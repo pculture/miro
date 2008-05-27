@@ -12,7 +12,9 @@
 <!ENTITY prefs.channels.check "Mettre à jour les chaînes pour du nouveau contenu">
 <!ENTITY prefs.channels.check.thirty "Toutes les 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Toutes les heures">
+<!ENTITY prefs.channels.check.daily "Tous les jours">
 <!ENTITY prefs.channels.check.manually "Manuellement">
+<!ENTITY prefs.channels.check.note "Note: You can set the frequency channels are checked from the channel's settings pane.">
 
 <!ENTITY prefs.channels.autodownloaddefault "Télécharger automatiquement les paramètres par défaut pour les nouvelles chaînes">
 <!ENTITY prefs.channels.autodownloaddefault.all "Tout">
@@ -39,7 +41,7 @@
 <!ENTITY prefs.autodownloads.max "Nombre maximum de canaux d'auto-téléchargement simultanés:">
 
 <!ENTITY prefs.disk.space "Espace disque">
-<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part1 "Concerver au moins cet espace libre sur mon disque:" >
 <!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "AVERTISSEMENT: Cette option n'aura pas d'effet tant que vous ne redémarrez pas $longAppName.">
 
@@ -51,12 +53,22 @@
 <!ENTITY prefs.videos.expire.thirty "1 mois">
 <!ENTITY prefs.videos.expire.never "Jamais">
 
+<!ENTITY prefs.videos.maxolditems "By default, remember">
+<!ENTITY prefs.videos.maxolditems2 "items in addition to the current contents">
+<!ENTITY prefs.videos.maxolditems.zero "0">
+<!ENTITY prefs.videos.maxolditems.twenty "20">
+<!ENTITY prefs.videos.maxolditems.fifty "50">
+<!ENTITY prefs.videos.maxolditems.hundred "100">
+<!ENTITY prefs.videos.maxolditems.thousand "1000">
+
+<!ENTITY prefs.videos.cleanallolditems "Clean old items in all feeds">
+
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(ATTENTION: Les changements ne seront effectifs qu'après un redémarrage de $longAppName.)">
-<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
-<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.upstream "Pour éviter des ralentissements sur Internet, limiter la vitesse d'émission à :">
+<!ENTITY prefs.torrent.limit.downstream "Limiter ma vitesse de réception à :">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
-<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_ports "Utiliser les ports suivants :">
 <!ENTITY prefs.torrent.use_upnp "Rediriger Automatiquement les Ports">
 <!ENTITY prefs.torrent.require_encryption "Ignorer les connexions non cryptées">
 <!ENTITY prefs.torrent.uploadratio "Arrêter l'envoi des torrents quand ce quota est atteint :">

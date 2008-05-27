@@ -12,14 +12,16 @@
 <!ENTITY prefs.channels.check "查找频道的新内容">
 <!ENTITY prefs.channels.check.thirty "每30分钟">
 <!ENTITY prefs.channels.check.sixty "每小时">
+<!ENTITY prefs.channels.check.daily "每天">
 <!ENTITY prefs.channels.check.manually "手动">
+<!ENTITY prefs.channels.check.note "Note: You can set the frequency channels are checked from the channel's settings pane.">
 
 <!ENTITY prefs.channels.autodownloaddefault "按默认设定自动下载新频道内容">
 <!ENTITY prefs.channels.autodownloaddefault.all "全部">
 <!ENTITY prefs.channels.autodownloaddefault.new "新添">
 <!ENTITY prefs.channels.autodownloaddefault.off "关闭">
 
-<!ENTITY prefs.playback "播放">
+<!ENTITY prefs.playback "回放">
 <!ENTITY prefs.playback.remember.pos "记住我停止观看节目的位置，并且下次从这个位置继续播放。">
 <!ENTITY prefs.playback.auto.next.video "连续播放视频">
 <!ENTITY prefs.playback.stop.after.each "播放一个节目，然后停止。">
@@ -50,6 +52,16 @@
 <!ENTITY prefs.videos.expire.ten "十天">
 <!ENTITY prefs.videos.expire.thirty "一个月">
 <!ENTITY prefs.videos.expire.never "从不">
+
+<!ENTITY prefs.videos.maxolditems "By default, remember">
+<!ENTITY prefs.videos.maxolditems2 "items in addition to the current contents">
+<!ENTITY prefs.videos.maxolditems.zero "0">
+<!ENTITY prefs.videos.maxolditems.twenty "20">
+<!ENTITY prefs.videos.maxolditems.fifty "50">
+<!ENTITY prefs.videos.maxolditems.hundred "100">
+<!ENTITY prefs.videos.maxolditems.thousand "1000">
+
+<!ENTITY prefs.videos.cleanallolditems "Clean old items in all feeds">
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(警告：更改直到您重启 $longAppName 后才会生效。)">

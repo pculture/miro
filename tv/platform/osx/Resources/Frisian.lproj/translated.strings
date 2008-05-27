@@ -4,7 +4,7 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 21:59-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-05-27 12:53-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 "Cancel" = "Ofbrekke";
@@ -32,7 +32,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Bring All to Front" = "Bring alles nei foaren";
 
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:80 */
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:80 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11 */
 "Channels" = "Kanalen";
 
@@ -50,6 +50,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Cut" = "Knippe";
 
+/* File: ../../portable/frontends/html/compiled_templates/multi_channel.py:78 */
 /* File: ../../portable/dialogs.py:104 */
 "Delete" = "Fourtsmite";
 
@@ -82,7 +83,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Minimize" = "Minimalisearje";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:54 */
 "Miro" = "Miro";
 
 "Miro Help" = "Miro Help";
@@ -103,11 +104,14 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Paste" = "Plakke";
 
-/* File: ../../platform/osx/platform/frontends/html/Application.py:244 */
+/* Flag: untranslated */
+"Planet Miro" = "Planet Miro";
+
+/* File: ../../platform/osx/plat/frontends/html/Application.py:244 */
 "Play Video" = "Fideo Ofspylje";
 
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:84 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22 */
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:84 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
 "Playback" = "Ofspylje";
 
 "Playlists" = "Ofspyllisten";
@@ -137,6 +141,9 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Stop Video" = "Stop Fideo";
 
+/* Flag: untranslated */
+"Translate" = "Translate";
+
 "Update All Channels" = "Fernij Alle Kanalen";
 
 "Update Channel" = "Fernij Kanaal";
@@ -149,17 +156,47 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "%channel title%" = "%kanaal titel%";
 
-"%donation label%" = "%donaasje label%";
-
 "-00:00:00" = "-00:00:00";
 
 "00:00:00" = "00:00:00";
 
-"Box" = "Fak";
+/* Flag: untranslated */
+"0:00:00" = "0:00:00";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:88 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:364 */
+"Email to a friend" = "Eamel nei in freon";
 
 "FullScreen Controls" = "FolsleinSkerm Kontrole";
 
-/* File: ../../portable/tabs.py:57 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:48 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:324 */
+/* File: ../../portable/dialogs.py:103 */
+"Keep" = "Bewarje";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:116 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:392 */
+"Post to Reddit" = "Post nei Reddit";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:94 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:370 */
+"Post to Video Bomb" = "Post nei Fideo Bom";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:102 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:378 */
+"Post to del.icio.us" = "Post nei del.icio.us";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:108 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:384 */
+"Post to digg" = "Post nei digg";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:73 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:349 */
+/* Flag: untranslated */
+"Share" = "Share";
+
+/* File: ../../portable/frontends/html/compiled_templates/search.py:170 */
+/* File: ../../portable/tabs.py:56 */
 "Video Search" = "Fideo Sykopdracht";
 
 "VideoWindow" = "FideoSkerm";
@@ -183,16 +220,17 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "-" = "-";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47 */
+/* File: ../../portable/item.py:551 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49 */
 "1 day" = "1 dei";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53 */
 "1 month" = "1 moanne";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
 "10 days" = "10 dagen";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50 */
 "3 days" = "3 dagen";
 
 "3 hours" = "3 oeren";
@@ -201,14 +239,14 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "5" = "5";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51 */
 "6 days" = "6 dagen";
 
 "99999" = "99999";
 
 "Add..." = "Foech ta...";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
 /* Flag: untranslated */
 "All" = "All";
 
@@ -218,13 +256,15 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Automatically forward ports" = "Automatically forward ports";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56 */
 /* Flag: untranslated */
 "BitTorrent" = "BitTorrent";
 
+"Box" = "Fak";
+
 "By default, videos expire after:" = "Standert ferrinne fideos nei:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
 "Change..." = "Wizigje...";
 
 "Check channels for new content:" = "Kontrolearje kanalen foar nij ynhâld:";
@@ -243,48 +283,48 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Ignore unencrypted connections" = "Ignore unencrypted connections";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
 /* Flag: untranslated */
 "KB/s." = "KB/s.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
 /* Flag: untranslated */
 "Keep at least this much free space on my drive:" = "Keep at least this much free space on my drive:";
 
 /* Flag: untranslated */
 "Limit downstream to" = "Limit downstream to";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
 "Never" = "Nea";
 
-/* File: ../../portable/tabs.py:56 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
+/* File: ../../portable/tabs.py:55 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21 */
 "New" = "Nij";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22 */
 /* Flag: untranslated */
 "Off" = "Off";
 
 "OtherViews" = "Oare Display";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:26 */
 "Play videos one after another." = "Spylje fideos efter inoar.";
 
 "Remember video position." = "Unthâld fideo posysje.";
 
-/* File: ../../portable/frontends/html/contextmenu.py:99 */
-/* File: ../../portable/frontends/html/contextmenu.py:104 */
+/* File: ../../portable/frontends/html/contextmenu.py:100 */
+/* File: ../../portable/frontends/html/contextmenu.py:105 */
 /* File: ../../portable/frontends/html/contextmenu.py:178 */
 /* File: ../../portable/frontends/html/contextmenu.py:184 */
 /* File: ../../portable/frontends/html/contextmenu.py:190 */
 /* File: ../../portable/frontends/html/contextmenu.py:199 */
-/* File: ../../portable/frontends/html/contextmenu.py:233 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
+/* File: ../../portable/frontends/html/contextmenu.py:232 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
 "Remove" = "Fuortsmite";
 
 "Run Miro at startup" = "Start Miro by it opstarten";
 
-/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:591 */
+/* File: ../../platform/gtk-x11/plat/frontends/html/callbackhandler.py:595 */
 "Show as Channel" = "Toan as Kanaal";
 
 "Stop after each video." = "Stop nei elke fideo.";
@@ -298,11 +338,11 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "To avoid internet slowdowns, limit upstream to" = "To avoid internet slowdowns, limit upstream to";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61 */
 /* Flag: untranslated */
 "Use these ports:" = "Use these ports:";
 
-/* File: ../../portable/frontends/html/main.py:319 */
+/* File: ../../portable/frontends/html/main.py:326 */
 /* Flag: untranslated */
 "Warn me when I attempt to quit with downloads in progress" = "Warn me when I attempt to quit with downloads in progress";
 
@@ -333,8 +373,8 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "URL" = "URL";
 
-/* File: ../../platform/windows-xul/platform/frontends/html/startup.py:59 */
-/* File: ../../platform/gtk-x11/platform/frontends/html/startup.py:56 */
+/* File: ../../platform/gtk-x11/plat/frontends/html/startup.py:56 */
+/* File: ../../platform/windows-xul/plat/frontends/html/startup.py:59 */
 /* Flag: python-format */
 "(parsed %d files - found %d videos)" = "(ferwurke %d bestannen - fûn %d fideos)";
 
@@ -342,7 +382,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Browse" = "Blêdzje";
 
-/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:121 */
+/* File: ../../platform/osx/plat/frontends/html/StartupPanel.py:121 */
 "Next" = "Fierder";
 
 /* File: ../../portable/dialogs.py:87 */
@@ -364,7 +404,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "Wy rêde jo oan dat de Miro Spiler start as jo kompjûter opstart. Sa kinne net foltôge ynlaadaksjes foltôge wurde en nije fideos kinne op de eftergrûn ynladen wurde, sa dat se klear binne as jo tiid hawwe om te sjen.\n\n\nWolle jo Miro starte as jo kompjûter opstart?";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:72 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:77 */
 "Welcome to Internet TV!" = "Wolkom by Ynternet TV!";
 
 "Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Wolkom by Ynternet TV.  Der is in protte wat jo dwaan kinne mei de Miro Spiler: automatysk fideos ynlade fan jo favorite kanalen, nije fideos efter inoar besjen, torrents ynlade, fideos oan freonen trochjaan, en folle mear.\n\n";
@@ -375,423 +415,328 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "%message%\n%message%" = "%berjocht%\n%berjocht%";
 
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83 */
-"Update Available" = "Fernijing Beskikber";
-
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84 */
-/* Flag: python-format */
-"A new version of %s is available for download." = "Der is in nij ferzje fan %s beskiber om yn te laden.";
-
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248 */
-"Error Bombing Item" = "Flater Bombing Underdiel";
-
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250 */
-"Error Recommending Item" = "Flater mei Oanrikkemandearjen Underdiel";
-
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252 */
-"Error Opening Website" = "Flater mei Iepenjen fan Webstee";
-
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256 */
-/* Flag: python-format */
-"There was an error opening %s.  Please try again in a few seconds" = "Der wie in flater mei it iepenjen fan %s. Probearje it oer in pear sekonden nochris";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:79 */
-/* Flag: python-format */
-"Error importing modules:\n%s" = "Flater mei ymportearjen modules:\n%s";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:254 */
-"Loading window" = "Skerm lade";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:255 */
-"onStartup called twice" = "onStartup twa kear oanroppe";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:739 */
-"Spacebar" = "Spaasjebalke";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:887 */
-"Close to tray?" = "Slute nei it systeemfak?";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:888 */
-"When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "As jo klikke op de reade slútknop, wolle jo dan dat Miro slút nei it systeemfak of ôfslutet?  Jo kinne dizze ynstelling letter noch wizigje yn de Opsjes.";
-
-/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55 */
-"Download Completed" = "Ynladen Dien";
-
-/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56 */
-/* Flag: python-format */
-"Download of video '%s' is finished." = "Ynladen fan fideo '%s' is dien.";
-
-/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65 */
-"Download Failed" = "Ynladen Mislearre";
-
-/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66 */
-/* Flag: python-format */
-"Download of video '%s' has failed." = "Ynladen fan fideo '%s' is mislearre.";
-
-/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:297 */
-"Subscribe to Channel" = "Ynskriuwe by Kanaal";
-
-/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:298 */
-"Enter the URL of the channel you would like to subscribe to." = "Fol de URL yn fan it kanaal wer't jo by ynskriuwe wolle.";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:79 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8 */
-"General" = "Algemien";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:81 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
-"Downloads" = "Ynladen Bestannen";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:82 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
-"Folders" = "Mappen";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:83 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41 */
-"Disk Space" = "Skiifromte";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:251 */
-"Movies Directory" = "Filmsmappen";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:252 */
-/* Flag: python-format */
-"Select a Directory to store %s downloads in." = "Selektearje in Map om %s ynladen bestanne yn te bewarjen.";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:253 */
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:362 */
-"Select" = "Selektearje";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:262 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
-"Migrate existing movies?" = "Migrearje besteande films?";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:263 */
-/* Flag: python-format */
-"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "Jo hawwe in nije map selektearre om films nei yn te laden.  Moat %s jo besteande ynladen bestaannen dernei ta ferpleatse?  (Aktuele ynlaadaksjes sille net ferpleatst wurde oant se klear binne).";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:360 */
-"View this Directory in the Library" = "Toan dize Map yn de Bibleteek";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:361 */
-"Select a Directory to view in the Library." = "Selektearje in Map om te besjen tn de Bibleteek.";
-
-/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:93 */
-/* Flag: untranslated */
-"Finish" = "Finish";
-
-/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:163 */
-"Search!" = "Sykje!";
-
-/* File: ../../platform/osx/platform/frontends/html/Application.py:241 */
-"Pause Video" = "Pausearje Fideo";
-
-/* File: ../../platform/osx/platform/frontends/html/Application.py:250 */
-"Unsupported version of Quicktime" = "Net stipe ferzje fan Quicktime";
-
-/* File: ../../platform/osx/platform/frontends/html/Application.py:251 */
-/* Flag: python-format */
-"To run %s you need the most recent version of Quicktime, which is a free update." = "Om %s te starten moatte jo de meast resinte ferzje fan Quicktime hawwe, wat in fergese fernijing is.";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:33 */
-"_Remove..." = "_Fuortsmite...";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:34 */
-"_Remove Playlist..." = "_Ofspyllist Fuortsmite...";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:35 */
-"_Remove Playlists..." = "_Ofspyllisten Fuortsmite...";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:36 */
-"_Remove Playlist Folder..." = "_Ofspyllistmap Fuortsmite...";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:37 */
-"_Remove Playlist Folders..." = "_Ofspyllistmappen Fuortsmite...";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:38 */
-/* File: ../../portable/menubar.py:193 */
-"_Remove Channel..." = "_Kanaal Fuortsmite...";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:39 */
-/* File: ../../portable/menubar.py:194 */
-"_Remove Channels..." = "_Kanalen Fuortsmite...";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:40 */
-/* File: ../../portable/menubar.py:196 */
-"_Remove Channel Folder..." = "_Kanaalmap Fuortsmite...";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:41 */
-/* File: ../../portable/menubar.py:195 */
-"_Remove Channel Folders..." = "_Kanaalmappen Fuortsmite...";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:42 */
-"_Remove Miro Guide..." = "_Smit Miro Gids fuort";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:43 */
-"_Remove Miro Guides..." = "_Smit Miro Hânliedings fuort";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:44 */
-"_Remove Video..." = "_Fideo Fuortsmite...";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:45 */
-"_Remove Videos..." = "_Fideos Fuortsmite...";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:46 */
-"Re_name..." = "Wer_neame...";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:47 */
-"Re_name Playlist..." = "Wer_neam Ofspyllist...";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:48 */
-"Re_name Playlist Folder..." = "Wer_neam Ofspyllistmap...";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:49 */
-/* File: ../../portable/menubar.py:192 */
-"Re_name Channel..." = "Wer_neam Kanaal...";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:50 */
-"Re_name Channel Folder..." = "Wer_neam Kanaalmap...";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:51 */
-"Re_name Miro Guide..." = "Wer_neam MIro Hânlieding";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:52 */
-/* File: ../../portable/menubar.py:198 */
-"_Update Channel..." = "_Fernij Kanaal...";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:53 */
-/* File: ../../portable/menubar.py:199 */
-"_Update Channels..." = "_Fernij Kanalen...";
-
-/* File: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319 */
-"Audio" = "Lûd";
-
-/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53 */
-"Settings" = "Ynstellings";
-
-/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:56 */
-"Hide" = "Ferstopje";
-
-/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:58 */
-"Show" = "Toane";
-
-/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:59 */
-/* File: ../../portable/menubar.py:273 */
-/* File: ../../portable/dialogs.py:88 */
-"Quit" = "Ofslute";
-
-/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333 */
-"New Channel _Guide..." = "Nije Kanaal_Gids...";
-
-/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582 */
-"Folder Location" = "Maplokaasje";
-
-/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211 */
+/* File: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:211 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3 */
 "Username:" = "Brûkersnamme:";
 
-/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:222 */
+/* File: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:222 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4 */
 "Password:" = "Wachtwurd:";
 
-/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:416 */
+/* File: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:416 */
 "Unknown Runtime Error" = "Unbekende Programma Flater";
 
-/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:417 */
+/* File: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:417 */
 /* Flag: python-format */
 "An unknown error has occurred %s." = "Der is in ûnbekende flater bard %s.";
 
-/* File: ../../portable/dl_daemon/download.py:458 */
-"Error" = "Flater";
+/* File: ../../platform/gtk-x11/plat/frontends/html/callbackhandler.py:333 */
+"New Channel _Guide..." = "Nije Kanaal_Gids...";
 
-/* File: ../../portable/dl_daemon/download.py:544 */
+/* File: ../../platform/gtk-x11/plat/frontends/html/callbackhandler.py:586 */
+"Folder Location" = "Maplokaasje";
+
+/* File: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:53 */
+/* File: ../../portable/frontends/html/compiled_templates/unittest/simpleunicode.py:36 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:327 */
+"Settings" = "Ynstellings";
+
+/* File: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:56 */
+"Hide" = "Ferstopje";
+
+/* File: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:58 */
+"Show" = "Toane";
+
+/* File: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:59 */
+/* File: ../../portable/dialogs.py:88 */
+/* File: ../../portable/menubar.py:274 */
+"Quit" = "Ofslute";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:80 */
 /* Flag: python-format */
-"Could not write to %s" = "Koe net skriuwe nei %s";
+"Error importing modules:\n%s" = "Flater mei ymportearjen modules:\n%s";
 
-/* File: ../../portable/dl_daemon/download.py:564 */
-/* File: ../../portable/dl_daemon/download.py:769 */
-"Not enough disk space" = "Net genôch skiifromte";
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:255 */
+"Loading window" = "Skerm lade";
 
-/* File: ../../portable/dl_daemon/download.py:565 */
-/* File: ../../portable/dl_daemon/download.py:770 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:256 */
+"onStartup called twice" = "onStartup twa kear oanroppe";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:748 */
+"Spacebar" = "Spaasjebalke";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:896 */
+"Close to tray?" = "Slute nei it systeemfak?";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:897 */
+"When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "As jo klikke op de reade slútknop, wolle jo dan dat Miro slút nei it systeemfak of ôfslutet?  Jo kinne dizze ynstelling letter noch wizigje yn de Opsjes.";
+
+/* File: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:83 */
+"Update Available" = "Fernijing Beskikber";
+
+/* File: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:84 */
 /* Flag: python-format */
-"%s MB required to store this video" = "%s MB nedich om dizze fideo te bewarjen";
+"A new version of %s is available for download." = "Der is in nij ferzje fan %s beskiber om yn te laden.";
 
-/* File: ../../portable/dl_daemon/download.py:781 */
-/* Flag: untranslated */
-"BitTorrent failure" = "BitTorrent failure";
+/* File: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:248 */
+"Error Bombing Item" = "Flater Bombing Underdiel";
 
-/* File: ../../portable/dl_daemon/download.py:782 */
-/* Flag: untranslated */
-"BitTorrent failed to startup" = "BitTorrent failed to startup";
+/* File: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:250 */
+"Error Recommending Item" = "Flater mei Oanrikkemandearjen Underdiel";
 
-/* File: ../../portable/dl_daemon/download.py:954 */
-"Corrupt Torrent" = "Korrupte Torrent";
+/* File: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:252 */
+"Error Opening Website" = "Flater mei Iepenjen fan Webstee";
 
-/* File: ../../portable/dl_daemon/download.py:955 */
+/* File: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:256 */
 /* Flag: python-format */
-"The torrent file at %s was not valid" = "It torrent bestân by %s wie net korrekt";
+"There was an error opening %s.  Please try again in a few seconds" = "Der wie in flater mei it iepenjen fan %s. Probearje it oer in pear sekonden nochris";
 
-/* File: ../../portable/dl_daemon/download.py:980 */
-"Torrent file deleted" = "Torrent bestân fuortsmiten";
-
-/* File: ../../portable/dl_daemon/download.py:981 */
+/* File: ../../platform/windows-xul/plat/flash.py:82 */
 /* Flag: untranslated */
-"The torrent file for this item was deleted outside of Miro." = "The torrent file for this item was deleted outside of Miro.";
-
-/* File: ../../portable/frontends/html/contextmenu.py:103 */
-"Update Channels Now" = "Fernij Kanalen No";
-
-/* File: ../../portable/frontends/html/contextmenu.py:128 */
 /* Flag: python-format */
-"%d Downloaded Items" = "%d Ynladen Underdielen";
+"Restart %s?" = "Restart %s?";
 
-/* File: ../../portable/frontends/html/contextmenu.py:130 */
-/* File: ../../portable/frontends/html/contextmenu.py:211 */
-"Play" = "Ofspylje";
-
-/* File: ../../portable/frontends/html/contextmenu.py:131 */
-/* File: ../../portable/frontends/html/contextmenu.py:214 */
-"Add to new playlist" = "Foach ta oan nij ôfspyllist";
-
-/* File: ../../portable/frontends/html/contextmenu.py:133 */
-/* File: ../../portable/frontends/html/contextmenu.py:207 */
-"Remove From Playlist" = "Helje Ut Ofspyllist";
-
-/* File: ../../portable/frontends/html/contextmenu.py:135 */
-/* File: ../../portable/frontends/html/contextmenu.py:209 */
-"Remove From the Library" = "Helje út de Bibleteek";
-
-/* File: ../../portable/frontends/html/contextmenu.py:141 */
-/* File: ../../portable/frontends/html/contextmenu.py:218 */
-"Mark as Unwatched" = "Markearje as Net sjoen";
-
-/* File: ../../portable/frontends/html/contextmenu.py:146 */
-/* File: ../../portable/frontends/html/contextmenu.py:220 */
+/* File: ../../platform/windows-xul/plat/flash.py:83 */
 /* Flag: untranslated */
-"Mark as Watched" = "Mark as Watched";
-
-/* File: ../../portable/frontends/html/contextmenu.py:151 */
 /* Flag: python-format */
-"%d Available Items" = "%d Beskikbere Underdielen";
+"To enable the Flash plugin, %s needs to be restarted.  Click Yes to shut %s down, or No to do it later." = "To enable the Flash plugin, %s needs to be restarted.  Click Yes to shut %s down, or No to do it later.";
 
-/* File: ../../portable/frontends/html/contextmenu.py:152 */
-/* File: ../../portable/frontends/html/contextmenu.py:227 */
-/* File: ../../portable/dialogs.py:93 */
-"Download" = "Ynlade";
+/* File: ../../platform/windows-xul/plat/flash.py:109 */
+/* Flag: untranslated */
+"Install Flash?" = "Install Flash?";
 
-/* File: ../../portable/frontends/html/contextmenu.py:157 */
+/* File: ../../platform/windows-xul/plat/flash.py:110 */
+/* Flag: untranslated */
 /* Flag: python-format */
-"%d Downloading Items" = "%d Ynladen Underdielen";
+"For the best %s experience, you should install Adobe Flash.  Do this now?" = "For the best %s experience, you should install Adobe Flash.  Do this now?";
 
-/* File: ../../portable/frontends/html/contextmenu.py:159 */
-/* File: ../../portable/frontends/html/contextmenu.py:225 */
-"Cancel Download" = "Stop Ynlaad";
+/* File: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:55 */
+"Download Completed" = "Ynladen Dien";
 
-/* File: ../../portable/frontends/html/contextmenu.py:161 */
-/* File: ../../portable/frontends/html/contextmenu.py:225 */
-"Pause Download" = "Pausearje Ynlaad";
-
-/* File: ../../portable/frontends/html/contextmenu.py:164 */
-/* File: ../../portable/frontends/html/contextmenu.py:223 */
-"Restart Upload" = "Werstart Oplaad";
-
-/* File: ../../portable/frontends/html/contextmenu.py:170 */
-"Update Channel Now" = "Fernij Kanaal No";
-
-/* File: ../../portable/frontends/html/contextmenu.py:172 */
-/* File: ../../portable/frontends/html/contextmenu.py:196 */
-"Copy URL to clipboard" = "Kopiearje URL nei klamboerd";
-
-/* File: ../../portable/frontends/html/contextmenu.py:173 */
-/* File: ../../portable/feed.py:825 */
-"Rename Channel" = "Werneam Kanaal";
-
-/* File: ../../portable/frontends/html/contextmenu.py:177 */
-"Revert Title to Default" = "Set Titel Tebek nei Standert";
-
-/* File: ../../portable/frontends/html/contextmenu.py:183 */
-/* File: ../../portable/folder.py:142 */
-"Rename Channel Folder" = "Werneam Kanaalmap";
-
-/* File: ../../portable/frontends/html/contextmenu.py:189 */
-/* File: ../../portable/folder.py:213 */
-"Rename Playlist Folder" = "Werneam Ofspyllistmap";
-
-/* File: ../../portable/frontends/html/contextmenu.py:213 */
-"Play Just This Video" = "Spylje Allinnich Dizze Fideo";
-
-/* File: ../../portable/frontends/html/contextmenu.py:232 */
-/* File: ../../portable/playlist.py:218 */
-"Rename Playlist" = "Werneam Ofspyllist";
-
-/* File: ../../portable/frontends/html/main.py:132 */
-/* File: ../../portable/startup.py:237 */
-/* Flag: untranslated */
-"Video Directory Missing" = "Video Directory Missing";
-
-/* File: ../../portable/frontends/html/main.py:133 */
-/* Flag: untranslated */
-"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro.";
-
-/* File: ../../portable/frontends/html/main.py:190 */
-/* File: ../../portable/theme.py:126 */
-"Custom Channels" = "Eigen Kanalen";
-
-/* File: ../../portable/frontends/html/main.py:190 */
-/* File: ../../portable/theme.py:126 */
-"You are running a version of $longAppName with a custom set of channels." = "Jo brûke in ferzje fan $longAppName  mei in eigen groep fan kanalen.";
-
-/* File: ../../portable/frontends/html/main.py:269 */
-/* File: ../../portable/httpclient.py:139 */
-"Internal Error" = "Ynterne flater";
-
-/* File: ../../portable/frontends/html/main.py:269 */
-/* Flag: untranslated */
-"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report.";
-
-/* File: ../../portable/frontends/html/main.py:269 */
-/* Flag: untranslated */
-"Include entire program database including all video and channel metadata with crash report" = "Include entire program database including all video and channel metadata with crash report";
-
-/* File: ../../portable/frontends/html/main.py:269 */
-/* Flag: untranslated */
-"Describe what you were doing that caused this error" = "Describe what you were doing that caused this error";
-
-/* File: ../../portable/frontends/html/main.py:284 */
+/* File: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:56 */
 /* Flag: python-format */
-"%s Version Alert" = "%s Ferzje Alarm";
+"Download of video '%s' is finished." = "Ynladen fan fideo '%s' is dien.";
 
-/* File: ../../portable/frontends/html/main.py:285 */
+/* File: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:65 */
+"Download Failed" = "Ynladen Mislearre";
+
+/* File: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:66 */
 /* Flag: python-format */
-"A new version of %s is available. Would you like to download it now?" = "In nije ferzje fan %s is beskikber. Wolle jo dizze no ynlade?";
+"Download of video '%s' has failed." = "Ynladen fan fideo '%s' is mislearre.";
 
-/* File: ../../portable/frontends/html/main.py:290 */
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:79 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8 */
+"General" = "Algemien";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:81 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
+"Downloads" = "Ynladen Bestannen";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:82 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
+"Folders" = "Mappen";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:83 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
+"Disk Space" = "Skiifromte";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:251 */
+"Movies Directory" = "Filmsmappen";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:252 */
 /* Flag: python-format */
-"%s Version Check" = "%s Ferzjekontrôle";
+"Select a Directory to store %s downloads in." = "Selektearje in Map om %s ynladen bestanne yn te bewarjen.";
 
-/* File: ../../portable/frontends/html/main.py:291 */
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:253 */
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:362 */
+"Select" = "Selektearje";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:262 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:53 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
+"Migrate existing movies?" = "Migrearje besteande films?";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:263 */
 /* Flag: python-format */
-"%s is up to date." = "%s is by de tiid.";
+"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "Jo hawwe in nije map selektearre om films nei yn te laden.  Moat %s jo besteande ynladen bestaannen dernei ta ferpleatse?  (Aktuele ynlaadaksjes sille net ferpleatst wurde oant se klear binne).";
 
-/* File: ../../portable/frontends/html/main.py:309 */
-"Are you sure you want to quit?" = "Witte jo seker dat jo ôfslute wolle?";
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:360 */
+"View this Directory in the Library" = "Toan dize Map yn de Bibleteek";
 
-/* File: ../../portable/frontends/html/main.py:311 */
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:361 */
+"Select a Directory to view in the Library." = "Selektearje in Map om te besjen tn de Bibleteek.";
+
+/* File: ../../platform/osx/plat/frontends/html/MainFrame.py:271 */
+"Subscribe to Channel" = "Ynskriuwe by Kanaal";
+
+/* File: ../../platform/osx/plat/frontends/html/MainFrame.py:272 */
+"Enter the URL of the channel you would like to subscribe to." = "Fol de URL yn fan it kanaal wer't jo by ynskriuwe wolle.";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:33 */
+"_Remove..." = "_Fuortsmite...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:34 */
+"_Remove Playlist..." = "_Ofspyllist Fuortsmite...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:35 */
+"_Remove Playlists..." = "_Ofspyllisten Fuortsmite...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:36 */
+"_Remove Playlist Folder..." = "_Ofspyllistmap Fuortsmite...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:37 */
+"_Remove Playlist Folders..." = "_Ofspyllistmappen Fuortsmite...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:38 */
+/* File: ../../portable/menubar.py:192 */
+"_Remove Channel..." = "_Kanaal Fuortsmite...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:39 */
+/* File: ../../portable/menubar.py:193 */
+"_Remove Channels..." = "_Kanalen Fuortsmite...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:40 */
+/* File: ../../portable/menubar.py:195 */
+"_Remove Channel Folder..." = "_Kanaalmap Fuortsmite...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:41 */
+/* File: ../../portable/menubar.py:194 */
+"_Remove Channel Folders..." = "_Kanaalmappen Fuortsmite...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:42 */
+"_Remove Miro Guide..." = "_Smit Miro Gids fuort";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:43 */
+"_Remove Miro Guides..." = "_Smit Miro Hânliedings fuort";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:44 */
+"_Remove Video..." = "_Fideo Fuortsmite...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:45 */
+"_Remove Videos..." = "_Fideos Fuortsmite...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:46 */
+"Re_name..." = "Wer_neame...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:47 */
+"Re_name Playlist..." = "Wer_neam Ofspyllist...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:48 */
+"Re_name Playlist Folder..." = "Wer_neam Ofspyllistmap...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:49 */
+/* File: ../../portable/menubar.py:191 */
+"Re_name Channel..." = "Wer_neam Kanaal...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:50 */
+"Re_name Channel Folder..." = "Wer_neam Kanaalmap...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:51 */
+"Re_name Miro Guide..." = "Wer_neam MIro Hânlieding";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:52 */
+/* File: ../../portable/menubar.py:197 */
+"_Update Channel..." = "_Fernij Kanaal...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:53 */
+/* File: ../../portable/menubar.py:198 */
+"_Update Channels..." = "_Fernij Kanalen...";
+
+/* File: ../../platform/osx/plat/frontends/html/StartupPanel.py:93 */
 /* Flag: untranslated */
-"Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?";
+"Finish" = "Finish";
 
-/* File: ../../portable/frontends/html/main.py:340 */
-/* Flag: untranslated */
-"Import OPML File" = "Import OPML File";
+/* File: ../../platform/osx/plat/frontends/html/StartupPanel.py:163 */
+"Search!" = "Sykje!";
 
-/* File: ../../portable/frontends/html/main.py:342 */
-/* Flag: untranslated */
-"OPML Files" = "OPML Files";
+/* File: ../../platform/osx/plat/frontends/html/Application.py:241 */
+"Pause Video" = "Pausearje Fideo";
 
-/* File: ../../portable/frontends/html/main.py:347 */
+/* File: ../../platform/osx/plat/frontends/html/Application.py:250 */
+"Unsupported version of Quicktime" = "Net stipe ferzje fan Quicktime";
+
+/* File: ../../platform/osx/plat/frontends/html/Application.py:251 */
+/* Flag: python-format */
+"To run %s you need the most recent version of Quicktime, which is a free update." = "Om %s te starten moatte jo de meast resinte ferzje fan Quicktime hawwe, wat in fergese fernijing is.";
+
+/* File: ../../platform/osx/plat/renderers/QuicktimeRenderer.py:319 */
+"Audio" = "Lûd";
+
+/* File: ../../portable/singleclick.py:99 */
 /* Flag: untranslated */
-"Export OPML File" = "Export OPML File";
+"Download already exists" = "Download already exists";
+
+/* File: ../../portable/singleclick.py:100 */
+/* Flag: untranslated */
+"That URL is already an external download." = "That URL is already an external download.";
+
+/* File: ../../portable/singleclick.py:106 */
+/* Flag: untranslated */
+"Miro will begin downloading it now." = "Miro will begin downloading it now.";
+
+/* File: ../../portable/singleclick.py:108 */
+/* Flag: untranslated */
+"It is downloading now." = "It is downloading now.";
+
+/* File: ../../portable/singleclick.py:110 */
+/* Flag: untranslated */
+"It has already been downloaded." = "It has already been downloaded.";
+
+/* File: ../../portable/singleclick.py:142 */
+/* Flag: untranslated */
+"Download Error" = "Download Error";
+
+/* File: ../../portable/singleclick.py:143 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Miro is not able to download a file at this URL:\n\nURL: %s" = "Miro is not able to download a file at this URL:\n\nURL: %s";
+
+/* File: ../../portable/singleclick.py:191 */
+/* Flag: untranslated */
+"File Download" = "File Download";
+
+/* File: ../../portable/singleclick.py:192 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"This file at %s does not appear to be audio, video, or an RSS feed." = "This file at %s does not appear to be audio, video, or an RSS feed.";
+
+/* File: ../../portable/singleclick.py:280 */
+"Subscribing to multiple channels" = "Ynskriuwe by ferskate kanalen";
+
+/* File: ../../portable/singleclick.py:281 */
+/* Flag: python-format */
+"Create %d channels?" = "%d kanalen meitsje?";
+
+/* File: ../../portable/singleclick.py:294 */
+/* Flag: python-format */
+"Adding %d channels to a new folder" = "Foecht %d kanalen ta oan nij map";
+
+/* File: ../../portable/singleclick.py:295 */
+/* File: ../../portable/folder.py:224 */
+"Enter a name for the new channel folder" = "Jou in namme foar de nije kanaalmap";
+
+/* File: ../../portable/singleclick.py:298 */
+/* Flag: python-format */
+"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "LET OP: Jo binne al ynskreaun by %d fan dizze kanalen.  Dizze kanalen sille wêr't se no binne.";
+
+/* File: ../../portable/singleclick.py:309 */
+"Subscription error" = "Ynskriuw flater";
+
+/* File: ../../portable/singleclick.py:319 */
+"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "Dit $shortAppName kanaal bestân hat in fout formaat: $url. Meld dit asjebleaft oan de publisearder fan dit bestân.";
+
+/* File: ../../portable/singleclick.py:327 */
+"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "Dit $shortAppName kanaalbestân hat it ferkearde ynhâldtype: $url. Meld dit asjebleaft oan de publisearder fan dit bestân.";
+
+/* File: ../../portable/singleclick.py:331 */
+"Could not download the $shortAppName channel file: $url." = "Koe net it $shortAppName kanaalbestân ynlade: $url.";
+
+/* File: ../../portable/singleclick.py:385 */
+"Invalid Torrent" = "Foute Torrent";
+
+/* File: ../../portable/singleclick.py:386 */
+/* Flag: python-format */
+"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "It torrent bestân %s liket korrupt te wêzen en kin net iepene wurde. [OK]";
 
 /* File: ../../portable/frontends/html/templatedisplay.py:325 */
 "Invalid Value" = "Foute Wearde";
@@ -843,18 +788,624 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Enter the URL of the video to download" = "Enter the URL of the video to download";
 
-/* File: ../../portable/tabs.py:55 */
+/* File: ../../portable/frontends/html/contextmenu.py:104 */
+"Update Channels Now" = "Fernij Kanalen No";
+
+/* File: ../../portable/frontends/html/contextmenu.py:128 */
+/* Flag: python-format */
+"%d Downloaded Items" = "%d Ynladen Underdielen";
+
+/* File: ../../portable/frontends/html/contextmenu.py:130 */
+/* File: ../../portable/frontends/html/contextmenu.py:210 */
+"Play" = "Ofspylje";
+
+/* File: ../../portable/frontends/html/contextmenu.py:131 */
+/* File: ../../portable/frontends/html/contextmenu.py:213 */
+"Add to new playlist" = "Foach ta oan nij ôfspyllist";
+
+/* File: ../../portable/frontends/html/contextmenu.py:133 */
+/* File: ../../portable/frontends/html/contextmenu.py:206 */
+"Remove From Playlist" = "Helje Ut Ofspyllist";
+
+/* File: ../../portable/frontends/html/contextmenu.py:135 */
+/* File: ../../portable/frontends/html/contextmenu.py:208 */
+"Remove From the Library" = "Helje út de Bibleteek";
+
+/* File: ../../portable/frontends/html/contextmenu.py:141 */
+/* File: ../../portable/frontends/html/contextmenu.py:217 */
+"Mark as Unwatched" = "Markearje as Net sjoen";
+
+/* File: ../../portable/frontends/html/contextmenu.py:146 */
+/* File: ../../portable/frontends/html/contextmenu.py:219 */
+/* Flag: untranslated */
+"Mark as Watched" = "Mark as Watched";
+
+/* File: ../../portable/frontends/html/contextmenu.py:151 */
+/* Flag: python-format */
+"%d Available Items" = "%d Beskikbere Underdielen";
+
+/* File: ../../portable/frontends/html/contextmenu.py:152 */
+/* File: ../../portable/frontends/html/contextmenu.py:226 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:128 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:140 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:292 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_thumbnail.py:79 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:91 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:103 */
+/* File: ../../portable/dialogs.py:93 */
+"Download" = "Ynlade";
+
+/* File: ../../portable/frontends/html/contextmenu.py:157 */
+/* Flag: python-format */
+"%d Downloading Items" = "%d Ynladen Underdielen";
+
+/* File: ../../portable/frontends/html/contextmenu.py:159 */
+/* File: ../../portable/frontends/html/contextmenu.py:224 */
+"Cancel Download" = "Stop Ynlaad";
+
+/* File: ../../portable/frontends/html/contextmenu.py:161 */
+/* File: ../../portable/frontends/html/contextmenu.py:224 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:275 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_thumbnail.py:62 */
+"Pause Download" = "Pausearje Ynlaad";
+
+/* File: ../../portable/frontends/html/contextmenu.py:164 */
+/* File: ../../portable/frontends/html/contextmenu.py:222 */
+"Restart Upload" = "Werstart Oplaad";
+
+/* File: ../../portable/frontends/html/contextmenu.py:170 */
+"Update Channel Now" = "Fernij Kanaal No";
+
+/* File: ../../portable/frontends/html/contextmenu.py:172 */
+/* File: ../../portable/frontends/html/contextmenu.py:196 */
+"Copy URL to clipboard" = "Kopiearje URL nei klamboerd";
+
+/* File: ../../portable/frontends/html/contextmenu.py:173 */
+/* File: ../../portable/feed.py:830 */
+"Rename Channel" = "Werneam Kanaal";
+
+/* File: ../../portable/frontends/html/contextmenu.py:177 */
+"Revert Title to Default" = "Set Titel Tebek nei Standert";
+
+/* File: ../../portable/frontends/html/contextmenu.py:183 */
+/* File: ../../portable/folder.py:142 */
+"Rename Channel Folder" = "Werneam Kanaalmap";
+
+/* File: ../../portable/frontends/html/contextmenu.py:189 */
+/* File: ../../portable/folder.py:213 */
+"Rename Playlist Folder" = "Werneam Ofspyllistmap";
+
+/* File: ../../portable/frontends/html/contextmenu.py:212 */
+"Play Just This Video" = "Spylje Allinnich Dizze Fideo";
+
+/* File: ../../portable/frontends/html/contextmenu.py:231 */
+/* File: ../../portable/playlist.py:218 */
+"Rename Playlist" = "Werneam Ofspyllist";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel_content.py:36 */
+/* File: ../../portable/frontends/html/compiled_templates/channel_folder.py:200 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:382 */
+/* Flag: untranslated */
+"Save Search" = "Save Search";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel_content.py:102 */
+/* File: ../../portable/frontends/html/compiled_templates/channel_folder.py:266 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:448 */
+/* Flag: untranslated */
+"Full Channel" = "Full Channel";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel_content.py:111 */
+/* File: ../../portable/frontends/html/compiled_templates/channel_content.py:194 */
+/* File: ../../portable/frontends/html/compiled_templates/channel_folder.py:275 */
+/* File: ../../portable/frontends/html/compiled_templates/channel_folder.py:358 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:457 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:540 */
+/* Flag: untranslated */
+"${len} Videos" = "${len} Videos";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel_content.py:185 */
+/* File: ../../portable/frontends/html/compiled_templates/channel_folder.py:349 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:531 */
+/* Flag: untranslated */
+"Downloaded" = "Downloaded";
+
+/* File: ../../portable/frontends/html/compiled_templates/feed_settings.py:48 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:188 */
+/* Flag: untranslated */
+"remove channel" = "remove channel";
+
+/* File: ../../portable/frontends/html/compiled_templates/feed_settings.py:57 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:197 */
+/* Flag: untranslated */
+"Settings: ${title}" = "Settings: ${title}";
+
+/* File: ../../portable/frontends/html/compiled_templates/feed_settings.py:59 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:199 */
+"Videos expire after" = "Fideos ferrinne nei";
+
+/* File: ../../portable/frontends/html/compiled_templates/feed_settings.py:63 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:203 */
+"Default" = "Standert";
+
+/* File: ../../portable/frontends/html/compiled_templates/feed_settings.py:70 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:210 */
+"default" = "standert";
+
+/* File: ../../portable/frontends/html/compiled_templates/feed_settings.py:136 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:276 */
+"Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting unwatched." = "Net Auto Ynlade as mear as ${maxnew} ${maxnew2} fideos wachtsje om besjoen te wurden.";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:53 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:329 */
+/* Flag: untranslated */
+"Saved" = "Saved";
+
+/* File: ../../portable/frontends/html/compiled_templates/playlist_folder.py:61 */
+"Empty Playlist Folder" = "Lege Ofspyllist Map";
+
+/* File: ../../portable/frontends/html/compiled_templates/playlist_folder.py:73 */
+"This folder contains ${count} playlists, but the playlists do not contain any items." = "Dizze map hat ${count} ôfspyllisten, mar de ôfspyllisten hawwe gjin ynhâld.";
+
+/* File: ../../portable/frontends/html/compiled_templates/playlist_folder.py:78 */
+"Drag playlists to this folder to add them." = "Sleepje ôfspyllisten nei dizze map om se ta te foegjen.";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:55 */
+/* File: ../../portable/frontends/html/compiled_templates/video_info.py:46 */
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:59 */
+/* Flag: untranslated */
+"EMAIL A FRIEND" = "EMAIL A FRIEND";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:62 */
+/* File: ../../portable/frontends/html/compiled_templates/video_info.py:53 */
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:66 */
+/* Flag: untranslated */
+"PERMALINK" = "PERMALINK";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:69 */
+/* File: ../../portable/frontends/html/compiled_templates/video_info.py:60 */
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:73 */
+/* Flag: untranslated */
+"COMMENTS" = "COMMENTS";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:81 */
+/* File: ../../portable/frontends/html/compiled_templates/video_info.py:72 */
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:85 */
+"KEEP" = "BEWARJE";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:88 */
+/* File: ../../portable/frontends/html/compiled_templates/video_info.py:79 */
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:92 */
+/* Flag: untranslated */
+"ADD TO LIBRARY" = "ADD TO LIBRARY";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:98 */
+/* File: ../../portable/frontends/html/compiled_templates/video_info.py:89 */
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:102 */
+"DELETE" = "FUORTSMITE";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:114 */
+/* Flag: untranslated */
+"Miro - External Playback Template" = "Miro - External Playback Template";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:124 */
+"Continue To Next Video" = "Fierder Nei Folgjende Fideo";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:39 */
+/* Flag: python-format */
+"%0.1f KB/s uploading" = "%0.1f KB/s opladen";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:42 */
+/* Flag: python-format */
+"%0.1f KB/s downloading" = "%0.1f KB/s ynladen";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:140 */
+/* Flag: untranslated */
+"External Downloads" = "External Downloads";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:142 */
+/* Flag: untranslated */
+"Clear Completed and Failed Downloads" = "Clear Completed and Failed Downloads";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:155 */
+"Seeding Torrents" = "Beskikbere Torrents";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:177 */
+"${size} free for downloads" = "${size} frij foar ynladen bestannen";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:186 */
+"${size} free on disk" = "${size} frij op skiif";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:464 */
+/* File: ../../portable/frontends/html/compiled_templates/new.py:138 */
+/* File: ../../portable/frontends/html/compiled_templates/library.py:137 */
+"Find" = "Fyn";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:466 */
+/* File: ../../portable/tabs.py:57 */
+"Downloading" = "Dwaande mei ynladen";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:485 */
+"Pause All" = "Pausearje Alles";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:503 */
+"Resume All" = "Gean Fierder mei Alles";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:516 */
+"Channel Downloads" = "Ynladen Kanalen";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel_folder.py:172 */
+"Empty Channel Folder" = "Lege Kanaalmap";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel_folder.py:174 */
+"Drag channels to this folder to add them." = "Sleepje kanalen nei dizze map om se ta te foegjen.";
+
+/* File: ../../portable/frontends/html/compiled_templates/unittest/translationtest.py:45 */
+"Simple translation" = "Simpele oersetting";
+
+/* File: ../../portable/frontends/html/compiled_templates/unittest/translationtest.py:59 */
+"truck stop in a ${can}" = "truck stop yn in ${can}";
+
+/* File: ../../portable/frontends/html/compiled_templates/unittest/translationtest.py:63 */
+"This is a ${car} and this is a ${truck} <span>This text is <b style=\"color:red\">raw</b> text</span>" = "Dit is in ${car} en dit is in ${truck} <span>Dizze tekst is <b style=\"color:red\">ruwe</b> tekst</span>";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:75 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:38 */
+/* Flag: untranslated */
+"Date:" = "Date:";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:82 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:45 */
+/* Flag: untranslated */
+"Length:" = "Length:";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:89 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:52 */
+/* Flag: untranslated */
+"Size:" = "Size:";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:98 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:61 */
+/* Flag: untranslated */
+"Show Details" = "Show Details";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:105 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:68 */
+/* Flag: untranslated */
+"Hide Details" = "Hide Details";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:153 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:116 */
+/* Flag: untranslated */
+"Download Torrent" = "Download Torrent";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:230 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:193 */
+"Pending Auto Download" = "Auto Ynload yn Ofwachting";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:244 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:207 */
+"STOP SEEDING" = "STOP SEEDING";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:282 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_thumbnail.py:69 */
+/* Flag: untranslated */
+"Resume Download" = "Resume Download";
+
+/* File: ../../portable/frontends/html/compiled_templates/new.py:146 */
+/* Flag: untranslated */
+"Recent Videos" = "Recent Videos";
+
+/* File: ../../portable/frontends/html/compiled_templates/playlist.py:58 */
+"Empty Playlist" = "Lege Ofspyllist";
+
+/* File: ../../portable/frontends/html/compiled_templates/playlist.py:60 */
+"Drag downloaded videos to this playlist to add them." = "Sleepje ynladen fideos nei dizze ôfspyllist om se ta te foegjen";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:139 */
+/* Flag: untranslated */
+"Miro can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<br></br><strong>File type:</strong> ${format}" = "Miro can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<br></br><strong>File type:</strong> ${format}";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:143 */
+"REVEAL FILE" = "BESTAN SJEN LITTE";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:147 */
+"Play Externally" = "Spylje Ekstern";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:156 */
+"Skip >> ${countdown}" = "Oerslaan >> ${countdown}";
+
+/* File: ../../portable/frontends/html/compiled_templates/search.py:49 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:293 */
+/* File: ../../portable/extrastrings.py:33 */
+/* File: ../../portable/feed.py:2393 */
+/* File: ../../portable/feed.py:2483 */
+"Search" = "Sykje";
+
+/* File: ../../portable/frontends/html/compiled_templates/search.py:74 */
+/* Flag: untranslated */
+"No videos found.<br></br>Enter a query in the search field above." = "No videos found.<br></br>Enter a query in the search field above.";
+
+/* File: ../../portable/frontends/html/compiled_templates/search.py:79 */
+"Searching..." = "Dwaande mei sykjen...";
+
+/* File: ../../portable/frontends/html/compiled_templates/search.py:84 */
+/* Flag: untranslated */
+"No matching videos found.<br></br>Enter a different query in the search field above." = "No matching videos found.<br></br>Enter a different query in the search field above.";
+
+/* File: ../../portable/frontends/html/compiled_templates/search.py:93 */
+/* Flag: untranslated */
+"Save as a Channel" = "Save as a Channel";
+
+/* File: ../../portable/frontends/html/compiled_templates/search.py:95 */
+/* Flag: untranslated */
+"<h3>Results for \"<span i18n:name=\"query\" t:replace=\"feed.lastQuery\"></span>\"</h3>" = "<h3>Results for \"<span i18n:name=\"query\" t:replace=\"feed.lastQuery\"></span>\"</h3>";
+
+/* File: ../../portable/frontends/html/compiled_templates/multi_channel.py:59 */
+"${count} Channel Folders Selected<br></br>(contains ${containedcount} channels)" = "${count} Kanal Mappen Selektearre<br></br>(hat ${containedcount} kanalen)";
+
+/* File: ../../portable/frontends/html/compiled_templates/multi_channel.py:71 */
+"${count} Channels Selected" = "${count} Kanalen Selektearre";
+
+/* File: ../../portable/frontends/html/compiled_templates/multi_channel.py:76 */
+/* Flag: untranslated */
+"Put Into a New Folder" = "Put Into a New Folder";
+
+/* File: ../../portable/frontends/html/compiled_templates/multi_channel.py:83 */
+/* Flag: untranslated */
+"Delete All" = "Delete All";
+
+/* File: ../../portable/frontends/html/compiled_templates/multi_playlist.py:59 */
+"${count} Playlist Folders Selected<br></br>(contains ${containedcount} playlists)" = "${count} Ofspyllist Mappen Selektearre<br></br>(hat ${containedcount} ôfspyllisten)";
+
+/* File: ../../portable/frontends/html/compiled_templates/multi_playlist.py:71 */
+"${count} Playlists Selected" = "${count} Ofspyllisten Selektearre";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:318 */
+/* Flag: untranslated */
+"Visit Website" = "Visit Website";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:325 */
+/* Flag: untranslated */
+"Send to a Friend" = "Send to a Friend";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:332 */
+/* Flag: untranslated */
+"Auto Download" = "Auto Download";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:746 */
+"Looking for videos at this URL" = "Syket foar fideos yn dizze URL";
+
+/* File: ../../portable/frontends/html/compiled_templates/library.py:145 */
+/* File: ../../portable/tabs.py:54 */
 "Library" = "Bibleteek";
 
-/* File: ../../portable/tabs.py:58 */
-"Downloading" = "Dwaande mei ynladen";
+/* File: ../../portable/frontends/html/main.py:138 */
+/* File: ../../portable/startup.py:236 */
+/* Flag: untranslated */
+"Video Directory Missing" = "Video Directory Missing";
+
+/* File: ../../portable/frontends/html/main.py:139 */
+/* Flag: untranslated */
+"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro.";
+
+/* File: ../../portable/frontends/html/main.py:197 */
+/* File: ../../portable/theme.py:127 */
+"Custom Channels" = "Eigen Kanalen";
+
+/* File: ../../portable/frontends/html/main.py:197 */
+/* File: ../../portable/theme.py:127 */
+"You are running a version of $longAppName with a custom set of channels." = "Jo brûke in ferzje fan $longAppName  mei in eigen groep fan kanalen.";
+
+/* File: ../../portable/frontends/html/main.py:276 */
+/* File: ../../portable/httpclient.py:151 */
+"Internal Error" = "Ynterne flater";
+
+/* File: ../../portable/frontends/html/main.py:276 */
+/* Flag: untranslated */
+"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report.";
+
+/* File: ../../portable/frontends/html/main.py:276 */
+/* Flag: untranslated */
+"Include entire program database including all video and channel metadata with crash report" = "Include entire program database including all video and channel metadata with crash report";
+
+/* File: ../../portable/frontends/html/main.py:276 */
+/* Flag: untranslated */
+"Describe what you were doing that caused this error" = "Describe what you were doing that caused this error";
+
+/* File: ../../portable/frontends/html/main.py:291 */
+/* Flag: python-format */
+"%s Version Alert" = "%s Ferzje Alarm";
+
+/* File: ../../portable/frontends/html/main.py:292 */
+/* Flag: python-format */
+"A new version of %s is available. Would you like to download it now?" = "In nije ferzje fan %s is beskikber. Wolle jo dizze no ynlade?";
+
+/* File: ../../portable/frontends/html/main.py:297 */
+/* Flag: python-format */
+"%s Version Check" = "%s Ferzjekontrôle";
+
+/* File: ../../portable/frontends/html/main.py:298 */
+/* Flag: python-format */
+"%s is up to date." = "%s is by de tiid.";
+
+/* File: ../../portable/frontends/html/main.py:316 */
+"Are you sure you want to quit?" = "Witte jo seker dat jo ôfslute wolle?";
+
+/* File: ../../portable/frontends/html/main.py:318 */
+/* Flag: untranslated */
+"Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?";
+
+/* File: ../../portable/frontends/html/main.py:347 */
+/* Flag: untranslated */
+"Import OPML File" = "Import OPML File";
+
+/* File: ../../portable/frontends/html/main.py:349 */
+/* Flag: untranslated */
+"OPML Files" = "OPML Files";
+
+/* File: ../../portable/frontends/html/main.py:354 */
+/* Flag: untranslated */
+"Export OPML File" = "Export OPML File";
+
+/* File: ../../portable/util.py:267 */
+/* Flag: python-format */
+"%1.1fGB" = "%1.1fGB";
+
+/* File: ../../portable/util.py:269 */
+/* Flag: python-format */
+"%dGB" = "%dGB";
+
+/* File: ../../portable/util.py:273 */
+/* Flag: python-format */
+"%1.1fMB" = "%1.1fMB";
+
+/* File: ../../portable/util.py:275 */
+/* Flag: python-format */
+"%dMB" = "%dMB";
+
+/* File: ../../portable/util.py:279 */
+/* Flag: python-format */
+"%1.1fKB" = "%1.1fKB";
+
+/* File: ../../portable/util.py:281 */
+/* Flag: python-format */
+"%dKB" = "%dKB";
+
+/* File: ../../portable/util.py:285 */
+/* Flag: python-format */
+"%1.1fB" = "%1.1fB";
+
+/* File: ../../portable/util.py:287 */
+/* Flag: python-format */
+"%dB" = "%dB";
+
+/* File: ../../portable/iheartmiro.py:134 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple %s extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\n%s" = "An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple %s extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\n%s";
+
+/* File: ../../portable/iheartmiro.py:142 */
+/* Flag: untranslated */
+"Install iHeartMiro?" = "Install iHeartMiro?";
+
+/* File: ../../portable/dl_daemon/download.py:457 */
+"Error" = "Flater";
+
+/* File: ../../portable/dl_daemon/download.py:544 */
+/* Flag: python-format */
+"Could not write to %s" = "Koe net skriuwe nei %s";
+
+/* File: ../../portable/dl_daemon/download.py:564 */
+/* File: ../../portable/dl_daemon/download.py:772 */
+"Not enough disk space" = "Net genôch skiifromte";
+
+/* File: ../../portable/dl_daemon/download.py:565 */
+/* File: ../../portable/dl_daemon/download.py:773 */
+/* Flag: python-format */
+"%s MB required to store this video" = "%s MB nedich om dizze fideo te bewarjen";
+
+/* File: ../../portable/dl_daemon/download.py:783 */
+/* Flag: untranslated */
+"BitTorrent failure" = "BitTorrent failure";
+
+/* File: ../../portable/dl_daemon/download.py:784 */
+/* Flag: untranslated */
+"BitTorrent failed to startup" = "BitTorrent failed to startup";
+
+/* File: ../../portable/dl_daemon/download.py:957 */
+"Corrupt Torrent" = "Korrupte Torrent";
+
+/* File: ../../portable/dl_daemon/download.py:958 */
+/* Flag: python-format */
+"The torrent file at %s was not valid" = "It torrent bestân by %s wie net korrekt";
+
+/* File: ../../portable/dl_daemon/download.py:983 */
+"Torrent file deleted" = "Torrent bestân fuortsmiten";
+
+/* File: ../../portable/dl_daemon/download.py:984 */
+/* Flag: untranslated */
+"The torrent file for this item was deleted outside of Miro." = "The torrent file for this item was deleted outside of Miro.";
+
+/* File: ../../portable/controller.py:197 */
+/* File: ../../portable/controller.py:211 */
+/* File: ../../portable/controller.py:255 */
+/* File: ../../portable/controller.py:281 */
+/* File: ../../portable/controller.py:301 */
+/* Flag: python-format */
+"Remove %s" = "Smit %s fuort";
+
+/* File: ../../portable/controller.py:198 */
+/* Flag: python-format */
+"Are you sure you want to remove the guide %s?" = "Witte jo seker dat jo de gids %s fuortsmite wolle?";
+
+/* File: ../../portable/controller.py:212 */
+/* Flag: python-format */
+"Are you sure you want to remove %s" = "Witte jo seker dat jo %s fuortsmite wolle";
+
+/* File: ../../portable/controller.py:215 */
+/* File: ../../portable/controller.py:260 */
+/* File: ../../portable/controller.py:286 */
+/* File: ../../portable/controller.py:305 */
+/* Flag: python-format */
+"Remove %s channels" = "Smit %s kanalen fuort";
+
+/* File: ../../portable/controller.py:217 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s playlists" = "Witte jo seker dat jo dizze %s ôfspyllisten fuortsmite wolle";
+
+/* File: ../../portable/controller.py:256 */
+"What would you like to do with the videos in this channel that you've downloaded?" = "Wat wolle jo dwaan mei de fideos yn dit kanaal dy't jo ynladen hawwe?";
+
+/* File: ../../portable/controller.py:261 */
+"What would you like to do with the videos in these channels that you've downloaded?" = "Wat wolle jo dwaan mei de fideos yn dizze kanalen dy't ynladen hawwe?";
+
+/* File: ../../portable/controller.py:282 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Witte jo seker dat jo %s fuortsmite wolle? Alle ynlaadaksje dy't noch dwaande binne wurde dan ôfbrutsen.";
+
+/* File: ../../portable/controller.py:287 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Witte jo seker dat jo dizze %s kanalen fuortsmite wolle?  Alle ynlaadaksje dy't noch dwaande binne wurde dan ôfbrutsen.";
+
+/* File: ../../portable/controller.py:302 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?" = "Witte jo seker dat jo %s fuortsmite wolle?";
+
+/* File: ../../portable/controller.py:306 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?" = "Witte jo seker dat jo dizze %s kanalen fuortsmite wolle?";
+
+/* File: ../../portable/controller.py:319 */
+/* Flag: python-format */
+"Stop watching %s" = "Stop mei %s";
+
+/* File: ../../portable/controller.py:320 */
+/* Flag: python-format */
+"Are you sure you want to stop watching %s?" = "Witte jo seker dat jo stoppe wolle mei sjen nei %s?";
+
+/* File: ../../portable/controller.py:323 */
+/* Flag: python-format */
+"Stop watching %s directories" = "Stop mei sjen nei %s mappen";
+
+/* File: ../../portable/controller.py:324 */
+/* Flag: python-format */
+"Are you sure you want to stop watching these %s directories?" = "Witte jo seker dat jo stoppe wolle mei sjen nei dizze %s mappen?";
+
+/* File: ../../portable/controller.py:498 */
+/* Flag: untranslated */
+"Error Saving Video" = "Error Saving Video";
+
+/* File: ../../portable/controller.py:500 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"An error occured while trying to save %s.  Please check that the file has not been deleted and try again." = "An error occured while trying to save %s.  Please check that the file has not been deleted and try again.";
 
 /* File: ../../portable/downloader.py:234 */
 "activity" = "aktiviteit";
 
 /* File: ../../portable/downloader.py:268 */
-/* File: ../../portable/httpclient.py:127 */
-/* File: ../../portable/httpclient.py:155 */
+/* File: ../../portable/httpclient.py:138 */
+/* File: ../../portable/httpclient.py:167 */
 "File not found" = "Bestân net fûn";
 
 /* File: ../../portable/downloader.py:269 */
@@ -863,421 +1414,126 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/downloader.py:445 */
 "starting up" = "dwaande mei opstarten";
 
-/* File: ../../portable/playlist.py:219 */
+/* File: ../../portable/httpclient.py:89 */
 /* Flag: python-format */
-"Enter a new name for the playlist %s" = "Jou in nije namme foar de ôfspyllist %s";
+"Error: %s" = "Flater: %s";
 
-/* File: ../../portable/playlist.py:241 */
-"Create Playlist" = "Meitsje Ofspyllist";
+/* File: ../../portable/httpclient.py:104 */
+/* File: ../../portable/httpclient.py:110 */
+"Can't connect" = "Kin gjin ferbining krije";
 
-/* File: ../../portable/playlist.py:242 */
-"Enter a name for the new playlist" = "Jou in namme foar de nije ôfspyllist";
-
-/* File: ../../portable/opml.py:144 */
-/* Flag: untranslated */
-"OPML Import failed" = "OPML Import failed";
-
-/* File: ../../portable/opml.py:145 */
-/* Flag: untranslated */
-"The selected OPML file appears to be invalid. Import was interrupted." = "The selected OPML file appears to be invalid. Import was interrupted.";
-
-/* File: ../../portable/opml.py:150 */
-/* Flag: untranslated */
-"OPML Import summary" = "OPML Import summary";
-
-/* File: ../../portable/util.py:266 */
+/* File: ../../portable/httpclient.py:105 */
 /* Flag: python-format */
-"%1.1fGB" = "%1.1fGB";
+"Connection Error: %s" = "Ferbiningsflater: %s";
 
-/* File: ../../portable/util.py:268 */
+/* File: ../../portable/httpclient.py:111 */
+"SSL connection error" = "SSL ferbiningsflater";
+
+/* File: ../../portable/httpclient.py:115 */
+"HTTP error" = "HTTP flater";
+
+/* File: ../../portable/httpclient.py:118 */
 /* Flag: python-format */
-"%dGB" = "%dGB";
+"Bad Status Line: %s" = "Foute Steat Rigel: %s";
 
-/* File: ../../portable/util.py:272 */
+/* File: ../../portable/httpclient.py:122 */
 /* Flag: python-format */
-"%1.1fMB" = "%1.1fMB";
+"Bad Header Line: %s" = "Foute Haadrigel: %s";
 
-/* File: ../../portable/util.py:274 */
+/* File: ../../portable/httpclient.py:126 */
 /* Flag: python-format */
-"%dMB" = "%dMB";
+"Bad Chunk size: %s" = "Foute Ofmjitting Chunk: %s";
 
-/* File: ../../portable/util.py:278 */
+/* File: ../../portable/httpclient.py:130 */
 /* Flag: python-format */
-"%1.1fKB" = "%1.1fKB";
+"Expected CRLF got: %r" = "Ferwachte CRLF krigen: %r";
 
-/* File: ../../portable/util.py:280 */
+/* File: ../../portable/httpclient.py:133 */
 /* Flag: python-format */
-"%dKB" = "%dKB";
+"%s closed connection" = "%s slút ferbining";
 
-/* File: ../../portable/util.py:284 */
+/* File: ../../portable/httpclient.py:139 */
+"Got 404 status code" = "Krige 404 steatkoade";
+
+/* File: ../../portable/httpclient.py:141 */
 /* Flag: python-format */
-"%1.1fB" = "%1.1fB";
+"Bad Status Code: %s" = "Foute Steatkoade: %s";
 
-/* File: ../../portable/util.py:286 */
+/* File: ../../portable/httpclient.py:146 */
+"Authorization failed" = "Autorisaasje mislearre";
+
+/* File: ../../portable/httpclient.py:152 */
+"Pipeline request never started" = "Pipeline fersyk net starte";
+
+/* File: ../../portable/httpclient.py:156 */
+"Timeout" = "Tiid ferstrutsen";
+
+/* File: ../../portable/httpclient.py:157 */
 /* Flag: python-format */
-"%dB" = "%dB";
+"Connection to %s timed out" = "Ferbining nei %s ferrûn";
 
-/* File: ../../portable/iheartmiro.py:82 */
+/* File: ../../portable/httpclient.py:161 */
+"Invalid URL" = "Ferkeard foarme URL";
+
+/* File: ../../portable/httpclient.py:162 */
 /* Flag: untranslated */
-"An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help." = "An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help.";
+/* Flag: python-format */
+"\"%s\" is not a valid URL" = "\"%s\" is not a valid URL";
 
-/* File: ../../portable/menubar.py:158 */
-"_Open" = "_Iepenje";
-
-/* File: ../../portable/menubar.py:159 */
+/* File: ../../portable/httpclient.py:168 */
 /* Flag: untranslated */
-"_Download Video" = "_Download Video";
+/* Flag: python-format */
+"The file: \"%s\" doesn't exist" = "The file: \"%s\" doesn't exist";
 
-/* File: ../../portable/menubar.py:161 */
-"Check _Version" = "Kontrolearje _Ferzje";
-
-/* File: ../../portable/menubar.py:163 */
-"_Remove Video" = "_Fideo Fuortsmite";
-
-/* File: ../../portable/menubar.py:164 */
-"_Remove Videos" = "_Fideos Fuortsmite";
-
-/* File: ../../portable/menubar.py:165 */
-"Re_name Video" = "Fideo Wer_neame";
-
-/* File: ../../portable/menubar.py:166 */
-"Save Video _As..." = "Bewarje Fideo _As...";
-
-/* File: ../../portable/menubar.py:167 */
-"Save Videos _As..." = "Bearje Fideos _As...";
-
-/* File: ../../portable/menubar.py:168 */
-"Copy Video _URL" = "Kopiearje Fideo _URL";
-
-/* File: ../../portable/menubar.py:170 */
+/* File: ../../portable/httpclient.py:172 */
 /* Flag: untranslated */
-"_Options..." = "_Options...";
+"Read error" = "Read error";
 
-/* File: ../../portable/menubar.py:171 */
-"_Quit" = "_Ofslute";
-
-/* File: ../../portable/menubar.py:179 */
-"Cu_t" = "Kni_ppe";
-
-/* File: ../../portable/menubar.py:180 */
-"_Copy" = "_Kopiearje";
-
-/* File: ../../portable/menubar.py:181 */
-"_Paste" = "_Plakke";
-
-/* File: ../../portable/menubar.py:182 */
-"Select _All" = "Selektearje _Alles";
-
-/* File: ../../portable/menubar.py:183 */
-"_Delete" = "_Fuortsmite";
-
-/* File: ../../portable/menubar.py:187 */
-"Add _Channel" = "Foech _Kanaal ta";
-
-/* File: ../../portable/menubar.py:188 */
-"New Searc_h Channel..." = "Nij Syk_h Kanaal...";
-
-/* File: ../../portable/menubar.py:189 */
-"New _Folder..." = "Nije _Map...";
-
-/* File: ../../portable/menubar.py:190 */
-"Add Channel _Guide..." = "Foech Kanaal_Gids ta...";
-
-/* File: ../../portable/menubar.py:200 */
-"Update _All Channels" = "Fernij _Alle Kanalen";
-
-/* File: ../../portable/menubar.py:202 */
+/* File: ../../portable/httpclient.py:173 */
 /* Flag: untranslated */
-"_Import Channels (OPML)..." = "_Import Channels (OPML)...";
+/* Flag: python-format */
+"Error while reading from \"%s\"" = "Error while reading from \"%s\"";
 
-/* File: ../../portable/menubar.py:203 */
+/* File: ../../portable/httpclient.py:369 */
 /* Flag: untranslated */
-"E_xport Channels (OPML)..." = "E_xport Channels (OPML)...";
+"Unknown Error code" = "Unknown Error code";
 
-/* File: ../../portable/menubar.py:205 */
-"_Send this channel to a friend" = "_Stjoer dit kanaal nei in freon";
+/* File: ../../portable/httpclient.py:401 */
+"Connection closed" = "Ferbining sluten";
 
-/* File: ../../portable/menubar.py:206 */
-"Copy Channel _Link" = "Kopiearje Kanaal _Keppeling";
+/* File: ../../portable/httpclient.py:823 */
+"Unknown" = "Unbekend";
 
-/* File: ../../portable/menubar.py:209 */
-"New _Playlist" = "Nije _Ofspyllist";
+/* File: ../../portable/httpclient.py:824 */
+"Internal Error: Not ready to send" = "Ynterne Flater: Net klear om te stjoeren";
 
-/* File: ../../portable/menubar.py:210 */
-"New Playlist Fol_der" = "Nije Ofspyllist Ma_p";
-
-/* File: ../../portable/menubar.py:212 */
-"Re_name Playlist" = "Wer_neam Ofspyllist";
-
-/* File: ../../portable/menubar.py:213 */
-"_Remove Playlist" = "_Smit Ofspyllist fuort";
-
-/* File: ../../portable/menubar.py:214 */
-"_Remove Playlists" = "_Smit Ofspyllisten fuort";
-
-/* File: ../../portable/menubar.py:215 */
-"_Remove Playlist Folders" = "_Smit Ofspyllistmappen fuort";
-
-/* File: ../../portable/menubar.py:216 */
-"_Remove Playlist Folder" = "_Smit Ofspyllistmap fuort";
-
-/* File: ../../portable/menubar.py:226 */
-/* File: ../../portable/menubar.py:227 */
-"_Play" = "_Spylje";
-
-/* File: ../../portable/menubar.py:228 */
+/* File: ../../portable/license.py:68 */
 /* Flag: untranslated */
-"_Pause" = "_Pause";
+"license page" = "license page";
 
-/* File: ../../portable/menubar.py:229 */
-"_Stop" = "_Stop";
-
-/* File: ../../portable/menubar.py:231 */
-"_Next Video" = "_Folgjende Fideo";
-
-/* File: ../../portable/menubar.py:232 */
-"_Previous Video" = "_Foarige Fideo";
-
-/* File: ../../portable/menubar.py:234 */
-"Skip _Forward" = "Stap _Foarút";
-
-/* File: ../../portable/menubar.py:235 */
-"Skip _Back" = "Stap _Tebek";
-
-/* File: ../../portable/menubar.py:237 */
-"Volume _Up" = "Volume _Omheech";
-
-/* File: ../../portable/menubar.py:238 */
-"Volume _Down" = "Volume _Omleech";
-
-/* File: ../../portable/menubar.py:240 */
-"_Fullscreen" = "_Folslein Skerm";
-
-/* File: ../../portable/menubar.py:244 */
-"_About" = "_Oer";
-
-/* File: ../../portable/menubar.py:245 */
-"_Donate" = "_Donearje";
-
-/* File: ../../portable/menubar.py:246 */
-/* File: ../../portable/menubar.py:261 */
-"_Help" = "_Help";
-
-/* File: ../../portable/menubar.py:248 */
-"Report a _Bug" = "Rapportearje in _Bug";
-
-/* File: ../../portable/menubar.py:252 */
-"_Video" = "_Fideo";
-
-/* File: ../../portable/menubar.py:254 */
-"_File" = "_Beatân";
-
-/* File: ../../portable/menubar.py:258 */
-"_Channels" = "_Kanalen";
-
-/* File: ../../portable/menubar.py:259 */
-"_Playlists" = "_Ofspyllisten";
-
-/* File: ../../portable/menubar.py:260 */
-"P_layback" = "O_fspylje";
-
-/* File: ../../portable/menubar.py:265 */
-"Play Unwatched ($numUnwatched)" = "Spilje Net besjoen ($numUnwatched)";
-
-/* File: ../../portable/menubar.py:266 */
-"Pause All Downloads ($numDownloading)" = "Pausearje Alle Ynlaadaksjes ($numDownloading)";
-
-/* File: ../../portable/menubar.py:267 */
-"Resume All Downloads ($numPaused)" = "Gean Fierder Mei Alle Ynlaadaksjes ($numPaused)";
-
-/* File: ../../portable/menubar.py:269 */
-/* Flag: untranslated */
-"Options..." = "Options...";
-
-/* File: ../../portable/menubar.py:271 */
-/* Flag: untranslated */
-"Hide Window" = "Hide Window";
-
-/* File: ../../portable/menubar.py:272 */
-/* Flag: untranslated */
-"Show Window" = "Show Window";
-
-/* File: ../../portable/theme.py:137 */
+/* File: ../../portable/theme.py:138 */
 /* Flag: untranslated */
 "Starter Channels" = "Starter Channels";
 
 /* File: ../../portable/theme.py:154 */
 "Example Playlist" = "Foarbyl Ofspyllist";
 
-/* File: ../../portable/httpclient.py:81 */
+/* File: ../../portable/folder.py:144 */
 /* Flag: python-format */
-"Error: %s" = "Flater: %s";
+"Enter a new name for the channel folder %s" = "Jou in nije namme foar de kanaalmap %s";
 
-/* File: ../../portable/httpclient.py:96 */
-/* File: ../../portable/httpclient.py:102 */
-"Can't connect" = "Kin gjin ferbining krije";
-
-/* File: ../../portable/httpclient.py:97 */
+/* File: ../../portable/folder.py:215 */
 /* Flag: python-format */
-"Connection Error: %s" = "Ferbiningsflater: %s";
+"Enter a new name for the playlist folder %s" = "Jou in nije namme foar de ôfspyllistmap %s";
 
-/* File: ../../portable/httpclient.py:103 */
-"SSL connection error" = "SSL ferbiningsflater";
+/* File: ../../portable/folder.py:223 */
+"Create Channel Folder" = "Meitsje Kanaalmap";
 
-/* File: ../../portable/httpclient.py:107 */
-"HTTP error" = "HTTP flater";
+/* File: ../../portable/folder.py:237 */
+"Create Playlist Folder" = "Meitsje Ofspyllistmap";
 
-/* File: ../../portable/httpclient.py:110 */
-/* Flag: python-format */
-"Bad Status Line: %s" = "Foute Steat Rigel: %s";
-
-/* File: ../../portable/httpclient.py:113 */
-/* Flag: python-format */
-"Bad Header Line: %s" = "Foute Haadrigel: %s";
-
-/* File: ../../portable/httpclient.py:116 */
-/* Flag: python-format */
-"Bad Chunk size: %s" = "Foute Ofmjitting Chunk: %s";
-
-/* File: ../../portable/httpclient.py:119 */
-/* Flag: python-format */
-"Expected CRLF got: %r" = "Ferwachte CRLF krigen: %r";
-
-/* File: ../../portable/httpclient.py:122 */
-/* Flag: python-format */
-"%s closed connection" = "%s slút ferbining";
-
-/* File: ../../portable/httpclient.py:128 */
-"Got 404 status code" = "Krige 404 steatkoade";
-
-/* File: ../../portable/httpclient.py:130 */
-/* Flag: python-format */
-"Bad Status Code: %s" = "Foute Steatkoade: %s";
-
-/* File: ../../portable/httpclient.py:134 */
-"Authorization failed" = "Autorisaasje mislearre";
-
-/* File: ../../portable/httpclient.py:140 */
-"Pipeline request never started" = "Pipeline fersyk net starte";
-
-/* File: ../../portable/httpclient.py:144 */
-"Timeout" = "Tiid ferstrutsen";
-
-/* File: ../../portable/httpclient.py:145 */
-/* Flag: python-format */
-"Connection to %s timed out" = "Ferbining nei %s ferrûn";
-
-/* File: ../../portable/httpclient.py:149 */
-"Invalid URL" = "Ferkeard foarme URL";
-
-/* File: ../../portable/httpclient.py:150 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"\"%s\" is not a valid URL" = "\"%s\" is not a valid URL";
-
-/* File: ../../portable/httpclient.py:156 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"The file: \"%s\" doesn't exist" = "The file: \"%s\" doesn't exist";
-
-/* File: ../../portable/httpclient.py:160 */
-/* Flag: untranslated */
-"Read error" = "Read error";
-
-/* File: ../../portable/httpclient.py:161 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Error while reading from \"%s\"" = "Error while reading from \"%s\"";
-
-/* File: ../../portable/httpclient.py:354 */
-/* Flag: untranslated */
-"Unknown Error code" = "Unknown Error code";
-
-/* File: ../../portable/httpclient.py:386 */
-"Connection closed" = "Ferbining sluten";
-
-/* File: ../../portable/httpclient.py:811 */
-"Unknown" = "Unbekend";
-
-/* File: ../../portable/httpclient.py:812 */
-"Internal Error: Not ready to send" = "Ynterne Flater: Net klear om te stjoeren";
-
-/* File: ../../portable/extrastrings.py:33 */
-/* File: ../../portable/feed.py:2409 */
-/* File: ../../portable/feed.py:2499 */
-"Search" = "Sykje";
-
-/* File: ../../portable/feed.py:384 */
-"never" = "noait";
-
-/* File: ../../portable/feed.py:386 */
-/* File: ../../portable/item.py:554 */
-/* Flag: python-format */
-"%d hours" = "%d oeren";
-
-/* File: ../../portable/feed.py:388 */
-/* Flag: python-format */
-"%d day" = "%d dei";
-
-/* File: ../../portable/feed.py:390 */
-/* File: ../../portable/item.py:552 */
-/* Flag: python-format */
-"%d days" = "%d dagen";
-
-/* File: ../../portable/feed.py:392 */
-/* Flag: python-format */
-"%d months" = "%d moannen";
-
-/* File: ../../portable/feed.py:826 */
-/* Flag: python-format */
-"Enter a new name for the channel %s" = "Jou in nije namme foar it kanaal %s";
-
-/* File: ../../portable/feed.py:923 */
-"Error loading feed" = "Flater by it laden fan feed";
-
-/* File: ../../portable/feed.py:924 */
-/* Flag: python-format */
-"Couldn't load the feed at %s (%s)." = "Koe de feed net lade op %s (%s).";
-
-/* File: ../../portable/feed.py:927 */
-"Would you like to keep the feed?" = "Wolle jo de feed bewarje?";
-
-/* File: ../../portable/feed.py:1040 */
-"Bad content-type" = "Ferkeard ynhâld-type";
-
-/* File: ../../portable/feed.py:1053 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
-"Channel is not compatible with $shortAppName!" = "Kanaal is net kompatible mei $shortAppName!";
-
-/* File: ../../portable/feed.py:1054 */
-"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "Mar wy dogge ús bêst om de bestannen te krijen. It kin ekstra tiid nimme om de fideos te sammmeljen, en de omskriuwings kinne der frjemd útsjen.  Nim kontakt op mei de publisearders fan $url en freegje oft se in feed jaan kinne dy't wol wurket yn $shortAppName.\n\nWolle jo it toch probearje?";
-
-/* File: ../../portable/feed.py:2513 */
-/* Flag: untranslated */
-"Local Files" = "Local Files";
-
-/* File: ../../portable/feed.py:2527 */
-/* Flag: untranslated */
-"Playing File" = "Playing File";
-
-/* File: ../../portable/storedatabase.py:859 */
-/* File: ../../portable/storedatabase.py:1258 */
-/* Flag: python-format */
-"%s database save succeeded" = "%s database bewarjen slagge";
-
-/* File: ../../portable/storedatabase.py:860 */
-/* File: ../../portable/storedatabase.py:1259 */
-"The database has been successfully saved. It is now safe to quit without losing any data." = "De database is súksesfol bewarre. It is no feilich om ôf te sluten.";
-
-/* File: ../../portable/storedatabase.py:867 */
-/* File: ../../portable/storedatabase.py:1267 */
-/* Flag: python-format */
-"%s database save failed" = "%s database bewarje mislearre";
-
-/* File: ../../portable/storedatabase.py:868 */
-/* File: ../../portable/storedatabase.py:1268 */
-/* Flag: python-format */
-"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s wie net yn steat om de database te bewarjen: Skiif Fol.\nWy stelle foar om bestannen fuort te smiten fan de skiif of ienfâldich films út Myn Kolleksje fourt te smiten.\nResint wizigings kinne ferlern wurde.";
+/* File: ../../portable/folder.py:238 */
+"Enter a name for the new playlist folder" = "Jou in namme foar de nije ôfspyllistmap";
 
 /* File: ../../portable/dialogs.py:89 */
 /* Flag: untranslated */
@@ -1288,12 +1544,12 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Submit Crash Report" = "Submit Crash Report";
 
 /* File: ../../portable/dialogs.py:91 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
 "Migrate" = "Migrearje";
 
 /* File: ../../portable/dialogs.py:92 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:36 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:39 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
 "Don't Migrate" = "Net Migrearje";
 
@@ -1322,9 +1578,6 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/dialogs.py:102 */
 "Add Into New Folder" = "Foech ta Yn Nije Map";
 
-/* File: ../../portable/dialogs.py:103 */
-"Keep" = "Bewarje";
-
 /* File: ../../portable/dialogs.py:105 */
 "Not Now" = "No Net";
 
@@ -1348,300 +1601,14 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Don't Install" = "Don't Install";
 
 /* File: ../../portable/dialogs.py:231 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
 "New Search Channel" = "Nij Sykkanaal";
 
 /* File: ../../portable/dialogs.py:231 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:27 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
 "A search channel contains items that match a search term." = "In sykkanaal hat ûnderdielen gelyk oan in sykterm";
-
-/* File: ../../portable/controller.py:196 */
-/* File: ../../portable/controller.py:210 */
-/* File: ../../portable/controller.py:254 */
-/* File: ../../portable/controller.py:280 */
-/* File: ../../portable/controller.py:300 */
-/* Flag: python-format */
-"Remove %s" = "Smit %s fuort";
-
-/* File: ../../portable/controller.py:197 */
-/* Flag: python-format */
-"Are you sure you want to remove the guide %s?" = "Witte jo seker dat jo de gids %s fuortsmite wolle?";
-
-/* File: ../../portable/controller.py:211 */
-/* Flag: python-format */
-"Are you sure you want to remove %s" = "Witte jo seker dat jo %s fuortsmite wolle";
-
-/* File: ../../portable/controller.py:214 */
-/* File: ../../portable/controller.py:259 */
-/* File: ../../portable/controller.py:285 */
-/* File: ../../portable/controller.py:304 */
-/* Flag: python-format */
-"Remove %s channels" = "Smit %s kanalen fuort";
-
-/* File: ../../portable/controller.py:216 */
-/* Flag: python-format */
-"Are you sure you want to remove these %s playlists" = "Witte jo seker dat jo dizze %s ôfspyllisten fuortsmite wolle";
-
-/* File: ../../portable/controller.py:255 */
-"What would you like to do with the videos in this channel that you've downloaded?" = "Wat wolle jo dwaan mei de fideos yn dit kanaal dy't jo ynladen hawwe?";
-
-/* File: ../../portable/controller.py:260 */
-"What would you like to do with the videos in these channels that you've downloaded?" = "Wat wolle jo dwaan mei de fideos yn dizze kanalen dy't ynladen hawwe?";
-
-/* File: ../../portable/controller.py:281 */
-/* Flag: python-format */
-"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Witte jo seker dat jo %s fuortsmite wolle? Alle ynlaadaksje dy't noch dwaande binne wurde dan ôfbrutsen.";
-
-/* File: ../../portable/controller.py:286 */
-/* Flag: python-format */
-"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Witte jo seker dat jo dizze %s kanalen fuortsmite wolle?  Alle ynlaadaksje dy't noch dwaande binne wurde dan ôfbrutsen.";
-
-/* File: ../../portable/controller.py:301 */
-/* Flag: python-format */
-"Are you sure you want to remove %s?" = "Witte jo seker dat jo %s fuortsmite wolle?";
-
-/* File: ../../portable/controller.py:305 */
-/* Flag: python-format */
-"Are you sure you want to remove these %s channels?" = "Witte jo seker dat jo dizze %s kanalen fuortsmite wolle?";
-
-/* File: ../../portable/controller.py:318 */
-/* Flag: python-format */
-"Stop watching %s" = "Stop mei %s";
-
-/* File: ../../portable/controller.py:319 */
-/* Flag: python-format */
-"Are you sure you want to stop watching %s?" = "Witte jo seker dat jo stoppe wolle mei sjen nei %s?";
-
-/* File: ../../portable/controller.py:322 */
-/* Flag: python-format */
-"Stop watching %s directories" = "Stop mei sjen nei %s mappen";
-
-/* File: ../../portable/controller.py:323 */
-/* Flag: python-format */
-"Are you sure you want to stop watching these %s directories?" = "Witte jo seker dat jo stoppe wolle mei sjen nei dizze %s mappen?";
-
-/* File: ../../portable/controller.py:497 */
-/* Flag: untranslated */
-"Error Saving Video" = "Error Saving Video";
-
-/* File: ../../portable/controller.py:499 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"An error occured while trying to save %s.  Please check that the file has not been deleted and try again." = "An error occured while trying to save %s.  Please check that the file has not been deleted and try again.";
-
-/* File: ../../portable/singleclick.py:99 */
-/* Flag: untranslated */
-"Download already exists" = "Download already exists";
-
-/* File: ../../portable/singleclick.py:100 */
-/* Flag: untranslated */
-"That URL is already an external download." = "That URL is already an external download.";
-
-/* File: ../../portable/singleclick.py:106 */
-/* Flag: untranslated */
-"Miro will begin downloading it now." = "Miro will begin downloading it now.";
-
-/* File: ../../portable/singleclick.py:108 */
-/* Flag: untranslated */
-"It is downloading now." = "It is downloading now.";
-
-/* File: ../../portable/singleclick.py:110 */
-/* Flag: untranslated */
-"It has already been downloaded." = "It has already been downloaded.";
-
-/* File: ../../portable/singleclick.py:137 */
-/* Flag: untranslated */
-"Download Error" = "Download Error";
-
-/* File: ../../portable/singleclick.py:138 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Miro is not able to download a file at this URL:\n\nURL: %s" = "Miro is not able to download a file at this URL:\n\nURL: %s";
-
-/* File: ../../portable/singleclick.py:146 */
-/* Flag: untranslated */
-"File Download" = "File Download";
-
-/* File: ../../portable/singleclick.py:147 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"This file at %s does not appear to be audio, video, or an RSS feed." = "This file at %s does not appear to be audio, video, or an RSS feed.";
-
-/* File: ../../portable/singleclick.py:235 */
-"Subscribing to multiple channels" = "Ynskriuwe by ferskate kanalen";
-
-/* File: ../../portable/singleclick.py:236 */
-/* Flag: python-format */
-"Create %d channels?" = "%d kanalen meitsje?";
-
-/* File: ../../portable/singleclick.py:249 */
-/* Flag: python-format */
-"Adding %d channels to a new folder" = "Foecht %d kanalen ta oan nij map";
-
-/* File: ../../portable/singleclick.py:250 */
-/* File: ../../portable/folder.py:224 */
-"Enter a name for the new channel folder" = "Jou in namme foar de nije kanaalmap";
-
-/* File: ../../portable/singleclick.py:253 */
-/* Flag: python-format */
-"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "LET OP: Jo binne al ynskreaun by %d fan dizze kanalen.  Dizze kanalen sille wêr't se no binne.";
-
-/* File: ../../portable/singleclick.py:264 */
-"Subscription error" = "Ynskriuw flater";
-
-/* File: ../../portable/singleclick.py:274 */
-"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "Dit $shortAppName kanaal bestân hat in fout formaat: $url. Meld dit asjebleaft oan de publisearder fan dit bestân.";
-
-/* File: ../../portable/singleclick.py:282 */
-"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "Dit $shortAppName kanaalbestân hat it ferkearde ynhâldtype: $url. Meld dit asjebleaft oan de publisearder fan dit bestân.";
-
-/* File: ../../portable/singleclick.py:286 */
-"Could not download the $shortAppName channel file: $url." = "Koe net it $shortAppName kanaalbestân ynlade: $url.";
-
-/* File: ../../portable/singleclick.py:334 */
-"Invalid Torrent" = "Foute Torrent";
-
-/* File: ../../portable/singleclick.py:335 */
-/* Flag: python-format */
-"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "It torrent bestân %s liket korrupt te wêzen en kin net iepene wurde. [OK]";
-
-/* File: ../../portable/item.py:497 */
-/* Flag: python-format */
-"Removing %s" = "Smit %s fuort";
-
-/* File: ../../portable/item.py:500 */
-"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Wolle jo dizze map fuortsmite en alle fideos dy't der yn steane of allinnich de fermelding yn de Bibleteek?";
-
-/* File: ../../portable/item.py:506 */
-/* Flag: untranslated */
-"Would you like to delete this file or just remove its entry from the Library?" = "Would you like to delete this file or just remove its entry from the Library?";
-
-/* File: ../../portable/item.py:526 */
-"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Dit ûnderdiel is in map.  As jo in map fuortsmite, wurde alle ûnderdielen yn die map ek fuortsmiten.";
-
-/* File: ../../portable/item.py:556 */
-/* Flag: python-format */
-"%d minutes" = "%d minuten";
-
-/* File: ../../portable/item.py:566 */
-/* Flag: python-format */
-"Expires in %s" = "Ferrint yn %s";
-
-/* File: ../../portable/item.py:578 */
-/* Flag: python-format */
-"Will retry in %s" = "Sil op 'e nij probearje yn %s";
-
-/* File: ../../portable/item.py:580 */
-"Paused" = "Pausearre";
-
-/* File: ../../portable/item.py:982 */
-"TORRENT" = "TORRENT";
-
-/* File: ../../portable/item.py:984 */
-"WEB PAGE" = "WEBSTEE";
-
-/* File: ../../portable/item.py:994 */
-"Total Down:" = "Totaal Yn:";
-
-/* File: ../../portable/item.py:997 */
-/* Flag: untranslated */
-"Error:" = "Error:";
-
-/* File: ../../portable/item.py:1006 */
-"Seeders:" = "Seeders:";
-
-/* File: ../../portable/item.py:1008 */
-/* Flag: untranslated */
-"Leechers:" = "Leechers:";
-
-/* File: ../../portable/item.py:1010 */
-"Down Rate:" = "Ynlaad Werdearring:";
-
-/* File: ../../portable/item.py:1011 */
-"Down Total:" = "Yn Totaal:";
-
-/* File: ../../portable/item.py:1013 */
-"Up Rate:" = "Pp Werdearring:";
-
-/* File: ../../portable/item.py:1014 */
-"Up Total:" = "Op Totaal:";
-
-/* File: ../../portable/item.py:1024 */
-"Web page:" = "Webstee:";
-
-/* File: ../../portable/item.py:1024 */
-"permalink" = "permakeppeling";
-
-/* File: ../../portable/item.py:1028 */
-"File link:" = "Bestânskeppeling:";
-
-/* File: ../../portable/item.py:1028 */
-"direct link to file" = "direkte keppeling nei bestân";
-
-/* File: ../../portable/item.py:1030 */
-"File type:" = "Bestânstype";
-
-/* File: ../../portable/item.py:1037 */
-/* File: ../../portable/item.py:1040 */
-/* File: ../../portable/item.py:1042 */
-/* Flag: untranslated */
-"License:" = "License:";
-
-/* File: ../../portable/item.py:1040 */
-/* File: ../../portable/item.py:1042 */
-/* Flag: untranslated */
-"see permalink" = "see permalink";
-
-/* File: ../../portable/item.py:1049 */
-"REVEAL LOCAL FOLDER" = "LIT LOKALE MAP SJEN";
-
-/* File: ../../portable/item.py:1051 */
-"REVEAL LOCAL FILE" = "LIT LOKAAL BESTAN SJEN";
-
-/* File: ../../portable/item.py:1053 */
-"Filename:" = "Bestânsnamme";
-
-/* File: ../../portable/item.py:1060 */
-"Down Total" = "Ynlaad Totaal";
-
-/* File: ../../portable/item.py:1062 */
-"Up Total" = "Op Totaal";
-
-/* File: ../../portable/item.py:1080 */
-"Item Details" = "Item Details";
-
-/* File: ../../portable/item.py:1087 */
-"Torrent Details" = "Torrent Details";
-
-/* File: ../../portable/item.py:1089 */
-/* Flag: untranslated */
-"Torrent Details <i>stopped</i>" = "Torrent Details <i>stopped</i>";
-
-/* File: ../../portable/item.py:1093 */
-"Download Details" = "Ynlaad Details";
-
-/* File: ../../portable/item.py:1310 */
-"downloading..." = "ynlade...";
-
-/* File: ../../portable/item.py:1317 */
-/* File: ../../portable/item.py:1320 */
-/* Flag: python-format */
-"%s remaining" = "%s te gean";
-
-/* File: ../../portable/item.py:1329 */
-"starting up..." = "dwaande mei opstarten...";
-
-/* File: ../../portable/item.py:1878 */
-/* Flag: python-format */
-"Removing %s items" = "Smit %s items fuort";
-
-/* File: ../../portable/item.py:1880 */
-"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "Ien of mear fan dizze fideos wie net ynladen fan in kanaall.  Wolle jo dizze fuortsmite of allinnich de fermelding yn de Bibleteek?";
-
-/* File: ../../portable/item.py:1888 */
-"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Ien of mear fan dizze ûnderdielen is in map. As jo in map fuortsmite, sille alle ûnderdielen yn die map ek fuortsmiten wurde.";
 
 /* File: ../../portable/startup.py:92 */
 /* Flag: untranslated */
@@ -1658,30 +1625,436 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/startup.py:156 */
 "You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "Jo hawwe in database dy't bewarre wie mei in nijere ferzje fan $shortAppName. Jo moatte de lêste ferzje tnlade fan $shortAppName en die gebrûke.";
 
-/* File: ../../portable/startup.py:238 */
+/* File: ../../portable/startup.py:237 */
 /* Flag: untranslated */
-"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected." = "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.";
+"\nMiro can't find your primary video directory $moviesDirectory.  This may be because it's located on an external drive that is currently disconnected.  Please, connect the drive or create the directory, then start Miro again." = "\nMiro can't find your primary video directory $moviesDirectory.  This may be because it's located on an external drive that is currently disconnected.  Please, connect the drive or create the directory, then start Miro again.";
 
-/* File: ../../portable/folder.py:144 */
+/* File: ../../portable/playlist.py:219 */
 /* Flag: python-format */
-"Enter a new name for the channel folder %s" = "Jou in nije namme foar de kanaalmap %s";
+"Enter a new name for the playlist %s" = "Jou in nije namme foar de ôfspyllist %s";
 
-/* File: ../../portable/folder.py:215 */
-/* Flag: python-format */
-"Enter a new name for the playlist folder %s" = "Jou in nije namme foar de ôfspyllistmap %s";
+/* File: ../../portable/playlist.py:241 */
+"Create Playlist" = "Meitsje Ofspyllist";
 
-/* File: ../../portable/folder.py:223 */
-"Create Channel Folder" = "Meitsje Kanaalmap";
+/* File: ../../portable/playlist.py:242 */
+"Enter a name for the new playlist" = "Jou in namme foar de nije ôfspyllist";
 
-/* File: ../../portable/folder.py:237 */
-"Create Playlist Folder" = "Meitsje Ofspyllistmap";
-
-/* File: ../../portable/folder.py:238 */
-"Enter a name for the new playlist folder" = "Jou in namme foar de nije ôfspyllistmap";
-
-/* File: ../../portable/license.py:68 */
+/* File: ../../portable/opml.py:155 */
 /* Flag: untranslated */
-"license page" = "license page";
+"OPML Import failed" = "OPML Import failed";
+
+/* File: ../../portable/opml.py:156 */
+/* Flag: untranslated */
+"The selected OPML file appears to be invalid. Import was interrupted." = "The selected OPML file appears to be invalid. Import was interrupted.";
+
+/* File: ../../portable/opml.py:161 */
+/* Flag: untranslated */
+"OPML Import summary" = "OPML Import summary";
+
+/* File: ../../portable/storedatabase.py:860 */
+/* File: ../../portable/storedatabase.py:1262 */
+/* Flag: python-format */
+"%s database save succeeded" = "%s database bewarjen slagge";
+
+/* File: ../../portable/storedatabase.py:861 */
+/* File: ../../portable/storedatabase.py:1263 */
+"The database has been successfully saved. It is now safe to quit without losing any data." = "De database is súksesfol bewarre. It is no feilich om ôf te sluten.";
+
+/* File: ../../portable/storedatabase.py:868 */
+/* File: ../../portable/storedatabase.py:1271 */
+/* Flag: python-format */
+"%s database save failed" = "%s database bewarje mislearre";
+
+/* File: ../../portable/storedatabase.py:869 */
+/* File: ../../portable/storedatabase.py:1272 */
+/* Flag: python-format */
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s wie net yn steat om de database te bewarjen: Skiif Fol.\nWy stelle foar om bestannen fuort te smiten fan de skiif of ienfâldich films út Myn Kolleksje fourt te smiten.\nResint wizigings kinne ferlern wurde.";
+
+/* File: ../../portable/menubar.py:157 */
+"_Open" = "_Iepenje";
+
+/* File: ../../portable/menubar.py:158 */
+/* Flag: untranslated */
+"_Download Video" = "_Download Video";
+
+/* File: ../../portable/menubar.py:160 */
+"Check _Version" = "Kontrolearje _Ferzje";
+
+/* File: ../../portable/menubar.py:162 */
+"_Remove Video" = "_Fideo Fuortsmite";
+
+/* File: ../../portable/menubar.py:163 */
+"_Remove Videos" = "_Fideos Fuortsmite";
+
+/* File: ../../portable/menubar.py:164 */
+"Re_name Video" = "Fideo Wer_neame";
+
+/* File: ../../portable/menubar.py:165 */
+"Save Video _As..." = "Bewarje Fideo _As...";
+
+/* File: ../../portable/menubar.py:166 */
+"Save Videos _As..." = "Bearje Fideos _As...";
+
+/* File: ../../portable/menubar.py:167 */
+"Copy Video _URL" = "Kopiearje Fideo _URL";
+
+/* File: ../../portable/menubar.py:169 */
+/* Flag: untranslated */
+"_Options..." = "_Options...";
+
+/* File: ../../portable/menubar.py:170 */
+"_Quit" = "_Ofslute";
+
+/* File: ../../portable/menubar.py:178 */
+"Cu_t" = "Kni_ppe";
+
+/* File: ../../portable/menubar.py:179 */
+"_Copy" = "_Kopiearje";
+
+/* File: ../../portable/menubar.py:180 */
+"_Paste" = "_Plakke";
+
+/* File: ../../portable/menubar.py:181 */
+"Select _All" = "Selektearje _Alles";
+
+/* File: ../../portable/menubar.py:182 */
+"_Delete" = "_Fuortsmite";
+
+/* File: ../../portable/menubar.py:186 */
+"Add _Channel" = "Foech _Kanaal ta";
+
+/* File: ../../portable/menubar.py:187 */
+"New Searc_h Channel..." = "Nij Syk_h Kanaal...";
+
+/* File: ../../portable/menubar.py:188 */
+"New _Folder..." = "Nije _Map...";
+
+/* File: ../../portable/menubar.py:189 */
+"Add Channel _Guide..." = "Foech Kanaal_Gids ta...";
+
+/* File: ../../portable/menubar.py:199 */
+"Update _All Channels" = "Fernij _Alle Kanalen";
+
+/* File: ../../portable/menubar.py:201 */
+/* Flag: untranslated */
+"_Import Channels (OPML)..." = "_Import Channels (OPML)...";
+
+/* File: ../../portable/menubar.py:202 */
+/* Flag: untranslated */
+"E_xport Channels (OPML)..." = "E_xport Channels (OPML)...";
+
+/* File: ../../portable/menubar.py:204 */
+"_Send this channel to a friend" = "_Stjoer dit kanaal nei in freon";
+
+/* File: ../../portable/menubar.py:205 */
+"Copy Channel _Link" = "Kopiearje Kanaal _Keppeling";
+
+/* File: ../../portable/menubar.py:208 */
+"New _Playlist" = "Nije _Ofspyllist";
+
+/* File: ../../portable/menubar.py:209 */
+"New Playlist Fol_der" = "Nije Ofspyllist Ma_p";
+
+/* File: ../../portable/menubar.py:211 */
+"Re_name Playlist" = "Wer_neam Ofspyllist";
+
+/* File: ../../portable/menubar.py:212 */
+"_Remove Playlist" = "_Smit Ofspyllist fuort";
+
+/* File: ../../portable/menubar.py:213 */
+"_Remove Playlists" = "_Smit Ofspyllisten fuort";
+
+/* File: ../../portable/menubar.py:214 */
+"_Remove Playlist Folders" = "_Smit Ofspyllistmappen fuort";
+
+/* File: ../../portable/menubar.py:215 */
+"_Remove Playlist Folder" = "_Smit Ofspyllistmap fuort";
+
+/* File: ../../portable/menubar.py:225 */
+/* File: ../../portable/menubar.py:226 */
+"_Play" = "_Spylje";
+
+/* File: ../../portable/menubar.py:227 */
+/* Flag: untranslated */
+"_Pause" = "_Pause";
+
+/* File: ../../portable/menubar.py:228 */
+"_Stop" = "_Stop";
+
+/* File: ../../portable/menubar.py:230 */
+"_Next Video" = "_Folgjende Fideo";
+
+/* File: ../../portable/menubar.py:231 */
+"_Previous Video" = "_Foarige Fideo";
+
+/* File: ../../portable/menubar.py:233 */
+"Skip _Forward" = "Stap _Foarút";
+
+/* File: ../../portable/menubar.py:234 */
+"Skip _Back" = "Stap _Tebek";
+
+/* File: ../../portable/menubar.py:236 */
+"Volume _Up" = "Volume _Omheech";
+
+/* File: ../../portable/menubar.py:237 */
+"Volume _Down" = "Volume _Omleech";
+
+/* File: ../../portable/menubar.py:239 */
+"_Fullscreen" = "_Folslein Skerm";
+
+/* File: ../../portable/menubar.py:243 */
+"_About" = "_Oer";
+
+/* File: ../../portable/menubar.py:244 */
+"_Donate" = "_Donearje";
+
+/* File: ../../portable/menubar.py:245 */
+/* File: ../../portable/menubar.py:262 */
+"_Help" = "_Help";
+
+/* File: ../../portable/menubar.py:247 */
+"Report a _Bug" = "Rapportearje in _Bug";
+
+/* File: ../../portable/menubar.py:248 */
+/* Flag: untranslated */
+"_Translate" = "_Translate";
+
+/* File: ../../portable/menubar.py:249 */
+/* Flag: untranslated */
+"_Planet" = "_Planet";
+
+/* File: ../../portable/menubar.py:253 */
+"_Video" = "_Fideo";
+
+/* File: ../../portable/menubar.py:255 */
+"_File" = "_Beatân";
+
+/* File: ../../portable/menubar.py:259 */
+"_Channels" = "_Kanalen";
+
+/* File: ../../portable/menubar.py:260 */
+"_Playlists" = "_Ofspyllisten";
+
+/* File: ../../portable/menubar.py:261 */
+"P_layback" = "O_fspylje";
+
+/* File: ../../portable/menubar.py:266 */
+"Play Unwatched ($numUnwatched)" = "Spilje Net besjoen ($numUnwatched)";
+
+/* File: ../../portable/menubar.py:267 */
+"Pause All Downloads ($numDownloading)" = "Pausearje Alle Ynlaadaksjes ($numDownloading)";
+
+/* File: ../../portable/menubar.py:268 */
+"Resume All Downloads ($numPaused)" = "Gean Fierder Mei Alle Ynlaadaksjes ($numPaused)";
+
+/* File: ../../portable/menubar.py:270 */
+/* Flag: untranslated */
+"Options..." = "Options...";
+
+/* File: ../../portable/menubar.py:272 */
+/* Flag: untranslated */
+"Hide Window" = "Hide Window";
+
+/* File: ../../portable/menubar.py:273 */
+/* Flag: untranslated */
+"Show Window" = "Show Window";
+
+/* File: ../../portable/feed.py:388 */
+"never" = "noait";
+
+/* File: ../../portable/feed.py:390 */
+/* File: ../../portable/item.py:555 */
+/* Flag: python-format */
+"%d hours" = "%d oeren";
+
+/* File: ../../portable/feed.py:392 */
+/* Flag: python-format */
+"%d day" = "%d dei";
+
+/* File: ../../portable/feed.py:394 */
+/* File: ../../portable/item.py:553 */
+/* Flag: python-format */
+"%d days" = "%d dagen";
+
+/* File: ../../portable/feed.py:396 */
+/* Flag: python-format */
+"%d months" = "%d moannen";
+
+/* File: ../../portable/feed.py:831 */
+/* Flag: python-format */
+"Enter a new name for the channel %s" = "Jou in nije namme foar it kanaal %s";
+
+/* File: ../../portable/feed.py:928 */
+"Error loading feed" = "Flater by it laden fan feed";
+
+/* File: ../../portable/feed.py:929 */
+/* Flag: python-format */
+"Couldn't load the feed at %s (%s)." = "Koe de feed net lade op %s (%s).";
+
+/* File: ../../portable/feed.py:932 */
+"Would you like to keep the feed?" = "Wolle jo de feed bewarje?";
+
+/* File: ../../portable/feed.py:1053 */
+"Bad content-type" = "Ferkeard ynhâld-type";
+
+/* File: ../../portable/feed.py:1066 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
+"Channel is not compatible with $shortAppName!" = "Kanaal is net kompatible mei $shortAppName!";
+
+/* File: ../../portable/feed.py:1067 */
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "Mar wy dogge ús bêst om de bestannen te krijen. It kin ekstra tiid nimme om de fideos te sammmeljen, en de omskriuwings kinne der frjemd útsjen.  Nim kontakt op mei de publisearders fan $url en freegje oft se in feed jaan kinne dy't wol wurket yn $shortAppName.\n\nWolle jo it toch probearje?";
+
+/* File: ../../portable/feed.py:2497 */
+/* Flag: untranslated */
+"Local Files" = "Local Files";
+
+/* File: ../../portable/feed.py:2511 */
+/* Flag: untranslated */
+"Playing File" = "Playing File";
+
+/* File: ../../portable/item.py:496 */
+/* Flag: python-format */
+"Removing %s" = "Smit %s fuort";
+
+/* File: ../../portable/item.py:499 */
+"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Wolle jo dizze map fuortsmite en alle fideos dy't der yn steane of allinnich de fermelding yn de Bibleteek?";
+
+/* File: ../../portable/item.py:505 */
+/* Flag: untranslated */
+"Would you like to delete this file or just remove its entry from the Library?" = "Would you like to delete this file or just remove its entry from the Library?";
+
+/* File: ../../portable/item.py:525 */
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Dit ûnderdiel is in map.  As jo in map fuortsmite, wurde alle ûnderdielen yn die map ek fuortsmiten.";
+
+/* File: ../../portable/item.py:557 */
+/* Flag: python-format */
+"%d minutes" = "%d minuten";
+
+/* File: ../../portable/item.py:567 */
+/* Flag: python-format */
+"Expires in %s" = "Ferrint yn %s";
+
+/* File: ../../portable/item.py:579 */
+/* Flag: python-format */
+"Will retry in %s" = "Sil op 'e nij probearje yn %s";
+
+/* File: ../../portable/item.py:581 */
+"Paused" = "Pausearre";
+
+/* File: ../../portable/item.py:989 */
+"TORRENT" = "TORRENT";
+
+/* File: ../../portable/item.py:991 */
+"WEB PAGE" = "WEBSTEE";
+
+/* File: ../../portable/item.py:1001 */
+"Total Down:" = "Totaal Yn:";
+
+/* File: ../../portable/item.py:1004 */
+/* Flag: untranslated */
+"Error:" = "Error:";
+
+/* File: ../../portable/item.py:1013 */
+"Seeders:" = "Seeders:";
+
+/* File: ../../portable/item.py:1015 */
+/* Flag: untranslated */
+"Leechers:" = "Leechers:";
+
+/* File: ../../portable/item.py:1017 */
+"Down Rate:" = "Ynlaad Werdearring:";
+
+/* File: ../../portable/item.py:1018 */
+"Down Total:" = "Yn Totaal:";
+
+/* File: ../../portable/item.py:1020 */
+"Up Rate:" = "Pp Werdearring:";
+
+/* File: ../../portable/item.py:1021 */
+"Up Total:" = "Op Totaal:";
+
+/* File: ../../portable/item.py:1032 */
+/* File: ../../portable/item.py:1037 */
+"Web page:" = "Webstee:";
+
+/* File: ../../portable/item.py:1032 */
+/* Flag: untranslated */
+"comments" = "comments";
+
+/* File: ../../portable/item.py:1037 */
+"permalink" = "permakeppeling";
+
+/* File: ../../portable/item.py:1041 */
+"File link:" = "Bestânskeppeling:";
+
+/* File: ../../portable/item.py:1041 */
+"direct link to file" = "direkte keppeling nei bestân";
+
+/* File: ../../portable/item.py:1043 */
+"File type:" = "Bestânstype";
+
+/* File: ../../portable/item.py:1050 */
+/* File: ../../portable/item.py:1053 */
+/* File: ../../portable/item.py:1055 */
+/* Flag: untranslated */
+"License:" = "License:";
+
+/* File: ../../portable/item.py:1053 */
+/* File: ../../portable/item.py:1055 */
+/* Flag: untranslated */
+"see permalink" = "see permalink";
+
+/* File: ../../portable/item.py:1062 */
+/* Flag: untranslated */
+"SHOW LOCAL FOLDER" = "SHOW LOCAL FOLDER";
+
+/* File: ../../portable/item.py:1064 */
+/* Flag: untranslated */
+"SHOW LOCAL FILE" = "SHOW LOCAL FILE";
+
+/* File: ../../portable/item.py:1066 */
+"Filename:" = "Bestânsnamme";
+
+/* File: ../../portable/item.py:1073 */
+"Down Total" = "Ynlaad Totaal";
+
+/* File: ../../portable/item.py:1075 */
+"Up Total" = "Op Totaal";
+
+/* File: ../../portable/item.py:1093 */
+"Item Details" = "Item Details";
+
+/* File: ../../portable/item.py:1100 */
+"Torrent Details" = "Torrent Details";
+
+/* File: ../../portable/item.py:1102 */
+/* Flag: untranslated */
+"Torrent Details <i>stopped</i>" = "Torrent Details <i>stopped</i>";
+
+/* File: ../../portable/item.py:1106 */
+"Download Details" = "Ynlaad Details";
+
+/* File: ../../portable/item.py:1329 */
+"downloading..." = "ynlade...";
+
+/* File: ../../portable/item.py:1336 */
+/* File: ../../portable/item.py:1339 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%s left" = "%s left";
+
+/* File: ../../portable/item.py:1348 */
+"starting up..." = "dwaande mei opstarten...";
+
+/* File: ../../portable/item.py:1939 */
+/* Flag: python-format */
+"Removing %s items" = "Smit %s items fuort";
+
+/* File: ../../portable/item.py:1941 */
+"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "Ien of mear fan dizze fideos wie net ynladen fan in kanaall.  Wolle jo dizze fuortsmite of allinnich de fermelding yn de Bibleteek?";
+
+/* File: ../../portable/item.py:1949 */
+"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Ien of mear fan dizze ûnderdielen is in map. As jo in map fuortsmite, sille alle ûnderdielen yn die map ek fuortsmiten wurde.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:2 */
 "1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 dei\n3 dagen\n6 dagen\n10 dagen\n1 moanne\nNoait";
@@ -1694,205 +2067,223 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." = "<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:11 */
-"<b>Searching for Videos</b>" = "<b>Sykje nei Fideos</b>";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:12 */
-"<b>Would you like Miro to look for video files on your computer?</b>" = "<b>Wolle jo dat Miro siket nei fideo bestannen op jo kompjûter?</b>";
+/* Flag: untranslated */
+"<b>Note:</b> You can set the frequency channels are checked for each\nchannel in the channel's settings pane." = "<b>Note:</b> You can set the frequency channels are checked for each\nchannel in the channel's settings pane.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:13 */
-"<b>Would you like to run Miro when your computer starts up?</b>" = "<b>Wolle jo dat Miro start as jo jo kompjûter oansette?</b>";
+"<b>Searching for Videos</b>" = "<b>Sykje nei Fideos</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:14 */
-"<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>Jo binne klear!</b>\n\nDe Ynstallaasje is kompleet -- no kinne jo in pear kanalen fine en begjinne mei te sjen.\n\n<b>Wachtsje net:</b> Miro is oars as it besjen fan webside fideos -- publisearders kinne grutte, hege kwaliteit fideos oanbiede.  Dus bliuw net wachtsjen op fideos: start in pear ynlaadaksjes en kontrolearje letter nochris.\n\n<b>Lit it Oan:</b> Miro kontroleart regelmjittich kanalen foar nije fideos en laad yn yn de eftergrûnd.  Ona stean litte betsjut dat jo nije fideos hawwe as jo der klear foar binne.\n\n<b>Wès net bang oer skiifromte:</b> Lyk as in TiVo, hat Miro in 'ferrin' systeem dat helpt mei it opskjinjen fan âlde fideos om plak te meitsjen foar nije fideos.  Jo kinne altiid in fideo permanent bewarje troch op 'bewarje' te klikken en jo kinne in kanaal ynstelle om fideos automatysk te bewarjen.\n\n<b>Gean Grut:</b> De knop oan de rjochterkant fan de ôfspilknop toant fideos op folslein skerm.\n\n<b>Fin Fideos:</b> De Miro Gids hat hunderten ynternet TV kanalen, se binne allegear fergees.  Klik gewoan op 'TAFOEGJE' om in kanaal te besjen.";
+"<b>Would you like Miro to look for video files on your computer?</b>" = "<b>Wolle jo dat Miro siket nei fideo bestannen op jo kompjûter?</b>";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:28 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
-/* Flag: untranslated */
-"Auto download default setting for new channels" = "Auto download default setting for new channels";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:15 */
+"<b>Would you like to run Miro when your computer starts up?</b>" = "<b>Wolle jo dat Miro start as jo jo kompjûter oansette?</b>";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:16 */
+"<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>Jo binne klear!</b>\n\nDe Ynstallaasje is kompleet -- no kinne jo in pear kanalen fine en begjinne mei te sjen.\n\n<b>Wachtsje net:</b> Miro is oars as it besjen fan webside fideos -- publisearders kinne grutte, hege kwaliteit fideos oanbiede.  Dus bliuw net wachtsjen op fideos: start in pear ynlaadaksjes en kontrolearje letter nochris.\n\n<b>Lit it Oan:</b> Miro kontroleart regelmjittich kanalen foar nije fideos en laad yn yn de eftergrûnd.  Ona stean litte betsjut dat jo nije fideos hawwe as jo der klear foar binne.\n\n<b>Wès net bang oer skiifromte:</b> Lyk as in TiVo, hat Miro in 'ferrin' systeem dat helpt mei it opskjinjen fan âlde fideos om plak te meitsjen foar nije fideos.  Jo kinne altiid in fideo permanent bewarje troch op 'bewarje' te klikken en jo kinne in kanaal ynstelle om fideos automatysk te bewarjen.\n\n<b>Gean Grut:</b> De knop oan de rjochterkant fan de ôfspilknop toant fideos op folslein skerm.\n\n<b>Fin Fideos:</b> De Miro Gids hat hunderten ynternet TV kanalen, se binne allegear fergees.  Klik gewoan op 'TAFOEGJE' om in kanaal te besjen.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
 /* Flag: untranslated */
-"Automatically for_ward ports." = "Automatically for_ward ports.";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
-/* Flag: untranslated */
-"By default, videos _expire after" = "By default, videos _expire after";
+"<b>xine</b>" = "<b>xine</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:31 */
-"C_hannel:" = "K_anaal";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
+/* Flag: untranslated */
+"Auto download default setting for new channels" = "Auto download default setting for new channels";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
 /* Flag: untranslated */
-"C_hannels" = "C_hannels";
+"Automatically for_ward ports." = "Automatically for_ward ports.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:33 */
-"C_reate Channel" = "M_eitsje Kanaal";
+/* Flag: untranslated */
+"By default, videos _expire after" = "By default, videos _expire after";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:34 */
-/* Flag: untranslated */
-"Check Channels for _new content" = "Check Channels for _new content";
+"C_hannel:" = "K_anaal";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:35 */
 /* Flag: untranslated */
-"Disk _Space" = "Disk _Space";
+"C_hannels" = "C_hannels";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:36 */
+"C_reate Channel" = "M_eitsje Kanaal";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:37 */
-"Every 30 minutes\nEvery hour\nManually" = "Elke 30 minuten\nElk oer\nHânmjittich";
+/* Flag: untranslated */
+"Check Channels for _new content" = "Check Channels for _new content";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:38 */
+/* Flag: untranslated */
+"Disk _Space" = "Disk _Space";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
 /* Flag: untranslated */
+"Every 30 minutes\nEvery hour\nEvery day\nManually" = "Every 30 minutes\nEvery hour\nEvery day\nManually";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
+/* Flag: untranslated */
 "G_B" = "G_B";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
-"Go" = "Gean";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
-/* Flag: untranslated */
-"Ignore Un_encrypted Connections." = "Ignore Un_encrypted Connections.";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
-"In This:" = "Hjir Yn:";
-
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
-/* Flag: untranslated */
-"Limit torrent _downstream to:" = "Limit torrent _downstream to:";
+"Go" = "Gean";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
 /* Flag: untranslated */
-"Maximum number of channel auto-downloads at a time: " = "Maximum number of channel auto-downloads at a time: ";
+"Ignore Un_encrypted Connections." = "Ignore Un_encrypted Connections.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
+"In This:" = "Hjir Yn:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
+/* Flag: untranslated */
+"Limit torrent _downstream to:" = "Limit torrent _downstream to:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
+/* Flag: untranslated */
+"Maximum number of channel auto-downloads at a time: " = "Maximum number of channel auto-downloads at a time: ";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
 /* Flag: untranslated */
 "Maximum number of manual downloads at a time: " = "Maximum number of manual downloads at a time: ";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
 "Miro can find all the videos on your computer to help you organize your collection." = "Miro kin alle fideos fine op jo kompjûter om jo te helpen jo kolleksje te organisearjen.";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
-/* Flag: untranslated */
-"New\nAll\nOff" = "New\nAll\nOff";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
 /* Flag: untranslated */
-"Play _videos one after another" = "Play _videos one after another";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:57 */
-"Preferences" = "Foarkarren";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:58 */
-"Restrict to my full _home folder" = "Behein oant myn folle _thúsmap";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
-/* Flag: untranslated */
-"S_top after each video" = "S_top after each video";
+"New\nAll\nOff" = "New\nAll\nOff";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:60 */
 /* Flag: untranslated */
-"S_tore downloaded videos in this folder:" = "S_tore downloaded videos in this folder:";
+"Play _videos one after another" = "Play _videos one after another";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:61 */
-"Search _Engine:" = "Syk _Masine:";
+"Preferences" = "Foarkarren";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:62 */
-"Search _custom folder:" = "Syk _eigen map:";
+"Restrict to my full _home folder" = "Behein oant myn folle _thúsmap";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:63 */
-"Select Movies Directory" = "Selektearje Filmsmap";
+/* Flag: untranslated */
+"S_top after each video" = "S_top after each video";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:64 */
-"Select custom search directory" = "Selektearje eigen sykmap";
+/* Flag: untranslated */
+"S_tore downloaded videos in this folder:" = "S_tore downloaded videos in this folder:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62 */
+"Search _Engine:" = "Syk _Masine:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
+"Search _custom folder:" = "Syk _eigen map:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
+"Select Movies Directory" = "Selektearje Filmsmap";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
+"Select custom search directory" = "Selektearje eigen sykmap";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:64 */
 /* Flag: untranslated */
 "Stop torrent uploads when this ratio is reached:" = "Stop torrent uploads when this ratio is reached:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
 "The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "De folgjende skermen sille jo helpe Miro yn testellen sa dat it wurkt sa as jo dat wolle.  Hjir is de earste fraach.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:71 */
 /* Flag: untranslated */
 "To avoid internet slowdowns, limit _upstream to:" = "To avoid internet slowdowns, limit _upstream to:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:72 */
 /* Flag: untranslated */
 "Use _ports:" = "Use _ports:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:73 */
+/* Flag: untranslated */
+"Use this for video when listening to audio:" = "Use this for video when listening to audio:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
 /* Flag: untranslated */
 "Use this renderer to play videos:" = "Use this renderer to play videos:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:75 */
 "Volume:" = "Volume:";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:71 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:76 */
 "We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "It wurd oanrikkemandearre dat jo Miro tastean te starten as jo kompjûter opstart.  Op dizze maier, fideos dy't net folslein ynladen binne kinne fierder gean en nije fideos op jo kanalen sille klear wêze as jo se besjen wolle.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:73 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:78 */
 "Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Wolkom by Ynternet TV.  Der is in protte wat jo dwaan kinne mei Miro: automatysk fideos ynlade fan jo favorite kanalen, nije fideos efter inoar besjen, torrents ynlade, fideos oan freonen trochjaan, en folle mear.";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:79 */
 "You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "Jo hawwe in nije map selektearre om films nei yn te laden. Moat Miro jo beateande ynladen bestannen hjir nei ta migrearje?  (Aktuele ynlaadaksjes sille net ferpleatst wurde oant se klear binne.)";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:75 */
-"_Add Folder" = "_Foech Map ta";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:76 */
-/* Flag: untranslated */
-"_Automatically run Miro when I log in" = "_Automatically run Miro when I log in";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:77 */
-/* Flag: untranslated */
-"_Downloads" = "_Downloads";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:78 */
-/* Flag: untranslated */
-"_Folders" = "_Folders";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:79 */
-/* Flag: untranslated */
-"_General" = "_General";
-
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:80 */
-/* Flag: untranslated */
-"_KB/s." = "_KB/s.";
+"_Add Folder" = "_Foech Map ta";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:81 */
 /* Flag: untranslated */
-"_Keep at least this much free space on my drive:" = "_Keep at least this much free space on my drive:";
+"_Automatically run Miro when I log in" = "_Automatically run Miro when I log in";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:82 */
 /* Flag: untranslated */
-"_Playback" = "_Playback";
+"_Downloads" = "_Downloads";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:83 */
 /* Flag: untranslated */
-"_Resume playback of videos from the point where they were stopped" = "_Resume playback of videos from the point where they were stopped";
+"_Folders" = "_Folders";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:84 */
-"_Search" = "_Sykje";
+/* Flag: untranslated */
+"_General" = "_General";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:85 */
-"_Search For:" = "_Sykje nei:";
+/* Flag: untranslated */
+"_KB/s." = "_KB/s.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:86 */
-"_URL" = "_URL";
+/* Flag: untranslated */
+"_Keep at least this much free space on my drive:" = "_Keep at least this much free space on my drive:";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:87 */
 /* Flag: untranslated */
-"_Warn me when I attempt to quit with downloads in progress" = "_Warn me when I attempt to quit with downloads in progress";
+"_Playback" = "_Playback";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:88 */
 /* Flag: untranslated */
-"_Watch for new videos in these folders and include them in the Library" = "_Watch for new videos in these folders and include them in the Library";
+"_Resume playback of videos from the point where they were stopped" = "_Resume playback of videos from the point where they were stopped";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:89 */
+"_Search" = "_Sykje";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:90 */
+"_Search For:" = "_Sykje nei:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:91 */
+"_URL" = "_URL";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:92 */
+/* Flag: untranslated */
+"_Warn me when I attempt to quit with downloads in progress" = "_Warn me when I attempt to quit with downloads in progress";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:93 */
+/* Flag: untranslated */
+"_Watch for new videos in these folders and include them in the Library" = "_Watch for new videos in these folders and include them in the Library";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:94 */
+/* Flag: untranslated */
+"goom\noscope\nfftscope\nfftgraph\nnone" = "goom\noscope\nfftscope\nfftgraph\nnone";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:99 */
 /* Flag: untranslated */
 "xine\ngstreamer" = "xine\ngstreamer";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2 */
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName ferzje $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName en de $longAppName logo binne hannelsmerken fan $publisher.";
+/* Flag: untranslated */
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1 */
 "About $longAppName" = "Oer $longAppName";
@@ -1947,13 +2338,13 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:2 */
 "Please enter the username and password given to you by this channel's publisher." = "Jou de brûkersnamme en it wachtwurd dat jo krigen hawwe fan de publisearder.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57 */
 "(WARNING: Changes won't go into effect until you restart $longAppName.)" = "(WARSKOGING: Wizigings binne aktyf nei dat jo $longAppName op 'e nij start hawwe.)";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:36 */
 "Add Folder..." = "Foech Map ta...";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62 */
 /* Flag: untranslated */
 "Automatically Forward Ports" = "Automatically Forward Ports";
 
@@ -1961,7 +2352,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Automatically run $longAppName when I login." = "Automatically run $longAppName when I login.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48 */
 "By default, videos expire after" = "Standert, ferrinne fideos nei";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
@@ -1974,44 +2365,52 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
 "Every 30 minutes" = "Elke 30 minuten";
 
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
+/* Flag: untranslated */
+"Every day" = "Every day";
+
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
 "Every hour" = "Elk oer";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
 /* Flag: untranslated */
 "Folder" = "Folder";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45 */
 /* Flag: untranslated */
 "GB" = "GB";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:63 */
 /* Flag: untranslated */
 "Ignore Unencrypted Connections" = "Ignore Unencrypted Connections";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60 */
 /* Flag: untranslated */
 "KB/s" = "KB/s";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59 */
 /* Flag: untranslated */
 "Limit downstream bandwith to:" = "Limit downstream bandwith to:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16 */
 "Manually" = "Hânmjitich";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41 */
 /* Flag: untranslated */
 "Maximum number of channel auto-downloads at a time:" = "Maximum number of channel auto-downloads at a time:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40 */
 /* Flag: untranslated */
 "Maximum number of manual downloads at a time:" = "Maximum number of manual downloads at a time:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
+/* Flag: untranslated */
+"Note: You can set the frequency channels are checked from the channel's settings pane." = "Note: You can set the frequency channels are checked from the channel's settings pane.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1 */
 "Options" = "Opsjes";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
 /* Flag: untranslated */
 "Play one video, then stop." = "Play one video, then stop.";
 
@@ -2019,29 +2418,29 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* Flag: untranslated */
 "Quit Miro completely." = "Quit Miro completely.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
 /* Flag: untranslated */
 "Remember where I stopped watching a video and continue playing from that point." = "Remember where I stopped watching a video and continue playing from that point.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
 /* Flag: untranslated */
 "Show as a Channel" = "Show as a Channel";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30 */
 "Store downloaded videos in this folder:" = "Bewarje ynladeen fideos yn dizze map:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58 */
 /* Flag: untranslated */
 "To avoid internet slowdowns, limit upstream bandwith to:" = "To avoid internet slowdowns, limit upstream bandwith to:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
 "WARNING: This setting will not go into effect until you restart $longAppName." = "(WARSKOGING: Dizze ynstelling is aktyf nei dat jo $longAppName op 'e nij start hawwe.)";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
 /* Flag: untranslated */
 "Warn me when I attempt to quit with downloads in progress." = "Warn me when I attempt to quit with downloads in progress.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
 /* Flag: untranslated */
 "Watch for new videos in these folders and include them in my Library." = "Watch for new videos in these folders and include them in my Library.";
 

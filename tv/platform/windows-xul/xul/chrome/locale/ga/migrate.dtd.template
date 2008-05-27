@@ -1,0 +1,4 @@
+<!ENTITY migrate.title "Ascain na scannáin atá ann cheana?">
+<!ENTITY migrate.accept "Ascain">
+<!ENTITY migrate.cancel "Ná Ascain">
+<!ENTITY migrate.description "Roghnaigh tú fillteán nua le scannáin a íosluchtú ann. Ar chóir do $shortAppName do chuid íosluchtaithe atá ann cheana a bhogadh ansin?(Ní bogfar scannáin atá á íosluchtú faoi láthair go dtí go bhfuil siad críochnaithe)">

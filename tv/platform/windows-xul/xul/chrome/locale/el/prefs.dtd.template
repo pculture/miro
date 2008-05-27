@@ -12,7 +12,9 @@
 <!ENTITY prefs.channels.check "Check channels for new content">
 <!ENTITY prefs.channels.check.thirty "Κάθε 30 λεπτά">
 <!ENTITY prefs.channels.check.sixty "Κάθε ώρα">
+<!ENTITY prefs.channels.check.daily "Every day">
 <!ENTITY prefs.channels.check.manually "Χειροκίνητα">
+<!ENTITY prefs.channels.check.note "Note: You can set the frequency channels are checked from the channel's settings pane.">
 
 <!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
 <!ENTITY prefs.channels.autodownloaddefault.all "All">
@@ -50,6 +52,16 @@
 <!ENTITY prefs.videos.expire.ten "10 μέρες">
 <!ENTITY prefs.videos.expire.thirty "1 μήνας">
 <!ENTITY prefs.videos.expire.never "Ποτέ">
+
+<!ENTITY prefs.videos.maxolditems "By default, remember">
+<!ENTITY prefs.videos.maxolditems2 "items in addition to the current contents">
+<!ENTITY prefs.videos.maxolditems.zero "0">
+<!ENTITY prefs.videos.maxolditems.twenty "20">
+<!ENTITY prefs.videos.maxolditems.fifty "50">
+<!ENTITY prefs.videos.maxolditems.hundred "100">
+<!ENTITY prefs.videos.maxolditems.thousand "1000">
+
+<!ENTITY prefs.videos.cleanallolditems "Clean old items in all feeds">
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">

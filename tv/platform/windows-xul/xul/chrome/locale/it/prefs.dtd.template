@@ -12,12 +12,14 @@
 <!ENTITY prefs.channels.check "Controlla i canali per trovare i nuovi contenuti">
 <!ENTITY prefs.channels.check.thirty "Ogni 30 minuti">
 <!ENTITY prefs.channels.check.sixty "Ogni ora">
+<!ENTITY prefs.channels.check.daily "Ogni giorno">
 <!ENTITY prefs.channels.check.manually "Manualmente">
+<!ENTITY prefs.channels.check.note "Note: You can set the frequency channels are checked from the channel's settings pane.">
 
 <!ENTITY prefs.channels.autodownloaddefault "Scarica automaticamente le impostazioni di default per i nuovi canali">
 <!ENTITY prefs.channels.autodownloaddefault.all "All">
 <!ENTITY prefs.channels.autodownloaddefault.new "Nuovo">
-<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+<!ENTITY prefs.channels.autodownloaddefault.off "Spento">
 
 <!ENTITY prefs.playback "Riproduzione">
 <!ENTITY prefs.playback.remember.pos "Ricordati a che punto ho smesso di guardare un video e continua la riproduzione da quel punto.">
@@ -32,14 +34,14 @@
 <!ENTITY prefs.folder.others.location "Cartella">
 <!ENTITY prefs.folder.others.shown "Mostra come un Canale">
 <!ENTITY prefs.folder.others.add "Aggiungi Cartella...">
-<!ENTITY prefs.folder.others.remove "_Rimuovi">
+<!ENTITY prefs.folder.others.remove "Rimuovi">
 
 <!ENTITY prefs.downloads "File Scaricati" >
 <!ENTITY prefs.downloads.max "Maximum number of manual downloads at a time:">
 <!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "Spazio su disco">
-<!ENTITY prefs.disk.space.min.part1 "tieni almeno questo spazio libero sul mio disco" >
+<!ENTITY prefs.disk.space.min.part1 "Tieni almeno questo spazio libero sul mio disco" >
 <!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "ATTENZIONE: questa impostazione sarà attiva al prossimo riavvio di $longAppName.">
 
@@ -51,12 +53,22 @@
 <!ENTITY prefs.videos.expire.thirty "1 mese">
 <!ENTITY prefs.videos.expire.never "Mai">
 
+<!ENTITY prefs.videos.maxolditems "By default, remember">
+<!ENTITY prefs.videos.maxolditems2 "items in addition to the current contents">
+<!ENTITY prefs.videos.maxolditems.zero "0">
+<!ENTITY prefs.videos.maxolditems.twenty "20">
+<!ENTITY prefs.videos.maxolditems.fifty "50">
+<!ENTITY prefs.videos.maxolditems.hundred "100">
+<!ENTITY prefs.videos.maxolditems.thousand "1000">
+
+<!ENTITY prefs.videos.cleanallolditems "Clean old items in all feeds">
+
 <!ENTITY prefs.torrent "BItTorrent">
 <!ENTITY prefs.torrent.restart.warning "(ATTENZIONE: le modifiche non avranno effetto finchè $longAppName non sarà riavviato)">
-<!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
+<!ENTITY prefs.torrent.limit.upstream "Per evitare rallentamenti internet, limita la larghezza di banda del flusso in uscita a:">
 <!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
-<!ENTITY prefs.torrent.use_ports "usa queste porte:">
+<!ENTITY prefs.torrent.use_ports "Usa queste porte:">
 <!ENTITY prefs.torrent.use_upnp "Reindirizza automaticamente le Porte">
 <!ENTITY prefs.torrent.require_encryption "Ignora Connessioni Non Sicure">
 <!ENTITY prefs.torrent.uploadratio "Arresta il caricamento dei torrent quando questa percentuale viene raggiunta:">

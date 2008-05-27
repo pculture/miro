@@ -1,4 +1,4 @@
-<!ENTITY prefs.title "Options">
+<!ENTITY prefs.title "Opțiuni">
 
 <!ENTITY prefs.run.on.startup "Automatically run $longAppName when I login.">
 <!ENTITY prefs.close_to_tray_start "When I click the red close button:">
@@ -6,30 +6,32 @@
 <!ENTITY prefs.no_close_to_tray "Quit Miro completely.">
 
 <!ENTITY prefs.general "Generale">
-<!ENTITY prefs.general.warn_on_quit "Warn me when I attempt to quit with downloads in progress.">
+<!ENTITY prefs.general.warn_on_quit "Atenţionează-mă când încerc să închid programul şi sunt încă downloaduri neterminate.">
 
 <!ENTITY prefs.channels "Canale">
 <!ENTITY prefs.channels.check "Check channels for new content">
 <!ENTITY prefs.channels.check.thirty "Every 30 minutes">
 <!ENTITY prefs.channels.check.sixty "Every hour">
+<!ENTITY prefs.channels.check.daily "Every day">
 <!ENTITY prefs.channels.check.manually "Manual">
+<!ENTITY prefs.channels.check.note "Note: You can set the frequency channels are checked from the channel's settings pane.">
 
 <!ENTITY prefs.channels.autodownloaddefault "Auto download default setting for new channels">
-<!ENTITY prefs.channels.autodownloaddefault.all "All">
+<!ENTITY prefs.channels.autodownloaddefault.all "Toate">
 <!ENTITY prefs.channels.autodownloaddefault.new "Nou">
-<!ENTITY prefs.channels.autodownloaddefault.off "Off">
+<!ENTITY prefs.channels.autodownloaddefault.off "Oprit">
 
 <!ENTITY prefs.playback "Redare">
-<!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
+<!ENTITY prefs.playback.remember.pos "Ţine minte unde mă opresc din vizionare şi reporneşte clipul din acel moment.">
 <!ENTITY prefs.playback.auto.next.video "Redă videourile unul după altul.">
 <!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
 
 <!ENTITY prefs.folder.movies "Dosare">
-<!ENTITY prefs.folder.downloads "Store downloaded videos in this folder:">
+<!ENTITY prefs.folder.downloads "Salvează fişierele video downloadate în directorul:">
 <!ENTITY prefs.folder.change "Modifică:">
 
-<!ENTITY prefs.folder.others.caption "Watch for new videos in these folders and include them in my Library.">
-<!ENTITY prefs.folder.others.location "Folder">
+<!ENTITY prefs.folder.others.caption "Urmăreşte dacă apar noi fişiere video în aceste directoare şi include-le în Librăria mea.">
+<!ENTITY prefs.folder.others.location "Director">
 <!ENTITY prefs.folder.others.shown "Show as a Channel">
 <!ENTITY prefs.folder.others.add "Adaugă dosar...">
 <!ENTITY prefs.folder.others.remove "Înlătură">
@@ -39,9 +41,9 @@
 <!ENTITY prefs.autodownloads.max "Maximum number of channel auto-downloads at a time:">
 
 <!ENTITY prefs.disk.space "Spaţiu pe disk">
-<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part1 "Menţine cel puţin această cantitate de spaţiu disponibile pe drive:" >
 <!ENTITY prefs.disk.space.min.part2 "GB">
-<!ENTITY prefs.disk.space.warning.restart "WARNING: This setting will not go into effect until you restart $longAppName.">
+<!ENTITY prefs.disk.space.warning.restart "ATENŢIE: Această setare va avea efect după ce vei restarta $longAppName.">
 
 <!ENTITY prefs.videos.expire "În mod standard secvenţele video expiră după">
 <!ENTITY prefs.videos.expire.one "1 zi">
@@ -51,12 +53,22 @@
 <!ENTITY prefs.videos.expire.thirty "1 lună">
 <!ENTITY prefs.videos.expire.never "Niciodată">
 
-<!ENTITY prefs.torrent "BitTorrent">
+<!ENTITY prefs.videos.maxolditems "By default, remember">
+<!ENTITY prefs.videos.maxolditems2 "items in addition to the current contents">
+<!ENTITY prefs.videos.maxolditems.zero "0">
+<!ENTITY prefs.videos.maxolditems.twenty "20">
+<!ENTITY prefs.videos.maxolditems.fifty "50">
+<!ENTITY prefs.videos.maxolditems.hundred "100">
+<!ENTITY prefs.videos.maxolditems.thousand "1000">
+
+<!ENTITY prefs.videos.cleanallolditems "Clean old items in all feeds">
+
+<!ENTITY prefs.torrent "BitTorent">
 <!ENTITY prefs.torrent.restart.warning "(WARNING: Changes won't go into effect until you restart $longAppName.)">
 <!ENTITY prefs.torrent.limit.upstream "To avoid internet slowdowns, limit upstream bandwith to:">
-<!ENTITY prefs.torrent.limit.downstream "Limit downstream bandwith to:">
+<!ENTITY prefs.torrent.limit.downstream "Limitează viteza de download la:">
 <!ENTITY prefs.torrent.limit.kbps "KB/s">
-<!ENTITY prefs.torrent.use_ports "Use these ports:">
+<!ENTITY prefs.torrent.use_ports "Utilizează aceste port-uri:">
 <!ENTITY prefs.torrent.use_upnp "Automatically Forward Ports">
 <!ENTITY prefs.torrent.require_encryption "Ignore Unencrypted Connections">
 <!ENTITY prefs.torrent.uploadratio "Stop torrent uploads when this ratio is reached:">

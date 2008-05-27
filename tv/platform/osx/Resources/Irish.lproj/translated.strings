@@ -1,0 +1,2430 @@
+﻿/* SOME DESCRIPTIVE TITLE.
+Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+This file is distributed under the same license as the PACKAGE package.
+FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+ */
+/* Flag: untranslated */
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-05-27 12:53-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+
+/* File: ../../portable/dialogs.py:85 */
+"Cancel" = "Cealaigh";
+
+"OK" = "Tá go maith";
+
+/* File: ../../portable/dialogs.py:84 */
+"Ok" = "Tá go maith";
+
+"$log" = "$taifead";
+
+"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">Tá ár lorgaire fabhtaí lonnaithe ag <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Inis dúinn cad a bhí ar siúl agat, greamaigh an teachtaireacht taifid ón bhosca thuas isteach, agus freagair roinnt ceisteanna, agus tosóimid ag obair air láithreach.</font>";
+
+"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "Má tá bomaite agat, an mbeadh tú toilteanach clis-thuairisc a fhógairt dár córas fabht rianú? Tá tuairisc de dhíth uainn ar cad a bhí ar siúl agat ag an t-am a tharla sé -- chomh beacht is ar féidir --, ar a laghad, móide an raiméis sa bhosca thíos:";
+
+"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "Mí-ádh! Tharla cliseadh inmheánach i $longAppName $when. Is dona linn seo agus molaimid duit scoir agus atosaigh $shortAppName. Tabharfaidh sé sin le fios dó, agus laghdóidh sé na failleanna go gcaillfidh tú do chuid sainroghanna nó síntiúis bealaí.";
+
+"The fall of $shortAppName??" = "Titim $shortAppName??";
+
+"About Miro" = "Maidir le Miro";
+
+"Add Channel..." = "Cuir Bealach Leis...";
+
+"Add Guide..." = "Cuir An t-Eolaí Leis...";
+
+"Bring All to Front" = "Tabhair Uile Chuig an Tosach";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:80 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11 */
+"Channels" = "Bealaí";
+
+"Check for New Version" = "Téigh Ar Thóir Leagan Nua";
+
+"Clear Menu" = "Glan an Roghchlár";
+
+"Close Window" = "Dún an Fhuinneog";
+
+"Copy" = "Macasamhlaigh";
+
+"Copy Channel URL" = "Macasamhlaigh URL an Bhealaigh";
+
+"Copy Video URL" = "Macasamhlaigh URL an Fhíseáin";
+
+"Cut" = "Gearr";
+
+/* File: ../../portable/frontends/html/compiled_templates/multi_channel.py:78 */
+/* File: ../../portable/dialogs.py:104 */
+"Delete" = "Scrios";
+
+"Donate" = "Bronn Airgead";
+
+"Download Video..." = "Íosluchtaigh an Físeán...";
+
+"Edit" = "Eagar";
+
+"Export Channels (OPML)..." = "Bealaí Amach (OPML)...";
+
+"File" = "Comhad";
+
+"Full Screen" = "Lánscáileán";
+
+"Help" = "Cabhair";
+
+"Hide Miro" = "Folaigh Miro";
+
+"Hide Others" = "Folaigh Rudaí Eile";
+
+"Import Channels (OPML)..." = "Bealaí Isteach (OPML)...";
+
+"Main Window" = "Príomhfhuinneog";
+
+"MainMenu" = "PríomhRoghchlár";
+
+"Minimize" = "Íoslaghdaigh";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:54 */
+"Miro" = "Miro";
+
+"Miro Help" = "Cabhair Miro";
+
+"New Channel Folder..." = "Fillteán Bealach Nua...";
+
+"New Playlist Folder..." = "Fillteán Seinmréim Nua...";
+
+"New Playlist..." = "Seinmréim Nua...";
+
+"New Search Channel..." = "Cuardaigh Bealach Nua...";
+
+"Next Video" = "An Físeán Ar Aghaidh";
+
+"Open Recent" = "Oscail Rudaí Deireanacha";
+
+"Open..." = "Oscail...";
+
+"Paste" = "Greamaigh";
+
+/* Flag: untranslated */
+"Planet Miro" = "Planet Miro";
+
+/* File: ../../platform/osx/plat/frontends/html/Application.py:244 */
+"Play Video" = "Seinn an Físeán";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:84 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
+"Playback" = "Athsheinm";
+
+"Playlists" = "Seinmréimeanna";
+
+"Preferences..." = "Sainroghanna...";
+
+"Previous Video" = "An Físeán Roimhe";
+
+"Quit Miro" = "Scoir ó Mhiro";
+
+"Remove..." = "Bain...";
+
+"Rename..." = "Athainmnigh...";
+
+"Report a bug" = "Fógraigh fabht";
+
+"Save Video As..." = "Cuir an Físeán i dtaisce Mar...";
+
+"Select All" = "Roghnaigh Uile";
+
+"Send This Channel to a Friend" = "Seol An Bealach Seo Chuig Cara";
+
+"Services" = "Seirbhísí";
+
+"Show All" = "Taispeáin Uile";
+
+"Stop Video" = "Stad an Físeán";
+
+/* Flag: untranslated */
+"Translate" = "Translate";
+
+"Update All Channels" = "Nuashonraigh Gach Bealach";
+
+"Update Channel" = "Nuashonraigh an Bealach";
+
+"Window" = "Fuinneog";
+
+"Zoom" = "Géarardú";
+
+"%channel feed%" = "%fothaire an bhealaigh%";
+
+"%channel title%" = "%teideal an bhealaigh%";
+
+"-00:00:00" = "-00:00:00";
+
+"00:00:00" = "00:00:00";
+
+/* Flag: untranslated */
+"0:00:00" = "0:00:00";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:88 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:364 */
+/* Flag: untranslated */
+"Email to a friend" = "Email to a friend";
+
+"FullScreen Controls" = "Rialaithe Lánscáileán";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:48 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:324 */
+/* File: ../../portable/dialogs.py:103 */
+"Keep" = "Coimeád";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:116 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:392 */
+/* Flag: untranslated */
+"Post to Reddit" = "Post to Reddit";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:94 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:370 */
+/* Flag: untranslated */
+"Post to Video Bomb" = "Post to Video Bomb";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:102 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:378 */
+/* Flag: untranslated */
+"Post to del.icio.us" = "Post to del.icio.us";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:108 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:384 */
+/* Flag: untranslated */
+"Post to digg" = "Post to digg";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:73 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:349 */
+/* Flag: untranslated */
+"Share" = "Share";
+
+/* File: ../../portable/frontends/html/compiled_templates/search.py:170 */
+/* File: ../../portable/tabs.py:56 */
+"Video Search" = "Cuardach Físeáin";
+
+"VideoWindow" = "Fuinneog na bhFíseán";
+
+"Location http://foo.bar.com/baz requires a username and password for \"text supplied by server\". (Do not localize -- test data)\n" = "Tá ainm úsáideora agus focal faire de dhíth ó http://foo.bar.com/baz do \"text supplied by server\".\n";
+
+"Password:\n" = "Focal Faire:\n";
+
+"Username and password required" = "Tá ainm úsáideora agus focal faire de dhíth";
+
+"Username:\n\n" = "Ainm úsáideora:\n\n";
+
+"(You must restart Miro for some of these changes to take effect)" = "(Caithfear Miro a atosú ionas go rachaidh roinnt dos na hathruithe seo i bhfeidhm)";
+
+"(You must restart Miro for this change to take effect)\n" = "(Caithfear Miro a atosú ionas go rachaidh an t-athrú seo i bhfeidhm)\n";
+
+"(movies directory path goes here)" = "(téann conaire comhadlann na scannán anseo)";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
+"-" = "-";
+
+/* File: ../../portable/item.py:551 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49 */
+"1 day" = "Lá amháin";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53 */
+"1 month" = "Mí amháin";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
+"10 days" = "10 lá";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50 */
+"3 days" = "3 lá";
+
+"3 hours" = "3 huaire";
+
+"4" = "4";
+
+"5" = "5";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51 */
+"6 days" = "6 lá";
+
+"99999" = "99999";
+
+"Add..." = "Cuir Leis...";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
+"All" = "Uile";
+
+"Auto download default setting for new channels:" = "Socrú réamhshocraithe íosluchtú uathoibríoch le haghaidh bealaí nua:";
+
+"Automatically forward ports" = "Seol ar aghaidh na poirt go huathoibríoch";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56 */
+"BitTorrent" = "BitTorrent";
+
+"Box" = "Bosca";
+
+"By default, videos expire after:" = "Mar réamhshocrú, téann físeáin as feidhm tar éis:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
+"Change..." = "Athraigh...";
+
+"Check channels for new content:" = "Scrúdaigh na bealaí le haghaidh ábhar nua...";
+
+"Don't auto-download more than this many videos per channel at once:" = "Ná íosluchtaigh go huathoibríoch níos mó ná an mhéid seo físeáin an bealach ag aon uair amháin:";
+
+"Don't download more than this many videos at once:" = "Ná íosluchtaigh níos mó ná an mhéid seo físeáin ag aon uair amháin:";
+
+"Folder location" = "Suíomh an fhillteán";
+
+"GB\n" = "GB\n";
+
+"Ignore unencrypted connections" = "Ná bac le naisc neamhchriptithe";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
+"KB/s." = "KB/s.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
+"Keep at least this much free space on my drive:" = "Coinnigh ar a laghad an mhéid seo slí ar mo thiomántán:";
+
+"Limit downstream to" = "Teorannaigh an sruth síos go";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
+"Never" = "Riamh";
+
+/* File: ../../portable/tabs.py:55 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21 */
+"New" = "Nua";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22 */
+"Off" = "As";
+
+"OtherViews" = "AmhaircEile";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:26 */
+"Play videos one after another." = "Seinn na físeáin i ndiaidh an chinn eile.";
+
+"Remember video position." = "Cuimhnigh ar suíomh an fhíseáin.";
+
+/* File: ../../portable/frontends/html/contextmenu.py:100 */
+/* File: ../../portable/frontends/html/contextmenu.py:105 */
+/* File: ../../portable/frontends/html/contextmenu.py:178 */
+/* File: ../../portable/frontends/html/contextmenu.py:184 */
+/* File: ../../portable/frontends/html/contextmenu.py:190 */
+/* File: ../../portable/frontends/html/contextmenu.py:199 */
+/* File: ../../portable/frontends/html/contextmenu.py:232 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
+"Remove" = "Bain";
+
+"Run Miro at startup" = "Rith Miro ag an tosú";
+
+/* File: ../../platform/gtk-x11/plat/frontends/html/callbackhandler.py:595 */
+"Show as Channel" = "Taispeáin mar Bhealach";
+
+"Stop after each video." = "Stad tar éis gach físeán.";
+
+"Stop uploads when this ratio is reached:" = "Stad na h-uasluchtaithe nuair a sroichtear an cóimheas seo:";
+
+"Store downloads in this folder:" = "Cuir íosluchtaithe i dtaisce san fhillteán seo:";
+
+"To avoid internet slowdowns, limit upstream to" = "Chun moilleanna idirlín a sheachaint, teorannaigh sruth suas go";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61 */
+"Use these ports:" = "Bain feidhm as na poirt seo:";
+
+/* File: ../../portable/frontends/html/main.py:326 */
+"Warn me when I attempt to quit with downloads in progress" = "Tabhair foráileamh dom nuair a dhéanaim iarracht scoir fad is atá rudaí ag íosluchtú";
+
+"Watch for new videos in these folders and include them in the Library:" = "Fair amach do físeáin nua sna fillteáin seo agus chur sa Leabharlann iad:";
+
+"every 30 minutes" = "gach 30 nóiméid";
+
+"every hour" = "gach uair a chlog";
+
+"manually" = "de láimh";
+
+"$label$" = "%lipéad%";
+
+"$title$" = "$teideal$";
+
+"Channel" = "Bealach";
+
+/* File: ../../portable/dialogs.py:99 */
+"Create" = "Cruthaigh";
+
+"In this:" = "Sa:";
+
+"Item1" = "Mír1";
+
+"Search Engine" = "Inneall Cuardaigh";
+
+"Search for:" = "Déan cuardach ar:";
+
+"URL" = "URL";
+
+/* File: ../../platform/gtk-x11/plat/frontends/html/startup.py:56 */
+/* File: ../../platform/windows-xul/plat/frontends/html/startup.py:59 */
+/* Flag: python-format */
+"(parsed %d files - found %d videos)" = "(%d comhaid miondealaithe - aimsíodh %d físeáin)";
+
+"Back" = "Siar";
+
+"Browse" = "Siortaigh";
+
+/* File: ../../platform/osx/plat/frontends/html/StartupPanel.py:121 */
+"Next" = "Ar Aghaidh";
+
+/* File: ../../portable/dialogs.py:87 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53 */
+"No" = "Ná Déan";
+
+"Only search my Movies folder." = "Cuardaigh i mo fhillteáin Scannáin amháin.";
+
+"Search my entire Home folder." = "Déan cuardach i mo fhillteán Baile ina iomlán.";
+
+"Search this folder:" = "Cuardaigh san fhillteán seo:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:37 */
+"Searching for Videos" = "Ag Cuardach le haghaidh Físeáin";
+
+"The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?" = "Is féidir leis an Seinnteoir Miro na físeáin uile ar do ríomhaire a aimsiú chun cabhrú leat do chnuasach a eagrú.\n\n\nAr mhaith leat go rachaidh Miro ar thóir comhaid físeáin ar do ríomhaire?";
+
+"The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question." = "Cabhróidh na chéad scáileáin eile leat an Seinnteoir Miro a shocrú ar an dóigh is fearr. Seo é an chéad ceist.";
+
+"We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "Molaimid duit lig do Seinnteoir Miro tosú nuair a thosaíonn do ríomhaire. Ar an dóigh seo, is féidir le físeáin nár chríochnaigh ag íosluchtú críochnú agus beidh físeáin nua ar do bhealaí réidh nuair a theastaíonn uait breathnú orthu.\n\nAr mhaith leat Miro a rith nuair a thosaíonn do ríomhaire?";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:77 */
+"Welcome to Internet TV!" = "Fáilte go Cianamharcaíocht ar an t-Idirlíon!";
+
+"Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "Fáilte go Cianamharcaíocht ar an t-Idirlíon! Is féidir a lán a dhéanamh le Seinnteoir Miro: íosluchtaigh físeán go huathoibríoch ó na bealaí is fearr leat, féach ar físeáin nua i ndiaidh an chinn eile, torrentí a íosluchtú, mol físeáin do do chuid cairde, agus a lán eile.\n\n";
+
+/* File: ../../portable/dialogs.py:86 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52 */
+"Yes" = "Ba Mhaith";
+
+"%message%\n%message%" = "%teachtaireacht%\n%teachtaireacht%";
+
+/* File: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:211 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3 */
+"Username:" = "Ainm Úsáideora:";
+
+/* File: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:222 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4 */
+"Password:" = "Focal Faire:";
+
+/* File: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:416 */
+"Unknown Runtime Error" = "Tharla Botún Anaithnid Ag Rith";
+
+/* File: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:417 */
+/* Flag: python-format */
+"An unknown error has occurred %s." = "Tharla botún anaithnid %s.";
+
+/* File: ../../platform/gtk-x11/plat/frontends/html/callbackhandler.py:333 */
+"New Channel _Guide..." = "_Eolaí Bealaí Nua...";
+
+/* File: ../../platform/gtk-x11/plat/frontends/html/callbackhandler.py:586 */
+"Folder Location" = "Suíomh an Fhillteán";
+
+/* File: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:53 */
+/* File: ../../portable/frontends/html/compiled_templates/unittest/simpleunicode.py:36 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:327 */
+"Settings" = "Socruithe";
+
+/* File: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:56 */
+"Hide" = "Folaigh";
+
+/* File: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:58 */
+"Show" = "Taispeáin";
+
+/* File: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:59 */
+/* File: ../../portable/dialogs.py:88 */
+/* File: ../../portable/menubar.py:274 */
+"Quit" = "Scoir";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:80 */
+/* Flag: python-format */
+"Error importing modules:\n%s" = "Tharla botún ag allmhairiú módúil:\n%s";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:255 */
+"Loading window" = "Ag luchtú an fhuinneog";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:256 */
+"onStartup called twice" = "Ghlaodh onStartup dhá uair";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:748 */
+"Spacebar" = "Spásbharra";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:896 */
+"Close to tray?" = "Dún chuig an trádaire?";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:897 */
+"When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "Nuair a bhrúnn tú an cnaipe dún dearg, ar mhaith leat go ndúnfaidh Miro go dtí tráidire an chórais nó scoir? Is féidir an socrú seo a athrú níos déanaí sna Roghanna.";
+
+/* File: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:83 */
+"Update Available" = "Tá Nuashonrú Ar Fáil";
+
+/* File: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:84 */
+/* Flag: python-format */
+"A new version of %s is available for download." = "Tá leagan nua de %s ar fáil le haghaidh íosluchtú.";
+
+/* File: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:248 */
+"Error Bombing Item" = "Tharla Botún Ag Pléascadh Mír";
+
+/* File: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:250 */
+"Error Recommending Item" = "Tharla Botún Ag Moladh Mír";
+
+/* File: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:252 */
+"Error Opening Website" = "Tharla botún ag oscailt an Láithreán Gréasáin";
+
+/* File: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:256 */
+/* Flag: python-format */
+"There was an error opening %s.  Please try again in a few seconds" = "Tharla botún ag oscailt %s. Atriail arís i roinnt soicindí le do thoil.";
+
+/* File: ../../platform/windows-xul/plat/flash.py:82 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"Restart %s?" = "Restart %s?";
+
+/* File: ../../platform/windows-xul/plat/flash.py:83 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"To enable the Flash plugin, %s needs to be restarted.  Click Yes to shut %s down, or No to do it later." = "To enable the Flash plugin, %s needs to be restarted.  Click Yes to shut %s down, or No to do it later.";
+
+/* File: ../../platform/windows-xul/plat/flash.py:109 */
+/* Flag: untranslated */
+"Install Flash?" = "Install Flash?";
+
+/* File: ../../platform/windows-xul/plat/flash.py:110 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"For the best %s experience, you should install Adobe Flash.  Do this now?" = "For the best %s experience, you should install Adobe Flash.  Do this now?";
+
+/* File: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:55 */
+"Download Completed" = "Íosluchtú Críochnaithe";
+
+/* File: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:56 */
+/* Flag: python-format */
+"Download of video '%s' is finished." = "Tá íosluchtú an físeán '%s' críochnaithe.";
+
+/* File: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:65 */
+"Download Failed" = "Theip ar an t-Íosluchtú";
+
+/* File: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:66 */
+/* Flag: python-format */
+"Download of video '%s' has failed." = "Theip ar íosluchtú an físeán '%s'.";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:79 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8 */
+"General" = "Coiteann";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:81 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
+"Downloads" = "Íosluchtaithe";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:82 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
+"Folders" = "Fillteáin";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:83 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
+"Disk Space" = "Slí ar an Diosc";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:251 */
+"Movies Directory" = "Comhadlann na Scannáin";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:252 */
+/* Flag: python-format */
+"Select a Directory to store %s downloads in." = "Roghnaigh Comhadlann chun %s íosluchtaithe a chur i dtaisce ann.";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:253 */
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:362 */
+"Select" = "Roghnaigh";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:262 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:53 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
+"Migrate existing movies?" = "Ascain na scannáin atá ann cheana?";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:263 */
+/* Flag: python-format */
+"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "Roghnaigh tú fillteán nua le haghaidh scannáin a íosluchtú ann. Ar chóir do %s do chuid íosluchtaithe cheana a bhogadh ann? (Ní bogfar scannáin atá á íosluchtú faoi láthair go dtí go mbeidh siad críochnaithe).";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:360 */
+"View this Directory in the Library" = "Féach ar an Chomhadlann seo sa Leabharlann";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:361 */
+"Select a Directory to view in the Library." = "Roghnaigh Comhadlann le breathnú uirthi sa Leabharlann.";
+
+/* File: ../../platform/osx/plat/frontends/html/MainFrame.py:271 */
+"Subscribe to Channel" = "Liostáil leis an Bealach";
+
+/* File: ../../platform/osx/plat/frontends/html/MainFrame.py:272 */
+"Enter the URL of the channel you would like to subscribe to." = "Cuir isteach URL an bhealaigh ar mhaith leat liostáil le.";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:33 */
+"_Remove..." = "_Bain...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:34 */
+"_Remove Playlist..." = "_Bain an Seinmréim...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:35 */
+"_Remove Playlists..." = "_Bain na Seinmréimeanna...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:36 */
+"_Remove Playlist Folder..." = "_Bain Fillteán na Seinmréim...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:37 */
+"_Remove Playlist Folders..." = "_Bain Fillteáin na Seinmréim...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:38 */
+/* File: ../../portable/menubar.py:192 */
+"_Remove Channel..." = "_Bain an Bealach...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:39 */
+/* File: ../../portable/menubar.py:193 */
+"_Remove Channels..." = "_Bain na Bealaigh...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:40 */
+/* File: ../../portable/menubar.py:195 */
+"_Remove Channel Folder..." = "_Bain Fillteán an Bhealaigh...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:41 */
+/* File: ../../portable/menubar.py:194 */
+"_Remove Channel Folders..." = "_Bain Fillteáin na mBealaí...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:42 */
+"_Remove Miro Guide..." = "_Bain Eolaí Miro...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:43 */
+"_Remove Miro Guides..." = "_Bain Eolaithe Miro...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:44 */
+"_Remove Video..." = "_Bain Físeán...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:45 */
+"_Remove Videos..." = "_Bain Físeáin...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:46 */
+"Re_name..." = "Athai_nmnigh...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:47 */
+"Re_name Playlist..." = "Athai_nmnigh an Seinmréim...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:48 */
+"Re_name Playlist Folder..." = "Athai_nmnigh Fillteán na Seinmréime...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:49 */
+/* File: ../../portable/menubar.py:191 */
+"Re_name Channel..." = "Athai_nmnigh an Bealach...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:50 */
+"Re_name Channel Folder..." = "Athai_nmnigh Fillteán an Bhealaigh...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:51 */
+"Re_name Miro Guide..." = "Athai_nmnigh Eolaí Miro...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:52 */
+/* File: ../../portable/menubar.py:197 */
+"_Update Channel..." = "_Nuashonraigh an Bealach...";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:53 */
+/* File: ../../portable/menubar.py:198 */
+"_Update Channels..." = "_Nuashonraigh na Bealaí...";
+
+/* File: ../../platform/osx/plat/frontends/html/StartupPanel.py:93 */
+"Finish" = "Críochnaigh";
+
+/* File: ../../platform/osx/plat/frontends/html/StartupPanel.py:163 */
+"Search!" = "Cuardaigh!";
+
+/* File: ../../platform/osx/plat/frontends/html/Application.py:241 */
+"Pause Video" = "Moilligh an Físeán";
+
+/* File: ../../platform/osx/plat/frontends/html/Application.py:250 */
+"Unsupported version of Quicktime" = "Leagan de Quicktime gan tacaíocht";
+
+/* File: ../../platform/osx/plat/frontends/html/Application.py:251 */
+/* Flag: python-format */
+"To run %s you need the most recent version of Quicktime, which is a free update." = "Chun %s a rith ní mór duit an leagan is déanaí de Quicktime a bheith agat, atá mar nuashonrú saor in aisce.";
+
+/* File: ../../platform/osx/plat/renderers/QuicktimeRenderer.py:319 */
+"Audio" = "Fuaim";
+
+/* File: ../../portable/singleclick.py:99 */
+"Download already exists" = "Tá an t-íosluchtú ann cheana";
+
+/* File: ../../portable/singleclick.py:100 */
+"That URL is already an external download." = "Is íosluchtú seachtrach é an URL cheana.";
+
+/* File: ../../portable/singleclick.py:106 */
+"Miro will begin downloading it now." = "Tosóidh Miro ag íosluchtú anois é.";
+
+/* File: ../../portable/singleclick.py:108 */
+"It is downloading now." = "Tá sé á íosluchú anois.";
+
+/* File: ../../portable/singleclick.py:110 */
+"It has already been downloaded." = "Íosluchtaíodh cheana é.";
+
+/* File: ../../portable/singleclick.py:142 */
+"Download Error" = "Botún Íosluchtaithe";
+
+/* File: ../../portable/singleclick.py:143 */
+/* Flag: python-format */
+"Miro is not able to download a file at this URL:\n\nURL: %s" = "Níorbh fhéidir le Miro comhad a íosluchtú ag an URL seo:\n\nURL: %s";
+
+/* File: ../../portable/singleclick.py:191 */
+"File Download" = "Íosluchtú an Chomhaid";
+
+/* File: ../../portable/singleclick.py:192 */
+/* Flag: python-format */
+"This file at %s does not appear to be audio, video, or an RSS feed." = "Tá an dealramh ar nach fuaim, físeán, nó fothaire RSS é an comhad seo ag %s.";
+
+/* File: ../../portable/singleclick.py:280 */
+"Subscribing to multiple channels" = "Ag liostáil le bealaí iolraí";
+
+/* File: ../../portable/singleclick.py:281 */
+/* Flag: python-format */
+"Create %d channels?" = "Cruthaigh %d bealaí?";
+
+/* File: ../../portable/singleclick.py:294 */
+/* Flag: python-format */
+"Adding %d channels to a new folder" = "Ag cuir %d bealaí le fillteán nua";
+
+/* File: ../../portable/singleclick.py:295 */
+/* File: ../../portable/folder.py:224 */
+"Enter a name for the new channel folder" = "Cuir isteach ainm nua don fhillteán bealach nua";
+
+/* File: ../../portable/singleclick.py:298 */
+/* Flag: python-format */
+"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "AIRE: Tá síntiúis agat le %d de na bealaí seo cheana. Fánfaidh na bealaí seo san áit atá siad faoi láthair.";
+
+/* File: ../../portable/singleclick.py:309 */
+"Subscription error" = "Botún síntiúis";
+
+/* File: ../../portable/singleclick.py:319 */
+"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "Tá cruth neamhsheasmhach ar comhad an bhealaigh $shortAppName: $url. Déan teagmháil le foilsitheoir an chomhaid seo.";
+
+/* File: ../../portable/singleclick.py:327 */
+"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "Tá an cineál ábhar mícheart ag an comhad an bhealaigh $shortAppName: $url. Fógraigh é seo le foilsitheoir an chomhaid seo.";
+
+/* File: ../../portable/singleclick.py:331 */
+"Could not download the $shortAppName channel file: $url." = "Ní féidir comhad an bhealaigh $shortAppName a íosluchtú: $url.";
+
+/* File: ../../portable/singleclick.py:385 */
+"Invalid Torrent" = "Torrent Neamhsheasmhach";
+
+/* File: ../../portable/singleclick.py:386 */
+/* Flag: python-format */
+"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "Tá an dealramh ar go bhfuil an comhad torrent %s truallaithe agus ní féidir é a oscailt. [OK]";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:325 */
+"Invalid Value" = "Luach Neamhsheasmhach";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:326 */
+/* Flag: python-format */
+"%s is invalid.  You must enter a non-negative number." = "Tá %s neamhsheasmhach. Ní mór duit uimhir neamhdhiúltach a chur isteach.";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:452 */
+"Error Revealing File" = "Tharla Botún Ag Soilsiú an Comhad";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:453 */
+/* Flag: python-format */
+"The file \"%s\" was deleted from outside Miro." = "Scriosadh an comhad \"%s\" lasmuigh de Miro.";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:560 */
+"Error Changing Movies Directory" = "Tharla Botún Ag Athrú Comhadlann na Scannán";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:561 */
+"You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "Níl cead agat scríobh chuig an chomhadlann a roghnaigh tú. Leanfaidh Miro ag baint feidhm as an sean comhadlann na bhfíseán.";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:664 */
+" - Invalid URL" = " - URL neamhsheasmhach";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:665 */
+"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "Níl URL seasmhach é an seoladh a chuir tú isteach.\nDearbhaigh arís é agus atriail é.\n\n";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:691 */
+"$shortAppName - Add Channel" = "$shortAppName - Cuir Bealach Leis";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:691 */
+"Enter the URL of the channel to add" = "Cuir isteach URL an bhealaigh le cuir leis";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:712 */
+"$shortAppName - Add Miro Guide" = "$shortAppName - Cuir Eolaí Miro Leis";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:712 */
+"Enter the URL of the Miro Guide to add" = "Cuir isteach URL an t-Eolaí Miro le cuir leis";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:718 */
+"$shortAppName - Download Video" = "$shortAppName - Íosluchtaigh an Físeán";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:718 */
+"Enter the URL of the video to download" = "Cuir isteach URL an fhíseán le íosluchtú";
+
+/* File: ../../portable/frontends/html/contextmenu.py:104 */
+"Update Channels Now" = "Nuashonraigh na Bealaí Anois";
+
+/* File: ../../portable/frontends/html/contextmenu.py:128 */
+/* Flag: python-format */
+"%d Downloaded Items" = "%d Míreanna Íosluchtaithe";
+
+/* File: ../../portable/frontends/html/contextmenu.py:130 */
+/* File: ../../portable/frontends/html/contextmenu.py:210 */
+"Play" = "Seinn";
+
+/* File: ../../portable/frontends/html/contextmenu.py:131 */
+/* File: ../../portable/frontends/html/contextmenu.py:213 */
+"Add to new playlist" = "Cuir le seinmréim nua";
+
+/* File: ../../portable/frontends/html/contextmenu.py:133 */
+/* File: ../../portable/frontends/html/contextmenu.py:206 */
+"Remove From Playlist" = "Bain As An Seinmréim";
+
+/* File: ../../portable/frontends/html/contextmenu.py:135 */
+/* File: ../../portable/frontends/html/contextmenu.py:208 */
+"Remove From the Library" = "Bain ón Leabharlann";
+
+/* File: ../../portable/frontends/html/contextmenu.py:141 */
+/* File: ../../portable/frontends/html/contextmenu.py:217 */
+"Mark as Unwatched" = "Comharthaigh mar Neamhfhairthe";
+
+/* File: ../../portable/frontends/html/contextmenu.py:146 */
+/* File: ../../portable/frontends/html/contextmenu.py:219 */
+"Mark as Watched" = "Comharthaigh mar Fairthe";
+
+/* File: ../../portable/frontends/html/contextmenu.py:151 */
+/* Flag: python-format */
+"%d Available Items" = "%d Míreanna Ar Fáil";
+
+/* File: ../../portable/frontends/html/contextmenu.py:152 */
+/* File: ../../portable/frontends/html/contextmenu.py:226 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:128 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:140 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:292 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_thumbnail.py:79 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:91 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:103 */
+/* File: ../../portable/dialogs.py:93 */
+"Download" = "Íosluchtaigh";
+
+/* File: ../../portable/frontends/html/contextmenu.py:157 */
+/* Flag: python-format */
+"%d Downloading Items" = "%d Míreanna Á Íosluchtú";
+
+/* File: ../../portable/frontends/html/contextmenu.py:159 */
+/* File: ../../portable/frontends/html/contextmenu.py:224 */
+"Cancel Download" = "Cealaigh an t-Íosluchtú";
+
+/* File: ../../portable/frontends/html/contextmenu.py:161 */
+/* File: ../../portable/frontends/html/contextmenu.py:224 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:275 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_thumbnail.py:62 */
+"Pause Download" = "Moilligh an t-Íosluchtú";
+
+/* File: ../../portable/frontends/html/contextmenu.py:164 */
+/* File: ../../portable/frontends/html/contextmenu.py:222 */
+"Restart Upload" = "Atosaigh an t-Uasluchtú";
+
+/* File: ../../portable/frontends/html/contextmenu.py:170 */
+"Update Channel Now" = "Nuashonraigh an Bealach Anois";
+
+/* File: ../../portable/frontends/html/contextmenu.py:172 */
+/* File: ../../portable/frontends/html/contextmenu.py:196 */
+"Copy URL to clipboard" = "Macasamhlaigh an URL chuig an ghearrthaisce";
+
+/* File: ../../portable/frontends/html/contextmenu.py:173 */
+/* File: ../../portable/feed.py:830 */
+"Rename Channel" = "Athainmigh an Bealach";
+
+/* File: ../../portable/frontends/html/contextmenu.py:177 */
+"Revert Title to Default" = "Athraigh an Teideal Ar Ais Chuig an Réamhshocrú";
+
+/* File: ../../portable/frontends/html/contextmenu.py:183 */
+/* File: ../../portable/folder.py:142 */
+"Rename Channel Folder" = "Athainmnigh Fillteán an Bhealaigh";
+
+/* File: ../../portable/frontends/html/contextmenu.py:189 */
+/* File: ../../portable/folder.py:213 */
+"Rename Playlist Folder" = "Athainmnigh Fillteán na Seinmréime";
+
+/* File: ../../portable/frontends/html/contextmenu.py:212 */
+"Play Just This Video" = "Seinn An Físeán Seo Amháin";
+
+/* File: ../../portable/frontends/html/contextmenu.py:231 */
+/* File: ../../portable/playlist.py:218 */
+"Rename Playlist" = "Athainmnigh an Seinmréim";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel_content.py:36 */
+/* File: ../../portable/frontends/html/compiled_templates/channel_folder.py:200 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:382 */
+/* Flag: untranslated */
+"Save Search" = "Save Search";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel_content.py:102 */
+/* File: ../../portable/frontends/html/compiled_templates/channel_folder.py:266 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:448 */
+/* Flag: untranslated */
+"Full Channel" = "Full Channel";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel_content.py:111 */
+/* File: ../../portable/frontends/html/compiled_templates/channel_content.py:194 */
+/* File: ../../portable/frontends/html/compiled_templates/channel_folder.py:275 */
+/* File: ../../portable/frontends/html/compiled_templates/channel_folder.py:358 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:457 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:540 */
+/* Flag: untranslated */
+"${len} Videos" = "${len} Videos";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel_content.py:185 */
+/* File: ../../portable/frontends/html/compiled_templates/channel_folder.py:349 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:531 */
+/* Flag: untranslated */
+"Downloaded" = "Downloaded";
+
+/* File: ../../portable/frontends/html/compiled_templates/feed_settings.py:48 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:188 */
+/* Flag: untranslated */
+"remove channel" = "remove channel";
+
+/* File: ../../portable/frontends/html/compiled_templates/feed_settings.py:57 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:197 */
+/* Flag: untranslated */
+"Settings: ${title}" = "Settings: ${title}";
+
+/* File: ../../portable/frontends/html/compiled_templates/feed_settings.py:59 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:199 */
+/* Flag: untranslated */
+"Videos expire after" = "Videos expire after";
+
+/* File: ../../portable/frontends/html/compiled_templates/feed_settings.py:63 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:203 */
+/* Flag: untranslated */
+"Default" = "Default";
+
+/* File: ../../portable/frontends/html/compiled_templates/feed_settings.py:70 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:210 */
+/* Flag: untranslated */
+"default" = "default";
+
+/* File: ../../portable/frontends/html/compiled_templates/feed_settings.py:136 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:276 */
+/* Flag: untranslated */
+"Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting unwatched." = "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting unwatched.";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:53 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:329 */
+/* Flag: untranslated */
+"Saved" = "Saved";
+
+/* File: ../../portable/frontends/html/compiled_templates/playlist_folder.py:61 */
+/* Flag: untranslated */
+"Empty Playlist Folder" = "Empty Playlist Folder";
+
+/* File: ../../portable/frontends/html/compiled_templates/playlist_folder.py:73 */
+/* Flag: untranslated */
+"This folder contains ${count} playlists, but the playlists do not contain any items." = "This folder contains ${count} playlists, but the playlists do not contain any items.";
+
+/* File: ../../portable/frontends/html/compiled_templates/playlist_folder.py:78 */
+/* Flag: untranslated */
+"Drag playlists to this folder to add them." = "Drag playlists to this folder to add them.";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:55 */
+/* File: ../../portable/frontends/html/compiled_templates/video_info.py:46 */
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:59 */
+/* Flag: untranslated */
+"EMAIL A FRIEND" = "EMAIL A FRIEND";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:62 */
+/* File: ../../portable/frontends/html/compiled_templates/video_info.py:53 */
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:66 */
+/* Flag: untranslated */
+"PERMALINK" = "PERMALINK";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:69 */
+/* File: ../../portable/frontends/html/compiled_templates/video_info.py:60 */
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:73 */
+/* Flag: untranslated */
+"COMMENTS" = "COMMENTS";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:81 */
+/* File: ../../portable/frontends/html/compiled_templates/video_info.py:72 */
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:85 */
+/* Flag: untranslated */
+"KEEP" = "KEEP";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:88 */
+/* File: ../../portable/frontends/html/compiled_templates/video_info.py:79 */
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:92 */
+/* Flag: untranslated */
+"ADD TO LIBRARY" = "ADD TO LIBRARY";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:98 */
+/* File: ../../portable/frontends/html/compiled_templates/video_info.py:89 */
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:102 */
+/* Flag: untranslated */
+"DELETE" = "DELETE";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:114 */
+/* Flag: untranslated */
+"Miro - External Playback Template" = "Miro - External Playback Template";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:124 */
+/* Flag: untranslated */
+"Continue To Next Video" = "Continue To Next Video";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:39 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%0.1f KB/s uploading" = "%0.1f KB/s uploading";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:42 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%0.1f KB/s downloading" = "%0.1f KB/s downloading";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:140 */
+/* Flag: untranslated */
+"External Downloads" = "External Downloads";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:142 */
+/* Flag: untranslated */
+"Clear Completed and Failed Downloads" = "Clear Completed and Failed Downloads";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:155 */
+/* Flag: untranslated */
+"Seeding Torrents" = "Seeding Torrents";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:177 */
+/* Flag: untranslated */
+"${size} free for downloads" = "${size} free for downloads";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:186 */
+/* Flag: untranslated */
+"${size} free on disk" = "${size} free on disk";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:464 */
+/* File: ../../portable/frontends/html/compiled_templates/new.py:138 */
+/* File: ../../portable/frontends/html/compiled_templates/library.py:137 */
+/* Flag: untranslated */
+"Find" = "Find";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:466 */
+/* File: ../../portable/tabs.py:57 */
+"Downloading" = "Á Íosluchtú";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:485 */
+/* Flag: untranslated */
+"Pause All" = "Pause All";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:503 */
+/* Flag: untranslated */
+"Resume All" = "Resume All";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:516 */
+/* Flag: untranslated */
+"Channel Downloads" = "Channel Downloads";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel_folder.py:172 */
+/* Flag: untranslated */
+"Empty Channel Folder" = "Empty Channel Folder";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel_folder.py:174 */
+/* Flag: untranslated */
+"Drag channels to this folder to add them." = "Drag channels to this folder to add them.";
+
+/* File: ../../portable/frontends/html/compiled_templates/unittest/translationtest.py:45 */
+/* Flag: untranslated */
+"Simple translation" = "Simple translation";
+
+/* File: ../../portable/frontends/html/compiled_templates/unittest/translationtest.py:59 */
+/* Flag: untranslated */
+"truck stop in a ${can}" = "truck stop in a ${can}";
+
+/* File: ../../portable/frontends/html/compiled_templates/unittest/translationtest.py:63 */
+/* Flag: untranslated */
+"This is a ${car} and this is a ${truck} <span>This text is <b style=\"color:red\">raw</b> text</span>" = "This is a ${car} and this is a ${truck} <span>This text is <b style=\"color:red\">raw</b> text</span>";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:75 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:38 */
+/* Flag: untranslated */
+"Date:" = "Date:";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:82 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:45 */
+/* Flag: untranslated */
+"Length:" = "Length:";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:89 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:52 */
+/* Flag: untranslated */
+"Size:" = "Size:";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:98 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:61 */
+/* Flag: untranslated */
+"Show Details" = "Show Details";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:105 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:68 */
+/* Flag: untranslated */
+"Hide Details" = "Hide Details";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:153 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:116 */
+/* Flag: untranslated */
+"Download Torrent" = "Download Torrent";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:230 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:193 */
+/* Flag: untranslated */
+"Pending Auto Download" = "Pending Auto Download";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:244 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:207 */
+/* Flag: untranslated */
+"STOP SEEDING" = "STOP SEEDING";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:282 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_thumbnail.py:69 */
+/* Flag: untranslated */
+"Resume Download" = "Resume Download";
+
+/* File: ../../portable/frontends/html/compiled_templates/new.py:146 */
+/* Flag: untranslated */
+"Recent Videos" = "Recent Videos";
+
+/* File: ../../portable/frontends/html/compiled_templates/playlist.py:58 */
+/* Flag: untranslated */
+"Empty Playlist" = "Empty Playlist";
+
+/* File: ../../portable/frontends/html/compiled_templates/playlist.py:60 */
+/* Flag: untranslated */
+"Drag downloaded videos to this playlist to add them." = "Drag downloaded videos to this playlist to add them.";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:139 */
+/* Flag: untranslated */
+"Miro can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<br></br><strong>File type:</strong> ${format}" = "Miro can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<br></br><strong>File type:</strong> ${format}";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:143 */
+/* Flag: untranslated */
+"REVEAL FILE" = "REVEAL FILE";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:147 */
+/* Flag: untranslated */
+"Play Externally" = "Play Externally";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:156 */
+/* Flag: untranslated */
+"Skip >> ${countdown}" = "Skip >> ${countdown}";
+
+/* File: ../../portable/frontends/html/compiled_templates/search.py:49 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:293 */
+/* File: ../../portable/extrastrings.py:33 */
+/* File: ../../portable/feed.py:2393 */
+/* File: ../../portable/feed.py:2483 */
+"Search" = "Cuardaigh";
+
+/* File: ../../portable/frontends/html/compiled_templates/search.py:74 */
+/* Flag: untranslated */
+"No videos found.<br></br>Enter a query in the search field above." = "No videos found.<br></br>Enter a query in the search field above.";
+
+/* File: ../../portable/frontends/html/compiled_templates/search.py:79 */
+/* Flag: untranslated */
+"Searching..." = "Searching...";
+
+/* File: ../../portable/frontends/html/compiled_templates/search.py:84 */
+/* Flag: untranslated */
+"No matching videos found.<br></br>Enter a different query in the search field above." = "No matching videos found.<br></br>Enter a different query in the search field above.";
+
+/* File: ../../portable/frontends/html/compiled_templates/search.py:93 */
+/* Flag: untranslated */
+"Save as a Channel" = "Save as a Channel";
+
+/* File: ../../portable/frontends/html/compiled_templates/search.py:95 */
+/* Flag: untranslated */
+"<h3>Results for \"<span i18n:name=\"query\" t:replace=\"feed.lastQuery\"></span>\"</h3>" = "<h3>Results for \"<span i18n:name=\"query\" t:replace=\"feed.lastQuery\"></span>\"</h3>";
+
+/* File: ../../portable/frontends/html/compiled_templates/multi_channel.py:59 */
+/* Flag: untranslated */
+"${count} Channel Folders Selected<br></br>(contains ${containedcount} channels)" = "${count} Channel Folders Selected<br></br>(contains ${containedcount} channels)";
+
+/* File: ../../portable/frontends/html/compiled_templates/multi_channel.py:71 */
+/* Flag: untranslated */
+"${count} Channels Selected" = "${count} Channels Selected";
+
+/* File: ../../portable/frontends/html/compiled_templates/multi_channel.py:76 */
+/* Flag: untranslated */
+"Put Into a New Folder" = "Put Into a New Folder";
+
+/* File: ../../portable/frontends/html/compiled_templates/multi_channel.py:83 */
+/* Flag: untranslated */
+"Delete All" = "Delete All";
+
+/* File: ../../portable/frontends/html/compiled_templates/multi_playlist.py:59 */
+/* Flag: untranslated */
+"${count} Playlist Folders Selected<br></br>(contains ${containedcount} playlists)" = "${count} Playlist Folders Selected<br></br>(contains ${containedcount} playlists)";
+
+/* File: ../../portable/frontends/html/compiled_templates/multi_playlist.py:71 */
+/* Flag: untranslated */
+"${count} Playlists Selected" = "${count} Playlists Selected";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:318 */
+/* Flag: untranslated */
+"Visit Website" = "Visit Website";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:325 */
+/* Flag: untranslated */
+"Send to a Friend" = "Send to a Friend";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:332 */
+/* Flag: untranslated */
+"Auto Download" = "Auto Download";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:746 */
+/* Flag: untranslated */
+"Looking for videos at this URL" = "Looking for videos at this URL";
+
+/* File: ../../portable/frontends/html/compiled_templates/library.py:145 */
+/* File: ../../portable/tabs.py:54 */
+"Library" = "Leabharlann";
+
+/* File: ../../portable/frontends/html/main.py:138 */
+/* File: ../../portable/startup.py:236 */
+"Video Directory Missing" = "Tá Comhadlann na bhFíseán In Easnamh";
+
+/* File: ../../portable/frontends/html/main.py:139 */
+"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Ní féidir le Miro do phríomhchomhadlann físeáin a aimsiú. D'fhéadfadh sé seo bheith de bharr go bhfuil sé lonnaithe ar thiomántán seachtrach nach bhfuil nasctha faoi láthair. \n\n    Má leanann tú ar aghaidh, athshocrófar comhadlann na bhfíseán go suíomh ar an tiomántán seo (caillfidh tú roinnt sonraí maidir leis na físeáin ar an tiomántán seachtrach ar an dóigh seo) Is féidir leat scoir freisin, nasc an tiomántán, agus atosaigh Miro.";
+
+/* File: ../../portable/frontends/html/main.py:197 */
+/* File: ../../portable/theme.py:127 */
+"Custom Channels" = "Bealaí Saincheaptha";
+
+/* File: ../../portable/frontends/html/main.py:197 */
+/* File: ../../portable/theme.py:127 */
+"You are running a version of $longAppName with a custom set of channels." = "Tá leagan de $longAppName á rith agat le tacar bealaí saincheaptha.";
+
+/* File: ../../portable/frontends/html/main.py:276 */
+/* File: ../../portable/httpclient.py:151 */
+"Internal Error" = "Botún Inmheánach";
+
+/* File: ../../portable/frontends/html/main.py:276 */
+"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Tharla botún taobh istigh de Miro. Is féidir cabhrú linn an fhadhb seo a aimsiú agus é a dheisiú trí tuairisc botúin a sheoladh chugainn.";
+
+/* File: ../../portable/frontends/html/main.py:276 */
+"Include entire program database including all video and channel metadata with crash report" = "Cuir bunachar sonraí iomlán an ríomhoidis san áireamh ina áirítear gach meiteasonraí físeáin agus bealaí le fógra an chliste";
+
+/* File: ../../portable/frontends/html/main.py:276 */
+"Describe what you were doing that caused this error" = "Inis cad a bhí ar siúl agat a thug ar an botún seo tarlú";
+
+/* File: ../../portable/frontends/html/main.py:291 */
+/* Flag: python-format */
+"%s Version Alert" = "Foráilimh Leagan %s";
+
+/* File: ../../portable/frontends/html/main.py:292 */
+/* Flag: python-format */
+"A new version of %s is available. Would you like to download it now?" = "Tá leagan nua de %s ar fáil. Ar mhaith leat é a íosluchtú anois?";
+
+/* File: ../../portable/frontends/html/main.py:297 */
+/* Flag: python-format */
+"%s Version Check" = "Dearbhú Leagan %s";
+
+/* File: ../../portable/frontends/html/main.py:298 */
+/* Flag: python-format */
+"%s is up to date." = "Tá %s cothrom le dáta.";
+
+/* File: ../../portable/frontends/html/main.py:316 */
+"Are you sure you want to quit?" = "An bhfuil tú cinnte go dteastaíonn uait scoir?";
+
+/* File: ../../portable/frontends/html/main.py:318 */
+"Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "Tá Miro fós ag uasluchtú do clis-thuairisc. Má scoireann tú anois, cealófar an t-uasluchtú. Scoir Ar Aon Nós?";
+
+/* File: ../../portable/frontends/html/main.py:347 */
+"Import OPML File" = "Allmhairigh Comhad OPML";
+
+/* File: ../../portable/frontends/html/main.py:349 */
+"OPML Files" = "Comhaid OPML";
+
+/* File: ../../portable/frontends/html/main.py:354 */
+"Export OPML File" = "Onnmhairigh Comhad OPML";
+
+/* File: ../../portable/util.py:267 */
+/* Flag: python-format */
+"%1.1fGB" = "%1.1fGB";
+
+/* File: ../../portable/util.py:269 */
+/* Flag: python-format */
+"%dGB" = "%dGB";
+
+/* File: ../../portable/util.py:273 */
+/* Flag: python-format */
+"%1.1fMB" = "%1.1fMB";
+
+/* File: ../../portable/util.py:275 */
+/* Flag: python-format */
+"%dMB" = "%dMB";
+
+/* File: ../../portable/util.py:279 */
+/* Flag: python-format */
+"%1.1fKB" = "%1.1fKB";
+
+/* File: ../../portable/util.py:281 */
+/* Flag: python-format */
+"%dKB" = "%dKB";
+
+/* File: ../../portable/util.py:285 */
+/* Flag: python-format */
+"%1.1fB" = "%1.1fB";
+
+/* File: ../../portable/util.py:287 */
+/* Flag: python-format */
+"%dB" = "%dB";
+
+/* File: ../../portable/iheartmiro.py:134 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple %s extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\n%s" = "An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple %s extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\n%s";
+
+/* File: ../../portable/iheartmiro.py:142 */
+/* Flag: untranslated */
+"Install iHeartMiro?" = "Install iHeartMiro?";
+
+/* File: ../../portable/dl_daemon/download.py:457 */
+"Error" = "Botún";
+
+/* File: ../../portable/dl_daemon/download.py:544 */
+/* Flag: python-format */
+"Could not write to %s" = "Níorbh fhéidir scríobh chuig %s";
+
+/* File: ../../portable/dl_daemon/download.py:564 */
+/* File: ../../portable/dl_daemon/download.py:772 */
+"Not enough disk space" = "Níl go leor slí diosca saor";
+
+/* File: ../../portable/dl_daemon/download.py:565 */
+/* File: ../../portable/dl_daemon/download.py:773 */
+/* Flag: python-format */
+"%s MB required to store this video" = "Tá %s MB de dhíth chun an físeán seo a chur i dtaisce";
+
+/* File: ../../portable/dl_daemon/download.py:783 */
+"BitTorrent failure" = "Teip BitTorrent";
+
+/* File: ../../portable/dl_daemon/download.py:784 */
+"BitTorrent failed to startup" = "Theip ar BitTorrent tosú";
+
+/* File: ../../portable/dl_daemon/download.py:957 */
+"Corrupt Torrent" = "Torrent Truallaithe";
+
+/* File: ../../portable/dl_daemon/download.py:958 */
+/* Flag: python-format */
+"The torrent file at %s was not valid" = "Ní raibh an comhad torrent ag %s seasmhach";
+
+/* File: ../../portable/dl_daemon/download.py:983 */
+"Torrent file deleted" = "Scriosadh an comhad torrent";
+
+/* File: ../../portable/dl_daemon/download.py:984 */
+"The torrent file for this item was deleted outside of Miro." = "Scriosadh lasmuigh de Miro an comhad torrent don mhír seo.";
+
+/* File: ../../portable/controller.py:197 */
+/* File: ../../portable/controller.py:211 */
+/* File: ../../portable/controller.py:255 */
+/* File: ../../portable/controller.py:281 */
+/* File: ../../portable/controller.py:301 */
+/* Flag: python-format */
+"Remove %s" = "Baiin %s";
+
+/* File: ../../portable/controller.py:198 */
+/* Flag: python-format */
+"Are you sure you want to remove the guide %s?" = "An bhfuil tú cinnte go dteastaíonn uait an t-eolaí %s a bhaint?";
+
+/* File: ../../portable/controller.py:212 */
+/* Flag: python-format */
+"Are you sure you want to remove %s" = "An bhfuil tú cinnte go dteastaíonn uait %s a bhaint?";
+
+/* File: ../../portable/controller.py:215 */
+/* File: ../../portable/controller.py:260 */
+/* File: ../../portable/controller.py:286 */
+/* File: ../../portable/controller.py:305 */
+/* Flag: python-format */
+"Remove %s channels" = "Bain %s bealaí";
+
+/* File: ../../portable/controller.py:217 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s playlists" = "An bhfuil tú cinnte go dteastaíonn uait na %s seinmréimeanna a bhaint";
+
+/* File: ../../portable/controller.py:256 */
+"What would you like to do with the videos in this channel that you've downloaded?" = "Cad ar mhaith leat a dhéanamh leis na físeáin sa bealach seo a d'íosluchtaigh tú?";
+
+/* File: ../../portable/controller.py:261 */
+"What would you like to do with the videos in these channels that you've downloaded?" = "Cad ar mhaith leat a dhéanamh leis na físeáin sna bealaí seo a d'íosluchtaigh tú?";
+
+/* File: ../../portable/controller.py:282 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "An bhfuil tú cinnte go dteastaíonn uait %s a bhaint? Cealófar aon rud atá á íosluchtú.";
+
+/* File: ../../portable/controller.py:287 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "An bhfuil tú cinnte go dteastaíonn uait na %s bealaí seo a bhaint? Cealófar aon rud atá á íosluchtú.";
+
+/* File: ../../portable/controller.py:302 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?" = "An bhfuil tú cinnte go dteastaíonn uait %s a bhaint?";
+
+/* File: ../../portable/controller.py:306 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?" = "An bhfuil tú cinnte go dteastaíonn na %s bealaí seo a bhaint?";
+
+/* File: ../../portable/controller.py:319 */
+/* Flag: python-format */
+"Stop watching %s" = "Stad ag faire ar %s";
+
+/* File: ../../portable/controller.py:320 */
+/* Flag: python-format */
+"Are you sure you want to stop watching %s?" = "An bhfuil tú cinnte go dteastaíonn uait stad ag breathnú ar %s?";
+
+/* File: ../../portable/controller.py:323 */
+/* Flag: python-format */
+"Stop watching %s directories" = "Stad ag breathnú ar %s comhadlanna";
+
+/* File: ../../portable/controller.py:324 */
+/* Flag: python-format */
+"Are you sure you want to stop watching these %s directories?" = "An bhfuil tú cinnte go dteastaíonn uait stad a bheith ag breathnú ar na %s comhadlanna?";
+
+/* File: ../../portable/controller.py:498 */
+"Error Saving Video" = "Tharla Botún Ag Chur An Físeán i dTaisce";
+
+/* File: ../../portable/controller.py:500 */
+/* Flag: python-format */
+"An error occured while trying to save %s.  Please check that the file has not been deleted and try again." = "Tharla botún ag iarraidh %s a chur i dtaisce. Dearbhaigh nach scriosadh an comhad agus déan iarracht arís le do thoil.";
+
+/* File: ../../portable/downloader.py:234 */
+"activity" = "gníomhaíocht";
+
+/* File: ../../portable/downloader.py:268 */
+/* File: ../../portable/httpclient.py:138 */
+/* File: ../../portable/httpclient.py:167 */
+"File not found" = "Níor aimsíodh an comhad";
+
+/* File: ../../portable/downloader.py:269 */
+"Flash URL Scraping Error" = "Botún Scríobadh Flash URL";
+
+/* File: ../../portable/downloader.py:445 */
+"starting up" = "ag tosú";
+
+/* File: ../../portable/httpclient.py:89 */
+/* Flag: python-format */
+"Error: %s" = "Botún: %s";
+
+/* File: ../../portable/httpclient.py:104 */
+/* File: ../../portable/httpclient.py:110 */
+"Can't connect" = "Ní féidir nasc";
+
+/* File: ../../portable/httpclient.py:105 */
+/* Flag: python-format */
+"Connection Error: %s" = "Botún Naisc: %s";
+
+/* File: ../../portable/httpclient.py:111 */
+"SSL connection error" = "Botún naisc SSL";
+
+/* File: ../../portable/httpclient.py:115 */
+"HTTP error" = "Botún HTTP";
+
+/* File: ../../portable/httpclient.py:118 */
+/* Flag: python-format */
+"Bad Status Line: %s" = "Droch Treolíne: %s";
+
+/* File: ../../portable/httpclient.py:122 */
+/* Flag: python-format */
+"Bad Header Line: %s" = "Droch Líne Ceanntáisc: %s";
+
+/* File: ../../portable/httpclient.py:126 */
+/* Flag: python-format */
+"Bad Chunk size: %s" = "Drochmhéid Smután: %s";
+
+/* File: ../../portable/httpclient.py:130 */
+/* Flag: python-format */
+"Expected CRLF got: %r" = "Fuair an CRLF ionchais: %r";
+
+/* File: ../../portable/httpclient.py:133 */
+/* Flag: python-format */
+"%s closed connection" = "%s nasc dúnta";
+
+/* File: ../../portable/httpclient.py:139 */
+"Got 404 status code" = "Fuarthas cód stádais 404";
+
+/* File: ../../portable/httpclient.py:141 */
+/* Flag: python-format */
+"Bad Status Code: %s" = "Droch Treochód: %s";
+
+/* File: ../../portable/httpclient.py:146 */
+"Authorization failed" = "Theip ar an t-údarú";
+
+/* File: ../../portable/httpclient.py:152 */
+"Pipeline request never started" = "Níor thosaíodh an t-iarratas píblíne";
+
+/* File: ../../portable/httpclient.py:156 */
+"Timeout" = "Teorainn Ama";
+
+/* File: ../../portable/httpclient.py:157 */
+/* Flag: python-format */
+"Connection to %s timed out" = "D'imigh an nasc chuig %s thar am";
+
+/* File: ../../portable/httpclient.py:161 */
+"Invalid URL" = "URL Neamhsheasmhach";
+
+/* File: ../../portable/httpclient.py:162 */
+/* Flag: python-format */
+"\"%s\" is not a valid URL" = "Ní URL seasmhac é \"%s\"";
+
+/* File: ../../portable/httpclient.py:168 */
+/* Flag: python-format */
+"The file: \"%s\" doesn't exist" = "Níl an comhad \"%s\" ann";
+
+/* File: ../../portable/httpclient.py:172 */
+"Read error" = "Tharla botún sa léamh";
+
+/* File: ../../portable/httpclient.py:173 */
+/* Flag: python-format */
+"Error while reading from \"%s\"" = "Tharla botún fad is a bhí sé á léamh ó \"%s\"";
+
+/* File: ../../portable/httpclient.py:369 */
+"Unknown Error code" = "Cód Botúin Anaithnid";
+
+/* File: ../../portable/httpclient.py:401 */
+"Connection closed" = "Nasc dúnta";
+
+/* File: ../../portable/httpclient.py:823 */
+"Unknown" = "Anaithnid";
+
+/* File: ../../portable/httpclient.py:824 */
+"Internal Error: Not ready to send" = "Botún Inmheánach: Níl sé réidh le seoladh";
+
+/* File: ../../portable/license.py:68 */
+"license page" = "leathanach an cheadúnais";
+
+/* File: ../../portable/theme.py:138 */
+"Starter Channels" = "Bealaí Le hAghaidh Tosú";
+
+/* File: ../../portable/theme.py:154 */
+"Example Playlist" = "Seinmréim Samplach";
+
+/* File: ../../portable/folder.py:144 */
+/* Flag: python-format */
+"Enter a new name for the channel folder %s" = "Cuir isteach ainm nua do fhillteán an bhealaigh %s";
+
+/* File: ../../portable/folder.py:215 */
+/* Flag: python-format */
+"Enter a new name for the playlist folder %s" = "Cuir isteach ainm nua do fillteán na seinmréime %s";
+
+/* File: ../../portable/folder.py:223 */
+"Create Channel Folder" = "Cruthaigh Fillteán an Bhealaigh";
+
+/* File: ../../portable/folder.py:237 */
+"Create Playlist Folder" = "Cruthaigh Fillteán don Seinmréim";
+
+/* File: ../../portable/folder.py:238 */
+"Enter a name for the new playlist folder" = "Cuir isteach ainm do fillteán na seinmréime";
+
+/* File: ../../portable/dialogs.py:89 */
+"Ignore" = "Déan neamhaird de";
+
+/* File: ../../portable/dialogs.py:90 */
+"Submit Crash Report" = "Seol Clis-thuairisc";
+
+/* File: ../../portable/dialogs.py:91 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
+"Migrate" = "Ascain";
+
+/* File: ../../portable/dialogs.py:92 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:39 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
+"Don't Migrate" = "Ná Ascain";
+
+/* File: ../../portable/dialogs.py:94 */
+"Remove Entry" = "Bain An Iontráil";
+
+/* File: ../../portable/dialogs.py:95 */
+"Delete File" = "Scrios an Comhad";
+
+/* File: ../../portable/dialogs.py:96 */
+"Delete Files" = "Scrios na Comhaid";
+
+/* File: ../../portable/dialogs.py:97 */
+"Keep Videos" = "Coimeád na Físeáin";
+
+/* File: ../../portable/dialogs.py:98 */
+"Delete Videos" = "Scrios na Físeáin";
+
+/* File: ../../portable/dialogs.py:100 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
+"Create Channel" = "Cruthaigh Bealach";
+
+/* File: ../../portable/dialogs.py:101 */
+"Add" = "Cuir Leis";
+
+/* File: ../../portable/dialogs.py:102 */
+"Add Into New Folder" = "Cuir Isteach San Fhillteán Nua";
+
+/* File: ../../portable/dialogs.py:105 */
+"Not Now" = "Ní Anois";
+
+/* File: ../../portable/dialogs.py:106 */
+"Close to Tray" = "Dún Chuig an Trádaire";
+
+/* File: ../../portable/dialogs.py:107 */
+"Launch Miro" = "Tosaigh Miro";
+
+/* File: ../../portable/dialogs.py:108 */
+"Download Anyway" = "Íosluchtaigh Ar Aon Nós";
+
+/* File: ../../portable/dialogs.py:109 */
+"Install iHeartMiro" = "Suiteáil iHeartMiro";
+
+/* File: ../../portable/dialogs.py:110 */
+"Don't Install" = "Ná Suiteáil";
+
+/* File: ../../portable/dialogs.py:231 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
+"New Search Channel" = "Cuardaigh Bealach Nua";
+
+/* File: ../../portable/dialogs.py:231 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
+"A search channel contains items that match a search term." = "Tá mhíreanna a chomhoiriúnaíonn le téarma cuardaigh i mbealach cuardaigh.";
+
+/* File: ../../portable/startup.py:92 */
+"Unknown Error" = "Botún Anaithnid";
+
+/* File: ../../portable/startup.py:93 */
+/* Flag: python-format */
+"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "Thoirmisc botún anaithnid do Miro tosú. Fógraigh an fabht ag %s le do thoil";
+
+/* File: ../../portable/startup.py:155 */
+"Database too new" = "Tá an bunachar sonraí ró-nua";
+
+/* File: ../../portable/startup.py:156 */
+"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "Tá bunachar sonraí agat a chuireadh i dtaisce le leagan níos úire de $shortAppName. Ní mór duit an leagan is déanaí de $shortAppName a íosluchtú agus é sin a rith.";
+
+/* File: ../../portable/startup.py:237 */
+"\nMiro can't find your primary video directory $moviesDirectory.  This may be because it's located on an external drive that is currently disconnected.  Please, connect the drive or create the directory, then start Miro again." = "\nNí féidir le Miro do phríomhchomhadlann físeáin $moviesDirectory a aimsiú.  D'fhéadfadh sé seo bheith de bharr go bhfuil sé lonnaithe ar thiomántán seachtrach nach bhfuil nasctha faoi láthair. Nasc an tiomántán le do thoil nó cruthaigh comhadlann, ansin atosaigh Miro arís.";
+
+/* File: ../../portable/playlist.py:219 */
+/* Flag: python-format */
+"Enter a new name for the playlist %s" = "Cuir isteach ainm nua don seinmréim  %s";
+
+/* File: ../../portable/playlist.py:241 */
+"Create Playlist" = "Cruthaigh Seinmréim";
+
+/* File: ../../portable/playlist.py:242 */
+"Enter a name for the new playlist" = "Cuir isteach ainm don seinmréim nua";
+
+/* File: ../../portable/opml.py:155 */
+"OPML Import failed" = "Theip ar Allmhairiú OPML";
+
+/* File: ../../portable/opml.py:156 */
+"The selected OPML file appears to be invalid. Import was interrupted." = "Tá an dealramh ar nach bhfuil an comhad OPML seasmhach. Idirbhriseadh an t-allmhairiú.";
+
+/* File: ../../portable/opml.py:161 */
+"OPML Import summary" = "Achoimre Allmhairiú OPML";
+
+/* File: ../../portable/storedatabase.py:860 */
+/* File: ../../portable/storedatabase.py:1262 */
+/* Flag: python-format */
+"%s database save succeeded" = "Chuireadh i dtaisce an bunachar sonraí %s i gceart";
+
+/* File: ../../portable/storedatabase.py:861 */
+/* File: ../../portable/storedatabase.py:1263 */
+"The database has been successfully saved. It is now safe to quit without losing any data." = "Chuireadh i dtaisce an bunachar sonraí go rathúil. Tá sé slán scoir anois gan aon sonraí a chailliúint.";
+
+/* File: ../../portable/storedatabase.py:868 */
+/* File: ../../portable/storedatabase.py:1271 */
+/* Flag: python-format */
+"%s database save failed" = "%s theip ar tharrtháil an bunachar sonraí";
+
+/* File: ../../portable/storedatabase.py:869 */
+/* File: ../../portable/storedatabase.py:1272 */
+/* Flag: python-format */
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "Ní raibh %s in ann a bhunachar sonraí a chuir i dtaisce: Diosc Lán.\nMolaimid comhaid a scrios ón diosc lán nó roinnt scannáin san cnuasach agat a scrios.\nB'fhéidir caillfear athruithe le déanaí.";
+
+/* File: ../../portable/menubar.py:157 */
+"_Open" = "_Oscail";
+
+/* File: ../../portable/menubar.py:158 */
+"_Download Video" = "_Íosluchtaigh an Físeán";
+
+/* File: ../../portable/menubar.py:160 */
+"Check _Version" = "Dearbhaigh_An Leagan";
+
+/* File: ../../portable/menubar.py:162 */
+"_Remove Video" = "_Bain an Físeán";
+
+/* File: ../../portable/menubar.py:163 */
+"_Remove Videos" = "_Bain na Físeáin";
+
+/* File: ../../portable/menubar.py:164 */
+"Re_name Video" = "Athai_nmnigh an Físeán";
+
+/* File: ../../portable/menubar.py:165 */
+"Save Video _As..." = "Cuir An Físeán i dTaisce _Mar...";
+
+/* File: ../../portable/menubar.py:166 */
+"Save Videos _As..." = "Cuir Na Físeáin i dTaisce _Mar...";
+
+/* File: ../../portable/menubar.py:167 */
+"Copy Video _URL" = "Macasamhlaigh URL an Fhíseáin";
+
+/* File: ../../portable/menubar.py:169 */
+"_Options..." = "_Roghanna...";
+
+/* File: ../../portable/menubar.py:170 */
+"_Quit" = "_Scoir";
+
+/* File: ../../portable/menubar.py:178 */
+"Cu_t" = "Gea_rr";
+
+/* File: ../../portable/menubar.py:179 */
+"_Copy" = "_Macasamhlaigh";
+
+/* File: ../../portable/menubar.py:180 */
+"_Paste" = "_Greamaigh";
+
+/* File: ../../portable/menubar.py:181 */
+"Select _All" = "Roghnaigh _Uile";
+
+/* File: ../../portable/menubar.py:182 */
+"_Delete" = "_Scrios";
+
+/* File: ../../portable/menubar.py:186 */
+"Add _Channel" = "Cuir _Bealach Leis";
+
+/* File: ../../portable/menubar.py:187 */
+"New Searc_h Channel..." = "Bealach Cuardac_h Nua...";
+
+/* File: ../../portable/menubar.py:188 */
+"New _Folder..." = "_Fillteán Nua...";
+
+/* File: ../../portable/menubar.py:189 */
+"Add Channel _Guide..." = "Cuir _Eolaí Bealaí Leis...";
+
+/* File: ../../portable/menubar.py:199 */
+"Update _All Channels" = "Nuashonraigh _Gach Bealach";
+
+/* File: ../../portable/menubar.py:201 */
+"_Import Channels (OPML)..." = "_Allmhairigh Bealaí (OPML)...";
+
+/* File: ../../portable/menubar.py:202 */
+"E_xport Channels (OPML)..." = "Onn_mhairigh Bealaí (OPML)...";
+
+/* File: ../../portable/menubar.py:204 */
+"_Send this channel to a friend" = "_Seol an bealach seo chuig cara";
+
+/* File: ../../portable/menubar.py:205 */
+"Copy Channel _Link" = "Macasamhlaigh _Nasc an Bhealaigh";
+
+/* File: ../../portable/menubar.py:208 */
+"New _Playlist" = "_Seinmréim Nua";
+
+/* File: ../../portable/menubar.py:209 */
+"New Playlist Fol_der" = "Fill_teán Seinmréim Nua";
+
+/* File: ../../portable/menubar.py:211 */
+"Re_name Playlist" = "Athai_nmnigh an Seinmréim";
+
+/* File: ../../portable/menubar.py:212 */
+"_Remove Playlist" = "_Bain an Seinmréim";
+
+/* File: ../../portable/menubar.py:213 */
+"_Remove Playlists" = "_Bain na Seinmréimeanna";
+
+/* File: ../../portable/menubar.py:214 */
+"_Remove Playlist Folders" = "_Bain Fillteáin na Seinmréimeanna";
+
+/* File: ../../portable/menubar.py:215 */
+"_Remove Playlist Folder" = "_Bain Fillteán na Seinmréime";
+
+/* File: ../../portable/menubar.py:225 */
+/* File: ../../portable/menubar.py:226 */
+"_Play" = "_Seinn";
+
+/* File: ../../portable/menubar.py:227 */
+"_Pause" = "_Moilligh";
+
+/* File: ../../portable/menubar.py:228 */
+"_Stop" = "_Stad";
+
+/* File: ../../portable/menubar.py:230 */
+"_Next Video" = "_An Físeán Ar Aghaidh";
+
+/* File: ../../portable/menubar.py:231 */
+"_Previous Video" = "_An Físeán Roimhe";
+
+/* File: ../../portable/menubar.py:233 */
+"Skip _Forward" = "Léim _Ar Aghaidh";
+
+/* File: ../../portable/menubar.py:234 */
+"Skip _Back" = "Léim _Siar";
+
+/* File: ../../portable/menubar.py:236 */
+"Volume _Up" = "Airde _Suas";
+
+/* File: ../../portable/menubar.py:237 */
+"Volume _Down" = "Airde _Síos";
+
+/* File: ../../portable/menubar.py:239 */
+"_Fullscreen" = "_Lánscáiléan";
+
+/* File: ../../portable/menubar.py:243 */
+"_About" = "_Maidir Le";
+
+/* File: ../../portable/menubar.py:244 */
+"_Donate" = "_Bronn Airgead";
+
+/* File: ../../portable/menubar.py:245 */
+/* File: ../../portable/menubar.py:262 */
+"_Help" = "_Cabhair";
+
+/* File: ../../portable/menubar.py:247 */
+"Report a _Bug" = "Fógraigh _Fabht";
+
+/* File: ../../portable/menubar.py:248 */
+/* Flag: untranslated */
+"_Translate" = "_Translate";
+
+/* File: ../../portable/menubar.py:249 */
+/* Flag: untranslated */
+"_Planet" = "_Planet";
+
+/* File: ../../portable/menubar.py:253 */
+"_Video" = "_Físeán";
+
+/* File: ../../portable/menubar.py:255 */
+"_File" = "_Comhad";
+
+/* File: ../../portable/menubar.py:259 */
+"_Channels" = "_Bealaí";
+
+/* File: ../../portable/menubar.py:260 */
+"_Playlists" = "_Seinmréimeanna";
+
+/* File: ../../portable/menubar.py:261 */
+"P_layback" = "Athsh_einm";
+
+/* File: ../../portable/menubar.py:266 */
+"Play Unwatched ($numUnwatched)" = "Seinn Neamhfhairthe ($numUnwatched)";
+
+/* File: ../../portable/menubar.py:267 */
+"Pause All Downloads ($numDownloading)" = "Moilligh Gach Íosluchtú ($numDownloading)";
+
+/* File: ../../portable/menubar.py:268 */
+"Resume All Downloads ($numPaused)" = "Atosaigh Gach Íosluchtú ($numPaused)";
+
+/* File: ../../portable/menubar.py:270 */
+"Options..." = "Roghanna...";
+
+/* File: ../../portable/menubar.py:272 */
+"Hide Window" = "Folaigh an Fhuinneog";
+
+/* File: ../../portable/menubar.py:273 */
+"Show Window" = "Taispeáin an Fhuinneog";
+
+/* File: ../../portable/feed.py:388 */
+"never" = "riamh";
+
+/* File: ../../portable/feed.py:390 */
+/* File: ../../portable/item.py:555 */
+/* Flag: python-format */
+"%d hours" = "%d uair";
+
+/* File: ../../portable/feed.py:392 */
+/* Flag: python-format */
+"%d day" = "%d lá";
+
+/* File: ../../portable/feed.py:394 */
+/* File: ../../portable/item.py:553 */
+/* Flag: python-format */
+"%d days" = "%d lá";
+
+/* File: ../../portable/feed.py:396 */
+/* Flag: python-format */
+"%d months" = "%d mí";
+
+/* File: ../../portable/feed.py:831 */
+/* Flag: python-format */
+"Enter a new name for the channel %s" = "Cuir isteach ainm nua don bealach %s";
+
+/* File: ../../portable/feed.py:928 */
+"Error loading feed" = "Tharla botún ag luchtú an fothaire";
+
+/* File: ../../portable/feed.py:929 */
+/* Flag: python-format */
+"Couldn't load the feed at %s (%s)." = "Níorbh fhéidir an fothaire a luchtú ag %s (%s).";
+
+/* File: ../../portable/feed.py:932 */
+"Would you like to keep the feed?" = "Ar mhaith leat an fothaire a choimeád?";
+
+/* File: ../../portable/feed.py:1053 */
+"Bad content-type" = "Droch cineál-ábhar";
+
+/* File: ../../portable/feed.py:1066 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
+"Channel is not compatible with $shortAppName!" = "Níl an bealach oiriúnach le $shortAppName!";
+
+/* File: ../../portable/feed.py:1067 */
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "Ach déanfaimid ár seacht ndícheall na comhaid a ghabháil. D'fhéadfadh sé breis ama a thógáil chun na físeáin a chur i réim, agus d'fhéadfadh comharthaí aithne ait bheith orthu.   Déan teagmháil le foilsitheoirí $url agus iarr orthu an féidir leo fothaire a sholáthair ar dóigh atá oiriúnach le $shortAppName.\n\nAn dteastaíonn iarracht a dhéanamh an bealach seo a luchtú ar aon nós?";
+
+/* File: ../../portable/feed.py:2497 */
+"Local Files" = "Comhaid Loganta";
+
+/* File: ../../portable/feed.py:2511 */
+"Playing File" = "Ag Seinm an Comhad";
+
+/* File: ../../portable/item.py:496 */
+/* Flag: python-format */
+"Removing %s" = "Ag baint %s";
+
+/* File: ../../portable/item.py:499 */
+"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Ar mhaith leat an comhad seo a scrios agus a fhíseáin uile nó é a bhaint ón Leabharlann amháin?";
+
+/* File: ../../portable/item.py:505 */
+"Would you like to delete this file or just remove its entry from the Library?" = "Ar mhaith leat an comhad seo a scrios nó é a bhaint ón Leabharlann amháin?";
+
+/* File: ../../portable/item.py:525 */
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "Is fillteán an mhír seo. Nuair a bhaineann tú fillteán, scriosfar mír ar bith atá istigh san fhillteán.";
+
+/* File: ../../portable/item.py:557 */
+/* Flag: python-format */
+"%d minutes" = "%d nóiméid";
+
+/* File: ../../portable/item.py:567 */
+/* Flag: python-format */
+"Expires in %s" = "Téann sé as feidhm i %s";
+
+/* File: ../../portable/item.py:579 */
+/* Flag: python-format */
+"Will retry in %s" = "Déanfar iarracht arís i %s";
+
+/* File: ../../portable/item.py:581 */
+"Paused" = "Moillithe";
+
+/* File: ../../portable/item.py:989 */
+"TORRENT" = "TORRENT";
+
+/* File: ../../portable/item.py:991 */
+"WEB PAGE" = "LEATHANACH GRÉASÁIN";
+
+/* File: ../../portable/item.py:1001 */
+"Total Down:" = "Iomlán Thíos:";
+
+/* File: ../../portable/item.py:1004 */
+"Error:" = "Botún:";
+
+/* File: ../../portable/item.py:1013 */
+"Seeders:" = "Síoladóirí:";
+
+/* File: ../../portable/item.py:1015 */
+"Leechers:" = "Súmairí:";
+
+/* File: ../../portable/item.py:1017 */
+"Down Rate:" = "An Luas Síos:";
+
+/* File: ../../portable/item.py:1018 */
+"Down Total:" = "Iomlán Síos:";
+
+/* File: ../../portable/item.py:1020 */
+"Up Rate:" = "An Luas Suas:";
+
+/* File: ../../portable/item.py:1021 */
+"Up Total:" = "Iomlán Suas:";
+
+/* File: ../../portable/item.py:1032 */
+/* File: ../../portable/item.py:1037 */
+"Web page:" = "Leathanach Gréasáin:";
+
+/* File: ../../portable/item.py:1032 */
+/* Flag: untranslated */
+"comments" = "comments";
+
+/* File: ../../portable/item.py:1037 */
+"permalink" = "nasc buan";
+
+/* File: ../../portable/item.py:1041 */
+"File link:" = "Nasc comhaid:";
+
+/* File: ../../portable/item.py:1041 */
+"direct link to file" = "nasc díreach chuig an comhad";
+
+/* File: ../../portable/item.py:1043 */
+"File type:" = "Cineál comhaid:";
+
+/* File: ../../portable/item.py:1050 */
+/* File: ../../portable/item.py:1053 */
+/* File: ../../portable/item.py:1055 */
+"License:" = "Ceadúnas:";
+
+/* File: ../../portable/item.py:1053 */
+/* File: ../../portable/item.py:1055 */
+"see permalink" = "féach an nasc buan";
+
+/* File: ../../portable/item.py:1062 */
+/* Flag: untranslated */
+"SHOW LOCAL FOLDER" = "SHOW LOCAL FOLDER";
+
+/* File: ../../portable/item.py:1064 */
+/* Flag: untranslated */
+"SHOW LOCAL FILE" = "SHOW LOCAL FILE";
+
+/* File: ../../portable/item.py:1066 */
+"Filename:" = "Ainm comhaid:";
+
+/* File: ../../portable/item.py:1073 */
+"Down Total" = "Iomlán Síos";
+
+/* File: ../../portable/item.py:1075 */
+"Up Total" = "Iomlán Suas";
+
+/* File: ../../portable/item.py:1093 */
+"Item Details" = "Sonraí na Mhíreanna";
+
+/* File: ../../portable/item.py:1100 */
+"Torrent Details" = "Sonraí an Torrent";
+
+/* File: ../../portable/item.py:1102 */
+"Torrent Details <i>stopped</i>" = "Sonraí an Torrent <i>stadta</i>";
+
+/* File: ../../portable/item.py:1106 */
+"Download Details" = "Sonraí an t-Íosluchtú";
+
+/* File: ../../portable/item.py:1329 */
+"downloading..." = "ag íosluchtú...";
+
+/* File: ../../portable/item.py:1336 */
+/* File: ../../portable/item.py:1339 */
+/* Flag: untranslated */
+/* Flag: python-format */
+"%s left" = "%s left";
+
+/* File: ../../portable/item.py:1348 */
+"starting up..." = "ag tosú...";
+
+/* File: ../../portable/item.py:1939 */
+/* Flag: python-format */
+"Removing %s items" = "Ag baint %s míreanna";
+
+/* File: ../../portable/item.py:1941 */
+"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "Ní féidir le ceann amháin nó níos mó de na físeáin seo íosluchtú ó bhealach. Ar mhaith leat na mhíreanna seo a scrios nó iad a bhaint ón Leabharlann?";
+
+/* File: ../../portable/item.py:1949 */
+"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "Is fillteán é/iad ceann amháin de na mhíreanna seo. Nuair a bhaineann tú nó a scriosann tú fillteán, bainfear nó scriosfar aon mhíreanna istigh sa bhfillteán.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:2 */
+"1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 lá\n3 lá\n6 lá\n10 lá\n1 mí\nRiamh";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:8 */
+"<b>BitTorrent</b>" = "<b>BitTorrent</b>";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:9 */
+"<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." = "<b>Aire:</b> Má athraíonn tú an stiallaire a seinneann físeáin, CAITHFEAR \nMiro a atosú ionas go rachaidh na hathruithe i bhfeidhm.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:11 */
+/* Flag: untranslated */
+"<b>Note:</b> You can set the frequency channels are checked for each\nchannel in the channel's settings pane." = "<b>Note:</b> You can set the frequency channels are checked for each\nchannel in the channel's settings pane.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:13 */
+"<b>Searching for Videos</b>" = "<b>Ag Cuardach le haghaidh Físeáin</b>";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:14 */
+"<b>Would you like Miro to look for video files on your computer?</b>" = "<b>Ar mhaith leat go rachadh Miro ar thóir comhaid físeáin ar do ríomhaire?</b>";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:15 */
+"<b>Would you like to run Miro when your computer starts up?</b>" = "<b>Ar mhaith leat Miro a rith nuair a thosaíonn do ríomhaire?</b>";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:16 */
+"<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>Tá críochnaithe agat!</b>\n\nTá an socrú críochnaithe -- anois is féidir leat roinnt bealaí a aimsiú agus tosú ag féachaint orthu.\n\n<b>Ná Moilligh:</b> Tá Miro éagsúil ó bheith ag breathnú ar físeáin ar leathanach gréasáin -- is féidir le foilsitheoirí físeáin móra de cháilíocht ard a thairiscint.  Ná suí ag feitheamh ar físeáin: tosaigh roinnt íosluchtaithe agus fill ar ais níos déanaí.\n\n<b>Fág Ar Siúl É:</b> Dearbhaíonn Miro bealaí go rialta le haghaidh físeáin nua agus íosluchtaíonn sé iad sa chúlra. Nuair a fhágann tú á rith é beidh físeáin nua agat nuair atá tú réidh chun breathnú orthu.\n\n<b>Ná Bí Buartha Faoi Slí Diosca:</b> Ar nós TiVo, tá córas 'téigh as feidhm' ag Miro a chuidíonn le físeáin níos sine a ghlanadh amach chun slí a chur ar fáil do físeáin nua.  Is féidir leat físeáin a choimeád go buan trí 'cuir i dtaisce' a bhrúigh agus is féidir leat socruithe bealach a shocrú chun físeáin a chur i dtaisce go huathoibríoch.\n\n<b>Déan Mór É:</b> Taispeánann an cnaipe ar taobh dheis den seinn cnaipe na físeáin i lánscáileán.\n\n<b>Aimsigh Físeáin:</b> Tá na céadta bealaí cianamharcaíochta ar an t-Idirlíon ag Eolaí Miro agus iad go léir saor in aisce.  Brúigh 'CUIR LEIS' chun breathnú ar bealach.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
+"<b>xine</b>" = "<b>xine</b>";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:31 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
+"Auto download default setting for new channels" = "Socrú réamhshocraithe íosluchtaigh go huathoibríoch le haghaidh bealaí nua";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
+"Automatically for_ward ports." = "Seol ar aghaidh poirt go huathoibríoch.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:33 */
+"By default, videos _expire after" = "Mar réamhshocrú, téann físeáin as feidhm tar éis";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:34 */
+"C_hannel:" = "B_ealach:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:35 */
+"C_hannels" = "B_ealaí";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:36 */
+"C_reate Channel" = "C_ruthaigh Bealach";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:37 */
+"Check Channels for _new content" = "Cruthaigh Bealaí le haghaidh ábhar _nua";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:38 */
+"Disk _Space" = "_Slí Diosca";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
+/* Flag: untranslated */
+"Every 30 minutes\nEvery hour\nEvery day\nManually" = "Every 30 minutes\nEvery hour\nEvery day\nManually";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
+"G_B" = "G_B";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
+"Go" = "Téigh";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
+"Ignore Un_encrypted Connections." = "Ná Bac le Naisc Neamh_chriptithe";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
+"In This:" = "Sa:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
+"Limit torrent _downstream to:" = "Teorannaigh sruth síos na torrentí go:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
+"Maximum number of channel auto-downloads at a time: " = "Uasmhéid líon na uath-íosluchtaithe bealaí ag aon uair amháin: ";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
+"Maximum number of manual downloads at a time: " = "Uasmhéid líon na íosluchtaithe de láimh ag aon uair amháin: ";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
+"Miro can find all the videos on your computer to help you organize your collection." = "Is féidir le Miro gach físeáin ar do ríomhaire a aimsiú chun cabhrú leat inneall a chur ar do chnuasach.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
+"New\nAll\nOff" = "Nua\nUile\nAs";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:60 */
+"Play _videos one after another" = "Seinn na _físeáin ceann i ndiaidh a chéile";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:61 */
+"Preferences" = "Sainroghanna";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:62 */
+"Restrict to my full _home folder" = "Srian go mo _fhillteán baile iomlán";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:63 */
+"S_top after each video" = "S_tad tar éis gach físeán";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:64 */
+"S_tore downloaded videos in this folder:" = "Chur físéain íosluchtaithe i dtaisce sa bhfillteán seo:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
+"Search _Engine:" = "_Inneall Cuardaigh:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
+"Search _custom folder:" = "Cuardaigh fillteáin sain_cheaptha:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
+"Select Movies Directory" = "Roghnaigh Comhadlann na Scannán";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
+"Select custom search directory" = "Roghnaigh comhadlann an cuardach saincheaptha";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:64 */
+"Stop torrent uploads when this ratio is reached:" = "Cuir deireadh le uasluchtaithe torrentí nuair a sroichtear an cóimheas seo:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
+"The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "Cabhróidh na chéad scáileáin ar aghaidh leat Miro a shocrú ar an dóigh is fearr leat. Seo é an chéad ceist.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:71 */
+"To avoid internet slowdowns, limit _upstream to:" = "Chun moilleanna idirlín a sheachaint, teorannaigh sr_uth suas go:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:72 */
+"Use _ports:" = "Bain feidhm as _poirt:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:73 */
+"Use this for video when listening to audio:" = "Bain feidhm as seo nuair atáthar ag éisteacht le fuaim:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
+"Use this renderer to play videos:" = "Bain feidhm as an stiallaire seo chun físeáin a sheinm:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:75 */
+"Volume:" = "Airde:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:76 */
+"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "Molaimid duit cead a thabhairt do Miro a thosú nuair a thosaíonn do ríomhaire. Ar an dóigh seo, is féidir le físeáin nár chríochnaigh ag íosluchtú críochnú agus beidh físeáin nua ar do bhealaí réidh nuair a theastaíonn uait breathnú orthu.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:78 */
+"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Fáilte go Cianamharcaíocht ar an t-Idirlíon. Is mórán rudaí ar féidir le Miro: íosluchtaigh físeáin go huathoibríoch ó na bealaí is fearr leat, féach ar físeáin ceann i ndiaidh a chéile, íosluchtaigh torrentí, mol físeáin do do chairde, agus a lán eile.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:79 */
+"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "Roghnaigh tú fillteán nua le scannáin a íosluchtú ann. Ar chóir do Miro d'íosluchtaithe atá ann cheana a ascain ansin? (Ní bogfar scannáin atá á íosluchtú faoi láthair go dtí go mbeidh siad críochnaithe.)";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:80 */
+"_Add Folder" = "_Cuir Fillteán Leis";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:81 */
+"_Automatically run Miro when I log in" = "_Rith Miro go huathoibríoch nuair a thosaím an ríomhaire";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:82 */
+"_Downloads" = "_Íosluchtaithe";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:83 */
+"_Folders" = "_Fillteáin";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:84 */
+"_General" = "Coiteann";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:85 */
+"_KB/s." = "_KB/s.";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:86 */
+"_Keep at least this much free space on my drive:" = "_Coinnigh ar a laghad an mhéid seo slí saor ar mo thiomántán:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:87 */
+"_Playback" = "_Athsheinm";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:88 */
+"_Resume playback of videos from the point where they were stopped" = "_Atosaigh athsheinm físeáin ón áit a stadadh iad";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:89 */
+"_Search" = "_Cuardaigh";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:90 */
+"_Search For:" = "_Cuardaigh Do:";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:91 */
+"_URL" = "_URL";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:92 */
+"_Warn me when I attempt to quit with downloads in progress" = "_Tabhair foráileamh dom nuair a dhéanaim iarracht scoir nuair atá rudaí á íosluchtú";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:93 */
+"_Watch for new videos in these folders and include them in the Library" = "_Fair amach do físeáin nua sna fillteáin seo agus cuir isteach sa Leabharlann iad";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:94 */
+"goom\noscope\nfftscope\nfftgraph\nnone" = "goom\noscope\nfftscope\nfftgraph\nceann ar bith";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:99 */
+"xine\ngstreamer" = "xine\ngstreamer";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2 */
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName version $appVersion ($appRevision); cóipcheart (c) 2005-2008 $publisher.  Is comharthaí tráchtála de chuid $publisher iad $longAppName agus comhartha $longAppName.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1 */
+"About $longAppName" = "Maidir le $longAppName";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:1 */
+"Add Channel" = "Cuir an Bealach Leis";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:2 */
+"Please enter the URL of the channel you'd like to add." = "Cuir isteach URL an bhealaigh ar mhaith leat cuir leis.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6 */
+"Copy log to clipboard" = "Macasamhlaigh an taifead chuig an ghearrthaisce";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5 */
+"Open up the bug tracker" = "Oscail an lorgaire fabhtaí";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2 */
+"Please help us fix it. Copy and paste all the\ninformation into our bug tracker and tell us what you were doing when the\nproblem occurred." = "Cuidigh linn é a dheisiú. Macasamhlaigh agus greamaigh\nan fhaisnéis go léir isteach inár lorgaire fabhtaí agus inis dúinn cad a bhí ar\nsiúl agat nuair a tharla an fhadhb.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:7 */
+"Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!" = "Ansin, atosaigh $longAppName  le do thoil (nó b'fhéidir gheobhaidh tú tuilleadh botúin gaolmhara). Is dona linn an mhíchaoithiúlacht. Is leagan béite fós é $longAppName, ach le cabhair uaitse, táimid ag deisiú fadhbanna go tapa!";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1 */
+"You found a bug in $longAppName!" = "D'aimsigh tú fabht i $longAppName!";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1 */
+" " = " ";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:2 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:2 */
+"'" = "'";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:10 */
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny." = "Ach déanfaimid ár seacht ndícheall na comhaid a ghabháil. D'fhéadfadh sé breis ama na físeáin a leagadh amach i réim, agus d'fhéadfadh na comharthaí aithne bheith ait.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:12 */
+"Please contact the publishers of" = "Déan teagmháil le foilsitheoirí";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:13 */
+"and ask if they can supply a feed in a format that will work with $shortAppName." = "agus iarr orthu an féidir leo fothaire a sholáthair i mbealach a bhfeidhmeoidh le  $shortAppName.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1 */
+"$longAppName" = "$longAppName";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:4 */
+"You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)" = "Roghnaigh tú fillteán nua le scannáin a íosluchtú ann. Ar chóir do $shortAppName do chuid íosluchtaithe atá ann cheana a bhogadh ansin?(Ní bogfar scannáin atá á íosluchtú faoi láthair go dtí go bhfuil siad críochnaithe)";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1 */
+"Channel requires authentication" = "Tá fíor-dheimhniú de dhíth ón bealach";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:2 */
+"Please enter the username and password given to you by this channel's publisher." = "Cuir isteach an t-ainm úsáideora agus an focal faire a thug foilsitheoir an bhealaigh duit le do thoil.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57 */
+"(WARNING: Changes won't go into effect until you restart $longAppName.)" = "(AIRE: Ní rachaidh na hathruithe i bhfeidhm go dtí go atosófar $longAppName.)";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:36 */
+"Add Folder..." = "Cuir Filltéan Leis...";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62 */
+"Automatically Forward Ports" = "Seol Ar Aghaidh Na Poirt Go hUathoibríoch";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:3 */
+"Automatically run $longAppName when I login." = "Rith $longAppName go huathoibríoch nuair a thosaím an ríomhaire.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48 */
+"By default, videos expire after" = "Mar réamhshocrú, téann an físeán as feidhm tar éis";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
+"Check channels for new content" = "Dearbhaigh na bealaí le haghaidh ábhar nua";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5 */
+"Close to tray so that downloads can continue." = "Dún go dtí an trádaire ionas gur féidir le íosluchtaithe leanúint ar aghaidh";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
+"Every 30 minutes" = "Gach 30 nóiméid";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
+/* Flag: untranslated */
+"Every day" = "Every day";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
+"Every hour" = "Gach uair a chlog";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
+"Folder" = "Fillteán";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45 */
+"GB" = "GB";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:63 */
+"Ignore Unencrypted Connections" = "Ná Bac Le Naisc Neamhchriptithe";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60 */
+"KB/s" = "KB/s";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59 */
+"Limit downstream bandwith to:" = "Teorannaigh leithead an chreasa an tsruth síos go:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16 */
+"Manually" = "De Láimh";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41 */
+"Maximum number of channel auto-downloads at a time:" = "Uasmhéid líon na huathíosluchtaithe bealaigh ag aon uair amháin:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40 */
+"Maximum number of manual downloads at a time:" = "Uasmhéid líon na n-íosluchtaithe de láimh ag aon uair amháin:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
+/* Flag: untranslated */
+"Note: You can set the frequency channels are checked from the channel's settings pane." = "Note: You can set the frequency channels are checked from the channel's settings pane.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1 */
+"Options" = "Roghanna";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
+"Play one video, then stop." = "Seinn físeán amháin, ansin stad.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6 */
+"Quit Miro completely." = "Scoir ó Miro ina iomlán.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
+"Remember where I stopped watching a video and continue playing from that point." = "Cuimhnigh ar an áit a stad mé ag breathnú ar físeán agus lean ar aghaidh ag seinm ón áit sin.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
+"Show as a Channel" = "Taispeáin mar Bealach";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30 */
+"Store downloaded videos in this folder:" = "Cuir físeáin íosluchtaithe i dtaisce sa bhfillteán seo:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58 */
+"To avoid internet slowdowns, limit upstream bandwith to:" = "Chun moilleanna ídirlín a sheachaint, teorannaigh leithead an chreasa an tsruth suas go:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
+"WARNING: This setting will not go into effect until you restart $longAppName." = "AIRE: Ní rachaidh an socrú seo i bhfeidhm go dtí go atósfar $longAppName.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
+"Warn me when I attempt to quit with downloads in progress." = "Tabhair foráileamh dom nuair a dhéanaim iarracht scoir nuair atá rudaí á íosluchtú.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
+"Watch for new videos in these folders and include them in my Library." = "Fair amach do físeáin nua sna fillteáin agus cuir iad i mo Leabharlann.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4 */
+"When I click the red close button:" = "Nuair a bhrúim an dúnchnaipe dearg:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5 */
+"Channel:" = "Bealach";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:6 */
+"Search Engine:" = "Inneall Cuardaigh:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:2 */
+"Search For:" = "Cuardaigh Do:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7 */
+"URL:" = "URL:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:33 */
+"$longAppName can find all the videos on your computer to help you organize your collection." = "Is féidir le $longAppName na físeáin uile ar do ríomhaire a aimsiú chun cabhrú leat do chnuasach a eagrú.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:45 */
+"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch." = "Dearbhaíonn $longAppName bealaí go rialta le haghaidh físeáin nua agus íosluchtaithe sa chúlra. Má fhágann tú ar siúl é beidh físeáin nua agat nuair atá tú réidh chun breathnú orthu.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:29 */
+"$shortAppName First Time Setup" = "Socrú $shortAppName Don Chéad Uair";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39 */
+"Cancel Search" = "Cealaigh an Cuardach";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:38 */
+"Change" = "Athraigh";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:46 */
+"Don't Worry About Disk Space:" = "Ná Bí Buartha Faoi Slí Diosca:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:50 */
+"Find Videos:" = "Aimsigh Físeáin:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48 */
+"Go Big:" = "Déan Mór É:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:44 */
+"Leave it On:" = "Fág Ar Siúl É:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:47 */
+"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "Ar nós TiVo, tá córas 'téann sé as feidhm' ag $longAppName a chuidíonn le sean físeáin a scrios chun slí a chur ar fáil do físeáin nua.  Is féidir físeáin a choimeád go buan más mian leat trí 'cuir i dtaisce' a bhrúigh agus is féidir leat socruithe bealach a shocrú chun físeáin a chur i dtaisce go huathoibríoch.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:42 */
+"Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" = "Anois is féidir leat dul trí Eolaí na mBealaí agus \ntosaigh ag féachaint. Roinnt leideanna chun tosú:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:40 */
+"Reset Search" = "Athshocraigh an Cuardaigh";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:35 */
+"Restrict to all my personal files." = "Srian go mo chuid comhaid pearsanta amháin.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:36 */
+"Search custom folder:" = "Cuardaigh fillteán saincheaptha:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51 */
+"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel." = "Tá na céadta bealaí cianamharcaíochta ar an t-idirlíon ar Eolaí na mBealaí $shortAppName;tá siad go léir saor in aisce. Brúigh 'CUIR LEIS' chun breathnú ar bealach.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49 */
+"The button to the right of the play button shows videos fullscreen." = "Taispeánann an cnaipe ar taobh dheis den cnaipe seinn na físeáin i lánscáileán.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:30 */
+"The next few screens will help you set up $longAppName so that it works best for you." = "Cabhróidh na chéad scáileáin eile leat $longAppName a shocrú ar an dóigh is fearr leat.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:31 */
+"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch." = "Molaimid go ligeann tú do $longAppName tosú nuair a thosaíonn do ríomhaire. Ar an dóigh seo, is féidir le físeán atá á íosluchtú críochnú agus is féidir le físeáin nua íosluchtú sa chúlra, réidh duit nuair a theastaíonn uait breathnú orthu.";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34 */
+"Would you like $longAppName to look for video files on your computer?" = "Ar mhaith leat go rachaidh $longAppName ar thóir comhaid físeáin ar do ríomhaire?";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:32 */
+"Would you like to run $shortAppName on startup?" = "Ar mhaith leat $shortAppName a rith ag an tosú?";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:41 */
+"You're done!" = "Tá críochnaithe agat!";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/update_available.dtd.template:1 */
+"Release Notes:" = "Nótaí Eisiúna:";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1 */
+"Question" = "Ceist";

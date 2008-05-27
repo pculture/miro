@@ -2,6 +2,6 @@
 <!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the
 information into our bug tracker and tell us what you were doing when the
 problem occurred.">
-<!ENTITY bugreport.openbugtracker "Open up the bug tracker">
-<!ENTITY bugreport.copytoclipboard "Copy log to clipboard">
+<!ENTITY bugreport.openbugtracker "Ava vigadejälgija">
+<!ENTITY bugreport.copytoclipboard "Kopeeri logi lõikepuhvrisse">
 <!ENTITY bugreport.pleaserestart "Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!">

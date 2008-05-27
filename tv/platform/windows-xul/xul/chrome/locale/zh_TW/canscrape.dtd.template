@@ -1,13 +1,13 @@
 <!ENTITY nbsp                " ">
-<!ENTITY rsaquo              "'">
+<!ENTITY rsaquo              "’">
 
 <!ENTITY canscrape.title     "$shortAppName 無法支援此頻道!">
 <!ENTITY canscrape.body      "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.">
 
-<!ENTITY canscrape.prefix    "Please contact the publishers of">
-<!ENTITY canscrape.suffix    "and ask if they can supply a feed in a format that will work with $shortAppName.">
+<!ENTITY canscrape.prefix    "請和發佈者聯繫">
+<!ENTITY canscrape.suffix    "並向他們請問是否可以提供一個資料來源可以相容於$shortAppName。">
 <!ENTITY canscrape.title     "$shortAppName 無法支援此頻道!">
 <!ENTITY canscrape.body      "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.">
 
-<!ENTITY canscrape.prefix    "Please contact the publishers of">
-<!ENTITY canscrape.suffix    "and ask if they can supply a feed in a format that will work with $shortAppName.">
+<!ENTITY canscrape.prefix    "請和發佈者聯繫">
+<!ENTITY canscrape.suffix    "並向他們請問是否可以提供一個資料來源可以相容於$shortAppName。">

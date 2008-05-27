@@ -1,8 +1,8 @@
-<!ENTITY searchchannel.description	"検索チャンネルには検索対象と合致したアイテムが入っています">
+<!ENTITY searchchannel.description	"検索チャンネルには検索対象と合致した項目が入っています">
 <!ENTITY searchchannel.termlabel 	"これを検索:">
 <!ENTITY searchchannel.title            "新しい検索チャンネル">
-<!ENTITY searchchannel.inthis "In This:">
+<!ENTITY searchchannel.inthis "この中に：">
 <!ENTITY searchchannel.channel "チャンネル:">
 <!ENTITY searchchannel.searchengine "検索エンジン:">
 <!ENTITY searchchannel.url "URL:">
-<!ENTITY searchchannel.createchannel "Create Channel">
+<!ENTITY searchchannel.createchannel "チャンネルを作る">

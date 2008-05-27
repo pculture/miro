@@ -13,7 +13,7 @@
 <!ENTITY startup.change	                "‚Äì√≤‚Äì‚àë‚Äì¬∫‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äî√á‚Äî√">
 <!ENTITY startup.cancel	                "‚Äì√ª‚Äî√á‚Äì¬∫‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äî√á‚Äî√  ‚Äì√∏‚Äì√¶‚Äì‚àè‚Äî√Ö‚Äì‚à´">
 <!ENTITY startup.undo	                "‚Äì¬∞‚Äì¬±‚Äî√Ñ‚Äì√¶‚Äî√Ö‚Äì‚àè‚Äî√á‚Äî√  ‚Äì√∏‚Äì√¶‚Äì‚àè‚Äî√Ö‚Äì‚à´">
-<!ENTITY startup.done1			"‚Äì√∂‚Äì√¶‚ÄìŒ©‚Äì¬µ‚Äî√ú!">
+<!ENTITY startup.done1			"Ви зробили!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
 <!ENTITY startup.done3.heading		"‚Äì√ª‚Äî√Ö‚Äî√á‚Äì‚àû‚Äì‚â§‚Äì¬™‚Äî√®‚ÄìœÄ‚Äî√á‚Äì¬µ Democracy ‚Äì‚â§‚Äì‚à´‚Äì¬™‚Äî√©‚Äî√°‚Äì¬µ‚ÄìŒ©‚ÄìŒ©‚Äî√£‚Äì¬∫:">
@@ -38,7 +38,7 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.change	                "‚Äì√≤‚Äì‚àë‚Äì¬∫‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äî√á‚Äî√">
 <!ENTITY startup.cancel	                "‚Äì√ª‚Äî√á‚Äì¬∫‚Äì¬µ‚ÄìŒ©‚Äì‚àè‚Äî√á‚Äî√  ‚Äì√∏‚Äì√¶‚Äì‚àè‚Äî√Ö‚Äì‚à´">
 <!ENTITY startup.undo	                "‚Äì¬∞‚Äì¬±‚Äî√Ñ‚Äì√¶‚Äî√Ö‚Äì‚àè‚Äî√á‚Äî√  ‚Äì√∏‚Äì√¶‚Äì‚àè‚Äî√Ö‚Äì‚à´">
-<!ENTITY startup.done1			"‚Äì√∂‚Äì√¶‚ÄìŒ©‚Äì¬µ‚Äî√ú!">
+<!ENTITY startup.done1			"Ви зробили!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
 <!ENTITY startup.done3.heading		"‚Äì√ª‚Äî√Ö‚Äî√á‚Äì‚àû‚Äì‚â§‚Äì¬™‚Äî√®‚ÄìœÄ‚Äî√á‚Äì¬µ Democracy ‚Äì‚â§‚Äì‚à´‚Äì¬™‚Äî√©‚Äî√°‚Äì¬µ‚ÄìŒ©‚ÄìŒ©‚Äî√£‚Äì¬∫:">

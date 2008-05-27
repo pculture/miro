@@ -1,7 +1,7 @@
-<!ENTITY bugreport.title     "貴方は $longAppName にバグを発見しました!">
+<!ENTITY bugreport.title     "あなたは $longAppName にバグを発見しました！">
 <!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the
 information into our bug tracker and tell us what you were doing when the
 problem occurred.">
-<!ENTITY bugreport.openbugtracker "Open up the bug tracker">
-<!ENTITY bugreport.copytoclipboard "Copy log to clipboard">
-<!ENTITY bugreport.pleaserestart "Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!">
+<!ENTITY bugreport.openbugtracker "バグ・トラッカーを開く">
+<!ENTITY bugreport.copytoclipboard "ログをクリップボードへコピーする">
+<!ENTITY bugreport.pleaserestart "そして、$longAppName を再起動して下さい(関連した他のエラーが起きるかもしれませんが)。ご迷惑をおかけします。まだ $longAppName はβ版ですがあなたの援助があれば問題を早く解決できます!">

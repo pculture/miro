@@ -12,7 +12,9 @@
 <!ENTITY prefs.channels.check "Verificar os Canais em busca de conteúdo novo">
 <!ENTITY prefs.channels.check.thirty "A cada 30 minutos">
 <!ENTITY prefs.channels.check.sixty "A cada hora">
+<!ENTITY prefs.channels.check.daily "Every day">
 <!ENTITY prefs.channels.check.manually "Manualmente">
+<!ENTITY prefs.channels.check.note "Note: You can set the frequency channels are checked from the channel's settings pane.">
 
 <!ENTITY prefs.channels.autodownloaddefault "Configuração Auto-download padrão para novos canais">
 <!ENTITY prefs.channels.autodownloaddefault.all "Tudo">
@@ -39,7 +41,7 @@
 <!ENTITY prefs.autodownloads.max "Número máximo de canais de auto-download simultâneos:">
 
 <!ENTITY prefs.disk.space "Espaço em Disco">
-<!ENTITY prefs.disk.space.min.part1 "Keep at least this much free space on my drive:" >
+<!ENTITY prefs.disk.space.min.part1 "Manter ao menos isto de espaço livre no meu disco:" >
 <!ENTITY prefs.disk.space.min.part2 "GB">
 <!ENTITY prefs.disk.space.warning.restart "ATENÇÃO: Esta alteração terá efeito somente após o re-inicio do $longAppName.">
 
@@ -50,6 +52,16 @@
 <!ENTITY prefs.videos.expire.ten "10 dias">
 <!ENTITY prefs.videos.expire.thirty "1 mês">
 <!ENTITY prefs.videos.expire.never "Nunca">
+
+<!ENTITY prefs.videos.maxolditems "By default, remember">
+<!ENTITY prefs.videos.maxolditems2 "items in addition to the current contents">
+<!ENTITY prefs.videos.maxolditems.zero "0">
+<!ENTITY prefs.videos.maxolditems.twenty "20">
+<!ENTITY prefs.videos.maxolditems.fifty "50">
+<!ENTITY prefs.videos.maxolditems.hundred "100">
+<!ENTITY prefs.videos.maxolditems.thousand "1000">
+
+<!ENTITY prefs.videos.cleanallolditems "Clean old items in all feeds">
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(ATENÇÃO: as alterações apenas terão efeito após o re-inicio do $longAppName.)">

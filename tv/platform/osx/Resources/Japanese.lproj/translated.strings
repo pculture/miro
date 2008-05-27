@@ -4,11 +4,11 @@ This file is distributed under the same license as the PACKAGE package.
 FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
  */
 /* Flag: untranslated */
-"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-03-19 21:59-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
+"" = "" /* = "Project-Id-Version: PACKAGE VERSION\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2008-05-27 12:53-0400\nPO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\nLast-Translator: FULL NAME <EMAIL@ADDRESS>\nLanguage-Team: LANGUAGE <LL@li.org>\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\n" */;
 
 /* File: ../../portable/dialogs.py:85 */
 /* Flag: untranslated */
-"Cancel" = "Cancel" /* = "キャンセル" */;
+"Cancel" = "Cancel" /* = "キャンセルする" */;
 
 "OK" = "OK";
 
@@ -17,55 +17,51 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "$log" = "$log";
 
-"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">バグトラッカーは <a href=\"$bugTrackerURL\">$bugTrackerURL</a> にあります。何をしていたかを書き、上のボックスからログメッセージをコピーし、幾つか質問に答えて下さい。その後、作業が整然と進むでしょう。</font>";
+"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were doing, paste in the log message from the box above, and answer a few questions, and we'll get right to work.</font>" = "<font face=\"Lucida Grande\" size=\"-1\">バグトラッカーは <a href=\"$bugTrackerURL\">$bugTrackerURL</a> にあります。何をしていたかを書き、上のボックスからログメッセージをコピーして貼り付け、幾つか質問に答えていただくと、すぐに私たちの方での作業にとりかかります。</font>";
 
-"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "時間があったら、クラッシュレポートを提出していただけませんか？クラッシュした時にしていた事を、できるだけ正確に教えてください。";
+"Actually, if you have a minute, would you be willing to submit a crash report to our bug-tracking system? At a minimum, what we'd need is description of what you were doing at the time -- as precise as possible -- plus the artfully-phrased nonsense in the box below:" = "実はちょっと時間があったらクラッシュ・レポートをバグ・トラッキング・システムに提出していただければありがたいのですが、いかがでしょうか。最小限、クラッシュした時にしていた事の記述をお願いします。できるだけ正確に。その他もろもろも一緒に下のボックスへどうぞ。";
 
-"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "不幸な事が起こりました。$longAppName が、$when に内部に何らかの混乱が発生したと判断、もしくは誤判断されて、その犠牲となってしまいました。私たちは謝意を表し、つつしんで $shortAppName を再起動することを提案いたします。そうすれば設定やチャンネル登録を失うことが避けられるかもしれません。";
+"Misfortune! $longAppName fell prey to some sort of internal confusion or wrong-headedness $when. We apologize and suggest that you exit and restart $shortAppName. That'll teach it, and it'll also reduce your chance of losing your preferences or channel subscriptions." = "不運にも、$longAppName が、$when に内部に何らかの混乱が発生したと判断、もしくは誤判断されて、その犠牲となってしまいました。お詫びしますとともに、 $shortAppName を再起動することを提案いたします。そうしていただくことで学習がなされ、今後設定やチャンネル登録を失う機会が減っていくことになります。";
 
-/* Flag: untranslated */
-"The fall of $shortAppName??" = "The fall of $shortAppName??";
+"The fall of $shortAppName??" = "$shortAppName の失敗??";
 
 "About Miro" = "Miro について";
 
-/* Flag: untranslated */
-"Add Channel..." = "Add Channel..." /* = "番組/チャンネルを加える" */;
+"Add Channel..." = "チャンネルを追加…";
 
-"Add Guide..." = "ガイドを加える";
+"Add Guide..." = "ガイドを加える…";
 
 "Bring All to Front" = "すべてを前に";
 
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:80 */
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:80 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11 */
 "Channels" = "チャンネル";
 
-"Check for New Version" = "アップデートを確認";
+"Check for New Version" = "新しいバージョンがあるかを確認";
 
 "Clear Menu" = "メニューをクリアする";
 
 "Close Window" = "ウィンドウを閉じる";
 
-"Copy" = "コピー";
+"Copy" = "コピーする";
 
-/* Flag: untranslated */
-"Copy Channel URL" = "Copy Channel URL" /* = "チャンネルのURLをコピーする" */;
+"Copy Channel URL" = "チャンネルのURLをコピーする";
 
-/* Flag: untranslated */
-"Copy Video URL" = "Copy Video URL" /* = "ビデオのURLをコピーする" */;
+"Copy Video URL" = "ビデオのURLをコピーする";
 
-/* Flag: untranslated */
-"Cut" = "Cut" /* = "カット" */;
+"Cut" = "切り取る";
 
+/* File: ../../portable/frontends/html/compiled_templates/multi_channel.py:78 */
 /* File: ../../portable/dialogs.py:104 */
-"Delete" = "削除";
+"Delete" = "削除する";
 
 "Donate" = "寄付する";
 
-"Download Video..." = "ビデオをダウンロードする...";
+"Download Video..." = "ビデオをダウンロードする…";
 
-"Edit" = "編集";
+"Edit" = "編集する";
 
-"Export Channels (OPML)..." = "チャンネルを書き出す（OPML）";
+"Export Channels (OPML)..." = "（OPML）チャンネルを書き出す";
 
 "File" = "ファイル";
 
@@ -73,33 +69,30 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Help" = "ヘルプ";
 
-/* Flag: untranslated */
-"Hide Miro" = "Hide Miro" /* = "Miro を隠す" */;
+"Hide Miro" = "Miro を隠す";
 
 "Hide Others" = "他を隠す";
 
-"Import Channels (OPML)..." = "チャンネルを取り込む（OPML）";
+"Import Channels (OPML)..." = "（OPML）チャンネルを取り込む";
 
-"Main Window" = "メインウィンドウ";
+"Main Window" = "メイン・ウィンドウ";
 
-"MainMenu" = "メインメニュー";
+"MainMenu" = "メイン・メニュー";
 
-"Minimize" = "最小化";
+"Minimize" = "最小化する";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:54 */
 "Miro" = "Miro";
 
-/* Flag: untranslated */
-"Miro Help" = "Miro Help" /* = "Miro のヘルプ" */;
+"Miro Help" = "Miro のヘルプ";
 
-"New Channel Folder..." = "チャンネルフォルダを作る";
+"New Channel Folder..." = "新しいチャンネルフォルダ…";
 
-"New Playlist Folder..." = "プレイリストフォルダを作る";
+"New Playlist Folder..." = "新しいプレイリスト・フォルダ…";
 
-"New Playlist..." = "プレイリストを作る";
+"New Playlist..." = "新しいプレイリスト…";
 
-/* Flag: untranslated */
-"New Search Channel..." = "New Search Channel..." /* = "検索チャンネルを作る" */;
+"New Search Channel..." = "新しい検索チャンネル";
 
 "Next Video" = "次のビデオ";
 
@@ -107,71 +100,96 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Open..." = "開く";
 
-/* Flag: untranslated */
-"Paste" = "Paste" /* = "貼り付け" */;
+"Paste" = "貼り付け";
 
-/* File: ../../platform/osx/platform/frontends/html/Application.py:244 */
+"Planet Miro" = "プラネットMiro";
+
+/* File: ../../platform/osx/plat/frontends/html/Application.py:244 */
 "Play Video" = "ビデオを再生する";
 
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:84 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22 */
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:84 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
 "Playback" = "再生";
 
 "Playlists" = "プレイリスト";
 
-"Preferences..." = "設定...";
+"Preferences..." = "設定…";
 
 "Previous Video" = "前のビデオ";
 
-/* Flag: untranslated */
-"Quit Miro" = "Quit Miro" /* = "Miro を終了" */;
+"Quit Miro" = "Miro を終了";
 
-"Remove..." = "削除...";
+"Remove..." = "削除…";
 
-"Rename..." = "名前の変更...";
+"Rename..." = "名前の変更…";
 
-/* Flag: untranslated */
-"Report a bug" = "Report a bug" /* = "バグを報告する" */;
+"Report a bug" = "バグを報告する";
 
-"Save Video As..." = "名前をつけて保存...";
+"Save Video As..." = "名前をつけて保存…";
 
-"Select All" = "全て選択";
+"Select All" = "全てを選択する";
 
-/* Flag: untranslated */
-"Send This Channel to a Friend" = "Send This Channel to a Friend" /* = "このチャンネルを友達に送る" */;
+"Send This Channel to a Friend" = "このチャンネルを友達に送る";
 
 "Services" = "サービス";
 
-"Show All" = "全てを表示";
+"Show All" = "全てを表示する";
 
 "Stop Video" = "ビデオを止める";
 
+"Translate" = "翻訳suru";
+
 "Update All Channels" = "全てのチャンネルを更新する";
 
-"Update Channel" = "チャンネルの更新";
+"Update Channel" = "チャンネルを更新する";
 
-/* Flag: untranslated */
-"Window" = "Window" /* = "ウインドウ" */;
+"Window" = "ウィンドウ";
 
-"Zoom" = "拡大";
+"Zoom" = "拡大する";
 
 "%channel feed%" = "%channel feed%";
 
 "%channel title%" = "%channel title%";
 
-"%donation label%" = "%donation label%";
-
 "-00:00:00" = "-00:00:00";
 
 "00:00:00" = "00:00:00";
 
-/* Flag: untranslated */
-"Box" = "Box" /* = "枠" */;
+"0:00:00" = "0:00:00";
 
-/* Flag: untranslated */
-"FullScreen Controls" = "FullScreen Controls" /* = "全画面の操作" */;
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:88 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:364 */
+"Email to a friend" = "友達に電子メールを送る";
 
-/* File: ../../portable/tabs.py:57 */
+"FullScreen Controls" = "全画面の操作";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:48 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:324 */
+/* File: ../../portable/dialogs.py:103 */
+"Keep" = "保持する";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:116 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:392 */
+"Post to Reddit" = "Redditへ投稿する";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:94 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:370 */
+"Post to Video Bomb" = "ビデオBombへ投稿する";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:102 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:378 */
+"Post to del.icio.us" = "delicioi.usへ投稿する";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:108 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:384 */
+"Post to digg" = "diggへ投稿する";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:73 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:349 */
+"Share" = "共有する";
+
+/* File: ../../portable/frontends/html/compiled_templates/search.py:170 */
+/* File: ../../portable/tabs.py:56 */
 "Video Search" = "ビデオ検索";
 
 "VideoWindow" = "ビデオウィンドウ";
@@ -180,33 +198,30 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "Password:\n" = "パスワード:\n";
 
-/* Flag: untranslated */
-"Username and password required" = "Username and password required" /* = "ユーザー名とパスワードを入力してください" */;
+"Username and password required" = "ユーザー名とパスワードを入力してください";
 
 "Username:\n\n" = "ユーザー名:\n\n";
 
-/* Flag: untranslated */
-"(You must restart Miro for some of these changes to take effect)" = "(You must restart Miro for some of these changes to take effect)";
+"(You must restart Miro for some of these changes to take effect)" = "（これらの変更を反映させるためにMiroを再起動して下さい）";
 
 "(You must restart Miro for this change to take effect)\n" = "（この変更を反映するには、Miroを再起動する必要があります。）\n";
 
-/* Flag: untranslated */
-"(movies directory path goes here)" = "(movies directory path goes here)" /* = "(ムービーのディレクトリパスはここです。)" */;
+"(movies directory path goes here)" = "(映像のディレクトリ経路はここです。)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:1 */
-/* Flag: untranslated */
-"-" = "-";
+"-" = "−";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47 */
+/* File: ../../portable/item.py:551 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49 */
 "1 day" = "1日";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53 */
 "1 month" = "1ヶ月";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
 "10 days" = "10日";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50 */
 "3 days" = "3日";
 
 "3 hours" = "3 時間";
@@ -215,124 +230,101 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "5" = "5";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51 */
 "6 days" = "6日";
 
-/* Flag: untranslated */
-"99999" = "99999" /* = "99999" */;
+"99999" = "99999";
 
-"Add..." = "追加...";
+"Add..." = "追加…";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18 */
-/* Flag: untranslated */
-"All" = "All";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
+"All" = "全て";
 
-/* Flag: untranslated */
-"Auto download default setting for new channels:" = "Auto download default setting for new channels:";
+"Auto download default setting for new channels:" = "新しいチャンネルのための自動ダウンロードの標準設定：";
 
-/* Flag: untranslated */
-"Automatically forward ports" = "Automatically forward ports";
+"Automatically forward ports" = "自動的にポートを転送する";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
-/* Flag: untranslated */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56 */
 "BitTorrent" = "BitTorrent";
+
+"Box" = "ボックス";
 
 "By default, videos expire after:" = "ビデオの標準の有効期限:";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
-"Change..." = "変更...";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
+"Change..." = "変更…";
 
-"Check channels for new content:" = "新しいコンテンツをチェック:";
+"Check channels for new content:" = "チャンネルに新しいコンテンツがあるかを確認する：";
 
-/* Flag: untranslated */
-"Don't auto-download more than this many videos per channel at once:" = "Don't auto-download more than this many videos per channel at once:";
+"Don't auto-download more than this many videos per channel at once:" = "一度に自動ダウンロードするときの、チャンネルあたりのビデオの最大数：";
 
-/* Flag: untranslated */
-"Don't download more than this many videos at once:" = "Don't download more than this many videos at once:";
+"Don't download more than this many videos at once:" = "一度にダウンロードするビデオの最大数：";
 
-/* Flag: untranslated */
-"Folder location" = "Folder location" /* = "フォルダの場所" */;
+"Folder location" = "フォルダの場所";
 
-/* Flag: untranslated */
 "GB\n" = "GB\n";
 
-/* Flag: untranslated */
-"Ignore unencrypted connections" = "Ignore unencrypted connections";
+"Ignore unencrypted connections" = "暗号化されていない接続を無視する";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
-/* Flag: untranslated */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
 "KB/s." = "KB/s.";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42 */
-/* Flag: untranslated */
-"Keep at least this much free space on my drive:" = "Keep at least this much free space on my drive:";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
+"Keep at least this much free space on my drive:" = "ドライブ上に確保すべき最小限の空き領域：";
 
-/* Flag: untranslated */
-"Limit downstream to" = "Limit downstream to";
+"Limit downstream to" = "指定ダウンストリーム先";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52 */
-"Never" = "設定しない";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54 */
+"Never" = "禁止";
 
-/* File: ../../portable/tabs.py:56 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
-"New" = "新しい";
+/* File: ../../portable/tabs.py:55 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21 */
+"New" = "新規";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20 */
-/* Flag: untranslated */
-"Off" = "Off";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22 */
+"Off" = "オフ";
 
 "OtherViews" = "その他のビュー";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24 */
-/* Flag: untranslated */
-"Play videos one after another." = "Play videos one after another." /* = "ビデオを連続再生。" */;
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:26 */
+"Play videos one after another." = "ビデオを次々に再生する。";
 
-/* Flag: untranslated */
-"Remember video position." = "Remember video position." /* = "ビデオの位置を記憶。" */;
+"Remember video position." = "ビデオの位置を記憶する。";
 
-/* File: ../../portable/frontends/html/contextmenu.py:99 */
-/* File: ../../portable/frontends/html/contextmenu.py:104 */
+/* File: ../../portable/frontends/html/contextmenu.py:100 */
+/* File: ../../portable/frontends/html/contextmenu.py:105 */
 /* File: ../../portable/frontends/html/contextmenu.py:178 */
 /* File: ../../portable/frontends/html/contextmenu.py:184 */
 /* File: ../../portable/frontends/html/contextmenu.py:190 */
 /* File: ../../portable/frontends/html/contextmenu.py:199 */
-/* File: ../../portable/frontends/html/contextmenu.py:233 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
-"Remove" = "削除";
+/* File: ../../portable/frontends/html/contextmenu.py:232 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
+"Remove" = "削除する";
 
-/* Flag: untranslated */
-"Run Miro at startup" = "Run Miro at startup" /* = "コンピューター起動時にMiroを起動する" */;
+"Run Miro at startup" = "コンピューター起動時にMiroを起動する";
 
-/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:591 */
-/* Flag: untranslated */
-"Show as Channel" = "Show as Channel" /* = "チャンネルとして表示" */;
+/* File: ../../platform/gtk-x11/plat/frontends/html/callbackhandler.py:595 */
+"Show as Channel" = "チャンネルとして表示する";
 
-/* Flag: untranslated */
-"Stop after each video." = "Stop after each video." /* = "ビデオ毎に停止。" */;
+"Stop after each video." = "ビデオ毎に停止する。";
 
-/* Flag: untranslated */
-"Stop uploads when this ratio is reached:" = "Stop uploads when this ratio is reached:";
+"Stop uploads when this ratio is reached:" = "到達したらアップロードを停止する比率：";
 
-/* Flag: untranslated */
-"Store downloads in this folder:" = "Store downloads in this folder:";
+"Store downloads in this folder:" = "ダウンロードしたものを保存するフォルダ：";
 
-/* Flag: untranslated */
-"To avoid internet slowdowns, limit upstream to" = "To avoid internet slowdowns, limit upstream to";
+"To avoid internet slowdowns, limit upstream to" = "インターネットの減速を防ぐためのアップストリームの制限：";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59 */
-/* Flag: untranslated */
-"Use these ports:" = "Use these ports:";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61 */
+"Use these ports:" = "利用するポート：";
 
-/* File: ../../portable/frontends/html/main.py:319 */
+/* File: ../../portable/frontends/html/main.py:326 */
 "Warn me when I attempt to quit with downloads in progress" = "ダウンロード進行中に終了するときは警告する";
 
-"Watch for new videos in these folders and include them in the Library:" = "以下のフォルダの新しいビデオをライブラリに追加:";
+"Watch for new videos in these folders and include them in the Library:" = "以下のフォルダの新しいビデオはライブラリに追加する：";
 
-/* Flag: untranslated */
-"every 30 minutes" = "every 30 minutes" /* = "30分毎に確認" */;
+"every 30 minutes" = "30分毎に確認";
 
-/* Flag: untranslated */
-"every hour" = "every hour" /* = "1時間毎に確認" */;
+"every hour" = "1時間毎";
 
 "manually" = "手動で確認する";
 
@@ -343,54 +335,51 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Channel" = "チャンネル";
 
 /* File: ../../portable/dialogs.py:99 */
-"Create" = "新規";
+"Create" = "作成する";
 
-"In this:" = "この中に";
+"In this:" = "この中に：";
 
-"Item1" = "アイテム1";
+"Item1" = "項目１";
 
 "Search Engine" = "検索エンジン";
 
-"Search for:" = "検索:";
+"Search for:" = "検索：:";
 
 "URL" = "URL";
 
-/* File: ../../platform/windows-xul/platform/frontends/html/startup.py:59 */
-/* File: ../../platform/gtk-x11/platform/frontends/html/startup.py:56 */
+/* File: ../../platform/gtk-x11/plat/frontends/html/startup.py:56 */
+/* File: ../../platform/windows-xul/plat/frontends/html/startup.py:59 */
 /* Flag: python-format */
-"(parsed %d files - found %d videos)" = "%d個のファイルを解析しました - %d個のビデオが見つかりました";
+"(parsed %d files - found %d videos)" = "（%d個のファイルを解析しました - %d個のビデオが見つかりました）";
 
 "Back" = "戻る";
 
-/* Flag: untranslated */
-"Browse" = "Browse" /* = "ブラウズ" */;
+"Browse" = "閲覧する";
 
-/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:121 */
-"Next" = "次";
+/* File: ../../platform/osx/plat/frontends/html/StartupPanel.py:121 */
+"Next" = "次へ";
 
 /* File: ../../portable/dialogs.py:87 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53 */
 "No" = "いいえ";
 
-"Only search my Movies folder." = "Movies フォルダのみ検索";
+"Only search my Movies folder." = "自分のMoviesフォルダのみを検索する。";
 
-"Search my entire Home folder." = "Home フォルダとサブフォルダを検索";
+"Search my entire Home folder." = "自分のHomeフォルダ全体を検索する：";
 
-"Search this folder:" = "このフォルダで検索:";
+"Search this folder:" = "このフォルダ内を検索する：";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:37 */
 "Searching for Videos" = "ビデオを検索しています";
 
-"The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?" = "Miroプレイヤーでは、コレクションを整理するためにあなたのコンピューターの全ての動画を見つけてくれます";
+"The Miro Player can find all the videos on your computer to help you organize your collection.\n\n\nWould you like Miro to look for video files on your computer?" = "Miroプレイヤーは、あなたのコンピュータにある全てのビデオを見つけて、あなたのコレクションを整理するのお手伝いをします。\n\n\nあなたのコンピュータにあるビデオ・ファイルをMiroに探してほしいですか？";
 
-"The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question." = "次の数画面は、あなたが快適にMiroプレイヤーを楽しむためです。最初の質問は以下です。";
+"The next few screens will help you set up the Miro Player so that it works best for you. Here's the first question." = "次のいくつかの画面で、Miroプレーヤが最適に動作するように設定するのをお手伝いします。まず最初の質問です。";
 
-/* Flag: untranslated */
-"We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" /* = "何時も新のビデオをダウンロードできるので、パソコンを点いてからMiroをスタートして勧めます。。\n\n\nパソコンを点いてからMiroをスタートしてよろしですか？" */;
+"We recommend that you allow the Miro Player to launch when your computer starts up. This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.\n\n\nWould you like to run Miro when your computer starts up?" = "コンピューターの起動時にMiro Playerの自動起動をお勧めします。そうすれば、ダウンロードが完了していなかったビデオが完了し、あなたのチャンネルの新しいビデオを観たいときの準備が整う状態になります。\n\n\nコンピューターの起動時にMiroを自動起動しますか？";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:72 */
-/* Flag: untranslated */
-"Welcome to Internet TV!" = "Welcome to Internet TV!" /* = "インターネットテレビへようこそ！" */;
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:77 */
+"Welcome to Internet TV!" = "インターネットテレビへようこそ！";
 
 "Welcome to Internet TV. There's a lot you can do with the Miro Player: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.\n\n" = "インターネット・テレビの世界へようこそ。ミロを使ってお気に入りのチャンネルから自動的にビデオをダウンロードしたり、新しいビデオを順番で再生したり、ビット・トレントをダウンロードしたり、ビデオを友達に推奨したりなど、いろいろなことができます。\n\n";
 
@@ -400,1141 +389,253 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 "%message%\n%message%" = "%message%\n%message%";
 
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83 */
-"Update Available" = "アップデートできます";
-
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84 */
-/* Flag: python-format */
-"A new version of %s is available for download." = "%sの新しいバージョンがダウンロード可能になりました。";
-
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248 */
-/* Flag: untranslated */
-"Error Bombing Item" = "Error Bombing Item";
-
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250 */
-"Error Recommending Item" = "アイテムのレコメンドに失敗しました";
-
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252 */
-"Error Opening Website" = "ウェブサイトを開けませんでした";
-
-/* File: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256 */
-/* Flag: python-format */
-"There was an error opening %s.  Please try again in a few seconds" = "%sを開くときにエラーが発生しました。数秒後に再試行してください。";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:79 */
-/* Flag: python-format */
-"Error importing modules:\n%s" = "以下のモジュールの読み込み中にエラーが発生しました：\n%s";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:254 */
-"Loading window" = "ロード中";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:255 */
-"onStartup called twice" = "onStartupが２回実行されました";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:739 */
-"Spacebar" = "スペースキー";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:887 */
-"Close to tray?" = "トーレへ閉まりますか？";
-
-/* File: ../../platform/windows-xul/xul/components/pybridge.py:888 */
-"When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "赤い閉じるボタンを押すと、システム・トレイで閉じるか、終了するかを選択してください？後でオプションから設定を変更できます。";
-
-/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55 */
-/* Flag: untranslated */
-"Download Completed" = "Download Completed" /* = "ダウンロード終了" */;
-
-/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56 */
-/* Flag: python-format */
-"Download of video '%s' is finished." = "'%s'のビデオのダウンロードは完了しました。";
-
-/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65 */
-/* Flag: untranslated */
-"Download Failed" = "Download Failed" /* = "ダウンロードが失敗しました" */;
-
-/* File: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66 */
-/* Flag: python-format */
-"Download of video '%s' has failed." = "'%s'のビデオのダウンロードは失敗しました。";
-
-/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:297 */
-"Subscribe to Channel" = "このチャネルに加入します。";
-
-/* File: ../../platform/osx/platform/frontends/html/MainFrame.py:298 */
-"Enter the URL of the channel you would like to subscribe to." = "加入したいチャネルを入力して下さい。";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:79 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8 */
-"General" = "一般";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:81 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37 */
-"Downloads" = "ダウンロード";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:82 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
-"Folders" = "フォルダ";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:83 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41 */
-"Disk Space" = "ディスク領域";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:251 */
-"Movies Directory" = "ビデオ・ディレクトリー";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:252 */
-/* Flag: python-format */
-"Select a Directory to store %s downloads in." = "%sのビデオを保存するディレクトリーをお選びください";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:253 */
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:362 */
-"Select" = "選択";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:262 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
-"Migrate existing movies?" = "既存のビデオを移動しますか？";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:263 */
-/* Flag: python-format */
-"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "新しいダウンロードディレクトリーが選択されました。既存のビデオを%sに移動させますか？（ダウンロード中のビデオはダウンロード完了後に移動されます）";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:360 */
-"View this Directory in the Library" = "このディレクトリーをライブラリーで表示する";
-
-/* File: ../../platform/osx/platform/frontends/html/Preferences.py:361 */
-"Select a Directory to view in the Library." = "ライブラリーに表示するディレクトリーを選択してください";
-
-/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:93 */
-"Finish" = "完了";
-
-/* File: ../../platform/osx/platform/frontends/html/StartupPanel.py:163 */
-"Search!" = "検索";
-
-/* File: ../../platform/osx/platform/frontends/html/Application.py:241 */
-"Pause Video" = "ビデオ一時停止";
-
-/* File: ../../platform/osx/platform/frontends/html/Application.py:250 */
-"Unsupported version of Quicktime" = "このバージョンのQicktimeは、サポートされていません";
-
-/* File: ../../platform/osx/platform/frontends/html/Application.py:251 */
-/* Flag: python-format */
-"To run %s you need the most recent version of Quicktime, which is a free update." = "%s 動作するためには、最新のQuicktimeのバージョンは必要です。無料でダウンロードは可能です。";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:33 */
-"_Remove..." = "削除(_R)";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:34 */
-"_Remove Playlist..." = "プレイリストを削除(_R)";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:35 */
-"_Remove Playlists..." = "複数のプレイリストを削除(_R)";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:36 */
-"_Remove Playlist Folder..." = "プレイリストフォルダを削除(_R)";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:37 */
-"_Remove Playlist Folders..." = "複数のプレイリストフォルダを削除(_R)";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:38 */
-/* File: ../../portable/menubar.py:193 */
-"_Remove Channel..." = "チャンネルを削除(_R)";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:39 */
-/* File: ../../portable/menubar.py:194 */
-"_Remove Channels..." = "複数のチャンネルを削除(_R)";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:40 */
-/* File: ../../portable/menubar.py:196 */
-"_Remove Channel Folder..." = "チャンネルフォルダを削除(_R)";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:41 */
-/* File: ../../portable/menubar.py:195 */
-"_Remove Channel Folders..." = "複数のチャンネルフォルダを削除(_R)";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:42 */
-/* Flag: untranslated */
-"_Remove Miro Guide..." = "_Remove Miro Guide..." /* = "ミロのガイドを非表示にする" */;
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:43 */
-/* Flag: untranslated */
-"_Remove Miro Guides..." = "_Remove Miro Guides..." /* = "ミロのガイドを非表示にする" */;
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:44 */
-"_Remove Video..." = "ビデオを削除(_R)";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:45 */
-"_Remove Videos..." = "複数のビデオを削除(_R)";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:46 */
-"Re_name..." = "名称変更(_N)";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:47 */
-"Re_name Playlist..." = "プレイリストの名前を変更(_N)";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:48 */
-"Re_name Playlist Folder..." = "プレイリストフォルダの名前を変更(_N)";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:49 */
-/* File: ../../portable/menubar.py:192 */
-"Re_name Channel..." = "チャンネルの名前を変更(_N)";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:50 */
-"Re_name Channel Folder..." = "チャンネルフォルダの名前を変更(_N)";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:51 */
-"Re_name Miro Guide..." = "Miroガイドの名前を変更";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:52 */
-/* File: ../../portable/menubar.py:198 */
-"_Update Channel..." = "チャンネルを更新する";
-
-/* File: ../../platform/osx/platform/frontends/html/UIStrings.py:53 */
-/* File: ../../portable/menubar.py:199 */
-"_Update Channels..." = "チャンネルを更新する";
-
-/* File: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319 */
-"Audio" = "サウンド";
-
-/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53 */
-"Settings" = "設定";
-
-/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:56 */
-"Hide" = "表示しない";
-
-/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:58 */
-"Show" = "表示する";
-
-/* File: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:59 */
-/* File: ../../portable/menubar.py:273 */
-/* File: ../../portable/dialogs.py:88 */
-"Quit" = "終了";
-
-/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333 */
-/* Flag: untranslated */
-"New Channel _Guide..." = "New Channel _Guide..." /* = "新規Channel_Guide..." */;
-
-/* File: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582 */
-"Folder Location" = "フョルだの場所";
-
-/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211 */
+/* File: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:211 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3 */
 "Username:" = "ユーザー名:";
 
-/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:222 */
+/* File: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:222 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4 */
 "Password:" = "パスワード:";
 
-/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:416 */
+/* File: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:416 */
 "Unknown Runtime Error" = "不明なランタイムエラー";
 
-/* File: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:417 */
+/* File: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:417 */
 /* Flag: python-format */
 "An unknown error has occurred %s." = "不明なエラー %s";
 
-/* File: ../../portable/dl_daemon/download.py:458 */
-"Error" = "エラー";
+/* File: ../../platform/gtk-x11/plat/frontends/html/callbackhandler.py:333 */
+"New Channel _Guide..." = "新しいChannel_Guide…";
 
-/* File: ../../portable/dl_daemon/download.py:544 */
+/* File: ../../platform/gtk-x11/plat/frontends/html/callbackhandler.py:586 */
+"Folder Location" = "フォルダの場所";
+
+/* File: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:53 */
+/* File: ../../portable/frontends/html/compiled_templates/unittest/simpleunicode.py:36 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:327 */
+"Settings" = "設定";
+
+/* File: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:56 */
+"Hide" = "表示しない";
+
+/* File: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:58 */
+"Show" = "表示する";
+
+/* File: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:59 */
+/* File: ../../portable/dialogs.py:88 */
+/* File: ../../portable/menubar.py:274 */
+"Quit" = "終了する";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:80 */
 /* Flag: python-format */
-"Could not write to %s" = "%sへ書き込みできませんでした";
+"Error importing modules:\n%s" = "以下のモジュールの読み込み中にエラーが発生しました：\n%s";
 
-/* File: ../../portable/dl_daemon/download.py:564 */
-/* File: ../../portable/dl_daemon/download.py:769 */
-"Not enough disk space" = "ディスクの容量が足りません";
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:255 */
+"Loading window" = "ウィンドウにロード中";
 
-/* File: ../../portable/dl_daemon/download.py:565 */
-/* File: ../../portable/dl_daemon/download.py:770 */
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:256 */
+"onStartup called twice" = "onStartupが２回実行されました";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:748 */
+"Spacebar" = "スペースキー";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:896 */
+"Close to tray?" = "トレイへ閉じますか？";
+
+/* File: ../../platform/windows-xul/xul/components/pybridge.py:897 */
+"When you click the red close button, would you like Miro to close to the system tray or quit?  You can change this setting later in the Options." = "赤い閉じるボタンを押したときに、Miroがシステム・トレイへ閉じるか、それとも終了するかのどちらをお望みでしょうか？　この設定は、後でオプションから変更できます。";
+
+/* File: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:83 */
+"Update Available" = "アップデートできます";
+
+/* File: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:84 */
 /* Flag: python-format */
-"%s MB required to store this video" = "このビデオを保存するには%sMBの空き容量が必要です";
+"A new version of %s is available for download." = "%sの新しいバージョンをダウンロードできます。";
 
-/* File: ../../portable/dl_daemon/download.py:781 */
-/* Flag: untranslated */
-"BitTorrent failure" = "BitTorrent failure" /* = "ビット・トレントエラー" */;
+/* File: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:248 */
+"Error Bombing Item" = "破壊的な項目に関するエラー";
 
-/* File: ../../portable/dl_daemon/download.py:782 */
-"BitTorrent failed to startup" = "ビット・トレントの起動が失敗しました";
+/* File: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:250 */
+"Error Recommending Item" = "推薦項目に関するエラー";
 
-/* File: ../../portable/dl_daemon/download.py:954 */
-"Corrupt Torrent" = "トレントが壊れています";
+/* File: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:252 */
+"Error Opening Website" = "ウェブ・サイト開示に関するエラー";
 
-/* File: ../../portable/dl_daemon/download.py:955 */
+/* File: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:256 */
 /* Flag: python-format */
-"The torrent file at %s was not valid" = "%sにあるトレントファイルは正常でありません";
+"There was an error opening %s.  Please try again in a few seconds" = "%sを開くときにエラーが発生しました。数秒後に再試行してください。";
 
-/* File: ../../portable/dl_daemon/download.py:980 */
-"Torrent file deleted" = "トレントファイルが削除されました";
-
-/* File: ../../portable/dl_daemon/download.py:981 */
-/* Flag: untranslated */
-"The torrent file for this item was deleted outside of Miro." = "The torrent file for this item was deleted outside of Miro.";
-
-/* File: ../../portable/frontends/html/contextmenu.py:103 */
-"Update Channels Now" = "チャネルをアップデートする";
-
-/* File: ../../portable/frontends/html/contextmenu.py:128 */
-/* Flag: untranslated */
+/* File: ../../platform/windows-xul/plat/flash.py:82 */
 /* Flag: python-format */
-"%d Downloaded Items" = "%d Downloaded Items" /* = "%dダウンロードの件" */;
+"Restart %s?" = "%s を再スタートする";
 
-/* File: ../../portable/frontends/html/contextmenu.py:130 */
-/* File: ../../portable/frontends/html/contextmenu.py:211 */
-"Play" = "再生";
-
-/* File: ../../portable/frontends/html/contextmenu.py:131 */
-/* File: ../../portable/frontends/html/contextmenu.py:214 */
-/* Flag: untranslated */
-"Add to new playlist" = "Add to new playlist" /* = "新プレリストに着ける" */;
-
-/* File: ../../portable/frontends/html/contextmenu.py:133 */
-/* File: ../../portable/frontends/html/contextmenu.py:207 */
-"Remove From Playlist" = "プレイリストから削除";
-
-/* File: ../../portable/frontends/html/contextmenu.py:135 */
-/* File: ../../portable/frontends/html/contextmenu.py:209 */
-"Remove From the Library" = "ライブラリkara";
-
-/* File: ../../portable/frontends/html/contextmenu.py:141 */
-/* File: ../../portable/frontends/html/contextmenu.py:218 */
-/* Flag: untranslated */
-"Mark as Unwatched" = "Mark as Unwatched" /* = "見たこと無い的する" */;
-
-/* File: ../../portable/frontends/html/contextmenu.py:146 */
-/* File: ../../portable/frontends/html/contextmenu.py:220 */
-/* Flag: untranslated */
-"Mark as Watched" = "Mark as Watched" /* = "「見た」と銘打" */;
-
-/* File: ../../portable/frontends/html/contextmenu.py:151 */
-/* Flag: untranslated */
+/* File: ../../platform/windows-xul/plat/flash.py:83 */
 /* Flag: python-format */
-"%d Available Items" = "%d Available Items" /* = "%d 在り合わせ" */;
+"To enable the Flash plugin, %s needs to be restarted.  Click Yes to shut %s down, or No to do it later." = "フラッシュのプラグインを使えるようにするために、 %s を再起動する必要があります。Yesをクリックして %s を閉じるか、あるいは、それを後で行って下さい。";
 
-/* File: ../../portable/frontends/html/contextmenu.py:152 */
-/* File: ../../portable/frontends/html/contextmenu.py:227 */
-/* File: ../../portable/dialogs.py:93 */
-"Download" = "ダウンロード";
+/* File: ../../platform/windows-xul/plat/flash.py:109 */
+"Install Flash?" = "フラッシュをインストールしますか？";
 
-/* File: ../../portable/frontends/html/contextmenu.py:157 */
+/* File: ../../platform/windows-xul/plat/flash.py:110 */
 /* Flag: python-format */
-"%d Downloading Items" = "%d個のダウンロードアイテムがあります";
+"For the best %s experience, you should install Adobe Flash.  Do this now?" = "%s を最もよく体験するためには、アドビ・フラッシュをインストールするべきです。今インストールしますか？";
 
-/* File: ../../portable/frontends/html/contextmenu.py:159 */
-/* File: ../../portable/frontends/html/contextmenu.py:225 */
-"Cancel Download" = "キャンセル";
+/* File: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:55 */
+"Download Completed" = "ダウンロード完了";
 
-/* File: ../../portable/frontends/html/contextmenu.py:161 */
-/* File: ../../portable/frontends/html/contextmenu.py:225 */
-"Pause Download" = "ダウンロードを一時停止";
-
-/* File: ../../portable/frontends/html/contextmenu.py:164 */
-/* File: ../../portable/frontends/html/contextmenu.py:223 */
-"Restart Upload" = "アップロードを再開する";
-
-/* File: ../../portable/frontends/html/contextmenu.py:170 */
-/* Flag: untranslated */
-"Update Channel Now" = "Update Channel Now" /* = "チャンネルをアップデートする" */;
-
-/* File: ../../portable/frontends/html/contextmenu.py:172 */
-/* File: ../../portable/frontends/html/contextmenu.py:196 */
-"Copy URL to clipboard" = "コピーURL";
-
-/* File: ../../portable/frontends/html/contextmenu.py:173 */
-/* File: ../../portable/feed.py:825 */
-"Rename Channel" = "チャンネル名の変更";
-
-/* File: ../../portable/frontends/html/contextmenu.py:177 */
-"Revert Title to Default" = "タイトルをデフォルトに戻す";
-
-/* File: ../../portable/frontends/html/contextmenu.py:183 */
-/* File: ../../portable/folder.py:142 */
-/* Flag: untranslated */
-"Rename Channel Folder" = "Rename Channel Folder";
-
-/* File: ../../portable/frontends/html/contextmenu.py:189 */
-/* File: ../../portable/folder.py:213 */
-/* Flag: untranslated */
-"Rename Playlist Folder" = "Rename Playlist Folder";
-
-/* File: ../../portable/frontends/html/contextmenu.py:213 */
-"Play Just This Video" = "このビデオだけ再生";
-
-/* File: ../../portable/frontends/html/contextmenu.py:232 */
-/* File: ../../portable/playlist.py:218 */
-/* Flag: untranslated */
-"Rename Playlist" = "Rename Playlist" /* = "プレイリストの名称変更" */;
-
-/* File: ../../portable/frontends/html/main.py:132 */
-/* File: ../../portable/startup.py:237 */
-/* Flag: untranslated */
-"Video Directory Missing" = "Video Directory Missing";
-
-/* File: ../../portable/frontends/html/main.py:133 */
-/* Flag: untranslated */
-"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro.";
-
-/* File: ../../portable/frontends/html/main.py:190 */
-/* File: ../../portable/theme.py:126 */
-/* Flag: untranslated */
-"Custom Channels" = "Custom Channels";
-
-/* File: ../../portable/frontends/html/main.py:190 */
-/* File: ../../portable/theme.py:126 */
-/* Flag: untranslated */
-"You are running a version of $longAppName with a custom set of channels." = "You are running a version of $longAppName with a custom set of channels.";
-
-/* File: ../../portable/frontends/html/main.py:269 */
-/* File: ../../portable/httpclient.py:139 */
-"Internal Error" = "インターナルエラー";
-
-/* File: ../../portable/frontends/html/main.py:269 */
-"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Miroはエラーしまいました。直すためにレポートを出してください。";
-
-/* File: ../../portable/frontends/html/main.py:269 */
-/* Flag: untranslated */
-"Include entire program database including all video and channel metadata with crash report" = "Include entire program database including all video and channel metadata with crash report";
-
-/* File: ../../portable/frontends/html/main.py:269 */
-/* Flag: untranslated */
-"Describe what you were doing that caused this error" = "Describe what you were doing that caused this error";
-
-/* File: ../../portable/frontends/html/main.py:284 */
+/* File: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:56 */
 /* Flag: python-format */
-"%s Version Alert" = "%s バージョンアップできます！";
+"Download of video '%s' is finished." = "'%s'のビデオのダウンロードは完了しました。";
 
-/* File: ../../portable/frontends/html/main.py:285 */
+/* File: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:65 */
+"Download Failed" = "ダウンロードが失敗しました";
+
+/* File: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:66 */
 /* Flag: python-format */
-"A new version of %s is available. Would you like to download it now?" = "新作%sがあります。ダウンロードをよろしいですか？";
+"Download of video '%s' has failed." = "'%s'のビデオのダウンロードは失敗しました。";
 
-/* File: ../../portable/frontends/html/main.py:290 */
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:79 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8 */
+"General" = "一般";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:81 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
+"Downloads" = "ダウンロード";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:82 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29 */
+"Folders" = "フォルダ";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:83 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
+"Disk Space" = "ディスク領域";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:251 */
+"Movies Directory" = "Moviesディレクトリー";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:252 */
 /* Flag: python-format */
-"%s Version Check" = "%sのバージョンを調べる";
+"Select a Directory to store %s downloads in." = "%sのダウンロードされたものを保存するディレクトリーを選んで下さい。";
 
-/* File: ../../portable/frontends/html/main.py:291 */
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:253 */
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:362 */
+"Select" = "選択する";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:262 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:53 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1 */
+"Migrate existing movies?" = "既存の映像を移動しますか？";
+
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:263 */
 /* Flag: python-format */
-"%s is up to date." = "%sは最新です。";
+"You've selected a new folder to download movies to.  Should %s migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish)." = "映像をダウンロードするための新しいフォルダが選択されました。そこに、あなたがダウンロードした既存のものを%sに移動させますか？（現在（ダウンロード中のビデオはダウンロード完了後に移動されます。）";
 
-/* File: ../../portable/frontends/html/main.py:309 */
-/* Flag: untranslated */
-"Are you sure you want to quit?" = "Are you sure you want to quit?";
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:360 */
+"View this Directory in the Library" = "このディレクトリーをライブラリーで表示する";
 
-/* File: ../../portable/frontends/html/main.py:311 */
-/* Flag: untranslated */
-"Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?";
+/* File: ../../platform/osx/plat/frontends/html/Preferences.py:361 */
+"Select a Directory to view in the Library." = "ライブラリーに表示するディレクトリーを選択してください";
 
-/* File: ../../portable/frontends/html/main.py:340 */
-/* Flag: untranslated */
-"Import OPML File" = "Import OPML File" /* = "OPMLファイルを使う" */;
+/* File: ../../platform/osx/plat/frontends/html/MainFrame.py:271 */
+"Subscribe to Channel" = "このチャネルに加入します。";
 
-/* File: ../../portable/frontends/html/main.py:342 */
-"OPML Files" = "OPMLファイル";
+/* File: ../../platform/osx/plat/frontends/html/MainFrame.py:272 */
+"Enter the URL of the channel you would like to subscribe to." = "加入したいチャネルのURLを入力して下さい。";
 
-/* File: ../../portable/frontends/html/main.py:347 */
-"Export OPML File" = "OPMLファイルをエクスポートする";
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:33 */
+"_Remove..." = "削除する(_R)…";
 
-/* File: ../../portable/frontends/html/templatedisplay.py:325 */
-/* Flag: untranslated */
-"Invalid Value" = "Invalid Value";
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:34 */
+"_Remove Playlist..." = "プレイリストを削除する(_R)…";
 
-/* File: ../../portable/frontends/html/templatedisplay.py:326 */
-/* Flag: untranslated */
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:35 */
+"_Remove Playlists..." = "複数のプレイリストを削除する(_R)…";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:36 */
+"_Remove Playlist Folder..." = "プレイリストフォルダを削除する(_R)…";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:37 */
+"_Remove Playlist Folders..." = "複数のプレイリストフォルダを削除する(_R)…";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:38 */
+/* File: ../../portable/menubar.py:192 */
+"_Remove Channel..." = "チャンネルを削除する(_R)…";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:39 */
+/* File: ../../portable/menubar.py:193 */
+"_Remove Channels..." = "複数のチャンネルを削除する(_R)…";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:40 */
+/* File: ../../portable/menubar.py:195 */
+"_Remove Channel Folder..." = "チャンネル・フォルダを削除する(_R)…";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:41 */
+/* File: ../../portable/menubar.py:194 */
+"_Remove Channel Folders..." = "複数のチャンネルフォルダを削除する(_R)…";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:42 */
+"_Remove Miro Guide..." = "Miroのガイドを削除する（_R）…";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:43 */
+"_Remove Miro Guides..." = "Miroのガイドを削除する（_R）…";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:44 */
+"_Remove Video..." = "ビデオを削除する(_R)…";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:45 */
+"_Remove Videos..." = "複数のビデオを削除する(_R)…";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:46 */
+"Re_name..." = "名前を変更する(_N)…";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:47 */
+"Re_name Playlist..." = "プレイリストの名前を変更する(_N)…";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:48 */
+"Re_name Playlist Folder..." = "プレイリストフォルダの名前を変更する(_N)…";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:49 */
+/* File: ../../portable/menubar.py:191 */
+"Re_name Channel..." = "チャンネルの名前を変更する(_N)…";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:50 */
+"Re_name Channel Folder..." = "チャンネル・フォルダの名前を変更する(_N)…";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:51 */
+"Re_name Miro Guide..." = "Miroガイドの名前を変更する（_N）…";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:52 */
+/* File: ../../portable/menubar.py:197 */
+"_Update Channel..." = "チャンネルを更新する（_U）…";
+
+/* File: ../../platform/osx/plat/frontends/html/UIStrings.py:53 */
+/* File: ../../portable/menubar.py:198 */
+"_Update Channels..." = "チャンネルを更新する（_U）…";
+
+/* File: ../../platform/osx/plat/frontends/html/StartupPanel.py:93 */
+"Finish" = "完了";
+
+/* File: ../../platform/osx/plat/frontends/html/StartupPanel.py:163 */
+"Search!" = "検索！";
+
+/* File: ../../platform/osx/plat/frontends/html/Application.py:241 */
+"Pause Video" = "ビデオ一時停止する";
+
+/* File: ../../platform/osx/plat/frontends/html/Application.py:250 */
+"Unsupported version of Quicktime" = "このバージョンのQicktimeは、サポートされていません";
+
+/* File: ../../platform/osx/plat/frontends/html/Application.py:251 */
 /* Flag: python-format */
-"%s is invalid.  You must enter a non-negative number." = "%s is invalid.  You must enter a non-negative number.";
+"To run %s you need the most recent version of Quicktime, which is a free update." = "%s　を動作させるためには、最新版のQuicktimeが必要です。最新版へのアップデートは無料です。";
 
-/* File: ../../portable/frontends/html/templatedisplay.py:452 */
-/* Flag: untranslated */
-"Error Revealing File" = "Error Revealing File";
-
-/* File: ../../portable/frontends/html/templatedisplay.py:453 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"The file \"%s\" was deleted from outside Miro." = "The file \"%s\" was deleted from outside Miro.";
-
-/* File: ../../portable/frontends/html/templatedisplay.py:560 */
-/* Flag: untranslated */
-"Error Changing Movies Directory" = "Error Changing Movies Directory";
-
-/* File: ../../portable/frontends/html/templatedisplay.py:561 */
-/* Flag: untranslated */
-"You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory.";
-
-/* File: ../../portable/frontends/html/templatedisplay.py:664 */
-/* Flag: untranslated */
-" - Invalid URL" = " - Invalid URL";
-
-/* File: ../../portable/frontends/html/templatedisplay.py:665 */
-/* Flag: untranslated */
-"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "The address you entered is not a valid URL.\nPlease double check and try again.\n\n";
-
-/* File: ../../portable/frontends/html/templatedisplay.py:691 */
-/* Flag: untranslated */
-"$shortAppName - Add Channel" = "$shortAppName - Add Channel";
-
-/* File: ../../portable/frontends/html/templatedisplay.py:691 */
-/* Flag: untranslated */
-"Enter the URL of the channel to add" = "Enter the URL of the channel to add";
-
-/* File: ../../portable/frontends/html/templatedisplay.py:712 */
-/* Flag: untranslated */
-"$shortAppName - Add Miro Guide" = "$shortAppName - Add Miro Guide";
-
-/* File: ../../portable/frontends/html/templatedisplay.py:712 */
-/* Flag: untranslated */
-"Enter the URL of the Miro Guide to add" = "Enter the URL of the Miro Guide to add";
-
-/* File: ../../portable/frontends/html/templatedisplay.py:718 */
-/* Flag: untranslated */
-"$shortAppName - Download Video" = "$shortAppName - Download Video";
-
-/* File: ../../portable/frontends/html/templatedisplay.py:718 */
-/* Flag: untranslated */
-"Enter the URL of the video to download" = "Enter the URL of the video to download";
-
-/* File: ../../portable/tabs.py:55 */
-"Library" = "ライブラリ";
-
-/* File: ../../portable/tabs.py:58 */
-"Downloading" = "ダウンロード中";
-
-/* File: ../../portable/downloader.py:234 */
-"activity" = "動き";
-
-/* File: ../../portable/downloader.py:268 */
-/* File: ../../portable/httpclient.py:127 */
-/* File: ../../portable/httpclient.py:155 */
-"File not found" = "ファイルが見つかりませんでした";
-
-/* File: ../../portable/downloader.py:269 */
-"Flash URL Scraping Error" = "Flash URLの処理エラー";
-
-/* File: ../../portable/downloader.py:445 */
-"starting up" = "起動中";
-
-/* File: ../../portable/playlist.py:219 */
-/* Flag: python-format */
-"Enter a new name for the playlist %s" = "プレイリスト %s の新しい名前:";
-
-/* File: ../../portable/playlist.py:241 */
-"Create Playlist" = "プレイリストを作る";
-
-/* File: ../../portable/playlist.py:242 */
-"Enter a name for the new playlist" = "新しいプレイリストの名前:";
-
-/* File: ../../portable/opml.py:144 */
-"OPML Import failed" = "OPMLのインポートに失敗しました";
-
-/* File: ../../portable/opml.py:145 */
-"The selected OPML file appears to be invalid. Import was interrupted." = "選択したOPMLファイルは無効のようです。インポートを中止しました。";
-
-/* File: ../../portable/opml.py:150 */
-"OPML Import summary" = "OPMLインポート結果の要約";
-
-/* File: ../../portable/util.py:266 */
-/* Flag: python-format */
-"%1.1fGB" = "%1.1fGB";
-
-/* File: ../../portable/util.py:268 */
-/* Flag: python-format */
-"%dGB" = "%dGB";
-
-/* File: ../../portable/util.py:272 */
-/* Flag: python-format */
-"%1.1fMB" = "%1.1fMB";
-
-/* File: ../../portable/util.py:274 */
-/* Flag: python-format */
-"%dMB" = "%dMB";
-
-/* File: ../../portable/util.py:278 */
-/* Flag: python-format */
-"%1.1fKB" = "%1.1fKB";
-
-/* File: ../../portable/util.py:280 */
-/* Flag: python-format */
-"%dKB" = "%dKB";
-
-/* File: ../../portable/util.py:284 */
-/* Flag: python-format */
-"%1.1fB" = "%1.1fB";
-
-/* File: ../../portable/util.py:286 */
-/* Flag: python-format */
-"%dB" = "%dB";
-
-/* File: ../../portable/iheartmiro.py:82 */
-/* Flag: untranslated */
-"An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help." = "An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple Firefox extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\nIf you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help.";
-
-/* File: ../../portable/menubar.py:158 */
-/* Flag: untranslated */
-"_Open" = "_Open";
-
-/* File: ../../portable/menubar.py:159 */
-/* Flag: untranslated */
-"_Download Video" = "_Download Video" /* = "ビデオをダウンロード" */;
-
-/* File: ../../portable/menubar.py:161 */
-/* Flag: untranslated */
-"Check _Version" = "Check _Version";
-
-/* File: ../../portable/menubar.py:163 */
-"_Remove Video" = "削除";
-
-/* File: ../../portable/menubar.py:164 */
-/* Flag: untranslated */
-"_Remove Videos" = "_Remove Videos";
-
-/* File: ../../portable/menubar.py:165 */
-/* Flag: untranslated */
-"Re_name Video" = "Re_name Video";
-
-/* File: ../../portable/menubar.py:166 */
-"Save Video _As..." = "名前をつけて保存";
-
-/* File: ../../portable/menubar.py:167 */
-"Save Videos _As..." = "別名で保存...";
-
-/* File: ../../portable/menubar.py:168 */
-/* Flag: untranslated */
-"Copy Video _URL" = "Copy Video _URL" /* = "ビデオをコピーする" */;
-
-/* File: ../../portable/menubar.py:170 */
-/* Flag: untranslated */
-"_Options..." = "_Options..." /* = "オプショーン" */;
-
-/* File: ../../portable/menubar.py:171 */
-"_Quit" = "終了(_Q)";
-
-/* File: ../../portable/menubar.py:179 */
-/* Flag: untranslated */
-"Cu_t" = "Cu_t";
-
-/* File: ../../portable/menubar.py:180 */
-"_Copy" = "_コピー";
-
-/* File: ../../portable/menubar.py:181 */
-"_Paste" = "_貼り付け";
-
-/* File: ../../portable/menubar.py:182 */
-"Select _All" = "全て_選択";
-
-/* File: ../../portable/menubar.py:183 */
-"_Delete" = "_削除";
-
-/* File: ../../portable/menubar.py:187 */
-/* Flag: untranslated */
-"Add _Channel" = "Add _Channel";
-
-/* File: ../../portable/menubar.py:188 */
-/* Flag: untranslated */
-"New Searc_h Channel..." = "New Searc_h Channel...";
-
-/* File: ../../portable/menubar.py:189 */
-/* Flag: untranslated */
-"New _Folder..." = "New _Folder...";
-
-/* File: ../../portable/menubar.py:190 */
-/* Flag: untranslated */
-"Add Channel _Guide..." = "Add Channel _Guide...";
-
-/* File: ../../portable/menubar.py:200 */
-/* Flag: untranslated */
-"Update _All Channels" = "Update _All Channels";
-
-/* File: ../../portable/menubar.py:202 */
-/* Flag: untranslated */
-"_Import Channels (OPML)..." = "_Import Channels (OPML)...";
-
-/* File: ../../portable/menubar.py:203 */
-/* Flag: untranslated */
-"E_xport Channels (OPML)..." = "E_xport Channels (OPML)...";
-
-/* File: ../../portable/menubar.py:205 */
-/* Flag: untranslated */
-"_Send this channel to a friend" = "_Send this channel to a friend" /* = "友達にこのチャンネルを送る(_S)" */;
-
-/* File: ../../portable/menubar.py:206 */
-/* Flag: untranslated */
-"Copy Channel _Link" = "Copy Channel _Link";
-
-/* File: ../../portable/menubar.py:209 */
-/* Flag: untranslated */
-"New _Playlist" = "New _Playlist";
-
-/* File: ../../portable/menubar.py:210 */
-/* Flag: untranslated */
-"New Playlist Fol_der" = "New Playlist Fol_der";
-
-/* File: ../../portable/menubar.py:212 */
-/* Flag: untranslated */
-"Re_name Playlist" = "Re_name Playlist" /* = "プレイリストの名前を変える(_N)" */;
-
-/* File: ../../portable/menubar.py:213 */
-/* Flag: untranslated */
-"_Remove Playlist" = "_Remove Playlist" /* = "プレイリストの削除(_R)" */;
-
-/* File: ../../portable/menubar.py:214 */
-/* Flag: untranslated */
-"_Remove Playlists" = "_Remove Playlists";
-
-/* File: ../../portable/menubar.py:215 */
-/* Flag: untranslated */
-"_Remove Playlist Folders" = "_Remove Playlist Folders";
-
-/* File: ../../portable/menubar.py:216 */
-/* Flag: untranslated */
-"_Remove Playlist Folder" = "_Remove Playlist Folder";
-
-/* File: ../../portable/menubar.py:226 */
-/* File: ../../portable/menubar.py:227 */
-/* Flag: untranslated */
-"_Play" = "_Play" /* = "開始(_P)" */;
-
-/* File: ../../portable/menubar.py:228 */
-/* Flag: untranslated */
-"_Pause" = "_Pause";
-
-/* File: ../../portable/menubar.py:229 */
-"_Stop" = "停止(_S)";
-
-/* File: ../../portable/menubar.py:231 */
-"_Next Video" = "次のビデオ";
-
-/* File: ../../portable/menubar.py:232 */
-"_Previous Video" = "前のビデオ";
-
-/* File: ../../portable/menubar.py:234 */
-/* Flag: untranslated */
-"Skip _Forward" = "Skip _Forward" /* = "次へスキップ(_F)" */;
-
-/* File: ../../portable/menubar.py:235 */
-/* Flag: untranslated */
-"Skip _Back" = "Skip _Back" /* = "前へスキップ(_B)" */;
-
-/* File: ../../portable/menubar.py:237 */
-/* Flag: untranslated */
-"Volume _Up" = "Volume _Up" /* = "音を大きく(_U)" */;
-
-/* File: ../../portable/menubar.py:238 */
-/* Flag: untranslated */
-"Volume _Down" = "Volume _Down" /* = "音を小さく(_D)" */;
-
-/* File: ../../portable/menubar.py:240 */
-"_Fullscreen" = "全画面表示";
-
-/* File: ../../portable/menubar.py:244 */
-/* Flag: untranslated */
-"_About" = "_About" /* = "Miro について" */;
-
-/* File: ../../portable/menubar.py:245 */
-"_Donate" = "寄付(_D)";
-
-/* File: ../../portable/menubar.py:246 */
-/* File: ../../portable/menubar.py:261 */
-"_Help" = "ヘルプ(_H)";
-
-/* File: ../../portable/menubar.py:248 */
-"Report a _Bug" = "バグを報告(_B)";
-
-/* File: ../../portable/menubar.py:252 */
-/* Flag: untranslated */
-"_Video" = "_Video" /* = "ビデオ(_V)" */;
-
-/* File: ../../portable/menubar.py:254 */
-"_File" = "ファイル(_F)";
-
-/* File: ../../portable/menubar.py:258 */
-/* Flag: untranslated */
-"_Channels" = "_Channels" /* = "チャンネル(_C)" */;
-
-/* File: ../../portable/menubar.py:259 */
-/* Flag: untranslated */
-"_Playlists" = "_Playlists" /* = "プレイリスト(_P)" */;
-
-/* File: ../../portable/menubar.py:260 */
-"P_layback" = "再生(_P)";
-
-/* File: ../../portable/menubar.py:265 */
-/* Flag: untranslated */
-"Play Unwatched ($numUnwatched)" = "Play Unwatched ($numUnwatched)" /* = "見ていないビデオを再生 ($numUnwatched)" */;
-
-/* File: ../../portable/menubar.py:266 */
-/* Flag: untranslated */
-"Pause All Downloads ($numDownloading)" = "Pause All Downloads ($numDownloading)" /* = "ダウンロードを停止 ($numDownloading)" */;
-
-/* File: ../../portable/menubar.py:267 */
-"Resume All Downloads ($numPaused)" = "ダウンロードを再開 ($numPaused)";
-
-/* File: ../../portable/menubar.py:269 */
-/* Flag: untranslated */
-"Options..." = "Options...";
-
-/* File: ../../portable/menubar.py:271 */
-/* Flag: untranslated */
-"Hide Window" = "Hide Window";
-
-/* File: ../../portable/menubar.py:272 */
-/* Flag: untranslated */
-"Show Window" = "Show Window";
-
-/* File: ../../portable/theme.py:137 */
-/* Flag: untranslated */
-"Starter Channels" = "Starter Channels";
-
-/* File: ../../portable/theme.py:154 */
-/* Flag: untranslated */
-"Example Playlist" = "Example Playlist";
-
-/* File: ../../portable/httpclient.py:81 */
-/* Flag: python-format */
-"Error: %s" = "エラー: %s";
-
-/* File: ../../portable/httpclient.py:96 */
-/* File: ../../portable/httpclient.py:102 */
-"Can't connect" = "接続できません";
-
-/* File: ../../portable/httpclient.py:97 */
-/* Flag: python-format */
-"Connection Error: %s" = "接続エラー: %s";
-
-/* File: ../../portable/httpclient.py:103 */
-"SSL connection error" = "SSL接続エラー";
-
-/* File: ../../portable/httpclient.py:107 */
-"HTTP error" = "HTTPエラー";
-
-/* File: ../../portable/httpclient.py:110 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Bad Status Line: %s" = "Bad Status Line: %s";
-
-/* File: ../../portable/httpclient.py:113 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Bad Header Line: %s" = "Bad Header Line: %s";
-
-/* File: ../../portable/httpclient.py:116 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Bad Chunk size: %s" = "Bad Chunk size: %s";
-
-/* File: ../../portable/httpclient.py:119 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Expected CRLF got: %r" = "Expected CRLF got: %r";
-
-/* File: ../../portable/httpclient.py:122 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%s closed connection" = "%s closed connection";
-
-/* File: ../../portable/httpclient.py:128 */
-"Got 404 status code" = "ファイルが見つかりませんでした";
-
-/* File: ../../portable/httpclient.py:130 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Bad Status Code: %s" = "Bad Status Code: %s";
-
-/* File: ../../portable/httpclient.py:134 */
-"Authorization failed" = "認証できません";
-
-/* File: ../../portable/httpclient.py:140 */
-/* Flag: untranslated */
-"Pipeline request never started" = "Pipeline request never started";
-
-/* File: ../../portable/httpclient.py:144 */
-"Timeout" = "タイムアウト";
-
-/* File: ../../portable/httpclient.py:145 */
-/* Flag: python-format */
-"Connection to %s timed out" = "%s への接続はタイムアウトしました";
-
-/* File: ../../portable/httpclient.py:149 */
-"Invalid URL" = "URLが無効です";
-
-/* File: ../../portable/httpclient.py:150 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"\"%s\" is not a valid URL" = "\"%s\" is not a valid URL";
-
-/* File: ../../portable/httpclient.py:156 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"The file: \"%s\" doesn't exist" = "The file: \"%s\" doesn't exist";
-
-/* File: ../../portable/httpclient.py:160 */
-/* Flag: untranslated */
-"Read error" = "Read error";
-
-/* File: ../../portable/httpclient.py:161 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Error while reading from \"%s\"" = "Error while reading from \"%s\"";
-
-/* File: ../../portable/httpclient.py:354 */
-/* Flag: untranslated */
-"Unknown Error code" = "Unknown Error code";
-
-/* File: ../../portable/httpclient.py:386 */
-"Connection closed" = "接続停止";
-
-/* File: ../../portable/httpclient.py:811 */
-/* Flag: untranslated */
-"Unknown" = "Unknown" /* = "不明な" */;
-
-/* File: ../../portable/httpclient.py:812 */
-/* Flag: untranslated */
-"Internal Error: Not ready to send" = "Internal Error: Not ready to send";
-
-/* File: ../../portable/extrastrings.py:33 */
-/* File: ../../portable/feed.py:2409 */
-/* File: ../../portable/feed.py:2499 */
-"Search" = "検索";
-
-/* File: ../../portable/feed.py:384 */
-"never" = "無期限";
-
-/* File: ../../portable/feed.py:386 */
-/* File: ../../portable/item.py:554 */
-/* Flag: python-format */
-"%d hours" = "%d時間";
-
-/* File: ../../portable/feed.py:388 */
-/* Flag: python-format */
-"%d day" = "%d日";
-
-/* File: ../../portable/feed.py:390 */
-/* File: ../../portable/item.py:552 */
-/* Flag: python-format */
-"%d days" = "%d日";
-
-/* File: ../../portable/feed.py:392 */
-/* Flag: python-format */
-"%d months" = "%d月間";
-
-/* File: ../../portable/feed.py:826 */
-/* Flag: python-format */
-"Enter a new name for the channel %s" = "%sチャンネルに新しい名前を適用する";
-
-/* File: ../../portable/feed.py:923 */
-"Error loading feed" = "フィードの読み込みに失敗しました";
-
-/* File: ../../portable/feed.py:924 */
-/* Flag: python-format */
-"Couldn't load the feed at %s (%s)." = "%sでフィードを読み込めませんでした(%s)";
-
-/* File: ../../portable/feed.py:927 */
-"Would you like to keep the feed?" = "フィードを保存したいですか？";
-
-/* File: ../../portable/feed.py:1040 */
-"Bad content-type" = "content-type　エラー";
-
-/* File: ../../portable/feed.py:1053 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
-"Channel is not compatible with $shortAppName!" = "チャンネスは$shortAppNameと互換性がありません！";
-
-/* File: ../../portable/feed.py:1054 */
-"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "私たちはファイルを取得するために最善を尽くします。ビデオを表示するのに多少時間がかかり、表示もおかしくなるかもしれません。$urlの発行者に連絡を取って$shortAppNameで機能するフォーマットのフィードを発行してくれるように頼んでください。";
-
-/* File: ../../portable/feed.py:2513 */
-"Local Files" = "ローカルファイル";
-
-/* File: ../../portable/feed.py:2527 */
-/* Flag: untranslated */
-"Playing File" = "Playing File" /* = "ファイルを上げる" */;
-
-/* File: ../../portable/storedatabase.py:859 */
-/* File: ../../portable/storedatabase.py:1258 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%s database save succeeded" = "%s database save succeeded" /* = "データベース %s の保存に成功しました" */;
-
-/* File: ../../portable/storedatabase.py:860 */
-/* File: ../../portable/storedatabase.py:1259 */
-/* Flag: untranslated */
-"The database has been successfully saved. It is now safe to quit without losing any data." = "The database has been successfully saved. It is now safe to quit without losing any data." /* = "データベースの保存に成功しました。終了してもデータは失われません。" */;
-
-/* File: ../../portable/storedatabase.py:867 */
-/* File: ../../portable/storedatabase.py:1267 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%s database save failed" = "%s database save failed" /* = "データベース %s の保存に失敗しました" */;
-
-/* File: ../../portable/storedatabase.py:868 */
-/* File: ../../portable/storedatabase.py:1268 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." /* = "%s はディスクフルの為データベースを保存できませんでした。\nディスクからファイルを削除するかムービーをコレクションから削除することをお勧めしますが、\n変更が失われるかもしれません。" */;
-
-/* File: ../../portable/dialogs.py:89 */
-"Ignore" = "無視 (Ignore)";
-
-/* File: ../../portable/dialogs.py:90 */
-"Submit Crash Report" = "クラッシュレポートを送信する";
-
-/* File: ../../portable/dialogs.py:91 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:48 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
-"Migrate" = "移動";
-
-/* File: ../../portable/dialogs.py:92 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:36 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
-"Don't Migrate" = "移動しない";
-
-/* File: ../../portable/dialogs.py:94 */
-/* Flag: untranslated */
-"Remove Entry" = "Remove Entry";
-
-/* File: ../../portable/dialogs.py:95 */
-"Delete File" = "ファイルの削除";
-
-/* File: ../../portable/dialogs.py:96 */
-"Delete Files" = "ファイルを削除";
-
-/* File: ../../portable/dialogs.py:97 */
-"Keep Videos" = "ビデオを持て";
-
-/* File: ../../portable/dialogs.py:98 */
-"Delete Videos" = "ビデオを削除";
-
-/* File: ../../portable/dialogs.py:100 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
-/* Flag: untranslated */
-"Create Channel" = "Create Channel" /* = "チャンネルをを作る" */;
-
-/* File: ../../portable/dialogs.py:101 */
-"Add" = "挿入";
-
-/* File: ../../portable/dialogs.py:102 */
-"Add Into New Folder" = "新フォルダに挿入";
-
-/* File: ../../portable/dialogs.py:103 */
-"Keep" = "保持";
-
-/* File: ../../portable/dialogs.py:105 */
-"Not Now" = "後で";
-
-/* File: ../../portable/dialogs.py:106 */
-"Close to Tray" = "トレイni";
-
-/* File: ../../portable/dialogs.py:107 */
-"Launch Miro" = "Miroを起動する";
-
-/* File: ../../portable/dialogs.py:108 */
-"Download Anyway" = "無視してダウンロードする";
-
-/* File: ../../portable/dialogs.py:109 */
-/* Flag: untranslated */
-"Install iHeartMiro" = "Install iHeartMiro";
-
-/* File: ../../portable/dialogs.py:110 */
-/* Flag: untranslated */
-"Don't Install" = "Don't Install";
-
-/* File: ../../portable/dialogs.py:231 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
-"New Search Channel" = "新しい検索チャンネル";
-
-/* File: ../../portable/dialogs.py:231 */
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:27 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
-"A search channel contains items that match a search term." = "検索チャンネルには検索対象と合致したアイテムが入っています";
-
-/* File: ../../portable/controller.py:196 */
-/* File: ../../portable/controller.py:210 */
-/* File: ../../portable/controller.py:254 */
-/* File: ../../portable/controller.py:280 */
-/* File: ../../portable/controller.py:300 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Remove %s" = "Remove %s";
-
-/* File: ../../portable/controller.py:197 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Are you sure you want to remove the guide %s?" = "Are you sure you want to remove the guide %s?";
-
-/* File: ../../portable/controller.py:211 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Are you sure you want to remove %s" = "Are you sure you want to remove %s";
-
-/* File: ../../portable/controller.py:214 */
-/* File: ../../portable/controller.py:259 */
-/* File: ../../portable/controller.py:285 */
-/* File: ../../portable/controller.py:304 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Remove %s channels" = "Remove %s channels";
-
-/* File: ../../portable/controller.py:216 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Are you sure you want to remove these %s playlists" = "Are you sure you want to remove these %s playlists";
-
-/* File: ../../portable/controller.py:255 */
-/* Flag: untranslated */
-"What would you like to do with the videos in this channel that you've downloaded?" = "What would you like to do with the videos in this channel that you've downloaded?";
-
-/* File: ../../portable/controller.py:260 */
-/* Flag: untranslated */
-"What would you like to do with the videos in these channels that you've downloaded?" = "What would you like to do with the videos in these channels that you've downloaded?";
-
-/* File: ../../portable/controller.py:281 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "Are you sure you want to remove %s?  Any downloads in progress will be canceled.";
-
-/* File: ../../portable/controller.py:286 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled.";
-
-/* File: ../../portable/controller.py:301 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Are you sure you want to remove %s?" = "Are you sure you want to remove %s?";
-
-/* File: ../../portable/controller.py:305 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Are you sure you want to remove these %s channels?" = "Are you sure you want to remove these %s channels?";
-
-/* File: ../../portable/controller.py:318 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Stop watching %s" = "Stop watching %s";
-
-/* File: ../../portable/controller.py:319 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Are you sure you want to stop watching %s?" = "Are you sure you want to stop watching %s?";
-
-/* File: ../../portable/controller.py:322 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Stop watching %s directories" = "Stop watching %s directories";
-
-/* File: ../../portable/controller.py:323 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Are you sure you want to stop watching these %s directories?" = "Are you sure you want to stop watching these %s directories?";
-
-/* File: ../../portable/controller.py:497 */
-/* Flag: untranslated */
-"Error Saving Video" = "Error Saving Video";
-
-/* File: ../../portable/controller.py:499 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"An error occured while trying to save %s.  Please check that the file has not been deleted and try again." = "An error occured while trying to save %s.  Please check that the file has not been deleted and try again.";
+/* File: ../../platform/osx/plat/renderers/QuicktimeRenderer.py:319 */
+"Audio" = "オーディオ";
 
 /* File: ../../portable/singleclick.py:99 */
 "Download already exists" = "ダウンロードするファイルは既に存在します";
 
 /* File: ../../portable/singleclick.py:100 */
-"That URL is already an external download." = "このURLは外ダウンロードしてあります。";
+"That URL is already an external download." = "そのURLは既に外からのダウンロードです。";
 
 /* File: ../../portable/singleclick.py:106 */
 "Miro will begin downloading it now." = "Miroはすぐにダウンロードを開始します。";
@@ -1545,550 +646,1499 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 /* File: ../../portable/singleclick.py:110 */
 "It has already been downloaded." = "既にダウンロードされています";
 
-/* File: ../../portable/singleclick.py:137 */
-"Download Error" = "ダウンロードエラー";
+/* File: ../../portable/singleclick.py:142 */
+"Download Error" = "ダウンロード・エラー";
 
-/* File: ../../portable/singleclick.py:138 */
+/* File: ../../portable/singleclick.py:143 */
 /* Flag: python-format */
 "Miro is not able to download a file at this URL:\n\nURL: %s" = "MiroはこのURLでファイルをダウンロードできません。\n\nURL: %s";
 
-/* File: ../../portable/singleclick.py:146 */
-"File Download" = "ダウンロード";
+/* File: ../../portable/singleclick.py:191 */
+"File Download" = "ファイルのダウンロード";
 
-/* File: ../../portable/singleclick.py:147 */
+/* File: ../../portable/singleclick.py:192 */
 /* Flag: python-format */
-"This file at %s does not appear to be audio, video, or an RSS feed." = "ファイル「%s」はオーディオかビデオかフィードじゃありません。";
+"This file at %s does not appear to be audio, video, or an RSS feed." = "%sにあるこのファイルは、オーディオでもビデオでもRSSフィードでもないように見受けられます。";
 
-/* File: ../../portable/singleclick.py:235 */
-/* Flag: untranslated */
-"Subscribing to multiple channels" = "Subscribing to multiple channels" /* = "複数のチャンネルを購読" */;
+/* File: ../../portable/singleclick.py:280 */
+"Subscribing to multiple channels" = "複数のチャンネルを購読しています";
 
-/* File: ../../portable/singleclick.py:236 */
-/* Flag: untranslated */
+/* File: ../../portable/singleclick.py:281 */
 /* Flag: python-format */
-"Create %d channels?" = "Create %d channels?" /* = "%d 本のチャンネルを作成?" */;
+"Create %d channels?" = "%d本のチャンネルを作成しますか?";
 
-/* File: ../../portable/singleclick.py:249 */
-/* Flag: untranslated */
+/* File: ../../portable/singleclick.py:294 */
 /* Flag: python-format */
-"Adding %d channels to a new folder" = "Adding %d channels to a new folder" /* = "新しいフォルダに %d 本のチャンネルを追加" */;
+"Adding %d channels to a new folder" = "新しいフォルダに %d本のチャンネルを追加しています";
 
-/* File: ../../portable/singleclick.py:250 */
+/* File: ../../portable/singleclick.py:295 */
 /* File: ../../portable/folder.py:224 */
-"Enter a name for the new channel folder" = "新名前を入力して下さい。";
+"Enter a name for the new channel folder" = "新しいチャンネル・フォルダに名前を入力して下さい";
 
-/* File: ../../portable/singleclick.py:253 */
+/* File: ../../portable/singleclick.py:298 */
+/* Flag: python-format */
+"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "注意: このうち %d 本のチャンネルは既に購読している為、変更されません。";
+
+/* File: ../../portable/singleclick.py:309 */
+"Subscription error" = "購読エラー";
+
+/* File: ../../portable/singleclick.py:319 */
+"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "この$shortAppNameチャンネル・ファイルはフォーマットが無効です：$url。　ファイルの発行者に連絡して下さい。";
+
+/* File: ../../portable/singleclick.py:327 */
+"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "この $shortAppNam eチャンネル・ファイルはコンテンツ・タイプに間違いがあります： $url。　ファイルの発行者に連絡して下さい。";
+
+/* File: ../../portable/singleclick.py:331 */
+"Could not download the $shortAppName channel file: $url." = "$shortAppName チャンネル・ファイルをダウンロードできませんでした： $url";
+
+/* File: ../../portable/singleclick.py:385 */
+"Invalid Torrent" = "不正なトレント";
+
+/* File: ../../portable/singleclick.py:386 */
+/* Flag: python-format */
+"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "トレント・ファイル %s が壊れているようで開けません。[OK]";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:325 */
+"Invalid Value" = "無効な値です";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:326 */
+/* Flag: python-format */
+"%s is invalid.  You must enter a non-negative number." = "%s は無効です。非負の数を入力してください。";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:452 */
+"Error Revealing File" = "ファイルの開示に関するエラー";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:453 */
+/* Flag: python-format */
+"The file \"%s\" was deleted from outside Miro." = "ファイル %s は、Miroの外側から削除されました。";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:560 */
+"Error Changing Movies Directory" = "映像ディレクトリの変更に関するエラー";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:561 */
+"You don't have permission to write to the directory you selected.  Miro will continue to use the old videos directory." = "あなたが選んだディレクトリへ書き込むための権限がありません。Miroは以前のビデオ・ディレクトリを続けて使うことになります。";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:664 */
+" - Invalid URL" = " - 無効なURL";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:665 */
+"The address you entered is not a valid URL.\nPlease double check and try again.\n\n" = "あなたが入れたアドレスは、有効なURLではありません。\n再確認してから、もう一度試みて下さい。\n\n";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:691 */
+"$shortAppName - Add Channel" = "$shortAppName - チャンネルを追加する";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:691 */
+"Enter the URL of the channel to add" = "追加するチャンネルのURLを入力する";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:712 */
+"$shortAppName - Add Miro Guide" = "$shortAppName - Miroガイドを加える";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:712 */
+"Enter the URL of the Miro Guide to add" = "追加するMiroガイドのURLを入力する";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:718 */
+"$shortAppName - Download Video" = "$shortAppName - ビデオをダウンロードする";
+
+/* File: ../../portable/frontends/html/templatedisplay.py:718 */
+"Enter the URL of the video to download" = "ダウンロードするビデオのURLを入力する";
+
+/* File: ../../portable/frontends/html/contextmenu.py:104 */
+"Update Channels Now" = "チャネルをアップデートする";
+
+/* File: ../../portable/frontends/html/contextmenu.py:128 */
+/* Flag: python-format */
+"%d Downloaded Items" = "%d 項目のダウンロード";
+
+/* File: ../../portable/frontends/html/contextmenu.py:130 */
+/* File: ../../portable/frontends/html/contextmenu.py:210 */
+"Play" = "再生";
+
+/* File: ../../portable/frontends/html/contextmenu.py:131 */
+/* File: ../../portable/frontends/html/contextmenu.py:213 */
+"Add to new playlist" = "新プレイリストに追加する";
+
+/* File: ../../portable/frontends/html/contextmenu.py:133 */
+/* File: ../../portable/frontends/html/contextmenu.py:206 */
+"Remove From Playlist" = "プレイリストから除く";
+
+/* File: ../../portable/frontends/html/contextmenu.py:135 */
+/* File: ../../portable/frontends/html/contextmenu.py:208 */
+"Remove From the Library" = "ライブラリから除く";
+
+/* File: ../../portable/frontends/html/contextmenu.py:141 */
+/* File: ../../portable/frontends/html/contextmenu.py:217 */
+"Mark as Unwatched" = "未鑑賞としてマークする";
+
+/* File: ../../portable/frontends/html/contextmenu.py:146 */
+/* File: ../../portable/frontends/html/contextmenu.py:219 */
+"Mark as Watched" = "鑑賞済みとマークする";
+
+/* File: ../../portable/frontends/html/contextmenu.py:151 */
+/* Flag: python-format */
+"%d Available Items" = "%d 個の項目が可能";
+
+/* File: ../../portable/frontends/html/contextmenu.py:152 */
+/* File: ../../portable/frontends/html/contextmenu.py:226 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:128 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:140 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:292 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_thumbnail.py:79 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:91 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:103 */
+/* File: ../../portable/dialogs.py:93 */
+"Download" = "ダウンロード";
+
+/* File: ../../portable/frontends/html/contextmenu.py:157 */
+/* Flag: python-format */
+"%d Downloading Items" = "%d 個のダウンロード項目があります";
+
+/* File: ../../portable/frontends/html/contextmenu.py:159 */
+/* File: ../../portable/frontends/html/contextmenu.py:224 */
+"Cancel Download" = "ダウンロードを取り消す";
+
+/* File: ../../portable/frontends/html/contextmenu.py:161 */
+/* File: ../../portable/frontends/html/contextmenu.py:224 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:275 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_thumbnail.py:62 */
+"Pause Download" = "ダウンロードを一時停止する";
+
+/* File: ../../portable/frontends/html/contextmenu.py:164 */
+/* File: ../../portable/frontends/html/contextmenu.py:222 */
+"Restart Upload" = "アップロードを再開する";
+
+/* File: ../../portable/frontends/html/contextmenu.py:170 */
+"Update Channel Now" = "チャンネルを今更新する";
+
+/* File: ../../portable/frontends/html/contextmenu.py:172 */
+/* File: ../../portable/frontends/html/contextmenu.py:196 */
+"Copy URL to clipboard" = "クリップボードいURLをコピーする";
+
+/* File: ../../portable/frontends/html/contextmenu.py:173 */
+/* File: ../../portable/feed.py:830 */
+"Rename Channel" = "チャンネル名を変更する";
+
+/* File: ../../portable/frontends/html/contextmenu.py:177 */
+"Revert Title to Default" = "標準のタイトルに戻す";
+
+/* File: ../../portable/frontends/html/contextmenu.py:183 */
+/* File: ../../portable/folder.py:142 */
+"Rename Channel Folder" = "チャンネル・フォルダの名前を変更します";
+
+/* File: ../../portable/frontends/html/contextmenu.py:189 */
+/* File: ../../portable/folder.py:213 */
+"Rename Playlist Folder" = "プレイリスト・フォルダの名前を変更します";
+
+/* File: ../../portable/frontends/html/contextmenu.py:212 */
+"Play Just This Video" = "このビデオのみ再生する";
+
+/* File: ../../portable/frontends/html/contextmenu.py:231 */
+/* File: ../../portable/playlist.py:218 */
+"Rename Playlist" = "プレイリストの名前を変更する";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel_content.py:36 */
+/* File: ../../portable/frontends/html/compiled_templates/channel_folder.py:200 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:382 */
+"Save Search" = "検索結果を保存する";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel_content.py:102 */
+/* File: ../../portable/frontends/html/compiled_templates/channel_folder.py:266 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:448 */
+"Full Channel" = "フル・チャンネル";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel_content.py:111 */
+/* File: ../../portable/frontends/html/compiled_templates/channel_content.py:194 */
+/* File: ../../portable/frontends/html/compiled_templates/channel_folder.py:275 */
+/* File: ../../portable/frontends/html/compiled_templates/channel_folder.py:358 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:457 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:540 */
+"${len} Videos" = "${len} ビデオ";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel_content.py:185 */
+/* File: ../../portable/frontends/html/compiled_templates/channel_folder.py:349 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:531 */
+"Downloaded" = "ダウンロード済み";
+
+/* File: ../../portable/frontends/html/compiled_templates/feed_settings.py:48 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:188 */
+"remove channel" = "チャンネルを除く";
+
+/* File: ../../portable/frontends/html/compiled_templates/feed_settings.py:57 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:197 */
+"Settings: ${title}" = "${title} を設定する";
+
+/* File: ../../portable/frontends/html/compiled_templates/feed_settings.py:59 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:199 */
+"Videos expire after" = "ビデオの期限は";
+
+/* File: ../../portable/frontends/html/compiled_templates/feed_settings.py:63 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:203 */
+"Default" = "標準";
+
+/* File: ../../portable/frontends/html/compiled_templates/feed_settings.py:70 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:210 */
+"default" = "標準";
+
+/* File: ../../portable/frontends/html/compiled_templates/feed_settings.py:136 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:276 */
+"Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting unwatched." = "${maxnew} ${maxnew2} 以上のビデオが未鑑賞になっているときには、自動ダウンロードを使わないで下さい。";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_description.py:53 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:329 */
+"Saved" = "保存済み";
+
+/* File: ../../portable/frontends/html/compiled_templates/playlist_folder.py:61 */
+"Empty Playlist Folder" = "空のプレイリストフォルダ";
+
+/* File: ../../portable/frontends/html/compiled_templates/playlist_folder.py:73 */
+"This folder contains ${count} playlists, but the playlists do not contain any items." = "このフォルダには ${count} 個のプレイリストがありますが、それらのプレイリストには何も入っていません。";
+
+/* File: ../../portable/frontends/html/compiled_templates/playlist_folder.py:78 */
+"Drag playlists to this folder to add them." = "プレイリストをドラッグして、このフォルダに追加します";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:55 */
+/* File: ../../portable/frontends/html/compiled_templates/video_info.py:46 */
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:59 */
+"EMAIL A FRIEND" = "友達へ電子メールを送る";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:62 */
+/* File: ../../portable/frontends/html/compiled_templates/video_info.py:53 */
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:66 */
+"PERMALINK" = "パーマリンク";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:69 */
+/* File: ../../portable/frontends/html/compiled_templates/video_info.py:60 */
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:73 */
+"COMMENTS" = "コメント";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:81 */
+/* File: ../../portable/frontends/html/compiled_templates/video_info.py:72 */
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:85 */
+"KEEP" = "保存する";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:88 */
+/* File: ../../portable/frontends/html/compiled_templates/video_info.py:79 */
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:92 */
+"ADD TO LIBRARY" = "ライブラリに追加する";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:98 */
+/* File: ../../portable/frontends/html/compiled_templates/video_info.py:89 */
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:102 */
+"DELETE" = "削除する";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:114 */
+"Miro - External Playback Template" = "Miro - 外部再生テンプレート";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:124 */
+"Continue To Next Video" = "続けて次のビデオへ";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:39 */
+/* Flag: python-format */
+"%0.1f KB/s uploading" = "%0.1f KB/s でアップロード中";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:42 */
+/* Flag: python-format */
+"%0.1f KB/s downloading" = "%0.1f KB/s でダウンロード中";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:140 */
+"External Downloads" = "外部ダウンロード";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:142 */
+"Clear Completed and Failed Downloads" = "完了あるいは失敗したダウンロードをはずす";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:155 */
+"Seeding Torrents" = "トレントのシーディング中";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:177 */
+"${size} free for downloads" = "${size} がダウンロード用に空いています";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:186 */
+"${size} free on disk" = "${size} ga";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:464 */
+/* File: ../../portable/frontends/html/compiled_templates/new.py:138 */
+/* File: ../../portable/frontends/html/compiled_templates/library.py:137 */
+"Find" = "探す";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:466 */
+/* File: ../../portable/tabs.py:57 */
+"Downloading" = "ダウンロード中";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:485 */
+"Pause All" = "全てを一時停止する";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:503 */
+"Resume All" = "全てを再開する";
+
+/* File: ../../portable/frontends/html/compiled_templates/download.py:516 */
+"Channel Downloads" = "チャンネルのダウンロード";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel_folder.py:172 */
+"Empty Channel Folder" = "チャンネル・フォルダを空にする";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel_folder.py:174 */
+"Drag channels to this folder to add them." = "チャンネルを追加するために、このフォルダにそれをドラッグして下さい";
+
+/* File: ../../portable/frontends/html/compiled_templates/unittest/translationtest.py:45 */
+"Simple translation" = "簡単な翻訳";
+
+/* File: ../../portable/frontends/html/compiled_templates/unittest/translationtest.py:59 */
+"truck stop in a ${can}" = "${can} でトラックが停止します";
+
+/* File: ../../portable/frontends/html/compiled_templates/unittest/translationtest.py:63 */
+"This is a ${car} and this is a ${truck} <span>This text is <b style=\"color:red\">raw</b> text</span>" = "これは ${car} で、　これは ${truck} です。<span> このテキストは <b style=\"color:red\">生の</b> テキストです。</span>";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:75 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:38 */
+"Date:" = "日付:";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:82 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:45 */
+"Length:" = "長さ:";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:89 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:52 */
+"Size:" = "サイズ:";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:98 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:61 */
+"Show Details" = "詳細を表示する";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:105 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:68 */
+"Hide Details" = "詳細を隠す";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:153 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:116 */
+"Download Torrent" = "トレントをダウンロード";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:230 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:193 */
+"Pending Auto Download" = "自動ダウンロードを保留中";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:244 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_details.py:207 */
+"STOP SEEDING" = "シーディングを停止する";
+
+/* File: ../../portable/frontends/html/compiled_templates/download_item_inner.py:282 */
+/* File: ../../portable/frontends/html/compiled_templates/download_item_thumbnail.py:69 */
+"Resume Download" = "ダウンロードを再開する";
+
+/* File: ../../portable/frontends/html/compiled_templates/new.py:146 */
+"Recent Videos" = "最近のビデオ";
+
+/* File: ../../portable/frontends/html/compiled_templates/playlist.py:58 */
+"Empty Playlist" = "空のプレイリスト";
+
+/* File: ../../portable/frontends/html/compiled_templates/playlist.py:60 */
+"Drag downloaded videos to this playlist to add them." = "ビデオをドラッグ&ドロップして、プレイリストに追加して下さい。";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:139 */
+"Miro can't play this file. You may be able to open it with a different program.<br></br><br></br><strong>Filename:</strong> ${filename}<br></br><strong>File type:</strong> ${format}" = "Miroはこのファイルを再生できません。他のプログラムで再生できるかもしれません：<br></br><br></br><strong>ファイル名：</strong> ${filename}<br></br><strong>ファイル・タイプ：</strong> ${format}";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:143 */
+"REVEAL FILE" = "ファイルを示す";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:147 */
+"Play Externally" = "外部で再生する";
+
+/* File: ../../portable/frontends/html/compiled_templates/external_playback.py:156 */
+"Skip >> ${countdown}" = "スキップ >> ${countdown}";
+
+/* File: ../../portable/frontends/html/compiled_templates/search.py:49 */
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:293 */
+/* File: ../../portable/extrastrings.py:33 */
+/* File: ../../portable/feed.py:2393 */
+/* File: ../../portable/feed.py:2483 */
+"Search" = "検索する";
+
+/* File: ../../portable/frontends/html/compiled_templates/search.py:74 */
+"No videos found.<br></br>Enter a query in the search field above." = "ビデオは見つかりませんでした。<br></br>上の検索欄で検索して下さい。";
+
+/* File: ../../portable/frontends/html/compiled_templates/search.py:79 */
+"Searching..." = "検索中...";
+
+/* File: ../../portable/frontends/html/compiled_templates/search.py:84 */
+"No matching videos found.<br></br>Enter a different query in the search field above." = "該当するビデオが見つかりませんでした。<br></br>上の検索欄で、異なる言葉で検索して下さい。";
+
+/* File: ../../portable/frontends/html/compiled_templates/search.py:93 */
+"Save as a Channel" = "チャンネルとして保存する";
+
+/* File: ../../portable/frontends/html/compiled_templates/search.py:95 */
+"<h3>Results for \"<span i18n:name=\"query\" t:replace=\"feed.lastQuery\"></span>\"</h3>" = "<h3>\"<span i18n:name=\"query\" t:replace=\"feed.lastQuery\"></span>\"の結果</h3>";
+
+/* File: ../../portable/frontends/html/compiled_templates/multi_channel.py:59 */
+"${count} Channel Folders Selected<br></br>(contains ${containedcount} channels)" = "${count} 個のチャンネル・フォルダが選択されました<br></br>( ${containedcount} 個のチャンネルが含まれています)";
+
+/* File: ../../portable/frontends/html/compiled_templates/multi_channel.py:71 */
+"${count} Channels Selected" = "${count} 個のチャンネルが選択されました";
+
+/* File: ../../portable/frontends/html/compiled_templates/multi_channel.py:76 */
+"Put Into a New Folder" = "新しいフォルダに入れる";
+
+/* File: ../../portable/frontends/html/compiled_templates/multi_channel.py:83 */
+"Delete All" = "全て削除する";
+
+/* File: ../../portable/frontends/html/compiled_templates/multi_playlist.py:59 */
+"${count} Playlist Folders Selected<br></br>(contains ${containedcount} playlists)" = "${count}個のプレイリスト・フォルダが選択されました<br></br>( ${containedcount} 個のプレイリストが含まれています)";
+
+/* File: ../../portable/frontends/html/compiled_templates/multi_playlist.py:71 */
+"${count} Playlists Selected" = "${count} 個のプレイリストが選択されています";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:318 */
+"Visit Website" = "ウェブ";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:325 */
+"Send to a Friend" = "友達に送る";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:332 */
+"Auto Download" = "自動ダウンロード";
+
+/* File: ../../portable/frontends/html/compiled_templates/channel.py:746 */
+"Looking for videos at this URL" = "このURL（アドレス）でのビデオを探す";
+
+/* File: ../../portable/frontends/html/compiled_templates/library.py:145 */
+/* File: ../../portable/tabs.py:54 */
+"Library" = "ライブラリ";
+
+/* File: ../../portable/frontends/html/main.py:138 */
+/* File: ../../portable/startup.py:236 */
+"Video Directory Missing" = "ビデオ・ディレクトリが見つかりません。";
+
+/* File: ../../portable/frontends/html/main.py:139 */
+"\n    Miro can't find your primary video directory.  This may be because it's     located on an external drive that is currently disconnected.\n\n    If you continue, the video directory will be reset to a location on this     drive (this will cause you to lose some details about the videos on the     external drive).  You can also quit, connect the drive, and relaunch Miro." = "\n    MIroはあなたの主ビデオ・ディレクトリを見つけられません。これは、現在つながっていない外付けドライブにあるかれかもしれません。\n\nもし、このまま続けると、そのビデオ・ディレクトリはこのドライブ上の場所にリセットされることになります（このことで外付けのドライブにあるビデオの詳細のある部分が失われることになります）。　続けないで止めて、そのドライブをつなげ、Miroを再起動することもできます。";
+
+/* File: ../../portable/frontends/html/main.py:197 */
+/* File: ../../portable/theme.py:127 */
+"Custom Channels" = "カスタム・チャンネル";
+
+/* File: ../../portable/frontends/html/main.py:197 */
+/* File: ../../portable/theme.py:127 */
+"You are running a version of $longAppName with a custom set of channels." = "あなたは、チャンネルがカスタム・セットになっている$longAppNameのバージョンを動かしています。";
+
+/* File: ../../portable/frontends/html/main.py:276 */
+/* File: ../../portable/httpclient.py:151 */
+"Internal Error" = "内部エラー";
+
+/* File: ../../portable/frontends/html/main.py:276 */
+"Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report." = "Miroha内部エラーに遭遇しました。あなたはエラー・レポートを提出して、この問題を私たちが追求し解決するのを助けることができます。";
+
+/* File: ../../portable/frontends/html/main.py:276 */
+"Include entire program database including all video and channel metadata with crash report" = "クラッシュ・レポートには、全てのビデオとチャンネルのメタデータを含む全てのプログラム・データベースを入れて下さい。";
+
+/* File: ../../portable/frontends/html/main.py:276 */
+"Describe what you were doing that caused this error" = "このエラーが生じたときにあなたがしていたことを記述してください。";
+
+/* File: ../../portable/frontends/html/main.py:291 */
+/* Flag: python-format */
+"%s Version Alert" = "%s バージョンアップのお知らせ";
+
+/* File: ../../portable/frontends/html/main.py:292 */
+/* Flag: python-format */
+"A new version of %s is available. Would you like to download it now?" = "%s の新しいバージョンが利用可能になっています。今それをダウンロードしたいですか？";
+
+/* File: ../../portable/frontends/html/main.py:297 */
+/* Flag: python-format */
+"%s Version Check" = "%s バージョンのチェック";
+
+/* File: ../../portable/frontends/html/main.py:298 */
+/* Flag: python-format */
+"%s is up to date." = "%sは最新です。";
+
+/* File: ../../portable/frontends/html/main.py:316 */
+"Are you sure you want to quit?" = "本当に終了してもよろしいですか？";
+
+/* File: ../../portable/frontends/html/main.py:318 */
+"Miro is still uploading your crash report. If you quit now the upload will be canceled.  Quit Anyway?" = "Miroはまだあなたのクラッシュ・レポートをアップロード中です。もし今終了すると、そのアップロードは取り消されます。それでも終了しますか？";
+
+/* File: ../../portable/frontends/html/main.py:347 */
+"Import OPML File" = "OPMLファイルをインポートする";
+
+/* File: ../../portable/frontends/html/main.py:349 */
+"OPML Files" = "OPMLファイル";
+
+/* File: ../../portable/frontends/html/main.py:354 */
+"Export OPML File" = "OPMLファイルをエクスポートする";
+
+/* File: ../../portable/util.py:267 */
+/* Flag: python-format */
+"%1.1fGB" = "%1.1fGB";
+
+/* File: ../../portable/util.py:269 */
+/* Flag: python-format */
+"%dGB" = "%dGB";
+
+/* File: ../../portable/util.py:273 */
+/* Flag: python-format */
+"%1.1fMB" = "%1.1fMB";
+
+/* File: ../../portable/util.py:275 */
+/* Flag: python-format */
+"%dMB" = "%dMB";
+
+/* File: ../../portable/util.py:279 */
+/* Flag: python-format */
+"%1.1fKB" = "%1.1fKB";
+
+/* File: ../../portable/util.py:281 */
+/* Flag: python-format */
+"%dKB" = "%dKB";
+
+/* File: ../../portable/util.py:285 */
+/* Flag: python-format */
+"%1.1fB" = "%1.1fB";
+
+/* File: ../../portable/util.py:287 */
+/* Flag: python-format */
+"%dB" = "%dB";
+
+/* File: ../../portable/iheartmiro.py:134 */
+/* Flag: python-format */
+"An Effortless Way to Help Miro\n\nMiro is open-source and built by a non-profit.  We need your help to continue our work.\n\nI Heart Miro is a simple %s extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.\n\n%s" = "労せずしてMiroを支援する方法\n\nMiroは、オープン・ソースで、非営利で作られています。続けるためには、あなたの支援を必要です。\n\nI Heart Miro は、あなたがAmaxonで買い物をすると、そこからの照会によりMiroの組織に照会料を支払うための簡単な %s の拡張です。　あなたがそれに気がつくことはないでしょうし、費用もかかりませんし、また、いつでも簡単に拡張の設定をはずすことができます。\n\n%s";
+
+/* File: ../../portable/iheartmiro.py:142 */
+"Install iHeartMiro?" = "iHearMiroをインストールしますか？";
+
+/* File: ../../portable/dl_daemon/download.py:457 */
+"Error" = "エラー";
+
+/* File: ../../portable/dl_daemon/download.py:544 */
+/* Flag: python-format */
+"Could not write to %s" = "%sへ書き込みできませんでした";
+
+/* File: ../../portable/dl_daemon/download.py:564 */
+/* File: ../../portable/dl_daemon/download.py:772 */
+"Not enough disk space" = "ディスクの容量が足りません";
+
+/* File: ../../portable/dl_daemon/download.py:565 */
+/* File: ../../portable/dl_daemon/download.py:773 */
+/* Flag: python-format */
+"%s MB required to store this video" = "このビデオを保存するには%sMBの空き容量が必要です";
+
+/* File: ../../portable/dl_daemon/download.py:783 */
+"BitTorrent failure" = "ビットトレントの失敗";
+
+/* File: ../../portable/dl_daemon/download.py:784 */
+"BitTorrent failed to startup" = "ビット・トレントの起動が失敗しました";
+
+/* File: ../../portable/dl_daemon/download.py:957 */
+"Corrupt Torrent" = "トレントが壊れています";
+
+/* File: ../../portable/dl_daemon/download.py:958 */
+/* Flag: python-format */
+"The torrent file at %s was not valid" = "%sにあるトレントファイルは有効でありません";
+
+/* File: ../../portable/dl_daemon/download.py:983 */
+"Torrent file deleted" = "トレントファイルが削除されました";
+
+/* File: ../../portable/dl_daemon/download.py:984 */
+"The torrent file for this item was deleted outside of Miro." = "この項目のトレント・ファイルはMiroの外側で削除されました。";
+
+/* File: ../../portable/controller.py:197 */
+/* File: ../../portable/controller.py:211 */
+/* File: ../../portable/controller.py:255 */
+/* File: ../../portable/controller.py:281 */
+/* File: ../../portable/controller.py:301 */
+/* Flag: python-format */
+"Remove %s" = "%s を削除する";
+
+/* File: ../../portable/controller.py:198 */
+/* Flag: python-format */
+"Are you sure you want to remove the guide %s?" = "ガイド %s を削除しますか？";
+
+/* File: ../../portable/controller.py:212 */
+/* Flag: python-format */
+"Are you sure you want to remove %s" = "%sを除きますが、よろしいですか？";
+
+/* File: ../../portable/controller.py:215 */
+/* File: ../../portable/controller.py:260 */
+/* File: ../../portable/controller.py:286 */
+/* File: ../../portable/controller.py:305 */
+/* Flag: python-format */
+"Remove %s channels" = "%s チャンネルを除きます";
+
+/* File: ../../portable/controller.py:217 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s playlists" = "%s プレイリストを除きますが、よろしいですか？";
+
+/* File: ../../portable/controller.py:256 */
+"What would you like to do with the videos in this channel that you've downloaded?" = "このチャンネルにあるダウンロードしたビデオをどのようにしたいですか？";
+
+/* File: ../../portable/controller.py:261 */
+"What would you like to do with the videos in these channels that you've downloaded?" = "これらのチャンネルにあるダウンロードしたビデオをどのようにしたいですか？";
+
+/* File: ../../portable/controller.py:282 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?  Any downloads in progress will be canceled." = "%s を除いてもよろしいですか？　ダウンロード中のものは取り消されます。";
+
+/* File: ../../portable/controller.py:287 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?  Any downloads in progress will be canceled." = "これらの %s チャンネルを除いてもよろしいですか？　ダウンロード中のものは取り消されます。";
+
+/* File: ../../portable/controller.py:302 */
+/* Flag: python-format */
+"Are you sure you want to remove %s?" = "%s を除いてもよろしいですか？";
+
+/* File: ../../portable/controller.py:306 */
+/* Flag: python-format */
+"Are you sure you want to remove these %s channels?" = "これらの %s チャンネルを除いてもよろしいですか？";
+
+/* File: ../../portable/controller.py:319 */
+/* Flag: python-format */
+"Stop watching %s" = "%s を観るのを停止する";
+
+/* File: ../../portable/controller.py:320 */
+/* Flag: python-format */
+"Are you sure you want to stop watching %s?" = "%s を観るのを停止してもよろしいですか？";
+
+/* File: ../../portable/controller.py:323 */
+/* Flag: python-format */
+"Stop watching %s directories" = "%s ディレクトリを観るのを停止する";
+
+/* File: ../../portable/controller.py:324 */
 /* Flag: untranslated */
 /* Flag: python-format */
-"NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." = "NOTE: You are already subscribed to %d of these channels.  These channels will stay where they currently are." /* = "注意: このうち %d 本のチャンネルは既に購読している為、変更されません。" */;
+"Are you sure you want to stop watching these %s directories?" = "Are you sure you want to stop watching these %s directories?" /* = "%s ディレクトリを観るのを停止してもよろしいですか？" */;
 
-/* File: ../../portable/singleclick.py:264 */
-/* Flag: untranslated */
-"Subscription error" = "Subscription error" /* = "購読エラー" */;
+/* File: ../../portable/controller.py:498 */
+"Error Saving Video" = "ビデオの保存に関するエラー";
 
-/* File: ../../portable/singleclick.py:274 */
-/* Flag: untranslated */
-"This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." = "This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file." /* = "チャンネルファイル $url のフォーマットが違います。ファイル提供元に連絡して下さい。" */;
-
-/* File: ../../portable/singleclick.py:282 */
-/* Flag: untranslated */
-"This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." = "This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file." /* = "チャンネルファイル $url のコンテンツタイプが違います。ファイル提供元に連絡して下さい。" */;
-
-/* File: ../../portable/singleclick.py:286 */
-/* Flag: untranslated */
-"Could not download the $shortAppName channel file: $url." = "Could not download the $shortAppName channel file: $url." /* = "チャンネルファイル $url をダウンロードできません。" */;
-
-/* File: ../../portable/singleclick.py:334 */
-"Invalid Torrent" = "不正な Torrent";
-
-/* File: ../../portable/singleclick.py:335 */
-/* Flag: untranslated */
+/* File: ../../portable/controller.py:500 */
 /* Flag: python-format */
-"The torrent file %s appears to be corrupt and cannot be opened. [OK]" = "The torrent file %s appears to be corrupt and cannot be opened. [OK]" /* = "torrentファイル %s が壊れているようで開けません。[OK]" */;
+"An error occured while trying to save %s.  Please check that the file has not been deleted and try again." = "%s を保存しているときにエラーが起きました。そのファイルが削除されていないかを確認してから再度試して下さい。";
 
-/* File: ../../portable/item.py:497 */
+/* File: ../../portable/downloader.py:234 */
+"activity" = "活動";
+
+/* File: ../../portable/downloader.py:268 */
+/* File: ../../portable/httpclient.py:138 */
+/* File: ../../portable/httpclient.py:167 */
+"File not found" = "ファイルが見つかりませんでした";
+
+/* File: ../../portable/downloader.py:269 */
+"Flash URL Scraping Error" = "Flash URLの処理エラー";
+
+/* File: ../../portable/downloader.py:445 */
+"starting up" = "起動中";
+
+/* File: ../../portable/httpclient.py:89 */
+/* Flag: python-format */
+"Error: %s" = "エラー: %s";
+
+/* File: ../../portable/httpclient.py:104 */
+/* File: ../../portable/httpclient.py:110 */
+"Can't connect" = "接続できません";
+
+/* File: ../../portable/httpclient.py:105 */
+/* Flag: python-format */
+"Connection Error: %s" = "接続エラー: %s";
+
+/* File: ../../portable/httpclient.py:111 */
+"SSL connection error" = "SSL接続エラー";
+
+/* File: ../../portable/httpclient.py:115 */
+"HTTP error" = "HTTPエラー";
+
+/* File: ../../portable/httpclient.py:118 */
+/* Flag: python-format */
+"Bad Status Line: %s" = "不正なステータス・ライン：%s";
+
+/* File: ../../portable/httpclient.py:122 */
+/* Flag: python-format */
+"Bad Header Line: %s" = "不正なヘッダ・ライン：%s";
+
+/* File: ../../portable/httpclient.py:126 */
+/* Flag: python-format */
+"Bad Chunk size: %s" = "不正なチャンク・サイズ：%s";
+
+/* File: ../../portable/httpclient.py:130 */
+/* Flag: python-format */
+"Expected CRLF got: %r" = "CRLFが入るべきところに %r が入りました。";
+
+/* File: ../../portable/httpclient.py:133 */
+/* Flag: python-format */
+"%s closed connection" = "%s が接続を閉じました";
+
+/* File: ../../portable/httpclient.py:139 */
+"Got 404 status code" = "４０４のステータス・コードが返ってきました。";
+
+/* File: ../../portable/httpclient.py:141 */
+/* Flag: python-format */
+"Bad Status Code: %s" = "不正なステータス・コード：%s";
+
+/* File: ../../portable/httpclient.py:146 */
+"Authorization failed" = "認証に失敗しました";
+
+/* File: ../../portable/httpclient.py:152 */
+"Pipeline request never started" = "パイプライン要求は一度もなされていません。";
+
+/* File: ../../portable/httpclient.py:156 */
+"Timeout" = "タイムアウト";
+
+/* File: ../../portable/httpclient.py:157 */
+/* Flag: python-format */
+"Connection to %s timed out" = "%s への接続はタイムアウトしました";
+
+/* File: ../../portable/httpclient.py:161 */
+"Invalid URL" = "URLが無効です";
+
+/* File: ../../portable/httpclient.py:162 */
+/* Flag: python-format */
+"\"%s\" is not a valid URL" = "”%s”は正しいURLではありません";
+
+/* File: ../../portable/httpclient.py:168 */
+/* Flag: python-format */
+"The file: \"%s\" doesn't exist" = "”%s”ha";
+
+/* File: ../../portable/httpclient.py:172 */
+"Read error" = "読み込みエラー";
+
+/* File: ../../portable/httpclient.py:173 */
+/* Flag: python-format */
+"Error while reading from \"%s\"" = "”%s”からの読み込み中のエラー";
+
+/* File: ../../portable/httpclient.py:369 */
+"Unknown Error code" = "不明なエラー・コード";
+
+/* File: ../../portable/httpclient.py:401 */
+"Connection closed" = "接続が閉じています";
+
+/* File: ../../portable/httpclient.py:823 */
+"Unknown" = "不明";
+
+/* File: ../../portable/httpclient.py:824 */
+"Internal Error: Not ready to send" = "内部エラー：送る準備ができていません";
+
+/* File: ../../portable/license.py:68 */
+"license page" = "ライセンスのページ";
+
+/* File: ../../portable/theme.py:138 */
+"Starter Channels" = "スターター・チャンネル";
+
+/* File: ../../portable/theme.py:154 */
+"Example Playlist" = "プレイリスト例";
+
+/* File: ../../portable/folder.py:144 */
+/* Flag: python-format */
+"Enter a new name for the channel folder %s" = "チャンネル・フォルダ %s に新しい名前をつけます";
+
+/* File: ../../portable/folder.py:215 */
+/* Flag: python-format */
+"Enter a new name for the playlist folder %s" = "プレイリスト・フォルダ %s に新しい名前をつけます";
+
+/* File: ../../portable/folder.py:223 */
+"Create Channel Folder" = "チャンネル・フォルダをつくります";
+
+/* File: ../../portable/folder.py:237 */
+"Create Playlist Folder" = "プレイリスト・フォルダをつくります";
+
+/* File: ../../portable/folder.py:238 */
+"Enter a name for the new playlist folder" = "新しいプレイリスト・フォルダに名前をつけます";
+
+/* File: ../../portable/dialogs.py:89 */
+"Ignore" = "無視する";
+
+/* File: ../../portable/dialogs.py:90 */
+"Submit Crash Report" = "クラッシュレポートを送信する";
+
+/* File: ../../portable/dialogs.py:91 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2 */
+"Migrate" = "移動する";
+
+/* File: ../../portable/dialogs.py:92 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:39 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3 */
+"Don't Migrate" = "移動しない";
+
+/* File: ../../portable/dialogs.py:94 */
+"Remove Entry" = "エントリを除く";
+
+/* File: ../../portable/dialogs.py:95 */
+"Delete File" = "ファイルを削除する";
+
+/* File: ../../portable/dialogs.py:96 */
+"Delete Files" = "ファイルを削除する";
+
+/* File: ../../portable/dialogs.py:97 */
+"Keep Videos" = "ビデオを保持する";
+
+/* File: ../../portable/dialogs.py:98 */
+"Delete Videos" = "ビデオを削除する";
+
+/* File: ../../portable/dialogs.py:100 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8 */
+"Create Channel" = "チャンネルを作る";
+
+/* File: ../../portable/dialogs.py:101 */
+"Add" = "追加する";
+
+/* File: ../../portable/dialogs.py:102 */
+"Add Into New Folder" = "新しいフォルダに追加する";
+
+/* File: ../../portable/dialogs.py:105 */
+"Not Now" = "後で";
+
+/* File: ../../portable/dialogs.py:106 */
+"Close to Tray" = "トレイに閉じる";
+
+/* File: ../../portable/dialogs.py:107 */
+"Launch Miro" = "Miroを起動する";
+
+/* File: ../../portable/dialogs.py:108 */
+"Download Anyway" = "とにかくダウンロードする";
+
+/* File: ../../portable/dialogs.py:109 */
+"Install iHeartMiro" = "iHeartMiroをインストールする";
+
+/* File: ../../portable/dialogs.py:110 */
+"Don't Install" = "インストールをしない";
+
+/* File: ../../portable/dialogs.py:231 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3 */
+"New Search Channel" = "新しい検索チャンネル";
+
+/* File: ../../portable/dialogs.py:231 */
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1 */
+"A search channel contains items that match a search term." = "検索チャンネルには検索対象と合致した項目が入っています";
+
+/* File: ../../portable/startup.py:92 */
+"Unknown Error" = "不明なエラー";
+
+/* File: ../../portable/startup.py:93 */
+/* Flag: python-format */
+"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "不明なエラーによりMiroの起動が妨げられました。どうぞ%sでバグ報告して下さい。";
+
+/* File: ../../portable/startup.py:155 */
+"Database too new" = "データベースが新しすぎます";
+
+/* File: ../../portable/startup.py:156 */
+"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "あなたが持っているデータベースは、$shortAppNameの新版で保存されたものです。$shortAppNameの最新版をダウンロードして、それで動作させて下さい。";
+
+/* File: ../../portable/startup.py:237 */
+"\nMiro can't find your primary video directory $moviesDirectory.  This may be because it's located on an external drive that is currently disconnected.  Please, connect the drive or create the directory, then start Miro again." = "\nMiroは、あなたの主ビデオ・ディレクトリである$moviesDirectoryを見つけることができません。これは、それが現在つながっていない外付けのドライブの場所にあるからかもしれません。どうぞ、そのドライブをつなぐか、そのディレクトリをつくってから、MIroを再度起動して下さい。";
+
+/* File: ../../portable/playlist.py:219 */
+/* Flag: python-format */
+"Enter a new name for the playlist %s" = "プレイリスト %s に新しい名前をつける";
+
+/* File: ../../portable/playlist.py:241 */
+"Create Playlist" = "プレイリストを作る";
+
+/* File: ../../portable/playlist.py:242 */
+"Enter a name for the new playlist" = "新しいプレイリストの名前を入力する";
+
+/* File: ../../portable/opml.py:155 */
+"OPML Import failed" = "OPMLのインポートに失敗しました";
+
+/* File: ../../portable/opml.py:156 */
+"The selected OPML file appears to be invalid. Import was interrupted." = "選択したOPMLファイルは無効のようです。インポートを中止しました。";
+
+/* File: ../../portable/opml.py:161 */
+"OPML Import summary" = "OPMLインポート結果の要約";
+
+/* File: ../../portable/storedatabase.py:860 */
+/* File: ../../portable/storedatabase.py:1262 */
+/* Flag: python-format */
+"%s database save succeeded" = "%s データベースの保存に成功しました";
+
+/* File: ../../portable/storedatabase.py:861 */
+/* File: ../../portable/storedatabase.py:1263 */
+"The database has been successfully saved. It is now safe to quit without losing any data." = "データベースの保存に成功しました。終了してもデータは失われません。";
+
+/* File: ../../portable/storedatabase.py:868 */
+/* File: ../../portable/storedatabase.py:1271 */
+/* Flag: python-format */
+"%s database save failed" = "%s データベースの保存に失敗しました";
+
+/* File: ../../portable/storedatabase.py:869 */
+/* File: ../../portable/storedatabase.py:1272 */
+/* Flag: python-format */
+"%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost." = "%s はディスクが満杯の為データベースを保存できませんでした。\n満杯のディスクからファイルを削除するか、あるいは単純に映像をコレクションから削除することをお勧めします。\n最新の変更は失われているかもしれません。";
+
+/* File: ../../portable/menubar.py:157 */
+"_Open" = "開く(_O)";
+
+/* File: ../../portable/menubar.py:158 */
+"_Download Video" = "ビデオをダウンロードする（_D）";
+
+/* File: ../../portable/menubar.py:160 */
+"Check _Version" = "バージョンを確認する（_V）";
+
+/* File: ../../portable/menubar.py:162 */
+"_Remove Video" = "ビデオを除く（_R）";
+
+/* File: ../../portable/menubar.py:163 */
+"_Remove Videos" = "複数のビデオを除く（_R）";
+
+/* File: ../../portable/menubar.py:164 */
+"Re_name Video" = "ビデオの名前を変更する（_n）";
+
+/* File: ../../portable/menubar.py:165 */
+"Save Video _As..." = "名前をつけてビデオを保存する…";
+
+/* File: ../../portable/menubar.py:166 */
+"Save Videos _As..." = "名前をつけてビデオを保存する…";
+
+/* File: ../../portable/menubar.py:167 */
+"Copy Video _URL" = "ビデオのURLをコピーする（_U）";
+
+/* File: ../../portable/menubar.py:169 */
+"_Options..." = "オプション（_O）…";
+
+/* File: ../../portable/menubar.py:170 */
+"_Quit" = "終了する(_Q)";
+
+/* File: ../../portable/menubar.py:178 */
+"Cu_t" = "切り取る(_t)";
+
+/* File: ../../portable/menubar.py:179 */
+"_Copy" = "コピーする（_C）";
+
+/* File: ../../portable/menubar.py:180 */
+"_Paste" = "貼り付ける(_P)";
+
+/* File: ../../portable/menubar.py:181 */
+"Select _All" = "全て選択する(_A)";
+
+/* File: ../../portable/menubar.py:182 */
+"_Delete" = "削除する(_D)";
+
+/* File: ../../portable/menubar.py:186 */
+"Add _Channel" = "チャンネルを追加する（_C）";
+
+/* File: ../../portable/menubar.py:187 */
+"New Searc_h Channel..." = "チャンネルを新たに検索する（_h）";
+
+/* File: ../../portable/menubar.py:188 */
+"New _Folder..." = "新しいフォルダ(_F)…";
+
+/* File: ../../portable/menubar.py:189 */
+"Add Channel _Guide..." = "チャンネル・ガイドを追加する…";
+
+/* File: ../../portable/menubar.py:199 */
+"Update _All Channels" = "全てのチャンネルを更新する（_A）";
+
+/* File: ../../portable/menubar.py:201 */
+"_Import Channels (OPML)..." = "(OPML)チャンネルをインポートする（_I）…";
+
+/* File: ../../portable/menubar.py:202 */
+"E_xport Channels (OPML)..." = "(OPML)チャンネルをエクスポートする（_I）…";
+
+/* File: ../../portable/menubar.py:204 */
+"_Send this channel to a friend" = "友達にこのチャンネルを送る(_S)";
+
+/* File: ../../portable/menubar.py:205 */
+"Copy Channel _Link" = "チャンネル・リンクをコピーする（_L）";
+
+/* File: ../../portable/menubar.py:208 */
+"New _Playlist" = "新しいプレイリスト（_P）";
+
+/* File: ../../portable/menubar.py:209 */
+"New Playlist Fol_der" = "新しいプレイリスト・フォルダ（_d）";
+
+/* File: ../../portable/menubar.py:211 */
+"Re_name Playlist" = "プレイリストの名前を変更する(_n)";
+
+/* File: ../../portable/menubar.py:212 */
+"_Remove Playlist" = "プレイリストを除く(_R)";
+
+/* File: ../../portable/menubar.py:213 */
+"_Remove Playlists" = "プレイリストを除く(_R)";
+
+/* File: ../../portable/menubar.py:214 */
+"_Remove Playlist Folders" = "プレイリスト・フォルダを除く（_R）";
+
+/* File: ../../portable/menubar.py:215 */
+"_Remove Playlist Folder" = "プレイリスト・フォルダを除く（_R）";
+
+/* File: ../../portable/menubar.py:225 */
+/* File: ../../portable/menubar.py:226 */
+"_Play" = "再生する（_P）";
+
+/* File: ../../portable/menubar.py:227 */
+"_Pause" = "一時停止する(_P)";
+
+/* File: ../../portable/menubar.py:228 */
+"_Stop" = "停止する(_S)";
+
+/* File: ../../portable/menubar.py:230 */
+"_Next Video" = "次のビデオ（_N）";
+
+/* File: ../../portable/menubar.py:231 */
+"_Previous Video" = "前のビデオ（_P）";
+
+/* File: ../../portable/menubar.py:233 */
+"Skip _Forward" = "前方へスキップ(_F)";
+
+/* File: ../../portable/menubar.py:234 */
+"Skip _Back" = "後方へスキップ(_B)";
+
+/* File: ../../portable/menubar.py:236 */
+"Volume _Up" = "音量を上げる(_U)";
+
+/* File: ../../portable/menubar.py:237 */
+"Volume _Down" = "音量を下げる(_D)";
+
+/* File: ../../portable/menubar.py:239 */
+"_Fullscreen" = "全画面表示（_F）";
+
+/* File: ../../portable/menubar.py:243 */
+"_About" = "Miroについて";
+
+/* File: ../../portable/menubar.py:244 */
+"_Donate" = "寄付する(_D)";
+
+/* File: ../../portable/menubar.py:245 */
+/* File: ../../portable/menubar.py:262 */
+"_Help" = "ヘルプ(_H)";
+
+/* File: ../../portable/menubar.py:247 */
+"Report a _Bug" = "バグを報告する(_B)";
+
+/* File: ../../portable/menubar.py:248 */
+"_Translate" = "翻訳する（_T）";
+
+/* File: ../../portable/menubar.py:249 */
+"_Planet" = "プラネット（_P）";
+
+/* File: ../../portable/menubar.py:253 */
+"_Video" = "ビデオ(_V)";
+
+/* File: ../../portable/menubar.py:255 */
+"_File" = "ファイル(_F)";
+
+/* File: ../../portable/menubar.py:259 */
+"_Channels" = "チャンネル(_C)";
+
+/* File: ../../portable/menubar.py:260 */
+"_Playlists" = "プレイリスト(_P)";
+
+/* File: ../../portable/menubar.py:261 */
+"P_layback" = "再生する(_P)";
+
+/* File: ../../portable/menubar.py:266 */
+/* Flag: untranslated */
+"Play Unwatched ($numUnwatched)" = "Play Unwatched ($numUnwatched)" /* = "未鑑賞ビデオ（$numUnwatched）を再生する" */;
+
+/* File: ../../portable/menubar.py:267 */
+"Pause All Downloads ($numDownloading)" = "全てのダウンロード （$numDownloading）を一時停止する";
+
+/* File: ../../portable/menubar.py:268 */
+"Resume All Downloads ($numPaused)" = "全てのダウンロード （$numPaused）を再開する";
+
+/* File: ../../portable/menubar.py:270 */
+"Options..." = "オプション…";
+
+/* File: ../../portable/menubar.py:272 */
+"Hide Window" = "ウィンドウを表示しない";
+
+/* File: ../../portable/menubar.py:273 */
+"Show Window" = "ウィンドウを表示する";
+
+/* File: ../../portable/feed.py:388 */
+"never" = "無期限";
+
+/* File: ../../portable/feed.py:390 */
+/* File: ../../portable/item.py:555 */
+/* Flag: python-format */
+"%d hours" = "%d時間";
+
+/* File: ../../portable/feed.py:392 */
+/* Flag: python-format */
+"%d day" = "%d日";
+
+/* File: ../../portable/feed.py:394 */
+/* File: ../../portable/item.py:553 */
+/* Flag: python-format */
+"%d days" = "%d日";
+
+/* File: ../../portable/feed.py:396 */
+/* Flag: python-format */
+"%d months" = "%d月間";
+
+/* File: ../../portable/feed.py:831 */
+/* Flag: python-format */
+"Enter a new name for the channel %s" = "%sチャンネルに新しい名前を適用する";
+
+/* File: ../../portable/feed.py:928 */
+"Error loading feed" = "フィードの読み込みに関するエラー";
+
+/* File: ../../portable/feed.py:929 */
+/* Flag: python-format */
+"Couldn't load the feed at %s (%s)." = "%sでフィードを読み込めませんでした(%s)";
+
+/* File: ../../portable/feed.py:932 */
+"Would you like to keep the feed?" = "フィードを保存したいですか？";
+
+/* File: ../../portable/feed.py:1053 */
+"Bad content-type" = "不正なcontent-type";
+
+/* File: ../../portable/feed.py:1066 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9 */
+"Channel is not compatible with $shortAppName!" = "チャンネルが$shortAppNameと互換性がありません！";
+
+/* File: ../../portable/feed.py:1067 */
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.  Please contact the publishers of $url and ask if they can supply a feed in a format that will work with $shortAppName.\n\nDo you want to try to load this channel anyway?" = "それでも、私たちはそのファイルを取得するために最善を尽くします。ビデオのリストをつくるのに余計な時間がかかることがあるかもしれませんし、その記述がおかしなふうに見えることがあるかもしれません。どうぞ$urlの発行者に問い合わせ、もし彼らが$shortAppNameで機能するフォーマットのフィードを発行できるかどうか尋ねてみて下さい。";
+
+/* File: ../../portable/feed.py:2497 */
+"Local Files" = "ローカル・ファイル";
+
+/* File: ../../portable/feed.py:2511 */
+"Playing File" = "ファイルを再生中";
+
+/* File: ../../portable/item.py:496 */
 /* Flag: python-format */
 "Removing %s" = "%s を削除しています";
 
-/* File: ../../portable/item.py:500 */
-/* Flag: untranslated */
-"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "Would you like to delete this folder and all of its videos or just remove its entry from the Library?";
+/* File: ../../portable/item.py:499 */
+"Would you like to delete this folder and all of its videos or just remove its entry from the Library?" = "このフォルダとその中のビデオのすべてを削除しますか、あるいは、単にライブラリからこのエントリーを除きますか？";
 
-/* File: ../../portable/item.py:506 */
-/* Flag: untranslated */
-"Would you like to delete this file or just remove its entry from the Library?" = "Would you like to delete this file or just remove its entry from the Library?";
+/* File: ../../portable/item.py:505 */
+"Would you like to delete this file or just remove its entry from the Library?" = "このファイルを削除しますか、あるいは、単にライブラリからこのエントリーを除きますか？";
 
-/* File: ../../portable/item.py:526 */
-/* Flag: untranslated */
-"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "This item is a folder.  When you remove a folder, any items inside that folder will be deleted.";
+/* File: ../../portable/item.py:525 */
+"This item is a folder.  When you remove a folder, any items inside that folder will be deleted." = "この項目はフォルダです。フォルダを削除すると、そのフォルダ内のどの項目も削除されます。";
 
-/* File: ../../portable/item.py:556 */
+/* File: ../../portable/item.py:557 */
 /* Flag: python-format */
 "%d minutes" = "%d分";
 
-/* File: ../../portable/item.py:566 */
-/* Flag: untranslated */
+/* File: ../../portable/item.py:567 */
 /* Flag: python-format */
-"Expires in %s" = "Expires in %s";
+"Expires in %s" = "%sに期限が切れます";
 
-/* File: ../../portable/item.py:578 */
-/* Flag: untranslated */
+/* File: ../../portable/item.py:579 */
 /* Flag: python-format */
-"Will retry in %s" = "Will retry in %s";
+"Will retry in %s" = "%sでリトライします";
 
-/* File: ../../portable/item.py:580 */
-/* Flag: untranslated */
-"Paused" = "Paused";
+/* File: ../../portable/item.py:581 */
+"Paused" = "一時停止";
 
-/* File: ../../portable/item.py:982 */
-/* Flag: untranslated */
+/* File: ../../portable/item.py:989 */
 "TORRENT" = "TORRENT";
 
-/* File: ../../portable/item.py:984 */
-/* Flag: untranslated */
-"WEB PAGE" = "WEB PAGE";
+/* File: ../../portable/item.py:991 */
+"WEB PAGE" = "Webページ";
 
-/* File: ../../portable/item.py:994 */
-/* Flag: untranslated */
-"Total Down:" = "Total Down:";
+/* File: ../../portable/item.py:1001 */
+"Total Down:" = "ダウン合計：";
 
-/* File: ../../portable/item.py:997 */
-/* Flag: untranslated */
-"Error:" = "Error:";
-
-/* File: ../../portable/item.py:1006 */
-/* Flag: untranslated */
-"Seeders:" = "Seeders:";
-
-/* File: ../../portable/item.py:1008 */
-/* Flag: untranslated */
-"Leechers:" = "Leechers:";
-
-/* File: ../../portable/item.py:1010 */
-/* Flag: untranslated */
-"Down Rate:" = "Down Rate:";
-
-/* File: ../../portable/item.py:1011 */
-/* Flag: untranslated */
-"Down Total:" = "Down Total:";
+/* File: ../../portable/item.py:1004 */
+"Error:" = "エラー:";
 
 /* File: ../../portable/item.py:1013 */
-/* Flag: untranslated */
-"Up Rate:" = "Up Rate:";
+"Seeders:" = "シーダー:";
 
-/* File: ../../portable/item.py:1014 */
-/* Flag: untranslated */
-"Up Total:" = "Up Total:";
+/* File: ../../portable/item.py:1015 */
+"Leechers:" = "リーチャー:";
 
-/* File: ../../portable/item.py:1024 */
-/* Flag: untranslated */
-"Web page:" = "Web page:";
+/* File: ../../portable/item.py:1017 */
+"Down Rate:" = "ダウン率：";
 
-/* File: ../../portable/item.py:1024 */
-/* Flag: untranslated */
-"permalink" = "permalink";
+/* File: ../../portable/item.py:1018 */
+"Down Total:" = "ダウン合計：";
 
-/* File: ../../portable/item.py:1028 */
-/* Flag: untranslated */
-"File link:" = "File link:";
+/* File: ../../portable/item.py:1020 */
+"Up Rate:" = "アップ率：";
 
-/* File: ../../portable/item.py:1028 */
-/* Flag: untranslated */
-"direct link to file" = "direct link to file";
+/* File: ../../portable/item.py:1021 */
+"Up Total:" = "アップ合計：";
 
-/* File: ../../portable/item.py:1030 */
-/* Flag: untranslated */
-"File type:" = "File type:";
+/* File: ../../portable/item.py:1032 */
+/* File: ../../portable/item.py:1037 */
+"Web page:" = "Webページ:";
+
+/* File: ../../portable/item.py:1032 */
+"comments" = "コメント";
 
 /* File: ../../portable/item.py:1037 */
-/* File: ../../portable/item.py:1040 */
-/* File: ../../portable/item.py:1042 */
-/* Flag: untranslated */
-"License:" = "License:";
+"permalink" = "パーマリンク";
 
-/* File: ../../portable/item.py:1040 */
-/* File: ../../portable/item.py:1042 */
-/* Flag: untranslated */
-"see permalink" = "see permalink";
+/* File: ../../portable/item.py:1041 */
+"File link:" = "ファイルのリンク：";
 
-/* File: ../../portable/item.py:1049 */
-/* Flag: untranslated */
-"REVEAL LOCAL FOLDER" = "REVEAL LOCAL FOLDER";
+/* File: ../../portable/item.py:1041 */
+"direct link to file" = "ファイルへの直接リンク";
 
-/* File: ../../portable/item.py:1051 */
-/* Flag: untranslated */
-"REVEAL LOCAL FILE" = "REVEAL LOCAL FILE";
+/* File: ../../portable/item.py:1043 */
+"File type:" = "ファイルの種類:";
+
+/* File: ../../portable/item.py:1050 */
+/* File: ../../portable/item.py:1053 */
+/* File: ../../portable/item.py:1055 */
+"License:" = "ライセンス:";
 
 /* File: ../../portable/item.py:1053 */
-/* Flag: untranslated */
-"Filename:" = "Filename:";
-
-/* File: ../../portable/item.py:1060 */
-/* Flag: untranslated */
-"Down Total" = "Down Total";
+/* File: ../../portable/item.py:1055 */
+"see permalink" = "パーマリンク参照";
 
 /* File: ../../portable/item.py:1062 */
-/* Flag: untranslated */
-"Up Total" = "Up Total";
+"SHOW LOCAL FOLDER" = "ローカル・フォルダを示す";
 
-/* File: ../../portable/item.py:1080 */
-/* Flag: untranslated */
-"Item Details" = "Item Details";
+/* File: ../../portable/item.py:1064 */
+"SHOW LOCAL FILE" = "ローカル・ファイルを示す";
 
-/* File: ../../portable/item.py:1087 */
-/* Flag: untranslated */
-"Torrent Details" = "Torrent Details";
+/* File: ../../portable/item.py:1066 */
+"Filename:" = "ファイル名:";
 
-/* File: ../../portable/item.py:1089 */
-/* Flag: untranslated */
-"Torrent Details <i>stopped</i>" = "Torrent Details <i>stopped</i>";
+/* File: ../../portable/item.py:1073 */
+"Down Total" = "ダウン合計";
+
+/* File: ../../portable/item.py:1075 */
+"Up Total" = "アップ合計";
 
 /* File: ../../portable/item.py:1093 */
-/* Flag: untranslated */
-"Download Details" = "Download Details";
+"Item Details" = "項目の詳細";
 
-/* File: ../../portable/item.py:1310 */
-/* Flag: untranslated */
-"downloading..." = "downloading...";
+/* File: ../../portable/item.py:1100 */
+"Torrent Details" = "トレントの詳細";
 
-/* File: ../../portable/item.py:1317 */
-/* File: ../../portable/item.py:1320 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"%s remaining" = "%s remaining";
+/* File: ../../portable/item.py:1102 */
+"Torrent Details <i>stopped</i>" = "トレントの詳細";
+
+/* File: ../../portable/item.py:1106 */
+"Download Details" = "ダウンロードの詳細";
 
 /* File: ../../portable/item.py:1329 */
-/* Flag: untranslated */
-"starting up..." = "starting up...";
+"downloading..." = "ダウンロード中・・・";
 
-/* File: ../../portable/item.py:1878 */
-/* Flag: untranslated */
+/* File: ../../portable/item.py:1336 */
+/* File: ../../portable/item.py:1339 */
 /* Flag: python-format */
-"Removing %s items" = "Removing %s items";
+"%s left" = "残り %s";
 
-/* File: ../../portable/item.py:1880 */
-/* Flag: untranslated */
-"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?";
+/* File: ../../portable/item.py:1348 */
+"starting up..." = "起動中…";
 
-/* File: ../../portable/item.py:1888 */
-/* Flag: untranslated */
-"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted.";
-
-/* File: ../../portable/startup.py:92 */
-/* Flag: untranslated */
-"Unknown Error" = "Unknown Error";
-
-/* File: ../../portable/startup.py:93 */
-/* Flag: untranslated */
+/* File: ../../portable/item.py:1939 */
 /* Flag: python-format */
-"An unkown error prevented Miro from startup.  Please file a bug report at %s" = "An unkown error prevented Miro from startup.  Please file a bug report at %s";
+"Removing %s items" = "%s項目を削除中";
 
-/* File: ../../portable/startup.py:155 */
-/* Flag: untranslated */
-"Database too new" = "Database too new";
+/* File: ../../portable/item.py:1941 */
+"One or more of these videos was not downloaded from a channel.  Would you like to delete these items or just remove their entries from the Library?" = "一つ以上のビデオがチャンネルからダウンロードされませんでした。これらの項目を削除しますか、あるいは、単にライブラリからこれらのエントリーを除きますか？";
 
-/* File: ../../portable/startup.py:156 */
-/* Flag: untranslated */
-"You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that." = "You have a database that was saved with a newer version of $shortAppName. You must download the latest version of $shortAppName and run that.";
-
-/* File: ../../portable/startup.py:238 */
-/* Flag: untranslated */
-"\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected." = "\nMiro can't find your primary video directory.  This may be because it's located on an external drive that is currently disconnected.";
-
-/* File: ../../portable/folder.py:144 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Enter a new name for the channel folder %s" = "Enter a new name for the channel folder %s";
-
-/* File: ../../portable/folder.py:215 */
-/* Flag: untranslated */
-/* Flag: python-format */
-"Enter a new name for the playlist folder %s" = "Enter a new name for the playlist folder %s";
-
-/* File: ../../portable/folder.py:223 */
-/* Flag: untranslated */
-"Create Channel Folder" = "Create Channel Folder";
-
-/* File: ../../portable/folder.py:237 */
-/* Flag: untranslated */
-"Create Playlist Folder" = "Create Playlist Folder";
-
-/* File: ../../portable/folder.py:238 */
-/* Flag: untranslated */
-"Enter a name for the new playlist folder" = "Enter a name for the new playlist folder";
-
-/* File: ../../portable/license.py:68 */
-/* Flag: untranslated */
-"license page" = "license page";
+/* File: ../../portable/item.py:1949 */
+"One or more of these items is a folder.  When you remove or delete a folder, any items inside that folder will also be removed or deleted." = "これらの内フォルダが一つ以上あります。フォルダが除かれるか削除されると、その中に入っている項目も除かれるか削除されることになります。";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:2 */
 /* Flag: untranslated */
 "1 day\n3 days\n6 days\n10 days\n1 month\nNever" = "1 day\n3 days\n6 days\n10 days\n1 month\nNever" /* = "1日\n3日\n6日\n10日\n1ヵ月\n設定しない" */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:8 */
-/* Flag: untranslated */
-"<b>BitTorrent</b>" = "<b>BitTorrent</b>";
+"<b>BitTorrent</b>" = "<b>ビットトレント</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:9 */
-/* Flag: untranslated */
-"<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." = "<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect.";
+"<b>Note:</b> If you change the renderer used to play videos, you MUST \nrestart Miro for the changes to take effect." = "<b>註：:</b>もしビデオの表示に使うソフトウェア（レンダラー）を変えたら、必ず\nその変更を有効にするためにMiroを再起動しなければなりません。";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:11 */
 /* Flag: untranslated */
-"<b>Searching for Videos</b>" = "<b>Searching for Videos</b>" /* = "<b>ビデオを検索中</b>" */;
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:12 */
-/* Flag: untranslated */
-"<b>Would you like Miro to look for video files on your computer?</b>" = "<b>Would you like Miro to look for video files on your computer?</b>" /* = "<b>コンピュータ内のビデオを検索しますか?</b>" */;
+"<b>Note:</b> You can set the frequency channels are checked for each\nchannel in the channel's settings pane." = "<b>Note:</b> You can set the frequency channels are checked for each\nchannel in the channel's settings pane." /* = "<b>註：</b> チャンネル設定欄でチャンネル毎に設定できます。" */;
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:13 */
-/* Flag: untranslated */
-"<b>Would you like to run Miro when your computer starts up?</b>" = "<b>Would you like to run Miro when your computer starts up?</b>" /* = "<b>コンピュータの起動時に Miro を実行しますか?</b>" */;
+"<b>Searching for Videos</b>" = "<b>ビデオを検索中</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:14 */
-/* Flag: untranslated */
-"<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." /* = "<b>やったね!</b>\n\nセットアップ完了 -- チャンネルを検索して視聴を開始できます。\n\n<b>待つ必要はありません:</b> Miro はビデオを単に見るだけではありません。高品質なビデオは大きいですが、ただ待つのでなく、ダウンロードを始めたら後でチェックすればよいのです。\n\n<b>起動しておきましょう:</b> Miro はチャンネルをチェックして新しいビデオをバックグラウンドでダウンロードします。起動しておけば準備できたビデオをすぐに見ることができます。\n\n<b>ディスク容量の心配なし:</b> TiVo のように Miro は古いビデオを消して新しいビデオの為に空きを作ります。「保存」をクリックしてビデオを保存するか、チャンネル設定でビデオを自動保存できます。\n\n<b>大きくな〜れ:</b> 再生ボタンの右隣のボタンでフルスクリーン表示が可能です。\n\n<b>ビデオ検索:</b> Miro Guide には数百の無料インターネットTVチャンネルがあります。「追加」をクリックしてチャンネルを見ましょう。" */;
+"<b>Would you like Miro to look for video files on your computer?</b>" = "Miroにあなたのコンピュータ内のビデオ・ファイルを探してもらいたいですか？";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:28 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
-/* Flag: untranslated */
-"Auto download default setting for new channels" = "Auto download default setting for new channels";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:15 */
+"<b>Would you like to run Miro when your computer starts up?</b>" = "<b>あなたのコンピュータが起動するときにMiroを起動したいですか？</b>";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:16 */
+"<b>You're done!</b>\n\nSetup is complete -- now you can find some channels and start watching.\n\n<b>Don't Wait:</b> Miro is different than watching webpage videos -- publishers can offer big, high quality videos.  So don't sit around waiting for videos: start some downloads and check back later.\n\n<b>Leave it On:</b> Miro regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.\n\n<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.\n\n<b>Go Big:</b> The button to the right of the play button shows videos fullscreen.\n\n<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all of them are free.  Just click 'ADD' to watch a channel." = "<b>やったね!</b>\n\nセットアップ完了 -- さあ、チャンネルを見つけて視聴を開始できますよ。\n\n<b>待たないで：</b> Miroはウェブ・ページのビデオを見るのとは違います -- 発信者が大きくて高品質なビデオを提供できます。ただ座ってビデオを待っていないで下さい：ダウンロードを始めておいて後で確認すればよいのです。\n\n<b>起動したままで：</b> Miroはチャンネルに新しいビデオがあるかを定期的に確認して、バックグラウンドでダウンロードします。起動したままにしておけば、新しいビデオをあなたが観たいときに見ることができます。\n\n<b>ディスク容量の心配をしないで：</b> TiVo のように、Miroは「期限切れ」システムを持っていて、新しいビデオの為に古いビデオを消して空きを作ります。いつでも「保存」をクリックしてビデオを恒久保存することができますし、チャンネル設定でビデオを自動保存することもできます。\n\n<b>大きくしよう：</b> 再生ボタンの右隣のボタンでフルスクリーン表示になります。\n\n<b>ビデオを探そう：</b> Miroガイドには何百もの無料インターネットTVチャンネルがあります。「追加」をクリックしてチャンネルを見ましょう。";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:29 */
-/* Flag: untranslated */
-"Automatically for_ward ports." = "Automatically for_ward ports.";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:30 */
-/* Flag: untranslated */
-"By default, videos _expire after" = "By default, videos _expire after";
+"<b>xine</b>" = "<b>xine</b>";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:31 */
-/* Flag: untranslated */
-"C_hannel:" = "C_hannel:" /* = "チャンネル(C_)" */;
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19 */
+"Auto download default setting for new channels" = "新しいチャンネル用の自動ダウンロード標準設定";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:32 */
-/* Flag: untranslated */
-"C_hannels" = "C_hannels";
+"Automatically for_ward ports." = "自動的にポートを転送する（_w）";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:33 */
-/* Flag: untranslated */
-"C_reate Channel" = "C_reate Channel" /* = "チャンネル作成(C_)" */;
+"By default, videos _expire after" = "標準で、ビデオの期限切れは（_e）";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:34 */
-/* Flag: untranslated */
-"Check Channels for _new content" = "Check Channels for _new content";
+"C_hannel:" = "チャンネル（_h）";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:35 */
-/* Flag: untranslated */
-"Disk _Space" = "Disk _Space";
+"C_hannels" = "チャンネル（_h）";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:36 */
+"C_reate Channel" = "チャンネルをつくる（_r）";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:37 */
-/* Flag: untranslated */
-"Every 30 minutes\nEvery hour\nManually" = "Every 30 minutes\nEvery hour\nManually";
+"Check Channels for _new content" = "チャンネルに新しいコンテンツがあるか確認する（_n）";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:38 */
+"Disk _Space" = "ディスク容量（_S）";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:40 */
-/* Flag: untranslated */
+"Every 30 minutes\nEvery hour\nEvery day\nManually" = "30分毎\n1時間毎\n1日毎\n手動";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:44 */
 "G_B" = "G_B";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:41 */
-/* Flag: untranslated */
-"Go" = "Go";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:42 */
-/* Flag: untranslated */
-"Ignore Un_encrypted Connections." = "Ignore Un_encrypted Connections.";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:43 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
-/* Flag: untranslated */
-"In This:" = "In This:";
-
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:45 */
-/* Flag: untranslated */
-"Limit torrent _downstream to:" = "Limit torrent _downstream to:";
+"Go" = "移動";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:46 */
-/* Flag: untranslated */
-"Maximum number of channel auto-downloads at a time: " = "Maximum number of channel auto-downloads at a time: ";
+"Ignore Un_encrypted Connections." = "暗号化されていない接続を無視する（_e）";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:47 */
-/* Flag: untranslated */
-"Maximum number of manual downloads at a time: " = "Maximum number of manual downloads at a time: ";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4 */
+"In This:" = "この中に：";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:49 */
+"Limit torrent _downstream to:" = "トレントのダウンストリームの制限：";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:50 */
+"Maximum number of channel auto-downloads at a time: " = "チャンネルの同時自動ダウンロードの最大数 ";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:51 */
-/* Flag: untranslated */
-"Miro can find all the videos on your computer to help you organize your collection." = "Miro can find all the videos on your computer to help you organize your collection.";
+"Maximum number of manual downloads at a time: " = "マニュアルの同時自動ダウンロードの最大数 ";
 
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:52 */
-/* Flag: untranslated */
-"New\nAll\nOff" = "New\nAll\nOff";
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:55 */
+"Miro can find all the videos on your computer to help you organize your collection." = "Miroは、あなたのコンピュータ上の全てのビデオを見つけて、あなたのコレクションを整理するお手伝いができます。";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:56 */
-/* Flag: untranslated */
-"Play _videos one after another" = "Play _videos one after another";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:57 */
-/* Flag: untranslated */
-"Preferences" = "Preferences";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:58 */
-/* Flag: untranslated */
-"Restrict to my full _home folder" = "Restrict to my full _home folder";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:59 */
-/* Flag: untranslated */
-"S_top after each video" = "S_top after each video";
+"New\nAll\nOff" = "新規\n全て\nオフ";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:60 */
-/* Flag: untranslated */
-"S_tore downloaded videos in this folder:" = "S_tore downloaded videos in this folder:";
+"Play _videos one after another" = "次々にビデオを再生する（_v）";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:61 */
-/* Flag: untranslated */
-"Search _Engine:" = "Search _Engine:";
+"Preferences" = "設定";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:62 */
-/* Flag: untranslated */
-"Search _custom folder:" = "Search _custom folder:";
+"Restrict to my full _home folder" = "ホーム・フォルダ全てに限定する（_h）";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:63 */
-/* Flag: untranslated */
-"Select Movies Directory" = "Select Movies Directory";
+"S_top after each video" = "ビデオ毎に停止する（_t）";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:64 */
-/* Flag: untranslated */
-"Select custom search directory" = "Select custom search directory";
+"S_tore downloaded videos in this folder:" = "このフォルダにダウンロードしたビデオを保存する（_t）：";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:65 */
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62 */
-/* Flag: untranslated */
-"Stop torrent uploads when this ratio is reached:" = "Stop torrent uploads when this ratio is reached:";
+"Search _Engine:" = "検索エンジン（_E）";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:66 */
-/* Flag: untranslated */
-"The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "The next few screens will help you set up Miro so that it works best for you.  Here's the first question.";
+"Search _custom folder:" = "カスタム・フォルダを検索する（_c）";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:67 */
-/* Flag: untranslated */
-"To avoid internet slowdowns, limit _upstream to:" = "To avoid internet slowdowns, limit _upstream to:";
+"Select Movies Directory" = "映像ディレクトリを選ぶ";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:68 */
-/* Flag: untranslated */
-"Use _ports:" = "Use _ports:";
+"Select custom search directory" = "カスタム検索ディレクトリを選ぶ";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:69 */
-/* Flag: untranslated */
-"Use this renderer to play videos:" = "Use this renderer to play videos:";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:64 */
+"Stop torrent uploads when this ratio is reached:" = "この比率に達したらトレント・アップロードを停止する：";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:70 */
-"Volume:" = "分量:";
+"The next few screens will help you set up Miro so that it works best for you.  Here's the first question." = "次のいくつかのスクリーンであなたにとって最適にMiroが動作するように設定するのをお手伝いします。まず、最初の質問です。";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:71 */
-/* Flag: untranslated */
-"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch.";
+"To avoid internet slowdowns, limit _upstream to:" = "インターネットの減速を防ぐためのアップストリームの制限（_u）：";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:72 */
+"Use _ports:" = "使用するポート（_p）：";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:73 */
-/* Flag: untranslated */
-"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more.";
+"Use this for video when listening to audio:" = "ビデオ中でオーディオを聴くときにはこれを使う：";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:74 */
-/* Flag: untranslated */
-"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)";
+"Use this renderer to play videos:" = "ビデオを再生するソフト（レンダラー）：";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:75 */
-/* Flag: untranslated */
-"_Add Folder" = "_Add Folder";
+"Volume:" = "音量：";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:76 */
-/* Flag: untranslated */
-"_Automatically run Miro when I log in" = "_Automatically run Miro when I log in";
-
-/* File: ../../platform/gtk-x11/glade/miro.glade.h:77 */
-/* Flag: untranslated */
-"_Downloads" = "_Downloads";
+"We recommend that you allow Miro to launch when your computer starts up.  This way, videos that haven't finished downloading can finish and new videos on your channels will be ready when you want to watch." = "あなたがコンピュータを起動するときにMiroが起動することを許すようにお勧めします。そうすることで、ダウンロードが完了していないビデオが完了し、あなたのチャンネル上にある新しいビデオが、観たいときに準備が整っているようになります。";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:78 */
-/* Flag: untranslated */
-"_Folders" = "_Folders";
+"Welcome to Internet TV.  There's a lot you can do with Miro: automatically download videos from your favorite channels, watch new videos one after the other, download torrents, recommend videos to friends, and lots more." = "インターネットTVへようこそ！　Miroであなたができることはたくさんあります：お気に入りのチャンネルからビデオを自動的にダウンロードしたり、次々に新しいビデオを観たり、トレントでダウンロードしたり、友達にビデオを薦めたり、その他にもたくさん。";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:79 */
-/* Flag: untranslated */
-"_General" = "_General";
+"You've selected a new folder to download movies to.  Should Miro migrate your existing downloads there?  (Currently dowloading movies will not be moved until they finish.)" = "映像をダウンロードするための新しいフォルダが選択されました。ダウンロードされた既存のものをそこへ移動しますか？　（現在ダウンロード中の映像はダウンロードが完了するまでは移動されません。）";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:80 */
-/* Flag: untranslated */
-"_KB/s." = "_KB/s.";
+"_Add Folder" = "フォルダを追加(_A)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:81 */
-/* Flag: untranslated */
-"_Keep at least this much free space on my drive:" = "_Keep at least this much free space on my drive:";
+"_Automatically run Miro when I log in" = "ログイン時にMiroを自動的に起動する（_A）";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:82 */
-/* Flag: untranslated */
-"_Playback" = "_Playback";
+"_Downloads" = "ダウンロード(_D)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:83 */
-/* Flag: untranslated */
-"_Resume playback of videos from the point where they were stopped" = "_Resume playback of videos from the point where they were stopped";
+"_Folders" = "フォルダ(_F)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:84 */
-/* Flag: untranslated */
-"_Search" = "_Search";
+"_General" = "一般(_G)";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:85 */
-/* Flag: untranslated */
-"_Search For:" = "_Search For:";
+"_KB/s." = "_KB/s.";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:86 */
-/* Flag: untranslated */
-"_URL" = "_URL";
+"_Keep at least this much free space on my drive:" = "ドライブ上の最小空き容量（_K）：";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:87 */
-/* Flag: untranslated */
-"_Warn me when I attempt to quit with downloads in progress" = "_Warn me when I attempt to quit with downloads in progress";
+"_Playback" = "再生（_P）";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:88 */
-/* Flag: untranslated */
-"_Watch for new videos in these folders and include them in the Library" = "_Watch for new videos in these folders and include them in the Library";
+"_Resume playback of videos from the point where they were stopped" = "停止された所からビデオ再生を再開する（_R）";
 
 /* File: ../../platform/gtk-x11/glade/miro.glade.h:89 */
-/* Flag: untranslated */
+"_Search" = "検索する（_S）";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:90 */
+"_Search For:" = "検索する（_S）：";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:91 */
+"_URL" = "URL(_U)";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:92 */
+"_Warn me when I attempt to quit with downloads in progress" = "ダウンロード中に終了しようとするときには警告を出す（_W）";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:93 */
+"_Watch for new videos in these folders and include them in the Library" = "これらのフォルダにある新しいビデオを監視して、見つけたらライブラリに入れる（_W）";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:94 */
+"goom\noscope\nfftscope\nfftgraph\nnone" = "goom\noscope\nfftscope\nfftgraph\nnone";
+
+/* File: ../../platform/gtk-x11/glade/miro.glade.h:99 */
 "xine\ngstreamer" = "xine\ngstreamer";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2 */
-/* Flag: untranslated */
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher.";
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher." = "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 $publisher. $longAppName and the $longAppName logo are trademarks of $publisher.";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1 */
-/* Flag: untranslated */
-"About $longAppName" = "About $longAppName" /* = "$longAppName について" */;
+"About $longAppName" = "$longAppName について";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:1 */
-/* Flag: untranslated */
-"Add Channel" = "Add Channel" /* = "チャンネルを追加" */;
+"Add Channel" = "チャンネルを追加する";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:2 */
-/* Flag: untranslated */
-"Please enter the URL of the channel you'd like to add." = "Please enter the URL of the channel you'd like to add." /* = "追加したいチャンネルのURLを入力して下さい。" */;
+"Please enter the URL of the channel you'd like to add." = "追加したいチャンネルのURLを入力して下さい。";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6 */
-/* Flag: untranslated */
-"Copy log to clipboard" = "Copy log to clipboard" /* = "ログをクリップボードへコピー" */;
+"Copy log to clipboard" = "ログをクリップボードへコピーする";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5 */
-/* Flag: untranslated */
-"Open up the bug tracker" = "Open up the bug tracker" /* = "バグトラッカーを開く" */;
+"Open up the bug tracker" = "バグ・トラッカーを開く";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2 */
-/* Flag: untranslated */
-"Please help us fix it. Copy and paste all the\ninformation into our bug tracker and tell us what you were doing when the\nproblem occurred." = "Please help us fix it. Copy and paste all the\ninformation into our bug tracker and tell us what you were doing when the\nproblem occurred." /* = "修正にご協力願います。\nあらゆる情報をバグトラッカーにコピー＆ペーストして\n問題発生時に行っていたことを教えて下さい。" */;
+"Please help us fix it. Copy and paste all the\ninformation into our bug tracker and tell us what you were doing when the\nproblem occurred." = "修正にご協力願います。あらゆる情報を\nバグ・トラッカーにコピー＆ペーストして\n問題発生時に行っていたことを教えて下さい。";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:7 */
-/* Flag: untranslated */
-"Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!" = "Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!" /* = "$longAppName を再起動して下さい(他のエラーが起きるかもしれません)。ご迷惑をおかけします。まだ $longAppName はβ版ですが貴方の援助があれば問題を早く解決できます!" */;
+"Then, please restart $longAppName (or you may keep getting related errors). Sorry for the inconvenience. $longAppName is still in beta, but with your help we're fixing problems fast!" = "そして、$longAppName を再起動して下さい(関連した他のエラーが起きるかもしれませんが)。ご迷惑をおかけします。まだ $longAppName はβ版ですがあなたの援助があれば問題を早く解決できます!";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1 */
-"You found a bug in $longAppName!" = "貴方は $longAppName にバグを発見しました!";
+"You found a bug in $longAppName!" = "あなたは $longAppName にバグを発見しました！";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1 */
@@ -2096,141 +2146,119 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:2 */
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:2 */
-/* Flag: untranslated */
 "'" = "'";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:10 */
-/* Flag: untranslated */
-"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny." = "But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny.";
+"But we'll try our best to grab the files. It may take extra time to list the videos, and descriptions may look funny." = "それでも、私たちはそのファイルを取得するのに最善を尽くします。ビデオのリストをつくるのに、すこし余分な時間がかかるかもしれませんし、また、記述がおかしく見えるかもしれません。";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:12 */
-/* Flag: untranslated */
-"Please contact the publishers of" = "Please contact the publishers of";
+"Please contact the publishers of" = "これの発行者に問い合わせて下さい：";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:13 */
-/* Flag: untranslated */
-"and ask if they can supply a feed in a format that will work with $shortAppName." = "and ask if they can supply a feed in a format that will work with $shortAppName.";
+"and ask if they can supply a feed in a format that will work with $shortAppName." = "そして、彼らが$shortAppName と互換性のあるフォーマットでのフィードが提供できるかを尋ねて下さい。";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1 */
-/* Flag: untranslated */
 "$longAppName" = "$longAppName";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:4 */
-/* Flag: untranslated */
-"You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)" = "You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)";
+"You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)" = "映像をダウンロードするための新しいフォルダが選択されました。$shortAppNameで、ダウンロードされた既存のものをそこへ移動しますか？　（現在ダウンロード中の映像は、ダウンロードが完了するまでは移動されません。）";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1 */
-/* Flag: untranslated */
-"Channel requires authentication" = "Channel requires authentication";
+"Channel requires authentication" = "チャンネルは認証を必要としています。";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:2 */
-/* Flag: untranslated */
-"Please enter the username and password given to you by this channel's publisher." = "Please enter the username and password given to you by this channel's publisher.";
+"Please enter the username and password given to you by this channel's publisher." = "このチャンネルの発行者があなたに与えたユーザ名とパスワードを入力して下さい。";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55 */
-/* Flag: untranslated */
-"(WARNING: Changes won't go into effect until you restart $longAppName.)" = "(WARNING: Changes won't go into effect until you restart $longAppName.)";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57 */
+"(WARNING: Changes won't go into effect until you restart $longAppName.)" = "（警告：変更は $longAppName が再起動するまで有効になりません。）";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
-"Add Folder..." = "フォルダを追加";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:36 */
+"Add Folder..." = "フォルダを追加する…";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60 */
-/* Flag: untranslated */
-"Automatically Forward Ports" = "Automatically Forward Ports";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62 */
+"Automatically Forward Ports" = "自動的にポートを転送する";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:3 */
-/* Flag: untranslated */
-"Automatically run $longAppName when I login." = "Automatically run $longAppName when I login.";
+"Automatically run $longAppName when I login." = "ログイン時に自動的に $longAppName を起動する";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
-/* Flag: untranslated */
-"By default, videos expire after" = "By default, videos expire after" /* = "デフォルトのビデオ有効期限" */;
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48 */
+"By default, videos expire after" = "標準のビデオ有効期限";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12 */
-/* Flag: untranslated */
-"Check channels for new content" = "Check channels for new content";
+"Check channels for new content" = "チャンネルに新しいコンテンツがあるか確認する";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5 */
-/* Flag: untranslated */
-"Close to tray so that downloads can continue." = "Close to tray so that downloads can continue." /* = "トレイを閉じるとダウンロードを続行します。" */;
+"Close to tray so that downloads can continue." = "トレイに閉じるとダウンロードは継続されます。";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13 */
 "Every 30 minutes" = "30分毎";
 
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
+"Every day" = "毎日";
+
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14 */
 "Every hour" = "1時間毎";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32 */
-/* Flag: untranslated */
-"Folder" = "Folder";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34 */
+"Folder" = "フォルダ";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43 */
-/* Flag: untranslated */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45 */
 "GB" = "GB";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61 */
-/* Flag: untranslated */
-"Ignore Unencrypted Connections" = "Ignore Unencrypted Connections";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:63 */
+"Ignore Unencrypted Connections" = "暗号化されていない接続を無視する";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58 */
-/* Flag: untranslated */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60 */
 "KB/s" = "KB/s";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57 */
-/* Flag: untranslated */
-"Limit downstream bandwith to:" = "Limit downstream bandwith to:";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59 */
+"Limit downstream bandwith to:" = "ダウンストリームの制限：";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16 */
 "Manually" = "手動";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39 */
-/* Flag: untranslated */
-"Maximum number of channel auto-downloads at a time:" = "Maximum number of channel auto-downloads at a time:";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41 */
+"Maximum number of channel auto-downloads at a time:" = "同時自動ダウンロードの最大数：";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38 */
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40 */
+"Maximum number of manual downloads at a time:" = "同時手動ダウンロードの最大数：";
+
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17 */
 /* Flag: untranslated */
-"Maximum number of manual downloads at a time:" = "Maximum number of manual downloads at a time:";
+"Note: You can set the frequency channels are checked from the channel's settings pane." = "Note: You can set the frequency channels are checked from the channel's settings pane." /* = "註： チャンネル設定欄でチェックされたチャンネルを設定することができます。" */;
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1 */
-/* Flag: untranslated */
-"Options" = "Options" /* = "オプション" */;
+"Options" = "オプション";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
-/* Flag: untranslated */
-"Play one video, then stop." = "Play one video, then stop.";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27 */
+"Play one video, then stop." = "一つのビデオを再生してから停止する";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6 */
-/* Flag: untranslated */
-"Quit Miro completely." = "Quit Miro completely.";
+"Quit Miro completely." = "Miroを完全に終了する";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23 */
-/* Flag: untranslated */
-"Remember where I stopped watching a video and continue playing from that point." = "Remember where I stopped watching a video and continue playing from that point.";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25 */
+"Remember where I stopped watching a video and continue playing from that point." = "ビデオを停止した所を記憶し、そこから再生を続ける。";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
-/* Flag: untranslated */
-"Show as a Channel" = "Show as a Channel";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35 */
+"Show as a Channel" = "チャンネルとして示す";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28 */
-"Store downloaded videos in this folder:" = "ダウンロードしたビデオをフォルダに保存:";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30 */
+"Store downloaded videos in this folder:" = "ダウンロードしたビデオを保存するフォルダ：";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56 */
-/* Flag: untranslated */
-"To avoid internet slowdowns, limit upstream bandwith to:" = "To avoid internet slowdowns, limit upstream bandwith to:";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58 */
+"To avoid internet slowdowns, limit upstream bandwith to:" = "インターネットの減速を防ぐためのアップストリーム帯域の上限：";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44 */
-"WARNING: This setting will not go into effect until you restart $longAppName." = "注意: $longAppName を再起動すると設定が有効になります。";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46 */
+"WARNING: This setting will not go into effect until you restart $longAppName." = "警告：この設定は $longAppName を再起動するまでは有効になりません。";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9 */
-/* Flag: untranslated */
-"Warn me when I attempt to quit with downloads in progress." = "Warn me when I attempt to quit with downloads in progress.";
+"Warn me when I attempt to quit with downloads in progress." = "ダウンロード中に終了しようとするときには警告する。";
 
-/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31 */
-/* Flag: untranslated */
-"Watch for new videos in these folders and include them in my Library." = "Watch for new videos in these folders and include them in my Library.";
+/* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33 */
+"Watch for new videos in these folders and include them in my Library." = "これらのフォルダに新しいビデオを見つけて、ライブラリに入れる。";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4 */
-"When I click the red close button:" = "赤いクローズボタンをクリックした時:";
+"When I click the red close button:" = "赤い閉じるボタンをクリックした時:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5 */
 "Channel:" = "チャンネル:";
@@ -2242,12 +2270,10 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Search For:" = "これを検索:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7 */
-/* Flag: untranslated */
 "URL:" = "URL:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:33 */
-/* Flag: untranslated */
-"$longAppName can find all the videos on your computer to help you organize your collection." = "$longAppName can find all the videos on your computer to help you organize your collection." /* = "$longAppName はコンピュータ内のビデオを検索してコレクションの整理を助けます。" */;
+"$longAppName can find all the videos on your computer to help you organize your collection." = "$longAppName はあなたのコンピュータ内の全てのビデオを見つけて、あなたのコレクションを整理するお手伝いをします。";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:45 */
 "$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch." = "$longAppName はチャンネルで新しいビデオを見つけるとバックグラウンドでダウンロードします。準備できたビデオはすぐに見ることができます。";
@@ -2256,7 +2282,7 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "$shortAppName First Time Setup" = "$shortAppName の最初のセットアップ";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39 */
-"Cancel Search" = "検索を中止";
+"Cancel Search" = "検索を中止する";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:38 */
 "Change" = "変更";
@@ -2268,55 +2294,49 @@ FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 "Find Videos:" = "ビデオを探す:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48 */
-/* Flag: untranslated */
-"Go Big:" = "Go Big:";
+"Go Big:" = "大きくする：";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:44 */
-/* Flag: untranslated */
-"Leave it On:" = "Leave it On:";
+"Leave it On:" = "起動したままにしておく：";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:47 */
-/* Flag: untranslated */
-"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." /* = "$longAppName は TiVo のように、古いビデオを削除して新しいビデオ用に空きを作ることができます。ビデオを残すには「保存」をクリックするか、チャンネル設定でビデオの自動保存を設定します。" */;
+"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically." = "$longAppName は TiVo のように、「期限切れ」システムを持っていて、古いビデオを削除して新しいビデオ用に空きを作ることができます。ビデオを恒久保存するには、「保存する」をクリックするか、チャンネル設定でビデオの自動保存を設定します。";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:42 */
-/* Flag: untranslated */
-"Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" = "Now you can explore the Channel Guide\nand start watching.  A few tips to get started:";
+"Now you can explore the Channel Guide\nand start watching.  A few tips to get started:" = "さて、チャンネル・ガイドに沿って、\n鑑賞を開始できます。開始にあたって２、３のヒント：";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:40 */
-"Reset Search" = "検索をリセット";
+"Reset Search" = "検索をリセットする";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:35 */
 "Restrict to all my personal files." = "自分の個人ファイルのみに制限する。";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:36 */
-"Search custom folder:" = "カスタムフォルダを検索:";
+"Search custom folder:" = "カスタム・フォルダを検索する：";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51 */
-"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel." = "$shortAppNameのチャンネルガイドは数百のフリーのインターネットテレビチャンネルに対応しています。\r\n「追加」をクリックしてチャンネルを視聴してください。";
+"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel." = "$shortAppNameのチャンネル・ガイドには、何百もの無料インターネットテレビ・チャンネルがあります。「追加する」をクリックしてチャンネルを視聴してください。";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49 */
-"The button to the right of the play button shows videos fullscreen." = "再生ボタンの右にあるボタンでフルスクリーン表示に変更します。";
+"The button to the right of the play button shows videos fullscreen." = "再生ボタンの右にあるボタンでフルスクリーン表示になります。";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:30 */
-/* Flag: untranslated */
-"The next few screens will help you set up $longAppName so that it works best for you." = "The next few screens will help you set up $longAppName so that it works best for you." /* = "これから幾つかの画面で $longAppName をセットアップし、自分にぴったりに動くようにします。" */;
+"The next few screens will help you set up $longAppName so that it works best for you." = "これから幾つかの画面で、最善の動作をするように $longAppName を設定します。";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:31 */
-"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch." = "コンピュータの起動時に $longAppName を起動することをお勧めします。起動することによって、ダウンロード途中のビデオのダウンロードを終わらせたり、新しいビデオをバックグラウンドでダウンロードしたりでき、見たい時に見られるようになります。";
+"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch." = "コンピュータの起動時に $longAppName を起動することをお勧めします。そうすることで、ダウンロード途中のビデオのダウンロードが完了したり、新しいビデオをバックグラウンドでダウンロードしたりでき、見たい時に見られるようになります。";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34 */
-"Would you like $longAppName to look for video files on your computer?" = "$longAppName にコンピュータ内のビデオを検索させますか?";
+"Would you like $longAppName to look for video files on your computer?" = "$longAppNameにパソコン内のビデオを探してもらいたいですか？";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:32 */
 "Would you like to run $shortAppName on startup?" = "コンピューター起動時に $shortAppName を起動しますか?";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:41 */
-"You're done!" = "完了";
+"You're done!" = "やったね！";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/update_available.dtd.template:1 */
-/* Flag: untranslated */
-"Release Notes:" = "Release Notes:" /* = "リリースノート:" */;
+"Release Notes:" = "リリース・ノート:";
 
 /* File: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1 */
 "Question" = "質問";

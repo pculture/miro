@@ -25,7 +25,7 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done6.heading		"Find Videos:">
 <!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
 <!ENTITY startup.answer.yes		"Já.">
-<!ENTITY startup.answer.no		"No">
+<!ENTITY startup.answer.no		"Nei">
 <!ENTITY startup.title			"$shortAppName First Time Setup">
 <!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
 <!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
@@ -50,4 +50,4 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done6.heading		"Find Videos:">
 <!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
 <!ENTITY startup.answer.yes		"Já.">
-<!ENTITY startup.answer.no		"No">
+<!ENTITY startup.answer.no		"Nei">

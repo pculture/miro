@@ -1,2 +1,2 @@
-<!ENTITY about.title         "About $longAppName"> 
-<!ENTITY about.body          "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 $publisher.  $longAppName and the $longAppName logo are trademarks of $publisher."> 
+<!ENTITY about.title         "關於$longAppName"> 
+<!ENTITY about.body          "$longAppName 版本：$appVersion ($appRevision) Copyright (c) 2005-2008 $publisher. $longAppName和$longAppName標誌為$publisher的註冊商標。"> 

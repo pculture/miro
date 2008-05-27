@@ -1,4 +1,4 @@
-<!ENTITY migrate.title "¿Migrar vídeos existentes?">
+<!ENTITY migrate.title "¿Migrar videos existentes?">
 <!ENTITY migrate.accept "Migrar">
 <!ENTITY migrate.cancel "No migrar">
-<!ENTITY migrate.description "Ha seleccionado una nueva carpeta donde descargar los vídeos. ¿Desea que $shortAppName mueva allí sus vídeos  descargados? (Los vídeos que se están descargando no se moverán hasta que no hayan terminado su descarga)">
+<!ENTITY migrate.description "Ha seleccionado una nueva carpeta para descargar los videos. ¿Desea que $shortAppName mueva allí sus videos descargados? (Los videos que se estén descargando no se moverán hasta que no haya terminado su descarga)">

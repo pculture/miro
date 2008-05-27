@@ -12,7 +12,9 @@
 <!ENTITY prefs.channels.check "Werk kanalen automatisch bij">
 <!ENTITY prefs.channels.check.thirty "Elke half uur">
 <!ENTITY prefs.channels.check.sixty "Elk uur">
+<!ENTITY prefs.channels.check.daily "Every day">
 <!ENTITY prefs.channels.check.manually "Handmatig">
+<!ENTITY prefs.channels.check.note "Note: You can set the frequency channels are checked from the channel's settings pane.">
 
 <!ENTITY prefs.channels.autodownloaddefault "Automatische downloads van nieuwe kanalen:">
 <!ENTITY prefs.channels.autodownloaddefault.all "Alle">
@@ -50,6 +52,16 @@
 <!ENTITY prefs.videos.expire.ten "10 dagen">
 <!ENTITY prefs.videos.expire.thirty "1 maand">
 <!ENTITY prefs.videos.expire.never "Nooit">
+
+<!ENTITY prefs.videos.maxolditems "By default, remember">
+<!ENTITY prefs.videos.maxolditems2 "items in addition to the current contents">
+<!ENTITY prefs.videos.maxolditems.zero "0">
+<!ENTITY prefs.videos.maxolditems.twenty "20">
+<!ENTITY prefs.videos.maxolditems.fifty "50">
+<!ENTITY prefs.videos.maxolditems.hundred "100">
+<!ENTITY prefs.videos.maxolditems.thousand "1000">
+
+<!ENTITY prefs.videos.cleanallolditems "Clean old items in all feeds">
 
 <!ENTITY prefs.torrent "Torrents">
 <!ENTITY prefs.torrent.restart.warning "(NB: De wijzigingen in $longAppName gaan in nadat u ze opnieuw opent.)">

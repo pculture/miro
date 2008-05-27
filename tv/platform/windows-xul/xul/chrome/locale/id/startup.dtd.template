@@ -9,11 +9,11 @@
 <!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
 <!ENTITY startup.search.restrict	"Restrict to all my personal files.">
 <!ENTITY startup.search.custom          "Search custom folder:">
-<!ENTITY startup.search.searching	"Searching for Videos">
+<!ENTITY startup.search.searching	"mencari video">
 <!ENTITY startup.change	                "Change">
 <!ENTITY startup.cancel	                "Cancel Search">
 <!ENTITY startup.undo	                "Reset Search">
-<!ENTITY startup.done1			"You're done!">
+<!ENTITY startup.done1			"Anda telah selesai">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
 <!ENTITY startup.done3.heading		"Leave it On:">
@@ -24,8 +24,8 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
 <!ENTITY startup.done6.heading		"Find Videos:">
 <!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
-<!ENTITY startup.answer.yes		"Yes">
-<!ENTITY startup.answer.no		"No">
+<!ENTITY startup.answer.yes		"Ya">
+<!ENTITY startup.answer.no		"Tidak">
 <!ENTITY startup.title			"$shortAppName First Time Setup">
 <!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
 <!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
@@ -34,11 +34,11 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
 <!ENTITY startup.search.restrict	"Restrict to all my personal files.">
 <!ENTITY startup.search.custom          "Search custom folder:">
-<!ENTITY startup.search.searching	"Searching for Videos">
+<!ENTITY startup.search.searching	"mencari video">
 <!ENTITY startup.change	                "Change">
 <!ENTITY startup.cancel	                "Cancel Search">
 <!ENTITY startup.undo	                "Reset Search">
-<!ENTITY startup.done1			"You're done!">
+<!ENTITY startup.done1			"Anda telah selesai">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
 <!ENTITY startup.done3.heading		"Leave it On:">
@@ -49,5 +49,5 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
 <!ENTITY startup.done6.heading		"Find Videos:">
 <!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
-<!ENTITY startup.answer.yes		"Yes">
-<!ENTITY startup.answer.no		"No">
+<!ENTITY startup.answer.yes		"Ya">
+<!ENTITY startup.answer.no		"Tidak">

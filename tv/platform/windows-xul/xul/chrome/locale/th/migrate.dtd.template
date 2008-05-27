@@ -1,4 +1,4 @@
-<!ENTITY migrate.title "ย้ายวิดิโอที่มีปัจจุบัน?">
+<!ENTITY migrate.title "ย้ายวิดีโอที่มีปัจจุบัน?">
 <!ENTITY migrate.accept "Migrate">
 <!ENTITY migrate.cancel "Don't Migrate">
-<!ENTITY migrate.description "You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)">
+<!ENTITY migrate.description "คุณเลือกที่จะดาวน์โหลดหนังลงในโฟลเดอร์ที่สร้างใหม่ คุณจะยอมให้ $shortAppName ย้ายหนังที่คุณดาวน์โหลดเสร็จแล้วไปที่นั่นหรือไม่? (หนังจะไม่ถูกย้ายจนกระทั่งดาวน์โหลดเสร็จ)">

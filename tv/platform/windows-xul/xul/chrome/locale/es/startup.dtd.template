@@ -3,13 +3,13 @@
 
 <!ENTITY startup.title			"Configuración Inicial de $shortAppName">
 <!ENTITY startup.description		"Las siguientes pantallas le ayudarán a configurar $longAppName para que funcione de forma óptima.">
-<!ENTITY startup.autostart.description	"Recomendamos que $longAppName se abra cada vez que arranque. De esta forma, los vídeos pueden terminar de descargarse y los vídeos nuevos pueden descargarse en segundo plano, listos para que pueda verlos cuando usted desee.">
-<!ENTITY startup.autostart.question	"¿Desea ejecutar $shortAppName al arrancar?">
-<!ENTITY startup.search.description	"$longAppName puede encontrar todos los vídeos en su ordenador para ayudarle a organizar su colección.">
-<!ENTITY startup.search.question        "¿Desea que $longAppName busque archivos de vídeo en su equipo?">
+<!ENTITY startup.autostart.description	"Recomendamos que permita que $longAppName se abra al iniciar su equipo. De esta forma, los videos en descarga pueden terminar de descargarse y los videos nuevos pueden descargarse en segundo plano, listos para que pueda verlos cuando usted desee.">
+<!ENTITY startup.autostart.question	"¿Desea ejecutar $shortAppName al inicio?">
+<!ENTITY startup.search.description	"$longAppName puede encontrar todos los videos en su equipo para ayudarle a organizar su colección.">
+<!ENTITY startup.search.question        "¿Desea que $longAppName busque archivos de video en su equipo?">
 <!ENTITY startup.search.restrict	"Restringir a todos mis archivos personales.">
 <!ENTITY startup.search.custom          "Buscar en la carpeta personalizada:">
-<!ENTITY startup.search.searching	"Buscando vídeos">
+<!ENTITY startup.search.searching	"Buscando videos">
 <!ENTITY startup.change	                "Cambiar">
 <!ENTITY startup.cancel	                "Cancelar búsqueda">
 <!ENTITY startup.undo	                "Reiniciar búsqueda">
@@ -17,24 +17,24 @@
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
 <!ENTITY startup.done3.heading		"Déjelo encendido:">
-<!ENTITY startup.done3.text		"$longAppName comprueba periódicamente los canales por si hay nuevos vídeos y los descarga en segundo plano. Dejarlo abierto significa que va a tener nuevos vídeos cuando esté listo para verlos.">
+<!ENTITY startup.done3.text		"$longAppName revisa periódicamente los canales buscando videos nuevos y los descarga en segundo plano. Dejarlo abierto significa que va a tener videos nuevos cuando esté listo para verlos.">
 <!ENTITY startup.done4.heading		"No se preocupe por el espacio en disco:">
-<!ENTITY startup.done4.text		"Como en un TiVo, $longAppName se caracteriza por tener un sistema de &quot;caducidad&quot;, lo que ayuda a que se eliminen los vídeos más antiguos para que haya espacio para los nuevos. Puede conservar un vídeo permanentemente pulsando en 'Guardar', y puede configurar cada canal para que sus vídeos se conserven automáticamente.">
-<!ENTITY startup.done5.heading		"Piense a lo grande:">
-<!ENTITY startup.done5.text		"El botón a la derecha de &quot;reproducir&quot; muestra los vídeos a pantalla completa.">
-<!ENTITY startup.done6.heading		"Encuentre vídeos:">
-<!ENTITY startup.done6.text		"La guía de canal $shortAppName tiene cientos de canales de televisión, todos gratis, Click en 'Añadir' para ver un canal.">
+<!ENTITY startup.done4.text		"Como en un TiVo, $longAppName se caracteriza por tener un sistema de «caducidad», lo que ayuda a que se eliminen los videos más antiguos para que haya espacio para los nuevos. Puede conservar un video permanentemente pulsando en «Guardar», y puede configurar cada canal para que sus videos se conserven automáticamente.">
+<!ENTITY startup.done5.heading		"Piense en grande:">
+<!ENTITY startup.done5.text		"El botón a la derecha del botón de reproducción muestra los videos en pantalla completa.">
+<!ENTITY startup.done6.heading		"Encuentre videos:">
+<!ENTITY startup.done6.text		"La guía de canales de $shortAppName contiene cientos de canales de televisión por Internet; todos ellos son gratuitos. Simplemente haga clic en «ADD» para ver el canal.">
 <!ENTITY startup.answer.yes		"Sí">
 <!ENTITY startup.answer.no		"No">
 <!ENTITY startup.title			"Configuración Inicial de $shortAppName">
 <!ENTITY startup.description		"Las siguientes pantallas le ayudarán a configurar $longAppName para que funcione de forma óptima.">
-<!ENTITY startup.autostart.description	"Recomendamos que $longAppName se abra cada vez que arranque. De esta forma, los vídeos pueden terminar de descargarse y los vídeos nuevos pueden descargarse en segundo plano, listos para que pueda verlos cuando usted desee.">
-<!ENTITY startup.autostart.question	"¿Desea ejecutar $shortAppName al arrancar?">
-<!ENTITY startup.search.description	"$longAppName puede encontrar todos los vídeos en su ordenador para ayudarle a organizar su colección.">
-<!ENTITY startup.search.question        "¿Desea que $longAppName busque archivos de vídeo en su equipo?">
+<!ENTITY startup.autostart.description	"Recomendamos que permita que $longAppName se abra al iniciar su equipo. De esta forma, los videos en descarga pueden terminar de descargarse y los videos nuevos pueden descargarse en segundo plano, listos para que pueda verlos cuando usted desee.">
+<!ENTITY startup.autostart.question	"¿Desea ejecutar $shortAppName al inicio?">
+<!ENTITY startup.search.description	"$longAppName puede encontrar todos los videos en su equipo para ayudarle a organizar su colección.">
+<!ENTITY startup.search.question        "¿Desea que $longAppName busque archivos de video en su equipo?">
 <!ENTITY startup.search.restrict	"Restringir a todos mis archivos personales.">
 <!ENTITY startup.search.custom          "Buscar en la carpeta personalizada:">
-<!ENTITY startup.search.searching	"Buscando vídeos">
+<!ENTITY startup.search.searching	"Buscando videos">
 <!ENTITY startup.change	                "Cambiar">
 <!ENTITY startup.cancel	                "Cancelar búsqueda">
 <!ENTITY startup.undo	                "Reiniciar búsqueda">
@@ -42,12 +42,12 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
 <!ENTITY startup.done3.heading		"Déjelo encendido:">
-<!ENTITY startup.done3.text		"$longAppName comprueba periódicamente los canales por si hay nuevos vídeos y los descarga en segundo plano. Dejarlo abierto significa que va a tener nuevos vídeos cuando esté listo para verlos.">
+<!ENTITY startup.done3.text		"$longAppName revisa periódicamente los canales buscando videos nuevos y los descarga en segundo plano. Dejarlo abierto significa que va a tener videos nuevos cuando esté listo para verlos.">
 <!ENTITY startup.done4.heading		"No se preocupe por el espacio en disco:">
-<!ENTITY startup.done4.text		"Como en un TiVo, $longAppName se caracteriza por tener un sistema de &quot;caducidad&quot;, lo que ayuda a que se eliminen los vídeos más antiguos para que haya espacio para los nuevos. Puede conservar un vídeo permanentemente pulsando en 'Guardar', y puede configurar cada canal para que sus vídeos se conserven automáticamente.">
-<!ENTITY startup.done5.heading		"Piense a lo grande:">
-<!ENTITY startup.done5.text		"El botón a la derecha de &quot;reproducir&quot; muestra los vídeos a pantalla completa.">
-<!ENTITY startup.done6.heading		"Encuentre vídeos:">
-<!ENTITY startup.done6.text		"La guía de canal $shortAppName tiene cientos de canales de televisión, todos gratis, Click en 'Añadir' para ver un canal.">
+<!ENTITY startup.done4.text		"Como en un TiVo, $longAppName se caracteriza por tener un sistema de «caducidad», lo que ayuda a que se eliminen los videos más antiguos para que haya espacio para los nuevos. Puede conservar un video permanentemente pulsando en «Guardar», y puede configurar cada canal para que sus videos se conserven automáticamente.">
+<!ENTITY startup.done5.heading		"Piense en grande:">
+<!ENTITY startup.done5.text		"El botón a la derecha del botón de reproducción muestra los videos en pantalla completa.">
+<!ENTITY startup.done6.heading		"Encuentre videos:">
+<!ENTITY startup.done6.text		"La guía de canales de $shortAppName contiene cientos de canales de televisión por Internet; todos ellos son gratuitos. Simplemente haga clic en «ADD» para ver el canal.">
 <!ENTITY startup.answer.yes		"Sí">
 <!ENTITY startup.answer.no		"No">

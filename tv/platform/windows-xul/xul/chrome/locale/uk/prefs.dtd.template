@@ -12,7 +12,9 @@
 <!ENTITY prefs.channels.check "Перевірити канали на наявність нових сюжетів">
 <!ENTITY prefs.channels.check.thirty "Що 30 хвилин">
 <!ENTITY prefs.channels.check.sixty "Щогодинни">
+<!ENTITY prefs.channels.check.daily "Кожен день">
 <!ENTITY prefs.channels.check.manually "Власноруч">
+<!ENTITY prefs.channels.check.note "Note: You can set the frequency channels are checked from the channel's settings pane.">
 
 <!ENTITY prefs.channels.autodownloaddefault "Автоматично скачувти налаштування за замовчуванням для  нових каналів">
 <!ENTITY prefs.channels.autodownloaddefault.all "Усі">
@@ -21,7 +23,7 @@
 
 <!ENTITY prefs.playback "Програвання">
 <!ENTITY prefs.playback.remember.pos "Запам'ятовувати де я зупинив перегляд сюжету та поновлювати перегляд з цього місця">
-<!ENTITY prefs.playback.auto.next.video "Програвати відео одне після другого.">
+<!ENTITY prefs.playback.auto.next.video "Програвати відео одне за одним.">
 <!ENTITY prefs.playback.stop.after.each "Показати лише це відео">
 
 <!ENTITY prefs.folder.movies "Папки">
@@ -39,7 +41,7 @@
 <!ENTITY prefs.autodownloads.max "Максимальна кількість автоматичних автозавантаженнь на канал:">
 
 <!ENTITY prefs.disk.space "Дисковий простір">
-<!ENTITY prefs.disk.space.min.part1 "Продовжувати, поки на моєму диску є стільки вільного місця:" >
+<!ENTITY prefs.disk.space.min.part1 "Зберігати вільного місця на диску не менш ніж:" >
 <!ENTITY prefs.disk.space.min.part2 "ГБ">
 <!ENTITY prefs.disk.space.warning.restart "УВАГА: Ці налаштування набудуть чинності лише після перезапуску $longAppName.">
 
@@ -51,12 +53,22 @@
 <!ENTITY prefs.videos.expire.thirty "1 місяць">
 <!ENTITY prefs.videos.expire.never "Ніколи">
 
+<!ENTITY prefs.videos.maxolditems "By default, remember">
+<!ENTITY prefs.videos.maxolditems2 "items in addition to the current contents">
+<!ENTITY prefs.videos.maxolditems.zero "0">
+<!ENTITY prefs.videos.maxolditems.twenty "20">
+<!ENTITY prefs.videos.maxolditems.fifty "50">
+<!ENTITY prefs.videos.maxolditems.hundred "100">
+<!ENTITY prefs.videos.maxolditems.thousand "1000">
+
+<!ENTITY prefs.videos.cleanallolditems "Clean old items in all feeds">
+
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(УВАГА: Зміни стануть чинними лише після перезапуску $longAppName.)">
 <!ENTITY prefs.torrent.limit.upstream "Щоб уникнуи незручностей при роботі з Internet, обмежити канал віддачі до:">
 <!ENTITY prefs.torrent.limit.downstream "Обмежити канал скачування до:">
 <!ENTITY prefs.torrent.limit.kbps "КБ/c">
-<!ENTITY prefs.torrent.use_ports "Використовувати ці порти:">
+<!ENTITY prefs.torrent.use_ports "Використовувати порти:">
 <!ENTITY prefs.torrent.use_upnp "Автоматично переадресовувати порти">
 <!ENTITY prefs.torrent.require_encryption "Ігнорувати незашифровані з'єднання">
 <!ENTITY prefs.torrent.uploadratio "Зупинити віддачу torrent коли досягнено співвідношення:">

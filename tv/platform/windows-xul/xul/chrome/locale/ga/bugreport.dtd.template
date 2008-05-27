@@ -1,0 +1,7 @@
+<!ENTITY bugreport.title     "D'aimsigh tú fabht i $longAppName!">
+<!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the
+information into our bug tracker and tell us what you were doing when the
+problem occurred.">
+<!ENTITY bugreport.openbugtracker "Oscail an lorgaire fabhtaí">
+<!ENTITY bugreport.copytoclipboard "Macasamhlaigh an taifead chuig an ghearrthaisce">
+<!ENTITY bugreport.pleaserestart "Ansin, atosaigh $longAppName  le do thoil (nó b'fhéidir gheobhaidh tú tuilleadh botúin gaolmhara). Is dona linn an mhíchaoithiúlacht. Is leagan béite fós é $longAppName, ach le cabhair uaitse, táimid ag deisiú fadhbanna go tapa!">

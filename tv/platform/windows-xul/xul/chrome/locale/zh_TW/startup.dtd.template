@@ -1,53 +1,53 @@
 <!ENTITY nbsp				" ">
-<!ENTITY rsaquo				"'">
+<!ENTITY rsaquo				"’">
 
 <!ENTITY startup.title			"$shortAppName First Time Setup">
-<!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
-<!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
-<!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
+<!ENTITY startup.description		"接下來的幾個畫面將會協助您最佳化$longAppName">
+<!ENTITY startup.autostart.description	"我們建議您讓$longAppName在電腦啟動時執行。如此，正在下載的影片或是新的影片可以在幕後下載，當您要看時將會比較方便。">
+<!ENTITY startup.autostart.question	"你希望$longAppName在啟動時執行嗎？">
 <!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
+<!ENTITY startup.search.question        "您希望$longAppName搜尋您電腦裡面的影片嗎？">
 <!ENTITY startup.search.restrict	"Restrict to all my personal files.">
-<!ENTITY startup.search.custom          "Search custom folder:">
+<!ENTITY startup.search.custom          "搜尋自訂資料夾">
 <!ENTITY startup.search.searching	"搜尋影片">
 <!ENTITY startup.change	                "變更">
 <!ENTITY startup.cancel	                "Cancel Search">
-<!ENTITY startup.undo	                "Reset Search">
-<!ENTITY startup.done1			"You're done!">
+<!ENTITY startup.undo	                "搜尋重設">
+<!ENTITY startup.done1			"恭喜你！完成了！">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
 <!ENTITY startup.done3.heading		"Leave it On:">
 <!ENTITY startup.done3.text		"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.">
 <!ENTITY startup.done4.heading		"Don't Worry About Disk Space:">
-<!ENTITY startup.done4.text		"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
+<!ENTITY startup.done4.text		"就像TiVo一樣，$longAppName也有「影片逾期」的功能，可以幫助您將較早下載的影片刪除，以便清出硬碟空間。您也可以永久保存影片，只要按一下「儲存」或是設定頻道將影片自動儲存。">
 <!ENTITY startup.done5.heading		"Go Big:">
-<!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
-<!ENTITY startup.done6.heading		"Find Videos:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done5.text		"在播放鍵旁邊的按鈕可以將螢幕放到最大。">
+<!ENTITY startup.done6.heading		"尋找影片">
+<!ENTITY startup.done6.text		"$shortAppName的頻道導覽中有上百種網路電視頻道，全部都是免費的。要觀看頻道只要按一下「新增」。">
 <!ENTITY startup.answer.yes		"是">
 <!ENTITY startup.answer.no		"否">
 <!ENTITY startup.title			"$shortAppName First Time Setup">
-<!ENTITY startup.description		"The next few screens will help you set up $longAppName so that it works best for you.">
-<!ENTITY startup.autostart.description	"We recommend that you have $longAppName launch when your computer starts up.  This way, videos in progress can finish downloading and new videos can be downloaded in the background, ready when you want to watch.">
-<!ENTITY startup.autostart.question	"Would you like to run $shortAppName on startup?">
+<!ENTITY startup.description		"接下來的幾個畫面將會協助您最佳化$longAppName">
+<!ENTITY startup.autostart.description	"我們建議您讓$longAppName在電腦啟動時執行。如此，正在下載的影片或是新的影片可以在幕後下載，當您要看時將會比較方便。">
+<!ENTITY startup.autostart.question	"你希望$longAppName在啟動時執行嗎？">
 <!ENTITY startup.search.description	"$longAppName can find all the videos on your computer to help you organize your collection.">
-<!ENTITY startup.search.question        "Would you like $longAppName to look for video files on your computer?">
+<!ENTITY startup.search.question        "您希望$longAppName搜尋您電腦裡面的影片嗎？">
 <!ENTITY startup.search.restrict	"Restrict to all my personal files.">
-<!ENTITY startup.search.custom          "Search custom folder:">
+<!ENTITY startup.search.custom          "搜尋自訂資料夾">
 <!ENTITY startup.search.searching	"搜尋影片">
 <!ENTITY startup.change	                "變更">
 <!ENTITY startup.cancel	                "Cancel Search">
-<!ENTITY startup.undo	                "Reset Search">
-<!ENTITY startup.done1			"You're done!">
+<!ENTITY startup.undo	                "搜尋重設">
+<!ENTITY startup.done1			"恭喜你！完成了！">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
 <!ENTITY startup.done3.heading		"Leave it On:">
 <!ENTITY startup.done3.text		"$longAppName regularly checks channels for new videos and downloads in the background.  Leaving it running means you'll have new videos when you're ready to watch.">
 <!ENTITY startup.done4.heading		"Don't Worry About Disk Space:">
-<!ENTITY startup.done4.text		"Like a TiVo, $longAppName features an 'expiration' system that helps clean out older videos to make room for new videos.  You can always keep a video permanently by clicking 'save' and you can set a channel's settings to save videos automatically.">
+<!ENTITY startup.done4.text		"就像TiVo一樣，$longAppName也有「影片逾期」的功能，可以幫助您將較早下載的影片刪除，以便清出硬碟空間。您也可以永久保存影片，只要按一下「儲存」或是設定頻道將影片自動儲存。">
 <!ENTITY startup.done5.heading		"Go Big:">
-<!ENTITY startup.done5.text		"The button to the right of the play button shows videos fullscreen.">
-<!ENTITY startup.done6.heading		"Find Videos:">
-<!ENTITY startup.done6.text		"The $shortAppName Channel Guide has hundreds of internet TV channels; all of them are free.  Just click 'ADD' to watch a channel.">
+<!ENTITY startup.done5.text		"在播放鍵旁邊的按鈕可以將螢幕放到最大。">
+<!ENTITY startup.done6.heading		"尋找影片">
+<!ENTITY startup.done6.text		"$shortAppName的頻道導覽中有上百種網路電視頻道，全部都是免費的。要觀看頻道只要按一下「新增」。">
 <!ENTITY startup.answer.yes		"是">
 <!ENTITY startup.answer.no		"否">

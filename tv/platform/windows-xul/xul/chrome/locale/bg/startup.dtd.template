@@ -12,7 +12,7 @@
 <!ENTITY startup.search.searching	"Търсене за филми">
 <!ENTITY startup.change	                "Промяна">
 <!ENTITY startup.cancel	                "Отказване на търсенето">
-<!ENTITY startup.undo	                "Reset Search">
+<!ENTITY startup.undo	                "Изчистване на търсенето">
 <!ENTITY startup.done1			"Готово!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">
@@ -37,7 +37,7 @@ and start watching.  A few tips to get started:">
 <!ENTITY startup.search.searching	"Търсене за филми">
 <!ENTITY startup.change	                "Промяна">
 <!ENTITY startup.cancel	                "Отказване на търсенето">
-<!ENTITY startup.undo	                "Reset Search">
+<!ENTITY startup.undo	                "Изчистване на търсенето">
 <!ENTITY startup.done1			"Готово!">
 <!ENTITY startup.done2			"Now you can explore the Channel Guide
 and start watching.  A few tips to get started:">

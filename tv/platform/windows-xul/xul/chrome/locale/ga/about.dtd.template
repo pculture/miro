@@ -1,0 +1,2 @@
+<!ENTITY about.title         "Maidir le $longAppName"> 
+<!ENTITY about.body          "$longAppName version $appVersion ($appRevision); cóipcheart (c) 2005-2008 $publisher.  Is comharthaí tráchtála de chuid $publisher iad $longAppName agus comhartha $longAppName."> 

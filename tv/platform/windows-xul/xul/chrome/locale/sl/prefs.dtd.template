@@ -12,7 +12,9 @@
 <!ENTITY prefs.channels.check "Preveri novo vsebino na kanalih">
 <!ENTITY prefs.channels.check.thirty "vsakih 30 minut">
 <!ENTITY prefs.channels.check.sixty "Vsako uro_24 urna">
+<!ENTITY prefs.channels.check.daily "Vsak dan">
 <!ENTITY prefs.channels.check.manually "Ročno">
+<!ENTITY prefs.channels.check.note "Opomba: V podoknu nastavitev kanala, lahko izberete kako pogosto je kanal posodobljen.">
 
 <!ENTITY prefs.channels.autodownloaddefault "Samodejno prenesi privzete nastavitve za nove kanale.">
 <!ENTITY prefs.channels.autodownloaddefault.all "Vse">
@@ -50,6 +52,16 @@
 <!ENTITY prefs.videos.expire.ten "10 dni">
 <!ENTITY prefs.videos.expire.thirty "1 mesec">
 <!ENTITY prefs.videos.expire.never "Nikoli">
+
+<!ENTITY prefs.videos.maxolditems "By default, remember">
+<!ENTITY prefs.videos.maxolditems2 "items in addition to the current contents">
+<!ENTITY prefs.videos.maxolditems.zero "0">
+<!ENTITY prefs.videos.maxolditems.twenty "20">
+<!ENTITY prefs.videos.maxolditems.fifty "50">
+<!ENTITY prefs.videos.maxolditems.hundred "100">
+<!ENTITY prefs.videos.maxolditems.thousand "1000">
+
+<!ENTITY prefs.videos.cleanallolditems "Clean old items in all feeds">
 
 <!ENTITY prefs.torrent "BitTorrent">
 <!ENTITY prefs.torrent.restart.warning "(Opozorilo: Spremembe ne bodo uveljavljene do ponovnega zagona programa $longAppName.)">

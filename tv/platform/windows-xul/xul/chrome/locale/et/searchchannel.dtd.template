@@ -1,8 +1,8 @@
-<!ENTITY searchchannel.description	"A search channel contains items that match a search term.">
-<!ENTITY searchchannel.termlabel 	"Search For:">
-<!ENTITY searchchannel.title            "New Search Channel">
+<!ENTITY searchchannel.description	"Otsiv kanal sisaldab märksõnale vastavaid videosid.">
+<!ENTITY searchchannel.termlabel 	"Otsida:">
+<!ENTITY searchchannel.title            "Uus otsiv kanal">
 <!ENTITY searchchannel.inthis "In This:">
 <!ENTITY searchchannel.channel "Kanal:">
 <!ENTITY searchchannel.searchengine "Otsingumootor:">
 <!ENTITY searchchannel.url "URL:">
-<!ENTITY searchchannel.createchannel "Create Channel">
+<!ENTITY searchchannel.createchannel "Loo kanal">

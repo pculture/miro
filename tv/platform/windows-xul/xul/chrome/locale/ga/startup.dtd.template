@@ -1,0 +1,53 @@
+<!ENTITY nbsp				" ">
+<!ENTITY rsaquo				"'">
+
+<!ENTITY startup.title			"Socrú $shortAppName Don Chéad Uair">
+<!ENTITY startup.description		"Cabhróidh na chéad scáileáin eile leat $longAppName a shocrú ar an dóigh is fearr leat.">
+<!ENTITY startup.autostart.description	"Molaimid go ligeann tú do $longAppName tosú nuair a thosaíonn do ríomhaire. Ar an dóigh seo, is féidir le físeán atá á íosluchtú críochnú agus is féidir le físeáin nua íosluchtú sa chúlra, réidh duit nuair a theastaíonn uait breathnú orthu.">
+<!ENTITY startup.autostart.question	"Ar mhaith leat $shortAppName a rith ag an tosú?">
+<!ENTITY startup.search.description	"Is féidir le $longAppName na físeáin uile ar do ríomhaire a aimsiú chun cabhrú leat do chnuasach a eagrú.">
+<!ENTITY startup.search.question        "Ar mhaith leat go rachaidh $longAppName ar thóir comhaid físeáin ar do ríomhaire?">
+<!ENTITY startup.search.restrict	"Srian go mo chuid comhaid pearsanta amháin.">
+<!ENTITY startup.search.custom          "Cuardaigh fillteán saincheaptha:">
+<!ENTITY startup.search.searching	"Ag Cuardach le haghaidh Físeáin">
+<!ENTITY startup.change	                "Athraigh">
+<!ENTITY startup.cancel	                "Cealaigh an Cuardach">
+<!ENTITY startup.undo	                "Athshocraigh an Cuardaigh">
+<!ENTITY startup.done1			"Tá críochnaithe agat!">
+<!ENTITY startup.done2			"Now you can explore the Channel Guide
+and start watching.  A few tips to get started:">
+<!ENTITY startup.done3.heading		"Fág Ar Siúl É:">
+<!ENTITY startup.done3.text		"Dearbhaíonn $longAppName bealaí go rialta le haghaidh físeáin nua agus íosluchtaithe sa chúlra. Má fhágann tú ar siúl é beidh físeáin nua agat nuair atá tú réidh chun breathnú orthu.">
+<!ENTITY startup.done4.heading		"Ná Bí Buartha Faoi Slí Diosca:">
+<!ENTITY startup.done4.text		"Ar nós TiVo, tá córas 'téann sé as feidhm' ag $longAppName a chuidíonn le sean físeáin a scrios chun slí a chur ar fáil do físeáin nua.  Is féidir físeáin a choimeád go buan más mian leat trí 'cuir i dtaisce' a bhrúigh agus is féidir leat socruithe bealach a shocrú chun físeáin a chur i dtaisce go huathoibríoch.">
+<!ENTITY startup.done5.heading		"Déan Mór É:">
+<!ENTITY startup.done5.text		"Taispeánann an cnaipe ar taobh dheis den cnaipe seinn na físeáin i lánscáileán.">
+<!ENTITY startup.done6.heading		"Aimsigh Físeáin:">
+<!ENTITY startup.done6.text		"Tá na céadta bealaí cianamharcaíochta ar an t-idirlíon ar Eolaí na mBealaí $shortAppName;tá siad go léir saor in aisce. Brúigh 'CUIR LEIS' chun breathnú ar bealach.">
+<!ENTITY startup.answer.yes		"Ba Mhaith">
+<!ENTITY startup.answer.no		"Ná Déan">
+<!ENTITY startup.title			"Socrú $shortAppName Don Chéad Uair">
+<!ENTITY startup.description		"Cabhróidh na chéad scáileáin eile leat $longAppName a shocrú ar an dóigh is fearr leat.">
+<!ENTITY startup.autostart.description	"Molaimid go ligeann tú do $longAppName tosú nuair a thosaíonn do ríomhaire. Ar an dóigh seo, is féidir le físeán atá á íosluchtú críochnú agus is féidir le físeáin nua íosluchtú sa chúlra, réidh duit nuair a theastaíonn uait breathnú orthu.">
+<!ENTITY startup.autostart.question	"Ar mhaith leat $shortAppName a rith ag an tosú?">
+<!ENTITY startup.search.description	"Is féidir le $longAppName na físeáin uile ar do ríomhaire a aimsiú chun cabhrú leat do chnuasach a eagrú.">
+<!ENTITY startup.search.question        "Ar mhaith leat go rachaidh $longAppName ar thóir comhaid físeáin ar do ríomhaire?">
+<!ENTITY startup.search.restrict	"Srian go mo chuid comhaid pearsanta amháin.">
+<!ENTITY startup.search.custom          "Cuardaigh fillteán saincheaptha:">
+<!ENTITY startup.search.searching	"Ag Cuardach le haghaidh Físeáin">
+<!ENTITY startup.change	                "Athraigh">
+<!ENTITY startup.cancel	                "Cealaigh an Cuardach">
+<!ENTITY startup.undo	                "Athshocraigh an Cuardaigh">
+<!ENTITY startup.done1			"Tá críochnaithe agat!">
+<!ENTITY startup.done2			"Now you can explore the Channel Guide
+and start watching.  A few tips to get started:">
+<!ENTITY startup.done3.heading		"Fág Ar Siúl É:">
+<!ENTITY startup.done3.text		"Dearbhaíonn $longAppName bealaí go rialta le haghaidh físeáin nua agus íosluchtaithe sa chúlra. Má fhágann tú ar siúl é beidh físeáin nua agat nuair atá tú réidh chun breathnú orthu.">
+<!ENTITY startup.done4.heading		"Ná Bí Buartha Faoi Slí Diosca:">
+<!ENTITY startup.done4.text		"Ar nós TiVo, tá córas 'téann sé as feidhm' ag $longAppName a chuidíonn le sean físeáin a scrios chun slí a chur ar fáil do físeáin nua.  Is féidir físeáin a choimeád go buan más mian leat trí 'cuir i dtaisce' a bhrúigh agus is féidir leat socruithe bealach a shocrú chun físeáin a chur i dtaisce go huathoibríoch.">
+<!ENTITY startup.done5.heading		"Déan Mór É:">
+<!ENTITY startup.done5.text		"Taispeánann an cnaipe ar taobh dheis den cnaipe seinn na físeáin i lánscáileán.">
+<!ENTITY startup.done6.heading		"Aimsigh Físeáin:">
+<!ENTITY startup.done6.text		"Tá na céadta bealaí cianamharcaíochta ar an t-idirlíon ar Eolaí na mBealaí $shortAppName;tá siad go léir saor in aisce. Brúigh 'CUIR LEIS' chun breathnú ar bealach.">
+<!ENTITY startup.answer.yes		"Ba Mhaith">
+<!ENTITY startup.answer.no		"Ná Déan">
