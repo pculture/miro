@@ -279,7 +279,7 @@ class OldItemExpireTest(FeedTestCase):
 
     def testOverflowWithReplacement(self):
         # Keep item with guid-2 in the feed.
-        config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 0)1
+        config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 0)
         self.counter = 1
         self.parseNewFeed(5)
         self.checkGuids(2, 3, 4, 5, 6)
