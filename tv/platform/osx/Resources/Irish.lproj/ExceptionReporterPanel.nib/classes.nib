@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {dismissPanel = id; }; 
+            CLASS = ExceptionReporterController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {logView = id; msg1Field = id; msg3View = id; }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

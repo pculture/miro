@@ -1,0 +1,115 @@
+{
+    IBClasses = (
+        {CLASS = ChromeProgressSlider; LANGUAGE = ObjC; SUPERCLASS = Slider; }, 
+        {CLASS = DTVSplitView; LANGUAGE = ObjC; SUPERCLASS = NSSplitView; }, 
+        {CLASS = DisplayHostView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {addChannel = id; switchTabs = id; }; 
+            CLASS = MainController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                channelsHostView = id; 
+                mainHostView = id; 
+                searchField = id; 
+                splitView = id; 
+                videoDisplayController = id; 
+                videoInfoHostView = id; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = MetalSlider; LANGUAGE = ObjC; SUPERCLASS = NSSlider; }, 
+        {
+            ACTIONS = {expireNow = id; handleShareItem = id; keep = id; share = id; }; 
+            CLASS = OverlayPalette; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                deleteButton = id; 
+                donationLabel = id; 
+                feedLabel = id; 
+                fsButton = id; 
+                keepButton = id; 
+                playPauseButton = id; 
+                playbackControls = id; 
+                progressSlider = id; 
+                seekBackwardButton = id; 
+                seekForwardButton = id; 
+                shareButton = id; 
+                shareMenu = id; 
+                skipBackwardButton = id; 
+                skipForwardButton = id; 
+                timeIndicator = id; 
+                titleLabel = id; 
+                volumeSlider = id; 
+            }; 
+            SUPERCLASS = NSWindow; 
+        }, 
+        {CLASS = OverlayPaletteControlsView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = OverlayPaletteSlider; LANGUAGE = ObjC; SUPERCLASS = Slider; }, 
+        {CLASS = OverlayPaletteView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            CLASS = PlacardView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {splitView = id; }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {
+            ACTIONS = {toggleRemainingTimeIndicator = id; }; 
+            CLASS = ProgressDisplayView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {progressSlider = id; remainingTimeIndicator = id; timeIndicator = id; }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {CLASS = RootView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = Slider; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            CLASS = VideoAreaView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {videoWindow = id; }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {
+            ACTIONS = {
+                exitFullScreen = id; 
+                fastBackward = id; 
+                fastForward = id; 
+                muteUnmuteVolume = id; 
+                playFullScreen = id; 
+                playPause = id; 
+                setVolume = id; 
+                skipBackward = id; 
+                skipForward = id; 
+                stop = id; 
+            }; 
+            CLASS = VideoDisplayController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                backwardButton = id; 
+                forwardButton = id; 
+                fullscreenButton = id; 
+                muteButton = id; 
+                playPauseButton = id; 
+                progressDisplayer = id; 
+                rootView = id; 
+                stopButton = id; 
+                videoAreaView = id; 
+                volumeSlider = id; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {search = id; }; 
+            CLASS = VideoSearchField; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSSearchField; 
+        }, 
+        {
+            ACTIONS = {exitFullScreen = id; toggleFullScreen = id; }; 
+            CLASS = VideoWindow; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {palette = id; }; 
+            SUPERCLASS = NSWindow; 
+        }
+    ); 
+    IBVersion = 1; 
+}
