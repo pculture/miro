@@ -2355,9 +2355,9 @@ class SearchFeedImpl (RSSMultiFeedImpl):
                                 return
         RSSMultiFeedImpl._handleNewEntry(self, entry, channelTitle)
 
-    def updateFinished(self):
+    def updateFinished(self, old_items):
         self.searching = False
-        RSSMultiFeedImpl.updateFinished(self)
+        RSSMultiFeedImpl.updateFinished(self, old_items)
 
     def update(self):
         if self.url is not None and self.url != u'':
