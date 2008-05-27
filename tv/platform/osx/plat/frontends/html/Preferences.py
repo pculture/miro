@@ -171,6 +171,8 @@ class ChannelsPrefsController (NSObject):
 
     periodicityPopup = IBOutlet('periodicityPopup')
     autoDownloadPopup = IBOutlet('autoDownloadPopup')
+    maxOldItemsPopupButton      = IBOutlet('maxOldItemsPopupButton')
+    cleanAllOldItemsButton      = IBOutlet('cleanAllOldItemsButton')
 
     AUTO_DOWNLOAD_VALS = ['all', 'new', 'off']
 
@@ -178,10 +180,14 @@ class ChannelsPrefsController (NSObject):
         minutes = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)
         itemIndex = self.periodicityPopup.indexOfItemWithTag_(minutes)
         self.periodicityPopup.selectItemAtIndex_(itemIndex)
-        
+
         defaultAutoDownload = config.get(prefs.CHANNEL_AUTO_DEFAULT)
         tag = self.AUTO_DOWNLOAD_VALS.index(defaultAutoDownload)
         self.autoDownloadPopup.selectItemWithTag_(tag)
+
+	itemTag = int(config.get(prefs.MAX_OLD_ITEMS_DEFAULT))
+	itemIndex = self.maxOldItemsPopupButton.indexOfItemWithTag_(itemTag)
+	self.maxOldItemsPopupButton.selectItemAtIndex_(itemIndex)
 
     def checkEvery_(self, sender):
         minutes = sender.selectedItem().tag()
@@ -190,6 +196,17 @@ class ChannelsPrefsController (NSObject):
     def setAutoDownloadDefault_(self, sender):
         val = self.AUTO_DOWNLOAD_VALS[sender.selectedItem().tag()]
         eventloop.addUrgentCall(lambda:config.set(prefs.CHANNEL_AUTO_DEFAULT, val), "Setting auto download default pref.")
+
+    def setMaxOldItems_(self, sender):
+	items = int(sender.selectedItem().tag())
+	print repr(items), repr(sender.selectedItem().tag())
+	config.set(prefs.MAX_OLD_ITEMS_DEFAULT, items)
+
+    def cleanAllOldItems_(self, sender):
+	def clean():
+	    for feed in views.feeds:
+		feed.cleanOldItems()
+	eventloop.addIdle(clean, 'cleaning old items in feeds')
 
 ###############################################################################
 
@@ -432,7 +449,7 @@ class DiskSpacePrefsController (NSObject):
         itemTag = int(config.get(prefs.EXPIRE_AFTER_X_DAYS) * 24)
         itemIndex = self.expirationDelayPopupButton.indexOfItemWithTag_(itemTag)
         self.expirationDelayPopupButton.selectItemAtIndex_(itemIndex)
-    
+	
     def preserveDiskSpace_(self, sender):
         preserve = (sender.state() == NSOnState)
         self.minimumSpaceField.setEnabled_(preserve)

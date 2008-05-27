@@ -1,10 +1,20 @@
 {
     IBClasses = (
         {
-            ACTIONS = {checkEvery = id; setAutoDownloadDefault = id; }; 
+            ACTIONS = {
+                checkEvery = id; 
+                cleanAllOldItems = id; 
+                setAutoDownloadDefault = id; 
+                setMaxOldItems = id; 
+            }; 
             CLASS = ChannelsPrefsController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {autoDownloadPopup = id; periodicityPopup = id; }; 
+            OUTLETS = {
+                autoDownloadPopup = id; 
+                cleanAllOldItemsButton = id; 
+                maxOldItemsPopupButton = id; 
+                periodicityPopup = id; 
+            }; 
             SUPERCLASS = NSObject; 
         }, 
         {
@@ -46,7 +56,6 @@
                 limitUpstreamField = id; 
                 maxAutoDownloadsField = id; 
                 maxDownloadsField = id; 
-                maxAutoDownloadsField = id; 
                 moviesDirectoryField = id; 
                 nonEncryptedCnxButton = id; 
                 stopAtRatioCheckbox = id; 

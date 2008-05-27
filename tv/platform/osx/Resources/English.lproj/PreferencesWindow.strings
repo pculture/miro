@@ -14,6 +14,9 @@
 /* NSTextField (-) : <title:-> (oid:114) */
 "-" = "-";
 
+/* NSMenuItem : <title:0> (oid:243) */
+"0" = "0";
+
 /* NSMenuItem : <title:1 day> (oid:83) */
 "1 day" = "1 day";
 
@@ -22,6 +25,15 @@
 
 /* NSMenuItem : <title:10 days> (oid:85) */
 "10 days" = "10 days";
+
+/* NSMenuItem : <title:100> (oid:246) */
+"100" = "100";
+
+/* NSMenuItem : <title:1000> (oid:247) */
+"1000" = "1000";
+
+/* NSMenuItem : <title:20> (oid:244) */
+"20" = "20";
 
 /* NSMenuItem : <title:3 days> (oid:81) */
 "3 days" = "3 days";
@@ -34,6 +46,9 @@
 
 /* NSTextField (1) : <title:5> (oid:48) */
 "5" = "5";
+
+/* NSMenuItem : <title:50> (oid:245) */
+"50" = "50";
 
 /* NSMenuItem : <title:6 days> (oid:84) */
 "6 days" = "6 days";
@@ -59,6 +74,9 @@
 /* NSBox (Box) : <title:Box> (oid:179) */
 "Box" = "Box";
 
+/* NSTextField (By default, remember ) : <title:By default, remember > (oid:240) */
+"By default, remember " = "By default, remember ";
+
 /* NSTextField (By default, videos expire after:) : <title:By default, videos expire after:> (oid:78) */
 "By default, videos expire after:" = "By default, videos expire after:";
 
@@ -67,6 +85,9 @@
 
 /* NSTextField (Check channels for new content:) : <title:Check channels for new content:> (oid:24) */
 "Check channels for new content:" = "Check channels for new content:";
+
+/* NSButton (Clear older items from all feeds now) : <title:Clear older items from all feeds now> (oid:250) */
+"Clear older items from all feeds now" = "Clear older items from all feeds now";
 
 /* NSTextField (Don't auto-download more than this many videos per channel at once:) : <title:Don't auto-download more than this many videos per channel at once:> (oid:200) */
 "Don't auto-download more than this many videos per channel at once:" = "Don't auto-download more than this many videos per channel at once:";
@@ -102,7 +123,7 @@
 /* NSMenuItem : <title:Off> (oid:197) */
 "Off" = "Off";
 
-/* NSMenu : <title:OtherViews> (oid:194) */
+/* NSMenu : <title:OtherViews> (oid:242) */
 "OtherViews" = "OtherViews";
 
 /* NSButtonCell (Play videos one after another.) : <title:Play videos one after another.> (oid:103) */
@@ -141,6 +162,9 @@
 /* NSTextField (Watch for new videos in these folders and include them in the Library:) : <title:Watch for new videos in these folders and include them in the Library:> (oid:144) */
 "Watch for new videos in these folders and include them in the Library:" = "Watch for new videos in these folders and include them in the Library:";
 
+/* NSTextField (current contents) : <title:current contents> (oid:249) */
+"current contents" = "current contents";
+
 /* NSMenuItem : <title:every 30 minutes> (oid:27) */
 "every 30 minutes" = "every 30 minutes";
 
@@ -149,4 +173,7 @@
 
 /* NSMenuItem : <title:manually> (oid:28) */
 "manually" = "manually";
+
+/* NSTextField (old items in addition to the) : <title:old items in addition to the> (oid:248) */
+"old items in addition to the" = "old items in addition to the";
 
