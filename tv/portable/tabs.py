@@ -374,7 +374,7 @@ def getViewForTab(tab):
         return views.guideTabs
     elif tab.type == 'statictab':
         return views.staticTabs
-    if tab.type == 'site':
+    elif tab.type == 'site':
         return getSingletonDDBObject(views.siteTabOrder).getView()
     elif tab.type == 'feed':
         return getSingletonDDBObject(views.channelTabOrder).getView()

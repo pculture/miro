@@ -32,19 +32,21 @@ playlistTabs = kargs['playlistTabOrder'].getView()
 	     drageffectchannelfolder="move" >
         <ul class="tab-list first">
 	        <li t:repeatForView="guideTabs" 
-                t:repeatTemplate="guidetab"
 	            class="***this.getState()***"
 	            selectID="***this.objID()***"
 	            selectViewName="guideTabs"
 	            selectArea='tablist' 
 	            onmousedown="return handleContextMenuSelect(event);" 
-	            onclick="return handleSelect(event);" />
+	            onclick="return handleSelect(event);">
+	            <t:includeTemplate filename="guidetab" />
+	        </li>
 	        <li t:repeatForView="staticTabs" 
-                t:repeatTemplate="statictab"
 	            class="***this.getState()***"
 	            selectID="***this.objID()***" selectViewName="staticTabs"
 	            selectArea='tablist' 
-	            onclick="return handleSelect(event);" />
+	            onclick="return handleSelect(event);">
+	            <t:includeTemplate filename="statictab" />
+	        </li>
         </ul>
         <div class="dnd-reorder-indicator circle" />
         <div class="dnd-reorder-indicator line" />
@@ -57,13 +59,14 @@ playlistTabs = kargs['playlistTabOrder'].getView()
          <h2>SITES</h2>
          <ul class="tab-list second">
              <li t:repeatForView="siteTabs" 
-                 t:repeatTemplate="sitetab"
                  class="***this.getState()***"
                  selectID="***this.objID()***"
                  selectViewName="siteTabs"
                  selectArea='tablist' 
                  onmousedown="return handleContextMenuSelect(event);" 
-                 onclick="return handleSelect(event)" />
+                 onclick="return handleSelect(event)">
+ 	            <t:includeTemplate filename="sitetab" />
+             </li>
          </ul>
          <div class="dnd-reorder-indicator circle" />
          <div class="dnd-reorder-indicator line" />
