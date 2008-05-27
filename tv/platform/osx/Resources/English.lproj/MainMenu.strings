@@ -4,8 +4,8 @@
 /* NSMenuItem : <title:Add Channel...> (oid:227) */
 "Add Channel..." = "Add Channel...";
 
-/* NSMenuItem : <title:Add Guide...> (oid:317) */
-"Add Guide..." = "Add Guide...";
+/* NSMenuItem : <title:Add Site...> (oid:317) */
+"Add Site..." = "Add Site...";
 
 /* NSMenuItem : <title:Bring All to Front> (oid:5) */
 "Bring All to Front" = "Bring All to Front";
