@@ -1519,6 +1519,13 @@ class RSSFeedImpl(RSSFeedImplBase):
         start = clock()
         parsed = self.parsed = unicodify(parsed)
         old_items = self.createItemsForParsed(parsed)
+
+        try:
+            updateFreq = self.parsed["feed"]["ttl"]
+        except KeyError:
+            updateFreq = 0
+        self.setUpdateFrequency(updateFreq)
+
         self.updateFinished(old_items)
         self.feedparser_finished()
         end = clock()
@@ -1527,19 +1534,7 @@ class RSSFeedImpl(RSSFeedImplBase):
 
     def call_feedparser (self, html):
         self.ufeed.confirmDBThread()
-        in_thread = False
-        if in_thread:
-            try:
-                parsed = feedparser.parse(html)
-                self.updateUsingParsed(parsed)
-            except:
-                logging.warning ("Error updating feed: %s", self.url)
-                self.updating = False
-                self.ufeed.signalChange(needsSave=False)
-                raise
-            self.feedparser_finished()
-        else:
-            eventloop.callInThread (self.feedparser_callback, self.feedparser_errback, feedparser.parse, "Feedparser callback - %s" % self.url, html)
+        eventloop.callInThread (self.feedparser_callback, self.feedparser_errback, feedparser.parse, "Feedparser callback - %s" % self.url, html)
 
     ##
     # Updates a feed
@@ -1599,13 +1594,6 @@ class RSSFeedImpl(RSSFeedImplBase):
         else:
             self.modified = None
         self.call_feedparser (html)
-
-    def setUpdateFrequency(self):
-        try:
-            updateFreq = self.parsed["feed"]["ttl"]
-        except KeyError:
-            updateFreq = 0
-        self.setUpdateFrequency(updateFreq)
 
     ##
     # Returns the URL of the license associated with the feed
