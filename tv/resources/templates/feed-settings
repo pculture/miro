@@ -92,7 +92,7 @@ t:hideIf="feed.getExpirationType() != 'never'" i18n:translate="">Never</option>
 		      <option value="50" selected="@@@int(feed.maxOldItems == 50)@@@">50</option>
 		      <option value="100" selected="@@@int(feed.maxOldItems == 100)@@@">100</option>
 		      <option value="1000" selected="@@@int(feed.maxOldItems == 1000)@@@">1000</option>
-		      <option value="-1" selected="@@@int(feed.maxOldItems is None)@@@">default (<span t:replace="config.get(prefs.MAX_OLD_ITEMS_DEFAULT)"/>)</option>
+		      <option value="-1" selected="@@@int(feed.maxOldItems is None)@@@">Default (<span t:replace="config.get(prefs.MAX_OLD_ITEMS_DEFAULT)"/>)</option>
 		    </select>
 		    older items in this feed in addition to the current contents.</span>
 		    (<a class="clean-old-items" onClick="return eventURL('action:cleanOldItems?feed=@@@feed.getID()@@@');" href="#"><span i18n:translate="">clear older items now</span></a>)
