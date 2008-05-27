@@ -8,15 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-29 12:40-0500\n"
-"PO-Revision-Date: 2008-03-09 13:45+0000\n"
+"POT-Creation-Date: 2008-05-13 19:11-0400\n"
+"PO-Revision-Date: 2008-05-11 15:44+0000\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-03-19 22:32+0000\n"
+"X-Launchpad-Export-Date: 2008-05-27 16:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:85
@@ -50,7 +50,7 @@ msgid ""
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
 msgstr ""
-"Om du har tid, kunne du tenkt deg å sende ein krasjrapport til feildatabasen "
+"Om du har tid, kunne du tenkt deg å senda ein krasjrapport til feildatabasen "
 "vår? Me treng minst ei skildring av kva du gjorde når programmet krasja, så "
 "nøyaktig som råd er, pluss teksten nedanfor:"
 
@@ -80,7 +80,7 @@ msgstr "Legg til kanalgaid …"
 msgid "Bring All to Front"
 msgstr "Flytt alt fram"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:80
+#: ../../platform/osx/plat/frontends/html/Preferences.py:80
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11
 msgid "Channels"
 msgstr "Kanalar"
@@ -106,6 +106,7 @@ msgstr "Kopier filmadresse"
 msgid "Cut"
 msgstr "Klipp ut"
 
+#: ../../portable/frontends/html/compiled_templates/multi_channel.py:78
 #: ../../portable/dialogs.py:104
 msgid "Delete"
 msgstr "Slett"
@@ -149,7 +150,7 @@ msgstr "Hovudmeny"
 msgid "Minimize"
 msgstr "Minimer"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:50
+#: ../../platform/gtk-x11/glade/miro.glade.h:54
 msgid "Miro"
 msgstr "Miro"
 
@@ -180,12 +181,15 @@ msgstr "Opna …"
 msgid "Paste"
 msgstr "Lim inn"
 
-#: ../../platform/osx/platform/frontends/html/Application.py:244
+msgid "Planet Miro"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/html/Application.py:244
 msgid "Play Video"
 msgstr "Spel av film"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:84
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22
+#: ../../platform/osx/plat/frontends/html/Preferences.py:84
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
 msgid "Playback"
 msgstr "Avspeling"
 
@@ -205,7 +209,7 @@ msgid "Remove..."
 msgstr "Fjern …"
 
 msgid "Rename..."
-msgstr "Endre namn …"
+msgstr "Endra namn …"
 
 msgid "Report a bug"
 msgstr "Meld frå om feil"
@@ -228,6 +232,9 @@ msgstr "Vis alle"
 msgid "Stop Video"
 msgstr "Stopp avspeling"
 
+msgid "Translate"
+msgstr ""
+
 msgid "Update All Channels"
 msgstr "Oppdater alle kanalar"
 
@@ -246,22 +253,56 @@ msgstr "%channel feed%"
 msgid "%channel title%"
 msgstr "%channel title%"
 
-msgid "%donation label%"
-msgstr "%donation label%"
-
 msgid "-00:00:00"
 msgstr "-00:00:00"
 
 msgid "00:00:00"
 msgstr "00:00:00"
 
-msgid "Box"
-msgstr "Boks"
+msgid "0:00:00"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:88
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:364
+msgid "Email to a friend"
+msgstr ""
 
 msgid "FullScreen Controls"
-msgstr "Fullskjemskontrollar"
+msgstr "Fullskjermskontrollar"
 
-#: ../../portable/tabs.py:57
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:48
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:324
+#: ../../portable/dialogs.py:103
+msgid "Keep"
+msgstr "Behald"
+
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:116
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:392
+msgid "Post to Reddit"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:94
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:370
+msgid "Post to Video Bomb"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:102
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:378
+msgid "Post to del.icio.us"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:108
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:384
+msgid "Post to digg"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:73
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:349
+msgid "Share"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/search.py:170
+#: ../../portable/tabs.py:56
 msgid "Video Search"
 msgstr "Filmsøk"
 
@@ -302,19 +343,20 @@ msgstr "(mappe for lagring av filmar)"
 msgid "-"
 msgstr "–"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
+#: ../../portable/item.py:551
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49
 msgid "1 day"
 msgstr "1 dag"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
 msgid "1 month"
 msgstr "1 månad"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid "10 days"
 msgstr "10 dagar"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
 msgid "3 days"
 msgstr "3 dagar"
 
@@ -327,7 +369,7 @@ msgstr "4"
 msgid "5"
 msgstr "5"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
 msgid "6 days"
 msgstr "6 dagar"
 
@@ -337,7 +379,7 @@ msgstr "99999"
 msgid "Add..."
 msgstr "Legg til …"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
 msgid "All"
 msgstr "Alle"
 
@@ -347,14 +389,17 @@ msgstr "Standardinnstillingar for nye kanalar:"
 msgid "Automatically forward ports"
 msgstr "Vidaresend automatisk portar"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56
 msgid "BitTorrent"
 msgstr "BitTorrent"
+
+msgid "Box"
+msgstr "Boks"
 
 msgid "By default, videos expire after:"
 msgstr "Som standard utgår filmane etter:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
 msgid "Change..."
 msgstr "Endra …"
 
@@ -363,7 +408,7 @@ msgstr "Sjå etter nytt innhald på kanalar:"
 
 msgid "Don't auto-download more than this many videos per channel at once:"
 msgstr ""
-"Ikkje last ned automatisk meir enn så mange filmar på kanal på éin gong:"
+"Ikkje last ned automatisk meir enn så mange filmar per kanal på éin gong."
 
 msgid "Don't download more than this many videos at once:"
 msgstr "Ikkje last ned meir enn så mange filmar på éin gong:"
@@ -377,55 +422,55 @@ msgstr "GB\n"
 msgid "Ignore unencrypted connections"
 msgstr "Ignorer ukrypterte samband"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:44
+#: ../../platform/gtk-x11/glade/miro.glade.h:48
 msgid "KB/s."
 msgstr "KB/s."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
 msgid "Keep at least this much free space on my drive:"
 msgstr "Ha alltid minst så mykje ledig plass att på disken:"
 
 msgid "Limit downstream to"
 msgstr "Avgrens nedlasting til"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
 msgid "Never"
 msgstr "Aldri"
 
-#: ../../portable/tabs.py:56
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
+#: ../../portable/tabs.py:55
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21
 msgid "New"
 msgstr "Ny"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22
 msgid "Off"
 msgstr "Av"
 
 msgid "OtherViews"
 msgstr "Andre visningar"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:26
 msgid "Play videos one after another."
 msgstr "Spel av filmar éin etter éin."
 
 msgid "Remember video position."
 msgstr "Hugs filmplassering."
 
-#: ../../portable/frontends/html/contextmenu.py:99
-#: ../../portable/frontends/html/contextmenu.py:104
+#: ../../portable/frontends/html/contextmenu.py:100
+#: ../../portable/frontends/html/contextmenu.py:105
 #: ../../portable/frontends/html/contextmenu.py:178
 #: ../../portable/frontends/html/contextmenu.py:184
 #: ../../portable/frontends/html/contextmenu.py:190
 #: ../../portable/frontends/html/contextmenu.py:199
-#: ../../portable/frontends/html/contextmenu.py:233
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
+#: ../../portable/frontends/html/contextmenu.py:232
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
 msgid "Remove"
 msgstr "Fjern"
 
 msgid "Run Miro at startup"
 msgstr "Køyr Miro ved oppstart"
 
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:591
+#: ../../platform/gtk-x11/plat/frontends/html/callbackhandler.py:595
 msgid "Show as Channel"
 msgstr "Vis som kanal"
 
@@ -441,11 +486,11 @@ msgstr "Lagra nedlastingar i denne mappa:"
 msgid "To avoid internet slowdowns, limit upstream to"
 msgstr "For å hindra overbelasta nettverk, avgrens opplasting til"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61
 msgid "Use these ports:"
 msgstr "Bruk desse portane:"
 
-#: ../../portable/frontends/html/main.py:319
+#: ../../portable/frontends/html/main.py:326
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "Åtvar ved forsøk på å avslutta med uferdige nedlastingar"
 
@@ -491,8 +536,8 @@ msgstr "Søk etter:"
 msgid "URL"
 msgstr "Adresse"
 
-#: ../../platform/windows-xul/platform/frontends/html/startup.py:59
-#: ../../platform/gtk-x11/platform/frontends/html/startup.py:56
+#: ../../platform/gtk-x11/plat/frontends/html/startup.py:56
+#: ../../platform/windows-xul/plat/frontends/html/startup.py:59
 #, python-format
 msgid "(parsed %d files - found %d videos)"
 msgstr "(søkte gjennom %d filer – fann %d filmar)"
@@ -503,7 +548,7 @@ msgstr "Tilbake"
 msgid "Browse"
 msgstr "Bla gjennom"
 
-#: ../../platform/osx/platform/frontends/html/StartupPanel.py:121
+#: ../../platform/osx/plat/frontends/html/StartupPanel.py:121
 msgid "Next"
 msgstr "Neste"
 
@@ -560,7 +605,7 @@ msgstr ""
 "\n"
 "Vil du at Miro skal starta automatisk når datamaskina vert starta?"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:72
+#: ../../platform/gtk-x11/glade/miro.glade.h:77
 msgid "Welcome to Internet TV!"
 msgstr "Velkommen til Internett-TV!"
 
@@ -588,42 +633,62 @@ msgstr ""
 "%message%\n"
 "%message%"
 
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83
-msgid "Update Available"
-msgstr "Oppdatering tilgjengeleg"
+#: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:211
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
+msgid "Username:"
+msgstr "Brukarnamn:"
 
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84
+#: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:222
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4
+msgid "Password:"
+msgstr "Passord:"
+
+#: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:416
+msgid "Unknown Runtime Error"
+msgstr "Ukjend køyretidsfeil"
+
+#: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:417
 #, python-format
-msgid "A new version of %s is available for download."
-msgstr "Det finst ein ny versjon av %s tilgjengeleg for nedlasting."
+msgid "An unknown error has occurred %s."
+msgstr "Det oppstod ein ukjend feil: %s."
 
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248
-msgid "Error Bombing Item"
-msgstr "Feil ved filmbombing"
+#: ../../platform/gtk-x11/plat/frontends/html/callbackhandler.py:333
+msgid "New Channel _Guide..."
+msgstr "Ny kanal_gaid …"
 
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250
-msgid "Error Recommending Item"
-msgstr "Feil ved filmanbefaling"
+#: ../../platform/gtk-x11/plat/frontends/html/callbackhandler.py:586
+msgid "Folder Location"
+msgstr "Mappeplassering"
 
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252
-msgid "Error Opening Website"
-msgstr "Feil ved opning av nettside"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256
-#, python-format
-msgid "There was an error opening %s.  Please try again in a few seconds"
-msgstr "Det oppstod ein feil ved opning av %s. Prøv på nytt om nokre sekund."
-
-#: ../../platform/windows-xul/platform/frontends/html/startup.py:67
-#: ../../platform/gtk-x11/platform/frontends/html/startup.py:75
-#: ../../platform/gtk-x11/platform/frontends/html/startup.py:173
+#: ../../platform/gtk-x11/plat/frontends/html/startup.py:75
+#: ../../platform/gtk-x11/plat/frontends/html/startup.py:173
+#: ../../platform/windows-xul/plat/frontends/html/startup.py:67
 #, python-format
 msgid "%d video found"
 msgid_plural "%d videos found"
 msgstr[0] "Fann %d film"
 msgstr[1] "Fann %d filmar"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:79
+#: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:53
+#: ../../portable/frontends/html/compiled_templates/unittest/simpleunicode.py:36
+#: ../../portable/frontends/html/compiled_templates/channel.py:327
+msgid "Settings"
+msgstr "Innstillingar"
+
+#: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:56
+msgid "Hide"
+msgstr "Gøym"
+
+#: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:58
+msgid "Show"
+msgstr "Vis"
+
+#: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:59
+#: ../../portable/dialogs.py:88 ../../portable/menubar.py:274
+msgid "Quit"
+msgstr "Avslutt"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:80
 #, python-format
 msgid ""
 "Error importing modules:\n"
@@ -632,23 +697,23 @@ msgstr ""
 "Feil ved importering av modular:\n"
 "%s"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:254
+#: ../../platform/windows-xul/xul/components/pybridge.py:255
 msgid "Loading window"
 msgstr "Opnar vindauge"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:255
+#: ../../platform/windows-xul/xul/components/pybridge.py:256
 msgid "onStartup called twice"
 msgstr "onStartup køyrd to gongar"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:739
+#: ../../platform/windows-xul/xul/components/pybridge.py:748
 msgid "Spacebar"
 msgstr "Mellomrom"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:887
+#: ../../platform/windows-xul/xul/components/pybridge.py:896
 msgid "Close to tray?"
 msgstr "Minimer til systemtrau?"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:888
+#: ../../platform/windows-xul/xul/components/pybridge.py:897
 msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
@@ -657,73 +722,113 @@ msgstr ""
 "eit ikon i systemtrauet, eller avslutta heilt? Du kan endra denne "
 "innstillinga seinare under «Innstillingar»."
 
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55
+#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:83
+msgid "Update Available"
+msgstr "Oppdatering tilgjengeleg"
+
+#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:84
+#, python-format
+msgid "A new version of %s is available for download."
+msgstr "Det finst ein ny versjon av %s tilgjengeleg for nedlasting."
+
+#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:248
+msgid "Error Bombing Item"
+msgstr "Feil ved filmbombing"
+
+#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:250
+msgid "Error Recommending Item"
+msgstr "Feil ved filmanbefaling"
+
+#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:252
+msgid "Error Opening Website"
+msgstr "Feil ved opning av nettside"
+
+#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:256
+#, python-format
+msgid "There was an error opening %s.  Please try again in a few seconds"
+msgstr "Det oppstod ein feil ved opning av %s. Prøv på nytt om nokre sekund."
+
+#: ../../platform/windows-xul/plat/flash.py:82
+#, python-format
+msgid "Restart %s?"
+msgstr ""
+
+#: ../../platform/windows-xul/plat/flash.py:83
+#, python-format
+msgid ""
+"To enable the Flash plugin, %s needs to be restarted.  Click Yes to shut %s "
+"down, or No to do it later."
+msgstr ""
+
+#: ../../platform/windows-xul/plat/flash.py:109
+msgid "Install Flash?"
+msgstr ""
+
+#: ../../platform/windows-xul/plat/flash.py:110
+#, python-format
+msgid ""
+"For the best %s experience, you should install Adobe Flash.  Do this now?"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:55
 msgid "Download Completed"
 msgstr "Nedlasting fullført"
 
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56
+#: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:56
 #, python-format
 msgid "Download of video '%s' is finished."
 msgstr "Nedlasting av filmen «%s» er fullført."
 
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65
+#: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:65
 msgid "Download Failed"
 msgstr "Feil ved nedlasting"
 
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66
+#: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:66
 #, python-format
 msgid "Download of video '%s' has failed."
 msgstr "Feil ved nedlasting av filmen «%s»."
 
-#: ../../platform/osx/platform/frontends/html/MainFrame.py:297
-msgid "Subscribe to Channel"
-msgstr "Abonner på kanal"
-
-#: ../../platform/osx/platform/frontends/html/MainFrame.py:298
-msgid "Enter the URL of the channel you would like to subscribe to."
-msgstr "Skriv inn adressa til kanalen du vil abonnera på."
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:79
+#: ../../platform/osx/plat/frontends/html/Preferences.py:79
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8
 msgid "General"
 msgstr "Generelt"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:81
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
+#: ../../platform/osx/plat/frontends/html/Preferences.py:81
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
 msgid "Downloads"
 msgstr "Nedlastingar"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:82
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
+#: ../../platform/osx/plat/frontends/html/Preferences.py:82
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
 msgid "Folders"
 msgstr "Mapper"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:83
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
+#: ../../platform/osx/plat/frontends/html/Preferences.py:83
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
 msgid "Disk Space"
 msgstr "Diskplass"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:251
+#: ../../platform/osx/plat/frontends/html/Preferences.py:251
 msgid "Movies Directory"
 msgstr "Filmmappe"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:252
+#: ../../platform/osx/plat/frontends/html/Preferences.py:252
 #, python-format
 msgid "Select a Directory to store %s downloads in."
 msgstr "Vel mappa du vil lagra %s-nedlastingar i."
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:253
-#: ../../platform/osx/platform/frontends/html/Preferences.py:362
+#: ../../platform/osx/plat/frontends/html/Preferences.py:253
+#: ../../platform/osx/plat/frontends/html/Preferences.py:362
 msgid "Select"
 msgstr "Vel"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:262
-#: ../../platform/gtk-x11/glade/miro.glade.h:49
+#: ../../platform/osx/plat/frontends/html/Preferences.py:262
+#: ../../platform/gtk-x11/glade/miro.glade.h:53
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
 msgid "Migrate existing movies?"
 msgstr "Flytta lagra filmar?"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:263
+#: ../../platform/osx/plat/frontends/html/Preferences.py:263
 #, python-format
 msgid ""
 "You've selected a new folder to download movies to.  Should %s migrate your "
@@ -734,31 +839,130 @@ msgstr ""
 "ferdige nedlastingar der? (Filmar som er i ferd med å lastast ned vert ikkje "
 "flytta før dei er ferdig nedlasta.)"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:360
+#: ../../platform/osx/plat/frontends/html/Preferences.py:360
 msgid "View this Directory in the Library"
 msgstr "Vis denne mappa i biblioteket"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:361
+#: ../../platform/osx/plat/frontends/html/Preferences.py:361
 msgid "Select a Directory to view in the Library."
 msgstr "Vel mappa du vil visa i biblioteket."
 
-#: ../../platform/osx/platform/frontends/html/StartupPanel.py:93
+#: ../../platform/osx/plat/frontends/html/MainFrame.py:271
+msgid "Subscribe to Channel"
+msgstr "Abonner på kanal"
+
+#: ../../platform/osx/plat/frontends/html/MainFrame.py:272
+msgid "Enter the URL of the channel you would like to subscribe to."
+msgstr "Skriv inn adressa til kanalen du vil abonnera på."
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:33
+msgid "_Remove..."
+msgstr "_Fjern …"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:34
+msgid "_Remove Playlist..."
+msgstr "_Fjern speleliste …"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:35
+msgid "_Remove Playlists..."
+msgstr "_Fjern spelelister …"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:36
+msgid "_Remove Playlist Folder..."
+msgstr "_Fjern spelelistemappe …"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:37
+msgid "_Remove Playlist Folders..."
+msgstr "_Fjern spelelistemapper …"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:38
+#: ../../portable/menubar.py:192
+msgid "_Remove Channel..."
+msgstr "_Fjern kanal …"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:39
+#: ../../portable/menubar.py:193
+msgid "_Remove Channels..."
+msgstr "_Fjern kanalar …"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:40
+#: ../../portable/menubar.py:195
+msgid "_Remove Channel Folder..."
+msgstr "_Fjern kanalmappe …"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:41
+#: ../../portable/menubar.py:194
+msgid "_Remove Channel Folders..."
+msgstr "_Fjern kanalmapper …"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:42
+msgid "_Remove Miro Guide..."
+msgstr "_Fjern Miro-gaid …"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:43
+msgid "_Remove Miro Guides..."
+msgstr "_Fjern Miro-gaidar …"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:44
+msgid "_Remove Video..."
+msgstr "_Fjern film …"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:45
+msgid "_Remove Videos..."
+msgstr "_Fjern filmar …"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:46
+msgid "Re_name..."
+msgstr "_Endra namn …"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:47
+msgid "Re_name Playlist..."
+msgstr "_Endra namn på speleliste …"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:48
+msgid "Re_name Playlist Folder..."
+msgstr "_Endra namn på spelelistemappe …"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:49
+#: ../../portable/menubar.py:191
+msgid "Re_name Channel..."
+msgstr "_Endra namn på kanal …"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:50
+msgid "Re_name Channel Folder..."
+msgstr "_Endra namn på kanalmappe …"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:51
+msgid "Re_name Miro Guide..."
+msgstr "_Endra namn på Miro-gaid …"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:52
+#: ../../portable/menubar.py:197
+msgid "_Update Channel..."
+msgstr "_Oppdater kanal …"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:53
+#: ../../portable/menubar.py:198
+msgid "_Update Channels..."
+msgstr "_Oppdater kanalar …"
+
+#: ../../platform/osx/plat/frontends/html/StartupPanel.py:93
 msgid "Finish"
 msgstr "Fullfør"
 
-#: ../../platform/osx/platform/frontends/html/StartupPanel.py:163
+#: ../../platform/osx/plat/frontends/html/StartupPanel.py:163
 msgid "Search!"
 msgstr "Søk!"
 
-#: ../../platform/osx/platform/frontends/html/Application.py:241
+#: ../../platform/osx/plat/frontends/html/Application.py:241
 msgid "Pause Video"
 msgstr "Stopp film mellombels"
 
-#: ../../platform/osx/platform/frontends/html/Application.py:250
+#: ../../platform/osx/plat/frontends/html/Application.py:250
 msgid "Unsupported version of Quicktime"
 msgstr "Ikkje-støtta versjon av QuickTime"
 
-#: ../../platform/osx/platform/frontends/html/Application.py:251
+#: ../../platform/osx/plat/frontends/html/Application.py:251
 #, python-format
 msgid ""
 "To run %s you need the most recent version of Quicktime, which is a free "
@@ -767,403 +971,114 @@ msgstr ""
 "For å køyra %s treng du den nyaste versjonen av QuickTime, som er ei gratis "
 "oppdatering."
 
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:33
-msgid "_Remove..."
-msgstr "_Fjern …"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:34
-msgid "_Remove Playlist..."
-msgstr "_Fjern speleliste …"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:35
-msgid "_Remove Playlists..."
-msgstr "_Fjern spelelister …"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:36
-msgid "_Remove Playlist Folder..."
-msgstr "_Fjern spelelistemappe …"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:37
-msgid "_Remove Playlist Folders..."
-msgstr "_Fjern spelelistemapper …"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:38
-#: ../../portable/menubar.py:193
-msgid "_Remove Channel..."
-msgstr "_Fjern kanal …"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:39
-#: ../../portable/menubar.py:194
-msgid "_Remove Channels..."
-msgstr "_Fjern kanalar …"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:40
-#: ../../portable/menubar.py:196
-msgid "_Remove Channel Folder..."
-msgstr "_Fjern kanalmappe …"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:41
-#: ../../portable/menubar.py:195
-msgid "_Remove Channel Folders..."
-msgstr "_Fjern kanalmapper …"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:42
-msgid "_Remove Miro Guide..."
-msgstr "_Fjern Miro-gaid …"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:43
-msgid "_Remove Miro Guides..."
-msgstr "_Fjern Miro-gaidar …"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:44
-msgid "_Remove Video..."
-msgstr "_Fjern film …"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:45
-msgid "_Remove Videos..."
-msgstr "_Fjern filmar …"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:46
-msgid "Re_name..."
-msgstr "_Endra namn …"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:47
-msgid "Re_name Playlist..."
-msgstr "_Endra namn på speleliste …"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:48
-msgid "Re_name Playlist Folder..."
-msgstr "_Endra namn på spelelistemappe …"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:49
-#: ../../portable/menubar.py:192
-msgid "Re_name Channel..."
-msgstr "_Endra namn på kanal …"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:50
-msgid "Re_name Channel Folder..."
-msgstr "_Endra namn på kanalmappe …"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:51
-msgid "Re_name Miro Guide..."
-msgstr "_Endra namn på Miro-gaid …"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:52
-#: ../../portable/menubar.py:198
-msgid "_Update Channel..."
-msgstr "_Oppdater kanal …"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:53
-#: ../../portable/menubar.py:199
-msgid "_Update Channels..."
-msgstr "_Oppdater kanalar …"
-
-#: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319
+#: ../../platform/osx/plat/renderers/QuicktimeRenderer.py:319
 msgid "Audio"
 msgstr "Lyd"
 
-#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53
-msgid "Settings"
-msgstr "Innstillingar"
+#: ../../portable/singleclick.py:99
+msgid "Download already exists"
+msgstr "Nedlastinga finst alt"
 
-#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:56
-msgid "Hide"
-msgstr "Gøym"
+#: ../../portable/singleclick.py:100
+msgid "That URL is already an external download."
+msgstr "Adressa er allereie ei ekstern nedlasting."
 
-#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:58
-msgid "Show"
-msgstr "Vis"
+#: ../../portable/singleclick.py:106
+msgid "Miro will begin downloading it now."
+msgstr "Miro vil no starta nedlastinga."
 
-#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:59
-#: ../../portable/menubar.py:273 ../../portable/dialogs.py:88
-msgid "Quit"
-msgstr "Avslutt"
+#: ../../portable/singleclick.py:108
+msgid "It is downloading now."
+msgstr "Nedlasting pågår."
 
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333
-msgid "New Channel _Guide..."
-msgstr "Ny kanal_gaid …"
+#: ../../portable/singleclick.py:110
+msgid "It has already been downloaded."
+msgstr "Nedlastinga er alt fullført."
 
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582
-msgid "Folder Location"
-msgstr "Mappeplassering"
+#: ../../portable/singleclick.py:142
+msgid "Download Error"
+msgstr "Feil ved nedlasting"
 
-#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
-msgid "Username:"
-msgstr "Brukarnamn:"
-
-#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:222
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4
-msgid "Password:"
-msgstr "Passord:"
-
-#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:416
-msgid "Unknown Runtime Error"
-msgstr "Ukjend køyretidsfeil"
-
-#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:417
+#: ../../portable/singleclick.py:143
 #, python-format
-msgid "An unknown error has occurred %s."
-msgstr "Det oppstod ein ukjend feil: %s."
+msgid ""
+"Miro is not able to download a file at this URL:\n"
+"\n"
+"URL: %s"
+msgstr ""
+"Miro klarer ikkje lasta ned fila på denne adressa:\n"
+"\n"
+"Adresse: %s"
 
-#: ../../portable/dl_daemon/download.py:458
-msgid "Error"
-msgstr "Feil"
+#: ../../portable/singleclick.py:191
+msgid "File Download"
+msgstr "Filnedlasting"
 
-#: ../../portable/dl_daemon/download.py:544
+#: ../../portable/singleclick.py:192
 #, python-format
-msgid "Could not write to %s"
-msgstr "Klarte ikkje skriva til %s"
+msgid "This file at %s does not appear to be audio, video, or an RSS feed."
+msgstr ""
+"Fila på «%s» ser ikkje ut til å vera ei lyd-, film- eller RSS-kjelde."
 
-#: ../../portable/dl_daemon/download.py:564
-#: ../../portable/dl_daemon/download.py:769
-msgid "Not enough disk space"
-msgstr "Ikkje nok diskplass"
+#: ../../portable/singleclick.py:280
+msgid "Subscribing to multiple channels"
+msgstr "Abonnering på fleire kanalar"
 
-#: ../../portable/dl_daemon/download.py:565
-#: ../../portable/dl_daemon/download.py:770
+#: ../../portable/singleclick.py:281
 #, python-format
-msgid "%s MB required to store this video"
-msgstr "%s MB nødvendig for å lagra filmen"
+msgid "Create %d channels?"
+msgstr "Lag %d kanalar?"
 
-#: ../../portable/dl_daemon/download.py:781
-msgid "BitTorrent failure"
-msgstr "BitTorrent-feil"
+#: ../../portable/singleclick.py:294
+#, python-format
+msgid "Adding %d channels to a new folder"
+msgstr "Legg %d kanalar til ny mappe"
 
-#: ../../portable/dl_daemon/download.py:782
-msgid "BitTorrent failed to startup"
-msgstr "Feil ved BitTorrent-start"
+#: ../../portable/singleclick.py:295 ../../portable/folder.py:224
+msgid "Enter a name for the new channel folder"
+msgstr "Skriv inn namn på den nye kanalmappa"
 
-#: ../../portable/dl_daemon/download.py:954
-msgid "Corrupt Torrent"
+#: ../../portable/singleclick.py:298
+#, python-format
+msgid ""
+"NOTE: You are already subscribed to %d of these channels.  These channels "
+"will stay where they currently are."
+msgstr ""
+"Merk: Du abonnerer alt på %d av desse kanalane. Desse kanalane vert verande "
+"der dei er."
+
+#: ../../portable/singleclick.py:309
+msgid "Subscription error"
+msgstr "Abonnementsfeil"
+
+#: ../../portable/singleclick.py:319
+msgid ""
+"This $shortAppName channel file has an invalid format: $url. Please notify "
+"the publisher of this file."
+msgstr ""
+"$shortAppName-kanalfila har eit ugyldig format: $url. Meld frå til "
+"utgjevaren av fila."
+
+#: ../../portable/singleclick.py:327
+msgid ""
+"This $shortAppName channel file has the wrong content type: $url. Please "
+"notify the publisher of this file."
+msgstr ""
+"$shortAppName-kanalfila har feil innhaldstype: $url. Meld frå til utgjevaren "
+"av fila."
+
+#: ../../portable/singleclick.py:331
+msgid "Could not download the $shortAppName channel file: $url."
+msgstr "Klarte ikkje lasta ned $shortAppName-kanalfila: $url."
+
+#: ../../portable/singleclick.py:385
+msgid "Invalid Torrent"
 msgstr "Ugyldig Torrent-fil"
 
-#: ../../portable/dl_daemon/download.py:955
+#: ../../portable/singleclick.py:386
 #, python-format
-msgid "The torrent file at %s was not valid"
-msgstr "Torrent-fila på %s var ikkje gyldig"
-
-#: ../../portable/dl_daemon/download.py:980
-msgid "Torrent file deleted"
-msgstr "Torrent-fil sletta"
-
-#: ../../portable/dl_daemon/download.py:981
-msgid "The torrent file for this item was deleted outside of Miro."
-msgstr "Torrent-fila vart sletta utanfor Miro."
-
-#: ../../portable/frontends/html/contextmenu.py:103
-msgid "Update Channels Now"
-msgstr "Oppdater kanalar no"
-
-#: ../../portable/frontends/html/contextmenu.py:128
-#, python-format
-msgid "%d Downloaded Items"
-msgstr "%d nedlasta filmar"
-
-#: ../../portable/frontends/html/contextmenu.py:130
-#: ../../portable/frontends/html/contextmenu.py:211
-msgid "Play"
-msgstr "Spel"
-
-#: ../../portable/frontends/html/contextmenu.py:131
-#: ../../portable/frontends/html/contextmenu.py:214
-msgid "Add to new playlist"
-msgstr "Legg til ny speleliste"
-
-#: ../../portable/frontends/html/contextmenu.py:133
-#: ../../portable/frontends/html/contextmenu.py:207
-msgid "Remove From Playlist"
-msgstr "Fjern frå speleliste"
-
-#: ../../portable/frontends/html/contextmenu.py:135
-#: ../../portable/frontends/html/contextmenu.py:209
-msgid "Remove From the Library"
-msgstr "Fjern frå bibliotek"
-
-#: ../../portable/frontends/html/contextmenu.py:141
-#: ../../portable/frontends/html/contextmenu.py:218
-msgid "Mark as Unwatched"
-msgstr "Merk som usett"
-
-#: ../../portable/frontends/html/contextmenu.py:146
-#: ../../portable/frontends/html/contextmenu.py:220
-msgid "Mark as Watched"
-msgstr "Merk som sett"
-
-#: ../../portable/frontends/html/contextmenu.py:151
-#, python-format
-msgid "%d Available Items"
-msgstr "%d tilgjengelege filmar"
-
-#: ../../portable/frontends/html/contextmenu.py:152
-#: ../../portable/frontends/html/contextmenu.py:227
-#: ../../portable/dialogs.py:93
-msgid "Download"
-msgstr "Last ned"
-
-#: ../../portable/frontends/html/contextmenu.py:157
-#, python-format
-msgid "%d Downloading Items"
-msgstr "%d nedlasta filmar"
-
-#: ../../portable/frontends/html/contextmenu.py:159
-#: ../../portable/frontends/html/contextmenu.py:225
-msgid "Cancel Download"
-msgstr "Avbryt nedlasting"
-
-#: ../../portable/frontends/html/contextmenu.py:161
-#: ../../portable/frontends/html/contextmenu.py:225
-msgid "Pause Download"
-msgstr "Stopp nedlasting mellombels"
-
-#: ../../portable/frontends/html/contextmenu.py:164
-#: ../../portable/frontends/html/contextmenu.py:223
-msgid "Restart Upload"
-msgstr "Hald fram med opplasting"
-
-#: ../../portable/frontends/html/contextmenu.py:170
-msgid "Update Channel Now"
-msgstr "Oppdater kanalen no"
-
-#: ../../portable/frontends/html/contextmenu.py:172
-#: ../../portable/frontends/html/contextmenu.py:196
-msgid "Copy URL to clipboard"
-msgstr "Kopier adresse til utklippstavle"
-
-#: ../../portable/frontends/html/contextmenu.py:173 ../../portable/feed.py:825
-msgid "Rename Channel"
-msgstr "Endra namn på kanal"
-
-#: ../../portable/frontends/html/contextmenu.py:177
-msgid "Revert Title to Default"
-msgstr "Tilbakestill tittel"
-
-#: ../../portable/frontends/html/contextmenu.py:183
-#: ../../portable/folder.py:142
-msgid "Rename Channel Folder"
-msgstr "Endra namn på kanalmappe"
-
-#: ../../portable/frontends/html/contextmenu.py:189
-#: ../../portable/folder.py:213
-msgid "Rename Playlist Folder"
-msgstr "Endra namn på spelelistemappe"
-
-#: ../../portable/frontends/html/contextmenu.py:213
-msgid "Play Just This Video"
-msgstr "Berre spel denne filmen"
-
-#: ../../portable/frontends/html/contextmenu.py:232
-#: ../../portable/playlist.py:218
-msgid "Rename Playlist"
-msgstr "Endra namn på speleliste"
-
-#: ../../portable/frontends/html/main.py:132 ../../portable/startup.py:237
-msgid "Video Directory Missing"
-msgstr "Filmmappa manglar"
-
-#: ../../portable/frontends/html/main.py:133
-msgid ""
-"\n"
-"    Miro can't find your primary video directory.  This may be because it's  "
-"   located on an external drive that is currently disconnected.\n"
-"\n"
-"    If you continue, the video directory will be reset to a location on this "
-"    drive (this will cause you to lose some details about the videos on the  "
-"   external drive).  You can also quit, connect the drive, and relaunch Miro."
-msgstr ""
-"\n"
-"    Miro finn ikkje hovudfilmmappa. Dette kan vera fordi mappa ligg på     "
-"ein ekstern harddisk som ikkje er kopla til.\n"
-"\n"
-"    Om du held fram, vert filmmappa nullstilt til ei plassering på denne     "
-"stasjonen. Dette vil føra til at du mistar nokre detaljar om filmane     på "
-"den eksterne stasjonen. Du kan òg avslutta, kopla til den eksterne     "
-"harddisken, og så starta Miro på nytt."
-
-#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
-msgid "Custom Channels"
-msgstr "Sjølvvalde kanalar"
-
-#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
-msgid ""
-"You are running a version of $longAppName with a custom set of channels."
-msgstr ""
-"Du køyrer ein versjon av $longAppName med eit eigedefinert kanalsett."
-
-#: ../../portable/frontends/html/main.py:269 ../../portable/httpclient.py:139
-msgid "Internal Error"
-msgstr "Intern feil"
-
-#: ../../portable/frontends/html/main.py:269
-msgid ""
-"Miro has encountered an internal error. You can help us track down this "
-"problem and fix it by submitting an error report."
-msgstr ""
-"Miro støtte på ein intern feil. Du kan hjelpa oss med å finna og retta "
-"feilen ved å senda inn ein feilrapport."
-
-#: ../../portable/frontends/html/main.py:269
-msgid ""
-"Include entire program database including all video and channel metadata "
-"with crash report"
-msgstr ""
-"Ta med heile programdatabasen, inkludert fullstendig film- og kanalmetadata, "
-"i krasjrapporten."
-
-#: ../../portable/frontends/html/main.py:269
-msgid "Describe what you were doing that caused this error"
-msgstr "Skriv kva du gjorde når feilen oppstod"
-
-#: ../../portable/frontends/html/main.py:284
-#, python-format
-msgid "%s Version Alert"
-msgstr "%s-versjonsvarsling"
-
-#: ../../portable/frontends/html/main.py:285
-#, python-format
-msgid "A new version of %s is available. Would you like to download it now?"
-msgstr "Ein ny versjon av %s er tilgjengeleg. Ønskjer du å lasta han ned no?"
-
-#: ../../portable/frontends/html/main.py:290
-#, python-format
-msgid "%s Version Check"
-msgstr "%s-versjonskontroll"
-
-#: ../../portable/frontends/html/main.py:291
-#, python-format
-msgid "%s is up to date."
-msgstr "%s er i nyaste versjon."
-
-#: ../../portable/frontends/html/main.py:309
-msgid "Are you sure you want to quit?"
-msgstr "Er du sikker på at du vil avslutta?"
-
-#: ../../portable/frontends/html/main.py:311
-msgid ""
-"Miro is still uploading your crash report. If you quit now the upload will "
-"be canceled.  Quit Anyway?"
-msgstr ""
-"Miro held framleis på med å lasta opp krasjrapporten. Viss du avsluttar no, "
-"vert opplastinga avbroten. Vil du likevel avslutta?"
-
-#: ../../portable/frontends/html/main.py:316
-#, python-format
-msgid "You have %d download still in progress.  Quit Anyway?"
-msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
-msgstr[0] "Du har %d uferdig nedlasting. Vil du likevel avslutta?"
-msgstr[1] "Du har %d uferdige nedlastingar. Vil du likevel avslutta?"
-
-#: ../../portable/frontends/html/main.py:340
-msgid "Import OPML File"
-msgstr "Importer OPML-fil"
-
-#: ../../portable/frontends/html/main.py:342
-msgid "OPML Files"
-msgstr "OPML-filer"
-
-#: ../../portable/frontends/html/main.py:347
-msgid "Export OPML File"
-msgstr "Eksporter OPML-fil"
+msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
+msgstr "Torrent-fila %s ser ut til å vera ugyldig, og kan ikkje opnast. [OK]"
 
 #: ../../portable/frontends/html/templatedisplay.py:325
 msgid "Invalid Value"
@@ -1233,20 +1148,795 @@ msgstr "$shortAppName – last ned film"
 msgid "Enter the URL of the video to download"
 msgstr "Skriv inn adressa til filmen du vil lasta ned"
 
-#: ../../portable/tabs.py:55
+#: ../../portable/frontends/html/contextmenu.py:104
+msgid "Update Channels Now"
+msgstr "Oppdater kanalar no"
+
+#: ../../portable/frontends/html/contextmenu.py:128
+#, python-format
+msgid "%d Downloaded Items"
+msgstr "%d nedlasta filmar"
+
+#: ../../portable/frontends/html/contextmenu.py:130
+#: ../../portable/frontends/html/contextmenu.py:210
+msgid "Play"
+msgstr "Spel"
+
+#: ../../portable/frontends/html/contextmenu.py:131
+#: ../../portable/frontends/html/contextmenu.py:213
+msgid "Add to new playlist"
+msgstr "Legg til i ny speleliste"
+
+#: ../../portable/frontends/html/contextmenu.py:133
+#: ../../portable/frontends/html/contextmenu.py:206
+msgid "Remove From Playlist"
+msgstr "Fjern frå speleliste"
+
+#: ../../portable/frontends/html/contextmenu.py:135
+#: ../../portable/frontends/html/contextmenu.py:208
+msgid "Remove From the Library"
+msgstr "Fjern frå bibliotek"
+
+#: ../../portable/frontends/html/contextmenu.py:141
+#: ../../portable/frontends/html/contextmenu.py:217
+msgid "Mark as Unwatched"
+msgstr "Merk som usett"
+
+#: ../../portable/frontends/html/contextmenu.py:146
+#: ../../portable/frontends/html/contextmenu.py:219
+msgid "Mark as Watched"
+msgstr "Merk som sett"
+
+#: ../../portable/frontends/html/contextmenu.py:151
+#, python-format
+msgid "%d Available Items"
+msgstr "%d tilgjengelege filmar"
+
+#: ../../portable/frontends/html/contextmenu.py:152
+#: ../../portable/frontends/html/contextmenu.py:226
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:128
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:140
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:292
+#: ../../portable/frontends/html/compiled_templates/download_item_thumbnail.py:79
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:91
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:103
+#: ../../portable/dialogs.py:93
+msgid "Download"
+msgstr "Last ned"
+
+#: ../../portable/frontends/html/contextmenu.py:157
+#, python-format
+msgid "%d Downloading Items"
+msgstr "%d nedlasta filmar"
+
+#: ../../portable/frontends/html/contextmenu.py:159
+#: ../../portable/frontends/html/contextmenu.py:224
+msgid "Cancel Download"
+msgstr "Avbryt nedlasting"
+
+#: ../../portable/frontends/html/contextmenu.py:161
+#: ../../portable/frontends/html/contextmenu.py:224
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:275
+#: ../../portable/frontends/html/compiled_templates/download_item_thumbnail.py:62
+msgid "Pause Download"
+msgstr "Stopp nedlasting mellombels"
+
+#: ../../portable/frontends/html/contextmenu.py:164
+#: ../../portable/frontends/html/contextmenu.py:222
+msgid "Restart Upload"
+msgstr "Hald fram med opplasting"
+
+#: ../../portable/frontends/html/contextmenu.py:170
+msgid "Update Channel Now"
+msgstr "Oppdater kanalen no"
+
+#: ../../portable/frontends/html/contextmenu.py:172
+#: ../../portable/frontends/html/contextmenu.py:196
+msgid "Copy URL to clipboard"
+msgstr "Kopier adresse til utklippstavle"
+
+#: ../../portable/frontends/html/contextmenu.py:173 ../../portable/feed.py:830
+msgid "Rename Channel"
+msgstr "Endra namn på kanal"
+
+#: ../../portable/frontends/html/contextmenu.py:177
+msgid "Revert Title to Default"
+msgstr "Tilbakestill tittel"
+
+#: ../../portable/frontends/html/contextmenu.py:183
+#: ../../portable/folder.py:142
+msgid "Rename Channel Folder"
+msgstr "Endra namn på kanalmappe"
+
+#: ../../portable/frontends/html/contextmenu.py:189
+#: ../../portable/folder.py:213
+msgid "Rename Playlist Folder"
+msgstr "Endra namn på spelelistemappe"
+
+#: ../../portable/frontends/html/contextmenu.py:212
+msgid "Play Just This Video"
+msgstr "Spel berre denne filmen"
+
+#: ../../portable/frontends/html/contextmenu.py:231
+#: ../../portable/playlist.py:218
+msgid "Rename Playlist"
+msgstr "Endra namn på speleliste"
+
+#: ../../portable/frontends/html/compiled_templates/channel_content.py:36
+#: ../../portable/frontends/html/compiled_templates/channel_folder.py:200
+#: ../../portable/frontends/html/compiled_templates/channel.py:382
+msgid "Save Search"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/channel_content.py:102
+#: ../../portable/frontends/html/compiled_templates/channel_folder.py:266
+#: ../../portable/frontends/html/compiled_templates/channel.py:448
+msgid "Full Channel"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/channel_content.py:111
+#: ../../portable/frontends/html/compiled_templates/channel_content.py:194
+#: ../../portable/frontends/html/compiled_templates/channel_folder.py:275
+#: ../../portable/frontends/html/compiled_templates/channel_folder.py:358
+#: ../../portable/frontends/html/compiled_templates/channel.py:457
+#: ../../portable/frontends/html/compiled_templates/channel.py:540
+msgid "${len} Videos"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/channel_content.py:185
+#: ../../portable/frontends/html/compiled_templates/channel_folder.py:349
+#: ../../portable/frontends/html/compiled_templates/channel.py:531
+msgid "Downloaded"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/feed_settings.py:48
+#: ../../portable/frontends/html/compiled_templates/channel.py:188
+msgid "remove channel"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/feed_settings.py:57
+#: ../../portable/frontends/html/compiled_templates/channel.py:197
+msgid "Settings: ${title}"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/feed_settings.py:59
+#: ../../portable/frontends/html/compiled_templates/channel.py:199
+msgid "Videos expire after"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/feed_settings.py:63
+#: ../../portable/frontends/html/compiled_templates/channel.py:203
+msgid "Default"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/feed_settings.py:70
+#: ../../portable/frontends/html/compiled_templates/channel.py:210
+msgid "default"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/feed_settings.py:136
+#: ../../portable/frontends/html/compiled_templates/channel.py:276
+msgid ""
+"Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
+"unwatched."
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:53
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:329
+msgid "Saved"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/playlist_folder.py:61
+msgid "Empty Playlist Folder"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/playlist_folder.py:73
+msgid ""
+"This folder contains ${count} playlists, but the playlists do not contain "
+"any items."
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/playlist_folder.py:78
+msgid "Drag playlists to this folder to add them."
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:55
+#: ../../portable/frontends/html/compiled_templates/video_info.py:46
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:59
+msgid "EMAIL A FRIEND"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:62
+#: ../../portable/frontends/html/compiled_templates/video_info.py:53
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:66
+msgid "PERMALINK"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:69
+#: ../../portable/frontends/html/compiled_templates/video_info.py:60
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:73
+msgid "COMMENTS"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:81
+#: ../../portable/frontends/html/compiled_templates/video_info.py:72
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:85
+msgid "KEEP"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:88
+#: ../../portable/frontends/html/compiled_templates/video_info.py:79
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:92
+msgid "ADD TO LIBRARY"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:98
+#: ../../portable/frontends/html/compiled_templates/video_info.py:89
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:102
+msgid "DELETE"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:114
+msgid "Miro - External Playback Template"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:124
+msgid "Continue To Next Video"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download.py:39
+#, python-format
+msgid "%0.1f KB/s uploading"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download.py:42
+#, python-format
+msgid "%0.1f KB/s downloading"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download.py:140
+msgid "External Downloads"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download.py:142
+msgid "Clear Completed and Failed Downloads"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download.py:155
+msgid "Seeding Torrents"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download.py:177
+msgid "${size} free for downloads"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download.py:186
+msgid "${size} free on disk"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download.py:464
+#: ../../portable/frontends/html/compiled_templates/new.py:138
+#: ../../portable/frontends/html/compiled_templates/library.py:137
+msgid "Find"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download.py:466
+#: ../../portable/tabs.py:57
+msgid "Downloading"
+msgstr "Nedlasting"
+
+#: ../../portable/frontends/html/compiled_templates/download.py:485
+msgid "Pause All"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download.py:503
+msgid "Resume All"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download.py:516
+msgid "Channel Downloads"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/channel_folder.py:172
+msgid "Empty Channel Folder"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/channel_folder.py:174
+msgid "Drag channels to this folder to add them."
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/unittest/translationtest.py:45
+msgid "Simple translation"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/unittest/translationtest.py:59
+msgid "truck stop in a ${can}"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/unittest/translationtest.py:63
+msgid ""
+"This is a ${car} and this is a ${truck} <span>This text is <b "
+"style=\"color:red\">raw</b> text</span>"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:75
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:38
+msgid "Date:"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:82
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:45
+msgid "Length:"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:89
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:52
+msgid "Size:"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:98
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:61
+msgid "Show Details"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:105
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:68
+msgid "Hide Details"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:153
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:116
+msgid "Download Torrent"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:230
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:193
+msgid "Pending Auto Download"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:244
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:207
+msgid "STOP SEEDING"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:282
+#: ../../portable/frontends/html/compiled_templates/download_item_thumbnail.py:69
+msgid "Resume Download"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/new.py:146
+msgid "Recent Videos"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/playlist.py:58
+msgid "Empty Playlist"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/playlist.py:60
+msgid "Drag downloaded videos to this playlist to add them."
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:139
+msgid ""
+"Miro can't play this file. You may be able to open it with a different "
+"program.<br></br><br></br><strong>Filename:</strong> "
+"${filename}<br></br><strong>File type:</strong> ${format}"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:143
+msgid "REVEAL FILE"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:147
+msgid "Play Externally"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:156
+msgid "Skip >> ${countdown}"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/search.py:49
+#: ../../portable/frontends/html/compiled_templates/channel.py:293
+#: ../../portable/extrastrings.py:33 ../../portable/feed.py:2393
+#: ../../portable/feed.py:2483
+msgid "Search"
+msgstr "Søk"
+
+#: ../../portable/frontends/html/compiled_templates/search.py:74
+msgid "No videos found.<br></br>Enter a query in the search field above."
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/search.py:79
+msgid "Searching..."
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/search.py:84
+msgid ""
+"No matching videos found.<br></br>Enter a different query in the search "
+"field above."
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/search.py:93
+msgid "Save as a Channel"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/search.py:95
+msgid ""
+"<h3>Results for \"<span i18n:name=\"query\" "
+"t:replace=\"feed.lastQuery\"></span>\"</h3>"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/multi_channel.py:59
+msgid ""
+"${count} Channel Folders Selected<br></br>(contains ${containedcount} "
+"channels)"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/multi_channel.py:71
+msgid "${count} Channels Selected"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/multi_channel.py:76
+msgid "Put Into a New Folder"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/multi_channel.py:83
+msgid "Delete All"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/multi_playlist.py:59
+msgid ""
+"${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
+"playlists)"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/multi_playlist.py:71
+msgid "${count} Playlists Selected"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/channel.py:318
+msgid "Visit Website"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/channel.py:325
+msgid "Send to a Friend"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/channel.py:332
+msgid "Auto Download"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/channel.py:746
+msgid "Looking for videos at this URL"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/library.py:145
+#: ../../portable/tabs.py:54
 msgid "Library"
 msgstr "Bibliotek"
 
-#: ../../portable/tabs.py:58
-msgid "Downloading"
-msgstr "Nedlasting"
+#: ../../portable/frontends/html/main.py:138 ../../portable/startup.py:236
+msgid "Video Directory Missing"
+msgstr "Filmmappa manglar"
+
+#: ../../portable/frontends/html/main.py:139
+msgid ""
+"\n"
+"    Miro can't find your primary video directory.  This may be because it's  "
+"   located on an external drive that is currently disconnected.\n"
+"\n"
+"    If you continue, the video directory will be reset to a location on this "
+"    drive (this will cause you to lose some details about the videos on the  "
+"   external drive).  You can also quit, connect the drive, and relaunch Miro."
+msgstr ""
+"\n"
+"    Miro finn ikkje hovudfilmmappa. Dette kan vera fordi mappa ligg på     "
+"ein ekstern harddisk som ikkje er kopla til.\n"
+"\n"
+"    Om du held fram, vert filmmappa nullstilt til ei plassering på denne     "
+"stasjonen. Dette vil føra til at du mistar nokre detaljar om filmane     på "
+"den eksterne stasjonen. Du kan òg avslutta, kopla til den eksterne     "
+"harddisken, og så starta Miro på nytt."
+
+#: ../../portable/frontends/html/main.py:197 ../../portable/theme.py:127
+msgid "Custom Channels"
+msgstr "Sjølvvalde kanalar"
+
+#: ../../portable/frontends/html/main.py:197 ../../portable/theme.py:127
+msgid ""
+"You are running a version of $longAppName with a custom set of channels."
+msgstr ""
+"Du køyrer ein versjon av $longAppName med eit eigedefinert kanalsett."
+
+#: ../../portable/frontends/html/main.py:276 ../../portable/httpclient.py:151
+msgid "Internal Error"
+msgstr "Intern feil"
+
+#: ../../portable/frontends/html/main.py:276
+msgid ""
+"Miro has encountered an internal error. You can help us track down this "
+"problem and fix it by submitting an error report."
+msgstr ""
+"Miro støtte på ein intern feil. Du kan hjelpa oss med å finna og retta "
+"feilen ved å senda inn ein feilrapport."
+
+#: ../../portable/frontends/html/main.py:276
+msgid ""
+"Include entire program database including all video and channel metadata "
+"with crash report"
+msgstr ""
+"Ta med heile programdatabasen, inkludert fullstendig film- og kanalmetadata, "
+"i krasjrapporten."
+
+#: ../../portable/frontends/html/main.py:276
+msgid "Describe what you were doing that caused this error"
+msgstr "Skriv kva du gjorde når feilen oppstod"
+
+#: ../../portable/frontends/html/main.py:291
+#, python-format
+msgid "%s Version Alert"
+msgstr "%s-versjonsvarsling"
+
+#: ../../portable/frontends/html/main.py:292
+#, python-format
+msgid "A new version of %s is available. Would you like to download it now?"
+msgstr "Ein ny versjon av %s er tilgjengeleg. Ønskjer du å lasta han ned no?"
+
+#: ../../portable/frontends/html/main.py:297
+#, python-format
+msgid "%s Version Check"
+msgstr "%s-versjonskontroll"
+
+#: ../../portable/frontends/html/main.py:298
+#, python-format
+msgid "%s is up to date."
+msgstr "%s er i nyaste versjon."
+
+#: ../../portable/frontends/html/main.py:316
+msgid "Are you sure you want to quit?"
+msgstr "Er du sikker på at du vil avslutta?"
+
+#: ../../portable/frontends/html/main.py:318
+msgid ""
+"Miro is still uploading your crash report. If you quit now the upload will "
+"be canceled.  Quit Anyway?"
+msgstr ""
+"Miro held framleis på med å lasta opp krasjrapporten. Viss du avsluttar no, "
+"vert opplastinga avbroten. Vil du likevel avslutta?"
+
+#: ../../portable/frontends/html/main.py:323
+#, python-format
+msgid "You have %d download still in progress.  Quit Anyway?"
+msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
+msgstr[0] "Du har %d uferdig nedlasting. Vil du likevel avslutta?"
+msgstr[1] "Du har %d uferdige nedlastingar. Vil du likevel avslutta?"
+
+#: ../../portable/frontends/html/main.py:347
+msgid "Import OPML File"
+msgstr "Importer OPML-fil"
+
+#: ../../portable/frontends/html/main.py:349
+msgid "OPML Files"
+msgstr "OPML-filer"
+
+#: ../../portable/frontends/html/main.py:354
+msgid "Export OPML File"
+msgstr "Eksporter OPML-fil"
+
+#: ../../portable/util.py:267
+#, python-format
+msgid "%1.1fGB"
+msgstr "%1.1f GB"
+
+#: ../../portable/util.py:269
+#, python-format
+msgid "%dGB"
+msgstr "%d GB"
+
+#: ../../portable/util.py:273
+#, python-format
+msgid "%1.1fMB"
+msgstr "%1.1f MB"
+
+#: ../../portable/util.py:275
+#, python-format
+msgid "%dMB"
+msgstr "%d MB"
+
+#: ../../portable/util.py:279
+#, python-format
+msgid "%1.1fKB"
+msgstr "%1.1f KB"
+
+#: ../../portable/util.py:281
+#, python-format
+msgid "%dKB"
+msgstr "%d KB"
+
+#: ../../portable/util.py:285
+#, python-format
+msgid "%1.1fB"
+msgstr "%1.1f B"
+
+#: ../../portable/util.py:287
+#, python-format
+msgid "%dB"
+msgstr "%d B"
+
+#: ../../portable/iheartmiro.py:134
+#, python-format
+msgid ""
+"An Effortless Way to Help Miro\n"
+"\n"
+"Miro is open-source and built by a non-profit.  We need your help to "
+"continue our work.\n"
+"\n"
+"I Heart Miro is a simple %s extension that gives a referral fee to the Miro "
+"organization when you shop at Amazon.  You'll never notice it, it doesn't "
+"cost you a thing, and it's easy to uninstall at any time.\n"
+"\n"
+"%s"
+msgstr ""
+
+#: ../../portable/iheartmiro.py:142
+msgid "Install iHeartMiro?"
+msgstr ""
+
+#: ../../portable/dl_daemon/download.py:457
+msgid "Error"
+msgstr "Feil"
+
+#: ../../portable/dl_daemon/download.py:544
+#, python-format
+msgid "Could not write to %s"
+msgstr "Klarte ikkje skriva til %s"
+
+#: ../../portable/dl_daemon/download.py:564
+#: ../../portable/dl_daemon/download.py:772
+msgid "Not enough disk space"
+msgstr "Ikkje nok diskplass"
+
+#: ../../portable/dl_daemon/download.py:565
+#: ../../portable/dl_daemon/download.py:773
+#, python-format
+msgid "%s MB required to store this video"
+msgstr "%s MB nødvendig for å lagra filmen"
+
+#: ../../portable/dl_daemon/download.py:783
+msgid "BitTorrent failure"
+msgstr "BitTorrent-feil"
+
+#: ../../portable/dl_daemon/download.py:784
+msgid "BitTorrent failed to startup"
+msgstr "Feil ved BitTorrent-start"
+
+#: ../../portable/dl_daemon/download.py:957
+msgid "Corrupt Torrent"
+msgstr "Ugyldig Torrent-fil"
+
+#: ../../portable/dl_daemon/download.py:958
+#, python-format
+msgid "The torrent file at %s was not valid"
+msgstr "Torrent-fila på %s var ikkje gyldig"
+
+#: ../../portable/dl_daemon/download.py:983
+msgid "Torrent file deleted"
+msgstr "Torrent-fil sletta"
+
+#: ../../portable/dl_daemon/download.py:984
+msgid "The torrent file for this item was deleted outside of Miro."
+msgstr "Torrent-fila vart sletta utanfor Miro."
+
+#: ../../portable/controller.py:197 ../../portable/controller.py:211
+#: ../../portable/controller.py:255 ../../portable/controller.py:281
+#: ../../portable/controller.py:301
+#, python-format
+msgid "Remove %s"
+msgstr "Fjern %s"
+
+#: ../../portable/controller.py:198
+#, python-format
+msgid "Are you sure you want to remove the guide %s?"
+msgstr "Er du sikker på at du vil fjerna gaiden «%s»?"
+
+#: ../../portable/controller.py:212
+#, python-format
+msgid "Are you sure you want to remove %s"
+msgstr "Er du sikker på at du vil fjerna «%s»?"
+
+#: ../../portable/controller.py:215 ../../portable/controller.py:260
+#: ../../portable/controller.py:286 ../../portable/controller.py:305
+#, python-format
+msgid "Remove %s channels"
+msgstr "Fjern %s kanalar"
+
+#: ../../portable/controller.py:217
+#, python-format
+msgid "Are you sure you want to remove these %s playlists"
+msgstr "Er du sikker på at du vil fjerna desse %s spelelistene?"
+
+#: ../../portable/controller.py:256
+msgid ""
+"What would you like to do with the videos in this channel that you've "
+"downloaded?"
+msgstr ""
+"Kva ønskjer du å gjera med filmane i denne kanalen som du har lasta ned?"
+
+#: ../../portable/controller.py:261
+msgid ""
+"What would you like to do with the videos in these channels that you've "
+"downloaded?"
+msgstr ""
+"Kva ønskjer du å gjera med filmane i desse kanalane som du har lasta ned?"
+
+#: ../../portable/controller.py:282
+#, python-format
+msgid ""
+"Are you sure you want to remove %s?  Any downloads in progress will be "
+"canceled."
+msgstr ""
+"Er du sikker på at du vil fjerna «%s»? Alle ufullførte nedlastingar vert "
+"avbrotne."
+
+#: ../../portable/controller.py:287
+#, python-format
+msgid ""
+"Are you sure you want to remove these %s channels?  Any downloads in "
+"progress will be canceled."
+msgstr ""
+"Er du sikker på at du vil fjerna desse %s kanalane? Alle ufullførte "
+"nedlastingar vert avbrotne."
+
+#: ../../portable/controller.py:302
+#, python-format
+msgid "Are you sure you want to remove %s?"
+msgstr "Er du sikker på at du vil fjerna «%s»?"
+
+#: ../../portable/controller.py:306
+#, python-format
+msgid "Are you sure you want to remove these %s channels?"
+msgstr "Er du sikker på at du vil fjerna desse %s kanalane?"
+
+#: ../../portable/controller.py:319
+#, python-format
+msgid "Stop watching %s"
+msgstr "Stopp overvaking av %s"
+
+#: ../../portable/controller.py:320
+#, python-format
+msgid "Are you sure you want to stop watching %s?"
+msgstr "Er du sikker på at du ønskjer å stoppa overvakinga av %s?"
+
+#: ../../portable/controller.py:323
+#, python-format
+msgid "Stop watching %s directories"
+msgstr "Stopp overvaking av %s mapper"
+
+#: ../../portable/controller.py:324
+#, python-format
+msgid "Are you sure you want to stop watching these %s directories?"
+msgstr ""
+"Er du sikker på at du ønskjer å stoppa overvakinga av desse %s mappene?"
+
+#: ../../portable/controller.py:498
+msgid "Error Saving Video"
+msgstr "Feil ved lagring av film"
+
+#: ../../portable/controller.py:500
+#, python-format
+msgid ""
+"An error occured while trying to save %s.  Please check that the file has "
+"not been deleted and try again."
+msgstr ""
+"Det oppstod ein feil ved lagring av «%s». Kontroller at fila ikkje vart "
+"sletta, og prøv på nytt."
 
 #: ../../portable/downloader.py:234
 msgid "activity"
 msgstr "aktivitet"
 
-#: ../../portable/downloader.py:268 ../../portable/httpclient.py:127
-#: ../../portable/httpclient.py:155
+#: ../../portable/downloader.py:268 ../../portable/httpclient.py:138
+#: ../../portable/httpclient.py:167
 msgid "File not found"
 msgstr "Fann ikkje fil"
 
@@ -1258,344 +1948,123 @@ msgstr "Feil ved henting av adresse til Flash-filmfil"
 msgid "starting up"
 msgstr "startar"
 
-#: ../../portable/playlist.py:219
+#: ../../portable/httpclient.py:89
 #, python-format
-msgid "Enter a new name for the playlist %s"
-msgstr "Skriv inn nytt namn på spelelista «%s»"
+msgid "Error: %s"
+msgstr "Feil: %s"
 
-#: ../../portable/playlist.py:241
-msgid "Create Playlist"
-msgstr "Lag speleliste"
+#: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
+msgid "Can't connect"
+msgstr "Kan ikkje kopla til"
 
-#: ../../portable/playlist.py:242
-msgid "Enter a name for the new playlist"
-msgstr "Skriv inn namn på den nye spelelista"
-
-#: ../../portable/opml.py:144
-msgid "OPML Import failed"
-msgstr "Feil ved OPML-import"
-
-#: ../../portable/opml.py:145
-msgid "The selected OPML file appears to be invalid. Import was interrupted."
-msgstr ""
-"Den valde OPML-fila ser ut til å vera ugyldig. Importeringa vart avbroten."
-
-#: ../../portable/opml.py:150
-msgid "OPML Import summary"
-msgstr "Samandrag av OPML-import"
-
-#: ../../portable/opml.py:151
+#: ../../portable/httpclient.py:105
 #, python-format
-msgid "Successfully imported %d feed."
-msgid_plural "Successfully imported %d feeds."
-msgstr[0] "%d filmkjelde vart importert."
-msgstr[1] "%d filmkjelder vart importert."
+msgid "Connection Error: %s"
+msgstr "Tilkoplingsfeil: %s"
 
-#: ../../portable/opml.py:154
+#: ../../portable/httpclient.py:111
+msgid "SSL connection error"
+msgstr "Feil ved SSL-tilkopling"
+
+#: ../../portable/httpclient.py:115
+msgid "HTTP error"
+msgstr "HTTP-feil"
+
+#: ../../portable/httpclient.py:118
 #, python-format
-msgid "Skipped %d feed already present."
-msgid_plural "Skipped %d feeds already present."
-msgstr[0] "Hoppa over %d eksisterande filmkjelde."
-msgstr[1] "Hoppa over %d eksisterande filmkjelder."
+msgid "Bad Status Line: %s"
+msgstr "Ugyldig statuslinje: %s"
 
-#: ../../portable/util.py:266
+#: ../../portable/httpclient.py:122
 #, python-format
-msgid "%1.1fGB"
-msgstr "%1.1f GB"
+msgid "Bad Header Line: %s"
+msgstr "Ugyldig HTTP-hovudlinje: %s"
 
-#: ../../portable/util.py:268
+#: ../../portable/httpclient.py:126
 #, python-format
-msgid "%dGB"
-msgstr "%d GB"
+msgid "Bad Chunk size: %s"
+msgstr "Ugyldig oppdelingsstorleik: %s"
 
-#: ../../portable/util.py:272
+#: ../../portable/httpclient.py:130
 #, python-format
-msgid "%1.1fMB"
-msgstr "%1.1f MB"
+msgid "Expected CRLF got: %r"
+msgstr "Venta CRLF, men fekk: %r"
 
-#: ../../portable/util.py:274
+#: ../../portable/httpclient.py:133
 #, python-format
-msgid "%dMB"
-msgstr "%d MB"
+msgid "%s closed connection"
+msgstr "%s avbraut sambandet"
 
-#: ../../portable/util.py:278
+#: ../../portable/httpclient.py:139
+msgid "Got 404 status code"
+msgstr "Fekk statuskode 404"
+
+#: ../../portable/httpclient.py:141
 #, python-format
-msgid "%1.1fKB"
-msgstr "%1.1f KB"
+msgid "Bad Status Code: %s"
+msgstr "Ugyldig statuskode: %s"
 
-#: ../../portable/util.py:280
+#: ../../portable/httpclient.py:146
+msgid "Authorization failed"
+msgstr "Feil ved godkjenning"
+
+#: ../../portable/httpclient.py:152
+msgid "Pipeline request never started"
+msgstr "Førespurnad for kommandokø starta aldri"
+
+#: ../../portable/httpclient.py:156
+msgid "Timeout"
+msgstr "Tidsavbrot"
+
+#: ../../portable/httpclient.py:157
 #, python-format
-msgid "%dKB"
-msgstr "%d KB"
+msgid "Connection to %s timed out"
+msgstr "Sambandet til %s vart tidsavbrote"
 
-#: ../../portable/util.py:284
+#: ../../portable/httpclient.py:161
+msgid "Invalid URL"
+msgstr "Ugyldig adresse"
+
+#: ../../portable/httpclient.py:162
 #, python-format
-msgid "%1.1fB"
-msgstr "%1.1f B"
+msgid "\"%s\" is not a valid URL"
+msgstr "«%s» er ikkje ei gyldig adresse"
 
-#: ../../portable/util.py:286
+#: ../../portable/httpclient.py:168
 #, python-format
-msgid "%dB"
-msgstr "%d B"
+msgid "The file: \"%s\" doesn't exist"
+msgstr "Fila «%s» finst ikkje"
 
-#: ../../portable/iheartmiro.py:82
-msgid ""
-"An Effortless Way to Help Miro\n"
-"\n"
-"Miro is open-source and built by a non-profit.  We need your help to "
-"continue our work.\n"
-"\n"
-"I Heart Miro is a simple Firefox extension that gives a referral fee to the "
-"Miro organization when you shop at Amazon.  You'll never notice it, it "
-"doesn't cost you a thing, and it's easy to uninstall at any time.\n"
-"\n"
-"If you click 'Install iHeartMiro' below, Firefox will launch and ask if it's "
-"ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks "
-"for your help."
-msgstr ""
-"Ein enkel måte å hjelpa Miro på\n"
-"\n"
-"Miro er fri og gratis programvare, og vert utvikla av eit nonprofitt-"
-"selskap. Me treng di hjelp til å kunna halda fram med dette.\n"
-"\n"
-"«I Heart Miro» («eg elskar Miro») er eit Firefox-tillegg som gjev "
-"referentpengar til Miro-organisasjonen når du handlar på Amazon. Du vil "
-"ikkje merka at tillegget køyrer, det kostar deg ingenting, og det er lett å "
-"avinstallera.\n"
-"\n"
-"Når du trykkjer «Installer iHeartMiro» nedanfor, vert Firefox starta, og vil "
-"spørja deg om det er greitt at tillegget vert installert. Berre svar ja, og "
-"du er ferdig. Det heile tar rundt 7 sekund. Og tusen takk for støtta di!"
+#: ../../portable/httpclient.py:172
+msgid "Read error"
+msgstr "Lesefeil"
 
-#: ../../portable/menubar.py:158
-msgid "_Open"
-msgstr "_Opna"
+#: ../../portable/httpclient.py:173
+#, python-format
+msgid "Error while reading from \"%s\""
+msgstr "Feil ved lesing frå «%s»"
 
-#: ../../portable/menubar.py:159
-msgid "_Download Video"
-msgstr "_Last ned film"
+#: ../../portable/httpclient.py:369
+msgid "Unknown Error code"
+msgstr "Ukjend feilkode"
 
-#: ../../portable/menubar.py:161
-msgid "Check _Version"
-msgstr "Kontroller _versjon"
+#: ../../portable/httpclient.py:401
+msgid "Connection closed"
+msgstr "Sambandet stengt"
 
-#: ../../portable/menubar.py:163
-msgid "_Remove Video"
-msgstr "_Fjern film"
+#: ../../portable/httpclient.py:823
+msgid "Unknown"
+msgstr "Ukjend"
 
-#: ../../portable/menubar.py:164
-msgid "_Remove Videos"
-msgstr "_Fjern filmar"
+#: ../../portable/httpclient.py:824
+msgid "Internal Error: Not ready to send"
+msgstr "Intern feil: Ikkje klar til å senda"
 
-#: ../../portable/menubar.py:165
-msgid "Re_name Video"
-msgstr "_Endra namn på film"
+#: ../../portable/license.py:68
+msgid "license page"
+msgstr "lisensside"
 
-#: ../../portable/menubar.py:166
-msgid "Save Video _As..."
-msgstr "Lagre film _som …"
-
-#: ../../portable/menubar.py:167
-msgid "Save Videos _As..."
-msgstr "Lagre filmar _som …"
-
-#: ../../portable/menubar.py:168
-msgid "Copy Video _URL"
-msgstr "Kopier film-_adresse"
-
-#: ../../portable/menubar.py:170
-msgid "_Options..."
-msgstr "_Innstillingar …"
-
-#: ../../portable/menubar.py:171
-msgid "_Quit"
-msgstr "_Avslutt"
-
-#: ../../portable/menubar.py:179
-msgid "Cu_t"
-msgstr "Klipp _ut"
-
-#: ../../portable/menubar.py:180
-msgid "_Copy"
-msgstr "_Kopier"
-
-#: ../../portable/menubar.py:181
-msgid "_Paste"
-msgstr "_Lim inn"
-
-#: ../../portable/menubar.py:182
-msgid "Select _All"
-msgstr "Merk _alle"
-
-#: ../../portable/menubar.py:183
-msgid "_Delete"
-msgstr "_Slett"
-
-#: ../../portable/menubar.py:187
-msgid "Add _Channel"
-msgstr "Legg til _kanal"
-
-#: ../../portable/menubar.py:188
-msgid "New Searc_h Channel..."
-msgstr "Ny _søkjekanal …"
-
-#: ../../portable/menubar.py:189
-msgid "New _Folder..."
-msgstr "Ny _mappe …"
-
-#: ../../portable/menubar.py:190
-msgid "Add Channel _Guide..."
-msgstr "Legg til kanal_gaid …"
-
-#: ../../portable/menubar.py:200
-msgid "Update _All Channels"
-msgstr "Oppdater _alle kanalar"
-
-#: ../../portable/menubar.py:202
-msgid "_Import Channels (OPML)..."
-msgstr "_Importer kanalar (OPML) …"
-
-#: ../../portable/menubar.py:203
-msgid "E_xport Channels (OPML)..."
-msgstr "E_ksporter kanalar (OPML) …"
-
-#: ../../portable/menubar.py:205
-msgid "_Send this channel to a friend"
-msgstr "_Send denne kanalen til ein venn"
-
-#: ../../portable/menubar.py:206
-msgid "Copy Channel _Link"
-msgstr "Kopier kanal_lenkje"
-
-#: ../../portable/menubar.py:209
-msgid "New _Playlist"
-msgstr "Ny _speleliste"
-
-#: ../../portable/menubar.py:210
-msgid "New Playlist Fol_der"
-msgstr "Ny speleliste_mappe"
-
-#: ../../portable/menubar.py:212
-msgid "Re_name Playlist"
-msgstr "_Endra namn på speleliste"
-
-#: ../../portable/menubar.py:213
-msgid "_Remove Playlist"
-msgstr "_Fjern speleliste"
-
-#: ../../portable/menubar.py:214
-msgid "_Remove Playlists"
-msgstr "_Fjern spelelister"
-
-#: ../../portable/menubar.py:215
-msgid "_Remove Playlist Folders"
-msgstr "_Fjern spelelistemapper"
-
-#: ../../portable/menubar.py:216
-msgid "_Remove Playlist Folder"
-msgstr "_Fjern spelelistemappe"
-
-#: ../../portable/menubar.py:226 ../../portable/menubar.py:227
-msgid "_Play"
-msgstr "_Spel"
-
-#: ../../portable/menubar.py:228
-msgid "_Pause"
-msgstr "_Pause"
-
-#: ../../portable/menubar.py:229
-msgid "_Stop"
-msgstr "_Stopp"
-
-#: ../../portable/menubar.py:231
-msgid "_Next Video"
-msgstr "_Neste film"
-
-#: ../../portable/menubar.py:232
-msgid "_Previous Video"
-msgstr "_Førre film"
-
-#: ../../portable/menubar.py:234
-msgid "Skip _Forward"
-msgstr "Spol _fram"
-
-#: ../../portable/menubar.py:235
-msgid "Skip _Back"
-msgstr "Spol _tilbake"
-
-#: ../../portable/menubar.py:237
-msgid "Volume _Up"
-msgstr "_Høgare lyd"
-
-#: ../../portable/menubar.py:238
-msgid "Volume _Down"
-msgstr "_Lågare lyd"
-
-#: ../../portable/menubar.py:240
-msgid "_Fullscreen"
-msgstr "_Fullskjerm"
-
-#: ../../portable/menubar.py:244
-msgid "_About"
-msgstr "_Om"
-
-#: ../../portable/menubar.py:245
-msgid "_Donate"
-msgstr "_Doner"
-
-#: ../../portable/menubar.py:246 ../../portable/menubar.py:261
-msgid "_Help"
-msgstr "_Hjelp"
-
-#: ../../portable/menubar.py:248
-msgid "Report a _Bug"
-msgstr "Meld frå om _feil"
-
-#: ../../portable/menubar.py:252
-msgid "_Video"
-msgstr "_Film"
-
-#: ../../portable/menubar.py:254
-msgid "_File"
-msgstr "_Fil"
-
-#: ../../portable/menubar.py:258
-msgid "_Channels"
-msgstr "_Kanalar"
-
-#: ../../portable/menubar.py:259
-msgid "_Playlists"
-msgstr "_Spelelister"
-
-#: ../../portable/menubar.py:260
-msgid "P_layback"
-msgstr "A_vspeling"
-
-#: ../../portable/menubar.py:265
-msgid "Play Unwatched ($numUnwatched)"
-msgstr "Spel usette ($numUnwatched)"
-
-#: ../../portable/menubar.py:266
-msgid "Pause All Downloads ($numDownloading)"
-msgstr "Stopp alle nedlastingar mellombels ($numDownloading)"
-
-#: ../../portable/menubar.py:267
-msgid "Resume All Downloads ($numPaused)"
-msgstr "Hald fram med alle nedlastingar ($numPaused)"
-
-#: ../../portable/menubar.py:269
-msgid "Options..."
-msgstr "Innstillingar …"
-
-#: ../../portable/menubar.py:271
-msgid "Hide Window"
-msgstr "Gøym vindauge"
-
-#: ../../portable/menubar.py:272
-msgid "Show Window"
-msgstr "Vis vindauge"
-
-#: ../../portable/theme.py:137
+#: ../../portable/theme.py:138
 msgid "Starter Channels"
 msgstr "Startkanalar"
 
@@ -1603,226 +2072,27 @@ msgstr "Startkanalar"
 msgid "Example Playlist"
 msgstr "Eksempelspeleliste"
 
-#: ../../portable/httpclient.py:81
+#: ../../portable/folder.py:144
 #, python-format
-msgid "Error: %s"
-msgstr "Feil: %s"
+msgid "Enter a new name for the channel folder %s"
+msgstr "Skriv inn nytt namn på kanalmappa «%s»"
 
-#: ../../portable/httpclient.py:96 ../../portable/httpclient.py:102
-msgid "Can't connect"
-msgstr "Kan ikkje kopla til"
-
-#: ../../portable/httpclient.py:97
+#: ../../portable/folder.py:215
 #, python-format
-msgid "Connection Error: %s"
-msgstr "Tilkoplingsfeil: %s"
+msgid "Enter a new name for the playlist folder %s"
+msgstr "Skriv inn nytt namn på spelelistemappa «%s»"
 
-#: ../../portable/httpclient.py:103
-msgid "SSL connection error"
-msgstr "Feil ved SSL-tilkopling"
+#: ../../portable/folder.py:223
+msgid "Create Channel Folder"
+msgstr "Lag kanalmappe"
 
-#: ../../portable/httpclient.py:107
-msgid "HTTP error"
-msgstr "HTTP-feil"
+#: ../../portable/folder.py:237
+msgid "Create Playlist Folder"
+msgstr "Lag spelelistemappe"
 
-#: ../../portable/httpclient.py:110
-#, python-format
-msgid "Bad Status Line: %s"
-msgstr "Ugyldig statuslinje: %s"
-
-#: ../../portable/httpclient.py:113
-#, python-format
-msgid "Bad Header Line: %s"
-msgstr "Ugyldig HTTP-hovudlinje: %s"
-
-#: ../../portable/httpclient.py:116
-#, python-format
-msgid "Bad Chunk size: %s"
-msgstr "Ugyldig oppdelingsstorleik: %s"
-
-#: ../../portable/httpclient.py:119
-#, python-format
-msgid "Expected CRLF got: %r"
-msgstr "Venta CRLF, men fekk: %r"
-
-#: ../../portable/httpclient.py:122
-#, python-format
-msgid "%s closed connection"
-msgstr "%s avbraut sambandet"
-
-#: ../../portable/httpclient.py:128
-msgid "Got 404 status code"
-msgstr "Fekk statuskode 404"
-
-#: ../../portable/httpclient.py:130
-#, python-format
-msgid "Bad Status Code: %s"
-msgstr "Ugyldig statuskode: %s"
-
-#: ../../portable/httpclient.py:134
-msgid "Authorization failed"
-msgstr "Feil ved godkjenning"
-
-#: ../../portable/httpclient.py:140
-msgid "Pipeline request never started"
-msgstr "Førespurnad for kommandokø starta aldri"
-
-#: ../../portable/httpclient.py:144
-msgid "Timeout"
-msgstr "Tidsavbrot"
-
-#: ../../portable/httpclient.py:145
-#, python-format
-msgid "Connection to %s timed out"
-msgstr "Sambandet til %s vart tidsavbrote"
-
-#: ../../portable/httpclient.py:149
-msgid "Invalid URL"
-msgstr "Ugyldig adresse"
-
-#: ../../portable/httpclient.py:150
-#, python-format
-msgid "\"%s\" is not a valid URL"
-msgstr "«%s» er ikkje ei gyldig adresse"
-
-#: ../../portable/httpclient.py:156
-#, python-format
-msgid "The file: \"%s\" doesn't exist"
-msgstr "Fila «%s» finst ikkje"
-
-#: ../../portable/httpclient.py:160
-msgid "Read error"
-msgstr "Lesefeil"
-
-#: ../../portable/httpclient.py:161
-#, python-format
-msgid "Error while reading from \"%s\""
-msgstr "Feil ved lesing frå «%s»"
-
-#: ../../portable/httpclient.py:354
-msgid "Unknown Error code"
-msgstr "Ukjend feilkode"
-
-#: ../../portable/httpclient.py:386
-msgid "Connection closed"
-msgstr "Sambandet stengt"
-
-#: ../../portable/httpclient.py:811
-msgid "Unknown"
-msgstr "Ukjend"
-
-#: ../../portable/httpclient.py:812
-msgid "Internal Error: Not ready to send"
-msgstr "Intern feil: Ikkje klar til å senda"
-
-#: ../../portable/extrastrings.py:33 ../../portable/feed.py:2409
-#: ../../portable/feed.py:2499
-msgid "Search"
-msgstr "Søk"
-
-#: ../../portable/feed.py:384
-msgid "never"
-msgstr "aldri"
-
-#: ../../portable/feed.py:386 ../../portable/item.py:554
-#, python-format
-msgid "%d hours"
-msgstr "%d timar"
-
-#: ../../portable/feed.py:388
-#, python-format
-msgid "%d day"
-msgstr "%d dag"
-
-#: ../../portable/feed.py:390 ../../portable/item.py:552
-#, python-format
-msgid "%d days"
-msgstr "%d dagar"
-
-#: ../../portable/feed.py:392
-#, python-format
-msgid "%d months"
-msgstr "%d månader"
-
-#: ../../portable/feed.py:826
-#, python-format
-msgid "Enter a new name for the channel %s"
-msgstr "Skriv inn nytt namn på kanalen «%s»"
-
-#: ../../portable/feed.py:923
-msgid "Error loading feed"
-msgstr "Feil ved henting av datakjelde"
-
-#: ../../portable/feed.py:924
-#, python-format
-msgid "Couldn't load the feed at %s (%s)."
-msgstr "Klarte ikkje henta datakjelda frå %s (%s)."
-
-#: ../../portable/feed.py:927
-msgid "Would you like to keep the feed?"
-msgstr "Ønskjer du å behalda kjelda?"
-
-#: ../../portable/feed.py:1040
-msgid "Bad content-type"
-msgstr "Ugyldig innhaldstype"
-
-#: ../../portable/feed.py:1053
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
-msgid "Channel is not compatible with $shortAppName!"
-msgstr "Kanalen er ikkje kompatibel med $shortAppName."
-
-#: ../../portable/feed.py:1054
-msgid ""
-"But we'll try our best to grab the files. It may take extra time to list the "
-"videos, and descriptions may look funny.  Please contact the publishers of "
-"$url and ask if they can supply a feed in a format that will work with "
-"$shortAppName.\n"
-"\n"
-"Do you want to try to load this channel anyway?"
-msgstr ""
-"Men me vil gjera vårt beste for å få tak i filmfilene. Det kan vera det tar "
-"lengre tid å visa filmoversikta, og programskildringane kan sjå rare ut. Ta "
-"kontakt med utgjevaren av $url og spør om dei kan tilby filmkjelda i eit "
-"format som $shortAppName støttar.\n"
-"\n"
-"Vil du prøva å leggja til kanalen likevel?"
-
-#: ../../portable/feed.py:2513
-msgid "Local Files"
-msgstr "Lokale filer"
-
-#: ../../portable/feed.py:2527
-msgid "Playing File"
-msgstr "Speler fil"
-
-#: ../../portable/storedatabase.py:859 ../../portable/storedatabase.py:1258
-#, python-format
-msgid "%s database save succeeded"
-msgstr "%s lagring av database fullført"
-
-#: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1259
-msgid ""
-"The database has been successfully saved. It is now safe to quit without "
-"losing any data."
-msgstr "Databasen er lagra. Du kan no trygt avslutta utan å mista data."
-
-#: ../../portable/storedatabase.py:867 ../../portable/storedatabase.py:1267
-#, python-format
-msgid "%s database save failed"
-msgstr "%s feil ved lagring av database"
-
-#: ../../portable/storedatabase.py:868 ../../portable/storedatabase.py:1268
-#, python-format
-msgid ""
-"%s was unable to save its database: Disk Full.\n"
-"We suggest deleting files from the full disk or simply deleting some movies "
-"from your collection.\n"
-"Recent changes may be lost."
-msgstr ""
-"%s klarte ikkje å lagra databasen: Disken er full.\n"
-"Du kan anten sletta filer frå disken, eller sletta nokre filmar frå "
-"samlinga.\n"
-"Nye endringar kan vera tapt."
+#: ../../portable/folder.py:238
+msgid "Enter a name for the new playlist folder"
+msgstr "Skriv inn namn på den nye spelelistemappa"
 
 #: ../../portable/dialogs.py:89
 msgid "Ignore"
@@ -1832,12 +2102,12 @@ msgstr "Ignorer"
 msgid "Submit Crash Report"
 msgstr "Send krasjrapport"
 
-#: ../../portable/dialogs.py:91 ../../platform/gtk-x11/glade/miro.glade.h:48
+#: ../../portable/dialogs.py:91 ../../platform/gtk-x11/glade/miro.glade.h:52
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
 msgid "Migrate"
 msgstr "Flytt"
 
-#: ../../portable/dialogs.py:92 ../../platform/gtk-x11/glade/miro.glade.h:36
+#: ../../portable/dialogs.py:92 ../../platform/gtk-x11/glade/miro.glade.h:39
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
 msgid "Don't Migrate"
 msgstr "Ikkje flytt"
@@ -1875,10 +2145,6 @@ msgstr "Legg til"
 msgid "Add Into New Folder"
 msgstr "Legg til i ny mappe"
 
-#: ../../portable/dialogs.py:103
-msgid "Keep"
-msgstr "Behald"
-
 #: ../../portable/dialogs.py:105
 msgid "Not Now"
 msgstr "Ikkje no"
@@ -1903,408 +2169,15 @@ msgstr "Installer iHeartMiro"
 msgid "Don't Install"
 msgstr "Ikkje installer"
 
-#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:55
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:59
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
 msgid "New Search Channel"
 msgstr "Ny søkjekanal"
 
-#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:27
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:30
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
 msgid "A search channel contains items that match a search term."
 msgstr "Ein søkjekanal inneheld filmar i samsvar med ein søkjetekst."
-
-#: ../../portable/controller.py:196 ../../portable/controller.py:210
-#: ../../portable/controller.py:254 ../../portable/controller.py:280
-#: ../../portable/controller.py:300
-#, python-format
-msgid "Remove %s"
-msgstr "Fjern %s"
-
-#: ../../portable/controller.py:197
-#, python-format
-msgid "Are you sure you want to remove the guide %s?"
-msgstr "Er du sikker på at du vil fjerna gaiden «%s»?"
-
-#: ../../portable/controller.py:211
-#, python-format
-msgid "Are you sure you want to remove %s"
-msgstr "Er du sikker på at du vil fjerna «%s»"
-
-#: ../../portable/controller.py:214 ../../portable/controller.py:259
-#: ../../portable/controller.py:285 ../../portable/controller.py:304
-#, python-format
-msgid "Remove %s channels"
-msgstr "Fjern %s kanalar"
-
-#: ../../portable/controller.py:216
-#, python-format
-msgid "Are you sure you want to remove these %s playlists"
-msgstr "Er du sikker på at du vil fjerna desse %s spelelistene"
-
-#: ../../portable/controller.py:255
-msgid ""
-"What would you like to do with the videos in this channel that you've "
-"downloaded?"
-msgstr ""
-"Kva ønskjer du å gjera med filmane i denne kanalen som du har lasta ned?"
-
-#: ../../portable/controller.py:260
-msgid ""
-"What would you like to do with the videos in these channels that you've "
-"downloaded?"
-msgstr ""
-"Kva ønskjer du å gjera med filmane i desse kanalane som du har lasta ned?"
-
-#: ../../portable/controller.py:281
-#, python-format
-msgid ""
-"Are you sure you want to remove %s?  Any downloads in progress will be "
-"canceled."
-msgstr ""
-"Er du sikker på at du vil fjerna «%s»? Alle ufullførte nedlastingar vert "
-"avbrotne."
-
-#: ../../portable/controller.py:286
-#, python-format
-msgid ""
-"Are you sure you want to remove these %s channels?  Any downloads in "
-"progress will be canceled."
-msgstr ""
-"Er du sikker på at du vil fjerna desse %s kanalane? Alle ufullførte "
-"nedlastingar vert avbrotne."
-
-#: ../../portable/controller.py:301
-#, python-format
-msgid "Are you sure you want to remove %s?"
-msgstr "Er du sikker på at du vil fjerna «%s»?"
-
-#: ../../portable/controller.py:305
-#, python-format
-msgid "Are you sure you want to remove these %s channels?"
-msgstr "Er du sikker på at du vil fjerna desse %s kanalane?"
-
-#: ../../portable/controller.py:318
-#, python-format
-msgid "Stop watching %s"
-msgstr "Stopp overvaking av %s"
-
-#: ../../portable/controller.py:319
-#, python-format
-msgid "Are you sure you want to stop watching %s?"
-msgstr "Er du sikker på at du ønskjer å stoppa overvakinga av %s?"
-
-#: ../../portable/controller.py:322
-#, python-format
-msgid "Stop watching %s directories"
-msgstr "Stopp overvaking av %s mapper"
-
-#: ../../portable/controller.py:323
-#, python-format
-msgid "Are you sure you want to stop watching these %s directories?"
-msgstr ""
-"Er du sikker på at du ønskjer å stoppa overvakinga av desse %s mappene?"
-
-#: ../../portable/controller.py:497
-msgid "Error Saving Video"
-msgstr "Feil ved lagring av film"
-
-#: ../../portable/controller.py:499
-#, python-format
-msgid ""
-"An error occured while trying to save %s.  Please check that the file has "
-"not been deleted and try again."
-msgstr ""
-"Det oppstod ein feil ved lagring av «%s». Kontroller at fila ikkje vart "
-"sletta, og prøv på nytt."
-
-#: ../../portable/singleclick.py:99
-msgid "Download already exists"
-msgstr "Nedlastinga finst alt"
-
-#: ../../portable/singleclick.py:100
-msgid "That URL is already an external download."
-msgstr "Adressa er allereie ei ekstern nedlasting."
-
-#: ../../portable/singleclick.py:106
-msgid "Miro will begin downloading it now."
-msgstr "Miro vil no starta nedlastinga."
-
-#: ../../portable/singleclick.py:108
-msgid "It is downloading now."
-msgstr "Nedlasting pågår."
-
-#: ../../portable/singleclick.py:110
-msgid "It has already been downloaded."
-msgstr "Nedlastinga er alt fullført."
-
-#: ../../portable/singleclick.py:137
-msgid "Download Error"
-msgstr "Feil ved nedlasting"
-
-#: ../../portable/singleclick.py:138
-#, python-format
-msgid ""
-"Miro is not able to download a file at this URL:\n"
-"\n"
-"URL: %s"
-msgstr ""
-"Miro klarer ikkje lasta ned fila på denne adressa:\n"
-"\n"
-"Adresse: %s"
-
-#: ../../portable/singleclick.py:146
-msgid "File Download"
-msgstr "Filnedlasting"
-
-#: ../../portable/singleclick.py:147
-#, python-format
-msgid "This file at %s does not appear to be audio, video, or an RSS feed."
-msgstr ""
-"Fila på «%s» ser ikkje ut til å vera ei lyd-, film- eller RSS-kjelde."
-
-#: ../../portable/singleclick.py:235
-msgid "Subscribing to multiple channels"
-msgstr "Abonnering på fleire kanalar"
-
-#: ../../portable/singleclick.py:236
-#, python-format
-msgid "Create %d channels?"
-msgstr "Lag %d kanalar?"
-
-#: ../../portable/singleclick.py:249
-#, python-format
-msgid "Adding %d channels to a new folder"
-msgstr "Legg %d kanalar til ny mappe"
-
-#: ../../portable/singleclick.py:250 ../../portable/folder.py:224
-msgid "Enter a name for the new channel folder"
-msgstr "Skriv inn namn på den nye kanalmappa"
-
-#: ../../portable/singleclick.py:253
-#, python-format
-msgid ""
-"NOTE: You are already subscribed to %d of these channels.  These channels "
-"will stay where they currently are."
-msgstr ""
-"Merk: Du abonnerer alt på %d av desse kanalane. Desse kanalane vert verande "
-"der dei er."
-
-#: ../../portable/singleclick.py:264
-msgid "Subscription error"
-msgstr "Abonnementsfeil"
-
-#: ../../portable/singleclick.py:274
-msgid ""
-"This $shortAppName channel file has an invalid format: $url. Please notify "
-"the publisher of this file."
-msgstr ""
-"$shortAppName-kanalfila har eit ugyldig format: $url. Meld frå til "
-"utgjevaren av fila."
-
-#: ../../portable/singleclick.py:282
-msgid ""
-"This $shortAppName channel file has the wrong content type: $url. Please "
-"notify the publisher of this file."
-msgstr ""
-"$shortAppName-kanalfila har feil innhaldstype: $url. Meld frå til utgjevaren "
-"av fila."
-
-#: ../../portable/singleclick.py:286
-msgid "Could not download the $shortAppName channel file: $url."
-msgstr "Klarte ikkje lasta ned $shortAppName-kanalfila: $url."
-
-#: ../../portable/singleclick.py:334
-msgid "Invalid Torrent"
-msgstr "Ugyldig Torrent-fil"
-
-#: ../../portable/singleclick.py:335
-#, python-format
-msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-msgstr "Torrent-fila %s ser ut til å vera ugyldig, og kan ikkje opnast. [OK]"
-
-#: ../../portable/item.py:497
-#, python-format
-msgid "Removing %s"
-msgstr "Fjernar %s"
-
-#: ../../portable/item.py:500
-msgid ""
-"Would you like to delete this folder and all of its videos or just remove "
-"its entry from the Library?"
-msgstr ""
-"Vil du sletta mappa og alle filmane ho inneheld eller berre oppføringa frå "
-"biblioteket?"
-
-#: ../../portable/item.py:506
-msgid ""
-"Would you like to delete this file or just remove its entry from the Library?"
-msgstr "Vil du sletta fila eller berre oppføringa frå biblioteket?"
-
-#: ../../portable/item.py:526
-msgid ""
-"This item is a folder.  When you remove a folder, any items inside that "
-"folder will be deleted."
-msgstr ""
-"Dette er ei mappe. Når du slettar mapper, vert òg alle elementa i mappene "
-"sletta."
-
-#: ../../portable/item.py:556
-#, python-format
-msgid "%d minutes"
-msgstr "%d minutt"
-
-#: ../../portable/item.py:566
-#, python-format
-msgid "Expires in %s"
-msgstr "Utgår om %s"
-
-#: ../../portable/item.py:578
-#, python-format
-msgid "Will retry in %s"
-msgstr "Prøver på nytt om %s"
-
-#: ../../portable/item.py:580
-msgid "Paused"
-msgstr "Pause"
-
-#: ../../portable/item.py:982
-msgid "TORRENT"
-msgstr "TORRENT"
-
-#: ../../portable/item.py:984
-msgid "WEB PAGE"
-msgstr "NETTSIDE"
-
-#: ../../portable/item.py:994
-msgid "Total Down:"
-msgstr "Totalt ned:"
-
-#: ../../portable/item.py:997
-msgid "Error:"
-msgstr "Feil:"
-
-#: ../../portable/item.py:1006
-msgid "Seeders:"
-msgstr "Sendarar:"
-
-#: ../../portable/item.py:1008
-msgid "Leechers:"
-msgstr "Snyltarar:"
-
-#: ../../portable/item.py:1010
-msgid "Down Rate:"
-msgstr "Nedlastingsfart:"
-
-#: ../../portable/item.py:1011
-msgid "Down Total:"
-msgstr "Ned totalt:"
-
-#: ../../portable/item.py:1013
-msgid "Up Rate:"
-msgstr "Opplastingsfart:"
-
-#: ../../portable/item.py:1014
-msgid "Up Total:"
-msgstr "Opp totalt:"
-
-#: ../../portable/item.py:1024
-msgid "Web page:"
-msgstr "Nettside:"
-
-#: ../../portable/item.py:1024
-msgid "permalink"
-msgstr "fastlenkje"
-
-#: ../../portable/item.py:1028
-msgid "File link:"
-msgstr "Fillenkje:"
-
-#: ../../portable/item.py:1028
-msgid "direct link to file"
-msgstr "direktelenkje til fil"
-
-#: ../../portable/item.py:1030
-msgid "File type:"
-msgstr "Filtype:"
-
-#: ../../portable/item.py:1037 ../../portable/item.py:1040
-#: ../../portable/item.py:1042
-msgid "License:"
-msgstr "Lisens:"
-
-#: ../../portable/item.py:1040 ../../portable/item.py:1042
-msgid "see permalink"
-msgstr "sjå fastlenkje"
-
-#: ../../portable/item.py:1049
-msgid "REVEAL LOCAL FOLDER"
-msgstr "VIS LOKAL MAPPE"
-
-#: ../../portable/item.py:1051
-msgid "REVEAL LOCAL FILE"
-msgstr "VIS LOKAL FIL"
-
-#: ../../portable/item.py:1053
-msgid "Filename:"
-msgstr "Filnamn:"
-
-#: ../../portable/item.py:1060
-msgid "Down Total"
-msgstr "Ned totalt"
-
-#: ../../portable/item.py:1062
-msgid "Up Total"
-msgstr "Opp totalt"
-
-#: ../../portable/item.py:1080
-msgid "Item Details"
-msgstr "Filmdetaljar"
-
-#: ../../portable/item.py:1087
-msgid "Torrent Details"
-msgstr "Torrent-detaljar"
-
-#: ../../portable/item.py:1089
-msgid "Torrent Details <i>stopped</i>"
-msgstr "Torrent-detaljar <i>stoppa</i>"
-
-#: ../../portable/item.py:1093
-msgid "Download Details"
-msgstr "Nedlastingsdetaljar"
-
-#: ../../portable/item.py:1310
-msgid "downloading..."
-msgstr "lastar ned …"
-
-#: ../../portable/item.py:1317 ../../portable/item.py:1320
-#, python-format
-msgid "%s remaining"
-msgstr "%s att"
-
-#: ../../portable/item.py:1329
-msgid "starting up..."
-msgstr "startar …"
-
-#: ../../portable/item.py:1878
-#, python-format
-msgid "Removing %s items"
-msgstr "Fjernar %s element"
-
-#: ../../portable/item.py:1880
-msgid ""
-"One or more of these videos was not downloaded from a channel.  Would you "
-"like to delete these items or just remove their entries from the Library?"
-msgstr ""
-"Éin eller fleire av desse filmane vart ikkje lasta ned frå ein kanal. Vil du "
-"sletta filmfilene eller berre fjerna oppføringane frå biblioteket?"
-
-#: ../../portable/item.py:1888
-msgid ""
-"One or more of these items is a folder.  When you remove or delete a folder, "
-"any items inside that folder will also be removed or deleted."
-msgstr ""
-"Éin eller fleire av desse elementa er mapper. Når du fjernar/slettar ei "
-"mappe, vert òg alle mapper og filmar inni mappa fjerna/sletta."
 
 #: ../../portable/startup.py:92
 msgid "Unknown Error"
@@ -2328,41 +2201,585 @@ msgstr ""
 "Du har ein database som vart lagra med ein nyare versjon av $shortAppName. "
 "Du må lasta ned ein nyare versjon av $shortAppName og køyra denne."
 
-#: ../../portable/startup.py:238
+#: ../../portable/startup.py:237
 msgid ""
 "\n"
-"Miro can't find your primary video directory.  This may be because it's "
-"located on an external drive that is currently disconnected."
+"Miro can't find your primary video directory $moviesDirectory.  This may be "
+"because it's located on an external drive that is currently disconnected.  "
+"Please, connect the drive or create the directory, then start Miro again."
 msgstr ""
 "\n"
-"Miro finn ikkje hovudfilmmappa. Dette kan vera fordi mappa ligg på ein "
-"ekstern harddisk som ikkje er kopla til."
+"Miro finn ikkje hovudfilmmappa «$moviesDirectory». Dette kan vera fordi "
+"mappa ligg på     ein ekstern harddisk som ikkje er kopla til. Avslutt Miro, "
+"kopla til den eksterne harddisken, og start så Miro på nytt."
 
-#: ../../portable/folder.py:144
+#: ../../portable/playlist.py:219
 #, python-format
-msgid "Enter a new name for the channel folder %s"
-msgstr "Skriv inn nytt namn på kanalmappa «%s»"
+msgid "Enter a new name for the playlist %s"
+msgstr "Skriv inn nytt namn på spelelista «%s»"
 
-#: ../../portable/folder.py:215
+#: ../../portable/playlist.py:241
+msgid "Create Playlist"
+msgstr "Lag speleliste"
+
+#: ../../portable/playlist.py:242
+msgid "Enter a name for the new playlist"
+msgstr "Skriv inn namn på den nye spelelista"
+
+#: ../../portable/opml.py:155
+msgid "OPML Import failed"
+msgstr "Feil ved OPML-import"
+
+#: ../../portable/opml.py:156
+msgid "The selected OPML file appears to be invalid. Import was interrupted."
+msgstr ""
+"Den valde OPML-fila ser ut til å vera ugyldig. Importeringa vart avbroten."
+
+#: ../../portable/opml.py:161
+msgid "OPML Import summary"
+msgstr "Samandrag av OPML-import"
+
+#: ../../portable/opml.py:162
 #, python-format
-msgid "Enter a new name for the playlist folder %s"
-msgstr "Skriv inn nytt namn på spelelistemappa «%s»"
+msgid "Successfully imported %d feed."
+msgid_plural "Successfully imported %d feeds."
+msgstr[0] "%d filmkjelde vart importert."
+msgstr[1] "%d filmkjelder vart importert."
 
-#: ../../portable/folder.py:223
-msgid "Create Channel Folder"
-msgstr "Lag kanalmappe"
+#: ../../portable/opml.py:165
+#, python-format
+msgid "Skipped %d feed already present."
+msgid_plural "Skipped %d feeds already present."
+msgstr[0] "Hoppa over %d eksisterande filmkjelde."
+msgstr[1] "Hoppa over %d eksisterande filmkjelder."
 
-#: ../../portable/folder.py:237
-msgid "Create Playlist Folder"
-msgstr "Lag spelelistemappe"
+#: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1262
+#, python-format
+msgid "%s database save succeeded"
+msgstr "%s lagring av database fullført"
 
-#: ../../portable/folder.py:238
-msgid "Enter a name for the new playlist folder"
-msgstr "Skriv inn namn på den nye spelelistemappa"
+#: ../../portable/storedatabase.py:861 ../../portable/storedatabase.py:1263
+msgid ""
+"The database has been successfully saved. It is now safe to quit without "
+"losing any data."
+msgstr "Databasen er lagra. Du kan no trygt avslutta utan å mista data."
 
-#: ../../portable/license.py:68
-msgid "license page"
-msgstr "lisensside"
+#: ../../portable/storedatabase.py:868 ../../portable/storedatabase.py:1271
+#, python-format
+msgid "%s database save failed"
+msgstr "%s feil ved lagring av database"
+
+#: ../../portable/storedatabase.py:869 ../../portable/storedatabase.py:1272
+#, python-format
+msgid ""
+"%s was unable to save its database: Disk Full.\n"
+"We suggest deleting files from the full disk or simply deleting some movies "
+"from your collection.\n"
+"Recent changes may be lost."
+msgstr ""
+"%s klarte ikkje å lagra databasen: Disken er full.\n"
+"Du kan anten sletta filer frå disken, eller sletta nokre filmar frå "
+"samlinga.\n"
+"Nye endringar kan vera tapt."
+
+#: ../../portable/menubar.py:157
+msgid "_Open"
+msgstr "_Opna"
+
+#: ../../portable/menubar.py:158
+msgid "_Download Video"
+msgstr "_Last ned film"
+
+#: ../../portable/menubar.py:160
+msgid "Check _Version"
+msgstr "Kontroller _versjon"
+
+#: ../../portable/menubar.py:162
+msgid "_Remove Video"
+msgstr "_Fjern film"
+
+#: ../../portable/menubar.py:163
+msgid "_Remove Videos"
+msgstr "_Fjern filmar"
+
+#: ../../portable/menubar.py:164
+msgid "Re_name Video"
+msgstr "_Endra namn på film"
+
+#: ../../portable/menubar.py:165
+msgid "Save Video _As..."
+msgstr "Lagre film _som …"
+
+#: ../../portable/menubar.py:166
+msgid "Save Videos _As..."
+msgstr "Lagre filmar _som …"
+
+#: ../../portable/menubar.py:167
+msgid "Copy Video _URL"
+msgstr "Kopier film-_adresse"
+
+#: ../../portable/menubar.py:169
+msgid "_Options..."
+msgstr "_Innstillingar …"
+
+#: ../../portable/menubar.py:170
+msgid "_Quit"
+msgstr "_Avslutt"
+
+#: ../../portable/menubar.py:178
+msgid "Cu_t"
+msgstr "Klipp _ut"
+
+#: ../../portable/menubar.py:179
+msgid "_Copy"
+msgstr "_Kopier"
+
+#: ../../portable/menubar.py:180
+msgid "_Paste"
+msgstr "_Lim inn"
+
+#: ../../portable/menubar.py:181
+msgid "Select _All"
+msgstr "Merk _alle"
+
+#: ../../portable/menubar.py:182
+msgid "_Delete"
+msgstr "_Slett"
+
+#: ../../portable/menubar.py:186
+msgid "Add _Channel"
+msgstr "Legg til _kanal"
+
+#: ../../portable/menubar.py:187
+msgid "New Searc_h Channel..."
+msgstr "Ny _søkjekanal …"
+
+#: ../../portable/menubar.py:188
+msgid "New _Folder..."
+msgstr "Ny _mappe …"
+
+#: ../../portable/menubar.py:189
+msgid "Add Channel _Guide..."
+msgstr "Legg til kanal_gaid …"
+
+#: ../../portable/menubar.py:199
+msgid "Update _All Channels"
+msgstr "Oppdater _alle kanalar"
+
+#: ../../portable/menubar.py:201
+msgid "_Import Channels (OPML)..."
+msgstr "_Importer kanalar (OPML) …"
+
+#: ../../portable/menubar.py:202
+msgid "E_xport Channels (OPML)..."
+msgstr "E_ksporter kanalar (OPML) …"
+
+#: ../../portable/menubar.py:204
+msgid "_Send this channel to a friend"
+msgstr "_Send denne kanalen til ein venn"
+
+#: ../../portable/menubar.py:205
+msgid "Copy Channel _Link"
+msgstr "Kopier kanal_lenkje"
+
+#: ../../portable/menubar.py:208
+msgid "New _Playlist"
+msgstr "Ny _speleliste"
+
+#: ../../portable/menubar.py:209
+msgid "New Playlist Fol_der"
+msgstr "Ny speleliste_mappe"
+
+#: ../../portable/menubar.py:211
+msgid "Re_name Playlist"
+msgstr "_Endra namn på speleliste"
+
+#: ../../portable/menubar.py:212
+msgid "_Remove Playlist"
+msgstr "_Fjern speleliste"
+
+#: ../../portable/menubar.py:213
+msgid "_Remove Playlists"
+msgstr "_Fjern spelelister"
+
+#: ../../portable/menubar.py:214
+msgid "_Remove Playlist Folders"
+msgstr "_Fjern spelelistemapper"
+
+#: ../../portable/menubar.py:215
+msgid "_Remove Playlist Folder"
+msgstr "_Fjern spelelistemappe"
+
+#: ../../portable/menubar.py:225 ../../portable/menubar.py:226
+msgid "_Play"
+msgstr "_Spel"
+
+#: ../../portable/menubar.py:227
+msgid "_Pause"
+msgstr "_Pause"
+
+#: ../../portable/menubar.py:228
+msgid "_Stop"
+msgstr "_Stopp"
+
+#: ../../portable/menubar.py:230
+msgid "_Next Video"
+msgstr "_Neste film"
+
+#: ../../portable/menubar.py:231
+msgid "_Previous Video"
+msgstr "_Førre film"
+
+#: ../../portable/menubar.py:233
+msgid "Skip _Forward"
+msgstr "Spol _fram"
+
+#: ../../portable/menubar.py:234
+msgid "Skip _Back"
+msgstr "Spol _tilbake"
+
+#: ../../portable/menubar.py:236
+msgid "Volume _Up"
+msgstr "_Høgare lyd"
+
+#: ../../portable/menubar.py:237
+msgid "Volume _Down"
+msgstr "_Lågare lyd"
+
+#: ../../portable/menubar.py:239
+msgid "_Fullscreen"
+msgstr "_Fullskjerm"
+
+#: ../../portable/menubar.py:243
+msgid "_About"
+msgstr "_Om"
+
+#: ../../portable/menubar.py:244
+msgid "_Donate"
+msgstr "_Doner"
+
+#: ../../portable/menubar.py:245 ../../portable/menubar.py:262
+msgid "_Help"
+msgstr "_Hjelp"
+
+#: ../../portable/menubar.py:247
+msgid "Report a _Bug"
+msgstr "Meld frå om _feil"
+
+#: ../../portable/menubar.py:248
+msgid "_Translate"
+msgstr ""
+
+#: ../../portable/menubar.py:249
+msgid "_Planet"
+msgstr ""
+
+#: ../../portable/menubar.py:253
+msgid "_Video"
+msgstr "_Film"
+
+#: ../../portable/menubar.py:255
+msgid "_File"
+msgstr "_Fil"
+
+#: ../../portable/menubar.py:259
+msgid "_Channels"
+msgstr "_Kanalar"
+
+#: ../../portable/menubar.py:260
+msgid "_Playlists"
+msgstr "_Spelelister"
+
+#: ../../portable/menubar.py:261
+msgid "P_layback"
+msgstr "A_vspeling"
+
+#: ../../portable/menubar.py:266
+msgid "Play Unwatched ($numUnwatched)"
+msgstr "Spel usette ($numUnwatched)"
+
+#: ../../portable/menubar.py:267
+msgid "Pause All Downloads ($numDownloading)"
+msgstr "Stopp alle nedlastingar mellombels ($numDownloading)"
+
+#: ../../portable/menubar.py:268
+msgid "Resume All Downloads ($numPaused)"
+msgstr "Hald fram med alle nedlastingar ($numPaused)"
+
+#: ../../portable/menubar.py:270
+msgid "Options..."
+msgstr "Innstillingar …"
+
+#: ../../portable/menubar.py:272
+msgid "Hide Window"
+msgstr "Gøym vindauge"
+
+#: ../../portable/menubar.py:273
+msgid "Show Window"
+msgstr "Vis vindauge"
+
+#: ../../portable/feed.py:388
+msgid "never"
+msgstr "aldri"
+
+#: ../../portable/feed.py:390 ../../portable/item.py:555
+#, python-format
+msgid "%d hours"
+msgstr "%d timar"
+
+#: ../../portable/feed.py:392
+#, python-format
+msgid "%d day"
+msgstr "%d dag"
+
+#: ../../portable/feed.py:394 ../../portable/item.py:553
+#, python-format
+msgid "%d days"
+msgstr "%d dagar"
+
+#: ../../portable/feed.py:396
+#, python-format
+msgid "%d months"
+msgstr "%d månader"
+
+#: ../../portable/feed.py:831
+#, python-format
+msgid "Enter a new name for the channel %s"
+msgstr "Skriv inn nytt namn på kanalen «%s»"
+
+#: ../../portable/feed.py:928
+msgid "Error loading feed"
+msgstr "Feil ved henting av datakjelde"
+
+#: ../../portable/feed.py:929
+#, python-format
+msgid "Couldn't load the feed at %s (%s)."
+msgstr "Klarte ikkje henta datakjelda frå %s (%s)."
+
+#: ../../portable/feed.py:932
+msgid "Would you like to keep the feed?"
+msgstr "Ønskjer du å behalda kjelda?"
+
+#: ../../portable/feed.py:1053
+msgid "Bad content-type"
+msgstr "Ugyldig innhaldstype"
+
+#: ../../portable/feed.py:1066
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
+msgid "Channel is not compatible with $shortAppName!"
+msgstr "Kanalen er ikkje kompatibel med $shortAppName."
+
+#: ../../portable/feed.py:1067
+msgid ""
+"But we'll try our best to grab the files. It may take extra time to list the "
+"videos, and descriptions may look funny.  Please contact the publishers of "
+"$url and ask if they can supply a feed in a format that will work with "
+"$shortAppName.\n"
+"\n"
+"Do you want to try to load this channel anyway?"
+msgstr ""
+"Men me vil gjera vårt beste for å få tak i filmfilene. Det kan vera det tar "
+"lengre tid å visa filmoversikta, og programskildringane kan sjå rare ut. Ta "
+"kontakt med utgjevaren av $url og spør om dei kan tilby filmkjelda i eit "
+"format som $shortAppName støttar.\n"
+"\n"
+"Vil du prøva å leggja til kanalen likevel?"
+
+#: ../../portable/feed.py:2497
+msgid "Local Files"
+msgstr "Lokale filer"
+
+#: ../../portable/feed.py:2511
+msgid "Playing File"
+msgstr "Speler fil"
+
+#: ../../portable/item.py:496
+#, python-format
+msgid "Removing %s"
+msgstr "Fjernar %s"
+
+#: ../../portable/item.py:499
+msgid ""
+"Would you like to delete this folder and all of its videos or just remove "
+"its entry from the Library?"
+msgstr ""
+"Vil du sletta mappa og alle filmane ho inneheld eller berre oppføringa frå "
+"biblioteket?"
+
+#: ../../portable/item.py:505
+msgid ""
+"Would you like to delete this file or just remove its entry from the Library?"
+msgstr "Vil du sletta fila eller berre oppføringa frå biblioteket?"
+
+#: ../../portable/item.py:525
+msgid ""
+"This item is a folder.  When you remove a folder, any items inside that "
+"folder will be deleted."
+msgstr ""
+"Dette er ei mappe. Når du slettar mapper, vert òg alle elementa i mappene "
+"sletta."
+
+#: ../../portable/item.py:557
+#, python-format
+msgid "%d minutes"
+msgstr "%d minutt"
+
+#: ../../portable/item.py:567
+#, python-format
+msgid "Expires in %s"
+msgstr "Utgår om %s"
+
+#: ../../portable/item.py:579
+#, python-format
+msgid "Will retry in %s"
+msgstr "Prøver på nytt om %s"
+
+#: ../../portable/item.py:581
+msgid "Paused"
+msgstr "Pause"
+
+#: ../../portable/item.py:989
+msgid "TORRENT"
+msgstr "TORRENT"
+
+#: ../../portable/item.py:991
+msgid "WEB PAGE"
+msgstr "NETTSIDE"
+
+#: ../../portable/item.py:1001
+msgid "Total Down:"
+msgstr "Totalt ned:"
+
+#: ../../portable/item.py:1004
+msgid "Error:"
+msgstr "Feil:"
+
+#: ../../portable/item.py:1013
+msgid "Seeders:"
+msgstr "Sendarar:"
+
+#: ../../portable/item.py:1015
+msgid "Leechers:"
+msgstr "Snyltarar:"
+
+#: ../../portable/item.py:1017
+msgid "Down Rate:"
+msgstr "Nedlastingsfart:"
+
+#: ../../portable/item.py:1018
+msgid "Down Total:"
+msgstr "Ned totalt:"
+
+#: ../../portable/item.py:1020
+msgid "Up Rate:"
+msgstr "Opplastingsfart:"
+
+#: ../../portable/item.py:1021
+msgid "Up Total:"
+msgstr "Opp totalt:"
+
+#: ../../portable/item.py:1032 ../../portable/item.py:1037
+msgid "Web page:"
+msgstr "Nettside:"
+
+#: ../../portable/item.py:1032
+msgid "comments"
+msgstr ""
+
+#: ../../portable/item.py:1037
+msgid "permalink"
+msgstr "fastlenkje"
+
+#: ../../portable/item.py:1041
+msgid "File link:"
+msgstr "Fillenkje:"
+
+#: ../../portable/item.py:1041
+msgid "direct link to file"
+msgstr "direktelenkje til fil"
+
+#: ../../portable/item.py:1043
+msgid "File type:"
+msgstr "Filtype:"
+
+#: ../../portable/item.py:1050 ../../portable/item.py:1053
+#: ../../portable/item.py:1055
+msgid "License:"
+msgstr "Lisens:"
+
+#: ../../portable/item.py:1053 ../../portable/item.py:1055
+msgid "see permalink"
+msgstr "sjå fastlenkje"
+
+#: ../../portable/item.py:1062
+msgid "SHOW LOCAL FOLDER"
+msgstr ""
+
+#: ../../portable/item.py:1064
+msgid "SHOW LOCAL FILE"
+msgstr ""
+
+#: ../../portable/item.py:1066
+msgid "Filename:"
+msgstr "Filnamn:"
+
+#: ../../portable/item.py:1073
+msgid "Down Total"
+msgstr "Ned totalt"
+
+#: ../../portable/item.py:1075
+msgid "Up Total"
+msgstr "Opp totalt"
+
+#: ../../portable/item.py:1093
+msgid "Item Details"
+msgstr "Filmdetaljar"
+
+#: ../../portable/item.py:1100
+msgid "Torrent Details"
+msgstr "Torrent-detaljar"
+
+#: ../../portable/item.py:1102
+msgid "Torrent Details <i>stopped</i>"
+msgstr "Torrent-detaljar <i>stoppa</i>"
+
+#: ../../portable/item.py:1106
+msgid "Download Details"
+msgstr "Nedlastingsdetaljar"
+
+#: ../../portable/item.py:1329
+msgid "downloading..."
+msgstr "lastar ned …"
+
+#: ../../portable/item.py:1336 ../../portable/item.py:1339
+#, python-format
+msgid "%s left"
+msgstr ""
+
+#: ../../portable/item.py:1348
+msgid "starting up..."
+msgstr "startar …"
+
+#: ../../portable/item.py:1939
+#, python-format
+msgid "Removing %s items"
+msgstr "Fjernar %s element"
+
+#: ../../portable/item.py:1941
+msgid ""
+"One or more of these videos was not downloaded from a channel.  Would you "
+"like to delete these items or just remove their entries from the Library?"
+msgstr ""
+"Éin eller fleire av desse filmane vart ikkje lasta ned frå ein kanal. Vil du "
+"sletta filmfilene eller berre fjerna oppføringane frå biblioteket?"
+
+#: ../../portable/item.py:1949
+msgid ""
+"One or more of these items is a folder.  When you remove or delete a folder, "
+"any items inside that folder will also be removed or deleted."
+msgstr ""
+"Éin eller fleire av desse elementa er mapper. Når du fjernar/slettar ei "
+"mappe, vert òg alle mapper og filmar inni mappa fjerna/sletta."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:2
 msgid ""
@@ -2390,21 +2807,27 @@ msgid ""
 "restart Miro for the changes to take effect."
 msgstr ""
 "<b>Merk:</b> Viss du endrar filmvisaren, <i>må</i> du starta Miro på nytt "
-"for at den nye visaren vert teken i bruk."
+"før den nye visaren vert teken i bruk."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:11
+msgid ""
+"<b>Note:</b> You can set the frequency channels are checked for each\n"
+"channel in the channel's settings pane."
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:13
 msgid "<b>Searching for Videos</b>"
 msgstr "<b>Søkjer etter filmar</b>"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:12
+#: ../../platform/gtk-x11/glade/miro.glade.h:14
 msgid "<b>Would you like Miro to look for video files on your computer?</b>"
 msgstr "<b>Vil du at Miro skal sjå etter filmar på datamaskina di?</b>"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:13
+#: ../../platform/gtk-x11/glade/miro.glade.h:15
 msgid "<b>Would you like to run Miro when your computer starts up?</b>"
 msgstr "<b>Vil du at Miro skal starta automatisk når du slår på maskina?</b>"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:14
+#: ../../platform/gtk-x11/glade/miro.glade.h:16
 msgid ""
 "<b>You're done!</b>\n"
 "\n"
@@ -2452,79 +2875,81 @@ msgstr ""
 "<b>Finn nye filmar:</b> Miro-gaiden har tusenvis av nettfjernsynskanalar, og "
 "alle er heilt gratis. Berre trykk «Legg til» for å overvaka ein kanal."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:28
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
-msgid "Auto download default setting for new channels"
-msgstr "Innstillingar for automatisk nedlasting av nye kanalar"
-
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
-msgid "Automatically for_ward ports."
-msgstr "Vidare_send automatisk portar."
+msgid "<b>xine</b>"
+msgstr "<b>xine</b>"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:30
+#: ../../platform/gtk-x11/glade/miro.glade.h:31
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
+msgid "Auto download default setting for new channels"
+msgstr "Standarval for nedlasting av nye kanalar:"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:32
+msgid "Automatically for_ward ports."
+msgstr "Vidare_send automatisk portar"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:33
 msgid "By default, videos _expire after"
 msgstr "Som standard _utgår filmar etter"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:31
+#: ../../platform/gtk-x11/glade/miro.glade.h:34
 msgid "C_hannel:"
 msgstr "_Kanal:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:32
+#: ../../platform/gtk-x11/glade/miro.glade.h:35
 msgid "C_hannels"
 msgstr "_Kanalar"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:33
+#: ../../platform/gtk-x11/glade/miro.glade.h:36
 msgid "C_reate Channel"
 msgstr "_Lag kanal"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:34
+#: ../../platform/gtk-x11/glade/miro.glade.h:37
 msgid "Check Channels for _new content"
 msgstr "Sjå etter _nytt innhald på kanalar"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:35
+#: ../../platform/gtk-x11/glade/miro.glade.h:38
 msgid "Disk _Space"
 msgstr "Disk_plass"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:37
+#: ../../platform/gtk-x11/glade/miro.glade.h:40
 msgid ""
 "Every 30 minutes\n"
 "Every hour\n"
+"Every day\n"
 "Manually"
 msgstr ""
-"Kvar halvtime\n"
-"Kvart time\n"
-"Manuelt"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:40
+#: ../../platform/gtk-x11/glade/miro.glade.h:44
 msgid "G_B"
 msgstr "G_B"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:41
+#: ../../platform/gtk-x11/glade/miro.glade.h:45
 msgid "Go"
 msgstr "Start"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:42
+#: ../../platform/gtk-x11/glade/miro.glade.h:46
 msgid "Ignore Un_encrypted Connections."
 msgstr "Ignorer _ukrypterte samband"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:43
+#: ../../platform/gtk-x11/glade/miro.glade.h:47
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
 msgid "In This:"
 msgstr "Her:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:45
+#: ../../platform/gtk-x11/glade/miro.glade.h:49
 msgid "Limit torrent _downstream to:"
-msgstr "Avgrense torrent_nedlasting til:"
+msgstr "Avgrens torrent_nedlasting til:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:46
+#: ../../platform/gtk-x11/glade/miro.glade.h:50
 msgid "Maximum number of channel auto-downloads at a time: "
 msgstr "Maks tal på automatiske nedlastingar per kanal: "
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:47
+#: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid "Maximum number of manual downloads at a time: "
 msgstr "Maks tal på manuelle nedlastingar: "
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:51
+#: ../../platform/gtk-x11/glade/miro.glade.h:55
 msgid ""
 "Miro can find all the videos on your computer to help you organize your "
 "collection."
@@ -2532,7 +2957,7 @@ msgstr ""
 "Miro kan finna alle filmane på datamaskina di, og hjelpa deg å halda orden "
 "på desse."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:52
+#: ../../platform/gtk-x11/glade/miro.glade.h:56
 msgid ""
 "New\n"
 "All\n"
@@ -2542,48 +2967,48 @@ msgstr ""
 "Alle\n"
 "Av"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:56
+#: ../../platform/gtk-x11/glade/miro.glade.h:60
 msgid "Play _videos one after another"
 msgstr "Spel _av filmar éin etter éin"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:57
+#: ../../platform/gtk-x11/glade/miro.glade.h:61
 msgid "Preferences"
 msgstr "Innstillingar"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:58
+#: ../../platform/gtk-x11/glade/miro.glade.h:62
 msgid "Restrict to my full _home folder"
 msgstr "Avgrens til heile _heimemappa"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:59
+#: ../../platform/gtk-x11/glade/miro.glade.h:63
 msgid "S_top after each video"
 msgstr "S_topp etter kvar film"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:60
+#: ../../platform/gtk-x11/glade/miro.glade.h:64
 msgid "S_tore downloaded videos in this folder:"
 msgstr "La_gra nedlasta filmar i denne mappa:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:61
+#: ../../platform/gtk-x11/glade/miro.glade.h:65
 msgid "Search _Engine:"
 msgstr "Søkje_motor:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:62
+#: ../../platform/gtk-x11/glade/miro.glade.h:66
 msgid "Search _custom folder:"
 msgstr "Søk i _sjølvvald mappe:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:63
+#: ../../platform/gtk-x11/glade/miro.glade.h:67
 msgid "Select Movies Directory"
 msgstr "Vel filmmappe"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:64
+#: ../../platform/gtk-x11/glade/miro.glade.h:68
 msgid "Select custom search directory"
 msgstr "Vel sjølvvald søkjemappe"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:65
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62
+#: ../../platform/gtk-x11/glade/miro.glade.h:69
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:64
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr "Stopp torrent-opplastingar når dette forholdet er nådd:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:66
+#: ../../platform/gtk-x11/glade/miro.glade.h:70
 msgid ""
 "The next few screens will help you set up Miro so that it works best for "
 "you.  Here's the first question."
@@ -2591,23 +3016,27 @@ msgstr ""
 "Dei følgjande skjermbileta hjelper deg å setja opp Miro til å verka best "
 "mogleg for deg. Her er første spørsmål."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:67
+#: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid "To avoid internet slowdowns, limit _upstream to:"
 msgstr "For å hindra overbalasta nettverk, avgrens _opplasting til:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:68
+#: ../../platform/gtk-x11/glade/miro.glade.h:72
 msgid "Use _ports:"
-msgstr "Bruk _portar:"
+msgstr "Bruk _portane:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:69
+#: ../../platform/gtk-x11/glade/miro.glade.h:73
+msgid "Use this for video when listening to audio:"
+msgstr "Bruk dette som videoillustrasjon ved avspeling av lydfiler:"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:74
 msgid "Use this renderer to play videos:"
 msgstr "Bruk denne filmvisaren:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:70
+#: ../../platform/gtk-x11/glade/miro.glade.h:75
 msgid "Volume:"
 msgstr "Lydstyrke:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:71
+#: ../../platform/gtk-x11/glade/miro.glade.h:76
 msgid ""
 "We recommend that you allow Miro to launch when your computer starts up.  "
 "This way, videos that haven't finished downloading can finish and new videos "
@@ -2617,7 +3046,7 @@ msgstr ""
 "kan filmar som ikkje er ferdig nedlasta lastast ned automatisk, og nye "
 "filmar er klare når du ønskjer å sjå dei."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:73
+#: ../../platform/gtk-x11/glade/miro.glade.h:78
 msgid ""
 "Welcome to Internet TV.  There's a lot you can do with Miro: automatically "
 "download videos from your favorite channels, watch new videos one after the "
@@ -2627,7 +3056,7 @@ msgstr ""
 "ned filmar frå favorittkanalane dine, sjå filmane etter kvarandre, lasta ned "
 "BitTorrent-filer, anbefala filmar til venner, og mykje anna."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:74
+#: ../../platform/gtk-x11/glade/miro.glade.h:79
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there?  (Currently dowloading movies will not be "
@@ -2637,65 +3066,79 @@ msgstr ""
 "ferdige nedlastingar der? (Filmar som er i ferd med å lastast ned vert ikkje "
 "flytta før dei er ferdig nedlasta.)"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:75
+#: ../../platform/gtk-x11/glade/miro.glade.h:80
 msgid "_Add Folder"
 msgstr "_Legg til mappe"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:76
+#: ../../platform/gtk-x11/glade/miro.glade.h:81
 msgid "_Automatically run Miro when I log in"
 msgstr "_Køyr automatisk Miro når eg loggar inn"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:77
+#: ../../platform/gtk-x11/glade/miro.glade.h:82
 msgid "_Downloads"
 msgstr "_Nedlastingar"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:78
+#: ../../platform/gtk-x11/glade/miro.glade.h:83
 msgid "_Folders"
 msgstr "_Mapper"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:79
+#: ../../platform/gtk-x11/glade/miro.glade.h:84
 msgid "_General"
 msgstr "_Generelt"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:80
+#: ../../platform/gtk-x11/glade/miro.glade.h:85
 msgid "_KB/s."
 msgstr "_KB/s."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:81
+#: ../../platform/gtk-x11/glade/miro.glade.h:86
 msgid "_Keep at least this much free space on my drive:"
 msgstr "_Ha alltid minst så mykje ledig plass att på disken:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:82
+#: ../../platform/gtk-x11/glade/miro.glade.h:87
 msgid "_Playback"
 msgstr "_Avspeling"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:83
+#: ../../platform/gtk-x11/glade/miro.glade.h:88
 msgid "_Resume playback of videos from the point where they were stopped"
 msgstr "_Hald fram avspeling av filmar frå der dei vart stoppa"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:84
+#: ../../platform/gtk-x11/glade/miro.glade.h:89
 msgid "_Search"
 msgstr "_Søk"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:85
+#: ../../platform/gtk-x11/glade/miro.glade.h:90
 msgid "_Search For:"
 msgstr "_Søk etter:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:86
+#: ../../platform/gtk-x11/glade/miro.glade.h:91
 msgid "_URL"
 msgstr "_Adresse"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:87
+#: ../../platform/gtk-x11/glade/miro.glade.h:92
 msgid "_Warn me when I attempt to quit with downloads in progress"
 msgstr "_Åtvar ved forsøk på å avslutta med uferdige nedlastingar"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:88
+#: ../../platform/gtk-x11/glade/miro.glade.h:93
 msgid ""
 "_Watch for new videos in these folders and include them in the Library"
 msgstr ""
 "_Sjå etter nye filmar i desse mappene, og legg dei automatisk til biblioteket"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:89
+#: ../../platform/gtk-x11/glade/miro.glade.h:94
+msgid ""
+"goom\n"
+"oscope\n"
+"fftscope\n"
+"fftgraph\n"
+"none"
+msgstr ""
+"goom\n"
+"oscope\n"
+"fftscope\n"
+"fftgraph\n"
+"none"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:99
 msgid ""
 "xine\n"
 "gstreamer"
@@ -2705,12 +3148,12 @@ msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
 msgid ""
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 "
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 "
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""
-"$longAppName versjon $appVersion ($appRevision). Copyright © 2005–2007 "
-"$publisher. $longAppName og $longAppName-logoen er varemerket til $publisher."
+"$longAppName versjon $appVersion ($appRevision). Copyright © 2005–2008 "
+"$publisher. $longAppName og $longAppName-logoen er varemerker til $publisher."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
 msgid "About $longAppName"
@@ -2809,18 +3252,18 @@ msgid ""
 msgstr ""
 "Skriv inn brukarnamnet og passordet du har fått frå utgjevaren av kanalen."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57
 msgid ""
 "(WARNING: Changes won't go into effect until you restart $longAppName.)"
 msgstr ""
 "(Åtvaring: Endringane vil først trå i kraft etter at du har starta "
 "$longAppName på nytt.)"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:36
 msgid "Add Folder..."
 msgstr "Legg til mappe …"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62
 msgid "Automatically Forward Ports"
 msgstr "Vidaresend automatisk portar"
 
@@ -2828,7 +3271,7 @@ msgstr "Vidaresend automatisk portar"
 msgid "Automatically run $longAppName when I login."
 msgstr "Køyr automatisk $longAppName ved innlogging."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48
 msgid "By default, videos expire after"
 msgstr "Som standard utgår filmar etter"
 
@@ -2844,47 +3287,57 @@ msgstr "Minimer til systemtrau, slik at nedlastingar kan halda fram."
 msgid "Every 30 minutes"
 msgstr "Kvar halvtime"
 
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
+msgid "Every day"
+msgstr ""
+
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14
 msgid "Every hour"
 msgstr "Kvar time"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
 msgid "Folder"
 msgstr "Mappe"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45
 msgid "GB"
 msgstr "GB"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:63
 msgid "Ignore Unencrypted Connections"
 msgstr "Ignorer ukrypterte samband"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60
 msgid "KB/s"
 msgstr "KB/s"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59
 msgid "Limit downstream bandwith to:"
 msgstr "Avgrens nedlastingsbandbreidd til:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16
 msgid "Manually"
 msgstr "Manuelt"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
 msgid "Maximum number of channel auto-downloads at a time:"
 msgstr "Maks tal på automatiske nedlastingar på éin gong, per kanal:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40
 msgid "Maximum number of manual downloads at a time:"
 msgstr "Maks tal på manuelle nedlastingar på éin gong:"
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
+msgid ""
+"Note: You can set the frequency channels are checked from the channel's "
+"settings pane."
+msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1
 msgid "Options"
 msgstr "Innstillingar"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
 msgid "Play one video, then stop."
 msgstr "Spel éin film, og så stopp."
 
@@ -2892,7 +3345,7 @@ msgstr "Spel éin film, og så stopp."
 msgid "Quit Miro completely."
 msgstr "Avslutt Miro fullstendig."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
 msgid ""
 "Remember where I stopped watching a video and continue playing from that "
 "point."
@@ -2900,20 +3353,20 @@ msgstr ""
 "Hugs kor eg slutta å sjå på ein film, og hald fram avspelinga frå den staden "
 "neste gong."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
 msgid "Show as a Channel"
 msgstr "Vis som kanal"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30
 msgid "Store downloaded videos in this folder:"
 msgstr "Lagra nedlasta filmar i denne mappa:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58
 msgid "To avoid internet slowdowns, limit upstream bandwith to:"
 msgstr ""
 "For å hindra overbelasta nettverk, avgrens opplastingsbandbreidd til:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46
 msgid ""
 "WARNING: This setting will not go into effect until you restart $longAppName."
 msgstr ""
@@ -2924,7 +3377,7 @@ msgstr ""
 msgid "Warn me when I attempt to quit with downloads in progress."
 msgstr "Åtvar ved forsøk på å avslutta med uferdige nedlastingar."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
 msgid "Watch for new videos in these folders and include them in my Library."
 msgstr ""
 "Sjå etter nye filmar i desse mappene, og legg dei automatisk til biblioteket."

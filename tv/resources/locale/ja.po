@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2008-02-29 12:40-0500\n"
-"PO-Revision-Date: 2008-01-31 04:19+0000\n"
-"Last-Translator: Japanese <Unknown>\n"
+"POT-Creation-Date: 2008-05-13 19:11-0400\n"
+"PO-Revision-Date: 2008-05-25 02:04+0000\n"
+"Last-Translator: Teru <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2008-03-19 22:32+0000\n"
+"X-Launchpad-Export-Date: 2008-05-27 16:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #~ msgid "Save this video"
@@ -51,9 +51,6 @@ msgstr ""
 
 #~ msgid "Unwatched"
 #~ msgstr "未視聴"
-
-#~ msgid "Searching..."
-#~ msgstr "検索中..."
 
 #~ msgid "My Collection"
 #~ msgstr "マイコレクション"
@@ -229,30 +226,8 @@ msgstr ""
 #~ msgstr "インターネットの速度低下を防ぐ:"
 
 #, fuzzy
-#~ msgid "Empty Playlist"
-#~ msgstr "空のプレイリスト"
-
-#, fuzzy
-#~ msgid "Drag downloaded videos to this playlist to add them."
-#~ msgstr "ビデオをドラッグ&ドロップすると、プレイリストに追加できます。"
-
-#, fuzzy
-#~ msgid "Empty Playlist Folder"
-#~ msgstr "空のプレイリストフォルダ"
-
-#, fuzzy
-#~ msgid "Drag playlists to this folder to add them."
-#~ msgstr "プレイリストをドラッグ&ドロップすると、フォルダに追加できます。"
-
-#~ msgid "${count} Playlists Selected"
-#~ msgstr "${count} 個のプレイリストが選択されています"
-
-#, fuzzy
 #~ msgid "STAR"
 #~ msgstr "評価"
-
-#~ msgid "Skip >> ${countdown}"
-#~ msgstr "スキップ >> ${countdown}"
 
 #~ msgid "SHOW FILE"
 #~ msgstr "ファイルを参照"
@@ -273,7 +248,7 @@ msgstr ""
 
 #: ../../portable/dialogs.py:85
 msgid "Cancel"
-msgstr "キャンセル"
+msgstr "キャンセルする"
 
 msgid "OK"
 msgstr "OK"
@@ -293,14 +268,17 @@ msgid ""
 msgstr ""
 "<font face=\"Lucida Grande\" size=\"-1\">バグトラッカーは <a "
 "href=\"$bugTrackerURL\">$bugTrackerURL</a> "
-"にあります。何をしていたかを書き、上のボックスからログメッセージをコピーし、幾つか質問に答えて下さい。その後、作業が整然と進むでしょう。</font>"
+"にあります。何をしていたかを書き、上のボックスからログメッセージをコピーして貼り付け、幾つか質問に答えていただくと、すぐに私たちの方での作業にとりかかりま"
+"す。</font>"
 
 msgid ""
 "Actually, if you have a minute, would you be willing to submit a crash "
 "report to our bug-tracking system? At a minimum, what we'd need is "
 "description of what you were doing at the time -- as precise as possible -- "
 "plus the artfully-phrased nonsense in the box below:"
-msgstr "時間があったら、クラッシュレポートを提出していただけませんか？クラッシュした時にしていた事を、できるだけ正確に教えてください。"
+msgstr ""
+"実はちょっと時間があったらクラッシュ・レポートをバグ・トラッキング・システムに提出していただければありがたいのですが、いかがでしょうか。最小限、クラッシュ"
+"した時にしていた事の記述をお願いします。できるだけ正確に。その他もろもろも一緒に下のボックスへどうぞ。"
 
 msgid ""
 "Misfortune! $longAppName fell prey to some sort of internal confusion or "
@@ -308,33 +286,32 @@ msgid ""
 "$shortAppName. That'll teach it, and it'll also reduce your chance of losing "
 "your preferences or channel subscriptions."
 msgstr ""
-"不幸な事が起こりました。$longAppName が、$when "
-"に内部に何らかの混乱が発生したと判断、もしくは誤判断されて、その犠牲となってしまいました。私たちは謝意を表し、つつしんで $shortAppName "
-"を再起動することを提案いたします。そうすれば設定やチャンネル登録を失うことが避けられるかもしれません。"
+"不運にも、$longAppName が、$when "
+"に内部に何らかの混乱が発生したと判断、もしくは誤判断されて、その犠牲となってしまいました。お詫びしますとともに、 $shortAppName "
+"を再起動することを提案いたします。そうしていただくことで学習がなされ、今後設定やチャンネル登録を失う機会が減っていくことになります。"
 
 msgid "The fall of $shortAppName??"
-msgstr ""
+msgstr "$shortAppName の失敗??"
 
 msgid "About Miro"
 msgstr "Miro について"
 
-#, fuzzy
 msgid "Add Channel..."
-msgstr "番組/チャンネルを加える"
+msgstr "チャンネルを追加…"
 
 msgid "Add Guide..."
-msgstr "ガイドを加える"
+msgstr "ガイドを加える…"
 
 msgid "Bring All to Front"
 msgstr "すべてを前に"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:80
+#: ../../platform/osx/plat/frontends/html/Preferences.py:80
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11
 msgid "Channels"
 msgstr "チャンネル"
 
 msgid "Check for New Version"
-msgstr "アップデートを確認"
+msgstr "新しいバージョンがあるかを確認"
 
 msgid "Clear Menu"
 msgstr "メニューをクリアする"
@@ -343,35 +320,33 @@ msgid "Close Window"
 msgstr "ウィンドウを閉じる"
 
 msgid "Copy"
-msgstr "コピー"
+msgstr "コピーする"
 
-#, fuzzy
 msgid "Copy Channel URL"
 msgstr "チャンネルのURLをコピーする"
 
-#, fuzzy
 msgid "Copy Video URL"
 msgstr "ビデオのURLをコピーする"
 
-#, fuzzy
 msgid "Cut"
-msgstr "カット"
+msgstr "切り取る"
 
+#: ../../portable/frontends/html/compiled_templates/multi_channel.py:78
 #: ../../portable/dialogs.py:104
 msgid "Delete"
-msgstr "削除"
+msgstr "削除する"
 
 msgid "Donate"
 msgstr "寄付する"
 
 msgid "Download Video..."
-msgstr "ビデオをダウンロードする..."
+msgstr "ビデオをダウンロードする…"
 
 msgid "Edit"
-msgstr "編集"
+msgstr "編集する"
 
 msgid "Export Channels (OPML)..."
-msgstr "チャンネルを書き出す（OPML）"
+msgstr "（OPML）チャンネルを書き出す"
 
 msgid "File"
 msgstr "ファイル"
@@ -382,7 +357,6 @@ msgstr "全画面表示"
 msgid "Help"
 msgstr "ヘルプ"
 
-#, fuzzy
 msgid "Hide Miro"
 msgstr "Miro を隠す"
 
@@ -390,37 +364,35 @@ msgid "Hide Others"
 msgstr "他を隠す"
 
 msgid "Import Channels (OPML)..."
-msgstr "チャンネルを取り込む（OPML）"
+msgstr "（OPML）チャンネルを取り込む"
 
 msgid "Main Window"
-msgstr "メインウィンドウ"
+msgstr "メイン・ウィンドウ"
 
 msgid "MainMenu"
-msgstr "メインメニュー"
+msgstr "メイン・メニュー"
 
 msgid "Minimize"
-msgstr "最小化"
+msgstr "最小化する"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:50
+#: ../../platform/gtk-x11/glade/miro.glade.h:54
 msgid "Miro"
 msgstr "Miro"
 
-#, fuzzy
 msgid "Miro Help"
 msgstr "Miro のヘルプ"
 
 msgid "New Channel Folder..."
-msgstr "チャンネルフォルダを作る"
+msgstr "新しいチャンネルフォルダ…"
 
 msgid "New Playlist Folder..."
-msgstr "プレイリストフォルダを作る"
+msgstr "新しいプレイリスト・フォルダ…"
 
 msgid "New Playlist..."
-msgstr "プレイリストを作る"
+msgstr "新しいプレイリスト…"
 
-#, fuzzy
 msgid "New Search Channel..."
-msgstr "検索チャンネルを作る"
+msgstr "新しい検索チャンネル"
 
 msgid "Next Video"
 msgstr "次のビデオ"
@@ -431,16 +403,18 @@ msgstr "最近使った項目を開く"
 msgid "Open..."
 msgstr "開く"
 
-#, fuzzy
 msgid "Paste"
 msgstr "貼り付け"
 
-#: ../../platform/osx/platform/frontends/html/Application.py:244
+msgid "Planet Miro"
+msgstr "プラネットMiro"
+
+#: ../../platform/osx/plat/frontends/html/Application.py:244
 msgid "Play Video"
 msgstr "ビデオを再生する"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:84
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22
+#: ../../platform/osx/plat/frontends/html/Preferences.py:84
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
 msgid "Playback"
 msgstr "再生"
 
@@ -448,32 +422,29 @@ msgid "Playlists"
 msgstr "プレイリスト"
 
 msgid "Preferences..."
-msgstr "設定..."
+msgstr "設定…"
 
 msgid "Previous Video"
 msgstr "前のビデオ"
 
-#, fuzzy
 msgid "Quit Miro"
 msgstr "Miro を終了"
 
 msgid "Remove..."
-msgstr "削除..."
+msgstr "削除…"
 
 msgid "Rename..."
-msgstr "名前の変更..."
+msgstr "名前の変更…"
 
-#, fuzzy
 msgid "Report a bug"
 msgstr "バグを報告する"
 
 msgid "Save Video As..."
-msgstr "名前をつけて保存..."
+msgstr "名前をつけて保存…"
 
 msgid "Select All"
-msgstr "全て選択"
+msgstr "全てを選択する"
 
-#, fuzzy
 msgid "Send This Channel to a Friend"
 msgstr "このチャンネルを友達に送る"
 
@@ -481,23 +452,25 @@ msgid "Services"
 msgstr "サービス"
 
 msgid "Show All"
-msgstr "全てを表示"
+msgstr "全てを表示する"
 
 msgid "Stop Video"
 msgstr "ビデオを止める"
+
+msgid "Translate"
+msgstr "翻訳suru"
 
 msgid "Update All Channels"
 msgstr "全てのチャンネルを更新する"
 
 msgid "Update Channel"
-msgstr "チャンネルの更新"
+msgstr "チャンネルを更新する"
 
-#, fuzzy
 msgid "Window"
-msgstr "ウインドウ"
+msgstr "ウィンドウ"
 
 msgid "Zoom"
-msgstr "拡大"
+msgstr "拡大する"
 
 msgid "%channel feed%"
 msgstr "%channel feed%"
@@ -505,24 +478,56 @@ msgstr "%channel feed%"
 msgid "%channel title%"
 msgstr "%channel title%"
 
-msgid "%donation label%"
-msgstr "%donation label%"
-
 msgid "-00:00:00"
 msgstr "-00:00:00"
 
 msgid "00:00:00"
 msgstr "00:00:00"
 
-#, fuzzy
-msgid "Box"
-msgstr "枠"
+msgid "0:00:00"
+msgstr "0:00:00"
 
-#, fuzzy
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:88
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:364
+msgid "Email to a friend"
+msgstr "友達に電子メールを送る"
+
 msgid "FullScreen Controls"
 msgstr "全画面の操作"
 
-#: ../../portable/tabs.py:57
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:48
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:324
+#: ../../portable/dialogs.py:103
+msgid "Keep"
+msgstr "保持する"
+
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:116
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:392
+msgid "Post to Reddit"
+msgstr "Redditへ投稿する"
+
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:94
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:370
+msgid "Post to Video Bomb"
+msgstr "ビデオBombへ投稿する"
+
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:102
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:378
+msgid "Post to del.icio.us"
+msgstr "delicioi.usへ投稿する"
+
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:108
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:384
+msgid "Post to digg"
+msgstr "diggへ投稿する"
+
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:73
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:349
+msgid "Share"
+msgstr "共有する"
+
+#: ../../portable/frontends/html/compiled_templates/search.py:170
+#: ../../portable/tabs.py:56
 msgid "Video Search"
 msgstr "ビデオ検索"
 
@@ -539,7 +544,6 @@ msgstr ""
 msgid "Password:\n"
 msgstr "パスワード:\n"
 
-#, fuzzy
 msgid "Username and password required"
 msgstr "ユーザー名とパスワードを入力してください"
 
@@ -551,32 +555,32 @@ msgstr ""
 "\n"
 
 msgid "(You must restart Miro for some of these changes to take effect)"
-msgstr ""
+msgstr "（これらの変更を反映させるためにMiroを再起動して下さい）"
 
 msgid "(You must restart Miro for this change to take effect)\n"
 msgstr "（この変更を反映するには、Miroを再起動する必要があります。）\n"
 
-#, fuzzy
 msgid "(movies directory path goes here)"
-msgstr "(ムービーのディレクトリパスはここです。)"
+msgstr "(映像のディレクトリ経路はここです。)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:1
 msgid "-"
-msgstr ""
+msgstr "−"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
+#: ../../portable/item.py:551
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49
 msgid "1 day"
 msgstr "1日"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
 msgid "1 month"
 msgstr "1ヶ月"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid "10 days"
 msgstr "10日"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
 msgid "3 days"
 msgstr "3日"
 
@@ -589,145 +593,139 @@ msgstr "4"
 msgid "5"
 msgstr "5"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
 msgid "6 days"
 msgstr "6日"
 
-#, fuzzy
 msgid "99999"
 msgstr "99999"
 
 msgid "Add..."
-msgstr "追加..."
+msgstr "追加…"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
 msgid "All"
-msgstr ""
+msgstr "全て"
 
 msgid "Auto download default setting for new channels:"
-msgstr ""
+msgstr "新しいチャンネルのための自動ダウンロードの標準設定："
 
 msgid "Automatically forward ports"
-msgstr ""
+msgstr "自動的にポートを転送する"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56
 msgid "BitTorrent"
-msgstr ""
+msgstr "BitTorrent"
+
+msgid "Box"
+msgstr "ボックス"
 
 msgid "By default, videos expire after:"
 msgstr "ビデオの標準の有効期限:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
 msgid "Change..."
-msgstr "変更..."
+msgstr "変更…"
 
 msgid "Check channels for new content:"
-msgstr "新しいコンテンツをチェック:"
+msgstr "チャンネルに新しいコンテンツがあるかを確認する："
 
 msgid "Don't auto-download more than this many videos per channel at once:"
-msgstr ""
+msgstr "一度に自動ダウンロードするときの、チャンネルあたりのビデオの最大数："
 
 msgid "Don't download more than this many videos at once:"
-msgstr ""
+msgstr "一度にダウンロードするビデオの最大数："
 
-#, fuzzy
 msgid "Folder location"
 msgstr "フォルダの場所"
 
 msgid "GB\n"
-msgstr ""
+msgstr "GB\n"
 
 msgid "Ignore unencrypted connections"
-msgstr ""
+msgstr "暗号化されていない接続を無視する"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:44
+#: ../../platform/gtk-x11/glade/miro.glade.h:48
 msgid "KB/s."
-msgstr ""
+msgstr "KB/s."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
 msgid "Keep at least this much free space on my drive:"
-msgstr ""
+msgstr "ドライブ上に確保すべき最小限の空き領域："
 
 msgid "Limit downstream to"
-msgstr ""
+msgstr "指定ダウンストリーム先"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
 msgid "Never"
-msgstr "設定しない"
+msgstr "禁止"
 
-#: ../../portable/tabs.py:56
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
+#: ../../portable/tabs.py:55
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21
 msgid "New"
-msgstr "新しい"
+msgstr "新規"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22
 msgid "Off"
-msgstr ""
+msgstr "オフ"
 
 msgid "OtherViews"
 msgstr "その他のビュー"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
-#, fuzzy
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:26
 msgid "Play videos one after another."
-msgstr "ビデオを連続再生。"
+msgstr "ビデオを次々に再生する。"
 
-#, fuzzy
 msgid "Remember video position."
-msgstr "ビデオの位置を記憶。"
+msgstr "ビデオの位置を記憶する。"
 
-#: ../../portable/frontends/html/contextmenu.py:99
-#: ../../portable/frontends/html/contextmenu.py:104
+#: ../../portable/frontends/html/contextmenu.py:100
+#: ../../portable/frontends/html/contextmenu.py:105
 #: ../../portable/frontends/html/contextmenu.py:178
 #: ../../portable/frontends/html/contextmenu.py:184
 #: ../../portable/frontends/html/contextmenu.py:190
 #: ../../portable/frontends/html/contextmenu.py:199
-#: ../../portable/frontends/html/contextmenu.py:233
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
+#: ../../portable/frontends/html/contextmenu.py:232
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
 msgid "Remove"
-msgstr "削除"
+msgstr "削除する"
 
-#, fuzzy
 msgid "Run Miro at startup"
 msgstr "コンピューター起動時にMiroを起動する"
 
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:591
-#, fuzzy
+#: ../../platform/gtk-x11/plat/frontends/html/callbackhandler.py:595
 msgid "Show as Channel"
-msgstr "チャンネルとして表示"
+msgstr "チャンネルとして表示する"
 
-#, fuzzy
 msgid "Stop after each video."
-msgstr "ビデオ毎に停止。"
+msgstr "ビデオ毎に停止する。"
 
 msgid "Stop uploads when this ratio is reached:"
-msgstr ""
+msgstr "到達したらアップロードを停止する比率："
 
 msgid "Store downloads in this folder:"
-msgstr ""
+msgstr "ダウンロードしたものを保存するフォルダ："
 
 msgid "To avoid internet slowdowns, limit upstream to"
-msgstr ""
+msgstr "インターネットの減速を防ぐためのアップストリームの制限："
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61
 msgid "Use these ports:"
-msgstr ""
+msgstr "利用するポート："
 
-#: ../../portable/frontends/html/main.py:319
+#: ../../portable/frontends/html/main.py:326
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "ダウンロード進行中に終了するときは警告する"
 
 msgid ""
 "Watch for new videos in these folders and include them in the Library:"
-msgstr "以下のフォルダの新しいビデオをライブラリに追加:"
+msgstr "以下のフォルダの新しいビデオはライブラリに追加する："
 
-#, fuzzy
 msgid "every 30 minutes"
 msgstr "30分毎に確認"
 
-#, fuzzy
 msgid "every hour"
-msgstr "1時間毎に確認"
+msgstr "1時間毎"
 
 msgid "manually"
 msgstr "手動で確認する"
@@ -743,39 +741,38 @@ msgstr "チャンネル"
 
 #: ../../portable/dialogs.py:99
 msgid "Create"
-msgstr "新規"
+msgstr "作成する"
 
 msgid "In this:"
-msgstr "この中に"
+msgstr "この中に："
 
 msgid "Item1"
-msgstr "アイテム1"
+msgstr "項目１"
 
 msgid "Search Engine"
 msgstr "検索エンジン"
 
 msgid "Search for:"
-msgstr "検索:"
+msgstr "検索：:"
 
 msgid "URL"
 msgstr "URL"
 
-#: ../../platform/windows-xul/platform/frontends/html/startup.py:59
-#: ../../platform/gtk-x11/platform/frontends/html/startup.py:56
+#: ../../platform/gtk-x11/plat/frontends/html/startup.py:56
+#: ../../platform/windows-xul/plat/frontends/html/startup.py:59
 #, python-format
 msgid "(parsed %d files - found %d videos)"
-msgstr "%d個のファイルを解析しました - %d個のビデオが見つかりました"
+msgstr "（%d個のファイルを解析しました - %d個のビデオが見つかりました）"
 
 msgid "Back"
 msgstr "戻る"
 
-#, fuzzy
 msgid "Browse"
-msgstr "ブラウズ"
+msgstr "閲覧する"
 
-#: ../../platform/osx/platform/frontends/html/StartupPanel.py:121
+#: ../../platform/osx/plat/frontends/html/StartupPanel.py:121
 msgid "Next"
-msgstr "次"
+msgstr "次へ"
 
 #: ../../portable/dialogs.py:87
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53
@@ -783,13 +780,13 @@ msgid "No"
 msgstr "いいえ"
 
 msgid "Only search my Movies folder."
-msgstr "Movies フォルダのみ検索"
+msgstr "自分のMoviesフォルダのみを検索する。"
 
 msgid "Search my entire Home folder."
-msgstr "Home フォルダとサブフォルダを検索"
+msgstr "自分のHomeフォルダ全体を検索する："
 
 msgid "Search this folder:"
-msgstr "このフォルダで検索:"
+msgstr "このフォルダ内を検索する："
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:37
 msgid "Searching for Videos"
@@ -801,14 +798,17 @@ msgid ""
 "\n"
 "\n"
 "Would you like Miro to look for video files on your computer?"
-msgstr "Miroプレイヤーでは、コレクションを整理するためにあなたのコンピューターの全ての動画を見つけてくれます"
+msgstr ""
+"Miroプレイヤーは、あなたのコンピュータにある全てのビデオを見つけて、あなたのコレクションを整理するのお手伝いをします。\n"
+"\n"
+"\n"
+"あなたのコンピュータにあるビデオ・ファイルをMiroに探してほしいですか？"
 
 msgid ""
 "The next few screens will help you set up the Miro Player so that it works "
 "best for you. Here's the first question."
-msgstr "次の数画面は、あなたが快適にMiroプレイヤーを楽しむためです。最初の質問は以下です。"
+msgstr "次のいくつかの画面で、Miroプレーヤが最適に動作するように設定するのをお手伝いします。まず最初の質問です。"
 
-#, fuzzy
 msgid ""
 "We recommend that you allow the Miro Player to launch when your computer "
 "starts up. This way, videos that haven't finished downloading can finish and "
@@ -817,13 +817,14 @@ msgid ""
 "\n"
 "Would you like to run Miro when your computer starts up?"
 msgstr ""
-"何時も新のビデオをダウンロードできるので、パソコンを点いてからMiroをスタートして勧めます。。\n"
+"コンピューターの起動時にMiro "
+"Playerの自動起動をお勧めします。そうすれば、ダウンロードが完了していなかったビデオが完了し、あなたのチャンネルの新しいビデオを観たいときの準備が整う"
+"状態になります。\n"
 "\n"
 "\n"
-"パソコンを点いてからMiroをスタートしてよろしですか？"
+"コンピューターの起動時にMiroを自動起動しますか？"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:72
-#, fuzzy
+#: ../../platform/gtk-x11/glade/miro.glade.h:77
 msgid "Welcome to Internet TV!"
 msgstr "インターネットテレビへようこそ！"
 
@@ -850,41 +851,61 @@ msgstr ""
 "%message%\n"
 "%message%"
 
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83
-msgid "Update Available"
-msgstr "アップデートできます"
+#: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:211
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
+msgid "Username:"
+msgstr "ユーザー名:"
 
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84
+#: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:222
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4
+msgid "Password:"
+msgstr "パスワード:"
+
+#: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:416
+msgid "Unknown Runtime Error"
+msgstr "不明なランタイムエラー"
+
+#: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:417
 #, python-format
-msgid "A new version of %s is available for download."
-msgstr "%sの新しいバージョンがダウンロード可能になりました。"
+msgid "An unknown error has occurred %s."
+msgstr "不明なエラー %s"
 
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248
-msgid "Error Bombing Item"
-msgstr ""
+#: ../../platform/gtk-x11/plat/frontends/html/callbackhandler.py:333
+msgid "New Channel _Guide..."
+msgstr "新しいChannel_Guide…"
 
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250
-msgid "Error Recommending Item"
-msgstr "アイテムのレコメンドに失敗しました"
+#: ../../platform/gtk-x11/plat/frontends/html/callbackhandler.py:586
+msgid "Folder Location"
+msgstr "フォルダの場所"
 
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252
-msgid "Error Opening Website"
-msgstr "ウェブサイトを開けませんでした"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256
-#, python-format
-msgid "There was an error opening %s.  Please try again in a few seconds"
-msgstr "%sを開くときにエラーが発生しました。数秒後に再試行してください。"
-
-#: ../../platform/windows-xul/platform/frontends/html/startup.py:67
-#: ../../platform/gtk-x11/platform/frontends/html/startup.py:75
-#: ../../platform/gtk-x11/platform/frontends/html/startup.py:173
+#: ../../platform/gtk-x11/plat/frontends/html/startup.py:75
+#: ../../platform/gtk-x11/plat/frontends/html/startup.py:173
+#: ../../platform/windows-xul/plat/frontends/html/startup.py:67
 #, python-format
 msgid "%d video found"
 msgid_plural "%d videos found"
 msgstr[0] "%d個のビデオが見つかりました"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:79
+#: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:53
+#: ../../portable/frontends/html/compiled_templates/unittest/simpleunicode.py:36
+#: ../../portable/frontends/html/compiled_templates/channel.py:327
+msgid "Settings"
+msgstr "設定"
+
+#: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:56
+msgid "Hide"
+msgstr "表示しない"
+
+#: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:58
+msgid "Show"
+msgstr "表示する"
+
+#: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:59
+#: ../../portable/dialogs.py:88 ../../portable/menubar.py:274
+msgid "Quit"
+msgstr "終了する"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:80
 #, python-format
 msgid ""
 "Error importing modules:\n"
@@ -893,1367 +914,281 @@ msgstr ""
 "以下のモジュールの読み込み中にエラーが発生しました：\n"
 "%s"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:254
-msgid "Loading window"
-msgstr "ロード中"
-
 #: ../../platform/windows-xul/xul/components/pybridge.py:255
+msgid "Loading window"
+msgstr "ウィンドウにロード中"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:256
 msgid "onStartup called twice"
 msgstr "onStartupが２回実行されました"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:739
+#: ../../platform/windows-xul/xul/components/pybridge.py:748
 msgid "Spacebar"
 msgstr "スペースキー"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:887
+#: ../../platform/windows-xul/xul/components/pybridge.py:896
 msgid "Close to tray?"
-msgstr "トーレへ閉まりますか？"
+msgstr "トレイへ閉じますか？"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:888
+#: ../../platform/windows-xul/xul/components/pybridge.py:897
 msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
-msgstr "赤い閉じるボタンを押すと、システム・トレイで閉じるか、終了するかを選択してください？後でオプションから設定を変更できます。"
+msgstr ""
+"赤い閉じるボタンを押したときに、Miroがシステム・トレイへ閉じるか、それとも終了するかのどちらをお望みでしょうか？　この設定は、後でオプションから変更で"
+"きます。"
 
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55
-#, fuzzy
+#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:83
+msgid "Update Available"
+msgstr "アップデートできます"
+
+#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:84
+#, python-format
+msgid "A new version of %s is available for download."
+msgstr "%sの新しいバージョンをダウンロードできます。"
+
+#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:248
+msgid "Error Bombing Item"
+msgstr "破壊的な項目に関するエラー"
+
+#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:250
+msgid "Error Recommending Item"
+msgstr "推薦項目に関するエラー"
+
+#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:252
+msgid "Error Opening Website"
+msgstr "ウェブ・サイト開示に関するエラー"
+
+#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:256
+#, python-format
+msgid "There was an error opening %s.  Please try again in a few seconds"
+msgstr "%sを開くときにエラーが発生しました。数秒後に再試行してください。"
+
+#: ../../platform/windows-xul/plat/flash.py:82
+#, python-format
+msgid "Restart %s?"
+msgstr "%s を再スタートする"
+
+#: ../../platform/windows-xul/plat/flash.py:83
+#, python-format
+msgid ""
+"To enable the Flash plugin, %s needs to be restarted.  Click Yes to shut %s "
+"down, or No to do it later."
+msgstr ""
+"フラッシュのプラグインを使えるようにするために、 %s を再起動する必要があります。Yesをクリックして %s "
+"を閉じるか、あるいは、それを後で行って下さい。"
+
+#: ../../platform/windows-xul/plat/flash.py:109
+msgid "Install Flash?"
+msgstr "フラッシュをインストールしますか？"
+
+#: ../../platform/windows-xul/plat/flash.py:110
+#, python-format
+msgid ""
+"For the best %s experience, you should install Adobe Flash.  Do this now?"
+msgstr "%s を最もよく体験するためには、アドビ・フラッシュをインストールするべきです。今インストールしますか？"
+
+#: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:55
 msgid "Download Completed"
-msgstr "ダウンロード終了"
+msgstr "ダウンロード完了"
 
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56
+#: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:56
 #, python-format
 msgid "Download of video '%s' is finished."
 msgstr "'%s'のビデオのダウンロードは完了しました。"
 
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65
-#, fuzzy
+#: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:65
 msgid "Download Failed"
 msgstr "ダウンロードが失敗しました"
 
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66
+#: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:66
 #, python-format
 msgid "Download of video '%s' has failed."
 msgstr "'%s'のビデオのダウンロードは失敗しました。"
 
-#: ../../platform/osx/platform/frontends/html/MainFrame.py:297
-msgid "Subscribe to Channel"
-msgstr "このチャネルに加入します。"
-
-#: ../../platform/osx/platform/frontends/html/MainFrame.py:298
-msgid "Enter the URL of the channel you would like to subscribe to."
-msgstr "加入したいチャネルを入力して下さい。"
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:79
+#: ../../platform/osx/plat/frontends/html/Preferences.py:79
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8
 msgid "General"
 msgstr "一般"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:81
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
+#: ../../platform/osx/plat/frontends/html/Preferences.py:81
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
 msgid "Downloads"
 msgstr "ダウンロード"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:82
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
+#: ../../platform/osx/plat/frontends/html/Preferences.py:82
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
 msgid "Folders"
 msgstr "フォルダ"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:83
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
+#: ../../platform/osx/plat/frontends/html/Preferences.py:83
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
 msgid "Disk Space"
 msgstr "ディスク領域"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:251
+#: ../../platform/osx/plat/frontends/html/Preferences.py:251
 msgid "Movies Directory"
-msgstr "ビデオ・ディレクトリー"
+msgstr "Moviesディレクトリー"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:252
+#: ../../platform/osx/plat/frontends/html/Preferences.py:252
 #, python-format
 msgid "Select a Directory to store %s downloads in."
-msgstr "%sのビデオを保存するディレクトリーをお選びください"
+msgstr "%sのダウンロードされたものを保存するディレクトリーを選んで下さい。"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:253
-#: ../../platform/osx/platform/frontends/html/Preferences.py:362
+#: ../../platform/osx/plat/frontends/html/Preferences.py:253
+#: ../../platform/osx/plat/frontends/html/Preferences.py:362
 msgid "Select"
-msgstr "選択"
+msgstr "選択する"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:262
-#: ../../platform/gtk-x11/glade/miro.glade.h:49
+#: ../../platform/osx/plat/frontends/html/Preferences.py:262
+#: ../../platform/gtk-x11/glade/miro.glade.h:53
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
 msgid "Migrate existing movies?"
-msgstr "既存のビデオを移動しますか？"
+msgstr "既存の映像を移動しますか？"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:263
+#: ../../platform/osx/plat/frontends/html/Preferences.py:263
 #, python-format
 msgid ""
 "You've selected a new folder to download movies to.  Should %s migrate your "
 "existing downloads there?  (Currently dowloading movies will not be moved "
 "until they finish)."
 msgstr ""
-"新しいダウンロードディレクトリーが選択されました。既存のビデオを%sに移動させますか？（ダウンロード中のビデオはダウンロード完了後に移動されます）"
+"映像をダウンロードするための新しいフォルダが選択されました。そこに、あなたがダウンロードした既存のものを%sに移動させますか？（現在（ダウンロード中のビデ"
+"オはダウンロード完了後に移動されます。）"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:360
+#: ../../platform/osx/plat/frontends/html/Preferences.py:360
 msgid "View this Directory in the Library"
 msgstr "このディレクトリーをライブラリーで表示する"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:361
+#: ../../platform/osx/plat/frontends/html/Preferences.py:361
 msgid "Select a Directory to view in the Library."
 msgstr "ライブラリーに表示するディレクトリーを選択してください"
 
-#: ../../platform/osx/platform/frontends/html/StartupPanel.py:93
+#: ../../platform/osx/plat/frontends/html/MainFrame.py:271
+msgid "Subscribe to Channel"
+msgstr "このチャネルに加入します。"
+
+#: ../../platform/osx/plat/frontends/html/MainFrame.py:272
+msgid "Enter the URL of the channel you would like to subscribe to."
+msgstr "加入したいチャネルのURLを入力して下さい。"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:33
+msgid "_Remove..."
+msgstr "削除する(_R)…"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:34
+msgid "_Remove Playlist..."
+msgstr "プレイリストを削除する(_R)…"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:35
+msgid "_Remove Playlists..."
+msgstr "複数のプレイリストを削除する(_R)…"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:36
+msgid "_Remove Playlist Folder..."
+msgstr "プレイリストフォルダを削除する(_R)…"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:37
+msgid "_Remove Playlist Folders..."
+msgstr "複数のプレイリストフォルダを削除する(_R)…"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:38
+#: ../../portable/menubar.py:192
+msgid "_Remove Channel..."
+msgstr "チャンネルを削除する(_R)…"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:39
+#: ../../portable/menubar.py:193
+msgid "_Remove Channels..."
+msgstr "複数のチャンネルを削除する(_R)…"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:40
+#: ../../portable/menubar.py:195
+msgid "_Remove Channel Folder..."
+msgstr "チャンネル・フォルダを削除する(_R)…"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:41
+#: ../../portable/menubar.py:194
+msgid "_Remove Channel Folders..."
+msgstr "複数のチャンネルフォルダを削除する(_R)…"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:42
+msgid "_Remove Miro Guide..."
+msgstr "Miroのガイドを削除する（_R）…"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:43
+msgid "_Remove Miro Guides..."
+msgstr "Miroのガイドを削除する（_R）…"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:44
+msgid "_Remove Video..."
+msgstr "ビデオを削除する(_R)…"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:45
+msgid "_Remove Videos..."
+msgstr "複数のビデオを削除する(_R)…"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:46
+msgid "Re_name..."
+msgstr "名前を変更する(_N)…"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:47
+msgid "Re_name Playlist..."
+msgstr "プレイリストの名前を変更する(_N)…"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:48
+msgid "Re_name Playlist Folder..."
+msgstr "プレイリストフォルダの名前を変更する(_N)…"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:49
+#: ../../portable/menubar.py:191
+msgid "Re_name Channel..."
+msgstr "チャンネルの名前を変更する(_N)…"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:50
+msgid "Re_name Channel Folder..."
+msgstr "チャンネル・フォルダの名前を変更する(_N)…"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:51
+msgid "Re_name Miro Guide..."
+msgstr "Miroガイドの名前を変更する（_N）…"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:52
+#: ../../portable/menubar.py:197
+msgid "_Update Channel..."
+msgstr "チャンネルを更新する（_U）…"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:53
+#: ../../portable/menubar.py:198
+msgid "_Update Channels..."
+msgstr "チャンネルを更新する（_U）…"
+
+#: ../../platform/osx/plat/frontends/html/StartupPanel.py:93
 msgid "Finish"
 msgstr "完了"
 
-#: ../../platform/osx/platform/frontends/html/StartupPanel.py:163
+#: ../../platform/osx/plat/frontends/html/StartupPanel.py:163
 msgid "Search!"
-msgstr "検索"
+msgstr "検索！"
 
-#: ../../platform/osx/platform/frontends/html/Application.py:241
+#: ../../platform/osx/plat/frontends/html/Application.py:241
 msgid "Pause Video"
-msgstr "ビデオ一時停止"
+msgstr "ビデオ一時停止する"
 
-#: ../../platform/osx/platform/frontends/html/Application.py:250
+#: ../../platform/osx/plat/frontends/html/Application.py:250
 msgid "Unsupported version of Quicktime"
 msgstr "このバージョンのQicktimeは、サポートされていません"
 
-#: ../../platform/osx/platform/frontends/html/Application.py:251
+#: ../../platform/osx/plat/frontends/html/Application.py:251
 #, python-format
 msgid ""
 "To run %s you need the most recent version of Quicktime, which is a free "
 "update."
-msgstr "%s 動作するためには、最新のQuicktimeのバージョンは必要です。無料でダウンロードは可能です。"
+msgstr "%s　を動作させるためには、最新版のQuicktimeが必要です。最新版へのアップデートは無料です。"
 
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:33
-msgid "_Remove..."
-msgstr "削除(_R)"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:34
-msgid "_Remove Playlist..."
-msgstr "プレイリストを削除(_R)"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:35
-msgid "_Remove Playlists..."
-msgstr "複数のプレイリストを削除(_R)"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:36
-msgid "_Remove Playlist Folder..."
-msgstr "プレイリストフォルダを削除(_R)"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:37
-msgid "_Remove Playlist Folders..."
-msgstr "複数のプレイリストフォルダを削除(_R)"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:38
-#: ../../portable/menubar.py:193
-msgid "_Remove Channel..."
-msgstr "チャンネルを削除(_R)"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:39
-#: ../../portable/menubar.py:194
-msgid "_Remove Channels..."
-msgstr "複数のチャンネルを削除(_R)"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:40
-#: ../../portable/menubar.py:196
-msgid "_Remove Channel Folder..."
-msgstr "チャンネルフォルダを削除(_R)"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:41
-#: ../../portable/menubar.py:195
-msgid "_Remove Channel Folders..."
-msgstr "複数のチャンネルフォルダを削除(_R)"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:42
-#, fuzzy
-msgid "_Remove Miro Guide..."
-msgstr "ミロのガイドを非表示にする"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:43
-#, fuzzy
-msgid "_Remove Miro Guides..."
-msgstr "ミロのガイドを非表示にする"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:44
-msgid "_Remove Video..."
-msgstr "ビデオを削除(_R)"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:45
-msgid "_Remove Videos..."
-msgstr "複数のビデオを削除(_R)"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:46
-msgid "Re_name..."
-msgstr "名称変更(_N)"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:47
-msgid "Re_name Playlist..."
-msgstr "プレイリストの名前を変更(_N)"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:48
-msgid "Re_name Playlist Folder..."
-msgstr "プレイリストフォルダの名前を変更(_N)"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:49
-#: ../../portable/menubar.py:192
-msgid "Re_name Channel..."
-msgstr "チャンネルの名前を変更(_N)"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:50
-msgid "Re_name Channel Folder..."
-msgstr "チャンネルフォルダの名前を変更(_N)"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:51
-msgid "Re_name Miro Guide..."
-msgstr "Miroガイドの名前を変更"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:52
-#: ../../portable/menubar.py:198
-msgid "_Update Channel..."
-msgstr "チャンネルを更新する"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:53
-#: ../../portable/menubar.py:199
-msgid "_Update Channels..."
-msgstr "チャンネルを更新する"
-
-#: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319
+#: ../../platform/osx/plat/renderers/QuicktimeRenderer.py:319
 msgid "Audio"
-msgstr "サウンド"
-
-#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53
-msgid "Settings"
-msgstr "設定"
-
-#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:56
-msgid "Hide"
-msgstr "表示しない"
-
-#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:58
-msgid "Show"
-msgstr "表示する"
-
-#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:59
-#: ../../portable/menubar.py:273 ../../portable/dialogs.py:88
-msgid "Quit"
-msgstr "終了"
-
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333
-#, fuzzy
-msgid "New Channel _Guide..."
-msgstr "新規Channel_Guide..."
-
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582
-msgid "Folder Location"
-msgstr "フョルだの場所"
-
-#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
-msgid "Username:"
-msgstr "ユーザー名:"
-
-#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:222
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4
-msgid "Password:"
-msgstr "パスワード:"
-
-#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:416
-msgid "Unknown Runtime Error"
-msgstr "不明なランタイムエラー"
-
-#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:417
-#, python-format
-msgid "An unknown error has occurred %s."
-msgstr "不明なエラー %s"
-
-#: ../../portable/dl_daemon/download.py:458
-msgid "Error"
-msgstr "エラー"
-
-#: ../../portable/dl_daemon/download.py:544
-#, python-format
-msgid "Could not write to %s"
-msgstr "%sへ書き込みできませんでした"
-
-#: ../../portable/dl_daemon/download.py:564
-#: ../../portable/dl_daemon/download.py:769
-msgid "Not enough disk space"
-msgstr "ディスクの容量が足りません"
-
-#: ../../portable/dl_daemon/download.py:565
-#: ../../portable/dl_daemon/download.py:770
-#, python-format
-msgid "%s MB required to store this video"
-msgstr "このビデオを保存するには%sMBの空き容量が必要です"
-
-#: ../../portable/dl_daemon/download.py:781
-#, fuzzy
-msgid "BitTorrent failure"
-msgstr "ビット・トレントエラー"
-
-#: ../../portable/dl_daemon/download.py:782
-msgid "BitTorrent failed to startup"
-msgstr "ビット・トレントの起動が失敗しました"
-
-#: ../../portable/dl_daemon/download.py:954
-msgid "Corrupt Torrent"
-msgstr "トレントが壊れています"
-
-#: ../../portable/dl_daemon/download.py:955
-#, python-format
-msgid "The torrent file at %s was not valid"
-msgstr "%sにあるトレントファイルは正常でありません"
-
-#: ../../portable/dl_daemon/download.py:980
-msgid "Torrent file deleted"
-msgstr "トレントファイルが削除されました"
-
-#: ../../portable/dl_daemon/download.py:981
-msgid "The torrent file for this item was deleted outside of Miro."
-msgstr ""
-
-#: ../../portable/frontends/html/contextmenu.py:103
-msgid "Update Channels Now"
-msgstr "チャネルをアップデートする"
-
-#: ../../portable/frontends/html/contextmenu.py:128
-#, fuzzy, python-format
-msgid "%d Downloaded Items"
-msgstr "%dダウンロードの件"
-
-#: ../../portable/frontends/html/contextmenu.py:130
-#: ../../portable/frontends/html/contextmenu.py:211
-msgid "Play"
-msgstr "再生"
-
-#: ../../portable/frontends/html/contextmenu.py:131
-#: ../../portable/frontends/html/contextmenu.py:214
-#, fuzzy
-msgid "Add to new playlist"
-msgstr "新プレリストに着ける"
-
-#: ../../portable/frontends/html/contextmenu.py:133
-#: ../../portable/frontends/html/contextmenu.py:207
-msgid "Remove From Playlist"
-msgstr "プレイリストから削除"
-
-#: ../../portable/frontends/html/contextmenu.py:135
-#: ../../portable/frontends/html/contextmenu.py:209
-msgid "Remove From the Library"
-msgstr "ライブラリkara"
-
-#: ../../portable/frontends/html/contextmenu.py:141
-#: ../../portable/frontends/html/contextmenu.py:218
-#, fuzzy
-msgid "Mark as Unwatched"
-msgstr "見たこと無い的する"
-
-#: ../../portable/frontends/html/contextmenu.py:146
-#: ../../portable/frontends/html/contextmenu.py:220
-#, fuzzy
-msgid "Mark as Watched"
-msgstr "「見た」と銘打"
-
-#: ../../portable/frontends/html/contextmenu.py:151
-#, fuzzy, python-format
-msgid "%d Available Items"
-msgstr "%d 在り合わせ"
-
-#: ../../portable/frontends/html/contextmenu.py:152
-#: ../../portable/frontends/html/contextmenu.py:227
-#: ../../portable/dialogs.py:93
-msgid "Download"
-msgstr "ダウンロード"
-
-#: ../../portable/frontends/html/contextmenu.py:157
-#, python-format
-msgid "%d Downloading Items"
-msgstr "%d個のダウンロードアイテムがあります"
-
-#: ../../portable/frontends/html/contextmenu.py:159
-#: ../../portable/frontends/html/contextmenu.py:225
-msgid "Cancel Download"
-msgstr "キャンセル"
-
-#: ../../portable/frontends/html/contextmenu.py:161
-#: ../../portable/frontends/html/contextmenu.py:225
-msgid "Pause Download"
-msgstr "ダウンロードを一時停止"
-
-#: ../../portable/frontends/html/contextmenu.py:164
-#: ../../portable/frontends/html/contextmenu.py:223
-msgid "Restart Upload"
-msgstr "アップロードを再開する"
-
-#: ../../portable/frontends/html/contextmenu.py:170
-#, fuzzy
-msgid "Update Channel Now"
-msgstr "チャンネルをアップデートする"
-
-#: ../../portable/frontends/html/contextmenu.py:172
-#: ../../portable/frontends/html/contextmenu.py:196
-msgid "Copy URL to clipboard"
-msgstr "コピーURL"
-
-#: ../../portable/frontends/html/contextmenu.py:173 ../../portable/feed.py:825
-msgid "Rename Channel"
-msgstr "チャンネル名の変更"
-
-#: ../../portable/frontends/html/contextmenu.py:177
-msgid "Revert Title to Default"
-msgstr "タイトルをデフォルトに戻す"
-
-#: ../../portable/frontends/html/contextmenu.py:183
-#: ../../portable/folder.py:142
-msgid "Rename Channel Folder"
-msgstr ""
-
-#: ../../portable/frontends/html/contextmenu.py:189
-#: ../../portable/folder.py:213
-msgid "Rename Playlist Folder"
-msgstr ""
-
-#: ../../portable/frontends/html/contextmenu.py:213
-msgid "Play Just This Video"
-msgstr "このビデオだけ再生"
-
-#: ../../portable/frontends/html/contextmenu.py:232
-#: ../../portable/playlist.py:218
-#, fuzzy
-msgid "Rename Playlist"
-msgstr "プレイリストの名称変更"
-
-#: ../../portable/frontends/html/main.py:132 ../../portable/startup.py:237
-msgid "Video Directory Missing"
-msgstr ""
-
-#: ../../portable/frontends/html/main.py:133
-msgid ""
-"\n"
-"    Miro can't find your primary video directory.  This may be because it's  "
-"   located on an external drive that is currently disconnected.\n"
-"\n"
-"    If you continue, the video directory will be reset to a location on this "
-"    drive (this will cause you to lose some details about the videos on the  "
-"   external drive).  You can also quit, connect the drive, and relaunch Miro."
-msgstr ""
-
-#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
-msgid "Custom Channels"
-msgstr ""
-
-#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
-msgid ""
-"You are running a version of $longAppName with a custom set of channels."
-msgstr ""
-
-#: ../../portable/frontends/html/main.py:269 ../../portable/httpclient.py:139
-msgid "Internal Error"
-msgstr "インターナルエラー"
-
-#: ../../portable/frontends/html/main.py:269
-msgid ""
-"Miro has encountered an internal error. You can help us track down this "
-"problem and fix it by submitting an error report."
-msgstr "Miroはエラーしまいました。直すためにレポートを出してください。"
-
-#: ../../portable/frontends/html/main.py:269
-msgid ""
-"Include entire program database including all video and channel metadata "
-"with crash report"
-msgstr ""
-
-#: ../../portable/frontends/html/main.py:269
-msgid "Describe what you were doing that caused this error"
-msgstr ""
-
-#: ../../portable/frontends/html/main.py:284
-#, python-format
-msgid "%s Version Alert"
-msgstr "%s バージョンアップできます！"
-
-#: ../../portable/frontends/html/main.py:285
-#, python-format
-msgid "A new version of %s is available. Would you like to download it now?"
-msgstr "新作%sがあります。ダウンロードをよろしいですか？"
-
-#: ../../portable/frontends/html/main.py:290
-#, python-format
-msgid "%s Version Check"
-msgstr "%sのバージョンを調べる"
-
-#: ../../portable/frontends/html/main.py:291
-#, python-format
-msgid "%s is up to date."
-msgstr "%sは最新です。"
-
-#: ../../portable/frontends/html/main.py:309
-msgid "Are you sure you want to quit?"
-msgstr ""
-
-#: ../../portable/frontends/html/main.py:311
-msgid ""
-"Miro is still uploading your crash report. If you quit now the upload will "
-"be canceled.  Quit Anyway?"
-msgstr ""
-
-#: ../../portable/frontends/html/main.py:316
-#, python-format
-msgid "You have %d download still in progress.  Quit Anyway?"
-msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/html/main.py:340
-#, fuzzy
-msgid "Import OPML File"
-msgstr "OPMLファイルを使う"
-
-#: ../../portable/frontends/html/main.py:342
-msgid "OPML Files"
-msgstr "OPMLファイル"
-
-#: ../../portable/frontends/html/main.py:347
-msgid "Export OPML File"
-msgstr "OPMLファイルをエクスポートする"
-
-#: ../../portable/frontends/html/templatedisplay.py:325
-msgid "Invalid Value"
-msgstr ""
-
-#: ../../portable/frontends/html/templatedisplay.py:326
-#, python-format
-msgid "%s is invalid.  You must enter a non-negative number."
-msgstr ""
-
-#: ../../portable/frontends/html/templatedisplay.py:452
-msgid "Error Revealing File"
-msgstr ""
-
-#: ../../portable/frontends/html/templatedisplay.py:453
-#, python-format
-msgid "The file \"%s\" was deleted from outside Miro."
-msgstr ""
-
-#: ../../portable/frontends/html/templatedisplay.py:560
-msgid "Error Changing Movies Directory"
-msgstr ""
-
-#: ../../portable/frontends/html/templatedisplay.py:561
-msgid ""
-"You don't have permission to write to the directory you selected.  Miro will "
-"continue to use the old videos directory."
-msgstr ""
-
-#: ../../portable/frontends/html/templatedisplay.py:664
-msgid " - Invalid URL"
-msgstr ""
-
-#: ../../portable/frontends/html/templatedisplay.py:665
-msgid ""
-"The address you entered is not a valid URL.\n"
-"Please double check and try again.\n"
-"\n"
-msgstr ""
-
-#: ../../portable/frontends/html/templatedisplay.py:691
-msgid "$shortAppName - Add Channel"
-msgstr ""
-
-#: ../../portable/frontends/html/templatedisplay.py:691
-msgid "Enter the URL of the channel to add"
-msgstr ""
-
-#: ../../portable/frontends/html/templatedisplay.py:712
-msgid "$shortAppName - Add Miro Guide"
-msgstr ""
-
-#: ../../portable/frontends/html/templatedisplay.py:712
-msgid "Enter the URL of the Miro Guide to add"
-msgstr ""
-
-#: ../../portable/frontends/html/templatedisplay.py:718
-msgid "$shortAppName - Download Video"
-msgstr ""
-
-#: ../../portable/frontends/html/templatedisplay.py:718
-msgid "Enter the URL of the video to download"
-msgstr ""
-
-#: ../../portable/tabs.py:55
-msgid "Library"
-msgstr "ライブラリ"
-
-#: ../../portable/tabs.py:58
-msgid "Downloading"
-msgstr "ダウンロード中"
-
-#: ../../portable/downloader.py:234
-msgid "activity"
-msgstr "動き"
-
-#: ../../portable/downloader.py:268 ../../portable/httpclient.py:127
-#: ../../portable/httpclient.py:155
-msgid "File not found"
-msgstr "ファイルが見つかりませんでした"
-
-#: ../../portable/downloader.py:269
-msgid "Flash URL Scraping Error"
-msgstr "Flash URLの処理エラー"
-
-#: ../../portable/downloader.py:445
-msgid "starting up"
-msgstr "起動中"
-
-#: ../../portable/playlist.py:219
-#, python-format
-msgid "Enter a new name for the playlist %s"
-msgstr "プレイリスト %s の新しい名前:"
-
-#: ../../portable/playlist.py:241
-msgid "Create Playlist"
-msgstr "プレイリストを作る"
-
-#: ../../portable/playlist.py:242
-msgid "Enter a name for the new playlist"
-msgstr "新しいプレイリストの名前:"
-
-#: ../../portable/opml.py:144
-msgid "OPML Import failed"
-msgstr "OPMLのインポートに失敗しました"
-
-#: ../../portable/opml.py:145
-msgid "The selected OPML file appears to be invalid. Import was interrupted."
-msgstr "選択したOPMLファイルは無効のようです。インポートを中止しました。"
-
-#: ../../portable/opml.py:150
-msgid "OPML Import summary"
-msgstr "OPMLインポート結果の要約"
-
-#: ../../portable/opml.py:151
-#, python-format
-msgid "Successfully imported %d feed."
-msgid_plural "Successfully imported %d feeds."
-msgstr[0] "%d個のフィードのインポートに成功しました。"
-
-#: ../../portable/opml.py:154
-#, python-format
-msgid "Skipped %d feed already present."
-msgid_plural "Skipped %d feeds already present."
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/util.py:266
-#, python-format
-msgid "%1.1fGB"
-msgstr "%1.1fGB"
-
-#: ../../portable/util.py:268
-#, python-format
-msgid "%dGB"
-msgstr "%dGB"
-
-#: ../../portable/util.py:272
-#, python-format
-msgid "%1.1fMB"
-msgstr "%1.1fMB"
-
-#: ../../portable/util.py:274
-#, python-format
-msgid "%dMB"
-msgstr "%dMB"
-
-#: ../../portable/util.py:278
-#, python-format
-msgid "%1.1fKB"
-msgstr "%1.1fKB"
-
-#: ../../portable/util.py:280
-#, python-format
-msgid "%dKB"
-msgstr "%dKB"
-
-#: ../../portable/util.py:284
-#, python-format
-msgid "%1.1fB"
-msgstr "%1.1fB"
-
-#: ../../portable/util.py:286
-#, python-format
-msgid "%dB"
-msgstr "%dB"
-
-#: ../../portable/iheartmiro.py:82
-msgid ""
-"An Effortless Way to Help Miro\n"
-"\n"
-"Miro is open-source and built by a non-profit.  We need your help to "
-"continue our work.\n"
-"\n"
-"I Heart Miro is a simple Firefox extension that gives a referral fee to the "
-"Miro organization when you shop at Amazon.  You'll never notice it, it "
-"doesn't cost you a thing, and it's easy to uninstall at any time.\n"
-"\n"
-"If you click 'Install iHeartMiro' below, Firefox will launch and ask if it's "
-"ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks "
-"for your help."
-msgstr ""
-
-#: ../../portable/menubar.py:158
-msgid "_Open"
-msgstr ""
-
-#: ../../portable/menubar.py:159
-#, fuzzy
-msgid "_Download Video"
-msgstr "ビデオをダウンロード"
-
-#: ../../portable/menubar.py:161
-msgid "Check _Version"
-msgstr ""
-
-#: ../../portable/menubar.py:163
-msgid "_Remove Video"
-msgstr "削除"
-
-#: ../../portable/menubar.py:164
-msgid "_Remove Videos"
-msgstr ""
-
-#: ../../portable/menubar.py:165
-msgid "Re_name Video"
-msgstr ""
-
-#: ../../portable/menubar.py:166
-msgid "Save Video _As..."
-msgstr "名前をつけて保存"
-
-#: ../../portable/menubar.py:167
-msgid "Save Videos _As..."
-msgstr "別名で保存..."
-
-#: ../../portable/menubar.py:168
-#, fuzzy
-msgid "Copy Video _URL"
-msgstr "ビデオをコピーする"
-
-#: ../../portable/menubar.py:170
-#, fuzzy
-msgid "_Options..."
-msgstr "オプショーン"
-
-#: ../../portable/menubar.py:171
-msgid "_Quit"
-msgstr "終了(_Q)"
-
-#: ../../portable/menubar.py:179
-msgid "Cu_t"
-msgstr ""
-
-#: ../../portable/menubar.py:180
-msgid "_Copy"
-msgstr "_コピー"
-
-#: ../../portable/menubar.py:181
-msgid "_Paste"
-msgstr "_貼り付け"
-
-#: ../../portable/menubar.py:182
-msgid "Select _All"
-msgstr "全て_選択"
-
-#: ../../portable/menubar.py:183
-msgid "_Delete"
-msgstr "_削除"
-
-#: ../../portable/menubar.py:187
-msgid "Add _Channel"
-msgstr ""
-
-#: ../../portable/menubar.py:188
-msgid "New Searc_h Channel..."
-msgstr ""
-
-#: ../../portable/menubar.py:189
-msgid "New _Folder..."
-msgstr ""
-
-#: ../../portable/menubar.py:190
-msgid "Add Channel _Guide..."
-msgstr ""
-
-#: ../../portable/menubar.py:200
-msgid "Update _All Channels"
-msgstr ""
-
-#: ../../portable/menubar.py:202
-msgid "_Import Channels (OPML)..."
-msgstr ""
-
-#: ../../portable/menubar.py:203
-msgid "E_xport Channels (OPML)..."
-msgstr ""
-
-#: ../../portable/menubar.py:205
-#, fuzzy
-msgid "_Send this channel to a friend"
-msgstr "友達にこのチャンネルを送る(_S)"
-
-#: ../../portable/menubar.py:206
-msgid "Copy Channel _Link"
-msgstr ""
-
-#: ../../portable/menubar.py:209
-msgid "New _Playlist"
-msgstr ""
-
-#: ../../portable/menubar.py:210
-msgid "New Playlist Fol_der"
-msgstr ""
-
-#: ../../portable/menubar.py:212
-#, fuzzy
-msgid "Re_name Playlist"
-msgstr "プレイリストの名前を変える(_N)"
-
-#: ../../portable/menubar.py:213
-#, fuzzy
-msgid "_Remove Playlist"
-msgstr "プレイリストの削除(_R)"
-
-#: ../../portable/menubar.py:214
-msgid "_Remove Playlists"
-msgstr ""
-
-#: ../../portable/menubar.py:215
-msgid "_Remove Playlist Folders"
-msgstr ""
-
-#: ../../portable/menubar.py:216
-msgid "_Remove Playlist Folder"
-msgstr ""
-
-#: ../../portable/menubar.py:226 ../../portable/menubar.py:227
-#, fuzzy
-msgid "_Play"
-msgstr "開始(_P)"
-
-#: ../../portable/menubar.py:228
-msgid "_Pause"
-msgstr ""
-
-#: ../../portable/menubar.py:229
-msgid "_Stop"
-msgstr "停止(_S)"
-
-#: ../../portable/menubar.py:231
-msgid "_Next Video"
-msgstr "次のビデオ"
-
-#: ../../portable/menubar.py:232
-msgid "_Previous Video"
-msgstr "前のビデオ"
-
-#: ../../portable/menubar.py:234
-#, fuzzy
-msgid "Skip _Forward"
-msgstr "次へスキップ(_F)"
-
-#: ../../portable/menubar.py:235
-#, fuzzy
-msgid "Skip _Back"
-msgstr "前へスキップ(_B)"
-
-#: ../../portable/menubar.py:237
-#, fuzzy
-msgid "Volume _Up"
-msgstr "音を大きく(_U)"
-
-#: ../../portable/menubar.py:238
-#, fuzzy
-msgid "Volume _Down"
-msgstr "音を小さく(_D)"
-
-#: ../../portable/menubar.py:240
-msgid "_Fullscreen"
-msgstr "全画面表示"
-
-#: ../../portable/menubar.py:244
-#, fuzzy
-msgid "_About"
-msgstr "Miro について"
-
-#: ../../portable/menubar.py:245
-msgid "_Donate"
-msgstr "寄付(_D)"
-
-#: ../../portable/menubar.py:246 ../../portable/menubar.py:261
-msgid "_Help"
-msgstr "ヘルプ(_H)"
-
-#: ../../portable/menubar.py:248
-msgid "Report a _Bug"
-msgstr "バグを報告(_B)"
-
-#: ../../portable/menubar.py:252
-#, fuzzy
-msgid "_Video"
-msgstr "ビデオ(_V)"
-
-#: ../../portable/menubar.py:254
-msgid "_File"
-msgstr "ファイル(_F)"
-
-#: ../../portable/menubar.py:258
-#, fuzzy
-msgid "_Channels"
-msgstr "チャンネル(_C)"
-
-#: ../../portable/menubar.py:259
-#, fuzzy
-msgid "_Playlists"
-msgstr "プレイリスト(_P)"
-
-#: ../../portable/menubar.py:260
-msgid "P_layback"
-msgstr "再生(_P)"
-
-#: ../../portable/menubar.py:265
-#, fuzzy
-msgid "Play Unwatched ($numUnwatched)"
-msgstr "見ていないビデオを再生 ($numUnwatched)"
-
-#: ../../portable/menubar.py:266
-#, fuzzy
-msgid "Pause All Downloads ($numDownloading)"
-msgstr "ダウンロードを停止 ($numDownloading)"
-
-#: ../../portable/menubar.py:267
-msgid "Resume All Downloads ($numPaused)"
-msgstr "ダウンロードを再開 ($numPaused)"
-
-#: ../../portable/menubar.py:269
-msgid "Options..."
-msgstr ""
-
-#: ../../portable/menubar.py:271
-msgid "Hide Window"
-msgstr ""
-
-#: ../../portable/menubar.py:272
-msgid "Show Window"
-msgstr ""
-
-#: ../../portable/theme.py:137
-msgid "Starter Channels"
-msgstr ""
-
-#: ../../portable/theme.py:154
-msgid "Example Playlist"
-msgstr ""
-
-#: ../../portable/httpclient.py:81
-#, python-format
-msgid "Error: %s"
-msgstr "エラー: %s"
-
-#: ../../portable/httpclient.py:96 ../../portable/httpclient.py:102
-msgid "Can't connect"
-msgstr "接続できません"
-
-#: ../../portable/httpclient.py:97
-#, python-format
-msgid "Connection Error: %s"
-msgstr "接続エラー: %s"
-
-#: ../../portable/httpclient.py:103
-msgid "SSL connection error"
-msgstr "SSL接続エラー"
-
-#: ../../portable/httpclient.py:107
-msgid "HTTP error"
-msgstr "HTTPエラー"
-
-#: ../../portable/httpclient.py:110
-#, python-format
-msgid "Bad Status Line: %s"
-msgstr ""
-
-#: ../../portable/httpclient.py:113
-#, python-format
-msgid "Bad Header Line: %s"
-msgstr ""
-
-#: ../../portable/httpclient.py:116
-#, python-format
-msgid "Bad Chunk size: %s"
-msgstr ""
-
-#: ../../portable/httpclient.py:119
-#, python-format
-msgid "Expected CRLF got: %r"
-msgstr ""
-
-#: ../../portable/httpclient.py:122
-#, python-format
-msgid "%s closed connection"
-msgstr ""
-
-#: ../../portable/httpclient.py:128
-msgid "Got 404 status code"
-msgstr "ファイルが見つかりませんでした"
-
-#: ../../portable/httpclient.py:130
-#, python-format
-msgid "Bad Status Code: %s"
-msgstr ""
-
-#: ../../portable/httpclient.py:134
-msgid "Authorization failed"
-msgstr "認証できません"
-
-#: ../../portable/httpclient.py:140
-msgid "Pipeline request never started"
-msgstr ""
-
-#: ../../portable/httpclient.py:144
-msgid "Timeout"
-msgstr "タイムアウト"
-
-#: ../../portable/httpclient.py:145
-#, python-format
-msgid "Connection to %s timed out"
-msgstr "%s への接続はタイムアウトしました"
-
-#: ../../portable/httpclient.py:149
-msgid "Invalid URL"
-msgstr "URLが無効です"
-
-#: ../../portable/httpclient.py:150
-#, python-format
-msgid "\"%s\" is not a valid URL"
-msgstr ""
-
-#: ../../portable/httpclient.py:156
-#, python-format
-msgid "The file: \"%s\" doesn't exist"
-msgstr ""
-
-#: ../../portable/httpclient.py:160
-msgid "Read error"
-msgstr ""
-
-#: ../../portable/httpclient.py:161
-#, python-format
-msgid "Error while reading from \"%s\""
-msgstr ""
-
-#: ../../portable/httpclient.py:354
-msgid "Unknown Error code"
-msgstr ""
-
-#: ../../portable/httpclient.py:386
-msgid "Connection closed"
-msgstr "接続停止"
-
-#: ../../portable/httpclient.py:811
-#, fuzzy
-msgid "Unknown"
-msgstr "不明な"
-
-#: ../../portable/httpclient.py:812
-msgid "Internal Error: Not ready to send"
-msgstr ""
-
-#: ../../portable/extrastrings.py:33 ../../portable/feed.py:2409
-#: ../../portable/feed.py:2499
-msgid "Search"
-msgstr "検索"
-
-#: ../../portable/feed.py:384
-msgid "never"
-msgstr "無期限"
-
-#: ../../portable/feed.py:386 ../../portable/item.py:554
-#, python-format
-msgid "%d hours"
-msgstr "%d時間"
-
-#: ../../portable/feed.py:388
-#, python-format
-msgid "%d day"
-msgstr "%d日"
-
-#: ../../portable/feed.py:390 ../../portable/item.py:552
-#, python-format
-msgid "%d days"
-msgstr "%d日"
-
-#: ../../portable/feed.py:392
-#, python-format
-msgid "%d months"
-msgstr "%d月間"
-
-#: ../../portable/feed.py:826
-#, python-format
-msgid "Enter a new name for the channel %s"
-msgstr "%sチャンネルに新しい名前を適用する"
-
-#: ../../portable/feed.py:923
-msgid "Error loading feed"
-msgstr "フィードの読み込みに失敗しました"
-
-#: ../../portable/feed.py:924
-#, python-format
-msgid "Couldn't load the feed at %s (%s)."
-msgstr "%sでフィードを読み込めませんでした(%s)"
-
-#: ../../portable/feed.py:927
-msgid "Would you like to keep the feed?"
-msgstr "フィードを保存したいですか？"
-
-#: ../../portable/feed.py:1040
-msgid "Bad content-type"
-msgstr "content-type　エラー"
-
-#: ../../portable/feed.py:1053
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
-msgid "Channel is not compatible with $shortAppName!"
-msgstr "チャンネスは$shortAppNameと互換性がありません！"
-
-#: ../../portable/feed.py:1054
-msgid ""
-"But we'll try our best to grab the files. It may take extra time to list the "
-"videos, and descriptions may look funny.  Please contact the publishers of "
-"$url and ask if they can supply a feed in a format that will work with "
-"$shortAppName.\n"
-"\n"
-"Do you want to try to load this channel anyway?"
-msgstr ""
-"私たちはファイルを取得するために最善を尽くします。ビデオを表示するのに多少時間がかかり、表示もおかしくなるかもしれません。$urlの発行者に連絡を取って$"
-"shortAppNameで機能するフォーマットのフィードを発行してくれるように頼んでください。"
-
-#: ../../portable/feed.py:2513
-msgid "Local Files"
-msgstr "ローカルファイル"
-
-#: ../../portable/feed.py:2527
-#, fuzzy
-msgid "Playing File"
-msgstr "ファイルを上げる"
-
-#: ../../portable/storedatabase.py:859 ../../portable/storedatabase.py:1258
-#, fuzzy, python-format
-msgid "%s database save succeeded"
-msgstr "データベース %s の保存に成功しました"
-
-#: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1259
-#, fuzzy
-msgid ""
-"The database has been successfully saved. It is now safe to quit without "
-"losing any data."
-msgstr "データベースの保存に成功しました。終了してもデータは失われません。"
-
-#: ../../portable/storedatabase.py:867 ../../portable/storedatabase.py:1267
-#, fuzzy, python-format
-msgid "%s database save failed"
-msgstr "データベース %s の保存に失敗しました"
-
-#: ../../portable/storedatabase.py:868 ../../portable/storedatabase.py:1268
-#, fuzzy, python-format
-msgid ""
-"%s was unable to save its database: Disk Full.\n"
-"We suggest deleting files from the full disk or simply deleting some movies "
-"from your collection.\n"
-"Recent changes may be lost."
-msgstr ""
-"%s はディスクフルの為データベースを保存できませんでした。\n"
-"ディスクからファイルを削除するかムービーをコレクションから削除することをお勧めしますが、\n"
-"変更が失われるかもしれません。"
-
-#: ../../portable/dialogs.py:89
-msgid "Ignore"
-msgstr "無視 (Ignore)"
-
-#: ../../portable/dialogs.py:90
-msgid "Submit Crash Report"
-msgstr "クラッシュレポートを送信する"
-
-#: ../../portable/dialogs.py:91 ../../platform/gtk-x11/glade/miro.glade.h:48
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
-msgid "Migrate"
-msgstr "移動"
-
-#: ../../portable/dialogs.py:92 ../../platform/gtk-x11/glade/miro.glade.h:36
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
-msgid "Don't Migrate"
-msgstr "移動しない"
-
-#: ../../portable/dialogs.py:94
-msgid "Remove Entry"
-msgstr ""
-
-#: ../../portable/dialogs.py:95
-msgid "Delete File"
-msgstr "ファイルの削除"
-
-#: ../../portable/dialogs.py:96
-msgid "Delete Files"
-msgstr "ファイルを削除"
-
-#: ../../portable/dialogs.py:97
-msgid "Keep Videos"
-msgstr "ビデオを持て"
-
-#: ../../portable/dialogs.py:98
-msgid "Delete Videos"
-msgstr "ビデオを削除"
-
-#: ../../portable/dialogs.py:100
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
-#, fuzzy
-msgid "Create Channel"
-msgstr "チャンネルをを作る"
-
-#: ../../portable/dialogs.py:101
-msgid "Add"
-msgstr "挿入"
-
-#: ../../portable/dialogs.py:102
-msgid "Add Into New Folder"
-msgstr "新フォルダに挿入"
-
-#: ../../portable/dialogs.py:103
-msgid "Keep"
-msgstr "保持"
-
-#: ../../portable/dialogs.py:105
-msgid "Not Now"
-msgstr "後で"
-
-#: ../../portable/dialogs.py:106
-msgid "Close to Tray"
-msgstr "トレイni"
-
-#: ../../portable/dialogs.py:107
-msgid "Launch Miro"
-msgstr "Miroを起動する"
-
-#: ../../portable/dialogs.py:108
-msgid "Download Anyway"
-msgstr "無視してダウンロードする"
-
-#: ../../portable/dialogs.py:109
-msgid "Install iHeartMiro"
-msgstr ""
-
-#: ../../portable/dialogs.py:110
-msgid "Don't Install"
-msgstr ""
-
-#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:55
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
-msgid "New Search Channel"
-msgstr "新しい検索チャンネル"
-
-#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:27
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
-msgid "A search channel contains items that match a search term."
-msgstr "検索チャンネルには検索対象と合致したアイテムが入っています"
-
-#: ../../portable/controller.py:196 ../../portable/controller.py:210
-#: ../../portable/controller.py:254 ../../portable/controller.py:280
-#: ../../portable/controller.py:300
-#, python-format
-msgid "Remove %s"
-msgstr ""
-
-#: ../../portable/controller.py:197
-#, python-format
-msgid "Are you sure you want to remove the guide %s?"
-msgstr ""
-
-#: ../../portable/controller.py:211
-#, python-format
-msgid "Are you sure you want to remove %s"
-msgstr ""
-
-#: ../../portable/controller.py:214 ../../portable/controller.py:259
-#: ../../portable/controller.py:285 ../../portable/controller.py:304
-#, python-format
-msgid "Remove %s channels"
-msgstr ""
-
-#: ../../portable/controller.py:216
-#, python-format
-msgid "Are you sure you want to remove these %s playlists"
-msgstr ""
-
-#: ../../portable/controller.py:255
-msgid ""
-"What would you like to do with the videos in this channel that you've "
-"downloaded?"
-msgstr ""
-
-#: ../../portable/controller.py:260
-msgid ""
-"What would you like to do with the videos in these channels that you've "
-"downloaded?"
-msgstr ""
-
-#: ../../portable/controller.py:281
-#, python-format
-msgid ""
-"Are you sure you want to remove %s?  Any downloads in progress will be "
-"canceled."
-msgstr ""
-
-#: ../../portable/controller.py:286
-#, python-format
-msgid ""
-"Are you sure you want to remove these %s channels?  Any downloads in "
-"progress will be canceled."
-msgstr ""
-
-#: ../../portable/controller.py:301
-#, python-format
-msgid "Are you sure you want to remove %s?"
-msgstr ""
-
-#: ../../portable/controller.py:305
-#, python-format
-msgid "Are you sure you want to remove these %s channels?"
-msgstr ""
-
-#: ../../portable/controller.py:318
-#, python-format
-msgid "Stop watching %s"
-msgstr ""
-
-#: ../../portable/controller.py:319
-#, python-format
-msgid "Are you sure you want to stop watching %s?"
-msgstr ""
-
-#: ../../portable/controller.py:322
-#, python-format
-msgid "Stop watching %s directories"
-msgstr ""
-
-#: ../../portable/controller.py:323
-#, python-format
-msgid "Are you sure you want to stop watching these %s directories?"
-msgstr ""
-
-#: ../../portable/controller.py:497
-msgid "Error Saving Video"
-msgstr ""
-
-#: ../../portable/controller.py:499
-#, python-format
-msgid ""
-"An error occured while trying to save %s.  Please check that the file has "
-"not been deleted and try again."
-msgstr ""
+msgstr "オーディオ"
 
 #: ../../portable/singleclick.py:99
 msgid "Download already exists"
@@ -2261,7 +1196,7 @@ msgstr "ダウンロードするファイルは既に存在します"
 
 #: ../../portable/singleclick.py:100
 msgid "That URL is already an external download."
-msgstr "このURLは外ダウンロードしてあります。"
+msgstr "そのURLは既に外からのダウンロードです。"
 
 #: ../../portable/singleclick.py:106
 msgid "Miro will begin downloading it now."
@@ -2275,11 +1210,11 @@ msgstr "現在ダウンロード中です。"
 msgid "It has already been downloaded."
 msgstr "既にダウンロードされています"
 
-#: ../../portable/singleclick.py:137
+#: ../../portable/singleclick.py:142
 msgid "Download Error"
-msgstr "ダウンロードエラー"
+msgstr "ダウンロード・エラー"
 
-#: ../../portable/singleclick.py:138
+#: ../../portable/singleclick.py:143
 #, python-format
 msgid ""
 "Miro is not able to download a file at this URL:\n"
@@ -2290,302 +1225,1751 @@ msgstr ""
 "\n"
 "URL: %s"
 
-#: ../../portable/singleclick.py:146
+#: ../../portable/singleclick.py:191
 msgid "File Download"
-msgstr "ダウンロード"
+msgstr "ファイルのダウンロード"
 
-#: ../../portable/singleclick.py:147
+#: ../../portable/singleclick.py:192
 #, python-format
 msgid "This file at %s does not appear to be audio, video, or an RSS feed."
-msgstr "ファイル「%s」はオーディオかビデオかフィードじゃありません。"
+msgstr "%sにあるこのファイルは、オーディオでもビデオでもRSSフィードでもないように見受けられます。"
 
-#: ../../portable/singleclick.py:235
-#, fuzzy
+#: ../../portable/singleclick.py:280
 msgid "Subscribing to multiple channels"
-msgstr "複数のチャンネルを購読"
+msgstr "複数のチャンネルを購読しています"
 
-#: ../../portable/singleclick.py:236
-#, fuzzy, python-format
+#: ../../portable/singleclick.py:281
+#, python-format
 msgid "Create %d channels?"
-msgstr "%d 本のチャンネルを作成?"
+msgstr "%d本のチャンネルを作成しますか?"
 
-#: ../../portable/singleclick.py:249
-#, fuzzy, python-format
+#: ../../portable/singleclick.py:294
+#, python-format
 msgid "Adding %d channels to a new folder"
-msgstr "新しいフォルダに %d 本のチャンネルを追加"
+msgstr "新しいフォルダに %d本のチャンネルを追加しています"
 
-#: ../../portable/singleclick.py:250 ../../portable/folder.py:224
+#: ../../portable/singleclick.py:295 ../../portable/folder.py:224
 msgid "Enter a name for the new channel folder"
-msgstr "新名前を入力して下さい。"
+msgstr "新しいチャンネル・フォルダに名前を入力して下さい"
 
-#: ../../portable/singleclick.py:253
-#, fuzzy, python-format
+#: ../../portable/singleclick.py:298
+#, python-format
 msgid ""
 "NOTE: You are already subscribed to %d of these channels.  These channels "
 "will stay where they currently are."
 msgstr "注意: このうち %d 本のチャンネルは既に購読している為、変更されません。"
 
-#: ../../portable/singleclick.py:264
-#, fuzzy
+#: ../../portable/singleclick.py:309
 msgid "Subscription error"
 msgstr "購読エラー"
 
-#: ../../portable/singleclick.py:274
-#, fuzzy
+#: ../../portable/singleclick.py:319
 msgid ""
 "This $shortAppName channel file has an invalid format: $url. Please notify "
 "the publisher of this file."
-msgstr "チャンネルファイル $url のフォーマットが違います。ファイル提供元に連絡して下さい。"
+msgstr "この$shortAppNameチャンネル・ファイルはフォーマットが無効です：$url。　ファイルの発行者に連絡して下さい。"
 
-#: ../../portable/singleclick.py:282
-#, fuzzy
+#: ../../portable/singleclick.py:327
 msgid ""
 "This $shortAppName channel file has the wrong content type: $url. Please "
 "notify the publisher of this file."
-msgstr "チャンネルファイル $url のコンテンツタイプが違います。ファイル提供元に連絡して下さい。"
+msgstr ""
+"この $shortAppNam eチャンネル・ファイルはコンテンツ・タイプに間違いがあります： $url。　ファイルの発行者に連絡して下さい。"
 
-#: ../../portable/singleclick.py:286
-#, fuzzy
+#: ../../portable/singleclick.py:331
 msgid "Could not download the $shortAppName channel file: $url."
-msgstr "チャンネルファイル $url をダウンロードできません。"
+msgstr "$shortAppName チャンネル・ファイルをダウンロードできませんでした： $url"
 
-#: ../../portable/singleclick.py:334
+#: ../../portable/singleclick.py:385
 msgid "Invalid Torrent"
-msgstr "不正な Torrent"
+msgstr "不正なトレント"
 
-#: ../../portable/singleclick.py:335
-#, fuzzy, python-format
+#: ../../portable/singleclick.py:386
+#, python-format
 msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-msgstr "torrentファイル %s が壊れているようで開けません。[OK]"
+msgstr "トレント・ファイル %s が壊れているようで開けません。[OK]"
 
-#: ../../portable/item.py:497
+#: ../../portable/frontends/html/templatedisplay.py:325
+msgid "Invalid Value"
+msgstr "無効な値です"
+
+#: ../../portable/frontends/html/templatedisplay.py:326
 #, python-format
-msgid "Removing %s"
-msgstr "%s を削除しています"
+msgid "%s is invalid.  You must enter a non-negative number."
+msgstr "%s は無効です。非負の数を入力してください。"
 
-#: ../../portable/item.py:500
+#: ../../portable/frontends/html/templatedisplay.py:452
+msgid "Error Revealing File"
+msgstr "ファイルの開示に関するエラー"
+
+#: ../../portable/frontends/html/templatedisplay.py:453
+#, python-format
+msgid "The file \"%s\" was deleted from outside Miro."
+msgstr "ファイル %s は、Miroの外側から削除されました。"
+
+#: ../../portable/frontends/html/templatedisplay.py:560
+msgid "Error Changing Movies Directory"
+msgstr "映像ディレクトリの変更に関するエラー"
+
+#: ../../portable/frontends/html/templatedisplay.py:561
 msgid ""
-"Would you like to delete this folder and all of its videos or just remove "
-"its entry from the Library?"
-msgstr ""
+"You don't have permission to write to the directory you selected.  Miro will "
+"continue to use the old videos directory."
+msgstr "あなたが選んだディレクトリへ書き込むための権限がありません。Miroは以前のビデオ・ディレクトリを続けて使うことになります。"
 
-#: ../../portable/item.py:506
+#: ../../portable/frontends/html/templatedisplay.py:664
+msgid " - Invalid URL"
+msgstr " - 無効なURL"
+
+#: ../../portable/frontends/html/templatedisplay.py:665
 msgid ""
-"Would you like to delete this file or just remove its entry from the Library?"
+"The address you entered is not a valid URL.\n"
+"Please double check and try again.\n"
+"\n"
 msgstr ""
+"あなたが入れたアドレスは、有効なURLではありません。\n"
+"再確認してから、もう一度試みて下さい。\n"
+"\n"
 
-#: ../../portable/item.py:526
+#: ../../portable/frontends/html/templatedisplay.py:691
+msgid "$shortAppName - Add Channel"
+msgstr "$shortAppName - チャンネルを追加する"
+
+#: ../../portable/frontends/html/templatedisplay.py:691
+msgid "Enter the URL of the channel to add"
+msgstr "追加するチャンネルのURLを入力する"
+
+#: ../../portable/frontends/html/templatedisplay.py:712
+msgid "$shortAppName - Add Miro Guide"
+msgstr "$shortAppName - Miroガイドを加える"
+
+#: ../../portable/frontends/html/templatedisplay.py:712
+msgid "Enter the URL of the Miro Guide to add"
+msgstr "追加するMiroガイドのURLを入力する"
+
+#: ../../portable/frontends/html/templatedisplay.py:718
+msgid "$shortAppName - Download Video"
+msgstr "$shortAppName - ビデオをダウンロードする"
+
+#: ../../portable/frontends/html/templatedisplay.py:718
+msgid "Enter the URL of the video to download"
+msgstr "ダウンロードするビデオのURLを入力する"
+
+#: ../../portable/frontends/html/contextmenu.py:104
+msgid "Update Channels Now"
+msgstr "チャネルをアップデートする"
+
+#: ../../portable/frontends/html/contextmenu.py:128
+#, python-format
+msgid "%d Downloaded Items"
+msgstr "%d 項目のダウンロード"
+
+#: ../../portable/frontends/html/contextmenu.py:130
+#: ../../portable/frontends/html/contextmenu.py:210
+msgid "Play"
+msgstr "再生"
+
+#: ../../portable/frontends/html/contextmenu.py:131
+#: ../../portable/frontends/html/contextmenu.py:213
+msgid "Add to new playlist"
+msgstr "新プレイリストに追加する"
+
+#: ../../portable/frontends/html/contextmenu.py:133
+#: ../../portable/frontends/html/contextmenu.py:206
+msgid "Remove From Playlist"
+msgstr "プレイリストから除く"
+
+#: ../../portable/frontends/html/contextmenu.py:135
+#: ../../portable/frontends/html/contextmenu.py:208
+msgid "Remove From the Library"
+msgstr "ライブラリから除く"
+
+#: ../../portable/frontends/html/contextmenu.py:141
+#: ../../portable/frontends/html/contextmenu.py:217
+msgid "Mark as Unwatched"
+msgstr "未鑑賞としてマークする"
+
+#: ../../portable/frontends/html/contextmenu.py:146
+#: ../../portable/frontends/html/contextmenu.py:219
+msgid "Mark as Watched"
+msgstr "鑑賞済みとマークする"
+
+#: ../../portable/frontends/html/contextmenu.py:151
+#, python-format
+msgid "%d Available Items"
+msgstr "%d 個の項目が可能"
+
+#: ../../portable/frontends/html/contextmenu.py:152
+#: ../../portable/frontends/html/contextmenu.py:226
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:128
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:140
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:292
+#: ../../portable/frontends/html/compiled_templates/download_item_thumbnail.py:79
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:91
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:103
+#: ../../portable/dialogs.py:93
+msgid "Download"
+msgstr "ダウンロード"
+
+#: ../../portable/frontends/html/contextmenu.py:157
+#, python-format
+msgid "%d Downloading Items"
+msgstr "%d 個のダウンロード項目があります"
+
+#: ../../portable/frontends/html/contextmenu.py:159
+#: ../../portable/frontends/html/contextmenu.py:224
+msgid "Cancel Download"
+msgstr "ダウンロードを取り消す"
+
+#: ../../portable/frontends/html/contextmenu.py:161
+#: ../../portable/frontends/html/contextmenu.py:224
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:275
+#: ../../portable/frontends/html/compiled_templates/download_item_thumbnail.py:62
+msgid "Pause Download"
+msgstr "ダウンロードを一時停止する"
+
+#: ../../portable/frontends/html/contextmenu.py:164
+#: ../../portable/frontends/html/contextmenu.py:222
+msgid "Restart Upload"
+msgstr "アップロードを再開する"
+
+#: ../../portable/frontends/html/contextmenu.py:170
+msgid "Update Channel Now"
+msgstr "チャンネルを今更新する"
+
+#: ../../portable/frontends/html/contextmenu.py:172
+#: ../../portable/frontends/html/contextmenu.py:196
+msgid "Copy URL to clipboard"
+msgstr "クリップボードいURLをコピーする"
+
+#: ../../portable/frontends/html/contextmenu.py:173 ../../portable/feed.py:830
+msgid "Rename Channel"
+msgstr "チャンネル名を変更する"
+
+#: ../../portable/frontends/html/contextmenu.py:177
+msgid "Revert Title to Default"
+msgstr "標準のタイトルに戻す"
+
+#: ../../portable/frontends/html/contextmenu.py:183
+#: ../../portable/folder.py:142
+msgid "Rename Channel Folder"
+msgstr "チャンネル・フォルダの名前を変更します"
+
+#: ../../portable/frontends/html/contextmenu.py:189
+#: ../../portable/folder.py:213
+msgid "Rename Playlist Folder"
+msgstr "プレイリスト・フォルダの名前を変更します"
+
+#: ../../portable/frontends/html/contextmenu.py:212
+msgid "Play Just This Video"
+msgstr "このビデオのみ再生する"
+
+#: ../../portable/frontends/html/contextmenu.py:231
+#: ../../portable/playlist.py:218
+msgid "Rename Playlist"
+msgstr "プレイリストの名前を変更する"
+
+#: ../../portable/frontends/html/compiled_templates/channel_content.py:36
+#: ../../portable/frontends/html/compiled_templates/channel_folder.py:200
+#: ../../portable/frontends/html/compiled_templates/channel.py:382
+msgid "Save Search"
+msgstr "検索結果を保存する"
+
+#: ../../portable/frontends/html/compiled_templates/channel_content.py:102
+#: ../../portable/frontends/html/compiled_templates/channel_folder.py:266
+#: ../../portable/frontends/html/compiled_templates/channel.py:448
+msgid "Full Channel"
+msgstr "フル・チャンネル"
+
+#: ../../portable/frontends/html/compiled_templates/channel_content.py:111
+#: ../../portable/frontends/html/compiled_templates/channel_content.py:194
+#: ../../portable/frontends/html/compiled_templates/channel_folder.py:275
+#: ../../portable/frontends/html/compiled_templates/channel_folder.py:358
+#: ../../portable/frontends/html/compiled_templates/channel.py:457
+#: ../../portable/frontends/html/compiled_templates/channel.py:540
+msgid "${len} Videos"
+msgstr "${len} ビデオ"
+
+#: ../../portable/frontends/html/compiled_templates/channel_content.py:185
+#: ../../portable/frontends/html/compiled_templates/channel_folder.py:349
+#: ../../portable/frontends/html/compiled_templates/channel.py:531
+msgid "Downloaded"
+msgstr "ダウンロード済み"
+
+#: ../../portable/frontends/html/compiled_templates/feed_settings.py:48
+#: ../../portable/frontends/html/compiled_templates/channel.py:188
+msgid "remove channel"
+msgstr "チャンネルを除く"
+
+#: ../../portable/frontends/html/compiled_templates/feed_settings.py:57
+#: ../../portable/frontends/html/compiled_templates/channel.py:197
+msgid "Settings: ${title}"
+msgstr "${title} を設定する"
+
+#: ../../portable/frontends/html/compiled_templates/feed_settings.py:59
+#: ../../portable/frontends/html/compiled_templates/channel.py:199
+msgid "Videos expire after"
+msgstr "ビデオの期限は"
+
+#: ../../portable/frontends/html/compiled_templates/feed_settings.py:63
+#: ../../portable/frontends/html/compiled_templates/channel.py:203
+msgid "Default"
+msgstr "標準"
+
+#: ../../portable/frontends/html/compiled_templates/feed_settings.py:70
+#: ../../portable/frontends/html/compiled_templates/channel.py:210
+msgid "default"
+msgstr "標準"
+
+#: ../../portable/frontends/html/compiled_templates/feed_settings.py:136
+#: ../../portable/frontends/html/compiled_templates/channel.py:276
 msgid ""
-"This item is a folder.  When you remove a folder, any items inside that "
-"folder will be deleted."
-msgstr ""
+"Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
+"unwatched."
+msgstr "${maxnew} ${maxnew2} 以上のビデオが未鑑賞になっているときには、自動ダウンロードを使わないで下さい。"
 
-#: ../../portable/item.py:556
-#, python-format
-msgid "%d minutes"
-msgstr "%d分"
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:53
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:329
+msgid "Saved"
+msgstr "保存済み"
 
-#: ../../portable/item.py:566
-#, python-format
-msgid "Expires in %s"
-msgstr ""
+#: ../../portable/frontends/html/compiled_templates/playlist_folder.py:61
+msgid "Empty Playlist Folder"
+msgstr "空のプレイリストフォルダ"
 
-#: ../../portable/item.py:578
-#, python-format
-msgid "Will retry in %s"
-msgstr ""
-
-#: ../../portable/item.py:580
-msgid "Paused"
-msgstr ""
-
-#: ../../portable/item.py:982
-msgid "TORRENT"
-msgstr ""
-
-#: ../../portable/item.py:984
-msgid "WEB PAGE"
-msgstr ""
-
-#: ../../portable/item.py:994
-msgid "Total Down:"
-msgstr ""
-
-#: ../../portable/item.py:997
-msgid "Error:"
-msgstr ""
-
-#: ../../portable/item.py:1006
-msgid "Seeders:"
-msgstr ""
-
-#: ../../portable/item.py:1008
-msgid "Leechers:"
-msgstr ""
-
-#: ../../portable/item.py:1010
-msgid "Down Rate:"
-msgstr ""
-
-#: ../../portable/item.py:1011
-msgid "Down Total:"
-msgstr ""
-
-#: ../../portable/item.py:1013
-msgid "Up Rate:"
-msgstr ""
-
-#: ../../portable/item.py:1014
-msgid "Up Total:"
-msgstr ""
-
-#: ../../portable/item.py:1024
-msgid "Web page:"
-msgstr ""
-
-#: ../../portable/item.py:1024
-msgid "permalink"
-msgstr ""
-
-#: ../../portable/item.py:1028
-msgid "File link:"
-msgstr ""
-
-#: ../../portable/item.py:1028
-msgid "direct link to file"
-msgstr ""
-
-#: ../../portable/item.py:1030
-msgid "File type:"
-msgstr ""
-
-#: ../../portable/item.py:1037 ../../portable/item.py:1040
-#: ../../portable/item.py:1042
-msgid "License:"
-msgstr ""
-
-#: ../../portable/item.py:1040 ../../portable/item.py:1042
-msgid "see permalink"
-msgstr ""
-
-#: ../../portable/item.py:1049
-msgid "REVEAL LOCAL FOLDER"
-msgstr ""
-
-#: ../../portable/item.py:1051
-msgid "REVEAL LOCAL FILE"
-msgstr ""
-
-#: ../../portable/item.py:1053
-msgid "Filename:"
-msgstr ""
-
-#: ../../portable/item.py:1060
-msgid "Down Total"
-msgstr ""
-
-#: ../../portable/item.py:1062
-msgid "Up Total"
-msgstr ""
-
-#: ../../portable/item.py:1080
-msgid "Item Details"
-msgstr ""
-
-#: ../../portable/item.py:1087
-msgid "Torrent Details"
-msgstr ""
-
-#: ../../portable/item.py:1089
-msgid "Torrent Details <i>stopped</i>"
-msgstr ""
-
-#: ../../portable/item.py:1093
-msgid "Download Details"
-msgstr ""
-
-#: ../../portable/item.py:1310
-msgid "downloading..."
-msgstr ""
-
-#: ../../portable/item.py:1317 ../../portable/item.py:1320
-#, python-format
-msgid "%s remaining"
-msgstr ""
-
-#: ../../portable/item.py:1329
-msgid "starting up..."
-msgstr ""
-
-#: ../../portable/item.py:1878
-#, python-format
-msgid "Removing %s items"
-msgstr ""
-
-#: ../../portable/item.py:1880
+#: ../../portable/frontends/html/compiled_templates/playlist_folder.py:73
 msgid ""
-"One or more of these videos was not downloaded from a channel.  Would you "
-"like to delete these items or just remove their entries from the Library?"
-msgstr ""
+"This folder contains ${count} playlists, but the playlists do not contain "
+"any items."
+msgstr "このフォルダには ${count} 個のプレイリストがありますが、それらのプレイリストには何も入っていません。"
 
-#: ../../portable/item.py:1888
+#: ../../portable/frontends/html/compiled_templates/playlist_folder.py:78
+msgid "Drag playlists to this folder to add them."
+msgstr "プレイリストをドラッグして、このフォルダに追加します"
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:55
+#: ../../portable/frontends/html/compiled_templates/video_info.py:46
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:59
+msgid "EMAIL A FRIEND"
+msgstr "友達へ電子メールを送る"
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:62
+#: ../../portable/frontends/html/compiled_templates/video_info.py:53
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:66
+msgid "PERMALINK"
+msgstr "パーマリンク"
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:69
+#: ../../portable/frontends/html/compiled_templates/video_info.py:60
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:73
+msgid "COMMENTS"
+msgstr "コメント"
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:81
+#: ../../portable/frontends/html/compiled_templates/video_info.py:72
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:85
+msgid "KEEP"
+msgstr "保存する"
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:88
+#: ../../portable/frontends/html/compiled_templates/video_info.py:79
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:92
+msgid "ADD TO LIBRARY"
+msgstr "ライブラリに追加する"
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:98
+#: ../../portable/frontends/html/compiled_templates/video_info.py:89
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:102
+msgid "DELETE"
+msgstr "削除する"
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:114
+msgid "Miro - External Playback Template"
+msgstr "Miro - 外部再生テンプレート"
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:124
+msgid "Continue To Next Video"
+msgstr "続けて次のビデオへ"
+
+#: ../../portable/frontends/html/compiled_templates/download.py:39
+#, python-format
+msgid "%0.1f KB/s uploading"
+msgstr "%0.1f KB/s でアップロード中"
+
+#: ../../portable/frontends/html/compiled_templates/download.py:42
+#, python-format
+msgid "%0.1f KB/s downloading"
+msgstr "%0.1f KB/s でダウンロード中"
+
+#: ../../portable/frontends/html/compiled_templates/download.py:140
+msgid "External Downloads"
+msgstr "外部ダウンロード"
+
+#: ../../portable/frontends/html/compiled_templates/download.py:142
+msgid "Clear Completed and Failed Downloads"
+msgstr "完了あるいは失敗したダウンロードをはずす"
+
+#: ../../portable/frontends/html/compiled_templates/download.py:155
+msgid "Seeding Torrents"
+msgstr "トレントのシーディング中"
+
+#: ../../portable/frontends/html/compiled_templates/download.py:177
+msgid "${size} free for downloads"
+msgstr "${size} がダウンロード用に空いています"
+
+#: ../../portable/frontends/html/compiled_templates/download.py:186
+msgid "${size} free on disk"
+msgstr "${size} ga"
+
+#: ../../portable/frontends/html/compiled_templates/download.py:464
+#: ../../portable/frontends/html/compiled_templates/new.py:138
+#: ../../portable/frontends/html/compiled_templates/library.py:137
+msgid "Find"
+msgstr "探す"
+
+#: ../../portable/frontends/html/compiled_templates/download.py:466
+#: ../../portable/tabs.py:57
+msgid "Downloading"
+msgstr "ダウンロード中"
+
+#: ../../portable/frontends/html/compiled_templates/download.py:485
+msgid "Pause All"
+msgstr "全てを一時停止する"
+
+#: ../../portable/frontends/html/compiled_templates/download.py:503
+msgid "Resume All"
+msgstr "全てを再開する"
+
+#: ../../portable/frontends/html/compiled_templates/download.py:516
+msgid "Channel Downloads"
+msgstr "チャンネルのダウンロード"
+
+#: ../../portable/frontends/html/compiled_templates/channel_folder.py:172
+msgid "Empty Channel Folder"
+msgstr "チャンネル・フォルダを空にする"
+
+#: ../../portable/frontends/html/compiled_templates/channel_folder.py:174
+msgid "Drag channels to this folder to add them."
+msgstr "チャンネルを追加するために、このフォルダにそれをドラッグして下さい"
+
+#: ../../portable/frontends/html/compiled_templates/unittest/translationtest.py:45
+msgid "Simple translation"
+msgstr "簡単な翻訳"
+
+#: ../../portable/frontends/html/compiled_templates/unittest/translationtest.py:59
+msgid "truck stop in a ${can}"
+msgstr "${can} でトラックが停止します"
+
+#: ../../portable/frontends/html/compiled_templates/unittest/translationtest.py:63
 msgid ""
-"One or more of these items is a folder.  When you remove or delete a folder, "
-"any items inside that folder will also be removed or deleted."
+"This is a ${car} and this is a ${truck} <span>This text is <b "
+"style=\"color:red\">raw</b> text</span>"
 msgstr ""
+"これは ${car} で、　これは ${truck} です。<span> このテキストは <b style=\"color:red\">生の</b> "
+"テキストです。</span>"
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:75
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:38
+msgid "Date:"
+msgstr "日付:"
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:82
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:45
+msgid "Length:"
+msgstr "長さ:"
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:89
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:52
+msgid "Size:"
+msgstr "サイズ:"
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:98
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:61
+msgid "Show Details"
+msgstr "詳細を表示する"
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:105
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:68
+msgid "Hide Details"
+msgstr "詳細を隠す"
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:153
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:116
+msgid "Download Torrent"
+msgstr "トレントをダウンロード"
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:230
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:193
+msgid "Pending Auto Download"
+msgstr "自動ダウンロードを保留中"
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:244
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:207
+msgid "STOP SEEDING"
+msgstr "シーディングを停止する"
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:282
+#: ../../portable/frontends/html/compiled_templates/download_item_thumbnail.py:69
+msgid "Resume Download"
+msgstr "ダウンロードを再開する"
+
+#: ../../portable/frontends/html/compiled_templates/new.py:146
+msgid "Recent Videos"
+msgstr "最近のビデオ"
+
+#: ../../portable/frontends/html/compiled_templates/playlist.py:58
+msgid "Empty Playlist"
+msgstr "空のプレイリスト"
+
+#: ../../portable/frontends/html/compiled_templates/playlist.py:60
+msgid "Drag downloaded videos to this playlist to add them."
+msgstr "ビデオをドラッグ&ドロップして、プレイリストに追加して下さい。"
+
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:139
+msgid ""
+"Miro can't play this file. You may be able to open it with a different "
+"program.<br></br><br></br><strong>Filename:</strong> "
+"${filename}<br></br><strong>File type:</strong> ${format}"
+msgstr ""
+"Miroはこのファイルを再生できません。他のプログラムで再生できるかもしれません：<br></br><br></br><strong>ファイル名：</st"
+"rong> ${filename}<br></br><strong>ファイル・タイプ：</strong> ${format}"
+
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:143
+msgid "REVEAL FILE"
+msgstr "ファイルを示す"
+
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:147
+msgid "Play Externally"
+msgstr "外部で再生する"
+
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:156
+msgid "Skip >> ${countdown}"
+msgstr "スキップ >> ${countdown}"
+
+#: ../../portable/frontends/html/compiled_templates/search.py:49
+#: ../../portable/frontends/html/compiled_templates/channel.py:293
+#: ../../portable/extrastrings.py:33 ../../portable/feed.py:2393
+#: ../../portable/feed.py:2483
+msgid "Search"
+msgstr "検索する"
+
+#: ../../portable/frontends/html/compiled_templates/search.py:74
+msgid "No videos found.<br></br>Enter a query in the search field above."
+msgstr "ビデオは見つかりませんでした。<br></br>上の検索欄で検索して下さい。"
+
+#: ../../portable/frontends/html/compiled_templates/search.py:79
+msgid "Searching..."
+msgstr "検索中..."
+
+#: ../../portable/frontends/html/compiled_templates/search.py:84
+msgid ""
+"No matching videos found.<br></br>Enter a different query in the search "
+"field above."
+msgstr "該当するビデオが見つかりませんでした。<br></br>上の検索欄で、異なる言葉で検索して下さい。"
+
+#: ../../portable/frontends/html/compiled_templates/search.py:93
+msgid "Save as a Channel"
+msgstr "チャンネルとして保存する"
+
+#: ../../portable/frontends/html/compiled_templates/search.py:95
+msgid ""
+"<h3>Results for \"<span i18n:name=\"query\" "
+"t:replace=\"feed.lastQuery\"></span>\"</h3>"
+msgstr ""
+"<h3>\"<span i18n:name=\"query\" "
+"t:replace=\"feed.lastQuery\"></span>\"の結果</h3>"
+
+#: ../../portable/frontends/html/compiled_templates/multi_channel.py:59
+msgid ""
+"${count} Channel Folders Selected<br></br>(contains ${containedcount} "
+"channels)"
+msgstr ""
+"${count} 個のチャンネル・フォルダが選択されました<br></br>( ${containedcount} 個のチャンネルが含まれています)"
+
+#: ../../portable/frontends/html/compiled_templates/multi_channel.py:71
+msgid "${count} Channels Selected"
+msgstr "${count} 個のチャンネルが選択されました"
+
+#: ../../portable/frontends/html/compiled_templates/multi_channel.py:76
+msgid "Put Into a New Folder"
+msgstr "新しいフォルダに入れる"
+
+#: ../../portable/frontends/html/compiled_templates/multi_channel.py:83
+msgid "Delete All"
+msgstr "全て削除する"
+
+#: ../../portable/frontends/html/compiled_templates/multi_playlist.py:59
+msgid ""
+"${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
+"playlists)"
+msgstr ""
+"${count}個のプレイリスト・フォルダが選択されました<br></br>( ${containedcount} 個のプレイリストが含まれています)"
+
+#: ../../portable/frontends/html/compiled_templates/multi_playlist.py:71
+msgid "${count} Playlists Selected"
+msgstr "${count} 個のプレイリストが選択されています"
+
+#: ../../portable/frontends/html/compiled_templates/channel.py:318
+msgid "Visit Website"
+msgstr "ウェブ"
+
+#: ../../portable/frontends/html/compiled_templates/channel.py:325
+msgid "Send to a Friend"
+msgstr "友達に送る"
+
+#: ../../portable/frontends/html/compiled_templates/channel.py:332
+msgid "Auto Download"
+msgstr "自動ダウンロード"
+
+#: ../../portable/frontends/html/compiled_templates/channel.py:746
+msgid "Looking for videos at this URL"
+msgstr "このURL（アドレス）でのビデオを探す"
+
+#: ../../portable/frontends/html/compiled_templates/library.py:145
+#: ../../portable/tabs.py:54
+msgid "Library"
+msgstr "ライブラリ"
+
+#: ../../portable/frontends/html/main.py:138 ../../portable/startup.py:236
+msgid "Video Directory Missing"
+msgstr "ビデオ・ディレクトリが見つかりません。"
+
+#: ../../portable/frontends/html/main.py:139
+msgid ""
+"\n"
+"    Miro can't find your primary video directory.  This may be because it's  "
+"   located on an external drive that is currently disconnected.\n"
+"\n"
+"    If you continue, the video directory will be reset to a location on this "
+"    drive (this will cause you to lose some details about the videos on the  "
+"   external drive).  You can also quit, connect the drive, and relaunch Miro."
+msgstr ""
+"\n"
+"    MIroはあなたの主ビデオ・ディレクトリを見つけられません。これは、現在つながっていない外付けドライブにあるかれかもしれません。\n"
+"\n"
+"もし、このまま続けると、そのビデオ・ディレクトリはこのドライブ上の場所にリセットされることになります（このことで外付けのドライブにあるビデオの詳細のある部"
+"分が失われることになります）。　続けないで止めて、そのドライブをつなげ、Miroを再起動することもできます。"
+
+#: ../../portable/frontends/html/main.py:197 ../../portable/theme.py:127
+msgid "Custom Channels"
+msgstr "カスタム・チャンネル"
+
+#: ../../portable/frontends/html/main.py:197 ../../portable/theme.py:127
+msgid ""
+"You are running a version of $longAppName with a custom set of channels."
+msgstr "あなたは、チャンネルがカスタム・セットになっている$longAppNameのバージョンを動かしています。"
+
+#: ../../portable/frontends/html/main.py:276 ../../portable/httpclient.py:151
+msgid "Internal Error"
+msgstr "内部エラー"
+
+#: ../../portable/frontends/html/main.py:276
+msgid ""
+"Miro has encountered an internal error. You can help us track down this "
+"problem and fix it by submitting an error report."
+msgstr "Miroha内部エラーに遭遇しました。あなたはエラー・レポートを提出して、この問題を私たちが追求し解決するのを助けることができます。"
+
+#: ../../portable/frontends/html/main.py:276
+msgid ""
+"Include entire program database including all video and channel metadata "
+"with crash report"
+msgstr "クラッシュ・レポートには、全てのビデオとチャンネルのメタデータを含む全てのプログラム・データベースを入れて下さい。"
+
+#: ../../portable/frontends/html/main.py:276
+msgid "Describe what you were doing that caused this error"
+msgstr "このエラーが生じたときにあなたがしていたことを記述してください。"
+
+#: ../../portable/frontends/html/main.py:291
+#, python-format
+msgid "%s Version Alert"
+msgstr "%s バージョンアップのお知らせ"
+
+#: ../../portable/frontends/html/main.py:292
+#, python-format
+msgid "A new version of %s is available. Would you like to download it now?"
+msgstr "%s の新しいバージョンが利用可能になっています。今それをダウンロードしたいですか？"
+
+#: ../../portable/frontends/html/main.py:297
+#, python-format
+msgid "%s Version Check"
+msgstr "%s バージョンのチェック"
+
+#: ../../portable/frontends/html/main.py:298
+#, python-format
+msgid "%s is up to date."
+msgstr "%sは最新です。"
+
+#: ../../portable/frontends/html/main.py:316
+msgid "Are you sure you want to quit?"
+msgstr "本当に終了してもよろしいですか？"
+
+#: ../../portable/frontends/html/main.py:318
+msgid ""
+"Miro is still uploading your crash report. If you quit now the upload will "
+"be canceled.  Quit Anyway?"
+msgstr ""
+"Miroはまだあなたのクラッシュ・レポートをアップロード中です。もし今終了すると、そのアップロードは取り消されます。それでも終了しますか？"
+
+#: ../../portable/frontends/html/main.py:323
+#, python-format
+msgid "You have %d download still in progress.  Quit Anyway?"
+msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
+msgstr[0] "まだ %d 個のダウンロード中です。それでも終了しますか？"
+
+#: ../../portable/frontends/html/main.py:347
+msgid "Import OPML File"
+msgstr "OPMLファイルをインポートする"
+
+#: ../../portable/frontends/html/main.py:349
+msgid "OPML Files"
+msgstr "OPMLファイル"
+
+#: ../../portable/frontends/html/main.py:354
+msgid "Export OPML File"
+msgstr "OPMLファイルをエクスポートする"
+
+#: ../../portable/util.py:267
+#, python-format
+msgid "%1.1fGB"
+msgstr "%1.1fGB"
+
+#: ../../portable/util.py:269
+#, python-format
+msgid "%dGB"
+msgstr "%dGB"
+
+#: ../../portable/util.py:273
+#, python-format
+msgid "%1.1fMB"
+msgstr "%1.1fMB"
+
+#: ../../portable/util.py:275
+#, python-format
+msgid "%dMB"
+msgstr "%dMB"
+
+#: ../../portable/util.py:279
+#, python-format
+msgid "%1.1fKB"
+msgstr "%1.1fKB"
+
+#: ../../portable/util.py:281
+#, python-format
+msgid "%dKB"
+msgstr "%dKB"
+
+#: ../../portable/util.py:285
+#, python-format
+msgid "%1.1fB"
+msgstr "%1.1fB"
+
+#: ../../portable/util.py:287
+#, python-format
+msgid "%dB"
+msgstr "%dB"
+
+#: ../../portable/iheartmiro.py:134
+#, python-format
+msgid ""
+"An Effortless Way to Help Miro\n"
+"\n"
+"Miro is open-source and built by a non-profit.  We need your help to "
+"continue our work.\n"
+"\n"
+"I Heart Miro is a simple %s extension that gives a referral fee to the Miro "
+"organization when you shop at Amazon.  You'll never notice it, it doesn't "
+"cost you a thing, and it's easy to uninstall at any time.\n"
+"\n"
+"%s"
+msgstr ""
+"労せずしてMiroを支援する方法\n"
+"\n"
+"Miroは、オープン・ソースで、非営利で作られています。続けるためには、あなたの支援を必要です。\n"
+"\n"
+"I Heart Miro は、あなたがAmaxonで買い物をすると、そこからの照会によりMiroの組織に照会料を支払うための簡単な %s "
+"の拡張です。　あなたがそれに気がつくことはないでしょうし、費用もかかりませんし、また、いつでも簡単に拡張の設定をはずすことができます。\n"
+"\n"
+"%s"
+
+#: ../../portable/iheartmiro.py:142
+msgid "Install iHeartMiro?"
+msgstr "iHearMiroをインストールしますか？"
+
+#: ../../portable/dl_daemon/download.py:457
+msgid "Error"
+msgstr "エラー"
+
+#: ../../portable/dl_daemon/download.py:544
+#, python-format
+msgid "Could not write to %s"
+msgstr "%sへ書き込みできませんでした"
+
+#: ../../portable/dl_daemon/download.py:564
+#: ../../portable/dl_daemon/download.py:772
+msgid "Not enough disk space"
+msgstr "ディスクの容量が足りません"
+
+#: ../../portable/dl_daemon/download.py:565
+#: ../../portable/dl_daemon/download.py:773
+#, python-format
+msgid "%s MB required to store this video"
+msgstr "このビデオを保存するには%sMBの空き容量が必要です"
+
+#: ../../portable/dl_daemon/download.py:783
+msgid "BitTorrent failure"
+msgstr "ビットトレントの失敗"
+
+#: ../../portable/dl_daemon/download.py:784
+msgid "BitTorrent failed to startup"
+msgstr "ビット・トレントの起動が失敗しました"
+
+#: ../../portable/dl_daemon/download.py:957
+msgid "Corrupt Torrent"
+msgstr "トレントが壊れています"
+
+#: ../../portable/dl_daemon/download.py:958
+#, python-format
+msgid "The torrent file at %s was not valid"
+msgstr "%sにあるトレントファイルは有効でありません"
+
+#: ../../portable/dl_daemon/download.py:983
+msgid "Torrent file deleted"
+msgstr "トレントファイルが削除されました"
+
+#: ../../portable/dl_daemon/download.py:984
+msgid "The torrent file for this item was deleted outside of Miro."
+msgstr "この項目のトレント・ファイルはMiroの外側で削除されました。"
+
+#: ../../portable/controller.py:197 ../../portable/controller.py:211
+#: ../../portable/controller.py:255 ../../portable/controller.py:281
+#: ../../portable/controller.py:301
+#, python-format
+msgid "Remove %s"
+msgstr "%s を削除する"
+
+#: ../../portable/controller.py:198
+#, python-format
+msgid "Are you sure you want to remove the guide %s?"
+msgstr "ガイド %s を削除しますか？"
+
+#: ../../portable/controller.py:212
+#, python-format
+msgid "Are you sure you want to remove %s"
+msgstr "%sを除きますが、よろしいですか？"
+
+#: ../../portable/controller.py:215 ../../portable/controller.py:260
+#: ../../portable/controller.py:286 ../../portable/controller.py:305
+#, python-format
+msgid "Remove %s channels"
+msgstr "%s チャンネルを除きます"
+
+#: ../../portable/controller.py:217
+#, python-format
+msgid "Are you sure you want to remove these %s playlists"
+msgstr "%s プレイリストを除きますが、よろしいですか？"
+
+#: ../../portable/controller.py:256
+msgid ""
+"What would you like to do with the videos in this channel that you've "
+"downloaded?"
+msgstr "このチャンネルにあるダウンロードしたビデオをどのようにしたいですか？"
+
+#: ../../portable/controller.py:261
+msgid ""
+"What would you like to do with the videos in these channels that you've "
+"downloaded?"
+msgstr "これらのチャンネルにあるダウンロードしたビデオをどのようにしたいですか？"
+
+#: ../../portable/controller.py:282
+#, python-format
+msgid ""
+"Are you sure you want to remove %s?  Any downloads in progress will be "
+"canceled."
+msgstr "%s を除いてもよろしいですか？　ダウンロード中のものは取り消されます。"
+
+#: ../../portable/controller.py:287
+#, python-format
+msgid ""
+"Are you sure you want to remove these %s channels?  Any downloads in "
+"progress will be canceled."
+msgstr "これらの %s チャンネルを除いてもよろしいですか？　ダウンロード中のものは取り消されます。"
+
+#: ../../portable/controller.py:302
+#, python-format
+msgid "Are you sure you want to remove %s?"
+msgstr "%s を除いてもよろしいですか？"
+
+#: ../../portable/controller.py:306
+#, python-format
+msgid "Are you sure you want to remove these %s channels?"
+msgstr "これらの %s チャンネルを除いてもよろしいですか？"
+
+#: ../../portable/controller.py:319
+#, python-format
+msgid "Stop watching %s"
+msgstr "%s を観るのを停止する"
+
+#: ../../portable/controller.py:320
+#, python-format
+msgid "Are you sure you want to stop watching %s?"
+msgstr "%s を観るのを停止してもよろしいですか？"
+
+#: ../../portable/controller.py:323
+#, python-format
+msgid "Stop watching %s directories"
+msgstr "%s ディレクトリを観るのを停止する"
+
+#: ../../portable/controller.py:324
+#, fuzzy, python-format
+msgid "Are you sure you want to stop watching these %s directories?"
+msgstr "%s ディレクトリを観るのを停止してもよろしいですか？"
+
+#: ../../portable/controller.py:498
+msgid "Error Saving Video"
+msgstr "ビデオの保存に関するエラー"
+
+#: ../../portable/controller.py:500
+#, python-format
+msgid ""
+"An error occured while trying to save %s.  Please check that the file has "
+"not been deleted and try again."
+msgstr "%s を保存しているときにエラーが起きました。そのファイルが削除されていないかを確認してから再度試して下さい。"
+
+#: ../../portable/downloader.py:234
+msgid "activity"
+msgstr "活動"
+
+#: ../../portable/downloader.py:268 ../../portable/httpclient.py:138
+#: ../../portable/httpclient.py:167
+msgid "File not found"
+msgstr "ファイルが見つかりませんでした"
+
+#: ../../portable/downloader.py:269
+msgid "Flash URL Scraping Error"
+msgstr "Flash URLの処理エラー"
+
+#: ../../portable/downloader.py:445
+msgid "starting up"
+msgstr "起動中"
+
+#: ../../portable/httpclient.py:89
+#, python-format
+msgid "Error: %s"
+msgstr "エラー: %s"
+
+#: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
+msgid "Can't connect"
+msgstr "接続できません"
+
+#: ../../portable/httpclient.py:105
+#, python-format
+msgid "Connection Error: %s"
+msgstr "接続エラー: %s"
+
+#: ../../portable/httpclient.py:111
+msgid "SSL connection error"
+msgstr "SSL接続エラー"
+
+#: ../../portable/httpclient.py:115
+msgid "HTTP error"
+msgstr "HTTPエラー"
+
+#: ../../portable/httpclient.py:118
+#, python-format
+msgid "Bad Status Line: %s"
+msgstr "不正なステータス・ライン：%s"
+
+#: ../../portable/httpclient.py:122
+#, python-format
+msgid "Bad Header Line: %s"
+msgstr "不正なヘッダ・ライン：%s"
+
+#: ../../portable/httpclient.py:126
+#, python-format
+msgid "Bad Chunk size: %s"
+msgstr "不正なチャンク・サイズ：%s"
+
+#: ../../portable/httpclient.py:130
+#, python-format
+msgid "Expected CRLF got: %r"
+msgstr "CRLFが入るべきところに %r が入りました。"
+
+#: ../../portable/httpclient.py:133
+#, python-format
+msgid "%s closed connection"
+msgstr "%s が接続を閉じました"
+
+#: ../../portable/httpclient.py:139
+msgid "Got 404 status code"
+msgstr "４０４のステータス・コードが返ってきました。"
+
+#: ../../portable/httpclient.py:141
+#, python-format
+msgid "Bad Status Code: %s"
+msgstr "不正なステータス・コード：%s"
+
+#: ../../portable/httpclient.py:146
+msgid "Authorization failed"
+msgstr "認証に失敗しました"
+
+#: ../../portable/httpclient.py:152
+msgid "Pipeline request never started"
+msgstr "パイプライン要求は一度もなされていません。"
+
+#: ../../portable/httpclient.py:156
+msgid "Timeout"
+msgstr "タイムアウト"
+
+#: ../../portable/httpclient.py:157
+#, python-format
+msgid "Connection to %s timed out"
+msgstr "%s への接続はタイムアウトしました"
+
+#: ../../portable/httpclient.py:161
+msgid "Invalid URL"
+msgstr "URLが無効です"
+
+#: ../../portable/httpclient.py:162
+#, python-format
+msgid "\"%s\" is not a valid URL"
+msgstr "”%s”は正しいURLではありません"
+
+#: ../../portable/httpclient.py:168
+#, python-format
+msgid "The file: \"%s\" doesn't exist"
+msgstr "”%s”ha"
+
+#: ../../portable/httpclient.py:172
+msgid "Read error"
+msgstr "読み込みエラー"
+
+#: ../../portable/httpclient.py:173
+#, python-format
+msgid "Error while reading from \"%s\""
+msgstr "”%s”からの読み込み中のエラー"
+
+#: ../../portable/httpclient.py:369
+msgid "Unknown Error code"
+msgstr "不明なエラー・コード"
+
+#: ../../portable/httpclient.py:401
+msgid "Connection closed"
+msgstr "接続が閉じています"
+
+#: ../../portable/httpclient.py:823
+msgid "Unknown"
+msgstr "不明"
+
+#: ../../portable/httpclient.py:824
+msgid "Internal Error: Not ready to send"
+msgstr "内部エラー：送る準備ができていません"
+
+#: ../../portable/license.py:68
+msgid "license page"
+msgstr "ライセンスのページ"
+
+#: ../../portable/theme.py:138
+msgid "Starter Channels"
+msgstr "スターター・チャンネル"
+
+#: ../../portable/theme.py:154
+msgid "Example Playlist"
+msgstr "プレイリスト例"
+
+#: ../../portable/folder.py:144
+#, python-format
+msgid "Enter a new name for the channel folder %s"
+msgstr "チャンネル・フォルダ %s に新しい名前をつけます"
+
+#: ../../portable/folder.py:215
+#, python-format
+msgid "Enter a new name for the playlist folder %s"
+msgstr "プレイリスト・フォルダ %s に新しい名前をつけます"
+
+#: ../../portable/folder.py:223
+msgid "Create Channel Folder"
+msgstr "チャンネル・フォルダをつくります"
+
+#: ../../portable/folder.py:237
+msgid "Create Playlist Folder"
+msgstr "プレイリスト・フォルダをつくります"
+
+#: ../../portable/folder.py:238
+msgid "Enter a name for the new playlist folder"
+msgstr "新しいプレイリスト・フォルダに名前をつけます"
+
+#: ../../portable/dialogs.py:89
+msgid "Ignore"
+msgstr "無視する"
+
+#: ../../portable/dialogs.py:90
+msgid "Submit Crash Report"
+msgstr "クラッシュレポートを送信する"
+
+#: ../../portable/dialogs.py:91 ../../platform/gtk-x11/glade/miro.glade.h:52
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
+msgid "Migrate"
+msgstr "移動する"
+
+#: ../../portable/dialogs.py:92 ../../platform/gtk-x11/glade/miro.glade.h:39
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
+msgid "Don't Migrate"
+msgstr "移動しない"
+
+#: ../../portable/dialogs.py:94
+msgid "Remove Entry"
+msgstr "エントリを除く"
+
+#: ../../portable/dialogs.py:95
+msgid "Delete File"
+msgstr "ファイルを削除する"
+
+#: ../../portable/dialogs.py:96
+msgid "Delete Files"
+msgstr "ファイルを削除する"
+
+#: ../../portable/dialogs.py:97
+msgid "Keep Videos"
+msgstr "ビデオを保持する"
+
+#: ../../portable/dialogs.py:98
+msgid "Delete Videos"
+msgstr "ビデオを削除する"
+
+#: ../../portable/dialogs.py:100
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
+msgid "Create Channel"
+msgstr "チャンネルを作る"
+
+#: ../../portable/dialogs.py:101
+msgid "Add"
+msgstr "追加する"
+
+#: ../../portable/dialogs.py:102
+msgid "Add Into New Folder"
+msgstr "新しいフォルダに追加する"
+
+#: ../../portable/dialogs.py:105
+msgid "Not Now"
+msgstr "後で"
+
+#: ../../portable/dialogs.py:106
+msgid "Close to Tray"
+msgstr "トレイに閉じる"
+
+#: ../../portable/dialogs.py:107
+msgid "Launch Miro"
+msgstr "Miroを起動する"
+
+#: ../../portable/dialogs.py:108
+msgid "Download Anyway"
+msgstr "とにかくダウンロードする"
+
+#: ../../portable/dialogs.py:109
+msgid "Install iHeartMiro"
+msgstr "iHeartMiroをインストールする"
+
+#: ../../portable/dialogs.py:110
+msgid "Don't Install"
+msgstr "インストールをしない"
+
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:59
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
+msgid "New Search Channel"
+msgstr "新しい検索チャンネル"
+
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:30
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
+msgid "A search channel contains items that match a search term."
+msgstr "検索チャンネルには検索対象と合致した項目が入っています"
 
 #: ../../portable/startup.py:92
 msgid "Unknown Error"
-msgstr ""
+msgstr "不明なエラー"
 
 #: ../../portable/startup.py:93
 #, python-format
 msgid ""
 "An unkown error prevented Miro from startup.  Please file a bug report at %s"
-msgstr ""
+msgstr "不明なエラーによりMiroの起動が妨げられました。どうぞ%sでバグ報告して下さい。"
 
 #: ../../portable/startup.py:155
 msgid "Database too new"
-msgstr ""
+msgstr "データベースが新しすぎます"
 
 #: ../../portable/startup.py:156
 msgid ""
 "You have a database that was saved with a newer version of $shortAppName. "
 "You must download the latest version of $shortAppName and run that."
 msgstr ""
+"あなたが持っているデータベースは、$shortAppNameの新版で保存されたものです。$shortAppNameの最新版をダウンロードして、それで動作さ"
+"せて下さい。"
 
-#: ../../portable/startup.py:238
+#: ../../portable/startup.py:237
 msgid ""
 "\n"
-"Miro can't find your primary video directory.  This may be because it's "
-"located on an external drive that is currently disconnected."
+"Miro can't find your primary video directory $moviesDirectory.  This may be "
+"because it's located on an external drive that is currently disconnected.  "
+"Please, connect the drive or create the directory, then start Miro again."
 msgstr ""
+"\n"
+"Miroは、あなたの主ビデオ・ディレクトリである$moviesDirectoryを見つけることができません。これは、それが現在つながっていない外付けのドラ"
+"イブの場所にあるからかもしれません。どうぞ、そのドライブをつなぐか、そのディレクトリをつくってから、MIroを再度起動して下さい。"
 
-#: ../../portable/folder.py:144
+#: ../../portable/playlist.py:219
 #, python-format
-msgid "Enter a new name for the channel folder %s"
-msgstr ""
+msgid "Enter a new name for the playlist %s"
+msgstr "プレイリスト %s に新しい名前をつける"
 
-#: ../../portable/folder.py:215
+#: ../../portable/playlist.py:241
+msgid "Create Playlist"
+msgstr "プレイリストを作る"
+
+#: ../../portable/playlist.py:242
+msgid "Enter a name for the new playlist"
+msgstr "新しいプレイリストの名前を入力する"
+
+#: ../../portable/opml.py:155
+msgid "OPML Import failed"
+msgstr "OPMLのインポートに失敗しました"
+
+#: ../../portable/opml.py:156
+msgid "The selected OPML file appears to be invalid. Import was interrupted."
+msgstr "選択したOPMLファイルは無効のようです。インポートを中止しました。"
+
+#: ../../portable/opml.py:161
+msgid "OPML Import summary"
+msgstr "OPMLインポート結果の要約"
+
+#: ../../portable/opml.py:162
 #, python-format
-msgid "Enter a new name for the playlist folder %s"
-msgstr ""
+msgid "Successfully imported %d feed."
+msgid_plural "Successfully imported %d feeds."
+msgstr[0] "%d個のフィードのインポートに成功しました。"
 
-#: ../../portable/folder.py:223
-msgid "Create Channel Folder"
-msgstr ""
+#: ../../portable/opml.py:165
+#, python-format
+msgid "Skipped %d feed already present."
+msgid_plural "Skipped %d feeds already present."
+msgstr[0] "既にある %d 個のフィードをスキップしました。"
 
-#: ../../portable/folder.py:237
-msgid "Create Playlist Folder"
-msgstr ""
+#: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1262
+#, python-format
+msgid "%s database save succeeded"
+msgstr "%s データベースの保存に成功しました"
 
-#: ../../portable/folder.py:238
-msgid "Enter a name for the new playlist folder"
-msgstr ""
+#: ../../portable/storedatabase.py:861 ../../portable/storedatabase.py:1263
+msgid ""
+"The database has been successfully saved. It is now safe to quit without "
+"losing any data."
+msgstr "データベースの保存に成功しました。終了してもデータは失われません。"
 
-#: ../../portable/license.py:68
-msgid "license page"
+#: ../../portable/storedatabase.py:868 ../../portable/storedatabase.py:1271
+#, python-format
+msgid "%s database save failed"
+msgstr "%s データベースの保存に失敗しました"
+
+#: ../../portable/storedatabase.py:869 ../../portable/storedatabase.py:1272
+#, python-format
+msgid ""
+"%s was unable to save its database: Disk Full.\n"
+"We suggest deleting files from the full disk or simply deleting some movies "
+"from your collection.\n"
+"Recent changes may be lost."
 msgstr ""
+"%s はディスクが満杯の為データベースを保存できませんでした。\n"
+"満杯のディスクからファイルを削除するか、あるいは単純に映像をコレクションから削除することをお勧めします。\n"
+"最新の変更は失われているかもしれません。"
+
+#: ../../portable/menubar.py:157
+msgid "_Open"
+msgstr "開く(_O)"
+
+#: ../../portable/menubar.py:158
+msgid "_Download Video"
+msgstr "ビデオをダウンロードする（_D）"
+
+#: ../../portable/menubar.py:160
+msgid "Check _Version"
+msgstr "バージョンを確認する（_V）"
+
+#: ../../portable/menubar.py:162
+msgid "_Remove Video"
+msgstr "ビデオを除く（_R）"
+
+#: ../../portable/menubar.py:163
+msgid "_Remove Videos"
+msgstr "複数のビデオを除く（_R）"
+
+#: ../../portable/menubar.py:164
+msgid "Re_name Video"
+msgstr "ビデオの名前を変更する（_n）"
+
+#: ../../portable/menubar.py:165
+msgid "Save Video _As..."
+msgstr "名前をつけてビデオを保存する…"
+
+#: ../../portable/menubar.py:166
+msgid "Save Videos _As..."
+msgstr "名前をつけてビデオを保存する…"
+
+#: ../../portable/menubar.py:167
+msgid "Copy Video _URL"
+msgstr "ビデオのURLをコピーする（_U）"
+
+#: ../../portable/menubar.py:169
+msgid "_Options..."
+msgstr "オプション（_O）…"
+
+#: ../../portable/menubar.py:170
+msgid "_Quit"
+msgstr "終了する(_Q)"
+
+#: ../../portable/menubar.py:178
+msgid "Cu_t"
+msgstr "切り取る(_t)"
+
+#: ../../portable/menubar.py:179
+msgid "_Copy"
+msgstr "コピーする（_C）"
+
+#: ../../portable/menubar.py:180
+msgid "_Paste"
+msgstr "貼り付ける(_P)"
+
+#: ../../portable/menubar.py:181
+msgid "Select _All"
+msgstr "全て選択する(_A)"
+
+#: ../../portable/menubar.py:182
+msgid "_Delete"
+msgstr "削除する(_D)"
+
+#: ../../portable/menubar.py:186
+msgid "Add _Channel"
+msgstr "チャンネルを追加する（_C）"
+
+#: ../../portable/menubar.py:187
+msgid "New Searc_h Channel..."
+msgstr "チャンネルを新たに検索する（_h）"
+
+#: ../../portable/menubar.py:188
+msgid "New _Folder..."
+msgstr "新しいフォルダ(_F)…"
+
+#: ../../portable/menubar.py:189
+msgid "Add Channel _Guide..."
+msgstr "チャンネル・ガイドを追加する…"
+
+#: ../../portable/menubar.py:199
+msgid "Update _All Channels"
+msgstr "全てのチャンネルを更新する（_A）"
+
+#: ../../portable/menubar.py:201
+msgid "_Import Channels (OPML)..."
+msgstr "(OPML)チャンネルをインポートする（_I）…"
+
+#: ../../portable/menubar.py:202
+msgid "E_xport Channels (OPML)..."
+msgstr "(OPML)チャンネルをエクスポートする（_I）…"
+
+#: ../../portable/menubar.py:204
+msgid "_Send this channel to a friend"
+msgstr "友達にこのチャンネルを送る(_S)"
+
+#: ../../portable/menubar.py:205
+msgid "Copy Channel _Link"
+msgstr "チャンネル・リンクをコピーする（_L）"
+
+#: ../../portable/menubar.py:208
+msgid "New _Playlist"
+msgstr "新しいプレイリスト（_P）"
+
+#: ../../portable/menubar.py:209
+msgid "New Playlist Fol_der"
+msgstr "新しいプレイリスト・フォルダ（_d）"
+
+#: ../../portable/menubar.py:211
+msgid "Re_name Playlist"
+msgstr "プレイリストの名前を変更する(_n)"
+
+#: ../../portable/menubar.py:212
+msgid "_Remove Playlist"
+msgstr "プレイリストを除く(_R)"
+
+#: ../../portable/menubar.py:213
+msgid "_Remove Playlists"
+msgstr "プレイリストを除く(_R)"
+
+#: ../../portable/menubar.py:214
+msgid "_Remove Playlist Folders"
+msgstr "プレイリスト・フォルダを除く（_R）"
+
+#: ../../portable/menubar.py:215
+msgid "_Remove Playlist Folder"
+msgstr "プレイリスト・フォルダを除く（_R）"
+
+#: ../../portable/menubar.py:225 ../../portable/menubar.py:226
+msgid "_Play"
+msgstr "再生する（_P）"
+
+#: ../../portable/menubar.py:227
+msgid "_Pause"
+msgstr "一時停止する(_P)"
+
+#: ../../portable/menubar.py:228
+msgid "_Stop"
+msgstr "停止する(_S)"
+
+#: ../../portable/menubar.py:230
+msgid "_Next Video"
+msgstr "次のビデオ（_N）"
+
+#: ../../portable/menubar.py:231
+msgid "_Previous Video"
+msgstr "前のビデオ（_P）"
+
+#: ../../portable/menubar.py:233
+msgid "Skip _Forward"
+msgstr "前方へスキップ(_F)"
+
+#: ../../portable/menubar.py:234
+msgid "Skip _Back"
+msgstr "後方へスキップ(_B)"
+
+#: ../../portable/menubar.py:236
+msgid "Volume _Up"
+msgstr "音量を上げる(_U)"
+
+#: ../../portable/menubar.py:237
+msgid "Volume _Down"
+msgstr "音量を下げる(_D)"
+
+#: ../../portable/menubar.py:239
+msgid "_Fullscreen"
+msgstr "全画面表示（_F）"
+
+#: ../../portable/menubar.py:243
+msgid "_About"
+msgstr "Miroについて"
+
+#: ../../portable/menubar.py:244
+msgid "_Donate"
+msgstr "寄付する(_D)"
+
+#: ../../portable/menubar.py:245 ../../portable/menubar.py:262
+msgid "_Help"
+msgstr "ヘルプ(_H)"
+
+#: ../../portable/menubar.py:247
+msgid "Report a _Bug"
+msgstr "バグを報告する(_B)"
+
+#: ../../portable/menubar.py:248
+msgid "_Translate"
+msgstr "翻訳する（_T）"
+
+#: ../../portable/menubar.py:249
+msgid "_Planet"
+msgstr "プラネット（_P）"
+
+#: ../../portable/menubar.py:253
+msgid "_Video"
+msgstr "ビデオ(_V)"
+
+#: ../../portable/menubar.py:255
+msgid "_File"
+msgstr "ファイル(_F)"
+
+#: ../../portable/menubar.py:259
+msgid "_Channels"
+msgstr "チャンネル(_C)"
+
+#: ../../portable/menubar.py:260
+msgid "_Playlists"
+msgstr "プレイリスト(_P)"
+
+#: ../../portable/menubar.py:261
+msgid "P_layback"
+msgstr "再生する(_P)"
+
+#: ../../portable/menubar.py:266
+#, fuzzy
+msgid "Play Unwatched ($numUnwatched)"
+msgstr "未鑑賞ビデオ（$numUnwatched）を再生する"
+
+#: ../../portable/menubar.py:267
+msgid "Pause All Downloads ($numDownloading)"
+msgstr "全てのダウンロード （$numDownloading）を一時停止する"
+
+#: ../../portable/menubar.py:268
+msgid "Resume All Downloads ($numPaused)"
+msgstr "全てのダウンロード （$numPaused）を再開する"
+
+#: ../../portable/menubar.py:270
+msgid "Options..."
+msgstr "オプション…"
+
+#: ../../portable/menubar.py:272
+msgid "Hide Window"
+msgstr "ウィンドウを表示しない"
+
+#: ../../portable/menubar.py:273
+msgid "Show Window"
+msgstr "ウィンドウを表示する"
+
+#: ../../portable/feed.py:388
+msgid "never"
+msgstr "無期限"
+
+#: ../../portable/feed.py:390 ../../portable/item.py:555
+#, python-format
+msgid "%d hours"
+msgstr "%d時間"
+
+#: ../../portable/feed.py:392
+#, python-format
+msgid "%d day"
+msgstr "%d日"
+
+#: ../../portable/feed.py:394 ../../portable/item.py:553
+#, python-format
+msgid "%d days"
+msgstr "%d日"
+
+#: ../../portable/feed.py:396
+#, python-format
+msgid "%d months"
+msgstr "%d月間"
+
+#: ../../portable/feed.py:831
+#, python-format
+msgid "Enter a new name for the channel %s"
+msgstr "%sチャンネルに新しい名前を適用する"
+
+#: ../../portable/feed.py:928
+msgid "Error loading feed"
+msgstr "フィードの読み込みに関するエラー"
+
+#: ../../portable/feed.py:929
+#, python-format
+msgid "Couldn't load the feed at %s (%s)."
+msgstr "%sでフィードを読み込めませんでした(%s)"
+
+#: ../../portable/feed.py:932
+msgid "Would you like to keep the feed?"
+msgstr "フィードを保存したいですか？"
+
+#: ../../portable/feed.py:1053
+msgid "Bad content-type"
+msgstr "不正なcontent-type"
+
+#: ../../portable/feed.py:1066
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
+msgid "Channel is not compatible with $shortAppName!"
+msgstr "チャンネルが$shortAppNameと互換性がありません！"
+
+#: ../../portable/feed.py:1067
+msgid ""
+"But we'll try our best to grab the files. It may take extra time to list the "
+"videos, and descriptions may look funny.  Please contact the publishers of "
+"$url and ask if they can supply a feed in a format that will work with "
+"$shortAppName.\n"
+"\n"
+"Do you want to try to load this channel anyway?"
+msgstr ""
+"それでも、私たちはそのファイルを取得するために最善を尽くします。ビデオのリストをつくるのに余計な時間がかかることがあるかもしれませんし、その記述がおかしな"
+"ふうに見えることがあるかもしれません。どうぞ$urlの発行者に問い合わせ、もし彼らが$shortAppNameで機能するフォーマットのフィードを発行できる"
+"かどうか尋ねてみて下さい。"
+
+#: ../../portable/feed.py:2497
+msgid "Local Files"
+msgstr "ローカル・ファイル"
+
+#: ../../portable/feed.py:2511
+msgid "Playing File"
+msgstr "ファイルを再生中"
+
+#: ../../portable/item.py:496
+#, python-format
+msgid "Removing %s"
+msgstr "%s を削除しています"
+
+#: ../../portable/item.py:499
+msgid ""
+"Would you like to delete this folder and all of its videos or just remove "
+"its entry from the Library?"
+msgstr "このフォルダとその中のビデオのすべてを削除しますか、あるいは、単にライブラリからこのエントリーを除きますか？"
+
+#: ../../portable/item.py:505
+msgid ""
+"Would you like to delete this file or just remove its entry from the Library?"
+msgstr "このファイルを削除しますか、あるいは、単にライブラリからこのエントリーを除きますか？"
+
+#: ../../portable/item.py:525
+msgid ""
+"This item is a folder.  When you remove a folder, any items inside that "
+"folder will be deleted."
+msgstr "この項目はフォルダです。フォルダを削除すると、そのフォルダ内のどの項目も削除されます。"
+
+#: ../../portable/item.py:557
+#, python-format
+msgid "%d minutes"
+msgstr "%d分"
+
+#: ../../portable/item.py:567
+#, python-format
+msgid "Expires in %s"
+msgstr "%sに期限が切れます"
+
+#: ../../portable/item.py:579
+#, python-format
+msgid "Will retry in %s"
+msgstr "%sでリトライします"
+
+#: ../../portable/item.py:581
+msgid "Paused"
+msgstr "一時停止"
+
+#: ../../portable/item.py:989
+msgid "TORRENT"
+msgstr "TORRENT"
+
+#: ../../portable/item.py:991
+msgid "WEB PAGE"
+msgstr "Webページ"
+
+#: ../../portable/item.py:1001
+msgid "Total Down:"
+msgstr "ダウン合計："
+
+#: ../../portable/item.py:1004
+msgid "Error:"
+msgstr "エラー:"
+
+#: ../../portable/item.py:1013
+msgid "Seeders:"
+msgstr "シーダー:"
+
+#: ../../portable/item.py:1015
+msgid "Leechers:"
+msgstr "リーチャー:"
+
+#: ../../portable/item.py:1017
+msgid "Down Rate:"
+msgstr "ダウン率："
+
+#: ../../portable/item.py:1018
+msgid "Down Total:"
+msgstr "ダウン合計："
+
+#: ../../portable/item.py:1020
+msgid "Up Rate:"
+msgstr "アップ率："
+
+#: ../../portable/item.py:1021
+msgid "Up Total:"
+msgstr "アップ合計："
+
+#: ../../portable/item.py:1032 ../../portable/item.py:1037
+msgid "Web page:"
+msgstr "Webページ:"
+
+#: ../../portable/item.py:1032
+msgid "comments"
+msgstr "コメント"
+
+#: ../../portable/item.py:1037
+msgid "permalink"
+msgstr "パーマリンク"
+
+#: ../../portable/item.py:1041
+msgid "File link:"
+msgstr "ファイルのリンク："
+
+#: ../../portable/item.py:1041
+msgid "direct link to file"
+msgstr "ファイルへの直接リンク"
+
+#: ../../portable/item.py:1043
+msgid "File type:"
+msgstr "ファイルの種類:"
+
+#: ../../portable/item.py:1050 ../../portable/item.py:1053
+#: ../../portable/item.py:1055
+msgid "License:"
+msgstr "ライセンス:"
+
+#: ../../portable/item.py:1053 ../../portable/item.py:1055
+msgid "see permalink"
+msgstr "パーマリンク参照"
+
+#: ../../portable/item.py:1062
+msgid "SHOW LOCAL FOLDER"
+msgstr "ローカル・フォルダを示す"
+
+#: ../../portable/item.py:1064
+msgid "SHOW LOCAL FILE"
+msgstr "ローカル・ファイルを示す"
+
+#: ../../portable/item.py:1066
+msgid "Filename:"
+msgstr "ファイル名:"
+
+#: ../../portable/item.py:1073
+msgid "Down Total"
+msgstr "ダウン合計"
+
+#: ../../portable/item.py:1075
+msgid "Up Total"
+msgstr "アップ合計"
+
+#: ../../portable/item.py:1093
+msgid "Item Details"
+msgstr "項目の詳細"
+
+#: ../../portable/item.py:1100
+msgid "Torrent Details"
+msgstr "トレントの詳細"
+
+#: ../../portable/item.py:1102
+msgid "Torrent Details <i>stopped</i>"
+msgstr "トレントの詳細"
+
+#: ../../portable/item.py:1106
+msgid "Download Details"
+msgstr "ダウンロードの詳細"
+
+#: ../../portable/item.py:1329
+msgid "downloading..."
+msgstr "ダウンロード中・・・"
+
+#: ../../portable/item.py:1336 ../../portable/item.py:1339
+#, python-format
+msgid "%s left"
+msgstr "残り %s"
+
+#: ../../portable/item.py:1348
+msgid "starting up..."
+msgstr "起動中…"
+
+#: ../../portable/item.py:1939
+#, python-format
+msgid "Removing %s items"
+msgstr "%s項目を削除中"
+
+#: ../../portable/item.py:1941
+msgid ""
+"One or more of these videos was not downloaded from a channel.  Would you "
+"like to delete these items or just remove their entries from the Library?"
+msgstr ""
+"一つ以上のビデオがチャンネルからダウンロードされませんでした。これらの項目を削除しますか、あるいは、単にライブラリからこれらのエントリーを除きますか？"
+
+#: ../../portable/item.py:1949
+msgid ""
+"One or more of these items is a folder.  When you remove or delete a folder, "
+"any items inside that folder will also be removed or deleted."
+msgstr "これらの内フォルダが一つ以上あります。フォルダが除かれるか削除されると、その中に入っている項目も除かれるか削除されることになります。"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:2
 #, fuzzy
@@ -2606,31 +2990,36 @@ msgstr ""
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:8
 msgid "<b>BitTorrent</b>"
-msgstr ""
+msgstr "<b>ビットトレント</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:9
 msgid ""
 "<b>Note:</b> If you change the renderer used to play videos, you MUST \n"
 "restart Miro for the changes to take effect."
 msgstr ""
+"<b>註：:</b>もしビデオの表示に使うソフトウェア（レンダラー）を変えたら、必ず\n"
+"その変更を有効にするためにMiroを再起動しなければなりません。"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:11
 #, fuzzy
+msgid ""
+"<b>Note:</b> You can set the frequency channels are checked for each\n"
+"channel in the channel's settings pane."
+msgstr "<b>註：</b> チャンネル設定欄でチャンネル毎に設定できます。"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:13
 msgid "<b>Searching for Videos</b>"
 msgstr "<b>ビデオを検索中</b>"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:12
-#, fuzzy
-msgid "<b>Would you like Miro to look for video files on your computer?</b>"
-msgstr "<b>コンピュータ内のビデオを検索しますか?</b>"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:13
-#, fuzzy
-msgid "<b>Would you like to run Miro when your computer starts up?</b>"
-msgstr "<b>コンピュータの起動時に Miro を実行しますか?</b>"
-
 #: ../../platform/gtk-x11/glade/miro.glade.h:14
-#, fuzzy
+msgid "<b>Would you like Miro to look for video files on your computer?</b>"
+msgstr "Miroにあなたのコンピュータ内のビデオ・ファイルを探してもらいたいですか？"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:15
+msgid "<b>Would you like to run Miro when your computer starts up?</b>"
+msgstr "<b>あなたのコンピュータが起動するときにMiroを起動したいですか？</b>"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:16
 msgid ""
 "<b>You're done!</b>\n"
 "\n"
@@ -2657,308 +3046,342 @@ msgid ""
 msgstr ""
 "<b>やったね!</b>\n"
 "\n"
-"セットアップ完了 -- チャンネルを検索して視聴を開始できます。\n"
+"セットアップ完了 -- さあ、チャンネルを見つけて視聴を開始できますよ。\n"
 "\n"
-"<b>待つ必要はありません:</b> Miro "
-"はビデオを単に見るだけではありません。高品質なビデオは大きいですが、ただ待つのでなく、ダウンロードを始めたら後でチェックすればよいのです。\n"
+"<b>待たないで：</b> Miroはウェブ・ページのビデオを見るのとは違います -- "
+"発信者が大きくて高品質なビデオを提供できます。ただ座ってビデオを待っていないで下さい：ダウンロードを始めておいて後で確認すればよいのです。\n"
 "\n"
-"<b>起動しておきましょう:</b> Miro "
-"はチャンネルをチェックして新しいビデオをバックグラウンドでダウンロードします。起動しておけば準備できたビデオをすぐに見ることができます。\n"
+"<b>起動したままで：</b> "
+"Miroはチャンネルに新しいビデオがあるかを定期的に確認して、バックグラウンドでダウンロードします。起動したままにしておけば、新しいビデオをあなたが観たい"
+"ときに見ることができます。\n"
 "\n"
-"<b>ディスク容量の心配なし:</b> TiVo のように Miro "
-"は古いビデオを消して新しいビデオの為に空きを作ります。「保存」をクリックしてビデオを保存するか、チャンネル設定でビデオを自動保存できます。\n"
+"<b>ディスク容量の心配をしないで：</b> TiVo "
+"のように、Miroは「期限切れ」システムを持っていて、新しいビデオの為に古いビデオを消して空きを作ります。いつでも「保存」をクリックしてビデオを恒久保存す"
+"ることができますし、チャンネル設定でビデオを自動保存することもできます。\n"
 "\n"
-"<b>大きくな〜れ:</b> 再生ボタンの右隣のボタンでフルスクリーン表示が可能です。\n"
+"<b>大きくしよう：</b> 再生ボタンの右隣のボタンでフルスクリーン表示になります。\n"
 "\n"
-"<b>ビデオ検索:</b> Miro Guide には数百の無料インターネットTVチャンネルがあります。「追加」をクリックしてチャンネルを見ましょう。"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:28
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
-msgid "Auto download default setting for new channels"
-msgstr ""
+"<b>ビデオを探そう：</b> Miroガイドには何百もの無料インターネットTVチャンネルがあります。「追加」をクリックしてチャンネルを見ましょう。"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
-msgid "Automatically for_ward ports."
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:30
-msgid "By default, videos _expire after"
-msgstr ""
+msgid "<b>xine</b>"
+msgstr "<b>xine</b>"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:31
-#, fuzzy
-msgid "C_hannel:"
-msgstr "チャンネル(C_)"
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
+msgid "Auto download default setting for new channels"
+msgstr "新しいチャンネル用の自動ダウンロード標準設定"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:32
-msgid "C_hannels"
-msgstr ""
+msgid "Automatically for_ward ports."
+msgstr "自動的にポートを転送する（_w）"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:33
-#, fuzzy
-msgid "C_reate Channel"
-msgstr "チャンネル作成(C_)"
+msgid "By default, videos _expire after"
+msgstr "標準で、ビデオの期限切れは（_e）"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:34
-msgid "Check Channels for _new content"
-msgstr ""
+msgid "C_hannel:"
+msgstr "チャンネル（_h）"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:35
-msgid "Disk _Space"
-msgstr ""
+msgid "C_hannels"
+msgstr "チャンネル（_h）"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:36
+msgid "C_reate Channel"
+msgstr "チャンネルをつくる（_r）"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:37
+msgid "Check Channels for _new content"
+msgstr "チャンネルに新しいコンテンツがあるか確認する（_n）"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:38
+msgid "Disk _Space"
+msgstr "ディスク容量（_S）"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:40
 msgid ""
 "Every 30 minutes\n"
 "Every hour\n"
+"Every day\n"
 "Manually"
 msgstr ""
+"30分毎\n"
+"1時間毎\n"
+"1日毎\n"
+"手動"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:40
+#: ../../platform/gtk-x11/glade/miro.glade.h:44
 msgid "G_B"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:41
-msgid "Go"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:42
-msgid "Ignore Un_encrypted Connections."
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:43
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
-msgid "In This:"
-msgstr ""
+msgstr "G_B"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:45
-msgid "Limit torrent _downstream to:"
-msgstr ""
+msgid "Go"
+msgstr "移動"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:46
-msgid "Maximum number of channel auto-downloads at a time: "
-msgstr ""
+msgid "Ignore Un_encrypted Connections."
+msgstr "暗号化されていない接続を無視する（_e）"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:47
-msgid "Maximum number of manual downloads at a time: "
-msgstr ""
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
+msgid "In This:"
+msgstr "この中に："
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:49
+msgid "Limit torrent _downstream to:"
+msgstr "トレントのダウンストリームの制限："
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:50
+msgid "Maximum number of channel auto-downloads at a time: "
+msgstr "チャンネルの同時自動ダウンロードの最大数 "
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:51
+msgid "Maximum number of manual downloads at a time: "
+msgstr "マニュアルの同時自動ダウンロードの最大数 "
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:55
 msgid ""
 "Miro can find all the videos on your computer to help you organize your "
 "collection."
-msgstr ""
+msgstr "Miroは、あなたのコンピュータ上の全てのビデオを見つけて、あなたのコレクションを整理するお手伝いができます。"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:52
+#: ../../platform/gtk-x11/glade/miro.glade.h:56
 msgid ""
 "New\n"
 "All\n"
 "Off"
 msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:56
-msgid "Play _videos one after another"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:57
-msgid "Preferences"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:58
-msgid "Restrict to my full _home folder"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:59
-msgid "S_top after each video"
-msgstr ""
+"新規\n"
+"全て\n"
+"オフ"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:60
-msgid "S_tore downloaded videos in this folder:"
-msgstr ""
+msgid "Play _videos one after another"
+msgstr "次々にビデオを再生する（_v）"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:61
-msgid "Search _Engine:"
-msgstr ""
+msgid "Preferences"
+msgstr "設定"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:62
-msgid "Search _custom folder:"
-msgstr ""
+msgid "Restrict to my full _home folder"
+msgstr "ホーム・フォルダ全てに限定する（_h）"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:63
-msgid "Select Movies Directory"
-msgstr ""
+msgid "S_top after each video"
+msgstr "ビデオ毎に停止する（_t）"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:64
-msgid "Select custom search directory"
-msgstr ""
+msgid "S_tore downloaded videos in this folder:"
+msgstr "このフォルダにダウンロードしたビデオを保存する（_t）："
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:65
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62
-msgid "Stop torrent uploads when this ratio is reached:"
-msgstr ""
+msgid "Search _Engine:"
+msgstr "検索エンジン（_E）"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:66
+msgid "Search _custom folder:"
+msgstr "カスタム・フォルダを検索する（_c）"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:67
+msgid "Select Movies Directory"
+msgstr "映像ディレクトリを選ぶ"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:68
+msgid "Select custom search directory"
+msgstr "カスタム検索ディレクトリを選ぶ"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:69
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:64
+msgid "Stop torrent uploads when this ratio is reached:"
+msgstr "この比率に達したらトレント・アップロードを停止する："
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:70
 msgid ""
 "The next few screens will help you set up Miro so that it works best for "
 "you.  Here's the first question."
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:67
-msgid "To avoid internet slowdowns, limit _upstream to:"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:68
-msgid "Use _ports:"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:69
-msgid "Use this renderer to play videos:"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:70
-msgid "Volume:"
-msgstr "分量:"
+msgstr "次のいくつかのスクリーンであなたにとって最適にMiroが動作するように設定するのをお手伝いします。まず、最初の質問です。"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:71
+msgid "To avoid internet slowdowns, limit _upstream to:"
+msgstr "インターネットの減速を防ぐためのアップストリームの制限（_u）："
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:72
+msgid "Use _ports:"
+msgstr "使用するポート（_p）："
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:73
+msgid "Use this for video when listening to audio:"
+msgstr "ビデオ中でオーディオを聴くときにはこれを使う："
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:74
+msgid "Use this renderer to play videos:"
+msgstr "ビデオを再生するソフト（レンダラー）："
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:75
+msgid "Volume:"
+msgstr "音量："
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:76
 msgid ""
 "We recommend that you allow Miro to launch when your computer starts up.  "
 "This way, videos that haven't finished downloading can finish and new videos "
 "on your channels will be ready when you want to watch."
 msgstr ""
+"あなたがコンピュータを起動するときにMiroが起動することを許すようにお勧めします。そうすることで、ダウンロードが完了していないビデオが完了し、あなたのチ"
+"ャンネル上にある新しいビデオが、観たいときに準備が整っているようになります。"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:73
+#: ../../platform/gtk-x11/glade/miro.glade.h:78
 msgid ""
 "Welcome to Internet TV.  There's a lot you can do with Miro: automatically "
 "download videos from your favorite channels, watch new videos one after the "
 "other, download torrents, recommend videos to friends, and lots more."
 msgstr ""
+"インターネットTVへようこそ！　Miroであなたができることはたくさんあります：お気に入りのチャンネルからビデオを自動的にダウンロードしたり、次々に新しい"
+"ビデオを観たり、トレントでダウンロードしたり、友達にビデオを薦めたり、その他にもたくさん。"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:74
+#: ../../platform/gtk-x11/glade/miro.glade.h:79
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there?  (Currently dowloading movies will not be "
 "moved until they finish.)"
 msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:75
-msgid "_Add Folder"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:76
-msgid "_Automatically run Miro when I log in"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:77
-msgid "_Downloads"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:78
-msgid "_Folders"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:79
-msgid "_General"
-msgstr ""
+"映像をダウンロードするための新しいフォルダが選択されました。ダウンロードされた既存のものをそこへ移動しますか？　（現在ダウンロード中の映像はダウンロードが"
+"完了するまでは移動されません。）"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:80
-msgid "_KB/s."
-msgstr ""
+msgid "_Add Folder"
+msgstr "フォルダを追加(_A)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:81
-msgid "_Keep at least this much free space on my drive:"
-msgstr ""
+msgid "_Automatically run Miro when I log in"
+msgstr "ログイン時にMiroを自動的に起動する（_A）"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:82
-msgid "_Playback"
-msgstr ""
+msgid "_Downloads"
+msgstr "ダウンロード(_D)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:83
-msgid "_Resume playback of videos from the point where they were stopped"
-msgstr ""
+msgid "_Folders"
+msgstr "フォルダ(_F)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:84
-msgid "_Search"
-msgstr ""
+msgid "_General"
+msgstr "一般(_G)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:85
-msgid "_Search For:"
-msgstr ""
+msgid "_KB/s."
+msgstr "_KB/s."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:86
-msgid "_URL"
-msgstr ""
+msgid "_Keep at least this much free space on my drive:"
+msgstr "ドライブ上の最小空き容量（_K）："
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:87
-msgid "_Warn me when I attempt to quit with downloads in progress"
-msgstr ""
+msgid "_Playback"
+msgstr "再生（_P）"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:88
-msgid ""
-"_Watch for new videos in these folders and include them in the Library"
-msgstr ""
+msgid "_Resume playback of videos from the point where they were stopped"
+msgstr "停止された所からビデオ再生を再開する（_R）"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:89
+msgid "_Search"
+msgstr "検索する（_S）"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:90
+msgid "_Search For:"
+msgstr "検索する（_S）："
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:91
+msgid "_URL"
+msgstr "URL(_U)"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:92
+msgid "_Warn me when I attempt to quit with downloads in progress"
+msgstr "ダウンロード中に終了しようとするときには警告を出す（_W）"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:93
+msgid ""
+"_Watch for new videos in these folders and include them in the Library"
+msgstr "これらのフォルダにある新しいビデオを監視して、見つけたらライブラリに入れる（_W）"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:94
+msgid ""
+"goom\n"
+"oscope\n"
+"fftscope\n"
+"fftgraph\n"
+"none"
+msgstr ""
+"goom\n"
+"oscope\n"
+"fftscope\n"
+"fftgraph\n"
+"none"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:99
 msgid ""
 "xine\n"
 "gstreamer"
 msgstr ""
+"xine\n"
+"gstreamer"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
 msgid ""
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 "
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 "
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 "
+"$publisher. $longAppName and the $longAppName logo are trademarks of "
+"$publisher."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
-#, fuzzy
 msgid "About $longAppName"
 msgstr "$longAppName について"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:1
-#, fuzzy
 msgid "Add Channel"
-msgstr "チャンネルを追加"
+msgstr "チャンネルを追加する"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:2
-#, fuzzy
 msgid "Please enter the URL of the channel you'd like to add."
 msgstr "追加したいチャンネルのURLを入力して下さい。"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6
-#, fuzzy
 msgid "Copy log to clipboard"
-msgstr "ログをクリップボードへコピー"
+msgstr "ログをクリップボードへコピーする"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5
-#, fuzzy
 msgid "Open up the bug tracker"
-msgstr "バグトラッカーを開く"
+msgstr "バグ・トラッカーを開く"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2
-#, fuzzy
 msgid ""
 "Please help us fix it. Copy and paste all the\n"
 "information into our bug tracker and tell us what you were doing when the\n"
 "problem occurred."
 msgstr ""
-"修正にご協力願います。\n"
-"あらゆる情報をバグトラッカーにコピー＆ペーストして\n"
+"修正にご協力願います。あらゆる情報を\n"
+"バグ・トラッカーにコピー＆ペーストして\n"
 "問題発生時に行っていたことを教えて下さい。"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:7
-#, fuzzy
 msgid ""
 "Then, please restart $longAppName (or you may keep getting related errors). "
 "Sorry for the inconvenience. $longAppName is still in beta, but with your "
 "help we're fixing problems fast!"
 msgstr ""
-"$longAppName を再起動して下さい(他のエラーが起きるかもしれません)。ご迷惑をおかけします。まだ $longAppName "
-"はβ版ですが貴方の援助があれば問題を早く解決できます!"
+"そして、$longAppName を再起動して下さい(関連した他のエラーが起きるかもしれませんが)。ご迷惑をおかけします。まだ $longAppName "
+"はβ版ですがあなたの援助があれば問題を早く解決できます!"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1
 msgid "You found a bug in $longAppName!"
-msgstr "貴方は $longAppName にバグを発見しました!"
+msgstr "あなたは $longAppName にバグを発見しました！"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1
@@ -2968,27 +3391,29 @@ msgstr " "
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:2
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:2
 msgid "'"
-msgstr ""
+msgstr "'"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:10
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
 "videos, and descriptions may look funny."
 msgstr ""
+"それでも、私たちはそのファイルを取得するのに最善を尽くします。ビデオのリストをつくるのに、すこし余分な時間がかかるかもしれませんし、また、記述がおかしく見"
+"えるかもしれません。"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:12
 msgid "Please contact the publishers of"
-msgstr ""
+msgstr "これの発行者に問い合わせて下さい："
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:13
 msgid ""
 "and ask if they can supply a feed in a format that will work with "
 "$shortAppName."
-msgstr ""
+msgstr "そして、彼らが$shortAppName と互換性のあるフォーマットでのフィードが提供できるかを尋ねて下さい。"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1
 msgid "$longAppName"
-msgstr ""
+msgstr "$longAppName"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:4
 msgid ""
@@ -2996,135 +3421,145 @@ msgid ""
 "migrate your existing downloads there?(Currently dowloading movies will not "
 "be moved until they finish)"
 msgstr ""
+"映像をダウンロードするための新しいフォルダが選択されました。$shortAppNameで、ダウンロードされた既存のものをそこへ移動しますか？　（現在ダウン"
+"ロード中の映像は、ダウンロードが完了するまでは移動されません。）"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1
 msgid "Channel requires authentication"
-msgstr ""
+msgstr "チャンネルは認証を必要としています。"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:2
 msgid ""
 "Please enter the username and password given to you by this channel's "
 "publisher."
-msgstr ""
+msgstr "このチャンネルの発行者があなたに与えたユーザ名とパスワードを入力して下さい。"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57
 msgid ""
 "(WARNING: Changes won't go into effect until you restart $longAppName.)"
-msgstr ""
+msgstr "（警告：変更は $longAppName が再起動するまで有効になりません。）"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:36
 msgid "Add Folder..."
-msgstr "フォルダを追加"
+msgstr "フォルダを追加する…"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62
 msgid "Automatically Forward Ports"
-msgstr ""
+msgstr "自動的にポートを転送する"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:3
 msgid "Automatically run $longAppName when I login."
-msgstr ""
+msgstr "ログイン時に自動的に $longAppName を起動する"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46
-#, fuzzy
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48
 msgid "By default, videos expire after"
-msgstr "デフォルトのビデオ有効期限"
+msgstr "標準のビデオ有効期限"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12
 msgid "Check channels for new content"
-msgstr ""
+msgstr "チャンネルに新しいコンテンツがあるか確認する"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5
-#, fuzzy
 msgid "Close to tray so that downloads can continue."
-msgstr "トレイを閉じるとダウンロードを続行します。"
+msgstr "トレイに閉じるとダウンロードは継続されます。"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
 msgid "Every 30 minutes"
 msgstr "30分毎"
 
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
+msgid "Every day"
+msgstr "毎日"
+
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14
 msgid "Every hour"
 msgstr "1時間毎"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
 msgid "Folder"
-msgstr ""
+msgstr "フォルダ"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:63
 msgid "Ignore Unencrypted Connections"
-msgstr ""
+msgstr "暗号化されていない接続を無視する"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60
 msgid "KB/s"
-msgstr ""
+msgstr "KB/s"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59
 msgid "Limit downstream bandwith to:"
-msgstr ""
+msgstr "ダウンストリームの制限："
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16
 msgid "Manually"
 msgstr "手動"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
 msgid "Maximum number of channel auto-downloads at a time:"
-msgstr ""
+msgstr "同時自動ダウンロードの最大数："
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40
 msgid "Maximum number of manual downloads at a time:"
-msgstr ""
+msgstr "同時手動ダウンロードの最大数："
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
+#, fuzzy
+msgid ""
+"Note: You can set the frequency channels are checked from the channel's "
+"settings pane."
+msgstr "註： チャンネル設定欄でチェックされたチャンネルを設定することができます。"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1
-#, fuzzy
 msgid "Options"
 msgstr "オプション"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
 msgid "Play one video, then stop."
-msgstr ""
+msgstr "一つのビデオを再生してから停止する"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
 msgid "Quit Miro completely."
-msgstr ""
+msgstr "Miroを完全に終了する"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
 msgid ""
 "Remember where I stopped watching a video and continue playing from that "
 "point."
-msgstr ""
+msgstr "ビデオを停止した所を記憶し、そこから再生を続ける。"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
 msgid "Show as a Channel"
-msgstr ""
+msgstr "チャンネルとして示す"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30
 msgid "Store downloaded videos in this folder:"
-msgstr "ダウンロードしたビデオをフォルダに保存:"
+msgstr "ダウンロードしたビデオを保存するフォルダ："
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58
 msgid "To avoid internet slowdowns, limit upstream bandwith to:"
-msgstr ""
+msgstr "インターネットの減速を防ぐためのアップストリーム帯域の上限："
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46
 msgid ""
 "WARNING: This setting will not go into effect until you restart $longAppName."
-msgstr "注意: $longAppName を再起動すると設定が有効になります。"
+msgstr "警告：この設定は $longAppName を再起動するまでは有効になりません。"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9
 msgid "Warn me when I attempt to quit with downloads in progress."
-msgstr ""
+msgstr "ダウンロード中に終了しようとするときには警告する。"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
 msgid "Watch for new videos in these folders and include them in my Library."
-msgstr ""
+msgstr "これらのフォルダに新しいビデオを見つけて、ライブラリに入れる。"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
 msgid "When I click the red close button:"
-msgstr "赤いクローズボタンをクリックした時:"
+msgstr "赤い閉じるボタンをクリックした時:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5
 msgid "Channel:"
@@ -3140,14 +3575,13 @@ msgstr "これを検索:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7
 msgid "URL:"
-msgstr ""
+msgstr "URL:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:33
-#, fuzzy
 msgid ""
 "$longAppName can find all the videos on your computer to help you organize "
 "your collection."
-msgstr "$longAppName はコンピュータ内のビデオを検索してコレクションの整理を助けます。"
+msgstr "$longAppName はあなたのコンピュータ内の全てのビデオを見つけて、あなたのコレクションを整理するお手伝いをします。"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:45
 msgid ""
@@ -3163,7 +3597,7 @@ msgstr "$shortAppName の最初のセットアップ"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39
 msgid "Cancel Search"
-msgstr "検索を中止"
+msgstr "検索を中止する"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:38
 msgid "Change"
@@ -3179,14 +3613,13 @@ msgstr "ビデオを探す:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48
 msgid "Go Big:"
-msgstr ""
+msgstr "大きくする："
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:44
 msgid "Leave it On:"
-msgstr ""
+msgstr "起動したままにしておく："
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:47
-#, fuzzy
 msgid ""
 "Like a TiVo, $longAppName features an 'expiration' system that helps clean "
 "out older videos to make room for new videos.  You can always keep a video "
@@ -3194,18 +3627,20 @@ msgid ""
 "videos automatically."
 msgstr ""
 "$longAppName は TiVo "
-"のように、古いビデオを削除して新しいビデオ用に空きを作ることができます。ビデオを残すには「保存」をクリックするか、チャンネル設定でビデオの自動保存を設定し"
-"ます。"
+"のように、「期限切れ」システムを持っていて、古いビデオを削除して新しいビデオ用に空きを作ることができます。ビデオを恒久保存するには、「保存する」をクリック"
+"するか、チャンネル設定でビデオの自動保存を設定します。"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:42
 msgid ""
 "Now you can explore the Channel Guide\n"
 "and start watching.  A few tips to get started:"
 msgstr ""
+"さて、チャンネル・ガイドに沿って、\n"
+"鑑賞を開始できます。開始にあたって２、３のヒント："
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:40
 msgid "Reset Search"
-msgstr "検索をリセット"
+msgstr "検索をリセットする"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:35
 msgid "Restrict to all my personal files."
@@ -3213,26 +3648,25 @@ msgstr "自分の個人ファイルのみに制限する。"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:36
 msgid "Search custom folder:"
-msgstr "カスタムフォルダを検索:"
+msgstr "カスタム・フォルダを検索する："
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51
 msgid ""
 "The $shortAppName Channel Guide has hundreds of internet TV channels; all of "
 "them are free.  Just click 'ADD' to watch a channel."
 msgstr ""
-"$shortAppNameのチャンネルガイドは数百のフリーのインターネットテレビチャンネルに対応しています。\n"
-"「追加」をクリックしてチャンネルを視聴してください。"
+"$shortAppNameのチャンネル・ガイドには、何百もの無料インターネットテレビ・チャンネルがあります。「追加する」をクリックしてチャンネルを視聴して"
+"ください。"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49
 msgid "The button to the right of the play button shows videos fullscreen."
-msgstr "再生ボタンの右にあるボタンでフルスクリーン表示に変更します。"
+msgstr "再生ボタンの右にあるボタンでフルスクリーン表示になります。"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:30
-#, fuzzy
 msgid ""
 "The next few screens will help you set up $longAppName so that it works best "
 "for you."
-msgstr "これから幾つかの画面で $longAppName をセットアップし、自分にぴったりに動くようにします。"
+msgstr "これから幾つかの画面で、最善の動作をするように $longAppName を設定します。"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:31
 msgid ""
@@ -3241,12 +3675,12 @@ msgid ""
 "downloaded in the background, ready when you want to watch."
 msgstr ""
 "コンピュータの起動時に $longAppName "
-"を起動することをお勧めします。起動することによって、ダウンロード途中のビデオのダウンロードを終わらせたり、新しいビデオをバックグラウンドでダウンロードした"
-"りでき、見たい時に見られるようになります。"
+"を起動することをお勧めします。そうすることで、ダウンロード途中のビデオのダウンロードが完了したり、新しいビデオをバックグラウンドでダウンロードしたりでき、"
+"見たい時に見られるようになります。"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34
 msgid "Would you like $longAppName to look for video files on your computer?"
-msgstr "$longAppName にコンピュータ内のビデオを検索させますか?"
+msgstr "$longAppNameにパソコン内のビデオを探してもらいたいですか？"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:32
 msgid "Would you like to run $shortAppName on startup?"
@@ -3254,12 +3688,11 @@ msgstr "コンピューター起動時に $shortAppName を起動しますか?"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:41
 msgid "You're done!"
-msgstr "完了"
+msgstr "やったね！"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/update_available.dtd.template:1
-#, fuzzy
 msgid "Release Notes:"
-msgstr "リリースノート:"
+msgstr "リリース・ノート:"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1
 msgid "Question"

@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2008-02-29 12:40-0500\n"
-"PO-Revision-Date: 2008-03-01 07:35+0000\n"
-"Last-Translator: Murat Bişkin <mbiskin@gmail.com>\n"
+"POT-Creation-Date: 2008-05-13 19:11-0400\n"
+"PO-Revision-Date: 2008-04-27 20:42+0000\n"
+"Last-Translator: Kov3n4nT <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2008-03-19 22:32+0000\n"
+"X-Launchpad-Export-Date: 2008-05-27 16:36+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/dialogs.py:85
@@ -81,7 +81,7 @@ msgstr "Rehber ekle..."
 msgid "Bring All to Front"
 msgstr "Hepsini Öne Getir"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:80
+#: ../../platform/osx/plat/frontends/html/Preferences.py:80
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11
 msgid "Channels"
 msgstr "Kanallar"
@@ -107,6 +107,7 @@ msgstr "Video Adresini Kopyala"
 msgid "Cut"
 msgstr "Kes"
 
+#: ../../portable/frontends/html/compiled_templates/multi_channel.py:78
 #: ../../portable/dialogs.py:104
 msgid "Delete"
 msgstr "Sil"
@@ -150,7 +151,7 @@ msgstr "Ana Menü"
 msgid "Minimize"
 msgstr "Küçült"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:50
+#: ../../platform/gtk-x11/glade/miro.glade.h:54
 msgid "Miro"
 msgstr "Miro"
 
@@ -181,12 +182,15 @@ msgstr "Aç"
 msgid "Paste"
 msgstr "Yapıştır"
 
-#: ../../platform/osx/platform/frontends/html/Application.py:244
+msgid "Planet Miro"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/html/Application.py:244
 msgid "Play Video"
 msgstr "Video Oynat"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:84
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22
+#: ../../platform/osx/plat/frontends/html/Preferences.py:84
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
 msgid "Playback"
 msgstr "Oynat"
 
@@ -229,6 +233,9 @@ msgstr "Hepsini Göster"
 msgid "Stop Video"
 msgstr "Görüntüyü Durdur"
 
+msgid "Translate"
+msgstr ""
+
 msgid "Update All Channels"
 msgstr "Tüm Kanalları Güncelle"
 
@@ -247,22 +254,56 @@ msgstr "%channel feed%"
 msgid "%channel title%"
 msgstr "%channel title%"
 
-msgid "%donation label%"
-msgstr "%donation label%"
-
 msgid "-00:00:00"
 msgstr "-00:00:00"
 
 msgid "00:00:00"
 msgstr "00:00:00"
 
-msgid "Box"
-msgstr "Kutu"
+msgid "0:00:00"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:88
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:364
+msgid "Email to a friend"
+msgstr ""
 
 msgid "FullScreen Controls"
 msgstr "TamEkran Kontrolleri"
 
-#: ../../portable/tabs.py:57
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:48
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:324
+#: ../../portable/dialogs.py:103
+msgid "Keep"
+msgstr "Sakla"
+
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:116
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:392
+msgid "Post to Reddit"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:94
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:370
+msgid "Post to Video Bomb"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:102
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:378
+msgid "Post to del.icio.us"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:108
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:384
+msgid "Post to digg"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:73
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:349
+msgid "Share"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/search.py:170
+#: ../../portable/tabs.py:56
 msgid "Video Search"
 msgstr "Video Arama"
 
@@ -291,6 +332,7 @@ msgstr ""
 
 msgid "(You must restart Miro for some of these changes to take effect)"
 msgstr ""
+"Değişikliklerin geçerli olması için Miro'yu yeniden başlatmanız gerekiyor."
 
 msgid "(You must restart Miro for this change to take effect)\n"
 msgstr ""
@@ -302,21 +344,22 @@ msgstr "(filmler dizini buraya gidiyor)"
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:1
 msgid "-"
-msgstr ""
+msgstr "-"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:47
+#: ../../portable/item.py:551
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49
 msgid "1 day"
 msgstr "1 gün"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
 msgid "1 month"
 msgstr "1 ay"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
 msgid "10 days"
 msgstr "10 gün"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
 msgid "3 days"
 msgstr "3 gün"
 
@@ -329,7 +372,7 @@ msgstr "4"
 msgid "5"
 msgstr "5"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
 msgid "6 days"
 msgstr "6 gün"
 
@@ -339,25 +382,28 @@ msgstr "99999"
 msgid "Add..."
 msgstr "Ekle..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:18
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
 #, fuzzy
 msgid "All"
 msgstr "Hepsi"
 
 msgid "Auto download default setting for new channels:"
-msgstr ""
+msgstr "Yeni kanallar için otomatik indirme ayarı"
 
 msgid "Automatically forward ports"
-msgstr ""
+msgstr "Port'u otomatik yönlendir"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56
 msgid "BitTorrent"
 msgstr "BitTorrent"
+
+msgid "Box"
+msgstr "Kutu"
 
 msgid "By default, videos expire after:"
 msgstr "Öntanımlı olarak, videoların süresi dolar:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
 msgid "Change..."
 msgstr "Değişim..."
 
@@ -365,69 +411,69 @@ msgid "Check channels for new content:"
 msgstr "Kanalları yeni içerik için kontrol et:"
 
 msgid "Don't auto-download more than this many videos per channel at once:"
-msgstr ""
+msgstr "Bir kanal içinde bu sayıdan fazla videoyu aynı anda indirme"
 
 msgid "Don't download more than this many videos at once:"
-msgstr ""
+msgstr "Bir seferde bundan daha fazla video indirme"
 
 msgid "Folder location"
 msgstr "Dosya yeri"
 
 msgid "GB\n"
-msgstr ""
+msgstr "GB\n"
 
 msgid "Ignore unencrypted connections"
-msgstr ""
+msgstr "Kriptolanmamış (şifrelenmemiş) bağlantıları göz ardı et"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:44
+#: ../../platform/gtk-x11/glade/miro.glade.h:48
 msgid "KB/s."
-msgstr ""
+msgstr "KB/s"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:42
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
 msgid "Keep at least this much free space on my drive:"
-msgstr ""
+msgstr "Sabit diskimde en az bu kadar yer kalmasını sağla"
 
 msgid "Limit downstream to"
-msgstr ""
+msgstr "İndirme hızını sınırlandır"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
 msgid "Never"
 msgstr "Asla"
 
-#: ../../portable/tabs.py:56
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
+#: ../../portable/tabs.py:55
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21
 msgid "New"
 msgstr "Yeni"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22
 msgid "Off"
-msgstr ""
+msgstr "Kapalı"
 
 msgid "OtherViews"
 msgstr "DiğerGörüşler"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:26
 msgid "Play videos one after another."
 msgstr "Videoları arka arkaya oynat."
 
 msgid "Remember video position."
 msgstr "Vıdeonun nerede kaldığını hatırla"
 
-#: ../../portable/frontends/html/contextmenu.py:99
-#: ../../portable/frontends/html/contextmenu.py:104
+#: ../../portable/frontends/html/contextmenu.py:100
+#: ../../portable/frontends/html/contextmenu.py:105
 #: ../../portable/frontends/html/contextmenu.py:178
 #: ../../portable/frontends/html/contextmenu.py:184
 #: ../../portable/frontends/html/contextmenu.py:190
 #: ../../portable/frontends/html/contextmenu.py:199
-#: ../../portable/frontends/html/contextmenu.py:233
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
+#: ../../portable/frontends/html/contextmenu.py:232
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
 msgid "Remove"
 msgstr "Kaldır"
 
 msgid "Run Miro at startup"
 msgstr "Bilgisayar açılırken Miro'yu da çalıştır"
 
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:591
+#: ../../platform/gtk-x11/plat/frontends/html/callbackhandler.py:595
 msgid "Show as Channel"
 msgstr "Kanal olarak göster"
 
@@ -435,19 +481,20 @@ msgid "Stop after each video."
 msgstr "Her videodan sonra dur."
 
 msgid "Stop uploads when this ratio is reached:"
-msgstr ""
+msgstr "Şu orana ulaşıldığı zaman paylaşımı durdur"
 
 msgid "Store downloads in this folder:"
-msgstr ""
+msgstr "İndirilen içeriği şu klasörde sakla"
 
 msgid "To avoid internet slowdowns, limit upstream to"
 msgstr ""
+"İnterneti yavaşlatmamak için yollama (paylaşım) hızını şu değerle sınırlandır"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61
 msgid "Use these ports:"
-msgstr ""
+msgstr "Şu portları kullan"
 
-#: ../../portable/frontends/html/main.py:319
+#: ../../portable/frontends/html/main.py:326
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "İndirme sırasında programdan çıkmak istersem beni uyar."
 
@@ -492,8 +539,8 @@ msgstr "Şunun için ara:"
 msgid "URL"
 msgstr "Adres"
 
-#: ../../platform/windows-xul/platform/frontends/html/startup.py:59
-#: ../../platform/gtk-x11/platform/frontends/html/startup.py:56
+#: ../../platform/gtk-x11/plat/frontends/html/startup.py:56
+#: ../../platform/windows-xul/plat/frontends/html/startup.py:59
 #, python-format
 msgid "(parsed %d files - found %d videos)"
 msgstr "(incelenen %d dosyalar - bulunan %d videolar)"
@@ -504,7 +551,7 @@ msgstr "Geri"
 msgid "Browse"
 msgstr "Göz at"
 
-#: ../../platform/osx/platform/frontends/html/StartupPanel.py:121
+#: ../../platform/osx/plat/frontends/html/StartupPanel.py:121
 msgid "Next"
 msgstr "Sonraki"
 
@@ -562,7 +609,7 @@ msgstr ""
 "\n"
 "Miro'nun bilgisayarınız açılırken çalışmasını istiyor musunuz?"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:72
+#: ../../platform/gtk-x11/glade/miro.glade.h:77
 msgid "Welcome to Internet TV!"
 msgstr "İnternet Televizyonuna Hoş Geldiniz!"
 
@@ -591,64 +638,84 @@ msgstr ""
 "%message%\n"
 "%message%"
 
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:83
-msgid "Update Available"
-msgstr "Güncellemeler Mevcut"
+#: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:211
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
+msgid "Username:"
+msgstr "Kullanıcı Adı:"
 
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:84
+#: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:222
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4
+msgid "Password:"
+msgstr "Parola:"
+
+#: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:416
+msgid "Unknown Runtime Error"
+msgstr "Bilinmeyen Çalışma Zamanı hatası"
+
+#: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:417
 #, python-format
-msgid "A new version of %s is available for download."
-msgstr "%s'nun indirebileceğiniz yeni bir sürümü var."
+msgid "An unknown error has occurred %s."
+msgstr "Bilinmeyen bir hata oluştu %s."
 
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:248
-msgid "Error Bombing Item"
-msgstr "Ögeyi Bombalama Hatası"
+#: ../../platform/gtk-x11/plat/frontends/html/callbackhandler.py:333
+msgid "New Channel _Guide..."
+msgstr "Yeni Kanal _Rehberi"
 
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:250
-msgid "Error Recommending Item"
-msgstr "Ögeyi Önerme Hatası"
+#: ../../platform/gtk-x11/plat/frontends/html/callbackhandler.py:586
+msgid "Folder Location"
+msgstr "Dizin Yeri"
 
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:252
-msgid "Error Opening Website"
-msgstr "İnternet Sayfası Açma Hatası"
-
-#: ../../platform/windows-xul/platform/frontends/html/UIBackendDelegate.py:256
-#, python-format
-msgid "There was an error opening %s.  Please try again in a few seconds"
-msgstr "%s açarken hata oluştu. Lütfen birkaç saniye sonra tekrar deneyin"
-
-#: ../../platform/windows-xul/platform/frontends/html/startup.py:67
-#: ../../platform/gtk-x11/platform/frontends/html/startup.py:75
-#: ../../platform/gtk-x11/platform/frontends/html/startup.py:173
+#: ../../platform/gtk-x11/plat/frontends/html/startup.py:75
+#: ../../platform/gtk-x11/plat/frontends/html/startup.py:173
+#: ../../platform/windows-xul/plat/frontends/html/startup.py:67
 #, python-format
 msgid "%d video found"
 msgid_plural "%d videos found"
 msgstr[0] "%d video bulundu"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:79
+#: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:53
+#: ../../portable/frontends/html/compiled_templates/unittest/simpleunicode.py:36
+#: ../../portable/frontends/html/compiled_templates/channel.py:327
+msgid "Settings"
+msgstr "Ayarlar"
+
+#: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:56
+msgid "Hide"
+msgstr "Gizle"
+
+#: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:58
+msgid "Show"
+msgstr "Göster"
+
+#: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:59
+#: ../../portable/dialogs.py:88 ../../portable/menubar.py:274
+msgid "Quit"
+msgstr "Çık"
+
+#: ../../platform/windows-xul/xul/components/pybridge.py:80
 #, python-format
 msgid ""
 "Error importing modules:\n"
 "%s"
 msgstr "Modülleri içeri alırken hata oluştu: %s"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:254
+#: ../../platform/windows-xul/xul/components/pybridge.py:255
 msgid "Loading window"
 msgstr "Pencere Yükleniyor"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:255
+#: ../../platform/windows-xul/xul/components/pybridge.py:256
 msgid "onStartup called twice"
 msgstr "başlangıçta iki kez çağrıldı"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:739
+#: ../../platform/windows-xul/xul/components/pybridge.py:748
 msgid "Spacebar"
 msgstr "Boşluk Çubuğu"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:887
+#: ../../platform/windows-xul/xul/components/pybridge.py:896
 msgid "Close to tray?"
 msgstr "Görev çubuğu çekmecesine kapat?"
 
-#: ../../platform/windows-xul/xul/components/pybridge.py:888
+#: ../../platform/windows-xul/xul/components/pybridge.py:897
 msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
@@ -658,73 +725,113 @@ msgstr ""
 "yapmaya devam etmesini mi tercih edersiniz? Bu ayarı sonradan Seçenekler "
 "bölümünden değiştirebilirsiniz."
 
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:55
+#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:83
+msgid "Update Available"
+msgstr "Güncellemeler Mevcut"
+
+#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:84
+#, python-format
+msgid "A new version of %s is available for download."
+msgstr "%s'nun indirebileceğiniz yeni bir sürümü var."
+
+#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:248
+msgid "Error Bombing Item"
+msgstr "Ögeyi Bombalama Hatası"
+
+#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:250
+msgid "Error Recommending Item"
+msgstr "Ögeyi Önerme Hatası"
+
+#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:252
+msgid "Error Opening Website"
+msgstr "İnternet Sayfası Açma Hatası"
+
+#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:256
+#, python-format
+msgid "There was an error opening %s.  Please try again in a few seconds"
+msgstr "%s açarken hata oluştu. Lütfen birkaç saniye sonra tekrar deneyin"
+
+#: ../../platform/windows-xul/plat/flash.py:82
+#, python-format
+msgid "Restart %s?"
+msgstr ""
+
+#: ../../platform/windows-xul/plat/flash.py:83
+#, python-format
+msgid ""
+"To enable the Flash plugin, %s needs to be restarted.  Click Yes to shut %s "
+"down, or No to do it later."
+msgstr ""
+
+#: ../../platform/windows-xul/plat/flash.py:109
+msgid "Install Flash?"
+msgstr ""
+
+#: ../../platform/windows-xul/plat/flash.py:110
+#, python-format
+msgid ""
+"For the best %s experience, you should install Adobe Flash.  Do this now?"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:55
 msgid "Download Completed"
 msgstr "İndirme Tamamlandı"
 
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:56
+#: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:56
 #, python-format
 msgid "Download of video '%s' is finished."
 msgstr "'%s' adlı videonun indirilmesi tamamlandı."
 
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:65
+#: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:65
 msgid "Download Failed"
 msgstr "İndirme başarısız oldu."
 
-#: ../../platform/osx/platform/frontends/html/GrowlNotifier.py:66
+#: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:66
 #, python-format
 msgid "Download of video '%s' has failed."
 msgstr "'%s' adlı videonun indirilmesi başarısızlıkla sonuçlandı."
 
-#: ../../platform/osx/platform/frontends/html/MainFrame.py:297
-msgid "Subscribe to Channel"
-msgstr "Kanala üye ol"
-
-#: ../../platform/osx/platform/frontends/html/MainFrame.py:298
-msgid "Enter the URL of the channel you would like to subscribe to."
-msgstr "Üye olmak istediğiniz kanalın adresini girin."
-
-#: ../../platform/osx/platform/frontends/html/Preferences.py:79
+#: ../../platform/osx/plat/frontends/html/Preferences.py:79
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8
 msgid "General"
 msgstr "Genel"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:81
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
+#: ../../platform/osx/plat/frontends/html/Preferences.py:81
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
 msgid "Downloads"
 msgstr "İndirmeler"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:82
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
+#: ../../platform/osx/plat/frontends/html/Preferences.py:82
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
 msgid "Folders"
 msgstr "Dizinler"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:83
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
+#: ../../platform/osx/plat/frontends/html/Preferences.py:83
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
 msgid "Disk Space"
 msgstr "Sabit Disk Alanı"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:251
+#: ../../platform/osx/plat/frontends/html/Preferences.py:251
 msgid "Movies Directory"
 msgstr "Filmler Dizini"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:252
+#: ../../platform/osx/plat/frontends/html/Preferences.py:252
 #, python-format
 msgid "Select a Directory to store %s downloads in."
 msgstr "İndirdiğiniz %s dosyalarını saklamak için bir dizin seçin."
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:253
-#: ../../platform/osx/platform/frontends/html/Preferences.py:362
+#: ../../platform/osx/plat/frontends/html/Preferences.py:253
+#: ../../platform/osx/plat/frontends/html/Preferences.py:362
 msgid "Select"
 msgstr "Seç"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:262
-#: ../../platform/gtk-x11/glade/miro.glade.h:49
+#: ../../platform/osx/plat/frontends/html/Preferences.py:262
+#: ../../platform/gtk-x11/glade/miro.glade.h:53
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
 msgid "Migrate existing movies?"
 msgstr "Varolan filmler taşınsın mi?"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:263
+#: ../../platform/osx/plat/frontends/html/Preferences.py:263
 #, python-format
 msgid ""
 "You've selected a new folder to download movies to.  Should %s migrate your "
@@ -735,31 +842,130 @@ msgstr ""
 "filmlerinizi de bu dizine taşısın mı? (İndirmekte olduğunuz filmler bitene "
 "kadar yeni dizine taşınmayacaklar)."
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:360
+#: ../../platform/osx/plat/frontends/html/Preferences.py:360
 msgid "View this Directory in the Library"
 msgstr "Bu dizini Kütüphanede inceleyin"
 
-#: ../../platform/osx/platform/frontends/html/Preferences.py:361
+#: ../../platform/osx/plat/frontends/html/Preferences.py:361
 msgid "Select a Directory to view in the Library."
 msgstr "Kütüphanede izlemek için bir dizin seçin."
 
-#: ../../platform/osx/platform/frontends/html/StartupPanel.py:93
+#: ../../platform/osx/plat/frontends/html/MainFrame.py:271
+msgid "Subscribe to Channel"
+msgstr "Kanala üye ol"
+
+#: ../../platform/osx/plat/frontends/html/MainFrame.py:272
+msgid "Enter the URL of the channel you would like to subscribe to."
+msgstr "Üye olmak istediğiniz kanalın adresini girin."
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:33
+msgid "_Remove..."
+msgstr "_Kaldır"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:34
+msgid "_Remove Playlist..."
+msgstr "_Çalma Listesini Kaldır..."
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:35
+msgid "_Remove Playlists..."
+msgstr "_Çalma Listelerini Kaldır..."
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:36
+msgid "_Remove Playlist Folder..."
+msgstr "_Çalma Listesi Dizinini Kaldır..."
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:37
+msgid "_Remove Playlist Folders..."
+msgstr "_Çalma Listesi Klasörlerini Kaldır..."
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:38
+#: ../../portable/menubar.py:192
+msgid "_Remove Channel..."
+msgstr "_Kanalı Kaldır..."
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:39
+#: ../../portable/menubar.py:193
+msgid "_Remove Channels..."
+msgstr "_Kanalları Kaldır..."
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:40
+#: ../../portable/menubar.py:195
+msgid "_Remove Channel Folder..."
+msgstr "_Kanal Dizinini Kaldır..."
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:41
+#: ../../portable/menubar.py:194
+msgid "_Remove Channel Folders..."
+msgstr "Kanal _Dizinlerini Kaldır"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:42
+msgid "_Remove Miro Guide..."
+msgstr "Miro Rehberini _Kaldır..."
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:43
+msgid "_Remove Miro Guides..."
+msgstr "Miro Rehberlerini _Kaldır..."
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:44
+msgid "_Remove Video..."
+msgstr "_Video Kaldır..."
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:45
+msgid "_Remove Videos..."
+msgstr "_Videoları Kaldır..."
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:46
+msgid "Re_name..."
+msgstr "_Yeniden Adlandır..."
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:47
+msgid "Re_name Playlist..."
+msgstr "Çalmalistesini _Yeniden Adlandır..."
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:48
+msgid "Re_name Playlist Folder..."
+msgstr "Çalmalistesi _Dizinini Kaldır..."
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:49
+#: ../../portable/menubar.py:191
+msgid "Re_name Channel..."
+msgstr "Kanalı Yeniden _Adlandır..."
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:50
+msgid "Re_name Channel Folder..."
+msgstr "Kanal Dizinini Yeniden _Adlandır..."
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:51
+msgid "Re_name Miro Guide..."
+msgstr "Miro Rehberinin Adını _Değiştir"
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:52
+#: ../../portable/menubar.py:197
+msgid "_Update Channel..."
+msgstr "Kanalı _Güncelle..."
+
+#: ../../platform/osx/plat/frontends/html/UIStrings.py:53
+#: ../../portable/menubar.py:198
+msgid "_Update Channels..."
+msgstr "Kanalları G_üncelle..."
+
+#: ../../platform/osx/plat/frontends/html/StartupPanel.py:93
 msgid "Finish"
 msgstr "Bitti"
 
-#: ../../platform/osx/platform/frontends/html/StartupPanel.py:163
+#: ../../platform/osx/plat/frontends/html/StartupPanel.py:163
 msgid "Search!"
 msgstr "Ara!"
 
-#: ../../platform/osx/platform/frontends/html/Application.py:241
+#: ../../platform/osx/plat/frontends/html/Application.py:241
 msgid "Pause Video"
 msgstr "Videoyu Duraklat"
 
-#: ../../platform/osx/platform/frontends/html/Application.py:250
+#: ../../platform/osx/plat/frontends/html/Application.py:250
 msgid "Unsupported version of Quicktime"
 msgstr "Desteklenmeyen Quicktime sürümü"
 
-#: ../../platform/osx/platform/frontends/html/Application.py:251
+#: ../../platform/osx/plat/frontends/html/Application.py:251
 #, python-format
 msgid ""
 "To run %s you need the most recent version of Quicktime, which is a free "
@@ -768,394 +974,113 @@ msgstr ""
 "%s'yu çalıştırmak için Quicktime'ın en son sürümüne ihtiyacınız var. "
 "Quicktime programınızı bu sürüme ücretsiz olarak yükseltebilirsiniz."
 
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:33
-msgid "_Remove..."
-msgstr "_Kaldır"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:34
-msgid "_Remove Playlist..."
-msgstr "_Çalma Listesini Kaldır..."
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:35
-msgid "_Remove Playlists..."
-msgstr "_Çalma Listelerini Kaldır..."
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:36
-msgid "_Remove Playlist Folder..."
-msgstr "_Çalma Listesi Dizinini Kaldır..."
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:37
-msgid "_Remove Playlist Folders..."
-msgstr "_Çalma Listesi Klasörlerini Kaldır..."
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:38
-#: ../../portable/menubar.py:193
-msgid "_Remove Channel..."
-msgstr "_Kanalı Kaldır..."
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:39
-#: ../../portable/menubar.py:194
-msgid "_Remove Channels..."
-msgstr "_Kanalları Kaldır..."
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:40
-#: ../../portable/menubar.py:196
-msgid "_Remove Channel Folder..."
-msgstr "_Kanal Dizinini Kaldır..."
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:41
-#: ../../portable/menubar.py:195
-msgid "_Remove Channel Folders..."
-msgstr "Kanal _Dizinlerini Kaldır"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:42
-msgid "_Remove Miro Guide..."
-msgstr "Miro Rehberini _Kaldır..."
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:43
-msgid "_Remove Miro Guides..."
-msgstr "Miro Rehberlerini _Kaldır..."
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:44
-msgid "_Remove Video..."
-msgstr "_Video Kaldır..."
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:45
-msgid "_Remove Videos..."
-msgstr "_Videoları Kaldır..."
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:46
-msgid "Re_name..."
-msgstr "_Yeniden Adlandır..."
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:47
-msgid "Re_name Playlist..."
-msgstr "Çalmalistesini _Yeniden Adlandır..."
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:48
-msgid "Re_name Playlist Folder..."
-msgstr "Çalmalistesi _Dizinini Kaldır..."
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:49
-#: ../../portable/menubar.py:192
-msgid "Re_name Channel..."
-msgstr "Kanalı Yeniden _Adlandır..."
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:50
-msgid "Re_name Channel Folder..."
-msgstr "Kanal Dizinini Yeniden _Adlandır..."
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:51
-msgid "Re_name Miro Guide..."
-msgstr "Miro Rehberinin Adını _Değiştir"
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:52
-#: ../../portable/menubar.py:198
-msgid "_Update Channel..."
-msgstr "Kanalı _Güncelle..."
-
-#: ../../platform/osx/platform/frontends/html/UIStrings.py:53
-#: ../../portable/menubar.py:199
-msgid "_Update Channels..."
-msgstr "Kanalları G_üncelle..."
-
-#: ../../platform/osx/platform/renderers/QuicktimeRenderer.py:319
+#: ../../platform/osx/plat/renderers/QuicktimeRenderer.py:319
 msgid "Audio"
 msgstr "Ses"
 
-#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:53
-msgid "Settings"
-msgstr "Ayarlar"
+#: ../../portable/singleclick.py:99
+msgid "Download already exists"
+msgstr "Mevcut olsa dahi indir"
 
-#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:56
-msgid "Hide"
-msgstr "Gizle"
+#: ../../portable/singleclick.py:100
+msgid "That URL is already an external download."
+msgstr "Bu zaten harici indirme adresi."
 
-#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:58
-msgid "Show"
-msgstr "Göster"
+#: ../../portable/singleclick.py:106
+msgid "Miro will begin downloading it now."
+msgstr "Miro onu indirmeye şimdi başlayacak."
 
-#: ../../platform/gtk-x11/platform/frontends/html/trayicon.py:59
-#: ../../portable/menubar.py:273 ../../portable/dialogs.py:88
-msgid "Quit"
-msgstr "Çık"
+#: ../../portable/singleclick.py:108
+msgid "It is downloading now."
+msgstr "İndiriliyor."
 
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:333
-msgid "New Channel _Guide..."
-msgstr "Yeni Kanal _Rehberi"
+#: ../../portable/singleclick.py:110
+msgid "It has already been downloaded."
+msgstr "O zaten indirilmiş."
 
-#: ../../platform/gtk-x11/platform/frontends/html/callbackhandler.py:582
-msgid "Folder Location"
-msgstr "Dizin Yeri"
+#: ../../portable/singleclick.py:142
+msgid "Download Error"
+msgstr "Yükleme Hatası"
 
-#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:211
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
-msgid "Username:"
-msgstr "Kullanıcı Adı:"
-
-#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:222
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4
-msgid "Password:"
-msgstr "Parola:"
-
-#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:416
-msgid "Unknown Runtime Error"
-msgstr "Bilinmeyen Çalışma Zamanı hatası"
-
-#: ../../platform/gtk-x11/platform/frontends/html/UIBackendDelegate.py:417
+#: ../../portable/singleclick.py:143
 #, python-format
-msgid "An unknown error has occurred %s."
-msgstr "Bilinmeyen bir hata oluştu %s."
-
-#: ../../portable/dl_daemon/download.py:458
-msgid "Error"
-msgstr "Hata"
-
-#: ../../portable/dl_daemon/download.py:544
-#, python-format
-msgid "Could not write to %s"
-msgstr "%s'e yazılamıyor"
-
-#: ../../portable/dl_daemon/download.py:564
-#: ../../portable/dl_daemon/download.py:769
-msgid "Not enough disk space"
-msgstr "Yeterli disk alanı yok"
-
-#: ../../portable/dl_daemon/download.py:565
-#: ../../portable/dl_daemon/download.py:770
-#, python-format
-msgid "%s MB required to store this video"
-msgstr "Bu videoyu kaydetmek için %s MB gerekli"
-
-#: ../../portable/dl_daemon/download.py:781
-msgid "BitTorrent failure"
-msgstr "BitTorrent hatası"
-
-#: ../../portable/dl_daemon/download.py:782
-msgid "BitTorrent failed to startup"
-msgstr "BitTorrent başlarken hata verdi"
-
-#: ../../portable/dl_daemon/download.py:954
-msgid "Corrupt Torrent"
-msgstr "Bozuk Torrent"
-
-#: ../../portable/dl_daemon/download.py:955
-#, python-format
-msgid "The torrent file at %s was not valid"
-msgstr "%s 'deki torrent dosyası geçerli değil"
-
-#: ../../portable/dl_daemon/download.py:980
-msgid "Torrent file deleted"
-msgstr "Torrent dosyası silindi"
-
-#: ../../portable/dl_daemon/download.py:981
-msgid "The torrent file for this item was deleted outside of Miro."
-msgstr ""
-
-#: ../../portable/frontends/html/contextmenu.py:103
-msgid "Update Channels Now"
-msgstr "Kanalları Şimdi Güncelleştir"
-
-#: ../../portable/frontends/html/contextmenu.py:128
-#, python-format
-msgid "%d Downloaded Items"
-msgstr "%d İndirilmiş Ögeler"
-
-#: ../../portable/frontends/html/contextmenu.py:130
-#: ../../portable/frontends/html/contextmenu.py:211
-msgid "Play"
-msgstr "Yürüt"
-
-#: ../../portable/frontends/html/contextmenu.py:131
-#: ../../portable/frontends/html/contextmenu.py:214
-msgid "Add to new playlist"
-msgstr "Yeni çalma listesine ekle"
-
-#: ../../portable/frontends/html/contextmenu.py:133
-#: ../../portable/frontends/html/contextmenu.py:207
-msgid "Remove From Playlist"
-msgstr "Çalma Listesinden Kaldır"
-
-#: ../../portable/frontends/html/contextmenu.py:135
-#: ../../portable/frontends/html/contextmenu.py:209
-msgid "Remove From the Library"
-msgstr "Kütüphaneden Çıkart"
-
-#: ../../portable/frontends/html/contextmenu.py:141
-#: ../../portable/frontends/html/contextmenu.py:218
-msgid "Mark as Unwatched"
-msgstr "İzlenmedi Olarak İşaretle"
-
-#: ../../portable/frontends/html/contextmenu.py:146
-#: ../../portable/frontends/html/contextmenu.py:220
-msgid "Mark as Watched"
-msgstr "İzlendi Olarak İşaretle"
-
-#: ../../portable/frontends/html/contextmenu.py:151
-#, python-format
-msgid "%d Available Items"
-msgstr "%d Uygun Ögeler"
-
-#: ../../portable/frontends/html/contextmenu.py:152
-#: ../../portable/frontends/html/contextmenu.py:227
-#: ../../portable/dialogs.py:93
-msgid "Download"
-msgstr "İndir"
-
-#: ../../portable/frontends/html/contextmenu.py:157
-#, python-format
-msgid "%d Downloading Items"
-msgstr "%d İndirilen Öge"
-
-#: ../../portable/frontends/html/contextmenu.py:159
-#: ../../portable/frontends/html/contextmenu.py:225
-msgid "Cancel Download"
-msgstr "İndirmeyi İptal Et"
-
-#: ../../portable/frontends/html/contextmenu.py:161
-#: ../../portable/frontends/html/contextmenu.py:225
-msgid "Pause Download"
-msgstr "İndirmeyi Duraklat"
-
-#: ../../portable/frontends/html/contextmenu.py:164
-#: ../../portable/frontends/html/contextmenu.py:223
-msgid "Restart Upload"
-msgstr "Yüklemeyi Tekrar Başlat"
-
-#: ../../portable/frontends/html/contextmenu.py:170
-msgid "Update Channel Now"
-msgstr "Kanalları Şimdi Güncelle"
-
-#: ../../portable/frontends/html/contextmenu.py:172
-#: ../../portable/frontends/html/contextmenu.py:196
-msgid "Copy URL to clipboard"
-msgstr "Adresi panoya kopyala"
-
-#: ../../portable/frontends/html/contextmenu.py:173 ../../portable/feed.py:825
-msgid "Rename Channel"
-msgstr "Kanalın Adını Değiştir"
-
-#: ../../portable/frontends/html/contextmenu.py:177
-msgid "Revert Title to Default"
-msgstr "Başlığı Varsayılana Döndür"
-
-#: ../../portable/frontends/html/contextmenu.py:183
-#: ../../portable/folder.py:142
-msgid "Rename Channel Folder"
-msgstr "Kanal Dizin Adını Değiştir"
-
-#: ../../portable/frontends/html/contextmenu.py:189
-#: ../../portable/folder.py:213
-msgid "Rename Playlist Folder"
-msgstr "Çalma Listesi Dizin Adını Değiştir"
-
-#: ../../portable/frontends/html/contextmenu.py:213
-msgid "Play Just This Video"
-msgstr "Sadece Bu Video'yu Yürüt"
-
-#: ../../portable/frontends/html/contextmenu.py:232
-#: ../../portable/playlist.py:218
-msgid "Rename Playlist"
-msgstr "Çalma Listesini Yeniden Adlandır"
-
-#: ../../portable/frontends/html/main.py:132 ../../portable/startup.py:237
-msgid "Video Directory Missing"
-msgstr "Video Klasörü Yerinde Değil"
-
-#: ../../portable/frontends/html/main.py:133
 msgid ""
+"Miro is not able to download a file at this URL:\n"
 "\n"
-"    Miro can't find your primary video directory.  This may be because it's  "
-"   located on an external drive that is currently disconnected.\n"
+"URL: %s"
+msgstr ""
+"Miro bu adresteki dosyayı indiremez:\n"
 "\n"
-"    If you continue, the video directory will be reset to a location on this "
-"    drive (this will cause you to lose some details about the videos on the  "
-"   external drive).  You can also quit, connect the drive, and relaunch Miro."
-msgstr ""
+"Adres: %s"
 
-#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
-msgid "Custom Channels"
-msgstr "Kişisel Kanallar"
+#: ../../portable/singleclick.py:191
+msgid "File Download"
+msgstr "Dosya İndirme"
 
-#: ../../portable/frontends/html/main.py:190 ../../portable/theme.py:126
+#: ../../portable/singleclick.py:192
+#, python-format
+msgid "This file at %s does not appear to be audio, video, or an RSS feed."
+msgstr "%s daki dosya ses, video veya  RSS feed gibi gözükmüyor."
+
+#: ../../portable/singleclick.py:280
+msgid "Subscribing to multiple channels"
+msgstr "Çoklu kanala abone olunuyor"
+
+#: ../../portable/singleclick.py:281
+#, python-format
+msgid "Create %d channels?"
+msgstr "%d kanal oluşturulsun mu?"
+
+#: ../../portable/singleclick.py:294
+#, python-format
+msgid "Adding %d channels to a new folder"
+msgstr "%d kanal yeni bir dizine ekleniyor"
+
+#: ../../portable/singleclick.py:295 ../../portable/folder.py:224
+msgid "Enter a name for the new channel folder"
+msgstr "Yeni kanal dizini için bir isim girin"
+
+#: ../../portable/singleclick.py:298
+#, python-format
 msgid ""
-"You are running a version of $longAppName with a custom set of channels."
+"NOTE: You are already subscribed to %d of these channels.  These channels "
+"will stay where they currently are."
 msgstr ""
-"$longAppName'yu kişiselleştirilmiş bir kanal listesiyle kullanıyorsunuz."
+"NOT: siz zaten bu kanallardan %d tanesine abonesiniz. Bu kanallar oldukları "
+"yerde kalacaklar."
 
-#: ../../portable/frontends/html/main.py:269 ../../portable/httpclient.py:139
-msgid "Internal Error"
-msgstr "İç hata"
+#: ../../portable/singleclick.py:309
+msgid "Subscription error"
+msgstr "Abonelik hatası"
 
-#: ../../portable/frontends/html/main.py:269
+#: ../../portable/singleclick.py:319
 msgid ""
-"Miro has encountered an internal error. You can help us track down this "
-"problem and fix it by submitting an error report."
+"This $shortAppName channel file has an invalid format: $url. Please notify "
+"the publisher of this file."
 msgstr ""
-"Miro dahili bi hata ile karşılaştı. Bu sorunu hata raporu bildirerek "
-"incelememize ve çözmemize yardım edebilirsiniz."
+"Bu $shortAppName kanal dosyasının yapısı yanlış: $url. Lütfen yayıncısına "
+"haber verin."
 
-#: ../../portable/frontends/html/main.py:269
+#: ../../portable/singleclick.py:327
 msgid ""
-"Include entire program database including all video and channel metadata "
-"with crash report"
+"This $shortAppName channel file has the wrong content type: $url. Please "
+"notify the publisher of this file."
 msgstr ""
-"Video ve kanal bilgisini de içerecek şekilde program veri tabanını hata "
-"raporuna ekle"
+"Bu $shortAppName Kanal dosyası yanlış formatta: $url. Lütfen yayıncısını "
+"haberdar edin."
 
-#: ../../portable/frontends/html/main.py:269
-msgid "Describe what you were doing that caused this error"
-msgstr "Bu hata oluştuğu sırada ne yaptığını tarif et"
+#: ../../portable/singleclick.py:331
+msgid "Could not download the $shortAppName channel file: $url."
+msgstr "$url adersindeki $shortAppName Kanal dosyası indirilemiyor."
 
-#: ../../portable/frontends/html/main.py:284
+#: ../../portable/singleclick.py:385
+msgid "Invalid Torrent"
+msgstr "Geçersiz Torrent"
+
+#: ../../portable/singleclick.py:386
 #, python-format
-msgid "%s Version Alert"
-msgstr "%s Yeni Sürüm Uyarısı"
-
-#: ../../portable/frontends/html/main.py:285
-#, python-format
-msgid "A new version of %s is available. Would you like to download it now?"
-msgstr "%s'nun yeni bir sürümü var. Şimdi indirmek ister misin?"
-
-#: ../../portable/frontends/html/main.py:290
-#, python-format
-msgid "%s Version Check"
-msgstr "%s Sürüm Kontrolü"
-
-#: ../../portable/frontends/html/main.py:291
-#, python-format
-msgid "%s is up to date."
-msgstr "%s güncel."
-
-#: ../../portable/frontends/html/main.py:309
-msgid "Are you sure you want to quit?"
-msgstr "Çıkmak istediğinizden emin misiniz?"
-
-#: ../../portable/frontends/html/main.py:311
-msgid ""
-"Miro is still uploading your crash report. If you quit now the upload will "
-"be canceled.  Quit Anyway?"
-msgstr ""
-"Miro halen hata raporunuzu yollamakta. Şimdi çıkarsanız yollama işlemi iptal "
-"olacak. Gene de çıkmak istiyormusunuz?"
-
-#: ../../portable/frontends/html/main.py:316
-#, python-format
-msgid "You have %d download still in progress.  Quit Anyway?"
-msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
-msgstr[0] "%d indirmesi devam etmekte. Gene de Çıkmak istiyormusunuz?"
-
-#: ../../portable/frontends/html/main.py:340
-msgid "Import OPML File"
-msgstr "İçe OPML Dosyası Aktar"
-
-#: ../../portable/frontends/html/main.py:342
-msgid "OPML Files"
-msgstr "OPML Dosyaları"
-
-#: ../../portable/frontends/html/main.py:347
-msgid "Export OPML File"
-msgstr "Dışa OPML Dosyası Aktar"
+msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
+msgstr "Torrent dosyası %s bozuk gibi görünüyor ve açılamadı. [TAMAM]"
 
 #: ../../portable/frontends/html/templatedisplay.py:325
 msgid "Invalid Value"
@@ -1225,20 +1150,800 @@ msgstr "$shortAppName - Video İndir"
 msgid "Enter the URL of the video to download"
 msgstr "İndirilecek videonun adresini girin"
 
-#: ../../portable/tabs.py:55
+#: ../../portable/frontends/html/contextmenu.py:104
+msgid "Update Channels Now"
+msgstr "Kanalları Şimdi Güncelleştir"
+
+#: ../../portable/frontends/html/contextmenu.py:128
+#, python-format
+msgid "%d Downloaded Items"
+msgstr "%d İndirilmiş Ögeler"
+
+#: ../../portable/frontends/html/contextmenu.py:130
+#: ../../portable/frontends/html/contextmenu.py:210
+msgid "Play"
+msgstr "Yürüt"
+
+#: ../../portable/frontends/html/contextmenu.py:131
+#: ../../portable/frontends/html/contextmenu.py:213
+msgid "Add to new playlist"
+msgstr "Yeni çalma listesine ekle"
+
+#: ../../portable/frontends/html/contextmenu.py:133
+#: ../../portable/frontends/html/contextmenu.py:206
+msgid "Remove From Playlist"
+msgstr "Çalma Listesinden Kaldır"
+
+#: ../../portable/frontends/html/contextmenu.py:135
+#: ../../portable/frontends/html/contextmenu.py:208
+msgid "Remove From the Library"
+msgstr "Kütüphaneden Çıkart"
+
+#: ../../portable/frontends/html/contextmenu.py:141
+#: ../../portable/frontends/html/contextmenu.py:217
+msgid "Mark as Unwatched"
+msgstr "İzlenmedi Olarak İşaretle"
+
+#: ../../portable/frontends/html/contextmenu.py:146
+#: ../../portable/frontends/html/contextmenu.py:219
+msgid "Mark as Watched"
+msgstr "İzlendi Olarak İşaretle"
+
+#: ../../portable/frontends/html/contextmenu.py:151
+#, python-format
+msgid "%d Available Items"
+msgstr "%d Uygun Ögeler"
+
+#: ../../portable/frontends/html/contextmenu.py:152
+#: ../../portable/frontends/html/contextmenu.py:226
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:128
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:140
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:292
+#: ../../portable/frontends/html/compiled_templates/download_item_thumbnail.py:79
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:91
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:103
+#: ../../portable/dialogs.py:93
+msgid "Download"
+msgstr "İndir"
+
+#: ../../portable/frontends/html/contextmenu.py:157
+#, python-format
+msgid "%d Downloading Items"
+msgstr "%d İndirilen Öge"
+
+#: ../../portable/frontends/html/contextmenu.py:159
+#: ../../portable/frontends/html/contextmenu.py:224
+msgid "Cancel Download"
+msgstr "İndirmeyi İptal Et"
+
+#: ../../portable/frontends/html/contextmenu.py:161
+#: ../../portable/frontends/html/contextmenu.py:224
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:275
+#: ../../portable/frontends/html/compiled_templates/download_item_thumbnail.py:62
+msgid "Pause Download"
+msgstr "İndirmeyi Duraklat"
+
+#: ../../portable/frontends/html/contextmenu.py:164
+#: ../../portable/frontends/html/contextmenu.py:222
+msgid "Restart Upload"
+msgstr "Yüklemeyi Tekrar Başlat"
+
+#: ../../portable/frontends/html/contextmenu.py:170
+msgid "Update Channel Now"
+msgstr "Kanalları Şimdi Güncelle"
+
+#: ../../portable/frontends/html/contextmenu.py:172
+#: ../../portable/frontends/html/contextmenu.py:196
+msgid "Copy URL to clipboard"
+msgstr "Adresi panoya kopyala"
+
+#: ../../portable/frontends/html/contextmenu.py:173 ../../portable/feed.py:830
+msgid "Rename Channel"
+msgstr "Kanalın Adını Değiştir"
+
+#: ../../portable/frontends/html/contextmenu.py:177
+msgid "Revert Title to Default"
+msgstr "Başlığı Varsayılana Döndür"
+
+#: ../../portable/frontends/html/contextmenu.py:183
+#: ../../portable/folder.py:142
+msgid "Rename Channel Folder"
+msgstr "Kanal Dizin Adını Değiştir"
+
+#: ../../portable/frontends/html/contextmenu.py:189
+#: ../../portable/folder.py:213
+msgid "Rename Playlist Folder"
+msgstr "Çalma Listesi Dizin Adını Değiştir"
+
+#: ../../portable/frontends/html/contextmenu.py:212
+msgid "Play Just This Video"
+msgstr "Sadece Bu Video'yu Yürüt"
+
+#: ../../portable/frontends/html/contextmenu.py:231
+#: ../../portable/playlist.py:218
+msgid "Rename Playlist"
+msgstr "Çalma Listesini Yeniden Adlandır"
+
+#: ../../portable/frontends/html/compiled_templates/channel_content.py:36
+#: ../../portable/frontends/html/compiled_templates/channel_folder.py:200
+#: ../../portable/frontends/html/compiled_templates/channel.py:382
+msgid "Save Search"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/channel_content.py:102
+#: ../../portable/frontends/html/compiled_templates/channel_folder.py:266
+#: ../../portable/frontends/html/compiled_templates/channel.py:448
+msgid "Full Channel"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/channel_content.py:111
+#: ../../portable/frontends/html/compiled_templates/channel_content.py:194
+#: ../../portable/frontends/html/compiled_templates/channel_folder.py:275
+#: ../../portable/frontends/html/compiled_templates/channel_folder.py:358
+#: ../../portable/frontends/html/compiled_templates/channel.py:457
+#: ../../portable/frontends/html/compiled_templates/channel.py:540
+msgid "${len} Videos"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/channel_content.py:185
+#: ../../portable/frontends/html/compiled_templates/channel_folder.py:349
+#: ../../portable/frontends/html/compiled_templates/channel.py:531
+msgid "Downloaded"
+msgstr "İndirildi"
+
+#: ../../portable/frontends/html/compiled_templates/feed_settings.py:48
+#: ../../portable/frontends/html/compiled_templates/channel.py:188
+msgid "remove channel"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/feed_settings.py:57
+#: ../../portable/frontends/html/compiled_templates/channel.py:197
+msgid "Settings: ${title}"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/feed_settings.py:59
+#: ../../portable/frontends/html/compiled_templates/channel.py:199
+msgid "Videos expire after"
+msgstr "Videoların süresi dolar"
+
+#: ../../portable/frontends/html/compiled_templates/feed_settings.py:63
+#: ../../portable/frontends/html/compiled_templates/channel.py:203
+msgid "Default"
+msgstr "Öntanımlı"
+
+#: ../../portable/frontends/html/compiled_templates/feed_settings.py:70
+#: ../../portable/frontends/html/compiled_templates/channel.py:210
+msgid "default"
+msgstr "öntanımlı"
+
+#: ../../portable/frontends/html/compiled_templates/feed_settings.py:136
+#: ../../portable/frontends/html/compiled_templates/channel.py:276
+msgid ""
+"Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
+"unwatched."
+msgstr ""
+"Eğer ${maxnew} ${maxnew2} den fazla izlenmemiş video bekliyor ise Otomatik "
+"İndirme yapma"
+
+#: ../../portable/frontends/html/compiled_templates/download_item_description.py:53
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:329
+msgid "Saved"
+msgstr "Kaydedildi"
+
+#: ../../portable/frontends/html/compiled_templates/playlist_folder.py:61
+msgid "Empty Playlist Folder"
+msgstr "Çalma Listesi Dizinini Boşalt"
+
+#: ../../portable/frontends/html/compiled_templates/playlist_folder.py:73
+msgid ""
+"This folder contains ${count} playlists, but the playlists do not contain "
+"any items."
+msgstr ""
+"Bu dizinde ${count} çalma listesi var, ama çalma listelerinde herhangi bir "
+"şey yok."
+
+#: ../../portable/frontends/html/compiled_templates/playlist_folder.py:78
+msgid "Drag playlists to this folder to add them."
+msgstr "Çalma listelerini eklemek için bu dizine sürükleyin."
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:55
+#: ../../portable/frontends/html/compiled_templates/video_info.py:46
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:59
+msgid "EMAIL A FRIEND"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:62
+#: ../../portable/frontends/html/compiled_templates/video_info.py:53
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:66
+msgid "PERMALINK"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:69
+#: ../../portable/frontends/html/compiled_templates/video_info.py:60
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:73
+msgid "COMMENTS"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:81
+#: ../../portable/frontends/html/compiled_templates/video_info.py:72
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:85
+msgid "KEEP"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:88
+#: ../../portable/frontends/html/compiled_templates/video_info.py:79
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:92
+msgid "ADD TO LIBRARY"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:98
+#: ../../portable/frontends/html/compiled_templates/video_info.py:89
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:102
+msgid "DELETE"
+msgstr "SİL"
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:114
+msgid "Miro - External Playback Template"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:124
+msgid "Continue To Next Video"
+msgstr "Sonraki videoya Devam Et"
+
+#: ../../portable/frontends/html/compiled_templates/download.py:39
+#, python-format
+msgid "%0.1f KB/s uploading"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download.py:42
+#, python-format
+msgid "%0.1f KB/s downloading"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download.py:140
+msgid "External Downloads"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download.py:142
+msgid "Clear Completed and Failed Downloads"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download.py:155
+msgid "Seeding Torrents"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download.py:177
+msgid "${size} free for downloads"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download.py:186
+msgid "${size} free on disk"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download.py:464
+#: ../../portable/frontends/html/compiled_templates/new.py:138
+#: ../../portable/frontends/html/compiled_templates/library.py:137
+msgid "Find"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download.py:466
+#: ../../portable/tabs.py:57
+msgid "Downloading"
+msgstr "İndiriyor"
+
+#: ../../portable/frontends/html/compiled_templates/download.py:485
+msgid "Pause All"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download.py:503
+msgid "Resume All"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download.py:516
+msgid "Channel Downloads"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/channel_folder.py:172
+msgid "Empty Channel Folder"
+msgstr "Kanal Dizinini Boşalt"
+
+#: ../../portable/frontends/html/compiled_templates/channel_folder.py:174
+msgid "Drag channels to this folder to add them."
+msgstr "Kanalları eklemek için bu dizine sürükleyin."
+
+#: ../../portable/frontends/html/compiled_templates/unittest/translationtest.py:45
+msgid "Simple translation"
+msgstr "Basit çeviri"
+
+#: ../../portable/frontends/html/compiled_templates/unittest/translationtest.py:59
+msgid "truck stop in a ${can}"
+msgstr "Kamyon ${can} da durdu"
+
+#: ../../portable/frontends/html/compiled_templates/unittest/translationtest.py:63
+msgid ""
+"This is a ${car} and this is a ${truck} <span>This text is <b "
+"style=\"color:red\">raw</b> text</span>"
+msgstr ""
+"Bu bir ${car} ve bu bir ${truck} <span>Bu yazı <b "
+"style=\"color:red\">ham</b> yazıdır</span>"
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:75
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:38
+msgid "Date:"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:82
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:45
+msgid "Length:"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:89
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:52
+msgid "Size:"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:98
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:61
+msgid "Show Details"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:105
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:68
+msgid "Hide Details"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:153
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:116
+msgid "Download Torrent"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:230
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:193
+msgid "Pending Auto Download"
+msgstr "Otomatik Yükleme Beklemede"
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:244
+#: ../../portable/frontends/html/compiled_templates/download_item_details.py:207
+msgid "STOP SEEDING"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:282
+#: ../../portable/frontends/html/compiled_templates/download_item_thumbnail.py:69
+msgid "Resume Download"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/new.py:146
+msgid "Recent Videos"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/playlist.py:58
+msgid "Empty Playlist"
+msgstr "Çalma Listesini Boşalt"
+
+#: ../../portable/frontends/html/compiled_templates/playlist.py:60
+msgid "Drag downloaded videos to this playlist to add them."
+msgstr "İndirilmiş videoları eklemek için bu çalma listesine  sürükleyin."
+
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:139
+msgid ""
+"Miro can't play this file. You may be able to open it with a different "
+"program.<br></br><br></br><strong>Filename:</strong> "
+"${filename}<br></br><strong>File type:</strong> ${format}"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:143
+msgid "REVEAL FILE"
+msgstr "DOSYAYI AÇIĞA ÇIKAR"
+
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:147
+msgid "Play Externally"
+msgstr "Dışardan Oynat"
+
+#: ../../portable/frontends/html/compiled_templates/external_playback.py:156
+msgid "Skip >> ${countdown}"
+msgstr "Atla >> ${countdown}"
+
+#: ../../portable/frontends/html/compiled_templates/search.py:49
+#: ../../portable/frontends/html/compiled_templates/channel.py:293
+#: ../../portable/extrastrings.py:33 ../../portable/feed.py:2393
+#: ../../portable/feed.py:2483
+msgid "Search"
+msgstr "Arama"
+
+#: ../../portable/frontends/html/compiled_templates/search.py:74
+msgid "No videos found.<br></br>Enter a query in the search field above."
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/search.py:79
+msgid "Searching..."
+msgstr "Arıyor..."
+
+#: ../../portable/frontends/html/compiled_templates/search.py:84
+msgid ""
+"No matching videos found.<br></br>Enter a different query in the search "
+"field above."
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/search.py:93
+msgid "Save as a Channel"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/search.py:95
+msgid ""
+"<h3>Results for \"<span i18n:name=\"query\" "
+"t:replace=\"feed.lastQuery\"></span>\"</h3>"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/multi_channel.py:59
+msgid ""
+"${count} Channel Folders Selected<br></br>(contains ${containedcount} "
+"channels)"
+msgstr ""
+"${count} Seçili Kanal Dizinleri<br></br>(${containedcount} kanal içerir)"
+
+#: ../../portable/frontends/html/compiled_templates/multi_channel.py:71
+msgid "${count} Channels Selected"
+msgstr "${count} Kanal Seçili"
+
+#: ../../portable/frontends/html/compiled_templates/multi_channel.py:76
+msgid "Put Into a New Folder"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/multi_channel.py:83
+msgid "Delete All"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/multi_playlist.py:59
+msgid ""
+"${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
+"playlists)"
+msgstr ""
+"${count} Seçili Çalma Listesi Dizinleri<br></br>(${containedcount} çalma "
+"listeleri içerir)"
+
+#: ../../portable/frontends/html/compiled_templates/multi_playlist.py:71
+msgid "${count} Playlists Selected"
+msgstr "${count} Çalma Listesi Seçili"
+
+#: ../../portable/frontends/html/compiled_templates/channel.py:318
+msgid "Visit Website"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/channel.py:325
+msgid "Send to a Friend"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/channel.py:332
+msgid "Auto Download"
+msgstr ""
+
+#: ../../portable/frontends/html/compiled_templates/channel.py:746
+msgid "Looking for videos at this URL"
+msgstr "Bu Bağlantıdaki Videolara Bakılıyor"
+
+#: ../../portable/frontends/html/compiled_templates/library.py:145
+#: ../../portable/tabs.py:54
 msgid "Library"
 msgstr "Kütüphane"
 
-#: ../../portable/tabs.py:58
-msgid "Downloading"
-msgstr "İndiriyor"
+#: ../../portable/frontends/html/main.py:138 ../../portable/startup.py:236
+msgid "Video Directory Missing"
+msgstr "Video Klasörü Yerinde Değil"
+
+#: ../../portable/frontends/html/main.py:139
+msgid ""
+"\n"
+"    Miro can't find your primary video directory.  This may be because it's  "
+"   located on an external drive that is currently disconnected.\n"
+"\n"
+"    If you continue, the video directory will be reset to a location on this "
+"    drive (this will cause you to lose some details about the videos on the  "
+"   external drive).  You can also quit, connect the drive, and relaunch Miro."
+msgstr ""
+"\n"
+"    Miro videolarınızı kaydedeceği öncelikli klasörünüzü bulamıyor. Bunun "
+"sebebi kayıt yerinizin harici bir disk olması ve şu an takılı olmaması "
+"olabilir.\n"
+"Eğer devam ederseniz video indirme klasörünüz bu sürücü içinde yaratılacak "
+"(bu harici diskinizdeki videolar hakkındaki bazı detayları kaybetmenize "
+"sebep olabilir). Dilerseniz programdan çıkıp, sürücünüzü takabilir ve "
+"Miro'yu yeniden başlatabilirsiniz."
+
+#: ../../portable/frontends/html/main.py:197 ../../portable/theme.py:127
+msgid "Custom Channels"
+msgstr "Kişisel Kanallar"
+
+#: ../../portable/frontends/html/main.py:197 ../../portable/theme.py:127
+msgid ""
+"You are running a version of $longAppName with a custom set of channels."
+msgstr ""
+"$longAppName'yu kişiselleştirilmiş bir kanal listesiyle kullanıyorsunuz."
+
+#: ../../portable/frontends/html/main.py:276 ../../portable/httpclient.py:151
+msgid "Internal Error"
+msgstr "İç hata"
+
+#: ../../portable/frontends/html/main.py:276
+msgid ""
+"Miro has encountered an internal error. You can help us track down this "
+"problem and fix it by submitting an error report."
+msgstr ""
+"Miro dahili bi hata ile karşılaştı. Bu sorunu hata raporu bildirerek "
+"incelememize ve çözmemize yardım edebilirsiniz."
+
+#: ../../portable/frontends/html/main.py:276
+msgid ""
+"Include entire program database including all video and channel metadata "
+"with crash report"
+msgstr ""
+"Video ve kanal bilgisini de içerecek şekilde program veri tabanını hata "
+"raporuna ekle"
+
+#: ../../portable/frontends/html/main.py:276
+msgid "Describe what you were doing that caused this error"
+msgstr "Bu hata oluştuğu sırada ne yaptığını tarif et"
+
+#: ../../portable/frontends/html/main.py:291
+#, python-format
+msgid "%s Version Alert"
+msgstr "%s Yeni Sürüm Uyarısı"
+
+#: ../../portable/frontends/html/main.py:292
+#, python-format
+msgid "A new version of %s is available. Would you like to download it now?"
+msgstr "%s'nun yeni bir sürümü var. Şimdi indirmek ister misin?"
+
+#: ../../portable/frontends/html/main.py:297
+#, python-format
+msgid "%s Version Check"
+msgstr "%s Sürüm Kontrolü"
+
+#: ../../portable/frontends/html/main.py:298
+#, python-format
+msgid "%s is up to date."
+msgstr "%s güncel."
+
+#: ../../portable/frontends/html/main.py:316
+msgid "Are you sure you want to quit?"
+msgstr "Çıkmak istediğinizden emin misiniz?"
+
+#: ../../portable/frontends/html/main.py:318
+msgid ""
+"Miro is still uploading your crash report. If you quit now the upload will "
+"be canceled.  Quit Anyway?"
+msgstr ""
+"Miro halen hata raporunuzu yollamakta. Şimdi çıkarsanız yollama işlemi iptal "
+"olacak. Gene de çıkmak istiyormusunuz?"
+
+#: ../../portable/frontends/html/main.py:323
+#, python-format
+msgid "You have %d download still in progress.  Quit Anyway?"
+msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
+msgstr[0] "%d indirmesi devam etmekte. Gene de Çıkmak istiyormusunuz?"
+
+#: ../../portable/frontends/html/main.py:347
+msgid "Import OPML File"
+msgstr "İçe OPML Dosyası Aktar"
+
+#: ../../portable/frontends/html/main.py:349
+msgid "OPML Files"
+msgstr "OPML Dosyaları"
+
+#: ../../portable/frontends/html/main.py:354
+msgid "Export OPML File"
+msgstr "Dışa OPML Dosyası Aktar"
+
+#: ../../portable/util.py:267
+#, python-format
+msgid "%1.1fGB"
+msgstr "%1.1fGB"
+
+#: ../../portable/util.py:269
+#, python-format
+msgid "%dGB"
+msgstr "%dGB"
+
+#: ../../portable/util.py:273
+#, python-format
+msgid "%1.1fMB"
+msgstr "%1.1fMB"
+
+#: ../../portable/util.py:275
+#, python-format
+msgid "%dMB"
+msgstr "%dMB"
+
+#: ../../portable/util.py:279
+#, python-format
+msgid "%1.1fKB"
+msgstr "%1.1fKB"
+
+#: ../../portable/util.py:281
+#, python-format
+msgid "%dKB"
+msgstr "%dKB"
+
+#: ../../portable/util.py:285
+#, python-format
+msgid "%1.1fB"
+msgstr "%1.1fB"
+
+#: ../../portable/util.py:287
+#, python-format
+msgid "%dB"
+msgstr "%dB"
+
+#: ../../portable/iheartmiro.py:134
+#, python-format
+msgid ""
+"An Effortless Way to Help Miro\n"
+"\n"
+"Miro is open-source and built by a non-profit.  We need your help to "
+"continue our work.\n"
+"\n"
+"I Heart Miro is a simple %s extension that gives a referral fee to the Miro "
+"organization when you shop at Amazon.  You'll never notice it, it doesn't "
+"cost you a thing, and it's easy to uninstall at any time.\n"
+"\n"
+"%s"
+msgstr ""
+
+#: ../../portable/iheartmiro.py:142
+msgid "Install iHeartMiro?"
+msgstr ""
+
+#: ../../portable/dl_daemon/download.py:457
+msgid "Error"
+msgstr "Hata"
+
+#: ../../portable/dl_daemon/download.py:544
+#, python-format
+msgid "Could not write to %s"
+msgstr "%s'e yazılamıyor"
+
+#: ../../portable/dl_daemon/download.py:564
+#: ../../portable/dl_daemon/download.py:772
+msgid "Not enough disk space"
+msgstr "Yeterli disk alanı yok"
+
+#: ../../portable/dl_daemon/download.py:565
+#: ../../portable/dl_daemon/download.py:773
+#, python-format
+msgid "%s MB required to store this video"
+msgstr "Bu videoyu kaydetmek için %s MB gerekli"
+
+#: ../../portable/dl_daemon/download.py:783
+msgid "BitTorrent failure"
+msgstr "BitTorrent hatası"
+
+#: ../../portable/dl_daemon/download.py:784
+msgid "BitTorrent failed to startup"
+msgstr "BitTorrent başlarken hata verdi"
+
+#: ../../portable/dl_daemon/download.py:957
+msgid "Corrupt Torrent"
+msgstr "Bozuk Torrent"
+
+#: ../../portable/dl_daemon/download.py:958
+#, python-format
+msgid "The torrent file at %s was not valid"
+msgstr "%s 'deki torrent dosyası geçerli değil"
+
+#: ../../portable/dl_daemon/download.py:983
+msgid "Torrent file deleted"
+msgstr "Torrent dosyası silindi"
+
+#: ../../portable/dl_daemon/download.py:984
+msgid "The torrent file for this item was deleted outside of Miro."
+msgstr "Bu yayının torrent dosyası Miro dışında silinmiş"
+
+#: ../../portable/controller.py:197 ../../portable/controller.py:211
+#: ../../portable/controller.py:255 ../../portable/controller.py:281
+#: ../../portable/controller.py:301
+#, python-format
+msgid "Remove %s"
+msgstr "Kaldır %s"
+
+#: ../../portable/controller.py:198
+#, python-format
+msgid "Are you sure you want to remove the guide %s?"
+msgstr "%s rehberini kaldırmak istediğinizden emin misiniz?"
+
+#: ../../portable/controller.py:212
+#, python-format
+msgid "Are you sure you want to remove %s"
+msgstr "%s kaldırmak istediğinizden emin misiniz?"
+
+#: ../../portable/controller.py:215 ../../portable/controller.py:260
+#: ../../portable/controller.py:286 ../../portable/controller.py:305
+#, python-format
+msgid "Remove %s channels"
+msgstr "%s Kanalı Kaldır"
+
+#: ../../portable/controller.py:217
+#, python-format
+msgid "Are you sure you want to remove these %s playlists"
+msgstr "Bu %s çalma listesini kaldırmak istediğinizden emin misiniz?"
+
+#: ../../portable/controller.py:256
+msgid ""
+"What would you like to do with the videos in this channel that you've "
+"downloaded?"
+msgstr "Bu kanaldan indirdiğiniz videoları ne yapmak istersiniz?"
+
+#: ../../portable/controller.py:261
+msgid ""
+"What would you like to do with the videos in these channels that you've "
+"downloaded?"
+msgstr "Bu kanallardan indirdiğiniz videoları ne yapmak istersiniz?"
+
+#: ../../portable/controller.py:282
+#, python-format
+msgid ""
+"Are you sure you want to remove %s?  Any downloads in progress will be "
+"canceled."
+msgstr ""
+"%s kaldırmak istediğinizden emin misiniz? Devam eden indirmeler iptal "
+"edilecek."
+
+#: ../../portable/controller.py:287
+#, python-format
+msgid ""
+"Are you sure you want to remove these %s channels?  Any downloads in "
+"progress will be canceled."
+msgstr ""
+"Bu %s kanallarını kaldırmak istediğinizden emin misiniz? Devam eden "
+"indirmeler iptal edilecek."
+
+#: ../../portable/controller.py:302
+#, python-format
+msgid "Are you sure you want to remove %s?"
+msgstr "%s'yu bilgisayarınızdan kaldırmak istediğiniz emin misiniz?"
+
+#: ../../portable/controller.py:306
+#, python-format
+msgid "Are you sure you want to remove these %s channels?"
+msgstr "Bu %s kanallarını silmek istediğinize emin misiniz?"
+
+#: ../../portable/controller.py:319
+#, python-format
+msgid "Stop watching %s"
+msgstr "%s dizinini artık takip etme."
+
+#: ../../portable/controller.py:320
+#, python-format
+msgid "Are you sure you want to stop watching %s?"
+msgstr "%s dizinini takip etmekten vazgeçmek istediğine emin misin?"
+
+#: ../../portable/controller.py:323
+#, python-format
+msgid "Stop watching %s directories"
+msgstr "Bu %s dizini artık takip etme."
+
+#: ../../portable/controller.py:324
+#, python-format
+msgid "Are you sure you want to stop watching these %s directories?"
+msgstr "Bu %s dizini artık takip etmek istemediğine emin min?"
+
+#: ../../portable/controller.py:498
+msgid "Error Saving Video"
+msgstr "Hata Video Kaydediliyor"
+
+#: ../../portable/controller.py:500
+#, python-format
+msgid ""
+"An error occured while trying to save %s.  Please check that the file has "
+"not been deleted and try again."
+msgstr ""
+"%s'yi kaydetmeye çalışırken bir hata oluştu. Lütfen dosyanın silinmediğinden "
+"emin olun ve tekrar deneyin"
 
 #: ../../portable/downloader.py:234
 msgid "activity"
 msgstr "hareketler"
 
-#: ../../portable/downloader.py:268 ../../portable/httpclient.py:127
-#: ../../portable/httpclient.py:155
+#: ../../portable/downloader.py:268 ../../portable/httpclient.py:138
+#: ../../portable/httpclient.py:167
 msgid "File not found"
 msgstr "Dosya bulunamadı"
 
@@ -1250,328 +1955,123 @@ msgstr "Flash Adresi Kazıma Hatası"
 msgid "starting up"
 msgstr "başlatılıyor"
 
-#: ../../portable/playlist.py:219
+#: ../../portable/httpclient.py:89
 #, python-format
-msgid "Enter a new name for the playlist %s"
-msgstr "Çalma Listesi için yeni bir isim girin %s."
+msgid "Error: %s"
+msgstr "Hata: %s"
 
-#: ../../portable/playlist.py:241
-msgid "Create Playlist"
-msgstr "Çalma Listesi Oluştur"
+#: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
+msgid "Can't connect"
+msgstr "Bağlanamadı"
 
-#: ../../portable/playlist.py:242
-msgid "Enter a name for the new playlist"
-msgstr "Yeni Çalma Listesi İçin İsim Girin"
-
-#: ../../portable/opml.py:144
-msgid "OPML Import failed"
-msgstr "OPML İçe Aktarılamadı"
-
-#: ../../portable/opml.py:145
-msgid "The selected OPML file appears to be invalid. Import was interrupted."
-msgstr "Seçili OPML dosyası bozuk görünüyor. İçe Aktarma bitirilemedi"
-
-#: ../../portable/opml.py:150
-msgid "OPML Import summary"
-msgstr "OPML İçe Aktarım özeti"
-
-#: ../../portable/opml.py:151
+#: ../../portable/httpclient.py:105
 #, python-format
-msgid "Successfully imported %d feed."
-msgid_plural "Successfully imported %d feeds."
-msgstr[0] "%d feed başarıyla indirildi."
+msgid "Connection Error: %s"
+msgstr "Bağlantı Hatası: %s"
 
-#: ../../portable/opml.py:154
+#: ../../portable/httpclient.py:111
+msgid "SSL connection error"
+msgstr "SSL bağlantı hatası"
+
+#: ../../portable/httpclient.py:115
+msgid "HTTP error"
+msgstr "HTTP hatası"
+
+#: ../../portable/httpclient.py:118
 #, python-format
-msgid "Skipped %d feed already present."
-msgid_plural "Skipped %d feeds already present."
-msgstr[0] "%d feed zaten mevcut olduğundan atlandı."
+msgid "Bad Status Line: %s"
+msgstr "Hatalı Durum Çubuğu: %s"
 
-#: ../../portable/util.py:266
+#: ../../portable/httpclient.py:122
 #, python-format
-msgid "%1.1fGB"
-msgstr "%1.1fGB"
+msgid "Bad Header Line: %s"
+msgstr "Hatalı Başlık Çubuğu: %s"
 
-#: ../../portable/util.py:268
+#: ../../portable/httpclient.py:126
 #, python-format
-msgid "%dGB"
-msgstr "%dGB"
+msgid "Bad Chunk size: %s"
+msgstr "Hatalı Parça Boyutu: %s"
 
-#: ../../portable/util.py:272
+#: ../../portable/httpclient.py:130
 #, python-format
-msgid "%1.1fMB"
-msgstr "%1.1fMB"
+msgid "Expected CRLF got: %r"
+msgstr "Beklenen CRLF:%r"
 
-#: ../../portable/util.py:274
+#: ../../portable/httpclient.py:133
 #, python-format
-msgid "%dMB"
-msgstr "%dMB"
+msgid "%s closed connection"
+msgstr "%s kapalı bağlantı"
 
-#: ../../portable/util.py:278
+#: ../../portable/httpclient.py:139
+msgid "Got 404 status code"
+msgstr "404 Hata kodu alındı"
+
+#: ../../portable/httpclient.py:141
 #, python-format
-msgid "%1.1fKB"
-msgstr "%1.1fKB"
+msgid "Bad Status Code: %s"
+msgstr "Hatalı Durum Kodu: %s"
 
-#: ../../portable/util.py:280
+#: ../../portable/httpclient.py:146
+msgid "Authorization failed"
+msgstr "İzin alınamadı"
+
+#: ../../portable/httpclient.py:152
+msgid "Pipeline request never started"
+msgstr "Ardışık düzen isteği hiç başlatılmadı"
+
+#: ../../portable/httpclient.py:156
+msgid "Timeout"
+msgstr "Zaman Aşımı"
+
+#: ../../portable/httpclient.py:157
 #, python-format
-msgid "%dKB"
-msgstr "%dKB"
+msgid "Connection to %s timed out"
+msgstr "%s bağlantısı zaman aşımına uğradı"
 
-#: ../../portable/util.py:284
+#: ../../portable/httpclient.py:161
+msgid "Invalid URL"
+msgstr "Geçersiz Adres"
+
+#: ../../portable/httpclient.py:162
 #, python-format
-msgid "%1.1fB"
-msgstr "%1.1fB"
+msgid "\"%s\" is not a valid URL"
+msgstr "\"%s\" geçerli bir URL değil"
 
-#: ../../portable/util.py:286
+#: ../../portable/httpclient.py:168
 #, python-format
-msgid "%dB"
-msgstr "%dB"
+msgid "The file: \"%s\" doesn't exist"
+msgstr "\"%s\" Dosyası Bulunamadı"
 
-#: ../../portable/iheartmiro.py:82
-msgid ""
-"An Effortless Way to Help Miro\n"
-"\n"
-"Miro is open-source and built by a non-profit.  We need your help to "
-"continue our work.\n"
-"\n"
-"I Heart Miro is a simple Firefox extension that gives a referral fee to the "
-"Miro organization when you shop at Amazon.  You'll never notice it, it "
-"doesn't cost you a thing, and it's easy to uninstall at any time.\n"
-"\n"
-"If you click 'Install iHeartMiro' below, Firefox will launch and ask if it's "
-"ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks "
-"for your help."
-msgstr ""
+#: ../../portable/httpclient.py:172
+msgid "Read error"
+msgstr "Okuma hatası"
 
-#: ../../portable/menubar.py:158
-msgid "_Open"
-msgstr "_Aç"
+#: ../../portable/httpclient.py:173
+#, python-format
+msgid "Error while reading from \"%s\""
+msgstr "\"%s\" ' den Okurken Hata Oluştu"
 
-#: ../../portable/menubar.py:159
-msgid "_Download Video"
-msgstr "_Video İndir"
+#: ../../portable/httpclient.py:369
+msgid "Unknown Error code"
+msgstr "Bilinmeyen Hata Kodu"
 
-#: ../../portable/menubar.py:161
-msgid "Check _Version"
-msgstr "Sürüm _Kontrol Et"
+#: ../../portable/httpclient.py:401
+msgid "Connection closed"
+msgstr "Bağlantı kapatıldı"
 
-#: ../../portable/menubar.py:163
-msgid "_Remove Video"
-msgstr "_Video Kaldır"
+#: ../../portable/httpclient.py:823
+msgid "Unknown"
+msgstr "Bilinmeyen"
 
-#: ../../portable/menubar.py:164
-msgid "_Remove Videos"
-msgstr "Videoları _Sil"
+#: ../../portable/httpclient.py:824
+msgid "Internal Error: Not ready to send"
+msgstr "İç Hata: Göndermeye hazır değil"
 
-#: ../../portable/menubar.py:165
-msgid "Re_name Video"
-msgstr "Videoyu Yeniden _İsimlendir"
+#: ../../portable/license.py:68
+msgid "license page"
+msgstr "Lisans sayfası"
 
-#: ../../portable/menubar.py:166
-msgid "Save Video _As..."
-msgstr "Videoyu Farklı _Kaydet..."
-
-#: ../../portable/menubar.py:167
-msgid "Save Videos _As..."
-msgstr "Videoyu _Yeni İsimle Kaydet"
-
-#: ../../portable/menubar.py:168
-msgid "Copy Video _URL"
-msgstr "Video A_dresini Kopyala"
-
-#: ../../portable/menubar.py:170
-msgid "_Options..."
-msgstr "_Seçenekler"
-
-#: ../../portable/menubar.py:171
-msgid "_Quit"
-msgstr "_Çık"
-
-#: ../../portable/menubar.py:179
-msgid "Cu_t"
-msgstr "_Kes"
-
-#: ../../portable/menubar.py:180
-msgid "_Copy"
-msgstr "K_opyala"
-
-#: ../../portable/menubar.py:181
-msgid "_Paste"
-msgstr "Ya_pıştır"
-
-#: ../../portable/menubar.py:182
-msgid "Select _All"
-msgstr "Tü_münü Seç"
-
-#: ../../portable/menubar.py:183
-msgid "_Delete"
-msgstr "_Sil"
-
-#: ../../portable/menubar.py:187
-msgid "Add _Channel"
-msgstr "Kanal _Ekle"
-
-#: ../../portable/menubar.py:188
-msgid "New Searc_h Channel..."
-msgstr "Yeni Aram_a Kanalı"
-
-#: ../../portable/menubar.py:189
-msgid "New _Folder..."
-msgstr "Yeni _Dizin"
-
-#: ../../portable/menubar.py:190
-msgid "Add Channel _Guide..."
-msgstr "Yeni Kanal _Rehberi"
-
-#: ../../portable/menubar.py:200
-msgid "Update _All Channels"
-msgstr "Tüm Kanalları _Güncelle"
-
-#: ../../portable/menubar.py:202
-msgid "_Import Channels (OPML)..."
-msgstr "Kanalları _İçe Aktar(OPML)..."
-
-#: ../../portable/menubar.py:203
-msgid "E_xport Channels (OPML)..."
-msgstr "Kanalları _Dışa Aktar(OPML)..."
-
-#: ../../portable/menubar.py:205
-msgid "_Send this channel to a friend"
-msgstr "Bu Kanalı Arkadaşına _Gönder"
-
-#: ../../portable/menubar.py:206
-msgid "Copy Channel _Link"
-msgstr "Kanal _Bağlantısını Kopyala"
-
-#: ../../portable/menubar.py:209
-msgid "New _Playlist"
-msgstr "Yeni _Oynatma Listesi"
-
-#: ../../portable/menubar.py:210
-msgid "New Playlist Fol_der"
-msgstr "Yeni Oynatma Listesi _Dizini"
-
-#: ../../portable/menubar.py:212
-msgid "Re_name Playlist"
-msgstr "_Çalma Listesini Yeniden Adlandır"
-
-#: ../../portable/menubar.py:213
-msgid "_Remove Playlist"
-msgstr "_Çalma Listesini Kaldır"
-
-#: ../../portable/menubar.py:214
-msgid "_Remove Playlists"
-msgstr "Oynatma Listelerini _Sil"
-
-#: ../../portable/menubar.py:215
-msgid "_Remove Playlist Folders"
-msgstr "Oynatma Listesi _Dizinlerini Sil"
-
-#: ../../portable/menubar.py:216
-msgid "_Remove Playlist Folder"
-msgstr "Oynatma Listesi _Dizinini Sil"
-
-#: ../../portable/menubar.py:226 ../../portable/menubar.py:227
-msgid "_Play"
-msgstr "_Oynat"
-
-#: ../../portable/menubar.py:228
-msgid "_Pause"
-msgstr ""
-
-#: ../../portable/menubar.py:229
-msgid "_Stop"
-msgstr "_Durdur"
-
-#: ../../portable/menubar.py:231
-msgid "_Next Video"
-msgstr "_Sonraki Video"
-
-#: ../../portable/menubar.py:232
-msgid "_Previous Video"
-msgstr "_Önceki Video"
-
-#: ../../portable/menubar.py:234
-msgid "Skip _Forward"
-msgstr "_İleri Atla"
-
-#: ../../portable/menubar.py:235
-msgid "Skip _Back"
-msgstr "_Geri Atla"
-
-#: ../../portable/menubar.py:237
-msgid "Volume _Up"
-msgstr "Sesi _Yükselt"
-
-#: ../../portable/menubar.py:238
-msgid "Volume _Down"
-msgstr "Sesi _Düşür"
-
-#: ../../portable/menubar.py:240
-msgid "_Fullscreen"
-msgstr "_Tamekran"
-
-#: ../../portable/menubar.py:244
-msgid "_About"
-msgstr "_Bu program hakkında"
-
-#: ../../portable/menubar.py:245
-msgid "_Donate"
-msgstr "_Bağış Yap"
-
-#: ../../portable/menubar.py:246 ../../portable/menubar.py:261
-msgid "_Help"
-msgstr "_Yardım"
-
-#: ../../portable/menubar.py:248
-msgid "Report a _Bug"
-msgstr "Hata _Bildir"
-
-#: ../../portable/menubar.py:252
-msgid "_Video"
-msgstr "_Video"
-
-#: ../../portable/menubar.py:254
-msgid "_File"
-msgstr "_Dosya"
-
-#: ../../portable/menubar.py:258
-msgid "_Channels"
-msgstr "_Kanallar"
-
-#: ../../portable/menubar.py:259
-msgid "_Playlists"
-msgstr "_Çalma Listeleri"
-
-#: ../../portable/menubar.py:260
-msgid "P_layback"
-msgstr "__Gerisar"
-
-#: ../../portable/menubar.py:265
-msgid "Play Unwatched ($numUnwatched)"
-msgstr "Seyeredilmemişleri Oynat ($numUnwatched)"
-
-#: ../../portable/menubar.py:266
-msgid "Pause All Downloads ($numDownloading)"
-msgstr "Tüm İndirmeleri Duraklat ($numDownloading)"
-
-#: ../../portable/menubar.py:267
-msgid "Resume All Downloads ($numPaused)"
-msgstr "Tüm İndirmelere Kaldığın Yerden Devam Et ($numPaused)"
-
-#: ../../portable/menubar.py:269
-msgid "Options..."
-msgstr "Seçenekler..."
-
-#: ../../portable/menubar.py:271
-msgid "Hide Window"
-msgstr "Pencereyi gizle"
-
-#: ../../portable/menubar.py:272
-msgid "Show Window"
-msgstr "Pencereyi göster"
-
-#: ../../portable/theme.py:137
+#: ../../portable/theme.py:138
 msgid "Starter Channels"
 msgstr "Yeni Başlayanlar İçin Kanallar"
 
@@ -1579,228 +2079,27 @@ msgstr "Yeni Başlayanlar İçin Kanallar"
 msgid "Example Playlist"
 msgstr "Örnek Çalma Listesi"
 
-#: ../../portable/httpclient.py:81
+#: ../../portable/folder.py:144
 #, python-format
-msgid "Error: %s"
-msgstr "Hata: %s"
+msgid "Enter a new name for the channel folder %s"
+msgstr "Kanal dizini için yeni bir ad girin %s"
 
-#: ../../portable/httpclient.py:96 ../../portable/httpclient.py:102
-msgid "Can't connect"
-msgstr "Bağlanamadı"
-
-#: ../../portable/httpclient.py:97
+#: ../../portable/folder.py:215
 #, python-format
-msgid "Connection Error: %s"
-msgstr "Bağlantı Hatası: %s"
+msgid "Enter a new name for the playlist folder %s"
+msgstr "Çalma Listesi dizini için yeni bir isim girin %s"
 
-#: ../../portable/httpclient.py:103
-msgid "SSL connection error"
-msgstr "SSL bağlantı hatası"
+#: ../../portable/folder.py:223
+msgid "Create Channel Folder"
+msgstr "Kanal Dizini Oluştur"
 
-#: ../../portable/httpclient.py:107
-msgid "HTTP error"
-msgstr "HTTP hatası"
+#: ../../portable/folder.py:237
+msgid "Create Playlist Folder"
+msgstr "Çalma Listesi Dizini Oluştur"
 
-#: ../../portable/httpclient.py:110
-#, python-format
-msgid "Bad Status Line: %s"
-msgstr "Hatalı Durum Çubuğu: %s"
-
-#: ../../portable/httpclient.py:113
-#, python-format
-msgid "Bad Header Line: %s"
-msgstr "Hatalı Başlık Çubuğu: %s"
-
-#: ../../portable/httpclient.py:116
-#, python-format
-msgid "Bad Chunk size: %s"
-msgstr "Hatalı Parça Boyutu: %s"
-
-#: ../../portable/httpclient.py:119
-#, python-format
-msgid "Expected CRLF got: %r"
-msgstr "Beklenen CRLF:%r"
-
-#: ../../portable/httpclient.py:122
-#, python-format
-msgid "%s closed connection"
-msgstr "%s kapalı bağlantı"
-
-#: ../../portable/httpclient.py:128
-msgid "Got 404 status code"
-msgstr "404 Hata kodu alındı"
-
-#: ../../portable/httpclient.py:130
-#, python-format
-msgid "Bad Status Code: %s"
-msgstr "Hatalı Durum Kodu: %s"
-
-#: ../../portable/httpclient.py:134
-msgid "Authorization failed"
-msgstr "İzin alınamadı"
-
-#: ../../portable/httpclient.py:140
-msgid "Pipeline request never started"
-msgstr "Ardışık düzen isteği hiç başlatılmadı"
-
-#: ../../portable/httpclient.py:144
-msgid "Timeout"
-msgstr "Zaman Aşımı"
-
-#: ../../portable/httpclient.py:145
-#, python-format
-msgid "Connection to %s timed out"
-msgstr "%s bağlantısı zaman aşımına uğradı"
-
-#: ../../portable/httpclient.py:149
-msgid "Invalid URL"
-msgstr "Geçersiz Adres"
-
-#: ../../portable/httpclient.py:150
-#, python-format
-msgid "\"%s\" is not a valid URL"
-msgstr "\"%s\" geçerli bir URL değil"
-
-#: ../../portable/httpclient.py:156
-#, python-format
-msgid "The file: \"%s\" doesn't exist"
-msgstr "\"%s\" Dosyası Bulunamadı"
-
-#: ../../portable/httpclient.py:160
-msgid "Read error"
-msgstr "Okuma hatası"
-
-#: ../../portable/httpclient.py:161
-#, python-format
-msgid "Error while reading from \"%s\""
-msgstr "\"%s\" ' den Okurken Hata Oluştu"
-
-#: ../../portable/httpclient.py:354
-msgid "Unknown Error code"
-msgstr "Bilinmeyen Hata Kodu"
-
-#: ../../portable/httpclient.py:386
-msgid "Connection closed"
-msgstr "Bağlantı kapatıldı"
-
-#: ../../portable/httpclient.py:811
-msgid "Unknown"
-msgstr "Bilinmeyen"
-
-#: ../../portable/httpclient.py:812
-msgid "Internal Error: Not ready to send"
-msgstr "İç Hata: Göndermeye hazır değil"
-
-#: ../../portable/extrastrings.py:33 ../../portable/feed.py:2409
-#: ../../portable/feed.py:2499
-msgid "Search"
-msgstr "Arama"
-
-#: ../../portable/feed.py:384
-msgid "never"
-msgstr "hiçbir zaman"
-
-#: ../../portable/feed.py:386 ../../portable/item.py:554
-#, python-format
-msgid "%d hours"
-msgstr "%d saat"
-
-#: ../../portable/feed.py:388
-#, python-format
-msgid "%d day"
-msgstr "%d gün"
-
-#: ../../portable/feed.py:390 ../../portable/item.py:552
-#, python-format
-msgid "%d days"
-msgstr "%d gün"
-
-#: ../../portable/feed.py:392
-#, python-format
-msgid "%d months"
-msgstr "%d ay"
-
-#: ../../portable/feed.py:826
-#, python-format
-msgid "Enter a new name for the channel %s"
-msgstr "%s Kanalı için yeni bir ad girin"
-
-#: ../../portable/feed.py:923
-msgid "Error loading feed"
-msgstr "Beslemeyi yüklemede hata"
-
-#: ../../portable/feed.py:924
-#, python-format
-msgid "Couldn't load the feed at %s (%s)."
-msgstr "%s (%s)'deki besleme yüklenemedi."
-
-#: ../../portable/feed.py:927
-msgid "Would you like to keep the feed?"
-msgstr "Beslemeyi saklamak ister misiniz?"
-
-#: ../../portable/feed.py:1040
-msgid "Bad content-type"
-msgstr "Geçersiz içerik-tür"
-
-#: ../../portable/feed.py:1053
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
-msgid "Channel is not compatible with $shortAppName!"
-msgstr "Bu kanal $shortAppName! ile uyumlu değil!"
-
-#: ../../portable/feed.py:1054
-msgid ""
-"But we'll try our best to grab the files. It may take extra time to list the "
-"videos, and descriptions may look funny.  Please contact the publishers of "
-"$url and ask if they can supply a feed in a format that will work with "
-"$shortAppName.\n"
-"\n"
-"Do you want to try to load this channel anyway?"
-msgstr ""
-"Biz dosyaları almak için elimizden geleni yapacağız. Ama videoları "
-"listelemek normalden daha uzun sürebilir ve tanıtım yazıları biraz garip "
-"görünebilir. Lütfen $url adresinin yaıncılarıyla temasa geçip $shortAppName "
-"ile daha uyumlu çalışacak bir feed oluştutup oluşturamayacaklarını sorun.\n"
-"\n"
-"Herşeye rağmen bu kanalı görüntülemek istediğine emin misin?"
-
-#: ../../portable/feed.py:2513
-msgid "Local Files"
-msgstr "Yerel Dosyalar"
-
-#: ../../portable/feed.py:2527
-msgid "Playing File"
-msgstr "Dosya çalınıyor"
-
-#: ../../portable/storedatabase.py:859 ../../portable/storedatabase.py:1258
-#, python-format
-msgid "%s database save succeeded"
-msgstr "%s veritabanı kaydı başarılı"
-
-#: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1259
-msgid ""
-"The database has been successfully saved. It is now safe to quit without "
-"losing any data."
-msgstr ""
-"Veritabanı kaydı başarılı oldu. Güvenli bir şekilde veri kaybetmeden "
-"kaydedip çıkabilirsiniz."
-
-#: ../../portable/storedatabase.py:867 ../../portable/storedatabase.py:1267
-#, python-format
-msgid "%s database save failed"
-msgstr "%s veritabanı kaydı başarısız"
-
-#: ../../portable/storedatabase.py:868 ../../portable/storedatabase.py:1268
-#, python-format
-msgid ""
-"%s was unable to save its database: Disk Full.\n"
-"We suggest deleting files from the full disk or simply deleting some movies "
-"from your collection.\n"
-"Recent changes may be lost."
-msgstr ""
-"%s kendi veritabanını kaydetmeyi başaramadı: Disk Dolu.\n"
-"Dolu diskten dosya silmenizi veya koleksiyonunuzdan birkaç tane video "
-"silmenizi tavsiye ederiz.\n"
-"Önceki değişiklikler kaybolabilir."
+#: ../../portable/folder.py:238
+msgid "Enter a name for the new playlist folder"
+msgstr "Yeni çalma listesi dizini için bir isim girin"
 
 #: ../../portable/dialogs.py:89
 msgid "Ignore"
@@ -1810,12 +2109,12 @@ msgstr "Önemseme"
 msgid "Submit Crash Report"
 msgstr "Hata Raporu Bildir"
 
-#: ../../portable/dialogs.py:91 ../../platform/gtk-x11/glade/miro.glade.h:48
+#: ../../portable/dialogs.py:91 ../../platform/gtk-x11/glade/miro.glade.h:52
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
 msgid "Migrate"
 msgstr "Taşı"
 
-#: ../../portable/dialogs.py:92 ../../platform/gtk-x11/glade/miro.glade.h:36
+#: ../../portable/dialogs.py:92 ../../platform/gtk-x11/glade/miro.glade.h:39
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
 msgid "Don't Migrate"
 msgstr "Taşıma"
@@ -1853,10 +2152,6 @@ msgstr "Ekle"
 msgid "Add Into New Folder"
 msgstr "Yeni Dizine Ekle"
 
-#: ../../portable/dialogs.py:103
-msgid "Keep"
-msgstr "Sakla"
-
 #: ../../portable/dialogs.py:105
 msgid "Not Now"
 msgstr "Şimdi değil"
@@ -1875,422 +2170,33 @@ msgstr "Her Hâlükârda İndir"
 
 #: ../../portable/dialogs.py:109
 msgid "Install iHeartMiro"
-msgstr ""
+msgstr "iHeartMiro'yu yükle"
 
 #: ../../portable/dialogs.py:110
 msgid "Don't Install"
-msgstr ""
+msgstr "Yükleme"
 
-#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:55
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:59
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
 msgid "New Search Channel"
 msgstr "Yeni Arama Kanalı"
 
-#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:27
+#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:30
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
 msgid "A search channel contains items that match a search term."
 msgstr "Bir arama kanalı arama şartına uyan ögeler içerir."
 
-#: ../../portable/controller.py:196 ../../portable/controller.py:210
-#: ../../portable/controller.py:254 ../../portable/controller.py:280
-#: ../../portable/controller.py:300
-#, python-format
-msgid "Remove %s"
-msgstr "Kaldır %s"
-
-#: ../../portable/controller.py:197
-#, python-format
-msgid "Are you sure you want to remove the guide %s?"
-msgstr "%s rehberini kaldırmak istediğinizden emin misiniz?"
-
-#: ../../portable/controller.py:211
-#, python-format
-msgid "Are you sure you want to remove %s"
-msgstr "%s kaldırmak istediğinizden emin misiniz?"
-
-#: ../../portable/controller.py:214 ../../portable/controller.py:259
-#: ../../portable/controller.py:285 ../../portable/controller.py:304
-#, python-format
-msgid "Remove %s channels"
-msgstr "%s Kanalı Kaldır"
-
-#: ../../portable/controller.py:216
-#, python-format
-msgid "Are you sure you want to remove these %s playlists"
-msgstr "Bu %s çalma listesini kaldırmak istediğinizden emin misiniz?"
-
-#: ../../portable/controller.py:255
-msgid ""
-"What would you like to do with the videos in this channel that you've "
-"downloaded?"
-msgstr "Bu kanaldan indirdiğiniz videoları ne yapmak istersiniz?"
-
-#: ../../portable/controller.py:260
-msgid ""
-"What would you like to do with the videos in these channels that you've "
-"downloaded?"
-msgstr "Bu kanallardan indirdiğiniz videoları ne yapmak istersiniz?"
-
-#: ../../portable/controller.py:281
-#, python-format
-msgid ""
-"Are you sure you want to remove %s?  Any downloads in progress will be "
-"canceled."
-msgstr ""
-"%s kaldırmak istediğinizden emin misiniz? Devam eden indirmeler iptal "
-"edilecek."
-
-#: ../../portable/controller.py:286
-#, python-format
-msgid ""
-"Are you sure you want to remove these %s channels?  Any downloads in "
-"progress will be canceled."
-msgstr ""
-"Bu %s kanallarını kaldırmak istediğinizden emin misiniz? Devam eden "
-"indirmeler iptal edilecek."
-
-#: ../../portable/controller.py:301
-#, python-format
-msgid "Are you sure you want to remove %s?"
-msgstr "%s'yu bilgisayarınızdan kaldırmak istediğiniz emin misiniz?"
-
-#: ../../portable/controller.py:305
-#, python-format
-msgid "Are you sure you want to remove these %s channels?"
-msgstr "Bu %s kanallarını silmek istediğinize emin misiniz?"
-
-#: ../../portable/controller.py:318
-#, python-format
-msgid "Stop watching %s"
-msgstr "%s dizinini artık takip etme."
-
-#: ../../portable/controller.py:319
-#, python-format
-msgid "Are you sure you want to stop watching %s?"
-msgstr "%s dizinini takip etmekten vazgeçmek istediğine emin misin?"
-
-#: ../../portable/controller.py:322
-#, python-format
-msgid "Stop watching %s directories"
-msgstr "Bu %s dizini artık takip etme."
-
-#: ../../portable/controller.py:323
-#, python-format
-msgid "Are you sure you want to stop watching these %s directories?"
-msgstr "Bu %s dizini artık takip etmek istemediğine emin min?"
-
-#: ../../portable/controller.py:497
-msgid "Error Saving Video"
-msgstr "Hata Video Kaydediliyor"
-
-#: ../../portable/controller.py:499
-#, python-format
-msgid ""
-"An error occured while trying to save %s.  Please check that the file has "
-"not been deleted and try again."
-msgstr ""
-"%s'yi kaydetmeye çalışırken bir hata oluştu. Lütfen dosyanın silinmediğinden "
-"emin olun ve tekrar deneyin"
-
-#: ../../portable/singleclick.py:99
-msgid "Download already exists"
-msgstr "Mevcut olsa dahi indir"
-
-#: ../../portable/singleclick.py:100
-msgid "That URL is already an external download."
-msgstr "Bu zaten harici indirme adresi."
-
-#: ../../portable/singleclick.py:106
-msgid "Miro will begin downloading it now."
-msgstr "Miro onu indirmeye şimdi başlayacak."
-
-#: ../../portable/singleclick.py:108
-msgid "It is downloading now."
-msgstr "İndiriliyor."
-
-#: ../../portable/singleclick.py:110
-msgid "It has already been downloaded."
-msgstr "O zaten indirilmiş."
-
-#: ../../portable/singleclick.py:137
-msgid "Download Error"
-msgstr "Yükleme Hatası"
-
-#: ../../portable/singleclick.py:138
-#, python-format
-msgid ""
-"Miro is not able to download a file at this URL:\n"
-"\n"
-"URL: %s"
-msgstr ""
-"Miro bu adresteki dosyayı indiremez:\n"
-"\n"
-"Adres: %s"
-
-#: ../../portable/singleclick.py:146
-msgid "File Download"
-msgstr "Dosya İndirme"
-
-#: ../../portable/singleclick.py:147
-#, python-format
-msgid "This file at %s does not appear to be audio, video, or an RSS feed."
-msgstr "%s daki dosya ses, video veya  RSS feed gibi gözükmüyor."
-
-#: ../../portable/singleclick.py:235
-msgid "Subscribing to multiple channels"
-msgstr "Çoklu kanala abone olunuyor"
-
-#: ../../portable/singleclick.py:236
-#, python-format
-msgid "Create %d channels?"
-msgstr "%d kanal oluşturulsun mu?"
-
-#: ../../portable/singleclick.py:249
-#, python-format
-msgid "Adding %d channels to a new folder"
-msgstr "%d kanal yeni bir dizine ekleniyor"
-
-#: ../../portable/singleclick.py:250 ../../portable/folder.py:224
-msgid "Enter a name for the new channel folder"
-msgstr "Yeni kanal dizini için bir isim girin"
-
-#: ../../portable/singleclick.py:253
-#, python-format
-msgid ""
-"NOTE: You are already subscribed to %d of these channels.  These channels "
-"will stay where they currently are."
-msgstr ""
-"NOT: siz zaten bu kanallardan %d tanesine abonesiniz. Bu kanallar oldukları "
-"yerde kalacaklar."
-
-#: ../../portable/singleclick.py:264
-msgid "Subscription error"
-msgstr "Abonelik hatası"
-
-#: ../../portable/singleclick.py:274
-msgid ""
-"This $shortAppName channel file has an invalid format: $url. Please notify "
-"the publisher of this file."
-msgstr ""
-"Bu $shortAppName kanal dosyasının yapısı yanlış: $url. Lütfen yayıncısına "
-"haber verin."
-
-#: ../../portable/singleclick.py:282
-msgid ""
-"This $shortAppName channel file has the wrong content type: $url. Please "
-"notify the publisher of this file."
-msgstr ""
-"Bu $shortAppName Kanal dosyası yanlış formatta: $url. Lütfen yayıncısını "
-"haberdar edin."
-
-#: ../../portable/singleclick.py:286
-msgid "Could not download the $shortAppName channel file: $url."
-msgstr "$url adersindeki $shortAppName Kanal dosyası indirilemiyor."
-
-#: ../../portable/singleclick.py:334
-msgid "Invalid Torrent"
-msgstr "Geçersiz Torrent"
-
-#: ../../portable/singleclick.py:335
-#, python-format
-msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-msgstr "Torrent dosyası %s bozuk gibi görünüyor ve açılamadı. [TAMAM]"
-
-#: ../../portable/item.py:497
-#, python-format
-msgid "Removing %s"
-msgstr "Kaldırılıyor %s"
-
-#: ../../portable/item.py:500
-msgid ""
-"Would you like to delete this folder and all of its videos or just remove "
-"its entry from the Library?"
-msgstr ""
-"Bu dizin ve içindeki videoları tamamen silmek mi yoksa sadece Kütüphanedeki "
-"kayıtlarını temizlemek mi istiyorsunuz?"
-
-#: ../../portable/item.py:506
-msgid ""
-"Would you like to delete this file or just remove its entry from the Library?"
-msgstr "Dosyayı diskten mi yoksa Kütüphaneden mi silmek istersiniz ?"
-
-#: ../../portable/item.py:526
-msgid ""
-"This item is a folder.  When you remove a folder, any items inside that "
-"folder will be deleted."
-msgstr ""
-"Bu öge bir dizindir. Dizini kaldırdığınız zaman, içindeki bütün ögeler "
-"silinecektir."
-
-#: ../../portable/item.py:556
-#, python-format
-msgid "%d minutes"
-msgstr "%d dakika"
-
-#: ../../portable/item.py:566
-#, python-format
-msgid "Expires in %s"
-msgstr "%s'de sona erer"
-
-#: ../../portable/item.py:578
-#, python-format
-msgid "Will retry in %s"
-msgstr "%s sonra tekrar deneyeceğiz"
-
-#: ../../portable/item.py:580
-msgid "Paused"
-msgstr "Duraklıyor"
-
-#: ../../portable/item.py:982
-msgid "TORRENT"
-msgstr "TORRENT"
-
-#: ../../portable/item.py:984
-msgid "WEB PAGE"
-msgstr "İNTERNET SAYFASI"
-
-#: ../../portable/item.py:994
-msgid "Total Down:"
-msgstr "Toplam İndirilen:"
-
-#: ../../portable/item.py:997
-msgid "Error:"
-msgstr "Hata:"
-
-#: ../../portable/item.py:1006
-msgid "Seeders:"
-msgstr "Uçlar"
-
-#: ../../portable/item.py:1008
-msgid "Leechers:"
-msgstr ""
-
-#: ../../portable/item.py:1010
-msgid "Down Rate:"
-msgstr "İndirme Hızı:"
-
-#: ../../portable/item.py:1011
-msgid "Down Total:"
-msgstr "Toplam İndirme:"
-
-#: ../../portable/item.py:1013
-msgid "Up Rate:"
-msgstr "Yükleme Hızı:"
-
-#: ../../portable/item.py:1014
-msgid "Up Total:"
-msgstr "Toplam Yükleme:"
-
-#: ../../portable/item.py:1024
-msgid "Web page:"
-msgstr "Web sayfası:"
-
-#: ../../portable/item.py:1024
-msgid "permalink"
-msgstr "Kalıcı bağlantı"
-
-#: ../../portable/item.py:1028
-msgid "File link:"
-msgstr "Dosya bağlantısı:"
-
-#: ../../portable/item.py:1028
-msgid "direct link to file"
-msgstr "Dosyaya doğrudan bağlantı"
-
-#: ../../portable/item.py:1030
-msgid "File type:"
-msgstr "Dosya türü:"
-
-#: ../../portable/item.py:1037 ../../portable/item.py:1040
-#: ../../portable/item.py:1042
-msgid "License:"
-msgstr ""
-
-#: ../../portable/item.py:1040 ../../portable/item.py:1042
-msgid "see permalink"
-msgstr ""
-
-#: ../../portable/item.py:1049
-msgid "REVEAL LOCAL FOLDER"
-msgstr "YEREL DİZİNİ GÖSTER"
-
-#: ../../portable/item.py:1051
-msgid "REVEAL LOCAL FILE"
-msgstr "YEREL DOSYAYI GÖSTER"
-
-#: ../../portable/item.py:1053
-msgid "Filename:"
-msgstr "Dosya Adı:"
-
-#: ../../portable/item.py:1060
-msgid "Down Total"
-msgstr "Toplam İndirilen"
-
-#: ../../portable/item.py:1062
-msgid "Up Total"
-msgstr "Toplam Yüklenen:"
-
-#: ../../portable/item.py:1080
-msgid "Item Details"
-msgstr "Öğe Detayları"
-
-#: ../../portable/item.py:1087
-msgid "Torrent Details"
-msgstr "Torrent Detayları"
-
-#: ../../portable/item.py:1089
-msgid "Torrent Details <i>stopped</i>"
-msgstr "Torrent Ayrıntıları <i>durduruldu</i>"
-
-#: ../../portable/item.py:1093
-msgid "Download Details"
-msgstr "İndirme Detayları"
-
-#: ../../portable/item.py:1310
-msgid "downloading..."
-msgstr "indiriyor..."
-
-#: ../../portable/item.py:1317 ../../portable/item.py:1320
-#, python-format
-msgid "%s remaining"
-msgstr "%s kalan"
-
-#: ../../portable/item.py:1329
-msgid "starting up..."
-msgstr "başlatılıyor..."
-
-#: ../../portable/item.py:1878
-#, python-format
-msgid "Removing %s items"
-msgstr "%s öge kaldırılıyor"
-
-#: ../../portable/item.py:1880
-msgid ""
-"One or more of these videos was not downloaded from a channel.  Would you "
-"like to delete these items or just remove their entries from the Library?"
-msgstr ""
-"Bu videolarda bir ya da birkaçı bir kanaldan indirilmedi. Bu videoları "
-"tamamen silmek mi yoksa sadece Kütüphanedeki kayıtlarını temizlemek mi "
-"istiyorsunuz?"
-
-#: ../../portable/item.py:1888
-msgid ""
-"One or more of these items is a folder.  When you remove or delete a folder, "
-"any items inside that folder will also be removed or deleted."
-msgstr ""
-"Bu ögelerden biri veya daha fazlası bir dizindir. Bir dizini sildiğiniz veya "
-"kaldırdığınız zaman, o dizinin içerisindeki ögeleri de kaldırmış veya silmiş "
-"olacaksınız."
-
 #: ../../portable/startup.py:92
 msgid "Unknown Error"
-msgstr ""
+msgstr "Bilinmeyen Hata"
 
 #: ../../portable/startup.py:93
 #, python-format
 msgid ""
 "An unkown error prevented Miro from startup.  Please file a bug report at %s"
 msgstr ""
+"Bilinmeyen bir hata yüzünden Miro başlatılamıyor. Lütfen %s adresindeki hata "
+"raporunu doldurarak yetkilileri haberdar edin."
 
 #: ../../portable/startup.py:155
 msgid "Database too new"
@@ -2305,38 +2211,587 @@ msgstr ""
 "var. Bu veritabanını kullanmak için $shortAppName'nun en son sürümünü "
 "indirip çalıştırmanız gerekiyor."
 
-#: ../../portable/startup.py:238
+#: ../../portable/startup.py:237
 msgid ""
 "\n"
-"Miro can't find your primary video directory.  This may be because it's "
-"located on an external drive that is currently disconnected."
+"Miro can't find your primary video directory $moviesDirectory.  This may be "
+"because it's located on an external drive that is currently disconnected.  "
+"Please, connect the drive or create the directory, then start Miro again."
+msgstr ""
+"\n"
+"Miro birincil video dizini olan $moviesDirectory bulamıyor. Bunun nedeni şu "
+"an bağlantısı kesilmiş harici bir sürücüde bulunuyor olması olabilir. Lütfen "
+"sürücüyü bağlayın ya da yeni bir dizin yaratın, daha sonra Miro`yu yeniden "
+"başlatın."
+
+#: ../../portable/playlist.py:219
+#, python-format
+msgid "Enter a new name for the playlist %s"
+msgstr "Çalma Listesi için yeni bir isim girin %s."
+
+#: ../../portable/playlist.py:241
+msgid "Create Playlist"
+msgstr "Çalma Listesi Oluştur"
+
+#: ../../portable/playlist.py:242
+msgid "Enter a name for the new playlist"
+msgstr "Yeni Çalma Listesi İçin İsim Girin"
+
+#: ../../portable/opml.py:155
+msgid "OPML Import failed"
+msgstr "OPML İçe Aktarılamadı"
+
+#: ../../portable/opml.py:156
+msgid "The selected OPML file appears to be invalid. Import was interrupted."
+msgstr "Seçili OPML dosyası bozuk görünüyor. İçe Aktarma bitirilemedi"
+
+#: ../../portable/opml.py:161
+msgid "OPML Import summary"
+msgstr "OPML İçe Aktarım özeti"
+
+#: ../../portable/opml.py:162
+#, python-format
+msgid "Successfully imported %d feed."
+msgid_plural "Successfully imported %d feeds."
+msgstr[0] "%d feed başarıyla indirildi."
+
+#: ../../portable/opml.py:165
+#, python-format
+msgid "Skipped %d feed already present."
+msgid_plural "Skipped %d feeds already present."
+msgstr[0] "%d feed zaten mevcut olduğundan atlandı."
+
+#: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1262
+#, python-format
+msgid "%s database save succeeded"
+msgstr "%s veritabanı kaydı başarılı"
+
+#: ../../portable/storedatabase.py:861 ../../portable/storedatabase.py:1263
+msgid ""
+"The database has been successfully saved. It is now safe to quit without "
+"losing any data."
+msgstr ""
+"Veritabanı kaydı başarılı oldu. Güvenli bir şekilde veri kaybetmeden "
+"kaydedip çıkabilirsiniz."
+
+#: ../../portable/storedatabase.py:868 ../../portable/storedatabase.py:1271
+#, python-format
+msgid "%s database save failed"
+msgstr "%s veritabanı kaydı başarısız"
+
+#: ../../portable/storedatabase.py:869 ../../portable/storedatabase.py:1272
+#, python-format
+msgid ""
+"%s was unable to save its database: Disk Full.\n"
+"We suggest deleting files from the full disk or simply deleting some movies "
+"from your collection.\n"
+"Recent changes may be lost."
+msgstr ""
+"%s kendi veritabanını kaydetmeyi başaramadı: Disk Dolu.\n"
+"Dolu diskten dosya silmenizi veya koleksiyonunuzdan birkaç tane video "
+"silmenizi tavsiye ederiz.\n"
+"Önceki değişiklikler kaybolabilir."
+
+#: ../../portable/menubar.py:157
+msgid "_Open"
+msgstr "_Aç"
+
+#: ../../portable/menubar.py:158
+msgid "_Download Video"
+msgstr "_Video İndir"
+
+#: ../../portable/menubar.py:160
+msgid "Check _Version"
+msgstr "Sürüm _Kontrol Et"
+
+#: ../../portable/menubar.py:162
+msgid "_Remove Video"
+msgstr "_Video Kaldır"
+
+#: ../../portable/menubar.py:163
+msgid "_Remove Videos"
+msgstr "Videoları _Sil"
+
+#: ../../portable/menubar.py:164
+msgid "Re_name Video"
+msgstr "Videoyu Yeniden _İsimlendir"
+
+#: ../../portable/menubar.py:165
+msgid "Save Video _As..."
+msgstr "Videoyu Farklı _Kaydet..."
+
+#: ../../portable/menubar.py:166
+msgid "Save Videos _As..."
+msgstr "Videoyu _Yeni İsimle Kaydet"
+
+#: ../../portable/menubar.py:167
+msgid "Copy Video _URL"
+msgstr "Video A_dresini Kopyala"
+
+#: ../../portable/menubar.py:169
+msgid "_Options..."
+msgstr "_Seçenekler"
+
+#: ../../portable/menubar.py:170
+msgid "_Quit"
+msgstr "_Çık"
+
+#: ../../portable/menubar.py:178
+msgid "Cu_t"
+msgstr "_Kes"
+
+#: ../../portable/menubar.py:179
+msgid "_Copy"
+msgstr "K_opyala"
+
+#: ../../portable/menubar.py:180
+msgid "_Paste"
+msgstr "Ya_pıştır"
+
+#: ../../portable/menubar.py:181
+msgid "Select _All"
+msgstr "Tü_münü Seç"
+
+#: ../../portable/menubar.py:182
+msgid "_Delete"
+msgstr "_Sil"
+
+#: ../../portable/menubar.py:186
+msgid "Add _Channel"
+msgstr "Kanal _Ekle"
+
+#: ../../portable/menubar.py:187
+msgid "New Searc_h Channel..."
+msgstr "Yeni Aram_a Kanalı"
+
+#: ../../portable/menubar.py:188
+msgid "New _Folder..."
+msgstr "Yeni _Dizin"
+
+#: ../../portable/menubar.py:189
+msgid "Add Channel _Guide..."
+msgstr "Yeni Kanal _Rehberi"
+
+#: ../../portable/menubar.py:199
+msgid "Update _All Channels"
+msgstr "Tüm Kanalları _Güncelle"
+
+#: ../../portable/menubar.py:201
+msgid "_Import Channels (OPML)..."
+msgstr "Kanalları _İçe Aktar(OPML)..."
+
+#: ../../portable/menubar.py:202
+msgid "E_xport Channels (OPML)..."
+msgstr "Kanalları _Dışa Aktar(OPML)..."
+
+#: ../../portable/menubar.py:204
+msgid "_Send this channel to a friend"
+msgstr "Bu Kanalı Arkadaşına _Gönder"
+
+#: ../../portable/menubar.py:205
+msgid "Copy Channel _Link"
+msgstr "Kanal _Bağlantısını Kopyala"
+
+#: ../../portable/menubar.py:208
+msgid "New _Playlist"
+msgstr "Yeni _Oynatma Listesi"
+
+#: ../../portable/menubar.py:209
+msgid "New Playlist Fol_der"
+msgstr "Yeni Oynatma Listesi _Dizini"
+
+#: ../../portable/menubar.py:211
+msgid "Re_name Playlist"
+msgstr "_Çalma Listesini Yeniden Adlandır"
+
+#: ../../portable/menubar.py:212
+msgid "_Remove Playlist"
+msgstr "_Çalma Listesini Kaldır"
+
+#: ../../portable/menubar.py:213
+msgid "_Remove Playlists"
+msgstr "Oynatma Listelerini _Sil"
+
+#: ../../portable/menubar.py:214
+msgid "_Remove Playlist Folders"
+msgstr "Oynatma Listesi _Dizinlerini Sil"
+
+#: ../../portable/menubar.py:215
+msgid "_Remove Playlist Folder"
+msgstr "Oynatma Listesi _Dizinini Sil"
+
+#: ../../portable/menubar.py:225 ../../portable/menubar.py:226
+msgid "_Play"
+msgstr "_Oynat"
+
+#: ../../portable/menubar.py:227
+msgid "_Pause"
+msgstr "_Duraklat"
+
+#: ../../portable/menubar.py:228
+msgid "_Stop"
+msgstr "_Durdur"
+
+#: ../../portable/menubar.py:230
+msgid "_Next Video"
+msgstr "_Sonraki Video"
+
+#: ../../portable/menubar.py:231
+msgid "_Previous Video"
+msgstr "_Önceki Video"
+
+#: ../../portable/menubar.py:233
+msgid "Skip _Forward"
+msgstr "_İleri Atla"
+
+#: ../../portable/menubar.py:234
+msgid "Skip _Back"
+msgstr "_Geri Atla"
+
+#: ../../portable/menubar.py:236
+msgid "Volume _Up"
+msgstr "Sesi _Yükselt"
+
+#: ../../portable/menubar.py:237
+msgid "Volume _Down"
+msgstr "Sesi _Düşür"
+
+#: ../../portable/menubar.py:239
+msgid "_Fullscreen"
+msgstr "_Tamekran"
+
+#: ../../portable/menubar.py:243
+msgid "_About"
+msgstr "_Bu program hakkında"
+
+#: ../../portable/menubar.py:244
+msgid "_Donate"
+msgstr "_Bağış Yap"
+
+#: ../../portable/menubar.py:245 ../../portable/menubar.py:262
+msgid "_Help"
+msgstr "_Yardım"
+
+#: ../../portable/menubar.py:247
+msgid "Report a _Bug"
+msgstr "Hata _Bildir"
+
+#: ../../portable/menubar.py:248
+msgid "_Translate"
 msgstr ""
 
-#: ../../portable/folder.py:144
-#, python-format
-msgid "Enter a new name for the channel folder %s"
-msgstr "Kanal dizini için yeni bir ad girin %s"
-
-#: ../../portable/folder.py:215
-#, python-format
-msgid "Enter a new name for the playlist folder %s"
-msgstr "Çalma Listesi dizini için yeni bir isim girin %s"
-
-#: ../../portable/folder.py:223
-msgid "Create Channel Folder"
-msgstr "Kanal Dizini Oluştur"
-
-#: ../../portable/folder.py:237
-msgid "Create Playlist Folder"
-msgstr "Çalma Listesi Dizini Oluştur"
-
-#: ../../portable/folder.py:238
-msgid "Enter a name for the new playlist folder"
-msgstr "Yeni çalma listesi dizini için bir isim girin"
-
-#: ../../portable/license.py:68
-msgid "license page"
+#: ../../portable/menubar.py:249
+msgid "_Planet"
 msgstr ""
+
+#: ../../portable/menubar.py:253
+msgid "_Video"
+msgstr "_Video"
+
+#: ../../portable/menubar.py:255
+msgid "_File"
+msgstr "_Dosya"
+
+#: ../../portable/menubar.py:259
+msgid "_Channels"
+msgstr "_Kanallar"
+
+#: ../../portable/menubar.py:260
+msgid "_Playlists"
+msgstr "_Çalma Listeleri"
+
+#: ../../portable/menubar.py:261
+msgid "P_layback"
+msgstr "__Gerisar"
+
+#: ../../portable/menubar.py:266
+msgid "Play Unwatched ($numUnwatched)"
+msgstr "Seyeredilmemişleri Oynat ($numUnwatched)"
+
+#: ../../portable/menubar.py:267
+msgid "Pause All Downloads ($numDownloading)"
+msgstr "Tüm İndirmeleri Duraklat ($numDownloading)"
+
+#: ../../portable/menubar.py:268
+msgid "Resume All Downloads ($numPaused)"
+msgstr "Tüm İndirmelere Kaldığın Yerden Devam Et ($numPaused)"
+
+#: ../../portable/menubar.py:270
+msgid "Options..."
+msgstr "Seçenekler..."
+
+#: ../../portable/menubar.py:272
+msgid "Hide Window"
+msgstr "Pencereyi gizle"
+
+#: ../../portable/menubar.py:273
+msgid "Show Window"
+msgstr "Pencereyi göster"
+
+#: ../../portable/feed.py:388
+msgid "never"
+msgstr "hiçbir zaman"
+
+#: ../../portable/feed.py:390 ../../portable/item.py:555
+#, python-format
+msgid "%d hours"
+msgstr "%d saat"
+
+#: ../../portable/feed.py:392
+#, python-format
+msgid "%d day"
+msgstr "%d gün"
+
+#: ../../portable/feed.py:394 ../../portable/item.py:553
+#, python-format
+msgid "%d days"
+msgstr "%d gün"
+
+#: ../../portable/feed.py:396
+#, python-format
+msgid "%d months"
+msgstr "%d ay"
+
+#: ../../portable/feed.py:831
+#, python-format
+msgid "Enter a new name for the channel %s"
+msgstr "%s Kanalı için yeni bir ad girin"
+
+#: ../../portable/feed.py:928
+msgid "Error loading feed"
+msgstr "Beslemeyi yüklemede hata"
+
+#: ../../portable/feed.py:929
+#, python-format
+msgid "Couldn't load the feed at %s (%s)."
+msgstr "%s (%s)'deki besleme yüklenemedi."
+
+#: ../../portable/feed.py:932
+msgid "Would you like to keep the feed?"
+msgstr "Beslemeyi saklamak ister misiniz?"
+
+#: ../../portable/feed.py:1053
+msgid "Bad content-type"
+msgstr "Geçersiz içerik-tür"
+
+#: ../../portable/feed.py:1066
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
+msgid "Channel is not compatible with $shortAppName!"
+msgstr "Bu kanal $shortAppName! ile uyumlu değil!"
+
+#: ../../portable/feed.py:1067
+msgid ""
+"But we'll try our best to grab the files. It may take extra time to list the "
+"videos, and descriptions may look funny.  Please contact the publishers of "
+"$url and ask if they can supply a feed in a format that will work with "
+"$shortAppName.\n"
+"\n"
+"Do you want to try to load this channel anyway?"
+msgstr ""
+"Biz dosyaları almak için elimizden geleni yapacağız. Ama videoları "
+"listelemek normalden daha uzun sürebilir ve tanıtım yazıları biraz garip "
+"görünebilir. Lütfen $url adresinin yaıncılarıyla temasa geçip $shortAppName "
+"ile daha uyumlu çalışacak bir feed oluştutup oluşturamayacaklarını sorun.\n"
+"\n"
+"Herşeye rağmen bu kanalı görüntülemek istediğine emin misin?"
+
+#: ../../portable/feed.py:2497
+msgid "Local Files"
+msgstr "Yerel Dosyalar"
+
+#: ../../portable/feed.py:2511
+msgid "Playing File"
+msgstr "Dosya çalınıyor"
+
+#: ../../portable/item.py:496
+#, python-format
+msgid "Removing %s"
+msgstr "Kaldırılıyor %s"
+
+#: ../../portable/item.py:499
+msgid ""
+"Would you like to delete this folder and all of its videos or just remove "
+"its entry from the Library?"
+msgstr ""
+"Bu dizin ve içindeki videoları tamamen silmek mi yoksa sadece Kütüphanedeki "
+"kayıtlarını temizlemek mi istiyorsunuz?"
+
+#: ../../portable/item.py:505
+msgid ""
+"Would you like to delete this file or just remove its entry from the Library?"
+msgstr "Dosyayı diskten mi yoksa Kütüphaneden mi silmek istersiniz ?"
+
+#: ../../portable/item.py:525
+msgid ""
+"This item is a folder.  When you remove a folder, any items inside that "
+"folder will be deleted."
+msgstr ""
+"Bu öge bir dizindir. Dizini kaldırdığınız zaman, içindeki bütün ögeler "
+"silinecektir."
+
+#: ../../portable/item.py:557
+#, python-format
+msgid "%d minutes"
+msgstr "%d dakika"
+
+#: ../../portable/item.py:567
+#, python-format
+msgid "Expires in %s"
+msgstr "%s'de sona erer"
+
+#: ../../portable/item.py:579
+#, python-format
+msgid "Will retry in %s"
+msgstr "%s sonra tekrar deneyeceğiz"
+
+#: ../../portable/item.py:581
+msgid "Paused"
+msgstr "Duraklıyor"
+
+#: ../../portable/item.py:989
+msgid "TORRENT"
+msgstr "TORRENT"
+
+#: ../../portable/item.py:991
+msgid "WEB PAGE"
+msgstr "İNTERNET SAYFASI"
+
+#: ../../portable/item.py:1001
+msgid "Total Down:"
+msgstr "Toplam İndirilen:"
+
+#: ../../portable/item.py:1004
+msgid "Error:"
+msgstr "Hata:"
+
+#: ../../portable/item.py:1013
+msgid "Seeders:"
+msgstr "Uçlar"
+
+#: ../../portable/item.py:1015
+msgid "Leechers:"
+msgstr "İndirenler:"
+
+#: ../../portable/item.py:1017
+msgid "Down Rate:"
+msgstr "İndirme Hızı:"
+
+#: ../../portable/item.py:1018
+msgid "Down Total:"
+msgstr "Toplam İndirme:"
+
+#: ../../portable/item.py:1020
+msgid "Up Rate:"
+msgstr "Yükleme Hızı:"
+
+#: ../../portable/item.py:1021
+msgid "Up Total:"
+msgstr "Toplam Yükleme:"
+
+#: ../../portable/item.py:1032 ../../portable/item.py:1037
+msgid "Web page:"
+msgstr "Web sayfası:"
+
+#: ../../portable/item.py:1032
+msgid "comments"
+msgstr ""
+
+#: ../../portable/item.py:1037
+msgid "permalink"
+msgstr "Kalıcı bağlantı"
+
+#: ../../portable/item.py:1041
+msgid "File link:"
+msgstr "Dosya bağlantısı:"
+
+#: ../../portable/item.py:1041
+msgid "direct link to file"
+msgstr "Dosyaya doğrudan bağlantı"
+
+#: ../../portable/item.py:1043
+msgid "File type:"
+msgstr "Dosya türü:"
+
+#: ../../portable/item.py:1050 ../../portable/item.py:1053
+#: ../../portable/item.py:1055
+msgid "License:"
+msgstr "Lisans:"
+
+#: ../../portable/item.py:1053 ../../portable/item.py:1055
+msgid "see permalink"
+msgstr "Kalıcı linke bak"
+
+#: ../../portable/item.py:1062
+msgid "SHOW LOCAL FOLDER"
+msgstr ""
+
+#: ../../portable/item.py:1064
+msgid "SHOW LOCAL FILE"
+msgstr ""
+
+#: ../../portable/item.py:1066
+msgid "Filename:"
+msgstr "Dosya Adı:"
+
+#: ../../portable/item.py:1073
+msgid "Down Total"
+msgstr "Toplam İndirilen"
+
+#: ../../portable/item.py:1075
+msgid "Up Total"
+msgstr "Toplam Yüklenen:"
+
+#: ../../portable/item.py:1093
+msgid "Item Details"
+msgstr "Öğe Detayları"
+
+#: ../../portable/item.py:1100
+msgid "Torrent Details"
+msgstr "Torrent Detayları"
+
+#: ../../portable/item.py:1102
+msgid "Torrent Details <i>stopped</i>"
+msgstr "Torrent Ayrıntıları <i>durduruldu</i>"
+
+#: ../../portable/item.py:1106
+msgid "Download Details"
+msgstr "İndirme Detayları"
+
+#: ../../portable/item.py:1329
+msgid "downloading..."
+msgstr "indiriyor..."
+
+#: ../../portable/item.py:1336 ../../portable/item.py:1339
+#, python-format
+msgid "%s left"
+msgstr ""
+
+#: ../../portable/item.py:1348
+msgid "starting up..."
+msgstr "başlatılıyor..."
+
+#: ../../portable/item.py:1939
+#, python-format
+msgid "Removing %s items"
+msgstr "%s öge kaldırılıyor"
+
+#: ../../portable/item.py:1941
+msgid ""
+"One or more of these videos was not downloaded from a channel.  Would you "
+"like to delete these items or just remove their entries from the Library?"
+msgstr ""
+"Bu videolarda bir ya da birkaçı bir kanaldan indirilmedi. Bu videoları "
+"tamamen silmek mi yoksa sadece Kütüphanedeki kayıtlarını temizlemek mi "
+"istiyorsunuz?"
+
+#: ../../portable/item.py:1949
+msgid ""
+"One or more of these items is a folder.  When you remove or delete a folder, "
+"any items inside that folder will also be removed or deleted."
+msgstr ""
+"Bu ögelerden biri veya daha fazlası bir dizindir. Bir dizini sildiğiniz veya "
+"kaldırdığınız zaman, o dizinin içerisindeki ögeleri de kaldırmış veya silmiş "
+"olacaksınız."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:2
 msgid ""
@@ -2363,23 +2818,31 @@ msgid ""
 "<b>Note:</b> If you change the renderer used to play videos, you MUST \n"
 "restart Miro for the changes to take effect."
 msgstr ""
+"<b>NOT:</b> Eğer video derleyiciyi değiştirirseniz etkin olması için Miro'yu "
+"MUTLAKA yeniden başlatmanız gerekecektir."
 
 #: ../../platform/gtk-x11/glade/miro.glade.h:11
+msgid ""
+"<b>Note:</b> You can set the frequency channels are checked for each\n"
+"channel in the channel's settings pane."
+msgstr ""
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:13
 msgid "<b>Searching for Videos</b>"
 msgstr "<b>Videolar Aranıyor</b>"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:12
+#: ../../platform/gtk-x11/glade/miro.glade.h:14
 msgid "<b>Would you like Miro to look for video files on your computer?</b>"
 msgstr ""
 "<b>Miro'nun bilgisayarınızdaki videoları bulmasını ister misiniz?</b>"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:13
+#: ../../platform/gtk-x11/glade/miro.glade.h:15
 msgid "<b>Would you like to run Miro when your computer starts up?</b>"
 msgstr ""
 "<b>Bilgisayarınız açılırken Miro'nun da otomatik olarak başlamasını ister "
 "misiniz?</b>"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:14
+#: ../../platform/gtk-x11/glade/miro.glade.h:16
 msgid ""
 "<b>You're done!</b>\n"
 "\n"
@@ -2429,79 +2892,81 @@ msgstr ""
 "içeriyor. Hepsi de bedava. Bir kanalı izlemek için \"EKLE\" tuşuna "
 "tıklamanız yeterli."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:28
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
-msgid "Auto download default setting for new channels"
-msgstr ""
-
 #: ../../platform/gtk-x11/glade/miro.glade.h:29
-msgid "Automatically for_ward ports."
-msgstr ""
+msgid "<b>xine</b>"
+msgstr "<b>xine</b>"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:30
+#: ../../platform/gtk-x11/glade/miro.glade.h:31
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
+msgid "Auto download default setting for new channels"
+msgstr "Yeni kanallar için otomatik indirme varsayılan ayarı"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:32
+msgid "Automatically for_ward ports."
+msgstr "Portları otomatik yön_lendir."
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:33
 msgid "By default, videos _expire after"
 msgstr "Varsayılan, videos_after sonrası"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:31
+#: ../../platform/gtk-x11/glade/miro.glade.h:34
 msgid "C_hannel:"
 msgstr "K_anal"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:32
+#: ../../platform/gtk-x11/glade/miro.glade.h:35
 msgid "C_hannels"
 msgstr "K_anallar"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:33
+#: ../../platform/gtk-x11/glade/miro.glade.h:36
 msgid "C_reate Channel"
 msgstr "Kanal _Oluştur"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:34
+#: ../../platform/gtk-x11/glade/miro.glade.h:37
 msgid "Check Channels for _new content"
 msgstr "Kanalları _güncel içerik için kontrol et"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:35
+#: ../../platform/gtk-x11/glade/miro.glade.h:38
 msgid "Disk _Space"
 msgstr "_Boş disk alanı"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:37
+#: ../../platform/gtk-x11/glade/miro.glade.h:40
 msgid ""
 "Every 30 minutes\n"
 "Every hour\n"
+"Every day\n"
 "Manually"
 msgstr ""
-"Her 30 dakikada bir\n"
-"Her saat\n"
-"El ile"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:40
+#: ../../platform/gtk-x11/glade/miro.glade.h:44
 msgid "G_B"
-msgstr ""
+msgstr "G_B"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:41
+#: ../../platform/gtk-x11/glade/miro.glade.h:45
 msgid "Go"
 msgstr "Git"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:42
+#: ../../platform/gtk-x11/glade/miro.glade.h:46
 msgid "Ignore Un_encrypted Connections."
-msgstr ""
+msgstr "Şifre_lenmemiş bağlantıları yoksay"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:43
+#: ../../platform/gtk-x11/glade/miro.glade.h:47
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
 msgid "In This:"
 msgstr "Bunda:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:45
+#: ../../platform/gtk-x11/glade/miro.glade.h:49
 msgid "Limit torrent _downstream to:"
-msgstr ""
+msgstr "torrent_indirme limiti:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:46
+#: ../../platform/gtk-x11/glade/miro.glade.h:50
 msgid "Maximum number of channel auto-downloads at a time: "
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:47
+#: ../../platform/gtk-x11/glade/miro.glade.h:51
 msgid "Maximum number of manual downloads at a time: "
 msgstr ""
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:51
+#: ../../platform/gtk-x11/glade/miro.glade.h:55
 msgid ""
 "Miro can find all the videos on your computer to help you organize your "
 "collection."
@@ -2509,55 +2974,58 @@ msgstr ""
 "Miro koleksiyonunuzu düzenlemenize yardım etmek için bilgisayarınızdaki tüm "
 "videoları bulabilir"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:52
+#: ../../platform/gtk-x11/glade/miro.glade.h:56
 msgid ""
 "New\n"
 "All\n"
 "Off"
 msgstr ""
+"Yeni\n"
+"Hepsi\n"
+"Kapalı"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:56
+#: ../../platform/gtk-x11/glade/miro.glade.h:60
 msgid "Play _videos one after another"
 msgstr "Videoları ardarda yürüt"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:57
+#: ../../platform/gtk-x11/glade/miro.glade.h:61
 msgid "Preferences"
 msgstr "Seçenekler"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:58
+#: ../../platform/gtk-x11/glade/miro.glade.h:62
 msgid "Restrict to my full _home folder"
 msgstr "full _home dizinine erişim kısıtla"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:59
+#: ../../platform/gtk-x11/glade/miro.glade.h:63
 msgid "S_top after each video"
 msgstr "Her videodan sonra _dur"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:60
+#: ../../platform/gtk-x11/glade/miro.glade.h:64
 msgid "S_tore downloaded videos in this folder:"
 msgstr "İ_ndirilen videoları bu dizinde sakla:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:61
+#: ../../platform/gtk-x11/glade/miro.glade.h:65
 msgid "Search _Engine:"
 msgstr "Arama _Motoru:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:62
+#: ../../platform/gtk-x11/glade/miro.glade.h:66
 msgid "Search _custom folder:"
 msgstr "_Kişisel dizinde ara:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:63
+#: ../../platform/gtk-x11/glade/miro.glade.h:67
 msgid "Select Movies Directory"
 msgstr "Filmler Dizinini Seç"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:64
+#: ../../platform/gtk-x11/glade/miro.glade.h:68
 msgid "Select custom search directory"
 msgstr "Kişisel arama dizinini seç"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:65
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62
+#: ../../platform/gtk-x11/glade/miro.glade.h:69
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:64
 msgid "Stop torrent uploads when this ratio is reached:"
-msgstr ""
+msgstr "Ratio bu sayıya ulaştığında torrent göndermelerini durdur:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:66
+#: ../../platform/gtk-x11/glade/miro.glade.h:70
 msgid ""
 "The next few screens will help you set up Miro so that it works best for "
 "you.  Here's the first question."
@@ -2565,23 +3033,27 @@ msgstr ""
 "Bundan sonraki birkaç ekran Miroyu istediğiniz gibi ayarlamanıza yardımcı "
 "olacak. İşte ilk sorunuz."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:67
+#: ../../platform/gtk-x11/glade/miro.glade.h:71
 msgid "To avoid internet slowdowns, limit _upstream to:"
-msgstr ""
+msgstr "İnternet yavaşlamalarının önüne geçmek için gönderme_limiti:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:68
+#: ../../platform/gtk-x11/glade/miro.glade.h:72
 msgid "Use _ports:"
-msgstr ""
+msgstr "Bu _portları kullan:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:69
+#: ../../platform/gtk-x11/glade/miro.glade.h:73
+msgid "Use this for video when listening to audio:"
+msgstr "Sesi dinlerken bunu video için kullan:"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:74
 msgid "Use this renderer to play videos:"
-msgstr ""
+msgstr "Videoları oynatmak için bu çeviriciyi kullan:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:70
+#: ../../platform/gtk-x11/glade/miro.glade.h:75
 msgid "Volume:"
 msgstr "Ses"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:71
+#: ../../platform/gtk-x11/glade/miro.glade.h:76
 msgid ""
 "We recommend that you allow Miro to launch when your computer starts up.  "
 "This way, videos that haven't finished downloading can finish and new videos "
@@ -2591,7 +3063,7 @@ msgstr ""
 "vermenizi öneririz. Böylece indirilimesi tamamlanmamış videolar "
 "tamamlanabilir ve siz seyretmek istediğinizde hazır olurlar."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:73
+#: ../../platform/gtk-x11/glade/miro.glade.h:78
 msgid ""
 "Welcome to Internet TV.  There's a lot you can do with Miro: automatically "
 "download videos from your favorite channels, watch new videos one after the "
@@ -2602,7 +3074,7 @@ msgstr ""
 "biribiri ardına izlemek, torrentler indirmek, videoları arkadaşlarınıza "
 "tavsiye etmek, ve daha bir sürü şey."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:74
+#: ../../platform/gtk-x11/glade/miro.glade.h:79
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there?  (Currently dowloading movies will not be "
@@ -2612,77 +3084,94 @@ msgstr ""
 "dizine taşısın mı? (Şu anda indirilmekte olan filmler, indirme tamamlanınca "
 "taşınacaklar)."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:75
+#: ../../platform/gtk-x11/glade/miro.glade.h:80
 msgid "_Add Folder"
 msgstr "_Dizin Ekle"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:76
+#: ../../platform/gtk-x11/glade/miro.glade.h:81
 msgid "_Automatically run Miro when I log in"
 msgstr "_Oturum açtığımda Miro'yu çalıştır"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:77
+#: ../../platform/gtk-x11/glade/miro.glade.h:82
 msgid "_Downloads"
 msgstr "_İndirilenler"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:78
+#: ../../platform/gtk-x11/glade/miro.glade.h:83
 msgid "_Folders"
 msgstr "_Klasörler"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:79
+#: ../../platform/gtk-x11/glade/miro.glade.h:84
 msgid "_General"
 msgstr "_Genel"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:80
+#: ../../platform/gtk-x11/glade/miro.glade.h:85
 msgid "_KB/s."
-msgstr ""
+msgstr "_KB/s."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:81
+#: ../../platform/gtk-x11/glade/miro.glade.h:86
 msgid "_Keep at least this much free space on my drive:"
-msgstr ""
+msgstr "Sürücümde en az bu kadar alan _sakla:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:82
+#: ../../platform/gtk-x11/glade/miro.glade.h:87
 msgid "_Playback"
 msgstr "_Yürütme"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:83
+#: ../../platform/gtk-x11/glade/miro.glade.h:88
 msgid "_Resume playback of videos from the point where they were stopped"
 msgstr "Videoları yürütmeye, durduruldukları noktadan devam et"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:84
+#: ../../platform/gtk-x11/glade/miro.glade.h:89
 msgid "_Search"
 msgstr "_Arama"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:85
+#: ../../platform/gtk-x11/glade/miro.glade.h:90
 msgid "_Search For:"
 msgstr "Şunun İçin _Ara:"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:86
+#: ../../platform/gtk-x11/glade/miro.glade.h:91
 msgid "_URL"
 msgstr "_Adres"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:87
+#: ../../platform/gtk-x11/glade/miro.glade.h:92
 msgid "_Warn me when I attempt to quit with downloads in progress"
 msgstr "_Dosya indirme işlemi sürerken çıkmaya çalışırsam, beni uyar"
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:88
+#: ../../platform/gtk-x11/glade/miro.glade.h:93
 msgid ""
 "_Watch for new videos in these folders and include them in the Library"
 msgstr "Kütüphanem de dahil, yeni videoları kontrol et."
 
-#: ../../platform/gtk-x11/glade/miro.glade.h:89
+#: ../../platform/gtk-x11/glade/miro.glade.h:94
+msgid ""
+"goom\n"
+"oscope\n"
+"fftscope\n"
+"fftgraph\n"
+"none"
+msgstr ""
+"goom\n"
+"oscope\n"
+"fftscope\n"
+"fftgraph\n"
+"none"
+
+#: ../../platform/gtk-x11/glade/miro.glade.h:99
 msgid ""
 "xine\n"
 "gstreamer"
 msgstr ""
+"xine\n"
+"gstreamer"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
 msgid ""
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 "
+"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 "
 "$publisher.  $longAppName and the $longAppName logo are trademarks of "
 "$publisher."
 msgstr ""
-"$longAppName sürüm $appVersion ($appRevision); copyright (c) 2005-2007 "
-"$publisher. $longAppName ve $longAppName logosu $publisher adına tescillidir."
+"$longAppName Sürümü $appVersion ($appRevision); Telif Hakkı (c) 2005-2008 "
+"$publisher.  $longAppName ve $longAppName logo'su $publisher'ın tescilli "
+"markasıdır."
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
 msgid "About $longAppName"
@@ -2785,26 +3274,26 @@ msgstr ""
 "Lütfen kanalın yayımcısı tarafından size verilen kullanıcı adını ve parolayı "
 "girin."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:55
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57
 msgid ""
 "(WARNING: Changes won't go into effect until you restart $longAppName.)"
 msgstr ""
 "(DİKKAT: Değişiklikler $longAppName programını tekrar başlatana kadar etkin "
 "hale gelmeyecek.)"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:36
 msgid "Add Folder..."
 msgstr "Dizin Ekle..."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62
 msgid "Automatically Forward Ports"
-msgstr ""
+msgstr "Portları Otomatik Yönlendir"
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:3
 msgid "Automatically run $longAppName when I login."
 msgstr "Oturum açtığımda $longAppName'i çalıştır"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48
 msgid "By default, videos expire after"
 msgstr "Varsayılan olarak, videoların süresi dolar"
 
@@ -2820,47 +3309,57 @@ msgstr "İndirmelerin devam edebilmesi için görev çubuğu çekmecesine kapat�
 msgid "Every 30 minutes"
 msgstr "Her 30 dakikada"
 
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
+msgid "Every day"
+msgstr ""
+
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14
 msgid "Every hour"
 msgstr "Her saatte"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:32
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
 msgid "Folder"
 msgstr "Klasör"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:63
 msgid "Ignore Unencrypted Connections"
-msgstr ""
+msgstr "Şifrelenmemiş Bağlantıları Yoksay"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60
 msgid "KB/s"
-msgstr ""
+msgstr "KB/s"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59
 msgid "Limit downstream bandwith to:"
-msgstr ""
+msgstr "İndirme bant genişliği limiti:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16
 msgid "Manually"
 msgstr "Siz istediğinizde"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
 msgid "Maximum number of channel auto-downloads at a time:"
 msgstr ""
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:38
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40
 msgid "Maximum number of manual downloads at a time:"
+msgstr ""
+
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
+msgid ""
+"Note: You can set the frequency channels are checked from the channel's "
+"settings pane."
 msgstr ""
 
 #: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1
 msgid "Options"
 msgstr "Seçenekler:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
 msgid "Play one video, then stop."
 msgstr "Bir video oynat ve dur"
 
@@ -2868,25 +3367,25 @@ msgstr "Bir video oynat ve dur"
 msgid "Quit Miro completely."
 msgstr "Mirodan tamamen çık"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:23
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
 msgid ""
 "Remember where I stopped watching a video and continue playing from that "
 "point."
 msgstr "Videolarda kaldığım yeri hatırla, oradan devam et."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
 msgid "Show as a Channel"
 msgstr "Kanal olarak göster"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:28
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30
 msgid "Store downloaded videos in this folder:"
 msgstr "İndirilmiş videoları bu dizinde sakla:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58
 msgid "To avoid internet slowdowns, limit upstream bandwith to:"
-msgstr ""
+msgstr "İnternet yavaşlamalarının önüne geçmek için gönderme limiti:"
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46
 msgid ""
 "WARNING: This setting will not go into effect until you restart $longAppName."
 msgstr ""
@@ -2897,7 +3396,7 @@ msgstr ""
 msgid "Warn me when I attempt to quit with downloads in progress."
 msgstr "İndirme sırasında çıkmayı denersem beni uyar."
 
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
+#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
 msgid "Watch for new videos in these folders and include them in my Library."
 msgstr "Kütüphanem dahil yeni görüntüleri ara."
 
