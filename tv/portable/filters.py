@@ -61,6 +61,9 @@ def watchableItems(obj):
     return (obj.isDownloaded() and not obj.isNonVideoFile() and 
             not obj.isContainerItem)
 
+def manualItems(obj):
+    return obj.getFeedURL() == 'dtv:manualFeed' and obj.getState() != 'downloading'
+
 def autoUploadingDownloaders(obj):
     return obj.getState() == 'uploading' and not obj.manualUpload
 

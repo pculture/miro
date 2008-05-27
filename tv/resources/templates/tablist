@@ -42,7 +42,8 @@ playlistTabs = kargs['playlistTabOrder'].getView()
 	        </li>
 	        <li t:repeatForView="staticTabs" 
 	            class="***this.getState()***"
-	            selectID="***this.objID()***" selectViewName="staticTabs"
+	            selectID="***this.objID()***"
+	            selectViewName="staticTabs"
 	            selectArea='tablist' 
 	            onclick="return handleSelect(event);">
 	            <t:includeTemplate filename="statictab" />

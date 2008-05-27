@@ -4,7 +4,7 @@
 <head>
 </head>
 <body>
-<a class="feeditem noselect">
+<a t:showIf="this.getVisible()" class="feeditem noselect">
     <img class="icon" alt="" src="***this.obj.getIconURL()***" />
     <div t:hideIf="this.obj.getNumber() == 0" class="bubble-left @@@this.obj.getNumberColor()@@@">
         <div class="bubble-right @@@this.obj.getNumberColor()@@@">

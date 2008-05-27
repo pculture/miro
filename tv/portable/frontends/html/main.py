@@ -158,18 +158,24 @@ class HTMLApplication:
         reloadStaticTabs()
         self.newTab = None
         self.downloadTab = None
+        self.indyTab = None
         for tab in views.allTabs:
             if tab.tabTemplateBase == 'newtab':
                 self.newTab = tab
             elif tab.tabTemplateBase == 'downloadtab':
                 self.downloadTab = tab
+            elif tab.tabTemplateBase == 'indytab':
+                self.indyTab = tab
 
         views.unwatchedItems.addAddCallback(self.onUnwatchedItemsCountChange)
         views.unwatchedItems.addRemoveCallback(self.onUnwatchedItemsCountChange)
         views.downloadingItems.addAddCallback(self.onDownloadingItemsCountChange)
         views.downloadingItems.addRemoveCallback(self.onDownloadingItemsCountChange)
+        views.manualItems.addAddCallback(self.onManualItemsCountChange)
+        views.manualItems.addRemoveCallback(self.onManualItemsCountChange)
         self.onUnwatchedItemsCountChange(None, None)
         self.onDownloadingItemsCountChange(None, None)
+        self.onManualItemsCountChange(None, None)
 
         # Set up the playback controller
         self.playbackController = VideoDisplay.PlaybackController()
@@ -370,6 +376,9 @@ class HTMLApplication:
 
     def onDownloadingItemsCountChange(self, obj, id):
         self.downloadTab.redraw()
+    
+    def onManualItemsCountChange(self, obj, id):
+        self.indyTab.redraw()
 
     def updateAvailableItemsCountFeedback(self):
         count = views.unwatchedItems.len()

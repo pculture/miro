@@ -52,6 +52,7 @@ import logging
 class StaticTab(database.DDBObject):
     tabTitles = {
         'librarytab': _('Library'),
+        'indytab': _('Individual Downloads'),
         'newtab': _('New'),
         'searchtab': _('Video Search'),
         'downloadtab': _('Downloading'),
@@ -59,6 +60,7 @@ class StaticTab(database.DDBObject):
 
     tabIcons = {
         'librarytab': 'collection-icon-tablist.png',
+        'indytab': 'collection-icon-tablist.png',
         'newtab': 'newvideos-icon-tablist.png',
         'searchtab': 'search-icon-tablist.png',
         'downloadtab': 'download-icon-tab.png',
@@ -71,6 +73,11 @@ class StaticTab(database.DDBObject):
         self.templateState = state
         database.DDBObject.__init__(self)
 
+    def getVisible(self):
+        if self.tabTemplateBase in ('downloadtab', 'newtab', 'indytab'):
+            return self.getNumber() > 0
+        return True
+
     def getTitle(self):
         return self.tabTitles[self.tabTemplateBase]
 
@@ -82,6 +89,8 @@ class StaticTab(database.DDBObject):
             return 'orange'
         elif self.tabTemplateBase == 'newtab':
             return 'green'
+        elif self.tabTemplateBase == 'indytab':
+            return 'green'
         else:
             return None
 
@@ -90,6 +99,8 @@ class StaticTab(database.DDBObject):
             return views.downloadingItems.len()
         elif self.tabTemplateBase == 'newtab':
             return views.unwatchedItems.len()
+        elif self.tabTemplateBase == 'indytab':
+            return views.manualItems.len()
         else:
             return 0
 
@@ -157,6 +168,11 @@ class Tab:
     def getSelected(self):
         self.obj.confirmDBThread()
         return self.selected
+
+    def getVisible(self):
+        if self.obj.__class__ == StaticTab: 
+            return self.obj.getVisible()
+        return True
 
     def getActive(self):
         self.obj.confirmDBThread()

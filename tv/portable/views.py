@@ -36,7 +36,7 @@ def initialize():
     global allTabs, guideTabs, siteTabs, staticTabs, feedTabs, playlistTabs
     global selectedTabs, tabOrders, siteTabOrder, channelTabOrder, playlistTabOrder
     global items, fileItems, toplevelItems, nonContainerItems, unwatchedItems
-    global watchableItems, newWatchableItems, uniqueWatchableItems, uniqueNewWatchableItems
+    global watchableItems, newWatchableItems, uniqueWatchableItems, uniqueNewWatchableItems, manualItems
     global feeds, remoteDownloads
     global httpauths, staticTabsObjects, autoUploads, guides, default_guide
     global manualFeed, singleFeed, directoryFeed, newlyDownloadedItems
@@ -92,6 +92,7 @@ def initialize():
     uniqueWatchableItems = watchableItems.filter(filters.uniqueItems)
     newWatchableItems = nonContainerItems.filter(filters.newWatchableItems)
     uniqueNewWatchableItems = newWatchableItems.filter(filters.uniqueItems)
+    manualItems = items.filter(filters.manualItems)
 
     # NOTE: we can't use the objectsByClass index for fileItems, because it
     # agregates all Item subclasses into one group.
