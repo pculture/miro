@@ -105,8 +105,11 @@ class StaticTab(database.DDBObject):
             return 0
 
     def enableNewVideoPlayButton(self):
-        return (self.tabTemplateBase == 'newtab' and 
-                views.unwatchedItems.len() > 0)
+        if self.tabTemplateBase == 'newtab':
+            return views.unwatchedItems.len() > 0
+        elif self.tabTemplateBase == 'indytab':
+            return views.manualItems.len() > 0
+        return False
 
 class Tab:
     idCounter = 0
