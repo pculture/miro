@@ -28,7 +28,7 @@
 
 <!ENTITY prefs.folder.movies "資料夾">
 <!ENTITY prefs.folder.downloads "將下載的影片存在：">
-<!ENTITY prefs.folder.change "變更(&H)...">
+<!ENTITY prefs.folder.change "變更...">
 
 <!ENTITY prefs.folder.others.caption "監視以下資料夾並將他們加入我的播放清單：">
 <!ENTITY prefs.folder.others.location "資料夾">
