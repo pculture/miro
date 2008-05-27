@@ -133,7 +133,7 @@ def startup():
     initialize() must be called before startup().
     """
     logging.info ("Starting up %s", config.get(prefs.LONG_APP_NAME))
-    logging.info ("OS:         %s %s", platform.system(), platform.machine())
+    logging.info ("OS:         %s", platform.system())
     logging.info ("Version:    %s", config.get(prefs.APP_VERSION))
     logging.info ("Revision:   %s", config.get(prefs.APP_REVISION))
     logging.info ("Builder:    %s", config.get(prefs.BUILD_MACHINE))
