@@ -1424,7 +1424,13 @@ class RSSFeedImplBase(FeedImpl):
         Items are only truncated if they don't exist in the feed anymore, and
         if the user hasn't downloaded them.
         """
-        limit = self.ufeed.getMaxOldItems()
+        limit = self.getMaxOldItems()
+        if len(self.items) > config.get(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS):
+            truncate = len(self.items) - config.get(
+                prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS)
+            if truncate > len(old_items):
+                truncate = 0
+            limit = min(limit, truncate)
         extra = len(old_items) - limit
         if extra <= 0:
             return

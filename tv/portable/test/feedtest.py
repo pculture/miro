@@ -218,7 +218,8 @@ class OldItemExpireTest(FeedTestCase):
         self.writeNewFeed()
         self.feed = self.makeFeed()
         self.items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
-        config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 2)
+        config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 4)
+        config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 20)
 
     def writeNewFeed(self, entryCount=2):
         # make a feed with a new item and parse it
@@ -297,6 +298,28 @@ class OldItemExpireTest(FeedTestCase):
             sleep(0.1)
         self.assertEquals(self.items.len(), 6)            
         self.feed.setMaxOldItems(2)
+        while self.feed.actualFeed.updating:
+            self.processThreads()
+            self.processIdles()
+            sleep(0.1)
+        self.assertEquals(self.items.len(), 4)
+        self.checkGuids(3, 4, 5, 6)
+
+    def testOverflowWithGlobalMaxOldItems(self):
+        config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 1000) # don't bother
+        self.assertEqual(self.items.len(), 2)
+        self.parseNewFeed()
+        self.assertEquals(self.items.len(), 4)
+        self.parseNewFeed()
+        config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 4)
+        self.feed.update()
+        while self.feed.actualFeed.updating:
+            self.processThreads()
+            self.processIdles()
+            sleep(0.1)
+        self.assertEquals(self.items.len(), 6)
+        config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 2)
+        self.feed.update()
         while self.feed.actualFeed.updating:
             self.processThreads()
             self.processIdles()
