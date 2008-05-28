@@ -254,7 +254,7 @@ function setupSeekButton(direction, buttonId) {
   }
 }
 
-function setupHandlers() {
+function setupHandlers() {    
     var volume_knob = document.getElementById("volume");
     volume_knob.onmousemove = volumeKnobMove;
     volume_knob.onmousedown = volumeKnobDown;
@@ -279,6 +279,8 @@ function setupHandlers() {
     }
     setupSeekButton(-1, "bottom-buttons-previous");
     setupSeekButton(1, "bottom-buttons-next");
+
+    window.onresize = doResize;
 }
 
 function onClose()
