@@ -74,8 +74,8 @@
 /* NSBox (Box) : <title:Box> (oid:179) */
 "Box" = "Box";
 
-/* NSTextField (By default, remember ) : <title:By default, remember > (oid:240) */
-"By default, remember " = "By default, remember ";
+/* NSTextField (By default, remember this many old items in addition to the current contents:) : <title:By default, remember this many old items in addition to the current contents:> (oid:240) */
+"By default, remember this many old items in addition to the current contents:" = "By default, remember this many old items in addition to the current contents:";
 
 /* NSTextField (By default, videos expire after:) : <title:By default, videos expire after:> (oid:78) */
 "By default, videos expire after:" = "By default, videos expire after:";
@@ -86,7 +86,10 @@
 /* NSTextField (Check channels for new content:) : <title:Check channels for new content:> (oid:24) */
 "Check channels for new content:" = "Check channels for new content:";
 
-/* NSButton (Clear older items from all feeds now) : <title:Clear older items from all feeds now> (oid:250) */
+/* NSButton (Clear) : <title:Clear> (oid:250) */
+"Clear" = "Clear";
+
+/* NSTextField (Clear older items from all feeds now) : <title:Clear older items from all feeds now> (oid:255) */
 "Clear older items from all feeds now" = "Clear older items from all feeds now";
 
 /* NSTextField (Don't auto-download more than this many videos per channel at once:) : <title:Don't auto-download more than this many videos per channel at once:> (oid:200) */
@@ -162,9 +165,6 @@
 /* NSTextField (Watch for new videos in these folders and include them in the Library:) : <title:Watch for new videos in these folders and include them in the Library:> (oid:144) */
 "Watch for new videos in these folders and include them in the Library:" = "Watch for new videos in these folders and include them in the Library:";
 
-/* NSTextField (current contents) : <title:current contents> (oid:249) */
-"current contents" = "current contents";
-
 /* NSMenuItem : <title:every 30 minutes> (oid:27) */
 "every 30 minutes" = "every 30 minutes";
 
@@ -173,7 +173,4 @@
 
 /* NSMenuItem : <title:manually> (oid:28) */
 "manually" = "manually";
-
-/* NSTextField (old items in addition to the) : <title:old items in addition to the> (oid:248) */
-"old items in addition to the" = "old items in addition to the";
 
