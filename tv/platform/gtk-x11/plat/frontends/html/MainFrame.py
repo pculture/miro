@@ -397,23 +397,27 @@ class MainFrame:
     @gtkAsyncMethod
     def about(self):
         confirmMainThread()
-        if (self.aboutWidget is None):
-            self.aboutWidget = gtk.AboutDialog()
-            self.aboutWidget.set_name(config.get(prefs.SHORT_APP_NAME))
-            self.aboutWidget.set_version( "%s (r%s)" % \
-                                          (config.get(prefs.APP_VERSION), 
-                                           config.get(prefs.APP_REVISION_NUM)))
-            self.aboutWidget.set_website(WEBSITE)
-            self.aboutWidget.set_copyright(COPYRIGHT)
+        if self.aboutWidget is None:
+            ab = gtk.AboutDialog()
+            ab.set_name(config.get(prefs.SHORT_APP_NAME))
+            ab.set_version( "%s (r%s)" % \
+                            (config.get(prefs.APP_VERSION), 
+                             config.get(prefs.APP_REVISION_NUM)))
+            ab.set_website(WEBSITE)
+            ab.set_copyright(COPYRIGHT)
+
             def delete_event_cb(widget, event):
                 widget.hide()
                 return True
+
             def response_cb(widget, id):
                 widget.hide()
                 return True
-            self.aboutWidget.connect ("delete_event", delete_event_cb)
-            self.aboutWidget.connect ("response", response_cb)
-            self.aboutWidget.set_transient_for (self.widgetTree['main-window'])
+
+            ab.connect ("delete_event", delete_event_cb)
+            ab.connect ("response", response_cb)
+            ab.set_transient_for (self.widgetTree['main-window'])
+            self.aboutWidget = ab
         self.aboutWidget.present()
 
     @gtkSyncMethod
@@ -437,7 +441,7 @@ class MainFrame:
             except:
                 self.videoLength = 0
             videoLength = self.videoLength
-            renderer.getCurrentTime(lambda x :CTCallback(videoTimeScale, videoLength, x))
+            renderer.getCurrentTime(lambda x: CTCallback(videoTimeScale, videoLength, x))
         return True
 
     @gtkAsyncMethod
@@ -445,21 +449,8 @@ class MainFrame:
         self.windowChanger.changeFullScreen (fullscreen)
         self.isFullscreen = fullscreen
 
-    # Internal use: return an estimate of the size of a given display area
-    # as a (width, height) pair, or None if no information's available.
-    @gtkSyncMethod
-    def getDisplaySizeHint(self, area):
-        display = self.selectedDisplays.get(area)
-        if display is None:
-            return None
-        allocation = display.getWidget().get_allocation()
-        return allocation.width, allocation.height
-
     def unlink(self):
         pass
     
     def __del__(self):
         self.unlink()
-
-###############################################################################
-###############################################################################
