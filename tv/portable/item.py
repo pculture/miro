@@ -858,7 +858,7 @@ folder will be deleted.""")
             width, height = Item.BIG_ICON_SIZE
         else:
             width, height = Item.SMALL_ICON_SIZE
-        if self.iconCache.isValid():
+        if self.iconCache is not None and self.iconCache.isValid():
             path = self.iconCache.getResizedFilename(width, height)
             return resources.absoluteUrl(fileutil.expand_filename(path))
         elif self.screenshot:
