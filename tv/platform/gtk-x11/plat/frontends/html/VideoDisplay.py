@@ -47,7 +47,6 @@ from threading import Event
 ###############################################################################
 
 class PlaybackController (PlaybackControllerBase):
-    
     def playItemExternally(self, itemID):
         item = PlaybackControllerBase.playItemExternally(self, itemID)
         # now play this item externally
@@ -56,8 +55,9 @@ class PlaybackController (PlaybackControllerBase):
 #### Right-hand pane video display                                         ####
 ###############################################################################
 
-class VideoDisplay (VideoDisplayBase):
-    "Video player that can be shown in a MainFrame's right-hand pane."
+class VideoDisplay(VideoDisplayBase):
+    """Video player that can be shown in a MainFrame's right-hand pane.
+    """
 
     def __init__(self):
         VideoDisplayBase.__init__(self)
@@ -66,7 +66,7 @@ class VideoDisplay (VideoDisplayBase):
         self.renderersReady = Event()
 
     def addRenderer(self, modname):
-        logging.info ("addRenderer: trying to add %s", modname)
+        logging.info("addRenderer: trying to add %s", modname)
         try:
             pkg = __import__('miro.plat.renderers.' + modname)
             module = getattr(pkg.plat.renderers, modname)
@@ -77,34 +77,37 @@ class VideoDisplay (VideoDisplayBase):
             widget.show()
             renderer.setWidget(widget)
             app.renderers.append(renderer)
-            logging.info ("addRenderer: success")
+            logging.info("addRenderer: success")
         except:
-            logging.info ("initRenderers: couldn't load %s: %s", modname, sys.exc_info()[1])
+            logging.info("initRenderers: couldn't load %s: %s", modname, sys.exc_info()[1])
             raise
 
     @gtkAsyncMethod
     def initRenderers(self):
-        # renderer modules have to be xxxxrenderer and xxxx shows up in the
-        # preferences.
+        """Initializes the renderer.
 
+        Note: renderer modules have to be xxxxrenderer and xxxx shows up in the
+        preferences.
+        """
         r = config.get(options.USE_RENDERER)
         try:
-            self.addRenderer(r + "renderer")
+            self.addRenderer("%srenderer" % r)
         except:
             try:
-                logging.error ("initRenderers: error detected...  trying to add gstreamerrenderer")
-                # try to add the xine renderer if the preferences aren't right
+                logging.error("initRenderers: error detected...  trying to add gstreamerrenderer")
+
+                # try to add the gstreamer renderer if the preferences aren't right
                 self.addRenderer("gstreamerrenderer")
             except:
-                logging.error ("initRenderers: no valid renderer has been loaded")
+                logging.error("initRenderers: no valid renderer has been loaded")
                 return
 
-        self.widget.add (app.renderers[0].widget)
+        self.widget.add(app.renderers[0].widget)
         self.renderersReady.set()
 
     @gtkAsyncMethod
-    def fillMovieData (self, filename, movie_data, callback):
-        def next_renderer (i, success):
+    def fillMovieData(self, filename, movie_data, callback):
+        def next_renderer(i, success):
             if success:
                 callback()
                 return
@@ -127,13 +130,13 @@ class VideoDisplay (VideoDisplayBase):
 
     @gtkAsyncMethod
     def _gtkInit(self):
-        self.widget = gtk.Alignment(xscale = 1.0, yscale = 1.0)
+        self.widget = gtk.Alignment(xscale=1.0, yscale=1.0)
         self.widget.show()
 
     def startVideoTimeUpdate(self):
         self.stopVideoTimeUpdate()
-        self.videoUpdateTimeout = gobject.timeout_add(500,
-                app.htmlapp.frame.updateVideoTime)
+        self.videoUpdateTimeout = gobject.timeout_add(500, 
+                                          app.htmlapp.frame.updateVideoTime)
         app.htmlapp.frame.updateVideoTime()
 
     def stopVideoTimeUpdate(self):
@@ -142,13 +145,13 @@ class VideoDisplay (VideoDisplayBase):
             self.videoUpdateTimeout = None
 
     @gtkAsyncMethod
-    def setChildWidget (self, widget):
+    def setChildWidget(self, widget):
         if self.widget.child != widget:
             if self.widget.child:
-                self.widget.remove (self.widget.child)
+                self.widget.remove(self.widget.child)
             self.widget.add (widget)
             
-    def setActiveRenderer (self, renderer):
+    def setActiveRenderer(self, renderer):
         VideoDisplayBase.setActiveRenderer(self, renderer)
         self.setChildWidget (renderer.widget)
 
@@ -171,8 +174,7 @@ class VideoDisplay (VideoDisplayBase):
             self.play(-1)
 
     def playFromTime(self, startTime):
-        
-        self.play (startTime)
+        self.play(startTime)
 
     def goToBeginningOfMovie(self):
         self.play(0)
@@ -183,7 +185,7 @@ class VideoDisplay (VideoDisplayBase):
         VideoDisplayBase.pause(self)
         app.htmlapp.frame.windowChanger.updatePlayPauseButton()
 
-    def getWidget(self, area = None):
+    def getWidget(self, area=None):
         return self.widget
 
     def setVolume(self, volume):
@@ -198,6 +200,3 @@ class VideoDisplay (VideoDisplayBase):
     def onDeselected(self, frame):
         Display.onDeselected(self, frame)
         VideoDisplayBase.onDeselected(self, frame)
-
-###############################################################################
-###############################################################################
