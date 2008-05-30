@@ -44,7 +44,7 @@ from miro import config
 from miro import eventloop
 from miro import prefs
 from miro.download_utils import nextFreeFilename
-from miro.plat.frontends.html import gtk_queue
+from miro.plat.frontends.html.gtk_queue import gtkSyncMethod, gtkAsyncMethod
 from miro.plat.utils import confirmMainThread
 
 class Tester:
@@ -53,7 +53,7 @@ class Tester:
         self.success = False
         self.actualInit(filename)
 
-    @gtk_queue.gtkSyncMethod
+    @gtkSyncMethod
     def actualInit(self, filename):
         confirmMainThread()
         self.playbin = gst.element_factory_make('playbin')
@@ -69,7 +69,7 @@ class Tester:
         self.playbin.set_property("uri", "file://%s" % filename)
         self.playbin.set_state(gst.STATE_PAUSED)
 
-    def result (self):
+    def result(self):
         self.done.wait(5)
         self.disconnect()
         return self.success
@@ -87,8 +87,8 @@ class Tester:
                 self.success = False
                 self.done.set()
 
-    @gtk_queue.gtkAsyncMethod
-    def disconnect (self):
+    @gtkAsyncMethod
+    def disconnect(self):
         confirmMainThread()
         self.bus.disconnect (self.watch_id)
         self.playbin.set_state(gst.STATE_NULL)
@@ -140,12 +140,10 @@ class Renderer:
         "recieves message posted on the GstBus"
         if message.type == gst.MESSAGE_ERROR:
             err, debug = message.parse_error()
-            print "onBusMessage: gstreamer error: %s" % err
+            logging.error("onBusMessage: gstreamer error: %s", err)
         elif message.type == gst.MESSAGE_EOS:
-#            print "onBusMessage: end of stream"
             eventloop.addIdle(app.htmlapp.playbackController.onMovieFinished,
                               "onBusMessage: skipping to next track")
-        return None
             
     def setWidget(self, widget):
         confirmMainThread()
@@ -161,7 +159,6 @@ class Renderer:
         
     def onUnrealize(self, widget):
         confirmMainThread()
-#        print "onUnrealize"
         self.playbin.set_state(gst.STATE_NULL)
         self.sink = None
         
@@ -184,43 +181,41 @@ class Renderer:
 
     def fillMovieData(self, filename, movie_data, callback):
         confirmMainThread()
-        dir = os.path.join (config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
+        d = os.path.join(config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
         try:
-            os.makedirs(dir)
+            os.makedirs(d)
         except:
             pass
-        screenshot = os.path.join (dir, os.path.basename(filename) + ".png")
+        screenshot = os.path.join(d, os.path.basename(filename) + ".png")
         movie_data["screenshot"] = nextFreeFilename(screenshot)
 
-
-	extracter = Extracter(filename, movie_data["screenshot"], handle_result)
+        extracter = Extracter(filename, movie_data["screenshot"], handle_result)
 
     def goFullscreen(self):
-        confirmMainThread()
         """Handle when the video window goes fullscreen."""
+        confirmMainThread()
         logging.debug("haven't implemented goFullscreen method yet!")
         
     def exitFullscreen(self):
-        confirmMainThread()
         """Handle when the video window exits fullscreen mode."""
+        confirmMainThread()
         logging.debug("haven't implemented exitFullscreen method yet!")
 
     def selectItem(self, anItem):
         self.selectFile(anItem.getFilename())
 
-    @gtk_queue.gtkAsyncMethod
+    @gtkAsyncMethod
     def selectFile(self, filename):
-        confirmMainThread()
         """starts playing the specified file"""
+        confirmMainThread()
         self.stop()
         self.playbin.set_property("uri", "file://%s" % filename)
-#        print "selectFile: playing file %s" % filename
 
     def getProgress(self):
         confirmMainThread()
         logging.info("getProgress: what does this do?")
 
-    @gtk_queue.gtkAsyncMethod
+    @gtkAsyncMethod
     def getCurrentTime(self, callback):
         confirmMainThread()
         try:
@@ -231,7 +226,7 @@ class Renderer:
             position = 0
         callback(position)
 
-    @gtk_queue.gtkAsyncMethod
+    @gtkAsyncMethod
     def setCurrentTime(self, seconds):
         self.seek(seconds)
 
@@ -239,7 +234,7 @@ class Renderer:
         confirmMainThread()
         event = gst.event_new_seek(1.0,
                                    gst.FORMAT_TIME,
-                                   gst.SEEK_FLAG_FLUSH|gst.SEEK_FLAG_ACCURATE,
+                                   gst.SEEK_FLAG_FLUSH | gst.SEEK_FLAG_ACCURATE,
                                    gst.SEEK_TYPE_SET,
                                    seconds * 1000000000,
                                    gst.SEEK_TYPE_NONE, 0)
@@ -250,9 +245,8 @@ class Renderer:
     def playFromTime(self, seconds):
         confirmMainThread()
         #self.playbin.set_state(gst.STATE_NULL)
-	self.seek(seconds)
+        self.seek(seconds)
         self.play()
-#        print "playFromTime: starting playback from %s sec" % seconds
 
     def getDuration(self, callback=None):
         confirmMainThread()
@@ -267,35 +261,30 @@ class Renderer:
             return
         return duration
 
-    @gtk_queue.gtkAsyncMethod
+    @gtkAsyncMethod
     def reset(self):
         confirmMainThread()
         self.playbin.set_state(gst.STATE_NULL)
-#        print "** RESET **"
 
-    @gtk_queue.gtkAsyncMethod
+    @gtkAsyncMethod
     def setVolume(self, level):
         confirmMainThread()
-#        print "setVolume: set volume to %s" % level
         self.playbin.set_property("volume", level * 4.0)
 
-    @gtk_queue.gtkAsyncMethod
+    @gtkAsyncMethod
     def play(self):
         confirmMainThread()
         self.playbin.set_state(gst.STATE_PLAYING)
-#        print "** PLAY **"
 
-    @gtk_queue.gtkAsyncMethod
+    @gtkAsyncMethod
     def pause(self):
         confirmMainThread()
         self.playbin.set_state(gst.STATE_PAUSED)
-#        print "** PAUSE **"
 
-    @gtk_queue.gtkAsyncMethod
+    @gtkAsyncMethod
     def stop(self):
         confirmMainThread()
         self.playbin.set_state(gst.STATE_NULL)
-#        print "** STOP **"
         
     def getRate(self):
         confirmMainThread()
