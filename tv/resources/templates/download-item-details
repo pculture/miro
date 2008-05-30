@@ -37,7 +37,11 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
   		<span class="error" t:replace="this.getFailureReason()" />
   	</div>
 	</div>	<!-- // end details -->
-	
+	<div class="stop-seeding" t:showIf="this.downloader and this.downloader.getState() == 'uploading'">
+		<a href="#" onclick="return eventURL('action:stopUploadItem?item=@@@this.getID()@@@');" class="button gray">
+			<span i18n:translate="">Stop Seeding</span>
+		</a>
+	</div>
 	<div class="main-video-status">
 		<div t:hideIf="this.looksLikeTorrent()" class="download-button">
 		  <div t:hideIf="this.isPendingAutoDownload()">
@@ -120,12 +124,6 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 			
 			<div t:hideIf="this.getEmblemCSSString() == '' or this.getEmblemCSSString() == 'New'" class="video-state ***this.getEmblemCSSClass()***">
 				<span t:replace="this.getEmblemCSSString()" />
-			</div>
-			
-			<div class="stop-seeding" t:showIf="this.downloader and this.downloader.getState() == 'uploading'">
-				<a href="#" onclick="return eventURL('action:stopUploadItem?item=@@@this.getID()@@@');" class="button gray">
-					<span i18n:translate="">STOP SEEDING</span>
-				</a>
 			</div>
 			
 		</div> <!-- // end status strings -->

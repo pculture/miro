@@ -328,6 +328,9 @@ table.select-box a:hover {
 .main-video-desc.noselect.new {
 	background: url('../images/status-icon_new.png') no-repeat left 5px;
 }
+.main-video-desc.noselect.downloading {
+  background: url('../images/status-icon_downloading.png') no-repeat left 5px;
+}
 .main-video-details-expiring {
 	background:url('../images/status_expires.png') no-repeat left top;
 }
@@ -379,19 +382,6 @@ a.button.blue {
 a.button.blue span {
 	background-image: url('../images/button-blue-right.png');
 }
-a.button.blue.saved {
-	background-image: url('../images/button-blue-left-saved.png');
-}
-a.button.blue.saved span {
-	background-image: url('../images/button-blue-right-saved.png');
-}
-a.button.blue.saved:hover {
-	background-position:left top;
-}
-a.button.blue.saved:hover span,
-a.button.blue.saved span:hover {
-	background-position:right top;
-}
 a.button.gray {
 	background-image: url('../images/button-gray-left.png');
 }
@@ -404,6 +394,19 @@ a.button.gray:hover {
 a.button.gray:hover span,
 a.button.gray span:hover {
 	background-position:right -20px;
+}
+a.button.gray.saved {
+	background-image: url('../images/button-gray-left_saved.png');
+}
+a.button.gray.saved span {
+	background-image: url('../images/button-gray-right_saved.png');
+}
+a.button.gray.saved:hover {
+	background-position:left top;
+}
+a.button.gray.saved:hover span,
+a.button.gray.saved span:hover {
+	background-position:right top;
 }
 a.button.black {
   background-image: url('../images/button-black_left.png');

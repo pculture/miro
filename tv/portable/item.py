@@ -595,6 +595,8 @@ folder will be deleted.""")
             return u'newly-downloaded'
         elif self.getState() == u'new':
             return u'new'
+        elif self.getState() == u'downloading':
+            return u'downloading'
         else:
             return u''
 

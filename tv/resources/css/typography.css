@@ -75,7 +75,7 @@ h1#main-title {
 		text-shadow:#fff 1px 1px 1px;
 		white-space:nowrap;
 }
-#download-info {
+#download-info, ul.download-rates li span {
 	font-size:12px;
 	font-weight:bold;
 	color:#3c3c3c;
@@ -135,14 +135,11 @@ a.button em {
 	font-style:normal;
 	text-transform:none;
 }
-a.button.blue,
-a.button.blue:link,
-a.button.blue:visited,
-a.button.blue:hover {
-	color:#fff;
+a.button.gray,
+a.button.gray:link,
+a.button.gray:visited,
+a.button.gray:hover {
 	text-decoration:none;
-	font-size:10px;
-	font-weight:bold;
 }
 a.button.blue span {
 	line-height:17px;
@@ -153,10 +150,11 @@ a.button.select {
 a.button.select.dark {
 	color:#e9e9e9;
 }
-a.button.blue.saved,
-a.button.blue.saved span {
-	color:#eee;
+a.button.gray.saved,
+a.button.gray.saved span {
+	color:#8d8d8d;
 	cursor:default;
+  text-decoration:none;
 }
 
 /* Download page titlebar components */
@@ -361,7 +359,7 @@ body.gray-background {
 }
 .main-video .main-video-desc.newly-downloaded h1,
 .main-video.selected .main-video-desc.newly-downloaded h1 {
-	color:#4eb222;
+	color:#43b51d;
 }
 .main-video .main-video-desc.new h1,
 .main-video.selected .main-video-desc.new h1 {

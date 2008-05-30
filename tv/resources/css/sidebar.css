@@ -16,7 +16,8 @@ a img{
 	}
 
 body {
-	font-family: "Helvetica Neue", "Tahoma", "Bitstream Vera Sans", Arial, sans-serif;
+/*	font-family: "Helvetica Neue", "Tahoma", "Bitstream Vera Sans", Arial, sans-serif;*/
+  font-family:"Lucida Grande", "Lucida Sans", "Segoe UI", "Aurulent Sans", Arial, sans-serif;
 	font-size: 12px;
 	background-color: #d5dde5;
 	margin: 0;
@@ -103,13 +104,12 @@ a.feeditem.playlist div.name,
 a.feeditem.folder div.name {
   line-height:24px;
 }
-.tab-list.first a.feeditem,
-a.feeditem.folder,
-a.feeditem.playlist {
+.tab-list.first a.feeditem {
 	padding:2px 5px 2px 23px;
-	font-size:12px;
+	font-size:11px;
 	color:#26292b;
   height:26px;
+  font-weight:bold;
 }
 a.feeditem.folder {
   padding-left:8px;
@@ -138,7 +138,7 @@ a.feeditem span {
 }
 .selected a.feeditem span, .selected-inactive a.feeditem span {
     color: #fff;
-/*    text-shadow:#454545 1px 1px 1px;*/
+    text-shadow:#333 1px 1px 1px;
 }
 
 .selected a.feeditem,
@@ -428,15 +428,10 @@ a.feeditem.playlist .number-count {
 .new-video-play-button {
 	position: absolute;
 	left: 7px;
-	top: 1px;
+	top: 0px;
 	height: 14px;
 	text-align: center;
 	z-index: 5;
-}
-.tab-list.first a.feeditem .new-video-play-button,
-a.feeditem.folder .new-video-play-button,
-a.feeditem.playlist .new-video-play-button {
-  top:0px;
 }
 
 .new-video-play-button:hover {

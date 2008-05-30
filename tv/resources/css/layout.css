@@ -204,7 +204,7 @@ ul#view_style li a {
   float:left;
   padding-right:20px;
 }
-.download-rates, .download-rates li {
+ul.download-rates, ul.download-rates li {
   float:left;
   margin-right:12px;
 }
@@ -805,8 +805,9 @@ dl.video-stats {
 }
 .stop-seeding {
   position:relative;
-  right:125px;
-  top:-25px;
+  top:82px;
+  right:6px;
+  float:right;
 }
 .is_auto {
   position:relative;
