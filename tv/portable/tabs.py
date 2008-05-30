@@ -96,7 +96,7 @@ class StaticTab(database.DDBObject):
 
     def getNumber(self):
         if self.tabTemplateBase == 'downloadtab':
-            return views.downloadingItems.len()
+            return views.downloadingItems.len() + views.items.filter(lambda x: x.downloader and x.downloader.getState() == 'uploading' and not (x.getFeed().url == 'dtv:manualFeed' and x.isNonVideoFile())).len()
         elif self.tabTemplateBase == 'newtab':
             return views.unwatchedItems.len()
         elif self.tabTemplateBase == 'indytab':
