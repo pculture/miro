@@ -39,9 +39,11 @@ from miro.plat import resources
 from miro.plat import flash
 from miro import searchengines
 from miro import views
+from miro import u3info
 from miro.plat.utils import _getLocale as getLocale
 from miro.frontends.html.main import HTMLApplication
 from miro.plat.frontends.html import HTMLDisplay
+from miro.plat.frontends.html import startup
 from miro.plat import migrateappname
 from miro.plat.xulhelper import makeService, pcfIDTVPyBridge
 
@@ -77,6 +79,17 @@ class Application(HTMLApplication):
     def quitUI(self):
         app.jsBridge.closeWindow()
 
+    def handleStartupSuccess(self, obj):
+        """
+        Override in order to send the files to self.finishStartup().
+        """
+        if self.AUTOUPDATE_SUPPORTED and not u3info.u3_active and \
+                config.get(prefs.STARTUP_TASKS_DONE):
+            foundFiles = startup.search.getFiles()
+            self.finishStartup(foundFiles)
+        else:
+            HTMLApplication.handleStartupSuccess(self, obj)
+        
     def finishStartupSequence(self):
         eventloop.addIdle(flash.checkFlashInstall, 'Install Flash')            
         pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",pcfIDTVPyBridge,True, False)
