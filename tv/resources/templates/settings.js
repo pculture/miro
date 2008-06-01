@@ -68,19 +68,9 @@ function setMaxOldItems() {
     var url = 'action:setMaxOldItems?feed=';
     url += document.forms['settings']['feed'].value;
     url += '&maxOldItems=';
-    var maxOld = document.forms['settings']['maxOldItems'];
-    if (document.forms['settings']['expireOldItems'].checked) {
-	maxOld.disabled = false;
-	if (maxOld.value == '') maxOld.value = '0';
-	if (!(parseInt(maxOld.value) >= 0)) {
-	    eventURL('action:requiresPositiveInteger?value=' + escape(maxOld.value));
-	    maxOld.value = '0';
-	}
-	url += maxOld.value;
-    } else {
-	maxOld.disabled = true;
-	url += '-1';
-    }
+    var idx = document.forms['settings']['maxOldItems'].selectedIndex;
+    var value = document.forms['settings']['maxOldItems'].options[idx].value;
+    url += value;
     eventURL(url);	
 }
 
