@@ -106,17 +106,17 @@ def toggleAllItemsMode(handle):
     matchingItems.recomputeFilter(newItems)
     handle.forceUpdate()
 
-def setSortBy(by, which, handle):
-    if which == 'main':
-      feed.itemSort.setSortBy(by)
-      matchingItems.recomputeSort(newItems)
-    elif which == 'downloading':
-      feed.itemSortDownloading.setSortBy(by)
-      allDownloadingItems.recomputeSort(downloadingItems)
-    else:
-      feed.itemSortWatchable.setSortBy(by)
-      allWatchableItems.recomputeSort(watchableItems)
-    handle.forceUpdate()
+def setSortBy(by, handle):
+   # main
+   feed.itemSort.setSortBy(by)
+   matchingItems.recomputeSort(newItems)
+   # downloading
+   feed.itemSortDownloading.setSortBy(by)
+   allDownloadingItems.recomputeSort(downloadingItems)
+   # downloaded
+   feed.itemSortWatchable.setSortBy(by)
+   allWatchableItems.recomputeSort(watchableItems)
+   handle.forceUpdate()
 
 _setFeed(kargs)
 
@@ -259,43 +259,10 @@ if feed.idExists():
 			</div>
 				
 	</div> <!-- // end sub-titlebar -->
-
-	<!--
-		<div id="views-bar">
-			
-			<div class="views-bar-left">
-				<ul id="view_style">
-					<li>
-						<a>box</a>
-					</li>
-					<li>
-						<a>box</a>
-					</li>
-					<li>
-						<a>box</a>
-					</li>
-				</ul> 
-			</div>
-		
-			<div class="views-bar-right">
-				<span>Sort By</span>
-				<div class="select-box-left">
-					<div class="select-box-right">
-						<div class="select-box-mid">
-							<span>(dropdown)</span>
-						</div>
-					</div>
-				</div>
-				<span>Status Groups:</span>
-			</div>
-
-	</div> 		-->
-	<!-- // views-bar -->
-
-
 	<!-- CHANNEL CONTAINER **************************************************** -->
 	<div id="main-container">
-		<div class="main-container-scraping" t:showIf="feed.isScraped() and feed.isUpdating()" t:updateHideOnView="thisFeedView">
+
+           <div class="main-container-scraping" t:showIf="feed.isScraped() and feed.isUpdating()" t:updateHideOnView="thisFeedView">
 			<div class="scraping-indicator">
 				<img align="left" src="resource:images/scraping-indicator-left.gif" />
 				<img align="right" src="resource:images/scraping-indicator-right.gif" />
@@ -304,6 +271,7 @@ if feed.idExists():
 				</div>
 			</div>
 		</div>
+
 		<div class="hide-channel-title">
 			<t:includeTemplate filename="channel-content" />
 		</div>

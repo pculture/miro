@@ -10,7 +10,15 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 
 </head>
 <body>
-	<!-- DOWNLOADS ******************************************************** -->
+  <!-- sort bar -->
+  <div t:updateForView="matchingItems">
+    <div t:hideIf="matchingItems.len() == 0">
+      <t:executeTemplate filename="sort-bar"
+                         itemSort="feed.itemSort" />
+    </div>
+  </div>
+
+  <!-- DOWNLOADS ******************************************************** -->
 	<div t:updateForView="matchingItems">
 	    <div t:showIf="not isFolder" i18n:translate="">
 		    <div class="feed-search" t:hideIf="feed.inlineSearchTerm is None or feed.getURL().startswith('dtv:directoryfeed')">
@@ -40,13 +48,6 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 			</div>
 		</div>
 
-		<div class="downloading-sort" t:updateForView="downloadingItems">
-			<div t:hideIf="downloadingItems.len() == 0">
-				<t:executeTemplate filename="sort-bar" 
-				itemSort="itemSortDownloading"
-				section="'downloading'" />
-			</div>
-		</div>
 		<div t:repeatForView="downloadingItems" t:repeatTemplate="download-item" t:containerDiv="true" />
 
 		<!-- / DOWNLOADS -->
@@ -86,14 +87,6 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 			</a>
 		</div>
 
-		<div t:updateForView="matchingItems">
-			<div class="available-sort" t:showIf="showNewItems">
-				<t:executeTemplate filename="sort-bar" 
-				itemSort="itemSort"
-				section="'main'" />
-			</div>
-		</div>
-
 		<div t:repeatForView="newItems" t:repeatTemplate="download-item" t:containerDiv="true" />
 
 		<!-- The infamous "N more videos" oval -->
@@ -122,14 +115,6 @@ eventCookie="@@@eventCookie@@@" dtvPlatform="@@@dtvPlatform@@@">
 					<!--<span i18n:translate="" class="light-text"><span i18n:name="len2" t:replace="unwatchedItems.len()" />
 					Not Viewed</span>-->
 				</a>
-			</div>
-
-			<div t:updateForView="watchableItems">
-				<div t:hideIf="len(watchableItems) == 0">
-					<t:executeTemplate filename="sort-bar" 
-					itemSort="itemSortWatchable"
-					section="'watchable'" />
-				</div>
 			</div>
 			<div t:repeatForView="watchableItems" t:repeatTemplate="download-item" t:containerDiv="true" />
 		</div>

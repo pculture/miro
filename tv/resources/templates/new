@@ -29,7 +29,7 @@ def updateSearchString(newSearch):
         app.controller.newVideosSearchTerm = newSearch
     views.uniqueNewWatchableItems.recomputeFilter(matchingItems)
 
-def setSortBy(by, section, handle):
+def setSortBy(by, handle):
     sorts.itemSortNew.setSortBy(by)
     views.uniqueNewWatchableItems.recomputeSort(matchingItems)
     handle.forceUpdate()

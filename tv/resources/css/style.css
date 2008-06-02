@@ -96,7 +96,7 @@ a.remove-channel {
 
 /* SORT BUTTONS AND VIDEO STATS -- THEY ARE GROUPED TOGETHER IN THE CSS SINCE THEY NEED TO LINE UP WITH EACH OTHER */
 
-.static-tab-sort .sort-buttons {
+#static-tab-sort .sort-buttons {
     background-color: #666;
 }
 .available-sort .sort-buttons {

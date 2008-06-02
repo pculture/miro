@@ -28,7 +28,7 @@ def updateSearchString(newSearch):
         app.controller.librarySearchTerm = newSearch
     views.uniqueWatchableItems.recomputeFilter(matchingItems)
 
-def setSortBy(by, section, handle):
+def setSortBy(by, handle):
     sorts.itemSortLibrary.setSortBy(by)
     views.uniqueWatchableItems.recomputeSort(matchingItems)
     handle.forceUpdate()

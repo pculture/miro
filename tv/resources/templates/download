@@ -65,15 +65,13 @@ def updateSearchString(newSearch):
     allPendingDownloads.recomputeFilter(matchingPendingDLs)
     allPausedDownloads.recomputeFilter(matchingPausedDLs)
 
-def setSortBy(by, which, handle):
-    if which == 'main':
-        sorts.itemSortDownloads.setSortBy(by)
-        allNormalDownloads.recomputeSort(matchingNormalDLs)
-        allPendingDownloads.recomputeSort(matchingPendingDLs)
-        allPausedDownloads.recomputeSort(matchingPausedDLs)
-    else:
-        sorts.itemSortSeedingTorrents.setSortBy(by)
-        allUploads.recomputeSort(matchingULs)
+def setSortBy(by, handle):
+    sorts.itemSortDownloads.setSortBy(by)
+    allNormalDownloads.recomputeSort(matchingNormalDLs)
+    allPendingDownloads.recomputeSort(matchingPendingDLs)
+    allPausedDownloads.recomputeSort(matchingPausedDLs)
+    sorts.itemSortSeedingTorrents.setSortBy(by)
+    allUploads.recomputeSort(matchingULs)
     handle.forceUpdate()
 ]]>
     </t:execOnLoad>
@@ -132,21 +130,18 @@ allPausedDownloads.unlink()
 		</span>
 	</div>	<!-- end download-info -->
 </div> <!-- end sub-titlebar -->
-
+        
 <div id="main-container" class="download">
-	<div t:hideIf="allNormalDownloads.len() == 0" t:updateHideOnView="allNormalDownloads" class="main-channelbar downloading-channelbar no-arrow">
+  <!-- SORT BAR ************************************************************* -->
+  <div t:updateForView="views.downloadingItems" t:hideIf="allNormalDownloads.len() + allExternalDownloads.len() + allUploads.len() + allPendingDownloads.len() + allPausedDownloads.len() == 0">
+      <t:executeTemplate filename="static-tab-sort-bar" 
+	                 itemSort="sorts.itemSortDownloads" />
+  </div>
+  <!-- / SORT BAR -->
+
+  <div t:hideIf="allNormalDownloads.len() == 0" t:updateHideOnView="allNormalDownloads" class="main-channelbar downloading-channelbar no-arrow">
 		<span i18n:translate="">Channel Downloads</span>
 	</div>
-
-	<!-- SORT BAR ************************************************************* --> 
-	<div t:updateForView="views.downloadingItems"> 
-		<div t:hideIf="matchingNormalDLs.len() + matchingPendingDLs.len() + matchingPausedDLs.len() == 0">
-			<t:executeTemplate filename="static-tab-sort-bar" 
-			itemSort="sorts.itemSortDownloads"
-			section="'main'" />
-		</div>
-	</div> 
-	<!-- / SORT BAR -->
 
 	<!-- VIDEOS ************************************************** -->
 	<div t:repeatForView="matchingNormalDLs" t:repeatTemplate='download-item' t:containerDiv="true" />
@@ -168,9 +163,6 @@ allPausedDownloads.unlink()
 			<div class="main-channelbar seeding-channelbar no-arrow">
 				<span i18n:translate="">Seeding Torrents</span>
 			</div>
-			<t:executeTemplate filename="static-tab-sort-bar" 
-			itemSort="sorts.itemSortSeedingTorrents"
-			section="'seeding-torrents'" />
 		</div>
 	</div>
 	<div t:repeatForView="matchingULs" t:repeatTemplate='download-item' t:containerDiv="true" />

@@ -910,9 +910,9 @@ class TemplateActionHandler:
             searchFeed.preserveDownloads(searchDownloadsFeed)
             searchFeed.reset()
 
-    def sortBy(self, by, section):
+    def sortBy(self, by):
         try:
-            self.templateHandle.getTemplateVariable('setSortBy')(by, section, self.templateHandle)
+            self.templateHandle.getTemplateVariable('setSortBy')(by, self.templateHandle)
         except KeyError, e:
             logging.warning ("KeyError in getTemplateVariable ('setSortBy')")
 

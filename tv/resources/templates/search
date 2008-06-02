@@ -23,7 +23,7 @@ searchItems = views.items.filterWithIndex(indexes.itemsByFeed, feed.getID())
 searchItemsSorted = searchItems.sort(sorts.itemSortSearch.sort, resort=True)
 searchEngines = views.searchEngines
 
-def setSortBy(by, section, handle):
+def setSortBy(by, handle):
   sorts.itemSortSearch.setSortBy(by)
   searchItems.recomputeSort(searchItemsSorted)
   handle.forceUpdate()

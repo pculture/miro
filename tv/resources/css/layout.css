@@ -239,11 +239,24 @@ ul.download-rates, ul.download-rates li {
     bottom: 16px;
 }
 
+/*
+#main-container > #sort-bar {
+    position: absolute:
+    top: 0;
+    left: 0;
+}
+
+#main-container > #static-tab-sort > #sort-bar {
+    position: fixed;
+    top: 58px;
+    left: 0;
+}
+/*
 /* This holds everything below the channel bar*/
 #main-container {
     position: absolute;
     padding-top: 0px;
-    top: 117px;
+    top: 88px;
     width: 100%;
     /*
     It would be nice to include these next two lines.  This would make the
@@ -256,10 +269,11 @@ ul.download-rates, ul.download-rates li {
      */
 }
 
-/* temp cleanups for missing content */
+
 #main-container.library,
 #main-container.new,
-#main-container.search {
+#main-container.search,
+#main-container.channel-folder {
   border-top:1px solid #f1f1f1;
   top:59px;
 }
@@ -345,6 +359,11 @@ a.sort-button.descending img.down-arrow {
     padding-top: 4px;
     padding-left:15px;
     }
+
+#static-tab-sort + .main-channelbar {
+    padding-top: 50px;
+    margin-top: 50px;
+}
 
 .main-channelbar.no-arrow {
     padding-left: 12px;

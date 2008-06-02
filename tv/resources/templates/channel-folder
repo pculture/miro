@@ -60,16 +60,13 @@ def toggleAllItemsMode(handle):
     matchingItems.recomputeFilter(newItems)
     handle.forceUpdate()
 
-def setSortBy(by, which, handle):
-    if which == 'main':
-      folder.itemSort.setSortBy(by)
-      matchingItems.recomputeSort(newItems)
-    elif which == 'downloading':
-      feed.itemSortDownloading.setSortBy(by)
-      allDownloadingItems.recomputeSort(downloadingItems)
-    else:
-      folder.itemSortWatchable.setSortBy(by)
-      allWatchableItems.recomputeSort(watchableItems)
+def setSortBy(by, handle):
+    folder.itemSort.setSortBy(by)
+    matchingItems.recomputeSort(newItems)
+    feed.itemSortDownloading.setSortBy(by)
+    allDownloadingItems.recomputeSort(downloadingItems)
+    folder.itemSortWatchable.setSortBy(by)
+    allWatchableItems.recomputeSort(watchableItems)
     handle.forceUpdate()
 
 allFeeds = views.feeds.filterWithIndex(indexes.byFolder, folder)
@@ -149,7 +146,7 @@ for feed in allFeeds:
         <h1 id="main-title" t:replace="folder.getTitle()" />
     </div>
 </div>
-<div id="main-container">
+<div id="main-container" class="channel-folder">
     <t:includeTemplate filename="channel-content" />
 </div>
 <div t:updateForView="childrenView">

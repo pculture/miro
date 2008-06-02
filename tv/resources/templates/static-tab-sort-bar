@@ -8,11 +8,10 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <t:execOnLoad><![CDATA[
 itemSort = kargs['itemSort']
-section = kargs['section']
     ]]></t:execOnLoad>
 </head>
 <body>
-<div class="static-tab-sort">
+<div id="static-tab-sort">
     <t:includeTemplate filename="sort-bar" /> 
 </div>
 </body>
