@@ -63,7 +63,7 @@ function onwizardfinish() {
     }
     var autoStartYes = getWidget("radiogroup-autostart-yes");
     pybridge.setRunAtStartup(autoStartYes.selected);
-    pybridge.setStartupTasksDone(true);
+    //pybridge.setStartupTasksDone(true);
     var wwatch = Components.classes["@mozilla.org/embedcomp/window-watcher;1"]
             .getService(Components.interfaces.nsIWindowWatcher);
     var startupTasksURL = "chrome://dtv/content/startup.xul";

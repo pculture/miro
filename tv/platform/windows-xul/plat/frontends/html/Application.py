@@ -84,7 +84,8 @@ class Application(HTMLApplication):
         Override in order to send the files to self.finishStartup().
         """
         if self.AUTOUPDATE_SUPPORTED and not u3info.u3_active and \
-                config.get(prefs.STARTUP_TASKS_DONE):
+                not config.get(prefs.STARTUP_TASKS_DONE):
+            config.set(prefs.STARTUP_TASKS_DONE, True)
             foundFiles = startup.search.getFiles()
             self.finishStartup(foundFiles)
         else:
