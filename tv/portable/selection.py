@@ -446,7 +446,7 @@ class SelectionHandler(signals.SignalEmitter):
 
         # ignore control and shift when selecting static tabs
         if (isinstance(selectedObj, tabs.Tab) and 
-                selectedObj.type in ('statictab', 'guide')):
+                selectedObj.type in ('statictab', 'guide', 'site')):
             controlSelect = shiftSelect = False
 
         if controlSelect:
