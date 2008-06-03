@@ -29,75 +29,76 @@ feed = views.feeds.getObjectByID(int(kargs['id']))
 		<h2 i18n:translate="">Settings: <span i18n:name="title" t:replace="feed.getTitle()" /></h2> 
 				
 		<div id="actual-settings">
-		  
-		<span i18n:translate="">Videos expire after </span>
-		<select name="expireAfter" onChange="javascript:setExpiration();">
-			<option value="system" selected="1" 
-t:hideIf="feed.getExpirationType() != 'system'"><span i18n:translate="">Default</span> 
-(<span t:replace="feed.getFormattedDefaultExpiration()" />)</option>
-			<option value="system" t:hideIf="feed.getExpirationType() == 
-'system'"><span i18n:translate="">default</span> (<span i18n:name="expiration"
-t:replace="feed.getFormattedDefaultExpiration()" />)</option>
-			<option value="3" selected="1" t:hideIf="feed.getExpirationTime() 
-!= 3" i18n:translate="">3 hours</option>
-			<option value="3" t:hideIf="feed.getExpirationTime() == 3" 
-i18n:translate="">3 hours</option>
-			<option value="24" selected="1" 
-t:hideIf="feed.getExpirationTime() != 24" i18n:translate="">1 day</option>
-			<option value="24" t:hideIf="feed.getExpirationTime() == 24" 
-i18n:translate="">1 day</option>
-			<option value="72" selected="1" 
-t:hideIf="feed.getExpirationTime() != 72" i18n:translate="">3 days</option>
-			<option value="72" t:hideIf="feed.getExpirationTime() == 72" 
-i18n:translate="">3 days</option>
-			<option value="144" selected="1" 
-t:hideIf="feed.getExpirationTime() != 144" i18n:translate="">6 days</option>
-			<option value="144" t:hideIf="feed.getExpirationTime() == 144" 
-i18n:translate="">6 days</option>
-			<option value="240" selected="1" 
-t:hideIf="feed.getExpirationTime() != 240" i18n:translate="">10 days</option>
-			<option value="240" t:hideIf="feed.getExpirationTime() == 240" 
-i18n:translate="" >10 days</option>
-			<option value="720" selected="1" 
-t:hideIf="feed.getExpirationTime() != 720" i18n:translate="">1 month</option>
-			<option value="720" t:hideIf="feed.getExpirationTime() == 720" 
-i18n:translate="">1 month</option>
-			<option value="never" selected="1" 
-t:hideIf="feed.getExpirationType() != 'never'" i18n:translate="">Never</option>
-			<option value="never" t:hideIf="feed.getExpirationType() == 
-'never'" i18n:translate="">Never</option>
-		</select>
-<br /><br />
-		<div class="settings-button">
-		  <a id="feed-settings-close-button" class="button gray" onclick="return hideSettings()" >
-		    <span i18:translate="">Done</span>
-		  </a>
-		</div>
-		<div>
-		  <input type="checkbox" name="maxOutDownloads" onClick="javascript:setMaxNew();" checked="checked" t:hideIf="feed.getMaxNew() == 'unlimited'" />
-		  <input type="checkbox" name="maxOutDownloads" onClick="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() != 'unlimited'"/>
-		  <span i18n:translate="">Don't Auto Download when more than 
-		    <input i18n:name="maxnew" name="maxNew" type="text" size="3" value="3" disabled="1" onBlur="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() != 'unlimited'"/>
-		    <input i18n:name="maxnew2" name="maxNew" type="text" size="3" value="@@@feed.getMaxNew()@@@" onBlur="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() == 'unlimited'"/>
-		    videos are waiting unwatched.</span>
-		  <!--
-		      <div i18n:translate="" class="settings-small">Prevents this channel from using unlimited disk space.</div>
-		      -->
-		</div>
-		<div>
-		  <span i18n:translate="">Remember
-		    <select i18n:name="maxold" name="maxOldItems" onChange="javascript:setMaxOldItems()">
-		      <option value="0" selected="@@@int(feed.maxOldItems == 0)@@@">0</option>
-		      <option value="20" selected="@@@int(feed.maxOldItems == 20)@@@">20</option>
-		      <option value="50" selected="@@@int(feed.maxOldItems == 50)@@@">50</option>
-		      <option value="100" selected="@@@int(feed.maxOldItems == 100)@@@">100</option>
-		      <option value="1000" selected="@@@int(feed.maxOldItems == 1000)@@@">1000</option>
-		      <option value="-1" selected="@@@int(feed.maxOldItems is None)@@@">Default (<span t:replace="config.get(prefs.MAX_OLD_ITEMS_DEFAULT)"/>)</option>
+		  <div>  
+		    <span i18n:translate="">Videos expire after </span>
+		    <select name="expireAfter" onChange="javascript:setExpiration();">
+		      <option value="system" selected="1" 
+                              t:hideIf="feed.getExpirationType() != 'system'"><span i18n:translate="">Default</span> 
+                        (<span t:replace="feed.getFormattedDefaultExpiration()" />)</option>
+		      <option value="system" t:hideIf="feed.getExpirationType() == 
+                                                       'system'"><span i18n:translate="">default</span> (<span i18n:name="expiration"
+                                                                                                               t:replace="feed.getFormattedDefaultExpiration()" />)</option>
+		      <option value="3" selected="1" t:hideIf="feed.getExpirationTime() 
+                                                               != 3" i18n:translate="">3 hours</option>
+		      <option value="3" t:hideIf="feed.getExpirationTime() == 3" 
+                              i18n:translate="">3 hours</option>
+		      <option value="24" selected="1" 
+                              t:hideIf="feed.getExpirationTime() != 24" i18n:translate="">1 day</option>
+		      <option value="24" t:hideIf="feed.getExpirationTime() == 24" 
+                              i18n:translate="">1 day</option>
+		      <option value="72" selected="1" 
+                              t:hideIf="feed.getExpirationTime() != 72" i18n:translate="">3 days</option>
+		      <option value="72" t:hideIf="feed.getExpirationTime() == 72" 
+                              i18n:translate="">3 days</option>
+		      <option value="144" selected="1" 
+                              t:hideIf="feed.getExpirationTime() != 144" i18n:translate="">6 days</option>
+		      <option value="144" t:hideIf="feed.getExpirationTime() == 144" 
+                              i18n:translate="">6 days</option>
+		      <option value="240" selected="1" 
+                              t:hideIf="feed.getExpirationTime() != 240" i18n:translate="">10 days</option>
+		      <option value="240" t:hideIf="feed.getExpirationTime() == 240" 
+                              i18n:translate="" >10 days</option>
+		      <option value="720" selected="1" 
+                              t:hideIf="feed.getExpirationTime() != 720" i18n:translate="">1 month</option>
+		      <option value="720" t:hideIf="feed.getExpirationTime() == 720" 
+                              i18n:translate="">1 month</option>
+		      <option value="never" selected="1" 
+                              t:hideIf="feed.getExpirationType() != 'never'" i18n:translate="">Never</option>
+		      <option value="never" t:hideIf="feed.getExpirationType() == 
+                                                      'never'" i18n:translate="">Never</option>
 		    </select>
-		    older items in this feed in addition to the current contents.</span>
+                  </div>
+                  <div class="settings-button">
+		    <a id="feed-settings-close-button" class="button gray" onclick="return hideSettings()" >
+		      <span i18:translate="">Done</span>
+		    </a>
+		  </div>
+		  <div>
+		    <input type="checkbox" name="maxOutDownloads" onClick="javascript:setMaxNew();" checked="checked" t:hideIf="feed.getMaxNew() == 'unlimited'" />
+		    <input type="checkbox" name="maxOutDownloads" onClick="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() != 'unlimited'"/>
+		    <span i18n:translate="">Don't Auto Download when more than 
+		      <input i18n:name="maxnew" name="maxNew" type="text" size="3" value="3" disabled="1" onBlur="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() != 'unlimited'"/>
+		      <input i18n:name="maxnew2" name="maxNew" type="text" size="3" value="@@@feed.getMaxNew()@@@" onBlur="javascript:setMaxNew();" t:hideIf="feed.getMaxNew() == 'unlimited'"/>
+		      videos are waiting unwatched.</span>
+		    <!--
+		        <div i18n:translate="" class="settings-small">Prevents this channel from using unlimited disk space.</div>
+		        -->
+		  </div>
+		  <div>
+		    <span i18n:translate="">Remember
+		      <select i18n:name="maxold" name="maxOldItems" onChange="javascript:setMaxOldItems()">
+		        <option value="0" selected="@@@int(feed.maxOldItems == 0)@@@">0</option>
+		        <option value="20" selected="@@@int(feed.maxOldItems == 20)@@@">20</option>
+		        <option value="50" selected="@@@int(feed.maxOldItems == 50)@@@">50</option>
+		        <option value="100" selected="@@@int(feed.maxOldItems == 100)@@@">100</option>
+		        <option value="1000" selected="@@@int(feed.maxOldItems == 1000)@@@">1000</option>
+		        <option value="-1" selected="@@@int(feed.maxOldItems is None)@@@">Default (<span t:replace="config.get(prefs.MAX_OLD_ITEMS_DEFAULT)"/>)</option>
+		      </select>
+		      older items in this feed in addition to the current contents.</span>
 		    (<a class="clean-old-items" onClick="return eventURL('action:cleanOldItems?feed=@@@feed.getID()@@@');" href="#"><span i18n:translate="">clear older items now</span></a>)
-		</div>
- 	</div>         
+		  </div>
+		                
+ 	        </div>         
 </div>
 
 

@@ -8,8 +8,8 @@
     z-index: 5; /* Needs to be float above the main page */
     }
 #settings-inner {
-    padding: 15px 18px 20px 18px;
-    height: 155px;
+    padding: 15px 18px 0px 18px;
+    min-height: 130px;
     margin-bottom: 4px;
 }
 
@@ -29,22 +29,31 @@ a.remove-channel {
 .settings-small {
     padding: 3px 0 0 23px;
 }
-.settings-button {
-    /*position: absolute;
-    bottom: 30px;
-		right:18px;*/
-		float:right;
-    margin-right:18px;
-}
+
 /* The block of drop downs and fields */
 #actual-settings {
-	padding: 18px 0 0 0px;
+	padding: 18px 0 0;
 	clear:both;
 }
 #actual-settings input {
   margin:0;
   padding:0;
 }
+
+#actual-settings > div {
+    margin: 10px 0;
+}
+
+#actual-settings :first-child {
+    padding-top: 0;
+}
+
+.settings-button {
+    float: right;
+    padding: 0;
+    margin: 0 0 20px;
+}
+
 /* This is the title section of the channel view */
 #main-titlebar {
     height: 60px;
