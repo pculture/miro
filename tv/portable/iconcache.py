@@ -125,7 +125,6 @@ class IconCache:
         self.resized_filenames = {}
         self.url = None
 
-        self.updated = False
         self.updating = False
         self.needsUpdate = False
         self.dbItem = dbItem
@@ -153,7 +152,6 @@ class IconCache:
         self.etag = None
         self.modified = None
         self.removed = False
-        self.updated = False
         self.updating = False
         self.needsUpdate = False
         self.iconChanged()
@@ -183,8 +181,6 @@ class IconCache:
             self.requestUpdate(True)
         elif error is not None:
             addTimeout(3600,self.requestUpdate, "Thumbnail request for %s" % url)
-        else:
-            self.updated = True
         iconCacheUpdater.updateFinished ()
 
     def updateIconCache (self, url, info):
@@ -203,7 +199,6 @@ class IconCache:
         try:
             # Our cache is good.  Hooray!
             if (info['status'] == 304):
-                self.updated = True
                 return
 
             needsChange = True
@@ -279,7 +274,6 @@ class IconCache:
             if self.url != url:
                 needsSave = True
                 self.url = url
-            self.updated = True
         finally:
             if needsChange:
                 self.iconChanged(needsSave=needsSave)
@@ -305,7 +299,8 @@ class IconCache:
             url = self.url
 
         # Only verify each icon once per run unless the url changes
-        if (self.updated and url == self.url):
+        if (url == self.url and self.filename and 
+                fileutil.access (self.filename, os.R_OK)):
             iconCacheUpdater.updateFinished ()
             return
 
@@ -317,10 +312,7 @@ class IconCache:
             return
 
         # Last try, get the icon from HTTP.
-        if (url == self.url and self.filename and fileutil.access (self.filename, os.R_OK)):
-            httpclient.grabURL (url, lambda info: self.updateIconCache(url, info), lambda error: self.errorCallback(url, error), etag=self.etag, modified=self.modified)
-        else:
-            httpclient.grabURL (url, lambda info: self.updateIconCache(url, info), lambda error: self.errorCallback(url, error))
+        httpclient.grabURL (url, lambda info: self.updateIconCache(url, info), lambda error: self.errorCallback(url, error))
 
     def requestUpdate (self, is_vital = False):
         if hasattr (self, "updating") and hasattr (self, "dbItem"):
