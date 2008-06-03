@@ -22,7 +22,7 @@
 <!ENTITY prefs.channels.autodownloaddefault.off "Off">
 
 <!ENTITY prefs.playback "Playback">
-<!ENTITY prefs.playback.remember.pos "Remember where I stopped watching a video and continue playing from that point.">
+<!ENTITY prefs.playback.remember.pos "Resume playing a videos from the point it was last stopped.">
 <!ENTITY prefs.playback.auto.next.video "Play videos one after another.">
 <!ENTITY prefs.playback.stop.after.each "Play one video, then stop.">
 

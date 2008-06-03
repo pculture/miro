@@ -8,6 +8,9 @@
 > (oid:100) */
 "(You must restart Miro for this change to take effect)\n" = "(You must restart Miro for this change to take effect)\n";
 
+/* NSTextField ((in addition to the current contents)) : <title:(in addition to the current contents)> (oid:256) */
+"(in addition to the current contents)" = "(in addition to the current contents)";
+
 /* NSTextField ((movies directory path goes here)) : <title:(movies directory path goes here)> (oid:94) */
 "(movies directory path goes here)" = "(movies directory path goes here)";
 
@@ -74,9 +77,6 @@
 /* NSBox (Box) : <title:Box> (oid:179) */
 "Box" = "Box";
 
-/* NSTextField (By default, remember this many old items in addition to the current contents:) : <title:By default, remember this many old items in addition to the current contents:> (oid:240) */
-"By default, remember this many old items in addition to the current contents:" = "By default, remember this many old items in addition to the current contents:";
-
 /* NSTextField (By default, videos expire after:) : <title:By default, videos expire after:> (oid:78) */
 "By default, videos expire after:" = "By default, videos expire after:";
 
@@ -132,11 +132,14 @@
 /* NSButtonCell (Play videos one after another.) : <title:Play videos one after another.> (oid:103) */
 "Play videos one after another." = "Play videos one after another.";
 
-/* NSButton (Remember video position.) : <title:Remember video position.> (oid:138) */
-"Remember video position." = "Remember video position.";
+/* NSTextField (Remember this many old items:) : <title:Remember this many old items:> (oid:240) */
+"Remember this many old items:" = "Remember this many old items:";
 
 /* NSButton (Remove) : <title:Remove> (oid:150) */
 "Remove" = "Remove";
+
+/* NSButton (Resume playing a video from the point it was last stopped.) : <title:Resume playing a video from the point it was last stopped.> (oid:138) */
+"Resume playing a video from the point it was last stopped." = "Resume playing a video from the point it was last stopped.";
 
 /* NSButton (Run Miro at startup) : <title:Run Miro at startup> (oid:47) */
 "Run Miro at startup" = "Run Miro at startup";

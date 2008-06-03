@@ -83,7 +83,7 @@ char *s = N_("Playback");
 # 6 "../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template"
 char *s = N_("Quit Miro completely.");
 # 25 "../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template"
-char *s = N_("Remember where I stopped watching a video and continue playing from that point.");
+char *s = N_("Resume playing a videos from the point it was last stopped.");
 # 37 "../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template"
 char *s = N_("Remove");
 # 35 "../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template"
