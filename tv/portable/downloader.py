@@ -503,6 +503,7 @@ URL was %s""" % self.url
         return self.status.get('filename', FilenameType(''))
 
     def onRestore(self):
+        DDBObject.onRestore(self)
         self.deleteFiles = True
         self.itemList = []
         if self.dlid == 'noid':

@@ -123,6 +123,7 @@ class Item(DDBObject):
     ##
     # Called by pickle during serialization
     def onRestore(self):
+        DDBObject.onRestore(self)
         if (self.iconCache == None):
             self.iconCache = IconCache (self)
         else:

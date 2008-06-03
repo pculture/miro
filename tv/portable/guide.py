@@ -97,6 +97,7 @@ class ChannelGuide(DDBObject):
         self.downloadGuide()
 
     def onRestore(self):
+        DDBObject.onRestore(self)
         self.lastVisitedURL = None
         self.historyLocation = None
         self.history = []

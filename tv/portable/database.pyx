@@ -43,6 +43,7 @@ import sys
 import types
 import threading
 
+from miro import signals
 from miro.fasttypes import LinkedList, SortedList
 
 class DatabaseConstraintError(Exception):
@@ -1318,7 +1319,7 @@ class DynamicDatabase:
 defaultDatabase = DynamicDatabase()
 
 # Dynamic Database object
-class DDBObject:
+class DDBObject(signals.SignalEmitter):
     #The last ID used in this class
     lastID = 0
 
@@ -1331,6 +1332,7 @@ class DDBObject:
     #        -- if ommitted the global database is used
     # @param add Iff true, object is added to the database
     def __init__(self, dd = None,add = True):
+        signals.SignalEmitter.__init__(self, 'removed')
         if dd != None:
             self.dd = dd
         
@@ -1341,6 +1343,9 @@ class DDBObject:
         if add:
             self.checkConstraints()
             self.dd.addAfterCursor(self)
+
+    def onRestore(self):
+        signals.SignalEmitter.__init__(self, 'removed')
 
     ##
     # returns unique integer assocaited with this object
@@ -1356,6 +1361,7 @@ class DDBObject:
     def remove(self):
         self.dd.confirmDBThread()
         self.dd.removeObj(self)
+        self.emit('removed')
 
     ##
     # Call this before you grab data from an object

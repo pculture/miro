@@ -171,6 +171,7 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
         database.DDBObject.__init__(self)
 
     def onRestore(self):
+        database.DDBObject.onRestore(self)
         self.setupTrackedItemView()
 
     getTitle, setTitle = makeSimpleGetSet('title')

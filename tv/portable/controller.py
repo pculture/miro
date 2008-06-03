@@ -184,11 +184,11 @@ class Controller:
     def updateCurrentFeed(self):
         for tab in app.selection.getSelectedTabs():
             if tab.isFeed():
-                tab.obj.update()
+                tab.obj.scheduleUpdateEvents(0)
 
     def updateAllFeeds(self):
         for f in views.feeds:
-            f.update()
+            f.scheduleUpdateEvents(0)
 
     def renameGuide(self, guide):
         if guide.getDefault():

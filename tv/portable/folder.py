@@ -131,6 +131,7 @@ class ChannelFolder(FolderBase):
         self._initRestore()
 
     def onRestore(self):
+        DDBObject.onRestore(self)
         self._initRestore()
 
     def _initRestore(self):

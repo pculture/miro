@@ -265,7 +265,7 @@ def expandedFolderFilter(tab):
     folder = tab.obj.getFolder()
     return folder is None or folder.getExpanded()
 
-class TabOrder(database.DDBObject, signals.SignalEmitter):
+class TabOrder(database.DDBObject):
     """TabOrder objects keep track of the order of the tabs.  Democracy
     creates 2 of these, one to track channels/channel folders and another to
     track playlists/playlist folders.
@@ -279,20 +279,21 @@ class TabOrder(database.DDBObject, signals.SignalEmitter):
         checkU(type)
         self.type = type
         self.tab_ids = []
+        database.DDBObject.__init__(self)
         self._initRestore()
         decorated = [(t.obj.getTitle().lower(), t) for t in self.tabView]
         decorated.sort()
         for sortkey, tab in decorated:
             self.trackedTabs.appendID(tab.getID())
-        database.DDBObject.__init__(self)
 
     def onRestore(self):
+        database.DDBObject.onRestore(self)
         self._initRestore()
         eventloop.addIdle(self.checkForNonExistentIds, 
                 "checking for non-existent TabOrder ids")
 
     def _initRestore(self):
-        signals.SignalEmitter.__init__(self, 'tab-added')
+        self.create_signal('tab-added')
         if self.type == u'site':
             self.tabView = views.siteTabs
         elif self.type == u'channel':

@@ -52,6 +52,7 @@ from miro import config
 from miro import iconcache
 from miro import dialogs
 from miro import eventloop
+from miro import feedupdate
 from miro import filters
 from miro import folder
 from miro import prefs
@@ -654,10 +655,16 @@ class Feed(DDBObject):
             folder = self.getFolder()
             if folder:
                 folder.signalChange(needsSave=False)
+        isUpdating = bool(self.actualFeed.updating)
+        if self.wasUpdating and not isUpdating:
+            self.emit('update-finished')
+        self.wasUpdating = isUpdating
         DDBObject.signalChange (self, needsSave=needsSave)
 
     def _initRestore(self):
+        self.create_signal('update-finished')
         self.download = None
+        self.wasUpdating = False
         self.blinking = False
         self.itemSort = sorts.ItemSort()
         self.itemSortDownloading = sorts.ItemSort()
@@ -1229,6 +1236,7 @@ $shortAppName.\n\nDo you want to try to load this channel anyway?"""))
             return u'channel:channelfolder'
 
     def onRestore(self):
+        DDBObject.onRestore(self)
         if (self.iconCache == None):
             self.iconCache = iconcache.IconCache (self, is_vital = True)
         else:
@@ -1260,7 +1268,23 @@ def _entry_equal(a, b):
         except:
             return a == b
 
-class RSSFeedImplBase(FeedImpl):
+class ThrottledUpdateFeedImpl(FeedImpl):
+    """Feed Impl that uses the feedupdate module to schedule it's updates.
+    Only a limited number of ThrottledUpdateFeedImpl objects will be updating at
+    any given time.
+    """
+
+    def scheduleUpdateEvents(self, firstTriggerDelay):
+        feedupdate.cancel_update(self.ufeed)
+        if firstTriggerDelay >= 0:
+            feedupdate.schedule_update(firstTriggerDelay, self.ufeed,
+                    self.update)
+        else:
+            if self.updateFreq > 0:
+                feedupdate.schedule_update(self.updateFreq, self.ufeed,
+                        self.update)
+
+class RSSFeedImplBase(ThrottledUpdateFeedImpl):
     """
     Base class from which RSSFeedImpl and RSSMultiFeedImpl derive.
     """
@@ -1514,9 +1538,7 @@ class RSSFeedImpl(RSSFeedImplBase):
         if not self.ufeed.idExists():
             return
         logging.info ("Error updating feed: %s: %s", self.url, e)
-        self.updating = False
-        self.ufeed.signalChange()
-        self.scheduleUpdateEvents(-1)
+        self.feedparser_finished()
 
     def feedparser_callback (self, parsed):
         self.ufeed.confirmDBThread()
@@ -1663,13 +1685,13 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         if self.updating == 0:
             self.updateFinished(self.oldItems)
             self.oldItems = None
+            self.scheduleUpdateEvents(-1)
 
     def feedparser_finished (self, url, needsSave = False):
         if not self.ufeed.idExists():
             return
         self.updating -= 1
         self.checkUpdateFinished()
-        self.scheduleUpdateEvents(-1)
         del self.download_dc[url]
 
     def feedparser_errback (self, e, url):
@@ -1829,7 +1851,7 @@ class Collection(FeedImpl):
 
 ##
 # A feed based on un unformatted HTML or pre-enclosure RSS
-class ScraperFeedImpl(FeedImpl):
+class ScraperFeedImpl(ThrottledUpdateFeedImpl):
     def __init__(self,url,ufeed, title = None, visible = True, initialHTML = None,etag=None,modified = None,charset = None):
         FeedImpl.__init__(self,url,ufeed,title,visible)
         self.initialHTML = initialHTML
@@ -1986,7 +2008,7 @@ class ScraperFeedImpl(FeedImpl):
 
     def onRemove(self):
         for download in self.downloads:
-            logging.info ("cancling download: %s", download.url)
+            logging.info ("canceling download: %s", download.url)
             download.cancel()
         self.downloads = set()
 
@@ -2356,6 +2378,8 @@ class SearchFeedImpl (RSSMultiFeedImpl):
     def update(self):
         if self.url is not None and self.url != u'':
             RSSMultiFeedImpl.update(self)
+        else:
+            self.ufeed.emit('update-finished')
 
 class SearchDownloadsFeedImpl(FeedImpl):
     def __init__(self, ufeed):
