@@ -1,3 +1,6 @@
+from miro import config
+from miro import prefs
+
 from miro.feed import Feed
 from miro.guide import ChannelGuide
 from miro.playlist import SavedPlaylist
@@ -67,7 +70,7 @@ class BackendMessagesTest(EventLoopTest):
         self.playlistTabOrder = TabOrder(u'playlist')
         # Adding a guide ensures that if we remove all our channel/playlist
         # tabs the selection code won't go crazy.
-        ChannelGuide(u"http://miroguide.com/")
+        ChannelGuide(config.get(prefs.CHANNEL_GUIDE_URL))
 
     def tearDown(self):
         messages.BackendMessage.install_handler(None)
