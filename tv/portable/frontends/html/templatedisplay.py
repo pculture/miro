@@ -48,6 +48,7 @@ from miro import download_utils
 from miro import eventloop
 from miro import feed
 from miro import folder
+from miro import filetypes
 from miro import guide
 from miro import httpclient
 from miro import indexes
@@ -202,11 +203,12 @@ class TemplateDisplay(HTMLDisplay):
                 action, args = self.parseEventURL(url)
                 self.dispatchAction(action, **args)
                 return False
-
+            
             # Let channel guide URLs pass through
             if (not subscription.isSubscribeLink(url) and
-                    app.controller.guide is not None and 
-                    app.controller.guide.isPartOfGuide(url)):
+                app.controller.guide is not None and 
+                app.controller.guide.isPartOfGuide(url) and
+                not filetypes.isAllowedFilename(url)):
                 app.controller.setLastVisitedGuideURL(url)
                 return True
             if url.startswith(u'file://'):
@@ -272,6 +274,11 @@ class TemplateDisplay(HTMLDisplay):
             f.blink()
             return
 
+        # guessing it's a media file
+        if filetypes.isAllowedFilename(url):
+            singleclick.addDownload(url)
+            return
+        
         app.delegate.openExternalURL(url)
 
     @eventloop.asUrgent
