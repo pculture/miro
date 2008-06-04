@@ -86,7 +86,10 @@ class Application(HTMLApplication):
         if self.AUTOUPDATE_SUPPORTED and not u3info.u3_active and \
                 not config.get(prefs.STARTUP_TASKS_DONE):
             config.set(prefs.STARTUP_TASKS_DONE, True)
-            foundFiles = startup.search.getFiles()
+            if startup.search is not None: # user searched for files
+                foundFiles = startup.search.getFiles()
+            else:
+                foundFiles = None
             self.finishStartup(foundFiles)
         else:
             HTMLApplication.handleStartupSuccess(self, obj)
