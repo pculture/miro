@@ -68,8 +68,8 @@ def getSpecialFolder(name):
 commonAppDataDirectory = getSpecialFolder("Common AppData")
 appDataDirectory = getSpecialFolder('AppData')
 if u3info.u3_active:
-    baseMoviesDirectory = u3info.device_document_prefix + '\\' + "Videos"
-    nonVideoDirectory = u3info.device_document_prefix
+    baseMoviesDirectory = u3info.DEVICE_DOCUMENT_PREFIX + '\\' + "Videos"
+    nonVideoDirectory = u3info.DEVICE_DOCUMENT_PREFIX
 else:
     baseMoviesDirectory = getSpecialFolder('My Videos')
     nonVideoDirectory = getSpecialFolder('Desktop')

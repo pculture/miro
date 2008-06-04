@@ -258,15 +258,15 @@ def expand_filename(filename):
     if not filename:
         return filename
     if u3info.u3_active:
-        if filename.startswith(u3info.app_data_prefix):
-            filename = filename[len(u3info.app_data_prefix):]
+        if filename.startswith(u3info.APP_DATA_PREFIX):
+            filename = filename[len(u3info.APP_DATA_PREFIX):]
             while len(filename) > 0 and filename[0] in ['/', '\\']:
                 filename = filename[1:]
             if len(filename) == 0:
                 return u3info.app_data_path
             return os.path.join (u3info.app_data_path, filename)
-        if filename.startswith(u3info.device_document_prefix):
-            filename = filename[len(u3info.device_document_prefix):]
+        if filename.startswith(u3info.DEVICE_DOCUMENT_PREFIX):
+            filename = filename[len(u3info.DEVICE_DOCUMENT_PREFIX):]
             while len(filename) > 0 and filename[0] in ['/', '\\']:
                 filename = filename[1:]
             if len(filename) == 0:
@@ -283,13 +283,14 @@ def collapse_filename(filename):
             while len(filename) > 0 and filename[0] in ['/', '\\']:
                 filename = filename[1:]
             if len(filename) == 0:
-                return u3info.app_data_prefix
-            return u3info.app_data_prefix + '\\' + filename
-        if filename.startswith(u3info.device_document_path):
+                return u3info.APP_DATA_PREFIX
+            return u3info.APP_DATA_PREFIX + '\\' + filename
+
+        elif filename.startswith(u3info.device_document_path):
             filename = filename[len(u3info.device_document_path):]
             while len(filename) > 0 and filename[0] in ['/', '\\']:
                 filename = filename[1:]
             if len(filename) == 0:
-                return u3info.device_document_prefix
-            return u3info.device_document_prefix + '\\' + filename
+                return u3info.DEVICE_DOCUMENT_PREFIX
+            return u3info.DEVICE_DOCUMENT_PREFIX + '\\' + filename
     return filename
