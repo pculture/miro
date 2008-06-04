@@ -82,6 +82,7 @@ def confirmMainThread():
 def initializeLocale():
     pass
 
+# XXX this is duplicated in tv/platform/osxx/plat/utils.py
 def setupLogging (inDownloader=False):
     if inDownloader:
         if os.environ.get('MIRO_FRONTEND') == 'cli':
