@@ -975,7 +975,7 @@ folder will be deleted.""")
         if self.downloader is not None:
             return self.downloader.getType() == u'bittorrent'
         else:
-            return self.getURL().endswith(u'.torrent')
+            return filetypes.isTorrentFilename(self.getURL())
 
     ##
     # Returns formatted XHTML with release date, duration, format, and size
