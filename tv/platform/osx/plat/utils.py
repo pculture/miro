@@ -90,11 +90,33 @@ def initializeLocale():
     localeInitialized = True
     del pool
 
+# XXX this is duplicated in tv/platform/gtk-x11/plat/utils.py
 def setupLogging (inDownloader=False):
-    logging.basicConfig(level=logging.INFO,
-                        format='%(asctime)s %(levelname)-8s %(message)s',
-                        stream = sys.stdout)
+    if inDownloader:
+        if os.environ.get('MIRO_FRONTEND') == 'cli':
+            level = logging.WARN
+        else:
+            level = logging.INFO
+        logging.basicConfig(level=level,
+                            format='%(levelname)-8s %(message)s',
+                            stream=sys.stdout)
+    else:
+        logging.basicConfig(level=logging.DEBUG,
+                            format='%(asctime)s %(levelname)-8s %(message)s',
+                            filename=config.get(prefs.LOG_PATHNAME),
+                            filemode="w")
+        console = logging.StreamHandler (sys.stdout)
+        if options.frontend != 'cli':
+            level = logging.INFO
+        else:
+            level = logging.WARN
+        console.setLevel(level)
+    
+        formatter = logging.Formatter('%(levelname)-8s %(message)s')
+        console.setFormatter(formatter)
 
+        logging.getLogger('').addHandler(console)
+                            
 # Takes in a unicode string representation of a filename and creates a
 # valid byte representation of it attempting to preserve extensions
 #
