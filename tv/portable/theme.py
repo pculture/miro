@@ -130,18 +130,18 @@ class ThemeHistory(DDBObject):
         else:
             logging.info("Adding default feeds")
             if platform.system() == 'Darwin':
-                defaultFeedURLs = [u'http://www.getmiro.com/screencasts/mac/mac.feed.rss']
-            elif platform.system() == 'Windows':
-                defaultFeedURLs = [u'http://www.getmiro.com/screencasts/windows/win.feed.rss']
+                usingMiroURL = u'http://www.getmiro.com/screencasts/mac/mac.feed.rss'
             else:
-                defaultFeedURLs = [u'http://www.getmiro.com/screencasts/windows/win.feed.rss']
-            defaultFeedURLs.extend([ (_('Starter Channels'),
+                usingMiroURL = u'http://www.getmiro.com/screencasts/windows/win.feed.rss'
+            defaultFeedURLs = [ (_('Starter Channels'),
                                       [u'http://richie-b.blip.tv/posts/?skin=rss',
                                        u'http://feeds.pbs.org/pbs/kcet/wiredscience-video',
                                        u'http://www.jpl.nasa.gov/multimedia/rss/podfeed-hd.xml',
                                        u'http://www.linktv.org/rss/hq/mosaic.xml']),
-                                   ])
+                                   ]
 
+            # Using Miro is set to auto-download
+            feed.Feed(usingMiroURL, initiallyAutoDownloadable=True)
             for default in defaultFeedURLs:
                 if isinstance(default, tuple): # folder
                     defaultFolder = default
