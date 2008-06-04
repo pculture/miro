@@ -237,12 +237,6 @@ class TemplateDisplay(HTMLDisplay):
         # check for subscribe.getdemocracy.com/subscribe.getmiro.com links
         type, subscribeURLs = subscription.findSubscribeLinks(url)
 
-        # check if the url that came from a guide, but the user switched tabs
-        # before it went through.
-        if len(subscribeURLs) == 0:
-            for guideObj in views.guides:
-                if guideObj.isPartOfGuide(url):
-                    return
 
         normalizedURLs = []
         for url, additional in subscribeURLs:
