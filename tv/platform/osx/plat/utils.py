@@ -93,11 +93,8 @@ def initializeLocale():
 # XXX this is duplicated in tv/platform/gtk-x11/plat/utils.py
 def setupLogging (inDownloader=False):
     if inDownloader:
-        if os.environ.get('MIRO_FRONTEND') == 'cli':
-            level = logging.WARN
-        else:
-            level = logging.INFO
-        logging.basicConfig(level=level,
+
+        logging.basicConfig(level=logging.INFO,
                             format='%(levelname)-8s %(message)s',
                             stream=sys.stdout)
     else:
@@ -106,11 +103,7 @@ def setupLogging (inDownloader=False):
                             filename=config.get(prefs.LOG_PATHNAME),
                             filemode="w")
         console = logging.StreamHandler (sys.stdout)
-        if options.frontend != 'cli':
-            level = logging.INFO
-        else:
-            level = logging.WARN
-        console.setLevel(level)
+        console.setLevel(logging.WARN)
     
         formatter = logging.Formatter('%(levelname)-8s %(message)s')
         console.setFormatter(formatter)
