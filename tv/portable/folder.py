@@ -131,7 +131,7 @@ class ChannelFolder(FolderBase):
         self._initRestore()
 
     def onRestore(self):
-        DDBObject.onRestore(self)
+        FolderBase.onRestore(self)
         self._initRestore()
 
     def _initRestore(self):
@@ -192,6 +192,7 @@ class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
         FolderBase.__init__(self, title)
 
     def onRestore(self):
+        FolderBase.onRestore(self)
         self.setupTrackedItemView()
 
     def handleDNDAppend(self, draggedIDs):
