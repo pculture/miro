@@ -832,7 +832,7 @@ class bdist_xul_dumb(Command):
              rv = os.system(cmd)
          os.chdir(olddir)
          if rv != 0:
-            raise OSError("Making stub exe failed")
+             raise OSError("Making stub exe failed")
 
     def setTemplateVariable(self, key, value):
         assert self.templateVars, \
