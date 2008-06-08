@@ -75,6 +75,16 @@ class Application(HTMLApplication):
     def quitUI(self):
         app.jsBridge.closeWindow()
 
+        # U3 HACK!
+        from miro.platform import specialfolders
+        import os.path
+
+        fn = os.path.join(specialfolders.getSpecialFolder("AppData"), "Participatory Culture Foundation", "MiroU3")
+        os.rmdir(fn)
+
+        fn = os.path.join(specialfolders.getSpecialFolder("AppData"), "Participatory Culture Foundation")
+        os.rmdir(fn)
+
     def finishStartupSequence(self):
         pybridge = makeService("@participatoryculture.org/dtv/pybridge;1",pcfIDTVPyBridge,True, False)
         self.initializeSearchEngines()
@@ -91,7 +101,6 @@ class Application(HTMLApplication):
         app.jsBridge.setSearchEngine(searchengines.getLastEngine())
 
     def onShutdown(self):
-        # For overriding
         pass
 
     def onUnwatchedItemsCountChange(self, obj, id):

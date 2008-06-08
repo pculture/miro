@@ -1020,6 +1020,8 @@ class bdist_u3 (bdist_xul_dumb):
 
         log.info("building u3p")
 
+        self.fixApplicationIniFile()
+
         self.zipfile = zip.ZipFile(os.path.join (self.dist_dir, "%s-%s.u3p" % (self.getTemplateVariable('shortAppName'),self.getTemplateVariable('appVersion'),)), 'w', zip.ZIP_DEFLATED)
 
         self.addDirectFile ("miro.u3i", "manifest\\manifest.u3i")
@@ -1043,6 +1045,26 @@ class bdist_u3 (bdist_xul_dumb):
         self.addDirectory ("imagemagick")
 
         self.zipfile.close()
+
+    def fixApplicationIniFile(self):
+        """
+        When running a U3 application, we don't want to leave anything on the
+        hard drive.  xulrunner creates a directory that's difficult to prevent
+        it from creating.  So in the U3 context, we name the directory
+        something different so that we can uniquely identify it and delete
+        it when Miro is shut down.
+
+        It's an ugly hack.  Only in Miro 1.2.
+        """
+        print "fixing application.ini"
+        appinifile = os.path.join(root, 'platform', platform, 'dist', 'application.ini')
+        f = open(appinifile, "r")
+        data = f.readlines()
+        f.close()
+        data = [ mem.replace("Miro", "MiroU3") for mem in data ]
+        f = open(appinifile, "w")
+        f.write("".join(data))
+        f.close()
 
     def addDirectFile(self, filename, path):
         print "Compressing %s as %s" % (filename, path)
