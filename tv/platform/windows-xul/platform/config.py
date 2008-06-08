@@ -53,7 +53,7 @@ def _getMoviesDirectory():
 
 def _getSupportDirectory():
     if u3info.u3_active:
-        path = u3info.app_data_prefix
+        path = u3info.APP_DATA_PREFIX
     else:
         # We don't get the publisher and long app name from the config so
         # changing the app name doesn't change the support directory
