@@ -49,6 +49,8 @@ UPSTREAM_LIMIT_IN_KBS       = Pref( key='upstreamLimitInKBS',    default=12,    
 UPSTREAM_TORRENT_LIMIT      = Pref( key='upstreamTorrentLimit',  default=10,    platformSpecific=False )
 LIMIT_DOWNSTREAM_BT         = Pref( key='limitDownstreamBT',     default=False, platformSpecific=False )
 DOWNSTREAM_BT_LIMIT_IN_KBS  = Pref( key='downstreamBTLimitInKBS',default=200,   platformSpecific=False )
+LIMIT_CONNECTIONS_BT = Pref( key='limitConnectionsBT',     default=False, platformSpecific=False )
+CONNECTION_LIMIT_BT_NUM  = Pref( key='connectionLimitBTNum', default=100,   platformSpecific=False )
 PRESERVE_DISK_SPACE         = Pref( key='preserveDiskSpace',     default=True,  platformSpecific=False )
 PRESERVE_X_GB_FREE          = Pref( key='preserveXGBFree',       default=0.2,   platformSpecific=False )
 EXPIRE_AFTER_X_DAYS         = Pref( key='expireAfterXDays',      default=6,     platformSpecific=False )

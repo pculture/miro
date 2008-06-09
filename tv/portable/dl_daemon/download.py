@@ -185,6 +185,13 @@ class TorrentSession:
             limit = config.get(prefs.DOWNSTREAM_BT_LIMIT_IN_KBS) * (2 ** 10)
         self.session.set_download_rate_limit(limit)
 
+    def setConnectionLimit(self):
+        limit = -1
+        print "config.get(prefs.LIMIT_CONNECTIONS_BT): %r" % config.get(prefs.LIMIT_CONNECTIONS_BT)
+        if config.get(prefs.LIMIT_CONNECTIONS_BT):
+            limit = config.get(prefs.CONNECTION_LIMIT_BT_NUM)
+        self.session.set_max_connections(limit)
+
     def setEncryption(self):
         if self.pe_set is None:
             self.pe_set = lt.pe_settings()
@@ -207,17 +214,19 @@ class TorrentSession:
         if key == prefs.BT_MIN_PORT.key:
             if value > self.session.listen_port():
                 self.listen()
-        if key == prefs.BT_MAX_PORT.key:
+        elif key == prefs.BT_MAX_PORT.key:
             if value < self.session.listen_port():
                 self.listen()
-        if key == prefs.USE_UPNP.key:
+        elif key == prefs.USE_UPNP.key:
             self.setUpnp()
-        if key in (prefs.LIMIT_UPSTREAM.key, prefs.UPSTREAM_LIMIT_IN_KBS.key):
+        elif key in (prefs.LIMIT_UPSTREAM.key, prefs.UPSTREAM_LIMIT_IN_KBS.key):
             self.setUploadLimit()
-        if key in (prefs.LIMIT_DOWNSTREAM_BT.key, prefs.DOWNSTREAM_BT_LIMIT_IN_KBS.key):
+        elif key in (prefs.LIMIT_DOWNSTREAM_BT.key, prefs.DOWNSTREAM_BT_LIMIT_IN_KBS.key):
             self.setDownloadLimit()
-        if key == prefs.BT_ENC_REQ.key:
+        elif key == prefs.BT_ENC_REQ.key:
             self.setEncryption()
+        elif key in (prefs.LIMIT_CONNECTIONS_BT.key, prefs.CONNECTION_LIMIT_BT_NUM.key):
+            self.setConnectionLimit()
 
     def addTorrent(self, torrent):
         self.torrents.add(torrent)

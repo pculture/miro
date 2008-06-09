@@ -207,7 +207,9 @@ class ControllerDaemon(Daemon):
                    prefs.LOG_PATHNAME,
                    prefs.GETTEXT_PATHNAME,
                    prefs.LIMIT_UPLOAD_RATIO,
-                   prefs.UPLOAD_RATIO
+                   prefs.UPLOAD_RATIO,
+                   prefs.LIMIT_CONNECTIONS_BT,
+                   prefs.CONNECTION_LIMIT_BT_NUM,
                 ]
 
         for desc in remoteConfigItems:
