@@ -187,7 +187,7 @@ class TorrentSession:
 
     def setConnectionLimit(self):
         limit = -1
-        print "config.get(prefs.LIMIT_CONNECTIONS_BT): %r" % config.get(prefs.LIMIT_CONNECTIONS_BT)
+        # print "config.get(prefs.LIMIT_CONNECTIONS_BT): %r" % config.get(prefs.LIMIT_CONNECTIONS_BT)
         if config.get(prefs.LIMIT_CONNECTIONS_BT):
             limit = config.get(prefs.CONNECTION_LIMIT_BT_NUM)
         self.session.set_max_connections(limit)
