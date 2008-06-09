@@ -239,7 +239,7 @@ def _scrapeGreenPeaceVideoURL(url, callback):
 # =============================================================================
 
 scraperInfoMap = [
-    {'pattern': 'http://([^/]+\.)?youtube.com/(?!get_video\.php)',         'func': _scrapeYouTubeURL},
+    {'pattern': 'http://([^/]+\.)?youtube.com/(?!get_video(\.php)?)',         'func': _scrapeYouTubeURL},
     {'pattern': 'http://video.google.com/googleplayer.swf', 'func': _scrapeGoogleVideoURL},
     {'pattern': 'http://([^/]+\.)?lulu.tv/wp-content/flash_play/flvplayer', 'func': _scrapeLuLuVideoURL},
     {'pattern': 'http://([^/]+\.)?vmix.com/flash/super_player.swf', 'func': _scrapeVMixVideoURL},
