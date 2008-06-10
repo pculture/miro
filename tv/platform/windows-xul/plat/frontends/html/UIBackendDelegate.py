@@ -81,7 +81,7 @@ def downloadUpdate(url):
         output = os.fdopen(fd, 'wb')
         output.write(info['body'])
         output.close()
-        subprocess.Popen(filename)
+        subprocess.Popen([filename, '/reinstall'])
         app.controller.shutdown()
     def error(e):
         # XXX what should we do here?
