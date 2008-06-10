@@ -133,14 +133,15 @@ def queryRevision(f):
         p.stdout.close()
         url = re.search("URL: (.*)", info).group(1)
         url = url.strip()
+        # FIXME - this doesn't work on non English systems because the word
+        # we're looking for will be in another language!
         revision = re.search("Revision: (.*)", info).group(1)
         revision = revision.strip()
         return (url, revision)
     except KeyboardInterrupt:
         raise
-    except:
-        # whatever
-        return None
+    except Exception, e:
+        print "Exception thrown when querying revision: %s" % e
 
 # 'path' is a path that could be passed to open() to open a file on
 # this platform. It must be an absolute path. Return the file:// URL
@@ -660,3 +661,99 @@ def toUni(orig, encoding = None):
             _unicache[orig] = unicode(orig,'utf-8')
         return _unicache[orig]
 
+
+import sgmllib
+
+class HTMLStripper(sgmllib.SGMLParser):
+    """
+    Strips html from text while maintaining links and newline-like HTML bits.
+    """
+    def __init__(self):
+        sgmllib.SGMLParser.__init__(self)
+        self.__temp = []
+        self.__data = ""
+        self.__pointer = 0
+        self.__links = []
+
+        # replaces one or more non-newline whitespace characters
+        self.__whitespacere = re.compile("[ \\t]+", re.M)
+
+        # replaces one or more newline characters
+        self.__newlinere = re.compile("[ ]*\\n[ \\n]+", re.M)
+
+        # <br/> fix--sgmllib.SGMLParser doesn't handle it right
+        self.__brre = re.compile("\\<[ ]*br[ ]*[/]?\\>", re.M)
+
+    def strip(self, s):
+        if "<" not in s:
+            return (s.strip(), [])
+
+        s = s.replace("\r\n", "\n")
+        s = self.__brre.sub("<br>", s)
+
+        self.feed(s)
+        self.close()
+
+        self.__flush()
+        data, links = self.__data, self.__links
+        data = data.rstrip()
+
+        self.reset()
+
+        return data, links
+
+    def reset(self):
+        sgmllib.SGMLParser.reset(self)
+        self.__data = ""
+        self.__data = []
+        self.__pointer = 0
+        self.__links = []
+
+    def __clean(self, s):
+        s = self.__whitespacere.sub(" ", s)
+        s = self.__newlinere.sub("\n", s)
+        return s
+
+    def __add(self, s):
+        self.__temp.append(s)
+
+    def __flush(self):
+        temp = self.__clean("".join(self.__temp))
+        if not self.__data:
+            self.__data = temp.lstrip()
+        else:
+            self.__data += temp
+        self.__temp = []
+ 
+    def handle_data(self, data):
+        data = data.replace("\n", " ")
+        self.__add(data)
+
+    def start_p(self, attributes):
+        self.__add("\n")
+
+    def end_p(self):
+        self.__add("\n")
+
+    def start_br(self, attributes):
+        self.__add("\n")
+
+    def end_br(self):
+        self.__add("\n")
+
+    def start_a(self, attributes):
+        for key, val in attributes:
+            if key == "href":
+                href = val
+                break
+        else:
+            return
+
+        self.__flush()
+        self.__links.append( (len(self.__data), -1, href) )
+
+    def end_a(self):
+        self.__flush()
+        if self.__links and self.__links[-1][1] == -1:
+            beg, _, url = self.__links[-1]
+            self.__links[-1] = (beg, len(self.__data), url)

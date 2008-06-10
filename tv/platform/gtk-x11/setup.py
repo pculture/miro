@@ -431,7 +431,9 @@ files.extend(listfiles(os.path.join(glade_dir, 'pixmaps')))
 files.append(os.path.join(glade_dir, 'miro.glade'))
 data_files.append(('/usr/share/miro/resources/', files))
 # handle the sub directories.
-for dir in ('templates', 'css', 'images', 'html', 'testdata', os.path.join('templates','unittest'), 'searchengines'):
+for dir in ('templates', 'css', 'images', 'html', 'testdata', 'searchengines',
+            os.path.join('testdata', 'stripperdata'),
+            os.path.join('templates','unittest') ):
     source_dir = os.path.join(resource_dir, dir)
     dest_dir = os.path.join('/usr/share/miro/resources/', dir)
     data_files.append((dest_dir, listfiles(source_dir)))
