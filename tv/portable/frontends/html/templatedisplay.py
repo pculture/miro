@@ -208,7 +208,8 @@ class TemplateDisplay(HTMLDisplay):
             if (not subscription.isSubscribeLink(url) and
                 app.controller.guide is not None and 
                 app.controller.guide.isPartOfGuide(url) and
-                not filetypes.isAllowedFilename(url)):
+                not filetypes.isAllowedFilename(url) and
+                not filetypes.isFeedFilename(url)):
                 app.controller.setLastVisitedGuideURL(url)
                 return True
             if url.startswith(u'file://'):
@@ -274,12 +275,23 @@ class TemplateDisplay(HTMLDisplay):
             f.blink()
             return
 
-        # guessing it's a media file
-        if filetypes.isAllowedFilename(url):
+        if filetypes.isFeedFilename(url): # feed URL, ask to subscribe
+            def callback(dialog):
+                if dialog.choice == dialogs.BUTTON_ADD:
+                        singleclick.addDownload(url)
+            title = _("File Download")
+            text = _("""This link appears to be a feed.  Do you want to \
+add it to your subscriptions?
+
+%s""") % url
+            dialog = dialogs.ChoiceDialog(title, text,
+                                          dialogs.BUTTON_YES,
+                                          dialogs.BUTTON_NO)
+            dialog.run(callback)
+        elif filetypes.isAllowedFilename(url): # media URL, download it
             singleclick.addDownload(url)
-            return
-        
-        app.delegate.openExternalURL(url)
+        else:
+            app.delegate.openExternalURL(url)
 
     @eventloop.asUrgent
     def dispatchAction(self, action, **kwargs):

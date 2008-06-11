@@ -30,6 +30,7 @@ import os
 
 VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid', '.rmvb', '.mkv', '.m2v', '.ogm']
 AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka']
+FEED_EXTENSIONS = ['.xml', '.rss', '.atom']
 
 MIMETYPES_EXT_MAP = {
     'video/quicktime':  ['.mov'],
@@ -94,6 +95,17 @@ def isTorrentFilename(filename):
     """
     filename = filename.lower()
     return filename.endswith('.torrent')
+
+def isFeedFilename(filename):
+    """
+    Pass a filename to this method and it will return a boolean saying if the
+    filename possibly represents an Atom or RSS feed URL.
+    """
+    filename = filename.lower()
+    for ext in FEED_EXTENSIONS:
+        if filename.endswith(ext):
+            return True
+    return False
 
 def isVideoEnclosure(enclosure):
     """
