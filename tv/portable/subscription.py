@@ -80,7 +80,7 @@ def parseContent(content):
             elif root.nodeName == "opml":
                 urlsType, urls = _getSubscriptionsFromOPMLOutline(root)
             else:
-                return None
+                urls = []
             return urlsType, urls
         finally:
             dom.unlink()
@@ -88,7 +88,7 @@ def parseContent(content):
         if util.chatter:
             logging.warn("Error parsing OPML content...\n%s",
                     traceback.format_exc())
-        return None
+        return 'rss', []
 
 def get_urls_from_query(query):
     urls = []
