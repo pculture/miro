@@ -244,7 +244,10 @@ class Renderer:
         
     def playFromTime(self, seconds):
         confirmMainThread()
-        #self.playbin.set_state(gst.STATE_NULL)
+        self.playbin.set_state(gst.STATE_PAUSED)
+
+        self.playbin.get_state()
+
         self.seek(seconds)
         self.play()
 
