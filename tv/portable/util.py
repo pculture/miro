@@ -563,19 +563,36 @@ def directoryWritable(directory):
 def random_string(length):
     return ''.join(random.choice(string.ascii_letters) for i in xrange(length))
 
-def getFirstVideoEnclosure(entry):
-    """Find the first video enclosure in a feedparser entry.  Returns the
-    enclosure, or None if no video enclosure is found.
+def cmp_enclosures(a, b):
     """
+    This is ultra-basic--it just hates swf files.  There's very very little
+    thought here.
+    """
+    if "type" in a and "type" in b:
+        if a["type"] == u"application/x-shockwave-flash":
+            return 1
+        if b["type"] == u"application/x-shockwave-flash":
+            return -1
+    return 0
 
+def getFirstVideoEnclosure(entry):
+    """Find the first "best" video enclosure in a feedparser entry.  Returns 
+    the enclosure, or None if no video enclosure is found.
+
+    FIXME - this should be re-written to really return the "best" video
+    enclosure.
+    """
     try:
         enclosures = entry.enclosures
     except (KeyError, AttributeError):
         return None
-    for enclosure in enclosures:
-        if filetypes.isVideoEnclosure(enclosure):
-            return enclosure
-    return None
+
+    enclosures = [ e for e in enclosures if filetypes.isVideoEnclosure(e) ]
+    if len(enclosures) == 0:
+        return None
+
+    enclosures.sort(cmp_enclosures)
+    return enclosures[0]
 
 def import_last(module_name):
     """Handles runtime importing when you want to import the last module in
