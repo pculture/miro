@@ -63,12 +63,14 @@ def defaultPort(scheme):
         return 443
     elif scheme == 'http':
         return 80
+    elif scheme == 'rtsp':
+        return 554
     elif scheme == 'file':
         return None
     else:
         if util.chatter:
             logging.warn("Assuming port 80 for scheme: %s" % scheme)
-        return 80
+    return 80
 
 def parseURL(url, split_path=False):
     url = fixFileURLS(url)
