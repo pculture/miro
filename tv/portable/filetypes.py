@@ -32,6 +32,8 @@ VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.anx', '.mpg', '.av
 AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka']
 FEED_EXTENSIONS = ['.xml', '.rss', '.atom']
 
+UNSUPPORTED_MIMETYPES = ( "video/3gpp", )
+
 MIMETYPES_EXT_MAP = {
     'video/quicktime':  ['.mov'],
     'video/mpeg':       ['.mpeg', '.mpg', '.m2v'],
@@ -123,7 +125,8 @@ def _hasVideoType(enclosure):
              enclosure['type'] == u"application/ogg" or
              enclosure['type'] == u"application/x-annodex" or
              enclosure['type'] == u"application/x-bittorrent" or
-             enclosure['type'] == u"application/x-shockwave-flash"))
+             enclosure['type'] == u"application/x-shockwave-flash") and
+            (enclosure['type'] not in UNSUPPORTED_MIMETYPES))
 
 def _hasVideoExtension(enclosure, key):
     from miro import download_utils
