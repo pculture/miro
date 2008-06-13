@@ -60,11 +60,17 @@ USE_XINE_XV_HACK = Pref(key="UseXineXVHack",
                         alias="xine-xvhack",
                         help="Whether or not to use the Xine xv hack.  (true, false)" )
 
-DEFAULT_XINE_DRIVER = Pref(key="DefaultXineDriver", 
-                           default="xv",
+XINE_DRIVER = Pref(key="DefaultXineDriver", 
+                   default="xv",
+                   platformSpecific=False,
+                   alias="xine-driver",
+                   help="Which Xine driver to use for video.  (auto, xv, xshm)" )
+
+GSTREAMER_IMAGESINK = Pref(key="DefaultGstreamerImagesink", 
+                           default="gconfvideosink",
                            platformSpecific=False,
-                           alias="xine-driver",
-                           help="Which Xine driver to use for video.  (auto, xv, xshm)" )
+                           alias="gstreamer-imagesink",
+                           help="Which GStreamer image sink to use for video.  (ximagesink, xvimagesink, gconfvideosink, ...)")
 
 # build a lookup for preferences by alias
 PREFERENCES = {}

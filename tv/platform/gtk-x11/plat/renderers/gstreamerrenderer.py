@@ -46,6 +46,7 @@ from miro import prefs
 from miro.download_utils import nextFreeFilename
 from miro.plat.frontends.html.gtk_queue import gtkSyncMethod, gtkAsyncMethod
 from miro.plat.utils import confirmMainThread
+from miro.plat import options
 
 class Tester:
     def __init__(self, filename):
@@ -108,7 +109,7 @@ class Renderer:
         self.watch_id = self.bus.connect("message", self.onBusMessage)
         self.bus.connect('sync-message::element', self.onSyncMessage)
 
-        videosink = "gconfvideosink"
+        videosink = config.get(options.GSTREAMER_IMAGESINK)
         try:
             self.sink = gst.element_factory_make(videosink, "sink")
 
