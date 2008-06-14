@@ -467,6 +467,14 @@ class ModelActionHandler:
         obj = app.db.getObjectByID(int(item))
         obj.stopUpload()
 
+    def pauseUploadItem(self, item):
+        obj = app.db.getObjectByID(int(item))
+        obj.pauseUpload()
+
+    def resumeUploadItem(self, item):
+        obj = app.db.getObjectByID(int(item))
+        obj.startUpload()
+
     def toggleMoreItemInfo(self, item):
         obj = app.db.getObjectByID(int(item))
         obj.toggleShowMoreInfo()
@@ -501,11 +509,26 @@ class ModelActionHandler:
         autodler.pauseDownloader()
         for item in views.downloadingItems:
             item.pause()
+        seeding_downloads = views.items.filter(
+            lambda x: x.downloader \
+                and x.downloader.getState() == 'uploading' \
+                and not (x.getFeed().url == 'dtv:manualFeed' \
+                and x.isNonVideoFile()))
+        for item in seeding_downloads:
+            item.pauseUpload()
 
     def resumeAll (self):
         for item in views.pausedItems:
             item.resume()
         autodler.resumeDownloader()
+        paused_seeding_downloads = views.items.filter(
+            lambda x: x.downloader \
+                and x.downloader.getState() == 'uploading-paused' \
+                and not (x.getFeed().url == 'dtv:manualFeed' \
+                and x.isNonVideoFile()))
+        for item in paused_seeding_downloads:
+            item.startUpload()
+
 
     def toggleExpand(self, id):
         obj = app.db.getObjectByID(int(id))

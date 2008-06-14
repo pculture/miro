@@ -91,7 +91,7 @@ def stopUpload(dlid):
         _lock.acquire()
         try:
             download = _downloads[dlid]
-            if download.state != u"uploading":
+            if download.state not in (u"uploading", u"uploading-paused"):
                 return
             del _downloads[dlid]
         finally:
@@ -100,6 +100,20 @@ def stopUpload(dlid):
         return
     return download.stopUpload()
 
+def pauseUpload(dlid):
+    try:
+        _lock.acquire()
+        try:
+            download = _downloads[dlid]
+            if download.state != u"uploading":
+                return
+            del _downloads[dlid]
+        finally:
+            _lock.release()
+    except: # There is no download with this id
+        return
+    return download.pauseUpload()
+
 def migrateDownload(dlid, directory):
     checkF(directory)
     try:
@@ -107,7 +121,7 @@ def migrateDownload(dlid, directory):
     except: # There is no download with this id
         pass
     else:
-        if download.state in (u"finished", u"uploading"):
+        if download.state in (u"finished", u"uploading", u"uploading-paused"):
             download.moveToDirectory(directory)
 
 def getDownloadStatus(dlids = None):
@@ -187,7 +201,6 @@ class TorrentSession:
 
     def setConnectionLimit(self):
         limit = -1
-        # print "config.get(prefs.LIMIT_CONNECTIONS_BT): %r" % config.get(prefs.LIMIT_CONNECTIONS_BT)
         if config.get(prefs.LIMIT_CONNECTIONS_BT):
             limit = config.get(prefs.CONNECTION_LIMIT_BT_NUM)
         self.session.set_max_connections(limit)
@@ -936,6 +949,11 @@ class BTDownloader(BGDownloader):
 
     def stopUpload(self):
         self.state = "finished"
+        self._shutdownTorrent()
+        self.updateClient()
+
+    def pauseUpload(self):
+        self.state = "uploading-paused"
         self._shutdownTorrent()
         self.updateClient()
 

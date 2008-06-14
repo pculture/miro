@@ -349,7 +349,9 @@ class Item(DDBObject):
     # _itemXML is the rendered XML
     def _calcItemXML(self):
         self._XMLViewName = "view%dview" % random.randint(9999999,99999999)
-        self._itemXML = template.fillStaticTemplate('download-item-inner', onlyBody=True, this=self, viewName = self._XMLViewName,templateState='unknown')
+        self._itemXML = template.fillStaticTemplate(
+            'download-item-inner', onlyBody=True, this=self,
+            viewName=self._XMLViewName,templateState='unknown')
         checkU(self._itemXML)
 
     #
@@ -536,11 +538,15 @@ folder will be deleted.""")
         else:
             self.executeExpire()
 
-    def stopUpload (self):
+    def stopUpload(self):
         if self.downloader:
             self.downloader.stopUpload()
 
-    def startUpload (self):
+    def pauseUpload(self):
+        if self.downloader:
+            self.downloader.pauseUpload()
+
+    def startUpload(self):
         if self.downloader:
             self.downloader.startUpload()
 

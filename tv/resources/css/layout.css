@@ -831,7 +831,7 @@ dl.video-stats {
 	white-space:nowrap;
 	right:45px;
 }
-.stop-seeding {
+.seeding-button {
   position:relative;
   top:82px;
   right:6px;

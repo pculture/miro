@@ -480,7 +480,7 @@ URL was %s""" % self.url
         return self.status.get('state', u'downloading')
 
     def isFinished(self):
-        return self.getState() in (u'finished', u'uploading')
+        return self.getState() in (u'finished', u'uploading', u'uploading-paused')
 
     ##
     # Returns the total size of the download in bytes
@@ -541,7 +541,8 @@ URL was %s""" % self.url
             c.send()
 
     def startUpload(self):
-        if self.getState() != u'finished' or self.getType() != u'bittorrent':
+        if self.getState() not in (u'finished', u'uploading-paused') \
+            or self.getType() != u'bittorrent':
             return
         self.manualUpload = True
         if _downloads.has_key(self.dlid):
@@ -556,8 +557,9 @@ URL was %s""" % self.url
             self.signalChange()
 
     def stopUpload(self):
-        if self.getState() != u"uploading":
-            return
+        """
+        Stop uploading/seeding and set status as "finished".
+        """
         if _downloads.has_key(self.dlid):
             c = command.StopUploadCommand(RemoteDownloader.dldaemon,
                                           self.dlid)
@@ -568,6 +570,21 @@ URL was %s""" % self.url
         self.afterChangingStatus()
         self.signalChange()
 
+    def pauseUpload(self):
+        """
+        Stop uploading/seeding and set status as "uploading-paused".
+        """
+        if _downloads.has_key(self.dlid):
+            c = command.PauseUploadCommand(RemoteDownloader.dldaemon,
+                                           self.dlid)
+            c.send()
+            del _downloads[self.dlid]
+        self.beforeChangingStatus()
+        self.status["state"] = u"uploading-paused"
+        self.afterChangingStatus()
+        self.signalChange()
+
+
 def cleanupIncompleteDownloads():
     downloadDir = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
             'Incomplete Downloads')
@@ -577,7 +594,9 @@ def cleanupIncompleteDownloads():
     filesInUse = set()
     views.remoteDownloads.confirmDBThread()
     for downloader in views.remoteDownloads:
-        if downloader.getState() in ('downloading', 'paused', 'offline', 'uploading', 'finished'):
+        if downloader.getState() in ('downloading', 'paused',
+                                     'offline', 'uploading', 'finished',
+                                     'uploading-paused'):
             filename = downloader.getFilename()
             if len(filename) > 0:
                 if not fileutil.isabs(filename):

@@ -43,9 +43,13 @@ def makeDownloadCategoryView(cat):
 allNormalDownloads = makeDownloadCategoryView('normal')
 allExternalDownloads = views.items.filter(lambda x: x.getFeed().url == 'dtv:manualFeed' and x.isNonVideoFile())
 # Specifically don't include anything in external downloads in uploads.
-allUploads = views.items.filter(lambda x: x.downloader and x.downloader.getState() == 'uploading' and not (x.getFeed().url == 'dtv:manualFeed' and x.isNonVideoFile()))
 allPendingDownloads = makeDownloadCategoryView('pending')
 allPausedDownloads = views.pausedItems.filter (lambda x: not (x.getFeed().url == 'dtv:manualFeed' and x.isNonVideoFile()))
+
+allUploads = views.items.filter(lambda x: x.downloader and x.downloader.getState() in (u'uploading', u'uploading-paused') and not (x.getFeed().url == 'dtv:manualFeed' and x.isNonVideoFile()))
+pausedUploads = allUploads.filter(lambda x: x.downloader and x.downloader.getState() == u'uploading-paused' and not (x.getFeed().url == 'dtv:manualFeed' and x.isNonVideoFile()))
+unpausedUploads = allUploads.filter(lambda x: x.downloader and x.downloader.getState() == u'uploading' and not (x.getFeed().url == 'dtv:manualFeed' and x.isNonVideoFile()))
+
 
 matchingNormalDLs = allNormalDownloads.filter(lambda x:searchFilter(x),sortFunc=sorts.itemSortDownloads.sort,resort=True)
 matchingExternalDLs = allExternalDownloads.filter(lambda x:searchFilter(x))
@@ -111,10 +115,10 @@ allPausedDownloads.unlink()
   				</li>
   			</ul>
   		</div>
-			<a t:hideIf="views.downloadingItems.len() == 0" t:updateHideOnView="views.downloadingItems" class="button gray" href="#" onclick="return eventURL('action:pauseAll');" title="Pause All">
+			<a t:hideIf="views.downloadingItems.len() + unpausedUploads.len() == 0" t:updateHideOnView="views.downloadingItems" class="button gray" href="#" onclick="return eventURL('action:pauseAll');" title="Pause All">
 				<span i18n:translate="">Pause All</span>
 			</a>
-			<a class="button gray" t:hideIf="views.pausedItems.len() == 0" t:updateHideOnView="views.pausedItems" href="#" onclick="return eventURL('action:resumeAll');" title="Resume All">
+			<a class="button gray" t:hideIf="views.pausedItems.len() + pausedUploads.len() == 0" t:updateHideOnView="views.pausedItems" href="#" onclick="return eventURL('action:resumeAll');" title="Resume All">
 				<span i18n:translate="">Resume All</span>
 			</a>
   	

@@ -136,6 +136,11 @@ class StopUploadCommand(Command):
         from miro.dl_daemon import download
         return download.stopUpload(*self.args, **self.kws)
 
+class PauseUploadCommand(Command):
+    def action(self):
+        from miro.dl_daemon import download
+        return download.pauseUpload(*self.args, **self.kws)
+
 class GetDownloadStatusCommand(Command):
     def action(self):
         from miro.dl_daemon import download
