@@ -66,8 +66,8 @@ def findHTTPAuth(host,path,realm = None,scheme = None):
     defaultDatabase.confirmDBThread()
     for obj in views.httpauths:
         if (obj.host == host and path.startswith(obj.path) and
-            (realm is None or obj.realm == realm) and
-            (scheme is None or obj.authScheme == scheme)):
+                (realm is None or obj.realm == realm) and
+                (scheme is None or obj.authScheme == scheme)):
             return obj
     return None
 
@@ -273,8 +273,7 @@ class RemoteDownloader(DDBObject):
     # Pauses the download.
     def pause(self, block=False):
         if _downloads.has_key(self.dlid):
-            c = command.PauseDownloadCommand(RemoteDownloader.dldaemon,
-                                             self.dlid)
+            c = command.PauseDownloadCommand(RemoteDownloader.dldaemon, self.dlid)
             c.send()
         else:
             self.beforeChangingStatus()
@@ -313,8 +312,8 @@ class RemoteDownloader(DDBObject):
         parent = os.path.normpath(parent)
         moviesDir = fileutil.expand_filename(config.get(prefs.MOVIES_DIRECTORY))
         if (os.path.exists(parent) and os.path.exists(moviesDir) and
-            not samefile(parent, moviesDir) and
-            len(os.listdir(parent)) == 0):
+                not samefile(parent, moviesDir) and
+                len(os.listdir(parent)) == 0):
             try:
                 os.rmdir(parent)
             except:
@@ -541,8 +540,8 @@ URL was %s""" % self.url
             c.send()
 
     def startUpload(self):
-        if self.getState() not in (u'finished', u'uploading-paused') \
-            or self.getType() != u'bittorrent':
+        if (self.getState() not in (u'finished', u'uploading-paused')
+                or self.getType() != u'bittorrent'):
             return
         self.manualUpload = True
         if _downloads.has_key(self.dlid):
@@ -587,7 +586,7 @@ URL was %s""" % self.url
 
 def cleanupIncompleteDownloads():
     downloadDir = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
-            'Incomplete Downloads')
+                                          'Incomplete Downloads')
     if not fileutil.exists(downloadDir):
         return
 

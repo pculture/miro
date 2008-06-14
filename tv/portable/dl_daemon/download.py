@@ -464,8 +464,8 @@ class BGDownloader:
 
     def handleNetworkError(self, error):
         if isinstance(error, httpclient.NetworkError):
-            if isinstance (error, httpclient.MalformedURL) or \
-               isinstance (error, httpclient.UnexpectedStatusCode):
+            if (isinstance(error, httpclient.MalformedURL) or 
+                    isinstance(error, httpclient.UnexpectedStatusCode)):
                 self.handleError(error.getFriendlyDescription(),
                                  error.getLongDescription())
             else:
@@ -552,7 +552,7 @@ class HTTPDownloader(BGDownloader):
         BGDownloader.handleError(self, shortReason, reason)
         self.cancelRequest()
         try:
-            fileutil.remove (self.filename)
+            fileutil.remove(self.filename)
         except:
             pass
         self.currentSize = 0
@@ -803,7 +803,7 @@ class BTDownloader(BGDownloader):
                 self.torrent = torrentSession.session.add_torrent(torrent_info, name, None, lt.storage_mode_t.storage_mode_allocate)
         except:
             self.handleError(_('BitTorrent failure'), 
-                    _('BitTorrent failed to startup'))
+                             _('BitTorrent failed to startup'))
         else:
             torrentSession.addTorrent (self)
 
@@ -982,7 +982,7 @@ class BTDownloader(BGDownloader):
                 name = metainfo['info']['name']
             except (RuntimeError):
                 self.handleError(_("Corrupt Torrent"),
-                        _("The torrent file at %s was not valid") % stringify(self.url))
+                                 _("The torrent file at %s was not valid") % stringify(self.url))
                 return
             name = name.decode('utf-8', 'replace')
             self.shortFilename = cleanFilename(name)
@@ -1008,8 +1008,8 @@ class BTDownloader(BGDownloader):
                     metainfoFile = open(path, 'rb')
                 except IOError:
                     self.handleError(_("Torrent file deleted"),
-                            _("The torrent file for this item was deleted "
-                                "outside of Miro."))
+                                     _("The torrent file for this item was deleted "
+                                       "outside of Miro."))
 
                     return
                 try:
@@ -1024,7 +1024,6 @@ class BTDownloader(BGDownloader):
         else:
             self.gotMetainfo()
                 
-
     def runDownloader(self,done=False):
         self.restarting = done
         self.updateClient()

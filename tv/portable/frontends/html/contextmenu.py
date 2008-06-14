@@ -113,9 +113,9 @@ def makeMultiItemContextMenu(templateName, view, selectedItems, clickedID):
         if i.getState() == 'downloading':
             downloading += 1
         elif i.isDownloaded():
-            if i.downloader \
-                and i.downloader.getState() in ('finished', 'uploading-paued') \
-                and i.downloader.getType() == 'bittorrent':
+            if (i.downloader
+                    and i.downloader.getState() in ('finished', 'uploading-paued')
+                    and i.downloader.getType() == 'bittorrent'):
                 uploadable += 1
             downloaded += 1
             if i.getSeen():

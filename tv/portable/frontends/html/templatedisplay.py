@@ -510,10 +510,10 @@ class ModelActionHandler:
         for item in views.downloadingItems:
             item.pause()
         seeding_downloads = views.items.filter(
-            lambda x: x.downloader \
-                and x.downloader.getState() == 'uploading' \
-                and not (x.getFeed().url == 'dtv:manualFeed' \
-                and x.isNonVideoFile()))
+            lambda x: (x.downloader
+                       and x.downloader.getState() == 'uploading' 
+                       and not (x.getFeed().url == 'dtv:manualFee'
+                       and x.isNonVideoFile())))
         for item in seeding_downloads:
             item.pauseUpload()
 
@@ -522,10 +522,10 @@ class ModelActionHandler:
             item.resume()
         autodler.resumeDownloader()
         paused_seeding_downloads = views.items.filter(
-            lambda x: x.downloader \
-                and x.downloader.getState() == 'uploading-paused' \
-                and not (x.getFeed().url == 'dtv:manualFeed' \
-                and x.isNonVideoFile()))
+            lambda x: (x.downloader
+                       and x.downloader.getState() == 'uploading-paused'
+                       and not (x.getFeed().url == 'dtv:manualFeed'
+                       and x.isNonVideoFile())))
         for item in paused_seeding_downloads:
             item.startUpload()
 
