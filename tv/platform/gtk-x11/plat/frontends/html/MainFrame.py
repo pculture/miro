@@ -436,12 +436,8 @@ class MainFrame:
         renderer = app.htmlapp.videoDisplay.activeRenderer
         videoTimeScale = self.widgetTree['video-time-scale']
         if renderer and not videoTimeScale.buttonsDown:
-            try:
-                self.videoLength = renderer.getDuration()
-            except:
-                self.videoLength = 0
-            videoLength = self.videoLength
-            renderer.getCurrentTime(lambda x: CTCallback(videoTimeScale, videoLength, x))
+            self.videoLength = renderer.getDuration()
+            renderer.getCurrentTime(lambda x: CTCallback(videoTimeScale, self.videoLength, x))
         return True
 
     @gtkAsyncMethod
