@@ -80,9 +80,15 @@ DEFAULT_FEED_ICON_TABLIST = u"images/feedicon-tablist.png"
 def defaultFeedIconURL():
     return resources.url(DEFAULT_FEED_ICON)
 
+def defaultFeedIconPath():
+    return resources.path(DEFAULT_FEED_ICON)
+
 @returnsUnicode
 def defaultTablistFeedIconURL():
     return resources.url(DEFAULT_FEED_ICON_TABLIST)
+
+def defaultTablistFeedIconPath():
+    return resources.path(DEFAULT_FEED_ICON_TABLIST)
 
 # Notes on character set encoding of feeds:
 #
@@ -1167,14 +1173,14 @@ $shortAppName.\n\nDo you want to try to load this channel anyway?"""))
             path = self.iconCache.getResizedFilename(76, 76)
             return fileutil.expand_filename(path)
         else:
-            return DEFAULT_FEED_ICON
+            return defaultFeedIconPath()
 
     def calcTablistThumbnail(self):
         if self.iconCache and self.iconCache.isValid():
             path = self.iconCache.getResizedFilename(20, 20)
             return fileutil.expand_filename(path)
         else:
-            return DEFAULT_FEED_ICON_TABLIST
+            return defaultTablistFeedIconPath()
 
     @returnsUnicode
     def getThumbnail(self):
