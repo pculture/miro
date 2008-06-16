@@ -28,41 +28,14 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-# This needs to be above Paths and configuration :(
-#
-# This isn't being used right now, as it doesn't detect all the cases
-# in which we need the xine hack
-def use_xine_hack_default():
-    try:
-        # Non-debian based system will throw an exception here
-        f = open('/etc/debian_version')
-        osname = f.read().strip()
-        f.close()
-        # Debian Etch
-        if osname == '4.0':
-            return True
 
-        # Ubuntu Feisty et al is Debian-based but lists testing/unstable
-        # and similar things in /etc/debian_version, so we check /etc/issue.
-        f.close()
-        f = open('/etc/issue')
-        osname = f.read()
-        f.close()
-
-        if ((osname.find("Ubuntu") > -1) and 
-                ((osname.find("7.04")>-1) or (osname.find("7.10")>-1) or (osname.find("hardy")>-1))):
-            return True
-    except:
-        pass
-    return False
-
-##############################################################################
+###############################################################################
 ## Paths and configuration                                                   ##
 ###############################################################################
 
 BOOST_LIB = 'boost_python'
 
-USE_XINE_HACK = True #use_xine_hack_default()
+USE_XINE_HACK = True
 
 ###############################################################################
 ## End of configuration. No user-servicable parts inside                     ##
