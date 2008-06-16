@@ -27,7 +27,7 @@
 # statement from all source files in the program, then also delete it here.
 
 import gtk
-
+import os
 import threading
 import logging
 from miro.plat.frontends.html.gtk_queue import queue, gtkAsyncMethod
@@ -60,6 +60,10 @@ class Application(HTMLApplication):
         logging.info("Gtk+ version:      %s", gtk.gtk_version)
         logging.info("PyGObject version: %s", gtk.ver)
         logging.info("PyGtk version:     %s", gtk.pygtk_version)
+        langs = ("LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG")
+        langs = [(l, os.environ.get(l)) for l in langs if os.environ.get(l)]
+        logging.info("Language:          %s", langs)
+
         gtk.main()
         app.controller.onShutdown()
 
