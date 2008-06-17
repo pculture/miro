@@ -48,6 +48,12 @@ from miro.plat.frontends.html.gtk_queue import gtkSyncMethod, gtkAsyncMethod
 from miro.plat.utils import confirmMainThread
 from miro.plat import options
 
+def to_seconds(t):
+    return t / 1000000000
+
+def from_seconds(s):
+    return s * 1000000000
+
 class Tester:
     def __init__(self, filename):
         self.done = Event()
@@ -221,7 +227,7 @@ class Renderer:
         confirmMainThread()
         try:
             position, format = self.playbin.query_position(gst.FORMAT_TIME)
-            position = position / 1000000000
+            position = to_seconds(position)
         except Exception, e:
             logging.error("getCurrentTime: caught exception: %s" % e)
             position = 0
@@ -237,7 +243,7 @@ class Renderer:
                                    gst.FORMAT_TIME,
                                    gst.SEEK_FLAG_FLUSH | gst.SEEK_FLAG_ACCURATE,
                                    gst.SEEK_TYPE_SET,
-                                   seconds * 1000000000,
+                                   from_seconds(seconds),
                                    gst.SEEK_TYPE_NONE, 0)
         result = self.playbin.send_event(event)
         if not result:
@@ -256,7 +262,7 @@ class Renderer:
         confirmMainThread()
         try:
             duration, format = self.playbin.query_duration(gst.FORMAT_TIME)
-            duration = duration / 1000000000
+            duration = to_seconds(duration)
         except Exception, e:
             logging.error("getDuration: caught exception: %s" % e)
             duration = 1
