@@ -32,7 +32,10 @@ To run Miro in "debug mode" (i.e. in gdb)::
 
    ./run.sh --debug
 
-For more command-line options::
+Obviously, this requires gdb.
+
+For more command-line options including how to set preferences on the command 
+and what preferences are available, do::
 
    ./run.sh --help
 
