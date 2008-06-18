@@ -1432,7 +1432,7 @@ folder will be deleted.""")
     ##
     # returns string with the format of the video
     KNOWN_MIME_TYPES = (u'audio', u'video')
-    KNOWN_MIME_SUBTYPES = (u'mov', u'wmv', u'mp4', u'mp3', u'mpg', u'mpeg', u'avi', u'x-flv', u'x-msvideo', u'm4v', u'mkv', u'm2v')
+    KNOWN_MIME_SUBTYPES = (u'mov', u'wmv', u'mp4', u'mp3', u'mpg', u'mpeg', u'avi', u'x-flv', u'x-msvideo', u'm4v', u'mkv', u'm2v', u'ogg')
     MIME_SUBSITUTIONS = {
         u'QUICKTIME': u'MOV',
     }
@@ -1441,7 +1441,7 @@ folder will be deleted.""")
         if self.looksLikeTorrent():
             return u'.torrent'
         try:
-            enclosure = self.entry['enclosures'][0]
+            enclosure = self.getFirstVideoEnclosure()
             try:
                 extension = enclosure['url'].split('.')[-1].lower().decode('ascii','replace')
             except:

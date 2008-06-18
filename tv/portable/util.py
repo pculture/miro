@@ -51,8 +51,17 @@ import subprocess
 
 from types import UnicodeType, StringType
 
+
 # Should we print out warning messages.  Turn off in the unit tests.
 chatter = True
+
+PREFERRED_TYPES = [
+    'application/x-bittorrent',
+    'application/ogg', 'video/ogg', 'audio/ogg',
+    'video/mp4', 'video/quicktime', 'video/mpeg',
+    'video/x-xvid', 'video/x-divx', 'video/x-wmv',
+    'video/x-msmpeg', 'video/x-flv']
+
 
 # Perform escapes needed for Javascript string contents.
 def quoteJS(x):
@@ -563,31 +572,54 @@ def directoryWritable(directory):
 def random_string(length):
     return ''.join(random.choice(string.ascii_letters) for i in xrange(length))
 
-def cmp_enclosures(a, b):
+def cmp_enclosures(enclosure1, enclosure2):
     """
-    This is ultra-basic--it just hates swf files.  There's very very little
-    thought here.
+    Returns:
+      -1 if enclosure1 is preferred, 1 if enclosure2 is preferred, and
+      zero if there is no preference between the two of them
     """
-    if "type" in a and "type" in b:
-        if a["type"] == u"application/x-shockwave-flash":
-            return 1
-        if b["type"] == u"application/x-shockwave-flash":
-            return -1
+    # first let's try sorting by preference
+    def get_enclosure_index(enclosure):
+        try:
+            return PREFERRED_TYPES.index(enclosure.get('type'))
+        except ValueError:
+            return None
+
+    enclosure1_index = get_enclosure_index(enclosure1)
+    enclosure2_index = get_enclosure_index(enclosure2)
+    if enclosure1_index < enclosure2_index:
+        return -1
+    elif enclosure2_index < enclosure1_index:
+        return 1
+
+    # next, let's try sorting by filesize..
+    def get_enclosure_size(enclosure):
+        if 'filesize' in enclosure and enclosure['filesize'].isdigit():
+            return int(enclosure['filesize'])
+        else:
+            return None
+
+    enclosure1_size = get_enclosure_size(enclosure1)
+    enclosure2_size = get_enclosure_size(enclosure2)
+    if enclosure1_size > enclosure2_size:
+        return -1
+    elif enclosure2_size > enclosure1_size:
+        return 1
+
+    # at this point they're the same for all we care
     return 0
 
 def getFirstVideoEnclosure(entry):
-    """Find the first "best" video enclosure in a feedparser entry.  Returns 
-    the enclosure, or None if no video enclosure is found.
-
-    FIXME - this should be re-written to really return the "best" video
-    enclosure.
+    """
+    Find the first "best" video enclosure in a feedparser entry.
+    Returns the enclosure, or None if no video enclosure is found.
     """
     try:
         enclosures = entry.enclosures
     except (KeyError, AttributeError):
         return None
 
-    enclosures = [ e for e in enclosures if filetypes.isVideoEnclosure(e) ]
+    enclosures = [e for e in enclosures if filetypes.isVideoEnclosure(e)]
     if len(enclosures) == 0:
         return None
 

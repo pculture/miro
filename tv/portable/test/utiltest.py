@@ -8,6 +8,14 @@ from miro import download_utils
 from miro import util
 from miro import xhtmltools
 
+
+# We're going to override this so we can guarantee that if the order
+# changes later that it doesn't really affect us.
+util.PREFERRED_TYPES = [
+    'application/x-bittorrent', 'video/ogg', 'video/mp4',
+    'video/quicktime', 'video/mpeg']
+
+
 class FakeStream:
     """Fake streams are used for the AutoflushingStream test.  They don't
     really do much, except check that write is always called with a string
@@ -36,6 +44,56 @@ class AutoflushingStreamTest(MiroTestCase):
         self.afs.write(u'\xf8')
 
 class UtilTest(MiroTestCase):
+    def setUp(self):
+        self.filesize_elements = [
+            {'href': u'http://example.org/1.ogg',
+             'type': u'video/ogg',
+             'filesize': u'21663'},
+            {'href': u'http://example.org/2.ogg',
+             'type': u'video/ogg',
+             'filesize': u'notafilesize'},
+            {'href': u'http://example.org/3.ogg',
+             'type': u'video/ogg',
+             'filesize': u'288'},
+            {'href': u'http://example.org/4.ogg',
+             'type': u'video/ogg',
+             'filesize': u'800088'},
+            {'href': u'http://example.org/5.ogg',
+             'type': u'video/ogg',
+             'filesize': u'82'}]
+        self.type_elements = [
+            {'href': u'http://example.org/1.mp4',
+             'type': u'video/mp4',
+             'filesize': u'2000'},
+            {'href': u'http://example.org/2.mpeg',
+             'type': u'video/mpeg',
+             'filesize': u'2000'},
+            {'href': u'http://example.org/3.mov',
+             'type': u'video/quicktime',
+             'filesize': u'2000'},
+            {'href': u'http://example.org/4.torrent',
+             'type': u'application/x-bittorrent',
+             'filesize': u'2000'},
+            {'href': u'http://example.org/5.ogg',
+             'type': u'video/ogg',
+             'filesize': u'2000'}]
+        self.combination_elements = [
+            {'href': u'http://example.org/1.ogg',
+             'type': u'video/ogg',
+             'filesize': u'302999'},
+            {'href': u'http://example.org/2.mov',
+             'type': u'video/quicktime',
+             'filesize': u'2000'},
+            {'href': u'http://example.org/3.mp4',
+             'type': u'video/mp4',
+             'filesize': u'401971'},
+            {'href': u'http://example.org/4.ogg',
+             'type': u'video/ogg',
+             'filesize': u'166955'},
+            {'href': u'http://example.org/5.mpeg',
+             'type': u'video/mpeg',
+             'filesize': u'244700'}]
+
     def testAbsolutePathToFileURL(self):
         testPaths = {
             '/ben/dean/kawamura' : 'file:///ben/dean/kawamura',
@@ -72,6 +130,63 @@ class UtilTest(MiroTestCase):
             ret = util.random_string(length)
             self.assertEquals(len(ret), length)
             self.assertEquals(ret.isalpha(), True)
+
+    def testCmpEnclosures(self):
+        """
+        Test for util.cmp_enclosures
+        """
+        def get_hrefs(enclosures):
+            return [enclosure['href'] for enclosure in enclosures]
+
+        self.filesize_elements.sort(util.cmp_enclosures)
+        self.type_elements.sort(util.cmp_enclosures)
+        self.combination_elements.sort(util.cmp_enclosures)
+
+        self.assertEqual(
+            get_hrefs(self.filesize_elements),
+            [u'http://example.org/4.ogg',
+             u'http://example.org/1.ogg',
+             u'http://example.org/3.ogg',
+             u'http://example.org/5.ogg',
+             u'http://example.org/2.ogg'])
+        self.assertEqual(
+            get_hrefs(self.type_elements),
+            [u'http://example.org/4.torrent',
+             u'http://example.org/5.ogg',
+             u'http://example.org/1.mp4',
+             u'http://example.org/3.mov',
+             u'http://example.org/2.mpeg'])
+        self.assertEqual(
+            get_hrefs(self.combination_elements),
+            [u'http://example.org/1.ogg',
+             u'http://example.org/4.ogg',
+             u'http://example.org/3.mp4',
+             u'http://example.org/2.mov',
+             u'http://example.org/5.mpeg'])
+            
+    def testGetFirstVideoEnclosure(self):
+        """
+        Test for util.getFirstVideoEnclosure
+        """
+        class FakeEntry(object):
+            def __init__(self, enclosures):
+                self.enclosures = enclosures
+
+        # set up the entries..
+        filesizes_entry = FakeEntry(self.filesize_elements)
+        types_entry = FakeEntry(self.type_elements)
+        combinations_entry = FakeEntry(self.combination_elements)
+
+        # get their "selected" results
+        selected_filesize = util.getFirstVideoEnclosure(filesizes_entry)
+        selected_type = util.getFirstVideoEnclosure(types_entry)
+        selected_combination = util.getFirstVideoEnclosure(combinations_entry)
+
+        # now make sure they returned what we expected..
+        self.assertEqual(selected_filesize['href'], u'http://example.org/4.ogg')
+        self.assertEqual(selected_type['href'], u'http://example.org/4.torrent')
+        self.assertEqual(selected_combination['href'],
+                         u'http://example.org/1.ogg')
 
 class XHTMLToolsTest(MiroTestCase):
     def testMultipartEncode(self):
