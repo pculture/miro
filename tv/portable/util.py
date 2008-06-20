@@ -730,15 +730,15 @@ class HTMLStripper(sgmllib.SGMLParser):
         # replaces one or more newline characters
         self.__newlinere = re.compile("[ ]*\\n[ \\n]+", re.M)
 
-        # <br/> fix--sgmllib.SGMLParser doesn't handle it right
-        self.__brre = re.compile("\\<[ ]*br[ ]*[/]?\\>", re.M)
+        # <xyz/> -> <xyz /> fix--sgmllib.SGMLParser doesn't handle these right
+        self.__unaryre = re.compile("\\<[ ]*([A-Za-z]+)[ ]*[/]?\\>", re.M)
 
     def strip(self, s):
         if "<" not in s:
             return (s.strip(), [])
 
         s = s.replace("\r\n", "\n")
-        s = self.__brre.sub("<br>", s)
+        s = self.__unaryre.sub("<\\1 />", s)
 
         self.feed(s)
         self.close()
