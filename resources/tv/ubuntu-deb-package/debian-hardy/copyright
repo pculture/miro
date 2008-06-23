@@ -3,18 +3,25 @@ Mon, 12 Jun 2006 13:34:47 +0200
 
 The current Debian maintainer is Uwe Hermann <uwe@debian.org>.
 
-It was downloaded from: http://www.getmiro.com/
+It was downloaded from:
 
-Upstream Authors: Nick Nassar <nassar@downhillbattle.org>
-                  Geoff Schmidt <gschmidt@gschmidt.org>
-                  Luc Heinrich <luc@honk-honk.com>
-                  Ben Dean-Kawamura <ben.dean.kawamura@gmail.com>
-                  Nick Reville <npr@pculture.org>
-                  Matt Bret <mb@pculture.org>
-                  Chris Lahey <clahey@clahey.net>
-                  Paul Swartz <pswartz@pculture.org>
-                  Will Guaraldi <will.guaraldi@pculture.org>
+    http://www.getmiro.com/
 
+Upstream Authors:
+
+    Nick Nassar <nassar@downhillbattle.org>
+    Geoff Schmidt <gschmidt@gschmidt.org>
+    Luc Heinrich <luc@honk-honk.com>
+    Ben Dean-Kawamura <ben.dean.kawamura@gmail.com>
+    Nick Reville <npr@pculture.org>
+    Matt Bret <mb@pculture.org>
+    Chris Lahey <clahey@clahey.net>
+    Paul Swartz <pswartz@pculture.org>
+    Will Guaraldi Kahn-Greene <will.guaraldi@pculture.org>
+
+-----
+
+Files: *
 Copyright: © 2005 - 2008 Participatory Culture Foundation
 License: GPL-2+ | other
     In addition, as a special exception, the copyright holders give 		
@@ -34,18 +41,18 @@ Public License can be found in `/usr/share/common-licenses/GPL'.
 ------------------------------------------------------------------------------
 
 Files: portable/feedparser.py
-Copyright: © Copyright 2002 - 2006, Mark Pilgrim
+Copyright: © 2002 - 2006, Mark Pilgrim
 License:
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are met:
-   
+
    * Redistributions of source code must retain the above copyright notice,
      this list of conditions and the following disclaimer.
    * Redistributions in binary form must reproduce the above copyright notice,
      this list of conditions and the following disclaimer in the documentation
      and/or other materials provided with the distribution.
-   
+
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 'AS IS'
    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -87,7 +94,7 @@ License:
    limitation the rights to use, copy, modify, merge, publish, distribute,
    sublicense, and/or sell copies of the Software, and to permit persons to
    whom the Software is furnished to do so.
-   
+
    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
@@ -131,18 +138,6 @@ License: MIT | PSF
 Files: portable/rdfa.py
 Copyright: © 2006 Elias Torres <elias@torrez.us>
 License: GPL-2
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, version 2 of the License.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 ------------------------------------------------------------------------------
 
@@ -164,32 +159,6 @@ License: GPL-2+ | other
 Files: portable/libtorrent/*:
 Copyright: © 2003 - 2007 Arvid Norberg
 License: BSD-3
-    All rights reserved.
-
-    Redistribution and use in source and binary forms, with or without
-    modification, are permitted provided that the following conditions
-    are met:
-
-        * Redistributions of source code must retain the above copyright
-          notice, this list of conditions and the following disclaimer.
-        * Redistributions in binary form must reproduce the above copyright
-          notice, this list of conditions and the following disclaimer in
-          the documentation and/or other materials provided with the distribution.
-        * Neither the name of Rasterbar Software nor the names of its
-          contributors may be used to endorse or promote products derived
-          from this software without specific prior written permission.
-
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-    POSSIBILITY OF SUCH DAMAGE.
 
 ------------------------------------------------------------------------------
 
@@ -253,43 +222,43 @@ License: other
 
 ------------------------------------------------------------------------------
 
-Files: */include/libtorrent/alert.hpp, 		
-       */include/libtorrent/random_sample.hpp, 		
-       */include/libtorrent/variant_stream.hpp 		
-       */include/libtorrent/invariant_check.hpp, 		
-       */include/libtorrent/kademlia/refresh.hpp, 		
-       */include/libtorrent/kademlia/find_data.hpp, 		
-       */include/libtorrent/kademlia/closest_nodes.hpp, 		
-       */include/libtorrent/kademlia/traversal_algorithm.hpp, 		
-       */include/libtorrent/kademlia/logging.hpp, 		
-       */libtorrent/src/alert.cpp, 		
-       */libtorrent/src/storage.cpp, 		
-       */libtorrent/src/kademlia/refresh.cpp, 		
-       */libtorrent/src/kademlia/find_data.hpp, 		
-       */libtorrent/src/kademlia/closest_nodes.hpp, 		
-       */libtorrent/src/kademlia/traversal_algorithm.hpp 		
-Copyright: © 2003 - 2007 Daniel Wallin, 		
-           © 2003 - 2007 Arvid Norberg 		
-License: BSD-3 		
+Files: */include/libtorrent/alert.hpp,
+       */include/libtorrent/random_sample.hpp,
+       */include/libtorrent/variant_stream.hpp,
+       */include/libtorrent/invariant_check.hpp,
+       */include/libtorrent/kademlia/refresh.hpp,
+       */include/libtorrent/kademlia/find_data.hpp,
+       */include/libtorrent/kademlia/closest_nodes.hpp,
+       */include/libtorrent/kademlia/traversal_algorithm.hpp,
+       */include/libtorrent/kademlia/logging.hpp,
+       */libtorrent/src/alert.cpp,
+       */libtorrent/src/storage.cpp,
+       */libtorrent/src/kademlia/refresh.cpp,
+       */libtorrent/src/kademlia/find_data.hpp,
+       */libtorrent/src/kademlia/closest_nodes.hpp,
+       */libtorrent/src/kademlia/traversal_algorithm.hpp
+Copyright: © 2003 - 2007 Daniel Wallin,
+           © 2003 - 2007 Arvid Norberg 
+License: BSD-3
 
 ------------------------------------------------------------------------------
 
-Files: */include/libtorrent/allocate_resources.hpp, 		
-       */include/libtorrent/aux_/allocate_resources_impl.hpp 		
-Copyright: © 2003 Magnus Jonsson 		
-License: BSD-3 		
+Files: */include/libtorrent/allocate_resources.hpp,
+       */include/libtorrent/aux_/allocate_resources_impl.hpp
+Copyright: © 2003 Magnus Jonsson
+License: BSD-3
 
 ------------------------------------------------------------------------------
 
-Files: */include/libtorrent/resource_request.hpp, 		
-       */include/libtorrent/bt_peer_connection.hpp 		
-       */libtorrent/src/allocate_resources.cpp, 		
-       */libtorrent/src/file_win.cpp, 		
-       */libtorrent/src/session.cpp, 		
-       */libtorrent/src/session_impl.cpp 		
-Copyright: © 2003 - 2007 Magnus Jonsson, 		
-           © 2003 - 2007 Arvid Norberg 		
-License: BSD-3 		
+Files: */include/libtorrent/resource_request.hpp,
+       */include/libtorrent/bt_peer_connection.hpp,
+       */libtorrent/src/allocate_resources.cpp,
+       */libtorrent/src/file_win.cpp,
+       */libtorrent/src/session.cpp,
+       */libtorrent/src/session_impl.cpp
+Copyright: © 2003 - 2007 Magnus Jonsson,
+           © 2003 - 2007 Arvid Norberg
+License: BSD-3
 
 ------------------------------------------------------------------------------
 
@@ -299,142 +268,142 @@ License: BSD-3
 
 ------------------------------------------------------------------------------
 
-Files: */libtorrent/src/ut_pex.hpp 		
-Copyright: © 2006 MassaRoddel, 		
-           © 2006 Arvid Norberg 		
-License: BSD-3 		
+Files: */libtorrent/src/ut_pex.hpp
+Copyright: © 2006 MassaRoddel,
+           © 2006 Arvid Norberg
+License: BSD-3
 
 ------------------------------------------------------------------------------
 
-Files: */include/libtorrent/pe_crypto.hpp, 		
-       */libtorrent/src/pe_crypto.cpp 		
-Copyright: © 2007 Un Shayam 		
-License: BSD-3 		
+Files: */include/libtorrent/pe_crypto.hpp,
+       */libtorrent/src/pe_crypto.cpp
+Copyright: © 2007 Un Shayam
+License: BSD-3
 
 ------------------------------------------------------------------------------
 
-Files: */libtorrent/src/bt_peer_connection.cpp 		
-Copyright: © 2007 Un Shayam 		
-           © 2003 - 2007 Avrid Norberg 		
-License: BSD-3 		
+Files: */libtorrent/src/bt_peer_connection.cpp
+Copyright: © 2007 Un Shayam
+           © 2003 - 2007 Avrid Norberg
+License: BSD-3
 
 ------------------------------------------------------------------------------
 
-Files: */include/libtorrent/utf8.hpp 		
-Copyright: © 2004 - 2005 Cory Nelson 		
-License: other 		
-    This software is provided 'as-is', without any express or implied 		
-    warranty.  In no event will the authors be held liable for any damages 		
-    arising from the use of this software. 		
+Files: */include/libtorrent/utf8.hpp
+Copyright: © 2004 - 2005 Cory Nelson
+License: other
+    This software is provided 'as-is', without any express or implied
+    warranty.  In no event will the authors be held liable for any damages
+    arising from the use of this software.
 
-    Permission is granted to anyone to use this software for any purpose, 		
-    including commercial applications, and to alter it and redistribute it 		
-    freely, subject to the following restrictions: 		
+    Permission is granted to anyone to use this software for any purpose,
+    including commercial applications, and to alter it and redistribute it
+    freely, subject to the following restrictions:
 
-    1. The origin of this software must not be misrepresented; you must not 		
-       claim that you wrote the original software. If you use this software 		
-       in a product, an acknowledgment in the product documentation would be 		
-       appreciated but is not required. 		
-    2. Altered source versions must be plainly marked as such, and must not be 		
-       misrepresented as being the original software. 		
-    3. This notice may not be removed or altered from any source distribution. 		
-
-------------------------------------------------------------------------------
-
-Files: */libtorrent/asio/*, 		
-       */libtorrent/asio/ssl/context_base.hpp, 		
-       */libtorrent/asio/ssl/detail/openssl_types.hpp, 		
-       */libtorrent/asoi/ssl/stream_base.hpp 		
-Copyright: © 2003 - 2007 Christopher M. Kohlhoff <chris@kohlhoff.com> 		
-License: other 		
-    Boost Software License - Version 1.0 - August 17th, 2003 		
-
-    Permission is hereby granted, free of charge, to any person or organization 		
-    obtaining a copy of the software and accompanying documentation covered by 		
-    this license (the "Software") to use, reproduce, display, distribute, 		
-    execute, and transmit the Software, and to prepare derivative works of the 		
-    Software, and to permit third-parties to whom the Software is furnished to 		
-    do so, all subject to the following: 		
-
-    The copyright notices in the Software and this entire statement, including 		
-    the above license grant, this restriction and the following disclaimer, 		
-    must be included in all copies of the Software, in whole or in part, and 		
-    all derivative works of the Software, unless such copies or derivative 		
-    works are solely in the form of machine-executable object code generated by 		
-    a source language processor. 		
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 		
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 		
-    FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT 		
-    SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE 		
-    FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE, 		
-    ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 		
-    DEALINGS IN THE SOFTWARE. 		
+    1. The origin of this software must not be misrepresented; you must not
+       claim that you wrote the original software. If you use this software
+       in a product, an acknowledgment in the product documentation would be
+       appreciated but is not required.
+    2. Altered source versions must be plainly marked as such, and must not be
+       misrepresented as being the original software.
+    3. This notice may not be removed or altered from any source distribution.
 
 ------------------------------------------------------------------------------
 
-Files: */libtorrent/asio/ssl/* 		
-Copyright: © 2003 - 2007 Christopher M. Kohlhoff <chris@kohlhoff.com> 		
-           © 2005        Voipster <Indrek.Juhani@voipster.com> 		
-License: other 		
-    Boost Software License - Version 1.0 - August 17th, 2003 		
+Files: */libtorrent/asio/*,
+       */libtorrent/asio/ssl/context_base.hpp,
+       */libtorrent/asio/ssl/detail/openssl_types.hpp,
+       */libtorrent/asoi/ssl/stream_base.hpp
+Copyright: © 2003 - 2007 Christopher M. Kohlhoff <chris@kohlhoff.com>
+License: other
+    Boost Software License - Version 1.0 - August 17th, 2003
 
-    Permission is hereby granted, free of charge, to any person or organization 		
-    obtaining a copy of the software and accompanying documentation covered by 		
-    this license (the "Software") to use, reproduce, display, distribute, 		
-    execute, and transmit the Software, and to prepare derivative works of the 		
-    Software, and to permit third-parties to whom the Software is furnished to 		
-    do so, all subject to the following: 		
+    Permission is hereby granted, free of charge, to any person or organization
+    obtaining a copy of the software and accompanying documentation covered by
+    this license (the "Software") to use, reproduce, display, distribute,
+    execute, and transmit the Software, and to prepare derivative works of the
+    Software, and to permit third-parties to whom the Software is furnished to
+    do so, all subject to the following:
 
-    The copyright notices in the Software and this entire statement, including 		
-    the above license grant, this restriction and the following disclaimer, 		
-    must be included in all copies of the Software, in whole or in part, and 		
-    all derivative works of the Software, unless such copies or derivative 		
-    works are solely in the form of machine-executable object code generated by 		
-    a source language processor. 		
+    The copyright notices in the Software and this entire statement, including
+    the above license grant, this restriction and the following disclaimer,
+    must be included in all copies of the Software, in whole or in part, and
+    all derivative works of the Software, unless such copies or derivative
+    works are solely in the form of machine-executable object code generated by
+    a source language processor.
 
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 		
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 		
-    FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT 		
-    SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE 		
-    FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE, 		
-    ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 		
-    DEALINGS IN THE SOFTWARE. 		
-
-------------------------------------------------------------------------------
-
-Files: */libtorrent/asio/detail/kqueue_reactor.hpp, 		
-       */libtorrent/asio/detail/kqueue_reactor_fwd.hpp 		
-Copyright: © 2003 - 2007 Christopher M. Kohlhoff <chris@kohlhoff.com> 		
-           © 2005        Stefan Arentz <stefan@soze.com> 		
-License: other 		
-    Boost Software License - Version 1.0 - August 17th, 2003 		
-
-    Permission is hereby granted, free of charge, to any person or organization 		
-    obtaining a copy of the software and accompanying documentation covered by 		
-    this license (the "Software") to use, reproduce, display, distribute, 		
-    execute, and transmit the Software, and to prepare derivative works of the 		
-    Software, and to permit third-parties to whom the Software is furnished to 		
-    do so, all subject to the following: 		
-
-    The copyright notices in the Software and this entire statement, including 		
-    the above license grant, this restriction and the following disclaimer, 		
-    must be included in all copies of the Software, in whole or in part, and 		
-    all derivative works of the Software, unless such copies or derivative 		
-    works are solely in the form of machine-executable object code generated by 		
-    a source language processor. 		
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 		
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 		
-    FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT 		
-    SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE 		
-    FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE, 		
-    ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 		
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
+    SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
+    FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
+    ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
     DEALINGS IN THE SOFTWARE.
 
 ------------------------------------------------------------------------------
 
-Debian packaging copyright:
+Files: */libtorrent/asio/ssl/*
+Copyright: © 2003 - 2007 Christopher M. Kohlhoff <chris@kohlhoff.com>,
+           © 2005 Voipster <Indrek.Juhani@voipster.com>
+License: other
+    Boost Software License - Version 1.0 - August 17th, 2003
 
+    Permission is hereby granted, free of charge, to any person or organization
+    obtaining a copy of the software and accompanying documentation covered by
+    this license (the "Software") to use, reproduce, display, distribute,
+    execute, and transmit the Software, and to prepare derivative works of the
+    Software, and to permit third-parties to whom the Software is furnished to
+    do so, all subject to the following:
+
+    The copyright notices in the Software and this entire statement, including
+    the above license grant, this restriction and the following disclaimer,
+    must be included in all copies of the Software, in whole or in part, and
+    all derivative works of the Software, unless such copies or derivative
+    works are solely in the form of machine-executable object code generated by
+    a source language processor.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
+    SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
+    FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
+    ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+    DEALINGS IN THE SOFTWARE.
+
+------------------------------------------------------------------------------
+
+Files: */libtorrent/asio/detail/kqueue_reactor.hpp,
+       */libtorrent/asio/detail/kqueue_reactor_fwd.hpp
+Copyright: © 2003 - 2007 Christopher M. Kohlhoff <chris@kohlhoff.com>,
+           © 2005        Stefan Arentz <stefan@soze.com>
+License: other
+    Boost Software License - Version 1.0 - August 17th, 2003
+
+    Permission is hereby granted, free of charge, to any person or organization
+    obtaining a copy of the software and accompanying documentation covered by
+    this license (the "Software") to use, reproduce, display, distribute,
+    execute, and transmit the Software, and to prepare derivative works of the
+    Software, and to permit third-parties to whom the Software is furnished to
+    do so, all subject to the following:
+
+    The copyright notices in the Software and this entire statement, including
+    the above license grant, this restriction and the following disclaimer,
+    must be included in all copies of the Software, in whole or in part, and
+    all derivative works of the Software, unless such copies or derivative
+    works are solely in the form of machine-executable object code generated by
+    a source language processor.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
+    SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
+    FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
+    ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+    DEALINGS IN THE SOFTWARE.
+
+------------------------------------------------------------------------------
+
+Files: debian/*
+Copyright: © 2006-2008 Uwe Hermann <uwe@debian.org>
    The packaging done by Uwe Hermann <uwe@debian.org> is hereby
    released as public domain.
