@@ -38,7 +38,7 @@ def appRoot():
     WhereAmI recipe on the py2exe website.
     """
     exe_path = unicode(sys.executable, sys.getfilesystemencoding())
-    return os.path.dirname(os.path.dirname(exe_path))
+    return os.path.dirname(exe_path)
 
 def resourceRoot():
     return os.path.join(appRoot(), 'resources')

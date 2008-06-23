@@ -4,7 +4,12 @@ from miro.test.framework import MiroTestCase
 
 class TestSignaller(signals.SignalEmitter):
     def __init__(self):
-        signals.SignalEmitter.__init__(self, 'signal1', 'signal2')
+        signals.SignalEmitter.__init__(self, 'signal1', 'signal2', 
+                'signal-three')
+        self.signal_three_callbacks = []
+
+    def do_signal_three(self, *args):
+        self.signal_three_callbacks.append(args)
 
 class SignalsTest(MiroTestCase):
     def setUp(self):
@@ -32,7 +37,7 @@ class SignalsTest(MiroTestCase):
 
     def test_missing_callback(self):
         self.assertRaises(KeyError, self.signaller.connect,
-                'signal3', self.callback)
+                'signal5', self.callback)
         self.assertEquals(self.callbacks, [])
 
     def test_connect_args(self):
@@ -44,6 +49,12 @@ class SignalsTest(MiroTestCase):
         self.signaller.connect('signal1', self.callback)
         self.signaller.emit('signal2', 'foo')
         self.assertEquals(self.callbacks, [])
+
+    def test_do_method(self):
+        self.signaller.connect('signal-three', self.callback)
+        self.signaller.emit('signal-three', 'foo')
+        self.checkSingleCallback(self.signaller, 'foo')
+        self.assertEquals(self.signaller.signal_three_callbacks, [('foo',)])
 
     def test_weak_callback(self):
         callback_obj = WeakCallbackTester(self)

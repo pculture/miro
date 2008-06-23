@@ -73,8 +73,8 @@ from miro.clock import clock
 
 whitespacePattern = re.compile(r"^[ \t\r\n]*$")
 
-DEFAULT_FEED_ICON = u"images/feedicon.png"
-DEFAULT_FEED_ICON_TABLIST = u"images/feedicon-tablist.png"
+DEFAULT_FEED_ICON = "wimages/feedicon.png"
+DEFAULT_FEED_ICON_TABLIST = "wimages/feedicon-tablist.png"
 
 @returnsUnicode
 def defaultFeedIconURL():
@@ -1202,13 +1202,13 @@ $shortAppName.\n\nDo you want to try to load this channel anyway?"""))
         self.confirmDBThread()
         return resources.path(self.calcTablistThumbnail())
 
-    @returnsUnicode
+    @returnsFilename
     def getItemThumbnail(self, width, height):
         self.confirmDBThread()
         if self.iconCache and self.iconCache.isValid():
             path = self.iconCache.getResizedFilename(width, height)
             path = fileutil.expand_filename(path)
-            return resources.absoluteUrl(path)
+            return resources.path(path)
         else:
             return None
 

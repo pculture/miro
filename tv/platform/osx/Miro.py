@@ -104,20 +104,11 @@ def launchApplication():
         sys.stderr = AutoflushingTeeStream([h, sys.stderr])
 
     # Kick off the application
-    from AppKit import NSApplication
-    NSApplication.sharedApplication()
 
-    from miro.plat.frontends.html.Application import Application
-    Application().run()
+    from miro.platform.frontends.widgets.application import OSXApplication
+    OSXApplication().run()
 
 # =============================================================================
-
-def getModulePath(name):
-    import imp
-    mfile, mpath, mdesc = imp.find_module(name)
-    if mfile is not None:
-        mfile.close()
-    return mpath
 
 def launchDownloaderDaemon():
     # Increase the maximum file descriptor count (to the max)

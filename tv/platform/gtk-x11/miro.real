@@ -34,9 +34,12 @@ if '--unittest' in sys.argv:
     unittest.main(module=test)
 
 def startup(props_to_set):
-    if parsed_options.frontend == 'html':
-        from miro.plat.frontends.html.Application import Application
-        Application().run(props_to_set)
+    from miro import startup
+    startup.initialize(parsed_options.theme)
+
+    if parsed_options.frontend == 'widgets':
+        from miro.plat.frontends.widgets.application import GtkX11Application
+        GtkX11Application().run(props_to_set)
     elif parsed_options.frontend == 'cli':
         from miro.frontends import cli
         cli.run(parsed_options.theme)
@@ -54,9 +57,9 @@ parser.add_option('--theme',
                   dest='theme', metavar='<THEME>', 
                   help='Theme to use')
 parser.add_option('--frontend', 
-                  dest='frontend', metavar='<FRONTEND>',
-                  help='Frontend to use (html, cli)')
-parser.set_defaults(frontend="html")
+                  dest='frontend', metavar='<FRONTEND>', 
+                  help='Frontend to use (widgets, cli)')
+parser.set_defaults(frontend="widgets")
 
 group = optparse.OptionGroup(parser, "Settings options")
 group.add_option('--list',

@@ -30,7 +30,7 @@
 # Includes all PyUnit unit tests
 
 from miro.test.databasetest import *
-from miro.test.templatetest import *
+#from miro.test.templatetest import *
 from miro.test.fasttypestest import *
 from miro.test.schematest import *
 from miro.test.storedatabasetest import *
@@ -45,7 +45,7 @@ from miro.test.feedparsertest import *
 from miro.test.parseurltest import *
 from miro.test.utiltest import *
 from miro.test.playlisttest import *
-from miro.test.unicodetest import *
+#from miro.test.unicodetest import *
 from miro.test.databaseupgradetest import *
 from miro.test.signalstest import *
 from miro.test.messagetest import *

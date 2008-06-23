@@ -389,9 +389,8 @@ class DemocracyUnicodeError(StandardError):
 
 # Raise an exception if input isn't unicode
 def checkU(text):
-    if text is not None and type(text) != UnicodeType:
-        raise DemocracyUnicodeError, (u"text \"%s\" is not a unicode string" %
-                                     text)
+    if text is not None and not isinstance(text, UnicodeType):
+        raise DemocracyUnicodeError(u"text %r is not a unicode string (type:%s)" % (text, type(text)))
 
 # Decorator that raised an exception if the function doesn't return unicode
 def returnsUnicode(func):
@@ -441,7 +440,7 @@ def returnsURL(func):
 def checkF(text):
     from miro.plat.utils import FilenameType
     if text is not None and type(text) != FilenameType:
-        raise DemocracyUnicodeError, (u"text \"%s\" is not a valid filename type" %
+        raise DemocracyUnicodeError, (u"text %r is not a valid filename type" %
                                      text)
 
 # Decorator that raised an exception if the function doesn't return a filename
@@ -710,7 +709,6 @@ def toUni(orig, encoding = None):
             _unicache[orig] = unicode(orig,'utf-8')
         return _unicache[orig]
 
-
 import sgmllib
 
 class HTMLStripper(sgmllib.SGMLParser):
@@ -743,11 +741,12 @@ class HTMLStripper(sgmllib.SGMLParser):
         self.feed(s)
         self.close()
 
-        self.__flush()
-        data, links = self.__data, self.__links
-        data = data.rstrip()
-
-        self.reset()
+        try:
+            self.__flush()
+            data, links = self.__data, self.__links
+            data = data.rstrip()
+        finally:
+            self.reset()
 
         return data, links
 
@@ -778,6 +777,9 @@ class HTMLStripper(sgmllib.SGMLParser):
         data = data.replace("\n", " ")
         self.__add(data)
 
+    def handle_charref(self, ref):
+        self.__add(unichr(int(ref)))
+
     def start_p(self, attributes):
         self.__add("\n")
 
@@ -806,3 +808,37 @@ class HTMLStripper(sgmllib.SGMLParser):
         if self.__links and self.__links[-1][1] == -1:
             beg, _, url = self.__links[-1]
             self.__links[-1] = (beg, len(self.__data), url)
+
+class Matrix(object):
+    """2 Dimensional matrix.
+    
+    Matrix objects are accessed like a list, except tuples are used as
+    indices, for example matrix[3,4] = foo
+    """
+
+    def __init__(self, columns, rows):
+        self.columns = columns
+        self.rows = rows
+        self.data = [None] * (columns * columns)
+
+    def __getitem__(self, key):
+        return self.data[key[0] * self.columns + key[1]]
+
+    def __setitem__(self, key, value):
+        self.data[key[0] * self.columns + key[1]] = value
+
+    def __iter__(self):
+        return iter(self.data)
+
+    def remove(self, value):
+        self.data.remove(value)
+
+    def row(self, row):
+        """Iterator that yields all the objects in a row."""
+        for i in xrange(self.columns):
+            yield self[i, row]
+
+    def column(self, column):
+        """Iterator that yields all the objects in a column."""
+        for i in xrange(self.rows):
+            yield self[column, i]

@@ -28,14 +28,41 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+# This needs to be above Paths and configuration :(
+#
+# This isn't being used right now, as it doesn't detect all the cases
+# in which we need the xine hack
+def use_xine_hack_default():
+    try:
+        # Non-debian based system will throw an exception here
+        f = open('/etc/debian_version')
+        osname = f.read().strip()
+        f.close()
+        # Debian Etch
+        if osname == '4.0':
+            return True
 
-###############################################################################
+        # Ubuntu Feisty et al is Debian-based but lists testing/unstable
+        # and similar things in /etc/debian_version, so we check /etc/issue.
+        f.close()
+        f = open('/etc/issue')
+        osname = f.read()
+        f.close()
+
+        if ((osname.find("Ubuntu") > -1) and 
+                ((osname.find("7.04")>-1) or (osname.find("7.10")>-1) or (osname.find("hardy")>-1))):
+            return True
+    except:
+        pass
+    return False
+
+##############################################################################
 ## Paths and configuration                                                   ##
 ###############################################################################
 
 BOOST_LIB = 'boost_python'
 
-USE_XINE_HACK = True
+USE_XINE_HACK = True #use_xine_hack_default()
 
 ###############################################################################
 ## End of configuration. No user-servicable parts inside                     ##
@@ -85,13 +112,13 @@ def get_root_dir():
 root_dir = get_root_dir()
 portable_dir = os.path.join(root_dir, 'portable')
 portable_frontend_dir = os.path.join(portable_dir, 'frontends')
-portable_html_frontend_dir = os.path.join(portable_frontend_dir, 'html')
 dl_daemon_dir = os.path.join(portable_dir, 'dl_daemon')
 test_dir = os.path.join(portable_dir, 'test')
 resource_dir = os.path.join(root_dir, 'resources')
 platform_dir = os.path.join(root_dir, 'platform', 'gtk-x11')
 platform_package_dir = os.path.join(platform_dir, 'plat')
-platform_html_frontend_dir = os.path.join(platform_package_dir, 'frontends', 'html')
+platform_widgets_dir = os.path.join(platform_package_dir, 'frontends',
+        'widgets')
 glade_dir = os.path.join(platform_dir, 'glade')
 xine_dir = os.path.join(platform_dir, 'xine')
 debian_package_dir = os.path.join(platform_dir, 'debian_package')
@@ -117,13 +144,6 @@ appVersion = util.readSimpleConfigFile(app_config)['appVersion']
 # RPM hack
 if 'bdist_rpm' in sys.argv:
     appVersion = appVersion.replace('-', '_')
-
-#### utility functions ####
-def compile_templates():
-    """Compiles the templates into .py files.
-    """
-    from miro.frontends.html import template_compiler
-    template_compiler.compileAllTemplates(root_dir)
 
 def getlogin():
     """Does a best-effort attempt to return the login of the user running the
@@ -345,28 +365,29 @@ for dir in mozilla_browser_options['include_dirs']:
 if nsI:
     mozilla_browser_options['extra_compile_args'].append('-DNS_I_SERVICE_MANAGER_UTILS=1')
 
-# do a xulrunner 1.9 check here and if not, then define PCF_USING_XULRUNNER19
-if xulrunner19:
-    mozilla_browser_options['extra_compile_args'].append('-DPCF_USING_XULRUNNER19=1')
-
-mozilla_browser_ext = Extension("miro.plat.MozillaBrowser",
-        [ os.path.join(platform_html_frontend_dir,'MozillaBrowser.pyx'),
-          os.path.join(platform_html_frontend_dir,'MozillaBrowserXPCOM.cc'),
-          os.path.join(platform_html_frontend_dir,'HttpObserver.cc'),
-          os.path.join(platform_html_frontend_dir,'PromptService.cc'),
-          os.path.join(platform_html_frontend_dir,'DragAndDrop.cc'),
-          os.path.join(platform_html_frontend_dir,'XPCOMUtil.cc'),
-        ],
-        runtime_library_dirs=mozilla_lib_path,
-        **mozilla_browser_options)
-
-
 #### Xlib Extension ####
 xlib_ext = \
     Extension("miro.plat.xlibhelper", 
         [ os.path.join(platform_package_dir,'xlibhelper.pyx') ],
         library_dirs = ['/usr/X11R6/lib'],
         libraries = ['X11'],
+    )
+
+pygtkhacks_ext = \
+    Extension("miro.frontends.widgets.gtk.pygtkhacks",
+        [ os.path.join(portable_frontend_dir, 'widgets', 'gtk', 
+            'pygtkhacks.pyx') ],
+        **parsePkgConfig('pkg-config', 
+            'pygobject-2.0 gtk+-2.0 glib-2.0 gthread-2.0')
+    )
+
+mozprompt_ext = \
+    Extension("miro.plat.frontends.widgets.mozprompt",
+        [ 
+            os.path.join(platform_widgets_dir, 'mozprompt.pyx'),
+            os.path.join(platform_widgets_dir, 'PromptService.cc'),
+        ],
+        **mozilla_browser_options
     )
 
 
@@ -404,9 +425,8 @@ files.extend(listfiles(os.path.join(glade_dir, 'pixmaps')))
 files.append(os.path.join(glade_dir, 'miro.glade'))
 data_files.append(('/usr/share/miro/resources/', files))
 # handle the sub directories.
-for dir in ('templates', 'css', 'images', 'html', 'testdata', 'searchengines',
-            os.path.join('testdata', 'stripperdata'),
-            os.path.join('templates','unittest') ):
+for dir in ('searchengines', 'wimages', 'testdata',
+        os.path.join('testdata', 'stripperdata')):
     source_dir = os.path.join(resource_dir, dir)
     dest_dir = os.path.join('/usr/share/miro/resources/', dir)
     data_files.append((dest_dir, listfiles(source_dir)))
@@ -432,7 +452,6 @@ data_files += [
 # if we're not doing "python setup.py clean", then we can do a bunch of things
 # that have file-related side-effects
 if not "clean" in sys.argv:
-    compile_templates()
     compile_xine_extractor()
     generate_miro()
     # gzip the man page
@@ -644,7 +663,8 @@ setup(name='miro',
     ],
     data_files=data_files,
     ext_modules = [
-        fasttypes_ext, mozilla_browser_ext, xine_ext, xlib_ext, libtorrent_ext,
+        fasttypes_ext, xine_ext, xlib_ext, libtorrent_ext, pygtkhacks_ext,
+        mozprompt_ext,
         Extension("miro.database", 
                 [os.path.join(portable_dir, 'database.pyx')]),
         Extension("miro.sorts", 
@@ -659,12 +679,11 @@ setup(name='miro',
         'miro.dl_daemon.private',
         'miro.frontends',
         'miro.frontends.cli',
-        'miro.frontends.html',
-        'miro.frontends.html.compiled_templates',
-        'miro.frontends.html.compiled_templates.unittest',
+        'miro.frontends.widgets',
+        'miro.frontends.widgets.gtk',
         'miro.plat',
         'miro.plat.frontends',
-        'miro.plat.frontends.html',
+        'miro.plat.frontends.widgets',
         'miro.plat.renderers',
     ],
     package_dir = {

@@ -303,7 +303,6 @@ class TabOrder(database.DDBObject):
         else:
             raise ValueError("Bad type for TabOrder")
         self.trackedTabs = TrackedIDList(self.tabView, self.tab_ids)
-        self.trackedTabs.setFilter(expandedFolderFilter)
         self.tabView.addAddCallback(self.onAddTab)
         self.tabView.addRemoveCallback(self.onRemoveTab)
 

@@ -36,7 +36,7 @@ from miro.plat import bundle
 # separators. The output, though, uses the native platform separator.
 def path(relative_path):
     rsrcpath = os.path.join(bundle.getBundleResourcePath(), u'resources', relative_path)
-    return os.path.abspath(rsrcpath)
+    return str(os.path.abspath(rsrcpath))
 
 # As path(), but return a file: URL instead.
 def url(relative_path):

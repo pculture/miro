@@ -42,7 +42,7 @@ def initialize():
     global manualFeed, singleFeed, directoryFeed, newlyDownloadedItems
     global downloadingItems, pausedItems, manualDownloads, autoDownloads
     global playlists, playlistFolders, channelFolders, searchEngines
-    global themeHistories
+    global themeHistories, visibleFeeds
 
     from miro import app
     from miro import feed
@@ -97,6 +97,7 @@ def initialize():
     # NOTE: we can't use the objectsByClass index for fileItems, because it
     # agregates all Item subclasses into one group.
     feeds = app.db.filterWithIndex(indexes.objectsByClass,feed.Feed)
+    visibleFeeds = feeds.filter(filters.feedIsVisible)
     remoteDownloads = app.db.filterWithIndex(indexes.objectsByClass, downloader.RemoteDownloader)
     httpauths = app.db.filterWithIndex(indexes.objectsByClass,downloader.HTTPAuthPassword)
     staticTabsObjects = app.db.filterWithIndex(indexes.objectsByClass,tabs.StaticTab)

@@ -42,6 +42,12 @@ The html frontend adds:
 
 delegate -- UIBackendDelegate that handles platform-specific UI tasks.
 htmlapp -- HTMLApplication object
+
+The widget frontend adds:
+
+widgetapp -- Application object
+display_manger -- Handles the right-hand display.
+tab_list_manager -- Handles the tab lists and selection.
 """
 
 renderers = []

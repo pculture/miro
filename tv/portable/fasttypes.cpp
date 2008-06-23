@@ -316,6 +316,9 @@ void incLLIter(LinkedListIterator& it) {
 void decLLIter(LinkedListIterator& it) {
   advance(it,-1);
 }
+object LLIterValue(LinkedListIterator& it) {
+    return *it;
+}
 SortedListIterator *copySLIter(SortedListIterator& it) {
   return new SortedListIterator(it);
 }
@@ -324,6 +327,9 @@ void incSLIter(SortedListIterator& it) {
 }
 void decSLIter(SortedListIterator& it) {
   advance(it,-1);
+}
+object SLIterValue(SortedListIterator& it) {
+    return *it;
 }
 
 BOOST_PYTHON_MODULE(fasttypes)
@@ -336,6 +342,7 @@ BOOST_PYTHON_MODULE(fasttypes)
     .def("copy",&copyLLIter,return_value_policy<manage_new_object>())
     .def("forward",&incLLIter)
     .def("back",&decLLIter)
+    .def("value",&LLIterValue)
     .def(self == self)
     .def(self != self)
   ;
@@ -344,6 +351,7 @@ BOOST_PYTHON_MODULE(fasttypes)
     .def("copy",&copySLIter,return_value_policy<manage_new_object>())
     .def("forward",&incSLIter)
     .def("back",&decSLIter)
+    .def("value",&SLIterValue)
     .def(self == self)
     .def(self != self)
   ;

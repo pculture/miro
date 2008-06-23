@@ -90,6 +90,9 @@ class MiroTestCase(unittest.TestCase):
         else:
             raise Exception("error signal %s" % report)
 
+    def assertSameSet(self, list1, list2):
+        self.assertEquals(set(list1), set(list2))
+
 class EventLoopTest(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
@@ -107,6 +110,12 @@ class EventLoopTest(MiroTestCase):
                 urgentQueue.processIdles()
             if idleQueue.hasPendingIdle():
                 idleQueue.processNextIdle()
+
+    def runUrgentCalls(self):
+        urgentQueue = eventloop._eventLoop.urgentQueue
+        while urgentQueue.hasPendingIdle():
+            if urgentQueue.hasPendingIdle():
+                urgentQueue.processIdles()
 
     def runEventLoop(self, timeout=10, timeoutNormal=False):
         eventloop.threadPoolInit()

@@ -58,6 +58,8 @@ from miro import item
 from miro import feed
 from miro import folder
 from miro import guide
+from miro import messages
+from miro import messagehandler
 from miro import moviedata
 from miro import playlist
 from miro import prefs
@@ -176,6 +178,7 @@ def finalizeStartup():
     setupTabs()
     searchengines.createEngines()
     setupTheme()
+    installMessageHandler()
 
     # Start the automatic downloader daemon
     logging.info ("Spawning auto downloader...")
@@ -256,6 +259,10 @@ def installMoviesGoneHandler(callback):
 def setupTheme():
     themeHistory = _getThemeHistory()
     themeHistory.checkNewTheme()
+
+def installMessageHandler():
+    handler = messagehandler.BackendMessageHandler()
+    messages.BackendMessage.install_handler(handler)
 
 def _getThemeHistory():
     if len(views.themeHistories) > 0:

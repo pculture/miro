@@ -51,7 +51,6 @@ from miro.databasehelper import makeSimpleGetSet
 from miro.iconcache import IconCache
 import types
 from miro import app
-from miro.frontends.html import template
 from miro import downloader
 from miro import config
 from miro import dialogs
@@ -348,6 +347,7 @@ class Item(DDBObject):
     # _XMLViewName is a random string we use for the name of the view
     # _itemXML is the rendered XML
     def _calcItemXML(self):
+        from miro.frontends.html import template
         self._XMLViewName = "view%dview" % random.randint(9999999,99999999)
         self._itemXML = template.fillStaticTemplate(
             'download-item-inner', onlyBody=True, this=self,
@@ -860,29 +860,33 @@ folder will be deleted.""")
             return None
 
     # When changing this function, change feed.iconChanged to signal the right set of items
-    @returnsUnicode
-    def getThumbnail (self):
+    @returnsFilename
+    def getThumbnail(self):
         self.confirmDBThread()
-        if self.showMoreInfo:
-            width, height = Item.BIG_ICON_SIZE
-        else:
-            width, height = Item.SMALL_ICON_SIZE
+        return self._doGetThumbnail(Item.SMALL_ICON_SIZE)
+
+    @returnsFilename
+    def getThumbnailLarge(self):
+        self.confirmDBThread()
+        return self._doGetThumbnail(Item.BIG_ICON_SIZE)
+
+    def _doGetThumbnail(self, (width, height)):
         if self.iconCache is not None and self.iconCache.isValid():
             path = self.iconCache.getResizedFilename(width, height)
-            return resources.absoluteUrl(fileutil.expand_filename(path))
+            return resources.path(fileutil.expand_filename(path))
         elif self.screenshot:
             path = self.getResizedScreenshot(width, height)
-            return resources.absoluteUrl(fileutil.expand_filename(path))
+            return resources.path(fileutil.expand_filename(path))
         elif self.isContainerItem:
-            return resources.url(u"images/container-icon.png")
+            return resources.path("wimages/container-icon.png")
         else:
             feedThumbnail = self.getFeed().getItemThumbnail(width, height)
             if feedThumbnail is not None:
                 return feedThumbnail
             elif self.showMoreInfo:
-                return resources.url(u"images/thumb-default_large.png")
+                return resources.path("wimages/thumb-default_large.png")
             else: 
-                return resources.url(u"images/thumb-default_small.png")
+                return resources.path("wimages/thumb-default_small.png")
 
     ##
     # returns the title of the item

@@ -140,6 +140,12 @@ class SignalEmitter:
             self.signal_callbacks[signal] = {}
 
     def emit(self, name, *args):
+        try:
+            self_callback = getattr(self, 'do_' + name.replace('-', '_'))
+        except AttributeError:
+            pass
+        else:
+            self_callback(*args)
         for callback in self.get_callbacks(name).values():
             callback.invoke(self, args)
         self.clear_old_weak_references()

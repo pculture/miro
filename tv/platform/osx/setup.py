@@ -127,7 +127,6 @@ import portable
 sys.modules['miro'] = portable
 
 from miro import util
-from miro.frontends.html import template_compiler
 
 # =============================================================================
 # Utility function used to extract stuff from the binary kit
@@ -293,14 +292,12 @@ class MiroBuild (py2app):
             'miro.dl_daemon',
             'miro.dl_daemon.private',
             'miro.frontends',
-            'miro.frontends.html',
-            'miro.frontends.html.compiled_templates',
+            'miro.frontends.widgets',
             'miro.plat',
             'miro.plat.frontends',
-            'miro.plat.frontends.html',
+            'miro.plat.frontends.widgets',
             'miro.plat.renderers',
         ]
-        self.includes.add('miro.frontends.html.compiled_templates')
 
         self.distribution.package_dir = {
             'miro': PORTABLE_DIR,
@@ -310,9 +307,10 @@ class MiroBuild (py2app):
         self.iconfile = self.config.get_icon_file()
         
         excludedResources = ['.svn', '.DS_Store']
-        resourceFiles = [os.path.join('Resources', x) for x in os.listdir('Resources') if x not in excludedResources]
-        resourceFiles.append('qt_extractor.py')
-        self.resources = resourceFiles
+        self.resources = [
+            os.path.join('Resources-Widgets', 'MainMenu.nib'),
+            'qt_extractor.py',
+        ]
     
     def setup_options(self):
         self.bundleRoot = os.path.join(self.dist_dir, '%s.app/Contents' % self.config.get('shortAppName'))
@@ -405,7 +403,6 @@ class MiroBuild (py2app):
     def run(self):
         print "Building %s v%s (%s)" % (self.config.get('longAppName'), self.config.get('appVersion'), self.config.get('appRevision'))
         
-        self.setup_templates()
         self.setup_dynamic_sources()
         self.setup_info_plist()
 
@@ -424,9 +421,6 @@ class MiroBuild (py2app):
 
         if self.make_dmg:
             self.make_disk_image()
-    
-    def setup_templates(self):
-        template_compiler.compileAllTemplates(ROOT_DIR)
     
     def setup_dynamic_sources(self):
         daemonTemplate = os.path.join(ROOT_DIR, 'portable/dl_daemon/daemon.py.template')
@@ -475,7 +469,7 @@ class MiroBuild (py2app):
             print "    (all skipped, already bundled)"
         else:
             os.mkdir(self.prsrcRoot)
-            for resource in ('css', 'images', 'html', 'searchengines', 'dtvapi.js', 'statictabs.xml'):
+            for resource in ('searchengines', 'wimages'):
                 src = os.path.join(ROOT_DIR, 'resources', resource)
                 rsrcName = os.path.basename(src)
                 if os.path.isdir(src):
@@ -486,17 +480,7 @@ class MiroBuild (py2app):
                     copy = shutil.copy
                 print "    %s" % dest
                 copy(src, dest)
-            os.mkdir(os.path.join(self.prsrcRoot, 'templates'))
-            if os.environ.has_key('DEMOCRACY_RECOMPILE_TEMPLATES'):
-                template_items = glob(os.path.join(ROOT_DIR, 'resources', 'templates', '*'))
-            else:
-                template_items = glob(os.path.join(ROOT_DIR, 'resources', 'templates', '*.js'))
-            for template_item in template_items:
-                dest = os.path.join(self.prsrcRoot, 'templates', os.path.basename(template_item))
-                print "    %s" % dest
-                if not os.path.isdir(template_item):
-                    copy(template_item, dest)
-                
+
     def copy_config_file(self):
         print "Copying config file to application bundle"
         shutil.move(self.appConfigPath, os.path.join(self.prsrcRoot, 'app.config'))
@@ -668,20 +652,6 @@ class MiroClean (Command):
         try:
             for appl in glob("*.app"):
                 shutil.rmtree(appl)
-        except:
-            pass
-        print "Removing old compiled templates..."
-        try:
-            template_dir = os.path.join("..","..","portable", "frontends",
-                    "html", "compiled_templates")
-            for filename in os.listdir(template_dir):
-                filename = os.path.join(template_dir, filename)
-                if not filename.startswith(".svn"):
-                    filename = os.path.join("..","..","portable","compiled_templates",filename)
-                    if os.path.isdir(filename):
-                        shutil.rmtree(filename)
-                    else:
-                        os.remove(filename)
         except:
             pass
 

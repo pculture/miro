@@ -284,7 +284,8 @@ def launchDownloadDaemon(oldpid, env):
     # it kicks up "%1 is not a valid Win32 application" errors on some Windows
     # machines.  Why it only happens on some is a mystery of the universe.
     # Bug #9274.
-    downloaderPath = '"%s"' % os.path.join(resources.appRoot(), 'xulrunner', 'python', "Miro_Downloader.exe")
+    downloaderPath = '"%s"' % os.path.join(resources.appRoot(),
+            "Miro_Downloader.exe") 
     startupinfo = subprocess.STARTUPINFO()
     startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
     subprocess.Popen(downloaderPath, stdout=subprocess.PIPE,

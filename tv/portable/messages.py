@@ -38,13 +38,17 @@ asynchronously.
 This module defines the messages that are passed between the two threads.
 """
 
+import logging
 import re
 
-from folder import ChannelFolder, PlaylistFolder
+from miro.folder import ChannelFolder, PlaylistFolder
+from miro.plat import resources
+from miro import util
 
 class MessageHandler(object):
     def __init__(self):
         self.message_map = {} # maps message classes to method names
+        self.complained_about = set()
 
     def call_handler(self, method, message):
         """Arrange for a message handler method to be called in the correct
@@ -57,7 +61,11 @@ class MessageHandler(object):
         try:
             handler = getattr(self, handler_name)
         except AttributeError:
-            pass
+            if handler_name not in self.complained_about:
+                logging.warn("MessageHandler doesn't have a %s method "
+                        "to handle the %s message" % (handler_name,
+                            message.__class__))
+                self.complained_about.add(handler_name)
         else:
             self.call_handler(handler, message)
 
@@ -92,14 +100,24 @@ class BackendMessage(Message):
     """Base class for Messages that get sent to the backend."""
 
     def send_to_backend(self):
-        self.handler.handle(self)
+        try:
+            handler = self.handler
+        except AttributeError:
+            logging.warn("No handler for backend messages")
+        else:
+            handler.handle(self)
 
 
 class FrontendMessage(Message):
     """Base class for Messages that get sent to the frontend."""
 
     def send_to_frontend(self):
-        self.handler.handle(self)
+        try:
+            handler = self.handler
+        except AttributeError:
+            logging.warn("No handler for frontend messages")
+        else:
+            handler.handle(self)
 
 # Backend Messages
 
@@ -107,8 +125,8 @@ class TrackChannels(BackendMessage):
     """Begin tracking channels.
 
     After this message is sent, the backend will send back a ChannelList
-    message, then it will send ChannelAdded, ChannelRemoved and ChannelChanged
-    messages whenever the channel list changes.
+    message, then it will send ChannelsChanged messages whenever the channel
+    list changes.
     """
 
 class StopTrackingChannels(BackendMessage):
@@ -118,12 +136,164 @@ class TrackPlaylists(BackendMessage):
     """Begin tracking playlists.
 
     After this message is sent, the backend will send back a PlaylistList
-    message, then it will send PlaylistAdded, PlaylistRemoved and
-    PlaylistChanged messages whenever the list of playlists changes.
+    message, then it will send PlaylistsChanged messages whenever the list of
+    playlists changes.
     """
 
 class StopTrackingPlaylists(BackendMessage):
     """Stop tracking playlists."""
+
+class TrackItemsForFeed(BackendMessage):
+    """Begin tracking items for a feed
+
+    After this message is sent, the backend will send back a ItemList message,
+    then it will send ItemsChanged messages for items in the feed.
+
+    feed_id should be the id of a feed, or it can be one of the following
+    special constants:
+
+    NEW -- Items that haven't been watched
+    DOWNLOADING -- Items being downloaded
+    LIBRARY -- All items
+    """
+    NEW = -1
+    DOWNLOADING = -2
+    LIBRARY = -3
+
+    def __init__(self, feed_id):
+        self.feed_id = feed_id
+
+class StopTrackingItemsForFeed(BackendMessage):
+    """Stop tracking items for a feed."""
+
+    def __init__(self, feed_id):
+        self.feed_id = feed_id
+
+class TrackDownloadCount(BackendMessage):
+    """Start tracking the number of downloading items.  After this message is
+    recieved the backend will send a corresponding DownloadCountChanged
+    message.  It will also send DownloadCountChanged whenever the count
+    changes.
+    """
+
+class StopTrackingDownloadCount(BackendMessage):
+    """Stop tracking the download count."""
+
+class TrackNewCount(BackendMessage):
+    """Start tracking the number of new videos.  When this message is recieved
+    the backend will send a corresponding NewCountChanged message.  It will
+    also send NewCountChanged.
+    """
+
+class StopTrackingNewCount(BackendMessage):
+    """Stop tracking the new videos count."""
+
+class RenameObject(BackendMessage):
+    """Tell the backend to rename a channel/playlist/folder.
+    
+    Attributes:
+    type -- 'feed', 'playlist', 'feed-folder' or 'playlist-folder'
+    id  -- id of the object to rename
+    new_name -- new name for the object
+    """
+
+    def __init__(self, type, id, new_name):
+        self.type = type
+        self.id = id
+        self.new_name = util.toUni(new_name)
+
+class DeleteChannel(BackendMessage):
+    """Delete a channel."""
+    def __init__(self, id, is_folder, keep_items):
+        self.id = id
+        self.is_folder = is_folder
+        self.keep_items = keep_items
+
+class DeletePlaylist(BackendMessage):
+    """Delete a playlist."""
+    def __init__(self, id, is_folder):
+        self.id = id
+        self.is_folder = is_folder
+
+class NewChannelFolder(BackendMessage):
+    """Create a new channel folder."""
+    def __init__(self, name):
+        self.name = util.toUni(name)
+
+class NewPlaylistFolder(BackendMessage):
+    """Create a new channel folder."""
+    def __init__(self, name):
+        self.name = util.toUni(name)
+
+class StartDownload(BackendMessage):
+    """Start downloading an item."""
+    def __init__(self, id):
+        self.id = id
+
+class CancelDownload(BackendMessage):
+    """Cancel downloading an item."""
+    def __init__(self, id):
+        self.id = id
+
+class PauseDownload(BackendMessage):
+    """Pause downloading an item."""
+    def __init__(self, id):
+        self.id = id
+
+class ResumeDownload(BackendMessage):
+    """Resume downloading an item."""
+    def __init__(self, id):
+        self.id = id
+
+class KeepVideo(BackendMessage):
+    """Cancel the auto-expiration of an item's video"""
+    def __init__(self, id):
+        self.id = id
+
+class DeleteVideo(BackendMessage):
+    """Delete the video for an item's video"""
+    def __init__(self, id):
+        self.id = id
+
+class FolderExpandedChange(BackendMessage):
+    """Inform the backend when a folder gets expanded/collapsed
+    """
+    def __init__(self, type, id, expanded):
+        self.type = type
+        self.id = id
+        self.expanded = expanded
+
+class AutodownloadChange(BackendMessage):
+    """Inform the backend that the user changed the auto-download setting for
+    a feed.  The possible setting values are "all", "new" and "off"
+    """
+    def __init__(self, id, setting):
+        self.id = id
+        self.setting = setting
+
+class TabsReordered(BackendMessage):
+    """Inform the backend when the channel tabs are rearanged.  This includes
+    simple position changes and also changes to which folders the channels are
+    in.
+
+    Attributes:
+    type -- 'playlist' or feed'
+    toplevels -- the list of ChannelInfo objects without parents
+    folder_children -- dict mapping channel folder ids to a list of
+        ChannelInfo objects for their children
+    """
+    def __init__(self, type):
+        self.type = type
+        self.toplevels = []
+        self.folder_children = {}
+
+    def append(self, info):
+        self.toplevels.append(info)
+        if info.is_folder:
+            self.folder_children[info.id] = []
+
+    def append_child(self, parent_id, info):
+        self.folder_children[parent_id].append(info)
 
 # Frontend Messages
 class ChannelInfo(object):
@@ -133,9 +303,14 @@ class ChannelInfo(object):
 
     name -- channel name
     id -- object id
+    tab_icon -- path to this channel's tab icon
+    thumbnail -- path to this channel's thumbnail
     unwatched -- number of unwatched videos
     available -- number of newly downloaded videos
-    children -- Child channels or None if this is not a folder
+    is_folder -- is this a channel folder?
+    base_href -- URL to use for relative links for items in this channel.  
+      This will be None for ChannelFolders.
+    autodownload_mode -- Current autodownload mode ('all', 'new' or 'off')
     """
 
     def __init__(self, channel_obj):
@@ -143,59 +318,17 @@ class ChannelInfo(object):
         self.id = channel_obj.id
         self.unwatched = channel_obj.numUnwatched()
         self.available = channel_obj.numAvailable()
-        if isinstance(channel_obj, ChannelFolder):
-            self.children = []
+        if not isinstance(channel_obj, ChannelFolder):
+            self.thumbnail = channel_obj.getThumbnailPath()
+            self.base_href = channel_obj.getBaseHref()
+            self.autodownload_mode = channel_obj.getAutoDownloadMode()
+            self.is_folder = False
+            self.tab_icon = resources.path('wimages/icon-rss.png')
         else:
-            self.children = None
-
-    def is_folder(self):
-        return children is not None
-
-class ChannelList(FrontendMessage):
-    """Informs the frontend of the current channel list.
-
-    Attributes:
-    channels -- the current list of ChannelInfo objects.
-    """
-
-    def __init__(self):
-        self.channels = []
-
-    def append(self, info):
-        self.channels.append(info)
-
-class ChannelAdded(FrontendMessage):
-    """Informs the frontend that a new channel has been added.
-
-    Attributes:
-    channel -- ChannelInfo object for the added channel
-    added_after -- id of the previous channel in the channel list, or None if
-        it's the first channel in the list.
-    """
-
-    def __init__(self, channel, added_after):
-        self.channel = channel
-        self.added_after = added_after
-
-class ChannelRemoved(FrontendMessage):
-    """Informs the frontend that a channel has been removed
-
-    Attributes:
-    channel -- ChannelInfo object for the removed channel
-    """
-
-    def __init__(self, channel):
-        self.channel = channel
-
-class ChannelChanged(FrontendMessage):
-    """Informs the frontend that a channel has been changed
-
-    Attributes:
-    channel -- ChannelInfo object for the changed channel
-    """
-
-    def __init__(self, channel):
-        self.channel = channel
+            self.thumbnail = resources.path('wimages/folder-icon.png')
+            self.autodownload_mode = self.base_href = None
+            self.is_folder = True
+            self.tab_icon = resources.path('wimages/icon-folder.png')
 
 class PlaylistInfo(object):
     """Tracks the state of a playlist
@@ -204,62 +337,165 @@ class PlaylistInfo(object):
 
     name -- playlist name
     id -- object id
-    children -- Child playlists or None if this is not a folder
+    is_folder -- is this a playlist folder?
     """
 
     def __init__(self, playlist_obj):
         self.name = playlist_obj.getTitle()
         self.id = playlist_obj.id
-        if isinstance(playlist_obj, PlaylistFolder):
-            self.children = []
-        else:
-            self.children = None
+        self.is_folder = isinstance(playlist_obj, PlaylistFolder)
 
-    def is_folder(self):
-        return children is not None
-
-class PlaylistList(FrontendMessage):
-    """Informs the frontend of the current list of playlists.
+class ItemInfo(object):
+    """Tracks the state of an item
 
     Attributes:
-    playlists -- the current list of PlaylistInfo objects.
+
+    name -- name of the item
+    id -- object id
+    feed_id -- id for the items feed
+    description -- longer description for the item (HTML)
+    release_date -- datetime object when the item was published
+    size -- size of the item in bytes
+    duration -- length of the video in seconds
+    permalink -- URL to a permalink to the item (or None)
+    downloaded -- Has the item been downloaded?
+    expiration_date -- datetime object for when the item will expire (or None)
+    item_viewed -- has the user ever seen the item?
+    video_watched -- has the user watched the video for the item?
+    video_path -- The path to the video for this item (or None)
+    thumbnail -- path to the thumbnail for this file
+    thumbnail_large -- path to the larger thumbnail for this file
+    download_info -- DownloadInfo object containing info about the download
+        (or None)
     """
 
-    def __init__(self):
-        self.playlists = []
+    def __init__(self, item):
+        self.name = item.getTitle()
+        self.id = item.id
+        self.feed_id = item.feed_id
+        self.description = item.getDescription()
+        self.release_date = item.getReleaseDateObj()
+        self.size = item.getSize()
+        self.duration = item.getDurationValue()
+        self.permalink = item.getLink()
+        if not item.keep:
+            self.expiration_date = item.getExpirationTime()
+        else:
+            self.expiration_date = None
+        self.item_viewed = item.getViewed()
+        self.downloaded = item.isDownloaded()
+        self.video_watched = item.getSeen()
+        self.video_path = item.getVideoFilename()
+        self.thumbnail = item.getThumbnail()
+        self.thumbnail_large = item.getThumbnailLarge()
+        if item.downloader:
+            self.download_info = DownloadInfo(item.downloader)
+        else:
+            self.download_info = None
+
+class DownloadInfo(object):
+    """Tracks the download state of an item.
+
+    Attributes:
+
+    downloaded_size -- bytes downloaded
+    rate -- current download rate, in bytes per second
+    state -- one of 'downloading', 'uploading', 'finished', 'failed' or 
+        'paused'.  'uploading' is for torrents only.  It means that we've
+        finished downloding the torrent and are now seeding it.
+    startup_activity -- The current stage of starting up
+    finished -- True if the item has finished downloading
+    """
+    def __init__(self, downloader):
+        self.downloaded_size = downloader.getCurrentSize()
+        self.rate = downloader.getRate()
+        self.state = downloader.getState()
+        self.startup_activity = downloader.getStartupActivity()
+        self.finished = downloader.isFinished()
+
+class TabList(FrontendMessage):
+    """Sends the frontend the initial list of channels and playlists
+
+    Attributes:
+    type -- 'feed' or 'playlist'
+    toplevels -- the list of ChannelInfo/PlaylistInfo objects without parents
+    folder_children -- dict mapping channel folder ids to a list of
+        ChannelInfo/PlaylistInfo objects for their children
+    expanded_folders -- set containing ids of the folders that should
+        be initially expanded.
+    """
+
+    def __init__(self, type):
+        self.type = type
+        self.toplevels = []
+        self.folder_children = {}
+        self.expanded_folders = set()
 
     def append(self, info):
-        self.playlists.append(info)
+        self.toplevels.append(info)
+        if info.is_folder:
+            self.folder_children[info.id] = []
 
-class PlaylistAdded(FrontendMessage):
-    """Informs the frontend that a new playlist has been added.
+    def append_child(self, parent_id, info):
+        self.folder_children[parent_id].append(info)
 
-    Attributes:
-    playlist -- PlaylistInfo object for the added playlist
-    added_after -- id of the previous playlist in the list of playlists or
-        None if it's the first playlist in the list.
-    """
+    def expand_folder(self, folder_id):
+        self.expanded_folders.add(folder_id)
 
-    def __init__(self, playlist, added_after):
-        self.playlist = playlist
-        self.added_after = added_after
-
-class PlaylistRemoved(FrontendMessage):
-    """Informs the frontend that a playlist has been removed
+class TabsChanged(FrontendMessage):
+    """Informs the frontend that the channel list or playlist list has been 
+    changed.
 
     Attributes:
-    playlist -- PlaylistInfo object for the removed playlist
+    type -- 'feed' or 'playlist'
+    added -- ChannelInfo/PlaylistInfo object for each added tab.  The list 
+        will be in the same order that the tabs were added.
+    changed -- set containing a ChannelInfo/PlaylistInfo for each changed tab.
+    removed -- set containing ids for each tab that was removed
     """
 
-    def __init__(self, playlist):
-        self.playlist = playlist
+    def __init__(self, type, added, changed, removed):
+        self.type = type
+        self.added = added
+        self.changed = changed
+        self.removed = removed
 
-class PlaylistChanged(FrontendMessage):
-    """Informs the frontend that a playlist has been changed
+class ItemList(FrontendMessage):
+    """Sends the frontend the initial list of items for a feed
 
     Attributes:
-    playlist -- PlaylistInfo object for the changed playlist
+    feed_id -- Feed the items are in
+    items -- list of ItemInfo objects
+    """
+    def __init__(self, feed_id, items):
+        self.feed_id = feed_id
+        self.items = [ItemInfo(item) for item in items]
+
+class ItemsChanged(FrontendMessage):
+    """Informs the frontend that the items in a feed have changed.
+
+    Attributes:
+    feed_id -- feed the items are in
+    added -- list containing an ItemInfo object for each added item.  The
+        order will be the order they were added.
+    changed -- set containing an ItemInfo for each changed item.
+    removed -- set containing ids for each item that was removed
     """
 
-    def __init__(self, playlist):
-        self.playlist = playlist
+    def __init__(self, feed_id, added, changed, removed):
+        self.feed_id = feed_id
+        self.added = added
+        self.changed = changed
+        self.removed = removed
+
+class DownloadCountChanged(FrontendMessage):
+    """Informs the frontend that number of downloads has changed """
+
+    def __init__(self, count):
+        self.count = count
+
+class NewCountChanged(FrontendMessage):
+    """Informs the frontend that number of new videos has changed """
+
+    def __init__(self, count):
+        self.count = count

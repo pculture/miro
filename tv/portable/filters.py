@@ -122,6 +122,9 @@ def mappableToTab(obj):
                 folder.ChannelFolder, playlist.SavedPlaylist,
                 folder.PlaylistFolder, guide.ChannelGuide))
 
+def feedIsVisible(obj):
+    return obj.isVisible()
+
 def autoDownloads(item):
     return item.getAutoDownloaded() and downloadingOrPausedItems(item)
 

@@ -276,7 +276,7 @@ class DownloadStatusUpdater:
     happen often enough to cause CPU problems.
     """
 
-    UPDATE_CLIENT_INTERVAL = 5
+    UPDATE_CLIENT_INTERVAL = 1
 
     def __init__(self):
         self.toUpdate = set()

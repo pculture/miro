@@ -35,7 +35,6 @@ from miro import prefs
 from miro.plat import resources
 from miro.plat.specialfolders import baseMoviesDirectory, appDataDirectory
 import _winreg
-from xpcom import components
 
 def migrateSupport(oldAppName, newAppName):
     global migratedSupport
@@ -86,13 +85,9 @@ def migrateSupport(oldAppName, newAppName):
     
 def migrateVideos(oldAppName, newAppName):
     global migratedSupport
-    # we have to wait to import this
-    pybridgeCID = "@participatoryculture.org/dtv/pybridge;1"
-    pybridge = components.classes[pybridgeCID]. \
-                 getService(components.interfaces.pcfIDTVPyBridge)
     if migratedSupport:
         oldDefault = os.path.join(baseMoviesDirectory, oldAppName)
         newDefault = os.path.join(baseMoviesDirectory, newAppName)
         videoDir = config.get(prefs.MOVIES_DIRECTORY)
         if videoDir == newDefault:
-            pybridge.changeMoviesDirectory(newDefault, True)
+            app.controller.changeMoviesDirectory(newDefault, True)
