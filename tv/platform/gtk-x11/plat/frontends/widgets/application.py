@@ -37,6 +37,8 @@ from miro.plat.frontends.widgets import threads
 from miro.plat import mozsetup
 from miro.plat.utils import setProperties
 
+import logging
+
 class GtkX11Application(Application):
     def run(self, props_to_set):
         threads.callOnUIThread(mozsetup.setupMozillaEnvironment)
@@ -44,6 +46,14 @@ class GtkX11Application(Application):
         self.startup()
         setProperties(props_to_set)
         self.in_kde = None
+
+        logging.info("Gtk+ version:      %s", gtk.gtk_version)
+        logging.info("PyGObject version: %s", gtk.ver)
+        logging.info("PyGtk version:     %s", gtk.pygtk_version)
+        langs = ("LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG")
+        langs = [(l, os.environ.get(l)) for l in langs if os.environ.get(l)]
+        logging.info("Language:          %s", langs)
+
         gtk.main()
         app.controller.onShutdown()
 
