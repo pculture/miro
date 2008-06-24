@@ -63,7 +63,7 @@ class OSXApplication(Application):
     def run(self):
         AppHelper.runEventLoop(main=self.main)
 
-    def quitUI(self):
+    def quit_ui(self):
         self.gotQuit = True
         NSApplication.sharedApplication().terminate_(nil)
 

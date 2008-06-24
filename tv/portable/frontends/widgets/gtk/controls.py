@@ -43,7 +43,7 @@ class TextEntry(Widget):
         self._widget.set_text(text)
 
     def get_text(self):
-        return self._widget.get_text()
+        return self._widget.get_text().decode('utf-8')
 
     def set_width(self, chars):
         self._widget.set_width_chars(chars)

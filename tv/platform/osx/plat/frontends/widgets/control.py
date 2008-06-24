@@ -40,6 +40,7 @@ def round_up(float):
     return int(round(float + 0.5))
 
 class TextEntry(Widget):
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, intial_text=None, hidden=False):
         Widget.__init__(self)
         self.font = NSFont.systemFontOfSize_(NSFont.systemFontSize())
@@ -75,6 +76,7 @@ class TextEntry(Widget):
         pass
 
 class Checkbox(Widget):
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, label):
         Widget.__init__(self)
         self.label = label
@@ -130,6 +132,7 @@ class AttributedStringStyler(Widget):
         self.invalidate_size_request()
 
 class Button(AttributedStringStyler):
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, label, style='normal'):
         AttributedStringStyler.__init__(self)
         self.label = label
@@ -173,6 +176,7 @@ class OptionMenu(AttributedStringStyler):
         AttributedStringStyler.__init__(self)
         self.create_signal('changed')
         self.view = NSPopUpButton.alloc().init()
+        self.options = options
         for option in options:
             self.view.addItemWithTitle_(option)
 

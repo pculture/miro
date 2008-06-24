@@ -28,4 +28,4 @@
 
 
 # We just get our functionality from the portable GTK code.
-from miro.frontends.widgets.gtk.threads import callOnUIThread
+from miro.frontends.widgets.gtk.threads import call_on_ui_thread

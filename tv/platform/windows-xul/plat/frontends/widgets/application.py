@@ -58,7 +58,7 @@ class WindowsApplication(Application):
         print 'shutdown'
         app.controller.onShutdown()
 
-    def quitUI(self):
+    def quit_ui(self):
         gtk.main_quit()
 
     def initXULRunner(self):

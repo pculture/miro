@@ -47,6 +47,7 @@ from miro.plat.frontends.widgets.simple import Label
 alive_windows = set()
 
 class Window(signals.SignalEmitter):
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPIfor a description of the API for this class."""
     def __init__(self, title, rect):
         signals.SignalEmitter.__init__(self, 'active-change')
         self.nswindow = NSWindow.alloc()

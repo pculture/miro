@@ -33,7 +33,7 @@ import traceback
 
 from PyObjCTools import AppHelper
 
-def callWrapper(func, args, kwargs):
+def call_wrapper(func, args, kwargs):
     def wrapper():
         try:
             func(*args, **kwargs)
@@ -46,7 +46,7 @@ def callWrapper(func, args, kwargs):
             logging.warn("%s\n%s", msg, traceback.format_exc())
     return wrapper
 
-def callOnUIThread(func, *args, **kwargs):
+def call_on_ui_thread(func, *args, **kwargs):
     """Call a function in the UI thread."""
 
-    AppHelper.callAfter(callWrapper(func, args, kwargs))
+    AppHelper.callAfter(call_wrapper(func, args, kwargs))

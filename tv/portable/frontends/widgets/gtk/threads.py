@@ -40,5 +40,5 @@ def wrap_idle_func(func, args, kwargs):
     finally:
         gtk.gdk.threads_leave()
 
-def callOnUIThread(function, *args, **kwargs):
+def call_on_ui_thread(function, *args, **kwargs):
     gobject.idle_add(wrap_idle_func, function, args, kwargs)

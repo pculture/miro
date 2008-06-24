@@ -41,6 +41,7 @@ from miro.plat.frontends.widgets.layoutmanager import LayoutManager
 from miro.plat.frontends.widgets.rect import NSRectWrapper
 
 class ImageSurface:
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, image):
         """Create a new ImageSurface."""
         self.image = image.nsimage.copy()
@@ -71,6 +72,7 @@ class ImageSurface:
             x += current_width
 
 class DrawingStyle(object):
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, bg_color=None, text_color=None):
         self.use_custom_style = True
         self.use_custom_titlebar_background = True
@@ -86,6 +88,7 @@ class DrawingStyle(object):
         return (rgb.redComponent(), rgb.greenComponent(), rgb.blueComponent())
 
 class DrawingContext:
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, view, drawing_area, rect):
         self.view = view
         self.path = NSBezierPath.bezierPath()
@@ -183,6 +186,7 @@ class DrawingContext:
 
 
 class Gradient(object):
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, x1, y1, x2, y2):
         self.filter = CIFilter.filterWithName_('CILinearGradient')
         # Make y negative because we want  things to work in flipped
@@ -249,11 +253,13 @@ class DrawingMixin(object):
         pass
 
 class DrawingArea(DrawingMixin, Widget):
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self):
         Widget.__init__(self)
         self.view = DrawingView.alloc().init()
 
 class Background(DrawingMixin, SimpleBin):
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self):
         SimpleBin.__init__(self)
         self.view = DrawingView.alloc().init()

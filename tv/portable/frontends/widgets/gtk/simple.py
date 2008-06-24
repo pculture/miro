@@ -80,11 +80,10 @@ class Label(Widget):
         self._widget.set_line_wrap(wrap)
 
     def set_text(self, text):
-        self.text = text
         self._widget.set_text(text)
 
     def get_text(self):
-        return self.text
+        self._widget.get_text().decode('utf-8')
 
     def set_attr(self, attr):
         attr.end_index = 65535

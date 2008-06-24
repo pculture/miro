@@ -41,7 +41,7 @@ import logging
 
 class GtkX11Application(Application):
     def run(self, props_to_set):
-        threads.callOnUIThread(mozsetup.setupMozillaEnvironment)
+        threads.call_on_ui_thread(mozsetup.setupMozillaEnvironment)
         gtk.gdk.threads_init()
         self.startup()
         setProperties(props_to_set)
@@ -57,7 +57,7 @@ class GtkX11Application(Application):
         gtk.main()
         app.controller.onShutdown()
 
-    def quitUI(self):
+    def quit_ui(self):
         gtk.main_quit()
 
     def open_url(self, url):

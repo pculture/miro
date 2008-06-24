@@ -42,7 +42,7 @@ from miro.frontends.widgets import displays
 from miro.frontends.widgets import tablistmanager
 from miro.frontends.widgets import rundialog
 from miro.frontends.widgets.window import MiroWindow
-from miro.plat.frontends.widgets.threads import callOnUIThread
+from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.frontends.widgets.widgetset import Rect
 
 class Application:
@@ -131,7 +131,7 @@ class Application:
         if response:
             messages.NewPlaylistFolder(response).send_to_backend()
 
-    def quitUI(self):
+    def quit_ui(self):
         """Quit  out of the UI event loop."""
         raise NotImplementedError()
 
@@ -149,7 +149,7 @@ class Application:
         if hasattr(self, 'window'):
             self.window.close()
         app.controller.shutdown()
-        self.quitUI()
+        self.quit_ui()
 
     def connect_to_signals(self):
         signals.system.connect('error', self.handleError)
@@ -160,14 +160,14 @@ class Application:
         signals.system.connect('shutdown', self.onBackendShutdown)
 
     def handleDialog(self, obj, dialog):
-        callOnUIThread(rundialog.run, dialog)
+        call_on_ui_thread(rundialog.run, dialog)
 
     def handleStartupFailure(self, obj, summary, description):
         dialogs.show_message(summary, description)
         app.controller.shutdown()
 
     def handleStartupSuccess(self, obj):
-        callOnUIThread(self.buildUI)
+        call_on_ui_thread(self.buildUI)
 
     def handleDownloadComplete(self, obj, item):
         print "DOWLOAD COMPLETE"
@@ -196,7 +196,7 @@ class Application:
 
 class WidgetsMessageHandler(messages.MessageHandler):
     def call_handler(self, method, message):
-        callOnUIThread(method, message)
+        call_on_ui_thread(method, message)
 
     def tablist_for_message(self, message):
         if message.type == 'feed':

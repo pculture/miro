@@ -170,7 +170,7 @@ class TableModelBase(signals.SignalEmitter):
             iter.forward()
 
 class TableRow(object):
-    """A row in a TableModel list."""
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView for a description of the API for this class."""
     def __init__(self, column_values):
         self.update_values(column_values)
 
@@ -188,7 +188,7 @@ class TableRow(object):
         return iter(self.source_row)
 
 class TableModel(TableModelBase):
-    """https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView"""
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView for a description of the API for this class."""
     def __init__(self, *column_types):
         TableModelBase.__init__(self, column_types)
         self.row_indexes = {}

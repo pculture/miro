@@ -35,6 +35,7 @@ from miro.plat.frontends.widgets.base import Widget, SimpleBin, FlippedView
 """A collection of various simple widgets."""
 
 class Image(object):
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, path):
         self.path = path
         self.nsimage = NSImage.alloc().initByReferencingFile_(path)
@@ -42,6 +43,7 @@ class Image(object):
         self.height = self.nsimage.size().height
 
 class ImageDisplay(Widget):
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, image):
         Widget.__init__(self)
         self.image = image
@@ -52,6 +54,7 @@ class ImageDisplay(Widget):
         return self.image.width, self.image.height
 
 class Label(Widget):
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, text="", wrap=False):
         Widget.__init__(self)
         self.view = NSTextField.alloc().init()

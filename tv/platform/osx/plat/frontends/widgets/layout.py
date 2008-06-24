@@ -176,6 +176,7 @@ class Box(Container):
         return position
 
 class VBox(Box):
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def translate_size(self, size):
         return (size[1], size[0])
 
@@ -188,6 +189,7 @@ class VBox(Box):
                 placement.size.width, length)
 
 class HBox(Box):
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def translate_size(self, size):
         return (size[0], size[1])
 
@@ -200,6 +202,7 @@ class HBox(Box):
                 length, placement.size.height)
 
 class Alignment(Bin):
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     CREATES_VIEW = False
 
     def __init__(self, xalign=0.0, yalign=0.0, xscale=0.0, yscale=0.0,
@@ -355,6 +358,7 @@ class MiroSplitView (NSSplitView):
         NSBezierPath.strokeLineFromPoint_toPoint_(p1, p2)
 
 class Splitter(Container):
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self):
         Container.__init__(self)
         self.left = self.right = None
@@ -439,9 +443,7 @@ class Splitter(Container):
         self.child_removed(old_right)
 
 class Table(Container):
-    """Lays out widgets in a table.  It works very similar to the GTK Table
-    widget, or an HTML table.
-    """
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     CREATES_VIEW = False
 
     def __init__(self, columns, rows):
@@ -521,6 +523,7 @@ class Table(Container):
         self.invalidate_size_request()
 
 class Scroller(Bin):
+    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, horizontal, vertical):
         Bin.__init__(self)
         self.view = NSScrollView.alloc().init()
