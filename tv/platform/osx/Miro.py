@@ -105,7 +105,7 @@ def launchApplication():
 
     # Kick off the application
 
-    from miro.platform.frontends.widgets.application import OSXApplication
+    from miro.plat.frontends.widgets.application import OSXApplication
     OSXApplication().run()
 
 # =============================================================================

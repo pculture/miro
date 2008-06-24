@@ -43,7 +43,7 @@ from miro.plat.frontends.widgets.layoutmanager import LayoutManager
 
 def get_all_indexes(tableview, index_set):
     row_count = tableview.numberOfRows()
-    (_, rows) = index_set.getIndexes_maxCount_inIndexRange_(row_count, NSRange(0, row_count))
+    (_, rows, _) = index_set.getIndexes_maxCount_inIndexRange_(row_count, NSRange(0, row_count))
     return rows
 
 # Disclosure button used as a reference in get_left_offset()
