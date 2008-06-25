@@ -77,7 +77,19 @@ OPENSSL_LIBRARIES = [ 'ssleay32', 'libeay32']
 GTK_ROOT_PATH = os.path.join(BINARY_KIT_ROOT, 'gtk+-2.12.9-bundle')
 GTK_INCLUDE_PATH = os.path.join(GTK_ROOT_PATH, 'include')
 GTK_LIB_PATH = os.path.join(GTK_ROOT_PATH, 'lib')
-GTK_RUNTIME_LIBRARY_PATH = os.path.join(GTK_ROOT_PATH, 'bin')
+GTK_BIN_PATH = os.path.join(GTK_ROOT_PATH, 'bin')
+GTK_INCLUDE_DIRS = [
+        os.path.join(GTK_INCLUDE_PATH, 'atk-1.0'),
+        os.path.join(GTK_INCLUDE_PATH, 'gtk-2.0'),
+        os.path.join(GTK_INCLUDE_PATH, 'glib-2.0'),
+        os.path.join(GTK_INCLUDE_PATH, 'glib-2.0'),
+        os.path.join(GTK_INCLUDE_PATH, 'pango-1.0'),
+        os.path.join(GTK_INCLUDE_PATH, 'cairo'),
+        os.path.join(GTK_LIB_PATH, 'glib-2.0', 'include'),
+        os.path.join(GTK_LIB_PATH, 'gtk-2.0', 'include'),
+]
+
+PYGOBJECT_INCLUDE_DIR = os.path.join(BINARY_KIT_ROOT, 'pygobject')
 
 # Path to the Mozilla "xulrunner-sdk" distribution. We include a build in
 # the Binary Kit to save you a minute or two, but if you want to be
@@ -132,6 +144,7 @@ root_dir = os.path.normpath(os.path.abspath(root_dir))
 platform_dir = os.path.join(root_dir, 'platform', 'windows-xul', 'plat')
 widgets_dir = os.path.join(platform_dir, 'frontends', 'widgets')
 portable_dir = os.path.join(root_dir, 'portable')
+portable_widgets_dir = os.path.join(portable_dir, 'frontends', 'widgets')
 resources_dir = os.path.join(root_dir, 'resources')
 sys.path.insert(0, root_dir)
 # when we install the portable modules, they will be in the miro package, but
@@ -156,20 +169,22 @@ fasttypes_ext = \
         include_dirs = [BOOST_INCLUDE_PATH]
     )
 
+pygtkhacks_ext = Extension("miro.frontends.widgets.gtk.pygtkhacks",
+        sources = [
+            os.path.join(portable_widgets_dir, 'gtk', 'pygtkhacks.pyx'),
+        ],
+        include_dirs=GTK_INCLUDE_DIRS + [PYGOBJECT_INCLUDE_DIR],
+        library_dirs=[GTK_LIB_PATH],
+        libraries=[
+            'gtk-win32-2.0',
+        ])
+
 xulrunnerbrowser_ext_dir = os.path.join(widgets_dir, 'XULRunnerBrowser')
 xulrunnerbrowser_ext = Extension("miro.plat.frontends.widgets.xulrunnerbrowser",
         include_dirs=[
             os.path.join(XULRUNNER_SDK_PATH, 'sdk', 'include'),
             os.path.join(XULRUNNER_SDK_PATH, 'include'),
-            os.path.join(GTK_INCLUDE_PATH, 'atk-1.0'),
-            os.path.join(GTK_INCLUDE_PATH, 'gtk-2.0'),
-            os.path.join(GTK_INCLUDE_PATH, 'glib-2.0'),
-            os.path.join(GTK_INCLUDE_PATH, 'glib-2.0'),
-            os.path.join(GTK_INCLUDE_PATH, 'pango-1.0'),
-            os.path.join(GTK_INCLUDE_PATH, 'cairo'),
-            os.path.join(GTK_LIB_PATH, 'glib-2.0', 'include'),
-            os.path.join(GTK_LIB_PATH, 'gtk-2.0', 'include'),
-        ],
+        ] + GTK_INCLUDE_DIRS,
         define_macros=[
             ("XP_WIN", 1), 
             ("XPCOM_GLUE", 1),
@@ -197,7 +212,7 @@ xulrunnerbrowser_ext = Extension("miro.plat.frontends.widgets.xulrunnerbrowser",
 # Setting the path here allows py2exe to find the DLLS
 os.environ['PATH'] = ';'.join([
     os.environ['PATH'], BOOST_LIB_PATH, ZLIB_RUNTIME_LIBRARY_PATH,
-    OPENSSL_LIB_PATH, GTK_RUNTIME_LIBRARY_PATH ])
+    OPENSSL_LIB_PATH, GTK_BIN_PATH ])
 
 ##### The libtorrent extension ####
 
@@ -248,6 +263,7 @@ ext_modules = [
     database_ext,
     sorts_ext,
     libtorrent_ext,
+    pygtkhacks_ext,
     xulrunnerbrowser_ext,
 ]
 
@@ -265,6 +281,7 @@ data_files.extend(find_data_files('imagemagick', IMAGEMAGICK_DIR))
 image_loader_path = os.path.join('lib', 'gtk-2.0', '2.10.0', 'loaders')
 data_files.extend(find_data_files(image_loader_path, 
     os.path.join(GTK_ROOT_PATH, image_loader_path)))
+data_files.append(('', iglob(os.path.join(GTK_BIN_PATH, '*.dll'))))
 
 # handle the resources subdirectories.
 for dir in ('searchengines', 'wimages'):
