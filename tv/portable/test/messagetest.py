@@ -408,7 +408,7 @@ class ItemTrackTest(BackendMessagesTest):
         self.checkChangedMessage(1, removed=[self.items[1]])
 
     def testStop(self):
-        messages.StopTrackingItemsForFeed(self.feed.id, False).send_to_backend()
+        messages.StopTrackingItemsForFeed(self.feed.id).send_to_backend()
         self.runUrgentCalls()
         self.items[0].entry.title = u'new name'
         self.items[0].signalChange()
