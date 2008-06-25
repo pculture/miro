@@ -41,6 +41,7 @@ class StripperTest(MiroTestCase):
 
             expected = os.path.splitext(mem)[0] + ".expected"
             if not os.path.isfile(expected):
+                print "%s not found." % expected
                 print "Input:"
                 print "%s" % repr(input)
                 print "Output:"
