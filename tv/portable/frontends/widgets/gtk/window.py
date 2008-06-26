@@ -42,6 +42,32 @@ from miro.frontends.widgets import menus
 
 alive_windows = set() # Keeps the objects alive until destroy() is called
 
+def __get_fullscreen_stock_id():
+    try:
+        return gtk.STOCK_FULLSCREEN
+    except:
+        pass
+
+STOCK_IDS = {
+    "SaveVideo": gtk.STOCK_SAVE,
+    "CopyVideoURL": gtk.STOCK_COPY,
+    "RemoveVideos": gtk.STOCK_REMOVE,
+    "Fullscreen": __get_fullscreen_stock_id(),
+    "StopVideo": gtk.STOCK_MEDIA_STOP,
+    "NextVideo": gtk.STOCK_MEDIA_NEXT,
+    "PreviousVideo": gtk.STOCK_MEDIA_PREVIOUS,
+    "PlayPauseVideo": gtk.STOCK_MEDIA_PLAY,
+    "Open": gtk.STOCK_OPEN,
+    "EditPreferences": gtk.STOCK_PREFERENCES,
+    "Quit": gtk.STOCK_QUIT,
+    "Help": gtk.STOCK_HELP,
+    "About": gtk.STOCK_ABOUT,
+    "Translate": gtk.STOCK_EDIT
+}
+
+def get_stock_id(n):
+    return STOCK_IDS.get(n, None)
+
 class WrappedWindow(gtk.Window):
     def do_delete_event(self, event):
         wrappermap.wrapper(self).on_delete()
@@ -159,7 +185,7 @@ class MainWindow(Window):
         self.menubar.show_all()
 
     def make_action(self, action, label):
-        gtk_action = gtk.Action(action, label, None, None)
+        gtk_action = gtk.Action(action, label, None, get_stock_id(action))
         callback = menus.lookup_handler(action)
         if callback is not None:
             gtk_action.connect("activate", self.on_activate, callback)

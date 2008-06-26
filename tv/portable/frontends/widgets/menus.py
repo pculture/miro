@@ -49,6 +49,7 @@ def action_handler(name):
 def on_quit():
     app.widgetapp.quit()
 
+# group name -> list of MenuItem labels belonging to group
 action_groups = {
         'FeedSelected': [
             'CopyChannelURL',
