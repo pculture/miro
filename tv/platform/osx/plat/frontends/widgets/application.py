@@ -38,6 +38,7 @@ from miro import eventloop
 from miro.frontends.widgets.application import Application
 from miro.plat import migrateappname
 from miro.plat.utils import ensureDownloadDaemonIsTerminated
+from miro.plat.frontends.widgets import osxmenus
 
 class OSXApplication(Application):
     def __init__(self):
@@ -51,6 +52,7 @@ class OSXApplication(Application):
 
     def handleStartupSuccess(self, obj):
         migrateappname.migrateVideos('Democracy', 'Miro')
+        osxmenus.populate_menu()
         Application.handleStartupSuccess(self, obj)
 
     ### eventloop (our own one, not the Cocoa one) delegate methods

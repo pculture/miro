@@ -39,6 +39,7 @@ from miro import messages
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import displays
+from miro.frontends.widgets import menus
 from miro.frontends.widgets import tablistmanager
 from miro.frontends.widgets import rundialog
 from miro.frontends.widgets.window import MiroWindow
@@ -59,6 +60,7 @@ class Application:
     def buildUI(self):
         app.tab_list_manager = tablistmanager.TabListManager()
         app.display_manager = displays.DisplayManager()
+        app.menu_manager = menus.MenuManager()
         self.window = MiroWindow(_("Miro"), Rect(100, 300, 800, 600))
         app.tab_list_manager.handle_startup_selection()
         videobox = self.window.videobox

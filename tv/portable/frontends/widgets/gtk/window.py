@@ -28,13 +28,17 @@
 
 """miro.frontends.wigets.gtk.window -- GTK Window widget."""
 
+import StringIO
+
 import gobject
 import gtk
 
 from miro import app
+from miro import menubar
 from miro import signals
 from miro import dialogs
 from miro.frontends.widgets.gtk import wrappermap
+from miro.frontends.widgets import menus
 
 alive_windows = set() # Keeps the objects alive until destroy() is called
 
@@ -115,13 +119,80 @@ class Window(WindowBase):
         needed for the titlebar, frame and other decorations.  When the window
         is resived, content should also be resized.
         """
-        self._window.add(widget._widget)
-        self._window.child.show()
+        self._add_content_widget(widget)
+        widget._widget.show()
         self.content_widget = widget
+
+    def _add_content_widget(self, widget):
+        self._window.add(widget._widget)
 
     def get_content_widget(self, widget):
         """Get the current content widget."""
         return self.content_widget
+
+class MainWindow(Window):
+    def __init__(self, title, rect):
+        Window.__init__(self, title, rect)
+        self.vbox = gtk.VBox()
+        self._window.add(self.vbox)
+        self.vbox.show()
+        self.add_menus()
+        app.menu_manager.connect('enabled-changed', self.on_menu_change)
+
+    def add_menus(self):
+        self.ui_manager = gtk.UIManager()
+        self.make_actions()
+        uistring = StringIO.StringIO()
+        uistring.write('<ui><menubar name="MiroMenu">')
+        for menu in menubar.menubar:
+            uistring.write('<menu action="Menu%s">' % menu.action)
+            for menuitem in menu.menuitems:
+                if isinstance(menuitem, menubar.Separator):
+                    uistring.write("<separator />")
+                else:
+                    uistring.write('<menuitem action="%s" />' % menuitem.action)
+            uistring.write('</menu>')
+        uistring.write('</menubar></ui>')
+        self.ui_manager.add_ui_from_string(uistring.getvalue())
+        self.menubar = self.ui_manager.get_widget("/MiroMenu")
+        self.vbox.pack_start(self.menubar, expand=False)
+        self.menubar.show_all()
+
+    def make_action(self, action, label):
+        gtk_action = gtk.Action(action, label, None, None)
+        callback = menus.lookup_handler(action)
+        if callback is not None:
+            gtk_action.connect("activate", self.on_activate, callback)
+        action_group_name = menus.get_action_group_name(action)
+        action_group = self.action_groups[action_group_name]
+        action_group.add_action(gtk_action)
+
+    def make_actions(self):
+        self.action_groups = {}
+        for name in menus.action_group_names():
+            self.action_groups[name] = gtk.ActionGroup(name)
+
+        for menu in menubar.menubar:
+            self.make_action('Menu' + menu.action, menu.label)
+            for menuitem in menu.menuitems:
+                if isinstance(menuitem, menubar.Separator):
+                    continue
+                self.make_action(menuitem.action, menuitem.label)
+        for action_group in self.action_groups.values():
+            self.ui_manager.insert_action_group(action_group, -1)
+
+    def on_menu_change(self, menu_manager):
+        for name, action_group in self.action_groups.items():
+            if name in menu_manager.enabled_groups:
+                action_group.set_sensitive(True)
+            else:
+                action_group.set_sensitive(False)
+
+    def on_activate(self, action, callback):
+        callback()
+
+    def _add_content_widget(self, widget):
+        self.vbox.pack_start(widget._widget, expand=True)
 
 
 _stock = { dialogs.BUTTON_OK.text : gtk.STOCK_OK,

@@ -31,6 +31,7 @@
 from miro import app
 from miro.frontends.widgets import displays
 from miro.frontends.widgets import feedview
+from miro.frontends.widgets import menus
 from miro.frontends.widgets import tablist
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
@@ -48,8 +49,20 @@ class TabListManager(object):
                     self.on_selection_changed)
 
     def handle_startup_selection(self):
+        self.handle_new_selection()
+
+    def handle_new_selection(self):
         app.display_manager.select_display_for_tabs(self.selected_tab_list,
                 self.selected_tabs)
+        if self.selected_tab_list.type == 'feed':
+            app.menu_manager.handle_feed_selection(self.selected_tabs)
+        elif self.selected_tab_list.type == 'playlist':
+            app.menu_manager.handle_playlist_selection(self.selected_tabs)
+        elif self.selected_tab_list.type == 'static':
+            app.menu_manager.handle_static_tab_selection(self.selected_tabs)
+        else:
+            raise ValueError("Unknown tab list type: %s" %
+                    self.selected_tab_list.type)
 
     def all_tab_lists(self):
         return (self.static_tab_list, self.feed_list, self.playlist_list)
@@ -88,8 +101,7 @@ class TabListManager(object):
             self.update_selected_tabs()
         else:
             self.handle_no_tabs_selected()
-        app.display_manager.select_display_for_tabs(self.selected_tab_list,
-                self.selected_tabs)
+        self.handle_new_selection()
 
     def handle_no_tabs_selected(self):
         for tab in self.selected_tabs:

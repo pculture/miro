@@ -50,9 +50,9 @@ class WidgetHolder(widgetset.VBox):
         self.remove(self.child)
         self.child = None
 
-class MiroWindow(widgetset.Window):
+class MiroWindow(widgetset.MainWindow):
     def __init__(self, title, rect):
-        widgetset.Window.__init__(self, title, rect)
+        widgetset.MainWindow.__init__(self, title, rect)
         self.splitter = widgetset.Splitter()
         self.videobox = videobox.VideoBox()
         self.main_area_holder = WidgetHolder()

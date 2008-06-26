@@ -132,6 +132,10 @@ class Window(signals.SignalEmitter):
     def get_content_widget(self):
         return self.content_widget
 
+class MainWindow(Window):
+    # We don't need to add the menubar here, so there's nothing to do.
+    pass
+
 class Dialog:
     def __init__(self, title, description):
         self.title = title

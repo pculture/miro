@@ -59,6 +59,10 @@ class ItemListBase(widgetset.TableView):
         self.create_signal('play-video')
         self.item_iters = {}
 
+    def do_selection_changed(self):
+        selected_items = [self.model[i][0] for i in self.get_selection()]
+        app.menu_manager.handle_item_list_selection(selected_items)
+
     def do_hotspot_clicked(self, name, iter):
         item_info = self.model[iter][0]
         if name == 'download':

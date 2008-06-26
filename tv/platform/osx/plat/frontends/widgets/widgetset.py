@@ -41,7 +41,7 @@ from miro.plat.frontends.widgets.drawing import DrawingContext, \
 from miro.plat.frontends.widgets.rect import Rect
 from miro.plat.frontends.widgets.layout import VBox, HBox, Alignment, \
         Splitter, Table, Scroller, Expander
-from miro.plat.frontends.widgets.window import Window, Dialog
+from miro.plat.frontends.widgets.window import Window, MainWindow, Dialog
 from miro.plat.frontends.widgets.browser import Browser
 from miro.plat.frontends.widgets.simple import Image, ImageDisplay, Label, \
         SolidBackground, HSeparator, VSeparator
