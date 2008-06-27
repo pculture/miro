@@ -117,6 +117,7 @@ class ItemListDisplay(TabDisplay):
         self.widget = self.view.widget
 
     def on_play_video(self, view, video_path):
+        app.menu_manager.handle_playing_selection()
         video_display = VideoDisplay(video_path)
         app.display_manager.select_display(video_display)
 

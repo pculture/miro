@@ -49,17 +49,36 @@ def action_handler(name):
 def on_quit():
     app.widgetapp.quit()
 
-# group name -> list of MenuItem labels belonging to group
+# action_group name -> list of MenuItem labels belonging to action_group
+# NOTE: menu items can belong to at most one group!
 action_groups = {
         'FeedSelected': [
-            'CopyChannelURL',
+            'RenameChannel',
             'MailChannel',
+            'CopyChannelURL'
         ],
         'FeedsSelected' : [
+            'RemoveChannels',
             'UpdateChannels',
         ],
+        'PlaylistSelected' : [
+            'RenamePlaylist',
+        ],
+        'PlaylistsSelected' : [
+            'RemovePlaylists',
+        ],
         'PlayableSelected': [
+            'RenameVideo',
+            'RemoveVideos',
+            'CopyVideoURL',
+            'SaveVideo',
             'PlayPauseVideo',
+        ],
+        'Playing': [
+            'StopVideo',
+            'NextVideo',
+            'PreviousVideo',
+            'Fullscreen',
         ],
 }
 
@@ -92,6 +111,9 @@ class MenuManager(signals.SignalEmitter):
 
     def handle_playlist_selection(self, selected_playlists):
         self.enabled_groups = set(['AlwaysOn'])
+        self.enabled_groups.add('PlaylistsSelected')
+        if len(selected_playlists) == 1:
+            self.enabled_groups.add('PlaylistSelected')
         self.emit('enabled-changed')
 
     def handle_static_tab_selection(self, selected_static_tabs):
@@ -106,4 +128,13 @@ class MenuManager(signals.SignalEmitter):
         for item in selected_items:
             if item.downloaded:
                 self.enabled_groups.add('PlayableSelected')
+                break
+        self.emit('enabled-changed')
+
+    def handle_playing_selection(self):
+        """Handle the user playing an item.
+        """
+        self.enabled_groups = set(['AlwaysOn'])
+        self.enabled_groups.add('PlayableSelected')
+        self.enabled_groups.add('Playing')
         self.emit('enabled-changed')
