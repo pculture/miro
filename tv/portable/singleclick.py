@@ -396,7 +396,9 @@ def parseCommandLineArgs(args=None):
             elif ext in ('.rss', '.rdf', '.atom', '.ato'):
                 addFeed(arg)
             elif ext in ('.miro', '.democracy', '.dem', '.opml'):
-                addSubscriptions(*subscription.parseFile(arg))
+                ret = subscription.parseFile(arg)
+                if ret is not None:
+                    addSubscriptions(ret[0], ret[1])
             else:
                 addVideo(arg, len(args) == 1)
                 addedVideos = True
