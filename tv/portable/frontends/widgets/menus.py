@@ -29,7 +29,9 @@
 """Menu handling code."""
 
 from miro import app
+from miro import prefs
 from miro import signals
+from miro import config
 
 action_handlers = {}
 def lookup_handler(action_name):
@@ -48,6 +50,27 @@ def action_handler(name):
 @action_handler("Quit")
 def on_quit():
     app.widgetapp.quit()
+
+@action_handler("Donate")
+def on_report_bug():
+    app.widgetapp.open_url(config.get(prefs.DONATE_URL))
+
+@action_handler("Help")
+def on_report_bug():
+    app.widgetapp.open_url(config.get(prefs.HELP_URL))
+
+@action_handler("ReportBug")
+def on_report_bug():
+    app.widgetapp.open_url(config.get(prefs.BUG_REPORT_URL))
+
+@action_handler("Translate")
+def on_report_bug():
+    app.widgetapp.open_url(config.get(prefs.TRANSLATE_URL))
+
+@action_handler("Planet")
+def on_report_bug():
+    app.widgetapp.open_url(config.get(prefs.PLANET_URL))
+
 
 # action_group name -> list of MenuItem labels belonging to action_group
 # NOTE: menu items can belong to at most one group!
