@@ -71,6 +71,7 @@ def get_stock_id(n):
 class WrappedWindow(gtk.Window):
     def do_delete_event(self, event):
         wrappermap.wrapper(self).on_delete()
+        return True
     def do_focus_in_event(self, event):
         gtk.Window.do_focus_in_event(self, event)
         wrappermap.wrapper(self).emit('active-change')
