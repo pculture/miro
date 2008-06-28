@@ -61,7 +61,7 @@ class Application:
         app.tab_list_manager = tablistmanager.TabListManager()
         app.display_manager = displays.DisplayManager()
         app.menu_manager = menus.MenuManager()
-        self.window = MiroWindow(_("Miro"), Rect(100, 300, 800, 600))
+        self.window = MiroWindow(_("Miro"), self.get_main_window_dimensions())
         app.tab_list_manager.handle_startup_selection()
         videobox = self.window.videobox
         videobox.time_slider.connect('changed', self.on_video_time_change)
@@ -75,6 +75,13 @@ class Application:
         messages.TrackPlaylists().send_to_backend()
         messages.TrackDownloadCount().send_to_backend()
         messages.TrackNewCount().send_to_backend()
+
+    def get_main_window_dimensions(self):
+        """Override this to provide platform-specific Main Window dimensions.
+
+        Must return a Rect.
+        """
+        return Rect(100, 300, 800, 600)
 
     def on_video_time_change(self, slider, time):
         print 'seek to: ', time

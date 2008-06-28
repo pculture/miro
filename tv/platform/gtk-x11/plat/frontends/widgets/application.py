@@ -29,6 +29,7 @@
 import traceback
 import gtk
 import os
+import gconf
 
 from miro import app
 from miro import eventloop
@@ -36,8 +37,46 @@ from miro.frontends.widgets.application import Application
 from miro.plat.frontends.widgets import threads
 from miro.plat import mozsetup
 from miro.plat.utils import setProperties
+from miro.plat.config import gconf_lock
+
+from miro.frontends.widgets.gtk.widgetset import Rect
 
 import logging
+
+def _getPref(key, getter_name):
+    gconf_lock.acquire()
+    try:
+        client = gconf.client_get_default()
+        fullkey = '/apps/miro/' + key
+        value = client.get(fullkey)
+        if value is not None:
+            getter = getattr(value, getter_name)
+            return getter()
+        else:
+            return None
+    finally:
+        gconf_lock.release()
+
+def _setPref(key, setter_name, value):
+    gconf_lock.acquire()
+    try:
+        client = gconf.client_get_default()
+        fullkey = '/apps/miro/' + key
+        setter = getattr(client, setter_name)
+        setter(fullkey, value)
+    finally:
+        gconf_lock.release()
+
+def getInt(key): return _getPref('window/' + key, 'get_int')
+def getBool(key): return _getPref('window/' + key, 'get_bool')
+def getPlayerInt(key): return _getPref(key, 'get_int')
+def getPlayerBool(key): return _getPref(key, 'get_bool')
+
+def setInt(key, value): return _setPref('window/' + key, 'set_int', value)
+def setBool(key, value): return _setPref('window/' + key, 'set_bool', value)
+def setPlayerInt(key, value): return _setPref(key, 'set_int', value)
+def setPlayerBool(key, value): return _setPref(key, 'set_bool', value)
+
 
 class GtkX11Application(Application):
     def run(self, props_to_set):
@@ -57,6 +96,10 @@ class GtkX11Application(Application):
         gtk.main()
         app.controller.onShutdown()
 
+    def buildUI(self):
+        Application.buildUI(self)
+        self.window.connect('save-dimensions', self.set_main_window_dimensions)
+
     def quit_ui(self):
         gtk.main_quit()
 
@@ -73,3 +116,17 @@ class GtkX11Application(Application):
         if self.in_kde is None:
             self.in_kde = os.environ.get("KDE_FULL_SESSION", False)
         return self.in_kde
+
+    def get_main_window_dimensions(self):
+        x = getInt("x") or 100
+        y = getInt("y") or 300
+        width = getInt("width") or 800
+        height = getInt("height") or 600
+
+        return Rect(x, y, width, height)
+
+    def set_main_window_dimensions(self, window, x, y, width, height):
+        setInt("width", width)
+        setInt("height", height)
+        setInt("x", x)
+        setInt("y", y)

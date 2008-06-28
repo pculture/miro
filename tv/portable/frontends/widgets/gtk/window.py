@@ -78,6 +78,10 @@ class WrappedWindow(gtk.Window):
     def do_focus_out_event(self, event):
         gtk.Window.do_focus_out_event(self, event)
         wrappermap.wrapper(self).emit('active-change')
+    def do_configure_event(self, event):
+        wrappermap.wrapper(self).on_configure()
+        gtk.Window.do_configure_event(self, event)
+
 gobject.type_register(WrappedWindow)
 
 class WindowBase(signals.SignalEmitter):
@@ -117,11 +121,17 @@ class Window(WindowBase):
         self._window.set_title(title)
         self._window.set_default_size(rect.width, rect.height)
         self.create_signal('active-change')
+        self.create_signal('save-dimensions')
         alive_windows.add(self)
 
     def on_delete(self):
         app.widgetapp.quit()
         return True
+
+    def on_configure(self):
+        (x, y) = self._window.get_position()
+        (width, height) = self._window.get_size()
+        self.emit('save-dimensions', x, y, width, height)
 
     def show(self):
         if self not in alive_windows:
