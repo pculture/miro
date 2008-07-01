@@ -146,9 +146,9 @@ class Controller:
             self.removeCurrentItems()
 
     def removeCurrentFeed(self):
-        t, feeds = app.tab_list_manager.get_selection()
+        t, channel_infos = app.tab_list_manager.get_selection()
         if t == 'feed':
-            self.removeFeeds(feeds)
+            self.removeFeeds(channel_infos)
 
     def removeCurrentGuide(self):
         if app.selection.tabListSelection.getType() == 'addedguidetab':
@@ -174,6 +174,42 @@ class Controller:
             playlist = app.selection.getSelectedTabs()[0].obj
             for i in selected:
                 playlist.removeItem(i)
+
+    def renameSomething(self):
+        t, channel_infos = app.tab_list_manager.get_selection()
+        ci = channel_infos[0]
+
+        if t == 'feed' and ci.is_folder:
+            title = _('Rename Channel Folder')
+            description = _('Enter a new name for the channel folder %s') % \
+                            ci.name
+
+            name = dialogsnew.ask_for_string(title, description, 
+                                             initial_text=ci.name)
+            if name:
+                messages.RenameObject('feed-folder', ci.id, name).send_to_backend()
+
+        elif t == 'feed' and not ci.is_folder:
+            title = _('Rename Channel')
+            description = _('Enter a new name for the channel %s') % \
+                            ci.name
+
+            name = dialogsnew.ask_for_string(title, description, 
+                                             initial_text=ci.name)
+            if name:
+                messages.RenameObject(t, ci.id, name).send_to_backend()
+
+        elif t == 'playlist':
+            title = _('Rename Playlist')
+            description = _('Enter a new name for the playlist %s') % \
+                            ci.name
+
+            name = dialogsnew.ask_for_string(title, description, 
+                                             initial_text=ci.name)
+            if name:
+                messages.RenameObject(t, ci.id, name).send_to_backend()
+
+ 
 
     def renameCurrentTab(self, typeCheckList=None):
         selected = app.selection.getSelectedTabs()

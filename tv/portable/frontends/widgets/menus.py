@@ -76,7 +76,9 @@ def on_new_channel():
 def on_new_channel_folder():
     app.controller.addNewChannelFolder()
 
-# FIXME - RenameChannel
+@action_handler("RenameChannel")
+def on_rename_channel():
+    app.controller.renameSomething()
 
 @action_handler("RemoveChannels")
 def on_remove_channels():
@@ -93,7 +95,11 @@ def on_remove_channels():
 
 # FIXME - NewPlaylist
 # FIXME - NewPlaylistFolder
-# FIXME - RenamePlaylist
+
+@action_handler("RenamePlaylist")
+def on_rename_channel():
+    app.controller.renameSomething()
+
 # FIXME - RemovePlaylists
 
 # Playback menu

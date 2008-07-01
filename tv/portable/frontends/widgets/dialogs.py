@@ -72,6 +72,8 @@ def ask_for_string(title, description, initial_text=None):
         window.add_button(BUTTON_CANCEL.text)
         entry = widgetset.TextEntry()
         entry.set_activates_default(True)
+        if initial_text:
+            entry.set_text(initial_text)
         window.set_extra_widget(entry)
         response = window.run()
         if response == 0:
