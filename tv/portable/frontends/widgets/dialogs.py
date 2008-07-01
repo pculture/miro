@@ -49,6 +49,18 @@ def show_message(title, description):
     finally:
         window.destroy()
 
+def show_choice_dialog(title, description, choices):
+    """Display a message to the user and wait for them to choose an option.
+    Returns the button object chosen."""
+    window = widgetset.Dialog(title, description)
+    try:
+        for mem in choices:
+            window.add_button(mem.text)
+        response = window.run()
+        return choices[response]
+    finally:
+        window.destroy()
+
 def ask_for_string(title, description, initial_text=None):
     """Ask the user to enter a string in a TextEntry box.
     

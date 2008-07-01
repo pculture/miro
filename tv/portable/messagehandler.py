@@ -35,6 +35,7 @@ from miro import eventloop
 from miro import indexes
 from miro import messages
 from miro import views
+from miro.feed import Feed, getFeedByURL
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
 from miro.util import getSingletonDDBObject
 
@@ -385,6 +386,11 @@ class BackendMessageHandler(messages.MessageHandler):
                 feed.setFolder(None)
         tab_order.tab_ids = order
         tab_order.signalChange()
+
+    def handle_new_channel(self, message):
+        url = message.url
+        if not getFeedByURL(url):
+            Feed(url)
 
     def handle_new_channel_folder(self, message):
         ChannelFolder(message.name)

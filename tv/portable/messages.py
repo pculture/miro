@@ -128,9 +128,11 @@ class TrackChannels(BackendMessage):
     message, then it will send ChannelsChanged messages whenever the channel
     list changes.
     """
+    pass
 
 class StopTrackingChannels(BackendMessage):
     """Stop tracking channels."""
+    pass
 
 class TrackPlaylists(BackendMessage):
     """Begin tracking playlists.
@@ -139,9 +141,11 @@ class TrackPlaylists(BackendMessage):
     message, then it will send PlaylistsChanged messages whenever the list of
     playlists changes.
     """
+    pass
 
 class StopTrackingPlaylists(BackendMessage):
     """Stop tracking playlists."""
+    pass
 
 class TrackItemsForFeed(BackendMessage):
     """Begin tracking items for a feed
@@ -175,18 +179,22 @@ class TrackDownloadCount(BackendMessage):
     message.  It will also send DownloadCountChanged whenever the count
     changes.
     """
+    pass
 
 class StopTrackingDownloadCount(BackendMessage):
     """Stop tracking the download count."""
+    pass
 
 class TrackNewCount(BackendMessage):
     """Start tracking the number of new videos.  When this message is recieved
     the backend will send a corresponding NewCountChanged message.  It will
     also send NewCountChanged.
     """
+    pass
 
 class StopTrackingNewCount(BackendMessage):
     """Stop tracking the new videos count."""
+    pass
 
 class RenameObject(BackendMessage):
     """Tell the backend to rename a channel/playlist/folder.
@@ -196,7 +204,6 @@ class RenameObject(BackendMessage):
     id  -- id of the object to rename
     new_name -- new name for the object
     """
-
     def __init__(self, type, id, new_name):
         self.type = type
         self.id = id
@@ -214,6 +221,11 @@ class DeletePlaylist(BackendMessage):
     def __init__(self, id, is_folder):
         self.id = id
         self.is_folder = is_folder
+
+class NewChannel(BackendMessage):
+    """Create a new channel."""
+    def __init__(self, url):
+        self.url = util.toUni(url)
 
 class NewChannelFolder(BackendMessage):
     """Create a new channel folder."""
@@ -308,16 +320,17 @@ class ChannelInfo(object):
     unwatched -- number of unwatched videos
     available -- number of newly downloaded videos
     is_folder -- is this a channel folder?
+    has_downloading -- are videos currently being downloaded for this channel?
     base_href -- URL to use for relative links for items in this channel.  
       This will be None for ChannelFolders.
     autodownload_mode -- Current autodownload mode ('all', 'new' or 'off')
     """
-
     def __init__(self, channel_obj):
         self.name = channel_obj.getTitle()
         self.id = channel_obj.id
         self.unwatched = channel_obj.numUnwatched()
         self.available = channel_obj.numAvailable()
+        self.has_downloading = channel_obj.hasDownloadingItems()
         if not isinstance(channel_obj, ChannelFolder):
             self.thumbnail = channel_obj.getThumbnailPath()
             self.base_href = channel_obj.getBaseHref()

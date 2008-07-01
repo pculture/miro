@@ -47,9 +47,70 @@ def action_handler(name):
         return func
     return decorator
 
+# Video menu
+
+# FIXME - Open
+# FIXME - NewDownload
+# FIXME - CheckVersion
+# FIXME - RemoveVideos
+# FIXME - RenameVideo
+# FIXME - SaveVideo
+# FIXME - CopyVideoURL
+# FIXME - EditPreferences
+
 @action_handler("Quit")
 def on_quit():
     app.widgetapp.quit()
+
+
+# Channels menu
+
+@action_handler("NewChannel")
+def on_new_channel():
+    app.controller.addNewChannel()
+
+# FIXME - NewGuide
+# FIXME - NewSearchChannel
+
+@action_handler("NewChannelFolder")
+def on_new_channel_folder():
+    app.controller.addNewChannelFolder()
+
+# FIXME - RenameChannel
+
+@action_handler("RemoveChannels")
+def on_remove_channels():
+    app.controller.removeCurrentFeed()
+
+# FIXME - UpdateChannels
+# FIXME - UpdateAllChannels
+# FIXME - ImportChannels
+# FIXME - ExportChannels
+# FIXME - MailChannel
+# FIXME - CopyChannelURL
+
+# Playlists menu
+
+# FIXME - NewPlaylist
+# FIXME - NewPlaylistFolder
+# FIXME - RenamePlaylist
+# FIXME - RemovePlaylists
+
+# Playback menu
+
+# FIXME - PlayPauseVideo
+# FIXME - StopVideo
+# FIXME - NextVideo
+# FIXME - PreviousVideo
+# FIXME - FastForward
+# FIXME - Rewind
+# FIXME - UpVolume
+# FIXME - DownVolume
+# FIXME - Fullscreen
+
+# Help menu
+
+# FIXME - About
 
 @action_handler("Donate")
 def on_report_bug():
