@@ -180,35 +180,37 @@ class Controller:
         ci = channel_infos[0]
 
         if t == 'feed' and ci.is_folder:
+            t = 'feed-folder'
+        elif t == 'playlist' and ci.is_folder:
+            t = 'playlist-folder'
+
+        if t == 'feed-folder':
             title = _('Rename Channel Folder')
             description = _('Enter a new name for the channel folder %s') % \
                             ci.name
-
-            name = dialogsnew.ask_for_string(title, description, 
-                                             initial_text=ci.name)
-            if name:
-                messages.RenameObject('feed-folder', ci.id, name).send_to_backend()
 
         elif t == 'feed' and not ci.is_folder:
             title = _('Rename Channel')
             description = _('Enter a new name for the channel %s') % \
                             ci.name
 
-            name = dialogsnew.ask_for_string(title, description, 
-                                             initial_text=ci.name)
-            if name:
-                messages.RenameObject(t, ci.id, name).send_to_backend()
-
         elif t == 'playlist':
             title = _('Rename Playlist')
             description = _('Enter a new name for the playlist %s') % \
                             ci.name
 
-            name = dialogsnew.ask_for_string(title, description, 
-                                             initial_text=ci.name)
-            if name:
-                messages.RenameObject(t, ci.id, name).send_to_backend()
+        elif t == 'playlist-folder':
+            title = _('Rename Playlist Folder')
+            description = _('Enter a new name for the playlist folder %s') % \
+                            ci.name
 
+        else:
+            return
+
+        name = dialogsnew.ask_for_string(title, description,
+                                         initial_text=ci.name)
+        if name:
+            messages.RenameObject(t, ci.id, name).send_to_backend()
  
 
     def renameCurrentTab(self, typeCheckList=None):
