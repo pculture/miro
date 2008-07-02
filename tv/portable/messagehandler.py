@@ -333,6 +333,19 @@ class BackendMessageHandler(messages.MessageHandler):
         else:
             folder.setExpanded(message.expanded)
 
+    def handle_update_channel(self, message):
+        view = views.visibleFeeds
+        try:
+            feed = view.getObjectByID(message.id)
+        except database.ObjectNotFoundError:
+            logging.warn("feed not found: %s" % id)
+        else:
+            feed.update()
+
+    def handle_update_all_channels(self, message):
+        for f in views.feeds:
+            f.scheduleUpdateEvents(0)
+
     def handle_delete_channel(self, message):
         if message.is_folder:
             view = views.channelFolders

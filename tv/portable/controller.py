@@ -270,14 +270,15 @@ class Controller:
         for item in downloading:
             item.pause()
 
-    def updateCurrentFeed(self):
-        for tab in app.selection.getSelectedTabs():
-            if tab.isFeed():
-                tab.obj.scheduleUpdateEvents(0)
+    def updateSelectedChannels(self):
+        t, channel_infos = app.tab_list_manager.get_selection()
+        if t == 'feed':
+            channel_infos = [ci for ci in channel_infos if not ci.is_folder]
+            for ci in channel_infos:
+                messages.UpdateChannel(ci.id).send_to_backend()
 
-    def updateAllFeeds(self):
-        for f in views.feeds:
-            f.scheduleUpdateEvents(0)
+    def updateAllChannels(self):
+        messages.UpdateAllChannels().send_to_backend()
 
     def renameGuide(self, guide):
         if guide.getDefault():

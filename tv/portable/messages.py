@@ -209,6 +209,15 @@ class RenameObject(BackendMessage):
         self.id = id
         self.new_name = util.toUni(new_name)
 
+class UpdateChannel(BackendMessage):
+    """Updates a channel."""
+    def __init__(self, id):
+        self.id = id
+
+class UpdateAllChannels(BackendMessage):
+    """Updates all channels."""
+    pass
+
 class DeleteChannel(BackendMessage):
     """Delete a channel."""
     def __init__(self, id, is_folder, keep_items):

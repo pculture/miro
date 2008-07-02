@@ -84,8 +84,14 @@ def on_rename_channel():
 def on_remove_channels():
     app.controller.removeCurrentFeed()
 
-# FIXME - UpdateChannels
-# FIXME - UpdateAllChannels
+@action_handler("UpdateChannels")
+def on_update_channels():
+    app.controller.updateSelectedChannels()
+
+@action_handler("UpdateAllChannels")
+def on_update_all_channels():
+    app.controller.updateAllChannels()
+
 # FIXME - ImportChannels
 # FIXME - ExportChannels
 # FIXME - MailChannel
