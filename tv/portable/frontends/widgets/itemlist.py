@@ -165,10 +165,12 @@ class ItemContainerView(signals.SignalEmitter):
     def do_handle_item_list(self, message):
         """Handle an incomming item list.  They will be already sorted.
         """
+        pass
 
     def do_handle_items_changed(self, message):
         """Handle an items changed message.  They will already be sorted.
         """
+        pass
 
     def handle_item_list(self, message):
         sort_items(message.items)
