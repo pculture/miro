@@ -1594,6 +1594,7 @@ class RSSFeedImpl(RSSFeedImplBase):
                 modified = self.modified
             except:
                 modified = None
+            logging.info("updating %s", self.url)
             self.download = grabURL(self.url, self._updateCallback,
                     self._updateErrback, etag=etag,modified=modified,defaultMimeType=u'application/rss+xml',)
 
