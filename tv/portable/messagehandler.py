@@ -36,6 +36,7 @@ from miro import indexes
 from miro import messages
 from miro import views
 from miro.feed import Feed, getFeedByURL
+from miro.playlist import SavedPlaylist
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
 from miro.util import getSingletonDDBObject
 
@@ -394,6 +395,10 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_new_channel_folder(self, message):
         ChannelFolder(message.name)
+
+    def handle_new_playlist(self, message):
+        name = message.name
+        SavedPlaylist(name)
 
     def handle_new_playlist_folder(self, message):
         PlaylistFolder(message.name)

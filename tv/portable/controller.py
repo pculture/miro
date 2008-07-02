@@ -130,6 +130,23 @@ class Controller:
         if name:
             messages.NewChannelFolder(name).send_to_backend()
 
+    def addNewPlaylist(self):
+        # FIXME - get list of things selected to add to playlist?
+        title = _('Create Playlist')
+        description = _("Enter a name for the new playlist")
+
+        name = dialogsnew.ask_for_string(title, description)
+        if name:
+            messages.NewPlaylist(name).send_to_backend()
+
+    def addNewPlaylistFolder(self):
+        title = _('Create Playlist Folder')
+        description = _("Enter a name for the new playlist folder")
+
+        name = dialogsnew.ask_for_string(title, description)
+        if name:
+            messages.NewPlaylistFolder(name).send_to_backend()
+
     def removeCurrentSelection(self):
         if app.selection.tabListActive:
             selection = app.selection.tabListSelection
@@ -158,9 +175,9 @@ class Controller:
             self.removeGuide(guides[0])
 
     def removeCurrentPlaylist(self):
-        if app.selection.tabListSelection.getType() == 'playlisttab':
-            playlists = [t.obj for t in app.selection.getSelectedTabs()]
-            self.removePlaylists(playlists)
+        t, infos = app.tab_list_manager.get_selection()
+        if t == 'playlist':
+            self.removePlaylists(infos)
 
     def removeCurrentItems(self):
         if app.selection.itemListSelection.getType() != 'item':
@@ -227,9 +244,11 @@ class Controller:
             logging.warning ("Bad object type in renameCurrentTab() %s", obj.__class__)
 
     def renameCurrentChannel(self):
+        # FIXME - i think this can be removed
         self.renameCurrentTab(typeCheckList=[feed.Feed, folder.ChannelFolder])
 
     def renameCurrentPlaylist(self):
+        # FIXME - i think this can be removed
         self.renameCurrentTab(typeCheckList=[playlist.SavedPlaylist,
                 folder.PlaylistFolder])
 
@@ -283,27 +302,27 @@ class Controller:
                 guide.remove()
         dialog.run(dialogCallback)
 
-    def removePlaylist(self, playlist):
-        return self.removePlaylists([playlist])
+    def removePlaylist(self, playlist_info):
+        return self.removePlaylists([playlist_info])
 
-    def removePlaylists(self, playlists):
-        if len(playlists) == 1:
-            title = _('Remove %s') % playlists[0].getTitle()
+    def removePlaylists(self, playlist_infos):
+        if len(playlist_infos) == 1:
+            title = _('Remove %s') % playlist_infos[0].name
             description = _("Are you sure you want to remove %s") % \
-                    playlists[0].getTitle()
+                    playlist_infos[0].name
         else:
-            title = _('Remove %s channels') % len(playlists)
+            title = _('Remove %s playlists') % len(playlist_infos)
             description = \
                     _("Are you sure you want to remove these %s playlists") % \
-                    len(playlists)
-        dialog = dialogs.ChoiceDialog(title, description, 
-                dialogs.BUTTON_YES, dialogs.BUTTON_NO)
-        def dialogCallback(dialog):
-            if dialog.choice == dialogs.BUTTON_YES:
-                for playlist in playlists:
-                    if playlist.idExists():
-                        playlist.remove()
-        dialog.run(dialogCallback)
+                    len(playlist_infos)
+
+        ret = dialogsnew.show_choice_dialog(title, description,
+                                            [dialogs.BUTTON_YES,
+                                             dialogs.BUTTON_NO])
+
+        if ret == dialogs.BUTTON_YES:
+            for pi in playlist_infos:
+                messages.DeletePlaylist(pi.id, pi.is_folder).send_to_backend()
 
     def removeFeed(self, channel_info):
         return self.removeFeeds([channel_info])

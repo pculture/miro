@@ -227,6 +227,11 @@ class NewChannel(BackendMessage):
     def __init__(self, url):
         self.url = util.toUni(url)
 
+class NewPlaylist(BackendMessage):
+    """Create a new playlist."""
+    def __init__(self, name):
+        self.name = util.toUni(name)
+
 class NewChannelFolder(BackendMessage):
     """Create a new channel folder."""
     def __init__(self, name):
