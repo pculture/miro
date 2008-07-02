@@ -62,7 +62,6 @@ class TabDisplay(Display):
         raise NotImplementedError()
 
 class DisplayManager(object):
-
     def __init__(self):
         self.display_classes = [
                 FeedDisplay,
@@ -133,6 +132,9 @@ class ItemListDisplay(TabDisplay):
 
     def cleanup(self):
         self.view.stop_tracking()
+
+    def make_view(self, tab):
+        pass
 
 class FeedDisplay(ItemListDisplay):
     @staticmethod
