@@ -393,6 +393,7 @@ class ItemInfo(object):
     video_path -- The path to the video for this item (or None)
     thumbnail -- path to the thumbnail for this file
     thumbnail_large -- path to the larger thumbnail for this file
+    file_type -- filetype of the enclosure that would be downloaded
     download_info -- DownloadInfo object containing info about the download
         (or None)
     """
@@ -416,6 +417,13 @@ class ItemInfo(object):
         self.video_path = item.getVideoFilename()
         self.thumbnail = item.getThumbnail()
         self.thumbnail_large = item.getThumbnailLarge()
+
+        enclosure = item.getFirstVideoEnclosure()
+        if enclosure:
+            self.file_type = enclosure.get('type')
+        else:
+            self.file_type = None
+
         if item.downloader:
             self.download_info = DownloadInfo(item.downloader)
         else:

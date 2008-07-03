@@ -326,7 +326,10 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             extra = self.pack_download_status(layout)
         else:
             layout.set_font(0.77)
-            button = layout.button(_('Download'), self.hotspot=='download')
+            if self.data.file_type == u'application/x-bittorrent':
+                button = layout.button(_('Download Torrent'), self.hotspot=='download')
+            else:
+                button = layout.button(_('Download'), self.hotspot=='download')
             button.set_min_width(80)
             hotspot = cellpack.Hotspot('download', button)
             extra = cellpack.align_left(hotspot)
