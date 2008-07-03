@@ -33,7 +33,7 @@ just imports the widgets from their actual locations.
 
 from miro.plat.frontends.widgets.const import *
 from miro.plat.frontends.widgets.control import TextEntry, Checkbox, Button, \
-        OptionMenu, get_clipboard_text
+        OptionMenu
 from miro.plat.frontends.widgets.customcontrol import CustomButton, \
         ContinuousCustomButton, CustomSlider
 from miro.plat.frontends.widgets.drawing import DrawingContext, \

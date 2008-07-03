@@ -61,6 +61,10 @@ class WindowsApplication(Application):
     def quit_ui(self):
         gtk.main_quit()
 
+    def get_clipboard_text(self):
+        # FIXME - implement me!
+        return None
+
     def initXULRunner(self):
         app_dir = os.path.dirname(sys.executable)
         xul_dir = os.path.join(app_dir, 'xulrunner')

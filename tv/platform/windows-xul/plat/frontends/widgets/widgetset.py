@@ -102,7 +102,3 @@ class Browser(Widget):
 
     def get_current_url(self):
         return self._widget.get_current_url()
-
-def get_clipboard_text():
-    # FIXME - implement me!
-    return None

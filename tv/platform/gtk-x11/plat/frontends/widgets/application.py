@@ -112,6 +112,21 @@ class GtkX11Application(Application):
         else:
             os.spawnlp (os.P_NOWAIT, "gnome-open", "gnome-open", url)
 
+    def get_clipboard_text(self):
+        """Pulls text from the clipboard and returns it.  This text is not
+        filtered in any way--that's the job of the caller.
+        """
+        clipboard = gtk.Clipboard(selection="CLIPBOARD")
+        primary = gtk.Clipboard(selection="PRIMARY")
+
+        text = primary.wait_for_text()
+        if text is None:
+            text = clipboard.wait_for_text()
+
+        if text:
+            text = unicode(text)
+        return text
+
     def check_kde(self):
         if self.in_kde is None:
             self.in_kde = os.environ.get("KDE_FULL_SESSION", False)

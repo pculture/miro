@@ -125,8 +125,7 @@ class Controller:
     def addNewChannel(self):
         title = _('Add Channel')
         description = _("Enter the URL of the channel to add:")
-        text = dialogsnew.get_clipboard_text()
-        logging.info(text)
+        text = app.widgetapp.get_clipboard_text()
         if text:
             text = feed.normalizeFeedURL(text)
         else:
