@@ -40,6 +40,7 @@ import urllib
 # FIXME - this is icky
 from miro import dialogs
 from miro.frontends.widgets import dialogs as dialogsnew
+from miro.frontends.widgets.displays import FeedDisplay
 
 from miro.gtcache import gettext as _
 from miro import app
@@ -131,13 +132,28 @@ class Controller:
             messages.NewChannelFolder(name).send_to_backend()
 
     def addNewPlaylist(self):
-        # FIXME - get list of things selected to add to playlist?
+        # FIXME - this is really brittle.  this violates the Law of Demeter
+        # in ways that should make people cry.
+        try:
+            t = app.display_manager.current_display
+            if isinstance(t, FeedDisplay):
+                t = t.view
+                t = t.full_view
+                t = t.item_list
+                selection = [t.model[i][0] for i in t.get_selection()]
+                ids = [s.id for s in selection if s.downloaded]
+            else:
+                ids = []
+        except:
+            logging.exception("addNewPlaylist exception.")
+            ids = []
+
         title = _('Create Playlist')
         description = _("Enter a name for the new playlist")
 
         name = dialogsnew.ask_for_string(title, description)
         if name:
-            messages.NewPlaylist(name).send_to_backend()
+            messages.NewPlaylist(name, ids).send_to_backend()
 
     def addNewPlaylistFolder(self):
         title = _('Create Playlist Folder')

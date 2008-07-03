@@ -411,7 +411,10 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_new_playlist(self, message):
         name = message.name
-        SavedPlaylist(name)
+        ids = message.ids
+        if not ids:
+            ids = None
+        SavedPlaylist(name, ids)
 
     def handle_new_playlist_folder(self, message):
         PlaylistFolder(message.name)

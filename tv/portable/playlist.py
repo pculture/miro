@@ -159,11 +159,10 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
     which is a temporary playlist that holds the videos we're playing right
     now.
     """
-
-    def __init__(self, title, items=None):
+    def __init__(self, title, item_ids=None):
         self.title = title
-        if items is not None:
-            self.item_ids = [i.getID() for i in items]
+        if item_ids:
+            self.item_ids = item_ids
         else:
             self.item_ids = []
         self.folder_id = None

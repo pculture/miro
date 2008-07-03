@@ -79,7 +79,7 @@ class PlaylistTestCase(PlaylistTestBase):
 
     def testInitialList(self):
         initialList = [self.i1, self.i2, self.i3]
-        playlist = SavedPlaylist("rocketboom", initialList)
+        playlist = SavedPlaylist("rocketboom", [i.id for i in initialList])
         self.assertEquals(playlist.getTitle(), 'rocketboom')
         self.checkList(playlist, initialList)
 
@@ -90,7 +90,7 @@ class PlaylistTestCase(PlaylistTestBase):
 
     def testCallbacks(self):
         initialList = [self.i1, self.i2, self.i3]
-        playlist = SavedPlaylist("rocketboom", initialList)
+        playlist = SavedPlaylist("rocketboom", [i.id for i in initialList])
         playlist.getView().addAddCallback(self.addCallback)
         playlist.getView().addRemoveCallback(self.removeCallback)
         playlist.moveItem(self.i2, 0)
@@ -108,8 +108,8 @@ class PlaylistTestCase(PlaylistTestBase):
         self.checkList(playlist, [self.i1, self.i3, self.i4])
 
     def testMoveSelectionAboveItem(self):
-        playlist = SavedPlaylist("rocketboom", [self.i1, self.i2, self.i3,
-                self.i4])
+        playlist = SavedPlaylist("rocketboom",
+                                 [i.id for i in [self.i1, self.i2, self.i3, self.i4]])
         view = playlist.getView()
         self.doReorder(playlist, self.i3, [self.i1])
         self.checkList(playlist, [self.i2, self.i1, self.i3, self.i4])
@@ -128,7 +128,7 @@ class PlaylistTestCase(PlaylistTestBase):
 
     def testExpireRemovesItem(self):
         checkList = [self.i1, self.i2, self.i3, self.i4]
-        playlist = SavedPlaylist("rocketboom", checkList)
+        playlist = SavedPlaylist("rocketboom", [i.id for i in checkList])
         for i in [self.i1, self.i3, self.i4, self.i2]:
             i.expire()
             checkList.remove(i)
@@ -138,9 +138,9 @@ class PlaylistFolderTestCase(PlaylistTestBase):
     def setUp(self):
         PlaylistTestBase.setUp(self)
         self.playlistTabOrder = tabs.TabOrder(u'playlist')
-        self.p1 = SavedPlaylist("rocketboom", [self.i1, self.i3])
-        self.p2 = SavedPlaylist("telemusicvision", [self.i4, self.i3])
-        self.p3 = SavedPlaylist("digg", [self.i1, self.i2, self.i3, self.i4])
+        self.p1 = SavedPlaylist("rocketboom", [self.i1.id, self.i3.id])
+        self.p2 = SavedPlaylist("telemusicvision", [self.i4.id, self.i3.id])
+        self.p3 = SavedPlaylist("digg", [self.i1.id, self.i2.id, self.i3.id, self.i4.id])
         self.folder = PlaylistFolder("My Best Vids")
         self.folder.setExpanded(True)
         self.runPendingIdles() # The TabOrder gets updated in an idle call
@@ -200,9 +200,9 @@ class PlaylistFolderTestCase(PlaylistTestBase):
         self.checkList(self.p2, [self.i4, self.i3])
         self.checkList(self.p3, [self.i1, self.i2, self.i3, self.i4])
 
-        self.p1 = SavedPlaylist("rocketboom", [self.i1, self.i3])
-        self.p2 = SavedPlaylist("telemusicvision", [self.i4, self.i3])
-        self.p3 = SavedPlaylist("digg", [self.i1, self.i2, self.i3, self.i4])
+        self.p1 = SavedPlaylist("rocketboom", [self.i1.id, self.i3.id])
+        self.p2 = SavedPlaylist("telemusicvision", [self.i4.id, self.i3.id])
+        self.p3 = SavedPlaylist("digg", [self.i1.id, self.i2.id, self.i3.id, self.i4.id])
 
     def testRemoveItemFromPlaylist(self):
         for pl in [self.p1, self.p2, self.p3]:
