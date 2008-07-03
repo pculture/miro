@@ -104,7 +104,9 @@ def on_export_channels():
 def on_mail_channel():
     app.controller.mailChannel()
 
-# FIXME - CopyChannelURL
+@action_handler("CopyChannelURL")
+def on_copy_channel_url():
+    app.controller.copyChannelURL()
 
 # Playlists menu
 

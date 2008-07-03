@@ -78,8 +78,11 @@ class OSXApplication(Application):
 
     def get_clipboard_text(self):
         # FIXME - implement me!
-        # see tv/portable/frontends/widgets/dialogs.py:get_clipboard_text
         return None
+
+    def copy_text_to_clipboard(self, text):
+        # FIXME - implement me!
+        pass
 
     def main(self, args):
         try:

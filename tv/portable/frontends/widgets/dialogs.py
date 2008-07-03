@@ -40,9 +40,6 @@ of the dialogs run modally.
 from miro.plat.frontends.widgets import widgetset
 from miro.dialogs import BUTTON_OK, BUTTON_CANCEL
 
-def get_clipboard_text():
-    return widgetset.get_clipboard_text()
-
 def show_message(title, description):
     """Display a message to the user and wait for them to click OK"""
     window = widgetset.Dialog(title, description)

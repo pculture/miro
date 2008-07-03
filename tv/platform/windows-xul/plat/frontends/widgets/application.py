@@ -65,6 +65,10 @@ class WindowsApplication(Application):
         # FIXME - implement me!
         return None
 
+    def copy_text_to_clipboard(self, text):
+        # FIXME - implement me!
+        pass
+
     def initXULRunner(self):
         app_dir = os.path.dirname(sys.executable)
         xul_dir = os.path.join(app_dir, 'xulrunner')

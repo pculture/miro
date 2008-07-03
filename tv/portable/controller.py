@@ -122,6 +122,12 @@ class Controller:
                 emailfriend_url += "?"
             app.widgetapp.open_url(emailfriend_url + query)
 
+    def copyChannelURL(self):
+        t, channel_infos = app.tab_list_manager.get_selection()
+        if t == 'feed' and len(channel_infos) == 1:
+            ci = channel_infos[0]
+            app.widgetapp.copy_text_to_clipboard(ci.base_href)
+
     def addNewChannel(self):
         title = _('Add Channel')
         description = _("Enter the URL of the channel to add:")

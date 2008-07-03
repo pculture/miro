@@ -113,19 +113,22 @@ class GtkX11Application(Application):
             os.spawnlp (os.P_NOWAIT, "gnome-open", "gnome-open", url)
 
     def get_clipboard_text(self):
-        """Pulls text from the clipboard and returns it.  This text is not
-        filtered in any way--that's the job of the caller.
-        """
-        clipboard = gtk.Clipboard(selection="CLIPBOARD")
-        primary = gtk.Clipboard(selection="PRIMARY")
+        """Pulls text from the clipboard and returns it.
 
-        text = primary.wait_for_text()
+        This text is not filtered/transformed in any way--that's the job of
+        the caller.
+        """
+        text = gtk.Clipboard(selection="PRIMARY").wait_for_text()
         if text is None:
-            text = clipboard.wait_for_text()
+            text = gtk.Clipboard(selection="CLIPBOARD").wait_for_text()
 
         if text:
             text = unicode(text)
         return text
+
+    def copy_text_to_clipboard(self, text):
+        gtk.Clipboard(selection="CLIPBOARD").set_text(text)
+        gtk.Clipboard(selection="PRIMARY").set_text(text)
 
     def check_kde(self):
         if self.in_kde is None:
