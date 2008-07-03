@@ -40,6 +40,9 @@ of the dialogs run modally.
 from miro.plat.frontends.widgets import widgetset
 from miro.dialogs import BUTTON_OK, BUTTON_CANCEL
 
+def get_clipboard_text():
+    return widgetset.get_clipboard_text()
+
 def show_message(title, description):
     """Display a message to the user and wait for them to click OK"""
     window = widgetset.Dialog(title, description)
@@ -63,7 +66,10 @@ def show_choice_dialog(title, description, choices):
 
 def ask_for_string(title, description, initial_text=None):
     """Ask the user to enter a string in a TextEntry box.
-    
+
+    description - textual description with newlines
+    initial_text - None, string or callable to pre-populate the entry box
+
     Returns the value entered, or None if the user clicked cancel
     """
     window = widgetset.Dialog(title, description)
@@ -73,6 +79,8 @@ def ask_for_string(title, description, initial_text=None):
         entry = widgetset.TextEntry()
         entry.set_activates_default(True)
         if initial_text:
+            if callable(initial_text):
+                initial_text = initial_text()
             entry.set_text(initial_text)
         window.set_extra_widget(entry)
         response = window.run()

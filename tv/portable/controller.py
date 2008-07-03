@@ -123,16 +123,21 @@ class Controller:
             app.widgetapp.open_url(emailfriend_url + query)
 
     def addNewChannel(self):
-        # FIXME - add code to pull from clipboard here
         title = _('Add Channel')
         description = _("Enter the URL of the channel to add:")
+        text = dialogsnew.get_clipboard_text()
+        logging.info(text)
+        if text:
+            text = feed.normalizeFeedURL(text)
+        else:
+            text = ""
 
         while 1:
-            url = dialogsnew.ask_for_string(title, description)
-            if url == None:
+            text = dialogsnew.ask_for_string(title, description, initial_text=text)
+            if text == None:
                 return
 
-            normalized_url = feed.normalizeFeedURL(url)
+            normalized_url = feed.normalizeFeedURL(text)
             if feed.validateFeedURL(normalized_url):
                 break
 

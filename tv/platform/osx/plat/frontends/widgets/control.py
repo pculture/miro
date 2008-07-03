@@ -194,3 +194,7 @@ class OptionMenu(AttributedStringStyler):
                     menu_item.title(), attributes)
             menu_item.setAttributedTitle_(string)
         self.view.setFont_(attributes[NSFontAttributeName])
+
+def get_clipboard_text():
+    # FIXME - implement me!
+    return None

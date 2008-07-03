@@ -27,6 +27,7 @@
 # statement from all source files in the program, then also delete it here.
 
 import gtkmozembed
+import gtk
 
 # Most of our stuff comes from the portable code.
 from miro.frontends.widgets.gtk.widgetset import *
@@ -64,3 +65,25 @@ def do_xpcom_setup():
 
     mozprompt.stop_prompts()
     xpcom_setup = True
+
+
+CLIPBOARD = {}
+
+def init_clipboard():
+    global CLIPBOARD
+    if not CLIPBOARD:
+        CLIPBOARD["clipboard"] = gtk.Clipboard(selection="CLIPBOARD")
+        CLIPBOARD["primary"] = gtk.Clipboard(selection="PRIMARY")
+
+def get_clipboard_text():
+    """Pulls text from the clipboard and returns it.  This text is not
+    filtered in any way--that's the job of the caller.
+    """
+    init_clipboard()
+    text = CLIPBOARD["primary"].wait_for_text()
+    if text is None:
+        text = CLIPBOARD["clipboard"].wait_for_text()
+
+    if text:
+        text = unicode(text)
+    return text
