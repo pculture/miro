@@ -104,6 +104,14 @@ class Controller:
         app.selection.itemListSelection.selectAll()
         app.selection.setTabListActive(False)
 
+    def importChannels(self):
+        # FIXME - implement me
+        logging.info("FIXME - need a filechooser dialog")
+
+    def exportChannels(self):
+        # FIXME - implement me
+        logging.info("FIXME - need a filechooser dialog")
+
     def addNewChannel(self):
         # FIXME - add code to pull from clipboard here
         title = _('Add Channel')

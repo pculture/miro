@@ -92,8 +92,14 @@ def on_update_channels():
 def on_update_all_channels():
     app.controller.updateAllChannels()
 
-# FIXME - ImportChannels
-# FIXME - ExportChannels
+@action_handler("ImportChannels")
+def on_import_channels():
+    app.controller.importChannels()
+
+@action_handler("ExportChannels")
+def on_export_channels():
+    app.controller.exportChannels()
+
 # FIXME - MailChannel
 # FIXME - CopyChannelURL
 
