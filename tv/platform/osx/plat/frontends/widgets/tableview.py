@@ -42,8 +42,11 @@ from miro.plat.frontends.widgets.helpers import NotificationForwarder
 from miro.plat.frontends.widgets.layoutmanager import LayoutManager
 
 def get_all_indexes(tableview, index_set):
-    row_count = tableview.numberOfRows()
-    (_, rows, _) = index_set.getIndexes_maxCount_inIndexRange_(row_count, NSRange(0, row_count))
+    rows = list()
+    index = index_set.firstIndex()
+    while (index != NSNotFound):
+        rows.append(index)
+        index = index_set.indexGreaterThanIndex_(index)
     return rows
 
 # Disclosure button used as a reference in get_left_offset()
