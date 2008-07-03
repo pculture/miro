@@ -69,7 +69,7 @@ class Menu:
         self.stateLabels = {}
         self.shortcuts = {}
         self.impls = {}
-        self.menuitems = menuitems
+        self.menuitems = list(menuitems)
         for item in menuitems:
             if not isinstance(item, Separator):
                 self.labels[item.action] = item.label
@@ -97,10 +97,22 @@ class Menu:
             return self.shortcuts[action]
         except:
             return ()
+    
+    def findItem(self, itemAction):
+        for item in self.menuitems:
+            if hasattr(item, 'action') and item.action == itemAction:
+                return item
+        return None
+    
+    def extractMenuItem(self, itemAction):
+        item = self.findItem(itemAction)
+        if item is not None:
+            self.menuitems.remove(item)
+        return item
 
 class MenuBar:
     def __init__(self, *menus):
-        self.menus = menus
+        self.menus = list(menus)
         self.labels = {}
         self.stateLabels = {}
         self.shortcuts = {}
@@ -129,6 +141,7 @@ class MenuBar:
                 return Template(self.stateLabels[action][state]).substitute(**variables)
             except KeyError:
                 return self.getLabel(action)
+
     def getShortcuts(self, action):
         try:
             if self.shortcuts[action] is None:
@@ -137,6 +150,7 @@ class MenuBar:
                 return self.shortcuts[action]
         except KeyError:
             return ()
+
     def getShortcut(self, action):
         all = self.getShortcuts(action)
         if len(all) > 0:
@@ -152,14 +166,26 @@ class MenuBar:
     
     def addImpl(self, action, impl):
         self.impls[action] = impl
+    
+    def findMenu(self, menuAction):
+        for menu in self.menus:
+            if hasattr(menu, 'action') and menu.action == menuAction:
+                return menu
+        return None
+    
+    def extractMenuItem(self, menuAction, itemAction):
+        menu = self.findMenu(menuAction)
+        if menu is not None:
+            return menu.extractMenuItem(itemAction)
+        return None
 
 VideoItems = [
-    MenuItem(_("_Open"), "Open", (Key("o", MOD),)),
-    MenuItem(_("_Download Video"), "NewDownload", ()),
+    MenuItem(_("_Open..."), "Open", (Key("o", MOD),)),
+    MenuItem(_("_Download Video..."), "NewDownload", ()),
     #MenuItem(_("Op_en Recent"), "OpenRecent", ()),
     MenuItem(_("Check _Version"), "CheckVersion", ()),
     Separator(),
-    MenuItem(_("_Remove Video"), "RemoveVideos", (Key(DELETE),Key(BKSPACE, MOD)), enabled=False,
+    MenuItem(_("_Remove Video..."), "RemoveVideos", (Key(DELETE),Key(BKSPACE, MOD)), enabled=False,
              plural=_("_Remove Videos")),
     MenuItem(_("Re_name Video"), "RenameVideo", (), enabled=False),
     MenuItem(_("Save Video _As..."), "SaveVideo", (Key("s",MOD),), enabled=False,
@@ -167,7 +193,7 @@ VideoItems = [
     MenuItem(_("Copy Video _URL"), "CopyVideoURL", (Key("u", MOD),), enabled=False),
     Separator(),
     MenuItem(_("_Options..."), "EditPreferences", ()),
-    MenuItem(_("_Quit"),"Quit", (Key("q",MOD),)),
+    MenuItem(_("_Quit"), "Quit", (Key("q",MOD),)),
 ]
 
 if platform == "gtk-x11":
@@ -194,8 +220,8 @@ ChannelItems = [
              folders=_("_Remove Channel Folders..."),
              folder=_("_Remove Channel Folder..."),
              ),
-    MenuItem(_("_Update Channel..."), "UpdateChannels", (Key("r",MOD),Key(F5)), enabled=False,
-             plural=_("_Update Channels...")),
+    MenuItem(_("_Update Channel"), "UpdateChannels", (Key("r",MOD),Key(F5)), enabled=False,
+             plural=_("_Update Channels")),
     MenuItem(_("Update _All Channels"), "UpdateAllChannels", (Key("r",MOD,SHIFT),)),
     Separator(),
     MenuItem(_("_Import Channels (OPML)..."), "ImportChannels", ()),
@@ -205,8 +231,8 @@ ChannelItems = [
     MenuItem(_("Copy Channel _Link"), "CopyChannelURL", (), enabled=False),
 ]
 PlaylistItems = [
-    MenuItem(_("New _Playlist"), "NewPlaylist", (Key("p",MOD),)),
-    MenuItem(_("New Playlist Fol_der"), "NewPlaylistFolder",(Key("p",MOD,SHIFT),)),
+    MenuItem(_("New _Playlist..."), "NewPlaylist", (Key("p",MOD),)),
+    MenuItem(_("New Playlist Fol_der..."), "NewPlaylistFolder",(Key("p",MOD,SHIFT),)),
     Separator(),
     MenuItem(_("Re_name Playlist"),"RenamePlaylist",(), enabled=False),
     MenuItem(_("_Remove Playlist"),"RemovePlaylists", (Key(DELETE),Key(BKSPACE, MOD)), enabled=False,
@@ -240,13 +266,13 @@ PlaybackItems = [
 ]
 
 HelpItems = [
-    MenuItem(_("_About"), "About", ()),
+    MenuItem(_("_About Miro"), "About", ()),
     MenuItem(_("_Donate"), "Donate", ()),
     MenuItem(_("_Help"), "Help", (Key(F1),)),
     Separator(),
     MenuItem(_("Report a _Bug"), "ReportBug", ()),
     MenuItem(_("_Translate"), "Translate", ()),
-    MenuItem(_("_Planet"), "Planet", ()),
+    MenuItem(_("_Planet Miro"), "Planet", ()),
 ]
 
 if platform == "gtk-x11":
@@ -254,13 +280,12 @@ if platform == "gtk-x11":
 else:
     main_title = _("_File")
 
-menubar = \
-        MenuBar(Menu(main_title, "Video", *VideoItems),
-                Menu(_("_Channels"), "Channels", *ChannelItems),
-                Menu(_("_Playlists"), "Playlists", *PlaylistItems),
-                Menu(_("P_layback"), "Playback", *PlaybackItems),
-                Menu(_("_Help"), "Help", *HelpItems),
-                )
+menubar = MenuBar(Menu(main_title, "Video", *VideoItems),
+                  Menu(_("_Channels"), "Channels", *ChannelItems),
+                  Menu(_("_Playlists"), "Playlists", *PlaylistItems),
+                  Menu(_("P_layback"), "Playback", *PlaybackItems),
+                  Menu(_("_Help"), "Help", *HelpItems),
+                 )
 
 traymenu = Menu("Miro","Miro",
                 MenuItem(_("Play Unwatched ($numUnwatched)"), "PlayUnwatched", ()),
@@ -269,7 +294,6 @@ traymenu = Menu("Miro","Miro",
                 Separator(),
                 MenuItem(_("Options..."), "EditPreferences", ()),
                 Separator(),
-                MenuItem(_("Hide Window"),"RestoreWindow", (),
-                         restore=_("Show Window")),
+                MenuItem(_("Hide Window"), "RestoreWindow", (), restore=_("Show Window")),
                 MenuItem(_("Quit"),"Quit", ()),
                 )                

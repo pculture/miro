@@ -34,7 +34,8 @@ from AppKit import *
 from Foundation import *
 
 from miro import app
-from miro import menubar
+from miro.menubar import menubar, Menu, MenuItem, Separator, Key, MOD, ALT
+from miro.gtcache import gettext as _
 from miro.frontends.widgets import menus
 
 class MenuHandler(NSObject):
@@ -59,7 +60,10 @@ all_handlers = set()
 def make_menu_item(menu_item):
     nsmenuitem = NSMenuItem.alloc().init()
     nsmenuitem.setTitleWithMnemonic_(menu_item.label.replace("_", "&"))
-    if menu_item.action:
+    if isinstance(menu_item, MenuItem):
+        if len(menu_item.shortcuts) > 0:
+            if isinstance(menu_item.shortcuts[0].key, str):
+                nsmenuitem.setKeyEquivalent_(menu_item.shortcuts[0].key)
         handler = MenuHandler.alloc().initWithAction_(menu_item.action)
         nsmenuitem.setTarget_(handler)
         nsmenuitem.setAction_('handleMenuItem:')
@@ -68,19 +72,72 @@ def make_menu_item(menu_item):
 
 def populate_single_menu(nsmenu, miro_menu):
     for miro_item in miro_menu.menuitems:
-        if isinstance(miro_item, menubar.Separator):
+        if isinstance(miro_item, Separator):
             item = NSMenuItem.separatorItem()
         else:
             item = make_menu_item(miro_item)
         nsmenu.addItem_(item)
 
 def populate_menu():
+    # Application menu
+    miroMenuItems = [
+        menubar.extractMenuItem("Help", "About"),
+        Separator(),
+        menubar.extractMenuItem("Help", "Donate"),
+        menubar.extractMenuItem("Video", "CheckVersion"),
+        Separator(),
+        menubar.extractMenuItem("Video", "EditPreferences"),
+        Separator(),
+        MenuItem(_("Services"), "NewChannel", ()),
+        Separator(),
+        MenuItem(_("Hide Miro"), "NewChannel", (Key("h"),)),
+        MenuItem(_("Hide Others"), "NewChannel", (Key("h", MOD, ALT),)),
+        MenuItem(_("Show All"), "NewChannel", ()),
+        Separator(),
+        menubar.extractMenuItem("Video", "Quit")
+    ]
+    miroMenu = Menu("Miro", "Miro", *miroMenuItems)
+    miroMenu.findItem("EditPreferences").label = _("Preferences...")
+    miroMenu.findItem("EditPreferences").shortcuts = (Key(","),)
+    miroMenu.findItem("Quit").label = _("Quit Miro")
+
+    # File menu
+    closeWinItem = MenuItem(_("Close Window"), "NewChannel", (Key("w"),))
+    menubar.findMenu("Video").menuitems.append(closeWinItem)
+
+    # Edit menu
+    editMenuItems = [
+        MenuItem(_("Cut"), "Cut", (Key("x"),)),
+        MenuItem(_("Copy"), "Copy", (Key("c"),)),
+        MenuItem(_("Paste"), "Paste", (Key("v"),)),
+        MenuItem(_("Delete"), "Delete", ()),
+        Separator(),
+        MenuItem(_("Select All"), "SelectAll", (Key("a"),))
+    ]
+    editMenu = Menu(_("Edit"), "Edit", *editMenuItems)
+    menubar.menus.insert(1, editMenu)
+
+    # Window menu
+    windowMenuItems = [
+        MenuItem(_("Zoom"), "Zoom", ()),
+        MenuItem(_("Minimize"), "Minimize", (Key("m"),)),
+        Separator(),
+        MenuItem(_("Main Window"), "ShowMain", (Key("0"),)),
+        Separator(),
+        MenuItem(_("Bring All to Front"), "BringAllToFront", ()),
+    ]
+    windowMenu = Menu(_("Window"), "Window", *windowMenuItems)
+    menubar.menus.insert(5, windowMenu)
+
+    # Help Menu
+    menubar.findMenu("Help").findItem("Help").label = _("Miro Help")
+
+    # Now populate the main menu bar
     main_menu = NSApp().mainMenu()
+    appMenu = main_menu.itemAtIndex_(0).submenu()
+    populate_single_menu(appMenu, miroMenu)
 
-    app_menu =  main_menu.itemAtIndex_(0).submenu()
-    populate_single_menu(app_menu, menubar.menubar.menus[0])
-
-    for menu in menubar.menubar.menus[1:]:
+    for menu in menubar.menus:
         nsmenu = NSMenu.alloc().init()
         nsmenu.setTitle_(menu.label.replace("_", ""))
         populate_single_menu(nsmenu, menu)

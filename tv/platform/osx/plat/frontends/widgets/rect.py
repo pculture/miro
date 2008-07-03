@@ -28,10 +28,7 @@
 
 """miro.plat.frontends.widgets.rect -- Simple Rectangle class."""
 
-from AppKit import *
-from Foundation import *
-from objc import NO, nil
-import WebKit
+from Foundation import NSMakeRect
 
 class Rect(object):
     def __init__(self, x, y, width, height):

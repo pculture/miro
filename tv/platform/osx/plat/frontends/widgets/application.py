@@ -35,10 +35,13 @@ from PyObjCTools import AppHelper
 
 from miro import app
 from miro import eventloop
+from miro import prefs
+from miro import config
 from miro.frontends.widgets.application import Application
 from miro.plat import migrateappname
 from miro.plat.utils import ensureDownloadDaemonIsTerminated
 from miro.plat.frontends.widgets import osxmenus
+from miro.plat.frontends.widgets.rect import Rect
 
 class OSXApplication(Application):
     def __init__(self):
@@ -64,8 +67,12 @@ class OSXApplication(Application):
 
     def run(self):
         AppHelper.runEventLoop(main=self.main)
-
+    
     def quit_ui(self):
+        windowFrame = NSStringFromRect(self.window.nswindow.frame())
+        config.set(prefs.MAIN_WINDOW_FRAME, windowFrame)
+        config.save()
+        
         self.gotQuit = True
         NSApplication.sharedApplication().terminate_(nil)
 
@@ -93,6 +100,14 @@ class OSXApplication(Application):
         # unfortunately, it doesn't have the same semantics under UNIX
         # as under other OSes. Sometimes it blocks, sometimes it doesn't.
         NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
+    
+    def get_main_window_dimensions(self):
+        windowFrame = config.get(prefs.MAIN_WINDOW_FRAME)
+        if windowFrame is None:
+            windowFrame = NSMakeRect(0,0,800,600)
+        else:
+            windowFrame = NSRectFromString(windowFrame)
+        return Rect(windowFrame.origin.x, windowFrame.origin.y, windowFrame.size.width, windowFrame.size.height)
 
 class AppController(NSObject):
     def initWithApp_(self, application):

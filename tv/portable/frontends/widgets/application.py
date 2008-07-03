@@ -201,7 +201,7 @@ class Application:
         chkboxdialog.run(callback)
 
     def onBackendShutdown(self, obj):
-        print 'Shutting down...'
+        logging.info('Shutting down...')
 
 class WidgetsMessageHandler(messages.MessageHandler):
     def call_handler(self, method, message):

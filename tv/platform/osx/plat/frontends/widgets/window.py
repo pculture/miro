@@ -59,6 +59,7 @@ class Window(signals.SignalEmitter):
                 NSBackingStoreBuffered,
                 NO)
         self.nswindow.setTitle_(title)
+        self.nswindow.setMinSize_(NSSize(800, 600))
         self.content_view = FlippedView.alloc().initWithFrame_(rect.nsrect)
         self.content_view.setAutoresizesSubviews_(NO)
         self.nswindow.setContentView_(self.content_view)
