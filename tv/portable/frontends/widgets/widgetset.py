@@ -92,20 +92,3 @@ class PlayButton(CustomControl):
 
     def size_request(self):
         return 50, 50
-
-# What is this ?!??! There's already a Miro window in frontends.widgets.window - luc
-#class MiroWindow(Window):
-#    def __init__(self, title, rect):
-#        Window.__init__(self, title, rect)
-#        self.connect('active-change', 
-#                lambda window: controlbox.queue_redraw())
-#        # self.splitter = Splitter()
-#        # b1 = make_browser('http://google.com/')
-#        # b2 = make_browser('http://getmiro.com/')
-#        # controlbox = PlaybackControls()
-#        # vbox = VBox()
-#        # vbox.pack_start(b2, True)
-#        # vbox.pack_start(controlbox)
-#        # self.splitter.set_left(b1)
-#        # self.splitter.set_right(vbox)
-#        # self.set_content_widget(self.splitter)
