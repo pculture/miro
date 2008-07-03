@@ -112,6 +112,16 @@ class Controller:
         # FIXME - implement me
         logging.info("FIXME - need a filechooser dialog")
 
+    def mailChannel(self):
+        t, channel_infos = app.tab_list_manager.get_selection()
+        if t == 'feed' and len(channel_infos) == 1:
+            ci = channel_infos[0]
+            query = urllib.urlencode({"url": ci.base_href, "title": ci.name})
+            emailfriend_url = config.get(prefs.EMAILFRIEND_URL)
+            if not emailfriend_url.endswith("?"):
+                emailfriend_url += "?"
+            app.widgetapp.open_url(emailfriend_url + query)
+
     def addNewChannel(self):
         # FIXME - add code to pull from clipboard here
         title = _('Add Channel')

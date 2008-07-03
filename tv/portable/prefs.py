@@ -95,6 +95,12 @@ if 'DTV_VIDEOBOMB_URL' in os.environ:
 else:
     effectiveVideobomb = u'http://www.videobomb.com/api/submit_or_bomb'
 
+if 'DTV_EMAILFRIEND_URL' in os.environ:
+    effectiveEmailfriend = util.unicodify(os.environ['DTV_VIDEOBOMB_URL'])
+else:
+    effectiveEmailfriend = u'http://www.videobomb.com/democracy_channel/email_friend?'
+
+
 if 'DTV_AUTOUPDATE_URL' in os.environ:
     effectiveAutoupdate = util.unicodify(os.environ['DTV_AUTOUPDATE_URL'])
 else:
@@ -114,6 +120,8 @@ ADDITIONAL_CHANNEL_GUIDES = Pref(key='additionalChannelGuides', default='',
 VIDEOBOMB_URL     = Pref(key='VideobombURL',    default=effectiveVideobomb,
                          platformSpecific=False)
 AUTOUPDATE_URL    = Pref(key='AutoupdateURL',   default=effectiveAutoupdate,
+                         platformSpecific=False)
+EMAILFRIEND_URL   = Pref(key='EmailfriendURL',  default=effectiveEmailfriend,
                          platformSpecific=False)
 DONATE_URL        = Pref(key='DonateURL', default=u"http://www.getmiro.com/donate/",
                          platformSpecific=False)
