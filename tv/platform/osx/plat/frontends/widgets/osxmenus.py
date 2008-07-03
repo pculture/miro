@@ -88,11 +88,11 @@ def populate_menu():
         Separator(),
         menubar.extractMenuItem("Video", "EditPreferences"),
         Separator(),
-        MenuItem(_("Services"), "NewChannel", ()),
+        MenuItem(_("Services"), "ServicesMenu", ()),
         Separator(),
-        MenuItem(_("Hide Miro"), "NewChannel", (Key("h"),)),
-        MenuItem(_("Hide Others"), "NewChannel", (Key("h", MOD, ALT),)),
-        MenuItem(_("Show All"), "NewChannel", ()),
+        MenuItem(_("Hide Miro"), "HideMiro", (Key("h"),)),
+        MenuItem(_("Hide Others"), "HideOthers", (Key("h", MOD, ALT),)),
+        MenuItem(_("Show All"), "ShowAll", ()),
         Separator(),
         menubar.extractMenuItem("Video", "Quit")
     ]
