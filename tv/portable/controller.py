@@ -132,7 +132,7 @@ class Controller:
         title = _('Add Channel')
         description = _("Enter the URL of the channel to add:")
         text = app.widgetapp.get_clipboard_text()
-        if text:
+        if text is not None and feed.validateFeedURL(text):
             text = feed.normalizeFeedURL(text)
         else:
             text = ""
