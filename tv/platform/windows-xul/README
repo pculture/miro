@@ -1,9 +1,29 @@
-This is the currently supported frontend on Windows. It is based on
-Mozilla's portable XULRunner application framework, and would be
-portable to other platforms with a little work, mostly to the build
-system and to platformcfg.py.
+======
+README
+======
 
-The build documentation for this platform is maintained in the
-Developer Wiki:
+:Author: Will Guaraldi <will.guaraldi at pculture dot org>
+:Date: June 25, 2008
 
-https://develop.participatoryculture.org/projects/dtv/wiki/WindowsBuildDocs
+
+Summary
+=======
+
+This is the Gtk-Windows port of Miro.
+
+Instructions and build requirements are documented at
+https://develop.participatoryculture.org/trac/democracy/wiki/WindowsBuildDocs
+
+
+Build and run
+=============
+
+To compile and run Miro in the current directory, do::
+
+   ./run.sh
+
+If you have the required dependencies it should build Miro and run it.
+
+See https://develop.participatoryculture.org/projects/dtv/wiki/WindowsBuildDocs
+for more information on building and executing the Gtk-Windows platform code.
+The information at this url is considered the authoritative source.
