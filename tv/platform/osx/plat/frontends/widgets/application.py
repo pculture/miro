@@ -77,12 +77,12 @@ class OSXApplication(Application):
         NSApplication.sharedApplication().terminate_(nil)
 
     def get_clipboard_text(self):
-        # FIXME - implement me!
-        return None
+        return NSPasteboard.generalPasteboard().stringForType_(NSStringPboardType)
 
     def copy_text_to_clipboard(self, text):
-        # FIXME - implement me!
-        pass
+        pb = NSPasteboard.generalPasteboard()
+        pb.declareTypes_owner_([NSStringPboardType], self)
+        pb.setString_forType_(text, NSStringPboardType)
 
     def main(self, args):
         try:
