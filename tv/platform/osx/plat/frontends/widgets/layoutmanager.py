@@ -51,7 +51,7 @@ def get_font(scale_factor, bold=False, italic=False):
         traits = NSItalicFontMask
     else:
         traits = 0
-    return NSFontManager.sharedFontManager().fontWithFamily_traits_weight_size_('Helvetica', traits, weight, size)
+    return NSFontManager.sharedFontManager().fontWithFamily_traits_weight_size_('Lucida Grande', traits, weight, size)
 
 class MiroLayoutManager(NSLayoutManager):
     """Overide NSLayoutManager to draw better underlines."""
