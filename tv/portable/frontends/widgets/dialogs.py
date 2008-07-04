@@ -97,8 +97,7 @@ def ask_for_open_pathname(title, initial_filename=None, filters=[]):
             window.set_filename(initial_filename)
 
         if filters:
-            for name, extlist in filters:
-                window.add_filter(name, extlist)
+            window.add_filters(filters)
 
         response = window.run()
         if response == 0:

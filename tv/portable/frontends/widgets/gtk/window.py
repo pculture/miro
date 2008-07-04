@@ -314,11 +314,17 @@ class FileOpenDialog:
     def set_filename(self, text):
         self._widget.set_filename(text)
 
-    def add_filter(self, name, ext_list):
+    def add_filters(self, filters):
+        for name, ext_list in filters:
+            filter = gtk.FileFilter()
+            filter.set_name(name)
+            for mem in ext_list:
+                filter.add_pattern('*.%s' % mem)
+            self._widget.add_filter(filter)
+
         filter = gtk.FileFilter()
-        filter.set_name(name)
-        for mem in ext_list:
-            filter.add_pattern(mem)
+        filter.set_name(_('All files'))
+        filter.add_pattern('*')
         self._widget.add_filter(filter)
 
     def get_filename(self):

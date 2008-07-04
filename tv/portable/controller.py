@@ -107,8 +107,7 @@ class Controller:
     def importChannels(self):
         title = _("Import OPML File")
         filename = dialogsnew.ask_for_open_pathname(title,
-                                      filters=[(_('OPML Files'), ['*.opml']),
-                                               (_('All Files'), ['*'])])
+                                      filters=[(_('OPML Files'), ['opml'])])
         if os.path.isfile(filename):
             messages.ImportChannels(filename).send_to_backend()
         else:
