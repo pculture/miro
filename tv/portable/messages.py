@@ -196,6 +196,24 @@ class StopTrackingNewCount(BackendMessage):
     """Stop tracking the new videos count."""
     pass
 
+class ImportChannels(BackendMessage):
+    """Tell the backend to import channels from an .opml file.
+
+    Attributes:
+    filename -- file name that exists
+    """
+    def __init__(self, filename):
+        self.filename = filename
+
+class ExportChannels(BackendMessage):
+    """Tell the backend to export channels to an .opml file.
+
+    Attributes:
+    filename -- file name to export to
+    """
+    def __init__(self, filename):
+        self.filename = filename
+
 class RenameObject(BackendMessage):
     """Tell the backend to rename a channel/playlist/folder.
     

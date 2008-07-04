@@ -35,6 +35,7 @@ from miro import eventloop
 from miro import indexes
 from miro import messages
 from miro import views
+from miro import opml
 from miro.feed import Feed, getFeedByURL
 from miro.playlist import SavedPlaylist
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
@@ -313,6 +314,12 @@ class BackendMessageHandler(messages.MessageHandler):
         if self.playlist_tracker:
             self.playlist_tracker.unlink()
             self.playlist_tracker = None
+
+    def handle_import_channels(self, message):
+        opml.Importer().importSubscriptionsFrom(message.filename)
+
+    def handle_export_channels(self, message):
+        opml.Exporter().exportSubscriptionsTo(message.filename)
 
     def handle_rename_object(self, message):
         view = self.view_for_type(message.type)

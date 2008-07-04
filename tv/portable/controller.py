@@ -105,12 +105,21 @@ class Controller:
         app.selection.setTabListActive(False)
 
     def importChannels(self):
-        # FIXME - implement me
-        logging.info("FIXME - need a filechooser dialog")
+        title = _("Import OPML File")
+        filename = dialogsnew.ask_for_open_pathname(title,
+                                      filters=[(_('OPML Files'), ['*.opml']),
+                                               (_('All Files'), ['*'])])
+        if os.path.isfile(filename):
+            messages.ImportChannels(filename).send_to_backend()
+        else:
+            dialogsnew.show_message(_('Import OPML File - Error'),
+                                    _('File %s does not exist.') % filename)
 
     def exportChannels(self):
-        # FIXME - implement me
-        logging.info("FIXME - need a filechooser dialog")
+        title = _("Export OPML File")
+        filename = dialogsnew.ask_for_save_pathname(title,
+                                      "miro_subscriptions.opml")
+        messages.ExportChannels(filename).send_to_backend()
 
     def mailChannel(self):
         t, channel_infos = app.tab_list_manager.get_selection()

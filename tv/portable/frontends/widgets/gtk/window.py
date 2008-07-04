@@ -296,3 +296,62 @@ class Dialog(WindowBase):
 
     def get_extra_widget(self):
         return self.extra_widget
+
+class FileOpenDialog:
+    def __init__(self, title):
+        self._text = None
+        self._widget = gtk.FileChooserDialog(title,
+                               action=gtk.FILE_CHOOSER_ACTION_OPEN,
+                               buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                                        gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+
+    def close(self):
+        self._window.hide()
+
+    def destroy(self):
+        self._widget.destroy()
+
+    def set_filename(self, text):
+        self._widget.set_filename(text)
+
+    def add_filter(self, name, ext_list):
+        filter = gtk.FileFilter()
+        filter.set_name(name)
+        for mem in ext_list:
+            filter.add_pattern(mem)
+        self._widget.add_filter(filter)
+
+    def get_filename(self):
+        return self._text
+
+    def run(self):
+        ret = self._widget.run()
+        if ret == gtk.RESPONSE_OK:
+            self._text = self._widget.get_filename()
+            return 0
+
+class FileSaveDialog:
+    def __init__(self, title):
+        self._text = None
+        self._widget = gtk.FileChooserDialog(title,
+                               action=gtk.FILE_CHOOSER_ACTION_SAVE,
+                               buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                                        gtk.STOCK_SAVE, gtk.RESPONSE_OK))
+
+    def close(self):
+        self._window.hide()
+
+    def destroy(self):
+        self._widget.destroy()
+
+    def set_filename(self, text):
+        self._widget.set_current_name(text)
+
+    def get_filename(self):
+        return self._text
+
+    def run(self):
+        ret = self._widget.run()
+        if ret == gtk.RESPONSE_OK:
+            self._text = self._widget.get_filename()
+            return 0

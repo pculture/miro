@@ -37,7 +37,8 @@ from miro.frontends.widgets.gtk.drawing import ImageSurface, DrawingContext, \
         DrawingArea, Background, Gradient
 from miro.frontends.widgets.gtk.layout import HBox, VBox, Alignment, \
         Splitter, Table
-from miro.frontends.widgets.gtk.window import Window, MainWindow, Dialog
+from miro.frontends.widgets.gtk.window import Window, MainWindow, Dialog, \
+        FileOpenDialog, FileSaveDialog
 from miro.frontends.widgets.gtk.tableview import TableView, TableModel, \
         TreeTableModel, CellRenderer, ImageCellRenderer, CustomCellRenderer
 from miro.frontends.widgets.gtk.simple import Image, ImageDisplay, Label, \

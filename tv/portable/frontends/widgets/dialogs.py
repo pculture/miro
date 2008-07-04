@@ -87,3 +87,34 @@ def ask_for_string(title, description, initial_text=None):
             return None
     finally:
         window.destroy()
+
+def ask_for_open_pathname(title, initial_filename=None, filters=[]):
+    """Returns the file pathname or None.
+    """
+    window = widgetset.FileOpenDialog(title)
+    try:
+        if initial_filename:
+            window.set_filename(initial_filename)
+
+        if filters:
+            for name, extlist in filters:
+                window.add_filter(name, extlist)
+
+        response = window.run()
+        if response == 0:
+            return window.get_filename()
+    finally:
+        window.destroy()
+
+def ask_for_save_pathname(title, initial_filename=None):
+    """Returns the file pathname or None.
+    """
+    window = widgetset.FileSaveDialog(title)
+    try:
+        if initial_filename:
+            window.set_filename(initial_filename)
+        response = window.run()
+        if response == 0:
+            return window.get_filename()
+    finally:
+        window.destroy()
