@@ -146,6 +146,7 @@ class Dialog:
 
     def add_button(self, text):
         button = Button(text)
+        button.set_size(1.0)
         button.connect('clicked', self.on_button_clicked, len(self.buttons))
         self.buttons.append(button)
 
@@ -154,13 +155,9 @@ class Dialog:
 
     def build_text(self):
         vbox = VBox(spacing=6)
-        title_label = Label(self.title, wrap=True)
         description_label = Label(self.description, wrap=True)
-        title_label.set_bold(True)
         description_label.set_bold(True)
-        title_label.set_size_request(360, -1)
         description_label.set_size_request(360, -1)
-        vbox.pack_start(title_label)
         vbox.pack_start(description_label)
         return vbox
 
@@ -187,13 +184,14 @@ class Dialog:
         self.content_widget = self.build_content()
         width, height = self.content_widget.get_size_request()
         width = max(width, 400)
-        window = NSWindow.alloc()
+        window = NSPanel.alloc()
         window.initWithContentRect_styleMask_backing_defer_(
                 NSMakeRect(400, 400, width, height),
                 NSTitledWindowMask, NSBackingStoreBuffered, NO)
         view = FlippedView.alloc().initWithFrame_(NSMakeRect(0, 0, width,
             height))
         window.setContentView_(view)
+        window.setTitle_(self.title)
         self.content_widget.place(view.frame(), view)
         if self.buttons:
             self.buttons[0].make_default()
