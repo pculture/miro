@@ -214,3 +214,63 @@ class Dialog:
 
     def get_extra_widget(self):
         return self.extra_widget
+
+class FileSaveDialog:
+    def __init__(self, title):
+        self._title = title
+        self._panel = NSSavePanel.savePanel()
+        self._filename = None
+
+    def set_filename(self, s):
+        self._filename = s
+
+    def get_filename(self):
+        return self._filename
+
+    def run(self):
+        response = self._panel.runModalForDirectory_file_(NSHomeDirectory(), self._filename)
+        if response == NSFileHandlingPanelOKButton:            
+            self._filename = self._panel.filename()
+            return 0
+        self._filename = ""
+
+    def close(self):
+        self.nswindow.close()
+
+    def destroy(self):
+        self._panel = None
+
+class FileOpenDialog:
+    def __init__(self, title):
+        self._title = title
+        self._panel = NSOpenPanel.openPanel()
+        self._filename = None
+        self._directory = None
+        self._types = None
+
+    def set_directory(self, d):
+        self._directory = d
+
+    def set_filename(self, s):
+        self._filename = s
+
+    def add_filters(self, filters):
+        self._types = []
+        for _, t in filters:
+            self._types += t
+
+    def get_filename(self):
+        return self._filename
+
+    def run(self):
+        response = self._panel.runModalForDirectory_file_types_(self._directory, self._filename, self._types)
+        if response == NSFileHandlingPanelOKButton:            
+            self._filename = self._panel.filenames()[0]
+            return 0
+        self._filename = ""
+
+    def close(self):
+        self.nswindow.close()
+
+    def destroy(self):
+        self._panel = None
