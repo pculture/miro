@@ -29,16 +29,18 @@
 """clipboard.py.  Used to access the clipboard from python."""
 
 from miro.util import toUni
-from ctypes import windll, c_char_p
+from ctypes import windll, c_char_p, create_string_buffer
 CF_TEXT = 1
 
 OpenClipboard = windll.user32.OpenClipboard
+EmptyClipboard = windll.user32.EmptyClipboard
 GetClipboardData = windll.user32.GetClipboardData
+SetClipboardData = windll.user32.SetClipboardData
 CloseClipboard = windll.user32.CloseClipboard
 GlobalLock = windll.kernel32.GlobalLock
 GlobalUnlock = windll.kernel32.GlobalUnlock
 
-def getText():
+def get_text():
      text = None
      if OpenClipboard(None):
          try:
@@ -52,3 +54,11 @@ def getText():
      if text is not None:
          text = toUni(text)
      return text
+
+def set_text(text):
+    text_buffer = create_string_buffer(text)
+
+    if OpenClipboard(None):
+        EmptyClipboard()
+        SetClipboardData(CF_TEXT, text_buffer)
+        CloseClipboard()

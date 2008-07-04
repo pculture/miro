@@ -42,6 +42,7 @@ from miro import prefs
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets.application import Application
 from miro.plat import migrateappname
+from miro.plat import clipboard
 from miro.plat.frontends.widgets import xulrunnerbrowser
 
 class WindowsApplication(Application):
@@ -62,12 +63,10 @@ class WindowsApplication(Application):
         gtk.main_quit()
 
     def get_clipboard_text(self):
-        # FIXME - implement me!
-        return None
+        return clipboard.get_text()
 
     def copy_text_to_clipboard(self, text):
-        # FIXME - implement me!
-        pass
+        clipboard.set_text(text)
 
     def initXULRunner(self):
         app_dir = os.path.dirname(sys.executable)
