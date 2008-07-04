@@ -38,7 +38,9 @@ of the dialogs run modally.
 """
 
 from miro.plat.frontends.widgets import widgetset
-from miro.dialogs import BUTTON_OK, BUTTON_CANCEL
+from miro.dialogs import BUTTON_OK, BUTTON_CANCEL, BUTTON_IGNORE, \
+        BUTTON_SUBMIT_REPORT, BUTTON_YES, BUTTON_NO, BUTTON_KEEP_VIDEOS, \
+        BUTTON_DELETE_VIDEOS, BUTTON_CANCEL
 
 def show_message(title, description):
     """Display a message to the user and wait for them to click OK"""

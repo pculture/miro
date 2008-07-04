@@ -37,6 +37,7 @@ from miro import app
 from miro import menubar
 from miro import signals
 from miro import dialogs
+from miro.gtcache import gettext as _
 from miro.frontends.widgets.gtk import wrappermap
 from miro.frontends.widgets import menus
 

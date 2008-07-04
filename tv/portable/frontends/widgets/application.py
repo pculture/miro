@@ -29,10 +29,15 @@
 """Application class.  Portable code to handle the high-level running of Miro.
 """
 
+import os
 import logging
 import traceback
+import urllib
 
 from miro import app
+from miro import config
+from miro import prefs
+from miro import feed
 from miro import startup
 from miro import signals
 from miro import messages
@@ -90,55 +95,292 @@ class Application:
         print 'volume change: ', volume
 
     def on_play_clicked(self, button):
-        type, selected = app.tab_list_manager.get_selection()
-        if len(selected) == 1:
-            if type == 'feed':
-                title = _("Rename Channel")
-                text = _("Enter a new name for the channel %s" %
-                        selected[0].name)
-            elif type == 'playlist':
-                title = _("Rename Playlist")
-                text = _("Enter a new name for the playlist %s" %
-                        selected[0].name)
-            elif type == 'static':
-                print 'cant rename static tabs: ', selected[0].name
-                return
-            else:
-                raise ValueError("unknown type: %s" % type)
-            response = dialogs.ask_for_string(title, text, selected[0].name)
-            if response:
-                if selected[0].is_folder:
-                    type = '%s-folder' % type
-                id = selected[0].id
-                messages.RenameObject(type, id, response).send_to_backend()
+        pass
 
     def on_stop_clicked(self, button):
-        type, selected = app.tab_list_manager.get_selection()
-        for tab in selected:
-            if type == 'feed':
-                message = messages.DeleteChannel(tab.id, tab.is_folder, False)
-            elif type == 'playlist':
-                message = messages.DeletePlaylist(tab.id, tab.is_folder)
-            elif type == 'static':
-                print 'cant delete static tab: ', tab.name
-                return
-            else:
-                raise ValueError("unknown type: %s" % type)
-            message.send_to_backend()
+        pass
 
     def on_forward_clicked(self, button):
-        title = _("New Channel Folder")
-        text = _("Enter the new name for the new channel folder")
-        response = dialogs.ask_for_string(title, text)
-        if response:
-            messages.NewChannelFolder(response).send_to_backend()
+        pass
 
     def on_previous_clicked(self, button):
-        title = _("New Playlist Folder")
-        text = _("Enter the new name for the new playlist folder")
-        response = dialogs.ask_for_string(title, text)
-        if response:
-            messages.NewPlaylistFolder(response).send_to_backend()
+        pass
+
+    def add_new_channel(self):
+        title = _('Add Channel')
+        description = _("Enter the URL of the channel to add:")
+        text = app.widgetapp.get_clipboard_text()
+        if text is not None and feed.validateFeedURL(text):
+            text = feed.normalizeFeedURL(text)
+        else:
+            text = ""
+
+        while 1:
+            text = dialogs.ask_for_string(title, description, initial_text=text)
+            if text == None:
+                return
+
+            normalized_url = feed.normalizeFeedURL(text)
+            if feed.validateFeedURL(normalized_url):
+                break
+
+            title = _('Add Channel - Invalid URL')
+            description = _("The address you entered is not a valid url.\nPlease check the URL and try again.\n\nEnter the URL of the channel to add:")
+
+        messages.NewChannel(normalized_url).send_to_backend()
+
+    def add_new_channel_folder(self):
+        title = _('Create Channel Folder')
+        description = _("Enter a name for the new channel folder:")
+
+        name = dialogs.ask_for_string(title, description)
+        if name:
+            messages.NewChannelFolder(name).send_to_backend()
+
+    def remove_current_feed(self):
+        t, channel_infos = app.tab_list_manager.get_selection()
+        if t == 'feed':
+            self.remove_feeds(channel_infos)
+
+    def remove_feeds(self, channel_infos):
+        # FIXME - this doesn't look right.  i would think we'd want to ask
+        # a bunch of appropriate questions and then flip through the items
+        # one by one.
+        downloads = False
+        downloading = False
+        allDirectories = True
+        for ci in channel_infos:
+            if not ci.is_folder:
+                allDirectories = False
+                if ci.unwatched > 0:
+                    downloads = True
+                    break
+                if ci.has_downloading:
+                    downloading = True
+
+        if downloads:
+            self.remove_feeds_with_downloads(channel_infos)
+        elif downloading:
+            self.remove_feeds_with_downloading(channel_infos)
+        elif allDirectories:
+            self.remove_directory_feeds(channel_infos)
+        else:
+            self.remove_feeds_normal(channel_infos)
+
+    def remove_feeds_with_downloads(self, channel_infos):
+        if len(channel_infos) == 1:
+            title = _('Remove %s') % channel_infos[0].name
+            description = _("""\
+What would you like to do with the videos in this channel that you've \
+downloaded?""")
+        else:
+            title = _('Remove %s channels') % len(channel_infos)
+            description = _("""\
+What would you like to do with the videos in these channels that you've \
+downloaded?""")
+
+        ret = dialogs.show_choice_dialog(title, description,
+                                         [dialogs.BUTTON_KEEP_VIDEOS, 
+                                          dialogs.BUTTON_DELETE_VIDEOS,
+                                          dialogs.BUTTON_CANCEL])
+
+        if ret == dialogs.BUTTON_KEEP_VIDEOS:
+            for ci in channel_infos:
+                messages.DeleteChannel(ci.id, ci.is_folder, True).send_to_backend()
+
+        elif ret == dialogs.BUTTON_DELETE_VIDEOS:
+            for ci in channel_infos:
+                messages.DeleteChannel(ci.id, ci.is_folder, False).send_to_backend()
+
+    def remove_feeds_with_downloading(self, channel_infos):
+        if len(channel_infos) == 1:
+            title = _('Remove %s') % channel_infos[0].name
+            description = _("""\
+Are you sure you want to remove %s?  Any downloads in progress will \
+be canceled.""") % channel_infos[0].name
+        else:
+            title = _('Remove %s channels') % len(channel_infos)
+            description = _("""\
+Are you sure you want to remove these %s channels?  Any downloads in \
+progress will be canceled.""") % len(channel_infos)
+
+        ret = dialogs.show_choice_dialog(title, description,
+                                         [dialogs.BUTTON_YES, 
+                                          dialogs.BUTTON_NO])
+
+        if ret == dialogs.BUTTON_YES:
+            for ci in channel_infos:
+                messages.DeleteChannel(ci.id, ci.is_folder, False).send_to_backend()
+
+    def remove_feeds_normal(self, channel_infos):
+        if len(channel_infos) == 1:
+            title = _('Remove %s') % channel_infos[0].name
+            description = _("""\
+Are you sure you want to remove %s?""") % channel_infos[0].name
+        else:
+            title = _('Remove %s channels') % len(channel_infos)
+            description = _("""\
+Are you sure you want to remove these %s channels?""") % len(channel_infos)
+
+        ret = dialogs.show_choice_dialog(title, description,
+                                         [dialogs.BUTTON_YES, 
+                                          dialogs.BUTTON_NO])
+        if ret == dialogs.BUTTON_YES:
+            for ci in channel_infos:
+                messages.DeleteChannel(ci.id, ci.is_folder, False).send_to_backend()
+
+    def remove_directory_feeds(self, channel_infos):
+        if len(channel_infos) == 1:
+            title = _('Stop watching %s') % channel_infos[0].name
+            description = _("""\
+Are you sure you want to stop watching %s?""") % channel_infos[0].name
+        else:
+            title = _('Stop watching %s directories') % len(channel_infos)
+            description = _("""\
+Are you sure you want to stop watching these %s directories?""") % len(channel_infos)
+        ret = dialogs.show_choice_dialog(title, description,
+                                         [dialogs.BUTTON_YES, 
+                                          dialogs.BUTTON_NO])
+        if ret == dialogs.BUTTON_YES:
+            for ci in channel_infos:
+                messages.DeleteChannel(ci.id, ci.is_folder, False).send_to_backend()
+
+    def update_selected_channels(self):
+        t, channel_infos = app.tab_list_manager.get_selection()
+        if t == 'feed':
+            channel_infos = [ci for ci in channel_infos if not ci.is_folder]
+            for ci in channel_infos:
+                messages.UpdateChannel(ci.id).send_to_backend()
+
+    def update_all_channels(self):
+        messages.UpdateAllChannels().send_to_backend()
+
+    def import_channels(self):
+        title = _("Import OPML File")
+        filename = dialogs.ask_for_open_pathname(title,
+                                      filters=[(_('OPML Files'), ['opml'])])
+        if os.path.isfile(filename):
+            messages.ImportChannels(filename).send_to_backend()
+        else:
+            dialogs.show_message(_('Import OPML File - Error'),
+                                 _('File %s does not exist.') % filename)
+
+    def export_channels(self):
+        title = _("Export OPML File")
+        filename = dialogs.ask_for_save_pathname(title, "miro_subscriptions.opml")
+        messages.ExportChannels(filename).send_to_backend()
+
+    def mail_channel(self):
+        t, channel_infos = app.tab_list_manager.get_selection()
+        if t == 'feed' and len(channel_infos) == 1:
+            ci = channel_infos[0]
+            query = urllib.urlencode({"url": ci.base_href, "title": ci.name})
+            emailfriend_url = config.get(prefs.EMAILFRIEND_URL)
+            if not emailfriend_url.endswith("?"):
+                emailfriend_url += "?"
+            app.widgetapp.open_url(emailfriend_url + query)
+
+    def copy_channel_url(self):
+        t, channel_infos = app.tab_list_manager.get_selection()
+        if t == 'feed' and len(channel_infos) == 1:
+            ci = channel_infos[0]
+            app.widgetapp.copy_text_to_clipboard(ci.base_href)
+
+    def add_new_playlist(self):
+        # FIXME - this is really brittle.  this violates the Law of Demeter
+        # in ways that should make people cry.
+        try:
+            t = app.display_manager.current_display
+
+            from miro.frontends.widgets.displays import FeedDisplay
+
+            if isinstance(t, FeedDisplay):
+                t = t.view
+                t = t.full_view
+                t = t.item_list
+                selection = [t.model[i][0] for i in t.get_selection()]
+                ids = [s.id for s in selection if s.downloaded]
+            else:
+                ids = []
+        except:
+            logging.exception("addNewPlaylist exception.")
+            ids = []
+
+        title = _('Create Playlist')
+        description = _("Enter a name for the new playlist")
+
+        name = dialogs.ask_for_string(title, description)
+        if name:
+            messages.NewPlaylist(name, ids).send_to_backend()
+
+    def add_new_playlist_folder(self):
+        title = _('Create Playlist Folder')
+        description = _("Enter a name for the new playlist folder")
+
+        name = dialogs.ask_for_string(title, description)
+        if name:
+            messages.NewPlaylistFolder(name).send_to_backend()
+
+    def rename_something(self):
+        t, channel_infos = app.tab_list_manager.get_selection()
+        ci = channel_infos[0]
+
+        if t == 'feed' and ci.is_folder:
+            t = 'feed-folder'
+        elif t == 'playlist' and ci.is_folder:
+            t = 'playlist-folder'
+
+        if t == 'feed-folder':
+            title = _('Rename Channel Folder')
+            description = _('Enter a new name for the channel folder %s') % \
+                            ci.name
+
+        elif t == 'feed' and not ci.is_folder:
+            title = _('Rename Channel')
+            description = _('Enter a new name for the channel %s') % \
+                            ci.name
+
+        elif t == 'playlist':
+            title = _('Rename Playlist')
+            description = _('Enter a new name for the playlist %s') % \
+                            ci.name
+
+        elif t == 'playlist-folder':
+            title = _('Rename Playlist Folder')
+            description = _('Enter a new name for the playlist folder %s') % \
+                            ci.name
+
+        else:
+            return
+
+        name = dialogs.ask_for_string(title, description,
+                                      initial_text=ci.name)
+        if name:
+            messages.RenameObject(t, ci.id, name).send_to_backend()
+
+    def remove_current_playlist(self):
+        t, infos = app.tab_list_manager.get_selection()
+        if t == 'playlist':
+            self.remove_playlists(infos)
+
+    def remove_playlists(self, playlist_infos):
+        if len(playlist_infos) == 1:
+            title = _('Remove %s') % playlist_infos[0].name
+            description = _("Are you sure you want to remove %s") % \
+                    playlist_infos[0].name
+        else:
+            title = _('Remove %s playlists') % len(playlist_infos)
+            description = \
+                    _("Are you sure you want to remove these %s playlists") % \
+                    len(playlist_infos)
+
+        ret = dialogs.show_choice_dialog(title, description,
+                                         [dialogs.BUTTON_YES,
+                                          dialogs.BUTTON_NO])
+
+        if ret == dialogs.BUTTON_YES:
+            for pi in playlist_infos:
+                messages.DeletePlaylist(pi.id, pi.is_folder).send_to_backend()
 
     def quit_ui(self):
         """Quit  out of the UI event loop."""
@@ -182,7 +424,7 @@ class Application:
         print "DOWLOAD COMPLETE"
 
     def handleError(self, obj, report):
-        # I don't want to write the code in dialogs.py yet
+        # FIXME - I don't want to write the code in dialogs.py yet
         print 'INTERNAL ERROR:'
         print report
         return

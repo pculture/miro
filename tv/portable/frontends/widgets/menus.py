@@ -67,64 +67,64 @@ def on_quit():
 
 @action_handler("NewChannel")
 def on_new_channel():
-    app.controller.addNewChannel()
+    app.widgetapp.add_new_channel()
 
 # FIXME - NewGuide
 # FIXME - NewSearchChannel
 
 @action_handler("NewChannelFolder")
 def on_new_channel_folder():
-    app.controller.addNewChannelFolder()
+    app.widgetapp.add_new_channel_folder()
 
 @action_handler("RenameChannel")
 def on_rename_channel():
-    app.controller.renameSomething()
+    app.widgetapp.rename_something()
 
 @action_handler("RemoveChannels")
 def on_remove_channels():
-    app.controller.removeCurrentFeed()
+    app.widgetapp.remove_current_feed()
 
 @action_handler("UpdateChannels")
 def on_update_channels():
-    app.controller.updateSelectedChannels()
+    app.widgetapp.update_selected_channels()
 
 @action_handler("UpdateAllChannels")
 def on_update_all_channels():
-    app.controller.updateAllChannels()
+    app.widgetapp.update_all_channels()
 
 @action_handler("ImportChannels")
 def on_import_channels():
-    app.controller.importChannels()
+    app.widgetapp.import_channels()
 
 @action_handler("ExportChannels")
 def on_export_channels():
-    app.controller.exportChannels()
+    app.widgetapp.export_channels()
 
 @action_handler("MailChannel")
 def on_mail_channel():
-    app.controller.mailChannel()
+    app.widgetapp.mail_channel()
 
 @action_handler("CopyChannelURL")
 def on_copy_channel_url():
-    app.controller.copyChannelURL()
+    app.widgetapp.copy_channel_url()
 
 # Playlists menu
 
 @action_handler("NewPlaylist")
 def on_new_playlist():
-    app.controller.addNewPlaylist()
+    app.widgetapp.add_new_playlist()
 
 @action_handler("NewPlaylistFolder")
 def on_new_playlist_folder():
-    app.controller.addNewPlaylistFolder()
+    app.widgetapp.add_new_playlist_folder()
 
 @action_handler("RenamePlaylist")
 def on_rename_channel():
-    app.controller.renameSomething()
+    app.widgetapp.rename_something()
 
 @action_handler("RemovePlaylists")
 def on_remove_playlists():
-    app.controller.removeCurrentPlaylist()
+    app.widgetapp.remove_current_playlist()
 
 # Playback menu
 
