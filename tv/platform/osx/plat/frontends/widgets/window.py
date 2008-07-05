@@ -274,3 +274,9 @@ class FileOpenDialog:
 
     def destroy(self):
         self._panel = None
+
+class AboutDialog:
+    def run(self):
+        NSApplication.sharedApplication().orderFrontStandardAboutPanel_(nil)
+    def destroy(self):
+        pass

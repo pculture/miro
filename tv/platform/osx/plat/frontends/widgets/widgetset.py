@@ -42,7 +42,7 @@ from miro.plat.frontends.widgets.rect import Rect
 from miro.plat.frontends.widgets.layout import VBox, HBox, Alignment, \
         Splitter, Table, Scroller, Expander
 from miro.plat.frontends.widgets.window import Window, MainWindow, Dialog, \
-        FileSaveDialog, FileOpenDialog
+        FileSaveDialog, FileOpenDialog, AboutDialog
 from miro.plat.frontends.widgets.browser import Browser
 from miro.plat.frontends.widgets.simple import Image, ImageDisplay, Label, \
         SolidBackground, HSeparator, VSeparator
