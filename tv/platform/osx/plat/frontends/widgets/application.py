@@ -26,6 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import sys
 import traceback
 
 from objc import YES, NO, nil
@@ -44,6 +45,7 @@ from miro.plat.frontends.widgets import osxmenus
 from miro.plat.frontends.widgets.rect import Rect
 
 class OSXApplication(Application):
+
     def __init__(self):
         Application.__init__(self)
         self.gotQuit = False
@@ -66,7 +68,9 @@ class OSXApplication(Application):
         del loop.pool
 
     def run(self):
-        AppHelper.runEventLoop(main=self.main)
+        self.app_controller = AppController.alloc().initWithApp_(self)
+        NSApplication.sharedApplication().setDelegate_(self.app_controller)
+        NSApplicationMain(sys.argv)        
     
     def quit_ui(self):
         windowFrame = NSStringFromRect(self.window.nswindow.frame())
@@ -84,25 +88,6 @@ class OSXApplication(Application):
         pb.declareTypes_owner_([NSStringPboardType], self)
         pb.setString_forType_(text, NSStringPboardType)
 
-    def main(self, args):
-        try:
-            # initialize the global Application object
-            NSApplication.sharedApplication()
-            self.startup()
-            self.installAppController()
-        except:
-            print "error starting up"
-            traceback.print_exc()
-            NSApplication.sharedApplication().terminate_(nil)
-        NSApplicationMain(args)
-
-    def installAppController(self):
-        self.app_controller = AppController.alloc().initWithApp_(self)
-        # Keeping a reference to AppController is very important!
-        # setDelegate_ creates a weak reference, so we need to make sure that
-        # we keep the object around.
-        NSApplication.sharedApplication().setDelegate_(self.app_controller)
-
     def open_url(self, url):
         # We could use Python's webbrowser.open() here, but
         # unfortunately, it doesn't have the same semantics under UNIX
@@ -118,10 +103,19 @@ class OSXApplication(Application):
         return Rect(windowFrame.origin.x, windowFrame.origin.y, windowFrame.size.width, windowFrame.size.height)
 
 class AppController(NSObject):
+
     def initWithApp_(self, application):
         self.init()
         self.application = application
         return self
+
+    def applicationDidFinishLaunching_(self, notification):
+        try:
+            self.application.startup()
+        except:
+            print "error starting up"
+            traceback.print_exc()
+            NSApplication.sharedApplication().terminate_(nil)
 
     def applicationShouldTerminate_(self, sender):
         # External termination requests (through Dock menu or AppleScript) call
