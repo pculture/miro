@@ -386,6 +386,9 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
         """Quit  out of the UI event loop."""
         raise NotImplementedError()
 
+    def about(self):
+        dialogs.show_about()
+
     def uiThreadFinished(self):
         """Called by the UI event thread when is finished processing and is
         about to exit. 

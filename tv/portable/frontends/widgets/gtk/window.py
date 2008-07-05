@@ -34,6 +34,8 @@ import gobject
 import gtk
 
 from miro import app
+from miro import config
+from miro import prefs
 from miro import menubar
 from miro import signals
 from miro import dialogs
@@ -307,7 +309,7 @@ class FileOpenDialog:
                                         gtk.STOCK_OPEN, gtk.RESPONSE_OK))
 
     def close(self):
-        self._window.hide()
+        self._widget.hide()
 
     def destroy(self):
         self._widget.destroy()
@@ -346,7 +348,7 @@ class FileSaveDialog:
                                         gtk.STOCK_SAVE, gtk.RESPONSE_OK))
 
     def close(self):
-        self._window.hide()
+        self._widget.hide()
 
     def destroy(self):
         self._widget.destroy()
@@ -362,3 +364,28 @@ class FileSaveDialog:
         if ret == gtk.RESPONSE_OK:
             self._text = self._widget.get_filename()
             return 0
+
+class AboutDialog:
+    def __init__(self):
+        self._text = None
+
+        ab = gtk.AboutDialog()
+        ab.set_name(config.get(prefs.SHORT_APP_NAME))
+        ab.set_version( "%s (r%s)" % \
+                        (config.get(prefs.APP_VERSION), 
+                         config.get(prefs.APP_REVISION_NUM)))
+        ab.set_website(config.get(prefs.PROJECT_URL))
+        ab.set_copyright(_('%s.  See LICENSE file for details.\n' +
+                           'Miro and Miro logo are trademarks of ' +
+                           'the Participatory Culture Foundation.') \
+                           % config.get(prefs.COPYRIGHT))
+        self._window = ab
+
+    def close(self):
+        self._window.hide()
+
+    def destroy(self):
+        self._window.destroy()
+
+    def run(self):
+        self._window.run()

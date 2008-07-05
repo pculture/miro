@@ -140,7 +140,9 @@ def on_remove_playlists():
 
 # Help menu
 
-# FIXME - About
+@action_handler("About")
+def on_about():
+    app.widgetapp.about()
 
 @action_handler("Donate")
 def on_report_bug():

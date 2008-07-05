@@ -191,9 +191,11 @@ HELP_URL = \
 RECOMMEND_URL = \
     Pref(key='recommendURL',      default=None, platformSpecific=False)
 BUG_TRACKER_URL = \
-    Pref(key='bugTrackerURL',      default=None, platformSpecific=False)
+    Pref(key='bugTrackerURL',     default=None, platformSpecific=False)
 PUBLISHER = \
     Pref(key='publisher',         default=None, platformSpecific=False)
+COPYRIGHT = \
+    Pref(key='copyright',         default=None, platformSpecific=False)
 APP_VERSION = \
     Pref(key='appVersion',        default=None, platformSpecific=False)
 APP_REVISION = \
