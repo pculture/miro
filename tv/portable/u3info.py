@@ -49,5 +49,8 @@ if device_document_path:
     device_document_path = os.path.normcase(device_document_path)
 
 # whether we're in u3 mode or not
-u3_active = app_data_path is not None and device_document_path is not None and os.path.isdir(app_data_path) and os.path.isdir(device_document_path)
+u3_active = (app_data_path is not None
+             and device_document_path is not None
+             and os.path.isdir(app_data_path) 
+             and os.path.isdir(device_document_path))
 
