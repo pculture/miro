@@ -119,9 +119,9 @@ class Item(DDBObject):
         DDBObject.__init__(self)
         self.splitItem()
 
-    ##
-    # Called by pickle during serialization
     def onRestore(self):
+        """Called by pickle during serialization.
+        """
         DDBObject.onRestore(self)
         if (self.iconCache == None):
             self.iconCache = IconCache (self)
@@ -322,20 +322,21 @@ class Item(DDBObject):
                 pass
         DDBObject.signalChange(self, needsSave=needsSave)
 
-    # Returns the rendered download-item template, hopefully from the cache
-    #
-    # viewName is the name of the view we're in. 
-    # view is the actual view object that we're in.
-    #
-    # Almost all of the search string is cached, but there are several pieces
-    # of data that must be generated on the fly:
-    #  * The name of the view, used for things like action:playNamedView
-    #  * The dragdesttype attribute -- it's based on the current selection
-    #  * The selected css class -- it's depends on whether the view that this
-    #     item is in is the view that's selected.  This matters when an item
-    #     is shown multiple times on a page, in different views.
-    #  * The channel name -- it's not displayed in the channel template.
     def getItemXML(self, viewName):
+        """Returns the rendered download-item template, hopefully from the cache
+
+        viewName - name of the view we're in.
+        view - actual view object that we're in.
+
+        Almost all of the search string is cached, but there are several pieces
+        of data that must be generated on the fly:
+         * The name of the view, used for things like action:playNamedView
+         * The dragdesttype attribute -- it's based on the current selection
+         * The selected css class -- it's depends on whether the view that this
+            item is in is the view that's selected.  This matters when an item
+            is shown multiple times on a page, in different views.
+         * The channel name -- it's not displayed in the channel template.
+        """
         try:
             xml = self._itemXML
         except AttributeError:
@@ -343,10 +344,12 @@ class Item(DDBObject):
             xml = self._itemXML
         return xml.replace(self._XMLViewName, viewName)
 
-    # Regenerates an expired item XML from the download-item template
-    # _XMLViewName is a random string we use for the name of the view
-    # _itemXML is the rendered XML
     def _calcItemXML(self):
+        """Regenerates an expired item XML from the download-item template.
+
+        _XMLViewName - random string we use for the name of the view
+        _itemXML - rendered XML
+        """
         from miro.frontends.html import template
         self._XMLViewName = "view%dview" % random.randint(9999999,99999999)
         self._itemXML = template.fillStaticTemplate(
@@ -354,19 +357,20 @@ class Item(DDBObject):
             viewName=self._XMLViewName,templateState='unknown')
         checkU(self._itemXML)
 
-    #
-    # Returns True iff this item has never been viewed in the interface
-    # Note the difference between "viewed" and seen
     def getViewed(self):
+        """Returns True iff this item has never been viewed in the interface.
+
+        Note the difference between "viewed" and seen.
+        """
         try:
             # optimizing by trying the cached feed
             return self._feed.lastViewed >= self.creationTime
         except:
             return self.creationTime <= self.getFeed().lastViewed 
 
-    ##
-    # Returns the first video enclosure in the item
     def getFirstVideoEnclosure(self):
+        """Returns the first video enclosure in the item.
+        """
         try:
             return self._firstVidEnc
         except:
@@ -376,21 +380,19 @@ class Item(DDBObject):
     def _calcFirstEnc(self):
         self._firstVidEnc = getFirstVideoEnclosure(self.entry)
         
-
-    ##
-    # Returns mime-type of the first video enclosure in the item
     @returnsUnicode
     def getFirstVideoEnclosureType(self):
+        """Returns mime-type of the first video enclosure in the item.
+        """
         enclosure = self.getFirstVideoEnclosure()
         if enclosure and enclosure.has_key('type'):
             return enclosure['type']
         return None
 
-
-    ##
-    # Returns the URL associated with the first enclosure in the item
     @returnsUnicode
     def getURL(self):
+        """Returns the URL associated with the first enclosure in the item.
+        """
         self.confirmDBThread()
         videoEnclosure = self.getFirstVideoEnclosure()
         if videoEnclosure is not None and 'url' in videoEnclosure:
@@ -398,10 +400,10 @@ class Item(DDBObject):
         else:
             return u''
 
-    ##
-    # returns the title of the item quoted for inclusion in URLs
     @returnsUnicode
     def getQuotedURL(self):
+        """Returns the title of the item quoted for inclusion in URLs.
+        """
         return urllib.quote_plus(urllib.unquote(self.getURL().encode('ascii'))).decode('ascii')
 
     def hasSharableURL(self):
@@ -412,9 +414,9 @@ class Item(DDBObject):
         url = self.getURL()
         return url != u'' and not url.startswith(u"file:")
 
-    ##
-    # Returns the feed this item came from
     def getFeed(self):
+        """Returns the feed this item came from.
+        """
         try:
             # optimizing by caching the feed
             return self._feed
@@ -450,9 +452,9 @@ class Item(DDBObject):
         else:
             raise ValueError("%s is not a container item" % self)
 
-    ##
-    # Moves this item to another feed.
     def setFeed(self, feed_id):
+        """Moves this item to another feed.
+        """
         self.feed_id = feed_id
         del self._feed
         if self.isContainerItem:
@@ -493,9 +495,9 @@ class Item(DDBObject):
         else:
             self.signalChange()
 
-    ##
-    # Marks this item as expired
     def expire(self):
+        """Marks this item as expired.
+        """
         title = _("Removing %s") % os.path.basename(self.getTitle())
         if self.isExternal():
             if self.isContainerItem:
@@ -674,10 +676,11 @@ folder will be deleted.""")
                     self.expiring = True
         return self.expiring
 
-    ##
-    # returns true iff video has been seen
-    # Note the difference between "viewed" and "seen"
     def getSeen(self):
+        """Returns true iff video has been seen.
+
+        Note the difference between "viewed" and "seen".
+        """
         self.confirmDBThread()
         if self.isContainerItem:
             if self.childrenSeen is None:
@@ -690,9 +693,9 @@ folder will be deleted.""")
         else:
             return self.seen
 
-    ##
-    # Marks the item as seen
     def markItemSeen(self, markOtherItems=True):
+        """Marks the item as seen.
+        """
         self.confirmDBThread()
         if self.seen == False:
             self.seen = True
@@ -762,21 +765,21 @@ folder will be deleted.""")
         self.confirmDBThread()
         return self.pendingReason
 
-    ##
-    # Returns true iff item was auto downloaded
     def getAutoDownloaded(self):
+        """Returns true iff item was auto downloaded.
+        """
         self.confirmDBThread()
         return self.autoDownloaded
 
-    ##
-    # Returns the linkNumber
     def getLinkNumber(self):
+        """Returns the linkNumber.
+        """
         self.confirmDBThread()
         return self.linkNumber
 
-    ##
-    # Starts downloading the item
     def download(self,autodl=False):
+        """Starts downloading the item.
+        """
         autodler.resumeDownloader()
         self.confirmDBThread()
         manualDownloadCount = views.manualDownloads.len()
@@ -835,10 +838,10 @@ folder will be deleted.""")
     def isFailedDownload(self):
         return self.downloader and self.downloader.getState() == u'failed'
 
-    ##
-    # Returns a link to the thumbnail of the video
     @returnsUnicode
     def getThumbnailURL(self):
+        """Returns a link to the thumbnail of the video.
+        """
         self.confirmDBThread()
         # Try to get the thumbnail specific to the video enclosure
         videoEnclosure = self.getFirstVideoEnclosure()
@@ -859,9 +862,11 @@ folder will be deleted.""")
         except:
             return None
 
-    # When changing this function, change feed.iconChanged to signal the right set of items
     @returnsFilename
     def getThumbnail(self):
+        """NOTE: When changing this function, change feed.iconChanged to signal
+        the right set of items.
+        """
         self.confirmDBThread()
         return self._doGetThumbnail(Item.SMALL_ICON_SIZE)
 
@@ -888,10 +893,10 @@ folder will be deleted.""")
             else: 
                 return resources.path("wimages/thumb-default_small.png")
 
-    ##
-    # returns the title of the item
     @returnsUnicode
     def getTitle(self):
+        """Returns the title of the item.
+        """
         try:
             return self.entry.title
         except:
@@ -901,10 +906,10 @@ folder will be deleted.""")
             except:
                 return u""
 
-    ##
-    # returns the title of the item quoted for inclusion in URLs
     @returnsUnicode
     def getQuotedTitle(self):
+        """Returns the title of the item quoted for inclusion in URLs.
+        """
         return urllib.quote_plus(self.getTitle().encode('utf8')).decode('ascii', 'replace')
 
     def setChannelTitle(self, title):
@@ -924,10 +929,10 @@ folder will be deleted.""")
         else:
             return u''
 
-    ##
-    # Returns the raw description of the video (unicode)
     @returnsUnicode
     def getRawDescription(self):
+        """Returns the raw description of the video (unicode).
+        """
         self.confirmDBThread()
 
         try:
@@ -943,10 +948,10 @@ folder will be deleted.""")
 
         return u''
 
-    ##
-    # Returns valid XHTML containing a description of the video (str)
     @returnsUnicode
     def getDescription(self):
+        """Returns valid XHTML containing a description of the video (str).
+        """
         rawDescription = self.getRawDescription()
 
         # FIXME - clean this up in regards to exception handling.
@@ -962,9 +967,9 @@ folder will be deleted.""")
                 logging.exception("getDescription threw error.")
                 return u'<span />'
 
-    ##
-    # Returns valid XHTML containing the ad (str)
     def getAd(self):
+        """Returns valid XHTML containing the ad (str).
+        """
         rawDescription = self.getRawDescription()
 
         # FIXME - clean this up in regards to exception handling.
@@ -987,10 +992,10 @@ folder will be deleted.""")
         else:
             return filetypes.isTorrentFilename(self.getURL())
 
-    ##
-    # Returns formatted XHTML with release date, duration, format, and size
     @returnsUnicode
     def getDetails(self):
+        """Returns formatted XHTML with release date, duration, format, and size.
+        """
         details = []
         reldate = self.getReleaseDate()
         format = self.getFormat()
@@ -1106,10 +1111,10 @@ folder will be deleted.""")
         #lines.append(u'</table>')
         return u'\n'.join(lines)
 
-    ## 
-    # Returns formatted XHTML with download info
     @returnsUnicode
     def getMoreInfo(self):
+        """Returns formatted XHTML with download info.
+        """
         details = [
             self.makeMoreInfoTable(_('Item Details'), self.getItemDetails()),
         ]
@@ -1128,9 +1133,9 @@ folder will be deleted.""")
         return u'\n'.join(details)
 
 
-    ##
-    # Stops downloading the item
     def deleteFiles(self):
+        """Stops downloading the item.
+        """
         self.confirmDBThread()
         if self.downloader is not None:
             self.downloader.removeItem(self)
@@ -1156,9 +1161,10 @@ folder will be deleted.""")
             self._calcState()
             return self._state
 
-    # Recalculate the state of an item after a change
     @returnsUnicode
     def _calcState(self):
+        """Recalculate the state of an item after a change
+        """
         self.confirmDBThread()
         # FIXME, 'failed', and 'paused' should get download icons.  The user
         # should be able to restart or cancel them (put them into the stopped
@@ -1249,9 +1255,9 @@ folder will be deleted.""")
         else:
             return u""
     
-    ##
-    # Returns the size of the item to be displayed.
     def getSizeForDisplay(self):
+        """Returns the size of the item to be displayed.
+        """
         return util.formatSizeForUser(self.getSize())
 
     def getSize(self):
@@ -1259,14 +1265,14 @@ folder will be deleted.""")
             self._size = self._getSize()
         return self._size
 
-    ##
-    # Returns the size of the item. We use the following methods to get the
-    # size:
-    #
-    # Physical size of a downloaded file
-    # HTTP content-length
-    # RSS enclosure tag value.
     def _getSize(self):
+        """Returns the size of the item. We use the following methods to get the
+        size:
+
+        1. Physical size of a downloaded file
+        2. HTTP content-length
+        3. RSS enclosure tag value
+        """
         if self.isDownloaded():
             try:
                 fname = self.getFilename()
@@ -1281,19 +1287,19 @@ folder will be deleted.""")
             except:
                 return 0
 
-    ##
-    # returns status of the download in plain text
     @returnsUnicode
     def getCurrentSize(self):
+        """Returns status of the download in plain text.
+        """
         if self.downloader is not None:
             size = self.downloader.getCurrentSize()
         else:
             size = 0
         return util.formatSizeForUser(size)
 
-    ##
-    # Returns the download progress in absolute percentage [0.0 - 100.0].
     def downloadProgress(self):
+        """Returns the download progress in absolute percentage [0.0 - 100.0].
+        """
         progress = 0
         self.confirmDBThread()
         if self.downloader is None:
@@ -1312,24 +1318,25 @@ folder will be deleted.""")
         else:
             return self.downloader.getTotalSize() != -1
 
-    ##
-    # Returns the width of the progress bar corresponding to the current
-    # download progress. This doesn't really belong here and even forces
-    # to use a hardcoded constant, but the templating system doesn't 
-    # really leave any other choice.
     def downloadProgressWidth(self):
+        """Returns the width of the progress bar corresponding to the current
+        download progress. This doesn't really belong here and even forces
+        to use a hardcoded constant, but the templating system doesn't
+        really leave any other choice.
+        """
         fullWidth = 131  # width of resource:channelview-progressbar-bg.png
         progress = self.downloadProgress() / 100.0
         if progress == 0:
             return 0
         return int(progress * fullWidth)
 
-    ##
-    # Returns string containing three digit percent finished
-    # "000" through "100".
     @returnsUnicode
     def threeDigitPercentDone(self):
+        """Returns string containing three digit percent finished
+        "000" through "100".
+        """
         return u'%03d' % int(self.downloadProgress())
+
     def twoDigitPercentDone(self):
         if int(self.downloadProgress()) < 10:
           out = u'%d' % int(self.downloadProgress())
@@ -1340,10 +1347,10 @@ folder will be deleted.""")
     def downloadInProgress(self):
         return self.downloader is not None and self.downloader.getETA() != 0
 
-    ##
-    # Returns string with estimate time until download completes
     @returnsUnicode
     def downloadETA(self):
+        """Returns string with estimate time until download completes.
+        """
         if self.downloader is not None:
             totalSecs = self.downloader.getETA()
             if totalSecs <= 0:
@@ -1368,10 +1375,10 @@ folder will be deleted.""")
         else:
             return _("starting up...")
 
-    ##
-    # Returns the download rate
     @returnsUnicode
     def downloadRate(self):
+        """Returns the download rate.
+        """
         rate = 0
         unit = u"KB/s"
         if self.downloader is not None:
@@ -1388,43 +1395,43 @@ folder will be deleted.""")
             
         return u"%d%s" % (rate, unit)
 
-    ##
-    # Returns the published date of the item
     @returnsUnicode
     def getPubDate(self):
+        """Returns the published date of the item.
+        """
         return getReleaseDate()
     
-    ##
-    # Returns the published date of the item as a datetime object
     def getPubDateParsed(self):
+        """Returns the published date of the item as a datetime object.
+        """
         return self.getReleaseDateObj()
 
-    ##
-    # returns the date this video was released or when it was published
     @returnsUnicode
     def getReleaseDate(self):
+        """Returns the date this video was released or when it was published.
+        """
         try:
             return self.getReleaseDateObj().strftime("%b %d %Y").decode(_charset)
         except:
             return u""
 
-    ##
-    # returns the date this video was released or when it was published
     def getReleaseDateObj(self):
+        """Returns the date this video was released or when it was published.
+        """
         return self.releaseDateObj
 
-    ##
-    # returns the length of the video in seconds
     def getDurationValue(self):
+        """Returns the length of the video in seconds.
+        """
         secs = 0
         if self.duration not in (-1, None):
             secs = self.duration / 1000
         return secs
 
-    ##
-    # returns string with the play length of the video
     @returnsUnicode
     def getDuration(self, emptyIfZero=True):
+        """Returns string with the play length of the video.
+        """
         secs = self.getDurationValue()
         if secs == 0:
             if emptyIfZero:
@@ -1433,8 +1440,6 @@ folder will be deleted.""")
                 return "n/a"
         return u"%02d:%02d" % (secs/60, secs % 60)
 
-    ##
-    # returns string with the format of the video
     KNOWN_MIME_TYPES = (u'audio', u'video')
     KNOWN_MIME_SUBTYPES = (u'mov', u'wmv', u'mp4', u'mp3', u'mpg', u'mpeg', u'avi', u'x-flv', u'x-msvideo', u'm4v', u'mkv', u'm2v', u'ogg')
     MIME_SUBSITUTIONS = {
@@ -1442,6 +1447,8 @@ folder will be deleted.""")
     }
     @returnsUnicode
     def getFormat(self, emptyForUnknown=True):
+        """Returns string with the format of the video.
+        """
         if self.looksLikeTorrent():
             return u'.torrent'
         try:
@@ -1472,20 +1479,20 @@ folder will be deleted.""")
         else:
             return u"unknown"
 
-    ##
-    # return keyword tags associated with the video separated by commas
     @returnsUnicode
     def getTags(self):
+        """Return keyword tags associated with the video separated by commas.
+        """
         self.confirmDBThread()
         try:
             return self.entry.categories.join(u", ")
         except:
             return u""
 
-    ##
-    # return the license associated with the video
     @returnsUnicode
     def getLicence(self):
+        """Return the license associated with the video.
+        """
         self.confirmDBThread()
         try:
             return self.entry.license
@@ -1496,10 +1503,10 @@ folder will be deleted.""")
                 pass
         return u""
 
-    ##
-    # returns the comments link if it exists in the feed item
     @returnsUnicode
     def getCommentsLink(self):
+        """Returns the comments link if it exists in the feed item.
+        """
         self.confirmDBThread()
         try:
             return self.entry.comments
@@ -1508,10 +1515,10 @@ folder will be deleted.""")
 
         return u""
 
-    ##
-    # return the people associated with the video, separated by commas
     @returnsUnicode
     def getPeople(self):
+        """Return the people associated with the video, separated by commas.
+        """
         ret = []
         self.confirmDBThread()
         try:
@@ -1525,18 +1532,18 @@ folder will be deleted.""")
             pass
         return u', '.join(ret)
 
-    ##
-    # returns the URL of the webpage associated with the item
     def getLink(self):
+        """Returns the URL of the webpage associated with the item.
+        """
         self.confirmDBThread()
         try:
             return self.entry.link.decode('ascii','replace')
         except:
             return u""
 
-    ##
-    # returns the URL of the payment page associated with the item
     def getPaymentLink(self):
+        """Returns the URL of the payment page associated with the item.
+        """
         self.confirmDBThread()
         try:
             return self.getFirstVideoEnclosure().payment_url.decode('ascii','replace')
@@ -1546,11 +1553,11 @@ folder will be deleted.""")
             except:
                 return u""
 
-    ##
-    # returns a snippet of HTML containing a link to the payment page
-    # HTML has already been sanitized by feedparser
     @returnsUnicode
     def getPaymentHTML(self):
+        """returns a snippet of HTML containing a link to the payment page
+        HTML has already been sanitized by feedparser.
+        """
         self.confirmDBThread()
         try:
             ret = self.getFirstVideoEnclosure().payment_html
@@ -1564,11 +1571,11 @@ folder will be deleted.""")
         # here...
         return u'<span>' + unescape(ret) + u'</span>'
 
-    ##
-    # Updates an item with new data
-    #
-    # @param entry a dict object containing the new data
     def update(self, entry):
+        """Updates an item with new data
+
+        entry - dict containing the new data
+        """
         UandA = self.getUandA()
         self.confirmDBThread()
         try:
@@ -1616,31 +1623,34 @@ folder will be deleted.""")
             self.keep = True
             self.signalChange()
 
-    ##
-    # gets the time the video was downloaded
-    # Only valid if the state of this item is "finished"
     def getDownloadedTime(self):
+        """Gets the time the video was downloaded.
+
+        Only valid if the state of this item is "finished".
+        """
         if self.downloadedTime is None:
             return datetime.min
         else:
             return self.downloadedTime
 
-    ##
-    # Returns the filename of the first downloaded video or the empty string
-    # NOTE: this will always return the absolute path to the file.
     @returnsFilename
     def getFilename(self):
+        """Returns the filename of the first downloaded video or the empty string.
+
+        NOTE: this will always return the absolute path to the file.
+        """
         self.confirmDBThread()
         try:
             return self.downloader.getFilename()
         except:
             return FilenameType("")
 
-    ##
-    # Returns the filename of the first downloaded video or the empty string
-    # NOTE: this will always return the absolute path to the file.
     @returnsFilename
     def getVideoFilename(self):
+        """Returns the filename of the first downloaded video or the empty string.
+
+        NOTE: this will always return the absolute path to the file.
+        """
         self.confirmDBThread()
         if self.videoFilename:
             return os.path.join (self.getFilename(), self.videoFilename)
@@ -1715,12 +1725,14 @@ folder will be deleted.""")
         if self.duration is None or self.screenshot is None:
             moviedata.movieDataUpdater.requestUpdate (self)
 
-    # Up to revision 6257, torrent downloads were incorrectly being created in 
-    # an extra subdirectory. This method "migrates" those torrent downloads to 
-    # the correct layout.
-    # from: /path/to/movies/foobar.mp4/foobar.mp4
-    # to:   /path/to/movies/foobar.mp4
     def fixIncorrectTorrentSubdir(self):
+        """Up to revision 6257, torrent downloads were incorrectly being created in
+        an extra subdirectory.  This method "migrates" those torrent downloads to
+        the correct layout.
+
+        from: /path/to/movies/foobar.mp4/foobar.mp4
+        to:   /path/to/movies/foobar.mp4
+        """
         filenamePath = self.getFilename()
         if (fileutil.isdir(filenamePath)):
             enclosedFile = os.path.join(filenamePath, os.path.basename(filenamePath))
@@ -1773,9 +1785,9 @@ def getEntryForURL(url, contentType=None):
     return FeedParserDict({'title' : title,
             'enclosures':[{'url' : url, 'type' : contentType}]})
 
-##
-# An Item that exists as a local file
 class FileItem(Item):
+    """An Item that exists as a local file
+    """
 
     def __init__(self,filename, feed_id=None, parent_id=None, offsetPath=None, deleted=False):
         checkF(filename)
