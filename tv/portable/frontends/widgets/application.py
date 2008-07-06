@@ -101,10 +101,24 @@ class Application:
         pass
 
     def on_forward_clicked(self, button):
+        # calls either next_video or fast_forward
         pass
 
     def on_previous_clicked(self, button):
+        # calls either previous_video or rewind
         pass
+
+    def next_video(self):
+        pass
+
+    def previous_video(self):
+        pass
+
+    def fast_forward(self):
+        pass
+
+    def rewind(self):
+        psss
 
     def add_new_channel(self):
         title = _('Add Channel')

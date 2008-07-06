@@ -128,12 +128,30 @@ def on_remove_playlists():
 
 # Playback menu
 
-# FIXME - PlayPauseVideo
-# FIXME - StopVideo
-# FIXME - NextVideo
-# FIXME - PreviousVideo
-# FIXME - FastForward
-# FIXME - Rewind
+@action_handler("PlayPauseVideo")
+def on_play_pause_video():
+    app.widgetapp.on_play_clicked(None)
+
+@action_handler("StopVideo")
+def on_play_pause_video():
+    app.widgetapp.on_stop_clicked(None)
+
+@action_handler("NextVideo")
+def on_next_video():
+    app.widgetapp.next_video()
+
+@action_handler("PreviousVideo")
+def on_previous_video():
+    app.widgetapp.previous_video()
+
+@action_handler("FastForward")
+def on_fast_forward():
+    app.widgetapp.fast_forward()
+
+@action_handler("Rewind")
+def on_rewind():
+    app.widgetapp.rewind()
+
 # FIXME - UpVolume
 # FIXME - DownVolume
 # FIXME - Fullscreen
@@ -195,6 +213,8 @@ action_groups = {
             'NextVideo',
             'PreviousVideo',
             'Fullscreen',
+            'Rewind',
+            'FastForward',
         ],
 }
 
