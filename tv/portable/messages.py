@@ -232,6 +232,11 @@ class UpdateChannel(BackendMessage):
     def __init__(self, id):
         self.id = id
 
+class MarkChannelSeen(BackendMessage):
+    """Mark a channel as seen"""
+    def __init__(self, id):
+        self.id = id
+
 class UpdateAllChannels(BackendMessage):
     """Updates all channels."""
     pass

@@ -315,6 +315,10 @@ class BackendMessageHandler(messages.MessageHandler):
             self.playlist_tracker.unlink()
             self.playlist_tracker = None
 
+    def handle_mark_channel_seen(self, message):
+        feed = database.defaultDatabase.getObjectByID(message.id)
+        feed.markAsViewed()
+
     def handle_import_channels(self, message):
         opml.Importer().importSubscriptionsFrom(message.filename)
 

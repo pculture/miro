@@ -29,6 +29,7 @@
 """Manages the tab lists from a high level perspective."""
 
 from miro import app
+from miro import messages
 from miro.frontends.widgets import displays
 from miro.frontends.widgets import feedview
 from miro.frontends.widgets import menus
@@ -56,6 +57,8 @@ class TabListManager(object):
                 self.selected_tabs)
         if self.selected_tab_list.type == 'feed':
             app.menu_manager.handle_feed_selection(self.selected_tabs)
+            for selected_tab in self.selected_tabs:
+                messages.MarkChannelSeen(selected_tab.id).send_to_backend()
         elif self.selected_tab_list.type == 'playlist':
             app.menu_manager.handle_playlist_selection(self.selected_tabs)
         elif self.selected_tab_list.type == 'static':
