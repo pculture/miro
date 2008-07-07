@@ -49,8 +49,14 @@ def action_handler(name):
 
 # Video menu
 
-# FIXME - Open
-# FIXME - NewDownload
+@action_handler("Open")
+def on_open():
+    app.widgetapp.open_video()
+
+@action_handler("NewDownload")
+def on_new_download():
+    app.widgetapp.new_download()
+
 # FIXME - CheckVersion
 # FIXME - RemoveVideos
 # FIXME - RenameVideo

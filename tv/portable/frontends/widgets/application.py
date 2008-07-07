@@ -120,9 +120,48 @@ class Application:
     def rewind(self):
         psss
 
+    def open_video(self):
+        title = _('Open Files...')
+        # FIXME - should we list video types we know we can open?
+        filename = dialogs.ask_for_open_pathname(title)
+
+        if not filename:
+            return
+
+        if os.path.isfile(filename):
+            # FIXME - play this file
+            pass
+        else:
+            dialogs.show_message(_('Open Files... - Error'),
+                                 _('File %s does not exist.') % filename)
+
+    def new_download(self):
+        title = _('New Download')
+        description = _('Enter the URL of the video to download')
+        text = app.widgetapp.get_clipboard_text()
+        if text is not None and feed.validateFeedURL(text):
+            text = feed.normalizeFeedURL(text)
+        else:
+            text = ""
+
+        while 1:
+            text = dialogs.ask_for_string(title, description, initial_text=text)
+            if text == None:
+                return
+
+            normalized_url = feed.normalizeFeedURL(text)
+            if feed.validateFeedURL(normalized_url):
+                break
+
+            title = _('New Download - Invalid URL')
+            description = _('The address you entered is not a valid url.\nPlease check the URL and try again.\n\nEnter the URL of the video to download')
+
+        # FIXME - implement download video
+        # messages.NewChannel(normalized_url).send_to_backend()
+
     def add_new_channel(self):
         title = _('Add Channel')
-        description = _("Enter the URL of the channel to add:")
+        description = _('Enter the URL of the channel to add')
         text = app.widgetapp.get_clipboard_text()
         if text is not None and feed.validateFeedURL(text):
             text = feed.normalizeFeedURL(text)
@@ -139,13 +178,13 @@ class Application:
                 break
 
             title = _('Add Channel - Invalid URL')
-            description = _("The address you entered is not a valid url.\nPlease check the URL and try again.\n\nEnter the URL of the channel to add:")
+            description = _('The address you entered is not a valid url.\nPlease check the URL and try again.\n\nEnter the URL of the channel to add')
 
         messages.NewChannel(normalized_url).send_to_backend()
 
     def add_new_channel_folder(self):
         title = _('Create Channel Folder')
-        description = _("Enter a name for the new channel folder:")
+        description = _('Enter a name for the new channel folder')
 
         name = dialogs.ask_for_string(title, description)
         if name:
@@ -270,9 +309,12 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
         messages.UpdateAllChannels().send_to_backend()
 
     def import_channels(self):
-        title = _("Import OPML File")
+        title = _('Import OPML File')
         filename = dialogs.ask_for_open_pathname(title,
                                       filters=[(_('OPML Files'), ['opml'])])
+        if not filename:
+            return
+
         if os.path.isfile(filename):
             messages.ImportChannels(filename).send_to_backend()
         else:
@@ -280,7 +322,7 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
                                  _('File %s does not exist.') % filename)
 
     def export_channels(self):
-        title = _("Export OPML File")
+        title = _('Export OPML File')
         filename = dialogs.ask_for_save_pathname(title, "miro_subscriptions.opml")
         messages.ExportChannels(filename).send_to_backend()
 
@@ -321,7 +363,7 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
             ids = []
 
         title = _('Create Playlist')
-        description = _("Enter a name for the new playlist")
+        description = _('Enter a name for the new playlist')
 
         name = dialogs.ask_for_string(title, description)
         if name:
@@ -329,7 +371,7 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
 
     def add_new_playlist_folder(self):
         title = _('Create Playlist Folder')
-        description = _("Enter a name for the new playlist folder")
+        description = _('Enter a name for the new playlist folder')
 
         name = dialogs.ask_for_string(title, description)
         if name:
@@ -380,12 +422,12 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
     def remove_playlists(self, playlist_infos):
         if len(playlist_infos) == 1:
             title = _('Remove %s') % playlist_infos[0].name
-            description = _("Are you sure you want to remove %s") % \
+            description = _('Are you sure you want to remove %s') % \
                     playlist_infos[0].name
         else:
             title = _('Remove %s playlists') % len(playlist_infos)
             description = \
-                    _("Are you sure you want to remove these %s playlists") % \
+                    _('Are you sure you want to remove these %s playlists') % \
                     len(playlist_infos)
 
         ret = dialogs.show_choice_dialog(title, description,
