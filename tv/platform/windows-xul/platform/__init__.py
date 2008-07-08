@@ -36,3 +36,6 @@ though, we just implement the parts of the API we need here.
 
 def system():
     return "Linux"
+
+def uname():
+    return ('Windows', 'xpbuild', 'XP', '5.1.2600', '', '')
