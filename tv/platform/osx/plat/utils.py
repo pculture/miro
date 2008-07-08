@@ -43,8 +43,8 @@ from AppKit import *
 from miro import prefs
 from miro import config
 from miro.util import returnsUnicode, returnsBinary, checkU, checkB
-from miro.plat.filenames import osFilenameToFilenameType, \
-        osFilenamesToFilenameTypes, filenameTypeToOSFilename
+from miro.plat.filenames import osFilenameToFilenameType, osFilenamesToFilenameTypes, filenameTypeToOSFilename
+from miro.plat.frontends.widgets.threads import on_ui_thread
 
 FilenameType = str
 
@@ -261,6 +261,7 @@ def killProcess(pid):
         except:
             logging.exception ("error killing process")
 
+@on_ui_thread
 def launchDownloadDaemon(oldpid, env):
     killProcess(oldpid)
 

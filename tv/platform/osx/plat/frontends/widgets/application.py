@@ -27,6 +27,7 @@
 # statement from all source files in the program, then also delete it here.
 
 import sys
+import logging
 import traceback
 
 from objc import YES, NO, nil
@@ -72,11 +73,13 @@ class OSXApplication(Application):
         NSApplication.sharedApplication().setDelegate_(self.app_controller)
         NSApplicationMain(sys.argv)        
     
-    def quit_ui(self):
+    def do_quit(self):
         windowFrame = NSStringFromRect(self.window.nswindow.frame())
         config.set(prefs.MAIN_WINDOW_FRAME, windowFrame)
         config.save()
-        
+        Application.do_quit(self)
+            
+    def quit_ui(self):
         self.gotQuit = True
         NSApplication.sharedApplication().terminate_(nil)
 
@@ -113,7 +116,6 @@ class AppController(NSObject):
         try:
             self.application.startup()
         except:
-            print "error starting up"
             traceback.print_exc()
             NSApplication.sharedApplication().terminate_(nil)
 
@@ -129,6 +131,15 @@ class AppController(NSObject):
             result = NSTerminateLater
         return result
 
+    def downloaderDaemonDidTerminate_(self, notification):
+        task = notification.object()
+        status = task.terminationStatus()
+        logging.info("Downloader daemon has been terminated (status: %d)" % status)
+
     def applicationWillTerminate_(self, notification):
+        # Reset the application icon to its default state
+        defaultAppIcon = NSImage.imageNamed_(u'NSApplicationIcon')
+        NSApplication.sharedApplication().setApplicationIconImage_(defaultAppIcon)
+
         ensureDownloadDaemonIsTerminated()    
         app.controller.onShutdown()

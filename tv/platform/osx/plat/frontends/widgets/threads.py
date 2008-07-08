@@ -48,5 +48,12 @@ def call_wrapper(func, args, kwargs):
 
 def call_on_ui_thread(func, *args, **kwargs):
     """Call a function in the UI thread."""
-
     AppHelper.callAfter(call_wrapper(func, args, kwargs))
+
+def on_ui_thread(func):
+    """Decorator which specifies that a method should always be called on the 
+    main GUI thread.
+    """
+    def scheduled(*args, **kwargs):
+        call_on_ui_thread(func, *args, **kwargs)
+    return scheduled
