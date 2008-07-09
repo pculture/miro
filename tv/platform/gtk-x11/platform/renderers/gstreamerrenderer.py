@@ -69,7 +69,7 @@ class Tester:
         self.playbin.set_property("uri", "file://%s" % filename)
         self.playbin.set_state(gst.STATE_PAUSED)
 
-    def result (self):
+    def result(self):
         self.done.wait(5)
         self.disconnect()
         return self.success
@@ -88,7 +88,7 @@ class Tester:
                 self.done.set()
 
     @gtk_queue.gtkAsyncMethod
-    def disconnect (self):
+    def disconnect(self):
         confirmMainThread()
         self.bus.disconnect (self.watch_id)
         self.playbin.set_state(gst.STATE_NULL)
@@ -106,7 +106,17 @@ class Renderer:
         self.bus.enable_sync_message_emission()        
         self.watch_id = self.bus.connect("message", self.onBusMessage)
         self.bus.connect('sync-message::element', self.onSyncMessage)
-        self.sink = gst.element_factory_make("ximagesink", "sink")
+        videosink = "gconfvideosink"
+        try:
+            self.sink = gst.element_factory_make(videosink, "sink")
+
+        except Exception, e:
+            logging.info("gstreamerrenderer: Exception thrown '%s'" % e)
+            logging.exception("sink exception")
+            videosink = "ximagesink"
+            self.sink = gst.element_factory_make(videosink, "sink")
+
+        logging.info("GStreamer sink:    %s", videosink)
         self.playbin.set_property("video-sink", self.sink)
 
     def onSyncMessage(self, bus, message):
@@ -151,14 +161,18 @@ class Renderer:
     def onExpose(self, widget, event):
         confirmMainThread()
         if self.sink:
-            self.sink.expose()
+            if hasattr(self.sink, "expose"):
+                self.sink.expose()
+                return True
         else:
             widget.window.draw_rectangle(self.gc,
                                          True,
                                          0, 0,
                                          widget.allocation.width,
                                          widget.allocation.height)
-        return True
+            return True
+
+        return False
 
     def canPlayFile(self, filename):
         """whether or not this renderer can play this data"""
@@ -178,13 +192,13 @@ class Renderer:
 	extracter = Extracter(filename, movie_data["screenshot"], handle_result)
 
     def goFullscreen(self):
-        confirmMainThread()
         """Handle when the video window goes fullscreen."""
+        confirmMainThread()
         logging.debug("haven't implemented goFullscreen method yet!")
         
     def exitFullscreen(self):
-        confirmMainThread()
         """Handle when the video window exits fullscreen mode."""
+        confirmMainThread()
         logging.debug("haven't implemented exitFullscreen method yet!")
 
     def selectItem(self, anItem):
@@ -192,8 +206,8 @@ class Renderer:
 
     @gtk_queue.gtkAsyncMethod
     def selectFile(self, filename):
-        confirmMainThread()
         """starts playing the specified file"""
+        confirmMainThread()
         self.stop()
         self.playbin.set_property("uri", "file://%s" % filename)
 #        print "selectFile: playing file %s" % filename
@@ -231,10 +245,10 @@ class Renderer:
         
     def playFromTime(self, seconds):
         confirmMainThread()
-        #self.playbin.set_state(gst.STATE_NULL)
+        self.playbin.set_state(gst.STATE_PAUSED)
+        self.playbin.get_state()
 	self.seek(seconds)
         self.play()
-#        print "playFromTime: starting playback from %s sec" % seconds
 
     def getDuration(self, callback=None):
         confirmMainThread()
