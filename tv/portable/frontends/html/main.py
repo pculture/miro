@@ -130,7 +130,7 @@ class HTMLApplication:
         else:
             self.finishStartup()
 
-    def handleMoviesGone():
+    def handleMoviesGone(self):
         title = _("Video Directory Missing")
         description = _("""
     Miro can't find your primary video directory.  This may be because it's \
@@ -139,6 +139,7 @@ class HTMLApplication:
     If you continue, the video directory will be reset to a location on this \
     drive (this will cause you to lose some details about the videos on the \
     external drive).  You can also quit, connect the drive, and relaunch Miro.""")
+        description = description + "\n\n%s" % config.get(prefs.MOVIES_DIRECTORY)
         dialog = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_QUIT,
                 dialogs.BUTTON_LAUNCH_MIRO)
         def callback(dialog):

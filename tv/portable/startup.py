@@ -161,8 +161,7 @@ You must download the latest version of $shortAppName and run that.""")).substit
     database.defaultDatabase.recomputeFilters()
 
     if moviesDirectoryGone():
-        global moviesGoneHandler
-        moviesGoneHandler()
+        app.htmlapp.handleMoviesGone()
     else:
         eventloop.addUrgentCall(finalizeStartup, "finalizing startup")
 
