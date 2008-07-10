@@ -174,13 +174,15 @@ class Renderer:
         if self.sink:
             if hasattr(self.sink, "expose"):
                 self.sink.expose()
+                return True
         else:
             widget.window.draw_rectangle(self.gc,
                                          True,
                                          0, 0,
                                          widget.allocation.width,
                                          widget.allocation.height)
-        return True
+            return True
+        return False
 
     def canPlayFile(self, filename):
         """whether or not this renderer can play this data"""
