@@ -47,8 +47,7 @@ def handle_external_url(url):
     if filetypes.isFeedFilename(url):
         ask_for_feed_subscribe(url)
     elif filetypes.isAllowedFilename(url): # media URL, download it
-        # FIXME - implement download video
-        print "SHOULD DOWNLOAD URL: ", url
+        messages.DownloadURL(url).send_to_backend()
     else:
         app.widgetapp.open_url(url)
 

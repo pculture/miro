@@ -461,6 +461,9 @@ class BackendMessageHandler(messages.MessageHandler):
             ids = None
         SavedPlaylist(name, ids)
 
+    def handle_download_url(self, message):
+        singleclick.addDownload(message.url)
+
     def handle_new_playlist_folder(self, message):
         PlaylistFolder(message.name)
 

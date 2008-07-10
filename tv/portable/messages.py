@@ -295,6 +295,10 @@ class NewPlaylistFolder(BackendMessage):
     def __init__(self, name):
         self.name = util.toUni(name)
 
+class DownloadURL(BackendMessage):
+    def __init__(self, url):
+        self.url = util.toUni(url)
+
 class StartDownload(BackendMessage):
     """Start downloading an item."""
     def __init__(self, id):

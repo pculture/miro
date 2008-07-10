@@ -141,31 +141,7 @@ class Application:
             dialogs.show_message(_('Open Files... - Error'),
                                  _('File %s does not exist.') % filename)
 
-    def new_download(self):
-        title = _('New Download')
-        description = _('Enter the URL of the video to download')
-        text = app.widgetapp.get_clipboard_text()
-        if text is not None and feed.validateFeedURL(text):
-            text = feed.normalizeFeedURL(text)
-        else:
-            text = ""
-
-        while 1:
-            text = dialogs.ask_for_string(title, description, initial_text=text)
-            if text == None:
-                return
-
-            normalized_url = feed.normalizeFeedURL(text)
-            if feed.validateFeedURL(normalized_url):
-                break
-
-            title = _('New Download - Invalid URL')
-            description = _('The address you entered is not a valid url.\nPlease check the URL and try again.\n\nEnter the URL of the video to download')
-
-        # FIXME - implement download video
-        # messages.NewChannel(normalized_url).send_to_backend()
-
-    def ask_for_url(self, title, invalid_title, description):
+    def ask_for_url(self, title, description, error_title, error_description):
         """Ask the user to enter a url in a TextEntry box.  
         
         If the URL the user enters is invalid, she will be asked to re-enter
@@ -173,7 +149,7 @@ class Application:
         clicks Cancel.
 
         The initial text for the TextEntry will be the clipboard contents (if
-        they are a valid URL).
+        it is a valid URL).
         """
         text = app.widgetapp.get_clipboard_text()
         if text is not None and feed.validateFeedURL(text):
@@ -189,13 +165,22 @@ class Application:
             if feed.validateFeedURL(normalized_url):
                 return normalized_url
 
-            title = invalid_title
-            description = _('The address you entered is not a valid url.\nPlease check the URL and try again.\n\nEnter the URL of the channel to add')
+            title = error_title
+            description = error_description
+
+    def new_download(self):
+        url = self.ask_for_url( _('New Download'),
+                _('Enter the URL of the video to download'),
+                _('New Download - Invalid URL'),
+                _('The address you entered is not a valid url.\nPlease check the URL and try again.\n\nEnter the URL of the video to download'))
+        if url is not None:
+            messages.DownloadURL(url).send_to_backend()
 
     def add_new_channel(self):
         url = self.ask_for_url(_('Add Channel'),
+                _('Enter the URL of the channel to add'),
                 _('Add Channel - Invalid URL'),
-                _('Enter the URL of the channel to add'))
+                _('The address you entered is not a valid url.\nPlease check the URL and try again.\n\nEnter the URL of the channel to add'))
         if url is not None:
             messages.NewChannel(url).send_to_backend()
 
@@ -209,8 +194,9 @@ class Application:
 
     def add_new_guide(self):
         url = self.ask_for_url(_('Add Guide'),
+                _('Enter the URL of the Miro guide to add'),
                 _('Add Guide - Invalid URL'),
-                _('Enter the URL of the Miro Guide to add'))
+                _('The address you entered is not a valid url.\nPlease check the URL and try again.\n\nEnter the URL of the Miro guide to add'))
 
         if url is not None:
             messages.NewGuide(url).send_to_backend()
