@@ -34,7 +34,7 @@ from AppKit import *
 from Foundation import *
 
 from miro import app
-from miro.menubar import menubar, Menu, MenuItem, Separator, Key, MOD, ALT
+from miro.menubar import menubar, Menu, MenuItem, Separator, Key, MOD, SHIFT, CTRL, ALT
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import menus
 
@@ -57,13 +57,28 @@ class MenuHandler(NSObject):
 # Keep a reference to each MenuHandler we create
 all_handlers = set()
 
+def make_modifier_mask(shortcut):
+    mask = 0
+    for modifier in shortcut.modifiers:
+        if modifier == MOD:
+            mask |= NSCommandKeyMask
+        elif modifier == SHIFT:
+            mask |= NSShiftKeyMask
+        elif modifier == CTRL:
+            mask |= NSControlKeyMask
+        elif modifier == ALT:
+            mask |= NSAlternateKeyMask
+    return mask
+
 def make_menu_item(menu_item):
     nsmenuitem = NSMenuItem.alloc().init()
     nsmenuitem.setTitleWithMnemonic_(menu_item.label.replace("_", "&"))
     if isinstance(menu_item, MenuItem):
         if len(menu_item.shortcuts) > 0:
-            if isinstance(menu_item.shortcuts[0].key, str):
-                nsmenuitem.setKeyEquivalent_(menu_item.shortcuts[0].key)
+            shortcut = menu_item.shortcuts[0]
+            if isinstance(shortcut.key, str):
+                nsmenuitem.setKeyEquivalent_(shortcut.key)
+                nsmenuitem.setKeyEquivalentModifierMask_(make_modifier_mask(shortcut))
         handler = MenuHandler.alloc().initWithAction_(menu_item.action)
         nsmenuitem.setTarget_(handler)
         nsmenuitem.setAction_('handleMenuItem:')
@@ -90,7 +105,7 @@ def populate_menu():
         Separator(),
         MenuItem(_("Services"), "ServicesMenu", ()),
         Separator(),
-        MenuItem(_("Hide Miro"), "HideMiro", (Key("h"),)),
+        MenuItem(_("Hide Miro"), "HideMiro", (Key("h", MOD),)),
         MenuItem(_("Hide Others"), "HideOthers", (Key("h", MOD, ALT),)),
         MenuItem(_("Show All"), "ShowAll", ()),
         Separator(),
@@ -98,21 +113,21 @@ def populate_menu():
     ]
     miroMenu = Menu("Miro", "Miro", *miroMenuItems)
     miroMenu.findItem("EditPreferences").label = _("Preferences...")
-    miroMenu.findItem("EditPreferences").shortcuts = (Key(","),)
+    miroMenu.findItem("EditPreferences").shortcuts = (Key(",", MOD),)
     miroMenu.findItem("Quit").label = _("Quit Miro")
 
     # File menu
-    closeWinItem = MenuItem(_("Close Window"), "NewChannel", (Key("w"),))
+    closeWinItem = MenuItem(_("Close Window"), "NewChannel", (Key("w", MOD),))
     menubar.findMenu("Video").menuitems.append(closeWinItem)
 
     # Edit menu
     editMenuItems = [
-        MenuItem(_("Cut"), "Cut", (Key("x"),)),
-        MenuItem(_("Copy"), "Copy", (Key("c"),)),
-        MenuItem(_("Paste"), "Paste", (Key("v"),)),
+        MenuItem(_("Cut"), "Cut", (Key("x", MOD),)),
+        MenuItem(_("Copy"), "Copy", (Key("c", MOD),)),
+        MenuItem(_("Paste"), "Paste", (Key("v", MOD),)),
         MenuItem(_("Delete"), "Delete", ()),
         Separator(),
-        MenuItem(_("Select All"), "SelectAll", (Key("a"),))
+        MenuItem(_("Select All"), "SelectAll", (Key("a", MOD),))
     ]
     editMenu = Menu(_("Edit"), "Edit", *editMenuItems)
     menubar.menus.insert(1, editMenu)
@@ -120,9 +135,9 @@ def populate_menu():
     # Window menu
     windowMenuItems = [
         MenuItem(_("Zoom"), "Zoom", ()),
-        MenuItem(_("Minimize"), "Minimize", (Key("m"),)),
+        MenuItem(_("Minimize"), "Minimize", (Key("m", MOD),)),
         Separator(),
-        MenuItem(_("Main Window"), "ShowMain", (Key("0"),)),
+        MenuItem(_("Main Window"), "ShowMain", (Key("0", MOD),)),
         Separator(),
         MenuItem(_("Bring All to Front"), "BringAllToFront", ()),
     ]
