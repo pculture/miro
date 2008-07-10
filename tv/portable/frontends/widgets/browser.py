@@ -32,11 +32,13 @@ what to do with them.
 
 import logging
 
+from miro import filetypes
 from miro import guide
 from miro import messages
 from miro import subscription
 from miro import util
 from miro.plat.frontends.widgets import widgetset
+from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.frontends.widgets import linkhandler
 
 class Browser(widgetset.Browser):
@@ -53,11 +55,19 @@ class Browser(widgetset.Browser):
         if subscription.isSubscribeLink(url):
             messages.SubscriptionLinkClicked(url).send_to_backend()
             return False
-        if (not guide.isPartOfGuide(url, self.guide_info.url,
-            self.guide_info.allowed_urls) and (url.startswith(u'http://')
+        if (guide.isPartOfGuide(url, self.guide_info.url,
+                self.guide_info.allowed_urls) and
+                not filetypes.isFeedFilename(url) and
+                not filetypes.isAllowedFilename(url)):
+            return True
+        if not (url.startswith(u'http://')
                 or url.startswith(u'https://') or
                 url.startswith(u'ftp://') or url.startswith(u'mailto:') or
-                url.startswith(u'feed://'))):
-            linkhandler.handle_external_url(url)
-            return False
-        return True
+                url.startswith(u'feed://')):
+            # javascript: link, or some other weird URL scheme.  Let the
+            # browser handle it.
+            return True
+        # handle_external_url could pop up dialogs and other complex things.
+        # Let's return from the callback before we call it.
+        call_on_ui_thread(linkhandler.handle_external_url, url)
+        return False

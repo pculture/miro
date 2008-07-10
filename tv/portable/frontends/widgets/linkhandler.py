@@ -30,10 +30,12 @@
 
 from miro import app
 from miro import feed
+from miro.gtcache import gettext as _
 from miro import filetypes
 from miro import messages
 from miro import subscription
 from miro import guide
+from miro.frontends.widgets import dialogs
 
 def handle_external_url(url):
     if url.startswith(u'feed://'):
@@ -58,6 +60,6 @@ add it to your subscriptions?
 
 %s""") % url
     choices = (dialogs.BUTTON_YES, dialogs.BUTTON_NO)
-    ret = dialogs.show_choice_dialog(title, description, choices)
+    ret = dialogs.show_choice_dialog(title, text, choices)
     if ret == dialogs.BUTTON_YES:
         messages.NewChannel(url).send_to_backend()
