@@ -87,6 +87,7 @@ class DisplayManager(object):
         self.selected_tabs = selected_tabs
         type = selected_tab_list.type
 
+        self.unselect_current_display()
         for klass in self.display_classes:
             if klass.should_display(type, selected_tabs):
                 self.select_display(klass(type, selected_tabs))
@@ -95,10 +96,13 @@ class DisplayManager(object):
             selected_tabs))
 
     def select_display(self, display):
-        if self.current_display:
-            self.current_display.cleanup()
         self.current_display = display
         app.widgetapp.window.set_main_area(display.widget)
+
+    def unselect_current_display(self):
+        app.item_list_manager.reset()
+        if self.current_display:
+            self.current_display.cleanup()
 
 class StaticTabDisplay(TabDisplay):
     @staticmethod
@@ -127,6 +131,7 @@ class ItemListDisplay(TabDisplay):
 
     def on_play_video(self, view, video_path):
         app.menu_manager.handle_playing_selection()
+        app.display_manager.unselect_current_display()
         video_display = VideoDisplay(video_path)
         app.display_manager.select_display(video_display)
 

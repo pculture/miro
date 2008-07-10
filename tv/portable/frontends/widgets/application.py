@@ -44,6 +44,7 @@ from miro import messages
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import displays
+from miro.frontends.widgets import itemlistmanager
 from miro.frontends.widgets import menus
 from miro.frontends.widgets import tablistmanager
 from miro.frontends.widgets import rundialog
@@ -70,6 +71,7 @@ class Application:
 
     def build_window(self):
         app.tab_list_manager = tablistmanager.TabListManager()
+        app.item_list_manager = itemlistmanager.ItemListManager()
         app.display_manager = displays.DisplayManager()
         app.menu_manager = menus.MenuManager()
         self.window = MiroWindow(_("Miro"), self.get_main_window_dimensions())
@@ -354,25 +356,8 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
             app.widgetapp.copy_text_to_clipboard(ci.base_href)
 
     def add_new_playlist(self):
-        # FIXME - this is really brittle.  this violates the Law of Demeter
-        # in ways that should make people cry.
-        try:
-            t = app.display_manager.current_display
-
-            from miro.frontends.widgets.displays import FeedDisplay
-
-            if isinstance(t, FeedDisplay):
-                t = t.view
-                t = t.full_view
-                t = t.item_list
-                selection = [t.model[i][0] for i in t.get_selection()]
-                ids = [s.id for s in selection if s.downloaded]
-            else:
-                ids = []
-        except:
-            logging.exception("addNewPlaylist exception.")
-            ids = []
-
+        selection = app.item_list_manager.get_selection()
+        ids = [s.id for s in selection if s.downloaded]
         title = _('Create Playlist')
         description = _('Enter a name for the new playlist')
 
