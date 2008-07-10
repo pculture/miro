@@ -75,7 +75,10 @@ def on_quit():
 def on_new_channel():
     app.widgetapp.add_new_channel()
 
-# FIXME - NewGuide
+@action_handler("NewGuide")
+def on_new_guidel():
+    app.widgetapp.add_new_guide()
+
 # FIXME - NewSearchChannel
 
 @action_handler("NewChannelFolder")

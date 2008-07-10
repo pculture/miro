@@ -267,6 +267,12 @@ class DeletePlaylist(BackendMessage):
         self.id = id
         self.is_folder = is_folder
 
+class NewGuide(BackendMessage):
+    """Create a new channel guide.
+    """
+    def __init__(self, url):
+        self.url = util.toUni(url)
+
 class NewChannel(BackendMessage):
     """Create a new channel."""
     def __init__(self, url, trackback=None):

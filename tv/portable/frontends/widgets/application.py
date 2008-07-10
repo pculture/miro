@@ -165,15 +165,21 @@ class Application:
         # FIXME - implement download video
         # messages.NewChannel(normalized_url).send_to_backend()
 
-    def add_new_channel(self):
-        title = _('Add Channel')
-        description = _('Enter the URL of the channel to add')
+    def ask_for_url(self, title, invalid_title, description):
+        """Ask the user to enter a url in a TextEntry box.  
+        
+        If the URL the user enters is invalid, she will be asked to re-enter
+        it again.  This process repeats until the user enters a valid URL, or
+        clicks Cancel.
+
+        The initial text for the TextEntry will be the clipboard contents (if
+        they are a valid URL).
+        """
         text = app.widgetapp.get_clipboard_text()
         if text is not None and feed.validateFeedURL(text):
             text = feed.normalizeFeedURL(text)
         else:
             text = ""
-
         while 1:
             text = dialogs.ask_for_string(title, description, initial_text=text)
             if text == None:
@@ -181,12 +187,17 @@ class Application:
 
             normalized_url = feed.normalizeFeedURL(text)
             if feed.validateFeedURL(normalized_url):
-                break
+                return normalized_url
 
-            title = _('Add Channel - Invalid URL')
+            title = invalid_title
             description = _('The address you entered is not a valid url.\nPlease check the URL and try again.\n\nEnter the URL of the channel to add')
 
-        messages.NewChannel(normalized_url).send_to_backend()
+    def add_new_channel(self):
+        url = self.ask_for_url(_('Add Channel'),
+                _('Add Channel - Invalid URL'),
+                _('Enter the URL of the channel to add'))
+        if url is not None:
+            messages.NewChannel(url).send_to_backend()
 
     def add_new_channel_folder(self):
         title = _('Create Channel Folder')
@@ -195,6 +206,14 @@ class Application:
         name = dialogs.ask_for_string(title, description)
         if name:
             messages.NewChannelFolder(name).send_to_backend()
+
+    def add_new_guide(self):
+        url = self.ask_for_url(_('Add Guide'),
+                _('Add Guide - Invalid URL'),
+                _('Enter the URL of the Miro Guide to add'))
+
+        if url is not None:
+            messages.NewGuide(url).send_to_backend()
 
     def remove_current_feed(self):
         t, channel_infos = app.tab_list_manager.get_selection()
@@ -551,7 +570,12 @@ class WidgetsMessageHandler(messages.MessageHandler):
                     self.update_default_guide(info)
                     message.changed.remove(info)
                     break
-            print 'should update guides'
+            for removed in message.removed:
+                print 'should remove guide: ', removed
+            for changed in message.changed:
+                print 'should change guide: ', changed.name
+            for added in message.added:
+                print 'should add guide: ', added.name
             return
         tablist = self.tablist_for_message(message)
         for id in message.removed:

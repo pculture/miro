@@ -437,6 +437,11 @@ class BackendMessageHandler(messages.MessageHandler):
         tab_order.tab_ids = order
         tab_order.signalChange()
 
+    def handle_new_guide(self, message):
+        url = message.url
+        if guide.getGuideByURL(url) is None:
+            guide.ChannelGuide(url, [u'*'])
+
     def handle_new_channel(self, message):
         url = message.url
         if not getFeedByURL(url):
