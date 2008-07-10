@@ -37,6 +37,7 @@ from miro import guide
 from miro import httpclient
 from miro import indexes
 from miro import messages
+from miro import singleclick
 from miro import subscription
 from miro import views
 from miro import opml
