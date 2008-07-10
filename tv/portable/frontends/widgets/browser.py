@@ -52,8 +52,11 @@ class Browser(widgetset.Browser):
         if subscription.isSubscribeLink(url):
             messages.SubscriptionLinkClicked(url).send_to_backend()
             return False
-        if not guide.isPartOfGuide(url, self.guide_info.url,
-                self.guide_info.allowed_urls):
+        if (not guide.isPartOfGuide(url, self.guide_info.url,
+            self.guide_info.allowed_urls) and (url.startswith(u'http://')
+                or url.startswith(u'https://') or
+                url.startswith(u'ftp://') or url.startswith(u'mailto:') or
+                url.startswith(u'feed://'))):
             linkhandler.handle_external_url(url)
             return False
         return True
