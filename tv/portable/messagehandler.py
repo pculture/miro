@@ -42,7 +42,7 @@ from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
 from miro.util import getSingletonDDBObject
 
 class ViewTracker(object):
-    """Handles tracking views for TrackChannels, TrackPlaylist and TrackItems."""
+    """Handles tracking views for TrackGuides, TrackChannels, TrackPlaylist and TrackItems."""
 
     def __init__(self):
         self.add_callbacks()
@@ -167,6 +167,19 @@ class PlaylistTracker(TabTracker):
     def get_tab_view(self):
         return getSingletonDDBObject(views.playlistTabOrder).getView()
 
+class GuideTracker(ViewTracker):
+    InfoClass = messages.GuideInfo
+
+    def get_object_views(self):
+        return [views.guides]
+
+    def make_changed_message(self, added, changed, removed):
+        return messages.TabsChanged('guide', added, changed, removed)
+
+    def send_initial_list(self):
+        info_list = [messages.GuideInfo(g) for g in views.guides]
+        messages.GuideList(info_list).send_to_frontend()
+
 class ItemTrackerBase(ViewTracker):
     InfoClass = messages.ItemInfo
 
@@ -178,9 +191,6 @@ class ItemTrackerBase(ViewTracker):
 
     def send_initial_list(self):
         messages.ItemList(self.feed_id, self.view).send_to_frontend()
-
-    def unlink(self):
-        self.remove_callbacks()
 
 class FeedItemTracker(ItemTrackerBase):
     def __init__(self, feed):
@@ -267,6 +277,7 @@ class BackendMessageHandler(messages.MessageHandler):
         messages.MessageHandler.__init__(self)
         self.channel_tracker = None
         self.playlist_tracker = None
+        self.guide_tracker = None
         self.download_count_tracker = None
         self.new_count_tracker = None
         self.item_trackers = {}
@@ -304,6 +315,16 @@ class BackendMessageHandler(messages.MessageHandler):
         if self.channel_tracker:
             self.channel_tracker.unlink()
             self.channel_tracker = None
+
+    def handle_track_guides(self, message):
+        if not self.guide_tracker:
+            self.guide_tracker = GuideTracker()
+        self.guide_tracker.send_initial_list()
+
+    def handle_stop_tracking_guides(self, message):
+        if self.guide_tracker:
+            self.guide_tracker.unlink()
+            self.guide_tracker = None
 
     def handle_track_playlists(self, message):
         if not self.playlist_tracker:

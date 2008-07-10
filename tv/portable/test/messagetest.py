@@ -55,7 +55,7 @@ class TestFrontendMessageHandler(object):
     def handle(self, message):
         self.messages.append(message)
 
-class BackendMessagesTest(EventLoopTest):
+class TrackerTest(EventLoopTest):
     def setUp(self):
         MiroTestCase.setUp(self)
         self.test_handler = TestFrontendMessageHandler()
@@ -66,69 +66,31 @@ class BackendMessagesTest(EventLoopTest):
         self.playlistTabOrder = TabOrder(u'playlist')
         # Adding a guide ensures that if we remove all our channel/playlist
         # tabs the selection code won't go crazy.
-        ChannelGuide(config.get(prefs.CHANNEL_GUIDE_URL))
+        self.guide = ChannelGuide(config.get(prefs.CHANNEL_GUIDE_URL))
 
     def tearDown(self):
         messages.BackendMessage.install_handler(None)
         messages.FrontendMessage.install_handler(None)
         MiroTestCase.tearDown(self)
 
-class FeedTrackTest(BackendMessagesTest):
-    def setUp(self):
-        BackendMessagesTest.setUp(self)
-        self.feed1 = Feed(u'http://example.com/')
-        self.feed2 = Feed(u'http://example.com/2')
-        self.feed_folder = ChannelFolder('test channel folder')
-        self.feed_folder.handleDNDAppend( set([self.feed2.id]))
-        messages.TrackChannels().send_to_backend()
-        self.runUrgentCalls()
-
-    def testInitialList(self):
-        self.assertEquals(len(self.test_handler.messages), 1)
-        message = self.test_handler.messages[0]
-        self.assert_(isinstance(message, messages.TabList))
-        self.assertEquals(message.type, 'feed')
-        self.checkChannelInfoList(message.toplevels, 
-                [self.feed1, self.feed_folder])
-        self.checkChannelInfoList(message.folder_children[self.feed_folder.id],
-                [self.feed2])
-        self.assertEquals(len(message.folder_children), 1)
-
-    def checkChannelInfo(self, channelInfo, feed):
-        self.assertEquals(channelInfo.name, feed.getTitle())
-        self.assertEquals(channelInfo.id, feed.id)
-        self.assertEquals(channelInfo.unwatched, feed.numUnwatched())
-        self.assertEquals(channelInfo.available, feed.numAvailable())
-        self.assertEquals(channelInfo.is_folder,
-                isinstance(feed, ChannelFolder))
-
-    def checkChannelInfoList(self, channelInfoList, objects):
-        self.assertEquals(len(channelInfoList), len(objects))
-        for info, object in zip(channelInfoList, objects):
-            self.checkChannelInfo(info, object)
-
-    def checkMessageCount(self, expected_count):
-        self.assertEquals(len(self.test_handler.messages), expected_count)
-
     def checkChangedMessage(self, index, added=None, changed=None,
             removed=None):
         message = self.test_handler.messages[index]
-        self.assertEquals(type(message), messages.TabsChanged)
-        self.assertEquals(message.type, 'feed')
+        self.checkChangedMessageType(message)
         if added:
             self.assertEquals(len(added), len(message.added))
-            for channel, info in zip(added, message.added):
-                self.checkChannelInfo(info, channel)
+            for object, info in zip(added, message.added):
+                self.checkInfo(info, object)
         else:
             self.assertEquals(len(message.added), 0)
         if changed:
             self.assertEquals(len(changed), len(message.changed))
-            def find_changed_info(channel):
+            def find_changed_info(object):
                 for info in message.changed:
-                    if info.id == channel.id:
+                    if info.id == object.id:
                         return info
-            for channel in changed:
-                self.checkChannelInfo(find_changed_info(channel), channel)
+            for object in changed:
+                self.checkInfo(find_changed_info(object), object)
         else:
             self.assertEquals(len(message.changed), 0)
         if removed:
@@ -136,59 +98,74 @@ class FeedTrackTest(BackendMessagesTest):
         else:
             self.assertEquals(len(message.removed), 0)
 
+    def checkMessageCount(self, expected_count):
+        self.assertEquals(len(self.test_handler.messages), expected_count)
+
+    def checkChangedMessageType(self, message):
+        raise NotImplementedError()
+
+    def checkInfoList(self, infoList, objects):
+        self.assertEquals(len(infoList), len(objects))
+        for info, object in zip(infoList, objects):
+            self.checkInfo(info, object)
+
+    def checkInfo(self, info, object):
+        raise NotImplementedError()
+
+class GuideTrackTest(TrackerTest):
+    def setUp(self):
+        TrackerTest.setUp(self)
+        self.guide1 = ChannelGuide(u'http://example.com/')
+        messages.TrackGuides().send_to_backend()
+        self.runUrgentCalls()
+
+    def checkInfo(self, guideInfo, guide):
+        self.assertEquals(guideInfo.name, guide.getTitle())
+        self.assertEquals(guideInfo.id, guide.id)
+        self.assertEquals(guideInfo.url, guide.getURL())
+        self.assertEquals(guideInfo.default, guide.getDefault())
+
+    def testInitialList(self):
+        self.assertEquals(len(self.test_handler.messages), 1)
+        message = self.test_handler.messages[0]
+        self.assert_(isinstance(message, messages.GuideList))
+        self.checkInfo(message.default_guide, self.guide)
+        self.checkInfoList(message.added_guides, [self.guide1])
+
+    def checkChangedMessageType(self, message):
+        self.assertEquals(type(message), messages.TabsChanged)
+        self.assertEquals(message.type, 'guide')
+
     def testAdded(self):
-        f = Feed(u'http://example.com/3')
+        g = ChannelGuide(u'http://example.com/3')
         self.runUrgentCalls()
         self.checkMessageCount(2)
-        self.checkChangedMessage(1, added=[f])
-
-    def testAddedOrder(self):
-        f1 = Feed(u'http://example.com/3')
-        f2 = Feed(u'http://example.com/4')
-        f3 = Feed(u'http://example.com/5')
-        f4 = Feed(u'http://example.com/6')
-        f5 = Feed(u'http://example.com/7')
-        self.runUrgentCalls()
-        # We want the ChannelAdded messages to come in the same order the
-        # feeds were added
-        self.checkChangedMessage(1, added=[f1, f2, f3, f4, f5])
+        self.checkChangedMessage(1, added=[g])
 
     def testRemoved(self):
-        self.feed2.remove()
+        self.guide1.remove()
         self.runUrgentCalls()
         self.checkMessageCount(2)
-        self.checkChangedMessage(1, removed=[self.feed2])
+        self.checkChangedMessage(1, removed=[self.guide1])
 
     def testChange(self):
-        self.feed1.setTitle(u"Booya")
+        self.guide1.setTitle(u"Booya")
         self.runUrgentCalls()
         self.checkMessageCount(2)
-        self.checkChangedMessage(1, changed=[self.feed1])
-
-    def testReduceNumberOfMessages(self):
-        f1 = Feed(u'http://example.com/3')
-        f1.remove()
-        f2 = Feed(u'http://example.com/4')
-        f2.setTitle(u'New Title')
-        self.runUrgentCalls()
-        # We don't need to see that f1 was added because it got removed
-        # immediately after.  We don't need to see that f2 was changed because
-        # it will have the updated info in added.
-        self.checkMessageCount(2)
-        self.checkChangedMessage(1, added=[f2])
+        self.checkChangedMessage(1, changed=[self.guide1])
 
     def testStop(self):
         self.checkMessageCount(1)
-        messages.StopTrackingChannels().send_to_backend()
+        messages.StopTrackingGuides().send_to_backend()
         self.runUrgentCalls()
-        self.feed1.setTitle(u"Booya")
-        f = Feed(u'http://example.com/3')
-        self.feed2.remove()
+        self.guide.setTitle(u"Booya")
+        g = ChannelGuide(u'http://example.com/3')
+        self.guide1.remove()
         self.checkMessageCount(1)
 
-class PlaylistTrackTest(BackendMessagesTest):
+class PlaylistTrackTest(TrackerTest):
     def setUp(self):
-        BackendMessagesTest.setUp(self)
+        TrackerTest.setUp(self)
         self.playlist1 = SavedPlaylist(u'Playlist 1')
         self.playlist2 = SavedPlaylist(u'Playlist 2')
         self.folder = PlaylistFolder('Playlist Folder')
@@ -202,51 +179,21 @@ class PlaylistTrackTest(BackendMessagesTest):
         message = self.test_handler.messages[0]
         self.assert_(isinstance(message, messages.TabList))
         self.assertEquals(message.type, 'playlist')
-        self.checkPlaylistInfoList(message.toplevels, 
+        self.checkInfoList(message.toplevels, 
                 [self.playlist1, self.folder])
-        self.checkPlaylistInfoList(message.folder_children[self.folder.id],
+        self.checkInfoList(message.folder_children[self.folder.id],
                 [self.playlist2])
         self.assertEquals(len(message.folder_children), 1)
 
-    def checkPlaylistInfo(self, playlistInfo, playlist):
+    def checkInfo(self, playlistInfo, playlist):
         self.assertEquals(playlistInfo.name, playlist.getTitle())
         self.assertEquals(playlistInfo.id, playlist.id)
         self.assertEquals(playlistInfo.is_folder,
                 isinstance(playlist, PlaylistFolder))
 
-    def checkPlaylistInfoList(self, playlistInfoList, objects):
-        self.assertEquals(len(playlistInfoList), len(objects))
-        for info, object in zip(playlistInfoList, objects):
-            self.checkPlaylistInfo(info, object)
-
-    def checkChangedMessage(self, index, added=None, changed=None,
-            removed=None):
-        message = self.test_handler.messages[index]
+    def checkChangedMessageType(self, message):
         self.assertEquals(type(message), messages.TabsChanged)
         self.assertEquals(message.type, 'playlist')
-        if added:
-            self.assertEquals(len(added), len(message.added))
-            for playlist, info in zip(added, message.added):
-                self.checkPlaylistInfo(info, playlist)
-        else:
-            self.assertEquals(len(message.added), 0)
-        if changed:
-            self.assertEquals(len(changed), len(message.changed))
-            def find_changed_info(playlist):
-                for info in message.changed:
-                    if info.id == playlist.id:
-                        return info
-            for playlist in changed:
-                self.checkPlaylistInfo(find_changed_info(playlist), playlist)
-        else:
-            self.assertEquals(len(message.changed), 0)
-        if removed:
-            self.assertSameSet([c.id for c in removed], message.removed)
-        else:
-            self.assertEquals(len(message.removed), 0)
-
-    def checkMessageCount(self, expected_count):
-        self.assertEquals(len(self.test_handler.messages), expected_count)
 
     def testAdded(self):
         p = SavedPlaylist(u'http://example.com/3')
@@ -299,6 +246,89 @@ class PlaylistTrackTest(BackendMessagesTest):
         self.playlist2.remove()
         self.checkMessageCount(1)
 
+class FeedTrackTest(TrackerTest):
+    def setUp(self):
+        TrackerTest.setUp(self)
+        self.feed1 = Feed(u'http://example.com/')
+        self.feed2 = Feed(u'http://example.com/2')
+        self.feed_folder = ChannelFolder('test channel folder')
+        self.feed_folder.handleDNDAppend( set([self.feed2.id]))
+        messages.TrackChannels().send_to_backend()
+        self.runUrgentCalls()
+
+    def testInitialList(self):
+        self.assertEquals(len(self.test_handler.messages), 1)
+        message = self.test_handler.messages[0]
+        self.assert_(isinstance(message, messages.TabList))
+        self.assertEquals(message.type, 'feed')
+        self.checkInfoList(message.toplevels, 
+                [self.feed1, self.feed_folder])
+        self.checkInfoList(message.folder_children[self.feed_folder.id],
+                [self.feed2])
+        self.assertEquals(len(message.folder_children), 1)
+
+    def checkInfo(self, channelInfo, feed):
+        self.assertEquals(channelInfo.name, feed.getTitle())
+        self.assertEquals(channelInfo.id, feed.id)
+        self.assertEquals(channelInfo.unwatched, feed.numUnwatched())
+        self.assertEquals(channelInfo.available, feed.numAvailable())
+        self.assertEquals(channelInfo.is_folder,
+                isinstance(feed, ChannelFolder))
+
+    def checkChangedMessageType(self, message):
+        self.assertEquals(type(message), messages.TabsChanged)
+        self.assertEquals(message.type, 'feed')
+
+    def testAdded(self):
+        f = Feed(u'http://example.com/3')
+        self.runUrgentCalls()
+        self.checkMessageCount(2)
+        self.checkChangedMessage(1, added=[f])
+
+    def testAddedOrder(self):
+        f1 = Feed(u'http://example.com/3')
+        f2 = Feed(u'http://example.com/4')
+        f3 = Feed(u'http://example.com/5')
+        f4 = Feed(u'http://example.com/6')
+        f5 = Feed(u'http://example.com/7')
+        self.runUrgentCalls()
+        # We want the ChannelAdded messages to come in the same order the
+        # feeds were added
+        self.checkChangedMessage(1, added=[f1, f2, f3, f4, f5])
+
+    def testRemoved(self):
+        self.feed2.remove()
+        self.runUrgentCalls()
+        self.checkMessageCount(2)
+        self.checkChangedMessage(1, removed=[self.feed2])
+
+    def testChange(self):
+        self.feed1.setTitle(u"Booya")
+        self.runUrgentCalls()
+        self.checkMessageCount(2)
+        self.checkChangedMessage(1, changed=[self.feed1])
+
+    def testReduceNumberOfMessages(self):
+        f1 = Feed(u'http://example.com/3')
+        f1.remove()
+        f2 = Feed(u'http://example.com/4')
+        f2.setTitle(u'New Title')
+        self.runUrgentCalls()
+        # We don't need to see that f1 was added because it got removed
+        # immediately after.  We don't need to see that f2 was changed because
+        # it will have the updated info in added.
+        self.checkMessageCount(2)
+        self.checkChangedMessage(1, added=[f2])
+
+    def testStop(self):
+        self.checkMessageCount(1)
+        messages.StopTrackingChannels().send_to_backend()
+        self.runUrgentCalls()
+        self.feed1.setTitle(u"Booya")
+        f = Feed(u'http://example.com/3')
+        self.feed2.remove()
+        self.checkMessageCount(1)
+
 class FakeDownloader(object):
     def __init__(self):
         self.current_size = 0
@@ -314,9 +344,9 @@ class FakeDownloader(object):
     def getState(self):
         return self.state
 
-class ItemTrackTest(BackendMessagesTest):
+class ItemTrackTest(TrackerTest):
     def setUp(self):
-        BackendMessagesTest.setUp(self)
+        TrackerTest.setUp(self)
         self.items = []
         self.feed = Feed(u'dtv:manualFeed')
         self.make_item(u'http://example.com/')
@@ -335,7 +365,7 @@ class ItemTrackTest(BackendMessagesTest):
         self.assertEquals(info.rate, downloader.getRate())
         self.assertEquals(info.state, downlader.getState())
 
-    def checkItemInfo(self, itemInfo, item):
+    def checkInfo(self, itemInfo, item):
         self.assertEquals(itemInfo.name, item.getTitle())
         self.assertEquals(itemInfo.description, item.getDescription())
         self.assertEquals(itemInfo.release_date, item.getReleaseDateObj())
@@ -350,30 +380,8 @@ class ItemTrackTest(BackendMessagesTest):
         else:
             self.assertEquals(itemInfo.download_info, None)
 
-    def checkChangedMessage(self, index, added=None, changed=None,
-            removed=None):
-        message = self.test_handler.messages[index]
+    def checkChangedMessageType(self, message):
         self.assertEquals(type(message), messages.ItemsChanged)
-        if added:
-            self.assertEquals(len(added), len(message.added))
-            for item, info in zip(added, message.added):
-                self.checkItemInfo(info, item)
-        else:
-            self.assertEquals(len(message.added), 0)
-        if changed:
-            self.assertEquals(len(changed), len(message.changed))
-            def find_changed_info(item):
-                for info in message.changed:
-                    if info.id == item.id:
-                        return info
-            for item in changed:
-                self.checkItemInfo(find_changed_info(item), item)
-        else:
-            self.assertEquals(len(message.changed), 0)
-        if removed:
-            self.assertSameSet([c.id for c in removed], message.removed)
-        else:
-            self.assertEquals(len(message.removed), 0)
 
     def testInitialList(self):
         self.assertEquals(len(self.test_handler.messages), 1)
@@ -383,8 +391,7 @@ class ItemTrackTest(BackendMessagesTest):
 
         self.assertEquals(len(message.items), len(self.items))
         message.items.sort(key=lambda i: i.id)
-        for info, item in zip(message.items, self.items):
-            self.checkItemInfo(info, item)
+        self.checkInfoList(message.items, self.items)
 
     def testUpdate(self):
         self.items[0].entry.title = u'new name'

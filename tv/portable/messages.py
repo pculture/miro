@@ -147,6 +147,19 @@ class StopTrackingPlaylists(BackendMessage):
     """Stop tracking playlists."""
     pass
 
+class TrackGuides(BackendMessage):
+    """Begin tracking guides.
+
+    After this message is sent, the backend will send back a GuideList
+    message, then it will send GuidesChanged messages whenever the guide
+    list changes.
+    """
+    pass
+
+class StopTrackingGuides(BackendMessage):
+    """Stop tracking guides."""
+    pass
+
 class TrackItemsForFeed(BackendMessage):
     """Begin tracking items for a feed
 
@@ -396,6 +409,22 @@ class PlaylistInfo(object):
         self.id = playlist_obj.id
         self.is_folder = isinstance(playlist_obj, PlaylistFolder)
 
+class GuideInfo(object):
+    """Tracks the state of a channel guide
+
+    Attributes:
+
+    name -- channel name
+    id -- object id
+    url -- URL for the guide
+    default -- is this the default channel guide?
+    """
+    def __init__(self, guide):
+        self.name = guide.getTitle()
+        self.id = guide.id
+        self.url = guide.getURL()
+        self.default = guide.getDefault()
+
 class ItemInfo(object):
     """Tracks the state of an item
 
@@ -472,6 +501,25 @@ class DownloadInfo(object):
         self.startup_activity = downloader.getStartupActivity()
         self.finished = downloader.isFinished()
 
+class GuideList(FrontendMessage):
+    """Sends the frontend the initial list of channel guides
+
+    Attributes:
+    default_guide -- The Default channel guide
+    guides -- list added channel guides
+    """
+
+    def __init__(self, guides):
+        self.default_guide = None
+        self.added_guides = []
+        for guide in guides:
+            if guide.default:
+                if self.default_guide is not None:
+                    raise ValueError("Multiple Default guides")
+                self.default_guide = guide
+            else:
+                self.added_guides.append(guide)
+
 class TabList(FrontendMessage):
     """Sends the frontend the initial list of channels and playlists
 
@@ -506,7 +554,7 @@ class TabsChanged(FrontendMessage):
     changed.
 
     Attributes:
-    type -- 'feed' or 'playlist'
+    type -- 'feed', playlist' or 'guide'
     added -- ChannelInfo/PlaylistInfo object for each added tab.  The list 
         will be in the same order that the tabs were added.
     changed -- set containing a ChannelInfo/PlaylistInfo for each changed tab.
