@@ -31,6 +31,7 @@ app.
 """
 
 from miro import app
+from miro.frontends.widgets import browser
 from miro.frontends.widgets import feedview
 from miro.frontends.widgets import itemlist
 from miro.plat.frontends.widgets import widgetset
@@ -65,6 +66,7 @@ class DisplayManager(object):
     def __init__(self):
         self.display_classes = [
                 FeedDisplay,
+                SiteDisplay,
                 LibraryDisplay,
                 NewVideosDisplay,
                 DownloadingDisplay,
@@ -106,6 +108,14 @@ class StaticTabDisplay(TabDisplay):
     def __init__(self, type, selected_tabs):
         # There is always exactly 1 selected static tab
         self.widget = selected_tabs[0].view
+
+class SiteDisplay(TabDisplay):
+    @staticmethod
+    def should_display(type, selected_tabs):
+        return type == 'site' and len(selected_tabs) == 1
+
+    def __init__(self, type, selected_tabs):
+        self.widget = browser.Browser(selected_tabs[0])
 
 class ItemListDisplay(TabDisplay):
     def __init__(self, type, selected_tabs):

@@ -238,10 +238,6 @@ class TabList(object):
         self.view.allow_multiple_select(True)
         self.view.connect('row-expanded', self.on_row_expanded_change, True)
         self.view.connect('row-collapsed', self.on_row_expanded_change, False)
-        self.view.set_drag_source(TabListDragHandler(self.type, 
-            '%s-with-folder' % self.type))
-        self.view.set_drag_dest(TabListDropHandler(self, self.type,
-            '%s-with-folder' % self.type))
         self.iter_map = {}
         self.in_drag_and_drop_reorder = False
 
@@ -249,9 +245,6 @@ class TabList(object):
         id = self.view.model[iter][0].id
         message = messages.FolderExpandedChange(self.type, id, expanded)
         message.send_to_backend()
-
-    def set_width(self, width):
-        self.view.set_column_width(0, width)
 
     def add(self, info, parent_id=None):
         self.init_info(info)
@@ -288,7 +281,23 @@ class TabList(object):
                 message.append_child(info.id, child[0])
         message.send_to_backend()
 
-class FeedList(TabList):
+class SiteList(TabList):
+    type = 'site'
+
+    def init_info(self, info):
+        thumb_path = resources.path('wimages/icon-site.png')
+        info.icon = imagepool.get_surface(thumb_path)
+        info.unwatched = info.available = 0
+
+class DndTabList(TabList):
+    def __init__(self):
+        TabList.__init__(self)
+        self.view.set_drag_source(TabListDragHandler(self.type, 
+            '%s-with-folder' % self.type))
+        self.view.set_drag_dest(TabListDropHandler(self, self.type,
+            '%s-with-folder' % self.type))
+
+class FeedList(DndTabList):
     type = 'feed'
 
     def init_info(self, info):
@@ -301,7 +310,7 @@ class FeedList(TabList):
                 return info
         return None
 
-class PlaylistList(TabList):
+class PlaylistList(DndTabList):
     type = 'playlist'
 
     def init_info(self, info):
@@ -325,6 +334,8 @@ class TabListBox(widgetset.Scroller):
         self.header_left_pad = tlm.feed_list.view.get_left_offset()
         vbox = widgetset.VBox()
         vbox.pack_start(tlm.static_tab_list.view)
+        vbox.pack_start(self.build_header(_('SITES'), 22, 15))
+        vbox.pack_start(tlm.site_list.view)
         vbox.pack_start(self.build_header(_('FEEDS'), 22, 15))
         vbox.pack_start(tlm.feed_list.view)
         vbox.pack_start(self.build_header(_('PLAYLISTS'), 22, 15))

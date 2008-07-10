@@ -51,7 +51,6 @@ class ChannelGuideTab(StaticTab):
 
     def make_view(self):
         self.browser = browser.Browser(app.widgetapp.default_guide_info)
-        self.browser.navigate(config.get(prefs.CHANNEL_GUIDE_URL))
         return self.browser
 
     def update(self, guide_info):

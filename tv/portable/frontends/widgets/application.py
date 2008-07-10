@@ -538,6 +538,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
             return app.tab_list_manager.feed_list
         elif message.type == 'playlist':
             return app.tab_list_manager.playlist_list
+        elif message.type == 'guide':
+            return app.tab_list_manager.site_list
         else:
             raise ValueError("Unknown Type: %s" % message.type)
 
@@ -556,7 +558,13 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
     def handle_guide_list(self, message):
         app.widgetapp.default_guide_info = message.default_guide
+        # We had to wait until we have the default channel guide info to show
+        # the UI
         app.widgetapp.build_window()
+        tablist = app.tab_list_manager.site_list
+        for info in message.added_guides:
+            tablist.add(info)
+        tablist.model_changed()
 
     def update_default_guide(self, guide_info):
         app.widgetapp.default_guide_info = guide_info
@@ -570,13 +578,6 @@ class WidgetsMessageHandler(messages.MessageHandler):
                     self.update_default_guide(info)
                     message.changed.remove(info)
                     break
-            for removed in message.removed:
-                print 'should remove guide: ', removed
-            for changed in message.changed:
-                print 'should change guide: ', changed.name
-            for added in message.added:
-                print 'should add guide: ', added.name
-            return
         tablist = self.tablist_for_message(message)
         for id in message.removed:
             tablist.remove(id)

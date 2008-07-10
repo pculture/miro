@@ -40,6 +40,7 @@ from miro.plat.frontends.widgets import widgetset
 class TabListManager(object):
     def __init__(self):
         self.static_tab_list = tablist.StaticTabList()
+        self.site_list = tablist.SiteList()
         self.feed_list = tablist.FeedList()
         self.playlist_list = tablist.PlaylistList()
         self.widget_to_tablist = {}
@@ -63,12 +64,14 @@ class TabListManager(object):
             app.menu_manager.handle_playlist_selection(self.selected_tabs)
         elif self.selected_tab_list.type == 'static':
             app.menu_manager.handle_static_tab_selection(self.selected_tabs)
+        elif self.selected_tab_list.type == 'site':
+            app.menu_manager.handle_site_selection(self.selected_tabs)
         else:
             raise ValueError("Unknown tab list type: %s" %
                     self.selected_tab_list.type)
 
     def all_tab_lists(self):
-        return (self.static_tab_list, self.feed_list, self.playlist_list)
+        return (self.static_tab_list, self.site_list, self.feed_list, self.playlist_list)
 
     def select_guide(self):
         view = self.static_tab_list.view

@@ -43,6 +43,7 @@ class Browser(widgetset.Browser):
     def __init__(self, guide_info):
         widgetset.Browser.__init__(self)
         self.guide_info = guide_info
+        self.navigate(guide_info.url)
 
     def should_load_url(self, url):
         logging.info ("got %s", url)

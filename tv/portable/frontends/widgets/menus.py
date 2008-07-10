@@ -254,6 +254,13 @@ class MenuManager(signals.SignalEmitter):
             self.enabled_groups.add('FeedSelected')
         self.emit('enabled-changed')
 
+    def handle_site_selection(self, selected_sites):
+        """Handle the user selecting things in the site list.  selected_sites
+        is a list of GuideInfo objects
+        """
+        self.enabled_groups = set(['AlwaysOn'])
+        self.emit('enabled-changed')
+
     def handle_playlist_selection(self, selected_playlists):
         self.enabled_groups = set(['AlwaysOn'])
         self.enabled_groups.add('PlaylistsSelected')
