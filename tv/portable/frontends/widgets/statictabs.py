@@ -28,10 +28,12 @@
 
 """statictabs.py -- Tabs that are always present."""
 
+from miro import app
 from miro import config
 from miro import prefs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import imagepool
+from miro.frontends.widgets import browser
 from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
 
@@ -48,9 +50,12 @@ class ChannelGuideTab(StaticTab):
     icon_name = 'icon-guide.png'
 
     def make_view(self):
-        view = widgetset.Browser()
-        view.navigate(config.get(prefs.CHANNEL_GUIDE_URL))
-        return view
+        self.browser = browser.Browser(app.widgetapp.default_guide_info)
+        self.browser.navigate(config.get(prefs.CHANNEL_GUIDE_URL))
+        return self.browser
+
+    def update(self, guide_info):
+        self.browser.guide_info = guide_info
 
 class DummyView(widgetset.Alignment):
     def __init__(self, title):

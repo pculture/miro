@@ -32,6 +32,7 @@ import logging
 
 from miro import database
 from miro import eventloop
+from miro import httpclient
 from miro import indexes
 from miro import messages
 from miro import views
@@ -437,6 +438,9 @@ class BackendMessageHandler(messages.MessageHandler):
         url = message.url
         if not getFeedByURL(url):
             Feed(url)
+            if message.trackback:
+                httpclient.grabURL(message.trackback, 
+                        lambda x: None, lambda x: None)
 
     def handle_new_channel_folder(self, message):
         ChannelFolder(message.name)
@@ -463,8 +467,7 @@ class BackendMessageHandler(messages.MessageHandler):
         try:
             item_tracker = self.item_trackers.pop(message.feed_id)
         except KeyError:
-            logging.warn("Item tracker not found (id: %s is_folder: %s)" % 
-                    (message.feed_id, message.is_folder))
+            logging.warn("Item tracker not found (id: %s)", message.feed_id)
         else:
             item_tracker.unlink()
 
@@ -544,3 +547,4 @@ class BackendMessageHandler(messages.MessageHandler):
         if self.new_count_tracker:
             self.new_count_tracker.stop_tracking()
             self.new_count_tracker = None
+

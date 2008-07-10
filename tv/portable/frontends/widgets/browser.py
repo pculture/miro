@@ -26,46 +26,33 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-import gtkmozembed
-import gtk
+"""browser.py -- portable browser code.  It checks if incomming URLs to see
+what to do with them.
+"""
 
-# Most of our stuff comes from the portable code.
-from miro.frontends.widgets.gtk.widgetset import *
+import logging
 
-# We need to provide a Browser
-from miro.plat.frontends.widgets import mozprompt
-xpcom_setup = False
+from miro import guide
+from miro import subscription
+from miro import util
+from miro.plat.frontends.widgets import widgetset
+from miro.frontends.widgets import linkhandler
 
-class Browser(Widget):
-    """Web browser widget.  """
-
-    def __init__(self):
-        Widget.__init__(self)
-        self.set_widget(gtkmozembed.MozEmbed())
-        self.url = None
-        self.wrapped_widget_connect('open-uri', self.on_open_uri)
-        self._widget.set_size_request(200, 100)
-        # Seems like a reasonable min-size
-
-    def on_open_uri(self, browser, uri):
-        if self.should_load_url(uri):
-            self.url = uri
-            return False
-        else:
-            return True
+class Browser(widgetset.Browser):
+    def __init__(self, guide_info):
+        widgetset.Browser.__init__(self)
+        self.guide_info = guide_info
 
     def should_load_url(self, url):
+        logging.info ("got %s", url)
+        # FIXME, this seems really weird.  How are we supposed to pick an
+        # encoding?
+        url = util.toUni(url)
+        if subscription.isSubscribeLink(url):
+            linkhandler.handle_subscription_link(url)
+            return False
+        if not guide.isPartOfGuide(url, self.guide_info.url,
+                self.guide_info.allowed_urls):
+            linkhandler.handle_external_url(url)
+            return False
         return True
-
-    def navigate(self, url):
-        self._widget.load_url(url)
-
-    def on_realize(self, widget):
-        if not xpcom_setup:
-            do_xpcom_setup()
-
-def do_xpcom_setup():
-    global xpcom_setup
-
-    mozprompt.stop_prompts()
-    xpcom_setup = True

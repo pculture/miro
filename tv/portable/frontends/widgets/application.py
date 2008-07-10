@@ -56,13 +56,19 @@ class Application:
         app.widgetapp = self
         self.ignoreErrors = False
         self.message_handler = WidgetsMessageHandler()
+        self.default_guide_info = None
         messages.FrontendMessage.install_handler(self.message_handler)
 
     def startup(self):
         self.connect_to_signals()
         startup.startup()
 
-    def buildUI(self):
+    def startup_ui(self):
+        # We need to wait until we have info about the channel guide before we
+        # can show the ui
+        messages.TrackGuides().send_to_backend()
+
+    def build_window(self):
         app.tab_list_manager = tablistmanager.TabListManager()
         app.display_manager = displays.DisplayManager()
         app.menu_manager = menus.MenuManager()
@@ -477,7 +483,7 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
         app.controller.shutdown()
 
     def handleStartupSuccess(self, obj):
-        call_on_ui_thread(self.buildUI)
+        call_on_ui_thread(self.startup_ui)
 
     def handleDownloadComplete(self, obj, item):
         print "DOWLOAD COMPLETE"
@@ -529,7 +535,24 @@ class WidgetsMessageHandler(messages.MessageHandler):
                 expanded = (info.id in message.expanded_folders)
                 tablist.set_folder_expanded(info.id, expanded)
 
+    def handle_guide_list(self, message):
+        app.widgetapp.default_guide_info = message.default_guide
+        app.widgetapp.build_window()
+
+    def update_default_guide(self, guide_info):
+        app.widgetapp.default_guide_info = guide_info
+        guide_tab = app.tab_list_manager.static_tab_list.get_tab('guide')
+        guide_tab.update(guide_info)
+
     def handle_tabs_changed(self, message):
+        if message.type == 'guide':
+            for info in list(message.changed):
+                if info.default:
+                    self.update_default_guide(info)
+                    message.changed.remove(info)
+                    break
+            print 'should update guides'
+            return
         tablist = self.tablist_for_message(message)
         for id in message.removed:
             tablist.remove(id)

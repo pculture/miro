@@ -269,8 +269,9 @@ class DeletePlaylist(BackendMessage):
 
 class NewChannel(BackendMessage):
     """Create a new channel."""
-    def __init__(self, url):
+    def __init__(self, url, trackback=None):
         self.url = util.toUni(url)
+        self.trackback = trackback
 
 class NewPlaylist(BackendMessage):
     """Create a new playlist."""
@@ -365,6 +366,7 @@ class ChannelInfo(object):
     Attributes:
 
     name -- channel name
+    url -- channel url (None for channel folders)
     id -- object id
     tab_icon -- path to this channel's tab icon
     thumbnail -- path to this channel's thumbnail
@@ -383,12 +385,14 @@ class ChannelInfo(object):
         self.available = channel_obj.numAvailable()
         self.has_downloading = channel_obj.hasDownloadingItems()
         if not isinstance(channel_obj, ChannelFolder):
+            self.url = channel_obj.getURL()
             self.thumbnail = channel_obj.getThumbnailPath()
             self.base_href = channel_obj.getBaseHref()
             self.autodownload_mode = channel_obj.getAutoDownloadMode()
             self.is_folder = False
             self.tab_icon = resources.path('wimages/icon-rss.png')
         else:
+            self.url = None
             self.thumbnail = resources.path('wimages/folder-icon.png')
             self.autodownload_mode = self.base_href = None
             self.is_folder = True
@@ -417,6 +421,7 @@ class GuideInfo(object):
     name -- channel name
     id -- object id
     url -- URL for the guide
+    allowed_urls -- URLs that should be also considered part of the guide
     default -- is this the default channel guide?
     """
     def __init__(self, guide):
@@ -424,6 +429,7 @@ class GuideInfo(object):
         self.id = guide.id
         self.url = guide.getURL()
         self.default = guide.getDefault()
+        self.allowed_urls = guide.allowedURLs
 
 class ItemInfo(object):
     """Tracks the state of an item

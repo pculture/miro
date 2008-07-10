@@ -78,6 +78,9 @@ class StaticTabList(object):
         tab.unwatched = count
         self.view.model.update(iter, tab)
 
+    def get_tab(self, name):
+        return self.view.model[self.iter_map[name]][0]
+
 class TabListDragHandler(object):
     def __init__(self, item_type, folder_type):
         self.item_type = item_type
@@ -290,6 +293,13 @@ class FeedList(TabList):
 
     def init_info(self, info):
         info.icon = imagepool.get_surface(info.tab_icon)
+
+    def find_feed_with_url(self, url):
+        for iter in self.iter_map.values():
+            info = self.view.model[iter][0]
+            if info.url == url:
+                return info
+        return None
 
 class PlaylistList(TabList):
     type = 'playlist'
