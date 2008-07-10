@@ -33,6 +33,7 @@ what to do with them.
 import logging
 
 from miro import guide
+from miro import messages
 from miro import subscription
 from miro import util
 from miro.plat.frontends.widgets import widgetset
@@ -49,7 +50,7 @@ class Browser(widgetset.Browser):
         # encoding?
         url = util.toUni(url)
         if subscription.isSubscribeLink(url):
-            linkhandler.handle_subscription_link(url)
+            messages.SubscriptionLinkClicked(url).send_to_backend()
             return False
         if not guide.isPartOfGuide(url, self.guide_info.url,
                 self.guide_info.allowed_urls):

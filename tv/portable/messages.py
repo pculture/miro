@@ -359,6 +359,14 @@ class TabsReordered(BackendMessage):
     def append_child(self, parent_id, info):
         self.folder_children[parent_id].append(info)
 
+class SubscriptionLinkClicked(BackendMessage):
+    """Inform the backend that the user clicked on a subscription link in a
+    web browser.
+    """
+
+    def __init__(self, url):
+        self.url = url
+
 # Frontend Messages
 class ChannelInfo(object):
     """Tracks the state of a channel

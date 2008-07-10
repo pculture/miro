@@ -32,9 +32,12 @@ import logging
 
 from miro import database
 from miro import eventloop
+from miro import feed
+from miro import guide
 from miro import httpclient
 from miro import indexes
 from miro import messages
+from miro import subscription
 from miro import views
 from miro import opml
 from miro.feed import Feed, getFeedByURL
@@ -548,3 +551,28 @@ class BackendMessageHandler(messages.MessageHandler):
             self.new_count_tracker.stop_tracking()
             self.new_count_tracker = None
 
+    def handle_subscription_link_clicked(self, message):
+        url = message.url
+        type, subscribeURLs = subscription.findSubscribeLinks(url)
+        normalizedURLs = []
+        for url, additional in subscribeURLs:
+            normalized = feed.normalizeFeedURL(url)
+            if feed.validateFeedURL(normalized):
+                normalizedURLs.append((normalized, additional))
+        if normalizedURLs:
+            if type == 'feed':
+                for url, additional in normalizedURLs:
+                    feed.Feed(url)
+                    if 'trackback' in additional:
+                        httpclient.grabURL(additional['trackback'],
+                                           lambda x: None,
+                                           lambda x: None)
+            elif type == 'download':
+                for url, additional in normalizedURLs:
+                    singleclick.addDownload(url, additional)
+            elif type == 'guide':
+                for url, additional in normalizedURLs:
+                    if guide.getGuideByURL (url) is None:
+                        guide.ChannelGuide(url, [u'*'])
+            else:
+                raise AssertionError("Unknown subscribe type")

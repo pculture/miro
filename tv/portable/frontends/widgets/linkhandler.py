@@ -35,31 +35,6 @@ from miro import messages
 from miro import subscription
 from miro import guide
 
-def handle_subscription_link(url):
-    type, subscribeURLs = subscription.findSubscribeLinks(url)
-    normalizedURLs = []
-    for url, additional in subscribeURLs:
-        normalized = feed.normalizeFeedURL(url)
-        if feed.validateFeedURL(normalized):
-            normalizedURLs.append((normalized, additional))
-    if normalizedURLs:
-        if type == 'feed':
-            for url, additional in normalizedURLs:
-                trackback = additional.get('trackback')
-                messages.NewChannel(url, trackback).send_to_backend()
-        elif type == 'download':
-            for url, additional in normalizedURLs:
-                print 'should download: ', url
-                #singleclick.addDownload(url, additional)
-        elif type == 'guide':
-            for url, additional in normalizedURLs:
-                print 'should add guide: ', url
-                #if guide.getGuideByURL (url) is None:
-                    #guide.ChannelGuide(url, [u'*'])
-        else:
-            raise AssertionError("Unknown subscribe type")
-        return
-
 def handle_external_url(url):
     if url.startswith(u'feed://'):
         feed_info = app.tab_list_manager.feed_list.find_feed_with_url(url)
