@@ -57,17 +57,17 @@ class MenuHandler(NSObject):
 # Keep a reference to each MenuHandler we create
 all_handlers = set()
 
+MODIFIERS_MAP = {
+    MOD:   NSCommandKeyMask,
+    SHIFT: NSShiftKeyMask,
+    CTRL:  NSControlKeyMask,
+    ALT:   NSAlternateKeyMask
+}
+
 def make_modifier_mask(shortcut):
     mask = 0
     for modifier in shortcut.modifiers:
-        if modifier == MOD:
-            mask |= NSCommandKeyMask
-        elif modifier == SHIFT:
-            mask |= NSShiftKeyMask
-        elif modifier == CTRL:
-            mask |= NSControlKeyMask
-        elif modifier == ALT:
-            mask |= NSAlternateKeyMask
+        mask |= MODIFIERS_MAP[modifier]
     return mask
 
 def make_menu_item(menu_item):
