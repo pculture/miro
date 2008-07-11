@@ -74,7 +74,7 @@ class ProgressTime(widgetset.DrawingArea):
     def draw(self, context, layout):
         if self.current_time is None:
             return
-        layout.set_font(0.85)
+        layout.set_font(0.75)
         layout.set_text_color(widgetutil.WHITE)
         text = layout.textbox(format_time(self.current_time))
         width, height = text.get_size()
@@ -108,7 +108,7 @@ class ProgressTimeRemaining(widgetset.CustomButton):
             text = '-' + format_time(self.duration - self.current_time)
         else:
             text = format_time(self.duration)
-        layout.set_font(0.85)
+        layout.set_font(0.75)
         layout.set_text_color(widgetutil.WHITE)
         text = layout.textbox(text)
         width, height = text.get_size()
