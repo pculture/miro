@@ -38,8 +38,10 @@ import zipfile as zip
 from glob import glob, iglob
 from xml.sax.saxutils import escape
 from distutils import sysconfig 
+from distutils.core import Command
 import distutils.command.install_data
 import distutils.command.build_py
+from distutils.ccompiler import new_compiler
 
 ###############################################################################
 ## Paths and configuration                                                   ##
@@ -141,8 +143,9 @@ platform = 'windows-xul'
 # Find the top of the source tree and set search path
 root_dir = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), '..', '..')
 root_dir = os.path.normpath(os.path.abspath(root_dir))
-platform_dir = os.path.join(root_dir, 'platform', 'windows-xul', 'plat')
-widgets_dir = os.path.join(platform_dir, 'frontends', 'widgets')
+platform_dir = os.path.join(root_dir, 'platform', 'windows-xul')
+platform_package_dir = os.path.join(platform_dir, 'plat')
+widgets_dir = os.path.join(platform_package_dir, 'frontends', 'widgets')
 portable_dir = os.path.join(root_dir, 'portable')
 portable_widgets_dir = os.path.join(portable_dir, 'frontends', 'widgets')
 resources_dir = os.path.join(root_dir, 'resources')
@@ -289,6 +292,10 @@ for dir in ('searchengines', 'wimages'):
     source_dir = os.path.join(resources_dir, dir)
     data_files.extend(find_data_files(dest_dir, source_dir))
 
+def get_template_variables():
+    app_config = os.path.join(resources_dir, 'app.config.template')
+    return util.readSimpleConfigFile(app_config)
+
 ###############################################################################
 
 #### Our specialized build_py command ####
@@ -299,8 +306,7 @@ class build_py (distutils.command.build_py.build_py):
     """
 
     def expand_templates(self):
-        app_config = os.path.join(resources_dir, 'app.config.template')
-        conf = util.readSimpleConfigFile(app_config)
+        conf = get_template_variables()
         for path in [os.path.join(portable_dir,'dl_daemon','daemon.py')]:
             template = string.Template(open(path+".template", 'rt').read())
             fout = open(path, 'wt')
@@ -362,9 +368,253 @@ class install_data (distutils.command.install_data.install_data):
         self.install_app_config()
         self.install_gdk_pixbuf_loaders()
 
+class build_movie_data_util(Command):
+    description = "build the Miro Movie Data Utility"
+
+    user_options = [
+            ('build-dir=', 'd', "directory to build to"),
+    ]
+
+
+    def initialize_options(self):
+        self.build_dir = None
+
+    def finalize_options(self):
+        if self.build_dir == None:
+            build = self.distribution.get_command_obj('build')
+            self.build_dir = os.path.join(build.build_base, 'moviedata_util')
+
+    def run(self):
+        log.info("building movie data utility")
+
+        sources = [ os.path.join(platform_dir, 'moviedata_util.c') ]
+        python_base = sysconfig.get_config_var('prefix')
+        include_dirs = [ sysconfig.get_python_inc() ]
+        library_dirs = [ os.path.join(python_base, 'libs')]
+
+        compiler = new_compiler( verbose=self.verbose, dry_run=self.dry_run,
+                force=self.force)
+        sysconfig.customize_compiler(compiler)
+        objects = compiler.compile(sources, output_dir=self.build_dir,
+                include_dirs=include_dirs)
+
+        compiler.link_executable(objects, 'Miro_MovieData',
+                library_dirs=library_dirs, output_dir=self.build_dir)
+
+
+class bdist_miro(Command):
+    description = "Build Miro"
+
+    user_options = [ ]
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        self.run_command('py2exe')
+        self.run_command('build_movie_data_util')
+        self.copy_movie_data_util()
+
+    def copy_movie_data_util(self):
+        dist_dir = self.get_finalized_command('py2exe').dist_dir
+        build_cmd = self.distribution.get_command_obj('build_movie_data_util')
+        build_cmd.build_dir
+
+        self.copy_file(os.path.join(build_cmd.build_dir, 'Miro_MovieData.exe'),
+            dist_dir)
+        self.copy_file(os.path.join(platform_dir, "moviedata_util.py"),
+                dist_dir)
+
+class bdist_nsis (Command):
+    description = "create Miro installer using NSIS"
+
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+
+    def run(self):
+        self.run_command('bdist_miro')
+        self.dist_dir = self.get_finalized_command('py2exe').dist_dir
+
+
+        log.info("building installer")
+
+        template_vars = get_template_variables()
+
+        self.copy_file(os.path.join(platform_dir, 'Miro.nsi'), self.dist_dir)
+        self.copy_file("Miro.ico", os.path.join(self.dist_dir, "%s.ico" %
+            template_vars['shortAppName']))
+        self.copy_file("iHeartMiro-installer-page.ini", self.dist_dir)
+        self.copy_file("miro-installer.ico", self.dist_dir)
+        self.copy_file("miro-install-image.bmp", self.dist_dir)
+
+        nsisVars = {}
+        for (ourName, nsisName) in [
+            ('appVersion', 'CONFIG_VERSION'),
+            ('projectURL', 'CONFIG_PROJECT_URL'),
+            ('shortAppName', 'CONFIG_SHORT_APP_NAME'),
+            ('longAppName', 'CONFIG_LONG_APP_NAME'),
+            ('publisher', 'CONFIG_PUBLISHER'),
+            ]:
+            nsisVars[nsisName] = template_vars[ourName]
+
+        nsisVars['CONFIG_EXECUTABLE'] = "%s.exe" % template_vars['shortAppName']
+        nsisVars['CONFIG_MOVIE_DATA_EXECUTABLE'] = "%s_MovieData.exe" % \
+                template_vars['shortAppName']
+        nsisVars['CONFIG_ICON'] = "%s.ico" % template_vars['shortAppName']
+        nsisVars['CONFIG_PROG_ID'] = template_vars['longAppName'].replace(" ",".")+".1"
+
+        # One stage installer
+        outputFile = "%s-%s.exe" % \
+                (template_vars['shortAppName'], template_vars['appVersion'])
+        nsisVars['CONFIG_OUTPUT_FILE'] = outputFile
+        nsisVars['CONFIG_TWOSTAGE'] = "No"
+
+        nsisArgs = ["/D%s=%s" % (k, v) for (k, v) in nsisVars.iteritems()]
+        nsisArgs.append(os.path.join(self.dist_dir, "Miro.nsi"))
+
+        if os.access(outputFile, os.F_OK):
+            os.remove(outputFile)
+        if subprocess.call([NSIS_PATH] + nsisArgs) != 0:
+            print "ERROR creating the 1 stage installer, quitting"
+            return
+
+        # Two stage installer
+        outputFile = "%s-%s-twostage.exe" % \
+            ( template_vars['shortAppName'], template_vars['appVersion'] )
+        nsisVars['CONFIG_OUTPUT_FILE'] = outputFile
+        nsisVars['CONFIG_TWOSTAGE'] = "Yes"
+
+        nsisArgs = ["/D%s=%s" % (k, v) for (k, v) in nsisVars.iteritems()]
+        nsisArgs.append(os.path.join(self.dist_dir, "Miro.nsi"))
+
+        if os.access(outputFile, os.F_OK):
+            os.remove(outputFile)
+        subprocess.call([NSIS_PATH] + nsisArgs)
+
+        zip_path = os.path.join (self.dist_dir, "%s-Contents-%s.zip" %
+            (template_vars['shortAppName'],template_vars['appVersion']))
+        self.zipfile = zip.ZipFile(zip_path, 'w', zip.ZIP_DEFLATED)
+        self.addFile (nsisVars['CONFIG_EXECUTABLE'])
+        self.addFile (nsisVars['CONFIG_ICON'])
+        self.addFile (nsisVars['CONFIG_MOVIE_DATA_EXECUTABLE'])
+        self.addFile ("moviedata_util.py")
+        self.addGlob ("*.dll")
+
+        self.addDirectory ("defaults")
+        self.addDirectory ("resources")
+        self.addDirectory ("xulrunner")
+        self.addDirectory ("imagemagick")
+
+        self.zipfile.close()
+
+    def addGlob(self, wildcard):
+        wildcard = os.path.join (self.dist_dir, wildcard)
+        length = len(self.dist_dir)
+        for filename in iglob(wildcard):
+            if filename[:length] == (self.dist_dir):
+                filename = filename[length:]
+                while len(filename) > 0 and (filename[0] == '/' or filename[0] == '\\'):
+                    filename = filename[1:]
+            print "Compressing %s" % (filename,)
+            self.zipfile.write (os.path.join (self.dist_dir, filename), filename)
+
+    def addFile(self, filename):
+        length = len(self.dist_dir)
+        if filename[:length] == (self.dist_dir):
+            filename = filename[length:]
+            while len(filename) > 0 and (filename[0] == '/' or filename[0] == '\\'):
+                filename = filename[1:]
+        print "Compressing %s" % (filename,)
+        self.zipfile.write (os.path.join (self.dist_dir, filename), filename)
+
+    def addDirectory (self, dirname):
+        for root, dirs, files in os.walk (os.path.join (self.dist_dir, dirname)):
+            for name in files:
+                self.addFile (os.path.join (root, name))
+
+if 0:
+    class bdist_u3 (bdist_xul_dumb):
+        def run(self):
+            bdist_xul_dumb.run(self)
+
+            log.info("building u3p")
+
+            self.zipfile = zip.ZipFile(os.path.join (self.dist_dir, "%s-%s.u3p" % (self.getTemplateVariable('shortAppName'),self.getTemplateVariable('appVersion'),)), 'w', zip.ZIP_DEFLATED)
+
+            self.addDirectFile ("miro.u3i", "manifest\\manifest.u3i")
+            self.addDirectFile ("Miro.ico", "manifest\\Miro.ico")
+            self.addDirectFile ("U3Action.exe", "host\\U3Action.exe")
+
+            self.addFile ("%s.exe" % (self.getTemplateVariable('shortAppName'),))
+            self.addFile ("%s.ico" % (self.getTemplateVariable('shortAppName'),))
+            self.addFile ("%s_MovieData.exe" % (self.getTemplateVariable('shortAppName')))
+            self.addFile ("moviedata_util.py")
+            self.addFile ("application.ini")
+            self.addGlob ("*.dll")
+
+            self.addDirectory ("chrome")
+            self.addDirectory ("components")
+            self.addDirectory ("defaults")
+            self.addDirectory ("resources")
+            self.addDirectory ("vlc-plugins")
+            self.addDirectory ("plugins")
+            self.addDirectory ("xulrunner")
+            self.addDirectory ("imagemagick")
+
+            self.zipfile.close()
+
+        def addDirectFile(self, filename, path):
+            print "Compressing %s as %s" % (filename, path)
+            self.zipfile.write (os.path.join (self.dist_dir, filename), path)
+
+        def addGlob(self, wildcard, src = None, dest = None):
+            import glob
+            if src is None:
+                src = self.dist_dir
+            if dest is None:
+                dest = "device/"
+            length = len(src)
+            wildcard = os.path.join (src, wildcard)
+            for filename in iglob(wildcard):
+                if filename[:length] == (src):
+                    filename = filename[length:]
+                    while len(filename) > 0 and (filename[0] == '/' or filename[0] == '\\'):
+                        filename = filename[1:]
+                print "Compressing %s" % (filename,)
+                self.zipfile.write (os.path.join (src, filename), os.path.join (dest, filename))
+
+        def addFile(self, filename, src = None, dest = None):
+            if src is None:
+                src = self.dist_dir
+            if dest is None:
+                dest = "device/"
+            length = len(src)
+            if filename[:length] == (src):
+                filename = filename[length:]
+                while len(filename) > 0 and (filename[0] == '/' or filename[0] == '\\'):
+                    filename = filename[1:]
+            print "Compressing %s" % (filename,)
+            self.zipfile.write (os.path.join (src, filename), os.path.join (dest, filename))
+
+        def addDirectory (self, dirname, src = None, dest = None):
+            if src is None:
+                src = self.dist_dir
+            for root, dirs, files in os.walk (os.path.join (src, dirname)):
+                for name in files:
+                    self.addFile (os.path.join (root, name), src, dest)
+
 if __name__ == "__main__":
     setup(
-        console=['Miro.py', 'Miro_Downloader.py'],
+        windows=['Miro.py', 'Miro_Downloader.py'],
         ext_modules = ext_modules,
         packages = [
             'miro',
@@ -379,13 +629,16 @@ if __name__ == "__main__":
         ],
         package_dir = {
             'miro': portable_dir,
-            'miro.plat': platform_dir,
+            'miro.plat': platform_package_dir,
         },
         data_files = data_files,
         cmdclass = {
             'build_py': build_py,
             'build_ext': build_ext,
             'install_data': install_data,
+            'build_movie_data_util': build_movie_data_util,
+            'bdist_miro': bdist_miro,
+            'bdist_nsis': bdist_nsis,
         },
         options = {
             'py2exe': {

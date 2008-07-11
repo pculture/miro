@@ -310,16 +310,15 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
   Delete   "${directory}\${CONFIG_ICON}"
   Delete   "${directory}\${CONFIG_MOVIE_DATA_EXECUTABLE}"
   Delete   "${directory}\*.dll"
+  Delete   "${directory}\*.pyd"
+  Delete   "${directory}\w9xpopen.exe"
   Delete   "${directory}\moviedata_util.py"
-  Delete   "${directory}\application.ini"
   Delete   "${directory}\uninstall.exe"
+  Delete   "${directory}\library.zip"
 
-  RMDir /r "${directory}\chrome"
-  RMDir /r "${directory}\components"
-  RMDir /r "${directory}\defaults"
+  RMDir /r "${directory}\etc"
+  RMDir /r "${directory}\lib"
   RMDir /r "${directory}\resources"
-  RMDir /r "${directory}\vlc-plugins"
-  RMDir /r "${directory}\plugins"
   RMDir /r "${directory}\xulrunner"
   RMDir /r "${directory}\imagemagick"
 
@@ -587,16 +586,14 @@ unzipok:
   File  "${CONFIG_MOVIE_DATA_EXECUTABLE}"
   File  "moviedata_util.py"
   File  "*.dll"
-  File  application.ini
-  File  /r chrome
-  File  /r components
-  File  /r defaults
+  File  "*.pyd"
+  File  "w9xpopen.exe"
+  File  "library.zip"
+  File  /r etc
+  File  /r lib
   File  /r resources
-  File  /r vlc-plugins
-  File  /r plugins
   File  /r xulrunner
   File  /r imagemagick
-
 !endif
 
 install_theme:
@@ -649,9 +646,6 @@ install_reg_keys:
 
   ; Delete our old, poorly formatted ProgID
   DeleteRegKey HKCR "DemocracyPlayer"
-
-  ; Democracy complains if this isn't present and it can't create it
-  CreateDirectory "$INSTDIR\xulrunner\extensions"
 
   Call GetShortcutInfo
 

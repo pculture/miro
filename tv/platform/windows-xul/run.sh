@@ -1,4 +1,4 @@
 #!/bin/sh
 
-python setup.py py2exe
+python setup.py bdist_miro
 dist\Miro.exe
