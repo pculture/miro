@@ -30,6 +30,7 @@
 
 import logging
 import traceback
+import threading
 
 from PyObjCTools import AppHelper
 
@@ -40,9 +41,9 @@ def call_wrapper(func, args, kwargs):
         except:
             msg = "Error when calling %s" % func
             if args:
-                msg += ' (args: %s)' % args
+                msg += ' (args: %s)' % (args,)
             if kwargs:
-                msg += ' (kwargs: %s)' % kwargs
+                msg += ' (kwargs: %s)' % (kwargs,)
             logging.warn("%s\n%s", msg, traceback.format_exc())
     return wrapper
 
@@ -57,3 +58,7 @@ def on_ui_thread(func):
     def scheduled(*args, **kwargs):
         call_on_ui_thread(func, *args, **kwargs)
     return scheduled
+
+def warn_if_not_on_main_thread(name):
+    if threading.currentThread().getName() != 'MainThread':
+        print "WARNING: function %s not on main thread" % name
