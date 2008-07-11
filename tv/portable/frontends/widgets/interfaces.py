@@ -421,6 +421,9 @@ class Splitter(Widget):
     def set_left_width(self, width):
         """Set the width of the left side."""
 
+    def get_left_width(self, width):
+        """Get the size of the left side"""
+
     def set_right_width(self, width):
         """Set the width of the right side."""
 

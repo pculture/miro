@@ -47,6 +47,7 @@ from miro.frontends.widgets import displays
 from miro.frontends.widgets import itemlistmanager
 from miro.frontends.widgets import menus
 from miro.frontends.widgets import tablistmanager
+from miro.frontends.widgets import playback
 from miro.frontends.widgets import rundialog
 from miro.frontends.widgets.window import MiroWindow
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
@@ -74,6 +75,7 @@ class Application:
         app.item_list_manager = itemlistmanager.ItemListManager()
         app.display_manager = displays.DisplayManager()
         app.menu_manager = menus.MenuManager()
+        app.playback_manager = playback.PlaybackManager()
         self.window = MiroWindow(_("Miro"), self.get_main_window_dimensions())
         app.tab_list_manager.handle_startup_selection()
         videobox = self.window.videobox
@@ -103,10 +105,10 @@ class Application:
         print 'volume change: ', volume
 
     def on_play_clicked(self, button):
-        pass
+        app.playback_manager.play_pause()
 
     def on_stop_clicked(self, button):
-        pass
+        app.playback_manager.stop()
 
     def on_forward_clicked(self, button):
         # calls either next_video or fast_forward

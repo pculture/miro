@@ -399,6 +399,7 @@ class Splitter(Container):
             self.left.place(self.left_view.bounds(), self.left_view)
         if self.right:
             self.right.place(self.right_view.bounds(), self.right_view)
+        self.view.setNeedsDisplay_(YES)
 
     def set_left(self, widget):
         """Set the left child widget."""
@@ -417,6 +418,10 @@ class Splitter(Container):
     def set_left_width(self, width):
         self.view.placeViewsWithLeftWidth_(width)
         self.place_children()
+
+    def get_left_width(self):
+        left, right = self.view.subviews()
+        return left.frame().size[0]
 
     def set_right_width(self, width):
         self.view.placeViewsWithRightWidth_(width)

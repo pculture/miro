@@ -194,6 +194,7 @@ class SimpleItemContainer(ItemContainerView):
         vbox = widgetset.VBox()
         vbox.pack_start(self.build_titlebar())
         self.item_list = ItemList()
+        self.item_list.connect('play-video', self.on_play_video)
         scroller = widgetset.Scroller(False, True)
         scroller.add(self.item_list)
         vbox.pack_start(scroller, expand=True)

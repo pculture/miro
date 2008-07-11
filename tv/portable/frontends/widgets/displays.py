@@ -130,10 +130,8 @@ class ItemListDisplay(TabDisplay):
         self.widget = self.view.widget
 
     def on_play_video(self, view, video_path):
-        app.menu_manager.handle_playing_selection()
-        app.display_manager.unselect_current_display()
-        video_display = VideoDisplay(video_path)
-        app.display_manager.select_display(video_display)
+        app.playback_manager.start_with_movie_file(video_path)
+        app.playback_manager.play()
 
     def handle_item_list(self, message):
         if message.feed_id != self.feed_id:
@@ -185,9 +183,17 @@ class LibraryDisplay(ItemListDisplay):
 
 class VideoDisplay(Display):
     def __init__(self, path):
-        import os
-        self.widget = widgetset.Label("Now playing: %s" %
-                os.path.basename(path)[:30])
+        self.widget = widgetset.VideoRenderer()
+        self.widget.set_movie_file(path)
+
+    def play(self):
+        self.widget.play()
+
+    def pause(self):
+        self.widget.pause()
+
+    def stop(self):
+        self.widget.stop()
 
     def cleanup(self):
         # Should cleanup resources here
