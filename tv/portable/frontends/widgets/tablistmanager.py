@@ -113,16 +113,14 @@ class TabListManager(object):
         self.on_selection_changed(self.selected_tab_list.view)
 
     def handle_no_tabs_selected(self):
-        for tab in self.selected_tabs:
-            try:
-                iter = self.selected_tab_list.iter_map[tab.id]
-            except KeyError: # tab is about to be deleted
-                continue
+        model = self.selected_tab_list.view.model
+        iter = model.first_iter()
+        if iter is None:
+            # We deleted all the feeds/playlists, select the guide instead
+            self.select_guide()
+        else:
             self.selected_tab_list.view.select(iter)
-            self.selected_tabs = [tab]
-            return
-        # We have no tabs that we can select, select the guide instead
-        self.select_guide()
+            self.selected_tabs = [model[iter][0]]
 
     def get_selection(self):
         return self.selected_tab_list.type, self.selected_tabs
