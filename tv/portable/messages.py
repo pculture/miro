@@ -391,6 +391,7 @@ class ChannelInfo(object):
     unwatched -- number of unwatched videos
     available -- number of newly downloaded videos
     is_folder -- is this a channel folder?
+    is_directory_feed -- is this channel a watched directory?
     has_downloading -- are videos currently being downloaded for this channel?
     base_href -- URL to use for relative links for items in this channel.  
       This will be None for ChannelFolders.
@@ -409,12 +410,15 @@ class ChannelInfo(object):
             self.autodownload_mode = channel_obj.getAutoDownloadMode()
             self.is_folder = False
             self.tab_icon = resources.path('wimages/icon-rss.png')
+            self.is_directory_feed = False
         else:
             self.url = None
             self.thumbnail = resources.path('wimages/folder-icon.png')
             self.autodownload_mode = self.base_href = None
             self.is_folder = True
             self.tab_icon = resources.path('wimages/icon-folder.png')
+            self.is_directory_feed = (self.url is not None and 
+                    self.url.startswith('dtv:directoryfeed'))
 
 class PlaylistInfo(object):
     """Tracks the state of a playlist

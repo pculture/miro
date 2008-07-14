@@ -218,7 +218,7 @@ class Application:
         downloading = False
         allDirectories = True
         for ci in channel_infos:
-            if not ci.is_folder:
+            if not ci.is_directory_feed:
                 allDirectories = False
                 if ci.unwatched > 0:
                     downloads = True
