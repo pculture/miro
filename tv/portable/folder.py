@@ -184,6 +184,10 @@ class ChannelFolder(FolderBase):
             if child.showA():
                 available += child.numAvailable()
         return available
+
+    def markAsViewed(self):
+        for child in self.getChildrenView():
+            child.markAsViewed()
     
 class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
     def __init__(self, title):
