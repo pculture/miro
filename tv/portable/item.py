@@ -26,7 +26,6 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from copy import copy
 from datetime import datetime, timedelta
 from miro.gtcache import gettext as _
 from math import ceil
