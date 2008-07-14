@@ -293,6 +293,7 @@ class ItemSchema(DDBObjectSchema):
         ('autoDownloaded', SchemaBool()),
         ('pendingManualDL', SchemaBool()),
         ('pendingReason', SchemaString()),
+        ('title', SchemaString()),
         ('entry', SchemaSimpleContainer()),
         ('expired', SchemaBool()),
         ('keep', SchemaBool()),
@@ -503,7 +504,7 @@ class ThemeHistorySchema(DDBObjectSchema):
         ('pastThemes', SchemaList(SchemaString(noneOk=True), noneOk=False)),
     ]
 
-VERSION = 65
+VERSION = 66
 objectSchemas = [
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,

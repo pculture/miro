@@ -180,6 +180,73 @@ class Application:
         if url is not None:
             messages.DownloadURL(url).send_to_backend()
 
+    def remove_videos(self):
+        selection = app.item_list_manager.get_selection()
+        selection = [s for s in selection if s.downloaded]
+
+        if not selection:
+            return
+
+        external_count = len([s for s in selection if s.is_external])
+        total_count = len(selection)
+
+        if len(selection) == 1:
+            if external_count == 0:
+                messages.DeleteVideo(selection[0].id).send_to_backend()
+                return
+
+            else:
+                title = _('Remove %s') % selection[0].name
+                description = _('Would you like to delete this file or just remove its entry from the Library?')
+                ret = dialogs.show_choice_dialog(title, description,
+                                                 [dialogs.BUTTON_REMOVE_ENTRY,
+                                                  dialogs.BUTTON_DELETE_FILE,
+                                                  dialogs.BUTTON_CANCEL])
+
+        else:
+            title = _('Removing %d items') % total_count
+            if external_count > 0:
+                description = _('One or more of these items was not downloaded from a channel.  ' \
+                                'Would you like to delete these items or just remove them from the Library?')
+                ret = dialogs.show_choice_dialog(title, description,
+                                                 [dialogs.BUTTON_REMOVE_ENTRY,
+                                                  dialogs.BUTTON_DELETE_FILE,
+                                                  dialogs.BUTTON_CANCEL])
+
+            else:
+                description = _('Are you sure you want to delete all %d items?') % total_count
+                ret = dialogs.show_choice_dialog(title, description,
+                                                 [dialogs.BUTTON_OK,
+                                                  dialogs.BUTTON_CANCEL])
+
+        if ret == dialogs.BUTTON_OK or ret == dialogs.BUTTON_DELETE_FILE:
+            for mem in selection:
+                messages.DeleteVideo(mem.id).send_to_backend()
+
+        elif ret == dialogs.BUTTON_REMOVE_ENTRY:
+            for mem in selection:
+                if mem.is_external:
+                    messages.RemoveVideoEntry(mem.id).send_to_backend()
+                else:
+                    messages.DeleteVideo(mem.id).send_to_backend()
+
+    def rename_video(self):
+        selection = app.item_list_manager.get_selection()
+        selection = [s for s in selection if s.downloaded]
+
+        if not selection:
+            return
+
+        video_item = selection[0]
+
+        title = _('Rename Video')
+        description = _('Enter the new name for the video')
+        text = video_item.name
+
+        name = dialogs.ask_for_string(title, description, initial_text=text)
+        if name:
+            messages.RenameVideo(video_item.id, name).send_to_backend()
+
     def add_new_channel(self):
         url = self.ask_for_url(_('Add Channel'),
                 _('Enter the URL of the channel to add'),
@@ -360,6 +427,7 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
     def add_new_playlist(self):
         selection = app.item_list_manager.get_selection()
         ids = [s.id for s in selection if s.downloaded]
+
         title = _('Create Playlist')
         description = _('Enter a name for the new playlist')
 

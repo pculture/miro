@@ -324,10 +324,21 @@ class KeepVideo(BackendMessage):
     def __init__(self, id):
         self.id = id
 
+class RemoveVideoEntry(BackendMessage):
+    """Remove the entry for an external video"""
+    def __init__(self, id):
+        self.id = id
+
 class DeleteVideo(BackendMessage):
     """Delete the video for an item's video"""
     def __init__(self, id):
         self.id = id
+
+class RenameVideo(BackendMessage):
+    """Renames the video"""
+    def __init__(self, id, new_name):
+        self.id = id
+        self.new_name = new_name
 
 class FolderExpandedChange(BackendMessage):
     """Inform the backend when a folder gets expanded/collapsed
@@ -467,6 +478,7 @@ class ItemInfo(object):
     duration -- length of the video in seconds
     permalink -- URL to a permalink to the item (or None)
     downloaded -- Has the item been downloaded?
+    is_external -- is this item external (true) or from a channel (false)?
     expiration_date -- datetime object for when the item will expire (or None)
     item_viewed -- has the user ever seen the item?
     video_watched -- has the user watched the video for the item?
@@ -493,6 +505,7 @@ class ItemInfo(object):
             self.expiration_date = None
         self.item_viewed = item.getViewed()
         self.downloaded = item.isDownloaded()
+        self.is_external = item.isExternal()
         self.video_watched = item.getSeen()
         self.video_path = item.getVideoFilename()
         self.thumbnail = item.getThumbnail()

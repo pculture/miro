@@ -962,6 +962,14 @@ def upgrade65(objectList):
             changed.add(o)
     return changed
 
+def upgrade66(objectList):
+    changed = set()
+    for o in objectList:
+        if o.classString in ('item', 'file-item'):
+            o.savedData['title'] = u""
+            changed.add(o)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

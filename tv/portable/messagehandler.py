@@ -521,8 +521,15 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warn("KeepVideo: Item not found -- %s", message.id)
         else:
-            print 'keeping: ', item
             item.save()
+
+    def handle_remove_video_entry(self, message):
+        try:
+            item = views.items.getObjectByID(message.id)
+        except database.ObjectNotFoundError:
+            logging.warn("RemoveVideoEntry: Item not found -- %s", message.id)
+        else:
+            item.executeExpire()
 
     def handle_delete_video(self, message):
         try:
@@ -530,7 +537,16 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warn("DeleteVideo: Item not found -- %s", message.id)
         else:
-            item.expire()
+            item.deleteFiles()
+            item.executeExpire()
+
+    def handle_rename_video(self, message):
+        try:
+            item = views.items.getObjectByID(message.id)
+        except database.ObjectNotFoundError:
+            logging.warn("RenameVideo: Item not found -- %s", message.id)
+        else:
+            item.setTitle(message.new_name)
 
     def handle_autodownload_change(self, message):
         try:

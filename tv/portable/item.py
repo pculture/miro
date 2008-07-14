@@ -95,6 +95,7 @@ class Item(DDBObject):
         self.downloadedTime = None
         self.watchedTime = None
         self.pendingReason = u""
+        self.title = u""
         self.entry = entry
         self.expired = False
         self.keep = False
@@ -495,51 +496,6 @@ class Item(DDBObject):
         else:
             self.signalChange()
 
-    def expire(self):
-        """Marks this item as expired.
-        """
-        title = _("Removing %s") % os.path.basename(self.getTitle())
-        if self.isExternal():
-            if self.isContainerItem:
-                description = _("""\
-Would you like to delete this folder and all of its videos or just remove \
-its entry from the Library?""")
-                button = dialogs.BUTTON_DELETE_FILES
-            else:
-                if self.isDownloaded():
-                    description = _("""\
-Would you like to delete this file or just remove its entry from the \
-Library?""")
-                    button = dialogs.BUTTON_DELETE_FILE
-                else:
-                    self.executeExpire()
-                    return
-            d = dialogs.ThreeChoiceDialog(title, description,
-                    dialogs.BUTTON_REMOVE_ENTRY, button,
-                    dialogs.BUTTON_CANCEL)
-            def callback(dialog):
-                if not self.idExists():
-                    return
-                if dialog.choice == button:
-                    self.deleteFiles()
-                if dialog.choice in (button, dialogs.BUTTON_REMOVE_ENTRY):
-                    self.executeExpire()
-    
-            d.run(callback)
-        elif self.isContainerItem:
-            description = _("""\
-This item is a folder.  When you remove a folder, any items inside that \
-folder will be deleted.""")
-            d = dialogs.ChoiceDialog(title, description,
-                                     dialogs.BUTTON_DELETE_FILES,
-                                     dialogs.BUTTON_CANCEL)
-            def callback(dialog):
-                if self.idExists() and dialog.choice == dialogs.BUTTON_DELETE_FILES:
-                    self.executeExpire()
-            d.run(callback)
-        else:
-            self.executeExpire()
-
     def stopUpload(self):
         if self.downloader:
             self.downloader.stopUpload()
@@ -897,14 +853,29 @@ folder will be deleted.""")
     def getTitle(self):
         """Returns the title of the item.
         """
-        try:
-            return self.entry.title
-        except:
-            try:
-                enclosure = self.getFirstVideoEnclosure()
-                return enclosure["url"].decode('ascii','replace')
-            except:
-                return u""
+        if not self.title:
+            if hasattr(self.entry, "title"):
+                self.title = self.entry.title
+            else:
+                enc = self.getFirstVideoEnclosure()
+                self.title = enc.get("url", _("no title")).decode("ascii", "replace")
+        return self.title
+
+    def setTitle(self, s):
+        self.confirmDBThread()
+        self.title = s
+        self.signalChange()
+
+    def revertTitle(self):
+        """Reverts the item title back to the data we got from RSS or the url.
+        """
+        self.confirmDBThread()
+        if hasattr(self.entry, "title"):
+            self.title = self.entry.title
+        else:
+            enc = self.getFirstVideoEnclosure()
+            self.title = enc.get("url", _("no title")).decode("ascii", "replace")
+        self.signalChange()
 
     @returnsUnicode
     def getQuotedTitle(self):
@@ -1131,7 +1102,6 @@ folder will be deleted.""")
                 or self.isFailedDownload()):
             addTable(_('Download Details'), self.getDownloadDetails())
         return u'\n'.join(details)
-
 
     def deleteFiles(self):
         """Stops downloading the item.

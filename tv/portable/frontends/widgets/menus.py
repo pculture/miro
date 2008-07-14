@@ -58,8 +58,15 @@ def on_new_download():
     app.widgetapp.new_download()
 
 # FIXME - CheckVersion
-# FIXME - RemoveVideos
-# FIXME - RenameVideo
+
+@action_handler("RemoveVideos")
+def on_remove_videos():
+    app.widgetapp.remove_videos()
+
+@action_handler("RenameVideo")
+def on_rename_video():
+    app.widgetapp.rename_video()
+
 # FIXME - SaveVideo
 # FIXME - CopyVideoURL
 # FIXME - EditPreferences
