@@ -168,9 +168,17 @@ def on_fast_forward():
 def on_rewind():
     app.widgetapp.rewind()
 
-# FIXME - UpVolume
-# FIXME - DownVolume
-# FIXME - Fullscreen
+@action_handler("UpVolume")
+def on_up_volume():
+    app.widgetapp.up_volume()
+
+@action_handler("DownVolume")
+def on_down_volume():
+    app.widgetapp.down_volume()
+
+@action_handler("Fullscreen")
+def on_fullscreen():
+    app.widgetapp.fullscreen()
 
 # Help menu
 

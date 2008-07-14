@@ -130,6 +130,15 @@ class Application:
     def rewind(self):
         psss
 
+    def up_volume(self):
+        pass
+
+    def down_volume(self):
+        pass
+
+    def fullscreen(self):
+        pass
+
     def open_video(self):
         title = _('Open Files...')
         # FIXME - should we list video types we know we can open?
