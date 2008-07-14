@@ -324,6 +324,12 @@ class KeepVideo(BackendMessage):
     def __init__(self, id):
         self.id = id
 
+class SaveItemAs(BackendMessage):
+    """Saves an item in the dark clutches of Miro to somewhere else."""
+    def __init__(self, id, filename):
+        self.id = id
+        self.filename = filename
+
 class RemoveVideoEntry(BackendMessage):
     """Remove the entry for an external video"""
     def __init__(self, id):

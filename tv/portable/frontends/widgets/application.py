@@ -256,6 +256,23 @@ class Application:
         if name:
             messages.RenameVideo(video_item.id, name).send_to_backend()
 
+    def save_video(self):
+        selection = app.item_list_manager.get_selection()
+        selection = [s for s in selection if s.downloaded]
+
+        if not selection:
+            return
+
+        title = _('Save Video As...')
+        filename = selection[0].video_path
+        filename = os.path.basename(filename)
+        filename = dialogs.ask_for_save_pathname(title, filename)
+
+        if not filename:
+            return
+
+        messages.SaveItemAs(selection[0].id, filename).send_to_backend()
+
     def add_new_channel(self):
         url = self.ask_for_url(_('Add Channel'),
                 _('Enter the URL of the channel to add'),

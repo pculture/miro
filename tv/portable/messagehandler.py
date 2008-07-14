@@ -46,6 +46,8 @@ from miro.playlist import SavedPlaylist
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
 from miro.util import getSingletonDDBObject
 
+import shutil
+
 class ViewTracker(object):
     """Handles tracking views for TrackGuides, TrackChannels, TrackPlaylist and TrackItems."""
 
@@ -522,6 +524,20 @@ class BackendMessageHandler(messages.MessageHandler):
             logging.warn("KeepVideo: Item not found -- %s", message.id)
         else:
             item.save()
+
+    def handle_save_item_as(self, message):
+        try:
+            item = views.items.getObjectByID(message.id)
+        except database.ObjectNotFoundError:
+            logging.warn("SaveVideoAs: Item not found -- %s", message.id)
+        else:
+            logging.info("saving video %s to %s" % (item.getVideoFilename(), 
+                                                    message.filename))
+            try:
+                shutil.copyfile(item.getVideoFilename(), message.filename)
+            except IOError:
+                # FIXME - we should pass the error back to the frontend
+                pass
 
     def handle_remove_video_entry(self, message):
         try:

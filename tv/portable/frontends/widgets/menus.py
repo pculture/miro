@@ -67,7 +67,10 @@ def on_remove_videos():
 def on_rename_video():
     app.widgetapp.rename_video()
 
-# FIXME - SaveVideo
+@action_handler("SaveVideo")
+def on_save_video():
+    app.widgetapp.save_video()
+
 # FIXME - CopyVideoURL
 # FIXME - EditPreferences
 
