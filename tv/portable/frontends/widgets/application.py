@@ -415,6 +415,10 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
     def export_channels(self):
         title = _('Export OPML File')
         filename = dialogs.ask_for_save_pathname(title, "miro_subscriptions.opml")
+
+        if not filename:
+            return
+
         messages.ExportChannels(filename).send_to_backend()
 
     def mail_channel(self):
