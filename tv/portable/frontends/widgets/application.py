@@ -552,8 +552,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
                     message.changed.remove(info)
                     break
         tablist = self.tablist_for_message(message)
-        for id in message.removed:
-            tablist.remove(id)
+        if message.removed:
+            tablist.remove(message.removed)
         for info in message.changed:
             tablist.update(info)
         for info in message.added:

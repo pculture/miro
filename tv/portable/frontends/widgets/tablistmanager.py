@@ -99,7 +99,7 @@ class TabListManager(object):
             return
 
         tab_list = self.widget_to_tablist[table_view]
-        if tab_list.in_drag_and_drop_reorder:
+        if tab_list.doing_change:
             return
         if tab_list is not self.selected_tab_list:
             self.handle_tablist_change(tab_list)
@@ -109,16 +109,19 @@ class TabListManager(object):
             self.handle_no_tabs_selected()
         self.handle_new_selection()
 
+    def recalc_selection(self):
+        self.on_selection_changed(self.selected_tab_list.view)
+
     def handle_no_tabs_selected(self):
         for tab in self.selected_tabs:
             try:
                 iter = self.selected_tab_list.iter_map[tab.id]
-            except KeyError: # Tab got deleted
+            except KeyError: # tab is about to be deleted
                 continue
             self.selected_tab_list.view.select(iter)
             self.selected_tabs = [tab]
             return
-        # all the tabs were deleted
+        # We have no tabs that we can select, select the guide instead
         self.select_guide()
 
     def get_selection(self):

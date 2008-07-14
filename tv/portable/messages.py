@@ -585,8 +585,8 @@ class TabsChanged(FrontendMessage):
     type -- 'feed', playlist' or 'guide'
     added -- ChannelInfo/PlaylistInfo object for each added tab.  The list 
         will be in the same order that the tabs were added.
-    changed -- set containing a ChannelInfo/PlaylistInfo for each changed tab.
-    removed -- set containing ids for each tab that was removed
+    changed -- list of ChannelInfo/PlaylistInfos for each changed tab.
+    removed -- list of ids for each tab that was removed
     """
 
     def __init__(self, type, added, changed, removed):

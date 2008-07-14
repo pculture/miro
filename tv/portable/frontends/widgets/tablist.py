@@ -60,7 +60,10 @@ class StaticTabList(object):
         self.add(statictabs.NewVideosTab())
         self.add(statictabs.DownloadsTab())
         self.view.model_changed()
-        self.in_drag_and_drop_reorder = False
+        self.doing_change = False 
+        # doing_change will be True if we are changing a bunch of tabs.  This
+        # will cause us to not try to update things based on the selection
+        # changing.
 
     def add(self, tab):
         iter = self.view.model.append(tab)
@@ -207,7 +210,7 @@ class TabListDropHandler(object):
 
     def accept_drop(self, table_view, model, type, source_actions, parent,
             position, data):
-        self.tablist.in_drag_and_drop_reorder = True
+        self.tablist.doing_change = True
         selected_rows = [model[iter][0].id for iter in \
                 table_view.get_selection()]
         table_view.unselect_all()
@@ -229,7 +232,7 @@ class TabListDropHandler(object):
             if parent is None or table_view.is_row_expanded(parent):
                 table_view.select(iter)
         self.tablist.send_new_order()
-        self.tablist.in_drag_and_drop_reorder = False
+        self.tablist.doing_change = False
         return True
 
 class TabList(object):
@@ -239,7 +242,7 @@ class TabList(object):
         self.view.connect('row-expanded', self.on_row_expanded_change, True)
         self.view.connect('row-collapsed', self.on_row_expanded_change, False)
         self.iter_map = {}
-        self.in_drag_and_drop_reorder = False
+        self.doing_change = False
 
     def on_row_expanded_change(self, view, iter, expanded):
         id = self.view.model[iter][0].id
@@ -262,9 +265,26 @@ class TabList(object):
         self.init_info(info)
         self.view.model.update(self.iter_map[info.id], info)
 
-    def remove(self, id):
-        iter = self.iter_map.pop(id)
-        self.view.model.remove(iter)
+    def remove(self, id_list):
+        self.doing_change = True
+        for id in id_list:
+            try:
+                iter = self.iter_map.pop(id)
+            except KeyError:
+                # child of a tab we already deleted
+                continue
+            self.forget_child_iters(iter)
+            self.view.model.remove(iter)
+        self.doing_change = False
+        app.tab_list_manager.recalc_selection()
+
+    def forget_child_iters(self, parent_iter):
+        model = self.view.model
+        iter = model.child_iter(parent_iter)
+        while iter is not None:
+            id = model[iter][0].id
+            del self.iter_map[id]
+            iter = model.next_iter(iter)
 
     def model_changed(self):
         self.view.model_changed()
