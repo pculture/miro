@@ -172,11 +172,11 @@ def on_about():
     app.widgetapp.about()
 
 @action_handler("Donate")
-def on_report_bug():
+def on_donate():
     app.widgetapp.open_url(config.get(prefs.DONATE_URL))
 
 @action_handler("Help")
-def on_report_bug():
+def on_help():
     app.widgetapp.open_url(config.get(prefs.HELP_URL))
 
 @action_handler("ReportBug")
@@ -184,11 +184,11 @@ def on_report_bug():
     app.widgetapp.open_url(config.get(prefs.BUG_REPORT_URL))
 
 @action_handler("Translate")
-def on_report_bug():
+def on_translate():
     app.widgetapp.open_url(config.get(prefs.TRANSLATE_URL))
 
 @action_handler("Planet")
-def on_report_bug():
+def on_planet():
     app.widgetapp.open_url(config.get(prefs.PLANET_URL))
 
 
