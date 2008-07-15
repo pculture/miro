@@ -44,7 +44,6 @@ from miro import config
 from miro import eventloop
 from miro import prefs
 from miro.download_utils import nextFreeFilename
-from miro.plat.frontends.html.gtk_queue import gtkSyncMethod, gtkAsyncMethod
 from miro.plat.utils import confirmMainThread
 from miro.plat import options
 
@@ -60,7 +59,6 @@ class Tester:
         self.success = False
         self.actualInit(filename)
 
-    @gtkSyncMethod
     def actualInit(self, filename):
         confirmMainThread()
         self.playbin = gst.element_factory_make('playbin')
@@ -94,7 +92,6 @@ class Tester:
                 self.success = False
                 self.done.set()
 
-    @gtkAsyncMethod
     def disconnect(self):
         confirmMainThread()
         self.bus.disconnect (self.watch_id)
@@ -213,7 +210,6 @@ class Renderer:
     def selectItem(self, anItem):
         self.selectFile(anItem.getFilename())
 
-    @gtkAsyncMethod
     def selectFile(self, filename):
         """starts playing the specified file"""
         confirmMainThread()
@@ -224,7 +220,6 @@ class Renderer:
         confirmMainThread()
         logging.info("getProgress: what does this do?")
 
-    @gtkAsyncMethod
     def getCurrentTime(self, callback):
         confirmMainThread()
         try:
@@ -235,7 +230,6 @@ class Renderer:
             position = 0
         callback(position)
 
-    @gtkAsyncMethod
     def setCurrentTime(self, seconds):
         self.seek(seconds)
 
@@ -273,27 +267,22 @@ class Renderer:
             return
         return duration
 
-    @gtkAsyncMethod
     def reset(self):
         confirmMainThread()
         self.playbin.set_state(gst.STATE_NULL)
 
-    @gtkAsyncMethod
     def setVolume(self, level):
         confirmMainThread()
         self.playbin.set_property("volume", level * 4.0)
 
-    @gtkAsyncMethod
     def play(self):
         confirmMainThread()
         self.playbin.set_state(gst.STATE_PLAYING)
 
-    @gtkAsyncMethod
     def pause(self):
         confirmMainThread()
         self.playbin.set_state(gst.STATE_PAUSED)
 
-    @gtkAsyncMethod
     def stop(self):
         confirmMainThread()
         self.playbin.set_state(gst.STATE_NULL)

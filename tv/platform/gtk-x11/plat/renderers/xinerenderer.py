@@ -39,7 +39,6 @@ from miro import eventloop
 from miro import prefs
 from miro import xine
 from miro.download_utils import nextFreeFilename
-from miro.plat.frontends.html import gtk_queue
 from miro.plat import options
 from miro.plat import resources
 from miro.plat.utils import confirmMainThread
@@ -109,7 +108,6 @@ class Renderer:
         self.xine.gotExposeEvent(event.area.x, event.area.y, event.area.width,
                 event.area.height)
 
-    @gtk_queue.gtkSyncMethod
     def canPlayFile(self, filename):
         confirmMainThread()
         return self.xine.canPlayFile(filename)
@@ -141,7 +139,6 @@ class Renderer:
     def selectItem(self, anItem):
         self.selectFile(anItem.getFilename())
 
-    @gtk_queue.gtkAsyncMethod
     @waitForAttach
     def selectFile(self, filename):
         confirmMainThread()
@@ -165,7 +162,6 @@ class Renderer:
         except:
             pass
 
-    @gtk_queue.gtkSyncMethod
     def getCurrentTime(self, callback):
         confirmMainThread()
         try:
@@ -206,19 +202,16 @@ class Renderer:
         # confirmMainThread() -- Not necessary because stop does this
         self.stop()
 
-    @gtk_queue.gtkAsyncMethod
     @waitForAttach
     def setVolume(self, level):
         confirmMainThread()
         self.xine.setVolume(int(level * 100))
 
-    @gtk_queue.gtkAsyncMethod
     @waitForAttach
     def play(self):
         confirmMainThread()
         self.xine.play()
 
-    @gtk_queue.gtkAsyncMethod
     @waitForAttach
     def pause(self):
         confirmMainThread()
@@ -229,12 +222,10 @@ class Renderer:
         # confirmMainThread() -- Not necessary since pause does this
         self.pause()
 
-    @gtk_queue.gtkSyncMethod
     def getRate(self):
         confirmMainThread()
         return self.xine.getRate()
 
-    @gtk_queue.gtkAsyncMethod
     @waitForAttach
     def setRate(self, rate):
         confirmMainThread()

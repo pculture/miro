@@ -29,12 +29,16 @@
 import gtkmozembed
 import gtk
 
-# Most of our stuff comes from the portable code.
+# Most of our stuff comes from the portable code, except the video renderer
+# and the browser.
 from miro.frontends.widgets.gtk.widgetset import *
+
+from miro.plat.frontends.widgets.video import VideoRenderer
 
 # We need to provide a Browser
 from miro.plat.frontends.widgets import mozprompt
 xpcom_setup = False
+
 
 class Browser(Widget):
     """Web browser widget.  """

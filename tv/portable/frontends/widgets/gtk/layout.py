@@ -110,8 +110,8 @@ class Splitter(Widget):
     def set_left_width(self, width):
         self._widget.set_position(width)
 
-    def get_left_width(self, width):
-        self._widget.get_position()
+    def get_left_width(self):
+        return self._widget.get_position()
 
     def set_right_width(self, width):
         self._widget.set_position(self.width - width)
