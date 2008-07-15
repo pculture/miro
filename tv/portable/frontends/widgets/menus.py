@@ -71,7 +71,10 @@ def on_rename_video():
 def on_save_video():
     app.widgetapp.save_video()
 
-# FIXME - CopyVideoURL
+@action_handler("CopyVideoURL")
+def on_copy_video_url():
+    app.widgetapp.copy_item_url()
+
 # FIXME - EditPreferences
 
 @action_handler("Quit")

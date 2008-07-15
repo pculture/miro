@@ -483,19 +483,19 @@ class ItemInfo(object):
     size -- size of the item in bytes
     duration -- length of the video in seconds
     permalink -- URL to a permalink to the item (or None)
-    downloaded -- Has the item been downloaded?
+    downloaded -- has the item been downloaded?
     is_external -- is this item external (true) or from a channel (false)?
     expiration_date -- datetime object for when the item will expire (or None)
     item_viewed -- has the user ever seen the item?
     video_watched -- has the user watched the video for the item?
-    video_path -- The path to the video for this item (or None)
+    video_path -- the file path to the video for this item (or None)
     thumbnail -- path to the thumbnail for this file
     thumbnail_large -- path to the larger thumbnail for this file
     file_type -- filetype of the enclosure that would be downloaded
+    file_url -- URL of the enclosure that would be downloaded
     download_info -- DownloadInfo object containing info about the download
         (or None)
     """
-
     def __init__(self, item):
         self.name = item.getTitle()
         self.id = item.id
@@ -520,8 +520,10 @@ class ItemInfo(object):
         enclosure = item.getFirstVideoEnclosure()
         if enclosure:
             self.file_type = enclosure.get('type')
+            self.file_url = enclosure.get('url')
         else:
             self.file_type = None
+            self.file_url = None
 
         if item.downloader:
             self.download_info = DownloadInfo(item.downloader)

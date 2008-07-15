@@ -273,6 +273,17 @@ class Application:
 
         messages.SaveItemAs(selection[0].id, filename).send_to_backend()
 
+    def copy_item_url(self):
+        selection = app.item_list_manager.get_selection()
+        selection = [s for s in selection if s.downloaded]
+
+        if not selection:
+            return
+
+        selection = selection[0]
+        if selection.file_url:
+            app.widgetapp.copy_text_to_clipboard(selection.file_url)
+
     def add_new_channel(self):
         url = self.ask_for_url(_('Add Channel'),
                 _('Enter the URL of the channel to add'),
