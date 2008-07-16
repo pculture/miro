@@ -321,8 +321,9 @@ class TableView(Widget):
         self.renderers = []
         self.background_color = None
         self.drag_button_down = False
-        self.drag_source = self.drag_dest = None
+        self.context_menu_callback = self.drag_source = self.drag_dest = None
         self.hotspot_tracker = None
+        self.ignore_selection_changed = False
         self.create_signal('row-expanded')
         self.create_signal('row-collapsed')
         self.create_signal('selection-changed')
@@ -447,6 +448,9 @@ class TableView(Widget):
         path = self.model._model.get_path(iter)
         return self._widget.row_expanded(path)
 
+    def set_context_menu_callback(self, callback):
+        self.context_menu_callback = callback
+
     def set_drag_source(self, drag_source):
         self.drag_source = drag_source
         # No need to call enable_model_drag_source() here, we handle it
@@ -468,7 +472,8 @@ class TableView(Widget):
         self.emit('row-collapsed', iter)
 
     def on_selection_changed(self, selection):
-        self.emit('selection-changed')
+        if not self.ignore_selection_changed:
+            self.emit('selection-changed')
 
     def on_row_inserted(self, model, path, iter):
         if self.hotspot_tracker:
@@ -495,6 +500,37 @@ class TableView(Widget):
             self.drag_button_down = True
             self.drag_start_x = int(event.x)
             self.drag_start_y = int(event.y)
+        elif event.button == 3 and self.context_menu_callback:
+            path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
+            if path_info is not None:
+                path, column, x, y = path_info
+                selection = self._widget.get_selection()
+                if not selection.path_is_selected(path):
+                    self.ignore_selection_changed = True
+                    selection.unselect_all()
+                    self.ignore_selection_changed = False
+                    selection.select_path(path)
+                menu = self.make_context_menu()
+                menu.popup(None, None, None, event.button, event.time)
+            return True
+
+    def make_context_menu(self):
+        menu = gtk.Menu()
+        for menu_item_info in self.context_menu_callback(self):
+            if menu_item_info is None:
+                item = gtk.SeparatorMenuItem()
+            else:
+                label, callback = menu_item_info
+                item = gtk.MenuItem(label)
+                if callback is not None:
+                    item.connect('activate', self.on_context_menu_activate, 
+                            callback)
+            menu.append(item)
+            item.show()
+        return menu
+
+    def on_context_menu_activate(self, item, callback):
+        callback()
 
     def on_button_release(self, treeview, event):
         hotspot_tracker = self.hotspot_tracker

@@ -320,6 +320,10 @@ class DndTabList(TabList):
 class FeedList(DndTabList):
     type = 'feed'
 
+    def __init__(self):
+        DndTabList.__init__(self)
+        self.view.set_context_menu_callback(self.on_context_menu)
+
     def init_info(self, info):
         info.icon = imagepool.get_surface(info.tab_icon)
 
@@ -329,6 +333,18 @@ class FeedList(DndTabList):
             if info.url == url:
                 return info
         return None
+
+    def on_context_menu(self, table_view):
+        selected_rows = [table_view.model[iter][0].id for iter in \
+                table_view.get_selection()]
+        menu = []
+        if len(selected_rows) <= 1:
+            label = _('Update Channel Now')
+        else:
+            label = _('Update Channels Now')
+        menu.append((label, app.widgetapp.update_selected_channels))
+        menu.append((_('Remove'), app.widgetapp.remove_current_feed))
+        return menu
 
 class PlaylistList(DndTabList):
     type = 'playlist'
@@ -340,6 +356,11 @@ class PlaylistList(DndTabList):
             thumb_path = resources.path('wimages/icon-playlist.png')
         info.icon = imagepool.get_surface(thumb_path)
         info.unwatched = info.available = 0
+
+    def on_context_menu(self, selection):
+        return makeMenu([
+            (app.controller.removeCurrentPlaylist, _('Remove')),
+        ])
 
 class TabListBox(widgetset.Scroller):
     def __init__(self):
