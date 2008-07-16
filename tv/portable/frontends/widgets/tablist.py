@@ -243,6 +243,7 @@ class TabList(object):
         self.view.connect('row-collapsed', self.on_row_expanded_change, False)
         self.iter_map = {}
         self.doing_change = False
+        self.view.set_context_menu_callback(self.on_context_menu)
 
     def on_row_expanded_change(self, view, iter, expanded):
         id = self.view.model[iter][0].id
@@ -310,7 +311,16 @@ class SiteList(TabList):
         info.icon = imagepool.get_surface(thumb_path)
         info.unwatched = info.available = 0
 
-class DndTabList(TabList):
+    def on_context_menu(self, table_view):
+        return [
+            (_('Copy URL to clipboard'), app.widgetapp.copy_site_url),
+            (_('Rename Site'), app.widgetapp.rename_something),
+            (_('Remove Site'), app.widgetapp.remove_current_site),
+        ]
+
+class NestedTabList(TabList):
+    """Tablist for tabs that can be put into folders (playlists and feeds)."""
+
     def __init__(self):
         TabList.__init__(self)
         self.view.set_drag_source(TabListDragHandler(self.type, 
@@ -318,12 +328,19 @@ class DndTabList(TabList):
         self.view.set_drag_dest(TabListDropHandler(self, self.type,
             '%s-with-folder' % self.type))
 
-class FeedList(DndTabList):
-    type = 'feed'
+    def on_context_menu(self, table_view):
+        selected_rows = [table_view.model[iter][0] for iter in \
+                table_view.get_selection()]
+        if len(selected_rows) == 1:
+            if selected_rows[0].is_folder:
+                return self.make_folder_context_menu()
+            else:
+                return self.make_single_context_menu()
+        else:
+            return self.make_multiple_context_menu()
 
-    def __init__(self):
-        DndTabList.__init__(self)
-        self.view.set_context_menu_callback(self.on_context_menu)
+class FeedList(NestedTabList):
+    type = 'feed'
 
     def init_info(self, info):
         info.icon = imagepool.get_surface(info.tab_icon)
@@ -335,28 +352,28 @@ class FeedList(DndTabList):
                 return info
         return None
 
-    def on_context_menu(self, table_view):
-        selected_rows = [table_view.model[iter][0].id for iter in \
-                table_view.get_selection()]
-        menu = []
-        if len(selected_rows) <= 1:
-            label = _('Update Channel Now')
-        else:
-            label = _('Update Channels Now')
-        menu.append((label, app.widgetapp.update_selected_channels))
-        if len(selected_rows) <= 1:
-            menu.append((_('Rename Channel'), app.widgetapp.rename_something))
-            menu.append((_('Copy URL to Clipboard'), app.widgetapp.copy_channel_url))
-            menu.append((_('Send Channel to Friend'), app.widgetapp.mail_channel))
-        menu.append((_('Remove'), app.widgetapp.remove_current_feed))
-        return menu
+    def make_folder_context_menu(self):
+        return [
+            (_('Update Channel Now'), app.widgetapp.update_selected_channels),
+            (_('Rename Channel Folder'), app.widgetapp.rename_something),
+            (_('Remove'), app.widgetapp.remove_current_feed)
+        ]
 
-class PlaylistList(DndTabList):
+    def make_single_context_menu(self):
+        return [
+            (_('Update Channel Now'), app.widgetapp.update_selected_channels),
+            (_('Copy URL to clipboard'), app.widgetapp.copy_channel_url),
+            (_('Remove'), app.widgetapp.remove_current_feed)
+        ]
+
+    def make_multiple_context_menu(self):
+        return [
+            (_('Update Channels Now'), app.widgetapp.update_selected_channels),
+            (_('Remove'), app.widgetapp.remove_current_feed)
+        ]
+
+class PlaylistList(NestedTabList):
     type = 'playlist'
-
-    def __init__(self):
-        DndTabList.__init__(self)
-        self.view.set_context_menu_callback(self.on_context_menu)
 
     def init_info(self, info):
         if info.is_folder:
@@ -366,15 +383,22 @@ class PlaylistList(DndTabList):
         info.icon = imagepool.get_surface(thumb_path)
         info.unwatched = info.available = 0
 
-    def on_context_menu(self, table_view):
-        selected_rows = [table_view.model[iter][0].id for iter in \
-                table_view.get_selection()]
+    def make_folder_context_menu(self):
+        return [
+            (_('Rename Playlist Folder'), app.widgetapp.rename_something),
+            (_('Remove'), app.widgetapp.remove_current_playlist)
+        ]
 
-        menu = []
-        if len(selected_rows) <= 1:
-            menu.append((_('Rename Playlist'), app.widgetapp.rename_something))
-        menu.append((_('Remove'), app.widgetapp.remove_current_playlist))
-        return menu
+    def make_single_context_menu(self):
+        return [
+            (_('Rename Playlist'), app.widgetapp.rename_something),
+            (_('Remove'), app.widgetapp.remove_current_playlist)
+        ]
+
+    def make_multiple_context_menu(self):
+        return [
+            (_('Remove'), app.widgetapp.remove_current_playlist)
+        ]
 
 class TabListBox(widgetset.Scroller):
     def __init__(self):

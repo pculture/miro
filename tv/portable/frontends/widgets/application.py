@@ -465,6 +465,11 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
             ci = channel_infos[0]
             app.widgetapp.copy_text_to_clipboard(ci.base_href)
 
+    def copy_site_url(self):
+        t, site_infos = app.tab_list_manager.get_selection()
+        if t == 'site':
+            app.widgetapp.copy_text_to_clipboard(site_infos[0].url)
+
     def add_new_playlist(self):
         selection = app.item_list_manager.get_selection()
         ids = [s.id for s in selection if s.downloaded]
@@ -514,7 +519,7 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
                             ci.name
 
         else:
-            return
+            raise AssertionError("Unknown tab type: %s" % t)
 
         name = dialogs.ask_for_string(title, description,
                                       initial_text=ci.name)
@@ -544,6 +549,19 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
         if ret == dialogs.BUTTON_YES:
             for pi in playlist_infos:
                 messages.DeletePlaylist(pi.id, pi.is_folder).send_to_backend()
+
+    def remove_current_site(self):
+        t, infos = app.tab_list_manager.get_selection()
+        if t == 'site':
+            info = infos[0] # Multiple guide selection is not allowed
+            title = _('Remove %s') % info.name
+            description = _('Are you sure you want to remove %s') % \
+                    info.name
+            ret = dialogs.show_choice_dialog(title, description,
+                    [dialogs.BUTTON_YES, dialogs.BUTTON_NO])
+
+            if ret == dialogs.BUTTON_YES:
+                messages.DeleteSite(info.id)
 
     def quit_ui(self):
         """Quit  out of the UI event loop."""
