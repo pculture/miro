@@ -346,9 +346,9 @@ class FeedList(DndTabList):
         menu.append((label, app.widgetapp.update_selected_channels))
         if len(selected_rows) <= 1:
             menu.append((_('Rename Channel'), app.widgetapp.rename_something))
-            menu.append((_('Copy Channel Link'), app.widgetapp.copy_channel_url))
+            menu.append((_('Copy URL to Clipboard'), app.widgetapp.copy_channel_url))
             menu.append((_('Send Channel to Friend'), app.widgetapp.mail_channel))
-        menu.append((_('Remove Channel'), app.widgetapp.remove_current_feed))
+        menu.append((_('Remove'), app.widgetapp.remove_current_feed))
         return menu
 
 class PlaylistList(DndTabList):
