@@ -34,6 +34,7 @@ from AppKit import *
 from Foundation import *
 from objc import YES, NO, nil
 
+from miro.plat.frontends.widgets import osxmenus
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets import tablemodel
 from miro.plat.frontends.widgets.base import Widget
@@ -271,6 +272,9 @@ class TableViewCommon(object):
         return NSDragOperationNone
 
     def mouseDown_(self, event):
+        if event.modifierFlags() & NSControlKeyMask:
+            self.handleContextMenu_(event)
+            return
         point = self.convertPoint_fromView_(event.locationInWindow(), nil)
         hotspot_tracker = HotspotTracker(self, point)
         if hotspot_tracker.hit:
@@ -278,6 +282,22 @@ class TableViewCommon(object):
             self.hotspot_tracker.redraw_cell()
         else:
             self.SuperClass.mouseDown_(self, event)
+
+    def rightMouseDown_(self, event):
+        self.handleContextMenu_(event)
+
+    def handleContextMenu_(self, event):
+        self.window().makeFirstResponder_(self)
+        point = self.convertPoint_fromView_(event.locationInWindow(), nil)
+        row = self.rowAtPoint_(point)
+        selection = self.selectedRowIndexes()
+        if not selection.containsIndex_(row):
+            index_set = NSIndexSet.alloc().initWithIndex_(row)
+            self.selectRowIndexes_byExtendingSelection_(index_set, NO)
+        wrapper = wrappermap.wrapper(self)
+        menu_items = wrapper.context_menu_callback(wrapper)
+        menu = osxmenus.make_context_menu(menu_items)
+        NSMenu.popUpContextMenu_withEvent_forView_(menu, event, self)
 
     def mouseDragged_(self, event):
         if self.hotspot_tracker is not None:
@@ -319,6 +339,7 @@ class TableView(Widget):
         self.create_signal('selection-changed')
         self.create_signal('hotspot-clicked')
         self.model = model
+        self.context_menu_callback = None
         if self.is_tree():
             self.create_signal('row-expanded')
             self.create_signal('row-collapsed')
@@ -545,6 +566,9 @@ class TableView(Widget):
 
     def unselect_all(self):
         self.view.deselectAll_(nil)
+
+    def set_context_menu_callback(self, callback):
+        self.context_menu_callback = callback
 
     def set_drag_source(self, drag_source):
         self.drag_source = drag_source

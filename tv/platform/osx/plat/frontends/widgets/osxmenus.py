@@ -159,3 +159,42 @@ def populate_menu():
         nsmenuitem = make_menu_item(menu)
         nsmenuitem.setSubmenu_(nsmenu)
         main_menu.addItem_(nsmenuitem)
+
+
+class ContextMenuHandler(NSObject):
+    def initWithCallback_(self, callback):
+        self = NSObject.init(self)
+        self.callback = callback
+        return self
+
+    def handleMenuItem_(self, sender):
+        self.callback()
+
+class MiroContextMenu(NSMenu):
+    # Works exactly like NSMenu, except it keeps a reference to the menu
+    # handler objects.
+    def init(self):
+        self = NSMenu.init(self)
+        self.handlers = set()
+        return self
+
+    def addItem_(self, item):
+        if isinstance(item.target(), ContextMenuHandler):
+            self.handlers.add(item.target())
+        return NSMenu.addItem_(self, item)
+
+def make_context_menu(menu_items):
+    nsmenu = MiroContextMenu.alloc().init()
+    for item in menu_items:
+        if item is None:
+            nsitem = NSMenuItem.separatorItem()
+        else:
+            label, callback = item
+            nsitem = NSMenuItem.alloc().init()
+            nsitem.setTitle_(label)
+            if callback:
+                handler = ContextMenuHandler.alloc().initWithCallback_(callback)
+                nsitem.setTarget_(handler)
+                nsitem.setAction_('handleMenuItem:')
+        nsmenu.addItem_(nsitem)
+    return nsmenu
