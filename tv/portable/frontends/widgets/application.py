@@ -491,40 +491,44 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
 
     def rename_something(self):
         t, channel_infos = app.tab_list_manager.get_selection()
-        ci = channel_infos[0]
+        info = channel_infos[0]
 
-        if t == 'feed' and ci.is_folder:
+        if t == 'feed' and info.is_folder:
             t = 'feed-folder'
-        elif t == 'playlist' and ci.is_folder:
+        elif t == 'playlist' and info.is_folder:
             t = 'playlist-folder'
 
         if t == 'feed-folder':
             title = _('Rename Channel Folder')
             description = _('Enter a new name for the channel folder %s') % \
-                            ci.name
+                            info.name
 
-        elif t == 'feed' and not ci.is_folder:
+        elif t == 'feed' and not info.is_folder:
             title = _('Rename Channel')
             description = _('Enter a new name for the channel %s') % \
-                            ci.name
+                            info.name
 
         elif t == 'playlist':
             title = _('Rename Playlist')
             description = _('Enter a new name for the playlist %s') % \
-                            ci.name
+                            info.name
 
         elif t == 'playlist-folder':
             title = _('Rename Playlist Folder')
             description = _('Enter a new name for the playlist folder %s') % \
-                            ci.name
+                            info.name
+        elif t == 'site':
+            title = _('Rename Site')
+            description = _('Enter a new name for the site %s') % \
+                            info.name
 
         else:
             raise AssertionError("Unknown tab type: %s" % t)
 
         name = dialogs.ask_for_string(title, description,
-                                      initial_text=ci.name)
+                                      initial_text=info.name)
         if name:
-            messages.RenameObject(t, ci.id, name).send_to_backend()
+            messages.RenameObject(t, info.id, name).send_to_backend()
 
     def remove_current_playlist(self):
         t, infos = app.tab_list_manager.get_selection()

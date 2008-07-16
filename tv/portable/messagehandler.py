@@ -310,6 +310,8 @@ class BackendMessageHandler(messages.MessageHandler):
             return views.channelFolders
         elif type == 'playlist-folder':
             return views.playlistFolders
+        elif type == 'site':
+            return views.guides
         else:
             raise ValueError("Unknown Type: %s" % type)
 
