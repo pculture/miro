@@ -1,0 +1,17 @@
+tv/platform/gtk-x11/build
+tv/platform/gtk-x11/dist
+tv/platform/gtk-x11/miro
+tv/platform/gtk-x11/miro.1.gz
+tv/platform/gtk-x11/miro.real.1.gz
+tv/platform/gtk-x11/plat/__init__.pyc
+tv/platform/gtk-x11/plat/xlibhelper.c
+tv/platform/gtk-x11/plat/frontends/widgets/mozprompt.pxi
+tv/platform/gtk-x11/plat/frontends/widgets/mozprompt.c
+tv/platform/gtk-x11/plat/frontends/widgets/mozprompt.h
+tv/platform/gtk-x11/xine/xine.c
+tv/platform/gtk-x11/xine/xine_extractor
+tv/portable/*.pyc
+tv/portable/*.c
+tv/portable/dl_daemon/daemon.py
+tv/portable/frontends/widgets/gtk/pygtkhacks.c
+
