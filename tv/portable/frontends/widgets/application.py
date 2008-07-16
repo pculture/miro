@@ -561,7 +561,7 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
                     [dialogs.BUTTON_YES, dialogs.BUTTON_NO])
 
             if ret == dialogs.BUTTON_YES:
-                messages.DeleteSite(info.id)
+                messages.DeleteSite(info.id).send_to_backend()
 
     def quit_ui(self):
         """Quit  out of the UI event loop."""

@@ -413,6 +413,12 @@ class BackendMessageHandler(messages.MessageHandler):
         else:
             playlist.remove()
 
+    def handle_delete_site(self, message):
+        site = views.guides.getObjectByID(message.id)
+        if site.getDefault():
+            raise ValueError("Can't delete default site")
+        site.remove()
+
     def handle_tabs_reordered(self, message):
         folder_view = self.folder_view_for_type(message.type)
         if message.type == 'feed':

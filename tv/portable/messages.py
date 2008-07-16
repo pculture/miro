@@ -267,6 +267,11 @@ class DeletePlaylist(BackendMessage):
         self.id = id
         self.is_folder = is_folder
 
+class DeleteSite(BackendMessage):
+    """Delete an external channel guide."""
+    def __init__(self, id):
+        self.id = id
+
 class NewGuide(BackendMessage):
     """Create a new channel guide.
     """
