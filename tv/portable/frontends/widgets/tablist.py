@@ -362,6 +362,7 @@ class FeedList(NestedTabList):
     def make_single_context_menu(self):
         return [
             (_('Update Channel Now'), app.widgetapp.update_selected_channels),
+            (_('Rename Channel'), app.widgetapp.rename_something),
             (_('Copy URL to clipboard'), app.widgetapp.copy_channel_url),
             (_('Remove'), app.widgetapp.remove_current_feed)
         ]
