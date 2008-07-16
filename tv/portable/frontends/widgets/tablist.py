@@ -276,6 +276,7 @@ class TabList(object):
             self.forget_child_iters(iter)
             self.view.model.remove(iter)
         self.doing_change = False
+        self.view.model_changed()
         app.tab_list_manager.recalc_selection()
 
     def forget_child_iters(self, parent_iter):
