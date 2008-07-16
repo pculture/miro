@@ -186,6 +186,12 @@ class Widget(signals.SignalEmitter):
         self._widget.get_colormap().alloc_color(color)
         return color
 
+    def enable_widget(self):
+        pass
+
+    def disable_widget(self):
+        pass
+
 class Bin(Widget):
     def __init__(self):
         Widget.__init__(self)
@@ -213,3 +219,9 @@ class Bin(Widget):
     def set_child(self, new_child):
         self.remove()
         self.add(new_child)
+
+    def enable_widget(self):
+        self.child.enable_widget()
+
+    def disable_widget(self):
+        self.child.disable_widget()

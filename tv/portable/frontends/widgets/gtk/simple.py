@@ -98,6 +98,12 @@ class Label(Widget):
             self.modify_style('fg', state, self.make_color(color))
             self.modify_style('text', state, self.make_color(color))
 
+    def enable_widget(self):
+        self._widget.set_sensitive(True)
+
+    def disable_widget(self):
+        self._widget.set_sensitive(False)
+
 class Scroller(Bin):
     def __init__(self, horizontal, vertical):
         Bin.__init__(self)
@@ -189,6 +195,12 @@ class OptionMenu(Widget):
         index = widget.get_active()
         self.emit('changed', index)
 
+    def enable_widget(self):
+        self._widget.set_sensitive(True)
+
+    def disable_widget(self):
+        self._widget.set_sensitive(False)
+
 class Button(Widget):
     def __init__(self, text, style='normal'):
         Widget.__init__(self)
@@ -208,6 +220,12 @@ class Button(Widget):
 
     def set_color(self, color):
         self.label.set_color(color)
+
+    def enable_widget(self):
+        self._widget.set_sensitive(True)
+
+    def disable_widget(self):
+        self._widget.set_sensitive(False)
 
 class HSeparator(Widget):
     def __init__(self):

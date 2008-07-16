@@ -54,6 +54,12 @@ class TextEntry(Widget):
     def set_activates_default(self, setting):
         self._widget.set_activates_default(setting)
 
+    def enable_widget(self):
+        self._widget.set_sensitive(True)
+
+    def disable_widget(self):
+        self._widget.set_sensitive(False)
+
 class Checkbox(Widget):
     """Widget that the user can toggle on or off."""
 
@@ -66,3 +72,9 @@ class Checkbox(Widget):
 
     def set_checked(self, value):
         self._widget.set_active(value)
+
+    def enable_widget(self):
+        self._widget.set_sensitive(True)
+
+    def disable_widget(self):
+        self._widget.set_sensitive(False)

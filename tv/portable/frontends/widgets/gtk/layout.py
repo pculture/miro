@@ -56,6 +56,14 @@ class Box(Widget):
         self._widget.remove(widget._widget)
         self.children.remove(widget)
 
+    def enable_widget(self):
+        for mem in self.children:
+            mem.enable_widget()
+
+    def disable_widget(self):
+        for mem in self.children:
+            mem.disable_widget()
+
 class HBox(Box):
     WIDGET_CLASS = gtk.HBox
 
