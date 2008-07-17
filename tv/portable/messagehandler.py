@@ -519,7 +519,7 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_pause_download(self, message):
         try:
-            item = views.downloadingItems.getObjectByID(message.id)
+            item = views.items.getObjectByID(message.id)
         except database.ObjectNotFoundError:
             logging.warn("PauseDownload: Item not found -- %s", message.id)
         else:
