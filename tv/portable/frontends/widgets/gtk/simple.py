@@ -163,7 +163,7 @@ class Expander(Bin):
         self._widget.set_expanded(expanded)
 
 class OptionMenu(Widget):
-    def __init__(self, *options):
+    def __init__(self, options):
         Widget.__init__(self)
         self.create_signal('changed')
 

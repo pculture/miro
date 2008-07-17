@@ -209,7 +209,7 @@ class FeedView(itemlist.ItemContainerView):
     def build_toolbar(self):
         hbox = widgetset.HBox(spacing=5)
         label = widgetset.Label(_('Auto Download'))
-        option_menu = widgetset.OptionMenu(_("All"), _("New"), _("Off"))
+        option_menu = widgetset.OptionMenu((_("All"), _("New"), _("Off")))
         feed_info = widgetutil.get_feed_info(self.feed_id)
         autodownload_mode = feed_info.autodownload_mode
         if autodownload_mode == 'all':

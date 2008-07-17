@@ -190,7 +190,7 @@ class Button(AttributedStringStyler):
         self.view.setEnabled_(False)
 
 class OptionMenu(AttributedStringStyler):
-    def __init__(self, *options):
+    def __init__(self, options):
         AttributedStringStyler.__init__(self)
         self.create_signal('changed')
         self.view = NSPopUpButton.alloc().init()
