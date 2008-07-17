@@ -72,21 +72,6 @@ using asio::ip::udp;
 TORRENT_DEFINE_LOG(node)
 #endif
 
-node_id generate_id()
-{
-	char random[20];
-	std::srand(std::time(0));
-#ifdef _MSC_VER
-	std::generate(random, random + 20, &rand);
-#else
-	std::generate(random, random + 20, &std::rand);
-#endif
-
-	hasher h;
-	h.update(random, 20);
-	return h.final();
-}
-
 // remove peers that have timed out
 void purge_peers(std::set<peer_entry>& peers)
 {
@@ -189,6 +174,12 @@ void node_impl::refresh(node_id const& id
 void node_impl::bootstrap(std::vector<udp::endpoint> const& nodes
 	, boost::function0<void> f)
 {
+#ifdef TORRENT_DHT_VERBOSE_LOGGING
+	TORRENT_LOG(node) << "bootrapping: " << nodes.size();
+	for (std::vector<udp::endpoint>::const_iterator i = nodes.begin()
+		, end(nodes.end()); i != end; ++i)
+		TORRENT_LOG(node) << "  " << *i;
+#endif
 	std::vector<node_entry> start;
 	start.reserve(nodes.size());
 	std::copy(nodes.begin(), nodes.end(), std::back_inserter(start));
@@ -269,13 +260,21 @@ namespace
 		, int listen_port, sha1_hash const& ih
 		, boost::function<void(std::vector<tcp::endpoint> const&, sha1_hash const&)> f)
 	{
+#ifdef TORRENT_DHT_VERBOSE_LOGGING
+		TORRENT_LOG(node) << "announce response [ ih: " << ih
+			<< " p: " << listen_port
+			<< " nodes: " << v.size() << " ]" ;
+#endif
 		bool nodes = false;
 		// only store on the first k nodes
 		for (std::vector<node_entry>::const_iterator i = v.begin()
 			, end(v.end()); i != end; ++i)
 		{
-			rpc.invoke(messages::get_peers, i->addr, observer_ptr(
-				new (rpc.allocator().malloc()) get_peers_observer(ih, listen_port, rpc, f)));
+			observer_ptr o(new (rpc.allocator().malloc()) get_peers_observer(ih, listen_port, rpc, f));
+#ifndef NDEBUG
+			o->m_in_constructor = false;
+#endif
+			rpc.invoke(messages::get_peers, i->addr, o);
 			nodes = true;
 		}
 	}
@@ -283,6 +282,9 @@ namespace
 
 void node_impl::add_router_node(udp::endpoint router)
 {
+#ifdef TORRENT_DHT_VERBOSE_LOGGING
+	TORRENT_LOG(node) << "adding router node: " << router;
+#endif
 	m_table.add_router_node(router);
 }
 
@@ -291,12 +293,18 @@ void node_impl::add_node(udp::endpoint node)
 	// ping the node, and if we get a reply, it
 	// will be added to the routing table
 	observer_ptr o(new (m_rpc.allocator().malloc()) null_observer(m_rpc.allocator()));
+#ifndef NDEBUG
+	o->m_in_constructor = false;
+#endif
 	m_rpc.invoke(messages::ping, node, o);
 }
 
 void node_impl::announce(sha1_hash const& info_hash, int listen_port
 	, boost::function<void(std::vector<tcp::endpoint> const&, sha1_hash const&)> f)
 {
+#ifdef TORRENT_DHT_VERBOSE_LOGGING
+	TORRENT_LOG(node) << "announcing [ ih: " << info_hash << " p: " << listen_port << " ]" ;
+#endif
 	// search for nodes with ids close to id, and then invoke the
 	// get_peers and then announce_peer rpc on them.
 	closest_nodes::initiate(info_hash, m_settings.search_branching
@@ -395,7 +403,7 @@ void node_impl::on_announce(msg const& m, msg& reply)
 
 	torrent_entry& v = m_map[m.info_hash];
 	peer_entry e;
-	e.addr = tcp::endpoint(m.addr.address(), m.addr.port());
+	e.addr = tcp::endpoint(m.addr.address(), m.port);
 	e.added = time_now();
 	std::set<peer_entry>::iterator i = v.peers.find(e);
 	if (i != v.peers.end()) v.peers.erase(i++);

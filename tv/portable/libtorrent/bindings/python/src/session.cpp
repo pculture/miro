@@ -5,6 +5,7 @@
 #include <libtorrent/session.hpp>
 #include <libtorrent/torrent.hpp>
 #include <libtorrent/storage.hpp>
+#include <libtorrent/ip_filter.hpp>
 #include <boost/python.hpp>
 #include "gil.hpp"
 
@@ -35,6 +36,7 @@ extern char const* session_status_m_doc;
 extern char const* session_start_dht_doc;
 extern char const* session_stop_dht_doc;
 extern char const* session_dht_state_doc;
+extern char const* session_add_dht_router_doc;
 extern char const* session_add_torrent_doc;
 extern char const* session_remove_torrent_doc;
 extern char const* session_set_download_rate_limit_doc;
@@ -51,9 +53,12 @@ extern char const* session_get_pe_settings_doc;
 extern char const* session_set_severity_level_doc;
 extern char const* session_pop_alert_doc;
 extern char const* session_start_upnp_doc;
+extern char const* session_start_lsd_doc;
+extern char const* session_stop_lsd_doc;
 extern char const* session_stop_upnp_doc;
 extern char const* session_start_natpmp_doc;
 extern char const* session_stop_natpmp_doc;
+extern char const* session_set_ip_filter_doc;
 
 namespace
 {
@@ -63,6 +68,14 @@ namespace
       allow_threading_guard guard;
       return s.listen_on(std::make_pair(min_, max_), interface);
   }
+
+#ifndef TORRENT_DISABLE_DHT
+  void add_dht_router(session& s, std::string router_, int port_)
+  {
+      allow_threading_guard guard;
+      return s.add_dht_router(std::make_pair(router_, port_));
+  }
+#endif
 
   struct invoke_extension_factory
   {
@@ -178,9 +191,15 @@ void bind_session()
         .def("listen_port", allow_threads(&session::listen_port), session_listen_port_doc)
         .def("status", allow_threads(&session::status), session_status_m_doc)
 #ifndef TORRENT_DISABLE_DHT
+        .def(
+            "add_dht_router", &add_dht_router
+          , (arg("router"), "port")
+          , session_add_dht_router_doc
+        )
         .def("start_dht", allow_threads(&session::start_dht), session_start_dht_doc)
         .def("stop_dht", allow_threads(&session::stop_dht), session_stop_dht_doc)
         .def("dht_state", allow_threads(&session::dht_state), session_dht_state_doc)
+        .def("set_dht_proxy", allow_threads(&session::set_dht_proxy))
 #endif
         .def(
             "add_torrent", &add_torrent
@@ -190,7 +209,8 @@ void bind_session()
             )
           , session_add_torrent_doc
         )
-        .def("remove_torrent", allow_threads(&session::remove_torrent), session_remove_torrent_doc)
+        .def("remove_torrent", allow_threads(&session::remove_torrent), arg("option") = session::none
+			  , session_remove_torrent_doc)
         .def(
             "set_download_rate_limit", allow_threads(&session::set_download_rate_limit)
           , session_set_download_rate_limit_doc
@@ -226,8 +246,10 @@ void bind_session()
           , session_num_connections_doc
         )
         .def("set_settings", allow_threads(&session::set_settings), session_set_settings_doc)
+#ifndef TORRENT_DISABLE_ENCRYPTION
         .def("set_pe_settings", allow_threads(&session::set_pe_settings), session_set_pe_settings_doc)
         .def("get_pe_settings", allow_threads(&session::get_pe_settings), return_value_policy<copy_const_reference>())
+#endif
         .def(
             "set_severity_level", allow_threads(&session::set_severity_level)
           , session_set_severity_level_doc
@@ -237,13 +259,13 @@ void bind_session()
         .def("set_peer_proxy", allow_threads(&session::set_peer_proxy))
         .def("set_tracker_proxy", allow_threads(&session::set_tracker_proxy))
         .def("set_web_seed_proxy", allow_threads(&session::set_web_seed_proxy))
-#ifndef TORRENT_DISABLE_DHT
-        .def("set_dht_proxy", allow_threads(&session::set_dht_proxy))
-#endif
         .def("start_upnp", allow_threads(&session::start_upnp), session_start_upnp_doc)
         .def("stop_upnp", allow_threads(&session::stop_upnp), session_stop_upnp_doc)
+        .def("start_lsd", allow_threads(&session::start_lsd), session_start_lsd_doc)
+        .def("stop_lsd", allow_threads(&session::stop_lsd), session_stop_lsd_doc)
         .def("start_natpmp", allow_threads(&session::start_natpmp), session_start_natpmp_doc)
         .def("stop_natpmp", allow_threads(&session::stop_natpmp), session_stop_natpmp_doc)
+        .def("set_ip_filter", allow_threads(&session::set_ip_filter), session_set_ip_filter_doc)
         ;
 
     register_ptr_to_python<std::auto_ptr<alert> >();

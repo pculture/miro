@@ -2,7 +2,7 @@
 // posix_fd_set_adapter.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2007 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2008 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -35,11 +35,16 @@ public:
     FD_ZERO(&fd_set_);
   }
 
-  void set(socket_type descriptor)
+  bool set(socket_type descriptor)
   {
-    if (max_descriptor_ == invalid_socket || descriptor > max_descriptor_)
-      max_descriptor_ = descriptor;
-    FD_SET(descriptor, &fd_set_);
+    if (descriptor < (socket_type)FD_SETSIZE)
+    {
+      if (max_descriptor_ == invalid_socket || descriptor > max_descriptor_)
+        max_descriptor_ = descriptor;
+      FD_SET(descriptor, &fd_set_);
+      return true;
+    }
+    return false;
   }
 
   bool is_set(socket_type descriptor) const

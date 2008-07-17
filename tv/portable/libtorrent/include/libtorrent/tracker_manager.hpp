@@ -122,6 +122,8 @@ namespace libtorrent
 		request_callback(): m_manager(0) {}
 		virtual ~request_callback() {}
 		virtual void tracker_warning(std::string const& msg) = 0;
+		virtual void tracker_scrape_response(tracker_request const& req
+			, int complete, int incomplete, int downloads) {}
 		virtual void tracker_response(
 			tracker_request const&
 			, std::vector<peer_entry>& peers
@@ -184,13 +186,14 @@ namespace libtorrent
 
 		typedef boost::mutex mutex_t;
 		mutable mutex_t m_mutex;
+		bool m_abort;
 	};
 
 	struct TORRENT_EXPORT tracker_connection
 		: timeout_handler
 	{
 		tracker_connection(tracker_manager& man
-			, tracker_request req
+			, tracker_request const& req
 			, asio::strand& str
 			, address bind_interface
 			, boost::weak_ptr<request_callback> r);
@@ -202,7 +205,7 @@ namespace libtorrent
 
 		void fail(int code, char const* msg);
 		void fail_timeout();
-		void close();
+		virtual void close();
 		address const& bind_interface() const { return m_bind_interface; }
 
 	protected:

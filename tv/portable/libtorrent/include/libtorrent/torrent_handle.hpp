@@ -64,6 +64,8 @@ namespace libtorrent
 		struct checker_impl;
 	}
 
+	struct torrent_plugin;
+
 	struct TORRENT_EXPORT duplicate_torrent: std::exception
 	{
 		virtual const char* what() const throw()
@@ -92,15 +94,17 @@ namespace libtorrent
 			, upload_rate(0)
 			, download_payload_rate(0)
 			, upload_payload_rate(0)
+			, num_seeds(0)
 			, num_peers(0)
 			, num_complete(-1)
 			, num_incomplete(-1)
+			, list_seeds(0)
+			, list_peers(0)
 			, pieces(0)
 			, num_pieces(0)
 			, total_done(0)
 			, total_wanted_done(0)
 			, total_wanted(0)
-			, num_seeds(0)
 			, distributed_copies(0.f)
 			, block_size(0)
 			, num_uploads(0)
@@ -108,6 +112,8 @@ namespace libtorrent
 			, uploads_limit(0)
 			, connections_limit(0)
 			, storage_mode(storage_mode_sparse)
+			, up_bandwidth_queue(0)
+			, down_bandwidth_queue(0)
 		{}
 
 		enum state_t
@@ -157,8 +163,12 @@ namespace libtorrent
 		float download_payload_rate;
 		float upload_payload_rate;
 
+		// the number of peers this torrent is connected to
+		// that are seeding.
+		int num_seeds;
+
 		// the number of peers this torrent
-		// is connected to.
+		// is connected to (including seeds).
 		int num_peers;
 
 		// if the tracker sends scrape info in its
@@ -169,6 +179,15 @@ namespace libtorrent
 		int num_complete;
 		int num_incomplete;
 
+		// this is the number of seeds whose IP we know
+		// but are not necessarily connected to
+		int list_seeds;
+
+		// this is the number of peers whose IP we know
+		// (including seeds), but are not necessarily
+		// connected to
+		int list_peers;
+		
 		const std::vector<bool>* pieces;
 		
 		// this is the number of pieces the client has
@@ -190,10 +209,6 @@ namespace libtorrent
 		// this may be smaller than the total torrent size
 		// in case any pieces are filtered as not wanted
 		size_type total_wanted;
-
-		// the number of peers this torrent is connected to
-		// that are seeding.
-		int num_seeds;
 
 		// the number of distributed copies of the file.
 		// note that one copy may be spread out among many peers.
@@ -218,6 +233,9 @@ namespace libtorrent
 		// true if the torrent is saved in compact mode
 		// false if it is saved in full allocation mode
 		storage_mode_t storage_mode;
+
+		int up_bandwidth_queue;
+		int down_bandwidth_queue;
 	};
 
 	struct TORRENT_EXPORT block_info
@@ -263,7 +281,6 @@ namespace libtorrent
 		torrent_handle(): m_ses(0), m_chk(0), m_info_hash(0) {}
 
 		void get_peer_info(std::vector<peer_info>& v) const;
-		bool send_chat_message(tcp::endpoint ip, std::string message) const;
 		torrent_status status() const;
 		void get_download_queue(std::vector<partial_piece_info>& queue) const;
 		
@@ -279,11 +296,17 @@ namespace libtorrent
 		void remove_url_seed(std::string const& url) const;
 		std::set<std::string> url_seeds() const;
 
+#ifndef TORRENT_DISABLE_EXTENSIONS
+		void add_extension(boost::function<boost::shared_ptr<torrent_plugin>(torrent*, void*)> const& ext
+			, void* userdata = 0);
+#endif
+
 		bool has_metadata() const;
 		const torrent_info& get_torrent_info() const;
 		bool is_valid() const;
 
 		bool is_seed() const;
+		bool is_finished() const;
 		bool is_paused() const;
 		void pause() const;
 		void resume() const;
@@ -337,6 +360,9 @@ namespace libtorrent
 		// announce will take place until the given time has
 		// timed out.
 		void force_reannounce(boost::posix_time::time_duration) const;
+
+		// performs a scrape request
+		void scrape_tracker() const;
 
 		// returns the name of this torrent, in case it doesn't
 		// have metadata it returns the name assigned to it

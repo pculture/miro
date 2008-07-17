@@ -2,7 +2,7 @@
 // win_iocp_socket_service.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2007 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2008 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -56,7 +56,7 @@ public:
   typedef typename Protocol::endpoint endpoint_type;
 
   // Base class for all operations.
-  typedef win_iocp_operation operation;
+  typedef win_iocp_io_service::operation operation;
 
   struct noop_deleter { void operator()(void*) {} };
   typedef boost::shared_ptr<void> shared_cancel_token_type;
@@ -155,11 +155,13 @@ public:
     // The protocol associated with the socket.
     protocol_type protocol_;
 
+#if defined(ASIO_ENABLE_CANCELIO)
     // The ID of the thread from which it is safe to cancel asynchronous
     // operations. 0 means no asynchronous operations have been started yet.
     // ~0 means asynchronous operations have been started from more than one
     // thread, and cancellation is not supported for the socket.
     DWORD safe_cancellation_thread_id_;
+#endif // defined(ASIO_ENABLE_CANCELIO)
 
     // Pointers to adjacent socket implementations in linked list.
     implementation_type* next_;
@@ -203,7 +205,9 @@ public:
     impl.socket_ = invalid_socket;
     impl.flags_ = 0;
     impl.cancel_token_.reset();
+#if defined(ASIO_ENABLE_CANCELIO)
     impl.safe_cancellation_thread_id_ = 0;
+#endif // defined(ASIO_ENABLE_CANCELIO)
 
     // Insert implementation into linked list of all implementations.
     asio::detail::mutex::scoped_lock lock(mutex_);
@@ -305,7 +309,9 @@ public:
       impl.socket_ = invalid_socket;
       impl.flags_ = 0;
       impl.cancel_token_.reset();
+#if defined(ASIO_ENABLE_CANCELIO)
       impl.safe_cancellation_thread_id_ = 0;
+#endif // defined(ASIO_ENABLE_CANCELIO)
     }
 
     ec = asio::error_code();
@@ -327,7 +333,7 @@ public:
       ec = asio::error::bad_descriptor;
     }
     else if (FARPROC cancel_io_ex_ptr = ::GetProcAddress(
-          ::GetModuleHandle("KERNEL32"), "CancelIoEx"))
+          ::GetModuleHandleA("KERNEL32"), "CancelIoEx"))
     {
       // The version of Windows supports cancellation from any thread.
       typedef BOOL (WINAPI* cancel_io_ex_t)(HANDLE, LPOVERLAPPED);
@@ -337,14 +343,25 @@ public:
       if (!cancel_io_ex(sock_as_handle, 0))
       {
         DWORD last_error = ::GetLastError();
-        ec = asio::error_code(last_error,
-            asio::error::system_category);
+        if (last_error == ERROR_NOT_FOUND)
+        {
+          // ERROR_NOT_FOUND means that there were no operations to be
+          // cancelled. We swallow this error to match the behaviour on other
+          // platforms.
+          ec = asio::error_code();
+        }
+        else
+        {
+          ec = asio::error_code(last_error,
+              asio::error::get_system_category());
+        }
       }
       else
       {
         ec = asio::error_code();
       }
     }
+#if defined(ASIO_ENABLE_CANCELIO)
     else if (impl.safe_cancellation_thread_id_ == 0)
     {
       // No operations have been started, so there's nothing to cancel.
@@ -360,7 +377,7 @@ public:
       {
         DWORD last_error = ::GetLastError();
         ec = asio::error_code(last_error,
-            asio::error::system_category);
+            asio::error::get_system_category());
       }
       else
       {
@@ -373,6 +390,13 @@ public:
       // so cancellation is not safe.
       ec = asio::error::operation_not_supported;
     }
+#else // defined(ASIO_ENABLE_CANCELIO)
+    else
+    {
+      // Cancellation is not supported as CancelIo may not be used.
+      ec = asio::error::operation_not_supported;
+    }
+#endif // defined(ASIO_ENABLE_CANCELIO)
 
     return ec;
   }
@@ -667,7 +691,7 @@ public:
       else if (last_error == ERROR_PORT_UNREACHABLE)
         last_error = WSAECONNREFUSED;
       ec = asio::error_code(last_error,
-          asio::error::system_category);
+          asio::error::get_system_category());
       return 0;
     }
 
@@ -680,13 +704,13 @@ public:
     : public operation
   {
   public:
-    send_operation(asio::io_service& io_service,
+    send_operation(win_iocp_io_service& io_service,
         weak_cancel_token_type cancel_token,
         const ConstBufferSequence& buffers, Handler handler)
-      : operation(
+      : operation(io_service,
           &send_operation<ConstBufferSequence, Handler>::do_completion_impl,
           &send_operation<ConstBufferSequence, Handler>::destroy_impl),
-        work_(io_service),
+        work_(io_service.get_io_service()),
         cancel_token_(cancel_token),
         buffers_(buffers),
         handler_(handler)
@@ -719,7 +743,7 @@ public:
 
       // Map non-portable errors to their portable counterparts.
       asio::error_code ec(last_error,
-          asio::error::system_category);
+          asio::error::get_system_category());
       if (ec.value() == ERROR_NETNAME_DELETED)
       {
         if (handler_op->cancel_token_.expired())
@@ -767,23 +791,25 @@ public:
   {
     if (!is_open(impl))
     {
-      this->io_service().post(bind_handler(handler,
+      this->get_io_service().post(bind_handler(handler,
             asio::error::bad_descriptor, 0));
       return;
     }
 
+#if defined(ASIO_ENABLE_CANCELIO)
     // Update the ID of the thread from which cancellation is safe.
     if (impl.safe_cancellation_thread_id_ == 0)
       impl.safe_cancellation_thread_id_ = ::GetCurrentThreadId();
     else if (impl.safe_cancellation_thread_id_ != ::GetCurrentThreadId())
       impl.safe_cancellation_thread_id_ = ~DWORD(0);
+#endif // defined(ASIO_ENABLE_CANCELIO)
 
     // Allocate and construct an operation to wrap the handler.
     typedef send_operation<ConstBufferSequence, Handler> value_type;
     typedef handler_alloc_traits<Handler, value_type> alloc_traits;
     raw_handler_ptr<alloc_traits> raw_ptr(handler);
-    handler_ptr<alloc_traits> ptr(raw_ptr,
-        this->io_service(), impl.cancel_token_, buffers, handler);
+    handler_ptr<alloc_traits> ptr(raw_ptr, iocp_service_,
+        impl.cancel_token_, buffers, handler);
 
     // Copy buffers into WSABUF array.
     ::WSABUF bufs[max_buffers];
@@ -803,7 +829,7 @@ public:
     // A request to receive 0 bytes on a stream socket is a no-op.
     if (impl.protocol_.type() == SOCK_STREAM && total_buffer_size == 0)
     {
-      asio::io_service::work work(this->io_service());
+      asio::io_service::work work(this->get_io_service());
       ptr.reset();
       asio::error_code error;
       iocp_service_.post(bind_handler(handler, error, 0));
@@ -819,10 +845,10 @@ public:
     // Check if the operation completed immediately.
     if (result != 0 && last_error != WSA_IO_PENDING)
     {
-      asio::io_service::work work(this->io_service());
+      asio::io_service::work work(this->get_io_service());
       ptr.reset();
       asio::error_code ec(last_error,
-          asio::error::system_category);
+          asio::error::get_system_category());
       iocp_service_.post(bind_handler(handler, ec, bytes_transferred));
     }
     else
@@ -860,14 +886,14 @@ public:
     // Send the data.
     DWORD bytes_transferred = 0;
     int result = ::WSASendTo(impl.socket_, bufs, i, &bytes_transferred,
-        flags, destination.data(), destination.size(), 0, 0);
+        flags, destination.data(), static_cast<int>(destination.size()), 0, 0);
     if (result != 0)
     {
       DWORD last_error = ::WSAGetLastError();
       if (last_error == ERROR_PORT_UNREACHABLE)
         last_error = WSAECONNREFUSED;
       ec = asio::error_code(last_error,
-          asio::error::system_category);
+          asio::error::get_system_category());
       return 0;
     }
 
@@ -880,12 +906,12 @@ public:
     : public operation
   {
   public:
-    send_to_operation(asio::io_service& io_service,
+    send_to_operation(win_iocp_io_service& io_service,
         const ConstBufferSequence& buffers, Handler handler)
-      : operation(
+      : operation(io_service,
           &send_to_operation<ConstBufferSequence, Handler>::do_completion_impl,
           &send_to_operation<ConstBufferSequence, Handler>::destroy_impl),
-        work_(io_service),
+        work_(io_service.get_io_service()),
         buffers_(buffers),
         handler_(handler)
     {
@@ -917,7 +943,7 @@ public:
 
       // Map non-portable errors to their portable counterparts.
       asio::error_code ec(last_error,
-          asio::error::system_category);
+          asio::error::get_system_category());
       if (ec.value() == ERROR_PORT_UNREACHABLE)
       {
         ec = asio::error::connection_refused;
@@ -958,23 +984,24 @@ public:
   {
     if (!is_open(impl))
     {
-      this->io_service().post(bind_handler(handler,
+      this->get_io_service().post(bind_handler(handler,
             asio::error::bad_descriptor, 0));
       return;
     }
 
+#if defined(ASIO_ENABLE_CANCELIO)
     // Update the ID of the thread from which cancellation is safe.
     if (impl.safe_cancellation_thread_id_ == 0)
       impl.safe_cancellation_thread_id_ = ::GetCurrentThreadId();
     else if (impl.safe_cancellation_thread_id_ != ::GetCurrentThreadId())
       impl.safe_cancellation_thread_id_ = ~DWORD(0);
+#endif // defined(ASIO_ENABLE_CANCELIO)
 
     // Allocate and construct an operation to wrap the handler.
     typedef send_to_operation<ConstBufferSequence, Handler> value_type;
     typedef handler_alloc_traits<Handler, value_type> alloc_traits;
     raw_handler_ptr<alloc_traits> raw_ptr(handler);
-    handler_ptr<alloc_traits> ptr(raw_ptr,
-        this->io_service(), buffers, handler);
+    handler_ptr<alloc_traits> ptr(raw_ptr, iocp_service_, buffers, handler);
 
     // Copy buffers into WSABUF array.
     ::WSABUF bufs[max_buffers];
@@ -991,17 +1018,17 @@ public:
 
     // Send the data.
     DWORD bytes_transferred = 0;
-    int result = ::WSASendTo(impl.socket_, bufs, i, &bytes_transferred,
-        flags, destination.data(), destination.size(), ptr.get(), 0);
+    int result = ::WSASendTo(impl.socket_, bufs, i, &bytes_transferred, flags,
+        destination.data(), static_cast<int>(destination.size()), ptr.get(), 0);
     DWORD last_error = ::WSAGetLastError();
 
     // Check if the operation completed immediately.
     if (result != 0 && last_error != WSA_IO_PENDING)
     {
-      asio::io_service::work work(this->io_service());
+      asio::io_service::work work(this->get_io_service());
       ptr.reset();
       asio::error_code ec(last_error,
-          asio::error::system_category);
+          asio::error::get_system_category());
       iocp_service_.post(bind_handler(handler, ec, bytes_transferred));
     }
     else
@@ -1056,7 +1083,7 @@ public:
       else if (last_error == ERROR_PORT_UNREACHABLE)
         last_error = WSAECONNREFUSED;
       ec = asio::error_code(last_error,
-          asio::error::system_category);
+          asio::error::get_system_category());
       return 0;
     }
     if (bytes_transferred == 0)
@@ -1074,15 +1101,15 @@ public:
     : public operation
   {
   public:
-    receive_operation(asio::io_service& io_service,
+    receive_operation(win_iocp_io_service& io_service,
         weak_cancel_token_type cancel_token,
         const MutableBufferSequence& buffers, Handler handler)
-      : operation(
+      : operation(io_service,
           &receive_operation<
             MutableBufferSequence, Handler>::do_completion_impl,
           &receive_operation<
             MutableBufferSequence, Handler>::destroy_impl),
-        work_(io_service),
+        work_(io_service.get_io_service()),
         cancel_token_(cancel_token),
         buffers_(buffers),
         handler_(handler)
@@ -1115,7 +1142,7 @@ public:
 
       // Map non-portable errors to their portable counterparts.
       asio::error_code ec(last_error,
-          asio::error::system_category);
+          asio::error::get_system_category());
       if (ec.value() == ERROR_NETNAME_DELETED)
       {
         if (handler_op->cancel_token_.expired())
@@ -1170,23 +1197,25 @@ public:
   {
     if (!is_open(impl))
     {
-      this->io_service().post(bind_handler(handler,
+      this->get_io_service().post(bind_handler(handler,
             asio::error::bad_descriptor, 0));
       return;
     }
 
+#if defined(ASIO_ENABLE_CANCELIO)
     // Update the ID of the thread from which cancellation is safe.
     if (impl.safe_cancellation_thread_id_ == 0)
       impl.safe_cancellation_thread_id_ = ::GetCurrentThreadId();
     else if (impl.safe_cancellation_thread_id_ != ::GetCurrentThreadId())
       impl.safe_cancellation_thread_id_ = ~DWORD(0);
+#endif // defined(ASIO_ENABLE_CANCELIO)
 
     // Allocate and construct an operation to wrap the handler.
     typedef receive_operation<MutableBufferSequence, Handler> value_type;
     typedef handler_alloc_traits<Handler, value_type> alloc_traits;
     raw_handler_ptr<alloc_traits> raw_ptr(handler);
-    handler_ptr<alloc_traits> ptr(raw_ptr,
-        this->io_service(), impl.cancel_token_, buffers, handler);
+    handler_ptr<alloc_traits> ptr(raw_ptr, iocp_service_,
+        impl.cancel_token_, buffers, handler);
 
     // Copy buffers into WSABUF array.
     ::WSABUF bufs[max_buffers];
@@ -1205,7 +1234,7 @@ public:
     // A request to receive 0 bytes on a stream socket is a no-op.
     if (impl.protocol_.type() == SOCK_STREAM && total_buffer_size == 0)
     {
-      asio::io_service::work work(this->io_service());
+      asio::io_service::work work(this->get_io_service());
       ptr.reset();
       asio::error_code error;
       iocp_service_.post(bind_handler(handler, error, 0));
@@ -1220,10 +1249,10 @@ public:
     DWORD last_error = ::WSAGetLastError();
     if (result != 0 && last_error != WSA_IO_PENDING)
     {
-      asio::io_service::work work(this->io_service());
+      asio::io_service::work work(this->get_io_service());
       ptr.reset();
       asio::error_code ec(last_error,
-          asio::error::system_category);
+          asio::error::get_system_category());
       iocp_service_.post(bind_handler(handler, ec, bytes_transferred));
     }
     else
@@ -1270,7 +1299,7 @@ public:
       if (last_error == ERROR_PORT_UNREACHABLE)
         last_error = WSAECONNREFUSED;
       ec = asio::error_code(last_error,
-          asio::error::system_category);
+          asio::error::get_system_category());
       return 0;
     }
     if (bytes_transferred == 0)
@@ -1290,17 +1319,17 @@ public:
     : public operation
   {
   public:
-    receive_from_operation(asio::io_service& io_service,
+    receive_from_operation(win_iocp_io_service& io_service,
         endpoint_type& endpoint, const MutableBufferSequence& buffers,
         Handler handler)
-      : operation(
+      : operation(io_service,
           &receive_from_operation<
             MutableBufferSequence, Handler>::do_completion_impl,
           &receive_from_operation<
             MutableBufferSequence, Handler>::destroy_impl),
         endpoint_(endpoint),
         endpoint_size_(static_cast<int>(endpoint.capacity())),
-        work_(io_service),
+        work_(io_service.get_io_service()),
         buffers_(buffers),
         handler_(handler)
     {
@@ -1337,7 +1366,7 @@ public:
 
       // Map non-portable errors to their portable counterparts.
       asio::error_code ec(last_error,
-          asio::error::system_category);
+          asio::error::get_system_category());
       if (ec.value() == ERROR_PORT_UNREACHABLE)
       {
         ec = asio::error::connection_refused;
@@ -1390,23 +1419,25 @@ public:
   {
     if (!is_open(impl))
     {
-      this->io_service().post(bind_handler(handler,
+      this->get_io_service().post(bind_handler(handler,
             asio::error::bad_descriptor, 0));
       return;
     }
 
+#if defined(ASIO_ENABLE_CANCELIO)
     // Update the ID of the thread from which cancellation is safe.
     if (impl.safe_cancellation_thread_id_ == 0)
       impl.safe_cancellation_thread_id_ = ::GetCurrentThreadId();
     else if (impl.safe_cancellation_thread_id_ != ::GetCurrentThreadId())
       impl.safe_cancellation_thread_id_ = ~DWORD(0);
+#endif // defined(ASIO_ENABLE_CANCELIO)
 
     // Allocate and construct an operation to wrap the handler.
     typedef receive_from_operation<MutableBufferSequence, Handler> value_type;
     typedef handler_alloc_traits<Handler, value_type> alloc_traits;
     raw_handler_ptr<alloc_traits> raw_ptr(handler);
-    handler_ptr<alloc_traits> ptr(raw_ptr,
-        this->io_service(), sender_endp, buffers, handler);
+    handler_ptr<alloc_traits> ptr(raw_ptr, iocp_service_,
+        sender_endp, buffers, handler);
 
     // Copy buffers into WSABUF array.
     ::WSABUF bufs[max_buffers];
@@ -1429,10 +1460,10 @@ public:
     DWORD last_error = ::WSAGetLastError();
     if (result != 0 && last_error != WSA_IO_PENDING)
     {
-      asio::io_service::work work(this->io_service());
+      asio::io_service::work work(this->get_io_service());
       ptr.reset();
       asio::error_code ec(last_error,
-          asio::error::system_category);
+          asio::error::get_system_category());
       iocp_service_.post(bind_handler(handler, ec, bytes_transferred));
     }
     else
@@ -1508,7 +1539,7 @@ public:
         socket_type socket, socket_type new_socket, Socket& peer,
         const protocol_type& protocol, endpoint_type* peer_endpoint,
         bool enable_connection_aborted, Handler handler)
-      : operation(
+      : operation(io_service,
           &accept_operation<Socket, Handler>::do_completion_impl,
           &accept_operation<Socket, Handler>::destroy_impl),
         io_service_(io_service),
@@ -1517,7 +1548,7 @@ public:
         peer_(peer),
         protocol_(protocol),
         peer_endpoint_(peer_endpoint),
-        work_(io_service.io_service()),
+        work_(io_service.get_io_service()),
         enable_connection_aborted_(enable_connection_aborted),
         handler_(handler)
     {
@@ -1671,7 +1702,7 @@ public:
 
       // Call the handler.
       asio::error_code ec(last_error,
-          asio::error::system_category);
+          asio::error::get_system_category());
       asio_handler_invoke_helpers::invoke(
           detail::bind_handler(handler, ec), &handler);
     }
@@ -1706,7 +1737,7 @@ public:
     // Check whether acceptor has been initialised.
     if (!is_open(impl))
     {
-      this->io_service().post(bind_handler(handler,
+      this->get_io_service().post(bind_handler(handler,
             asio::error::bad_descriptor));
       return;
     }
@@ -1714,16 +1745,18 @@ public:
     // Check that peer socket has not already been opened.
     if (peer.is_open())
     {
-      this->io_service().post(bind_handler(handler,
+      this->get_io_service().post(bind_handler(handler,
             asio::error::already_open));
       return;
     }
 
+#if defined(ASIO_ENABLE_CANCELIO)
     // Update the ID of the thread from which cancellation is safe.
     if (impl.safe_cancellation_thread_id_ == 0)
       impl.safe_cancellation_thread_id_ = ::GetCurrentThreadId();
     else if (impl.safe_cancellation_thread_id_ != ::GetCurrentThreadId())
       impl.safe_cancellation_thread_id_ = ~DWORD(0);
+#endif // defined(ASIO_ENABLE_CANCELIO)
 
     // Create a new socket for the connection.
     asio::error_code ec;
@@ -1731,7 +1764,7 @@ public:
           impl.protocol_.type(), impl.protocol_.protocol(), ec));
     if (sock.get() == invalid_socket)
     {
-      this->io_service().post(bind_handler(handler, ec));
+      this->get_io_service().post(bind_handler(handler, ec));
       return;
     }
 
@@ -1769,10 +1802,10 @@ public:
       }
       else
       {
-        asio::io_service::work work(this->io_service());
+        asio::io_service::work work(this->get_io_service());
         ptr.reset();
         asio::error_code ec(last_error,
-            asio::error::system_category);
+            asio::error::get_system_category());
         iocp_service_.post(bind_handler(handler, ec));
       }
     }
@@ -1849,7 +1882,7 @@ public:
       if (connect_error)
       {
         ec = asio::error_code(connect_error,
-            asio::error::system_category);
+            asio::error::get_system_category());
         io_service_.post(bind_handler(handler_, ec));
         return true;
       }
@@ -1888,16 +1921,18 @@ public:
   {
     if (!is_open(impl))
     {
-      this->io_service().post(bind_handler(handler,
+      this->get_io_service().post(bind_handler(handler,
             asio::error::bad_descriptor));
       return;
     }
 
+#if defined(ASIO_ENABLE_CANCELIO)
     // Update the ID of the thread from which cancellation is safe.
     if (impl.safe_cancellation_thread_id_ == 0)
       impl.safe_cancellation_thread_id_ = ::GetCurrentThreadId();
     else if (impl.safe_cancellation_thread_id_ != ::GetCurrentThreadId())
       impl.safe_cancellation_thread_id_ = ~DWORD(0);
+#endif // defined(ASIO_ENABLE_CANCELIO)
 
     // Check if the reactor was already obtained from the io_service.
     reactor_type* reactor = static_cast<reactor_type*>(
@@ -1905,7 +1940,8 @@ public:
             reinterpret_cast<void**>(&reactor_), 0, 0));
     if (!reactor)
     {
-      reactor = &(asio::use_service<reactor_type>(this->io_service()));
+      reactor = &(asio::use_service<reactor_type>(
+            this->get_io_service()));
       interlocked_exchange_pointer(
           reinterpret_cast<void**>(&reactor_), reactor);
     }
@@ -1916,7 +1952,7 @@ public:
     asio::error_code ec;
     if (socket_ops::ioctl(impl.socket_, FIONBIO, &non_blocking, ec))
     {
-      this->io_service().post(bind_handler(handler, ec));
+      this->get_io_service().post(bind_handler(handler, ec));
       return;
     }
 
@@ -1933,7 +1969,7 @@ public:
 
       // The connect operation has finished successfully so we need to post the
       // handler immediately.
-      this->io_service().post(bind_handler(handler, ec));
+      this->get_io_service().post(bind_handler(handler, ec));
     }
     else if (ec == asio::error::in_progress
         || ec == asio::error::would_block)
@@ -1945,7 +1981,7 @@ public:
           connect_handler<Handler>(
             impl.socket_,
             (impl.flags_ & implementation_type::user_set_non_blocking) != 0,
-            completed, this->io_service(), *reactor, handler));
+            completed, this->get_io_service(), *reactor, handler));
     }
     else
     {
@@ -1958,7 +1994,7 @@ public:
       }
 
       // The connect operation has failed, so post the handler immediately.
-      this->io_service().post(bind_handler(handler, ec));
+      this->get_io_service().post(bind_handler(handler, ec));
     }
   }
 
@@ -1996,7 +2032,9 @@ private:
       impl.socket_ = invalid_socket;
       impl.flags_ = 0;
       impl.cancel_token_.reset();
+#if defined(ASIO_ENABLE_CANCELIO)
       impl.safe_cancellation_thread_id_ = 0;
+#endif // defined(ASIO_ENABLE_CANCELIO)
     }
   }
 

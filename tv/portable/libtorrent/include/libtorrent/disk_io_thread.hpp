@@ -30,6 +30,9 @@ POSSIBILITY OF SUCH DAMAGE.
 
 */
 
+#ifndef TORRENT_DISK_IO_THREAD
+#define TORRENT_DISK_IO_THREAD
+
 #ifdef TORRENT_DISK_STATS
 #include <fstream>
 #endif
@@ -41,6 +44,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <boost/bind.hpp>
 #include <boost/pool/pool.hpp>
 #include <boost/noncopyable.hpp>
+#include <list>
 #include "libtorrent/config.hpp"
 
 namespace libtorrent
@@ -70,7 +74,7 @@ namespace libtorrent
 		action_t action;
 
 		char* buffer;
-		size_type buffer_size;
+		int buffer_size;
 		boost::intrusive_ptr<piece_manager> storage;
 		// arguments used for read and write
 		int piece, offset;
@@ -99,7 +103,9 @@ namespace libtorrent
 		int disk_allocations() const
 		{ return m_allocations; }
 #endif
-	
+
+		void join();
+
 		// aborts read operations
 		void stop(boost::intrusive_ptr<piece_manager> s);
 		void add_job(disk_io_job const& j
@@ -124,10 +130,11 @@ namespace libtorrent
 
 	private:
 
-		mutable boost::mutex m_mutex;
+		typedef boost::recursive_mutex mutex_t;
+		mutable mutex_t m_mutex;
 		boost::condition m_signal;
 		bool m_abort;
-		std::deque<disk_io_job> m_jobs;
+		std::list<disk_io_job> m_jobs;
 		size_type m_queue_buffer_size;
 
 		// memory pool for read and write operations
@@ -150,4 +157,6 @@ namespace libtorrent
 	};
 
 }
+
+#endif
 

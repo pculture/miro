@@ -69,7 +69,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "libtorrent/piece_block_progress.hpp"
 #include "libtorrent/config.hpp"
 #include "libtorrent/session.hpp"
-#include "libtorrent/bandwidth_manager.hpp"
+#include "libtorrent/bandwidth_limit.hpp"
 #include "libtorrent/policy.hpp"
 #include "libtorrent/socket_type.hpp"
 #include "libtorrent/intrusive_ptr_base.hpp"
@@ -120,6 +120,7 @@ namespace libtorrent
 		peer_connection(
 			aux::session_impl& ses
 			, boost::shared_ptr<socket_type> s
+			, tcp::endpoint const& remote
 			, policy::peer* peerinfo);
 
 		virtual ~peer_connection();
@@ -173,8 +174,8 @@ namespace libtorrent
 		void request_large_blocks(bool b)
 		{ m_request_large_blocks = b; }
 
-		void set_non_prioritized(bool b)
-		{ m_non_prioritized = b; }
+		void set_priority(int p)
+		{ m_priority = p; }
 
 		void fast_reconnect(bool r);
 		bool fast_reconnect() const { return m_fast_reconnect; }
@@ -224,7 +225,7 @@ namespace libtorrent
 		void add_stat(size_type downloaded, size_type uploaded);
 
 		// is called once every second by the main loop
-		void second_tick(float tick_interval) throw();
+		void second_tick(float tick_interval);
 
 		boost::shared_ptr<socket_type> get_socket() const { return m_socket; }
 		tcp::endpoint const& remote() const { return m_remote; }
@@ -367,8 +368,12 @@ namespace libtorrent
 			return boost::optional<piece_block_progress>();
 		}
 
-		void send_buffer(char const* begin, int size);
-		buffer::interval allocate_send_buffer(int size);
+		// these functions are virtual to let bt_peer_connection hook into them
+		// and encrypt the content
+		virtual void send_buffer(char const* begin, int size);
+		virtual buffer::interval allocate_send_buffer(int size);
+		virtual void setup_send();
+
 		template <class Destructor>
 		void append_send_buffer(char* buffer, int size, Destructor const& destructor)
 		{
@@ -378,7 +383,6 @@ namespace libtorrent
 			m_ses.log_buffer_usage();
 #endif
 		}
-		void setup_send();
 
 #ifndef TORRENT_DISABLE_RESOLVE_COUNTRIES	
 		void set_country(char const* c)
@@ -466,9 +470,6 @@ namespace libtorrent
 		// the peer belongs to.
 		aux::session_impl& m_ses;
 
-		boost::intrusive_ptr<peer_connection> self()
-		{ return boost::intrusive_ptr<peer_connection>(this); }
-		
 		// called from the main loop when this connection has any
 		// work to do.
 		void on_send_data(asio::error_code const& error
@@ -683,11 +684,9 @@ namespace libtorrent
 		// at a time.
 		bool m_request_large_blocks;
 		
-		// if this is true, other (prioritized) peers will
-		// skip ahead of it in the queue for bandwidth. The
-		// effect is that non prioritized peers will only use
-		// the left-over bandwidth (suitable for web seeds).
-		bool m_non_prioritized;
+		// this is the priority with which this peer gets
+		// download bandwidth quota assigned to it.
+		int m_priority;
 
 		int m_upload_limit;
 		int m_download_limit;

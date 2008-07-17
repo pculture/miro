@@ -121,9 +121,10 @@ namespace libtorrent
 	{
 		TORRENT_ASSERT(recv_buffer.left() >= m_recv_buffer.left());
 		boost::tuple<int, int> ret(0, 0);
+		int start_pos = m_recv_buffer.left();
 
 		// early exit if there's nothing new in the receive buffer
-		if (recv_buffer.left() == m_recv_buffer.left()) return ret;
+		if (start_pos == recv_buffer.left()) return ret;
 		m_recv_buffer = recv_buffer;
 
 		char const* pos = recv_buffer.begin + m_recv_pos;
@@ -132,7 +133,11 @@ namespace libtorrent
 			TORRENT_ASSERT(!m_finished);
 			char const* newline = std::find(pos, recv_buffer.end, '\n');
 			// if we don't have a full line yet, wait.
-			if (newline == recv_buffer.end) return ret;
+			if (newline == recv_buffer.end)
+			{
+				boost::get<1>(ret) += m_recv_buffer.left() - start_pos;
+				return ret;
+			}
 
 			if (newline == pos)
 				throw std::runtime_error("unexpected newline in HTTP response");
@@ -144,7 +149,7 @@ namespace libtorrent
 			++newline;
 			int incoming = (int)std::distance(pos, newline);
 			m_recv_pos += incoming;
-			boost::get<1>(ret) += incoming;
+			boost::get<1>(ret) += newline - (m_recv_buffer.begin + start_pos);
 			pos = newline;
 
 			line >> m_protocol;
@@ -162,6 +167,7 @@ namespace libtorrent
 				m_status_code = 0;
 			}
 			m_state = read_header;
+			start_pos = pos - recv_buffer.begin;
 		}
 
 		if (m_state == read_header)
@@ -179,7 +185,6 @@ namespace libtorrent
 				line.assign(pos, line_end);
 				++newline;
 				m_recv_pos += newline - pos;
-				boost::get<1>(ret) += newline - pos;
 				pos = newline;
 
 				std::string::size_type separator = line.find(':');
@@ -217,18 +222,24 @@ namespace libtorrent
 					char dummy;
 					std::string bytes;
 					size_type range_start, range_end;
-					range_str >> bytes >> range_start >> dummy >> range_end;
-					if (!range_str || range_end < range_start)
+					// apparently some web servers do not send the "bytes"
+					// in their content-range
+					if (value.find(' ') != std::string::npos)
+						range_str >> bytes;
+					range_str >> range_start >> dummy >> range_end;
+					if (!range_str || range_end < range_start
+						|| range_end - range_start + 1 >= (std::numeric_limits<int>::max)())
 					{
 						throw std::runtime_error("invalid content-range in HTTP response: " + range_str.str());
 					}
 					// the http range is inclusive
-					m_content_length = range_end - range_start + 1;
+					m_content_length = int(range_end - range_start + 1);
 				}
 
 				TORRENT_ASSERT(m_recv_pos <= (int)recv_buffer.left());
 				newline = std::find(pos, recv_buffer.end, '\n');
 			}
+			boost::get<1>(ret) += newline - (m_recv_buffer.begin + start_pos);
 		}
 
 		if (m_state == read_body)
@@ -489,7 +500,9 @@ namespace libtorrent
 			, boost::lexical_cast<std::string>(m_port));
 		m_name_lookup.async_resolve(q, m_strand.wrap(
 			boost::bind(&http_tracker_connection::name_lookup, self(), _1, _2)));
-		set_timeout(m_settings.tracker_completion_timeout
+		set_timeout(req.event == tracker_request::stopped
+			? m_settings.stop_tracker_timeout
+			: m_settings.tracker_completion_timeout
 			, m_settings.tracker_receive_timeout);
 	}
 
@@ -501,6 +514,23 @@ namespace libtorrent
 		if (m_connection_ticket > -1) m_cc.done(m_connection_ticket);
 		m_connection_ticket = -1;
 		fail_timeout();
+	}
+
+	void http_tracker_connection::close()
+	{
+		asio::error_code ec;
+		m_socket.close(ec);
+		m_name_lookup.cancel();
+		if (m_connection_ticket > -1) m_cc.done(m_connection_ticket);
+		m_connection_ticket = -1;
+		m_timed_out = true;
+		tracker_connection::close();
+#if defined(TORRENT_VERBOSE_LOGGING) || defined(TORRENT_LOGGING)
+		boost::shared_ptr<request_callback> cb = requester();
+		std::stringstream msg;
+		msg << "http_tracker_connection::close() " << m_man.num_requests();
+		if (cb) cb->debug_log(msg.str());
+#endif
 	}
 
 	void http_tracker_connection::name_lookup(asio::error_code const& error
@@ -759,7 +789,6 @@ namespace libtorrent
 		if (m_parser.status_code() != 200)
 		{
 			fail(m_parser.status_code(), m_parser.message().c_str());
-			close();
 			return;
 		}
 	
@@ -779,7 +808,7 @@ namespace libtorrent
 				return;
 			}
 			m_buffer.erase(m_buffer.begin(), m_buffer.begin() + m_parser.body_start());
-			if (inflate_gzip(m_buffer, tracker_request(), cb.get(),
+			if (inflate_gzip(m_buffer, tracker_req(), cb.get(),
 				m_settings.tracker_maximum_response_length))
 			{
 				close();
@@ -821,6 +850,7 @@ namespace libtorrent
 			TORRENT_ASSERT(false);
 		}
 		#endif
+		close();
 	}
 
 	peer_entry http_tracker_connection::extract_peer_info(const entry& info)
@@ -878,21 +908,33 @@ namespace libtorrent
 			}
 			catch(type_error const&) {}
 			
-			std::vector<peer_entry> peer_list;
-
 			if (tracker_req().kind == tracker_request::scrape_request)
 			{
-				std::string ih;
-				std::copy(tracker_req().info_hash.begin(), tracker_req().info_hash.end()
-					, std::back_inserter(ih));
+				std::string ih = tracker_req().info_hash.to_string();
 				entry scrape_data = e["files"][ih];
-				int complete = scrape_data["complete"].integer();
-				int incomplete = scrape_data["incomplete"].integer();
-				cb->tracker_response(tracker_request(), peer_list, 0, complete
-					, incomplete);
+
+				int complete = -1;
+				int incomplete = -1;
+				int downloaded = -1;
+
+				entry const* complete_ent = scrape_data.find_key("complete");
+				if (complete_ent && complete_ent->type() == entry::int_t)
+					complete = int(complete_ent->integer());
+		
+				entry const* incomplete_ent = scrape_data.find_key("incomplete");
+				if (incomplete_ent && incomplete_ent->type() == entry::int_t)
+					incomplete = int(incomplete_ent->integer());
+
+				entry const* downloaded_ent = scrape_data.find_key("downloaded");
+				if (downloaded_ent && downloaded_ent->type() == entry::int_t)
+					downloaded = int(downloaded_ent->integer());
+
+				cb->tracker_scrape_response(tracker_req(), complete
+					, incomplete, downloaded);
 				return;
 			}
 
+			std::vector<peer_entry> peer_list;
 			int interval = (int)e["interval"].integer();
 
 			if (e["peers"].type() == entry::string_t)
@@ -940,22 +982,22 @@ namespace libtorrent
 			int complete = -1;
 			int incomplete = -1;
 
-			try { complete = e["complete"].integer(); }
+			try { complete = int(e["complete"].integer()); }
 			catch(type_error&) {}
 
-			try { incomplete = e["incomplete"].integer(); }
+			try { incomplete = int(e["incomplete"].integer()); }
 			catch(type_error&) {}
 			
-			cb->tracker_response(tracker_request(), peer_list, interval, complete
+			cb->tracker_response(tracker_req(), peer_list, interval, complete
 				, incomplete);
 		}
 		catch(type_error& e)
 		{
-			cb->tracker_request_error(tracker_request(), m_parser.status_code(), e.what());
+			cb->tracker_request_error(tracker_req(), m_parser.status_code(), e.what());
 		}
 		catch(std::runtime_error& e)
 		{
-			cb->tracker_request_error(tracker_request(), m_parser.status_code(), e.what());
+			cb->tracker_request_error(tracker_req(), m_parser.status_code(), e.what());
 		}
 	}
 

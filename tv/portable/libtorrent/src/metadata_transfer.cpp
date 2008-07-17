@@ -95,7 +95,6 @@ namespace libtorrent { namespace
 		return ret;
 	}
 
-
 	struct metadata_plugin : torrent_plugin
 	{
 		metadata_plugin(torrent& t)
@@ -217,7 +216,7 @@ namespace libtorrent { namespace
 			m_metadata_size = total_size;
 		}
 
-		void piece_pass(int)
+		void on_piece_pass(int)
 		{
 			// if we became a seed, copy the metadata from
 			// the torrent before it is deallocated
@@ -276,7 +275,7 @@ namespace libtorrent { namespace
 			entry const& messages = h["m"];
 			if (entry const* index = messages.find_key("LT_metadata"))
 			{
-				m_message_index = index->integer();
+				m_message_index = int(index->integer());
 				return true;
 			}
 			else
@@ -504,11 +503,10 @@ namespace libtorrent { namespace
 		// extension and that has metadata
 		int peers = 0;
 #ifndef TORRENT_DISABLE_EXTENSIONS
-		typedef std::map<tcp::endpoint, peer_connection*> conn_map;
-		for (conn_map::iterator i = m_torrent.begin()
+		for (torrent::peer_iterator i = m_torrent.begin()
 			, end(m_torrent.end()); i != end; ++i)
 		{
-			bt_peer_connection* c = dynamic_cast<bt_peer_connection*>(i->second);
+			bt_peer_connection* c = dynamic_cast<bt_peer_connection*>(*i);
 			if (c == 0) continue;
 			metadata_peer_plugin* p
 				= c->supports_extension<metadata_peer_plugin>();

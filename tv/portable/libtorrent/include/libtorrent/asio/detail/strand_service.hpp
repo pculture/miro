@@ -2,7 +2,7 @@
 // strand_service.hpp
 // ~~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2007 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2008 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -276,7 +276,7 @@ public:
           if (impl_->first_waiter_ == 0)
             impl_->last_waiter_ = 0;
           lock.unlock();
-          service_impl_.io_service().post(
+          service_impl_.get_io_service().post(
               invoke_current_handler(service_impl_, impl_));
         }
       }
@@ -427,10 +427,9 @@ public:
       if (impl->current_handler_ == 0)
       {
         // This handler now has the lock, so can be dispatched immediately.
-        impl->current_handler_ = ptr.get();
+        impl->current_handler_ = ptr.release();
         lock.unlock();
-        this->io_service().dispatch(invoke_current_handler(*this, impl));
-        ptr.release();
+        this->get_io_service().dispatch(invoke_current_handler(*this, impl));
       }
       else
       {
@@ -467,10 +466,9 @@ public:
     if (impl->current_handler_ == 0)
     {
       // This handler now has the lock, so can be dispatched immediately.
-      impl->current_handler_ = ptr.get();
+      impl->current_handler_ = ptr.release();
       lock.unlock();
-      this->io_service().post(invoke_current_handler(*this, impl));
-      ptr.release();
+      this->get_io_service().post(invoke_current_handler(*this, impl));
     }
     else
     {

@@ -79,12 +79,12 @@ namespace libtorrent
 	{
 		// make a best guess of the interface we're using and its IP
 		asio::error_code ec;
-		std::vector<address> const& interfaces = enum_net_interfaces(ios, ec);
+		std::vector<ip_interface> const& interfaces = enum_net_interfaces(ios, ec);
 		address ret = address_v4::any();
-		for (std::vector<address>::const_iterator i = interfaces.begin()
+		for (std::vector<ip_interface>::const_iterator i = interfaces.begin()
 			, end(interfaces.end()); i != end; ++i)
 		{
-			address const& a = *i;
+			address const& a = i->interface_address;
 			if (is_loopback(a)
 				|| is_multicast(a)
 				|| is_any(a)) continue;
@@ -99,6 +99,44 @@ namespace libtorrent
 		return ret;
 	}
 
+	// count the length of the common bit prefix
+	int common_bits(unsigned char const* b1
+		, unsigned char const* b2, int n)
+	{
+		for (int i = 0; i < n; ++i, ++b1, ++b2)
+		{
+			unsigned char a = *b1 ^ *b2;
+			if (a == 0) continue;
+			int ret = i * 8 + 8;
+			for (; a > 0; a >>= 1) --ret;
+			return ret;
+		}
+		return n * 8;
+	}
+
+	// returns the number of bits in that differ from the right
+	// between the addresses.
+	int cidr_distance(address const& a1, address const& a2)
+	{
+		if (a1.is_v4() == a2.is_v4())
+		{
+			// both are v4
+			address_v4::bytes_type b1 = a1.to_v4().to_bytes();
+			address_v4::bytes_type b2 = a2.to_v4().to_bytes();
+			return address_v4::bytes_type::static_size * 8
+				- common_bits(b1.c_array(), b2.c_array(), b1.size());
+		}
+	
+		address_v6::bytes_type b1;
+		address_v6::bytes_type b2;
+		if (a1.is_v4()) b1 = address_v6::v4_mapped(a1.to_v4()).to_bytes();
+		else b1 = a1.to_v6().to_bytes();
+		if (a2.is_v4()) b2 = address_v6::v4_mapped(a2.to_v4()).to_bytes();
+		else b2 = a2.to_v6().to_bytes();
+		return address_v6::bytes_type::static_size * 8
+			- common_bits(b1.c_array(), b2.c_array(), b1.size());
+	}
+
 	broadcast_socket::broadcast_socket(asio::io_service& ios
 		, udp::endpoint const& multicast_endpoint
 		, receive_handler_t const& handler
@@ -111,20 +149,20 @@ namespace libtorrent
 		using namespace asio::ip::multicast;
 	
 		asio::error_code ec;
-		std::vector<address> interfaces = enum_net_interfaces(ios, ec);
+		std::vector<ip_interface> interfaces = enum_net_interfaces(ios, ec);
 
-		for (std::vector<address>::const_iterator i = interfaces.begin()
+		for (std::vector<ip_interface>::const_iterator i = interfaces.begin()
 			, end(interfaces.end()); i != end; ++i)
 		{
 			// only broadcast to IPv4 addresses that are not local
-			if (!is_local(*i)) continue;
+			if (!is_local(i->interface_address)) continue;
 			// only multicast on compatible networks
-			if (i->is_v4() != multicast_endpoint.address().is_v4()) continue;
+			if (i->interface_address.is_v4() != multicast_endpoint.address().is_v4()) continue;
 			// ignore any loopback interface
-			if (is_loopback(*i)) continue;
+			if (is_loopback(i->interface_address)) continue;
 
 			boost::shared_ptr<datagram_socket> s(new datagram_socket(ios));
-			if (i->is_v4())
+			if (i->interface_address.is_v4())
 			{
 				s->open(udp::v4(), ec);
 				if (ec) continue;
@@ -134,7 +172,7 @@ namespace libtorrent
 				if (ec) continue;
 				s->set_option(join_group(multicast_endpoint.address()), ec);
 				if (ec) continue;
-				s->set_option(outbound_interface(i->to_v4()), ec);
+				s->set_option(outbound_interface(i->interface_address.to_v4()), ec);
 				if (ec) continue;
 			}
 			else
@@ -147,7 +185,7 @@ namespace libtorrent
 				if (ec) continue;
 				s->set_option(join_group(multicast_endpoint.address()), ec);
 				if (ec) continue;
-//				s->set_option(outbound_interface(i->to_v6()), ec);
+//				s->set_option(outbound_interface(i->interface_address.to_v6()), ec);
 //				if (ec) continue;
 			}
 			s->set_option(hops(255), ec);
@@ -170,29 +208,38 @@ namespace libtorrent
 		for (std::list<socket_entry>::iterator i = m_sockets.begin()
 			, end(m_sockets.end()); i != end; ++i)
 		{
+			if (!i->socket) continue;
 			asio::error_code e;
 			i->socket->send_to(asio::buffer(buffer, size), m_multicast_endpoint, 0, e);
 #ifndef NDEBUG
 //			std::cerr << " sending on " << i->socket->local_endpoint().address().to_string() << std::endl;
 #endif
-			if (e) ec = e;
+			if (e)
+			{
+				i->socket->close(e);
+				i->socket.reset();
+			}
 		}
 	}
 
 	void broadcast_socket::on_receive(socket_entry* s, asio::error_code const& ec
 		, std::size_t bytes_transferred)
 	{
-		if (ec || bytes_transferred == 0) return;
+		if (ec || bytes_transferred == 0 || !m_on_receive) return;
 		m_on_receive(s->remote, s->buffer, bytes_transferred);
+		if (!s->socket) return;
 		s->socket->async_receive_from(asio::buffer(s->buffer, sizeof(s->buffer))
 			, s->remote, bind(&broadcast_socket::on_receive, this, s, _1, _2));
 	}
 
 	void broadcast_socket::close()
 	{
+		m_on_receive.clear();
+
 		for (std::list<socket_entry>::iterator i = m_sockets.begin()
 			, end(m_sockets.end()); i != end; ++i)
 		{
+			if (!i->socket) continue;
 			i->socket->close();
 		}
 	}

@@ -84,7 +84,7 @@ namespace libtorrent
 			LIBTORRENT_VERSION)
 			: user_agent(user_agent_)
 			, tracker_completion_timeout(60)
-			, tracker_receive_timeout(20)
+			, tracker_receive_timeout(40)
 			, stop_tracker_timeout(5)
 			, tracker_maximum_response_length(1024*1024)
 			, piece_timeout(10)
@@ -95,6 +95,7 @@ namespace libtorrent
 			, peer_timeout(120)
 			, urlseed_timeout(20)
 			, urlseed_pipeline_size(5)
+			, urlseed_wait_retry(30)
 			, file_pool_size(40)
 			, allow_multiple_connections_per_ip(false)
 			, max_failcount(3)
@@ -115,6 +116,8 @@ namespace libtorrent
 #ifndef TORRENT_DISABLE_DHT
 			, use_dht_as_fallback(true)
 #endif
+			, free_torrent_hashes(true)
+			, upnp_ignore_nonrouters(true)
 		{}
 
 		// this is the user agent that will be sent to the tracker
@@ -184,6 +187,9 @@ namespace libtorrent
 		
 		// controls the pipelining size of url-seeds
 		int urlseed_pipeline_size;
+
+		// time to wait until a new retry takes place
+		int urlseed_wait_retry;
 		
 		// sets the upper limit on the total number of files this
 		// session will keep open. The reason why files are
@@ -281,6 +287,17 @@ namespace libtorrent
 		// tracker is online
 		bool use_dht_as_fallback;
 #endif
+
+		// if this is true, the piece hashes will be freed, in order
+		// to save memory, once the torrent is seeding. This will
+		// make the get_torrent_info() function to return an incomplete
+		// torrent object that cannot be passed back to add_torrent()
+		bool free_torrent_hashes;
+
+		// when this is true, the upnp port mapper will ignore
+		// any upnp devices that don't have an address that matches
+		// our currently configured router.
+		bool upnp_ignore_nonrouters;
 	};
 	
 #ifndef TORRENT_DISABLE_DHT

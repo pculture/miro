@@ -27,6 +27,7 @@ extern char const* piece_finished_alert_doc;
 extern char const* block_finished_alert_doc;
 extern char const* block_downloading_alert_doc;
 extern char const* storage_moved_alert_doc;
+extern char const* torrent_deleted_alert_doc;
 extern char const* torrent_paused_alert_doc;
 extern char const* torrent_checked_alert_doc;
 extern char const* url_seed_alert_doc;
@@ -39,6 +40,8 @@ extern char const* portmap_error_alert_doc;
 extern char const* portmap_alert_doc;
 extern char const* fastresume_rejected_alert_doc;
 extern char const* peer_blocked_alert_doc;
+extern char const* scrape_reply_alert_doc;
+extern char const* scrape_failed_alert_doc;
 
 void bind_alert()
 {
@@ -157,6 +160,10 @@ void bind_alert()
         "storage_moved_alert", storage_moved_alert_doc, no_init
     );
 
+    class_<torrent_deleted_alert, bases<torrent_alert>, noncopyable>(
+        "torrent_deleted_alert", torrent_deleted_alert_doc, no_init
+    );
+    
     class_<torrent_paused_alert, bases<torrent_alert>, noncopyable>(
         "torrent_paused_alert", torrent_paused_alert_doc, no_init
     );
@@ -210,4 +217,15 @@ void bind_alert()
     )
         .def_readonly("ip", &peer_blocked_alert::ip)
         ;
+        
+    class_<scrape_reply_alert, bases<torrent_alert>, noncopyable>(
+        "scrape_reply_alert", scrape_reply_alert_doc, no_init
+    )
+        .def_readonly("incomplete", &scrape_reply_alert::incomplete)
+        .def_readonly("complete", &scrape_reply_alert::complete)
+        ;
+    
+    class_<scrape_failed_alert, bases<torrent_alert>, noncopyable>(
+        "scrape_failed_alert", scrape_failed_alert_doc, no_init
+    );
 }

@@ -2,7 +2,7 @@
 // buffered_stream.hpp
 // ~~~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2007 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2008 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -83,10 +83,17 @@ public:
     return stream_impl_.lowest_layer();
   }
 
-  /// Get the io_service associated with the object.
+  /// (Deprecated: use get_io_service().) Get the io_service associated with
+  /// the object.
   asio::io_service& io_service()
   {
-    return stream_impl_.io_service();
+    return stream_impl_.get_io_service();
+  }
+
+  /// Get the io_service associated with the object.
+  asio::io_service& get_io_service()
+  {
+    return stream_impl_.get_io_service();
   }
 
   /// Close the stream.

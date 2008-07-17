@@ -120,7 +120,8 @@ namespace libtorrent
 		void write_interested() {}
 		void write_not_interested() {}
 		void write_request(peer_request const& r);
-		void write_cancel(peer_request const& r) {}
+		void write_cancel(peer_request const& r)
+		{ incoming_reject_request(r); }
 		void write_have(int index) {}
 		void write_piece(peer_request const& r, char* buffer) { TORRENT_ASSERT(false); }
 		void write_keepalive() {}
@@ -173,6 +174,9 @@ namespace libtorrent
 		// response. used to know where in the buffer the
 		// next response starts
 		int m_received_body;
+
+		// position in the current range response
+		int m_range_pos;
 	};
 }
 

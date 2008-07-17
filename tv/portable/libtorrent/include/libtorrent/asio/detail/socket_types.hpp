@@ -2,7 +2,7 @@
 // socket_types.hpp
 // ~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2007 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2008 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -29,12 +29,12 @@
 # if !defined(_WIN32_WINNT) && !defined(_WIN32_WINDOWS)
 #  if defined(_MSC_VER) || defined(__BORLANDC__)
 #   pragma message("Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately")
-#   pragma message("Assuming _WIN32_WINNT=0x0500 (i.e. Windows 2000 target)")
+#   pragma message("Assuming _WIN32_WINNT=0x0501 (i.e. Windows XP target)")
 #  else // defined(_MSC_VER) || defined(__BORLANDC__)
 #   warning Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately
-#   warning Assuming _WIN32_WINNT=0x0500 (i.e. Windows 2000 target)
+#   warning Assuming _WIN32_WINNT=0x0501 (i.e. Windows XP target)
 #  endif // defined(_MSC_VER) || defined(__BORLANDC__)
-#  define _WIN32_WINNT 0x0500
+#  define _WIN32_WINNT 0x0501
 # endif // !defined(_WIN32_WINNT) && !defined(_WIN32_WINDOWS)
 # if defined(_MSC_VER)
 #  if defined(_WIN32) && !defined(WIN32)
@@ -80,7 +80,9 @@
 #  undef ASIO_WSPIAPI_H_DEFINED
 # endif // defined(ASIO_WSPIAPI_H_DEFINED)
 # if !defined(ASIO_NO_DEFAULT_LINKED_LIBS)
-#  if defined(_MSC_VER) || defined(__BORLANDC__)
+#  if defined(UNDER_CE)
+#   pragma comment(lib, "ws2.lib")
+#  elif defined(_MSC_VER) || defined(__BORLANDC__)
 #   pragma comment(lib, "ws2_32.lib")
 #   pragma comment(lib, "mswsock.lib")
 #  endif // defined(_MSC_VER) || defined(__BORLANDC__)
@@ -90,7 +92,11 @@
 # include <sys/ioctl.h>
 # include <sys/poll.h>
 # include <sys/types.h>
-# include <sys/select.h>
+# if defined(__hpux) && !defined(__HP_aCC)
+#  include <sys/time.h>
+# else
+#  include <sys/select.h>
+# endif
 # include <sys/socket.h>
 # include <sys/uio.h>
 # include <netinet/in.h>
@@ -154,7 +160,16 @@ const int max_addr_v4_str_len = INET_ADDRSTRLEN;
 const int max_addr_v6_str_len = INET6_ADDRSTRLEN + 1 + IF_NAMESIZE;
 typedef sockaddr socket_addr_type;
 typedef in_addr in4_addr_type;
+# if defined(__hpux)
+// HP-UX doesn't provide ip_mreq when _XOPEN_SOURCE_EXTENDED is defined.
+struct in4_mreq_type
+{
+  struct in_addr imr_multiaddr;
+  struct in_addr imr_interface;
+};
+# else
 typedef ip_mreq in4_mreq_type;
+# endif
 typedef sockaddr_in sockaddr_in4_type;
 typedef in6_addr in6_addr_type;
 typedef ipv6_mreq in6_mreq_type;

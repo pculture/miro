@@ -68,13 +68,14 @@ class upnp : public intrusive_ptr_base<upnp>
 public:
 	upnp(io_service& ios, connection_queue& cc
 		, address const& listen_interface, std::string const& user_agent
-		, portmap_callback_t const& cb);
+		, portmap_callback_t const& cb, bool ignore_nonrouters);
 	~upnp();
 
 	// maps the ports, if a port is set to 0
 	// it will not be mapped
 	void set_mappings(int tcp, int udp);
 
+	void discover_device();
 	void close();
 
 private:
@@ -89,18 +90,18 @@ private:
 	void resend_request(asio::error_code const& e);
 	void on_reply(udp::endpoint const& from, char* buffer
 		, std::size_t bytes_transferred);
-	void discover_device();
 
 	struct rootdevice;
 	
 	void on_upnp_xml(asio::error_code const& e
-		, libtorrent::http_parser const& p, rootdevice& d);
+		, libtorrent::http_parser const& p, rootdevice& d
+		, http_connection& c);
 	void on_upnp_map_response(asio::error_code const& e
 		, libtorrent::http_parser const& p, rootdevice& d
-		, int mapping);
+		, int mapping, http_connection& c);
 	void on_upnp_unmap_response(asio::error_code const& e
 		, libtorrent::http_parser const& p, rootdevice& d
-		, int mapping);
+		, int mapping, http_connection& c);
 	void on_expire(asio::error_code const& e);
 
 	void map_port(rootdevice& d, int i);
@@ -230,6 +231,7 @@ private:
 	
 	bool m_disabled;
 	bool m_closing;
+	bool m_ignore_outside_network;
 
 	connection_queue& m_cc;
 

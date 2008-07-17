@@ -96,7 +96,9 @@ namespace libtorrent
 		m_name_lookup.async_resolve(q
 			, m_strand.wrap(boost::bind(
 			&udp_tracker_connection::name_lookup, self(), _1, _2)));
-		set_timeout(m_settings.tracker_completion_timeout
+		set_timeout(req.event == tracker_request::stopped
+			? m_settings.stop_tracker_timeout
+			: m_settings.tracker_completion_timeout
 			, m_settings.tracker_receive_timeout);
 	}
 
@@ -104,7 +106,6 @@ namespace libtorrent
 		, udp::resolver::iterator i) try
 	{
 		if (error == asio::error::operation_aborted) return;
-		if (!m_socket.is_open()) return; // the operation was aborted
 		if (error || i == udp::resolver::iterator())
 		{
 			fail(-1, error.message().c_str());
@@ -156,9 +157,18 @@ namespace libtorrent
 
 	void udp_tracker_connection::on_timeout()
 	{
-		m_socket.close();
+		asio::error_code ec;
+		m_socket.close(ec);
 		m_name_lookup.cancel();
 		fail_timeout();
+	}
+
+	void udp_tracker_connection::close()
+	{
+		asio::error_code ec;
+		m_socket.close(ec);
+		m_name_lookup.cancel();
+		tracker_connection::close();
 	}
 
 	void udp_tracker_connection::send_udp_connect()
@@ -468,6 +478,7 @@ namespace libtorrent
 			, complete, incomplete);
 
 		m_man.remove_request(this);
+		close();
 		return;
 	}
 	catch (std::exception& e)
@@ -536,21 +547,22 @@ namespace libtorrent
 		}
 
 		int complete = detail::read_int32(buf);
-		/*int downloaded = */detail::read_int32(buf);
+		int downloaded = detail::read_int32(buf);
 		int incomplete = detail::read_int32(buf);
 
 		boost::shared_ptr<request_callback> cb = requester();
 		if (!cb)
 		{
 			m_man.remove_request(this);
+			close();
 			return;
 		}
 		
-		std::vector<peer_entry> peer_list;
-		cb->tracker_response(tracker_req(), peer_list, 0
-			, complete, incomplete);
+		cb->tracker_scrape_response(tracker_req()
+			, complete, incomplete, downloaded);
 
 		m_man.remove_request(this);
+		close();
 	}
 	catch (std::exception& e)
 	{

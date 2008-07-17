@@ -96,6 +96,8 @@ char const* session_stop_dht_doc =
     "";
 char const* session_dht_state_doc = 
     "";
+char const* session_add_dht_router_doc = 
+    "add dht router";
 
 char const* session_add_torrent_doc = 
     "Adds a new torrent to the session. Return a `torrent_handle`.\n"
@@ -169,10 +171,17 @@ char const* session_start_upnp_doc =
     "";
 char const* session_stop_upnp_doc =
     "";
+char const* session_start_lsd_doc =  
+    "";
+char const* session_stop_lsd_doc =
+    "";
 char const* session_start_natpmp_doc =
     "";
 char const* session_stop_natpmp_doc =
     "";
+char const* session_set_ip_filter_doc =
+    "";
+    
 // -- alert -----------------------------------------------------------------
 
 char const* alert_doc =
@@ -261,6 +270,9 @@ char const* storage_moved_alert_doc =
     "It contains a `torrent_handle` to the torrent in question. This alert\n"
     "is generated as severity level `alert.severity_levels.warning`.";
 
+char const* torrent_deleted_alert_doc =
+    "";
+    
 char const* torrent_paused_alert_doc =
     "This alert is generated when a torrent switches from being a\n"
     "active to paused.\n"
@@ -317,3 +329,13 @@ char const* fastresume_rejected_alert_doc =
 
 char const* peer_blocked_alert_doc =
     "";
+
+char const* scrape_reply_alert_doc =
+    "This alert is generated when a scrape request succeeds.\n"
+    "incomplete and complete is the data returned in the scrape\n"
+    "response. These numbers may be -1 if the reponse was malformed.";
+    
+char const* scrape_failed_alert_doc = 
+    "If a scrape request fails, this alert is generated. This might\n"
+    "be due to the tracker timing out, refusing connection or returning\n"
+    "an http response code indicating an error.";

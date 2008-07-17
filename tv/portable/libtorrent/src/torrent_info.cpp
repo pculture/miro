@@ -165,7 +165,7 @@ namespace
 	{
 		target.size = dict["length"].integer();
 		target.path = root_dir;
-
+		target.file_base = 0;
 
 		// prefer the name.utf-8
 		// because if it exists, it is more
@@ -340,7 +340,7 @@ namespace libtorrent
 		m_info_hash = h.final();
 
 		// extract piece length
-		m_piece_length = (int)info["piece length"].integer();
+		m_piece_length = int(info["piece length"].integer());
 		if (m_piece_length <= 0) throw std::runtime_error("invalid torrent. piece length <= 0");
 
 		// extract file name (or the directory name if it's a multifile libtorrent)
@@ -350,10 +350,23 @@ namespace libtorrent
 		{ m_name = info["name"].string(); }
 		
 		fs::path tmp = m_name;
-		if (tmp.is_complete()) throw std::runtime_error("torrent contains "
-			"a file with an absolute path: '" + m_name + "'");
-		if (tmp.has_branch_path()) throw std::runtime_error(
-			"torrent contains name with directories: '" + m_name + "'");
+  		if (tmp.is_complete())
+  		{
+ 			m_name = tmp.leaf();
+  		}
+ 		else if (tmp.has_branch_path())
+  		{
+ 			fs::path p;
+ 			for (fs::path::iterator i = tmp.begin()
+ 				, end(tmp.end()); i != end; ++i)
+ 			{
+ 				if (*i == "." || *i == "..") continue;
+ 				p /= *i;
+ 			}
+ 			m_name = p.string();
+ 		}
+ 		if (m_name == ".." || m_name == ".")
+ 			throw std::runtime_error("invalid 'name' of torrent (possible exploit attempt)");
 	
 		// extract file list
 		entry const* i = info.find_key("files");
@@ -430,14 +443,17 @@ namespace libtorrent
 	void torrent_info::read_torrent_info(const entry& torrent_file)
 	{
 		// extract the url of the tracker
-		if (entry const* i = torrent_file.find_key("announce-list"))
+		entry const* i = torrent_file.find_key("announce-list");
+		if (i && i->type() == entry::list_t)
 		{
 			const entry::list_type& l = i->list();
 			for (entry::list_type::const_iterator j = l.begin(); j != l.end(); ++j)
 			{
+				if (j->type() != entry::list_t) continue;
 				const entry::list_type& ll = j->list();
 				for (entry::list_type::const_iterator k = ll.begin(); k != ll.end(); ++k)
 				{
+					if (k->type() != entry::string_t) continue;
 					announce_entry e(k->string());
 					e.tier = (int)std::distance(l.begin(), j);
 					m_urls.push_back(e);
@@ -484,7 +500,7 @@ namespace libtorrent
 				std::string const& hostname = iter->string();
 				++iter;
 				int port = 6881;
-				if (l.end() != iter) port = iter->integer();
+				if (l.end() != iter) port = int(iter->integer());
 				m_nodes.push_back(std::make_pair(hostname, port));
 			}
 		}
@@ -623,6 +639,8 @@ namespace libtorrent
 		if (!info.find_key("name"))
 			info["name"] = m_name;
 
+		if (m_private) info["private"] = 1;
+
 		if (!m_multifile)
 		{
 			info["length"] = m_files.front().size;
@@ -682,8 +700,6 @@ namespace libtorrent
 		}
 
 		entry dict;
-
-		if (m_private) dict["private"] = 1;
 
 		if (!m_urls.empty())
 			dict["announce"] = m_urls.front().url;
@@ -804,16 +820,16 @@ namespace libtorrent
 
 // ------- end deprecation -------
 
-	size_type torrent_info::piece_size(int index) const
+	int torrent_info::piece_size(int index) const
 	{
 		TORRENT_ASSERT(index >= 0 && index < num_pieces());
 		if (index == num_pieces()-1)
 		{
 			size_type size = total_size()
-				- (num_pieces() - 1) * piece_length();
+				- size_type(num_pieces() - 1) * piece_length();
 			TORRENT_ASSERT(size > 0);
 			TORRENT_ASSERT(size <= piece_length());
-			return size;
+			return int(size);
 		}
 		else
 			return piece_length();
@@ -824,20 +840,19 @@ namespace libtorrent
 		m_nodes.push_back(node);
 	}
 
-	bool torrent_info::remap_files(std::vector<std::pair<std::string
-		, libtorrent::size_type> > const& map)
+	bool torrent_info::remap_files(std::vector<file_entry> const& map)
 	{
-		typedef std::vector<std::pair<std::string, size_type> > files_t;
-
 		size_type offset = 0;
 		m_remapped_files.resize(map.size());
 
 		for (int i = 0; i < int(map.size()); ++i)
 		{
 			file_entry& fe = m_remapped_files[i];
-			fe.path = map[i].first;
+			fe.path = map[i].path;
 			fe.offset = offset;
-			fe.size = map[i].second;
+			fe.size = map[i].size;
+			fe.file_base = map[i].file_base;
+			fe.orig_path.reset();
 			offset += fe.size;
 		}
 		if (offset != total_size())
@@ -846,16 +861,37 @@ namespace libtorrent
 			return false;
 		}
 
+#ifndef NDEBUG
+		std::vector<file_entry> map2(m_remapped_files);
+		std::sort(map2.begin(), map2.end()
+			, bind(&file_entry::file_base, _1) < bind(&file_entry::file_base, _2));
+		std::stable_sort(map2.begin(), map2.end()
+			, bind(&file_entry::path, _1) < bind(&file_entry::path, _2));
+		fs::path last_path;
+		size_type last_end = 0;
+		for (std::vector<file_entry>::iterator i = map2.begin(), end(map2.end());
+			i != end; ++i)
+		{
+			if (last_path == i->path)
+			{
+				assert(last_end <= i->file_base);
+			}
+			last_end = i->file_base + i->size;
+			last_path = i->path;
+		}
+#endif
+
 		return true;
 	}
 
 	std::vector<file_slice> torrent_info::map_block(int piece, size_type offset
-		, int size, bool storage) const
+		, int size_, bool storage) const
 	{
 		TORRENT_ASSERT(num_files() > 0);
 		std::vector<file_slice> ret;
 
 		size_type start = piece * (size_type)m_piece_length + offset;
+		size_type size = size_;
 		TORRENT_ASSERT(start + size <= m_total_size);
 
 		// find the file iterator and file offset
@@ -871,7 +907,7 @@ namespace libtorrent
 			{
 				file_slice f;
 				f.file_index = counter;
-				f.offset = file_offset;
+				f.offset = file_offset + file_iter->file_base;
 				f.size = (std::min)(file_iter->size - file_offset, (size_type)size);
 				size -= f.size;
 				file_offset += f.size;
@@ -894,8 +930,8 @@ namespace libtorrent
 		size_type offset = file_offset + file_at(file_index, storage).offset;
 
 		peer_request ret;
-		ret.piece = offset / piece_length();
-		ret.start = offset - ret.piece * piece_length();
+		ret.piece = int(offset / piece_length());
+		ret.start = int(offset - ret.piece * piece_length());
 		ret.length = size;
 		return ret;
 	}

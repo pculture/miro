@@ -94,11 +94,15 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <sys/mount.h>
 #endif
 
-#if defined(_WIN32) && defined(UNICODE)
+#if TORRENT_USE_WPATH
 
+#ifdef BOOST_WINDOWS
 #include <windows.h>
+#endif
+
 #include <boost/filesystem/exception.hpp>
 #include "libtorrent/utf8.hpp"
+#include "libtorrent/buffer.hpp"
 
 namespace libtorrent
 {
@@ -264,7 +268,7 @@ namespace libtorrent
 				fs::path f = p / i->path;
 				size = file_size_win(f);
 				time = last_write_time_win(f);
-#elif defined(_WIN32) && defined(UNICODE)
+#elif TORRENT_USE_WPATH
 				fs::wpath f = safe_convert((p / i->path).string());
 				size = file_size(f);
 				time = last_write_time(f);
@@ -313,7 +317,7 @@ namespace libtorrent
 				fs::path f = p / i->path;
 				size = file_size_win(f);
 				time = last_write_time_win(f);
-#elif defined(_WIN32) && defined(UNICODE)
+#elif TORRENT_USE_WPATH
 				fs::wpath f = safe_convert((p / i->path).string());
 				size = file_size(f);
 				time = last_write_time(f);
@@ -386,7 +390,7 @@ namespace libtorrent
 		file_pool& m_files;
 		
 		// temporary storage for moving pieces
-		std::vector<char> m_scratch_buffer;
+		buffer m_scratch_buffer;
 	};
 
 	sha1_hash storage::hash_for_slot(int slot, partial_hash& ph, int piece_size)
@@ -435,7 +439,7 @@ namespace libtorrent
 				last_path = dir;
 				if (!exists_win(last_path))
 					create_directories_win(last_path);
-#elif defined(_WIN32) && defined(UNICODE)
+#elif TORRENT_USE_WPATH
 				last_path = dir;
 				fs::wpath wp = safe_convert(last_path.string());
 				if (!exists(wp))
@@ -451,15 +455,19 @@ namespace libtorrent
 			// the directory exists.
 			if (file_iter->size == 0)
 			{
-				file(m_save_path / file_iter->path, file::out);
+				try {
+					file(m_save_path / file_iter->path, file::out);
+				} catch (std::exception&) {}
 				continue;
 			}
 
-			if (allocate_files)
-			{
-				m_files.open_file(this, m_save_path / file_iter->path, file::in | file::out)
-					->set_size(file_iter->size);
-			}
+			try {
+				if (allocate_files)
+				{
+					m_files.open_file(this, m_save_path / file_iter->path, file::in | file::out)
+						->set_size(file_iter->size);
+				}
+			} catch (std::exception&) {}
 		}
 		// close files that were opened in write mode
 		m_files.release(this);
@@ -468,14 +476,16 @@ namespace libtorrent
 	void storage::release_files()
 	{
 		m_files.release(this);
-		std::vector<char>().swap(m_scratch_buffer);
+		buffer().swap(m_scratch_buffer);
 	}
 
 	void storage::delete_files()
 	{
 		// make sure we don't have the files open
 		m_files.release(this);
-		std::vector<char>().swap(m_scratch_buffer);
+		buffer().swap(m_scratch_buffer);
+
+		std::string error;
 
 		// delete the files from disk
 		std::set<std::string> directories;
@@ -492,13 +502,35 @@ namespace libtorrent
 				std::pair<iter_t, bool> ret = directories.insert((m_save_path / bp).string());
 				bp = bp.branch_path();
 			}
-			std::remove(p.c_str());
+#if TORRENT_USE_WPATH
+			try
+			{ fs::remove(safe_convert(p)); }
+			catch (std::exception& e)
+			{ error = e.what(); }
+#else
+			if (std::remove(p.c_str()) != 0 && errno != ENOENT)
+				error = std::strerror(errno);
+#endif
 		}
 
 		// remove the directories. Reverse order to delete
 		// subdirectories first
-		std::for_each(directories.rbegin(), directories.rend()
-			, bind((int(*)(char const*))&std::remove, bind(&std::string::c_str, _1)));
+
+		for (std::set<std::string>::reverse_iterator i = directories.rbegin()
+			, end(directories.rend()); i != end; ++i)
+		{
+#if TORRENT_USE_WPATH
+			try
+			{ fs::remove(safe_convert(*i)); }
+			catch (std::exception& e)
+			{ error = e.what(); }
+#else
+			if (std::remove(i->c_str()) != 0 && errno != ENOENT)
+				error = std::strerror(errno);
+#endif
+		}
+
+		if (!error.empty()) throw std::runtime_error(error);
 	}
 
 	void storage::write_resume_data(entry& rd) const
@@ -526,9 +558,9 @@ namespace libtorrent
 		for (entry::list_type::iterator i = l.begin();
 			i != l.end(); ++i)
 		{
-			file_sizes.push_back(std::pair<size_type, std::time_t>(
+			file_sizes.push_back(std::make_pair(
 				i->list().front().integer()
-				, i->list().back().integer()));
+				, std::time_t(i->list().back().integer())));
 		}
 
 		if (file_sizes.empty())
@@ -566,7 +598,7 @@ namespace libtorrent
 			// the resume data says we have the entire torrent
 			// make sure the file sizes are the right ones
 			for (torrent_info::file_iterator i = m_info->begin_files(true)
-					, end(m_info->end_files(true)); i != end; ++i, ++fs)
+				, end(m_info->end_files(true)); i != end; ++i, ++fs)
 			{
 				if (i->size != fs->first)
 				{
@@ -576,7 +608,6 @@ namespace libtorrent
 					return false;
 				}
 			}
-			return true;
 		}
 
 		return match_filesizes(*m_info, m_save_path, file_sizes
@@ -586,7 +617,7 @@ namespace libtorrent
 	// returns true on success
 	bool storage::move_storage(fs::path save_path)
 	{
-#if defined(_WIN32) && defined(UNICODE) && BOOST_VERSION >= 103400
+#if TORRENT_USE_WPATH
 		fs::wpath old_path;
 		fs::wpath new_path;
 #else
@@ -602,7 +633,7 @@ namespace libtorrent
 			CreateDirectory(wsave_path.c_str(), 0);
 		else if ((GetFileAttributes(wsave_path.c_str()) & FILE_ATTRIBUTE_DIRECTORY) == 0)
 			return false;
-#elif defined(_WIN32) && defined(UNICODE)
+#elif TORRENT_USE_WPATH
 		fs::wpath wp = safe_convert(save_path.string());
 		if (!exists(wp))
 			create_directory(wp);
@@ -617,7 +648,7 @@ namespace libtorrent
 
 		m_files.release(this);
 
-#if defined(_WIN32) && defined(UNICODE) && BOOST_VERSION >= 103400
+#if TORRENT_USE_WPATH
 		old_path = safe_convert((m_save_path / m_info->name()).string());
 		new_path = safe_convert((save_path / m_info->name()).string());
 #else
@@ -757,10 +788,10 @@ namespace libtorrent
 
 		TORRENT_ASSERT(file_offset < file_iter->size);
 
-		TORRENT_ASSERT(slices[0].offset == file_offset);
+		TORRENT_ASSERT(slices[0].offset == file_offset + file_iter->file_base);
 
-		size_type new_pos = in->seek(file_offset);
-		if (new_pos != file_offset)
+		size_type new_pos = in->seek(file_offset + file_iter->file_base);
+		if (new_pos != file_offset + file_iter->file_base)
 		{
 			// the file was not big enough
 			if (!fill_zero)
@@ -771,7 +802,7 @@ namespace libtorrent
 
 #ifndef NDEBUG
 		size_type in_tell = in->tell();
-		TORRENT_ASSERT(in_tell == file_offset);
+		TORRENT_ASSERT(in_tell == file_offset + file_iter->file_base);
 #endif
 
 		int left_to_read = size;
@@ -804,7 +835,7 @@ namespace libtorrent
 					== file_iter->path);
 #endif
 
-				size_type actual_read = in->read(buf + buf_pos, read_bytes);
+				int actual_read = int(in->read(buf + buf_pos, read_bytes));
 
 				if (read_bytes != actual_read)
 				{
@@ -835,7 +866,7 @@ namespace libtorrent
 				file_offset = 0;
 				in = m_files.open_file(
 					this, path, file::in);
-				in->seek(0);
+				in->seek(file_iter->file_base);
 			}
 		}
 		return result;
@@ -881,11 +912,11 @@ namespace libtorrent
 			this, p, file::out | file::in);
 
 		TORRENT_ASSERT(file_offset < file_iter->size);
-		TORRENT_ASSERT(slices[0].offset == file_offset);
+		TORRENT_ASSERT(slices[0].offset == file_offset + file_iter->file_base);
 
-		size_type pos = out->seek(file_offset);
+		size_type pos = out->seek(file_offset + file_iter->file_base);
 
-		if (pos != file_offset)
+		if (pos != file_offset + file_iter->file_base)
 		{
 			std::stringstream s;
 			s << "no storage for slot " << slot;
@@ -951,7 +982,7 @@ namespace libtorrent
 				out = m_files.open_file(
 					this, p, file::out | file::in);
 
-				out->seek(0);
+				out->seek(file_iter->file_base);
 			}
 		}
 	}
@@ -975,6 +1006,7 @@ namespace libtorrent
 		, m_storage_mode(storage_mode_sparse)
 		, m_info(ti)
 		, m_save_path(complete(save_path))
+		, m_state(state_none)
 		, m_current_slot(0)
 		, m_out_of_place(false)
 		, m_scratch_piece(-1)
@@ -982,6 +1014,9 @@ namespace libtorrent
 		, m_io_thread(io)
 		, m_torrent(torrent)
 	{
+#ifndef NDEBUG
+		m_resume_data_verified = false;
+#endif
 	}
 
 	piece_manager::~piece_manager()
@@ -995,6 +1030,9 @@ namespace libtorrent
 
 	bool piece_manager::verify_resume_data(entry& rd, std::string& error)
 	{
+#ifndef NDEBUG
+		m_resume_data_verified = true;
+#endif
 		return m_storage->verify_resume_data(rd, error);
 	}
 
@@ -1128,14 +1166,14 @@ namespace libtorrent
 			for (last = m_slot_to_piece.rbegin();
 				last != m_slot_to_piece.rend(); ++last)
 			{
-				if (*last != unallocated && have[*last]) break;
+				if (*last != unallocated) break;
 			}
 
 			for (std::vector<int>::const_iterator i =
 				m_slot_to_piece.begin();
 				i != last.base(); ++i)
 			{
-				p.push_back(have[*i] ? *i : unassigned);
+				p.push_back((*i >= 0) ? *i : unassigned);
 			}
 		}
 		else
@@ -1457,6 +1495,7 @@ namespace libtorrent
 		if (!data.piece_map.empty()
 			&& int(data.piece_map.size()) <= m_info->num_pieces())
 		{
+			TORRENT_ASSERT(m_resume_data_verified);
 			for (int i = 0; i < (int)data.piece_map.size(); ++i)
 			{
 				m_slot_to_piece[i] = data.piece_map[i];
@@ -1622,8 +1661,8 @@ namespace libtorrent
 			if (m_current_slot == m_info->num_pieces())
 			{
 				m_state = state_create_files;
-				std::vector<char>().swap(m_scratch_buffer);
-				std::vector<char>().swap(m_scratch_buffer2);
+				buffer().swap(m_scratch_buffer);
+				buffer().swap(m_scratch_buffer2);
 				if (m_storage_mode != storage_mode_compact)
 				{
 					std::vector<int>().swap(m_piece_to_slot);
@@ -1666,6 +1705,12 @@ namespace libtorrent
 
 		try
 		{
+			if (m_info->num_pieces() == 0)
+			{
+				m_state = state_create_files;
+				return std::make_pair(false, 1.f);
+			}
+
 			// initialization for the full check
 			if (m_hash_to_piece.empty())
 			{
@@ -1680,8 +1725,8 @@ namespace libtorrent
 
 			m_piece_data.resize(int(m_info->piece_length()));
 			int piece_size = int(m_info->piece_size(m_current_slot));
-			int num_read = m_storage->read(&m_piece_data[0]
-				, m_current_slot, 0, piece_size);
+			int num_read = int(m_storage->read(&m_piece_data[0]
+				, m_current_slot, 0, piece_size));
 
 			// if the file is incomplete, skip the rest of it
 			if (num_read != piece_size)
@@ -1893,7 +1938,7 @@ namespace libtorrent
 		{
 			// find the file that failed, and skip all the blocks in that file
 			size_type file_offset = 0;
-			size_type current_offset = m_current_slot * m_info->piece_length();
+			size_type current_offset = size_type(m_current_slot) * m_info->piece_length();
 			for (torrent_info::file_iterator i = m_info->begin_files(true);
 					i != m_info->end_files(true); ++i)
 			{
@@ -2160,7 +2205,8 @@ namespace libtorrent
 
 		if (m_unallocated_slots.empty() && m_state == state_finished)
 		{
-			TORRENT_ASSERT(m_storage_mode != storage_mode_compact);
+			TORRENT_ASSERT(m_storage_mode != storage_mode_compact
+				|| m_info->num_pieces() == 0);
 		}
 		
 		if (m_storage_mode != storage_mode_compact)

@@ -229,8 +229,8 @@ void routing_table::node_failed(node_id const& id)
 		{
 			b.erase(i);
 			TORRENT_ASSERT(m_lowest_active_bucket <= bucket_index);
-			while (m_buckets[m_lowest_active_bucket].first.empty()
-				&& m_lowest_active_bucket < 160)
+			while (m_lowest_active_bucket < 160
+				&& m_buckets[m_lowest_active_bucket].first.empty())
 			{
 				++m_lowest_active_bucket;
 			}
@@ -386,7 +386,7 @@ void routing_table::find_node(node_id const& target
 	// [0, bucket_index) if we are to include ourself
 	// or [1, bucket_index) if not.
 	bucket_t tmpb;
-	for (int i = include_self?0:1; i < count; ++i)
+	for (int i = include_self?0:1; i < bucket_index; ++i)
 	{
 		bucket_t& b = m_buckets[i].first;
 		std::remove_copy_if(b.begin(), b.end(), std::back_inserter(tmpb)
@@ -436,7 +436,8 @@ void routing_table::find_node(node_id const& target
 
 routing_table::iterator routing_table::begin() const
 {
-	return iterator(m_buckets.begin(), m_buckets.end());
+	// +1 to avoid ourself
+	return iterator(m_buckets.begin() + 1, m_buckets.end());
 }
 
 routing_table::iterator routing_table::end() const

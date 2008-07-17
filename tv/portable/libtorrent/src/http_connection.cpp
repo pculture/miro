@@ -45,9 +45,8 @@ namespace libtorrent
 	enum { max_bottled_buffer = 1024 * 1024 };
 
 void http_connection::get(std::string const& url, time_duration timeout
-	, bool handle_redirect)
+	, int handle_redirects)
 {
-	m_redirect = handle_redirect;
 	std::string protocol;
 	std::string auth;
 	std::string hostname;
@@ -62,21 +61,24 @@ void http_connection::get(std::string const& url, time_duration timeout
 		headers << "Authorization: Basic " << base64encode(auth) << "\r\n";
 	headers << "\r\n";
 	sendbuffer = headers.str();
-	start(hostname, boost::lexical_cast<std::string>(port), timeout);
+	m_url = url;
+ 	start(hostname, boost::lexical_cast<std::string>(port), timeout, handle_redirects);
 }
 
 void http_connection::start(std::string const& hostname, std::string const& port
-	, time_duration timeout, bool handle_redirect)
+ 	, time_duration timeout, int handle_redirects)
 {
-	m_redirect = handle_redirect;
+ 	m_redirects = handle_redirects;
 	m_timeout = timeout;
 	m_timer.expires_from_now(m_timeout);
 	m_timer.async_wait(bind(&http_connection::on_timeout
 		, boost::weak_ptr<http_connection>(shared_from_this()), _1));
 	m_called = false;
+ 	m_parser.reset();
+ 	m_recvbuffer.clear();
+ 	m_read_pos = 0;
 	if (m_sock.is_open() && m_hostname == hostname && m_port == port)
 	{
-		m_parser.reset();
 		asio::async_write(m_sock, asio::buffer(sendbuffer)
 			, bind(&http_connection::on_write, shared_from_this(), _1));
 	}
@@ -96,9 +98,7 @@ void http_connection::on_connect_timeout()
 	if (m_connection_ticket > -1) m_cc.done(m_connection_ticket);
 	m_connection_ticket = -1;
 
-	if (m_bottled && m_called) return;
-	m_called = true;
-	m_handler(asio::error::timed_out, m_parser, 0, 0);
+	callback(asio::error::timed_out);
 	close();
 }
 
@@ -112,14 +112,14 @@ void http_connection::on_timeout(boost::weak_ptr<http_connection> p
 
 	if (e == asio::error::operation_aborted) return;
 
-	if (c->m_bottled && c->m_called) return;
-
 	if (c->m_last_receive + c->m_timeout < time_now())
 	{
-		c->m_called = true;
-		c->m_handler(asio::error::timed_out, c->m_parser, 0, 0);
+		c->callback(asio::error::timed_out);
+		c->close();
 		return;
 	}
+
+	if (!c->m_sock.is_open()) return;
 
 	c->m_timer.expires_at(c->m_last_receive + c->m_timeout);
 	c->m_timer.async_wait(bind(&http_connection::on_timeout, p, _1));
@@ -135,6 +135,8 @@ void http_connection::close()
 
 	if (m_connection_ticket > -1) m_cc.done(m_connection_ticket);
 	m_connection_ticket = -1;
+
+	m_handler.clear();
 }
 
 void http_connection::on_resolve(asio::error_code const& e
@@ -142,10 +144,8 @@ void http_connection::on_resolve(asio::error_code const& e
 {
 	if (e)
 	{
+		callback(e);
 		close();
-		if (m_bottled && m_called) return;
-		m_called = true;
-		m_handler(e, m_parser, 0, 0);
 		return;
 	}
 	TORRENT_ASSERT(i != tcp::resolver::iterator());
@@ -181,10 +181,17 @@ void http_connection::on_connect(asio::error_code const& e
 	} 
 */	else
 	{ 
+		callback(e);
 		close();
-		if (m_bottled && m_called) return;
+	}
+}
+
+void http_connection::callback(asio::error_code const& e, char const* data, int size)
+{
+	if (!m_bottled || !m_called)
+	{
 		m_called = true;
-		m_handler(e, m_parser, 0, 0);
+		if (m_handler) m_handler(e, m_parser, data, size, *this);
 	}
 }
 
@@ -192,10 +199,8 @@ void http_connection::on_write(asio::error_code const& e)
 {
 	if (e)
 	{
+		callback(e);
 		close();
-		if (m_bottled && m_called) return;
-		m_called = true;
-		m_handler(e, m_parser, 0, 0);
 		return;
 	}
 
@@ -230,9 +235,7 @@ void http_connection::on_read(asio::error_code const& e
 
 	if (e == asio::error::eof)
 	{
-		close();
-		if (m_bottled && m_called) return;
-		m_called = true;
+		TORRENT_ASSERT(bytes_transferred == 0);
 		char const* data = 0;
 		std::size_t size = 0;
 		if (m_bottled && m_parser.header_finished())
@@ -240,58 +243,100 @@ void http_connection::on_read(asio::error_code const& e
 			data = m_parser.get_body().begin;
 			size = m_parser.get_body().left();
 		}
-		m_handler(e, m_parser, data, size);
+		callback(e, data, size);
+		close();
 		return;
 	}
 
 	if (e)
 	{
+		TORRENT_ASSERT(bytes_transferred == 0);
+		callback(e);
 		close();
-		if (m_bottled && m_called) return;
-		m_called = true;
-		m_handler(e, m_parser, 0, 0);
 		return;
 	}
 
 	m_read_pos += bytes_transferred;
 	TORRENT_ASSERT(m_read_pos <= int(m_recvbuffer.size()));
 
-	// having a nonempty path means we should handle redirects
-	if (m_redirect && m_parser.header_finished())
-	{
-		int code = m_parser.status_code();
-		if (code >= 300 && code < 400)
-		{
-			// attempt a redirect
-			std::string const& url = m_parser.header("location");
-			if (url.empty())
-			{
-				// missing location header
-				if (m_bottled && m_called) return;
-				m_called = true;
-				m_handler(e, m_parser, 0, 0);
-				return;
-			}
-
-			m_limiter_timer_active = false;
-			close();
-
-			get(url, m_timeout);
-			return;
-		}
-	
-		m_redirect = false;
-	}
-
 	if (m_bottled || !m_parser.header_finished())
 	{
 		libtorrent::buffer::const_interval rcv_buf(&m_recvbuffer[0]
 			, &m_recvbuffer[0] + m_read_pos);
-		m_parser.incoming(rcv_buf);
+		try
+		{
+			m_parser.incoming(rcv_buf);
+		}
+		catch (std::exception&)
+		{
+			m_timer.cancel();
+			callback(asio::error::fault, 0, 0);
+			close();
+			return;
+		}
+
+		// having a nonempty path means we should handle redirects
+		if (m_redirects && m_parser.header_finished())
+		{
+			int code = m_parser.status_code();
+
+			if (code >= 300 && code < 400)
+			{
+				// attempt a redirect
+				std::string const& location = m_parser.header("location");
+				if (location.empty())
+				{
+					// missing location header
+					callback(asio::error::fault);
+					close();
+					return;
+				}
+
+				try
+				{
+					asio::error_code ec;
+					m_sock.close(ec);
+					get(location, m_timeout, m_redirects - 1);
+					return;
+				}
+				catch (std::exception& e)
+				{
+					// some broken web servers send out relative paths
+					// in the location header.
+					std::string url = m_url;
+					// remove the leaf filename
+					std::size_t i = url.find_last_of('/');
+					if (i == std::string::npos)
+					{
+						url += '/';
+					}
+					else
+					{
+						url.resize(i + 1);
+					}
+					url += location;
+
+					try
+					{
+						get(url, m_timeout, m_redirects - 1);
+					}
+					catch (std::exception& e)
+					{
+						// location header is invalid
+						callback(asio::error::fault);
+						close();
+					}
+				}
+				return;
+			}
+	
+			m_redirects = 0;
+		}
+
 		if (!m_bottled && m_parser.header_finished())
 		{
 			if (m_read_pos > m_parser.body_start())
-				m_handler(e, m_parser, &m_recvbuffer[0] + m_parser.body_start()
+				callback(e, &m_recvbuffer[0] + m_parser.body_start()
 					, m_read_pos - m_parser.body_start());
 			m_read_pos = 0;
 			m_last_receive = time_now();
@@ -299,15 +344,13 @@ void http_connection::on_read(asio::error_code const& e
 		else if (m_bottled && m_parser.finished())
 		{
 			m_timer.cancel();
-			if (m_bottled && m_called) return;
-			m_called = true;
-			m_handler(e, m_parser, m_parser.get_body().begin, m_parser.get_body().left());
+			callback(e, m_parser.get_body().begin, m_parser.get_body().left());
 		}
 	}
 	else
 	{
 		TORRENT_ASSERT(!m_bottled);
-		m_handler(e, m_parser, &m_recvbuffer[0], m_read_pos);
+		callback(e, &m_recvbuffer[0], m_read_pos);
 		m_read_pos = 0;
 		m_last_receive = time_now();
 	}
@@ -316,10 +359,8 @@ void http_connection::on_read(asio::error_code const& e
 		m_recvbuffer.resize((std::min)(m_read_pos + 2048, int(max_bottled_buffer)));
 	if (m_read_pos == max_bottled_buffer)
 	{
+		callback(asio::error::eof);
 		close();
-		if (m_bottled && m_called) return;
-		m_called = true;
-		m_handler(asio::error::eof, m_parser, 0, 0);
 		return;
 	}
 	int amount_to_read = m_recvbuffer.size() - m_read_pos;
@@ -345,8 +386,7 @@ void http_connection::on_assign_bandwidth(asio::error_code const& e)
 		&& m_limiter_timer_active)
 		|| !m_sock.is_open())
 	{
-		if (!m_bottled || !m_called)
-			m_handler(e, m_parser, 0, 0);
+		callback(asio::error::eof);
 		return;
 	}
 	m_limiter_timer_active = false;
@@ -359,6 +399,8 @@ void http_connection::on_assign_bandwidth(asio::error_code const& e)
 	int amount_to_read = m_recvbuffer.size() - m_read_pos;
 	if (amount_to_read > m_download_quota)
 		amount_to_read = m_download_quota;
+
+	if (!m_sock.is_open()) return;
 
 	m_sock.async_read_some(asio::buffer(&m_recvbuffer[0] + m_read_pos
 		, amount_to_read)
@@ -373,6 +415,8 @@ void http_connection::on_assign_bandwidth(asio::error_code const& e)
 
 void http_connection::rate_limit(int limit)
 {
+	if (!m_sock.is_open()) return;
+
 	if (!m_limiter_timer_active)
 	{
 		m_limiter_timer_active = true;

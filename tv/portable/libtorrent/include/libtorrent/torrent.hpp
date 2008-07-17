@@ -65,7 +65,8 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "libtorrent/piece_picker.hpp"
 #include "libtorrent/config.hpp"
 #include "libtorrent/escape_string.hpp"
-#include "libtorrent/bandwidth_manager.hpp"
+#include "libtorrent/bandwidth_limit.hpp"
+#include "libtorrent/bandwidth_queue_entry.hpp"
 #include "libtorrent/storage.hpp"
 #include "libtorrent/hasher.hpp"
 #include "libtorrent/assert.hpp"
@@ -128,6 +129,8 @@ namespace libtorrent
 
 #ifndef TORRENT_DISABLE_EXTENSIONS
 		void add_extension(boost::shared_ptr<torrent_plugin>);
+		void add_extension(boost::function<boost::shared_ptr<torrent_plugin>(torrent*, void*)> const& ext
+			, void* userdata);
 #endif
 
 		// this is called when the torrent has metadata.
@@ -167,11 +170,12 @@ namespace libtorrent
 			unfinished_pieces);
 
 		stat statistics() const { return m_stat; }
+		void add_stats(stat const& s) { m_stat += s; }
 		size_type bytes_left() const;
 		boost::tuples::tuple<size_type, size_type> bytes_done() const;
 		size_type quantized_bytes_done() const;
 
-		void ip_filter_updated() { m_policy->ip_filter_updated(); }
+		void ip_filter_updated() { m_policy.ip_filter_updated(); }
 
 		void pause();
 		void resume();
@@ -204,7 +208,7 @@ namespace libtorrent
 		tcp::endpoint const& get_interface() const { return m_net_interface; }
 		
 		void connect_to_url_seed(std::string const& url);
-		peer_connection* connect_to_peer(policy::peer* peerinfo);
+		bool connect_to_peer(policy::peer* peerinfo);
 
 		void set_ratio(float ratio)
 		{ TORRENT_ASSERT(ratio >= 0.0f); m_ratio = ratio; }
@@ -226,13 +230,12 @@ namespace libtorrent
 
 		void request_bandwidth(int channel
 			, boost::intrusive_ptr<peer_connection> const& p
-			, bool non_prioritized);
+			, int priority);
 
 		void perform_bandwidth_request(int channel
 			, boost::intrusive_ptr<peer_connection> const& p
-			, int block_size
-			, bool non_prioritized);
-		
+			, int block_size, int priority);
+
 		void expire_bandwidth(int channel, int amount);
 		void assign_bandwidth(int channel, int amount, int blk);
 		
@@ -251,6 +254,8 @@ namespace libtorrent
 	
 		void remove_url_seed(std::string const& url)
 		{ m_web_seeds.erase(url); }
+
+		void retry_url_seed(std::string const& url);
 
 		std::set<std::string> url_seeds() const
 		{ return m_web_seeds; }
@@ -276,31 +281,12 @@ namespace libtorrent
 		bool want_more_peers() const;
 		bool try_connect_peer();
 
-		peer_connection* connection_for(tcp::endpoint const& a)
-		{
-			peer_iterator i = m_connections.find(a);
-			if (i == m_connections.end()) return 0;
-			return i->second;
-		}
-
-#ifndef NDEBUG
-		void connection_for(address const& a, std::vector<peer_connection*>& pc)
-		{
-			for (peer_iterator i = m_connections.begin()
-				, end(m_connections.end()); i != end; ++i)
-			{
-				if (i->first.address() == a) pc.push_back(i->second);
-			}
-			return;
-		}
-#endif
-
 		// the number of peers that belong to this torrent
 		int num_peers() const { return (int)m_connections.size(); }
 		int num_seeds() const;
 
-		typedef std::map<tcp::endpoint, peer_connection*>::iterator peer_iterator;
-		typedef std::map<tcp::endpoint, peer_connection*>::const_iterator const_peer_iterator;
+		typedef std::set<peer_connection*>::iterator peer_iterator;
+		typedef std::set<peer_connection*>::const_iterator const_peer_iterator;
 
 		const_peer_iterator begin() const { return m_connections.begin(); }
 		const_peer_iterator end() const { return m_connections.end(); }
@@ -309,6 +295,9 @@ namespace libtorrent
 		peer_iterator end() { return m_connections.end(); }
 
 		void resolve_peer_country(boost::intrusive_ptr<peer_connection> const& p) const;
+
+		void get_peer_info(std::vector<peer_info>& v);
+		void get_download_queue(std::vector<partial_piece_info>& queue);
 
 // --------------------------------------------
 		// TRACKER MANAGEMENT
@@ -326,6 +315,8 @@ namespace libtorrent
 		virtual void tracker_request_error(tracker_request const& r
 			, int response_code, const std::string& str);
 		virtual void tracker_warning(std::string const& msg);
+		virtual void tracker_scrape_response(tracker_request const& req
+			, int complete, int incomplete, int downloaded);
 
 		// generates a request string for sending
 		// to the tracker
@@ -349,6 +340,7 @@ namespace libtorrent
 		// forcefully sets next_announce to the current time
 		void force_tracker_request();
 		void force_tracker_request(ptime);
+		void scrape_tracker();
 
 		// sets the username and password that will be sent to
 		// the tracker
@@ -466,6 +458,13 @@ namespace libtorrent
 		// test
 		void piece_finished(int index, bool passed_hash_check);
 		void piece_failed(int index);
+
+		// this will restore the piece picker state for a piece
+		// by re marking all the requests to blocks in this piece
+		// that are still outstanding in peers' download queues.
+		// this is done when a piece fails
+		void restore_piece_state(int index);
+
 		void received_redundant_data(int num_bytes)
 		{ TORRENT_ASSERT(num_bytes > 0); m_total_redundant_bytes += num_bytes; }
 
@@ -495,11 +494,7 @@ namespace libtorrent
 		{
 			return m_picker.get() != 0;
 		}
-		policy& get_policy()
-		{
-			TORRENT_ASSERT(m_policy);
-			return *m_policy;
-		}
+		policy& get_policy() { return m_policy; }
 		piece_manager& filesystem();
 		torrent_info const& torrent_file() const
 		{ return *m_torrent_file; }
@@ -550,7 +545,7 @@ namespace libtorrent
 		// to the checker thread for initial checking
 		// of the storage.
 		void set_metadata(entry const&);
-		
+
 	private:
 
 		void on_files_deleted(int ret, disk_io_job const& j);
@@ -567,7 +562,7 @@ namespace libtorrent
 			, boost::intrusive_ptr<peer_connection> p) const;
 		bool request_bandwidth_from_session(int channel) const;
 
-		void update_peer_interest();
+		void update_peer_interest(bool was_finished);
 
 		boost::intrusive_ptr<torrent_info> m_torrent_file;
 
@@ -633,7 +628,7 @@ namespace libtorrent
 #ifndef NDEBUG
 	public:
 #endif
-		std::map<tcp::endpoint, peer_connection*> m_connections;
+		std::set<peer_connection*> m_connections;
 #ifndef NDEBUG
 	private:
 #endif
@@ -641,6 +636,10 @@ namespace libtorrent
 		// The list of web seeds in this torrent. Seeds
 		// with fatal errors are removed from the set
 		std::set<std::string> m_web_seeds;
+
+		// a list of web seeds that have failed and are
+		// waiting to be retried
+		std::map<std::string, ptime> m_web_seeds_next_retry;
 		
 		// urls of the web seeds that we are currently
 		// resolving the address for
@@ -689,8 +688,6 @@ namespace libtorrent
 
 		// -----------------------------
 
-		boost::shared_ptr<policy> m_policy;
-
 		// a back reference to the session
 		// this torrent belongs to.
 		aux::session_impl& m_ses;
@@ -699,7 +696,7 @@ namespace libtorrent
 		boost::scoped_ptr<piece_picker> m_picker;
 
 		// the queue of peer_connections that want more bandwidth
-		typedef std::deque<bw_queue_entry<peer_connection> > queue_t;
+		typedef std::deque<bw_queue_entry<peer_connection, torrent> > queue_t;
 		queue_t m_bandwidth_queue[2];
 
 		std::vector<announce_entry> m_trackers;
@@ -790,6 +787,10 @@ namespace libtorrent
 
 		// the maximum number of connections for this torrent
 		int m_max_connections;
+
+#ifndef NDEBUG
+		bool m_files_checked;
+#endif
 		
 #ifndef TORRENT_DISABLE_EXTENSIONS
 		typedef std::list<boost::shared_ptr<torrent_plugin> > extension_list_t;
@@ -802,6 +803,8 @@ namespace libtorrent
 		// total_done - m_initial_done <= total_payload_download
 		size_type m_initial_done;
 #endif
+
+		policy m_policy;
 	};
 
 	inline ptime torrent::next_announce() const

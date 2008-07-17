@@ -62,20 +62,15 @@ namespace libtorrent
 
 	disk_io_thread::~disk_io_thread()
 	{
-		boost::mutex::scoped_lock l(m_mutex);
-		m_abort = true;
-		m_signal.notify_all();
-		l.unlock();
-
-		m_disk_io_thread.join();
+		TORRENT_ASSERT(m_abort == true);
 	}
 
 #ifndef NDEBUG
 	disk_io_job disk_io_thread::find_job(boost::intrusive_ptr<piece_manager> s
 		, int action, int piece) const
 	{
-		boost::mutex::scoped_lock l(m_mutex);
-		for (std::deque<disk_io_job>::const_iterator i = m_jobs.begin();
+		mutex_t::scoped_lock l(m_mutex);
+		for (std::list<disk_io_job>::const_iterator i = m_jobs.begin();
 			i != m_jobs.end(); ++i)
 		{
 			if (i->storage != s)
@@ -95,12 +90,22 @@ namespace libtorrent
 
 #endif
 
+	void disk_io_thread::join()
+	{
+		mutex_t::scoped_lock l(m_mutex);
+		m_abort = true;
+		m_signal.notify_all();
+		l.unlock();
+
+		m_disk_io_thread.join();
+	}
+
 	// aborts read operations
 	void disk_io_thread::stop(boost::intrusive_ptr<piece_manager> s)
 	{
-		boost::mutex::scoped_lock l(m_mutex);
+		mutex_t::scoped_lock l(m_mutex);
 		// read jobs are aborted, write and move jobs are syncronized
-		for (std::deque<disk_io_job>::iterator i = m_jobs.begin();
+		for (std::list<disk_io_job>::iterator i = m_jobs.begin();
 			i != m_jobs.end();)
 		{
 			if (i->storage != s)
@@ -151,9 +156,9 @@ namespace libtorrent
 	{
 		TORRENT_ASSERT(!j.callback);
 		TORRENT_ASSERT(j.storage);
-		boost::mutex::scoped_lock l(m_mutex);
+		mutex_t::scoped_lock l(m_mutex);
 		
-		std::deque<disk_io_job>::reverse_iterator i = m_jobs.rbegin();
+		std::list<disk_io_job>::reverse_iterator i = m_jobs.rbegin();
 		if (j.action == disk_io_job::read)
 		{
 			// when we're reading, we may not skip
@@ -196,7 +201,7 @@ namespace libtorrent
 		if (i == m_jobs.rend() && (m_jobs.empty() || j.priority <= m_jobs.back().priority))
 			i = m_jobs.rbegin();
 
-		std::deque<disk_io_job>::iterator k = m_jobs.insert(i.base(), j);
+		std::list<disk_io_job>::iterator k = m_jobs.insert(i.base(), j);
 		k->callback.swap(const_cast<boost::function<void(int, disk_io_job const&)>&>(f));
 		if (j.action == disk_io_job::write)
 			m_queue_buffer_size += j.buffer_size;
@@ -206,7 +211,7 @@ namespace libtorrent
 
 	char* disk_io_thread::allocate_buffer()
 	{
-		boost::mutex::scoped_lock l(m_mutex);
+		mutex_t::scoped_lock l(m_mutex);
 #ifdef TORRENT_STATS
 		++m_allocations;
 #endif
@@ -215,7 +220,7 @@ namespace libtorrent
 
 	void disk_io_thread::free_buffer(char* buf)
 	{
-		boost::mutex::scoped_lock l(m_mutex);
+		mutex_t::scoped_lock l(m_mutex);
 #ifdef TORRENT_STATS
 		--m_allocations;
 #endif
@@ -229,7 +234,7 @@ namespace libtorrent
 #ifdef TORRENT_DISK_STATS
 			m_log << log_time() << " idle" << std::endl;
 #endif
-			boost::mutex::scoped_lock l(m_mutex);
+			mutex_t::scoped_lock l(m_mutex);
 #ifndef NDEBUG
 			m_current.action = (disk_io_job::action_t)-1;
 			m_current.piece = -1;
@@ -250,7 +255,7 @@ namespace libtorrent
 
 			int ret = 0;
 
-			bool free_buffer = true;
+			bool free_current_buffer = true;
 			try
 			{
 				TORRENT_ASSERT(j.storage);
@@ -264,15 +269,10 @@ namespace libtorrent
 #ifdef TORRENT_DISK_STATS
 						m_log << log_time() << " read " << j.buffer_size << std::endl;
 #endif
-						free_buffer = false;
+						free_current_buffer = false;
 						if (j.buffer == 0)
 						{
-							l.lock();
-							j.buffer = (char*)m_pool.ordered_malloc();
-#ifdef TORRENT_STATS
-							++m_allocations;
-#endif
-							l.unlock();
+							j.buffer = allocate_buffer();
 							TORRENT_ASSERT(j.buffer_size <= m_block_size);
 							if (j.buffer == 0)
 							{
@@ -281,8 +281,8 @@ namespace libtorrent
 								break;
 							}
 						}
-						ret = j.storage->read_impl(j.buffer, j.piece, j.offset
-							, j.buffer_size);
+						ret = int(j.storage->read_impl(j.buffer, j.piece, j.offset
+							, j.buffer_size));
 
 						// simulates slow drives
 						// usleep(300);
@@ -333,7 +333,11 @@ namespace libtorrent
 			catch (std::exception& e)
 			{
 //				std::cerr << "DISK THREAD: exception: " << e.what() << std::endl;
-				j.str = e.what();
+				try
+				{
+					j.str = e.what();
+				}
+				catch (std::exception&) {}
 				ret = -1;
 			}
 
@@ -344,16 +348,10 @@ namespace libtorrent
 
 #ifndef NDEBUG
 			m_current.storage = 0;
+			m_current.callback.clear();
 #endif
 			
-			if (j.buffer && free_buffer)
-			{
-				l.lock();
-				m_pool.ordered_free(j.buffer);
-#ifdef TORRENT_STATS
-				--m_allocations;
-#endif
-			}
+			if (j.buffer && free_current_buffer) free_buffer(j.buffer);
 		}
 	}
 }

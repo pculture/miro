@@ -38,6 +38,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "libtorrent/http_tracker_connection.hpp"
 #include "libtorrent/xml_parse.hpp"
 #include "libtorrent/connection_queue.hpp"
+#include "libtorrent/enum_net.hpp"
 
 #include <boost/bind.hpp>
 #include <boost/ref.hpp>
@@ -61,7 +62,7 @@ namespace libtorrent
 
 upnp::upnp(io_service& ios, connection_queue& cc
 	, address const& listen_interface, std::string const& user_agent
-	, portmap_callback_t const& cb)
+	, portmap_callback_t const& cb, bool ignore_nonrouters)
 	: m_udp_local_port(0)
 	, m_tcp_local_port(0)
 	, m_user_agent(user_agent)
@@ -70,18 +71,18 @@ upnp::upnp(io_service& ios, connection_queue& cc
 	, m_io_service(ios)
 	, m_strand(ios)
 	, m_socket(ios, udp::endpoint(address_v4::from_string("239.255.255.250"), 1900)
-		, m_strand.wrap(bind(&upnp::on_reply, self(), _1, _2, _3)), false)
+		, bind(&upnp::on_reply, self(), _1, _2, _3), false)
 	, m_broadcast_timer(ios)
 	, m_refresh_timer(ios)
 	, m_disabled(false)
 	, m_closing(false)
+	, m_ignore_outside_network(ignore_nonrouters)
 	, m_cc(cc)
 {
 #ifdef TORRENT_UPNP_LOGGING
 	m_log.open("upnp.log", std::ios::in | std::ios::out | std::ios::trunc);
 #endif
 	m_retry_count = 0;
-	discover_device();
 }
 
 upnp::~upnp()
@@ -118,8 +119,8 @@ void upnp::discover_device() try
 
 	++m_retry_count;
 	m_broadcast_timer.expires_from_now(milliseconds(250 * m_retry_count));
-	m_broadcast_timer.async_wait(m_strand.wrap(bind(&upnp::resend_request
-		, self(), _1)));
+	m_broadcast_timer.async_wait(bind(&upnp::resend_request
+		, self(), _1));
 
 #ifdef TORRENT_UPNP_LOGGING
 	m_log << time_now_string()
@@ -208,13 +209,15 @@ try
 				m_log << time_now_string()
 					<< " ==> connecting to " << d.url << std::endl;
 #endif
+				if (d.upnp_connection) d.upnp_connection->close();
 				d.upnp_connection.reset(new http_connection(m_io_service
-					, m_cc, m_strand.wrap(bind(&upnp::on_upnp_xml, self(), _1, _2
-					, boost::ref(d)))));
+					, m_cc, bind(&upnp::on_upnp_xml, self(), _1, _2
+					, boost::ref(d), _5)));
 				d.upnp_connection->get(d.url);
 			}
 			catch (std::exception& e)
 			{
+				(void)e;
 #ifdef TORRENT_UPNP_LOGGING
 				m_log << time_now_string()
 					<< " *** Connection failed to: " << d.url
@@ -266,6 +269,33 @@ try
 	Server:Microsoft-Windows-NT/5.1 UPnP/1.0 UPnP-Device-Host/1.0
 
 */
+	asio::error_code ec;
+	if (m_ignore_outside_network && !in_local_network(m_io_service, from.address(), ec))
+	{
+		// this upnp device is filtered because it's not in the
+		// list of configured routers
+#ifdef TORRENT_UPNP_LOGGING
+		if (ec)
+		{
+			m_log << time_now_string() << " <== (" << from << ") error: "
+				<< ec.message() << std::endl;
+		}
+		else
+		{
+			std::vector<ip_interface> const& net = enum_net_interfaces(m_io_service, ec);
+			m_log << time_now_string() << " <== (" << from << ") UPnP device "
+				"ignored because it's not on our network ";
+			for (std::vector<ip_interface>::const_iterator i = net.begin()
+				, end(net.end()); i != end; ++i)
+			{
+				m_log << "(" << i->interface_address << ", " << i->netmask << ") ";
+			}
+			m_log << std::endl;
+		}
+#endif
+		return;
+	}
+
 	http_parser p;
 	try
 	{
@@ -274,6 +304,7 @@ try
 	}
 	catch (std::exception& e)
 	{
+		(void)e;
 #ifdef TORRENT_UPNP_LOGGING
 		m_log << time_now_string()
 			<< " <== (" << from << ") Rootdevice responded with incorrect HTTP packet. Ignoring device (" << e.what() << ")" << std::endl;
@@ -328,8 +359,20 @@ try
 		std::string protocol;
 		std::string auth;
 		// we don't have this device in our list. Add it
-		boost::tie(protocol, auth, d.hostname, d.port, d.path)
-			= parse_url_components(d.url);
+		try
+		{
+			boost::tie(protocol, auth, d.hostname, d.port, d.path)
+				= parse_url_components(d.url);
+		}
+		catch (std::exception& e)
+		{
+#ifdef TORRENT_UPNP_LOGGING
+			m_log << time_now_string()
+				<< " <== (" << from << ") invalid url: '" << d.url
+				<< "'. Ignoring device" << std::endl;
+#endif
+			return;
+		}
 
 		// ignore the auth here. It will be re-parsed
 		// by the http connection later
@@ -414,13 +457,15 @@ try
 					m_log << time_now_string()
 						<< " ==> connecting to " << d.url << std::endl;
 #endif
+					if (d.upnp_connection) d.upnp_connection->close();
 					d.upnp_connection.reset(new http_connection(m_io_service
-						, m_cc, m_strand.wrap(bind(&upnp::on_upnp_xml, self(), _1, _2
-						, boost::ref(d)))));
+						, m_cc, bind(&upnp::on_upnp_xml, self(), _1, _2
+						, boost::ref(d), _5)));
 					d.upnp_connection->get(d.url);
 				}
 				catch (std::exception& e)
 				{
+					(void)e;
 #ifdef TORRENT_UPNP_LOGGING
 					m_log << time_now_string()
 						<< " *** Connection failed to: " << d.url
@@ -443,6 +488,8 @@ void upnp::post(upnp::rootdevice const& d, std::string const& soap
 	, std::string const& soap_action)
 {
 	TORRENT_ASSERT(d.magic == 1337);
+	TORRENT_ASSERT(d.upnp_connection);
+
 	std::stringstream header;
 	
 	header << "POST " << d.control_url << " HTTP/1.1\r\n"
@@ -463,6 +510,17 @@ void upnp::post(upnp::rootdevice const& d, std::string const& soap
 void upnp::create_port_mapping(http_connection& c, rootdevice& d, int i)
 {
 	TORRENT_ASSERT(d.magic == 1337);
+
+	if (!d.upnp_connection)
+	{
+		TORRENT_ASSERT(d.disabled);
+#ifdef TORRENT_UPNP_LOGGING
+		m_log << time_now_string() << " *** mapping (" << i
+			<< ") aborted" << std::endl;
+#endif
+		return;
+	}
+	
 	std::string soap_action = "AddPortMapping";
 
 	std::stringstream soap;
@@ -508,9 +566,10 @@ void upnp::map_port(rootdevice& d, int i)
 		m_log << time_now_string()
 			<< " ==> connecting to " << d.hostname << std::endl;
 #endif
+	if (d.upnp_connection) d.upnp_connection->close();
 	d.upnp_connection.reset(new http_connection(m_io_service
-		, m_cc, m_strand.wrap(bind(&upnp::on_upnp_map_response, self(), _1, _2
-		, boost::ref(d), i)), true
+		, m_cc, bind(&upnp::on_upnp_map_response, self(), _1, _2
+		, boost::ref(d), i, _5), true
 		, bind(&upnp::create_port_mapping, self(), _1, boost::ref(d), i)));
 
 	d.upnp_connection->start(d.hostname, boost::lexical_cast<std::string>(d.port)
@@ -520,6 +579,17 @@ void upnp::map_port(rootdevice& d, int i)
 void upnp::delete_port_mapping(rootdevice& d, int i)
 {
 	TORRENT_ASSERT(d.magic == 1337);
+
+	if (!d.upnp_connection)
+	{
+		TORRENT_ASSERT(d.disabled);
+#ifdef TORRENT_UPNP_LOGGING
+		m_log << time_now_string() << " *** unmapping (" << i
+			<< ") aborted" << std::endl;
+#endif
+		return;
+	}
+
 	std::stringstream soap;
 	
 	std::string soap_action = "DeletePortMapping";
@@ -554,9 +624,11 @@ void upnp::unmap_port(rootdevice& d, int i)
 		m_log << time_now_string()
 			<< " ==> connecting to " << d.hostname << std::endl;
 #endif
+
+	if (d.upnp_connection) d.upnp_connection->close();
 	d.upnp_connection.reset(new http_connection(m_io_service
-		, m_cc, m_strand.wrap(bind(&upnp::on_upnp_unmap_response, self(), _1, _2
-		, boost::ref(d), i)), true
+		, m_cc, bind(&upnp::on_upnp_unmap_response, self(), _1, _2
+		, boost::ref(d), i, _5), true
 		, bind(&upnp::delete_port_mapping, self(), boost::ref(d), i)));
 	d.upnp_connection->start(d.hostname, boost::lexical_cast<std::string>(d.port)
 		, seconds(10));
@@ -620,10 +692,11 @@ namespace
 }
 
 void upnp::on_upnp_xml(asio::error_code const& e
-	, libtorrent::http_parser const& p, rootdevice& d) try
+	, libtorrent::http_parser const& p, rootdevice& d
+	, http_connection& c) try
 {
 	TORRENT_ASSERT(d.magic == 1337);
-	if (d.upnp_connection)
+	if (d.upnp_connection && d.upnp_connection.get() == &c)
 	{
 		d.upnp_connection->close();
 		d.upnp_connection.reset();
@@ -663,7 +736,7 @@ void upnp::on_upnp_xml(asio::error_code const& e
 	parse_state s;
 	s.reset("urn:schemas-upnp-org:service:WANIPConnection:1");
 	xml_parse((char*)p.get_body().begin, (char*)p.get_body().end
-		, m_strand.wrap(bind(&find_control_url, _1, _2, boost::ref(s))));
+		, bind(&find_control_url, _1, _2, boost::ref(s)));
 	if (s.found_service)
 	{
 		d.service_namespace = s.service_type;
@@ -674,7 +747,7 @@ void upnp::on_upnp_xml(asio::error_code const& e
 		// a PPP connection
 		s.reset("urn:schemas-upnp-org:service:WANPPPConnection:1");
 		xml_parse((char*)p.get_body().begin, (char*)p.get_body().end
-			, m_strand.wrap(bind(&find_control_url, _1, _2, boost::ref(s))));
+			, bind(&find_control_url, _1, _2, boost::ref(s)));
 		if (s.found_service)
 		{
 			d.service_namespace = s.service_type;
@@ -768,10 +841,11 @@ namespace
 }
 
 void upnp::on_upnp_map_response(asio::error_code const& e
-	, libtorrent::http_parser const& p, rootdevice& d, int mapping) try
+	, libtorrent::http_parser const& p, rootdevice& d, int mapping
+	, http_connection& c) try
 {
 	TORRENT_ASSERT(d.magic == 1337);
-	if (d.upnp_connection)
+	if (d.upnp_connection && d.upnp_connection.get() == &c)
 	{
 		d.upnp_connection->close();
 		d.upnp_connection.reset();
@@ -821,7 +895,7 @@ void upnp::on_upnp_map_response(asio::error_code const& e
 
 	error_code_parse_state s;
 	xml_parse((char*)p.get_body().begin, (char*)p.get_body().end
-		, m_strand.wrap(bind(&find_error_code, _1, _2, boost::ref(s))));
+		, bind(&find_error_code, _1, _2, boost::ref(s)));
 
 #ifdef TORRENT_UPNP_LOGGING
 	if (s.error_code != -1)
@@ -890,7 +964,7 @@ void upnp::on_upnp_map_response(asio::error_code const& e
 				|| next_expire > d.mapping[mapping].expires)
 			{
 				m_refresh_timer.expires_at(d.mapping[mapping].expires);
-				m_refresh_timer.async_wait(m_strand.wrap(bind(&upnp::on_expire, self(), _1)));
+				m_refresh_timer.async_wait(bind(&upnp::on_expire, self(), _1));
 			}
 		}
 		else
@@ -914,10 +988,11 @@ catch (std::exception&)
 };
 
 void upnp::on_upnp_unmap_response(asio::error_code const& e
-	, libtorrent::http_parser const& p, rootdevice& d, int mapping) try
+	, libtorrent::http_parser const& p, rootdevice& d, int mapping
+	, http_connection& c) try
 {
 	TORRENT_ASSERT(d.magic == 1337);
-	if (d.upnp_connection)
+	if (d.upnp_connection && d.upnp_connection.get() == &c)
 	{
 		d.upnp_connection->close();
 		d.upnp_connection.reset();
@@ -999,7 +1074,7 @@ void upnp::on_expire(asio::error_code const& e) try
 	if (next_expire != max_time())
 	{
 		m_refresh_timer.expires_at(next_expire);
-		m_refresh_timer.async_wait(m_strand.wrap(bind(&upnp::on_expire, self(), _1)));
+		m_refresh_timer.async_wait(bind(&upnp::on_expire, self(), _1));
 	}
 }
 catch (std::exception&)

@@ -95,6 +95,7 @@ namespace libtorrent
 	typedef asio::io_service io_service;
 
 	using asio::async_write;
+	using asio::error_code;
 	
 	typedef asio::basic_deadline_timer<libtorrent::ptime> deadline_timer;
 	
@@ -171,6 +172,21 @@ namespace libtorrent
 			return Endpoint(addr, port);
 		}
 	}
+
+	struct v6only
+	{
+		v6only(bool enable): m_value(enable) {}
+		template<class Protocol>
+		int level(Protocol const&) const { return IPPROTO_IPV6; }
+		template<class Protocol>
+		int name(Protocol const&) const { return IPV6_V6ONLY; }
+		template<class Protocol>
+		int const* data(Protocol const&) const { return &m_value; }
+		template<class Protocol>
+		size_t size(Protocol const&) const { return sizeof(m_value); }
+		int m_value;
+	};
+	
 }
 
 #endif // TORRENT_SOCKET_HPP_INCLUDED

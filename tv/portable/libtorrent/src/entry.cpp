@@ -33,6 +33,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "libtorrent/pch.hpp"
 
 #include <algorithm>
+#include <iostream>
 #include <iomanip>
 #include "libtorrent/entry.hpp"
 #include "libtorrent/config.hpp"
@@ -53,19 +54,6 @@ namespace
 		TORRENT_ASSERT(o);
 		o->~T();
 	}
-
-	struct compare_string
-	{
-		compare_string(char const* s): m_str(s)  {}
-	
-		bool operator()(
-			std::pair<std::string
-			, libtorrent::entry> const& e) const
-		{
-			return m_str && e.first == m_str;
-		}
-		char const* m_str;
-	};
 }
 
 namespace libtorrent
@@ -98,25 +86,25 @@ namespace libtorrent
 		if (i != dict().end()) return i->second;
 		dictionary_type::iterator ret = dict().insert(
 			dict().begin()
+			, std::make_pair(key, entry()));
+		return ret->second;
+	}
+
+	entry& entry::operator[](std::string const& key)
+	{
+		dictionary_type::iterator i = dict().find(key);
+		if (i != dict().end()) return i->second;
+		dictionary_type::iterator ret = dict().insert(
+			dict().begin()
 			, std::make_pair(std::string(key), entry()));
 		return ret->second;
 	}
 
-
-	entry& entry::operator[](std::string const& key)
-	{
-		return (*this)[key.c_str()];
-	}
-
 	entry* entry::find_key(char const* key)
 	{
-		dictionary_type::iterator i = std::find_if(
-			dict().begin()
-			, dict().end()
-			, compare_string(key));
+		dictionary_type::iterator i = dict().find(key);
 		if (i == dict().end()) return 0;
 		return &i->second;
-	
 	}
 
 	entry const* entry::find_key(char const* key) const
@@ -126,6 +114,21 @@ namespace libtorrent
 		return &i->second;
 	}
 	
+	entry* entry::find_key(std::string const& key)
+	{
+		dictionary_type::iterator i = dict().find(key);
+		if (i == dict().end()) return 0;
+		return &i->second;
+	}
+
+	entry const* entry::find_key(std::string const& key) const
+	{
+		dictionary_type::const_iterator i = dict().find(key);
+		if (i == dict().end()) return 0;
+		return &i->second;
+	}
+	
+#ifndef BOOST_NO_EXCEPTIONS
 	const entry& entry::operator[](char const* key) const
 	{
 		dictionary_type::const_iterator i = dict().find(key);
@@ -138,26 +141,31 @@ namespace libtorrent
 	{
 		return (*this)[key.c_str()];
 	}
+#endif
 
 	entry::entry(dictionary_type const& v)
+		: m_type(undefined_t)
 	{
 		new(data) dictionary_type(v);
 		m_type = dictionary_t;
 	}
 
 	entry::entry(string_type const& v)
+		: m_type(undefined_t)
 	{
 		new(data) string_type(v);
 		m_type = string_t;
 	}
 
 	entry::entry(list_type const& v)
+		: m_type(undefined_t)
 	{
 		new(data) list_type(v);
 		m_type = list_t;
 	}
 
 	entry::entry(integer_type const& v)
+		: m_type(undefined_t)
 	{
 		new(data) integer_type(v);
 		m_type = int_t;
@@ -213,8 +221,7 @@ namespace libtorrent
 
 	void entry::construct(data_type t)
 	{
-		m_type = t;
-		switch(m_type)
+		switch(t)
 		{
 		case int_t:
 			new(data) integer_type;
@@ -231,13 +238,14 @@ namespace libtorrent
 		default:
 			TORRENT_ASSERT(m_type == undefined_t);
 			m_type = undefined_t;
+			return;
 		}
+		m_type = t;
 	}
 
 	void entry::copy(entry const& e)
 	{
-		m_type = e.m_type;
-		switch(m_type)
+		switch(e.m_type)
 		{
 		case int_t:
 			new(data) integer_type(e.integer());
@@ -253,7 +261,9 @@ namespace libtorrent
 			break;
 		default:
 			m_type = undefined_t;
+			return;
 		}
+		m_type = e.m_type;
 	}
 
 	void entry::destruct()
@@ -276,6 +286,7 @@ namespace libtorrent
 			TORRENT_ASSERT(m_type == undefined_t);
 			break;
 		}
+		m_type = undefined_t;
 	}
 
 	void entry::swap(entry& e)

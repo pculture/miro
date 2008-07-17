@@ -52,7 +52,7 @@ namespace libtorrent
 struct http_connection;
 	
 typedef boost::function<void(asio::error_code const&
-	, http_parser const&, char const* data, int size)> http_handler;
+	, http_parser const&, char const* data, int size, http_connection&)> http_handler;
 
 typedef boost::function<void(http_connection&)> http_connect_handler;
 
@@ -78,7 +78,7 @@ struct http_connection : boost::enable_shared_from_this<http_connection>, boost:
 		, m_download_quota(0)
 		, m_limiter_timer_active(false)
 		, m_limiter_timer(ios)
-		, m_redirect(true)
+		, m_redirects(5)
 		, m_connection_ticket(-1)
 		, m_cc(cc)
 	{
@@ -93,10 +93,10 @@ struct http_connection : boost::enable_shared_from_this<http_connection>, boost:
 	std::string sendbuffer;
 
 	void get(std::string const& url, time_duration timeout = seconds(30)
-		, bool handle_redirect = true);
+		, int handle_redirects = 5);
 
 	void start(std::string const& hostname, std::string const& port
-		, time_duration timeout, bool handle_redirect = true);
+		, time_duration timeout, int handle_redirect = 5);
 	void close();
 
 	tcp::socket const& socket() const { return m_sock; }
@@ -114,6 +114,8 @@ private:
 	static void on_timeout(boost::weak_ptr<http_connection> p
 		, asio::error_code const& e);
 	void on_assign_bandwidth(asio::error_code const& e);
+
+	void callback(asio::error_code const& e, char const* data = 0, int size = 0);
 
 	std::vector<char> m_recvbuffer;
 	tcp::socket m_sock;
@@ -134,6 +136,7 @@ private:
 	bool m_called;
 	std::string m_hostname;
 	std::string m_port;
+	std::string m_url;
 
 	// the current download limit, in bytes per second
 	// 0 is unlimited.
@@ -151,9 +154,8 @@ private:
 	// as all the quota was used.
 	deadline_timer m_limiter_timer;
 
-	// if set to true, the connection should handle
-	// HTTP redirects.
-	bool m_redirect;
+	// the number of redirects to follow (in sequence)
+	int m_redirects;
 
 	int m_connection_ticket;
 	connection_queue& m_cc;

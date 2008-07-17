@@ -98,6 +98,8 @@ namespace libtorrent
 		time_duration() {}
 		time_duration operator/(int rhs) const { return time_duration(diff / rhs); }
 		explicit time_duration(boost::int64_t d) : diff(d) {}
+		time_duration& operator-=(time_duration const& c) { diff -= c.diff; return *this; }
+		time_duration operator+(time_duration const& c) { return time_duration(diff + c.diff); }
 		boost::int64_t diff;
 	};
 
@@ -253,7 +255,7 @@ namespace libtorrent
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
-#include <Windows.h>
+#include <windows.h>
 #include "libtorrent/assert.hpp"
 
 namespace libtorrent
@@ -291,13 +293,13 @@ namespace libtorrent
 
 	inline int total_seconds(time_duration td)
 	{
-		return aux::performance_counter_to_microseconds(td.diff)
-			/ 1000000;
+		return int(aux::performance_counter_to_microseconds(td.diff)
+			/ 1000000);
 	}
 	inline int total_milliseconds(time_duration td)
 	{
-		return aux::performance_counter_to_microseconds(td.diff)
-			/ 1000;
+		return int(aux::performance_counter_to_microseconds(td.diff)
+			/ 1000);
 	}
 	inline boost::int64_t total_microseconds(time_duration td)
 	{

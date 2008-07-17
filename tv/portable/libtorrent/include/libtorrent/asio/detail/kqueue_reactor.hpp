@@ -2,7 +2,7 @@
 // kqueue_reactor.hpp
 // ~~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2007 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2008 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 // Copyright (c) 2005 Stefan Arentz (stefan at soze dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -74,7 +74,8 @@ public:
       pending_cancellations_(),
       stop_thread_(false),
       thread_(0),
-      shutdown_(false)
+      shutdown_(false),
+      need_kqueue_wait_(true)
   {
     // Start the reactor's internal thread only if needed.
     if (Own_Thread)
@@ -151,7 +152,7 @@ public:
       if (::kevent(kqueue_fd_, &event, 1, 0, 0, 0) == -1)
       {
         asio::error_code ec(errno,
-            asio::error::system_category);
+            asio::error::get_system_category());
         read_op_queue_.dispatch_all_operations(descriptor, ec);
       }
     }
@@ -178,7 +179,7 @@ public:
       if (::kevent(kqueue_fd_, &event, 1, 0, 0, 0) == -1)
       {
         asio::error_code ec(errno,
-            asio::error::system_category);
+            asio::error::get_system_category());
         write_op_queue_.dispatch_all_operations(descriptor, ec);
       }
     }
@@ -204,7 +205,7 @@ public:
       if (::kevent(kqueue_fd_, &event, 1, 0, 0, 0) == -1)
       {
         asio::error_code ec(errno,
-            asio::error::system_category);
+            asio::error::get_system_category());
         except_op_queue_.dispatch_all_operations(descriptor, ec);
       }
     }
@@ -228,7 +229,7 @@ public:
       if (::kevent(kqueue_fd_, &event, 1, 0, 0, 0) == -1)
       {
         asio::error_code ec(errno,
-            asio::error::system_category);
+            asio::error::get_system_category());
         write_op_queue_.dispatch_all_operations(descriptor, ec);
       }
     }
@@ -243,7 +244,7 @@ public:
       if (::kevent(kqueue_fd_, &event, 1, 0, 0, 0) == -1)
       {
         asio::error_code ec(errno,
-            asio::error::system_category);
+            asio::error::get_system_category());
         except_op_queue_.dispatch_all_operations(descriptor, ec);
         write_op_queue_.dispatch_all_operations(descriptor, ec);
       }
@@ -373,7 +374,9 @@ private:
 
     // Block on the kqueue descriptor.
     struct kevent events[128];
-    int num_events = kevent(kqueue_fd_, 0, 0, events, 128, timeout);
+    int num_events = (block || need_kqueue_wait_)
+      ? kevent(kqueue_fd_, 0, 0, events, 128, timeout)
+      : 0;
 
     lock.lock();
     wait_in_progress_ = false;
@@ -397,7 +400,7 @@ private:
         if (events[i].flags & EV_ERROR)
         {
           asio::error_code error(
-              events[i].data, asio::error::system_category);
+              events[i].data, asio::error::get_system_category());
           except_op_queue_.dispatch_all_operations(descriptor, error);
           read_op_queue_.dispatch_all_operations(descriptor, error);
         }
@@ -428,7 +431,7 @@ private:
         if (::kevent(kqueue_fd_, &event, 1, 0, 0, 0) == -1)
         {
           asio::error_code error(errno,
-              asio::error::system_category);
+              asio::error::get_system_category());
           except_op_queue_.dispatch_all_operations(descriptor, error);
           read_op_queue_.dispatch_all_operations(descriptor, error);
         }
@@ -440,7 +443,7 @@ private:
         if (events[i].flags & EV_ERROR)
         {
           asio::error_code error(
-              events[i].data, asio::error::system_category);
+              events[i].data, asio::error::get_system_category());
           write_op_queue_.dispatch_all_operations(descriptor, error);
         }
         else
@@ -458,7 +461,7 @@ private:
         if (::kevent(kqueue_fd_, &event, 1, 0, 0, 0) == -1)
         {
           asio::error_code error(errno,
-              asio::error::system_category);
+              asio::error::get_system_category());
           write_op_queue_.dispatch_all_operations(descriptor, error);
         }
       }
@@ -477,6 +480,10 @@ private:
     for (std::size_t i = 0; i < pending_cancellations_.size(); ++i)
       cancel_ops_unlocked(pending_cancellations_[i]);
     pending_cancellations_.clear();
+
+    // Determine whether kqueue needs to be called next time the reactor is run.
+    need_kqueue_wait_ = !read_op_queue_.empty()
+      || !write_op_queue_.empty() || !except_op_queue_.empty();
 
     cleanup_operations_and_timers(lock);
   }
@@ -515,7 +522,7 @@ private:
       boost::throw_exception(
           asio::system_error(
             asio::error_code(errno,
-              asio::error::system_category),
+              asio::error::get_system_category()),
             "kqueue"));
     }
     return fd;
@@ -630,6 +637,9 @@ private:
 
   // Whether the service has been shut down.
   bool shutdown_;
+
+  // Whether we need to call kqueue the next time the reactor is run.
+  bool need_kqueue_wait_;
 };
 
 } // namespace detail

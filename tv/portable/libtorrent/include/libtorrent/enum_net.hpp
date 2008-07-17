@@ -33,12 +33,32 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef TORRENT_ENUM_NET_HPP_INCLUDED
 #define TORRENT_ENUM_NET_HPP_INCLUDED
 
+#include "libtorrent/config.hpp"
 #include "libtorrent/socket.hpp"
 
 namespace libtorrent
 {
-	std::vector<address> enum_net_interfaces(asio::io_service& ios, asio::error_code& ec);
-	address router_for_interface(address const interface, asio::error_code& ec);
+
+	struct ip_interface
+	{
+		address interface_address;
+		address netmask;
+	};
+
+	// returns a list of the configured IP interfaces
+	// on the machine
+	TORRENT_EXPORT std::vector<ip_interface> enum_net_interfaces(asio::io_service& ios
+		, asio::error_code& ec);
+
+	// returns true if the specified address is on the same
+	// local network as the specified interface
+	TORRENT_EXPORT bool in_subnet(address const& addr, ip_interface const& iface);
+
+	// returns true if the specified address is on the same
+	// local network as us
+	TORRENT_EXPORT bool in_local_network(asio::io_service& ios, address const& addr, asio::error_code& ec);
+	
+	TORRENT_EXPORT address router_for_interface(address const interface, asio::error_code& ec);
 }
 
 #endif

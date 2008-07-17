@@ -101,18 +101,23 @@ closest_nodes::closest_nodes(
 void closest_nodes::invoke(node_id const& id, udp::endpoint addr)
 {
 	observer_ptr o(new (m_rpc.allocator().malloc()) closest_nodes_observer(this, id, m_target));
+#ifndef NDEBUG
+	o->m_in_constructor = false;
+#endif
 	m_rpc.invoke(messages::find_node, addr, o);
 }
 
 void closest_nodes::done()
 {
 	std::vector<node_entry> results;
-	int result_size = m_table.bucket_size();
-	if (result_size > (int)m_results.size()) result_size = (int)m_results.size();
+	int num_results = m_max_results;
 	for (std::vector<result>::iterator i = m_results.begin()
-		, end(m_results.begin() + result_size); i != end; ++i)
+		, end(m_results.end()); i != end && num_results > 0; ++i)
 	{
+		if (i->flags & result::no_id) continue;
+		if ((i->flags & result::queried) == 0) continue;
 		results.push_back(node_entry(i->id, i->addr));
+		--num_results;
 	}
 	m_done_callback(results);
 }

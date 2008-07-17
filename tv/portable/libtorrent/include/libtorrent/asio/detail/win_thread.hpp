@@ -2,7 +2,7 @@
 // win_thread.hpp
 // ~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2007 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2008 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -21,7 +21,7 @@
 #include <boost/config.hpp>
 #include "asio/detail/pop_options.hpp"
 
-#if defined(BOOST_WINDOWS)
+#if defined(BOOST_WINDOWS) && !defined(UNDER_CE)
 
 #include "asio/error.hpp"
 #include "asio/system_error.hpp"
@@ -56,7 +56,7 @@ public:
       DWORD last_error = ::GetLastError();
       asio::system_error e(
           asio::error_code(last_error,
-            asio::error::system_category),
+            asio::error::get_system_category()),
           "thread");
       boost::throw_exception(e);
     }
@@ -118,7 +118,7 @@ inline unsigned int __stdcall win_thread_function(void* arg)
 } // namespace detail
 } // namespace asio
 
-#endif // defined(BOOST_WINDOWS)
+#endif // defined(BOOST_WINDOWS) && !defined(UNDER_CE)
 
 #include "asio/detail/pop_options.hpp"
 

@@ -66,6 +66,7 @@ namespace libtorrent
 		: peer_connection(ses, t, s, remote, peerinfo)
 		, m_url(url)
 		, m_first_request(true)
+		, m_range_pos(0)
 	{
 		INVARIANT_CHECK;
 
@@ -73,7 +74,7 @@ namespace libtorrent
 		// we can request more bytes at once
 		request_large_blocks(true);
 		// we only want left-over bandwidth
-		set_non_prioritized(true);
+		set_priority(0);
 		shared_ptr<torrent> tor = t.lock();
 		TORRENT_ASSERT(tor);
 		int blocks_per_piece = tor->torrent_file().piece_length() / tor->block_size();
@@ -224,7 +225,7 @@ namespace libtorrent
 				request += "\r\nProxy-Connection: keep-alive";
 			}
 			request += "\r\nRange: bytes=";
-			request += boost::lexical_cast<std::string>(r.piece
+			request += boost::lexical_cast<std::string>(size_type(r.piece)
 				* info.piece_length() + r.start);
 			request += "-";
 			request += boost::lexical_cast<std::string>(r.piece
@@ -306,10 +307,12 @@ namespace libtorrent
 
 	namespace
 	{
-		bool range_contains(peer_request const& range, peer_request const& req)
+		bool range_contains(peer_request const& range, peer_request const& req, int piece_size)
 		{
-			return range.start <= req.start
-				&& range.start + range.length >= req.start + req.length;
+			size_type range_start = size_type(range.piece) * piece_size + range.start;
+			size_type req_start = size_type(req.piece) * piece_size + req.start;
+			return range_start <= req_start
+				&& range_start + range.length >= req_start + req.length;
 		}
 	}
 
@@ -343,14 +346,20 @@ namespace libtorrent
 			if (!header_finished)
 			{
 				boost::tie(payload, protocol) = m_parser.incoming(recv_buffer);
-				m_statistics.received_bytes(payload, protocol);
+				m_statistics.received_bytes(0, protocol);
+				bytes_transferred -= protocol;
 
 				TORRENT_ASSERT(recv_buffer.left() == 0 || *recv_buffer.begin == 'H');
 			
 				TORRENT_ASSERT(recv_buffer.left() <= packet_size());
 				
 				// this means the entire status line hasn't been received yet
-				if (m_parser.status_code() == -1) break;
+				if (m_parser.status_code() == -1)
+				{
+					TORRENT_ASSERT(payload == 0);
+					TORRENT_ASSERT(bytes_transferred == 0);
+					break;
+				}
 
 				// if the status code is not one of the accepted ones, abort
 				if (m_parser.status_code() != 206 // partial content
@@ -358,7 +367,11 @@ namespace libtorrent
 					&& !(m_parser.status_code() >= 300 // redirect
 						&& m_parser.status_code() < 400))
 				{
-					// we should not try this server again.
+					if (m_parser.status_code() == 503)
+					{
+						// temporarily unavailable, retry later
+						t->retry_url_seed(m_url);
+					}
 					t->remove_url_seed(m_url);
 					std::string error_msg = boost::lexical_cast<std::string>(m_parser.status_code())
 						+ " " + m_parser.message();
@@ -370,14 +383,15 @@ namespace libtorrent
 					}
 					throw std::runtime_error(error_msg);
 				}
-				if (!m_parser.header_finished()) break;
+				if (!m_parser.header_finished())
+				{
+					TORRENT_ASSERT(payload == 0);
+					TORRENT_ASSERT(bytes_transferred == 0);
+					break;
+				}
 
 				m_body_start = m_parser.body_start();
 				m_received_body = 0;
-			}
-			else
-			{
-				m_statistics.received_bytes(bytes_transferred, 0);
 			}
 
 			// we just completed reading the header
@@ -435,9 +449,11 @@ namespace libtorrent
 
 				m_body_start = m_parser.body_start();
 				m_received_body = 0;
+				m_range_pos = 0;
 			}
 
 			recv_buffer.begin += m_body_start;
+
 			// we only received the header, no data
 			if (recv_buffer.left() == 0) break;
 
@@ -470,6 +486,16 @@ namespace libtorrent
 				}
 			}
 
+			int left_in_response = range_end - range_start - m_range_pos;
+			int payload_transferred = (std::min)(left_in_response, int(bytes_transferred));
+			m_statistics.received_bytes(payload_transferred, 0);
+			bytes_transferred -= payload_transferred;
+			m_range_pos += payload_transferred;;
+			if (m_range_pos > range_end - range_start) m_range_pos = range_end - range_start;
+
+//			std::cerr << "REQUESTS: m_requests: " << m_requests.size()
+//				<< " file_requests: " << m_file_requests.size() << std::endl;
+
 			torrent_info const& info = t->torrent_file();
 
 			if (m_requests.empty() || m_file_requests.empty())
@@ -477,23 +503,20 @@ namespace libtorrent
 
 			int file_index = m_file_requests.front();
 			peer_request in_range = info.map_file(file_index, range_start
-				, range_end - range_start);
+				, int(range_end - range_start));
 
 			peer_request front_request = m_requests.front();
 
 			size_type rs = size_type(in_range.piece) * info.piece_length() + in_range.start;
 			size_type re = rs + in_range.length;
 			size_type fs = size_type(front_request.piece) * info.piece_length() + front_request.start;
+/*
 			size_type fe = fs + front_request.length;
-			if (fs < rs || fe > re)
-			{
-				throw std::runtime_error("invalid range in HTTP response");
-			}
 
-			// skip the http header and the blocks we've already read. The
-			// http_body.begin is now in sync with the request at the front
-			// of the request queue
-//			TORRENT_ASSERT(in_range.start - int(m_piece.size()) <= front_request.start);
+			std::cerr << "RANGE: r = (" << rs << ", " << re << " ) "
+				"f = (" << fs << ", " << fe << ") "
+				"file_index = " << file_index << " received_body = " << m_received_body << std::endl;
+*/
 
 			// the http response body consists of 3 parts
 			// 1. the middle of a block or the ending of a block
@@ -501,14 +524,20 @@ namespace libtorrent
 			// 3. the start of a block
 			// in that order, these parts are parsed.
 
-			bool range_overlaps_request = in_range.start + in_range.length
-				> front_request.start + int(m_piece.size());
+			bool range_overlaps_request = re > fs + int(m_piece.size());
+
+			if (!range_overlaps_request)
+			{
+				// this means the end of the incoming request ends _before_ the
+				// first expected byte (fs + m_piece.size())
+				throw std::runtime_error("invalid range in HTTP response");
+			}
 
 			// if the request is contained in the range (i.e. the entire request
 			// fits in the range) we should not start a partial piece, since we soon
 			// will receive enough to call incoming_piece() and pass the read buffer
 			// directly (in the next loop below).
-			if (range_overlaps_request && !range_contains(in_range, front_request))
+			if (range_overlaps_request && !range_contains(in_range, front_request, info.piece_length()))
 			{
 				// the start of the next block to receive is stored
 				// in m_piece. We need to append the rest of that
@@ -549,7 +578,7 @@ namespace libtorrent
 
 			// report all received blocks to the bittorrent engine
 			while (!m_requests.empty()
-				&& range_contains(in_range, m_requests.front())
+				&& range_contains(in_range, m_requests.front(), info.piece_length())
 				&& recv_buffer.left() >= m_requests.front().length)
 			{
 				peer_request r = m_requests.front();
@@ -602,8 +631,9 @@ namespace libtorrent
 				m_received_body = 0;
 				continue;
 			}
-			break;
+			if (bytes_transferred == 0) break;
 		}
+		TORRENT_ASSERT(bytes_transferred == 0);
 	}
 
 	void web_peer_connection::get_specific_peer_info(peer_info& p) const

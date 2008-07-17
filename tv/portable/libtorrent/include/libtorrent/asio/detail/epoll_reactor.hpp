@@ -2,7 +2,7 @@
 // epoll_reactor.hpp
 // ~~~~~~~~~~~~~~~~~
 //
-// Copyright (c) 2003-2007 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2008 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -66,7 +66,8 @@ public:
       pending_cancellations_(),
       stop_thread_(false),
       thread_(0),
-      shutdown_(false)
+      shutdown_(false),
+      need_epoll_wait_(true)
   {
     // Start the reactor's internal thread only if needed.
     if (Own_Thread)
@@ -160,7 +161,7 @@ public:
       if (result != 0)
       {
         asio::error_code ec(errno,
-            asio::error::system_category);
+            asio::error::get_system_category());
         read_op_queue_.dispatch_all_operations(descriptor, ec);
       }
     }
@@ -196,7 +197,7 @@ public:
       if (result != 0)
       {
         asio::error_code ec(errno,
-            asio::error::system_category);
+            asio::error::get_system_category());
         write_op_queue_.dispatch_all_operations(descriptor, ec);
       }
     }
@@ -228,7 +229,7 @@ public:
       if (result != 0)
       {
         asio::error_code ec(errno,
-            asio::error::system_category);
+            asio::error::get_system_category());
         except_op_queue_.dispatch_all_operations(descriptor, ec);
       }
     }
@@ -262,7 +263,7 @@ public:
       if (result != 0)
       {
         asio::error_code ec(errno,
-            asio::error::system_category);
+            asio::error::get_system_category());
         write_op_queue_.dispatch_all_operations(descriptor, ec);
         except_op_queue_.dispatch_all_operations(descriptor, ec);
       }
@@ -387,7 +388,9 @@ private:
 
     // Block on the epoll descriptor.
     epoll_event events[128];
-    int num_events = epoll_wait(epoll_fd_, events, 128, timeout);
+    int num_events = (block || need_epoll_wait_)
+      ? epoll_wait(epoll_fd_, events, 128, timeout)
+      : 0;
 
     lock.lock();
     wait_in_progress_ = false;
@@ -456,7 +459,7 @@ private:
           if (result != 0)
           {
             ec = asio::error_code(errno,
-                asio::error::system_category);
+                asio::error::get_system_category());
             read_op_queue_.dispatch_all_operations(descriptor, ec);
             write_op_queue_.dispatch_all_operations(descriptor, ec);
             except_op_queue_.dispatch_all_operations(descriptor, ec);
@@ -477,6 +480,10 @@ private:
     for (size_t i = 0; i < pending_cancellations_.size(); ++i)
       cancel_ops_unlocked(pending_cancellations_[i]);
     pending_cancellations_.clear();
+
+    // Determine whether epoll_wait should be called when the reactor next runs.
+    need_epoll_wait_ = !read_op_queue_.empty()
+      || !write_op_queue_.empty() || !except_op_queue_.empty();
 
     cleanup_operations_and_timers(lock);
   }
@@ -518,7 +525,7 @@ private:
       boost::throw_exception(
           asio::system_error(
             asio::error_code(errno,
-              asio::error::system_category),
+              asio::error::get_system_category()),
             "epoll"));
     }
     return fd;
@@ -632,6 +639,9 @@ private:
 
   // Whether the service has been shut down.
   bool shutdown_;
+
+  // Whether we need to call epoll_wait the next time the reactor is run.
+  bool need_epoll_wait_;
 };
 
 } // namespace detail

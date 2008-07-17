@@ -158,6 +158,7 @@ namespace libtorrent { namespace dht
 		, m_refresh_timer(ios)
 		, m_settings(settings)
 		, m_refresh_bucket(160)
+		, m_abort(false)
 		, m_host_resolver(ios)
 		, m_refs(0)
 	{
@@ -220,10 +221,13 @@ namespace libtorrent { namespace dht
 
 	void dht_tracker::stop()
 	{
+		mutex_t::scoped_lock l(m_mutex);
+		m_abort = true;
 		m_timer.cancel();
 		m_connection_timer.cancel();
 		m_refresh_timer.cancel();
 		m_socket.close();
+		m_host_resolver.cancel();
 	}
 
 	void dht_tracker::dht_status(session_status& s)
@@ -236,7 +240,9 @@ namespace libtorrent { namespace dht
 	void dht_tracker::connection_timeout(asio::error_code const& e)
 		try
 	{
-		if (e) return;
+		mutex_t::scoped_lock l(m_mutex);
+		if (e || m_abort) return;
+
 		if (!m_socket.is_open()) return;
 		time_duration d = m_dht.connection_timeout();
 		m_connection_timer.expires_from_now(d);
@@ -254,7 +260,9 @@ namespace libtorrent { namespace dht
 	void dht_tracker::refresh_timeout(asio::error_code const& e)
 		try
 	{
-		if (e) return;
+		mutex_t::scoped_lock l(m_mutex);
+		if (e || m_abort) return;
+
 		if (!m_socket.is_open()) return;
 		time_duration d = m_dht.refresh_timeout();
 		m_refresh_timer.expires_from_now(d);
@@ -272,12 +280,17 @@ namespace libtorrent { namespace dht
 		udp::endpoint ep(listen_interface, listen_port);
 		m_socket.open(ep.protocol());
 		m_socket.bind(ep);
+		m_socket.async_receive_from(asio::buffer(&m_in_buf[m_buffer][0]
+			, m_in_buf[m_buffer].size()), m_remote_endpoint[m_buffer]
+			, m_strand.wrap(bind(&dht_tracker::on_receive, self(), _1, _2)));
 	}
 
 	void dht_tracker::tick(asio::error_code const& e)
 		try
 	{
-		if (e) return;
+		mutex_t::scoped_lock l(m_mutex);
+		if (e || m_abort) return;
+
 		if (!m_socket.is_open()) return;
 		m_timer.expires_from_now(minutes(tick_period));
 		m_timer.async_wait(m_strand.wrap(bind(&dht_tracker::tick, self(), _1)));
@@ -400,6 +413,54 @@ namespace libtorrent { namespace dht
 			, m_strand.wrap(bind(&dht_tracker::on_receive, self(), _1, _2)));
 
 		if (error) return;
+
+		node_ban_entry* match = 0;
+		node_ban_entry* min = m_ban_nodes;
+		ptime now = time_now();
+		for (node_ban_entry* i = m_ban_nodes; i < m_ban_nodes + num_ban_nodes; ++i)
+		{
+			if (i->src == m_remote_endpoint[current_buffer])
+			{
+				match = i;
+				break;
+			}
+			if (i->count < min->count) min = i;
+		}
+
+		if (match)
+		{
+			++match->count;
+			if (match->count >= 20)
+			{
+				if (now < match->limit)
+				{
+#ifdef TORRENT_DHT_VERBOSE_LOGGING
+					if (match->count == 20)
+					{
+						TORRENT_LOG(dht_tracker) << time_now_string() << " BANNING PEER [ ip: "
+							<< m_remote_endpoint[current_buffer] << " | "
+							"time: " << total_seconds((now - match->limit) + seconds(5))
+							<< " | count: " << match->count << " ]";
+					}
+#endif
+					// we've received 20 messages in less than 5 seconds from
+					// this node. Ignore it until it's silent for 5 minutes
+					match->limit = now + minutes(5);
+					return;
+				}
+
+				// we got 50 messages from this peer, but it was in
+				// more than 5 seconds. Reset the counter and the timer
+				match->count = 0;
+				match->limit = now + seconds(5);
+			}
+		}
+		else
+		{
+			min->count = 1;
+			min->limit = now + seconds(5);
+			min->src = m_remote_endpoint[current_buffer];
+		}
 
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
 		++m_total_message_input;
@@ -920,12 +981,12 @@ namespace libtorrent { namespace dht
 					break;	
 				}
 				case messages::announce_peer:
-					a["port"] = m_settings.service_port;
+					a["port"] = m.port;
 					a["info_hash"] = std::string(m.info_hash.begin(), m.info_hash.end());
 					a["token"] = m.write_token;
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
-					TORRENT_LOG(dht_tracker) << "   port: "
-						<< m_settings.service_port
+					TORRENT_LOG(dht_tracker)
+						<< "   port: " << m.port
 						<< "   info_hash: " << boost::lexical_cast<std::string>(m.info_hash);
 #endif
 					break;

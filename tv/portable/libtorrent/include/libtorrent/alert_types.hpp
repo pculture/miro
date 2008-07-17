@@ -58,10 +58,12 @@ namespace libtorrent
 		tracker_alert(torrent_handle const& h
 			, int times
 			, int status
+			, std::string const& url_
 			, std::string const& msg)
 			: torrent_alert(h, alert::warning, msg)
 			, times_in_row(times)
 			, status_code(status)
+			, url(url_)
 		{}
 
 		virtual std::auto_ptr<alert> clone() const
@@ -69,6 +71,7 @@ namespace libtorrent
 
 		int times_in_row;
 		int status_code;
+		std::string url;
 	};
 
 	struct TORRENT_EXPORT tracker_warning_alert: torrent_alert
@@ -80,6 +83,35 @@ namespace libtorrent
 
 		virtual std::auto_ptr<alert> clone() const
 		{ return std::auto_ptr<alert>(new tracker_warning_alert(*this)); }
+	};
+
+	struct TORRENT_EXPORT scrape_reply_alert: torrent_alert
+	{
+		scrape_reply_alert(torrent_handle const& h
+			, int incomplete_
+			, int complete_
+			, std::string const& msg)
+			: torrent_alert(h, alert::info, msg)
+			, incomplete(incomplete_)
+			, complete(complete_)
+		{}
+
+		int incomplete;
+		int complete;
+
+		virtual std::auto_ptr<alert> clone() const
+		{ return std::auto_ptr<alert>(new scrape_reply_alert(*this)); }
+	};
+
+	struct TORRENT_EXPORT scrape_failed_alert: torrent_alert
+	{
+		scrape_failed_alert(torrent_handle const& h
+			, std::string const& msg)
+			: torrent_alert(h, alert::warning, msg)
+		{}
+
+		virtual std::auto_ptr<alert> clone() const
+		{ return std::auto_ptr<alert>(new scrape_failed_alert(*this)); }
 	};
 
 	struct TORRENT_EXPORT tracker_reply_alert: torrent_alert

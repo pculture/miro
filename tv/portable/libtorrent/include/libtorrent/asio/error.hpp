@@ -2,7 +2,7 @@
 // error.hpp
 // ~~~~~~~~~
 //
-// Copyright (c) 2003-2007 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2008 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -69,6 +69,11 @@ enum basic_errors
 
   /// Operation already in progress.
   already_started = ASIO_SOCKET_ERROR(EALREADY),
+
+  /// Broken pipe.
+  broken_pipe = ASIO_WIN_OR_POSIX(
+      ASIO_NATIVE_ERROR(ERROR_BROKEN_PIPE),
+      ASIO_NATIVE_ERROR(EPIPE)),
 
   /// A connection has been aborted.
   connection_aborted = ASIO_SOCKET_ERROR(ECONNABORTED),
@@ -194,29 +199,46 @@ enum misc_errors
   eof,
 
   /// Element not found.
-  not_found
+  not_found,
+
+  /// The descriptor cannot fit into the select system call's fd_set.
+  fd_set_failure
+};
+
+enum ssl_errors
+{
 };
 
 // boostify: error category definitions go here.
 
 inline asio::error_code make_error_code(basic_errors e)
 {
-  return asio::error_code(static_cast<int>(e), system_category);
+  return asio::error_code(
+      static_cast<int>(e), get_system_category());
 }
 
 inline asio::error_code make_error_code(netdb_errors e)
 {
-  return asio::error_code(static_cast<int>(e), netdb_category);
+  return asio::error_code(
+      static_cast<int>(e), get_netdb_category());
 }
 
 inline asio::error_code make_error_code(addrinfo_errors e)
 {
-  return asio::error_code(static_cast<int>(e), addrinfo_category);
+  return asio::error_code(
+      static_cast<int>(e), get_addrinfo_category());
 }
 
 inline asio::error_code make_error_code(misc_errors e)
 {
-  return asio::error_code(static_cast<int>(e), misc_category);
+  return asio::error_code(
+      static_cast<int>(e), get_misc_category());
+}
+
+inline asio::error_code make_error_code(ssl_errors e)
+{
+  return asio::error_code(
+      static_cast<int>(e), get_ssl_category());
 }
 
 } // namespace error

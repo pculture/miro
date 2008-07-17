@@ -1,6 +1,6 @@
 /*
 
-Copyright (c) 2003, Magnus Jonsson, Arvid Norberg
+Copyright (c) 2007, Arvid Norberg
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -30,70 +30,27 @@ POSSIBILITY OF SUCH DAMAGE.
 
 */
 
-#ifndef TORRENT_RESOURCE_REQUEST_HPP_INCLUDED
-#define TORRENT_RESOURCE_REQUEST_HPP_INCLUDED
+#ifndef TORRENT_BANDWIDTH_QUEUE_ENTRY_HPP_INCLUDED
+#define TORRENT_BANDWIDTH_QUEUE_ENTRY_HPP_INCLUDED
 
-#include <boost/integer_traits.hpp>
+#include <boost/intrusive_ptr.hpp>
 
-#ifdef min
-#undef min
-#endif
+namespace libtorrent {
 
-#ifdef max
-#undef max
-#endif
-
-#include "libtorrent/config.hpp"
-
-namespace libtorrent
+template<class PeerConnection, class Torrent>
+struct bw_queue_entry
 {
-	struct TORRENT_EXPORT resource_request
-	{
-		resource_request()
-			: used(0)
-			, min(0)
-			, max(0)
-			, given(0)
-			, leftovers(0)
-		{}
+	bw_queue_entry(boost::intrusive_ptr<PeerConnection> const& pe
+		, int blk, int prio)
+		: peer(pe), torrent(peer->associated_torrent())
+		, max_block_size(blk), priority(prio) {}
+	boost::intrusive_ptr<PeerConnection> peer;
+	boost::weak_ptr<Torrent> torrent;
+	int max_block_size;
+	int priority; // 0 is low prio
+};
 
-		resource_request(int used_, int min_, int max_, int given_)
-			: used(used_)
-			, min(min_)
-			, max(max_)
-			, given(given_)
-			, leftovers(0)
-		{}
-
-		int left() const
-		{
-			assert(given <= max);
-			assert(given >= min);
-			assert(used >= 0);
-			return (std::max)(given - used, 0);
-		}
-		
-		void reset() { used = leftovers; leftovers = 0; }
-
-		static const int inf = boost::integer_traits<int>::const_max;
-
-		// right now I'm actively using this amount
-		int used;
-
-		// given cannot be smaller than min
-		// and not greater than max.
-		int min;
-		int max;
-
-		// Reply: Okay, you're allowed to use this amount (a compromise):
-		int given;
-
-		// this is the amount of resources that exceeded the
-		// given limit. When the used field is reset (after resources
-		// have been distributed), it is reset to this number.
-		int leftovers;
-	};
 }
 
-
 #endif
+

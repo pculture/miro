@@ -213,11 +213,11 @@ bool rpc_manager::incoming(msg const& m)
 			return false;
 		}
 		
-		if (m.addr != o->target_addr)
+		if (m.addr.address() != o->target_addr.address())
 		{
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
 			TORRENT_LOG(rpc) << "Reply with incorrect address and valid transaction id: " 
-				<< tid << " from " << m.addr;
+				<< tid << " from " << m.addr << " expected: " << o->target_addr;
 #endif
 			return false;
 		}
@@ -226,6 +226,10 @@ bool rpc_manager::incoming(msg const& m)
 		std::ofstream reply_stats("libtorrent_logs/round_trip_ms.log", std::ios::app);
 		reply_stats << m.addr << "\t" << total_milliseconds(time_now() - o->sent)
 			<< std::endl;
+#endif
+#ifdef TORRENT_DHT_VERBOSE_LOGGING
+		TORRENT_LOG(rpc) << "Reply with transaction id: " 
+			<< tid << " from " << m.addr;
 #endif
 		o->reply(m);
 		m_transactions[tid] = 0;
@@ -284,6 +288,10 @@ time_duration rpc_manager::tick()
 		try
 		{
 			m_transactions[m_oldest_transaction_id] = 0;
+#ifdef TORRENT_DHT_VERBOSE_LOGGING
+			TORRENT_LOG(rpc) << "Timing out transaction id: " 
+				<< m_oldest_transaction_id << " from " << o->target_addr;
+#endif
 			timeouts.push_back(o);
 		} catch (std::exception) {}
 	}
@@ -309,7 +317,13 @@ unsigned int rpc_manager::new_transaction_id(observer_ptr o)
 		// moving the observer into the set of aborted transactions
 		// it will prevent it from spawning new requests right now,
 		// since that would break the invariant
-		m_aborted_transactions.push_back(m_transactions[m_next_transaction_id]);
+		observer_ptr o = m_transactions[m_next_transaction_id];
+		m_aborted_transactions.push_back(o);
+#ifdef TORRENT_DHT_VERBOSE_LOGGING
+		TORRENT_LOG(rpc) << "[new_transaction_id] Aborting message with transaction id: " 
+			<< m_next_transaction_id << " sent to " << o->target_addr
+			<< " " << total_seconds(time_now() - o->sent) << " seconds ago";
+#endif
 		m_transactions[m_next_transaction_id] = 0;
 		TORRENT_ASSERT(m_oldest_transaction_id == m_next_transaction_id);
 	}
@@ -416,6 +430,9 @@ void rpc_manager::reply_with_ping(msg& m)
 	io::write_uint16(m_next_transaction_id, out);
 
 	observer_ptr o(new (allocator().malloc()) null_observer(allocator()));
+#ifndef NDEBUG
+	o->m_in_constructor = false;
+#endif
 	TORRENT_ASSERT(!m_transactions[m_next_transaction_id]);
 	o->sent = time_now();
 	o->target_addr = m.addr;
