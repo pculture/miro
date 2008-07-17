@@ -106,13 +106,13 @@ class DrawingContext:
         self.path.moveToPoint_(NSPoint(x+0.5, y+0.5))
 
     def rel_move_to(self, dx, dy):
-        self.path.relativeMoveToPoint_(NSPoint(dx+0.5, dy+0.5))
+        self.path.relativeMoveToPoint_(NSPoint(dx, dy))
 
     def line_to(self, x, y):
         self.path.lineToPoint_(NSPoint(x+0.5, y+0.5))
 
     def rel_line_to(self, dx, dy):
-        self.path.relativeLineToPoint_(NSPoint(dx+0.5, dy+0.5))
+        self.path.relativeLineToPoint_(NSPoint(dx, dy))
 
     def curve_to(self, x1, y1, x2, y2, x3, y3):
         self.path.curveToPoint_controlPoint1_controlPoint2_(
@@ -120,7 +120,7 @@ class DrawingContext:
 
     def rel_curve_to(self, dx1, dy1, dx2, dy2, dx3, dy3):
         self.path.relativeCurveToPoint_controlPoint1_controlPoint2_(
-                NSPoint(dx3+0.5, dy3+0.5), NSPoint(dx1+0.5, dy1+0.5), NSPoint(dx2+0.5, dy2+0.5))
+                NSPoint(dx3, dy3), NSPoint(dx1, dy1), NSPoint(dx2, dy2))
 
     def arc(self, x, y, radius, angle1, angle2):
         angle1 = (angle1 * 360) / (2 * math.pi)
