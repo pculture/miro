@@ -68,6 +68,7 @@ class Label(Widget):
         self.sizer_cell = self.view.cell().copy()
         self.set_font()
         self.set_text(text)
+        self.color = self.view.textColor()
 
     def set_bold(self, bold):
         self.bold = bold
@@ -78,7 +79,8 @@ class Label(Widget):
         self.set_font()
 
     def set_color(self, color):
-        self.view.setTextColor_(self.make_color(color))
+        self.color = self.make_color(color)
+        self.view.setTextColor_(self.color)
 
     def set_background_color(self, color):
         self.view.setBackgroundColor_(self.make_color(color))
@@ -115,11 +117,11 @@ class Label(Widget):
         self.invalidate_size_request()
 
     def enable_widget(self):
+        self.view.setTextColor_(self.color)
         self.view.setEnabled_(True)
 
     def disable_widget(self):
-        # FIXME - this doesn't actually do anything.  i think we need to
-        # change the text color, but i'm not brave enough to do that.
+        self.view.setTextColor_(self.color.colorWithAlphaComponent_(0.5))
         self.view.setEnabled_(False)
 
 class SolidBackground(SimpleBin):
