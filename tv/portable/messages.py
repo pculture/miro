@@ -250,6 +250,16 @@ class MarkChannelSeen(BackendMessage):
     def __init__(self, id):
         self.id = id
 
+class MarkItemWatched(BackendMessage):
+    """Mark an item as watched"""
+    def __init__(self, id):
+        self.id = id
+
+class MarkItemUnwatched(BackendMessage):
+    """Mark an item as unwatched"""
+    def __init__(self, id):
+        self.id = id
+
 class UpdateAllChannels(BackendMessage):
     """Updates all channels."""
     pass
@@ -321,6 +331,11 @@ class PauseDownload(BackendMessage):
 
 class ResumeDownload(BackendMessage):
     """Resume downloading an item."""
+    def __init__(self, id):
+        self.id = id
+
+class RestartUpload(BackendMessage):
+    """Start uploading a torrent again."""
     def __init__(self, id):
         self.id = id
 
@@ -547,6 +562,7 @@ class DownloadInfo(object):
         finished downloding the torrent and are now seeding it.
     startup_activity -- The current stage of starting up
     finished -- True if the item has finished downloading
+    torrent -- Is this a Torrent download?
     """
     def __init__(self, downloader):
         self.downloaded_size = downloader.getCurrentSize()
@@ -554,6 +570,7 @@ class DownloadInfo(object):
         self.state = downloader.getState()
         self.startup_activity = downloader.getStartupActivity()
         self.finished = downloader.isFinished()
+        self.torrent = (downloader.getType() == 'bittorrent')
 
 class GuideList(FrontendMessage):
     """Sends the frontend the initial list of channel guides

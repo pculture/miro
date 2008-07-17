@@ -59,6 +59,7 @@ class ItemListBase(widgetset.TableView):
         self.create_signal('play-video')
         self.item_iters = {}
         app.item_list_manager.manage_item_list(self)
+        self.set_context_menu_callback(self.on_context_menu)
 
     def do_hotspot_clicked(self, name, iter):
         item_info = self.model[iter][0]
@@ -92,6 +93,52 @@ class ItemListBase(widgetset.TableView):
                 insert_pos = self.model.next_iter(insert_pos)
             iter = self.model.insert_before(insert_pos, item_info)
             self.item_iters[item_info.id] = iter
+
+    def on_context_menu(self, tableview):
+        selected = [self.model[iter][0] for iter in self.get_selection()]
+        if len(selected) == 1:
+            return self.make_context_menu_single(selected[0])
+        else:
+            return self.make_context_menu_multiple(selected)
+
+    def make_context_menu_single(self, item):
+        if item.downloaded:
+            menu = [
+                (_('Play'), app.playback_manager.play_pause),
+                (_('Play Just this Video'), app.playback_manager.play_pause),
+                (_('Add to New Playlist'), app.widgetapp.add_new_playlist),
+                (_('Remove From the Library'), app.widgetapp.remove_videos),
+            ]
+            if item.video_watched:
+                menu.append((_('Mark as Unwatched'),
+                    messages.MarkItemUnwatched(item.id).send_to_backend))
+            else:
+                menu.append((_('Mark as Watched'),
+                    messages.MarkItemWatched(item.id).send_to_backend))
+            if (item.download_info and item.download_info.torrent and
+                    item.download_info.state == 'finished'):
+                menu.append((_('Restart Upload'),
+                    messages.RestartUpload(item.id).send_to_backend))
+        elif item.download_info is not None:
+            menu = [
+                    (_('Cancel Download'), 
+                        messages.CancelDownload(item.id).send_to_backend)
+            ]
+            if item.download_info.state != 'paused':
+                menu.append((_('Pause Download'),
+                        messages.PauseDownload(item.id).send_to_backend))
+            else:
+                menu.append((_('Resume Download'),
+                        messages.ResumeDownload(item.id).send_to_backend))
+        else:
+            menu = [
+                (_('Download'),
+                    messages.StartDownload(item.id).send_to_backend)
+            ]
+        return menu
+
+    def make_context_menu_multiple(self, selection):
+        return [('booya', None)]
 
 class ItemList(ItemListBase):
     def items_added(self, item_list):

@@ -349,6 +349,14 @@ class BackendMessageHandler(messages.MessageHandler):
         feed = database.defaultDatabase.getObjectByID(message.id)
         feed.markAsViewed()
 
+    def handle_mark_item_watched(self, message):
+        item = views.items.getObjectByID(message.id)
+        item.markItemSeen()
+
+    def handle_mark_item_unwatched(self, message):
+        item = views.items.getObjectByID(message.id)
+        item.markItemUnseen()
+
     def handle_import_channels(self, message):
         opml.Importer().importSubscriptionsFrom(message.filename)
 
@@ -524,6 +532,19 @@ class BackendMessageHandler(messages.MessageHandler):
             logging.warn("ResumeDownload: Item not found -- %s", message.id)
         else:
             item.resume()
+
+    def handle_restart_upload(self, message):
+        try:
+            item = views.items.getObjectByID(message.id)
+        except database.ObjectNotFoundError:
+            logging.warn("ResumeDownload: Item not found -- %s", message.id)
+        else:
+            if item.downloader.getType() != 'bittorrent':
+                logging.warn("%s is not a torrent", item)
+            elif item.downloader.state == 'uploading':
+                logging.warn("%s is currently uploading", item)
+            else:
+                item.startUpload()
 
     def handle_keep_video(self, message):
         try:
