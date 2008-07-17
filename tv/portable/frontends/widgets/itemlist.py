@@ -116,7 +116,7 @@ class ItemListBase(widgetset.TableView):
                 menu.append((_('Mark as Watched'),
                     messages.MarkItemWatched(item.id).send_to_backend))
             if (item.download_info and item.download_info.torrent and
-                    item.download_info.state == 'finished'):
+                    item.download_info.state != 'uploading'):
                 menu.append((_('Restart Upload'),
                     messages.RestartUpload(item.id).send_to_backend))
         elif item.download_info is not None:
@@ -138,7 +138,70 @@ class ItemListBase(widgetset.TableView):
         return menu
 
     def make_context_menu_multiple(self, selection):
-        return [('booya', None)]
+        watched = unwatched = downloaded = downloading = available = uploadable = 0
+        for info in selection:
+            if info.downloaded:
+                downloaded += 1
+                if info.video_watched:
+                    watched += 1
+                else:
+                    unwatched += 1
+            elif info.download_info is not None:
+                downloading += 1
+                if (info.download_info.torrent and
+                        info.download_info.state != 'uploading'):
+                    uploadable += 1
+            else:
+                available += 1
+
+        menu = []
+        if downloaded > 0:
+            menu.append((_('%d Downloaded Items') % downloaded, None))
+            menu.append((_('Play'), app.playback_manager.play_pause))
+            menu.append((_('Add to New Playlist'),
+                app.widgetapp.add_new_playlist))
+            menu.append((_('Remove From the Library'),
+                app.widgetapp.remove_videos))
+            if watched:
+                def mark_unwatched():
+                    for item in selection:
+                        messages.MarkItemUnwatched(item.id).send_to_backend()
+                menu.append((_('Mark as Unwatched'), mark_unwatched))
+            if unwatched:
+                def mark_watched():
+                    for item in selection:
+                        messages.MarkItemWatched(item.id).send_to_backend()
+                menu.append((_('Mark as Watched'), mark_watched))
+
+        if available > 0:
+            if len(menu) > 0:
+                menu.append(None)
+            menu.append((_('%d Available Items') % available, None))
+            def download_all():
+                for item in selection:
+                    messages.StartDownload(item.id).send_to_backend()
+            menu.append((_('Download'), download_all))
+
+        if downloading:
+            if len(menu) > 0:
+                menu.append(None)
+            menu.append((_('%d Downloading Items') % downloading, None))
+            def cancel_all():
+                for item in selection:
+                    messages.CancelDownload(item.id).send_to_backend()
+            def pause_all():
+                for item in selection:
+                    messages.PauseDownload(item.id).send_to_backend()
+            menu.append((_('Cancel Download'), cancel_all))
+            menu.append((_('Pause Download'), pause_all))
+
+        if uploadable > 0:
+            def restart_all():
+                for item in selection:
+                    messages.RestartUpload(item.id).send_to_backend()
+            menu.append((_('Restart Upload'), restart_all))
+
+        return menu
 
 class ItemList(ItemListBase):
     def items_added(self, item_list):
