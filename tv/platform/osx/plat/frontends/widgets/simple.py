@@ -114,6 +114,14 @@ class Label(Widget):
         self.wrap = True
         self.invalidate_size_request()
 
+    def enable_widget(self):
+        self.view.setEnabled_(True)
+
+    def disable_widget(self):
+        # FIXME - this doesn't actually do anything.  i think we need to
+        # change the text color, but i'm not brave enough to do that.
+        self.view.setEnabled_(False)
+
 class SolidBackground(SimpleBin):
     def __init__(self,  color=None):
         SimpleBin.__init__(self)

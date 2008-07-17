@@ -154,6 +154,12 @@ class Widget(signals.SignalEmitter):
         return NSColor.colorWithDeviceRed_green_blue_alpha_(red, green, blue, 
                 1.0)
 
+    def enable_widget(self):
+        pass
+
+    def disable_widget(self):
+        pass
+
 class Container(Widget):
     """Widget that holds other widgets.  """
 
@@ -249,6 +255,12 @@ class Bin(Container):
         old_child = self.child
         self.child = new_child
         self.child_changed(old_child, new_child)
+
+    def enable_widget(self):
+        self.child.enable_widget()
+
+    def disable_widget(self):
+        self.child.disable_widget()
 
 class SimpleBin(Bin):
     """Bin that whose child takes up it's entire space."""

@@ -75,6 +75,12 @@ class TextEntry(Widget):
     def set_activates_default(self, setting):
         pass
 
+    def enable_widget(self):
+        self.view.setEnabled_(True)
+
+    def disable_widget(self):
+        self.view.setEnabled_(False)
+
 class Checkbox(Widget):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, label):
@@ -96,6 +102,12 @@ class Checkbox(Widget):
             self.view.setState_(NSOnState)
         else:
             self.view.setState_(NSOffState)
+
+    def enable_widget(self):
+        self.view.setEnabled_(True)
+
+    def disable_widget(self):
+        self.view.setEnabled_(False)
 
 class MiroButton(NSButton):
     def sendAction_to_(self, action, to):
@@ -171,6 +183,12 @@ class Button(AttributedStringStyler):
                 self.label, attributes)
         self.view.setAttributedTitle_(string)
 
+    def enable_widget(self):
+        self.view.setEnabled_(True)
+
+    def disable_widget(self):
+        self.view.setEnabled_(False)
+
 class OptionMenu(AttributedStringStyler):
     def __init__(self, *options):
         AttributedStringStyler.__init__(self)
@@ -194,3 +212,9 @@ class OptionMenu(AttributedStringStyler):
                     menu_item.title(), attributes)
             menu_item.setAttributedTitle_(string)
         self.view.setFont_(attributes[NSFontAttributeName])
+
+    def enable_widget(self):
+        self.view.setEnabled_(True)
+
+    def disable_widget(self):
+        self.view.setEnabled_(False)

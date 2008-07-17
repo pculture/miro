@@ -175,6 +175,14 @@ class Box(Container):
             position += child_length + self.spacing
         return position
 
+    def enable_widget(self):
+        for mem in self.children:
+            mem.enable_widget()
+
+    def disable_widget(self):
+        for mem in self.children:
+            mem.disable_widget()
+
 class VBox(Box):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def translate_size(self, size):
