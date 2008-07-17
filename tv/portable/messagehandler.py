@@ -507,7 +507,7 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warn("CancelDownload: Item not found -- %s", message.id)
         else:
-            item.expire()
+            item.executeExpire()
 
     def handle_pause_download(self, message):
         try:
