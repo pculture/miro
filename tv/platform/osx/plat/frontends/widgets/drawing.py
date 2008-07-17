@@ -35,6 +35,7 @@ from AppKit import *
 from Quartz import *
 from objc import YES, NO, nil
 
+from miro.plat import utils
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets.base import Widget, SimpleBin, FlippedView
 from miro.plat.frontends.widgets.layoutmanager import LayoutManager
@@ -191,8 +192,12 @@ class Gradient(object):
         self.filter = CIFilter.filterWithName_('CILinearGradient')
         # Make y negative because we want  things to work in flipped
         # coordinates
-        self.filter.setValue_forKey_(self.ci_point(x1, -y1), 'inputPoint0')
-        self.filter.setValue_forKey_(self.ci_point(x2, -y2), 'inputPoint1')
+        if utils.getMajorOSVersion() < 9:
+            self.filter.setValue_forKey_(self.ci_point(x1, -y1), 'inputPoint0')
+            self.filter.setValue_forKey_(self.ci_point(x2, -y2), 'inputPoint1')
+        else:
+            self.filter.setValue_forKey_(self.ci_point(x1, -y1), 'inputPoint1')
+            self.filter.setValue_forKey_(self.ci_point(x2, -y2), 'inputPoint0')
 
     def rect_for_flipped_rect(self, rect):
         origin = NSPoint(rect.origin.x, -rect.origin.y-rect.size.height)
@@ -203,8 +208,12 @@ class Gradient(object):
         # Adjust for the fact the coordinate systems are flipped
         y1 = drawing_context.height - self.y1
         y2 = drawing_context.height - self.y2
-        self.filter.setValue_forKey_(self.ci_point(self.x1, y1), 'inputPoint0')
-        self.filter.setValue_forKey_(self.ci_point(self.x2, y2), 'inputPoint1')
+        if utils.getMajorOSVersion() < 9:
+            self.filter.setValue_forKey_(self.ci_point(self.x1, y1), 'inputPoint0')
+            self.filter.setValue_forKey_(self.ci_point(self.x2, y2), 'inputPoint1')
+        else:
+            self.filter.setValue_forKey_(self.ci_point(self.x1, y1), 'inputPoint1')
+            self.filter.setValue_forKey_(self.ci_point(self.x2, y2), 'inputPoint0')
 
     def set_start_color(self, (red, green, blue)):
         self.filter.setValue_forKey_(self.ci_color(red, green, blue), 
