@@ -48,6 +48,7 @@ class Browser(Widget):
         self.set_widget(gtkmozembed.MozEmbed())
         self.url = None
         self.wrapped_widget_connect('open-uri', self.on_open_uri)
+        self.wrapped_widget_connect('realize', self.on_realize)
         self._widget.set_size_request(200, 100)
         # Seems like a reasonable min-size
 

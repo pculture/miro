@@ -364,6 +364,9 @@ for dir in mozilla_browser_options['include_dirs']:
 
 if nsI:
     mozilla_browser_options['extra_compile_args'].append('-DNS_I_SERVICE_MANAGER_UTILS=1')
+# define PCF_USING_XULRUNNER19 if we're on xulrunner 1.9
+if xulrunner19:
+    mozilla_browser_options['extra_compile_args'].append('-DPCF_USING_XULRUNNER19=1')
 
 #### Xlib Extension ####
 xlib_ext = \
