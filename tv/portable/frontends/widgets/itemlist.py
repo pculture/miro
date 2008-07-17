@@ -46,6 +46,10 @@ from miro.plat import resources
 def sort_items(item_list):
     item_list.sort(key=lambda i: i.release_date, reverse=True)
 
+def play_multiple_placeholder(info_list):
+    for info in info_list:
+        print 'should start playing: ', info.name
+
 class ItemListBase(widgetset.TableView):
     """TableView containing a list of items."""
     def __init__(self):
@@ -103,9 +107,14 @@ class ItemListBase(widgetset.TableView):
 
     def make_context_menu_single(self, item):
         if item.downloaded:
+            def play():
+                print 'should play: ', item.name
+            def play_and_stop():
+                print 'should play then stop: ', item.name
+
             menu = [
-                (_('Play'), app.playback_manager.play_pause),
-                (_('Play Just this Video'), app.playback_manager.play_pause),
+                (_('Play'), play),
+                (_('Play Just this Video'), play_and_stop),
                 (_('Add to New Playlist'), app.widgetapp.add_new_playlist),
                 (_('Remove From the Library'), app.widgetapp.remove_videos),
             ]
@@ -156,8 +165,11 @@ class ItemListBase(widgetset.TableView):
 
         menu = []
         if downloaded > 0:
+            def play():
+                for info in selection:
+                    print 'should play: ', info.name
             menu.append((_('%d Downloaded Items') % downloaded, None))
-            menu.append((_('Play'), app.playback_manager.play_pause))
+            menu.append((_('Play'), play)),
             menu.append((_('Add to New Playlist'),
                 app.widgetapp.add_new_playlist))
             menu.append((_('Remove From the Library'),
