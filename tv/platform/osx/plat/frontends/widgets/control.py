@@ -198,6 +198,13 @@ class OptionMenu(AttributedStringStyler):
         for option in options:
             self.view.addItemWithTitle_(option)
 
+    def set_size(self, scale):
+        AttributedStringStyler.set_size(self, scale)
+        if scale == 0.85:
+            self.view.cell().setControlSize_(NSSmallControlSize)
+        else:
+            self.view.cell().setControlSize_(NSRegularControlSize)
+
     def calc_size_request(self):
         return self.view.cell().cellSize()
 

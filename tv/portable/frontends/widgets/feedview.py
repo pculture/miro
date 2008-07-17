@@ -197,19 +197,21 @@ class FeedView(itemlist.ItemContainerView):
         background.add(hbox)
         return background
 
-    def style_toolbar_widget(self, widget):
-        widget.set_size(0.85)
-        widget.set_color((0.43, 0.43, 0.43))
-        widget.set_bold(True)
-
     def make_toolbar_button(self, text):
         button = widgetset.Button(text, style='smooth')
         return button
 
     def build_toolbar(self):
         hbox = widgetset.HBox(spacing=5)
+        toolbar_gray = (0.43, 0.43, 0.43)
+
         label = widgetset.Label(_('Auto Download'))
+        label.set_size(0.85)
+        label.set_color(toolbar_gray)
+        label.set_bold(True)
+
         option_menu = widgetset.OptionMenu((_("All"), _("New"), _("Off")))
+        option_menu.set_size(0.85)
         feed_info = widgetutil.get_feed_info(self.feed_id)
         autodownload_mode = feed_info.autodownload_mode
         if autodownload_mode == 'all':
@@ -219,12 +221,15 @@ class FeedView(itemlist.ItemContainerView):
         elif autodownload_mode == 'off':
             option_menu.select_option(2)
         option_menu.connect('changed', self.on_autodownload_changed)
+        
         send_button = self.make_toolbar_button(_("Send to a friend"))
+        send_button.set_size(0.7)
+        send_button.set_color(toolbar_gray)
+
         settings_button = self.make_toolbar_button(_("Settings"))
-        self.style_toolbar_widget(label)
-        self.style_toolbar_widget(option_menu)
-        self.style_toolbar_widget(send_button)
-        self.style_toolbar_widget(settings_button)
+        settings_button.set_size(0.7)
+        settings_button.set_color(toolbar_gray)
+
         hbox.pack_start(widgetutil.align_middle(label))
         hbox.pack_start(widgetutil.align_middle(option_menu))
         hbox.pack_end(widgetutil.align_middle(settings_button))
