@@ -161,13 +161,13 @@ class TitleDrawer(widgetset.DrawingArea):
 class FeedView(itemlist.ItemContainerView):
     """Handles displaying a feed or feed folder"""
 
-    def __init__(self, feed_id, is_folder):
+    def __init__(self, id, is_folder):
         self.is_folder = is_folder
-        itemlist.ItemContainerView.__init__(self, feed_id)
+        itemlist.ItemContainerView.__init__(self, 'feed', id)
 
     def on_autodownload_changed(self, widget, option):
         setting = ["all", "new", "off"][option]
-        messages.AutodownloadChange(self.feed_id, setting).send_to_backend()
+        messages.AutodownloadChange(self.id, setting).send_to_backend()
 
     def build_widget(self):
         self.downloads_view = DownloadsHidableList()
@@ -189,7 +189,7 @@ class FeedView(itemlist.ItemContainerView):
         return widget
 
     def build_titlebar(self):
-        feed_info = widgetutil.get_feed_info(self.feed_id)
+        feed_info = widgetutil.get_feed_info(self.id)
         hbox = widgetset.HBox()
         hbox.pack_start(widgetset.ImageDisplay(imagepool.get(feed_info.thumbnail)))
         hbox.pack_start(TitleDrawer(feed_info.name), padding=15, expand=True)
@@ -212,7 +212,7 @@ class FeedView(itemlist.ItemContainerView):
 
         option_menu = widgetset.OptionMenu((_("All"), _("New"), _("Off")))
         option_menu.set_size(0.85)
-        feed_info = widgetutil.get_feed_info(self.feed_id)
+        feed_info = widgetutil.get_feed_info(self.id)
         autodownload_mode = feed_info.autodownload_mode
         if autodownload_mode == 'all':
             option_menu.select_option(0)
@@ -248,7 +248,7 @@ class FeedView(itemlist.ItemContainerView):
         return scroller
 
     def expand_lists(self, video_downloaded):
-        feed_info = widgetutil.get_feed_info(self.feed_id)
+        feed_info = widgetutil.get_feed_info(self.id)
         autodownload_mode = feed_info.autodownload_mode
         if (not video_downloaded or autodownload_mode is None or
                 autodownload_mode == 'off'):

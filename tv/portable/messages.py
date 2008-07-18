@@ -160,31 +160,35 @@ class StopTrackingGuides(BackendMessage):
     """Stop tracking guides."""
     pass
 
-class TrackItemsForFeed(BackendMessage):
+class TrackItems(BackendMessage):
     """Begin tracking items for a feed
 
     After this message is sent, the backend will send back a ItemList message,
     then it will send ItemsChanged messages for items in the feed.
 
-    feed_id should be the id of a feed, or it can be one of the following
-    special constants:
+    type is the type of object that we are tracking items for.  It can be one
+    of the following:
 
-    NEW -- Items that haven't been watched
-    DOWNLOADING -- Items being downloaded
-    LIBRARY -- All items
+    'feed' -- Items in a feed
+    'playlist' - Items in a playlist
+    'new' -- Items that haven't been watched
+    'downloading' -- Items being downloaded
+    'library' -- All items
+
+    id should be the id of a feed/playlist. For new, downloading and library
+    it is ignored.
     """
-    NEW = -1
-    DOWNLOADING = -2
-    LIBRARY = -3
 
-    def __init__(self, feed_id):
-        self.feed_id = feed_id
+    def __init__(self, type, id):
+        self.type = type
+        self.id = id
 
-class StopTrackingItemsForFeed(BackendMessage):
+class StopTrackingItems(BackendMessage):
     """Stop tracking items for a feed."""
 
-    def __init__(self, feed_id):
-        self.feed_id = feed_id
+    def __init__(self, type, id):
+        self.type = type
+        self.id = id
 
 class TrackDownloadCount(BackendMessage):
     """Start tracking the number of downloading items.  After this message is
@@ -642,26 +646,30 @@ class ItemList(FrontendMessage):
     """Sends the frontend the initial list of items for a feed
 
     Attributes:
-    feed_id -- Feed the items are in
+    type -- type of object being tracked (same as in TrackItems)
+    id -- id of the object being tracked (same as in TrackItems)
     items -- list of ItemInfo objects
     """
-    def __init__(self, feed_id, items):
-        self.feed_id = feed_id
+    def __init__(self, type, id, items):
+        self.type = type
+        self.id = id
         self.items = [ItemInfo(item) for item in items]
 
 class ItemsChanged(FrontendMessage):
     """Informs the frontend that the items in a feed have changed.
 
     Attributes:
-    feed_id -- feed the items are in
+    type -- type of object being tracked (same as in TrackItems)
+    id -- id of the object being tracked (same as in TrackItems)
     added -- list containing an ItemInfo object for each added item.  The
         order will be the order they were added.
     changed -- set containing an ItemInfo for each changed item.
     removed -- set containing ids for each item that was removed
     """
 
-    def __init__(self, feed_id, added, changed, removed):
-        self.feed_id = feed_id
+    def __init__(self, type, id, added, changed, removed):
+        self.type = type
+        self.id = id
         self.added = added
         self.changed = changed
         self.removed = removed

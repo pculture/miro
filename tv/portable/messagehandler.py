@@ -191,25 +191,28 @@ class ItemTrackerBase(ViewTracker):
     InfoClass = messages.ItemInfo
 
     def make_changed_message(self, added, changed, removed):
-        return messages.ItemsChanged(self.feed_id, added, changed, removed)
+        return messages.ItemsChanged(self.type, self.id, 
+                added, changed, removed)
 
     def get_object_views(self):
         return [self.view]
 
     def send_initial_list(self):
-        messages.ItemList(self.feed_id, self.view).send_to_frontend()
+        messages.ItemList(self.type, self.id, self.view).send_to_frontend()
 
 class FeedItemTracker(ItemTrackerBase):
+    type = 'feed'
     def __init__(self, feed):
         self.view = feed.items
-        self.feed_id = feed.id
+        self.id = feed.id
         ItemTrackerBase.__init__(self)
 
 class FolderItemTracker(ItemTrackerBase):
+    type = 'feed'
     def __init__(self, folder):
         self.view = views.items.filterWithIndex(indexes.itemsByChannelFolder, 
                 folder)
-        self.feed_id = folder.id
+        self.id = folder.id
         ItemTrackerBase.__init__(self)
 
     def unlink(self):
@@ -217,36 +220,42 @@ class FolderItemTracker(ItemTrackerBase):
         self.view.unlink()
 
 class DownloadingItemsTracker(ItemTrackerBase):
+    type = 'downloads'
+    id = None
     def __init__(self):
         self.view = views.downloadingItems
-        self.feed_id = messages.TrackItemsForFeed.DOWNLOADING
         ItemTrackerBase.__init__(self)
 
 class NewItemsTracker(ItemTrackerBase):
+    type = 'new'
+    id = None
     def __init__(self):
         self.view = views.uniqueNewWatchableItems
-        self.feed_id = messages.TrackItemsForFeed.NEW
         ItemTrackerBase.__init__(self)
 
 class LibraryItemsTracker(ItemTrackerBase):
+    type = 'library'
+    id = None
     def __init__(self):
         self.view = views.uniqueWatchableItems
-        self.feed_id = messages.TrackItemsForFeed.LIBRARY
         ItemTrackerBase.__init__(self)
 
 def make_item_tracker(message):
-    if message.feed_id == messages.TrackItemsForFeed.DOWNLOADING:
+    if message.type == 'downloads':
         return DownloadingItemsTracker()
-    elif message.feed_id == messages.TrackItemsForFeed.NEW:
+    elif message.type == 'new':
         return NewItemsTracker()
-    elif message.feed_id == messages.TrackItemsForFeed.LIBRARY:
+    elif message.type == 'library':
         return LibraryItemsTracker()
-    try:
-        feed = views.feeds.getObjectByID(message.feed_id)
-        return FeedItemTracker(feed)
-    except database.ObjectNotFoundError:
-        folder = views.channelFolders.getObjectByID(message.feed_id)
-        return FolderItemTracker(folder)
+    elif message.type == 'feed':
+        try:
+            feed = views.feeds.getObjectByID(message.id)
+            return FeedItemTracker(feed)
+        except database.ObjectNotFoundError:
+            folder = views.channelFolders.getObjectByID(message.id)
+            return FolderItemTracker(folder)
+    else:
+        logging.warn("Unknown TrackItems type: %s", message.type)
 
 class CountTracker(object):
     """Tracks downloads count or new videos count"""
@@ -485,19 +494,27 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_new_playlist_folder(self, message):
         PlaylistFolder(message.name)
 
-    def handle_track_items_for_feed(self, message):
-        if message.feed_id not in self.item_trackers:
+    def item_tracker_key(self, message):
+        return (message.type, message.id)
+
+    def handle_track_items(self, message):
+        key = self.item_tracker_key(message)
+        if key not in self.item_trackers:
             item_tracker = make_item_tracker(message)
-            self.item_trackers[message.feed_id] = item_tracker
+            if item_tracker is None:
+                # message type was wrong
+                return 
+            self.item_trackers[key] = item_tracker
         else:
-            item_tracker = self.item_trackers[message.feed_id]
+            item_tracker = self.item_trackers[key]
         item_tracker.send_initial_list()
 
-    def handle_stop_tracking_items_for_feed(self, message):
+    def handle_stop_tracking_items(self, message):
+        key = self.item_tracker_key(message)
         try:
-            item_tracker = self.item_trackers.pop(message.feed_id)
+            item_tracker = self.item_trackers.pop(key)
         except KeyError:
-            logging.warn("Item tracker not found (id: %s)", message.feed_id)
+            logging.warn("Item tracker not found (id: %s)", message.id)
         else:
             item_tracker.unlink()
 

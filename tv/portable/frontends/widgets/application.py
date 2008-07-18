@@ -694,7 +694,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def handle_item_list(self, message):
         current_display = app.display_manager.current_display
         if isinstance(current_display, displays.ItemListDisplay):
-            if current_display.feed_id == message.feed_id:
+            if current_display.view.should_handle_message(message):
                 current_display.view.handle_item_list(message)
             else:
                 logging.warn("wrong id for feed view (%s feed view: %s)",
@@ -705,7 +705,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def handle_items_changed(self, message):
         current_display = app.display_manager.current_display
         if isinstance(current_display, displays.ItemListDisplay):
-            if current_display.feed_id == message.feed_id:
+            if current_display.view.should_handle_message(message):
                 current_display.view.handle_items_changed(message)
             else:
                 logging.warn("wrong id for feed view (%s feed view: %s)",

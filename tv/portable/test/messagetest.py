@@ -344,7 +344,7 @@ class FakeDownloader(object):
     def getState(self):
         return self.state
 
-class ItemTrackTest(TrackerTest):
+class FeedItemTrackTest(TrackerTest):
     def setUp(self):
         TrackerTest.setUp(self)
         self.items = []
@@ -352,7 +352,7 @@ class ItemTrackTest(TrackerTest):
         self.make_item(u'http://example.com/')
         self.make_item(u'http://example.com/2')
         self.runUrgentCalls()
-        messages.TrackItemsForFeed(self.feed.id).send_to_backend()
+        messages.TrackItems('feed', self.feed.id).send_to_backend()
         self.runUrgentCalls()
 
     def make_item(self, url):
@@ -382,12 +382,14 @@ class ItemTrackTest(TrackerTest):
 
     def checkChangedMessageType(self, message):
         self.assertEquals(type(message), messages.ItemsChanged)
+        self.assertEquals(message.type, 'feed')
 
     def testInitialList(self):
         self.assertEquals(len(self.test_handler.messages), 1)
         message = self.test_handler.messages[0]
         self.assert_(isinstance(message, messages.ItemList))
-        self.assertEquals(message.feed_id, self.feed.id)
+        self.assertEquals(message.type, 'feed')
+        self.assertEquals(message.id, self.feed.id)
 
         self.assertEquals(len(message.items), len(self.items))
         message.items.sort(key=lambda i: i.id)
@@ -415,7 +417,7 @@ class ItemTrackTest(TrackerTest):
         self.checkChangedMessage(1, removed=[self.items[1]])
 
     def testStop(self):
-        messages.StopTrackingItemsForFeed(self.feed.id).send_to_backend()
+        messages.StopTrackingItems('feed', self.feed.id).send_to_backend()
         self.runUrgentCalls()
         self.items[0].entry.title = u'new name'
         self.items[0].signalChange()

@@ -271,15 +271,22 @@ class ItemContainerView(signals.SignalEmitter):
     playlists, folders, downloads tab, etc).
     """
 
-    def __init__(self, feed_id):
+    def __init__(self, type, id):
         signals.SignalEmitter.__init__(self)
         self.create_signal('play-video')
-        self.feed_id = feed_id
+        self.type = type
+        self.id = id
         self.widget = self.build_widget()
         self.start_tracking()
 
     def build_widget(self):
         raise NotImplementedError()
+
+    def should_handle_message(self, message):
+        """Inspect a ItemList or ItemsChanged message and figure out if it's
+        meant for this ItemList.
+        """
+        return message.type == self.type and message.id == self.id
 
     def do_handle_item_list(self, message):
         """Handle an incomming item list.  They will be already sorted.
@@ -303,14 +310,14 @@ class ItemContainerView(signals.SignalEmitter):
         self.emit('play-video', path) # Just forward it along
 
     def start_tracking(self):
-        messages.TrackItemsForFeed(self.feed_id).send_to_backend()
+        messages.TrackItems(self.type, self.id).send_to_backend()
 
     def stop_tracking(self):
-        messages.StopTrackingItemsForFeed(self.feed_id).send_to_backend()
+        messages.StopTrackingItems(self.type, self.id).send_to_backend()
 
 class SimpleItemContainer(ItemContainerView):
     def __init__(self):
-        ItemContainerView.__init__(self, self.feed_id)
+        ItemContainerView.__init__(self, self.type, None)
 
     def build_widget(self):
         vbox = widgetset.VBox()
@@ -348,16 +355,16 @@ class SimpleItemContainer(ItemContainerView):
         self.item_list.model_changed()
 
 class DownloadsView(SimpleItemContainer):
-    feed_id = messages.TrackItemsForFeed.DOWNLOADING
+    type = 'downloads'
     image_filename = 'icon-downloading_large.png'
     title = _("Downloads")
 
 class NewView(SimpleItemContainer):
-    feed_id = messages.TrackItemsForFeed.NEW
+    type = 'new'
     image_filename = 'icon-new_large.png'
     title = _("New Videos")
 
 class LibraryView(SimpleItemContainer):
-    feed_id = messages.TrackItemsForFeed.LIBRARY
+    type = 'library'
     image_filename = 'icon-library_large.png'
     title = _("Library")

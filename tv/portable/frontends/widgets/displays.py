@@ -125,23 +125,13 @@ class ItemListDisplay(TabDisplay):
     def __init__(self, type, selected_tabs):
         tab = selected_tabs[0]
         self.view = self.make_view(tab)
-        self.feed_id = self.view.feed_id
+        self.id = self.view.id
         self.view.connect('play-video', self.on_play_video)
         self.widget = self.view.widget
 
     def on_play_video(self, view, video_path):
         app.playback_manager.start_with_movie_file(video_path)
         app.playback_manager.play()
-
-    def handle_item_list(self, message):
-        if message.feed_id != self.feed_id:
-            raise ValueError("Wrong feed id")
-        self.view.handle_item_list(message)
-
-    def handle_items_changed(self, message):
-        if message.feed_id != self.feed_id:
-            raise ValueError("Wrong feed id")
-        self.view.handle_item_list(message)
 
     def cleanup(self):
         self.view.stop_tracking()
