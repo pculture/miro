@@ -102,12 +102,15 @@ BUTTON_ADD = DialogButton(_("Add"))
 BUTTON_ADD_INTO_NEW_FOLDER = DialogButton(_("Add Into New Folder"))
 BUTTON_KEEP = DialogButton(_("Keep"))
 BUTTON_DELETE = DialogButton(_("Delete"))
+BUTTON_REMOVE = DialogButton(_("Remove"))
 BUTTON_NOT_NOW = DialogButton(_("Not Now"))
 BUTTON_CLOSE_TO_TRAY = DialogButton(_("Close to Tray"))
 BUTTON_LAUNCH_MIRO = DialogButton(_("Launch Miro"))
 BUTTON_DOWNLOAD_ANYWAY = DialogButton(_("Download Anyway"))
 BUTTON_INSTALL_IHEARTMIRO = DialogButton(_("Install iHeartMiro"))
 BUTTON_DONT_INSTALL = DialogButton(_("Don't Install"))
+BUTTON_SUBSCRIBE = DialogButton(_("Subscribe"))
+BUTTON_STOP_WATCHING = DialogButton(_("Stop Watching"))
 
 class Dialog(object):
     """Abstract base class for dialogs."""

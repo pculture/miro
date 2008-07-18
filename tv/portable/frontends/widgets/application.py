@@ -225,10 +225,11 @@ class Application:
             else:
                 description = _('Are you sure you want to delete all %d items?') % total_count
                 ret = dialogs.show_choice_dialog(title, description,
-                                                 [dialogs.BUTTON_OK,
+                                                 [dialogs.BUTTON_DELETE,
                                                   dialogs.BUTTON_CANCEL])
 
-        if ret == dialogs.BUTTON_OK or ret == dialogs.BUTTON_DELETE_FILE:
+        if ret in (dialogs.BUTTON_OK, dialogs.BUTTON_DELETE_FILE,
+                dialogs.BUTTON_DELETE):
             for mem in selection:
                 messages.DeleteVideo(mem.id).send_to_backend()
 
@@ -377,10 +378,10 @@ Are you sure you want to remove these %s channels?  Any downloads in \
 progress will be canceled.""") % len(channel_infos)
 
         ret = dialogs.show_choice_dialog(title, description,
-                                         [dialogs.BUTTON_YES, 
-                                          dialogs.BUTTON_NO])
+                                         [dialogs.BUTTON_REMOVE, 
+                                          dialogs.BUTTON_CANCEL])
 
-        if ret == dialogs.BUTTON_YES:
+        if ret == dialogs.BUTTON_REMOVE:
             for ci in channel_infos:
                 messages.DeleteChannel(ci.id, ci.is_folder, False).send_to_backend()
 
@@ -395,9 +396,9 @@ Are you sure you want to remove %s?""") % channel_infos[0].name
 Are you sure you want to remove these %s channels?""") % len(channel_infos)
 
         ret = dialogs.show_choice_dialog(title, description,
-                                         [dialogs.BUTTON_YES, 
-                                          dialogs.BUTTON_NO])
-        if ret == dialogs.BUTTON_YES:
+                                         [dialogs.BUTTON_REMOVE, 
+                                          dialogs.BUTTON_CANCEL])
+        if ret == dialogs.BUTTON_REMOVE:
             for ci in channel_infos:
                 messages.DeleteChannel(ci.id, ci.is_folder, False).send_to_backend()
 
@@ -411,9 +412,9 @@ Are you sure you want to stop watching %s?""") % channel_infos[0].name
             description = _("""\
 Are you sure you want to stop watching these %s directories?""") % len(channel_infos)
         ret = dialogs.show_choice_dialog(title, description,
-                                         [dialogs.BUTTON_YES, 
-                                          dialogs.BUTTON_NO])
-        if ret == dialogs.BUTTON_YES:
+                                         [dialogs.BUTTON_STOP_WATCHING, 
+                                          dialogs.BUTTON_CANCEL])
+        if ret == dialogs.BUTTON_STOP_WATCHING:
             for ci in channel_infos:
                 messages.DeleteChannel(ci.id, ci.is_folder, False).send_to_backend()
 
@@ -547,10 +548,10 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
                     len(playlist_infos)
 
         ret = dialogs.show_choice_dialog(title, description,
-                                         [dialogs.BUTTON_YES,
-                                          dialogs.BUTTON_NO])
+                                         [dialogs.BUTTON_REMOVE,
+                                          dialogs.BUTTON_CANCEL])
 
-        if ret == dialogs.BUTTON_YES:
+        if ret == dialogs.BUTTON_REMOVE:
             for pi in playlist_infos:
                 messages.DeletePlaylist(pi.id, pi.is_folder).send_to_backend()
 
@@ -562,9 +563,9 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
             description = _('Are you sure you want to remove %s') % \
                     info.name
             ret = dialogs.show_choice_dialog(title, description,
-                    [dialogs.BUTTON_YES, dialogs.BUTTON_NO])
+                    [dialogs.BUTTON_REMOVE, dialogs.BUTTON_CANCEL])
 
-            if ret == dialogs.BUTTON_YES:
+            if ret == dialogs.BUTTON_REMOVE:
                 messages.DeleteSite(info.id).send_to_backend()
 
     def quit_ui(self):

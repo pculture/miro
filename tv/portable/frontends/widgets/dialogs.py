@@ -41,7 +41,7 @@ from miro.plat.frontends.widgets import widgetset
 from miro.dialogs import BUTTON_OK, BUTTON_CANCEL, BUTTON_IGNORE, \
         BUTTON_SUBMIT_REPORT, BUTTON_YES, BUTTON_NO, BUTTON_KEEP_VIDEOS, \
         BUTTON_DELETE_VIDEOS, BUTTON_CANCEL, BUTTON_DELETE_FILE, \
-        BUTTON_REMOVE_ENTRY
+        BUTTON_REMOVE_ENTRY, BUTTON_REMOVE, BUTTON_SUBSCRIBE
 
 def show_about():
     window = widgetset.AboutDialog()

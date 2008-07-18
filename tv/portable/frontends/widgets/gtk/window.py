@@ -239,7 +239,10 @@ _stock = { dialogs.BUTTON_OK.text : gtk.STOCK_OK,
            dialogs.BUTTON_CANCEL.text : gtk.STOCK_CANCEL,
            dialogs.BUTTON_YES.text : gtk.STOCK_YES,
            dialogs.BUTTON_NO.text : gtk.STOCK_NO,
-           dialogs.BUTTON_QUIT.text : gtk.STOCK_QUIT}
+           dialogs.BUTTON_QUIT.text : gtk.STOCK_QUIT,
+           dialogs.BUTTON_REMOVE.text : gtk.STOCK_REMOVE,
+           dialogs.BUTTON_DELETE.text : gtk.STOCK_DELETE,
+    }
 
 class Dialog(WindowBase):
     def __init__(self, title, description):
