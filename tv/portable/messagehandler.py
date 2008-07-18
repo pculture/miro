@@ -207,7 +207,7 @@ class FeedItemTracker(ItemTrackerBase):
         self.id = feed.id
         ItemTrackerBase.__init__(self)
 
-class FolderItemTracker(ItemTrackerBase):
+class FeedFolderItemTracker(ItemTrackerBase):
     type = 'feed'
     def __init__(self, folder):
         self.view = views.items.filterWithIndex(indexes.itemsByChannelFolder, 
@@ -218,6 +218,13 @@ class FolderItemTracker(ItemTrackerBase):
     def unlink(self):
         ItemTrackerBase.unlink(self)
         self.view.unlink()
+
+class PlaylistItemTracker(ItemTrackerBase):
+    type = 'playlist'
+    def __init__(self, playlist):
+        self.view = playlist.trackedItems.view
+        self.id = playlist.id
+        ItemTrackerBase.__init__(self)
 
 class DownloadingItemsTracker(ItemTrackerBase):
     type = 'downloads'
@@ -253,7 +260,14 @@ def make_item_tracker(message):
             return FeedItemTracker(feed)
         except database.ObjectNotFoundError:
             folder = views.channelFolders.getObjectByID(message.id)
-            return FolderItemTracker(folder)
+            return FeedFolderItemTracker(folder)
+    elif message.type == 'playlist':
+        try:
+            playlist = views.playlists.getObjectByID(message.id)
+            return PlaylistItemTracker(playlist)
+        except database.ObjectNotFoundError:
+            playlist = views.playlistFolders.getObjectByID(message.id)
+            return PlaylistItemTracker(playlist)
     else:
         logging.warn("Unknown TrackItems type: %s", message.type)
 

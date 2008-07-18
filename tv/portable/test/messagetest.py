@@ -425,3 +425,87 @@ class FeedItemTrackTest(TrackerTest):
         self.make_item(u'http://example.com/4')
         self.runUrgentCalls()
         self.assertEquals(len(self.test_handler.messages), 1)
+
+class PlaylistItemTrackTest(TrackerTest):
+    def setUp(self):
+        TrackerTest.setUp(self)
+        self.items = []
+        self.feed = Feed(u'dtv:manualFeed')
+        self.playlist = SavedPlaylist(u'test playlist')
+        self.make_item(u'http://example.com/')
+        self.make_item(u'http://example.com/2')
+        self.runUrgentCalls()
+        messages.TrackItems('playlist', self.playlist.id).send_to_backend()
+        self.runUrgentCalls()
+
+    def make_item(self, url):
+        item = Item(entry=getEntryForURL(url), feed_id=self.feed.id)
+        self.items.append(item)
+        self.playlist.addItem(item)
+
+    def checkDownloadInfo(self, info, item):
+        downloader = item.downloader
+        self.assertEquals(info.current_size, downloader.getCurrentSize())
+        self.assertEquals(info.rate, downloader.getRate())
+        self.assertEquals(info.state, downlader.getState())
+
+    def checkInfo(self, itemInfo, item):
+        self.assertEquals(itemInfo.name, item.getTitle())
+        self.assertEquals(itemInfo.description, item.getDescription())
+        self.assertEquals(itemInfo.release_date, item.getReleaseDateObj())
+        self.assertEquals(itemInfo.size, item.getSize())
+        self.assertEquals(itemInfo.permalink, item.getLink())
+        self.assertEquals(itemInfo.id, item.id)
+        self.assertEquals(itemInfo.expiration_date, item.getExpirationTime())
+        self.assertEquals(itemInfo.thumbnail, item.getThumbnail())
+        self.assertEquals(itemInfo.thumbnail_large, item.getThumbnailLarge())
+        if item.downloader:
+            self.checkDownloadInfo(itemInfo.download_info)
+        else:
+            self.assertEquals(itemInfo.download_info, None)
+
+    def checkChangedMessageType(self, message):
+        self.assertEquals(type(message), messages.ItemsChanged)
+        self.assertEquals(message.type, 'playlist')
+
+    def testInitialList(self):
+        self.assertEquals(len(self.test_handler.messages), 1)
+        message = self.test_handler.messages[0]
+        self.assert_(isinstance(message, messages.ItemList))
+        self.assertEquals(message.type, 'playlist')
+        self.assertEquals(message.id, self.playlist.id)
+
+        self.assertEquals(len(message.items), len(self.items))
+        message.items.sort(key=lambda i: i.id)
+        self.checkInfoList(message.items, self.items)
+
+    def testUpdate(self):
+        self.items[0].entry.title = u'new name'
+        self.items[0].signalChange()
+        self.runUrgentCalls()
+        self.assertEquals(len(self.test_handler.messages), 2)
+        self.checkChangedMessage(1, changed=[self.items[0]])
+
+    def testAdd(self):
+        self.make_item(u'http://example.com/3')
+        self.make_item(u'http://example.com/4')
+        self.make_item(u'http://example.com/5')
+        self.runUrgentCalls()
+        self.assertEquals(len(self.test_handler.messages), 2)
+        self.checkChangedMessage(1, added=self.items[2:])
+
+    def testRemove(self):
+        self.items[1].remove()
+        self.runUrgentCalls()
+        self.assertEquals(len(self.test_handler.messages), 2)
+        self.checkChangedMessage(1, removed=[self.items[1]])
+
+    def testStop(self):
+        messages.StopTrackingItems('playlist', self.playlist.id).send_to_backend()
+        self.runUrgentCalls()
+        self.items[0].entry.title = u'new name'
+        self.items[0].signalChange()
+        self.items[1].remove()
+        self.make_item(u'http://example.com/4')
+        self.runUrgentCalls()
+        self.assertEquals(len(self.test_handler.messages), 1)

@@ -317,7 +317,7 @@ class ItemContainerView(signals.SignalEmitter):
 
 class SimpleItemContainer(ItemContainerView):
     def __init__(self):
-        ItemContainerView.__init__(self, self.type, None)
+        ItemContainerView.__init__(self, self.type, self.id)
 
     def build_widget(self):
         vbox = widgetset.VBox()
@@ -356,15 +356,26 @@ class SimpleItemContainer(ItemContainerView):
 
 class DownloadsView(SimpleItemContainer):
     type = 'downloads'
+    id = None
     image_filename = 'icon-downloading_large.png'
     title = _("Downloads")
 
 class NewView(SimpleItemContainer):
     type = 'new'
+    id = None
     image_filename = 'icon-new_large.png'
     title = _("New Videos")
 
 class LibraryView(SimpleItemContainer):
     type = 'library'
+    id = None
     image_filename = 'icon-library_large.png'
     title = _("Library")
+
+class PlaylistView(SimpleItemContainer):
+    image_filename = 'playlist-icon.png'
+    def __init__(self, playlist_info):
+        self.type = 'playlist'
+        self.id = playlist_info.id
+        self.title = playlist_info.name
+        SimpleItemContainer.__init__(self)

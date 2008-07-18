@@ -66,6 +66,7 @@ class DisplayManager(object):
     def __init__(self):
         self.display_classes = [
                 FeedDisplay,
+                PlaylistDisplay,
                 SiteDisplay,
                 LibraryDisplay,
                 NewVideosDisplay,
@@ -146,6 +147,14 @@ class FeedDisplay(ItemListDisplay):
 
     def make_view(self, tab):
         return feedview.FeedView(tab.id, tab.is_folder)
+
+class PlaylistDisplay(ItemListDisplay):
+    @staticmethod
+    def should_display(type, selected_tabs):
+        return type == 'playlist' and len(selected_tabs) == 1
+
+    def make_view(self, playlist_info):
+        return itemlist.PlaylistView(playlist_info)
 
 class DownloadingDisplay(ItemListDisplay):
     @staticmethod
