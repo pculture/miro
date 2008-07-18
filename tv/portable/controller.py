@@ -207,6 +207,7 @@ class Controller:
     def removeFeed(self, channel_info):
         return self.removeFeeds([channel_info])
 
+    @eventloop.asUrgent
     def shutdown(self):
         logging.info ("Shutting down Downloader...")
         downloader.shutdownDownloader(self.downloaderShutdown)
