@@ -144,7 +144,6 @@ class TabDnDReorder(object):
                 self.removed_children[row[0].id] = children
                 iter = self.remove_row(model, iter, tuple(row))
             else:
-                to_remove = []
                 child_iter = model.child_iter(iter)
                 while child_iter is not None:
                     row = model[child_iter]
