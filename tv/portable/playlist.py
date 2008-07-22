@@ -197,6 +197,9 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
             folder = views.playlistFolders.getObjectByID(old_folder_id)
             for id in self.item_ids:
                 folder.checkItemIDRemoved(id)
+        if newFolder:
+            for id in self.item_ids:
+                newFolder.checkItemIDAdded(id)
 
     def handleRemove(self, ids):
         """Handle the user removing a set of IDs.  This method will also check

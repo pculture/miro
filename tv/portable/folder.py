@@ -215,6 +215,10 @@ class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
         if view.len() == 0 and id in self.trackedItems:
             self.removeID(id)
 
+    def checkItemIDAdded(self, id):
+        if id not in self.trackedItems:
+            self.trackedItems.appendID(id)
+
     def renameTitle(self):
         return _("Rename Playlist Folder")
     def renameText(self):
