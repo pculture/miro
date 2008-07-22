@@ -179,8 +179,6 @@ class ProgressSlider(widgetset.CustomSlider):
         return 1
 
     def draw(self, context, layout):
-        if (self.get_value() == 0):
-            return
         min, max = self.get_range()
         progress_width = int(round(self.get_value() / max * context.width))
         self.progress_surface.draw(context, 0, 0, progress_width)

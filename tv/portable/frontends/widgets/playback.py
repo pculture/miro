@@ -28,7 +28,7 @@
 
 from miro import app
 from miro import signals
-from miro import eventloop
+from miro.plat.frontends.widgets import timer
 from miro.frontends.widgets.displays import VideoDisplay
 #from miro.frontends.widgets.displays import AudioDisplay
 #from miro.frontends.widgets.displays import ExternalVideoDisplay
@@ -68,7 +68,7 @@ class PlaybackManager (signals.SignalEmitter):
             if self.is_playing and not self.is_paused:
                 self.notify_update()
                 self.schedule_update()
-        eventloop.addTimeout(0.5, notify_and_reschedule, "Notifying playback progress")
+        timer.add(0.5, notify_and_reschedule)
 
     def notify_update(self):
         if self.video_display is not None:
