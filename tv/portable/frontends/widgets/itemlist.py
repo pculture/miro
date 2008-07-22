@@ -46,10 +46,6 @@ from miro.plat import resources
 def sort_items(item_list):
     item_list.sort(key=lambda i: i.release_date, reverse=True)
 
-def play_multiple_placeholder(info_list):
-    for info in info_list:
-        print 'should start playing: ', info.name
-
 class ItemListBase(widgetset.TableView):
     """TableView containing a list of items."""
     def __init__(self):
