@@ -121,6 +121,14 @@ class ItemListBase(widgetset.TableView):
         else:
             return self.make_context_menu_multiple(selected)
 
+    def _remove_context_menu_item(self, selection):
+        return (_('Remove From the Library'), app.widgetapp.remove_videos)
+
+    def _add_remove_context_menu_item(self, menu, selection):
+        remove = self._remove_context_menu_item(selection)
+        if remove is not None:
+            menu.append(remove)
+
     def make_context_menu_single(self, item):
         if item.downloaded:
             def play():
@@ -132,8 +140,8 @@ class ItemListBase(widgetset.TableView):
                 (_('Play'), play),
                 (_('Play Just this Video'), play_and_stop),
                 (_('Add to New Playlist'), app.widgetapp.add_new_playlist),
-                (_('Remove From the Library'), app.widgetapp.remove_videos),
             ]
+            self._add_remove_context_menu_item(menu, [item])
             if item.video_watched:
                 menu.append((_('Mark as Unwatched'),
                     messages.MarkItemUnwatched(item.id).send_to_backend))
@@ -188,8 +196,7 @@ class ItemListBase(widgetset.TableView):
             menu.append((_('Play'), play)),
             menu.append((_('Add to New Playlist'),
                 app.widgetapp.add_new_playlist))
-            menu.append((_('Remove From the Library'),
-                app.widgetapp.remove_videos))
+            self._add_remove_context_menu_item(menu, selection)
             if watched:
                 def mark_unwatched():
                     for item in selection:
@@ -337,10 +344,13 @@ class SimpleItemContainer(ItemContainerView):
     def __init__(self):
         ItemContainerView.__init__(self, self.type, self.id)
 
+    def make_item_list(self):
+        return ItemList()
+
     def build_widget(self):
         vbox = widgetset.VBox()
         vbox.pack_start(self.build_titlebar())
-        self.item_list = ItemList()
+        self.item_list = self.make_item_list()
         self.item_list.connect('play-video', self.on_play_video)
         scroller = widgetset.Scroller(False, True)
         scroller.add(self.item_list)

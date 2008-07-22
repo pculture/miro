@@ -319,6 +319,11 @@ class AddVideosToPlaylist(BackendMessage):
         self.playlist_id = playlist_id
         self.video_ids = video_ids
 
+class RemoveVideosFromPlaylist(BackendMessage):
+    def __init__(self, playlist_id, video_ids):
+        self.playlist_id = playlist_id
+        self.video_ids = video_ids
+
 class DownloadURL(BackendMessage):
     def __init__(self, url):
         self.url = util.toUni(url)

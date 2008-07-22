@@ -544,6 +544,23 @@ class BackendMessageHandler(messages.MessageHandler):
             else:
                 playlist.addItem(item)
 
+    def handle_remove_videos_from_playlist(self, message):
+        try:
+            playlist = views.playlists.getObjectByID(message.playlist_id)
+        except database.ObjectNotFoundError:
+            logging.warn("RemoveVideosFromPlaylist: Playlist not found -- %s", 
+                    message.playlist_id)
+            return
+        to_remove = []
+        for id in message.video_ids:
+            if not playlist.idInPlaylist(id):
+                logging.warn("RemoveVideosFromPlaylist: Id not found -- %s",
+                        id)
+            else:
+                to_remove.append(id)
+        if to_remove:
+            playlist.handleRemove(to_remove)
+
     def item_tracker_key(self, message):
         return (message.type, message.id)
 

@@ -29,6 +29,7 @@
 """playlist.py -- Handle displaying a playlist."""
 
 from miro import messages
+from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import itemlist
 
@@ -120,13 +121,32 @@ class DropHandler(object):
         messages.PlaylistReordered(self.playlist_id,
                 item_ids).send_to_backend()
 
+class PlaylistItemList(itemlist.ItemList):
+    def __init__(self, playlist_id, is_folder):
+        itemlist.ItemList.__init__(self)
+        self.playlist_id = playlist_id
+        self.is_folder = is_folder
+        self.set_drag_dest(DropHandler(self.playlist_id, self))
+
+    def _remove_context_menu_item(self, selection):
+        if self.is_folder:
+            return None
+        def do_remove():
+            ids = [info.id for info in selection]
+            messages.RemoveVideosFromPlaylist(self.playlist_id,
+                    ids).send_to_backend()
+        return (_('Remove From Playlist'), do_remove)
+
 class PlaylistView(itemlist.SimpleItemContainer):
     SORT_ITEMS = False
     image_filename = 'playlist-icon.png'
+
+    def make_item_list(self):
+        return PlaylistItemList(self.id, self.is_folder)
 
     def __init__(self, playlist_info):
         self.type = 'playlist'
         self.id = playlist_info.id
         self.title = playlist_info.name
+        self.is_folder = playlist_info.is_folder
         itemlist.SimpleItemContainer.__init__(self)
-        self.item_list.set_drag_dest(DropHandler(self.id, self.item_list))

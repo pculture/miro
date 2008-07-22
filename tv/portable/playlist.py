@@ -118,6 +118,9 @@ class PlaylistMixin:
         self.trackedItems.moveID(id, newPosition)
         self.signalChange()
 
+    def idInPlaylist(self, id):
+        return id in self.trackedItems
+
     def addItem(self, item):
         return self.addID(item.getID())
 
