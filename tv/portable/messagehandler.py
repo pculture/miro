@@ -528,14 +528,14 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_add_videos_to_playlist(self, message):
         try:
             playlist = views.playlists.getObjectByID(message.playlist_id)
-        except ObjectNotFoundError:
+        except database.ObjectNotFoundError:
             logging.warn("AddVideosToPlaylist: Playlist not found -- %s", 
                     message.playlist_id)
             return
         for id in message.video_ids:
             try:
                 item = views.items.getObjectByID(id)
-            except ObjectNotFoundError:
+            except database.ObjectNotFoundError:
                 logging.warn("AddVideosToPlaylist: Item not found -- %s", id)
                 continue
             if not item.isDownloaded():
