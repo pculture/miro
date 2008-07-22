@@ -286,6 +286,7 @@ class ItemContainerView(signals.SignalEmitter):
     """Base class for views that display objects that contain items (feeds,
     playlists, folders, downloads tab, etc).
     """
+    SORT_ITEMS = True
 
     def __init__(self, type, id):
         signals.SignalEmitter.__init__(self)
@@ -315,7 +316,8 @@ class ItemContainerView(signals.SignalEmitter):
         pass
 
     def handle_item_list(self, message):
-        sort_items(message.items)
+        if self.SORT_ITEMS:
+            sort_items(message.items)
         self.do_handle_item_list(message)
 
     def handle_items_changed(self, message):
@@ -387,11 +389,3 @@ class LibraryView(SimpleItemContainer):
     id = None
     image_filename = 'icon-library_large.png'
     title = _("Library")
-
-class PlaylistView(SimpleItemContainer):
-    image_filename = 'playlist-icon.png'
-    def __init__(self, playlist_info):
-        self.type = 'playlist'
-        self.id = playlist_info.id
-        self.title = playlist_info.name
-        SimpleItemContainer.__init__(self)

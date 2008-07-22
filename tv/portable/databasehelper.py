@@ -189,3 +189,12 @@ class TrackedIDList(object):
                 self.insertID(anchorPos, id)
             else:
                 self.appendID(id)
+
+    def reorder(self, newOrder):
+        if set(newOrder) != set(self.positions.keys()):
+            raise ValueError("reorder called with different ids")
+        self.list[:] = newOrder
+        pos = count()
+        for id in newOrder:
+            self.positions[id] = pos.next()
+        self.recomputeSort()

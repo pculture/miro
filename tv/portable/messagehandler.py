@@ -476,8 +476,25 @@ class BackendMessageHandler(messages.MessageHandler):
             else:
                 feed = item_view.getObjectByID(info.id)
                 feed.setFolder(None)
-        tab_order.tab_ids = order
+        tab_order.reorder(order)
         tab_order.signalChange()
+
+    def handle_playlist_reordered(self, message):
+        try:
+            playlist = views.playlists.getObjectByID(message.id)
+        except database.ObjectNotFoundError:
+            try:
+                playlist = views.playlistFolders.getObjectByID(message.id)
+            except database.ObjectNotFoundError:
+                logging.warn("PlaylistReordered: Playlist not found -- %s", 
+                        message.id)
+                return
+
+        if set(playlist.item_ids) != set(message.item_ids):
+            logging.warn("PlaylistReordered: Not all ids present in the new order\nOriginal Ids: %s\nNew ids: %s", playlist.item_ids, message.item_ids)
+            return
+        playlist.reorder(message.item_ids)
+        playlist.signalChange()
 
     def handle_new_guide(self, message):
         url = message.url

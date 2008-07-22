@@ -369,6 +369,9 @@ class TabOrder(database.DDBObject):
         if sendSignalChange:
             self.signalChange()
 
+    def reorder(self, newOrder):
+        self.trackedTabs.reorder(newOrder)
+
 # Remove all static tabs from the database
 def removeStaticTabs():
     app.db.confirmDBThread()

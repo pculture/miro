@@ -138,6 +138,9 @@ class PlaylistMixin:
                 for child in item.getChildren():
                     self.addID(child.getID())
 
+    def reorder(self, newOrder):
+        self.trackedItems.reorder(newOrder)
+
     def handleDNDReorder(self, anchorItem, draggedItems):
         """Handle drag-and-drop reordering of the playlist."""
         for iid in draggedItems:

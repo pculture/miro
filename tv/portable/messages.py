@@ -415,6 +415,17 @@ class TabsReordered(BackendMessage):
     def append_child(self, parent_id, info):
         self.folder_children[parent_id].append(info)
 
+class PlaylistReordered(BackendMessage):
+    """Inform the backend when the items in a playlist are re-ordered.
+
+    Attributes:
+    id -- playlist that was re-ordered
+    item_ids -- List of ids for item in the playlist, in their new order.
+    """
+    def __init__(self, id, item_ids):
+        self.id = id
+        self.item_ids = item_ids
+
 class SubscriptionLinkClicked(BackendMessage):
     """Inform the backend that the user clicked on a subscription link in a
     web browser.

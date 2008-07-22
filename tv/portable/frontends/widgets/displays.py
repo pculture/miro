@@ -34,6 +34,7 @@ from miro import app
 from miro.frontends.widgets import browser
 from miro.frontends.widgets import feedview
 from miro.frontends.widgets import itemlist
+from miro.frontends.widgets import playlist
 from miro.plat.frontends.widgets import widgetset
 
 class Display(object):
@@ -154,7 +155,7 @@ class PlaylistDisplay(ItemListDisplay):
         return type == 'playlist' and len(selected_tabs) == 1
 
     def make_view(self, playlist_info):
-        return itemlist.PlaylistView(playlist_info)
+        return playlist.PlaylistView(playlist_info)
 
 class DownloadingDisplay(ItemListDisplay):
     @staticmethod

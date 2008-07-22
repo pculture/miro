@@ -713,6 +713,9 @@ class TableModel(object):
     def next_iter(self, iter):
         return self._model.iter_next(iter)
 
+    def nth_iter(self, index):
+        return self._model.iter_nth_child(None, index)
+
     def __iter__(self):
         return iter(self._model)
 
