@@ -158,7 +158,10 @@ class ProgressSlider(widgetset.CustomSlider):
         app.playback_manager.connect('did-stop', self.handle_stop)
 
     def handle_progress(self, obj, elapsed, total):
-        self.set_value(elapsed/total)
+        if total > 0:
+            self.set_value(float(elapsed)/total)
+        else:
+            self.set_value(0)
 
     def handle_stop(self, obj):
         self.set_value(0)
@@ -196,6 +199,7 @@ class ProgressTimeline(widgetset.Background):
         self.background = widgetutil.ThreeImageSurface('display')
         self.duration = self.current_time = None
         self.slider = ProgressSlider()
+        self.slider.set_range(0, 1)
         self.time = ProgressTime()
         self.slider.connect('clicked', self.on_slider_clicked)
         self.slider.connect('moved', self.on_slider_moved)

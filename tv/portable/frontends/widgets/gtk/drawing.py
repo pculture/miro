@@ -60,7 +60,7 @@ class ImageSurface:
     def get_size(self):
         return self.width, self.height
 
-    def draw(self, context, x, y, width, height):
+    def draw(self, context, x, y, width, height, fraction=1.0):
         m = cairo.Matrix()
         m.translate(-x, -y)
         self.pattern.set_matrix(m)
@@ -69,7 +69,11 @@ class ImageSurface:
         cairo_context.set_source(self.pattern)
         cairo_context.new_path()
         cairo_context.rectangle(x, y, width, height)
-        cairo_context.fill()
+        if fraction >= 1.0:
+            cairo_context.fill()
+        else:
+            cairo_context.clip()
+            cairo_context.paint_with_alpha(fraction)
         cairo_context.restore()
 
 class DrawingStyle(object):

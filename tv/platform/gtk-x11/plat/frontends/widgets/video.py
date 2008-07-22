@@ -95,10 +95,15 @@ class VideoRenderer (Widget):
         self.renderer.selectFile(path)
 
     def get_elapsed_playback_time(self):
-        return 0.0
+        # FIXME, why use a callback here?
+        result = []
+        def callback(time):
+            result.append(time)
+        self.renderer.getCurrentTime(callback)
+        return result[0]
 
     def get_total_playback_time(self):
-        return 0.0
+        return self.renderer.getDuration()
 
     def play(self):
         confirmMainThread()
@@ -113,4 +118,5 @@ class VideoRenderer (Widget):
         self.renderer.stop()
 
     def seek_to(self, position):
-        pass
+        time = self.get_total_playback_time() * position
+        self.renderer.setCurrentTime(time)

@@ -100,6 +100,7 @@ class CustomScaleMixin(CustomControlMixin):
         self.drag_inbounds = True
         self.move_slider_to_mouse(event.x, event.y)
         self.grab_focus()
+        wrappermap.wrapper(self).emit('clicked')
 
     def do_motion_notify_event(self, event):
         if self.in_drag:
@@ -141,6 +142,7 @@ class CustomScaleMixin(CustomControlMixin):
                 (0 <= event.x < self.allocation.width) and
                 (0 <= event.y < self.allocation.height)):
             wrappermap.wrapper(self).emit('changed', self.get_value())
+        wrappermap.wrapper(self).emit('released')
 
 class CustomHScaleWidget(CustomScaleMixin, gtk.HScale):
     def __init__(self):
@@ -220,13 +222,15 @@ class ContinuousCustomButton(Drawable, Widget):
 class CustomSlider(Drawable, Widget):
     def __init__(self):
         Widget.__init__(self)
+        self.create_signal('clicked')
+        self.create_signal('released')
         self.create_signal('changed')
         self.create_signal('moved')
         if self.is_horizontal():
             self.set_widget(CustomHScaleWidget())
         else:
             self.set_widget(CustomVScaleWidget())
-        self._widget.connect('move-slider', self.on_slider_move)
+        self.wrapped_widget_connect('move-slider', self.on_slider_move)
 
     def on_slider_move(self, widget, scrolltype):
         self.emit('changed', widget.get_value())
