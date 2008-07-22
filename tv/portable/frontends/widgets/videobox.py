@@ -90,7 +90,7 @@ class ProgressTime(widgetset.DrawingArea):
         self.queue_redraw()
 
     def draw(self, context, layout):
-        if self.current_time is None:
+        if not app.playback_manager.is_playing:
             return
         layout.set_font(0.75)
         layout.set_text_color(widgetutil.WHITE)
@@ -132,7 +132,7 @@ class ProgressTimeRemaining(widgetset.CustomButton):
         self.queue_redraw()
 
     def draw(self, context, layout):
-        if self.current_time is None or self.duration is None:
+        if self.current_time is None or self.duration is None or not app.playback_manager.is_playing:
             return
         if self.display_remaining:
             text = '-' + format_time(self.duration - self.current_time)
@@ -179,6 +179,8 @@ class ProgressSlider(widgetset.CustomSlider):
         return 1
 
     def draw(self, context, layout):
+        if not app.playback_manager.is_playing:
+            return
         min, max = self.get_range()
         progress_width = int(round(self.get_value() / max * context.width))
         self.progress_surface.draw(context, 0, 0, progress_width)
@@ -217,8 +219,6 @@ class ProgressTimeline(widgetset.Background):
         app.playback_manager.suspend()
         
     def on_slider_moved(self, slider, new_time):
-#        self.time.set_current_time(new_time)
-#        self.remaining_time.set_current_time(new_time)
         app.playback_manager.seek_to(new_time)
 
     def on_slider_released(self, slider):
