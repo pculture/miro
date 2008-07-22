@@ -66,7 +66,8 @@ class PlaybackManager (signals.SignalEmitter):
     def schedule_update(self):
         def notify_and_reschedule():
             if self.is_playing and not self.is_paused:
-                self.notify_update()
+                if not self.is_suspended:
+                    self.notify_update()
                 self.schedule_update()
         timer.add(0.5, notify_and_reschedule)
 
@@ -84,6 +85,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.schedule_update()
         self.is_playing = True
         self.is_paused = False
+        self.is_suspended = False
 
     def pause(self):
         if self.is_playing:
@@ -105,11 +107,14 @@ class PlaybackManager (signals.SignalEmitter):
     def suspend(self):
         if self.is_playing and not self.is_paused:
             self.video_display.pause()
+        self.is_suspended = True
     
     def resume(self):
         if self.is_playing and not self.is_paused:
             self.video_display.play()
+        self.is_suspended = False
 
     def seek_to(self, progress):
         self.video_display.seek_to(progress)
-        self.notify_update()
+        total = self.video_display.get_total_playback_time()
+        self.emit('playback-did-progress', progress * total, total)
