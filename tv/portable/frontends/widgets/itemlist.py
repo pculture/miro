@@ -46,6 +46,25 @@ from miro.plat import resources
 def sort_items(item_list):
     item_list.sort(key=lambda i: i.release_date, reverse=True)
 
+class ItemListDragHandler(object):
+    def allowed_actions(self):
+        return widgetset.DRAG_ACTION_COPY
+
+    def allowed_types(self):
+        return ('downloaded-item',)
+
+    def begin_drag(self, tableview, rows):
+        videos = []
+        for row in rows:
+            item_info = row[0]
+            if item_info.downloaded:
+                videos.append(item_info)
+        if videos:
+            data = '-'.join(str(info.id) for info in videos)
+            return {'downloaded-item':  data }
+        else:
+            return None
+
 class ItemListBase(widgetset.TableView):
     """TableView containing a list of items."""
     def __init__(self):
@@ -60,6 +79,7 @@ class ItemListBase(widgetset.TableView):
         self.item_iters = {}
         app.item_list_manager.manage_item_list(self)
         self.set_context_menu_callback(self.on_context_menu)
+        self.set_drag_source(ItemListDragHandler())
 
     def do_hotspot_clicked(self, name, iter):
         item_info = self.model[iter][0]

@@ -85,10 +85,6 @@ class StaticTabList(object):
         return self.view.model[self.iter_map[name]][0]
 
 class TabListDragHandler(object):
-    def __init__(self, item_type, folder_type):
-        self.item_type = item_type
-        self.folder_type = folder_type
-
     def allowed_actions(self):
         return widgetset.DRAG_ACTION_MOVE
 
@@ -177,10 +173,8 @@ class TabDnDReorder(object):
         return retval
 
 class TabListDropHandler(object):
-    def __init__(self, tablist, item_type, folder_type):
+    def __init__(self, tablist):
         self.tablist = tablist
-        self.item_type = item_type
-        self.folder_type = folder_type
 
     def allowed_actions(self):
         return widgetset.DRAG_ACTION_COPY
@@ -234,6 +228,55 @@ class TabListDropHandler(object):
         self.tablist.send_new_order()
         self.tablist.doing_change = False
         return True
+
+class FeedListDropHandler(TabListDropHandler):
+    item_type = 'feed'
+    folder_type = 'feed-with-folder'
+
+class FeedListDragHandler(TabListDragHandler):
+    item_type = 'feed'
+    folder_type = 'feed-with-folder'
+
+class PlaylistListDropHandler(TabListDropHandler):
+    item_type = 'playlist'
+    folder_type = 'playlist-with-folder'
+
+    def allowed_actions(self):
+        return (TabListDropHandler.allowed_actions(self) | 
+                widgetset.DRAG_ACTION_COPY)
+
+    def allowed_types(self):
+        return TabListDropHandler.allowed_types(self) + ('downloaded-item',)
+
+    def validate_drop(self, table_view, model, type, source_actions, parent,
+            position):
+        if type == 'downloaded-item':
+            if (parent is not None and position == -1 and
+                    not model[parent][0].is_folder):
+                return widgetset.DRAG_ACTION_COPY
+            else:
+                return widgetset.DRAG_ACTION_NONE
+        return TabListDropHandler.validate_drop(self, table_view, model, type,
+                source_actions, parent, position)
+
+    def accept_drop(self, table_view, model, type, source_actions, parent,
+            position, data):
+        if type == 'downloaded-item':
+            if parent is not None and position == -1:
+                playlist_id = model[parent][0].id
+                video_ids = [int(id) for id in data.split('-')]
+                messages.AddVideosToPlaylist(playlist_id,
+                        video_ids).send_to_backend()
+                return True
+            # We shouldn't get here, because don't allow it in validate_drop.
+            # Return False just in case
+            return False
+        return TabListDropHandler.accept_drop(self, table_view, model, type,
+                source_actions, parent, position, data)
+
+class PlaylistListDragHandler(TabListDragHandler):
+    item_type = 'playlist'
+    folder_type = 'playlist-with-folder'
 
 class TabList(object):
     def __init__(self):
@@ -321,13 +364,6 @@ class SiteList(TabList):
 class NestedTabList(TabList):
     """Tablist for tabs that can be put into folders (playlists and feeds)."""
 
-    def __init__(self):
-        TabList.__init__(self)
-        self.view.set_drag_source(TabListDragHandler(self.type, 
-            '%s-with-folder' % self.type))
-        self.view.set_drag_dest(TabListDropHandler(self, self.type,
-            '%s-with-folder' % self.type))
-
     def on_context_menu(self, table_view):
         selected_rows = [table_view.model[iter][0] for iter in \
                 table_view.get_selection()]
@@ -341,6 +377,11 @@ class NestedTabList(TabList):
 
 class FeedList(NestedTabList):
     type = 'feed'
+
+    def __init__(self):
+        TabList.__init__(self)
+        self.view.set_drag_source(FeedListDragHandler())
+        self.view.set_drag_dest(FeedListDropHandler(self))
 
     def init_info(self, info):
         info.icon = imagepool.get_surface(info.tab_icon)
@@ -375,6 +416,11 @@ class FeedList(NestedTabList):
 
 class PlaylistList(NestedTabList):
     type = 'playlist'
+
+    def __init__(self):
+        TabList.__init__(self)
+        self.view.set_drag_source(PlaylistListDragHandler())
+        self.view.set_drag_dest(PlaylistListDropHandler(self))
 
     def init_info(self, info):
         if info.is_folder:

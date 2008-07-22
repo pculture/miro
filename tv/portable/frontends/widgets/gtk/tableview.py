@@ -558,7 +558,10 @@ class TableView(Widget):
                     self.drag_start_y, int(event.x), int(event.y))):
             model, row_paths = treeview.get_selection().get_selected_rows()
             rows = [model[path] for path in row_paths]
-            self.drag_data = self.drag_source.begin_drag(self, rows)
+            drag_data = self.drag_source.begin_drag(self, rows)
+            if drag_data is None:
+                return True
+            self.drag_data = drag_data
             treeview.drag_begin(gtk_target_list(self.drag_data.keys()),
                     self.drag_source.allowed_actions(), 1, event)
 

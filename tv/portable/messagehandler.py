@@ -508,6 +508,25 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_new_playlist_folder(self, message):
         PlaylistFolder(message.name)
 
+    def handle_add_videos_to_playlist(self, message):
+        try:
+            playlist = views.playlists.getObjectByID(message.playlist_id)
+        except ObjectNotFoundError:
+            logging.warn("AddVideosToPlaylist: Playlist not found -- %s", 
+                    message.playlist_id)
+            return
+        for id in message.video_ids:
+            try:
+                item = views.items.getObjectByID(id)
+            except ObjectNotFoundError:
+                logging.warn("AddVideosToPlaylist: Item not found -- %s", id)
+                continue
+            if not item.isDownloaded():
+                logging.warn("AddVideosToPlaylist: Item not downloaded (%s)",
+                        item)
+            else:
+                playlist.addItem(item)
+
     def item_tracker_key(self, message):
         return (message.type, message.id)
 
