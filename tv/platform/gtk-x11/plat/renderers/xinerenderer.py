@@ -43,39 +43,39 @@ from miro.plat import options
 from miro.plat import resources
 from miro.plat.utils import confirmMainThread
 
-def waitForAttach(func):
+def wait_for_attach(func):
     """Many xine calls can't be made until we attach the object to a X window.
     This decorator delays method calls until then.
     """
-    def waitForAttachWrapper(self, *args):
+    def wait_for_attach_wrapper(self, *args):
         if self.attached:
             func(self, *args)
         else:
-            self.attachQueue.append((func, args))
-    return waitForAttachWrapper
+            self.attach_queue.append((func, args))
+    return wait_for_attach_wrapper
 
 class Renderer:
     def __init__(self):
         logging.info("Xine version:      %s", xine.getXineVersion())
         self.xine = xine.Xine()
-        self.xine.setEosCallback(self.onEos)
-        self.attachQueue = []
+        self.xine.setEosCallback(self.on_eos)
+        self.attach_queue = []
         self.attached = False
         self.driver = config.get(options.XINE_DRIVER)
         logging.info("Xine video driver: %s", self.driver)
 
-    def setWidget(self, widget):
+    def set_widget(self, widget):
         confirmMainThread()
-        widget.connect_after("realize", self.onRealize)
-        widget.connect("unrealize", self.onUnrealize)
-        widget.connect("configure-event", self.onConfigureEvent)
-        widget.connect("expose-event", self.onExposeEvent)
+        widget.connect_after("realize", self.on_realize)
+        widget.connect("unrealize", self.on_unrealize)
+        widget.connect("configure-event", self.on_configure_event)
+        widget.connect("expose-event", self.on_expose_event)
         self.widget = widget
 
-    def onEos(self):
-        eventloop.addIdle(app.htmlapp.playbackController.onMovieFinished, "onEos: Skip to next track")
+    def on_eos(self):
+        eventloop.addIdle(app.htmlapp.playbackController.onMovieFinished, "on_eos: Skip to next track")
 
-    def onRealize(self, widget):
+    def on_realize(self, widget):
         confirmMainThread()
         # flush gdk output to ensure that our window is created
         gtk.gdk.flush()
@@ -86,33 +86,33 @@ class Renderer:
                          int(options.shouldSyncX), 
                          int(config.get(options.USE_XINE_XV_HACK)))
         self.attached = True
-        for func, args in self.attachQueue:
+        for func, args in self.attach_queue:
             try:
                 func(self, *args)
             except Exception, e:
-                print "Exception in attachQueue function"
+                print "Exception in attach_queue function"
                 traceback.print_exc()
-        self.attachQueue = []
+        self.attach_queue = []
 
-    def onUnrealize(self, widget):
+    def on_unrealize(self, widget):
         confirmMainThread()
         self.xine.detach()
         self.attached = False
 
-    def onConfigureEvent(self, widget, event):
+    def on_configure_event(self, widget, event):
         confirmMainThread()
         self.xine.setArea(event.x, event.y, event.width, event.height)
 
-    def onExposeEvent(self, widget, event):
+    def on_expose_event(self, widget, event):
         confirmMainThread()
         self.xine.gotExposeEvent(event.area.x, event.area.y, event.area.width,
                 event.area.height)
 
-    def canPlayFile(self, filename):
+    def can_play_file(self, filename):
         confirmMainThread()
-        return self.xine.canPlayFile(filename)
+        return self.xine.can_play_file(filename)
 
-    def goFullscreen(self):
+    def go_fullscreen(self):
         """Handle when the video window goes fullscreen."""
         confirmMainThread()
         # Sometimes xine doesn't seem to handle the expose events properly and
@@ -120,7 +120,7 @@ class Renderer:
         # send it a couple of fake expose events for the entire window, after
         # a short time delay.
 
-        def fullscreenExposeWorkaround():
+        def fullscreen_expose_workaround():
             try:
                 _, _, width, height, _ = self.widget.window.get_geometry()
                 self.xine.gotExposeEvent(0, 0, width, height)
@@ -128,19 +128,19 @@ class Renderer:
                 return True
             return False
 
-        gobject.timeout_add(500, fullscreenExposeWorkaround)
-        gobject.timeout_add(1000, fullscreenExposeWorkaround)
+        gobject.timeout_add(500, fullscreen_expose_workaround)
+        gobject.timeout_add(1000, fullscreen_expose_workaround)
 
-    def exitFullscreen(self):
+    def exit_fullscreen(self):
         """Handle when the video window exits fullscreen mode."""
         # nothing to do here
         confirmMainThread()
 
-    def selectItem(self, anItem):
-        self.selectFile(anItem.getFilename())
+    def select_item(self, anItem):
+        self.select_file(anItem.getFilename())
 
-    @waitForAttach
-    def selectFile(self, filename):
+    @wait_for_attach
+    def select_file(self, filename):
         confirmMainThread()
         viz = config.get(options.XINE_VIZ);
         self.xine.setViz(viz);
@@ -155,14 +155,14 @@ class Renderer:
 
         gobject.timeout_add(500, exposeWorkaround)
 
-    def getProgress(self):
+    def get_progress(self):
         confirmMainThread()
         try:
             pos, length = self.xine.getPositionAndLength()
         except:
             pass
 
-    def getCurrentTime(self, callback):
+    def get_current_time(self, callback):
         confirmMainThread()
         try:
             pos, length = self.xine.getPositionAndLength()
@@ -170,20 +170,20 @@ class Renderer:
         except:
             callback(None)
 
-    def setCurrentTime(self, seconds):
+    def set_current_time(self, seconds):
         confirmMainThread()
         self.seek(seconds)
 
-    def playFromTime(self, seconds):
+    def play_from_time(self, seconds):
         confirmMainThread()
         self.seek (seconds)
-        
-    @waitForAttach
+
+    @wait_for_attach
     def seek(self, seconds):
         confirmMainThread()
         self.xine.seek(int(seconds * 1000))
 
-    def getDuration(self, callback=None):
+    def get_duration(self, callback=None):
         confirmMainThread()
         try:
             pos, length = self.xine.getPositionAndLength()
@@ -197,27 +197,27 @@ class Renderer:
 
         return ret
 
-    # @waitForAttach  -- Not necessary because stop does this
+    # @wait_for_attach  -- Not necessary because stop does this
     def reset(self):
         # confirmMainThread() -- Not necessary because stop does this
         self.stop()
 
-    @waitForAttach
-    def setVolume(self, level):
+    @wait_for_attach
+    def set_volume(self, level):
         confirmMainThread()
-        self.xine.setVolume(int(level * 100))
+        self.xine.set_volume(int(level * 100))
 
-    @waitForAttach
+    @wait_for_attach
     def play(self):
         confirmMainThread()
         self.xine.play()
 
-    @waitForAttach
+    @wait_for_attach
     def pause(self):
         confirmMainThread()
         self.xine.pause()
 
-    #@waitForAttach -- Not necessary because pause does this
+    #@wait_for_attach -- Not necessary because pause does this
     def stop(self):
         # confirmMainThread() -- Not necessary since pause does this
         self.pause()
@@ -226,10 +226,10 @@ class Renderer:
         confirmMainThread()
         return self.xine.getRate()
 
-    @waitForAttach
-    def setRate(self, rate):
+    @wait_for_attach
+    def set_rate(self, rate):
         confirmMainThread()
-        self.xine.setRate(rate)
+        self.xine.set_rate(rate)
 
-    def movieDataProgramInfo(self, moviePath, thumbnailPath):
-        return ((resources.path('../../../lib/miro/xine_extractor'), moviePath, thumbnailPath), None)
+    def movie_data_program_info(self, movie_path, thumbnail_path):
+        return ((resources.path('../../../lib/miro/xine_extractor'), movie_path, thumbnail_path), None)

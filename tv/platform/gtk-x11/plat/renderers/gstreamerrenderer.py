@@ -57,9 +57,9 @@ class Tester:
     def __init__(self, filename):
         self.done = Event()
         self.success = False
-        self.actualInit(filename)
+        self.actual_init(filename)
 
-    def actualInit(self, filename):
+    def actual_init(self, filename):
         confirmMainThread()
         self.playbin = gst.element_factory_make('playbin')
         self.videosink = gst.element_factory_make("fakesink", "videosink")
@@ -69,7 +69,7 @@ class Tester:
 
         self.bus = self.playbin.get_bus()
         self.bus.add_signal_watch()
-        self.watch_id = self.bus.connect("message", self.onBusMessage)
+        self.watch_id = self.bus.connect("message", self.on_bus_message)
 
         self.playbin.set_property("uri", "file://%s" % filename)
         self.playbin.set_state(gst.STATE_PAUSED)
@@ -79,7 +79,7 @@ class Tester:
         self.disconnect()
         return self.success
 
-    def onBusMessage(self, bus, message):
+    def on_bus_message(self, bus, message):
         confirmMainThread()
         if message.src == self.playbin:
             if message.type == gst.MESSAGE_STATE_CHANGED:
@@ -109,8 +109,8 @@ class Renderer:
         self.bus = self.playbin.get_bus()
         self.bus.add_signal_watch()
         self.bus.enable_sync_message_emission()        
-        self.watch_id = self.bus.connect("message", self.onBusMessage)
-        self.bus.connect('sync-message::element', self.onSyncMessage)
+        self.watch_id = self.bus.connect("message", self.on_bus_message)
+        self.bus.connect('sync-message::element', self.on_sync_message)
 
         videosink = config.get(options.GSTREAMER_IMAGESINK)
         try:
@@ -130,7 +130,7 @@ class Renderer:
         logging.info("GStreamer sink:    %s", videosink)
         self.playbin.set_property("video-sink", self.sink)
 
-    def onSyncMessage(self, bus, message):
+    def on_sync_message(self, bus, message):
         if message.structure is None:
             return
         message_name = message.structure.get_name()
@@ -139,34 +139,34 @@ class Renderer:
             imagesink.set_property('force-aspect-ratio', True)
             imagesink.set_xwindow_id(self.widget.window.xid)        
         
-    def onBusMessage(self, bus, message):
+    def on_bus_message(self, bus, message):
         confirmMainThread()
         "recieves message posted on the GstBus"
         if message.type == gst.MESSAGE_ERROR:
             err, debug = message.parse_error()
-            logging.error("onBusMessage: gstreamer error: %s", err)
+            logging.error("on_bus_message: gstreamer error: %s", err)
         elif message.type == gst.MESSAGE_EOS:
             eventloop.addIdle(app.htmlapp.playbackController.onMovieFinished,
-                              "onBusMessage: skipping to next track")
+                              "on_bus_message: skipping to next track")
             
-    def setWidget(self, widget):
+    def set_widget(self, widget):
         confirmMainThread()
-        widget.connect_after("realize", self.onRealize)
-        widget.connect("unrealize", self.onUnrealize)
-        widget.connect("expose-event", self.onExpose)
+        widget.connect_after("realize", self.on_realize)
+        widget.connect("unrealize", self.on_unrealize)
+        widget.connect("expose-event", self.on_expose)
         self.widget = widget
 
-    def onRealize(self, widget):
+    def on_realize(self, widget):
         confirmMainThread()
         self.gc = widget.window.new_gc()
         self.gc.foreground = gtk.gdk.color_parse("black")
         
-    def onUnrealize(self, widget):
+    def on_unrealize(self, widget):
         confirmMainThread()
         self.playbin.set_state(gst.STATE_NULL)
         self.sink = None
         
-    def onExpose(self, widget, event):
+    def on_expose(self, widget, event):
         confirmMainThread()
         if self.sink:
             if hasattr(self.sink, "expose"):
@@ -181,11 +181,11 @@ class Renderer:
             return True
         return False
 
-    def canPlayFile(self, filename):
+    def can_play_file(self, filename):
         """whether or not this renderer can play this data"""
         return Tester(filename).result()
 
-    def fillMovieData(self, filename, movie_data, callback):
+    def fill_movie_data(self, filename, movie_data, callback):
         confirmMainThread()
         d = os.path.join(config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
         try:
@@ -197,40 +197,40 @@ class Renderer:
 
         extracter = Extracter(filename, movie_data["screenshot"], handle_result)
 
-    def goFullscreen(self):
+    def go_fullscreen(self):
         """Handle when the video window goes fullscreen."""
         confirmMainThread()
-        logging.debug("haven't implemented goFullscreen method yet!")
+        logging.debug("haven't implemented go_fullscreen method yet!")
         
-    def exitFullscreen(self):
+    def exit_fullscreen(self):
         """Handle when the video window exits fullscreen mode."""
         confirmMainThread()
-        logging.debug("haven't implemented exitFullscreen method yet!")
+        logging.debug("haven't implemented exit_fullscreen method yet!")
 
-    def selectItem(self, anItem):
-        self.selectFile(anItem.getFilename())
+    def select_item(self, anItem):
+        self.select_file(anItem.getFilename())
 
-    def selectFile(self, filename):
+    def select_file(self, filename):
         """starts playing the specified file"""
         confirmMainThread()
         self.stop()
         self.playbin.set_property("uri", "file://%s" % filename)
 
-    def getProgress(self):
+    def get_progress(self):
         confirmMainThread()
-        logging.info("getProgress: what does this do?")
+        logging.info("get_progress: what does this do?")
 
-    def getCurrentTime(self, callback):
+    def get_current_time(self, callback):
         confirmMainThread()
         try:
             position, format = self.playbin.query_position(gst.FORMAT_TIME)
             position = to_seconds(position)
         except Exception, e:
-            logging.error("getCurrentTime: caught exception: %s" % e)
+            logging.error("get_current_time: caught exception: %s" % e)
             position = 0
         callback(position)
 
-    def setCurrentTime(self, seconds):
+    def set_current_time(self, seconds):
         self.seek(seconds)
 
     def seek(self, seconds):
@@ -245,7 +245,7 @@ class Renderer:
         if not result:
             logging.error("seek failed")
         
-    def playFromTime(self, seconds):
+    def play_from_time(self, seconds):
         confirmMainThread()
         self.playbin.set_state(gst.STATE_PAUSED)
 
@@ -254,13 +254,13 @@ class Renderer:
         self.seek(seconds)
         self.play()
 
-    def getDuration(self, callback=None):
+    def get_duration(self, callback=None):
         confirmMainThread()
         try:
             duration, format = self.playbin.query_duration(gst.FORMAT_TIME)
             duration = to_seconds(duration)
         except Exception, e:
-            logging.error("getDuration: caught exception: %s" % e)
+            logging.error("get_duration: caught exception: %s" % e)
             duration = 1
         if callback:
             callback(duration)
@@ -271,7 +271,7 @@ class Renderer:
         confirmMainThread()
         self.playbin.set_state(gst.STATE_NULL)
 
-    def setVolume(self, level):
+    def set_volume(self, level):
         confirmMainThread()
         self.playbin.set_property("volume", level * 4.0)
 
@@ -287,13 +287,13 @@ class Renderer:
         confirmMainThread()
         self.playbin.set_state(gst.STATE_NULL)
         
-    def getRate(self):
+    def get_rate(self):
         confirmMainThread()
         return 256
     
-    def setRate(self, rate):
+    def set_rate(self, rate):
         confirmMainThread()
-        logging.info("gstreamer setRate: set rate to %s" % rate)
+        logging.info("gstreamer set_rate: set rate to %s" % rate)
 
-    def movieDataProgramInfo(self, moviePath, thumbnailPath):
+    def movie_data_program_info(self, moviePath, thumbnailPath):
         return (("python", 'plat/renderers/gst_extractor.py', moviePath, thumbnailPath), None)

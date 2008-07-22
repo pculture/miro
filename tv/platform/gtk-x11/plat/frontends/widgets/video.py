@@ -80,7 +80,7 @@ class VideoRenderer (Widget):
         self.set_widget(gtk.DrawingArea())
         self._widget.set_double_buffered(False)
         self._widget.add_events(gtk.gdk.POINTER_MOTION_MASK)
-        self.renderer.setWidget(self._widget)
+        self.renderer.set_widget(self._widget)
 
     def reset(self):
         confirmMainThread()
@@ -88,22 +88,22 @@ class VideoRenderer (Widget):
     
     def can_play_movie_file(self, path):
         confirmMainThread()
-        return self.renderer.canPlayFile(anItem.getVideoFilename())
+        return self.renderer.can_play_file(path)
     
     def set_movie_file(self, path):
         confirmMainThread()
-        self.renderer.selectFile(path)
+        self.renderer.select_file(path)
 
     def get_elapsed_playback_time(self):
         # FIXME, why use a callback here?
         result = []
         def callback(time):
             result.append(time)
-        self.renderer.getCurrentTime(callback)
+        self.renderer.get_current_time(callback)
         return result[0]
 
     def get_total_playback_time(self):
-        return self.renderer.getDuration()
+        return self.renderer.get_duration()
 
     def play(self):
         confirmMainThread()
@@ -119,4 +119,4 @@ class VideoRenderer (Widget):
 
     def seek_to(self, position):
         time = self.get_total_playback_time() * position
-        self.renderer.setCurrentTime(time)
+        self.renderer.set_current_time(time)
