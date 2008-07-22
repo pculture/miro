@@ -620,6 +620,7 @@ class TableView(Widget):
             return True
         type = self.find_type(drag_context)
         if type == "NONE":
+            drag_context.drag_status(0, timestamp)
             return True
         drop_action = 0
         for pos_info in self.calc_positions(x, y):
