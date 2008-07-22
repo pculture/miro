@@ -100,7 +100,7 @@ class CustomScaleMixin(CustomControlMixin):
         self.drag_inbounds = True
         self.move_slider_to_mouse(event.x, event.y)
         self.grab_focus()
-        wrappermap.wrapper(self).emit('clicked')
+        wrappermap.wrapper(self).emit('pressed')
 
     def do_motion_notify_event(self, event):
         if self.in_drag:
@@ -222,7 +222,7 @@ class ContinuousCustomButton(Drawable, Widget):
 class CustomSlider(Drawable, Widget):
     def __init__(self):
         Widget.__init__(self)
-        self.create_signal('clicked')
+        self.create_signal('pressed')
         self.create_signal('released')
         self.create_signal('changed')
         self.create_signal('moved')

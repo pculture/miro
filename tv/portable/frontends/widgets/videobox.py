@@ -201,7 +201,7 @@ class ProgressTimeline(widgetset.Background):
         self.slider = ProgressSlider()
         self.slider.set_range(0, 1)
         self.time = ProgressTime()
-        self.slider.connect('clicked', self.on_slider_clicked)
+        self.slider.connect('pressed', self.on_slider_pressed)
         self.slider.connect('moved', self.on_slider_moved)
         self.slider.connect('released', self.on_slider_released)
         self.remaining_time = ProgressTimeRemaining()
@@ -215,7 +215,7 @@ class ProgressTimeline(widgetset.Background):
     def on_remaining_clicked(self, widget):
         self.remaining_time.toggle_display()
 
-    def on_slider_clicked(self, slider):
+    def on_slider_pressed(self, slider):
         app.playback_manager.suspend()
         
     def on_slider_moved(self, slider, new_time):
