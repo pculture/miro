@@ -31,9 +31,9 @@ import glob
 import logging
 
 from objc import YES, NO, nil
-from Foundation import NSURL
+from Foundation import NSURL, NSZeroPoint
 from AppKit import NSWindow, NSBorderlessWindowMask, NSBackingStoreBuffered, NSWindowAbove
-from AppKit import NSView, NSColor, NSNotificationCenter, NSZeroPoint
+from AppKit import NSView, NSColor, NSNotificationCenter
 from QTKit import QTMovieView, QTMovie, QTMovieURLAttribute, QTMovieDidEndNotification
 
 from miro.plat import bundle
