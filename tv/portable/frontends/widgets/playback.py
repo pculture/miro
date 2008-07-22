@@ -27,18 +27,26 @@
 # statement from all source files in the program, then also delete it here.
 
 from miro import app
+from miro import signals
+from miro import eventloop
 from miro.frontends.widgets.displays import VideoDisplay
 #from miro.frontends.widgets.displays import AudioDisplay
 #from miro.frontends.widgets.displays import ExternalVideoDisplay
 
-class PlaybackManager (object):
+class PlaybackManager (signals.SignalEmitter):
     
     def __init__(self):
+        signals.SignalEmitter.__init__(self)
         self.previous_left_width = 0
         self.previous_display = None
         self.video_display = None
         self.is_playing = False
         self.is_paused = False
+        self.create_signal('will-play')
+        self.create_signal('will-pause')
+        self.create_signal('will-stop')
+        self.create_signal('did-stop')
+        self.create_signal('playback-did-progress')
     
     def play_pause(self):
         if not self.is_playing or self.is_paused:
@@ -47,24 +55,44 @@ class PlaybackManager (object):
             self.pause()
     
     def start_with_movie_file(self, path):
-        self.video_display = VideoDisplay(path)
+        self.video_display = VideoDisplay()
         self.previous_display = app.display_manager.current_display
         self.previous_left_width = app.widgetapp.window.splitter.get_left_width()
         app.widgetapp.window.splitter.set_left_width(0)
         app.display_manager.select_display(self.video_display)
         app.menu_manager.handle_playing_selection()
+        self.video_display.setup(path)
+    
+    def schedule_update(self):
+        def notify_and_reschedule():
+            if self.is_playing and not self.is_paused:
+                self.notify_update()
+                self.schedule_update()
+        eventloop.addTimeout(0.5, notify_and_reschedule, "Notifying playback progress")
+
+    def notify_update(self):
+        if self.video_display is not None:
+            elapsed = self.video_display.get_elapsed_playback_time()
+            total = self.video_display.get_total_playback_time()
+            self.emit('playback-did-progress', elapsed, total)
     
     def play(self):
+        duration = self.video_display.get_total_playback_time()
+        self.emit('will-play', duration)
         self.video_display.play()
+        self.notify_update()
+        self.schedule_update()
         self.is_playing = True
         self.is_paused = False
 
     def pause(self):
         if self.is_playing:
+            self.emit('will-pause')
             self.video_display.pause()
             self.is_paused = True
 
     def stop(self):
+        self.emit('will-stop')
         self.video_display.stop()
         app.display_manager.select_display(self.previous_display)
         app.widgetapp.window.splitter.set_left_width(self.previous_left_width)
@@ -72,3 +100,16 @@ class PlaybackManager (object):
         self.video_display = None
         self.is_playing = False
         self.is_paused = False
+        self.emit('did-stop')
+
+    def suspend(self):
+        if self.is_playing and not self.is_paused:
+            self.video_display.pause()
+    
+    def resume(self):
+        if self.is_playing and not self.is_paused:
+            self.video_display.play()
+
+    def seek_to(self, progress):
+        self.video_display.seek_to(progress)
+        self.notify_update()

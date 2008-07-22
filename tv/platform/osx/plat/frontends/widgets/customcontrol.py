@@ -114,6 +114,10 @@ class CustomSliderCell(NSSliderCell):
         size -= slider_size
         return max(0, min(1, float(pos) / size))
 
+    def startTrackingAt_inView_(self, at, view):
+        wrappermap.wrapper(view).emit('clicked')
+        return YES
+
     def continueTracking_at_inView_(self, lastPoint, at, view):
         if view.isVertical():
             pos = at.y
@@ -128,6 +132,9 @@ class CustomSliderCell(NSSliderCell):
         if self.isContinuous():
             wrappermap.wrapper(view).emit('changed', value)
         return YES
+    
+    def stopTracking_at_inView_mouseIsUp_(self, lastPoint, at, view, mouseUp):
+        wrappermap.wrapper(view).emit('released')
 
 class CustomSliderView(NSSlider):
     def init(self):
@@ -180,6 +187,8 @@ class CustomSlider(drawing.DrawingMixin, Widget):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self):
         Widget.__init__(self)
+        self.create_signal('clicked')
+        self.create_signal('released')
         self.create_signal('changed')
         self.create_signal('moved')
         self.view = CustomSliderView.alloc().init()

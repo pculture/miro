@@ -79,7 +79,6 @@ class Application:
         self.window = MiroWindow(_("Miro"), self.get_main_window_dimensions())
         app.tab_list_manager.handle_startup_selection()
         videobox = self.window.videobox
-        videobox.time_slider.connect('changed', self.on_video_time_change)
         videobox.volume_slider.connect('changed', self.on_volume_change)
         videobox.controls.play.connect('clicked', self.on_play_clicked)
         videobox.controls.stop.connect('clicked', self.on_stop_clicked)
@@ -97,9 +96,6 @@ class Application:
         Must return a Rect.
         """
         return Rect(100, 300, 800, 600)
-
-    def on_video_time_change(self, slider, time):
-        print 'seek to: ', time
 
     def on_volume_change(self, slider, volume):
         print 'volume change: ', volume

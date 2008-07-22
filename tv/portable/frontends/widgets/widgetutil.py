@@ -120,20 +120,19 @@ class ThreeImageSurface(object):
             raise ValueError("Images aren't the same height")
         self.height = self.left.height
 
-    def draw(self, context, x, y, width):
+    def draw(self, context, x, y, width, fraction=1.0):
         left_width = min(self.left.width, width)
-        self.left.draw(context, x, y, left_width, self.height)
-        self.draw_right(context, x + left_width, y, width - left_width)
+        self.left.draw(context, x, y, left_width, self.height, fraction)
+        self.draw_right(context, x + left_width, y, width - left_width, fraction)
 
-    def draw_right(self, context, x, y, width):
+    def draw_right(self, context, x, y, width, fraction=1.0):
         """Draw only the right 2 images."""
 
         right_width = min(self.right.width, width)
         center_width = width - right_width
 
-        self.center.draw(context, x, y, center_width, self.height)
-        self.right.draw(context, x + center_width, y, right_width,
-                self.height)
+        self.center.draw(context, x, y, center_width, self.height, fraction)
+        self.right.draw(context, x + center_width, y, right_width, self.height, fraction)
 
 def middle_baseline(font, height):
     """Calculate a baseline that will position a line of text in the middle

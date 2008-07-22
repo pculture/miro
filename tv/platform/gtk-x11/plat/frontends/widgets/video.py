@@ -94,6 +94,12 @@ class VideoRenderer (Widget):
         confirmMainThread()
         self.renderer.selectFile(path)
 
+    def get_elapsed_playback_time(self):
+        return 0.0
+
+    def get_total_playback_time(self):
+        return 0.0
+
     def play(self):
         confirmMainThread()
         self.renderer.play()
@@ -105,3 +111,6 @@ class VideoRenderer (Widget):
     def stop(self):
         confirmMainThread()
         self.renderer.stop()
+
+    def seek_to(self, position):
+        pass

@@ -32,7 +32,8 @@ import logging
 
 from objc import YES, NO, nil
 from Foundation import NSURL
-from AppKit import NSColor, NSNotificationCenter
+from AppKit import NSWindow, NSBorderlessWindowMask, NSBackingStoreBuffered, NSWindowAbove
+from AppKit import NSView, NSColor, NSNotificationCenter, NSZeroPoint
 from QTKit import QTMovieView, QTMovie, QTMovieURLAttribute, QTMovieDidEndNotification
 
 from miro.plat import bundle
@@ -41,60 +42,82 @@ from miro.plat.utils import filenameTypeToOSFilename
 from miro.plat.frontends.widgets import threads
 from miro.plat.frontends.widgets.base import Widget
 
-quicktime_components_registered = False
+def initializeVideoRendering():
+    bundlePath = bundle.getBundlePath()
+    componentsDirectoryPath = os.path.join(bundlePath, 'Contents', 'Components')
+    components = glob.glob(os.path.join(componentsDirectoryPath, '*.component'))
+    for component in components:
+        cmpName = os.path.basename(component)
+        ok = qtcomp.register(component.encode('utf-8'))
+        if ok:
+            logging.info('Successfully registered embedded component: %s' % cmpName)
+        else:
+            logging.warn('Error while registering embedded component: %s' % cmpName)
+
 
 class VideoRenderer (Widget):
 
     def __init__(self):
         Widget.__init__(self)
-        self.registerQuicktimeComponents()
-        self.view = QTMovieView.alloc().initWithFrame_(((0,0),(100,100)))
-        self.view.setFillColor_(NSColor.blackColor())
-        self.view.setControllerVisible_(NO)
-        self.view.setEditable_(NO)
-        self.view.setPreservesAspectRatio_(YES)
+        frame = ((0,0),(200,200))
+        
+        self.view = NSView.alloc().initWithFrame_(frame)
+
+        self.video_view = QTMovieView.alloc().initWithFrame_(frame)
+        self.video_view.setFillColor_(NSColor.blackColor())
+        self.video_view.setControllerVisible_(NO)
+        self.video_view.setEditable_(NO)
+        self.video_view.setPreservesAspectRatio_(YES)
+
+        self.video_window = VideoWindow.alloc().initWithContentRect_styleMask_backing_defer_(frame, NSBorderlessWindowMask, NSBackingStoreBuffered, NO)
+        self.video_window.setContentView_(self.video_view)
+        
         self.movie = None
         self.cached_movie = None
-
-    def registerQuicktimeComponents(self):
-        global quicktime_components_registered
-        if not quicktime_components_registered:
-            bundlePath = bundle.getBundlePath()
-            componentsDirectoryPath = os.path.join(bundlePath, 'Contents', 'Components')
-            components = glob.glob(os.path.join(componentsDirectoryPath, '*.component'))
-            for component in components:
-                cmpName = os.path.basename(component)
-                ok = qtcomp.register(component.encode('utf-8'))
-                if ok:
-                    logging.info('Successfully registered embedded component: %s' % cmpName)
-                else:
-                    logging.warn('Error while registering embedded component: %s' % cmpName)
-        quicktime_components_registered = True
 
     def calc_size_request(self):
         return (200,200)
 
+    def place(self, rect, containing_view):
+        Widget.place(self, rect, containing_view)
+        self.view.window().addChildWindow_ordered_(self.video_window, NSWindowAbove)
+        self.video_window.orderFront_(nil)
+        self.adjust_video_frame()
+    
+    def teardown(self):
+        self.reset()
+        self.view.window().removeChildWindow_(self.video_window)
+        self.video_window.orderOut_(nil)
+        self.video_window = None
+
     def reset(self):
         threads.warn_if_not_on_main_thread('VideoRenderer.reset')
-        if self.view is not nil:
-            self.view.setMovie_(nil)
+        self.video_view.setMovie_(nil)
         self.unregister_movie_observer(self.movie)
         self.movie = None
         self.cachedMovie = None
+
+    def adjust_video_frame(self):
+        frame = self.view.frame()
+        frame.origin = self.view.convertPoint_toView_(NSZeroPoint, nil)
+        frame.origin.x = 0
+        frame.origin = self.view.window().convertBaseToScreen_(frame.origin)
+        frame.size = (self.view.window().frame().size.width, frame.size.height)
+        self.video_window.setFrame_display_(frame, YES)
     
     def can_play_movie_file(self, path):
         threads.warn_if_not_on_main_thread('VideoRenderer.can_play_movie_file')
         return True
-    
+
     def set_movie_file(self, path):
         threads.warn_if_not_on_main_thread('VideoRenderer.set_movie_file')
         qtmovie = self.get_movie_from_file(path)
         self.reset()
         if qtmovie is not nil:
             self.movie = qtmovie
-            self.view.setMovie_(self.movie)
-            self.view.setNeedsDisplay_(YES)
-            self.register_movie_observer(qtmovie)
+            self.video_view.setMovie_(self.movie)
+            self.video_view.setNeedsDisplay_(YES)
+            self.register_movie_observer(self.movie)
 
     def get_movie_from_file(self, path):
         osfilename = filenameTypeToOSFilename(path)
@@ -106,6 +129,32 @@ class VideoRenderer (Widget):
             self.cachedMovie = qtmovie
         return qtmovie
 
+    def get_elapsed_playback_time(self):
+        qttime = self.movie.currentTime()
+        return _qttime2secs(qttime)
+
+    def get_total_playback_time(self):
+        return movieDuration(self.movie)
+
+    def play(self):
+        threads.warn_if_not_on_main_thread('VideoRenderer.play')
+        self.video_view.play_(nil)
+        self.video_view.setNeedsDisplay_(YES)
+
+    def pause(self):
+        threads.warn_if_not_on_main_thread('VideoRenderer.pause')
+        self.video_view.pause_(nil)
+
+    def stop(self):
+        threads.warn_if_not_on_main_thread('VideoRenderer.stop')
+        self.video_view.pause_(nil)
+        self.teardown()
+    
+    def seek_to(self, position):
+        qttime = self.movie.duration()
+        qttime.timeValue = qttime.timeValue * position
+        self.movie.setCurrentTime_(qttime)
+    
     def register_movie_observer(self, movie):
         threads.warn_if_not_on_main_thread('VideoRenderer.register_movie_observer')
         nc = NSNotificationCenter.defaultCenter()
@@ -116,18 +165,25 @@ class VideoRenderer (Widget):
         nc = NSNotificationCenter.defaultCenter()
         nc.removeObserver_name_object_(self, QTMovieDidEndNotification, movie)
 
-    def play(self):
-        threads.warn_if_not_on_main_thread('VideoRenderer.play')
-        self.view.play_(nil)
-        self.view.setNeedsDisplay_(YES)
-
-    def pause(self):
-        threads.warn_if_not_on_main_thread('VideoRenderer.pause')
-        self.view.pause_(nil)
-
-    def stop(self):
-        threads.warn_if_not_on_main_thread('VideoRenderer.stop')
-        self.view.pause_(nil)
-    
     def handleMovieNotification_(self, notification):
         print notification
+
+
+class VideoWindow (NSWindow):
+
+    def canBecomeMainWindow(self):
+        return NO
+    
+    def canBecomeKeyWindow(self):
+        return NO
+
+def _qttime2secs(qttime):
+    if qttime.timeScale == 0:
+        return 0.0
+    return qttime.timeValue / float(qttime.timeScale)
+
+def movieDuration(qtmovie):
+    if qtmovie is nil:
+        return 0
+    qttime = qtmovie.duration()
+    return _qttime2secs(qttime)

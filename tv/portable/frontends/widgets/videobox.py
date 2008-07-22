@@ -30,6 +30,7 @@
 video controls).
 """
 
+from miro import app
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import imagebutton
@@ -50,6 +51,9 @@ class PlaybackControls(widgetset.HBox):
         self.pack_start(widgetutil.align_middle(self.stop))
         self.pack_start(widgetutil.align_middle(self.play))
         self.pack_start(widgetutil.align_middle(self.forward))
+        app.playback_manager.connect('will-play', self.handle_play)
+        app.playback_manager.connect('will-pause', self.handle_pause)
+        app.playback_manager.connect('did-stop', self.handle_pause)
 
     def make_button(self, name, continous):
         if continous:
@@ -58,15 +62,29 @@ class PlaybackControls(widgetset.HBox):
         else:
             button = imagebutton.ImageButton(name)
         return button
+    
+    def handle_play(self, obj, duration):
+        self.play.set_image('pause')
+    
+    def handle_pause(self, obj):
+        self.play.set_image('play')
 
 class ProgressTime(widgetset.DrawingArea):
     def __init__(self):
         widgetset.DrawingArea.__init__(self)
         self.current_time = None
+        app.playback_manager.connect('playback-did-progress', self.handle_progress)
+        app.playback_manager.connect('did-stop', self.handle_stop)
 
     def size_request(self, layout):
         return (40, 13)
 
+    def handle_progress(self, obj, elapsed, total):
+        self.set_current_time(elapsed)
+        
+    def handle_stop(self, obj):
+        self.set_current_time(None)
+    
     def set_current_time(self, current_time):
         self.current_time = current_time
         self.queue_redraw()
@@ -85,9 +103,21 @@ class ProgressTimeRemaining(widgetset.CustomButton):
         widgetset.CustomButton.__init__(self)
         self.duration = self.current_time = None
         self.display_remaining = True
+        app.playback_manager.connect('will-play', self.handle_play)
+        app.playback_manager.connect('playback-did-progress', self.handle_progress)
+        app.playback_manager.connect('did-stop', self.handle_stop)
 
     def size_request(self, layout):
         return (50, 13)
+
+    def handle_play(self, obj, duration):
+        self.set_duration(duration)
+
+    def handle_progress(self, obj, elapsed, total):
+        self.set_current_time(elapsed)
+
+    def handle_stop(self, obj):
+        self.set_current_time(None)
 
     def set_current_time(self, current_time):
         self.current_time = current_time
@@ -121,10 +151,17 @@ class ProgressTimeRemaining(widgetset.CustomButton):
 class ProgressSlider(widgetset.CustomSlider):
     def __init__(self):
         widgetset.CustomSlider.__init__(self)
-        self.background_surface = \
-                widgetutil.ThreeImageSurface('playback_track')
-        self.progress_surface = \
-                widgetutil.ThreeImageSurface('playback_track_progress')
+        self.background_surface = widgetutil.ThreeImageSurface('playback_track')
+        self.progress_surface = widgetutil.ThreeImageSurface('playback_track_progress')
+        self.progress_cursor = widgetutil.make_surface('playback_cursor')
+        app.playback_manager.connect('playback-did-progress', self.handle_progress)
+        app.playback_manager.connect('did-stop', self.handle_stop)
+
+    def handle_progress(self, obj, elapsed, total):
+        self.set_value(elapsed/total)
+
+    def handle_stop(self, obj):
+        self.set_value(0)
 
     def is_horizontal(self):
         return True
@@ -139,14 +176,19 @@ class ProgressSlider(widgetset.CustomSlider):
         return 1
 
     def draw(self, context, layout):
+        if (self.get_value() == 0):
+            return
         min, max = self.get_range()
         progress_width = int(round(self.get_value() / max * context.width))
         self.progress_surface.draw(context, 0, 0, progress_width)
         if progress_width == 0:
             self.background_surface.draw(context, 0, 0, context.width)
         else:
-            self.background_surface.draw_right(context, progress_width, 0, 
-                    context.width - progress_width)
+            self.background_surface.draw_right(context, progress_width, 0, context.width - progress_width)
+        if progress_width <= 3:
+            self.progress_cursor.draw(context, 0, 0, self.progress_cursor.width, self.progress_cursor.height)
+        else:
+            self.progress_cursor.draw(context, progress_width-3, 0, self.progress_cursor.width, self.progress_cursor.height)
 
 class ProgressTimeline(widgetset.Background):
     def __init__(self):
@@ -155,22 +197,30 @@ class ProgressTimeline(widgetset.Background):
         self.duration = self.current_time = None
         self.slider = ProgressSlider()
         self.time = ProgressTime()
+        self.slider.connect('clicked', self.on_slider_clicked)
         self.slider.connect('moved', self.on_slider_moved)
+        self.slider.connect('released', self.on_slider_released)
         self.remaining_time = ProgressTimeRemaining()
         self.remaining_time.connect('clicked', self.on_remaining_clicked)
         hbox = widgetset.HBox()
         hbox.pack_start(widgetutil.align_middle(self.time), expand=False, padding=5)
         hbox.pack_start(widgetutil.align_middle(self.slider), expand=True)
-        hbox.pack_start(widgetutil.align_middle(self.remaining_time,
-            left_pad=20, right_pad=5))
+        hbox.pack_start(widgetutil.align_middle(self.remaining_time, left_pad=20, right_pad=5))
         self.add(widgetutil.align_middle(hbox))
 
     def on_remaining_clicked(self, widget):
         self.remaining_time.toggle_display()
 
+    def on_slider_clicked(self, slider):
+        app.playback_manager.suspend()
+        
     def on_slider_moved(self, slider, new_time):
-        self.time.set_current_time(new_time)
-        self.remaining_time.set_current_time(new_time)
+#        self.time.set_current_time(new_time)
+#        self.remaining_time.set_current_time(new_time)
+        app.playback_manager.seek_to(new_time)
+
+    def on_slider_released(self, slider):
+        app.playback_manager.resume()
 
     def set_duration(self, duration):
         self.slider.set_range(0, duration)
@@ -186,7 +236,10 @@ class ProgressTimeline(widgetset.Background):
         return -1, self.background.height
 
     def draw(self, context, layout):
-        self.background.draw(context, 0, 0, context.width)
+        fraction = 1.0
+        if not self.get_window().is_active():
+            fraction = 0.5
+        self.background.draw(context, 0, 0, context.width, fraction)
 
 class VolumeSlider(widgetset.CustomSlider):
     def __init__(self):
@@ -231,10 +284,6 @@ class VideoBox(widgetset.Background):
         self.volume_slider = VolumeSlider()
         self.time_slider = self.timeline.slider
 
-        self.timeline.set_duration(310)
-        self.timeline.set_current_time(50)
-        self.volume_slider.set_value(0.4)
-
         self.image = widgetutil.make_surface('wtexture')
         self.separator_color = (170.0/255.0, 170.0/255.0, 170.0/255.0)
         self.highlight_color = (218.0/255.0, 218.0/255.0, 218.0/255.0)
@@ -245,8 +294,7 @@ class VideoBox(widgetset.Background):
         hbox = widgetset.HBox(spacing=35)
         hbox.pack_start(self.controls, expand=False)
         hbox.pack_start(widgetutil.align_middle(self.timeline), expand=True)
-        volume_image = imagepool.get(
-                resources.path('wimages/volume_high.png'))
+        volume_image = imagepool.get(resources.path('wimages/volume_high.png'))
         volume_display = widgetset.ImageDisplay(volume_image)
         volume_hbox = widgetset.HBox(spacing=5)
         volume_hbox.pack_start(widgetutil.align_middle(volume_display))

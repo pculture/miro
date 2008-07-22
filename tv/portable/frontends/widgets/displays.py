@@ -181,9 +181,17 @@ class LibraryDisplay(ItemListDisplay):
         return itemlist.LibraryView()
 
 class VideoDisplay(Display):
-    def __init__(self, path):
+    def __init__(self):
         self.widget = widgetset.VideoRenderer()
+
+    def setup(self, path):
         self.widget.set_movie_file(path)
+
+    def get_elapsed_playback_time(self):
+        return self.widget.get_elapsed_playback_time()
+
+    def get_total_playback_time(self):
+        return self.widget.get_total_playback_time()
 
     def play(self):
         self.widget.play()
@@ -194,8 +202,10 @@ class VideoDisplay(Display):
     def stop(self):
         self.widget.stop()
 
+    def seek_to(self, position):
+        self.widget.seek_to(position)
+
     def cleanup(self):
-        # Should cleanup resources here
         pass
 
 class DummyDisplay(TabDisplay):

@@ -34,14 +34,16 @@ from miro.plat import resources
 
 class ImageButtonMixin(object):
     def __init__(self, image_name):
-        path = resources.path('wimages/%s.png' % image_name)
-        pressed_path = resources.path('wimages/%s_active.png' % image_name)
-        self.image = imagepool.get_surface(path)
-        self.pressed_image = imagepool.get_surface(pressed_path)
-
+        self.set_image(image_name)
         if (self.image.width != self.pressed_image.width or
                 self.image.height != self.pressed_image.height):
             raise ValueError("Image sizes don't match")
+    
+    def set_image(self, image_name):
+        path = resources.path('wimages/%s.png' % image_name)
+        self.image = imagepool.get_surface(path)
+        pressed_path = resources.path('wimages/%s_active.png' % image_name)
+        self.pressed_image = imagepool.get_surface(pressed_path)
     
     def size_request(self, layout):
         return self.image.width, self.image.height

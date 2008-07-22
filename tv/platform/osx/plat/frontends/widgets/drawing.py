@@ -50,26 +50,25 @@ class ImageSurface:
         self.width = image.width
         self.height = image.height
 
-    def draw(self, context, x, y, width, height):
+    def draw(self, context, x, y, width, height, fraction=1.0):
         endy = y + height
         while y < endy:
             current_height = min(self.height, endy - y)
-            self._draw_line(x, y, width, current_height)
+            self._draw_line(x, y, width, current_height, fraction)
             y += height
         context.path.removeAllPoints()
 
     def get_size(self):
         return self.width, self.height
 
-    def _draw_line(self, x, y, width, height):
+    def _draw_line(self, x, y, width, height, fraction=1.0):
         endx = x + width
         while x < endx:
-            at = NSPoint(x+0.5, y+0.5)
+            at = NSPoint(x, y)
             current_width = min(self.width, endx - x)
             dest_rect = NSRect(at, NSSize(current_width, height))
             source_rect = NSMakeRect(0, 0, current_width, height)
-            self.image.drawInRect_fromRect_operation_fraction_(dest_rect,
-                source_rect, NSCompositeSourceOver, 1.0)
+            self.image.drawInRect_fromRect_operation_fraction_(dest_rect, source_rect, NSCompositeSourceOver, fraction)
             x += current_width
 
 class DrawingStyle(object):
