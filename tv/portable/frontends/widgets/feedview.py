@@ -149,8 +149,9 @@ class TitleDrawer(widgetset.DrawingArea):
         self.title = title
 
     def draw(self, context, layout):
-        layout.set_font(2.5)
+        layout.set_font(2.5, bold=True)
         layout.set_text_color((0.31, 0.31, 0.31))
+        layout.set_text_shadow(widgetutil.Shadow((1,1,1), 1, (1.5,-1.5), 0.5))
         textbox = layout.textbox(self.title)
         textbox.set_width(context.width)
         textbox.set_wrap_style('char')

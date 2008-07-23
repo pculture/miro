@@ -134,6 +134,14 @@ class ThreeImageSurface(object):
         self.center.draw(context, x, y, center_width, self.height, fraction)
         self.right.draw(context, x + center_width, y, right_width, self.height, fraction)
 
+class Shadow(object):
+    """Encapsulates all parameters required to draw shadows"""
+    def __init__(self, color, opacity, offset, blur_radius):
+        self.color = color
+        self.opacity = opacity
+        self.offset = offset
+        self.blur_radius = blur_radius
+
 #def middle_baseline(font, height):
 #    """Calculate a baseline that will position a line of text in the middle
 #    of a box height pixels tall.

@@ -82,6 +82,9 @@ class LayoutManager(object):
     def set_text_color(self, color):
         self.text_color = color
 
+    def set_text_shadow(self, shadow):
+        self.shadow = shadow
+
     def textbox(self, text):
         textbox = TextBox(self.pango_context, self.current_font,
                 self.text_color)

@@ -110,6 +110,9 @@ class DrawingContext(object):
     def set_color(self, (red, green, blue), alpha=1.0):
         self.context.set_source_rgba(red, green, blue, alpha)
 
+    def set_shadow(self, color, opacity, offset, blur_radius):
+        pass
+
     def gradient_fill(self, gradient):
         old_source = self.context.get_source()
         self.context.set_source(gradient.pattern)

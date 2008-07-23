@@ -141,6 +141,13 @@ class DrawingContext:
         self.color = NSColor.colorWithDeviceRed_green_blue_alpha_(red, green,
                 blue, alpha)
         self.color.set()
+        
+    def set_shadow(self, color, opacity, offset, blur_radius):
+        shadow = NSShadow.alloc().init()
+        shadow.setShadowOffset_(offset)
+        shadow.setShadowBlurRadius_(blur_radius)
+        shadow.setShadowColor_(NSColor.colorWithDeviceRed_green_blue_alpha_(color[0], color[1], color[2], opacity))
+        shadow.set()
 
     def set_line_width(self, width):
         self.path.setLineWidth_(width)

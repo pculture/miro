@@ -362,10 +362,9 @@ class SimpleItemContainer(ItemContainerView):
         hbox = widgetset.HBox()
         image_path = resources.path("wimages/%s" % self.image_filename)
         hbox.pack_start(widgetset.ImageDisplay(imagepool.get(image_path)))
-        title = widgetset.Label(self.title)
-        title.set_size(2.5)
-        title.set_color((0.31, 0.31, 0.31))
-        hbox.pack_start(widgetutil.align_middle(title), padding=15)
+        from miro.frontends.widgets.feedview import TitleDrawer
+        hbox.pack_start(TitleDrawer(self.title), padding=15, expand=True)
+
         if not use_custom_titlebar_background:
             return hbox
         else:

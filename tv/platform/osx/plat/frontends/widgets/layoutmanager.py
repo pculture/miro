@@ -139,6 +139,7 @@ class LayoutManager(object):
     def __init__(self):
         self.set_font(1.0)
         self.set_text_color((0, 0, 0))
+        self.set_text_shadow(None)
 
     def font(self, scale_factor, bold=False, italic=False):
         return Font(get_font(scale_factor, bold, italic))
@@ -149,10 +150,13 @@ class LayoutManager(object):
     def set_text_color(self, color):
         self.text_color = color
 
+    def set_text_shadow(self, shadow):
+        self.shadow = shadow
+
     def textbox(self, text):
         layout_manager = nslayout_manager_pool.get()
         color = NSColor.colorWithDeviceRed_green_blue_alpha_(self.text_color[0], self.text_color[1], self.text_color[2], 1.0)
-        textbox = TextBox(layout_manager, text, self.current_font, color)
+        textbox = TextBox(layout_manager, text, self.current_font, color, self.shadow)
         nslayout_manager_pool.monitor_owner(textbox, layout_manager)
         return textbox
 
@@ -163,12 +167,14 @@ class LayoutManager(object):
         nslayout_manager_pool.trim_pool()
         self.set_font(1.0)
         self.set_text_color((0, 0, 0))
+        self.set_text_shadow(None)
 
 class TextBox(object):
-    def __init__(self, layout_manager, text, font, color):
+    def __init__(self, layout_manager, text, font, color, shadow=None):
         self.layout_manager = layout_manager
         self.font = font
         self.color = color
+        self.shadow = shadow
         self.text_storage = NSTextStorage.alloc().init()
         self.text_storage.addLayoutManager_(self.layout_manager)
         self.text_container = layout_manager.textContainers()[0]
@@ -270,10 +276,15 @@ class TextBox(object):
             return None
 
     def draw(self, context, x, y, width, height):
+        if self.shadow is not None:
+            context.save()
+            context.set_shadow(self.shadow.color, self.shadow.opacity, self.shadow.offset, self.shadow.blur_radius)
         self.width = width
         self.text_container.setContainerSize_(NSSize(width, height))
         glyph_range = self.layout_manager.glyphRangeForTextContainer_(self.text_container)
         self.layout_manager.drawGlyphsForGlyphRange_atPoint_(glyph_range, NSPoint(x, y))
+        if self.shadow is not None:
+            context.restore()
         context.path.removeAllPoints()
 
 class Font(object):
