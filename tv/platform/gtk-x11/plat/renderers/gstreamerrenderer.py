@@ -138,7 +138,7 @@ class Renderer:
             imagesink = message.src
             imagesink.set_property('force-aspect-ratio', True)
             imagesink.set_xwindow_id(self.widget.window.xid)        
-        
+
     def on_bus_message(self, bus, message):
         confirmMainThread()
         "recieves message posted on the GstBus"
@@ -148,7 +148,7 @@ class Renderer:
         elif message.type == gst.MESSAGE_EOS:
             eventloop.addIdle(app.htmlapp.playbackController.onMovieFinished,
                               "on_bus_message: skipping to next track")
-            
+
     def set_widget(self, widget):
         confirmMainThread()
         widget.connect_after("realize", self.on_realize)
@@ -160,12 +160,12 @@ class Renderer:
         confirmMainThread()
         self.gc = widget.window.new_gc()
         self.gc.foreground = gtk.gdk.color_parse("black")
-        
+
     def on_unrealize(self, widget):
         confirmMainThread()
         self.playbin.set_state(gst.STATE_NULL)
         self.sink = None
-        
+
     def on_expose(self, widget, event):
         confirmMainThread()
         if self.sink:
@@ -201,7 +201,7 @@ class Renderer:
         """Handle when the video window goes fullscreen."""
         confirmMainThread()
         logging.debug("haven't implemented go_fullscreen method yet!")
-        
+
     def exit_fullscreen(self):
         """Handle when the video window exits fullscreen mode."""
         confirmMainThread()
@@ -244,7 +244,7 @@ class Renderer:
         result = self.playbin.send_event(event)
         if not result:
             logging.error("seek failed")
-        
+
     def play_from_time(self, seconds):
         confirmMainThread()
         self.playbin.set_state(gst.STATE_PAUSED)
@@ -286,14 +286,14 @@ class Renderer:
     def stop(self):
         confirmMainThread()
         self.playbin.set_state(gst.STATE_NULL)
-        
+ 
     def get_rate(self):
         confirmMainThread()
         return 256
-    
+
     def set_rate(self, rate):
         confirmMainThread()
         logging.info("gstreamer set_rate: set rate to %s" % rate)
 
-    def movie_data_program_info(self, moviePath, thumbnailPath):
-        return (("python", 'plat/renderers/gst_extractor.py', moviePath, thumbnailPath), None)
+    def movie_data_program_info(self, movie_path, thumbnail_path):
+        return (("python", 'plat/renderers/gst_extractor.py', movie_path, thumbnail_path), None)

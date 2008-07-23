@@ -136,8 +136,8 @@ class Renderer:
         # nothing to do here
         confirmMainThread()
 
-    def select_item(self, anItem):
-        self.select_file(anItem.getFilename())
+    def select_item(self, an_item):
+        self.select_file(an_item.getFilename())
 
     @wait_for_attach
     def select_file(self, filename):
@@ -145,7 +145,7 @@ class Renderer:
         viz = config.get(options.XINE_VIZ);
         self.xine.setViz(viz);
         self.xine.selectFile(filename)
-        def exposeWorkaround():
+        def expose_workaround():
             try:
                 _, _, width, height, _ = self.widget.window.get_geometry()
                 self.xine.gotExposeEvent(0, 0, width, height)
@@ -153,7 +153,7 @@ class Renderer:
                 return True
             return False
 
-        gobject.timeout_add(500, exposeWorkaround)
+        gobject.timeout_add(500, expose_workaround)
         self.seek(0)
 
     def get_progress(self):
@@ -177,7 +177,7 @@ class Renderer:
 
     def play_from_time(self, seconds):
         confirmMainThread()
-        self.seek (seconds)
+        self.seek(seconds)
 
     @wait_for_attach
     def seek(self, seconds):
