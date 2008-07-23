@@ -154,6 +154,7 @@ class Renderer:
             return False
 
         gobject.timeout_add(500, exposeWorkaround)
+        self.seek(0)
 
     def get_progress(self):
         confirmMainThread()
