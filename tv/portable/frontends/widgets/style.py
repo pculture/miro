@@ -63,7 +63,7 @@ class TabRenderer(widgetset.CustomCellRenderer):
 
         hbox = cellpack.HBox(spacing=4)
         hbox.pack(cellpack.align_middle(self.data.icon))
-        hbox.pack(cellpack.ClippedTextLine(titlebox), expand=True)
+        hbox.pack(cellpack.align_middle(cellpack.ClippedTextLine(titlebox)), expand=True)
         layout.set_font(0.77)
         layout.set_text_color(widgetutil.WHITE)
         self.pack_bubbles(hbox, layout)

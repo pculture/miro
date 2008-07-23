@@ -57,13 +57,10 @@ class MiroLayoutManager(NSLayoutManager):
     """Overide NSLayoutManager to draw better underlines."""
 
     def drawUnderlineForGlyphRange_underlineType_baselineOffset_lineFragmentRect_lineFragmentGlyphRange_containerOrigin_(self, glyph_range, type, offset, line_rect, line_glyph_range, container_origin):
-        container, _ = self.textContainerForGlyphAtIndex_effectiveRange_(
-                glyph_range.location)
-        rect = self.boundingRectForGlyphRange_inTextContainer_(glyph_range,
-                container)
+        container, _ = self.textContainerForGlyphAtIndex_effectiveRange_(glyph_range.location, None)
+        rect = self.boundingRectForGlyphRange_inTextContainer_(glyph_range, container)
         x = container_origin.x + rect.origin.x
-        y = (container_origin.y + rect.origin.y + rect.size.height -
-                offset)
+        y = (container_origin.y + rect.origin.y + rect.size.height - offset)
         underline_height, offset = self.calc_underline_extents(glyph_range)
         y = math.ceil(y + offset) + underline_height / 2.0
         path = NSBezierPath.bezierPath()
@@ -74,8 +71,7 @@ class MiroLayoutManager(NSLayoutManager):
 
     def calc_underline_extents(self, line_glyph_range):
         index = self.characterIndexForGlyphAtIndex_(line_glyph_range.location)
-        font, _ = self.textStorage().attribute_atIndex_effectiveRange_(
-                NSFontAttributeName, index)
+        font, _ = self.textStorage().attribute_atIndex_effectiveRange_(NSFontAttributeName, index, None)
         # we use a couple of magic numbers that seems to work okay.  I (BDK)
         # got it from some old mozilla code.
         height = font.ascender() - font.descender()
@@ -135,8 +131,7 @@ class NSLayoutManagerPool(object):
             # to a TextBox around, so this seems okay for now.
             logging.warn("We're leaking NSLayoutManagers!")
         removing = len(self.available_layout_managers) - self.POOL_SIZE
-        self.available_layout_managers = \
-                self.available_layout_managers[:self.POOL_SIZE]
+        self.available_layout_managers = self.available_layout_managers[:self.POOL_SIZE]
 
 nslayout_manager_pool = NSLayoutManagerPool()
 
@@ -156,9 +151,7 @@ class LayoutManager(object):
 
     def textbox(self, text):
         layout_manager = nslayout_manager_pool.get()
-        color = NSColor.colorWithDeviceRed_green_blue_alpha_(
-                self.text_color[0], self.text_color[1], self.text_color[2],
-                1.0)
+        color = NSColor.colorWithDeviceRed_green_blue_alpha_(self.text_color[0], self.text_color[1], self.text_color[2], 1.0)
         textbox = TextBox(layout_manager, text, self.current_font, color)
         nslayout_manager_pool.monitor_owner(textbox, layout_manager)
         return textbox
@@ -188,20 +181,18 @@ class TextBox(object):
     def make_attr_string(self, text, color, font, underline):
         attributes = { }
         if color is not None:
-            nscolor = NSColor.colorWithDeviceRed_green_blue_alpha_(color[0], 
-                    color[1], color[2], 1.0)
+            nscolor = NSColor.colorWithDeviceRed_green_blue_alpha_(color[0], color[1], color[2], 1.0)
             attributes[NSForegroundColorAttributeName] = nscolor
         else:
             attributes[NSForegroundColorAttributeName] = self.color
-        if font:
+        if font is not None:
             attributes[NSFontAttributeName] = font.nsfont
         else:
             attributes[NSFontAttributeName] = self.font.nsfont
         attributes[NSParagraphStyleAttributeName] = self.paragraph_style.copy()
         if underline:
             attributes[NSUnderlineStyleAttributeName] = NSUnderlineStyleSingle
-        return NSAttributedString.alloc().initWithString_attributes_( text,
-                attributes)
+        return NSAttributedString.alloc().initWithString_attributes_(text, attributes)
 
     def set_text(self, text, color=None, font=None, underline=False):
         string = self.make_attr_string(text, color, font, underline)
@@ -219,10 +210,10 @@ class TextBox(object):
         self.width = width
 
     def update_paragraph_style(self):
-        attributes = { NSParagraphStyleAttributeName:
-            self.paragraph_style.copy() }
-        self.text_storage.setAttributes_range_(attributes, NSMakeRange(0,
-            self.text_storage.length()))
+        attr = NSParagraphStyleAttributeName
+        value = self.paragraph_style.copy()
+        rnge = NSMakeRange(0, self.text_storage.length())
+        self.text_storage.addAttribute_value_range_(attr, value, rnge)
 
     def set_wrap_style(self, wrap):
         if wrap == 'word':
@@ -244,25 +235,25 @@ class TextBox(object):
             raise ValueError("Unknown align value: %s" % align)
         self.update_paragraph_style()
 
-    def line_count(self):
-        glyph_count = self.layout_manager.numberOfGlyphs()
-        retval = 0
-        index = 0
-        while index < glyph_count:
-            _, glyph_range =  self.layout_manager.lineFragmentRectForGlyphAtIndex_effectiveRange_(index, None)
-            index = NSMaxRange(glyph_range)
-            retval += 1
-        return retval
+#    def line_count(self):
+#        glyph_count = self.layout_manager.numberOfGlyphs()
+#        retval = 0
+#        index = 0
+#        while index < glyph_count:
+#            _, glyph_range =  self.layout_manager.lineFragmentRectForGlyphAtIndex_effectiveRange_(index, None)
+#            index = NSMaxRange(glyph_range)
+#            retval += 1
+#        return retval
 
-    def get_glyph_range_for_line(self, line):
-        glyph_count = self.layout_manager.numberOfGlyphs()
-        index = 0
-        for i in xrange(line + 1):
-            if index >= glyph_count:
-                raise IndexError("Not enough lines")
-            _, glyph_range = self.layout_manager.lineFragmentRectForGlyphAtIndex_effectiveRange_(index)
-            index = NSMaxRange(glyph_range)
-        return glyph_range
+#    def get_glyph_range_for_line(self, line):
+#        glyph_count = self.layout_manager.numberOfGlyphs()
+#        index = 0
+#        for i in xrange(line + 1):
+#            if index >= glyph_count:
+#                raise IndexError("Not enough lines")
+#            _, glyph_range = self.layout_manager.lineFragmentRectForGlyphAtIndex_effectiveRange_(index)
+#            index = NSMaxRange(glyph_range)
+#        return glyph_range
 
     def get_size(self):
         # The next line is there just to force cocoa to layout the text
@@ -281,10 +272,8 @@ class TextBox(object):
     def draw(self, context, x, y, width, height):
         self.width = width
         self.text_container.setContainerSize_(NSSize(width, height))
-        glyph_range = self.layout_manager.glyphRangeForTextContainer_(
-                self.text_container)
-        self.layout_manager.drawGlyphsForGlyphRange_atPoint_(glyph_range,
-                NSPoint(x, y))
+        glyph_range = self.layout_manager.glyphRangeForTextContainer_(self.text_container)
+        self.layout_manager.drawGlyphsForGlyphRange_atPoint_(glyph_range, NSPoint(x, y))
         context.path.removeAllPoints()
 
 class Font(object):

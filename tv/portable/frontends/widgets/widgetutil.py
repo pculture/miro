@@ -134,12 +134,12 @@ class ThreeImageSurface(object):
         self.center.draw(context, x, y, center_width, self.height, fraction)
         self.right.draw(context, x + center_width, y, right_width, self.height, fraction)
 
-def middle_baseline(font, height):
-    """Calculate a baseline that will position a line of text in the middle
-    of a box height pixels tall.
-    """
-    extra = max(0, height - font.line_height())
-    return font.ascent() + (extra / 2.0)
+#def middle_baseline(font, height):
+#    """Calculate a baseline that will position a line of text in the middle
+#    of a box height pixels tall.
+#    """
+#    extra = max(0, height - font.line_height())
+#    return font.ascent() + (extra / 2.0)
 
 def get_feed_info(feed_id):
     return app.tab_list_manager.feed_list.get_info(feed_id)
