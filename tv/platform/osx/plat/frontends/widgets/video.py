@@ -36,11 +36,13 @@ from AppKit import NSWindow, NSBorderlessWindowMask, NSBackingStoreBuffered, NSW
 from AppKit import NSView, NSColor, NSNotificationCenter
 from QTKit import QTMovieView, QTMovie, QTMovieURLAttribute, QTMovieDidEndNotification
 
+from miro import app
 from miro.plat import bundle
 from miro.plat import qtcomp
 from miro.plat.utils import filenameTypeToOSFilename
 from miro.plat.frontends.widgets import threads
 from miro.plat.frontends.widgets.base import Widget
+from miro.plat.frontends.widgets.helpers import NotificationForwarder
 
 def initializeVideoRendering():
     bundlePath = bundle.getBundlePath()
@@ -93,7 +95,7 @@ class VideoRenderer (Widget):
     def reset(self):
         threads.warn_if_not_on_main_thread('VideoRenderer.reset')
         self.video_view.setMovie_(nil)
-        self.unregister_movie_observer(self.movie)
+        self.movie_notifications = None
         self.movie = None
         self.cachedMovie = None
 
@@ -117,7 +119,8 @@ class VideoRenderer (Widget):
             self.movie = qtmovie
             self.video_view.setMovie_(self.movie)
             self.video_view.setNeedsDisplay_(YES)
-            self.register_movie_observer(self.movie)
+            self.movie_notifications = NotificationForwarder.create(self.movie)
+            self.movie_notifications.connect(self.handleMovieNotification, QTMovieDidEndNotification)
 
     def get_movie_from_file(self, path):
         osfilename = filenameTypeToOSFilename(path)
@@ -154,20 +157,10 @@ class VideoRenderer (Widget):
         qttime = self.movie.duration()
         qttime.timeValue = qttime.timeValue * position
         self.movie.setCurrentTime_(qttime)
-    
-    def register_movie_observer(self, movie):
-        threads.warn_if_not_on_main_thread('VideoRenderer.register_movie_observer')
-        nc = NSNotificationCenter.defaultCenter()
-        nc.addObserver_selector_name_object_(self, 'handleMovieNotification:', QTMovieDidEndNotification, movie)
 
-    def unregister_movie_observer(self, movie):
-        threads.warn_if_not_on_main_thread('VideoRenderer.unregister_movie_observer')
-        nc = NSNotificationCenter.defaultCenter()
-        nc.removeObserver_name_object_(self, QTMovieDidEndNotification, movie)
-
-    def handleMovieNotification_(self, notification):
-        print notification
-
+    def handleMovieNotification(self, notification):
+        if notification.name() == QTMovieDidEndNotification:
+            app.playback_manager.on_movie_finished()
 
 class VideoWindow (NSWindow):
 

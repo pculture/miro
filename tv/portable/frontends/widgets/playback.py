@@ -118,3 +118,6 @@ class PlaybackManager (signals.SignalEmitter):
         self.video_display.seek_to(progress)
         total = self.video_display.get_total_playback_time()
         self.emit('playback-did-progress', progress * total, total)
+
+    def on_movie_finished(self):
+        self.stop()
