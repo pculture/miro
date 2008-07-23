@@ -142,10 +142,8 @@ class SeparatorView(FlippedView):
     def initWithHorizontal_(self, horizontal):
         self = FlippedView.init(self)
         self.horizontal = horizontal
-        self.color1 = NSColor.colorWithDeviceRed_green_blue_alpha_(0.85, 0.85,
-                0.85, 1.0)
-        self.color2 = NSColor.colorWithDeviceRed_green_blue_alpha_(0.95, 0.95,
-                0.95, 1.0)
+        self.color1 = NSColor.colorWithDeviceWhite_alpha_(0.85, 1.0)
+        self.color2 = NSColor.colorWithDeviceWhite_alpha_(0.95, 1.0)
         return self
 
     def isOpaque(self):
