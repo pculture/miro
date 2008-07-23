@@ -72,11 +72,11 @@ class LayoutManager(object):
         else:
             self.pango_context.set_base_dir(pango.DIRECTION_LTR)
 
-    def font(self, scale_factor, bold=False, italic=False):
+    def font(self, scale_factor, bold=False, italic=False, family=None):
         return Font(self.pango_context, self.style_font_desc, scale_factor,
                 bold, italic)
 
-    def set_font(self, scale_factor, bold=False, italic=False):
+    def set_font(self, scale_factor, bold=False, italic=False, family=None):
         self.current_font = self.font(scale_factor, bold, italic)
 
     def set_text_color(self, color):

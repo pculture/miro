@@ -41,7 +41,7 @@ from objc import YES, NO, nil
 
 INFINITE = 1000000 # size of an "infinite" dimension
 
-def get_font(scale_factor, bold=False, italic=False):
+def get_font(scale_factor, bold=False, italic=False, family=None):
     size = scale_factor * NSFont.systemFontSize()
     if bold:
         weight = 9
@@ -51,7 +51,9 @@ def get_font(scale_factor, bold=False, italic=False):
         traits = NSItalicFontMask
     else:
         traits = 0
-    return NSFontManager.sharedFontManager().fontWithFamily_traits_weight_size_('Lucida Grande', traits, weight, size)
+    if family is None:
+        family = "Lucida Grande"
+    return NSFontManager.sharedFontManager().fontWithFamily_traits_weight_size_(family, traits, weight, size)
 
 class MiroLayoutManager(NSLayoutManager):
     """Overide NSLayoutManager to draw better underlines."""
@@ -141,11 +143,11 @@ class LayoutManager(object):
         self.set_text_color((0, 0, 0))
         self.set_text_shadow(None)
 
-    def font(self, scale_factor, bold=False, italic=False):
-        return Font(get_font(scale_factor, bold, italic))
+    def font(self, scale_factor, bold=False, italic=False, family=None):
+        return Font(get_font(scale_factor, bold, italic, family))
 
-    def set_font(self, scale_factor, bold=False, italic=False):
-        self.current_font = self.font(scale_factor, bold, italic)
+    def set_font(self, scale_factor, bold=False, italic=False, family=None):
+        self.current_font = self.font(scale_factor, bold, italic, family)
 
     def set_text_color(self, color):
         self.text_color = color

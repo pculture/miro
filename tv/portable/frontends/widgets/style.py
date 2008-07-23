@@ -197,7 +197,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         return cellpack.Background(inner, margin=(5, 20, 5, 20))
 
     def make_description(self, layout):
-        layout.set_font(0.85)
+        layout.set_font(0.85, family="Helvetica")
         layout.set_text_color(self.ITEM_DESC_COLOR)
         text, links = self.html_stripper.strip(self.data.description)
         textbox = layout.textbox("")
@@ -226,7 +226,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     def pack_main(self, layout):
         layout.set_text_color(self.text_color)
         vbox = cellpack.VBox()
-        layout.set_font(1.1)
+        layout.set_font(1.1, family="Helvetica")
         if self.data.downloaded and not self.data.video_watched:
             layout.set_text_color(self.UNWATCHED_ITEM_TITLE_COLOR)
         else:
