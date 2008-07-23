@@ -42,13 +42,15 @@ from miro.plat.frontends.widgets import widgetset
 
 PI = math.pi
 
-TAB_LIST_BACKGROUND_COLOR = (0.84, 0.87, 0.90)
-TAB_LIST_HEADER_COLOR = (0.42, 0.47, 0.62)
+TAB_LIST_BACKGROUND_COLOR = (221/255.0, 227/255.0, 234/255.0)
+TAB_LIST_HEADER_COLOR = (128/255.0, 137/255.0, 153/255.0)
+TAB_LIST_SEPARATOR_COLOR = (209/255.0, 216/255.0, 220/255.0)
 
 class TabRenderer(widgetset.CustomCellRenderer):
     MIN_WIDTH = 175
     MIN_HEIGHT = 25
-    TITLE_FONT_SIZE = 0.92
+    TITLE_FONT_SIZE = 0.82
+    BOLD_TITLE = False
     UNWATCHED_BUBBLE_COLOR = (0.45, 0.71, 0.17)
     AVAILABLE_BUBBLE_COLOR = (0.54, 0.61, 0.75)
 
@@ -58,7 +60,7 @@ class TabRenderer(widgetset.CustomCellRenderer):
 
     def render(self, context, layout, selected, hotspot):
         layout.set_text_color(context.style.text_color)
-        layout.set_font(self.TITLE_FONT_SIZE)
+        layout.set_font(self.TITLE_FONT_SIZE, bold=self.BOLD_TITLE)
         titlebox = layout.textbox(self.data.name)
 
         hbox = cellpack.HBox(spacing=4)
@@ -99,6 +101,7 @@ class TabRenderer(widgetset.CustomCellRenderer):
         context.fill()
 
 class StaticTabRenderer(TabRenderer):
+    BOLD_TITLE = True
     DOWNLOADING_BUBBLE_COLOR = (0.90, 0.45, 0.08)
 
     def pack_bubbles(self, hbox, layout):
@@ -116,6 +119,9 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     BORDER_COLOR = (0.78, 0.78, 0.78)
     SELECTED_BACKGROUND_COLOR = (0.90, 0.93, 0.96)
     SELECTED_HIGHLIGHT_COLOR = (0.50, 0.59, 0.68)
+    UNWATCHED_ITEM_TITLE_COLOR = (0.41, 0.75, 0.08)
+    WATCHED_ITEM_TITLE_COLOR = (0.33, 0.33, 0.33)
+    ITEM_DESC_COLOR = (0.6, 0.6, 0.6)
     EMBLEM_FONT_SIZE = 0.77
     GRADIENT_HEIGHT = 25
 
@@ -192,6 +198,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
     def make_description(self, layout):
         layout.set_font(0.85)
+        layout.set_text_color(self.ITEM_DESC_COLOR)
         text, links = self.html_stripper.strip(self.data.description)
         textbox = layout.textbox("")
         pos = 0
@@ -219,7 +226,11 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     def pack_main(self, layout):
         layout.set_text_color(self.text_color)
         vbox = cellpack.VBox()
-        layout.set_font(1.2)
+        layout.set_font(1.1)
+        if self.data.downloaded and not self.data.video_watched:
+            layout.set_text_color(self.UNWATCHED_ITEM_TITLE_COLOR)
+        else:
+            layout.set_text_color(self.WATCHED_ITEM_TITLE_COLOR)
         title = layout.textbox(self.data.name)
         vbox.pack(cellpack.ClippedTextLine(title, 150))
         description = cellpack.ClippedTextBox(self.make_description(layout))

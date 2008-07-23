@@ -133,7 +133,7 @@ class TitlebarBackground(widgetset.Background):
         context.rectangle(0, 0, context.width, context.height)
         context.gradient_fill(gradient)
 
-class ToolbackBackground(widgetset.Background):
+class ToolbarBackground(widgetset.Background):
     def draw(self, context, layout):
         if not context.style.use_custom_titlebar_background:
             return
@@ -185,6 +185,7 @@ class FeedView(itemlist.ItemContainerView):
         if not self.is_folder:
             widget.pack_start(widgetset.HSeparator())
             widget.pack_start(self.build_toolbar())
+        widget.pack_start(widgetset.HThinSeparator((0.7, 0.7, 0.7)))
         widget.pack_start(self.build_item_list_section(), expand=True)
         return widget
 
@@ -234,7 +235,7 @@ class FeedView(itemlist.ItemContainerView):
         hbox.pack_start(widgetutil.align_middle(option_menu))
         hbox.pack_end(widgetutil.align_middle(settings_button))
         hbox.pack_end(widgetutil.align_middle(send_button))
-        background = ToolbackBackground()
+        background = ToolbarBackground()
         background.add(widgetutil.pad(hbox, top=4, bottom=4, left=10,
             right=10))
         return background

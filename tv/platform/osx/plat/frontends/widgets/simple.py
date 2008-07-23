@@ -187,3 +187,35 @@ class VSeparator(Widget):
 
     def calc_size_request(self):
         return (2, 0)
+
+class ThinSeparatorView(FlippedView):
+    def initWithHorizontal_color_(self, horizontal, color):
+        self = FlippedView.init(self)
+        self.horizontal = horizontal
+        self.color = color
+        return self
+
+    def isOpaque(self):
+        return True
+
+    def drawRect_(self, rect):
+        size = self.bounds().size
+        path = NSBezierPath.bezierPath()
+        path.setLineWidth_(1)
+        if self.horizontal:
+            path.moveToPoint_(NSPoint(0, 0.5))
+            path.lineToPoint_(NSPoint(size.width, 0.5))
+        else:
+            path.moveToPoint_(NSPoint(0.5, 0))
+            path.lineToPoint_(NSPoint(0.5, size.height))
+        self.color.set()
+        path.stroke()
+
+class HThinSeparator(Widget):
+    def __init__(self, color):
+        Widget.__init__(self)
+        nscolor = NSColor.colorWithDeviceRed_green_blue_alpha_(color[0], color[1], color[2], 1.0)
+        self.view = ThinSeparatorView.alloc().initWithHorizontal_color_(True, nscolor)
+
+    def calc_size_request(self):
+        return (0, 1)

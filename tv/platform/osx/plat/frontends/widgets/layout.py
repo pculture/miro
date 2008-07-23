@@ -272,16 +272,14 @@ class Alignment(Bin):
         request_width, request_height = self.child.get_size_request()
 
         child_width = self.calc_size(request_width, total_width, self.xscale)
-        child_height = self.calc_size(request_height, total_height,
-                self.yscale)
+        child_height = self.calc_size(request_height, total_height, self.yscale)
         child_x = self.calc_position(child_width, total_width, self.xalign)
         child_y = self.calc_position(child_height, total_height, self.yalign)
         child_x += self.left_pad
-        child_y += self.bottom_pad
+        child_y += self.top_pad
         
         my_origin = self.viewport.area().origin
-        child_rect = NSMakeRect(my_origin.x + child_x, my_origin.y + child_y, 
-            child_width, child_height)
+        child_rect = NSMakeRect(my_origin.x + child_x, my_origin.y + child_y,  child_width, child_height)
         self.child.place(child_rect, self.viewport.view)
 
 class MiroSplitView (NSSplitView):

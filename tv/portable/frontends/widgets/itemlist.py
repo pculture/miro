@@ -36,8 +36,8 @@ from miro import app
 from miro import messages
 from miro import signals
 from miro.gtcache import gettext as _
-from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import style
+from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import use_custom_titlebar_background
@@ -350,6 +350,7 @@ class SimpleItemContainer(ItemContainerView):
     def build_widget(self):
         vbox = widgetset.VBox()
         vbox.pack_start(self.build_titlebar())
+        vbox.pack_start(widgetset.HThinSeparator((0.7, 0.7, 0.7)))
         self.item_list = self.make_item_list()
         self.item_list.connect('play-video', self.on_play_video)
         scroller = widgetset.Scroller(False, True)
@@ -364,11 +365,12 @@ class SimpleItemContainer(ItemContainerView):
         title = widgetset.Label(self.title)
         title.set_size(2.5)
         title.set_color((0.31, 0.31, 0.31))
-        hbox.pack_start(title, padding=15)
+        hbox.pack_start(widgetutil.align_middle(title), padding=15)
         if not use_custom_titlebar_background:
             return hbox
         else:
-            background = widgetset.SolidBackground((0.91, 0.91, 0.91))
+            from miro.frontends.widgets.feedview import TitlebarBackground
+            background = TitlebarBackground()
             background.add(hbox)
             return background
 

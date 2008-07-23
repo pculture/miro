@@ -34,20 +34,20 @@ from miro import prefs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import browser
+from miro.frontends.widgets import widgetutil
 from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
 
 class StaticTab(object):
     def __init__(self):
         self.unwatched = self.downloading = 0
-        icon_path = resources.path('wimages/%s' % self.icon_name)
-        self.icon = imagepool.get_surface(icon_path)
+        self.icon = widgetutil.make_surface(self.icon_name)
         self.view = self.make_view()
 
 class ChannelGuideTab(StaticTab):
     id = 'guide'
     name = _('Miro Guide')
-    icon_name = 'icon-guide.png'
+    icon_name = 'icon-guide'
 
     def make_view(self):
         self.browser = browser.Browser(app.widgetapp.default_guide_info)
@@ -72,19 +72,19 @@ class DummyTab(StaticTab):
 class SearchTab(DummyTab):
     id = 'search'
     name = _('Video Search')
-    icon_name = 'icon-search.png'
+    icon_name = 'icon-search'
 
 class LibraryTab(DummyTab):
     id = 'library'
     name = _('Library')
-    icon_name = 'icon-library.png'
+    icon_name = 'icon-library'
 
 class NewVideosTab(DummyTab):
     id = 'new'
     name = _('New')
-    icon_name = 'icon-new.png'
+    icon_name = 'icon-new'
 
 class DownloadsTab(DummyTab):
     id = 'downloading'
     name = _('Downloading')
-    icon_name = 'icon-downloading.png'
+    icon_name = 'icon-downloading'

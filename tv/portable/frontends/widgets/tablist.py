@@ -459,18 +459,24 @@ class TabListBox(widgetset.Scroller):
         self.header_left_pad = tlm.feed_list.view.get_left_offset()
         vbox = widgetset.VBox()
         vbox.pack_start(tlm.static_tab_list.view)
-        vbox.pack_start(self.build_header(_('SITES'), 5, 15))
+        vbox.pack_start(self.build_header(_('SITES')))
         vbox.pack_start(tlm.site_list.view)
-        vbox.pack_start(self.build_header(_('FEEDS'), 5, 15))
+        vbox.pack_start(self.build_header(_('FEEDS')))
         vbox.pack_start(tlm.feed_list.view)
-        vbox.pack_start(self.build_header(_('PLAYLISTS'), 5, 15))
+        vbox.pack_start(self.build_header(_('PLAYLISTS')))
         vbox.pack_start(tlm.playlist_list.view)
         return vbox
 
-    def build_header(self, text, top_pad, bottom_pad):
+    def build_header(self, text):
+        separator = widgetset.HThinSeparator(style.TAB_LIST_SEPARATOR_COLOR)
+
         label = widgetset.Label(text)
         label.set_bold(True)
         label.set_size(0.92)
         label.set_color(style.TAB_LIST_HEADER_COLOR)
-        return widgetutil.align_left(label, top_pad, bottom_pad,
-                self.header_left_pad)
+
+        vbox = widgetset.VBox()
+        vbox.pack_start(widgetutil.pad(separator, top=5, bottom=10))
+        vbox.pack_start(widgetutil.align_left(label, 0, 5, self.header_left_pad))
+
+        return vbox
