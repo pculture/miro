@@ -181,10 +181,10 @@ class FeedView(itemlist.ItemContainerView):
         for view in self.all_item_views:
             view.item_list.connect('play-video', self.on_play_video)
         widget = widgetset.VBox()
-        widget.pack_start(widgetutil.pad(self.build_titlebar(), bottom=2))
+        widget.pack_start(self.build_titlebar())
         if not self.is_folder:
             widget.pack_start(widgetset.HSeparator())
-            widget.pack_start(widgetutil.pad(self.build_toolbar(), top=2))
+            widget.pack_start(self.build_toolbar())
         widget.pack_start(self.build_item_list_section(), expand=True)
         return widget
 
