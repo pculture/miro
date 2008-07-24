@@ -74,8 +74,9 @@ class OSXApplication(Application):
         NSApplicationMain(sys.argv)        
     
     def do_quit(self):
-        windowFrame = NSStringFromRect(self.window.nswindow.frame())
-        config.set(prefs.MAIN_WINDOW_FRAME, windowFrame)
+        windowFrame = self.window.nswindow.frame()
+        windowFrame.size.height -= 22
+        config.set(prefs.MAIN_WINDOW_FRAME, NSStringFromRect(windowFrame))
         config.save()
         Application.do_quit(self)
             
@@ -100,10 +101,11 @@ class OSXApplication(Application):
     def get_main_window_dimensions(self):
         windowFrame = config.get(prefs.MAIN_WINDOW_FRAME)
         if windowFrame is None:
-            windowFrame = NSMakeRect(0,0,800,600)
+            windowFrame = (0,0,800,600)
         else:
-            windowFrame = NSRectFromString(windowFrame)
-        return Rect(windowFrame.origin.x, windowFrame.origin.y, windowFrame.size.width, windowFrame.size.height)
+            rect = NSRectFromString(windowFrame)
+            windowFrame = (rect.origin.x, rect.origin.y, rect.size.width, rect.size.height)
+        return Rect(*windowFrame)
 
 class AppController(NSObject):
 
