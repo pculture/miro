@@ -428,6 +428,25 @@ class bdist_miro(Command):
         self.copy_file(os.path.join(platform_dir, "moviedata_util.py"),
                 dist_dir)
 
+class runmiro (Command):
+    description = "build Miro and start it up"
+
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+
+    def run(self):
+        self.run_command('bdist_miro')
+        olddir = os.getcwd()
+        os.chdir(self.get_finalized_command('py2exe').dist_dir)
+        os.system("Miro.exe")
+        os.chdir(olddir)
+
 class bdist_nsis (Command):
     description = "create Miro installer using NSIS"
 
@@ -639,6 +658,7 @@ if __name__ == "__main__":
             'build_movie_data_util': build_movie_data_util,
             'bdist_miro': bdist_miro,
             'bdist_nsis': bdist_nsis,
+            'runmiro': runmiro,
         },
         options = {
             'py2exe': {
