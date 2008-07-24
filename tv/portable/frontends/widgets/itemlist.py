@@ -37,6 +37,7 @@ from miro import messages
 from miro import signals
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import style
+from miro.frontends.widgets import separator
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
@@ -350,7 +351,7 @@ class SimpleItemContainer(ItemContainerView):
     def build_widget(self):
         vbox = widgetset.VBox()
         vbox.pack_start(self.build_titlebar())
-        vbox.pack_start(widgetset.HThinSeparator((0.7, 0.7, 0.7)))
+        vbox.pack_start(separator.HThinSeparator((0.7, 0.7, 0.7)))
         self.item_list = self.make_item_list()
         self.item_list.connect('play-video', self.on_play_video)
         scroller = widgetset.Scroller(False, True)

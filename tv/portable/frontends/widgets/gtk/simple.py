@@ -226,20 +226,3 @@ class Button(Widget):
 
     def disable_widget(self):
         self._widget.set_sensitive(False)
-
-class HSeparator(Widget):
-    def __init__(self):
-        Widget.__init__(self)
-        self.set_widget(gtk.HSeparator())
-
-class HThinSeparator(Widget):
-    def __init__(self, color):
-        Widget.__init__(self)
-        # FIXME: gtk separator are 2 pixels high/wide.
-        #        HThinSeparator should be 1 pixel high/wide.
-        self.set_widget(gtk.HSeparator())
-
-class VSeparator(Widget):
-    def __init__(self):
-        Widget.__init__(self)
-        self.set_widget(gtk.VSeparator())

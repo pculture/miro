@@ -42,8 +42,7 @@ from miro.frontends.widgets.gtk.window import Window, MainWindow, Dialog, \
 from miro.frontends.widgets.gtk.tableview import TableView, TableModel, \
         TreeTableModel, CellRenderer, ImageCellRenderer, CustomCellRenderer
 from miro.frontends.widgets.gtk.simple import Image, ImageDisplay, Label, \
-        Scroller, Expander, SolidBackground, OptionMenu, Button, \
-        HSeparator, HThinSeparator, VSeparator
+        Scroller, Expander, SolidBackground, OptionMenu, Button
 
 # Just use the GDK Rectangle class
 Rect = gtk.gdk.Rectangle

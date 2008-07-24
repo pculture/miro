@@ -32,9 +32,10 @@ from miro import app
 from miro import messages
 from miro.gtcache import gettext as _
 from miro.plat import resources
+from miro.frontends.widgets import style
+from miro.frontends.widgets import separator
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import statictabs
-from miro.frontends.widgets import style
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
 
@@ -468,7 +469,7 @@ class TabListBox(widgetset.Scroller):
         return vbox
 
     def build_header(self, text):
-        separator = widgetset.HThinSeparator(style.TAB_LIST_SEPARATOR_COLOR)
+        hsep = separator.HThinSeparator(style.TAB_LIST_SEPARATOR_COLOR)
 
         label = widgetset.Label(text)
         label.set_bold(True)
@@ -476,7 +477,7 @@ class TabListBox(widgetset.Scroller):
         label.set_color(style.TAB_LIST_HEADER_COLOR)
 
         vbox = widgetset.VBox()
-        vbox.pack_start(widgetutil.pad(separator, top=5, bottom=10))
+        vbox.pack_start(widgetutil.pad(hsep, top=5, bottom=10))
         vbox.pack_start(widgetutil.align_left(label, 0, 5, self.header_left_pad))
 
         return vbox

@@ -31,6 +31,7 @@
 from miro.gtcache import gettext as _
 from miro import messages
 from miro.frontends.widgets import itemlist
+from miro.frontends.widgets import separator
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
@@ -184,9 +185,9 @@ class FeedView(itemlist.ItemContainerView):
         widget = widgetset.VBox()
         widget.pack_start(self.build_titlebar())
         if not self.is_folder:
-            widget.pack_start(widgetset.HSeparator())
+            widget.pack_start(separator.HSeparator())
             widget.pack_start(self.build_toolbar())
-        widget.pack_start(widgetset.HThinSeparator((0.7, 0.7, 0.7)))
+        widget.pack_start(separator.HThinSeparator((0.7, 0.7, 0.7)))
         widget.pack_start(self.build_item_list_section(), expand=True)
         return widget
 
