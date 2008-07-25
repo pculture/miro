@@ -53,9 +53,7 @@ class Window(signals.SignalEmitter):
         self.nswindow = NSWindow.alloc()
         self.nswindow.initWithContentRect_styleMask_backing_defer_(
                 rect.nsrect,
-                NSTitledWindowMask  | 
-                NSMiniaturizableWindowMask | 
-                NSResizableWindowMask,
+                NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask,
                 NSBackingStoreBuffered,
                 NO)
         self.nswindow.setTitle_(title)
@@ -64,16 +62,11 @@ class Window(signals.SignalEmitter):
         self.content_view.setAutoresizesSubviews_(NO)
         self.nswindow.setContentView_(self.content_view)
         self.content_widget = None
-        self.view_notifications = NotificationForwarder.create(
-                self.content_view)
-        self.view_notifications.connect(self.on_frame_change,
-                'NSViewFrameDidChangeNotification')
-        self.window_notifications = NotificationForwarder.create(
-                self.nswindow)
-        self.window_notifications.connect(self.on_activate,
-                'NSWindowDidBecomeMainNotification')
-        self.window_notifications.connect(self.on_deactivate,
-                'NSWindowDidResignMainNotification')
+        self.view_notifications = NotificationForwarder.create(self.content_view)
+        self.view_notifications.connect(self.on_frame_change, 'NSViewFrameDidChangeNotification')
+        self.window_notifications = NotificationForwarder.create(self.nswindow)
+        self.window_notifications.connect(self.on_activate, 'NSWindowDidBecomeMainNotification')
+        self.window_notifications.connect(self.on_deactivate, 'NSWindowDidResignMainNotification')
         wrappermap.add(self.nswindow, self)
         alive_windows.add(self)
 
@@ -96,10 +89,10 @@ class Window(signals.SignalEmitter):
         self.nswindow.makeMainWindow()
 
     def close(self):
-        self.nswindow.close()
+        self.nswindow.orderOut_(nil)
 
     def destroy(self):
-        self.close()
+        self.nswindow.close()
         alive_windows.discard(self)
 
     def place_child(self):
@@ -134,8 +127,9 @@ class Window(signals.SignalEmitter):
         return self.content_widget
 
 class MainWindow(Window):
-    # We don't need to add the menubar here, so there's nothing to do.
-    pass
+    def __init__(self, title, rect):
+        Window.__init__(self, title, rect)
+        self.nswindow.setReleasedWhenClosed_(NO)
 
 class Dialog:
     def __init__(self, title, description):

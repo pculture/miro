@@ -49,11 +49,52 @@ class MenuHandler(NSObject):
         return group_name in app.menu_manager.enabled_groups
 
     def handleMenuItem_(self, sender):
-        handler = menus.lookup_handler(self.action)
-        if handler is not None:
-            handler()
+        if self.action == "HideMiro":
+            NSApp.hide_(None)
+
+        elif self.action == "HideOthers":
+            NSApp.hideOtherApplications_(None)
+
+        elif self.action == "ShowAll":
+            NSApp.unhideAllApplications_(None)
+
+        elif self.action == "CloseWindow":
+            app.widgetapp.window.nswindow.orderOut_(sender)
+
+        elif self.action == "Cut":
+            NSApp.sendAction_to_from_("cut:", None, sender)
+
+        elif self.action == "Copy":
+            NSApp.sendAction_to_from_("copy:", None, sender)
+
+        elif self.action == "Paste":
+            NSApp.sendAction_to_from_("paste:", None, sender)
+
+        elif self.action == "Delete":
+            NSApp.sendAction_to_from_("delete:", None, sender)
+
+        elif self.action == "SelectAll":
+            NSApp.sendAction_to_from_("selectAll:", None, sender)
+
+        elif self.action == "Zoom":
+            NSApp.sendAction_to_from_("performZoom:", None, sender)
+
+        elif self.action == "Minimize":
+            NSApp.sendAction_to_from_("performMiniaturize:", None, sender)
+
+        elif self.action == "ShowMain":
+            app.widgetapp.window.nswindow.makeKeyAndOrderFront_(sender)
+
+        elif self.action == "BringAllToFront":
+            NSApp.sendAction_to_from_("arrangeInFront:", None, sender)
+
         else:
-            logging.warn("No handler for %s" % self.action)
+            handler = menus.lookup_handler(self.action)
+            if handler is not None:
+                handler()
+            else:
+                logging.warn("No handler for %s" % self.action)
+
 # Keep a reference to each MenuHandler we create
 all_handlers = set()
 
@@ -117,7 +158,7 @@ def populate_menu():
     miroMenu.findItem("Quit").label = _("Quit Miro")
 
     # File menu
-    closeWinItem = MenuItem(_("Close Window"), "NewChannel", (Key("w", MOD),))
+    closeWinItem = MenuItem(_("Close Window"), "CloseWindow", (Key("w", MOD),))
     menubar.findMenu("Video").menuitems.append(closeWinItem)
 
     # Edit menu
