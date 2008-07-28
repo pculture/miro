@@ -155,7 +155,7 @@ class TitleDrawer(widgetset.DrawingArea):
         layout.set_text_shadow(widgetutil.Shadow((1,1,1), 1, (1.5,-1.5), 0.5))
         textbox = layout.textbox(self.title)
         textbox.set_width(context.width)
-        textbox.set_wrap_style('char')
+        textbox.set_wrap_style('truncated-char')
         height = textbox.font.line_height()
         y = (context.height - height) / 2
         textbox.draw(context, 0, y, context.width, height)

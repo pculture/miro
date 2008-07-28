@@ -228,6 +228,8 @@ class TextBox(object):
             self.paragraph_style.setLineBreakMode_(NSLineBreakByWordWrapping)
         elif wrap == 'char':
             self.paragraph_style.setLineBreakMode_(NSLineBreakByCharWrapping)
+        elif wrap == 'truncated-char':
+            self.paragraph_style.setLineBreakMode_(NSLineBreakByTruncatingTail)
         else:
             raise ValueError("Unknown wrap value: %s" % wrap)
         self.update_paragraph_style()

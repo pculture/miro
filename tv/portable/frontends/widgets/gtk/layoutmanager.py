@@ -170,7 +170,7 @@ class TextBox(object):
     def set_wrap_style(self, wrap):
         if wrap == 'word':
             self.layout.set_wrap(pango.WRAP_WORD_CHAR)
-        elif wrap == 'char':
+        elif wrap == 'char' or wrap == 'truncated-char':
             self.layout.set_wrap(pango.WRAP_CHAR)
         else:
             raise ValueError("Unknown wrap value: %s" % wrap)

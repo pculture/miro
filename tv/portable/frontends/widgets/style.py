@@ -65,7 +65,7 @@ class TabRenderer(widgetset.CustomCellRenderer):
 
         hbox = cellpack.HBox(spacing=4)
         hbox.pack(cellpack.align_middle(self.data.icon))
-        hbox.pack(cellpack.align_middle(cellpack.ClippedTextLine(titlebox)), expand=True)
+        hbox.pack(cellpack.align_middle(cellpack.TruncatedTextLine(titlebox)), expand=True)
         layout.set_font(0.77)
         layout.set_text_color(widgetutil.WHITE)
         self.pack_bubbles(hbox, layout)
@@ -232,7 +232,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         else:
             layout.set_text_color(self.WATCHED_ITEM_TITLE_COLOR)
         title = layout.textbox(self.data.name)
-        vbox.pack(cellpack.ClippedTextLine(title, 150))
+        vbox.pack(cellpack.TruncatedTextLine(title, 150))
         description = cellpack.ClippedTextBox(self.make_description(layout))
         vbox.pack(cellpack.Hotspot('description', description), expand=True)
         if self.data.downloaded:

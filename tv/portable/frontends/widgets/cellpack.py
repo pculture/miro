@@ -367,6 +367,11 @@ class ClippedTextLine(TextBoxPacker):
     def _calc_size(self):
         return self.min_width, self.textbox.font.line_height()
 
+class TruncatedTextLine(ClippedTextLine):
+    def __init__(self, textbox, min_width=0):
+        ClippedTextLine.__init__(self, textbox, min_width)
+        self.textbox.set_wrap_style('truncated-char')
+
 class Hotspot(Packer):
     """A Hotspot handles mouse click tracking.  It's only purpose is to store
     a name to return from find_hotspot().  In terms of layout, it simply
