@@ -386,6 +386,10 @@ class FeedList(NestedTabList):
     def init_info(self, info):
         info.icon = imagepool.get_surface(info.tab_icon)
 
+    def get_feeds(self):
+        infos = [self.view.model[i][0] for i in self.iter_map.values()]
+        return infos
+
     def find_feed_with_url(self, url):
         for iter in self.iter_map.values():
             info = self.view.model[iter][0]
