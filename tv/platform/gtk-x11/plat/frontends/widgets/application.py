@@ -102,12 +102,12 @@ class GtkX11Application(Application):
         self.window.connect('save-dimensions', self.set_main_window_dimensions)
         self.window.connect('save-maximized', self.set_main_window_maximized)
 
-        maximized = get_main_window_maximized()
+        maximized = self.get_main_window_maximized()
         if maximized != None:
             if maximized:
-                self._window.maximize()
+                self.window._window.maximize()
             else:
-                self._window.unmaximize()
+                self.window._window.unmaximize()
 
     def quit_ui(self):
         gtk.main_quit()
