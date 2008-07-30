@@ -147,6 +147,9 @@ class Window(WindowBase):
     def destroy(self):
         child = self._window.child
         if child:
+            # Remove our child widget.  This shouldn't be needed, but its a 
+            # workaround for a hang that happens when we try to destroy a
+            # window that contains a GTKMozEmbed widget.
             child.hide()
             self._window.remove(child)
         self._window.destroy()
