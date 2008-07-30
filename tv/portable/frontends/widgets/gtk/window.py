@@ -145,6 +145,10 @@ class Window(WindowBase):
         self._window.hide()
 
     def destroy(self):
+        child = self._window.child
+        if child:
+            child.hide()
+            self._window.remove(child)
         self._window.destroy()
         alive_windows.discard(self)
 
