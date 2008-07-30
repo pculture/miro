@@ -154,3 +154,31 @@ class Table(Widget):
 
     def set_row_spacing(self, spacing):
         self._widget.set_row_spacings(spacing)
+
+    def enable_widget(self, row=None, column=None):
+        if row != None and column != None:
+            if self.children[column, row]:
+                self.children[column, row].enable_widget()
+        elif row != None:
+            for mem in self.children.row(row):
+                if mem: mem.enable_widget()
+        elif column != None:
+            for mem in self.children.column(column):
+                if mem: mem.enable_widget()
+        else:
+            for mem in self.children:
+                if mem: mem.enable_widget()
+
+    def disable_widget(self, row=None, column=None):
+        if row != None and column != None:
+            if self.children[column, row]: 
+                self.children[column, row].disable_widget()
+        elif row != None:
+            for mem in self.children.row(row):
+                if mem: mem.disable_widget()
+        elif column != None:
+            for mem in self.children.column(column):
+                if mem: mem.disable_widget()
+        else:
+            for mem in self.children:
+                if mem: mem.disable_widget()

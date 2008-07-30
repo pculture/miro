@@ -533,6 +533,34 @@ class Table(Container):
         self.row_spacing = spacing
         self.invalidate_size_request()
 
+    def enable_widget(self, row=None, column=None):
+        if row != None and column != None:
+            if self.cells[column, row]:
+                self.cells[column, row].enable_widget()
+        elif row != None:
+            for mem in self.cells.row(row):
+                if mem: mem.enable_widget()
+        elif column != None:
+            for mem in self.cells.column(column):
+                if mem: mem.enable_widget()
+        else:
+            for mem in self.cells:
+                if mem: mem.enable_widget()
+
+    def disable_widget(self, row=None, column=None):
+        if row != None and column != None:
+            if self.cells[column, row]: 
+                self.cells[column, row].disable_widget()
+        elif row != None:
+            for mem in self.cells.row(row):
+                if mem: mem.disable_widget()
+        elif column != None:
+            for mem in self.cells.column(column):
+                if mem: mem.disable_widget()
+        else:
+            for mem in self.cells:
+                if mem: mem.disable_widget()
+
 class Scroller(Bin):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, horizontal, vertical):
