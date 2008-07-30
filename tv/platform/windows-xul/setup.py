@@ -131,6 +131,7 @@ from distutils.extension import Extension
 from distutils.core import Command
 from distutils import log
 import py2exe
+import py2exe.build_exe
 import os
 import sys
 import shutil
@@ -367,6 +368,20 @@ class install_data (distutils.command.install_data.install_data):
         distutils.command.install_data.install_data.run(self)
         self.install_app_config()
         self.install_gdk_pixbuf_loaders()
+
+# We want to make sure we include msvcp71.dll in the dist directory.
+# Recipe taken from
+# http://www.py2exe.org/index.cgi/OverridingCriteraForIncludingDlls
+DLLS_TO_INCLUDE = [
+        'msvcp71.dll',
+]
+origIsSystemDLL = py2exe.build_exe.isSystemDLL
+def isSystemDLL(pathname):
+    if os.path.basename(pathname).lower() in DLLS_TO_INCLUDE:
+        return False
+    else:
+        return origIsSystemDLL(pathname)
+py2exe.build_exe.isSystemDLL = isSystemDLL
 
 class build_movie_data_util(Command):
     description = "build the Miro Movie Data Utility"
