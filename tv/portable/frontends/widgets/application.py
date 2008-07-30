@@ -289,6 +289,10 @@ class Application:
         if url is not None:
             messages.NewChannel(url).send_to_backend()
 
+    def add_new_search_channel(self):
+        # data = dialogs.new_search_channel()
+        logging.info("IMPLEMENT ME!")
+
     def add_new_channel_folder(self):
         title = _('Create Channel Folder')
         description = _('Enter a name for the new channel folder')

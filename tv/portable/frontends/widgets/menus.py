@@ -92,7 +92,9 @@ def on_new_channel():
 def on_new_guidel():
     app.widgetapp.add_new_guide()
 
-# FIXME - NewSearchChannel
+@action_handler("NewSearchChannel")
+def on_new_search_channel():
+    app.widgetapp.add_new_search_channel()
 
 @action_handler("NewChannelFolder")
 def on_new_channel_folder():
