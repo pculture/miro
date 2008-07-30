@@ -59,7 +59,7 @@ class MiroLayoutManager(NSLayoutManager):
     """Overide NSLayoutManager to draw better underlines."""
 
     def drawUnderlineForGlyphRange_underlineType_baselineOffset_lineFragmentRect_lineFragmentGlyphRange_containerOrigin_(self, glyph_range, type, offset, line_rect, line_glyph_range, container_origin):
-        container, _ = self.textContainerForGlyphAtIndex_effectiveRange_(glyph_range.location, None)
+        container, _ = self.textContainerForGlyphAtIndex_effectiveRange_(glyph_range.location)
         rect = self.boundingRectForGlyphRange_inTextContainer_(glyph_range, container)
         x = container_origin.x + rect.origin.x
         y = (container_origin.y + rect.origin.y + rect.size.height - offset)
@@ -73,7 +73,7 @@ class MiroLayoutManager(NSLayoutManager):
 
     def calc_underline_extents(self, line_glyph_range):
         index = self.characterIndexForGlyphAtIndex_(line_glyph_range.location)
-        font, _ = self.textStorage().attribute_atIndex_effectiveRange_(NSFontAttributeName, index, None)
+        font, _ = self.textStorage().attribute_atIndex_effectiveRange_(NSFontAttributeName, index)
         # we use a couple of magic numbers that seems to work okay.  I (BDK)
         # got it from some old mozilla code.
         height = font.ascender() - font.descender()
