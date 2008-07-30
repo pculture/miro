@@ -145,7 +145,7 @@ class Window(WindowBase):
         self._window.hide()
 
     def destroy(self):
-        self.close()
+        self._window.destroy()
         alive_windows.discard(self)
 
     def is_active(self):

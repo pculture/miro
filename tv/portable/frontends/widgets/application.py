@@ -587,7 +587,7 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
 
     def do_quit(self):
         if hasattr(self, 'window'):
-            self.window.close()
+            self.window.destroy()
         app.controller.shutdown()
         self.quit_ui()
 
