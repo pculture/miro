@@ -292,9 +292,6 @@ class FeedImpl:
         return self.lastViewed != datetime.min
 
     # Returns the ID of the actual feed, never that of the UniversalFeed wrapper
-    def getFeedID(self):
-        return self.getID()
-
     def getID(self):
         try:
             return self.ufeed.getID()
@@ -689,10 +686,6 @@ class Feed(DDBObject):
             if self.idExists():
                 self.setBlinking(False)
         eventloop.addTimeout(0.5, timeout, 'unblink feed')
-
-    # Returns the ID of this feed. Deprecated.
-    def getFeedID(self):
-        return self.getID()
 
     def getID(self):
         return DDBObject.getID(self)
