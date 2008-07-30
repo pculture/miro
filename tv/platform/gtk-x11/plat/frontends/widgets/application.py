@@ -97,9 +97,17 @@ class GtkX11Application(Application):
         gtk.main()
         app.controller.onShutdown()
 
-    def buildUI(self):
-        Application.buildUI(self)
+    def build_window(self):
+        Application.build_window(self)
         self.window.connect('save-dimensions', self.set_main_window_dimensions)
+        self.window.connect('save-maximized', self.set_main_window_maximized)
+
+        maximized = get_main_window_maximized()
+        if maximized != None:
+            if maximized:
+                self._window.maximize()
+            else:
+                self._window.unmaximize()
 
     def quit_ui(self):
         gtk.main_quit()
@@ -144,8 +152,14 @@ class GtkX11Application(Application):
 
         return Rect(x, y, width, height)
 
+    def get_main_window_maximized(self):
+        return getBool("maximized") == True
+
     def set_main_window_dimensions(self, window, x, y, width, height):
         setInt("width", width)
         setInt("height", height)
         setInt("x", x)
         setInt("y", y)
+
+    def set_main_window_maximized(self, window, maximized):
+        setBool("maximized", maximized)

@@ -81,8 +81,10 @@ class WrappedWindow(gtk.Window):
     def do_focus_out_event(self, event):
         gtk.Window.do_focus_out_event(self, event)
         wrappermap.wrapper(self).emit('active-change')
+    def do_window_state_event(self, event):
+        wrappermap.wrapper(self).on_window_state_event(event)
     def do_configure_event(self, event):
-        wrappermap.wrapper(self).on_configure()
+        wrappermap.wrapper(self).on_configure_event(event)
         gtk.Window.do_configure_event(self, event)
 
 gobject.type_register(WrappedWindow)
@@ -123,18 +125,24 @@ class Window(WindowBase):
         self.set_window(WrappedWindow())
         self._window.set_title(title)
         self._window.set_default_size(rect.width, rect.height)
+
         self.create_signal('active-change')
         self.create_signal('save-dimensions')
+        self.create_signal('save-maximized')
         alive_windows.add(self)
 
     def on_delete(self):
         app.widgetapp.quit()
         return True
 
-    def on_configure(self):
+    def on_configure_event(self, event):
         (x, y) = self._window.get_position()
         (width, height) = self._window.get_size()
         self.emit('save-dimensions', x, y, width, height)
+
+    def on_window_state_event(self, event):
+        maximized = (event.new_window_state & gtk.gdk.WINDOW_STATE_MAXIMIZED) != 0
+        self.emit('save-maximized', maximized)
 
     def show(self):
         if self not in alive_windows:
