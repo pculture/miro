@@ -135,13 +135,14 @@ class Table(Widget):
         self.set_widget(gtk.Table(rows, columns, homogeneous=False))
         self.children = Matrix(rows, columns)
 
-    def set_cell(self, widget, row, column):
-        """Add a widget to the table."""
-        self.children[row, column] = widget
-        self._widget.attach(widget._widget, row, row+1, column, column+1)
+    def set_cell(self, widget, column, row):
+        """Add a widget to the table.
+        """
+        self.children[column, row] = widget
+        self._widget.attach(widget._widget, column, column+1, row, row+1)
 
-    def get_cell(self, widget, row, column):
-        return self.children[row, column]
+    def get_cell(self, widget, column, row):
+        return self.children[column, row]
 
     def remove(self, widget):
         widget._widget.hide() # otherwise gtkmozembed gets confused
