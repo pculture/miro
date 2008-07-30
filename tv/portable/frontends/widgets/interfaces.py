@@ -288,6 +288,12 @@ class Widget:
     def relative_position(self, other_widget):
         """Get the position of another widget, relative to this widget."""
 
+    def enable_widget(self):
+        """Enables the widget and any child widgets."""
+
+    def disable_widget(self):
+        """Disables the widget and any child widgets."""
+
 class Box(Widget):
     """Simple box-packing widget.   This works like GTK's HBox/VBox
     classes.  Check out the GTK tutorial for how it should act.
