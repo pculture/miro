@@ -218,11 +218,11 @@ class FeedView(itemlist.ItemContainerView):
         feed_info = widgetutil.get_feed_info(self.id)
         autodownload_mode = feed_info.autodownload_mode
         if autodownload_mode == 'all':
-            option_menu.select_option(0)
+            option_menu.set_selected(0)
         elif autodownload_mode == 'new':
-            option_menu.select_option(1)
+            option_menu.set_selected(1)
         elif autodownload_mode == 'off':
-            option_menu.select_option(2)
+            option_menu.set_selected(2)
         option_menu.connect('changed', self.on_autodownload_changed)
         
         send_button = self.make_toolbar_button(_("Send to a friend"))

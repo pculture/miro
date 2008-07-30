@@ -208,8 +208,11 @@ class OptionMenu(AttributedStringStyler):
     def calc_size_request(self):
         return self.view.cell().cellSize()
 
-    def select_option(self, index):
+    def set_selected(self, index):
         self.view.selectItemAtIndex_(index)
+
+    def get_selected(self):
+        return self.view.indexOfSelectedItem()
 
     def handle_new_attributes(self, attributes):
         menu = self.view.menu()

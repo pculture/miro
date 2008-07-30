@@ -188,8 +188,11 @@ class OptionMenu(Widget):
     def set_color(self, color):
         self.cell.props.foreground_gdk = self.make_color(color)
 
-    def select_option(self, index):
+    def set_selected(self, index):
         self._widget.set_active(index)
+
+    def get_selected(self):
+        return self._widget.get_active()
 
     def on_changed(self, widget):
         index = widget.get_active()
