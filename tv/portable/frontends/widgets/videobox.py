@@ -115,6 +115,7 @@ class ProgressTimeRemaining(widgetset.CustomButton):
 
     def handle_progress(self, obj, elapsed, total):
         self.set_current_time(elapsed)
+        self.set_duration(total)
 
     def handle_stop(self, obj):
         self.set_current_time(None)
