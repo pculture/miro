@@ -96,6 +96,7 @@ class VLCRenderer:
         self.exc.check()
 
     def on_unrealize(self, widget):
+        self.reset()
         libvlc.libvlc_video_set_parent(self.vlc, 0, self.exc.ref())
         self.exc.check()
 
