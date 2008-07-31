@@ -33,8 +33,6 @@ import gtk
 # and the browser.
 from miro.frontends.widgets.gtk.widgetset import *
 
-from miro.plat.frontends.widgets.video import VideoRenderer
-
 # We need to provide a Browser
 from miro.plat.frontends.widgets import mozprompt
 xpcom_setup = False

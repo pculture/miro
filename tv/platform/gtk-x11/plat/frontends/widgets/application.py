@@ -35,8 +35,7 @@ from miro import app
 from miro import eventloop
 from miro.frontends.widgets.application import Application
 from miro.plat.frontends.widgets import threads
-from miro.plat.frontends.widgets import video
-from miro.plat import mozsetup
+from miro.plat import mozsetup, renderers
 from miro.plat.utils import setProperties
 from miro.plat.config import gconf_lock
 
@@ -93,7 +92,7 @@ class GtkX11Application(Application):
         langs = ("LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG")
         langs = [(l, os.environ.get(l)) for l in langs if os.environ.get(l)]
         logging.info("Language:          %s", langs)
-        video.init_renderer()
+        renderers.init_renderer()
         gtk.main()
         app.controller.onShutdown()
 

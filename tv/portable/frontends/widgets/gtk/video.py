@@ -28,70 +28,42 @@
 
 """video.py -- Video code. """
 
-import logging
-import traceback
-
 import gtk
 
 from miro import app
-from miro import config
 from miro.frontends.widgets.gtk.widgetset import Widget
-from miro.plat import options
-from miro.plat.utils import confirmMainThread
 
-def set_renderer(modname):
-    """Attempt to set the video renderer."""
+class NullRenderer(object):
+    def can_play_file(self, path):
+        return False
 
-    logging.info("set_renderer: trying to add %s", modname)
-    try:
-        pkg = __import__('miro.plat.renderers.' + modname)
-        module = getattr(pkg.plat.renderers, modname)
-        app.renderer = module.Renderer()
-        logging.info("set_renderer: successfully loaded %s", modname)
-    except:
-        logging.info("set_renderer: couldn't load %s: %s", modname,
-                traceback.format_exc())
-        raise
-
-def init_renderer():
-    """Initializes a video renderer for us to use.
-
-    Note: renderer modules have to be xxxxrenderer and xxxx shows up in the
-    preferences.
-    """
-    r = config.get(options.USE_RENDERER)
-    try:
-        set_renderer("%srenderer" % r)
-    except:
-        try:
-            logging.error("init_renderer: error detected...  trying to add gstreamerrenderer")
-
-            # try to add the gstreamer renderer if the preferences aren't right
-            set_renderer("gstreamerrenderer")
-        except:
-            logging.error("init_renderer: no valid renderer has been loaded")
-        app.renderer = None
+    def reset(self):
+        pass
 
 class VideoRenderer (Widget):
+    """Video renderer widget.  NOTE app.renderer must be initialized before
+    instantiating this class.  If no renderers can be found, set app.renderer
+    to None.
+    """
 
     def __init__(self):
         Widget.__init__(self)
-        self.renderer = app.renderer
+        if app.renderer is not None:
+            self.renderer = app.renderer
+        else:
+            self.renderer = NullRenderer()
         self.set_widget(gtk.DrawingArea())
         self._widget.set_double_buffered(False)
         self._widget.add_events(gtk.gdk.POINTER_MOTION_MASK)
         self.renderer.set_widget(self._widget)
 
     def reset(self):
-        confirmMainThread()
         self.renderer.reset()
     
     def can_play_movie_file(self, path):
-        confirmMainThread()
         return self.renderer.can_play_file(path)
     
     def set_movie_file(self, path):
-        confirmMainThread()
         self.renderer.select_file(path)
 
     def get_elapsed_playback_time(self):
@@ -106,15 +78,12 @@ class VideoRenderer (Widget):
         return self.renderer.get_duration()
 
     def play(self):
-        confirmMainThread()
         self.renderer.play()
 
     def pause(self):
-        confirmMainThread()
         self.renderer.pause()
 
     def stop(self):
-        confirmMainThread()
         self.renderer.stop()
 
     def seek_to(self, position):

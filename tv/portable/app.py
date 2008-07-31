@@ -48,6 +48,8 @@ The widget frontend adds:
 widgetapp -- Application object
 display_manger -- Handles the right-hand display.
 tab_list_manager -- Handles the tab lists and selection.
+renderer -- Video rendering object (or None if the platform code can't
+        initialize a suitable renderer)
 """
 
 renderers = []
