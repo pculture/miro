@@ -77,7 +77,9 @@ class ProgressTime(widgetset.DrawingArea):
         app.playback_manager.connect('did-stop', self.handle_stop)
 
     def size_request(self, layout):
-        return (40, 13)
+        layout.set_font(0.75)
+        sizer_text = layout.textbox('9999:99')
+        return sizer_text.get_size()
 
     def handle_progress(self, obj, elapsed, total):
         self.set_current_time(elapsed)
@@ -96,7 +98,7 @@ class ProgressTime(widgetset.DrawingArea):
         layout.set_text_color(widgetutil.WHITE)
         text = layout.textbox(format_time(self.current_time))
         width, height = text.get_size()
-        text.draw(context, context.width-width, 2, width, height)
+        text.draw(context, context.width-width, 0, width, height)
 
 class ProgressTimeRemaining(widgetset.CustomButton):
     def __init__(self):
@@ -108,7 +110,9 @@ class ProgressTimeRemaining(widgetset.CustomButton):
         app.playback_manager.connect('did-stop', self.handle_stop)
 
     def size_request(self, layout):
-        return (50, 13)
+        layout.set_font(0.75)
+        sizer_text = layout.textbox('-9999:99')
+        return sizer_text.get_size()
 
     def handle_play(self, obj, duration):
         self.set_duration(duration)
@@ -143,7 +147,7 @@ class ProgressTimeRemaining(widgetset.CustomButton):
         layout.set_text_color(widgetutil.WHITE)
         text = layout.textbox(text)
         width, height = text.get_size()
-        text.draw(context, 10, 2, width, height)
+        text.draw(context, 10, 0, width, height)
 
     def draw_pressed(self, context, layout):
         # Maybe we should have a different style here for user feed back?
