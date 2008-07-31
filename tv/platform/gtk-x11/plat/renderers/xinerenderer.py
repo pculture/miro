@@ -163,13 +163,14 @@ class Renderer:
         except:
             pass
 
-    def get_current_time(self, callback):
+    def get_current_time(self):
         confirmMainThread()
         try:
             pos, length = self.xine.getPositionAndLength()
-            callback(pos / 1000.0)
-        except:
-            callback(None)
+            return pos / 1000.0
+        except Exception, e:
+            logging.error("get_current_time: caught exception: %s" % e)
+            return None
 
     def set_current_time(self, seconds):
         confirmMainThread()
@@ -184,19 +185,14 @@ class Renderer:
         confirmMainThread()
         self.xine.seek(int(seconds * 1000))
 
-    def get_duration(self, callback=None):
+    def get_duration(self):
         confirmMainThread()
         try:
             pos, length = self.xine.getPositionAndLength()
-            ret = length / 1000
-        except:
-            ret = None
-
-        if callback: 
-            callback(ret)
-            return
-
-        return ret
+            return length / 1000.0
+        except Exception, e:
+            logging.error("get_duration: caught exception: %s" % e)
+            return None
 
     # @wait_for_attach  -- Not necessary because stop does this
     def reset(self):

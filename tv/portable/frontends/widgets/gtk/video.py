@@ -68,11 +68,7 @@ class VideoRenderer (Widget):
 
     def get_elapsed_playback_time(self):
         # FIXME, why use a callback here?
-        result = []
-        def callback(time):
-            result.append(time)
-        self.renderer.get_current_time(callback)
-        return result[0]
+        return self.renderer.get_current_time()
 
     def get_total_playback_time(self):
         return self.renderer.get_duration()

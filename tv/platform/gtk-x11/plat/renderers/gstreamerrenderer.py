@@ -48,7 +48,7 @@ from miro.plat.utils import confirmMainThread
 from miro.plat import options
 
 def to_seconds(t):
-    return t / 1000000000
+    return t / 1000000000.0
 
 def from_seconds(s):
     return s * 1000000000
@@ -220,15 +220,14 @@ class Renderer:
         confirmMainThread()
         logging.info("get_progress: what does this do?")
 
-    def get_current_time(self, callback):
+    def get_current_time(self):
         confirmMainThread()
         try:
             position, format = self.playbin.query_position(gst.FORMAT_TIME)
-            position = to_seconds(position)
+            return to_seconds(position)
         except Exception, e:
             logging.error("get_current_time: caught exception: %s" % e)
-            position = 0
-        callback(position)
+            return None
 
     def set_current_time(self, seconds):
         self.seek(seconds)
@@ -254,18 +253,14 @@ class Renderer:
         self.seek(seconds)
         self.play()
 
-    def get_duration(self, callback=None):
+    def get_duration(self):
         confirmMainThread()
         try:
             duration, format = self.playbin.query_duration(gst.FORMAT_TIME)
-            duration = to_seconds(duration)
+            return to_seconds(duration)
         except Exception, e:
             logging.error("get_duration: caught exception: %s" % e)
-            duration = 1
-        if callback:
-            callback(duration)
-            return
-        return duration
+            return None
 
     def reset(self):
         confirmMainThread()
