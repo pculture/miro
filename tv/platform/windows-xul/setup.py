@@ -648,7 +648,16 @@ if 0:
 
 if __name__ == "__main__":
     setup(
-        windows=['Miro.py', 'Miro_Downloader.py'],
+        windows=[
+            {
+                'script': 'Miro.py',
+                'icon_resources': [(0, "Miro.ico")],
+            },
+            {
+                'script': 'Miro_Downloader.py',
+                'icon_resources': [(0, "Miro.ico")],
+            }
+            ],
         ext_modules = ext_modules,
         packages = [
             'miro',
