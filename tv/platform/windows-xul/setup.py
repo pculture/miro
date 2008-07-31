@@ -506,6 +506,8 @@ class bdist_nsis (Command):
             nsisVars[nsisName] = template_vars[ourName]
 
         nsisVars['CONFIG_EXECUTABLE'] = "%s.exe" % template_vars['shortAppName']
+        nsisVars['CONFIG_DOWNLOADER_EXECUTABLE'] = "%s_Downloader.exe" % \
+                template_vars['shortAppName']
         nsisVars['CONFIG_MOVIE_DATA_EXECUTABLE'] = "%s_MovieData.exe" % \
                 template_vars['shortAppName']
         nsisVars['CONFIG_ICON'] = "%s.ico" % template_vars['shortAppName']

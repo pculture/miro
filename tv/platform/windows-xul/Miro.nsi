@@ -5,6 +5,7 @@
 ;  CONFIG_LONG_APP_NAME  eg, "Miro"
 ;  CONFIG_PUBLISHER      eg, "Participatory Culture Foundation"
 ;  CONFIG_EXECUTABLE     eg, "Miro.exe
+;  CONFIG_DOWNLOADER_EXECUTABLE     eg, "Miro_Downloader.exe
 ;  CONFIG_MOVIE_DATA_EXECUTABLE     eg, "Miro_MovieData.exe
 ;  CONFIG_ICON           eg, "Miro.ico"
 ;  CONFIG_OUTPUT_FILE    eg, "Miro-1.2.3.exe"
@@ -93,7 +94,7 @@ Function add_radio_buttons
   StrCmp $REINSTALL "1" 0 +2
   Abort
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Settings" "NumFields" "5"
-  
+
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 2" "Top" "20"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 2" "Bottom" "38"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 2" "Right" "325"
@@ -308,6 +309,7 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
   ; Remove the program
   Delete   "${directory}\${CONFIG_EXECUTABLE}"
   Delete   "${directory}\${CONFIG_ICON}"
+  Delete   "${directory}\${CONFIG_DOWNLOADER_EXECUTABLE}"
   Delete   "${directory}\${CONFIG_MOVIE_DATA_EXECUTABLE}"
   Delete   "${directory}\*.dll"
   Delete   "${directory}\*.pyd"
@@ -322,7 +324,7 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
   RMDir /r "${directory}\xulrunner"
   RMDir /r "${directory}\imagemagick"
 
-  RMDIR ${directory} 
+  RMDIR ${directory}
 !macroend
 
 !macro GetConfigOptionsMacro trim find
@@ -388,32 +390,32 @@ Function IsUserAdmin
 Push $R0
 Push $R1
 Push $R2
- 
+
 ClearErrors
 UserInfo::GetName
 IfErrors Win9x
 Pop $R1
 UserInfo::GetAccountType
 Pop $R2
- 
+
 StrCmp $R2 "Admin" 0 Continue
 ; Observation: I get here when running Win98SE. (Lilla)
-; The functions UserInfo.dll looks for are there on Win98 too, 
+; The functions UserInfo.dll looks for are there on Win98 too,
 ; but just don't work. So UserInfo.dll, knowing that admin isn't required
 ; on Win98, returns admin anyway. (per kichik)
 StrCpy $R0 "true"
 Goto Done
- 
+
 Continue:
 ; You should still check for an empty string because the functions
 ; UserInfo.dll looks for may not be present on Windows 95. (per kichik)
 StrCmp $R2 "" Win9x
 StrCpy $R0 "false"
 Goto Done
- 
+
 Win9x:
 StrCpy $R0 "true"
- 
+
 Done:
 Pop $R2
 Pop $R1
@@ -451,7 +453,7 @@ done_version:
   Exch $R0
 FunctionEnd
 
-; Sets $R0 to icon, $R1 to parameters, $R2 to the shortcut name, 
+; Sets $R0 to icon, $R1 to parameters, $R2 to the shortcut name,
 ; $R3 uninstall shortcut name
 Function GetShortcutInfo
   StrCpy $R0 "$INSTDIR\${CONFIG_ICON}"
@@ -556,7 +558,7 @@ lbl_winnt:
   StrCmp $R0 "true" is_admin
   MessageBox MB_OK|MB_ICONEXCLAMATION "You must have administrator privileges to install $APP_NAME.  Please log in using an administrator account and try again."
   Quit
-  
+
 is_admin:
   SetShellVarContext all
   SetOutPath "$INSTDIR"
@@ -583,6 +585,7 @@ unzipok:
 
   File  "${CONFIG_EXECUTABLE}"
   File  "${CONFIG_ICON}"
+  File  "${CONFIG_DOWNLOADER_EXECUTABLE}"
   File  "${CONFIG_MOVIE_DATA_EXECUTABLE}"
   File  "moviedata_util.py"
   File  "*.dll"
@@ -616,7 +619,7 @@ done_installing_theme:
 done_installing_initial_feeds:
 
   IfErrors 0 files_ok
-  
+
   MessageBox MB_OK|MB_ICONEXCLAMATION "Installation failed.  An error occured writing to the ${CONFIG_SHORT_APP_NAME} Folder."
   Quit
 files_ok:
@@ -784,7 +787,7 @@ Function .onInit
   IfErrors +2 0
   StrCpy $REINSTALL "1"
   ClearErrors
-  
+
   !insertmacro MUI_INSTALLOPTIONS_EXTRACT "iHeartMiro-installer-page.ini"
 
   GetTempFileName $TACKED_ON_FILE
@@ -853,7 +856,7 @@ no_tackon:
 LocateDone:
   ${locate::Close} $0
 
-  
+
   ; Is the app running?  Stop it if so.
 TestRunning:
   ${nsProcess::FindProcess} "miro.exe" $R0
@@ -893,7 +896,7 @@ NotOldDownloaderRunning:
   ; Is the app already installed? Bail if so.
   ReadRegStr $R0 HKLM "${INST_KEY}" "InstallDir"
   StrCmp $R0 "" NotCurrentInstalled
- 
+
 prompt_for_uninstall:
   ; Should we uninstall the old one?
   StrCmp $REINSTALL 1 UninstallCurrent 0
@@ -909,7 +912,7 @@ NotCurrentInstalled:
   ; Is the app already installed? Bail if so.
   ReadRegStr $R0 HKLM "${OLD_INST_KEY}" "InstallDir"
   StrCmp $R0 "" NotOldInstalled
- 
+
   ; Should we uninstall the old one?
   MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
   "It looks like you already have a copy of Democracy Player $\n\
