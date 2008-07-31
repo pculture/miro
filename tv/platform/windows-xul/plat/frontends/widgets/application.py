@@ -43,10 +43,12 @@ from miro.frontends.widgets import dialogs
 from miro.frontends.widgets.application import Application
 from miro.plat import migrateappname
 from miro.plat import clipboard
+from miro.plat.renderers.vlc import VLCRenderer
 from miro.plat.frontends.widgets import xulrunnerbrowser
 
 class WindowsApplication(Application):
     def run(self):
+        app.renderer = VLCRenderer()
         self.initXULRunner()
         gtk.gdk.threads_init()
         self.startup()
@@ -56,7 +58,6 @@ class WindowsApplication(Application):
         finally:
             gtk.gdk.threads_leave()
         xulrunnerbrowser.shutdown()
-        print 'shutdown'
         app.controller.onShutdown()
 
     def quit_ui(self):

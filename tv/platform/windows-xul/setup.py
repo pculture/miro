@@ -100,6 +100,8 @@ PYGOBJECT_INCLUDE_DIR = os.path.join(BINARY_KIT_ROOT, 'pygobject')
 XULRUNNER_SDK_PATH = os.path.join(BINARY_KIT_ROOT, 'xulrunner-sdk')
 XULRUNNER_SDK_BIN_PATH = os.path.join(XULRUNNER_SDK_PATH, 'bin')
 
+VLC_PATH = os.path.join(BINARY_KIT_ROOT, 'vlc')
+
 # Path to a build of the convert utility from imagemagick
 IMAGEMAGICK_DIR = os.path.join(BINARY_KIT_ROOT, 'imagemagick')
 
@@ -286,6 +288,9 @@ image_loader_path = os.path.join('lib', 'gtk-2.0', '2.10.0', 'loaders')
 data_files.extend(find_data_files(image_loader_path, 
     os.path.join(GTK_ROOT_PATH, image_loader_path)))
 data_files.append(('', iglob(os.path.join(GTK_BIN_PATH, '*.dll'))))
+data_files.extend(find_data_files('vlc-plugins', 
+    os.path.join(VLC_PATH, 'plugins')))
+data_files.append(('', [os.path.join(VLC_PATH, 'libvlc.dll')]))
 
 # handle the resources subdirectories.
 for dir in ('searchengines', 'wimages'):
@@ -648,7 +653,7 @@ if 0:
 
 if __name__ == "__main__":
     setup(
-        windows=[
+        console=[
             {
                 'script': 'Miro.py',
                 'icon_resources': [(0, "Miro.ico")],
@@ -667,6 +672,7 @@ if __name__ == "__main__":
             'miro.frontends.widgets',
             'miro.frontends.widgets.gtk',
             'miro.plat',
+            'miro.plat.renderers',
             'miro.plat.frontends',
             'miro.plat.frontends.widgets',
         ],
