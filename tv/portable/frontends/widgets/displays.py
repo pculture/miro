@@ -31,13 +31,14 @@ app.
 """
 
 from miro import app
+from miro import signals
 from miro.frontends.widgets import browser
 from miro.frontends.widgets import feedview
 from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import playlist
 from miro.plat.frontends.widgets import widgetset
 
-class Display(object):
+class Display(signals.SignalEmitter):
     """A display is a view that can be shown in the right hand side of the
     app.
 
@@ -45,6 +46,10 @@ class Display(object):
 
     widget -- Widget to show to the user.
     """
+
+    def __init__(self):
+        signals.SignalEmitter.__init__(self)
+        self.create_signal('removed')
 
     def cleanup(self):
         """Cleanup any resources allocated in create.  This will be called
@@ -105,6 +110,7 @@ class DisplayManager(object):
         app.item_list_manager.reset()
         if self.current_display:
             self.current_display.cleanup()
+            self.current_display.emit("removed")
 
 class StaticTabDisplay(TabDisplay):
     @staticmethod
@@ -112,6 +118,7 @@ class StaticTabDisplay(TabDisplay):
         return type == 'static'
 
     def __init__(self, type, selected_tabs):
+        Display.__init__(self)
         # There is always exactly 1 selected static tab
         self.widget = selected_tabs[0].view
 
@@ -121,10 +128,12 @@ class SiteDisplay(TabDisplay):
         return type == 'site' and len(selected_tabs) == 1
 
     def __init__(self, type, selected_tabs):
+        Display.__init__(self)
         self.widget = browser.Browser(selected_tabs[0])
 
 class ItemListDisplay(TabDisplay):
     def __init__(self, type, selected_tabs):
+        Display.__init__(self)
         tab = selected_tabs[0]
         self.view = self.make_view(tab)
         self.id = self.view.id
@@ -183,6 +192,7 @@ class LibraryDisplay(ItemListDisplay):
 
 class VideoDisplay(Display):
     def __init__(self):
+        Display.__init__(self)
         self.widget = widgetset.VideoRenderer()
 
     def setup(self, path):
@@ -207,7 +217,7 @@ class VideoDisplay(Display):
         self.widget.seek_to(position)
 
     def cleanup(self):
-        pass
+        self.widget.stop()
 
 class DummyDisplay(TabDisplay):
     @staticmethod
@@ -215,6 +225,7 @@ class DummyDisplay(TabDisplay):
         return True
 
     def __init__(self, type, selected_tabs):
+        Display.__init__(self)
         text = '\n'.join(tab.name for tab in selected_tabs)
         label = widgetset.Label(text)
         label.set_size(3)

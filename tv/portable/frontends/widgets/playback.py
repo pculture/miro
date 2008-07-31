@@ -56,6 +56,7 @@ class PlaybackManager (signals.SignalEmitter):
     
     def start_with_movie_file(self, path):
         self.video_display = VideoDisplay()
+        self.video_display.connect('removed', self.on_display_removed)
         self.previous_display = app.display_manager.current_display
         self.previous_left_width = app.widgetapp.window.splitter.get_left_width()
         app.widgetapp.window.splitter.set_left_width(0)
@@ -76,6 +77,9 @@ class PlaybackManager (signals.SignalEmitter):
             elapsed = self.video_display.get_elapsed_playback_time()
             total = self.video_display.get_total_playback_time()
             self.emit('playback-did-progress', elapsed, total)
+
+    def on_display_removed(self, display):
+        self.stop()
     
     def play(self):
         duration = self.video_display.get_total_playback_time()
