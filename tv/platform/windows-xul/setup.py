@@ -655,7 +655,7 @@ if 0:
 
 if __name__ == "__main__":
     setup(
-        console=[
+        windows=[
             {
                 'script': 'Miro.py',
                 'icon_resources': [(0, "Miro.ico")],
