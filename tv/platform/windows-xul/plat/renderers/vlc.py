@@ -143,7 +143,7 @@ class VLCRenderer:
         self.exc.check()
         return input
 
-    def get_current_time(self, callback):
+    def get_current_time(self):
         try:
             input = self._get_input()
             try:
@@ -156,8 +156,6 @@ class VLCRenderer:
             time = 0
         time = time / 1000.0
 
-        if callback:
-            callback(time)
         return time
 
     def set_current_time(self, seconds):
@@ -176,7 +174,7 @@ class VLCRenderer:
         except VLCError, e:
             logging.warn("exception seeking: %s" % e)
 
-    def get_duration(self, callback=None):
+    def get_duration(self):
         try:
             input = self._get_input()
             try:
@@ -189,6 +187,4 @@ class VLCRenderer:
             duration = 0
         duration = duration / 1000.0
 
-        if callback:
-            callback(duration)
         return duration
