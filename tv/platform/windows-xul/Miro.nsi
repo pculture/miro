@@ -323,6 +323,7 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
   RMDir /r "${directory}\resources"
   RMDir /r "${directory}\xulrunner"
   RMDir /r "${directory}\imagemagick"
+  RMDir /r "${directory}\vlc-plugins"
 
   RMDIR ${directory}
 !macroend
@@ -597,6 +598,7 @@ unzipok:
   File  /r resources
   File  /r xulrunner
   File  /r imagemagick
+  File  /r vlc-plugins
 !endif
 
 install_theme:
