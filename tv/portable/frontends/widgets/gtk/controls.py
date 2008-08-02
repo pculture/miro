@@ -29,6 +29,7 @@
 """miro.frontends.widgets.gtk.controls -- Control Widgets."""
 
 import gtk
+import weakref
 
 from miro.frontends.widgets.gtk.base import Widget
 
@@ -72,6 +73,61 @@ class Checkbox(Widget):
 
     def set_checked(self, value):
         self._widget.set_active(value)
+
+    def enable_widget(self):
+        self._widget.set_sensitive(True)
+
+    def disable_widget(self):
+        self._widget.set_sensitive(False)
+
+class RadioButtonGroup:
+    """RadioButtonGroup.
+
+    Create the group, then create a bunch of RadioButtons passing in the group.
+    """
+    def __init__(self):
+        self._buttons = []
+
+    def add_button(self, button):
+        self._buttons.append(button)
+
+    def get_buttons(self):
+        return self._buttons
+
+    def get_selected(self):
+        for mem in self._buttons:
+            if mem.get_selected():
+                return mem
+
+# use a weakref so that we're not creating circular references between
+# RadioButtons and RadioButtonGroups
+radio_button_to_group_mapping = weakref.WeakValueDictionary()
+
+class RadioButton(Widget):
+    """RadioButton."""
+    def __init__(self, label, group=None):
+        Widget.__init__(self)
+        self.set_widget(gtk.RadioButton(label=label))
+        self.create_signal('clicked')
+        self.forward_signal('clicked')
+
+        if group:
+            buttons = group.get_buttons()
+            if buttons:
+                self._widget.set_group(buttons[0]._widget)
+
+            group.add_button(self)
+        else:
+            group = RadioButtonGroup()
+
+        oid = id(self)
+        radio_button_to_group_mapping[oid] = group
+
+    def get_group(self):
+        return radio_button_to_group_mapping[id(self)]
+
+    def get_selected(self):
+        return self._widget.get_active()
 
     def enable_widget(self):
         self._widget.set_sensitive(True)

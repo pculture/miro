@@ -30,7 +30,8 @@ import gtk
 
 from miro.frontends.widgets.gtk.base import Widget, Bin
 from miro.frontends.widgets.gtk.const import *
-from miro.frontends.widgets.gtk.controls import TextEntry, Checkbox
+from miro.frontends.widgets.gtk.controls import TextEntry, Checkbox, \
+        RadioButton, RadioButtonGroup
 from miro.frontends.widgets.gtk.customcontrols import CustomButton, \
         ContinuousCustomButton, CustomSlider
 from miro.frontends.widgets.gtk.drawing import ImageSurface, DrawingContext, \
