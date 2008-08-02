@@ -56,6 +56,26 @@ class SearchEngine(DDBObject):
         requestURL = requestURL.replace(u"%l", unicode(int(limit)))
         return requestURL
 
+class SearchEngineInfo:
+    def __init__(self, name, title, url):
+        checkU(name)
+        checkU(title)
+        checkU(url)
+        self.name = name
+        self.title = title
+        self.url = url
+
+    def get_request_url(self, query, filterAdultContents, limit):
+        requestURL = self.url.replace(u"%s", urlencode(query))
+        requestURL = requestURL.replace(u"%a", unicode(int(not filterAdultContents)))
+        requestURL = requestURL.replace(u"%l", unicode(int(limit)))
+        return requestURL
+
+    def __repr__(self):
+        return "<SearchEngineInfo %s %s" % (self.name, self.title)
+
+_engines = []
+
 def delete_engines():
     for engine in views.searchEngines:
         engine.remove()
@@ -74,6 +94,7 @@ def warn(filename, message):
     logging.warn("Error parsing searchengine: %s: %s", filename, message)
 
 def load_search_engine(filename):
+    global _engines
     try:
         dom = parse(filename)
         id_ = displayname = url = sort = None
@@ -117,7 +138,10 @@ def load_search_engine(filename):
             return
         if sort == None:
             sort = 0
+
+        _engines.append(SearchEngineInfo(id_, displayname, url))
         SearchEngine(id_, displayname, url, sort)
+
     except:
         warn(filename, "Exception parsing file")
 
@@ -162,6 +186,9 @@ def getSearchEnginesHTML():
         enginesHTML += u'</option>'
     enginesHTML += u'</select>'
     return enginesHTML
+
+def get_search_engines():
+    return list(_engines)
 
 def get_last_engine_title():
     return get_engine_title(get_last_engine())
