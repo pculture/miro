@@ -290,8 +290,20 @@ class Application:
             messages.NewChannel(url).send_to_backend()
 
     def add_new_search_channel(self):
-        # data = dialogs.new_search_channel()
-        logging.info("IMPLEMENT ME!")
+        channel_options = app.tab_list_manager.feed_list.get_feeds()
+        channel_options = [ci for ci in channel_options if not ci.is_folder]
+        data = dialogs.new_search_channel(_('New Search Channel'),
+                                          _('A search channel contains items that match a search term.'),
+                                          channel_options)
+        if not data:
+            return
+
+        if data[0] == "channel":
+            messages.NewChannelSearchChannel(data[1], data[2]).send_to_backend()
+        elif data[0] == "search_engine":
+            pass
+        elif data[0] == "url":
+            pass
 
     def add_new_channel_folder(self):
         title = _('Create Channel Folder')

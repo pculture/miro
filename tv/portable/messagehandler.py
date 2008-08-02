@@ -45,6 +45,7 @@ from miro.feed import Feed, getFeedByURL
 from miro.playlist import SavedPlaylist
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
 from miro.util import getSingletonDDBObject
+from miro.xhtmltools import urlencode
 
 import shutil
 
@@ -508,6 +509,23 @@ class BackendMessageHandler(messages.MessageHandler):
             if message.trackback:
                 httpclient.grabURL(message.trackback, 
                         lambda x: None, lambda x: None)
+
+    def handle_new_channel_search_channel(self, message):
+        logging.info("handle_new_channel_search_channel")
+        term = message.search_term
+        channel_info = message.channel_info
+        location = channel_info.url
+
+        if isinstance(term, unicode):
+            term = term.encode("utf-8")
+
+        if isinstance(location, unicode):
+            location = location.encode("utf-8")
+
+        url = u"dtv:searchTerm:%s?%s" % (urlencode(location), urlencode(term))
+        logging.info("search url: %s", url)
+        if not getFeedByURL(url):
+            Feed(url)
 
     def handle_new_channel_folder(self, message):
         ChannelFolder(message.name)

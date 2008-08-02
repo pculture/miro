@@ -298,6 +298,12 @@ class NewChannel(BackendMessage):
         self.url = util.toUni(url)
         self.trackback = trackback
 
+class NewChannelSearchChannel(BackendMessage):
+    """Creates a new channel based on a search through a channel."""
+    def __init__(self, channel_info, search_term):
+        self.search_term = search_term
+        self.channel_info = channel_info
+
 class NewPlaylist(BackendMessage):
     """Create a new playlist."""
     def __init__(self, name, ids):
@@ -455,9 +461,9 @@ class ChannelInfo(object):
     is_folder -- is this a channel folder?
     is_directory_feed -- is this channel a watched directory?
     has_downloading -- are videos currently being downloaded for this channel?
-    base_href -- URL to use for relative links for items in this channel.  
+    base_href -- url to use for relative links for items in this channel.
       This will be None for ChannelFolders.
-    autodownload_mode -- Current autodownload mode ('all', 'new' or 'off')
+    autodownload_mode -- current autodownload mode ('all', 'new' or 'off')
     """
     def __init__(self, channel_obj):
         self.name = channel_obj.getTitle()
