@@ -301,8 +301,14 @@ class NewChannel(BackendMessage):
 class NewChannelSearchChannel(BackendMessage):
     """Creates a new channel based on a search through a channel."""
     def __init__(self, channel_info, search_term):
-        self.search_term = search_term
         self.channel_info = channel_info
+        self.search_term = search_term
+
+class NewChannelSearchEngine(BackendMessage):
+    """Creates a new channel from a search engine."""
+    def __init__(self, search_engine_info, search_term):
+        self.search_engine_info = search_engine_info
+        self.search_term = search_term
 
 class NewPlaylist(BackendMessage):
     """Create a new playlist."""

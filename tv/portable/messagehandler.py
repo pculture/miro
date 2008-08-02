@@ -41,6 +41,7 @@ from miro import singleclick
 from miro import subscription
 from miro import views
 from miro import opml
+from miro import searchengines
 from miro.feed import Feed, getFeedByURL
 from miro.playlist import SavedPlaylist
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
@@ -526,7 +527,20 @@ class BackendMessageHandler(messages.MessageHandler):
             term = term + " " + channel_info.search_term
 
         url = u"dtv:searchTerm:%s?%s" % (urlencode(location), urlencode(term))
-        logging.info("search url: %s", url)
+        if not getFeedByURL(url):
+            Feed(url)
+
+    def handle_new_channel_search_engine(self, message):
+        sei = message.search_engine_info
+        term = message.search_term
+
+        title = "%s: %s" % (searchengines.get_engine_title(sei.title),
+                            term)
+        url = searchengines.get_request_url(sei.name, term)
+
+        if not url:
+            return
+
         if not getFeedByURL(url):
             Feed(url)
 

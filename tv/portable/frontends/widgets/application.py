@@ -301,7 +301,7 @@ class Application:
         if data[0] == "channel":
             messages.NewChannelSearchChannel(data[1], data[2]).send_to_backend()
         elif data[0] == "search_engine":
-            pass
+            messages.NewChannelSearchEngine(data[1], data[2]).send_to_backend()
         elif data[0] == "url":
             pass
 
