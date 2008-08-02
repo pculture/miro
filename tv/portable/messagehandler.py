@@ -514,13 +514,16 @@ class BackendMessageHandler(messages.MessageHandler):
         logging.info("handle_new_channel_search_channel")
         term = message.search_term
         channel_info = message.channel_info
-        location = channel_info.url
+        location = channel_info.base_href
 
         if isinstance(term, unicode):
             term = term.encode("utf-8")
 
         if isinstance(location, unicode):
             location = location.encode("utf-8")
+
+        if channel_info.search_term:
+            term = term + " " + channel_info.search_term
 
         url = u"dtv:searchTerm:%s?%s" % (urlencode(location), urlencode(term))
         logging.info("search url: %s", url)

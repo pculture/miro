@@ -464,6 +464,7 @@ class ChannelInfo(object):
     base_href -- url to use for relative links for items in this channel.
       This will be None for ChannelFolders.
     autodownload_mode -- current autodownload mode ('all', 'new' or 'off')
+    search_term -- the search term used for this feed or None
     """
     def __init__(self, channel_obj):
         self.name = channel_obj.getTitle()
@@ -471,6 +472,10 @@ class ChannelInfo(object):
         self.unwatched = channel_obj.numUnwatched()
         self.available = channel_obj.numAvailable()
         self.has_downloading = channel_obj.hasDownloadingItems()
+        if hasattr(channel_obj, "searchTerm"):
+            self.search_term = channel_obj.searchTerm
+        else:
+            self.search_term = None
         if not isinstance(channel_obj, ChannelFolder):
             self.url = channel_obj.getURL()
             self.thumbnail = channel_obj.getThumbnailPath()
