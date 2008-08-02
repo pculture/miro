@@ -710,7 +710,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
                 current_display.view.handle_items_changed(message)
             else:
                 logging.warn("wrong id for feed view (%s feed view: %s)",
-                        message.feed_id, current_display.feed_id)
+                        message.id, current_display.id)
         else:
             logging.warn("got item list, but display is: %s", current_display)
 
