@@ -50,104 +50,108 @@ class SearchEngine(DDBObject):
         self.sortOrder = sortOrder
         DDBObject.__init__(self)
 
-    def getRequestURL (self, query, filterAdultContents, limit):
+    def get_request_url(self, query, filterAdultContents, limit):
         requestURL = self.url.replace(u"%s", urlencode(query))
         requestURL = requestURL.replace(u"%a", unicode(int(not filterAdultContents)))
         requestURL = requestURL.replace(u"%l", unicode(int(limit)))
         return requestURL
 
-def deleteEngines():
+def delete_engines():
     for engine in views.searchEngines:
         engine.remove()
 
-def searchForSearchEngines (dir):
+def search_for_search_engines(dir_):
     engines = {}
     try:
-        for f in os.listdir (dir):
+        for f in os.listdir(dir_):
             if f.endswith(".xml"):
-                engines[os.path.normcase(f)] = os.path.normcase(os.path.join(dir, f))
+                engines[os.path.normcase(f)] = os.path.normcase(os.path.join(dir_, f))
     except OSError:
         pass
     return engines
 
-def warn (file, message):
-    logging.warn ("Error parsing searchengine: %s: %s", file, message)
+def warn(filename, message):
+    logging.warn("Error parsing searchengine: %s: %s", filename, message)
 
-def loadSearchEngine (file):
+def load_search_engine(filename):
     try:
-        dom = parse(file)
-        id = displayname = url = sort = None
+        dom = parse(filename)
+        id_ = displayname = url = sort = None
         root = dom.documentElement
         for child in root.childNodes:
             if child.nodeType == child.ELEMENT_NODE:
                 tag = child.tagName
                 text = child.childNodes[0].data
                 if tag == "id":
-                    if id != None:
-                        warn(file, "Duplicated id tag")
+                    if id_ != None:
+                        warn(filename, "Duplicated id tag")
                         return
-                    id = text
+                    id_ = text
                 elif tag == "displayname":
                     if displayname != None:
-                        warn(file, "Duplicated displayname tag")
+                        warn(filename, "Duplicated displayname tag")
                         return
                     displayname = text
                 elif tag == "url":
                     if url != None:
-                        warn(file, "Duplicated url tag")
+                        warn(filename, "Duplicated url tag")
                         return
                     url = text
                 elif tag == "sort":
                     if sort != None:
-                        warn(file, "Duplicated sort tag")
+                        warn(filename, "Duplicated sort tag")
                         return
                     sort = float (text)
                 else:
-                    warn(file, "Unrecognized tag %s" % (tag,))
+                    warn(filename, "Unrecognized tag %s" % (tag,))
                     return
         dom.unlink()
-        if id == None:
-            warn(file, "Missing id tag")
+        if id_ == None:
+            warn(filename, "Missing id tag")
             return
         if displayname == None:
-            warn(file, "Missing displayname tag")
+            warn(filename, "Missing displayname tag")
             return
         if url == None:
-            warn(file, "Missing url tag")
+            warn(filename, "Missing url tag")
             return
         if sort == None:
             sort = 0
-        SearchEngine (id, displayname, url, sort)
+        SearchEngine(id_, displayname, url, sort)
     except:
-        warn(file, "Exception parsing file")
+        warn(filename, "Exception parsing file")
 
-def createEngines():
-    deleteEngines()
-    searchEngines = searchForSearchEngines(resources.path("searchengines"))
-    searchEngines.update (searchForSearchEngines(os.path.join (config.get(prefs.SUPPORT_DIRECTORY), "searchengines")))
-    for file in searchEngines.itervalues():
-        loadSearchEngine (file)
+def create_engines():
+    delete_engines()
+    searchEngines = search_for_search_engines(resources.path("searchengines"))
+    searchEngines.update(search_for_search_engines(os.path.join(config.get(prefs.SUPPORT_DIRECTORY), "searchengines")))
+    for filename in searchEngines.itervalues():
+        load_search_engine(filename)
     SearchEngine(u"all", u"Search All", u"", -1)
 
 @returnsUnicode
-def getRequestURL(engineName, query, filterAdultContents=True, limit=50):
+def get_request_url(engineName, query, filterAdultContents=True, limit=50):
     if query == "LET'S TEST DTV'S CRASH REPORTER TODAY":
         someVariable = intentionallyUndefinedVariableToTestCrashReporter
+
     if query == "LET'S DEBUG DTV: DUMP DATABASE":
         from miro import database
-        database.defaultDatabase.liveStorage.dumpDatabase (database.defaultDatabase)
+        database.defaultDatabase.liveStorage.dumpDatabase(database.defaultDatabase)
         return u""
+
     if engineName == u'all':
-        all_urls = [urlencode(engine.getRequestURL(query, filterAdultContents, limit)) for engine in views.searchEngines if engine.name != u'all']
+        all_urls = [urlencode(engine.get_request_url(query, filterAdultContents, limit)) for engine in views.searchEngines if engine.name != u'all']
         return "dtv:multi:" + ','.join(all_urls)
+
     for engine in views.searchEngines:
         if engine.name == engineName:
-            return engine.getRequestURL(query, filterAdultContents, limit)
+            return engine.get_request_url(query, filterAdultContents, limit)
     return u""
 
+# FIXME - remove this
 @returnsUnicode
-def getSearchEnginesHTML ():
-    searchFeed = getSingletonDDBObject (views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search'))
+def getSearchEnginesHTML():
+    searchFeed = getSingletonDDBObject(views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search'))
     enginesHTML = u'<select name="engines" onChange="updateLastSearchEngine()">\n'
     for engine in views.searchEngines:
         enginesHTML += u'<option value="%s"' % (quoteattr(engine.name),)
@@ -159,26 +163,20 @@ def getSearchEnginesHTML ():
     enginesHTML += u'</select>'
     return enginesHTML
 
-def getLastEngineTitle():
-    return getEngineTitle(getLastEngine())
+def get_last_engine_title():
+    return get_engine_title(get_last_engine())
 
-def getEngineTitle(which):
+def get_engine_title(which):
     for engine in views.searchEngines:
         if engine.name == which:
             return engine.title
     return u''
 
-def getLastEngine():
-    searchFeed = _getSearchFeed()
+def get_last_engine():
+    searchFeed = _get_search_feed()
     if not hasattr(searchFeed, 'lastEngine'):
         return u'youtube'
     return searchFeed.lastEngine
 
-def getLastQuery():
-    searchFeed = _getSearchFeed()
-    if not hasattr(searchFeed, 'lastQuery'):
-        return ''
-    return searchFeed.lastQuery
-
-def _getSearchFeed():
-    return getSingletonDDBObject (views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search'))
+def _get_search_feed():
+    return getSingletonDDBObject(views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search'))

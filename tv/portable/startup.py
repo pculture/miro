@@ -176,7 +176,7 @@ def finalizeStartup():
     util.print_mem_usage("Post-downloader memory check")
     setupGlobalFeeds()
     setupTabs()
-    searchengines.createEngines()
+    searchengines.create_engines()
     setupTheme()
     installMessageHandler()
 

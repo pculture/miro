@@ -264,7 +264,7 @@ class SearchChannelDialog(Dialog):
             location = location.encode("utf8")
 
         if style == self.ENGINE:
-            return searchengines.getRequestURL (location, term)
+            return searchengines.get_request_url(location, term)
 
         if style == self.URL:
             return "dtv:searchTerm:%s?%s" % (urlencode(location), urlencode(term))

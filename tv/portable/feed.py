@@ -2337,7 +2337,7 @@ class SearchFeedImpl (RSSMultiFeedImpl):
     def lookup(self, engine, query):
         checkU(engine)
         checkU(query)
-        url = searchengines.getRequestURL(engine, query)
+        url = searchengines.get_request_url(engine, query)
         self.reset(url, True)
         self.lastQuery = query
         self.lastEngine = engine
