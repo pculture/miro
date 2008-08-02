@@ -171,8 +171,10 @@ class OptionMenu(Widget):
         self.cell = gtk.CellRendererText()
         self._widget.pack_start(self.cell, True)
         self._widget.add_attribute(self.cell, 'text', 0)
-        for option in options:
-            self._widget.get_model().append((option, 'booya'))
+        if options:
+            for option in options:
+                self._widget.get_model().append((option, 'booya'))
+            self._widget.set_active(0)
         self.options = options
         self.wrapped_widget_connect('changed', self.on_changed)
 
