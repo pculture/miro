@@ -150,8 +150,7 @@ class ItemListDisplay(TabDisplay):
         app.item_list_manager.default_item_list = self.view.default_item_list()
 
     def on_play_videos(self, view, item_infos):
-        paths_to_play = [info.video_path for info in item_infos]
-        app.playback_manager.start_with_movie_files(paths_to_play)
+        app.playback_manager.start_with_items(item_infos)
 
     def cleanup(self):
         self.view.stop_tracking()

@@ -28,6 +28,7 @@
 
 from miro import app
 from miro import config
+from miro import messages
 from miro import prefs
 from miro import signals
 from miro.plat.frontends.widgets import timer
@@ -40,12 +41,12 @@ class PlaybackManager (signals.SignalEmitter):
     def __init__(self):
         signals.SignalEmitter.__init__(self)
         self.previous_left_width = 0
-        self.previous_display = None
         self.video_display = None
         self.is_playing = False
         self.is_paused = False
         self.playlist = None
         self.position = None
+        self.mark_as_watched_timeout = None
         self.create_signal('will-play')
         self.create_signal('will-pause')
         self.create_signal('will-stop')
@@ -58,15 +59,14 @@ class PlaybackManager (signals.SignalEmitter):
         else:
             self.pause()
     
-    def start_with_movie_files(self, paths):
+    def start_with_items(self, item_infos):
         self.video_display = VideoDisplay()
         self.video_display.connect('removed', self.on_display_removed)
-        self.previous_display = app.display_manager.current_display
         self.previous_left_width = app.widgetapp.window.splitter.get_left_width()
         app.widgetapp.window.splitter.set_left_width(0)
         app.display_manager.select_display(self.video_display)
         app.menu_manager.handle_playing_selection()
-        self.playlist = paths
+        self.playlist = item_infos
         self.position = 0
         self._select_current()
         self.play()
@@ -107,13 +107,13 @@ class PlaybackManager (signals.SignalEmitter):
     def stop(self):
         if not self.is_playing:
             return
+        self.cancel_mark_as_watched()
         self.is_playing = False
         self.is_paused = False
         self.emit('will-stop')
         self.video_display.stop()
-        app.display_manager.select_display(self.previous_display)
+        app.tab_list_manager.recalc_selection()
         app.widgetapp.window.splitter.set_left_width(self.previous_left_width)
-        self.previous_display = None
         self.video_display = None
         self.position = self.playlist = None
         self.emit('did-stop')
@@ -136,11 +136,26 @@ class PlaybackManager (signals.SignalEmitter):
     def on_movie_finished(self):
         self.play_next_movie()
 
+    def schedule_mark_as_watched(self):
+        self.mark_as_watched_timeout = timer.add(3, self.mark_as_watched)
+
+    def cancel_mark_as_watched(self):
+        if self.mark_as_watched_timeout is not None:
+            timer.cancel(self.mark_as_watched_timeout)
+            self.mark_as_watched_timeout = None
+
+    def mark_as_watched(self):
+        id = self.playlist[self.position].id
+        messages.MarkItemWatched(id).send_to_backend()
+        self.mark_as_watched_timeout = None
+
     def _select_current(self):
+        self.cancel_mark_as_watched()
         self.video_display.stop()
         if 0 <= self.position < len(self.playlist):
-            path = self.playlist[self.position]
+            path = self.playlist[self.position].video_path
             self.video_display.setup(path)
+            self.schedule_mark_as_watched()
         else:
             self.stop()
 
@@ -150,6 +165,7 @@ class PlaybackManager (signals.SignalEmitter):
             self.video_display.play()
 
     def play_next_movie(self):
+        self.cancel_mark_as_watched()
         if config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
             self.stop()
             return
@@ -157,6 +173,7 @@ class PlaybackManager (signals.SignalEmitter):
         self._play_current()
 
     def play_prev_movie(self):
+        self.cancel_mark_as_watched()
         if config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
             self.stop()
             return

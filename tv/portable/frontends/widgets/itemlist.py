@@ -145,7 +145,7 @@ class ItemListBase(widgetset.TableView):
     def make_context_menu_single(self, item):
         if item.downloaded:
             def play_and_stop():
-                app.playback_manager.start_with_movie_files([item.video_path])
+                app.playback_manager.start_with_items([item])
 
             menu = [
                 (_('Play'), app.widgetapp.play_selection),

@@ -109,8 +109,7 @@ class Application:
     def play_selection(self):
         infos_to_play = app.item_list_manager.calc_videos_to_play()
         if infos_to_play:
-            paths_to_play = [info.video_path for info in infos_to_play]
-            app.playback_manager.start_with_movie_files(paths_to_play)
+            app.playback_manager.start_with_items(infos_to_play)
 
     def on_stop_clicked(self, button):
         app.playback_manager.stop()
