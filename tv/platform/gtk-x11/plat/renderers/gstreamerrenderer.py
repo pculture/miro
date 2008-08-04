@@ -146,8 +146,7 @@ class Renderer:
             err, debug = message.parse_error()
             logging.error("on_bus_message: gstreamer error: %s", err)
         elif message.type == gst.MESSAGE_EOS:
-            eventloop.addIdle(app.htmlapp.playbackController.onMovieFinished,
-                              "on_bus_message: skipping to next track")
+            app.playback_manager.on_movie_finished()
 
     def set_widget(self, widget):
         confirmMainThread()
