@@ -162,7 +162,7 @@ def new_search_channel(title, description, channels):
         hb2.pack_start(widgetutil.align_top(widgetset.Label(_('In this:')), top_pad=6),
                        padding=5)
 
-        choice_table = widgetset.Table(3, 2)
+        choice_table = widgetset.Table(columns=2, rows=3)
         choice_table.set_column_spacing(5)
         choice_table.set_row_spacing(5)
         rbg = widgetset.RadioButtonGroup()

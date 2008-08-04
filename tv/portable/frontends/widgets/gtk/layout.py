@@ -130,10 +130,10 @@ class Table(Widget):
     """Lays out widgets in a table.  It works very similar to the GTK Table
     widget, or an HTML table.
     """
-    def __init__(self, rows, columns):
+    def __init__(self, columns, rows):
         Widget.__init__(self)
         self.set_widget(gtk.Table(rows, columns, homogeneous=False))
-        self.children = Matrix(rows, columns)
+        self.children = Matrix(columns, rows)
 
     def set_cell(self, widget, column, row):
         """Add a widget to the table.
