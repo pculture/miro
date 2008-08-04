@@ -115,11 +115,10 @@ class RadioButton(Widget):
             buttons = group.get_buttons()
             if buttons:
                 self._widget.set_group(buttons[0]._widget)
-
-            group.add_button(self)
         else:
             group = RadioButtonGroup()
 
+        group.add_button(self)
         oid = id(self)
         radio_button_to_group_mapping[oid] = group
 
