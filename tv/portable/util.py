@@ -819,16 +819,19 @@ class Matrix(object):
     def __init__(self, columns, rows):
         self.columns = columns
         self.rows = rows
-        self.data = [None] * (columns * columns)
+        self.data = [None] * (columns * rows)
 
     def __getitem__(self, key):
-        return self.data[key[0] * self.columns + key[1]]
+        return self.data[(key[0] * self.rows) + key[1]]
 
     def __setitem__(self, key, value):
-        self.data[key[0] * self.columns + key[1]] = value
+        self.data[(key[0] * self.rows) + key[1]] = value
 
     def __iter__(self):
         return iter(self.data)
+
+    def __repr__(self):
+        return "\n".join([", ".join([repr(r) for r in list(self.row(i))]) for i in xrange(self.rows)])
 
     def remove(self, value):
         self.data.remove(value)
