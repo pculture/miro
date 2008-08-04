@@ -235,12 +235,7 @@ class RadioButtonGroup:
         self._buttons = []
 
     def handle_click(self, widget):
-        # this enforces the "1 radio button clicked at any time" invariant
-        for mem in self._buttons:
-            if widget is mem:
-                mem.view.setState_(NSOnState)
-            else:
-                mem.view.setState_(NSOffState)
+        self.set_selected(widget)
 
     def add_button(self, button):
         self._buttons.append(button)
@@ -257,6 +252,13 @@ class RadioButtonGroup:
         for mem in self._buttons:
             if mem.get_selected():
                 return mem
+
+    def set_selected(self, button):
+        for mem in self._buttons:
+            if button is mem:
+                mem.view.setState_(NSOnState)
+            else:
+                mem.view.setState_(NSOffState)
 
 # use a weakref so that we're not creating circular references between
 # RadioButtons and RadioButtonGroups
