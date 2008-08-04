@@ -40,6 +40,7 @@ class ItemListManager(object):
         self.item_lists = []
         self.callback_ids = {}
         self.current_item_list = None
+        self.default_item_list = None
 
     def manage_item_list(self, item_list):
         """Start managing an item list.  This should be called for each item
@@ -80,3 +81,18 @@ class ItemListManager(object):
 
         items = self.get_selection()
         app.menu_manager.handle_item_list_selection(items)
+
+    def calc_videos_to_play(self):
+        if self.current_item_list is None:
+            if self.default_item_list is not None:
+                return self.default_item_list.get_watchable_videos()
+            else:
+                return None
+        selection = self.get_selection()
+        # If one video is selected, play that video, then the rest in the
+        # channel.  If more than one is selected, just play the selection.
+        if len(selection) == 1:
+            id = selection[0].id
+            return self.current_item_list.get_watchable_videos(start_id=id)
+        else:
+            return selection

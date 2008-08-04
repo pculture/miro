@@ -101,9 +101,21 @@ class ItemListBase(widgetset.TableView):
             base_href = widgetutil.get_feed_info(item_info.feed_id).base_href
             app.widgetapp.open_url(urljoin(base_href, url))
         elif name == 'play':
-            self.emit('play-video', item_info.video_path)
+            self.emit('play-video', item_info.id)
         else:
             print 'hotspot clicked: ', name, item_info.name
+
+    def get_items(self):
+        return [row[0] for row in self.model]
+
+    def get_watchable_videos(self, start_id=None):
+        infos = self.get_items()
+        if start_id is not None:
+            for i in xrange(len(infos)):
+                if infos[i].id == start_id:
+                    break
+            infos = infos[i:]
+        return filter(lambda info: info.downloaded, infos)
 
     def insert_sorted_items(self, item_list):
         insert_pos = self.model.first_iter()
@@ -132,13 +144,11 @@ class ItemListBase(widgetset.TableView):
 
     def make_context_menu_single(self, item):
         if item.downloaded:
-            def play():
-                print 'should play: ', item.name
             def play_and_stop():
-                print 'should play then stop: ', item.name
+                app.playback_manager.start_with_movie_files([item.video_path])
 
             menu = [
-                (_('Play'), play),
+                (_('Play'), app.widgetapp.play_selection),
                 (_('Play Just this Video'), play_and_stop),
                 (_('Add to New Playlist'), app.widgetapp.add_new_playlist),
             ]
@@ -190,11 +200,8 @@ class ItemListBase(widgetset.TableView):
 
         menu = []
         if downloaded > 0:
-            def play():
-                for info in selection:
-                    print 'should play: ', info.name
             menu.append((_('%d Downloaded Items') % downloaded, None))
-            menu.append((_('Play'), play)),
+            menu.append((_('Play'), app.widgetapp.play_selection)),
             menu.append((_('Add to New Playlist'),
                 app.widgetapp.add_new_playlist))
             self._add_remove_context_menu_item(menu, selection)
@@ -298,13 +305,17 @@ class ItemContainerView(signals.SignalEmitter):
 
     def __init__(self, type, id):
         signals.SignalEmitter.__init__(self)
-        self.create_signal('play-video')
+        self.create_signal('play-videos')
         self.type = type
         self.id = id
         self.widget = self.build_widget()
         self.start_tracking()
 
     def build_widget(self):
+        raise NotImplementedError()
+
+    def default_item_list(self):
+        """Item list to play from if no videos are selected."""
         raise NotImplementedError()
 
     def should_handle_message(self, message):
@@ -332,8 +343,8 @@ class ItemContainerView(signals.SignalEmitter):
         sort_items(message.added)
         self.do_handle_items_changed(message)
 
-    def on_play_video(self, item_list, path):
-        self.emit('play-video', path) # Just forward it along
+    def on_play_video(self, item_list, id):
+        self.emit('play-videos', item_list.get_watchable_videos(start_id=id))
 
     def start_tracking(self):
         messages.TrackItems(self.type, self.id).send_to_backend()
@@ -347,6 +358,9 @@ class SimpleItemContainer(ItemContainerView):
 
     def make_item_list(self):
         return ItemList()
+
+    def default_item_list(self):
+        return self.item_list
 
     def build_widget(self):
         vbox = widgetset.VBox()

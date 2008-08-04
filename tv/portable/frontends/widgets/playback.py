@@ -27,6 +27,8 @@
 # statement from all source files in the program, then also delete it here.
 
 from miro import app
+from miro import config
+from miro import prefs
 from miro import signals
 from miro.plat.frontends.widgets import timer
 from miro.frontends.widgets.displays import VideoDisplay
@@ -42,6 +44,8 @@ class PlaybackManager (signals.SignalEmitter):
         self.video_display = None
         self.is_playing = False
         self.is_paused = False
+        self.playlist = None
+        self.position = None
         self.create_signal('will-play')
         self.create_signal('will-pause')
         self.create_signal('will-stop')
@@ -54,7 +58,7 @@ class PlaybackManager (signals.SignalEmitter):
         else:
             self.pause()
     
-    def start_with_movie_file(self, path):
+    def start_with_movie_files(self, paths):
         self.video_display = VideoDisplay()
         self.video_display.connect('removed', self.on_display_removed)
         self.previous_display = app.display_manager.current_display
@@ -62,7 +66,10 @@ class PlaybackManager (signals.SignalEmitter):
         app.widgetapp.window.splitter.set_left_width(0)
         app.display_manager.select_display(self.video_display)
         app.menu_manager.handle_playing_selection()
-        self.video_display.setup(path)
+        self.playlist = paths
+        self.position = 0
+        self._select_current()
+        self.play()
     
     def schedule_update(self):
         def notify_and_reschedule():
@@ -104,6 +111,7 @@ class PlaybackManager (signals.SignalEmitter):
         app.widgetapp.window.splitter.set_left_width(self.previous_left_width)
         self.previous_display = None
         self.video_display = None
+        self.position = self.playlist = None
         self.is_playing = False
         self.is_paused = False
         self.emit('did-stop')
@@ -124,4 +132,31 @@ class PlaybackManager (signals.SignalEmitter):
         self.emit('playback-did-progress', progress * total, total)
 
     def on_movie_finished(self):
-        self.stop()
+        self.play_next_movie()
+
+    def _select_current(self):
+        self.video_display.stop()
+        if 0 <= self.position < len(self.playlist):
+            path = self.playlist[self.position]
+            self.video_display.setup(path)
+        else:
+            self.stop()
+
+    def _play_current(self):
+        self._select_current()
+        if self.is_playing:
+            self.video_display.play()
+
+    def play_next_movie(self):
+        if config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
+            self.stop()
+            return
+        self.position += 1
+        self._play_current()
+
+    def play_prev_movie(self):
+        if config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
+            self.stop()
+            return
+        self.position -= 1
+        self._play_current()

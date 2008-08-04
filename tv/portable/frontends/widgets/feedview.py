@@ -171,6 +171,9 @@ class FeedView(itemlist.ItemContainerView):
         setting = ["all", "new", "off"][option]
         messages.AutodownloadChange(self.id, setting).send_to_backend()
 
+    def default_item_list(self):
+        return self.downloaded_view.item_list
+
     def build_widget(self):
         self.downloads_view = DownloadsHidableList()
         self.full_view = FullList()

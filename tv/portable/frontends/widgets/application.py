@@ -101,18 +101,25 @@ class Application:
         print 'volume change: ', volume
 
     def on_play_clicked(self, button):
-        app.playback_manager.play_pause()
+        if app.playback_manager.is_playing:
+            app.playback_manager.play_pause()
+        else:
+            self.play_selection()
+
+    def play_selection(self):
+        infos_to_play = app.item_list_manager.calc_videos_to_play()
+        if infos_to_play is not None:
+            paths_to_play = [info.video_path for info in infos_to_play]
+            app.playback_manager.start_with_movie_files(paths_to_play)
 
     def on_stop_clicked(self, button):
         app.playback_manager.stop()
 
     def on_forward_clicked(self, button):
-        # calls either next_video or fast_forward
-        pass
+        app.playback_manager.play_next_movie()
 
     def on_previous_clicked(self, button):
-        # calls either previous_video or rewind
-        pass
+        app.playback_manager.play_prev_movie()
 
     def next_video(self):
         pass

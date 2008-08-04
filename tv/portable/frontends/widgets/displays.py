@@ -137,15 +137,17 @@ class ItemListDisplay(TabDisplay):
         tab = selected_tabs[0]
         self.view = self.make_view(tab)
         self.id = self.view.id
-        self.view.connect('play-video', self.on_play_video)
+        self.view.connect('play-videos', self.on_play_videos)
         self.widget = self.view.widget
+        app.item_list_manager.default_item_list = self.view.default_item_list()
 
-    def on_play_video(self, view, video_path):
-        app.playback_manager.start_with_movie_file(video_path)
-        app.playback_manager.play()
+    def on_play_videos(self, view, item_infos):
+        paths_to_play = [info.video_path for info in item_infos]
+        app.playback_manager.start_with_movie_files(paths_to_play)
 
     def cleanup(self):
         self.view.stop_tracking()
+        app.item_list_manager.default_item_list = None
 
     def make_view(self, tab):
         pass
