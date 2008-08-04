@@ -159,8 +159,7 @@ def new_search_channel(title, description, channels):
         extra.pack_start(hb1)
 
         hb2 = widgetset.HBox()
-        hb2.pack_start(widgetutil.align_top(widgetset.Label(_('In this:')), top_pad=6),
-                       padding=5)
+        hb2.pack_start(widgetutil.align_top(widgetset.Label(_('In this:')), top_pad=3), padding=5)
 
         choice_table = widgetset.Table(columns=2, rows=3)
         choice_table.set_column_spacing(5)
@@ -209,7 +208,7 @@ def new_search_channel(title, description, channels):
         search_engine_rb.connect('clicked', handle_clicked)
         url_rb.connect('clicked', handle_clicked)
 
-        extra.pack_start(hb2)
+        extra.pack_start(widgetutil.align_top(hb2, top_pad=6))
 
         window.set_extra_widget(extra)
         response = window.run()
