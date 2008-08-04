@@ -303,7 +303,7 @@ class Application:
         elif data[0] == "search_engine":
             messages.NewChannelSearchEngine(data[1], data[2]).send_to_backend()
         elif data[0] == "url":
-            messages.NewChannelSearchUrl(data[1], data[2]).send_to_backend()
+            messages.NewChannelSearchURL(data[1], data[2]).send_to_backend()
 
     def add_new_channel_folder(self):
         title = _('Create Channel Folder')

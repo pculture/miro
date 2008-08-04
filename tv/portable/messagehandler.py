@@ -548,7 +548,15 @@ class BackendMessageHandler(messages.MessageHandler):
         url = message.url
         term = message.search_term
 
-        # FIXME - implement this -- what's it supposed to do?
+        if isinstance(term, unicode):
+            term = term.encode("utf-8")
+
+        if isinstance(url, unicode):
+            url = url.encode("utf-8")
+
+        url = u"dtv:searchTerm:%s?%s" % (urlencode(url), urlencode(term))
+        if not getFeedByURL(url):
+            Feed(url)
 
     def handle_new_channel_folder(self, message):
         ChannelFolder(message.name)
