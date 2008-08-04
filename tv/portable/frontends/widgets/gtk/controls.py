@@ -99,6 +99,14 @@ class RadioButtonGroup:
             if mem.get_selected():
                 return mem
 
+    def set_selected(self, button):
+        for mem in self._buttons:
+            if mem is button:
+                mem._widget.set_active(True)
+            else:
+                mem._widget.set_active(False)
+
+
 # use a weakref so that we're not creating circular references between
 # RadioButtons and RadioButtonGroups
 radio_button_to_group_mapping = weakref.WeakValueDictionary()
