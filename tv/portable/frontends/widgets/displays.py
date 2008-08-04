@@ -51,6 +51,11 @@ class Display(signals.SignalEmitter):
         signals.SignalEmitter.__init__(self)
         self.create_signal('removed')
 
+    def on_selected(self):
+        """Perform any code that needs to be run every time the display is
+        selected.
+        """
+
     def cleanup(self):
         """Cleanup any resources allocated in create.  This will be called
         after the widget for this display is removed.
@@ -94,7 +99,6 @@ class DisplayManager(object):
         self.selected_tabs = selected_tabs
         type = selected_tab_list.type
 
-        self.unselect_current_display()
         for klass in self.display_classes:
             if klass.should_display(type, selected_tabs):
                 self.select_display(klass(type, selected_tabs))
@@ -103,7 +107,9 @@ class DisplayManager(object):
             selected_tabs))
 
     def select_display(self, display):
+        self.unselect_current_display()
         self.current_display = display
+        self.current_display.on_selected()
         app.widgetapp.window.set_main_area(display.widget)
 
     def unselect_current_display(self):
@@ -139,6 +145,8 @@ class ItemListDisplay(TabDisplay):
         self.id = self.view.id
         self.view.connect('play-videos', self.on_play_videos)
         self.widget = self.view.widget
+
+    def on_selected(self):
         app.item_list_manager.default_item_list = self.view.default_item_list()
 
     def on_play_videos(self, view, item_infos):

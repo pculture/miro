@@ -105,6 +105,10 @@ class PlaybackManager (signals.SignalEmitter):
             self.is_paused = True
 
     def stop(self):
+        if not self.is_playing:
+            return
+        self.is_playing = False
+        self.is_paused = False
         self.emit('will-stop')
         self.video_display.stop()
         app.display_manager.select_display(self.previous_display)
@@ -112,8 +116,6 @@ class PlaybackManager (signals.SignalEmitter):
         self.previous_display = None
         self.video_display = None
         self.position = self.playlist = None
-        self.is_playing = False
-        self.is_paused = False
         self.emit('did-stop')
 
     def suspend(self):
