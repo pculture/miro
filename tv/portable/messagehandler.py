@@ -544,6 +544,12 @@ class BackendMessageHandler(messages.MessageHandler):
         if not getFeedByURL(url):
             Feed(url)
 
+    def handle_new_channel_search_url(self, message):
+        url = message.url
+        term = message.search_term
+
+        # FIXME - implement this -- what's it supposed to do?
+
     def handle_new_channel_folder(self, message):
         ChannelFolder(message.name)
 
