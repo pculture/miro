@@ -31,6 +31,7 @@
 from AppKit import *
 from Foundation import *
 from objc import YES, NO, nil
+import weakref
 
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets import layoutmanager
@@ -222,6 +223,67 @@ class OptionMenu(AttributedStringStyler):
                     menu_item.title(), attributes)
             menu_item.setAttributedTitle_(string)
         self.view.setFont_(attributes[NSFontAttributeName])
+
+    def enable_widget(self):
+        self.view.setEnabled_(True)
+
+    def disable_widget(self):
+        self.view.setEnabled_(False)
+
+class RadioButtonGroup:
+    def __init__(self):
+        self._buttons = []
+
+    def handle_click(self, widget):
+        # this enforces the "1 radio button clicked at any time" invariant
+        for mem in self._buttons:
+            if widget is mem:
+                mem.view.setState_(NSOnState)
+            else:
+                mem.view.setState_(NSOffState)
+
+    def add_button(self, button):
+        self._buttons.append(button)
+        button.connect('clicked', self.handle_click)
+        if len(self._buttons) == 1:
+            button.view.setState_(NSOnState)
+        else:
+            button.view.setState_(NSOffState)
+
+    def get_buttons(self):
+        return self._buttons
+
+    def get_selected(self):
+        for mem in self._buttons:
+            if mem.get_selected():
+                return mem
+
+# use a weakref so that we're not creating circular references between
+# RadioButtons and RadioButtonGroups
+radio_button_to_group_mapping = weakref.WeakValueDictionary()
+
+class RadioButton(Widget):
+    def __init__(self, label, group=None):
+        Widget.__init__(self)
+        self.create_signal('clicked')
+        self.view = MiroButton.alloc().init()
+        self.view.setButtonType_(NSRadioButton)
+        self.view.setTitle_(label)
+
+        if group:
+            group.add_button(self)
+        else:
+            group = RadioButtonGroup() 
+
+    def calc_size_request(self):
+        size = self.view.cell().cellSize()
+        return (size.width, size.height)
+
+    def get_group(self):
+        return radio_button_to_group_mapping[id(self)]
+
+    def get_selected(self):
+        return self.view.state() == NSOnState
 
     def enable_widget(self):
         self.view.setEnabled_(True)
