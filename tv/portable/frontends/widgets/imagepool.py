@@ -49,6 +49,20 @@ path_to_surface = weakref.WeakValueDictionary()
 
 broken_image = widgetset.Image(resources.path('wimages/broken-image.gif'))
 
+def scaled_size(image, size):
+    image_ratio = float(image.width) / image.height
+    new_ratio = float(size[0]) / size[1]
+    if image_ratio == new_ratio:
+        return size
+    elif image_ratio > new_ratio:
+        # The scaled image has a wider aspect ratio than the old one.
+        height = int(round(float(size[0]) / image.width * image.height))
+        return size[0], height
+    else:
+        # The scaled image has a taller aspect ratio than the old one.
+        width = int(round(float(size[1]) / image.height * image.width))
+        return width, size[1]
+
 def get(path, size=None):
     """Returns an Image for path.
     
@@ -66,7 +80,7 @@ def get(path, size=None):
                     traceback.format_exc())
             image = broken_image
         if size is not None:
-            image = image.resize(size[0], size[1])
+            image = image.resize(*scaled_size(image, size))
             path_to_image[(path, size)] = image
         else:
             path_to_image[(path, None)] = image

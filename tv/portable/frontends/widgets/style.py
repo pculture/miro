@@ -414,7 +414,13 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
     def draw_thumbnail(self, context, x, y, width, height):
         thumbnail = self.get_thumbnail(self.data)
-        thumbnail.draw(context, x, y, width, height)
+        if width != thumbnail.width or height != thumbnail.height:
+            context.rectangle(x, y, width, height)
+            context.set_color((0, 0, 0))
+            context.fill()
+            x += (width - thumbnail.width) / 2
+            y += (height - thumbnail.height) / 2
+        thumbnail.draw(context, x, y, thumbnail.width, thumbnail.height)
 
     def draw_emblem(self, context, x, y, width, height, color):
         radius = height / 2.0
