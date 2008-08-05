@@ -26,11 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from miro import views
-from miro import indexes
-import re
-from miro.util import getSingletonDDBObject, checkU, returnsUnicode, quoteattr, escape
-from miro.database import DDBObject
+from miro.util import checkU, returnsUnicode
 from miro.xhtmltools import urlencode
 from xml.dom.minidom import parse
 from miro.plat import resources
@@ -39,31 +35,15 @@ from miro import config
 from miro import prefs
 import logging
 
-class SearchEngine(DDBObject):
-    def __init__(self, name, title, url, sortOrder=0):
-        checkU(name)
-        checkU(title)
-        checkU(url)
-        self.name = name
-        self.title = title
-        self.url = url
-        self.sortOrder = sortOrder
-        DDBObject.__init__(self)
-
-    def get_request_url(self, query, filterAdultContents, limit):
-        requestURL = self.url.replace(u"%s", urlencode(query))
-        requestURL = requestURL.replace(u"%a", unicode(int(not filterAdultContents)))
-        requestURL = requestURL.replace(u"%l", unicode(int(limit)))
-        return requestURL
-
 class SearchEngineInfo:
-    def __init__(self, name, title, url):
+    def __init__(self, name, title, url, sort_order=0):
         checkU(name)
         checkU(title)
         checkU(url)
         self.name = name
         self.title = title
         self.url = url
+        self.sort_order = sort_order
 
     def get_request_url(self, query, filterAdultContents, limit):
         requestURL = self.url.replace(u"%s", urlencode(query))
@@ -77,8 +57,8 @@ class SearchEngineInfo:
 _engines = []
 
 def delete_engines():
-    for engine in views.searchEngines:
-        engine.remove()
+    global _engines
+    _engines = []
 
 def search_for_search_engines(dir_):
     engines = {}
@@ -140,21 +120,23 @@ def load_search_engine(filename):
             sort = 0
 
         _engines.append(SearchEngineInfo(id_, displayname, url))
-        SearchEngine(id_, displayname, url, sort)
 
     except:
         warn(filename, "Exception parsing file")
 
 def create_engines():
     delete_engines()
-    searchEngines = search_for_search_engines(resources.path("searchengines"))
-    searchEngines.update(search_for_search_engines(os.path.join(config.get(prefs.SUPPORT_DIRECTORY), "searchengines")))
-    for filename in searchEngines.itervalues():
-        load_search_engine(filename)
-    SearchEngine(u"all", u"Search All", u"", -1)
+    engines = search_for_search_engines(resources.path("searchengines"))
+    engines.update(search_for_search_engines(os.path.join(config.get(prefs.SUPPORT_DIRECTORY), "searchengines")))
+    for fn in engines.itervalues():
+        load_search_engine(fn)
+
+    _engines.append(SearchEngineInfo(u"all", u"Search All", u"", -1))
+    _engines.sort(lambda a, b: cmp((a.sort_order, a.name, a.title), 
+                                   (b.sort_order, b.name, b.title)))
 
 @returnsUnicode
-def get_request_url(engineName, query, filterAdultContents=True, limit=50):
+def get_request_url(engine_name, query, filter_adult_contents=True, limit=50):
     if query == "LET'S TEST DTV'S CRASH REPORTER TODAY":
         someVariable = intentionallyUndefinedVariableToTestCrashReporter
 
@@ -163,29 +145,15 @@ def get_request_url(engineName, query, filterAdultContents=True, limit=50):
         database.defaultDatabase.liveStorage.dumpDatabase(database.defaultDatabase)
         return u""
 
-    if engineName == u'all':
-        all_urls = [urlencode(engine.get_request_url(query, filterAdultContents, limit)) for engine in views.searchEngines if engine.name != u'all']
+    if engine_name == u'all':
+        all_urls = [urlencode(engine.get_request_url(query, filter_adult_contents, limit)) 
+                    for engine in _engines if engine.name != u'all']
         return "dtv:multi:" + ','.join(all_urls)
 
-    for engine in views.searchEngines:
-        if engine.name == engineName:
-            return engine.get_request_url(query, filterAdultContents, limit)
+    for engine in _engines:
+        if engine.name == engine_name:
+            return engine.get_request_url(query, filter_adult_contents, limit)
     return u""
-
-# FIXME - remove this
-@returnsUnicode
-def getSearchEnginesHTML():
-    searchFeed = getSingletonDDBObject(views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search'))
-    enginesHTML = u'<select name="engines" onChange="updateLastSearchEngine()">\n'
-    for engine in views.searchEngines:
-        enginesHTML += u'<option value="%s"' % (quoteattr(engine.name),)
-        if engine.name == searchFeed.lastEngine:
-            enginesHTML += u' selected="selected"'
-        enginesHTML += u'>'
-        enginesHTML += escape(engine.title)
-        enginesHTML += u'</option>'
-    enginesHTML += u'</select>'
-    return enginesHTML
 
 def get_search_engines():
     return list(_engines)
@@ -193,17 +161,12 @@ def get_search_engines():
 def get_last_engine_title():
     return get_engine_title(get_last_engine())
 
-def get_engine_title(which):
-    for engine in views.searchEngines:
-        if engine.name == which:
+def get_engine_title(name):
+    for engine in _engines:
+        if engine.name == name:
             return engine.title
     return u''
 
 def get_last_engine():
-    searchFeed = _get_search_feed()
-    if not hasattr(searchFeed, 'lastEngine'):
-        return u'youtube'
-    return searchFeed.lastEngine
-
-def _get_search_feed():
-    return getSingletonDDBObject(views.feeds.filterWithIndex(indexes.feedsByURL, 'dtv:search'))
+    # FIXME - this needs to be re-written
+    return u"youtube"

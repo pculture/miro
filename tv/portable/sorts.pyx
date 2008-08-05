@@ -36,6 +36,8 @@ import item as itemmod
 # in the pair is the unmapped version of the object, the second is the
 # mapped version. In practice, you'll only want to use the second item.
 
+# FIXME - do we need this module anymore?
+
 def item(x,y):
     x = x[1]
     y = y[1]
@@ -183,13 +185,3 @@ def guideTabs(x, y):
 
 def staticTabs(x, y):
     return x[1].obj.order < y[1].obj.order
-
-def searchEngines(x, y):
-    try:
-        return x[1].sortOrder < y[1].sortOrder
-    except:
-        pass
-    if x[1].title == y[1].title:
-        return x[1].name < y[1].name
-    else:
-        return x[1].title < y[1].title

@@ -41,7 +41,7 @@ def initialize():
     global httpauths, staticTabsObjects, autoUploads, guides, default_guide
     global manualFeed, singleFeed, directoryFeed, newlyDownloadedItems
     global downloadingItems, pausedItems, manualDownloads, autoDownloads
-    global playlists, playlistFolders, channelFolders, searchEngines
+    global playlists, playlistFolders, channelFolders
     global themeHistories, visibleFeeds
 
     from miro import app
@@ -143,8 +143,5 @@ def initialize():
     channelFolders = app.db.filterWithIndex(indexes.objectsByClass,
                                         folder.ChannelFolder)
     channelFolders.createIndex(indexes.foldersByTitle)
-    searchEngines = app.db.filterWithIndex(indexes.objectsByClass,
-                                       searchengines.SearchEngine)
-    searchEngines = searchEngines.sort(sorts.searchEngines)
 
     themeHistories = app.db.filterWithIndex(indexes.objectsByClass,theme.ThemeHistory)
