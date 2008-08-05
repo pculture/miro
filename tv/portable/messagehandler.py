@@ -648,7 +648,7 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warn("CancelDownload: Item not found -- %s", message.id)
         else:
-            item.executeExpire()
+            item.expire()
 
     def handle_pause_download(self, message):
         try:
@@ -707,7 +707,7 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warn("RemoveVideoEntry: Item not found -- %s", message.id)
         else:
-            item.executeExpire()
+            item.expire()
 
     def handle_delete_video(self, message):
         try:
@@ -716,7 +716,7 @@ class BackendMessageHandler(messages.MessageHandler):
             logging.warn("DeleteVideo: Item not found -- %s", message.id)
         else:
             item.deleteFiles()
-            item.executeExpire()
+            item.expire()
 
     def handle_rename_video(self, message):
         try:

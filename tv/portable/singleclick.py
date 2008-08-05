@@ -86,7 +86,7 @@ def addVideo(path, single = False):
         correctFeed = util.getSingletonDDBObject(views.singleFeed)
         items = [i for i in correctFeed.items]
         for i in items:
-            i.executeExpire()
+            i.expire()
     else:
         correctFeed = getManualFeed()
     fileItem = item.FileItem(path, feed_id=correctFeed.getID())

@@ -463,7 +463,7 @@ class Item(DDBObject):
                 item.signalChange()
         self.signalChange()
 
-    def executeExpire(self):
+    def expire(self):
         self.confirmDBThread()
         self.removeFromPlaylists()
         UandA = self.getUandA()
@@ -1686,7 +1686,7 @@ class Item(DDBObject):
         self.splitItem()
         # This must come after reconnecting the downloader
         if self.isContainerItem is not None and not fileutil.exists(self.getFilename()):
-            self.executeExpire()
+            self.expire()
             return
         if self.screenshot and not fileutil.exists(self.screenshot):
             self.screenshot = None
@@ -1819,7 +1819,7 @@ class FileItem(Item):
     def isExternal(self):
         return self.parent_id is None
 
-    def executeExpire(self):
+    def expire(self):
         self.confirmDBThread()
         self.removeFromPlaylists()
         if self.isContainerItem:
@@ -1969,7 +1969,7 @@ any items inside that folder will also be removed or deleted.""")
                 dialogs.BUTTON_DELETE_FILES):
             for item in items:
                 if item.idExists():
-                    item.executeExpire()
+                    item.expire()
     d.run(callback)
 
 @returnsUnicode
