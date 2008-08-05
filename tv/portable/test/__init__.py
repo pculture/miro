@@ -29,9 +29,8 @@
 
 # Includes all PyUnit unit tests
 
-# FIXME - figure out if we need these anymore now that we've switched
-# away from html templates.
-#from miro.test.templatetest import *
+# FIXME - this needs to be re-tooled to use new frontend or a testing
+# front end
 #from miro.test.unicodetest import *
 
 from miro.test.databasetest import *
