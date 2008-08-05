@@ -221,3 +221,70 @@ class DownloadUtilsTest(MiroTestCase):
             'abc' + longExtension)
         self.checkCleanFilename(longFilename + longExtension,
             longFilename[:50] + longExtension[:50])
+
+class MatrixTest(MiroTestCase):
+    def testMatrixInit(self):
+        m = util.Matrix(1, 2)
+        self.assertEquals(list(m), [None, None])
+
+        m = util.Matrix(2, 1)
+        self.assertEquals(list(m), [None, None])
+
+        m = util.Matrix(1, 5)
+        self.assertEquals(m.columns, 1)
+        self.assertEquals(m.rows, 5)
+
+        m = util.Matrix(0, 0)
+        self.assertEquals(m.columns, 0)
+        self.assertEquals(m.rows, 0)
+
+        m = util.Matrix(5, 1)
+        self.assertEquals(m.columns, 5)
+        self.assertEquals(m.rows, 1)
+
+        self.assertEquals(m[0, 0], None)
+        self.assertEquals(m[1, 0], None)
+        self.assertEquals(m[2, 0], None)
+        self.assertEquals(m[3, 0], None)
+        self.assertEquals(m[4, 0], None)
+
+    def testGetSet(self):
+        m = util.Matrix(3, 2)
+        m[0, 0] = 1
+        m[0, 1] = 2
+        m[1, 0] = 3
+        m[1, 1] = 4
+        m[2, 0] = 5
+        m[2, 1] = 6
+
+        self.assertEquals(m[0,0], 1)
+        self.assertEquals(m[1,0], 3)
+        self.assertEquals(m[2,0], 5)
+
+        m[0,0] = 17
+        self.assertEquals(m[0,0], 17)
+
+    def testRowsColumns(self):
+        m = util.Matrix(3, 2)
+        m[0, 0] = 1
+        m[0, 1] = 2
+        m[1, 0] = 3
+        m[1, 1] = 4
+        m[2, 0] = 5
+        m[2, 1] = 6
+
+        self.assertEquals(list(m.row(0)), [1, 3, 5])
+        self.assertEquals(list(m.row(1)), [2, 4, 6])
+        self.assertEquals(list(m.column(0)), [1, 2])
+        self.assertEquals(list(m.column(1)), [3, 4])
+        self.assertEquals(list(m.column(2)), [5, 6])
+
+    def testRemove(self):
+        m = util.Matrix(1, 2)
+        m[0,0] = 1
+        m[0,1] = 2
+
+        m.remove(2)
+
+        self.assertEquals(m[0,0], 1)
+        self.assertEquals(m[0,1], None)

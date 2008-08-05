@@ -834,7 +834,11 @@ class Matrix(object):
         return "\n".join([", ".join([repr(r) for r in list(self.row(i))]) for i in xrange(self.rows)])
 
     def remove(self, value):
-        self.data.remove(value)
+        """This sets the value to None--it does NOT remove the cell from the
+        Matrix because that doesn't make any sense.
+        """
+        i = self.data.index(value)
+        self.data[i] = None
 
     def row(self, row):
         """Iterator that yields all the objects in a row."""
