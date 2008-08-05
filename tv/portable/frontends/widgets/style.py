@@ -169,6 +169,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         return self.MIN_WIDTH, max(140, sizer.get_size()[1])
 
     def hotspot_test(self, style, layout, x, y, width, height):
+        self.download_info = self.data.download_info
         self.setup_style(style)
         self.hotspot = None
         self.selected = False
