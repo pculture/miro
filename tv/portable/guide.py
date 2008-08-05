@@ -70,9 +70,6 @@ def isPartOfGuide(url, guideURL, allowedURLs = None):
                 return True
         return False
 class ChannelGuide(DDBObject):
-    ICON_CACHE_SIZES = [
-#        (20, 20),
-    ]
     def __init__(self, url, allowedURLs = None):
         checkU(url)
         if allowedURLs is None:

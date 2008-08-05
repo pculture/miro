@@ -35,10 +35,19 @@ from miro.frontends.widgets.gtk.base import Widget, Bin
 
 class Image(object):
     def __init__(self, path):
-        self.path = path
         self.pixbuf = gtk.gdk.pixbuf_new_from_file(path)
         self.width = self.pixbuf.get_width()
         self.height = self.pixbuf.get_height()
+
+    def resize(self, width, height):
+        return ResizedImage(self, width, height)
+
+class ResizedImage(Image):
+    def __init__(self, image, width, height):
+        self.pixbuf = image.pixbuf.scale_simple(width, height,
+                gtk.gdk.INTERP_BILINEAR)
+        self.width = width
+        self.height = height
 
 class ImageDisplay(Widget):
     def __init__(self, image):

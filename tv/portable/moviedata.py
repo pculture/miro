@@ -183,7 +183,6 @@ class MovieDataUpdater:
             item.duration = duration
             item.screenshot = screenshot
             item.updating_movie_info = False
-            item.resizeScreenshot()
             item.signalChange()
 
     def requestUpdate (self, item):

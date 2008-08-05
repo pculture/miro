@@ -215,38 +215,6 @@ def findConvert():
                 _convert_path_cache = convert_path
         return _convert_path_cache
 
-def resizeImage(source_path, dest_path, width, height):
-    """Resize an image to a smaller size.
-    
-    Guidelines:
-
-    Don't try to expand up the image.
-
-    Don't change the aspect ratio
-
-    The final image should be have the exact dimensions <width>X<height>.  If
-    there is extra room, either because the source image was smaller
-    specified, or because it had a different aspect ratio, pad out the image
-    with black pixels.
-    """
-    convert_path = findConvert()
-    if convert_path == None:
-        return
-    # From the "Pad Out Image" recipe at
-    # http://www.imagemagick.org/Usage/thumbnails/
-    border_width = max(width, height) / 2
-    # sometimes convert complains because our output filename doesn't match a
-    # known image filetype.  It still converts the image though, so don't
-    # worry about it.
-    call_command(convert_path,  source_path, 
-            "-strip",
-            "-resize", "%dx%d>" % (width, height), 
-            "-gravity", "center", "-bordercolor", "black",
-            "-border", "%s" % border_width,
-            "-crop", "%dx%d+0+0" % (width, height),
-            "+repage", dest_path,
-            ignore_stderr=True)
-
 def pidIsRunning(pid):
     if pid is None:
         return False

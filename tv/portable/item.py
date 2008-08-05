@@ -68,7 +68,6 @@ import logging
 from miro import filetypes
 from miro import searchengines
 from miro import fileutil
-from miro import imageresize
 from miro import signals
 from miro import license
 
@@ -78,10 +77,6 @@ class Item(DDBObject):
     """An item corresponds to a single entry in a feed. It has a single url
     associated with it.
     """
-
-    SMALL_ICON_SIZE = (154, 105)
-    BIG_ICON_SIZE = (252, 190)
-    ICON_CACHE_SIZES = [SMALL_ICON_SIZE, BIG_ICON_SIZE]
 
     def __init__(self, entry, linkNumber=0, feed_id=None, parent_id=None):
         self.feed_id = feed_id
@@ -821,30 +816,20 @@ class Item(DDBObject):
         the right set of items.
         """
         self.confirmDBThread()
-        return self._doGetThumbnail(Item.SMALL_ICON_SIZE)
-
-    @returnsFilename
-    def getThumbnailLarge(self):
-        self.confirmDBThread()
-        return self._doGetThumbnail(Item.BIG_ICON_SIZE)
-
-    def _doGetThumbnail(self, (width, height)):
         if self.iconCache is not None and self.iconCache.isValid():
-            path = self.iconCache.getResizedFilename(width, height)
+            path = self.iconCache.getFilename()
             return resources.path(fileutil.expand_filename(path))
         elif self.screenshot:
-            path = self.getResizedScreenshot(width, height)
+            path = self.screenshot
             return resources.path(fileutil.expand_filename(path))
         elif self.isContainerItem:
             return resources.path("wimages/container-icon.png")
         else:
-            feedThumbnail = self.getFeed().getItemThumbnail(width, height)
-            if feedThumbnail is not None:
-                return feedThumbnail
-            elif self.showMoreInfo:
+            feed = self.getFeed()
+            if feed.thumbnailValid():
+                return feed.getThumbnailPath()
+            else:
                 return resources.path("wimages/thumb-default_large.png")
-            else: 
-                return resources.path("wimages/thumb-default_small.png")
 
     @returnsUnicode
     def getTitle(self):
@@ -1569,20 +1554,6 @@ class Item(DDBObject):
         
         signals.system.downloadComplete(self)
 
-    def getResizedScreenshot(self, width, height):
-        try:
-            return imageresize.getImage(self.resized_screenshots, width, height)
-        except KeyError:
-            return self.screenshot
-
-    def resizeScreenshot(self):
-        imageresize.removeResizedFiles(self.resized_screenshots)
-        if self.screenshot:
-            self.resized_screenshots = imageresize.multiResizeImage(
-                    self.screenshot, self.ICON_CACHE_SIZES)
-        else:
-            self.resized_screenshots = {}
-
     def save(self):
         self.confirmDBThread()
         if self.keep != True:
@@ -1663,7 +1634,6 @@ class Item(DDBObject):
         if self.iconCache is not None:
             self.iconCache.remove()
             self.iconCache = None
-        imageresize.removeResizedFiles(self.resized_screenshots)
         if self.isContainerItem:
             for item in self.getChildren():
                 item.remove()

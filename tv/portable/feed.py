@@ -616,13 +616,6 @@ class Feed(DDBObject):
 
     It works by passing on attributes to the actual feed.
     """
-    ICON_CACHE_SIZES = [
-        (20, 20),
-        (76, 76),
-        itemmod.Item.SMALL_ICON_SIZE,
-        itemmod.Item.BIG_ICON_SIZE
-    ]
-
     def __init__(self, url, initiallyAutoDownloadable=None):
         DDBObject.__init__(self, add=False)
         checkU(url)
@@ -1171,17 +1164,18 @@ $shortAppName.\n\nDo you want to try to load this channel anyway?"""))
         DDBObject.remove(self)
         self.actualFeed.onRemove()
 
+    def thumbnailValid(self):
+        return self.iconCache and self.iconCache.isValid()
+
     def calcThumbnail(self):
-        if self.iconCache and self.iconCache.isValid():
-            path = self.iconCache.getResizedFilename(76, 76)
-            return fileutil.expand_filename(path)
+        if self.thumbnailValid():
+            return fileutil.expand_filename(self.iconCache.getFilename())
         else:
             return defaultFeedIconPath()
 
     def calcTablistThumbnail(self):
-        if self.iconCache and self.iconCache.isValid():
-            path = self.iconCache.getResizedFilename(20, 20)
-            return fileutil.expand_filename(path)
+        if self.thumbnailValid():
+            return fileutil.expand_filename(self.iconCache.getFilename())
         else:
             return defaultTablistFeedIconPath()
 
@@ -1204,16 +1198,6 @@ $shortAppName.\n\nDo you want to try to load this channel anyway?"""))
     def getTablistThumbnailPath(self):
         self.confirmDBThread()
         return resources.path(self.calcTablistThumbnail())
-
-    @returnsFilename
-    def getItemThumbnail(self, width, height):
-        self.confirmDBThread()
-        if self.iconCache and self.iconCache.isValid():
-            path = self.iconCache.getResizedFilename(width, height)
-            path = fileutil.expand_filename(path)
-            return resources.path(path)
-        else:
-            return None
 
     def hasDownloadedItems(self):
         self.confirmDBThread()

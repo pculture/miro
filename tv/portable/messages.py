@@ -558,7 +558,6 @@ class ItemInfo(object):
     video_watched -- has the user watched the video for the item?
     video_path -- the file path to the video for this item (or None)
     thumbnail -- path to the thumbnail for this file
-    thumbnail_large -- path to the larger thumbnail for this file
     file_type -- filetype of the enclosure that would be downloaded
     file_url -- URL of the enclosure that would be downloaded
     download_info -- DownloadInfo object containing info about the download
@@ -583,7 +582,6 @@ class ItemInfo(object):
         self.video_watched = item.getSeen()
         self.video_path = item.getVideoFilename()
         self.thumbnail = item.getThumbnail()
-        self.thumbnail_large = item.getThumbnailLarge()
 
         enclosure = item.getFirstVideoEnclosure()
         if enclosure:

@@ -147,15 +147,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         try:
             return info.icon
         except AttributeError:
-            info.icon = imagepool.get_surface(info.thumbnail)
+            info.icon = imagepool.get_surface(info.thumbnail, size=(154, 105))
             return info.icon
-
-    def get_thumbnail_large(self, info):
-        try:
-            return info.icon_large
-        except AttributeError:
-            info.icon_large = imagepool.get_surface(info.thumbnail_large)
-            return info.icon_large
 
     def get_size(self, style, layout):
         # The right side of the cell is what's going to drive the height.

@@ -197,7 +197,8 @@ class FeedView(itemlist.ItemContainerView):
     def build_titlebar(self):
         feed_info = widgetutil.get_feed_info(self.id)
         hbox = widgetset.HBox()
-        hbox.pack_start(widgetset.ImageDisplay(imagepool.get(feed_info.thumbnail)))
+        image = imagepool.get(feed_info.thumbnail, size=(61, 61))
+        hbox.pack_start(widgetset.ImageDisplay(image))
         hbox.pack_start(TitleDrawer(feed_info.name), padding=15, expand=True)
         background = TitlebarBackground()
         background.add(hbox)

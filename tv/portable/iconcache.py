@@ -39,7 +39,6 @@ from miro import prefs
 from miro import fileutil
 import time
 import random
-from miro import imageresize
 
 RUNNING_MAX = 3
     
@@ -141,11 +140,9 @@ class IconCache:
     def remove (self):
         self.removed = True
         self._removeFile(self.filename)
-        imageresize.removeResizedFiles(self.resized_filenames)
 
     def reset (self):
         self._removeFile(self.filename)
-        imageresize.removeResizedFiles(self.resized_filenames)
         self.filename = None
         self.resized_filenamed = {}
         self.url = None
@@ -251,9 +248,6 @@ class IconCache:
             except:
                 self.filename = None
                 needsSave = True
-            else:
-                self.resizeIcon()
-
 
             if (info.has_key ("etag")):
                 etag = unicodify(info["etag"])
@@ -339,14 +333,3 @@ class IconCache:
             return self.url
         else:
             return self.filename
-
-    def getResizedFilename(self, width, height):
-        try:
-            return imageresize.getImage(self.resized_filenames, width, height)
-        except KeyError:
-            return self.getFilename()
-
-    def resizeIcon(self):
-        imageresize.removeResizedFiles(self.resized_filenames)
-        self.resized_filenames = imageresize.multiResizeImage(self.filename,
-                self.dbItem.ICON_CACHE_SIZES)

@@ -37,10 +37,20 @@ from miro.plat.frontends.widgets.base import Widget, SimpleBin, FlippedView
 class Image(object):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, path):
-        self.path = path
         self.nsimage = NSImage.alloc().initByReferencingFile_(path)
         self.width = self.nsimage.size().width
         self.height = self.nsimage.size().height
+
+    def resize(self, width, height):
+        return ResizedImage(self, width, height)
+
+class ResizedImage(Image):
+    def __init__(self, image, width, height):
+        self.nsimage = image.nsimage.copy()
+        self.nsimage.setScalesWhenResized_(YES)
+        self.nsimage.setSize_(NSSize(width, height))
+        self.width = width
+        self.height = height
 
 class ImageDisplay(Widget):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""

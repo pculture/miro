@@ -40,18 +40,24 @@ import weakref
 from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
 
+# path_to_image and path_to_surface maps (path, size) tuples to
+# Image/ImageSurface objects.
 # Uses weak references so that once the Image/ImageSurface is not being used
 # it will be deleted.
 path_to_image = weakref.WeakValueDictionary()
 path_to_surface = weakref.WeakValueDictionary()
-path_to_image_display = weakref.WeakValueDictionary()
 
 broken_image = widgetset.Image(resources.path('wimages/broken-image.gif'))
 
-def get(path):
-    """Returns an Image for path."""
+def get(path, size=None):
+    """Returns an Image for path.
+    
+    size is an optional argument that can be used to get resized images.  If
+    given it should be a (width, height) tuple.  By default we return the
+    native size of the widget.
+    """
     try:
-        return path_to_image[path]
+        return path_to_image[(path, size)]
     except KeyError:
         try:
             image = widgetset.Image(path)
@@ -59,15 +65,22 @@ def get(path):
             logging.warn("error loading image %s:\n%s", path,
                     traceback.format_exc())
             image = broken_image
-        path_to_image[path] = image
+        if size is not None:
+            image = image.resize(size[0], size[1])
+            path_to_image[(path, size)] = image
+        else:
+            path_to_image[(path, None)] = image
+            path_to_image[(path, (image.width, image.height))] = image
         return image
 
-def get_surface(path):
+def get_surface(path, size=None):
     """Returns an ImageSurface for path."""
     try:
-        return path_to_surface[path]
+        return path_to_surface[(path, size)]
     except KeyError:
-        image = get(path)
+        image = get(path, size)
         surface = widgetset.ImageSurface(image)
-        path_to_surface[path] = surface
+        path_to_surface[(path, size)] = surface
+        if size is None:
+            path_to_surface[(path, (image.width, image.height))] = surface
         return surface
