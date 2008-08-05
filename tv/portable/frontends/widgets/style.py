@@ -156,7 +156,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         self.hotspot = None
         self.selected = False
         sizer = self.add_background(self.pack_right(layout))
-        return self.MIN_WIDTH, max(135, sizer.get_size()[1])
+        return self.MIN_WIDTH, max(140, sizer.get_size()[1])
 
     def hotspot_test(self, style, layout, x, y, width, height):
         self.setup_style(style)
