@@ -83,7 +83,7 @@ class Item(DDBObject):
     BIG_ICON_SIZE = (252, 190)
     ICON_CACHE_SIZES = [SMALL_ICON_SIZE, BIG_ICON_SIZE]
 
-    def __init__(self, entry, linkNumber = 0, feed_id=None, parent_id=None):
+    def __init__(self, entry, linkNumber=0, feed_id=None, parent_id=None):
         self.feed_id = feed_id
         self.parent_id = parent_id
         self.isContainerItem = None
@@ -700,7 +700,7 @@ class Item(DDBObject):
             del self.entry['id']
             self.signalChange()
 
-    def setAutoDownloaded(self,autodl = True):
+    def setAutoDownloaded(self, autodl=True):
         self.confirmDBThread()
         if autodl != self.autoDownloaded:
             self.autoDownloaded = autodl
@@ -732,7 +732,7 @@ class Item(DDBObject):
         self.confirmDBThread()
         return self.linkNumber
 
-    def download(self,autodl=False):
+    def download(self, autodl=False):
         """Starts downloading the item.
         """
         autodler.resumeDownloader()
@@ -743,10 +743,8 @@ class Item(DDBObject):
         if ((not autodl) and 
                 manualDownloadCount >= config.get(prefs.MAX_MANUAL_DOWNLOADS)):
             self.pendingManualDL = True
-            self.pendingReason = u"queued for download" # FIXME:
-                                                        # Should this
-                                                        # be
-                                                        # translated --NN
+            # FIXME - should this be translated --NN
+            self.pendingReason = u"queued for download"
             self.signalChange()
             return
         else:
@@ -1061,7 +1059,6 @@ class Item(DDBObject):
             link = util.makeEventURL(label, linkEventURL)
             rv.append((_('Filename:'), u"%s<BR />%s" % (filenameToUnicode(basename), link)))
         return rv
-
 
     def getTorrentDetailsFinished(self):
         status = self.downloader.status
@@ -1758,7 +1755,7 @@ class FileItem(Item):
     """An Item that exists as a local file
     """
 
-    def __init__(self,filename, feed_id=None, parent_id=None, offsetPath=None, deleted=False):
+    def __init__(self, filename, feed_id=None, parent_id=None, offsetPath=None, deleted=False):
         checkF(filename)
         filename = fileutil.abspath(filename)
         self.filename = filename
@@ -1868,7 +1865,7 @@ class FileItem(Item):
         except:
             return FilenameType("")
 
-    def download(self,autodl=False):
+    def download(self, autodl=False):
         self.deleted = False
         self.signalChange()
 
