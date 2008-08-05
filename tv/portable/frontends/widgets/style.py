@@ -119,7 +119,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     BORDER_COLOR = (0.78, 0.78, 0.78)
     SELECTED_BACKGROUND_COLOR = (0.90, 0.93, 0.96)
     SELECTED_HIGHLIGHT_COLOR = (0.50, 0.59, 0.68)
-    UNWATCHED_ITEM_TITLE_COLOR = (0.41, 0.75, 0.08)
+    UNWATCHED_ITEM_TITLE_COLOR = (0.41, 0.70, 0.08)
     WATCHED_ITEM_TITLE_COLOR = (0.33, 0.33, 0.33)
     ITEM_DESC_COLOR = (0.6, 0.6, 0.6)
     EMBLEM_FONT_SIZE = 0.77
@@ -226,7 +226,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     def pack_main(self, layout):
         layout.set_text_color(self.text_color)
         vbox = cellpack.VBox()
-        layout.set_font(1.1, family="Helvetica")
+        layout.set_font(1.1, family="Helvetica", bold=True)
         if self.data.downloaded and not self.data.video_watched:
             layout.set_text_color(self.UNWATCHED_ITEM_TITLE_COLOR)
         else:
