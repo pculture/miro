@@ -349,14 +349,14 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         hbox = cellpack.HBox()
         if self.data.downloaded:
             if self.hotspot == 'play':
-                button = cellpack.Hotspot('play', self.play_button_pressed)
+                button = self.play_button_pressed
             else:
-                button = cellpack.Hotspot('play', self.play_button)
-            alignment = cellpack.Alignment(button, xscale=0, xalign=0.5, 
-                    yscale=0, yalign=0.5)
+                button = self.play_button
+            alignment = cellpack.Alignment(button, xscale=0, xalign=0.0, 
+                    yscale=0, yalign=1.0)
             background = cellpack.Background(alignment, 154, 105)
             background.set_callback(self.draw_thumbnail)
-            hbox.pack(background)
+            hbox.pack(cellpack.Hotspot('play', background))
         else:
             hbox.pack(cellpack.DrawingArea(154, 105, self.draw_thumbnail))
         hbox.pack_space(25)
