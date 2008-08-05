@@ -61,7 +61,7 @@ class HidableItemList(widgetset.VBox):
 
     def show(self):
         if not self.shown:
-            self.pack_start(self.expander)
+            self.pack_start(widgetutil.pad(self.expander, top=3, bottom=3, left=5))
             self.shown = True
 
     def hide(self):
@@ -107,7 +107,7 @@ class DownloadedHidableList(HidableItemList):
 
     def update_counts(self, downloads, watchable):
         if watchable > 0:
-            text = _(" | %d Videos ") % watchable
+            text = _("  |  %d Videos  ") % watchable
             self.info_label.set_text(text)
             self.show()
         else:
@@ -120,7 +120,7 @@ class FullList(HidableItemList):
         self.show()
 
     def update_counts(self, downloads, watchable):
-        text = _(" | %(videos)d Videos | %(downloads)d Downloading") % \
+        text = _("  |  %(videos)d Videos  |  %(downloads)d Downloading") % \
                 { 'videos': watchable, 'downloads': downloads }
         self.info_label.set_text(text)
 
