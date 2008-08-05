@@ -150,7 +150,7 @@ class TitleDrawer(widgetset.DrawingArea):
         self.title = title
 
     def draw(self, context, layout):
-        layout.set_font(2.5, bold=True, family="Helvetica")
+        layout.set_font(2.2, family="Helvetica")
         layout.set_text_color((0.31, 0.31, 0.31))
         layout.set_text_shadow(widgetutil.Shadow((1,1,1), 1, (1.5,-1.5), 0.5))
         textbox = layout.textbox(self.title)
