@@ -81,6 +81,7 @@ class ItemListBase(widgetset.TableView):
         app.item_list_manager.manage_item_list(self)
         self.set_context_menu_callback(self.on_context_menu)
         self.set_drag_source(ItemListDragHandler())
+        self.set_background_color(widgetutil.WHITE)
 
     def do_hotspot_clicked(self, name, iter):
         item_info = self.model[iter][0]
