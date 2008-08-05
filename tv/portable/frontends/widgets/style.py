@@ -112,6 +112,13 @@ class StaticTabRenderer(TabRenderer):
             self.pack_bubble(hbox, layout, self.data.downloading,
                     self.DOWNLOADING_BUBBLE_COLOR)
 
+class FakeDownloadInfo(object):
+    # Fake download info object used to size items
+    def __init__(self):
+        self.state = 'paused'
+        self.rate = 0
+        self.downloaded_size = 0
+
 class ItemRenderer(widgetset.CustomCellRenderer):
     MIN_WIDTH = 600
     UNWATCHED_COLOR = (0.26, 0.71, 0.11)
@@ -151,7 +158,10 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             return info.icon
 
     def get_size(self, style, layout):
-        # The right side of the cell is what's going to drive the height.
+        # The right side of the cell is what's going to drive the height and
+        # the right side is the tallest when we're downloading something.  So
+        # use that to calculate the height.
+        self.download_info = FakeDownloadInfo()
         self.setup_style(style)
         self.hotspot = None
         self.selected = False
@@ -285,7 +295,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         return emblem
 
     def download_textbox(self, layout):
-        dl_info = self.data.download_info
+        dl_info = self.download_info
         if dl_info.state == 'paused' or dl_info.rate == 0:
             layout.set_font(0.77, bold=True)
             self.set_info_right_color(layout)
@@ -312,7 +322,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         hbox = cellpack.HBox(spacing=5)
         progress_bar = cellpack.DrawingArea(131, 9, self.draw_progress_bar)
         hbox.pack(cellpack.align_middle(progress_bar))
-        if self.data.download_info.state != 'paused':
+        if self.download_info.state != 'paused':
             hbox.pack(cellpack.Hotspot('pause', self.pause_button))
         else:
             hbox.pack(cellpack.Hotspot('resume', self.resume_button))
@@ -326,7 +336,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         if self.data.downloaded:
             extra = self.pack_emblem(layout)
-        elif self.data.download_info is not None:
+        elif self.download_info is not None:
             extra = self.pack_download_status(layout)
         else:
             layout.set_font(0.77)
@@ -373,6 +383,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             self.text_color = style.text_color
 
     def render(self, context, layout, selected, hotspot):
+        self.download_info = self.data.download_info
         self.setup_style(context.style)
         self.hotspot = hotspot
         self.selected = selected
@@ -436,7 +447,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         context.fill()
 
     def draw_progress_bar(self, context, x, y, width, height):
-        dl_info = self.data.download_info
+        dl_info = self.download_info
         split = float(width) * dl_info.downloaded_size / self.data.size
         self.progress_bar_bg.draw(context, x, y, width, height)
         self.progress_bar.draw(context, x, y, split, height)
