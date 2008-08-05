@@ -121,7 +121,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     SELECTED_HIGHLIGHT_COLOR = (0.43, 0.63, 0.82)
     UNWATCHED_ITEM_TITLE_COLOR = (0.41, 0.70, 0.08)
     WATCHED_ITEM_TITLE_COLOR = (0.33, 0.33, 0.33)
-    ITEM_DESC_COLOR = (0.6, 0.6, 0.6)
+    ITEM_DESC_COLOR = (0.4, 0.4, 0.4)
     EMBLEM_FONT_SIZE = 0.77
     GRADIENT_HEIGHT = 25
 
