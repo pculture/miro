@@ -204,7 +204,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         pos = 0
         for start, end, url in links:
             textbox.append_text(text[pos:start])
-            textbox.append_text(text[start:end], underline=True, color=(0, 0, 1))
+            textbox.append_text(text[start:end], underline=True, color=self.ITEM_DESC_COLOR)
             pos = end
         if pos < len(text):
             textbox.append_text(text[pos:])
