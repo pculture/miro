@@ -105,6 +105,12 @@ class GTKCustomCellRenderer(gtk.GenericCellRenderer):
             state = gtk.STATE_NORMAL
         context = drawing.DrawingContext(window, cell_area, expose_area)
         widget_wrapper = wrappermap.wrapper(widget)
+        if selected and widget_wrapper.use_custom_style:
+            # Draw the base color as our background.  This erases the gradient
+            # that GTK draws for selected items.
+            area = widget.get_background_area(self.path, self.column)
+            window.draw_rectangle(widget.style.base_gc[state], True,
+                    area.x, area.y, area.width, area.height)
         context.style = drawing.DrawingStyle(widget_wrapper,
                 use_base_color=True, state=state)
         owner = wrappermap.wrapper(self)
