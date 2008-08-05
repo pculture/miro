@@ -57,16 +57,17 @@ class HidableItemList(widgetset.VBox):
         self.expander = widgetset.Expander(item_list)
         self.expander.set_expanded(False)
         self.item_list = self.expander.child
+        self.display = widgetutil.pad(self.expander, top=3, bottom=3, left=5)
         self.shown = False
 
     def show(self):
         if not self.shown:
-            self.pack_start(widgetutil.pad(self.expander, top=3, bottom=3, left=5))
+            self.pack_start(self.display)
             self.shown = True
 
     def hide(self):
         if self.shown:
-            self.remove(self.expander)
+            self.remove(self.display)
             self.shown = False
 
     def make_header_label(self, text):
