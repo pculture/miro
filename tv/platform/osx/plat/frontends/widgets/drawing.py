@@ -87,6 +87,12 @@ class DrawingStyle(object):
         rgb = color.colorUsingColorSpaceName_(NSDeviceRGBColorSpace)
         return (rgb.redComponent(), rgb.greenComponent(), rgb.blueComponent())
 
+# Transforms to offset the coordinate system by half a pixel.  These make Cocoa # work the same way as cairo when stroking lines
+stroke_tweak_xform = NSAffineTransform.transform()
+stroke_tweak_xform.translateXBy_yBy_(0.5, 0.5)
+stroke_tweak_invert_xform = stroke_tweak_xform.copy()
+stroke_tweak_invert_xform.invert()
+
 class DrawingContext:
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, view, drawing_area, rect):
@@ -152,12 +158,17 @@ class DrawingContext:
     def set_line_width(self, width):
         self.path.setLineWidth_(width)
 
-    def stroke(self):
+    def _stroke(self):
+        stroke_tweak_xform.concat()
         self.path.stroke()
+        stroke_tweak_invert_xform.concat()
+
+    def stroke(self):
+        self._stroke()
         self.path.removeAllPoints()
 
     def stroke_preserve(self):
-        self.path.stroke()
+        self._stroke()
 
     def fill(self):
         self.path.fill()

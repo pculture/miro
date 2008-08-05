@@ -385,7 +385,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
     def draw_background(self, context, x, y, width, height):
         # Draw the gradient at the bottom
-        self.make_border_path(context, x, y, width, height, 0.5)
+        self.make_border_path(context, x, y, width, height, 0)
         context.clip()
         top = y + height - self.GRADIENT_HEIGHT
         gradient = widgetset.Gradient(0, top, 0, top + self.GRADIENT_HEIGHT)
