@@ -418,7 +418,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
     def draw_emblem(self, context, x, y, width, height, color):
         radius = height / 2.0
-        inner_width = width - radius * 2
+        inner_width = width - radius
         context.move_to(x + radius, y)
         context.rel_line_to(inner_width, 0)
         context.rel_line_to(0, height)
