@@ -75,12 +75,14 @@ class StaticTabList(object):
         tab = self.view.model[iter][0]
         tab.downloading = count
         self.view.model.update(iter, tab)
+        self.view.model_changed()
 
     def update_new_count(self, count):
         iter = self.iter_map['new']
         tab = self.view.model[iter][0]
         tab.unwatched = count
         self.view.model.update(iter, tab)
+        self.view.model_changed()
 
     def get_tab(self, name):
         return self.view.model[self.iter_map[name]][0]
