@@ -416,3 +416,9 @@ class LibraryView(SimpleItemContainer):
     id = None
     image_filename = 'icon-library_large.png'
     title = _("Library")
+
+class IndividualDownloadsView(SimpleItemContainer):
+    type = 'individual_downloads'
+    id = None
+    image_filename = 'icon-library_large.png'
+    title = _("Individual Downloads")

@@ -58,6 +58,7 @@ class StaticTabList(object):
         self.add(statictabs.ChannelGuideTab())
         self.add(statictabs.SearchTab())
         self.add(statictabs.LibraryTab())
+        self.add(statictabs.IndividualDownloadsTab())
         self.add(statictabs.NewVideosTab())
         self.add(statictabs.DownloadsTab())
         self.view.model_changed()

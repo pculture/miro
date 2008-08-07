@@ -80,6 +80,7 @@ class DisplayManager(object):
                 PlaylistDisplay,
                 SiteDisplay,
                 LibraryDisplay,
+                IndividualDownloadsDisplay,
                 NewVideosDisplay,
                 DownloadingDisplay,
                 StaticTabDisplay,
@@ -198,6 +199,14 @@ class LibraryDisplay(ItemListDisplay):
 
     def make_view(self, tab):
         return itemlist.LibraryView()
+
+class IndividualDownloadsDisplay(ItemListDisplay):
+    @staticmethod
+    def should_display(type, selected_tabs):
+        return type == 'static' and selected_tabs[0].id == 'individual_downloads'
+
+    def make_view(self, tab):
+        return itemlist.IndividualDownloadsView()
 
 class VideoDisplay(Display):
     def __init__(self):

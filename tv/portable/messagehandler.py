@@ -30,14 +30,17 @@
 
 import logging
 
+from miro import app
 from miro import database
 from miro import eventloop
 from miro import feed
+from miro import filters
 from miro import guide
 from miro import httpclient
 from miro import indexes
 from miro import messages
 from miro import singleclick
+from miro import sorts
 from miro import subscription
 from miro import views
 from miro import opml
@@ -235,6 +238,13 @@ class DownloadingItemsTracker(ItemTrackerBase):
         self.view = views.downloadingItems
         ItemTrackerBase.__init__(self)
 
+class IndividualDownloadsTracker(ItemTrackerBase):
+    type = 'individual_downloads'
+    id = None
+    def __init__(self):
+        self.view = views.manualItems
+        ItemTrackerBase.__init__(self)
+
 class NewItemsTracker(ItemTrackerBase):
     type = 'new'
     id = None
@@ -252,6 +262,8 @@ class LibraryItemsTracker(ItemTrackerBase):
 def make_item_tracker(message):
     if message.type == 'downloads':
         return DownloadingItemsTracker()
+    elif message.type == 'individual_downloads':
+        return IndividualDownloadsTracker()
     elif message.type == 'new':
         return NewItemsTracker()
     elif message.type == 'library':
