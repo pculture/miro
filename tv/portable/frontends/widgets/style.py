@@ -388,7 +388,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
     def calc_status_bump(self, layout):
         bump = None
-        if not self.data.item_viewed:
+        if not self.data.item_viewed and not self.data.downloaded:
             bump = imagepool.get_surface(resources.path(
                 'wimages/status-icon-new.png'))
         elif self.data.downloaded and not self.data.video_watched:
