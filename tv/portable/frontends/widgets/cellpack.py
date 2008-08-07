@@ -329,6 +329,23 @@ class Background(Packer):
             return None
         return (self.child,) + self.margin.inner_rect(0, 0, width, height)
 
+class Padding(Packer):
+    """Adds padding to the edges of a packer."""
+    def __init__(self, child, top=0, right=0, bottom=0, left=0):
+        self.child = child
+        self.margin = Margin((top, right, bottom, left))
+
+    def _calc_size(self):
+        return self.margin.outer_size(self.child.get_size())
+
+    def _layout(self, context, x, y, width, height):
+        self.child.draw(context, *self.margin.inner_rect(x, y, width, height))
+
+    def _find_child_at(self, x, y, width, height):
+        if not self.margin.point_in_margin(x, y, width, height):
+            return None
+        return (self.child,) + self.margin.inner_rect(0, 0, width, height)
+
 class TextBoxPacker(Packer):
     """Base class for ClippedTextLine and ClippedTextBox"""
     def _layout(self, context, x, y, width, height):
@@ -414,3 +431,7 @@ def align_middle(packer):
 def align_center(packer):
     """Align a packer to the center of it's allocated space."""
     return Alignment(packer, xalign=0.5, xscale=0.0)
+
+def pad(packer, top=0, left=0, bottom=0, right=0):
+    """Add padding to a packer."""
+    return Padding(packer, top, left, bottom, right)

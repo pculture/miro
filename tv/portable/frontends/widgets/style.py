@@ -357,7 +357,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         return outer_vbox
 
     def pack_all(self, layout):
-        hbox = cellpack.HBox()
+        outer_hbox = cellpack.HBox(spacing=25)
         if self.data.downloaded:
             if self.hotspot == 'play':
                 button = self.play_button_pressed
@@ -367,14 +367,14 @@ class ItemRenderer(widgetset.CustomCellRenderer):
                     yscale=0, yalign=1.0)
             background = cellpack.Background(alignment, 154, 105)
             background.set_callback(self.draw_thumbnail)
-            hbox.pack(cellpack.Hotspot('play', background))
+            outer_hbox.pack(cellpack.Hotspot('play', background))
         else:
-            hbox.pack(cellpack.DrawingArea(154, 105, self.draw_thumbnail))
-        hbox.pack_space(25)
-        hbox.pack(self.pack_main(layout), expand=True)
-        hbox.pack_space(25)
-        hbox.pack(self.pack_right(layout))
-        return self.add_background(hbox)
+            outer_hbox.pack(cellpack.DrawingArea(154, 105, self.draw_thumbnail))
+        inner_hbox = cellpack.HBox(spacing=25)
+        inner_hbox.pack(self.pack_main(layout), expand=True)
+        inner_hbox.pack(self.pack_right(layout))
+        outer_hbox.pack(cellpack.pad(inner_hbox, top=4), expand=True)
+        return self.add_background(outer_hbox)
 
     def setup_style(self, style):
         self.use_custom_style = style.use_custom_style
