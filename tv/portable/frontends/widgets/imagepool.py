@@ -98,3 +98,43 @@ def get_surface(path, size=None):
         if size is None:
             path_to_surface[(path, (image.width, image.height))] = surface
         return surface
+
+class LazySurface(object):
+    """Lazily loaded ImageSurface.  
+    
+    LazySurface objects only create ImageSurfaces as needed.  If multiple
+    LazySurface objects are created for the same path, then they will share
+    the underlying ImageSurface object.
+    """
+    def __init__(self, path, size=None):
+        self.path = path
+        self.size = size
+        self._get_surface_if_available()
+
+    def _get_surface_if_available(self):
+        """Try to get the ImageSurface for this object if it's already
+        created.  This ensures that if the other ImageSurface is destroyed, we
+        will still have a reference.
+        """
+        try:
+            self._surface = path_to_surface[(self.path, self.size)]
+        except KeyError:
+            pass
+
+    def _ensure_surface(self):
+        if not hasattr(self, '_surface'):
+            self._surface = get_surface(self.path, self.size)
+
+    def get_width(self):
+        self._ensure_surface()
+        return self._surface.width
+    width = property(get_width)
+
+    def get_height(self):
+        self._ensure_surface()
+        return self._surface.height
+    height = property(get_height)
+
+    def draw(self, context, x, y, width, height):
+        self._ensure_surface()
+        self._surface.draw(context, x, y, width, height)

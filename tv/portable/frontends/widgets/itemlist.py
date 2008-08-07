@@ -106,6 +106,10 @@ class ItemListBase(widgetset.TableView):
         else:
             print 'hotspot clicked: ', name, item_info.name
 
+    def setup_info(self, info):
+        """Initialize a newly recieved ItemInfo."""
+        info.icon = imagepool.LazySurface(info.thumbnail, (154, 105))
+
     def get_items(self):
         return [row[0] for row in self.model]
 
@@ -121,12 +125,17 @@ class ItemListBase(widgetset.TableView):
     def insert_sorted_items(self, item_list):
         insert_pos = self.model.first_iter()
         for item_info in item_list:
+            self.setup_info(item_info)
             while (insert_pos is not None and 
                     self.model[insert_pos][0].release_date > 
                     item_info.release_date):
                 insert_pos = self.model.next_iter(insert_pos)
             iter = self.model.insert_before(insert_pos, item_info)
             self.item_iters[item_info.id] = iter
+
+    def update_item(self, iter, item_info):
+        self.setup_info(item_info)
+        self.model.update(iter, item_info)
 
     def on_context_menu(self, tableview):
         selected = [self.model[iter][0] for iter in self.get_selection()]
@@ -259,7 +268,7 @@ class ItemList(ItemListBase):
     def items_changed(self, item_list):
         for item_info in item_list:
             iter = self.item_iters[item_info.id]
-            self.model.update(iter, item_info)
+            self.update_item(iter, item_info)
 
 class FilteredItemList(ItemListBase):
     """ItemListBase that only contains a portion of the items (downloading and
@@ -291,7 +300,7 @@ class FilteredItemList(ItemListBase):
                     to_add.append(item_info)
             else:
                 if self.filter(item_info):
-                    self.model.update(iter, item_info)
+                    self.update_item(iter, item_info)
                 else:
                     self.model.remove(iter)
                     del self.item_iters[item_info.id]

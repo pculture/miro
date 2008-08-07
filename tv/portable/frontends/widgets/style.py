@@ -154,13 +154,6 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             'wimages/thumb-overlay-large.png'))
         self.html_stripper = util.HTMLStripper()
 
-    def get_thumbnail(self, info):
-        try:
-            return info.icon
-        except AttributeError:
-            info.icon = imagepool.get_surface(info.thumbnail, size=(154, 105))
-            return info.icon
-
     def get_size(self, style, layout):
         # The right side of the cell is what's going to drive the height and
         # the right side is the tallest when we're downloading something.  So
@@ -461,15 +454,14 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
     def draw_thumbnail(self, context, x, y, width, height):
         height = min(height, 105)
-        thumbnail = self.get_thumbnail(self.data)
-        if width != thumbnail.width or height != thumbnail.height:
+        if width != self.data.icon.width or height != self.data.icon.height:
             context.rectangle(x, y, width, height)
             context.set_color((0, 0, 0))
             context.fill()
-            thumb_x = x + (width - thumbnail.width) / 2
-            thumb_y = y + (height - thumbnail.height) / 2
-        thumbnail.draw(context, thumb_x, thumb_y, 
-                thumbnail.width, thumbnail.height)
+            thumb_x = x + (width - self.data.icon.width) / 2
+            thumb_y = y + (height - self.data.icon.height) / 2
+        self.data.icon.draw(context, thumb_x, thumb_y, 
+                self.data.icon.width, self.data.icon.height)
         self.thumb_overlay.draw(context, x, y, width, height)
 
     def draw_emblem(self, context, x, y, width, height, color):
