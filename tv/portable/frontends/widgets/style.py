@@ -148,6 +148,10 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             'wimages/play-button.png'))
         self.play_button_pressed = imagepool.get_surface(resources.path(
             'wimages/play-button-pressed.png'))
+        self.thumb_overlay = imagepool.get_surface(resources.path(
+            'wimages/thumb-overlay-small.png'))
+        self.thumb_overlay_large = imagepool.get_surface(resources.path(
+            'wimages/thumb-overlay-large.png'))
         self.html_stripper = util.HTMLStripper()
 
     def get_thumbnail(self, info):
@@ -456,14 +460,17 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         context.stroke()
 
     def draw_thumbnail(self, context, x, y, width, height):
+        height = min(height, 105)
         thumbnail = self.get_thumbnail(self.data)
         if width != thumbnail.width or height != thumbnail.height:
             context.rectangle(x, y, width, height)
             context.set_color((0, 0, 0))
             context.fill()
-            x += (width - thumbnail.width) / 2
-            y += (height - thumbnail.height) / 2
-        thumbnail.draw(context, x, y, thumbnail.width, thumbnail.height)
+            thumb_x = x + (width - thumbnail.width) / 2
+            thumb_y = y + (height - thumbnail.height) / 2
+        thumbnail.draw(context, thumb_x, thumb_y, 
+                thumbnail.width, thumbnail.height)
+        self.thumb_overlay.draw(context, x, y, width, height)
 
     def draw_emblem(self, context, x, y, width, height, color):
         radius = height / 2.0
