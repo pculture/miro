@@ -51,8 +51,8 @@ class TabRenderer(widgetset.CustomCellRenderer):
     MIN_HEIGHT = 25
     TITLE_FONT_SIZE = 0.82
     BOLD_TITLE = False
-    UNWATCHED_BUBBLE_COLOR = (0.45, 0.71, 0.17)
-    AVAILABLE_BUBBLE_COLOR = (0.54, 0.61, 0.75)
+    UNWATCHED_BUBBLE_COLOR = (0.31, 0.75, 0.12)
+    AVAILABLE_BUBBLE_COLOR = (0.60, 0.68, 0.80)
 
     def get_size(self, style, layout):
         return (self.MIN_WIDTH, max(self.MIN_HEIGHT,
