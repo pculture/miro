@@ -357,7 +357,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         return outer_vbox
 
     def pack_all(self, layout):
-        outer_hbox = cellpack.HBox(spacing=25)
+        outer_hbox = cellpack.HBox()
         if self.data.downloaded:
             if self.hotspot == 'play':
                 button = self.play_button_pressed
@@ -370,11 +370,42 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             outer_hbox.pack(cellpack.Hotspot('play', background))
         else:
             outer_hbox.pack(cellpack.DrawingArea(154, 105, self.draw_thumbnail))
-        inner_hbox = cellpack.HBox(spacing=25)
+        inner_hbox = cellpack.HBox()
+        status_bump = self.calc_status_bump(layout)
+        if status_bump:
+            inner_hbox.pack(status_bump)
+        else:
+            inner_hbox.pack_space(25)
         inner_hbox.pack(self.pack_main(layout), expand=True)
+        inner_hbox.pack_space(25)
         inner_hbox.pack(self.pack_right(layout))
         outer_hbox.pack(cellpack.pad(inner_hbox, top=4), expand=True)
         return self.add_background(outer_hbox)
+
+    def calc_status_bump(self, layout):
+        bump = None
+        if not self.data.item_viewed:
+            bump = imagepool.get_surface(resources.path(
+                'wimages/status-icon-new.png'))
+        elif self.data.downloaded and not self.data.video_watched:
+            bump = imagepool.get_surface(resources.path(
+                'wimages/status-icon-newly-downloaded.png'))
+        elif not self.data.downloaded and self.download_info is not None:
+            bump = imagepool.get_surface(resources.path(
+                'wimages/status-icon-downloading.png'))
+        if bump is None:
+            return None
+        layout.set_font(1.1, family="Helvetica", bold=True)
+        title_ascent = layout.current_font.ascent()
+        return cellpack.DrawingArea(25, bump.height, self.draw_status_bump,
+                bump, title_ascent)
+
+    def draw_status_bump(self, context, x, y, width, height, bump,
+            title_ascent):
+        right = x + width - 6
+        bottom = y + title_ascent
+        bump.draw(context, right - bump.width, bottom - bump.height, 
+                bump.width, bump.height)
 
     def setup_style(self, style):
         self.use_custom_style = style.use_custom_style
