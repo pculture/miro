@@ -381,15 +381,18 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
     def calc_status_bump(self, layout):
         bump = None
-        if not self.data.item_viewed and not self.data.downloaded:
+        if not self.data.downloaded and self.download_info is not None:
             bump = imagepool.get_surface(resources.path(
-                'wimages/status-icon-new.png'))
+                'wimages/status-icon-downloading.png'))
+
         elif self.data.downloaded and not self.data.video_watched:
             bump = imagepool.get_surface(resources.path(
                 'wimages/status-icon-newly-downloaded.png'))
-        elif not self.data.downloaded and self.download_info is not None:
+
+        elif not self.data.item_viewed:
             bump = imagepool.get_surface(resources.path(
-                'wimages/status-icon-downloading.png'))
+                'wimages/status-icon-new.png'))
+
         if bump is None:
             return None
         layout.set_font(1.1, family="Helvetica", bold=True)

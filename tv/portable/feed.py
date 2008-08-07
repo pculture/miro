@@ -591,7 +591,7 @@ class FeedImpl:
                 pass
         return count
 
-    def onRestore(self):        
+    def onRestore(self):
         self.updating = False
         self.calc_item_list()
 
@@ -2390,6 +2390,11 @@ class ManualFeedImpl(FeedImpl):
                 title=None, visible=False)
         self.ufeed.expire = u'never'
         self.setUpdateFrequency(-1)
+        self.lastViewed = datetime.max
+
+    def onRestore(self):
+        FeedImpl.onRestore(self)
+        self.lastViewed = datetime.max
 
     @returnsUnicode
     def getTitle(self):
