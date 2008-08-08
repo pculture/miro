@@ -78,7 +78,6 @@ class ItemListBase(widgetset.TableView):
         self.allow_multiple_select(True)
         self.create_signal('play-video')
         self.item_iters = {}
-        app.item_list_manager.manage_item_list(self)
         self.set_context_menu_callback(self.on_context_menu)
         self.set_drag_source(ItemListDragHandler())
         self.set_background_color(widgetutil.WHITE)
@@ -324,6 +323,9 @@ class ItemContainerView(signals.SignalEmitter):
     def build_widget(self):
         raise NotImplementedError()
 
+    def all_item_lists(self):
+        """Return a list of all the ItemLists contained in this view."""
+
     def default_item_list(self):
         """Item list to play from if no videos are selected."""
         raise NotImplementedError()
@@ -368,6 +370,9 @@ class SimpleItemContainer(ItemContainerView):
 
     def make_item_list(self):
         return ItemList()
+
+    def all_item_lists(self):
+        return [self.item_list]
 
     def default_item_list(self):
         return self.item_list

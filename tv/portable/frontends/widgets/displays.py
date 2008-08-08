@@ -149,6 +149,8 @@ class ItemListDisplay(TabDisplay):
 
     def on_selected(self):
         app.item_list_manager.default_item_list = self.view.default_item_list()
+        for item_list in self.view.all_item_lists():
+            app.item_list_manager.manage_item_list(item_list)
 
     def on_play_videos(self, view, item_infos):
         app.playback_manager.start_with_items(item_infos)
