@@ -386,7 +386,10 @@ class SimpleItemContainer(ItemContainerView):
     def build_titlebar(self):
         hbox = widgetset.HBox()
         image_path = resources.path("wimages/%s" % self.image_filename)
-        hbox.pack_start(widgetset.ImageDisplay(imagepool.get(image_path)))
+        im = widgetutil.align(widgetset.ImageDisplay(imagepool.get(image_path)),
+                              xscale=1, yscale=1)
+        im.set_size_request(61, 61)
+        hbox.pack_start(im)
         from miro.frontends.widgets.feedview import TitleDrawer
         hbox.pack_start(TitleDrawer(self.title), padding=15, expand=True)
 
@@ -429,5 +432,5 @@ class LibraryView(SimpleItemContainer):
 class IndividualDownloadsView(SimpleItemContainer):
     type = 'individual_downloads'
     id = None
-    image_filename = 'icon-library_large.png'
+    image_filename = 'icon-individual_large.png'
     title = _("Individual Downloads")

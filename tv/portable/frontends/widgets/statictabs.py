@@ -82,7 +82,7 @@ class LibraryTab(DummyTab):
 class IndividualDownloadsTab(DummyTab):
     id = 'individual_downloads'
     name = _('Individual Downloads')
-    icon_name = 'icon-library'
+    icon_name = 'icon-individual'
 
 class NewVideosTab(DummyTab):
     id = 'new'
