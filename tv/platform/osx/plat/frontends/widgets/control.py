@@ -156,6 +156,10 @@ class Button(AttributedStringStyler):
         self.setup_style(style)
         self.min_width = 0
 
+    def set_text(self, title):
+        self.label = title
+        self.view.setTitle_(title)
+
     def setup_style(self, style):
         if style == 'normal':
             self.view.setBezelStyle_(NSRoundedBezelStyle)

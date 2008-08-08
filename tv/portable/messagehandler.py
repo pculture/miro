@@ -662,6 +662,10 @@ class BackendMessageHandler(messages.MessageHandler):
         else:
             item.expire()
 
+    def handle_pause_all_downloads(self, message):
+        for item in views.downloadingItems:
+            item.pause()
+
     def handle_pause_download(self, message):
         try:
             item = views.items.getObjectByID(message.id)
@@ -669,6 +673,10 @@ class BackendMessageHandler(messages.MessageHandler):
             logging.warn("PauseDownload: Item not found -- %s", message.id)
         else:
             item.pause()
+
+    def handle_resume_all_downloads(self, message):
+        for item in views.pausedItems:
+            item.resume()
 
     def handle_resume_download(self, message):
         try:

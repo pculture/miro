@@ -226,6 +226,9 @@ class Button(Widget):
         self._widget.add(self.label._widget)
         self.label._widget.show()
 
+    def set_text(self, title):
+        self.label.set_text(title)
+
     def set_bold(self, bold):
         self.label.set_bold(bold)
 

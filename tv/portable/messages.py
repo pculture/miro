@@ -356,10 +356,18 @@ class CancelDownload(BackendMessage):
     def __init__(self, id):
         self.id = id
 
+class PauseAllDownloads(BackendMessage):
+    """Pauses all downloading items."""
+    pass
+
 class PauseDownload(BackendMessage):
     """Pause downloading an item."""
     def __init__(self, id):
         self.id = id
+
+class ResumeAllDownloads(BackendMessage):
+    """Resumes all downloading items."""
+    pass
 
 class ResumeDownload(BackendMessage):
     """Resume downloading an item."""

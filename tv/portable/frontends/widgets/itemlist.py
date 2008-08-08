@@ -33,8 +33,10 @@ import itertools
 from urlparse import urljoin
 
 from miro import app
+from miro import downloader
 from miro import messages
 from miro import signals
+from miro import util
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import style
 from miro.frontends.widgets import separator
@@ -43,6 +45,7 @@ from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import use_custom_titlebar_background
 from miro.plat import resources
+from miro.plat.utils import getAvailableBytesForMovies
 
 def sort_items(item_list):
     item_list.sort(key=lambda i: i.release_date, reverse=True)
@@ -421,6 +424,84 @@ class DownloadsView(SimpleItemContainer):
     id = None
     image_filename = 'icon-downloading_large.png'
     title = _("Downloads")
+    _downloading_state = "pause"
+
+    _pause_text = _('Pause All')
+    _resume_text = _('Resume All')
+
+    def get_free_space(self):
+        bytes_ = getAvailableBytesForMovies()
+        return util.formatSizeForUser(bytes_, "0B", False)
+
+    def get_up_rate(self):
+        up = downloader.totalUpRate
+        if up < 10:
+            return u""
+        return _("%0.1f KB/s uploading") % (up / 1024.0)
+
+    def get_down_rate(self):
+        down = downloader.totalDownRate
+        if down < 10:
+            return u""
+        return _("%0.1f KB/s downloading") % (down / 1024.0)
+
+    def build_titlebar(self):
+        toolbar_gray = (0.43, 0.43, 0.43)
+
+        v = widgetset.VBox()
+        tv = SimpleItemContainer.build_titlebar(self)
+        v.pack_start(tv)
+
+        v.pack_start(separator.HSeparator())
+
+        h = widgetset.HBox(spacing=20)
+
+        free_disk_label = widgetset.Label(_("%s free on disk") % self.get_free_space())
+        free_disk_label.set_bold(True)
+        self._free_disk_label = free_disk_label
+
+        h.pack_start(widgetutil.align_left(free_disk_label, left_pad=10), expand=True)
+
+        uploading_label = widgetset.Label("")
+        uploading_label.set_bold(True)
+        self._uploading_label = uploading_label
+
+        h.pack_start(uploading_label)
+
+        downloading_label = widgetset.Label("")
+        downloading_label.set_bold(True)
+        self._downloading_label = downloading_label
+
+        h.pack_start(downloading_label)
+
+        if DownloadsView._downloading_state == "pause":
+            pause_resume_button = widgetset.Button(DownloadsView._pause_text, style='smooth')
+        else:
+            pause_resume_button = widgetset.Button(DownloadsView._resume_text, style='smooth')
+        pause_resume_button.set_size(0.85)
+        pause_resume_button.set_color(toolbar_gray)
+        pause_resume_button.connect('clicked', self.on_pause_resume_button_clicked)
+        h.pack_start(widgetutil.align_right(pause_resume_button, top_pad=5, bottom_pad=5, right_pad=10))
+
+        v.pack_start(h)
+        return v
+
+    def on_pause_resume_button_clicked(self, widget):
+        if DownloadsView._downloading_state == "pause":
+            messages.PauseAllDownloads().send_to_backend()
+            DownloadsView._downloading_state = "resume"
+            widget.set_text(DownloadsView._resume_text)
+        else:
+            messages.ResumeAllDownloads().send_to_backend()
+            DownloadsView._downloading_state = "pause"
+            widget.set_text(DownloadsView._pause_text)
+
+    def do_handle_items_changed(self, message):
+        # piggy-backing on the items_changed signal to update the upload/download
+        # rates
+        SimpleItemContainer.do_handle_items_changed(self, message)
+        self._downloading_label.set_text(self.get_down_rate())
+        self._uploading_label.set_text(self.get_up_rate())
 
 class NewView(SimpleItemContainer):
     type = 'new'
