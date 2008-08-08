@@ -546,15 +546,15 @@ class BackendMessageHandler(messages.MessageHandler):
         sei = message.search_engine_info
         term = message.search_term
 
-        title = "%s: %s" % (searchengines.get_engine_title(sei.title),
-                            term)
+        title = "%s: %s" % (sei.title, term)
         url = searchengines.get_request_url(sei.name, term)
 
         if not url:
             return
 
         if not getFeedByURL(url):
-            Feed(url)
+            f = Feed(url)
+            f.setTitle(title)
 
     def handle_new_channel_search_url(self, message):
         url = message.url
