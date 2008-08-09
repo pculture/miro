@@ -122,6 +122,7 @@ class Label(Widget):
     def set_text(self, text):
         self.view.setStringValue_(text)
         self.sizer_cell.setStringValue_(text)
+        self.invalidate_size_request()
 
     def get_text(self):
         self.view.stringValue()
