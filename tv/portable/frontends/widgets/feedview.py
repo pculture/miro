@@ -34,6 +34,7 @@ from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
+from miro.frontends.widgets import style
 from miro.plat.frontends.widgets import widgetset
 
 class DownloadsList(itemlist.FilteredItemList):
@@ -221,11 +222,10 @@ class FeedView(itemlist.ItemContainerView):
 
     def build_toolbar(self):
         hbox = widgetset.HBox(spacing=5)
-        toolbar_gray = (0.43, 0.43, 0.43)
 
         label = widgetset.Label(_('Auto Download'))
         label.set_size(0.85)
-        label.set_color(toolbar_gray)
+        label.set_color(style.TOOLBAR_GRAY)
 
         option_menu = widgetset.OptionMenu((_("all"), _("new"), _("off")))
         option_menu.set_size(0.85)
@@ -241,11 +241,11 @@ class FeedView(itemlist.ItemContainerView):
         
         send_button = self.make_toolbar_button(_("Send to a friend"))
         send_button.set_size(0.85)
-        send_button.set_color(toolbar_gray)
+        send_button.set_color(style.TOOLBAR_GRAY)
 
         settings_button = self.make_toolbar_button(_("Settings"))
         settings_button.set_size(0.85)
-        settings_button.set_color(toolbar_gray)
+        settings_button.set_color(style.TOOLBAR_GRAY)
 
         hbox.pack_start(widgetutil.align_middle(label, right_pad=2))
         hbox.pack_start(widgetutil.align_middle(option_menu))
