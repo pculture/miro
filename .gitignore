@@ -15,8 +15,8 @@ tv/platform/windows-xul/dist
 tv/platform/windows-xul/plat/frontends/widgets/XULRunnerBrowser/xulrunnerbrowser.cpp
 tv/platform/.DS_Store
 tv/platform/osx/.DS_Store
-tv/platform/osx/Miro.app/
-tv/platform/osx/build/
+tv/platform/osx/Miro.app
+tv/platform/osx/build
 tv/portable/*.pyc
 tv/portable/*.c
 tv/portable/dl_daemon/daemon.py
