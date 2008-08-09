@@ -59,6 +59,9 @@ mv app.config.template2 app.config.template
 cd ..
 cd ..
 
+# remove files that shouldn't be distributed
+rm tv/platform/windows-xul/U3Action.exe
+
 mv tv Miro-$tag
 tar zcvf Miro-$tag.tar.gz --exclude=.svn Miro-$tag
 mv Miro-$tag.tar.gz ..
