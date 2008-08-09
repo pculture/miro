@@ -64,6 +64,9 @@ def watchableItems(obj):
 def manualItems(obj):
     return obj.getFeedURL() == 'dtv:manualFeed' and not downloadingOrPausedItems(obj)
 
+def allDownloadingItems(obj):
+    return downloadingOrPausedItems(obj)
+
 def autoUploadingDownloaders(obj):
     return obj.getState() == 'uploading' and not obj.manualUpload
 

@@ -40,7 +40,7 @@ def initialize():
     global feeds, remoteDownloads
     global httpauths, staticTabsObjects, autoUploads, guides, default_guide
     global manualFeed, singleFeed, directoryFeed, newlyDownloadedItems
-    global downloadingItems, pausedItems, manualDownloads, autoDownloads
+    global downloadingItems, pausedItems, manualDownloads, autoDownloads, allDownloadingItems
     global playlists, playlistFolders, channelFolders
     global themeHistories, visibleFeeds
 
@@ -130,6 +130,7 @@ def initialize():
     downloadingItems.createIndex(indexes.downloadsByCategory)
     manualDownloads = items.filter(filters.manualDownloads)
     autoDownloads = items.filter(filters.autoDownloads)
+    allDownloadingItems = items.filter(filters.allDownloadingItems)
 
     playlists = app.db.filterWithIndex(indexes.objectsByClass,
                                    playlist.SavedPlaylist)
