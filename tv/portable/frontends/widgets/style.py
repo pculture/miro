@@ -424,10 +424,11 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
     def make_border_path(self, context, x, y, width, height, inset):
         widgetutil.round_rect(context, x + inset, y + inset,
-                width - inset*2, height - inset*2, 10)
+                width - inset*2, height - inset*2, 7)
 
     def draw_background(self, context, x, y, width, height):
         # Draw the gradient at the bottom
+        context.save()
         self.make_border_path(context, x, y, width, height, 0)
         context.clip()
         top = y + height - self.GRADIENT_HEIGHT
@@ -437,6 +438,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         gradient.set_end_color(tuple(c - 0.06 for c in bg_color))
         context.rectangle(x, top, width, self.GRADIENT_HEIGHT)
         context.gradient_fill(gradient)
+        context.restore()
         # Draw the border
         context.set_line_width(1)
         self.make_border_path(context, x, y, width, height, 0.5)
