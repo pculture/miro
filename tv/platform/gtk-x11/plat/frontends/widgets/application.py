@@ -38,6 +38,8 @@ from miro.plat.frontends.widgets import threads
 from miro.plat import mozsetup, renderers
 from miro.plat.utils import setProperties
 from miro.plat.config import gconf_lock
+from miro.plat.frontends.widgets import trayicon
+from miro.plat import resources
 
 from miro.frontends.widgets.gtk.widgetset import Rect
 
@@ -107,6 +109,12 @@ class GtkX11Application(Application):
                 self.window._window.maximize()
             else:
                 self.window._window.unmaximize()
+
+        if getPlayerBool("showTrayicon") and trayicon.trayicon_is_supported:
+            self.trayicon = trayicon.Trayicon(resources.sharePath("pixmaps/miro-24x24.png"), self)
+            self.trayicon.set_visible(True)
+
+        self.window._window.set_icon_from_file(resources.sharePath('pixmaps/miro-128x128.png'))
 
     def quit_ui(self):
         gtk.main_quit()
