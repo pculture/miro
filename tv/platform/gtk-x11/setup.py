@@ -119,7 +119,6 @@ platform_dir = os.path.join(root_dir, 'platform', 'gtk-x11')
 platform_package_dir = os.path.join(platform_dir, 'plat')
 platform_widgets_dir = os.path.join(platform_package_dir, 'frontends',
         'widgets')
-glade_dir = os.path.join(platform_dir, 'glade')
 xine_dir = os.path.join(platform_dir, 'xine')
 debian_package_dir = os.path.join(platform_dir, 'debian_package')
 
@@ -424,8 +423,6 @@ data_files = []
 # filter out app.config.template (which is handled specially)
 files = [f for f in listfiles(resource_dir) \
         if os.path.basename(f) != 'app.config.template']
-files.extend(listfiles(os.path.join(glade_dir, 'pixmaps')))
-files.append(os.path.join(glade_dir, 'miro.glade'))
 data_files.append(('/usr/share/miro/resources/', files))
 # handle the sub directories.
 for dir in ('searchengines', 'wimages', 'testdata',
