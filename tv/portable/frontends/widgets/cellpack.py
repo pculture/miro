@@ -248,6 +248,100 @@ class VBox(Box):
     def _translate(self, x, y):
         return y, x
 
+class Table(Packer):
+    def __init__(self, row_length=1, col_length=1,
+                 row_spacing=0, col_spacing=0):
+        """
+        Create a new Table.
+
+        Args:
+          row_length: how many rows long this should be
+          col_length: how many rows wide this should be
+          row_spacing: amount of spacing (in pixels) between rows
+          col_spacing: amount of spacing (in pixels) between columns
+        """
+        assert min(row_length, col_length) > 0
+        assert isinstance(row_length, int) and isinstance(col_length, int)
+        self.row_length = row_length
+        self.col_length = col_length
+        self.row_spacing = row_spacing
+        self.col_spacing = col_spacing
+        self.table_multiarray = self._generate_table_multiarray()
+
+    def _generate_table_multiarray(self):
+        table_multiarray = []
+        row_count = 0
+        table_multiarray = [
+            [None for col in range(self.col_length)]
+            for row in range(self.row_length)]
+        return table_multiarray
+
+    def pack(self, child, row, column, expand=False):
+        # TODO: flesh out "expand" ability, maybe?
+        #
+        # possibly throw a special exception if outside the range.
+        # For now, just allowing an IndexError to be thrown.
+        self.table_multiarray[row][column] = Packing(child, expand)
+    
+    def _get_grid_sizes(self):
+        """
+        Get the width and eights for both rows and columns
+        """
+        row_sizes = {}
+        col_sizes = {}
+        for row_count, row in enumerate(self.table_multiarray):
+            row_sizes.setdefault(row_count, 0)
+            for col_count, col_packing in enumerate(row):
+                col_sizes.setdefault(col_count, 0)
+                if col_packing:
+                    x, y = col_packing.calc_size(self._translate)
+                    if y > row_sizes[row_count]:
+                        row_sizes[row_count] = y
+                    if x > col_sizes[col_count]:
+                        col_sizes[col_count] = x
+        return col_sizes, row_sizes
+
+    def _find_child_at(self, x, y, width, height):
+        col_sizes, row_sizes = self._get_grid_sizes()
+        row_distance = 0
+        for row_count, row in enumerate(self.table_multiarray):
+            col_distance = 0
+            for col_count, packing in enumerate(row):
+                child_width, child_height = packing.calc_size(self._translate)
+                if packing.child:
+                    if (col_distance <= x < col_distance + child_width
+                            and row_distance <= y < row_distance + child_height):
+                        return (packing.child,
+                                col_distance, row_distance,
+                                child_width, child_height)
+                col_distance += col_sizes[col_count] + self.col_spacing
+            row_distance += row_sizes[row_count] + self.row_spacing
+
+    def _calc_size(self):
+        col_sizes, row_sizes = self._get_grid_sizes()
+        x = sum(col_sizes.values()) + ((self.col_length - 1) * self.col_spacing)
+        y = sum(row_sizes.values()) + ((self.row_length - 1) * self.row_spacing)
+        return x, y
+        
+    def _layout(self, context, x, y, width, height):
+        col_sizes, row_sizes = self._get_grid_sizes()
+  
+        row_distance = 0
+        for row_count, row in enumerate(self.table_multiarray):
+            col_distance = 0
+            for col_count, packing in enumerate(row):
+                if packing:
+                    child_width, child_height = packing.calc_size(self._translate)
+                    packing.child.draw(context,
+                                       x + col_distance, y + row_distance,
+                                       child_width, child_height)
+                col_distance += col_sizes[col_count] + self.col_spacing
+            row_distance += row_sizes[row_count] + self.row_spacing
+
+    def _translate(self, x, y):
+        return x, y
+
+
 class Alignment(Packer):
     """Positions a child inside a larger space.  """
     def __init__(self, child, xscale=1.0, yscale=1.0, xalign=0.0, yalign=0.0):

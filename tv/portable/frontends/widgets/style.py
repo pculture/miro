@@ -30,7 +30,9 @@
 
 import datetime
 import math
+import os
 
+from miro import license
 from miro import util
 from miro import displaytext
 from miro.gtcache import gettext as _
@@ -55,6 +57,8 @@ class TabRenderer(widgetset.CustomCellRenderer):
     BOLD_TITLE = False
     UNWATCHED_BUBBLE_COLOR = (0.31, 0.75, 0.12)
     AVAILABLE_BUBBLE_COLOR = (0.60, 0.68, 0.80)
+    MODEL_ATTR_MAP = {
+        'data': 0}
 
     def get_size(self, style, layout):
         return (self.MIN_WIDTH, max(self.MIN_HEIGHT,
@@ -105,6 +109,8 @@ class TabRenderer(widgetset.CustomCellRenderer):
 class StaticTabRenderer(TabRenderer):
     BOLD_TITLE = True
     DOWNLOADING_BUBBLE_COLOR = (0.90, 0.45, 0.08)
+    MODEL_ATTR_MAP = {
+        'data': 0}
 
     def pack_bubbles(self, hbox, layout):
         if self.data.unwatched > 0:
@@ -133,6 +139,10 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     ITEM_DESC_COLOR = (0.4, 0.4, 0.4)
     EMBLEM_FONT_SIZE = 0.77
     GRADIENT_HEIGHT = 25
+    MODEL_ATTR_MAP = {
+        'data': 0,
+        'show_details': 1}
+
 
     def __init__(self):
         widgetset.CustomCellRenderer.__init__(self)
@@ -250,33 +260,96 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             layout.set_text_color(self.text_color)
 
     def pack_info(self, layout):
-        hbox = cellpack.HBox(spacing=10)
-        layout.set_font(0.85)
-        if self.use_custom_style:
-            layout.set_text_color((0.66, 0.66, 0.66))
-        else:
-            layout.set_text_color(self.text_color)
-        left_text = '\n'.join((_("Date:"), _("Length:"), _("Size:")))
-        hbox.pack(layout.textbox(left_text))
-        if self.data.duration > 0:
-            duration = displaytext.time(self.data.duration)
-        else:
-            duration = ''
-        layout.set_font(0.85, bold=True)
-        self.set_info_right_color(layout)
+        def create_pseudo_table(rows):
+            table = cellpack.Table(len(rows), 2, col_spacing=10)
+
+            row_counter = 0
+            for left_col, right_col, hotspot in rows:
+                layout.set_font(0.85)
+                if self.use_custom_style:
+                    layout.set_text_color((0.66, 0.66, 0.66))
+                else:
+                    layout.set_text_color(self.text_color)
+                table.pack(layout.textbox(left_col), row_counter, 0)
+
+                layout.set_font(0.85, bold=True)
+                self.set_info_right_color(layout)
+                if hotspot:
+                    pack_widget = cellpack.Hotspot(
+                        hotspot,
+                        layout.textbox(right_col, underline=True))
+                else:
+                    pack_widget = layout.textbox(right_col)
+                table.pack(pack_widget, row_counter, 1)
+
+                row_counter += 1
+            return table
+        
+        vbox = cellpack.VBox(3)
+
+        # Create the "normal info" box
         if self.data.release_date > datetime.datetime.min:
             release_date = self.data.release_date.strftime("%b %d %Y")
         else:
             release_date = ''
-        right_text = '\n'.join((
-                release_date,
-                duration,
-                displaytext.size(self.data.size)
-            ))
-        right_textbox = layout.textbox(right_text + "\n")
-        right_textbox.append_text(_('Show Details'), underline=True)
-        hbox.pack(right_textbox)
-        return hbox
+        if self.data.duration > 0:
+            duration = displaytext.time(self.data.duration)
+        else:
+            duration = ''
+        info_box = create_pseudo_table(
+            ((_("Date:"), release_date, None),
+             (_("Length:"), duration, None),
+             (_('Size:'), displaytext.size(self.data.size), None)))
+
+        vbox.pack(info_box)
+
+        # Pack the details box into an expander widget, then pack both
+        # into the vbox
+
+        if not self.show_details:
+            # Ok, we're done.  Pack in the Show Details button and
+            # let's go home.
+            show_details_text = layout.textbox(_(u'Show Details'), underline=True)
+            vbox.pack(cellpack.Hotspot('details_toggle', show_details_text))
+            return vbox
+        
+        hide_details_text = layout.textbox(_(u'Hide Details'), underline=True)
+        vbox.pack(cellpack.Hotspot('details_toggle', hide_details_text))
+
+        ### Create the "details info" box
+        ## gather data
+        if self.data.video_path:
+            basename = util.clampText(
+                os.path.basename(self.data.video_path), 20)
+        else:
+            basename = u''
+
+        ## set up rows
+        details_rows = []
+        details_rows.append((_(u'Web page'), _(u'permalink'), 'visit_webpage'))
+        if self.data.file_url and not self.data.file_url.startswith('file:'):
+            details_rows.append(
+                (_(u'File link'), _(u'direct link to file'), 'visit_filelink'))
+        details_rows.append((_(u'File type'), self.data.file_format, None))
+        if self.data.license_name:
+            details_rows.append(
+                (_(u'License'), self.data.license_name, 'visit_license'))
+        else:
+            details_rows.append((_(u'License'), _(u'see permalink'), None))
+        if self.data.downloaded:
+            details_rows.append((_(u'Filename'), basename, None))
+            if self.data.is_container_item:
+                details_rows.append(
+                    (_(u'Local directory'), _(u'show'), 'show_local_file'))
+            else:
+                details_rows.append(
+                    (_(u'Local file'), _(u'show'), 'show_local_file'))
+
+        ## Now pack them in...
+        details_box = create_pseudo_table(details_rows)
+        vbox.pack(details_box)
+
+        return vbox
 
     def pack_emblem(self, layout):
         layout.set_font(0.77, bold=True)

@@ -30,6 +30,7 @@
 """
 
 import itertools
+import os
 from urlparse import urljoin
 
 from miro import app
@@ -38,6 +39,7 @@ from miro import messages
 from miro import signals
 from miro import util
 from miro.gtcache import gettext as _
+from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import style
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import imagepool
@@ -72,7 +74,7 @@ class ItemListDragHandler(object):
 class ItemListBase(widgetset.TableView):
     """TableView containing a list of items."""
     def __init__(self):
-        model = widgetset.TableModel('object')
+        model = widgetset.TableModel('object', 'boolean')
         widgetset.TableView.__init__(self, model)
         self.set_draws_selection(False)
         renderer = style.ItemRenderer()
@@ -86,7 +88,7 @@ class ItemListBase(widgetset.TableView):
         self.set_background_color(widgetutil.WHITE)
 
     def do_hotspot_clicked(self, name, iter):
-        item_info = self.model[iter][0]
+        item_info, show_details = self.model[iter]
         if name == 'download':
             messages.StartDownload(item_info.id).send_to_backend()
         elif name == 'pause':
@@ -99,6 +101,29 @@ class ItemListBase(widgetset.TableView):
             messages.KeepVideo(item_info.id).send_to_backend()
         elif name == 'delete':
             messages.DeleteVideo(item_info.id).send_to_backend()
+        elif name == 'details_toggle':
+            if show_details == False:
+                show_details = True
+            else:
+                show_details = False
+            item_info.show_details = show_details
+            self.model.update(iter, item_info, show_details)
+            self.model_changed()
+        elif name == 'visit_webpage':
+            app.widgetapp.open_url(item_info.permalink)
+        elif name == 'visit_filelink':
+            app.widgetapp.open_url(item_info.file_url)
+        elif name == 'visit_license':
+            app.widgetapp.open_url(item_info.license)
+        elif name == 'show_local_file':
+            if not os.path.exists(item_info.video_path):
+                basename = os.path.basename(item_info.video_path)
+                dialogs.show_message(
+                    _("Error Revealing File"),
+                    _("The file \"%s\" was deleted "
+                      "from outside Miro.") % basename)
+            else:
+                app.widgetapp.open_file(item_info.video_path)
         elif name.startswith('description-link:'):
             url = name.split(':', 1)[1]
             base_href = widgetutil.get_feed_info(item_info.feed_id).base_href
@@ -132,7 +157,7 @@ class ItemListBase(widgetset.TableView):
                     self.model[insert_pos][0].release_date > 
                     item_info.release_date):
                 insert_pos = self.model.next_iter(insert_pos)
-            iter = self.model.insert_before(insert_pos, item_info)
+            iter = self.model.insert_before(insert_pos, item_info, False)
             self.item_iters[item_info.id] = iter
 
     def update_item(self, iter, item_info):

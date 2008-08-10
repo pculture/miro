@@ -43,6 +43,10 @@ from miro.frontends.widgets.gtk.simple import Image
 from miro.frontends.widgets.gtk.layoutmanager import LayoutManager
 from miro.frontends.widgets.gtk.weakconnect import weak_connect
 
+def apply_attr_map(model_row, renderer):
+    for attr_name, col_index in renderer.MODEL_ATTR_MAP.iteritems():
+        setattr(renderer, attr_name, model_row[col_index])
+
 def rect_contains_rect(outside, inside):
     return (outside.x <= inside.x and 
             outside.y <= inside.y and 
@@ -59,7 +63,7 @@ class CellRenderer(object):
     def __init__(self):
         self._renderer = gtk.CellRendererText()
 
-    def setup_attributes(self, column, model_index):
+    def setup_attributes(self, column, model_index): 
         column.add_attribute(self._renderer, 'text', model_index)
 
 class ImageCellRenderer(object):
@@ -74,10 +78,18 @@ class ImageCellRenderer(object):
 class GTKCustomCellRenderer(gtk.GenericCellRenderer):
     """Handles the GTK hide of CustomCellRenderer
     https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView"""
+
+    @property
+    def MODEL_ATTR_MAP(self):
+        wrapper = wrappermap.wrapper(self)
+        return wrapper.MODEL_ATTR_MAP
+
     def on_get_size(self, widget, cell_area=None):
         wrapper = wrappermap.wrapper(self)
         widget_wrapper = wrappermap.wrapper(widget)
         style = drawing.DrawingStyle(widget_wrapper, use_base_color=True)
+        for attr_name in self.MODEL_ATTR_MAP.keys():
+            setattr(wrapper, attr_name, getattr(self, attr_name))
         wrapper.data = self.data
         width, height = wrapper.get_size(style, widget_wrapper.layout_manager)
         x_offset = self.props.xpad
@@ -114,7 +126,8 @@ class GTKCustomCellRenderer(gtk.GenericCellRenderer):
         context.style = drawing.DrawingStyle(widget_wrapper,
                 use_base_color=True, state=state)
         owner = wrappermap.wrapper(self)
-        owner.data = self.data
+        for attr_name in self.MODEL_ATTR_MAP.keys():
+            setattr(owner, attr_name, getattr(self, attr_name))
         widget_wrapper.layout_manager.update_cairo_context(context.context)
         hotspot_tracker = widget_wrapper.hotspot_tracker
         if (hotspot_tracker and hotspot_tracker.hit and 
@@ -144,14 +157,13 @@ class CustomCellRenderer(object):
         wrappermap.add(self._renderer, self)
 
     def setup_attributes(self, column, model_index):
-        column.set_cell_data_func(self._renderer, self.cell_data_func,
-                model_index)
-        self.model_index = model_index
+        column.set_cell_data_func(
+            self._renderer, self.cell_data_func, self._renderer.MODEL_ATTR_MAP)
 
-    def cell_data_func(self, column, cell, model, iter, model_index):
-        cell.data = model.get_value(iter, model_index)
+    def cell_data_func(self, column, cell, model, iter, attr_map):
         cell.column = column
         cell.path = model.get_path(iter)
+        apply_attr_map(model[iter], cell)
 
     def hotspot_test(self, style, layout, x, y, width, height):
         return None
@@ -292,7 +304,7 @@ class HotspotTracker(object):
         cell_area = self.treeview.get_cell_area(self.path, self.column)
         if rect_contains_point(cell_area, self.x, self.y):
             model = self.treeview.get_model()
-            self.renderer.data = model[self.iter][self.renderer.model_index]
+            apply_attr_map(model[self.iter], self.renderer)
             style = drawing.DrawingStyle(self.treeview_wrapper,
                 use_base_color=True, state=self.calc_cell_state())
             x = self.x - cell_area.x
@@ -677,6 +689,7 @@ class TableModel(object):
 
     def map_types(self, miro_column_types):
         type_map = {
+                'boolean': bool,
                 'numeric': float,
                 'text': str,
                 'image': gtk.gdk.Pixbuf,
@@ -701,7 +714,24 @@ class TableModel(object):
         return self._model.append(self.convert_for_gtk(column_values))
 
     def update(self, iter, *column_values):
-        self._model[iter] = self.convert_for_gtk(column_values)
+        converted_values = self.convert_for_gtk(column_values)
+
+        # So sometimes the number of items stored in the data is
+        # longer than the column values currently in place.  If that's
+        # the case, use the pre-existing column values for the ones
+        # that aren't provided.
+        # (This is used, for example, because the ItemRenderer needs
+        # both the ItemInfo object and a boolean for show_details.
+        # But sometimes when the state changes, only a new,
+        # regenerated ItemInfo gets sent in here.
+        if len(converted_values) == len(self._model[iter]):
+            new_values = converted_values
+        else:
+            new_values = list(converted_values)
+            for i in range(len(column_values), len(self._model[iter])):
+                new_values.append(self._model[iter][i])
+
+        self._model[iter] = new_values
 
     def remove(self, iter):
         if self._model.remove(iter):

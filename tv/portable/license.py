@@ -32,7 +32,12 @@ from miro.gtcache import gettext as _
 from miro import rdfa
 from xml.sax import SAXParseException
 
+
 DC_TITLE = "http://purl.org/dc/elements/1.1/title"
+# Use caching to reduce number of get requests we need.
+# This is a mapping of {license_uri: license_name_string}
+URI_CACHE = {}
+
 
 class DictSink(object):
     """Simple sink for the RDFa parser; stores triples in a nested dict
@@ -49,6 +54,9 @@ class DictSink(object):
 def license_name(license_uri):
     """Attempt to determine the license name from the URI; if the name cannot
     be determined, the URI is returned unchanged."""
+    cached_name = URI_CACHE.get(license_uri)
+    if cached_name is not None:
+        return cached_name
 
     # retrieve the license document and parse it for RDFa
     try:
@@ -62,7 +70,10 @@ def license_name(license_uri):
 
         # note this is parser-specific; swapping out rdfa.py
         # may invalidate this extraction 
-        return license_name[1:license_name.find('"',1)]
+        return_name = license_name[1:license_name.find('"',1)]
 
     except (IOError, KeyError, SAXParseException), e:
-        return _('license page')
+        return_name = _('license page')
+
+    URI_CACHE[license_uri] = return_name
+    return return_name

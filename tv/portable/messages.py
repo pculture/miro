@@ -40,7 +40,9 @@ This module defines the messages that are passed between the two threads.
 
 import logging
 import re
+import urlparse
 
+from miro import license
 from miro.folder import ChannelFolder, PlaylistFolder
 from miro.plat import resources
 from miro import util
@@ -566,10 +568,16 @@ class ItemInfo(object):
     video_watched -- has the user watched the video for the item?
     video_path -- the file path to the video for this item (or None)
     thumbnail -- path to the thumbnail for this file
+    file_format -- User-facing format description.  Possibly the file type,
+      pulled from the mime_type, or more generic, like "audio"
+    license -- this file's license, if known.
+    license_name -- user-facing license name
     file_type -- filetype of the enclosure that would be downloaded
     file_url -- URL of the enclosure that would be downloaded
     download_info -- DownloadInfo object containing info about the download
         (or None)
+    is_container_item -- whether or not this item is actually a
+        collection of files as opposed to an individual item
     """
     def __init__(self, item):
         self.name = item.getTitle()
@@ -590,6 +598,14 @@ class ItemInfo(object):
         self.video_watched = item.getSeen()
         self.video_path = item.getVideoFilename()
         self.thumbnail = item.getThumbnail()
+        self.file_format = item.getFormat()
+        self.license = item.getLicence()
+        self.file_url = item.getURL()
+        self.is_container_item = item.isContainerItem
+        if urlparse.urlparse(self.license)[0]:
+            self.license_name = license.license_name(self.license)
+        else:
+            self.license_name = None
 
         enclosure = item.getFirstVideoEnclosure()
         if enclosure:
