@@ -306,7 +306,9 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         # Pack the details box into an expander widget, then pack both
         # into the vbox
 
-        if not self.show_details:
+        # FIXME - the hasattr portion of this conditional is here so that OSX
+        # continues to work without a working show/hide details implementation.
+        if not hasattr(self, "show_details") or not self.show_details:
             # Ok, we're done.  Pack in the Show Details button and
             # let's go home.
             show_details_text = layout.textbox(_(u'Show Details'), underline=True)
