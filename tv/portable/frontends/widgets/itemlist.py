@@ -424,10 +424,6 @@ class DownloadsView(SimpleItemContainer):
     id = None
     image_filename = 'icon-downloading_large.png'
     title = _("Downloads")
-    _downloading_state = "pause"
-
-    _pause_text = _('Pause All')
-    _resume_text = _('Resume All')
 
     def get_free_space(self):
         bytes_ = getAvailableBytesForMovies()
@@ -452,7 +448,7 @@ class DownloadsView(SimpleItemContainer):
 
         v.pack_start(separator.HSeparator())
 
-        h = widgetset.HBox(spacing=20)
+        h = widgetset.HBox(spacing=10)
 
         free_disk_label = widgetset.Label(_("%s free on disk") % self.get_free_space())
         free_disk_label.set_bold(True)
@@ -472,31 +468,26 @@ class DownloadsView(SimpleItemContainer):
 
         h.pack_start(widgetutil.pad(downloading_label, top=5))
 
-        if DownloadsView._downloading_state == "pause":
-            button_text = DownloadsView._pause_text
-        else:
-            button_text = DownloadsView._resume_text
-        pause_resume_button = widgetset.Button(button_text, style='smooth')
-        pause_resume_button.set_size(0.85)
-        pause_resume_button.set_color(style.TOOLBAR_GRAY)
-        pause_resume_button.connect('clicked', self.on_pause_resume_button_clicked)
-        h.pack_start(widgetutil.align_right(pause_resume_button, top_pad=5, bottom_pad=5, right_pad=10))
+        pause_button = widgetset.Button(_('Pause All'), style='smooth')
+        pause_button.set_size(0.85)
+        pause_button.set_color(style.TOOLBAR_GRAY)
+        pause_button.connect('clicked', self.on_pause_button_clicked)
+        h.pack_start(widgetutil.align_right(pause_button, top_pad=5, bottom_pad=5))
+
+        resume_button = widgetset.Button(_('Resume All'), style='smooth')
+        resume_button.set_size(0.85)
+        resume_button.set_color(style.TOOLBAR_GRAY)
+        resume_button.connect('clicked', self.on_resume_button_clicked)
+        h.pack_start(widgetutil.align_right(resume_button, top_pad=5, bottom_pad=5, right_pad=10))
 
         v.pack_start(h)
         return v
 
-    def on_pause_resume_button_clicked(self, widget):
-        if DownloadsView._downloading_state == "pause":
-            messages.PauseAllDownloads().send_to_backend()
-            DownloadsView._downloading_state = "resume"
-            widget.set_text(DownloadsView._resume_text)
-        else:
-            messages.ResumeAllDownloads().send_to_backend()
-            DownloadsView._downloading_state = "pause"
-            widget.set_text(DownloadsView._pause_text)
+    def on_pause_button_clicked(self, widget):
+        messages.PauseAllDownloads().send_to_backend()
 
-        widget.set_size(0.85)
-        widget.set_color(style.TOOLBAR_GRAY)
+    def on_resume_button_clicked(self, widget):
+        messages.ResumeAllDownloads().send_to_backend()
 
     def do_handle_items_changed(self, message):
         # piggy-backing on the items_changed signal to update the upload/download
