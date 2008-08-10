@@ -512,4 +512,4 @@ class IndividualDownloadsView(SimpleItemContainer):
     type = 'individual_downloads'
     id = None
     image_filename = 'icon-individual_large.png'
-    title = _("Individual Downloads")
+    title = _("Single Items")
