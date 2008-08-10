@@ -103,3 +103,7 @@ class WindowsApplication(Application):
                     "a few seconds") % shortURL
             dialogs.show_message(title, msg)
 
+    def open_file(self, fn):
+        if not os.path.isdir(fn):
+            fn = os.path.dirname(fn)
+        os.startfile(fn)
