@@ -441,7 +441,13 @@ class ItemRenderer(widgetset.CustomCellRenderer):
                     yscale=0, yalign=1.0)
             background = cellpack.Background(alignment, 154, 105)
             background.set_callback(self.draw_thumbnail)
-            outer_hbox.pack(cellpack.Hotspot('play', background))
+
+            # we throw the cellback Hotspot in an inner_vbox so that the play 
+            # button doesn't drop when the show-details link is pressed
+            inner_vbox = cellpack.VBox()
+            inner_vbox.pack(cellpack.Hotspot('play', background))
+
+            outer_hbox.pack(inner_vbox)
         else:
             outer_hbox.pack(cellpack.DrawingArea(154, 105, self.draw_thumbnail))
         inner_hbox = cellpack.HBox()
