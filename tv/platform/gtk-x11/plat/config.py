@@ -60,7 +60,7 @@ def _get_gconf(fullkey, default = None):
     finally:
         gconf_lock.release()
 
-class gconfDict:
+class GconfDict:
     def get(self, key, default = None):
         if (type(key) != str):
             raise TypeError()
@@ -85,16 +85,17 @@ class gconfDict:
     def __setitem__(self, key, value):
         gconf_lock.acquire()
         try:
-            if (type(key) != str):
+            if not isinstance(key, str):
                 raise TypeError()
+
             fullkey = '/apps/miro/' + key
-            if (type(value) == str):
+            if isinstance(value, str):
                 client.set_string(fullkey, value)
-            elif (type(value) == int):
+            elif isinstance(value, int):
                 client.set_int(fullkey, value)
-            elif (type(value) == bool):
+            elif isinstance(value, bool):
                 client.set_bool(fullkey, value)
-            elif (type(value) == float):
+            elif isinstance(value, float):
                 client.set_float(fullkey, value)
             else:
                 raise TypeError()
@@ -102,7 +103,7 @@ class gconfDict:
             gconf_lock.release()
 
 def load():
-    return gconfDict()
+    return GconfDict()
 
 def save(data):
     pass

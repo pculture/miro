@@ -33,19 +33,19 @@ from miro import config
 from miro import prefs
 import gtkmozembed
 
-def createProfileDirectory():
+def create_profile_directory():
     """Create the mozilla profile directory, if needed."""
 
     path = os.path.join(config.get(prefs.SUPPORT_DIRECTORY), 'mozilla')
     if not os.path.exists(path):
         os.makedirs(path)
 
-def createPrefsJS():
+def create_prefs_js():
     """Create the file prefs.js in the mozilla profile directory.  This
     file does things like turn off the warning when navigating to https pages.
     """
 
-    prefsContent = """\
+    prefs_content = """\
 # Mozilla User Preferences
 user_pref("security.warn_entering_secure", false);
 user_pref("security.warn_entering_weak", false);
@@ -70,7 +70,7 @@ user_pref("capability.principal.codebase.p0.subjectName", "")
        repr(config.get(prefs.PROJECT_URL)))
 
     if config.get(prefs.HTTP_PROXY_ACTIVE):
-        prefsContent += """\
+        prefs_content += """\
 user_pref("network.proxy.type", 1);
 user_pref("network.proxy.http", %s);
 user_pref("network.proxy.http_port", %d);
@@ -84,16 +84,15 @@ user_pref("network.proxy.share_proxy_settings", true);
        
 
 
-    prefsPath = os.path.join(config.get(prefs.SUPPORT_DIRECTORY), 'mozilla',
-            'prefs.js')
-    f = open(prefsPath, "wt")
-    f.write(prefsContent)
+    prefs_path = os.path.join(config.get(prefs.SUPPORT_DIRECTORY), 'mozilla', 'prefs.js')
+    f = open(prefs_path, "wt")
+    f.write(prefs_content)
     f.close()
 
-def setupMozillaEnvironment():
+def setup_mozilla_environment():
     """Do all the work necessary setup the Miro Mozilla environment."""
-    createProfileDirectory()
-    createPrefsJS()
+    create_profile_directory()
+    create_prefs_js()
 
     # newer versions of gtkmozembed use gtkmozembed.set_profile_path(), older
     # versions have the awkward name
@@ -111,9 +110,9 @@ def setupMozillaEnvironment():
     else:
         set_comp_path = None
 
-    compPath = config.get(prefs.SUPPORT_DIRECTORY) + "mozilla/" + "components"
+    comp_path = config.get(prefs.SUPPORT_DIRECTORY) + "mozilla/" + "components"
     if set_comp_path:
         if config.get(prefs.MOZILLA_LIB_PATH):
             set_comp_path(config.get(prefs.MOZILLA_LIB_PATH))
     else:
-        set_comp_path(compPath);
+        set_comp_path(comp_path)

@@ -54,14 +54,14 @@ from os.path import samefile
 ###############################################################################
 
 def getAvailableBytesForMovies():
-    dir = config.get(prefs.MOVIES_DIRECTORY)
+    dir_ = config.get(prefs.MOVIES_DIRECTORY)
     # Create the download directory if it doesn't already exist.
     try:
-        os.makedirs(dir)
+        os.makedirs(dir_)
     except:
         pass
     
-    statinfo = os.statvfs (dir)
+    statinfo = os.statvfs(dir_)
     return statinfo.f_frsize * statinfo.f_bavail
 
 main_thread = None
@@ -72,10 +72,9 @@ def setMainThread():
     main_thread = threading.currentThread()
 
 def confirmMainThread():
-    global main_thread
     if main_thread is not None and main_thread != threading.currentThread():
         import traceback
-        print "UI function called from thread %s" % (threading.currentThread(),)
+        print "UI function called from thread %s" % threading.currentThread()
         traceback.print_stack()
 
 # Gettext understands *NIX locales, so we don't have to do anything
@@ -83,7 +82,7 @@ def initializeLocale():
     pass
 
 # XXX this is duplicated in tv/platform/osxx/plat/utils.py
-def setupLogging (inDownloader=False):
+def setupLogging(inDownloader=False):
     if inDownloader:
         if os.environ.get('MIRO_FRONTEND') == 'cli':
             level = logging.WARN
@@ -97,7 +96,7 @@ def setupLogging (inDownloader=False):
                             format='%(asctime)s %(levelname)-8s %(message)s',
                             filename=config.get(prefs.LOG_PATHNAME),
                             filemode="w")
-        console = logging.StreamHandler (sys.stdout)
+        console = logging.StreamHandler(sys.stdout)
         if options.frontend != 'cli':
             level = logging.INFO
         else:
@@ -135,7 +134,7 @@ def unicodeToFilename(filename, path=None):
 
     # Keep this a little shorter than the max length, so we can run
     # nextFilename
-    MAX_LEN = os.statvfs(path)[statvfs.F_NAMEMAX]-5
+    max_len = os.statvfs(path)[statvfs.F_NAMEMAX]-5
     
     for mem in ("/", "\000", "\\", ":", "*", "?", "\"", "<", ">", "|", "&"):
         filename = filename.replace(mem, "_")
@@ -146,16 +145,16 @@ def unicodeToFilename(filename, path=None):
         except:
             return filename.encode('ascii','replace')
 
-    newFilename = encodef(filename)
+    new_filename = encodef(filename)
 
-    while len(newFilename) > MAX_LEN:
+    while len(new_filename) > max_len:
         filename = shortenFilename(filename)
-        newFilename = encodef(filename)
+        new_filename = encodef(filename)
 
-    return newFilename
+    return new_filename
 
 @returnsUnicode
-def filenameToUnicode(filename, path = None):
+def filenameToUnicode(filename, path=None):
     """Given a filename in raw bytes, return the unicode representation
     
     Note: This is not guaranteed to give the same results every time it is run,
@@ -184,36 +183,38 @@ def filenameTypeToOSFilename(filename):
 # Takes in a byte string or a unicode string and does the right thing
 # to make a URL
 @returnsUnicode
-def makeURLSafe(string, safe = '/'):
-    if type(string) == str:
+def makeURLSafe(s, safe='/'):
+    if isinstance(s, str):
         # quote the byte string
-        return urllib.quote(string, safe = safe).decode('ascii')
+        return urllib.quote(s, safe=safe).decode('ascii')
     else:
         try:
-            return urllib.quote(string.encode(locale.getpreferredencoding()), safe = safe).decode('ascii')
+            return urllib.quote(s.encode(locale.getpreferredencoding()), safe=safe).decode('ascii')
         except:
-            return string.decode('ascii','replace')
+            return s.decode('ascii','replace')
     
 # Undoes makeURLSafe (assuming it was passed a filenameType)
 @returnsBinary
-def unmakeURLSafe(string):
+def unmakeURLSafe(s):
     # unquote the byte string
-    checkU(string)
-    return urllib.unquote(string.encode('ascii'))
+    checkU(s)
+    return urllib.unquote(s.encode('ascii'))
+
+_convert_path_cache = None
 
 @returnsBinary
 def findConvert():
     global _convert_path_cache
-    try:
+
+    if _convert_path_cache != None:
         return _convert_path_cache
-    except NameError:
-        _convert_path_cache = None
-        search_path = os.environ.get('PATH', os.defpath)
-        for d in search_path.split(os.pathsep):
-            convert_path = os.path.join(d, 'convert')
-            if os.path.exists(convert_path):
-                _convert_path_cache = convert_path
-        return _convert_path_cache
+
+    search_path = os.environ.get('PATH', os.defpath)
+    for d in search_path.split(os.pathsep):
+        convert_path = os.path.join(d, 'convert')
+        if os.path.exists(convert_path):
+            _convert_path_cache = convert_path
+    return _convert_path_cache
 
 def pidIsRunning(pid):
     if pid is None:
@@ -246,18 +247,17 @@ def launchDownloadDaemon(oldpid, env):
     environ = os.environ.copy()
     environ['MIRO_FRONTEND'] = options.frontend
     environ.update(env)
-    miroPath = os.path.dirname(miro.__file__)
-    dlDaemonPath = os.path.join(miroPath, 'dl_daemon')
+    miro_path = os.path.dirname(miro.__file__)
+    dl_daemon_path = os.path.join(miro_path, 'dl_daemon')
 
     # run the Miro_Downloader script
-    script = os.path.join(dlDaemonPath,  'Democracy_Downloader.py')
+    script = os.path.join(dl_daemon_path,  'Democracy_Downloader.py')
     os.spawnlpe(os.P_NOWAIT, "python", "python", script, environ)
 
-def exit(returnCode):
-    sys.exit(returnCode)
+def exit(return_code):
+    sys.exit(return_code)
 
 def setProperties(props):
     for p, val in props:
         logging.info("Setting preference: %s -> %s", p.alias, val)
         config.set(p, val)
-

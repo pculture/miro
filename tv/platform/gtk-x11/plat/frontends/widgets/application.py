@@ -82,7 +82,7 @@ def setPlayerBool(key, value): return _setPref(key, 'set_bool', value)
 
 class GtkX11Application(Application):
     def run(self, props_to_set):
-        threads.call_on_ui_thread(mozsetup.setupMozillaEnvironment)
+        threads.call_on_ui_thread(mozsetup.setup_mozilla_environment)
         gtk.gdk.threads_init()
         self.startup()
         setProperties(props_to_set)

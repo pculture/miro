@@ -29,12 +29,10 @@
 import os
 import urllib
 
-resource_root = os.environ.get('MIRO_RESOURCE_ROOT',
-        '/usr/share/miro/resources/')
+resource_root = os.environ.get('MIRO_RESOURCE_ROOT', '/usr/share/miro/resources/')
 resource_root = os.path.abspath(resource_root)
 
-share_root = os.environ.get('MIRO_SHARE_ROOT',
-                            '/usr/share/')
+share_root = os.environ.get('MIRO_SHARE_ROOT', '/usr/share/')
 share_root = os.path.abspath(share_root)
 
 # Note: some of these functions are probably not absolutely correct in

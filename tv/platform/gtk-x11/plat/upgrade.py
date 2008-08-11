@@ -40,12 +40,11 @@ def upgrade():
         shutil.rmtree(os.path.join(dst, "icon-cache"), True)
 
     # autostart file
-    config_home = os.environ.get ('XDG_CONFIG_HOME',
-                                  '~/.config')
-    config_home = os.path.expanduser (config_home)
-    autostart_dir = os.path.join (config_home, "autostart")
-    old_file = os.path.join (autostart_dir, "democracyplayer.desktop")
-    destination = os.path.join (autostart_dir, "miro.desktop")
+    config_home = os.environ.get('XDG_CONFIG_HOME', '~/.config')
+    config_home = os.path.expanduser(config_home)
+    autostart_dir = os.path.join(config_home, "autostart")
+    old_file = os.path.join(autostart_dir, "democracyplayer.desktop")
+    destination = os.path.join(autostart_dir, "miro.desktop")
     if os.path.exists(old_file):
         if not os.path.exists(destination):
             try:
@@ -53,11 +52,11 @@ def upgrade():
             except:
                 pass
             try:
-                shutil.copy (resources.sharePath('applications/miro.desktop'), destination)
+                shutil.copy(resources.sharePath('applications/miro.desktop'), destination)
             except:
                 pass
             try: 
-                os.remove (old_file)
+                os.remove(old_file)
             except:
                 pass
 
@@ -71,15 +70,15 @@ def upgrade():
             client.set(entry_dst, entry.value)
         for subdir in client.all_dirs(src):
             subdir_dst = dst + '/' + subdir.split('/')[-1]
-            _copy_gconf (subdir, subdir_dst)
+            _copy_gconf(subdir, subdir_dst)
 
-    if client.dir_exists ("/apps/democracy/player") and not client.dir_exists ("/apps/miro"):
+    if client.dir_exists("/apps/democracy/player") and not client.dir_exists("/apps/miro"):
         _copy_gconf("/apps/democracy/player", "/apps/miro")
         client.recursive_unset("/apps/democracy", 1)
         if client.get("/apps/miro/MoviesDirectory") is None:
             value = os.path.expanduser('~/Movies/Democracy')
             client.set_string("/apps/miro/MoviesDirectory", value)
             try:
-                os.makedirs (value)
+                os.makedirs(value)
             except:
                 pass

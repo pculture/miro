@@ -204,7 +204,7 @@ else:
                 args[i] = args[i].decode('latin1')
             dbusargs = dbus.Array(args, signature="s")
     
-            iface.HandleArgs(dbusargs)
+            iface.handle_args(dbusargs)
         except dbus.DBusException:
             startapp()
     except ImportError:

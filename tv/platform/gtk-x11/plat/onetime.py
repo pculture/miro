@@ -29,18 +29,18 @@
 import dbus
 import dbus.service
 
-if getattr(dbus, 'version', (0,0,0)) >= (0,41,0):
+if getattr(dbus, 'version', (0, 0, 0)) >= (0, 41, 0):
     import dbus.glib
 
 # We do this crazy stuff so that Miro can run on platforms that have the
-# older dbus-python bindings.  Dapper uses (0,51,0).  I think once we
+# older dbus-python bindings.  Dapper uses (0, 51, 0).  I think once we
 # stop supporting Dapper, we can rip this whole section out.
 # This section was re-written so that it doesn't trigger the dbus-python
 # deprecation warning and is localized so we can just delete it and
 # move on with our lives when the time comes. - willguaraldi 10-29-2007
 
-# (0,80,0) is the first version that has do_not_queue
-if getattr(dbus, 'version', (0,0,0)) >= (0,80,0):
+# (0, 80, 0) is the first version that has do_not_queue
+if getattr(dbus, 'version', (0, 0, 0)) >= (0, 80, 0):
     BusName = dbus.service.BusName
 
     NameExistsException = dbus.NameExistsException
@@ -107,7 +107,6 @@ else:
         # are guaranteed to exist only once for each bus name
         def __del__(self):
             dbus.dbus_bindings.bus_release_name(self._bus.get_connection(), self._name)
-            pass
     
         def get_bus(self):
             """Get the Bus this Service is on"""
@@ -136,7 +135,7 @@ class OneTime (dbus.service.Object):
         dbus.service.Object.__init__(self, bus_name, '/org/participatoryculture/dtv/OneTime')
 
     @dbus.service.method('org.participatoryculture.dtv.OneTimeIface')
-    def HandleArgs (self, args):
+    def handle_args (self, args):
         from miro import singleclick
         from miro import app
         from miro import eventloop
