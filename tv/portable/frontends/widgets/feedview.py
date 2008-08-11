@@ -295,5 +295,7 @@ class FeedView(itemlist.ItemContainerView):
     def update_counts(self):
         downloads = self.downloads_view.get_count()
         watchable = self.downloaded_view.get_count()
-        for item_view in self.all_item_views:
-            item_view.update_counts(downloads, watchable)
+        full = self.full_view.get_count()
+        self.downloads_view.update_counts(downloads, watchable)
+        self.full_view.update_counts(downloads, full)
+        self.downloaded_view.update_counts(downloads, watchable)
