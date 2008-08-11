@@ -548,6 +548,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             context.fill()
             thumb_x = x + (width - self.data.icon.width) / 2
             thumb_y = y + (height - self.data.icon.height) / 2
+        else:
+            thumb_x = thumb_y = 0
         self.data.icon.draw(context, thumb_x, thumb_y, 
                 self.data.icon.width, self.data.icon.height)
         self.thumb_overlay.draw(context, x, y, width, height)
