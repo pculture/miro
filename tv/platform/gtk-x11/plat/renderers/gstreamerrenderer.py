@@ -29,19 +29,15 @@
 from threading import Event
 import logging
 import os
-import traceback
 
 import pygst
 pygst.require('0.10')
-import gobject
 import gst
 import gst.interfaces
 import gtk
-import pygtk
 
 from miro import app
 from miro import config
-from miro import eventloop
 from miro import prefs
 from miro.download_utils import nextFreeFilename
 from miro.plat.utils import confirmMainThread
@@ -140,8 +136,8 @@ class Renderer:
             imagesink.set_xwindow_id(self.widget.window.xid)        
 
     def on_bus_message(self, bus, message):
+        """recieves message posted on the GstBus"""
         confirmMainThread()
-        "recieves message posted on the GstBus"
         if message.type == gst.MESSAGE_ERROR:
             err, debug = message.parse_error()
             logging.error("on_bus_message: gstreamer error: %s", err)
@@ -194,8 +190,6 @@ class Renderer:
         screenshot = os.path.join(d, os.path.basename(filename) + ".png")
         movie_data["screenshot"] = nextFreeFilename(screenshot)
 
-        extracter = Extracter(filename, movie_data["screenshot"], handle_result)
-
     def go_fullscreen(self):
         """Handle when the video window goes fullscreen."""
         confirmMainThread()
@@ -206,8 +200,8 @@ class Renderer:
         confirmMainThread()
         logging.debug("haven't implemented exit_fullscreen method yet!")
 
-    def select_item(self, anItem):
-        self.select_file(anItem.getFilename())
+    def select_item(self, an_item):
+        self.select_file(an_item.getFilename())
 
     def select_file(self, filename):
         """starts playing the specified file"""

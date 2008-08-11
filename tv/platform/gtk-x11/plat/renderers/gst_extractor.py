@@ -48,10 +48,10 @@ class Extractor:
         self.first_pause = True
         self.success = False
         self.duration = -1
-	self.buffer_probes = {}
+        self.buffer_probes = {}
         self.audio_only = False
 
-	self.pipeline = gst.parse_launch('filesrc location="%s" ! decodebin ! ffmpegcolorspace ! video/x-raw-rgb,depth=24,bpp=24 ! fakesink signal-handoffs=True' % (filename,))
+        self.pipeline = gst.parse_launch('filesrc location="%s" ! decodebin ! ffmpegcolorspace ! video/x-raw-rgb,depth=24,bpp=24 ! fakesink signal-handoffs=True' % (filename,))
 
         for sink in self.pipeline.sinks():
             name = sink.get_name()
@@ -62,18 +62,18 @@ class Extractor:
 
         self.bus = self.pipeline.get_bus()
         self.bus.add_signal_watch()
-        self.watch_id = self.bus.connect("message", self.onBusMessage)
+        self.watch_id = self.bus.connect("message", self.on_bus_message)
 
         self.pipeline.set_state(gst.STATE_PAUSED)
 
     def start_audio_only(self):
         self.audio_only = True
 
-	self.pipeline = gst.parse_launch('filesrc location="%s" ! decodebin ! fakesink' % (self.filename,))
+        self.pipeline = gst.parse_launch('filesrc location="%s" ! decodebin ! fakesink' % (self.filename,))
 
         self.bus = self.pipeline.get_bus()
         self.bus.add_signal_watch()
-        self.watch_id = self.bus.connect("message", self.onBusMessage)
+        self.watch_id = self.bus.connect("message", self.on_bus_message)
 
         self.pipeline.set_state(gst.STATE_PAUSED)
             
@@ -103,8 +103,7 @@ class Extractor:
         self.first_pause = False
         return False
 
-    def errorOccurred(self):
-##        print "errorOccurred()"
+    def error_occurred(self):
         self.disconnect()
         if self.audio_only:
             self.done()
@@ -112,27 +111,25 @@ class Extractor:
             self.start_audio_only()
         return False
 
-    def onBusMessage(self, bus, message):
-#        print message
+    def on_bus_message(self, bus, message):
         if message.src == self.pipeline:
             if message.type == gst.MESSAGE_STATE_CHANGED:
                 prev, new, pending = message.parse_state_changed()
                 if new == gst.STATE_PAUSED:
                     gobject.idle_add(self.paused_reached)
         if message.type == gst.MESSAGE_ERROR:
-            gobject.idle_add(self.errorOccurred)
+            gobject.idle_add(self.error_occurred)
 
-    def buffer_probe_handler_real(self, pad, buffer, name) :
+    def buffer_probe_handler_real(self, pad, buff, name):
         """Capture buffers as gdk_pixbufs when told to."""
-#        print "buffer_probe_handler_real(...)"
         if self.grabit:
-            caps = buffer.caps
+            caps = buff.caps
             if caps is not None:
                 filters = caps[0]
                 self.width = filters["width"]
                 self.height = filters["height"]
             timecode = self.pipeline.query_position(gst.FORMAT_TIME)[0]
-            pixbuf = gtk.gdk.pixbuf_new_from_data(buffer.data, gtk.gdk.COLORSPACE_RGB, False, 8, self.width, self.height, self.width * 3)
+            pixbuf = gtk.gdk.pixbuf_new_from_data(buff.data, gtk.gdk.COLORSPACE_RGB, False, 8, self.width, self.height, self.width * 3)
             pixbuf.save(self.thumbnail_filename, "png")
             del pixbuf
             self.success = True
@@ -140,13 +137,11 @@ class Extractor:
             self.done()
         return False
 
-    def buffer_probe_handler(self, pad, buffer, name) :
-#        print "buffer_probe_handler(...)"
-        gobject.idle_add(lambda: self.buffer_probe_handler_real(pad, buffer, name))
+    def buffer_probe_handler(self, pad, buff, name):
+        gobject.idle_add(lambda: self.buffer_probe_handler_real(pad, buff, name))
         return True
 
-    def disconnect (self):
-#        print "disconnect()"
+    def disconnect(self):
         if self.pipeline is not None:
             self.pipeline.set_state(gst.STATE_NULL)
             if not self.audio_only:
@@ -159,10 +154,10 @@ class Extractor:
                         del self.buffer_probes[name]
             self.pipeline = None
         if self.bus is not None:
-            self.bus.disconnect (self.watch_id)
+            self.bus.disconnect(self.watch_id)
             self.bus = None
 
-def handle_result (duration, success):
+def handle_result(duration, success):
     if duration != -1:
         print "Miro-Movie-Data-Length: %s" % (duration / 1000000)
     else:
