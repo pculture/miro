@@ -155,7 +155,7 @@ class LayoutManager(object):
     def set_text_shadow(self, shadow):
         self.shadow = shadow
 
-    def textbox(self, text):
+    def textbox(self, text, underline=False):
         layout_manager = nslayout_manager_pool.get()
         color = NSColor.colorWithDeviceRed_green_blue_alpha_(self.text_color[0], self.text_color[1], self.text_color[2], 1.0)
         textbox = TextBox(layout_manager, text, self.current_font, color, self.shadow)
