@@ -52,7 +52,6 @@ def initialize():
     from miro import item
     from miro import tabs
     from miro import playlist
-    from miro import searchengines
     from miro import theme
 
     from miro import indexes
@@ -82,7 +81,7 @@ def initialize():
     playlistTabOrder = tabOrders.filterWithIndex(indexes.tabOrderType, u'playlist')
 
     # items includes fileItems.
-    items = app.db.filterWithIndex(indexes.objectsByClass,item.Item)
+    items = app.db.filterWithIndex(indexes.objectsByClass, item.Item)
     fileItems = app.db.filter(lambda x: isinstance(x, item.FileItem))
     toplevelItems = items.filter(lambda x: x.feed_id is not None)
     nonContainerItems = items.filter(lambda x: not x.isContainerItem)
@@ -96,15 +95,15 @@ def initialize():
 
     # NOTE: we can't use the objectsByClass index for fileItems, because it
     # agregates all Item subclasses into one group.
-    feeds = app.db.filterWithIndex(indexes.objectsByClass,feed.Feed)
+    feeds = app.db.filterWithIndex(indexes.objectsByClass, feed.Feed)
     visibleFeeds = feeds.filter(filters.feedIsVisible)
     remoteDownloads = app.db.filterWithIndex(indexes.objectsByClass, downloader.RemoteDownloader)
-    httpauths = app.db.filterWithIndex(indexes.objectsByClass,downloader.HTTPAuthPassword)
-    staticTabsObjects = app.db.filterWithIndex(indexes.objectsByClass,tabs.StaticTab)
+    httpauths = app.db.filterWithIndex(indexes.objectsByClass, downloader.HTTPAuthPassword)
+    staticTabsObjects = app.db.filterWithIndex(indexes.objectsByClass, tabs.StaticTab)
 
     remoteDownloads.createIndex(indexes.downloadsByDLID)
     remoteDownloads.createIndex(indexes.downloadsByURL)
-    autoUploads = remoteDownloads.filter (filters.autoUploadingDownloaders, sortFunc=sorts.downloadersByEndTime)
+    autoUploads = remoteDownloads.filter(filters.autoUploadingDownloaders, sortFunc=sorts.downloadersByEndTime)
     items.createIndex(indexes.itemsByFeed, sortFunc=sorts.item)
     toplevelItems.createIndex(indexes.itemsByFeed)
     items.createIndex(indexes.itemsByParent)
@@ -113,7 +112,7 @@ def initialize():
     feeds.createIndex(indexes.byFolder)
 
     #FIXME: These should just be globals
-    guides = app.db.filterWithIndex(indexes.objectsByClass,guide.ChannelGuide)
+    guides = app.db.filterWithIndex(indexes.objectsByClass, guide.ChannelGuide)
     guides.createIndex(indexes.guidesByURL)
     default_guide = guides.filter(lambda x: x.getDefault())
     manualFeed = feeds.filterWithIndex(indexes.feedsByURL, 'dtv:manualFeed')
@@ -145,4 +144,4 @@ def initialize():
                                         folder.ChannelFolder)
     channelFolders.createIndex(indexes.foldersByTitle)
 
-    themeHistories = app.db.filterWithIndex(indexes.objectsByClass,theme.ThemeHistory)
+    themeHistories = app.db.filterWithIndex(indexes.objectsByClass, theme.ThemeHistory)
