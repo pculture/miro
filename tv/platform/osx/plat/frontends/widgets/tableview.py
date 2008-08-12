@@ -72,10 +72,8 @@ class HotspotTracker(object):
             return
         model = tableview.dataSource().model
         self.iter = model.iter_for_row(tableview, self.row)
-        table_column = tableview.tableColumns()[self.column]
-        self.index = table_column.identifier()
-        self.cell = table_column.dataCell()
-        self.cell_renderer = self.cell.wrapper
+        self.table_column = tableview.tableColumns()[self.column]
+        self.cell = self.table_column.dataCell()
         self.update_position(point)
         self.name = self.calc_hotspot()
         self.hit = (self.name is not None)
@@ -86,7 +84,6 @@ class HotspotTracker(object):
             return self.name
         else:
             return None
-
 
     def update_position(self, point):
         cell_frame = self.tableview.frameOfCellAtColumn_row_(self.column,
@@ -100,15 +97,19 @@ class HotspotTracker(object):
         if old_hit != self.hit:
             self.redraw_cell()
 
+    def set_cell_data(self):
+        row = self.tableview.dataSource().model[self.iter]
+        value_dict = tablemodel.get_column_data(row, self.table_column)
+        self.cell.setObjectValue_(value_dict)
+
     def calc_hotspot(self):
-        model = self.tableview.dataSource().model
-        self.cell_renderer.data = model[self.iter][self.index]
+        self.set_cell_data()
         cell_frame = self.tableview.frameOfCellAtColumn_row_(self.column,
                 self.row)
         style = self.cell.make_drawing_style(cell_frame, self.tableview)
         layout_manager = self.cell.layout_manager
         layout_manager.reset()
-        return self.cell_renderer.hotspot_test(style, layout_manager,
+        return self.cell.wrapper.hotspot_test(style, layout_manager,
                 self.pos.x, self.pos.y, cell_frame.size.width,
                 cell_frame.size.height)
 
@@ -120,7 +121,7 @@ class HotspotTracker(object):
             self.tableview.setNeedsDisplayInRect_(cell_frame)
 
 class MiroTableCell(NSCell):
-    def getHeightForData_(self, view, data):
+    def calcHeight_(self, view):
         font = self.font()
         return font.ascender() + abs(font.descender) + font.leading
 
@@ -130,15 +131,21 @@ class MiroTableCell(NSCell):
         else:
             return nil
 
+    def setObjectValue_(self, value_dict):
+        NSCell.setObjectValue_(self, value_dict['value'])
+
 class MiroTableImageCell(NSImageCell):
-    def getHeightForData_(self, view, data):
-        return data.size().height
+    def calcHeight_(self, view):
+        return self.value_dict['image'].size().height
 
     def highlightColorWithFrame_inView_(self, frame, view):
         if wrappermap.wrapper(view).draws_selection:
             return NSCell.highlightColorWithFrame_inView_(self, frame, view)
         else:
             return nil
+
+    def setObjectValue_(self, value_dict):
+        NSImageCell.setObjectValue_(self, value_dict['image'])
 
 class CellRenderer(object):
     def setDataCell_(self, column):
@@ -161,8 +168,7 @@ class CustomTableCell(NSCell):
         else:
             return nil
 
-    def getHeightForData_(self, view, data):
-        self.wrapper.data = data
+    def calcHeight_(self, view):
         self.layout_manager.reset()
         style = self.make_drawing_style(None, view)
         cell_size = self.wrapper.get_size(style, self.layout_manager)
@@ -185,14 +191,14 @@ class CustomTableCell(NSCell):
                 frame.size.width - pad_left, frame.size.height)
         context = DrawingContext(view, drawing_rect, drawing_rect)
         context.style = self.make_drawing_style(frame, view)
-        self.wrapper.data = self.data
         self.layout_manager.reset()
         self.wrapper.render(context, self.layout_manager, self.isHighlighted(),
                 self.hotspot)
         NSGraphicsContext.currentContext().restoreGraphicsState()
 
-    def setObjectValue_(self, wrapped_value):
-        self.data = wrapped_value.value
+    def setObjectValue_(self, value_dict):
+        for name, value in value_dict.items():
+            setattr(self.wrapper, name, value)
 
 class CustomCellRenderer(object):
     def __init__(self):
@@ -218,10 +224,10 @@ def calc_row_height(view, model_row):
     row_height = 0
     for column in view.tableColumns():
         cell = column.dataCell()
-        if isinstance(cell, CustomTableCell):
-            data = model_row[column.identifier()]
-            cell_height = cell.getHeightForData_(view, data)
-            row_height = max(row_height, cell_height)
+        value_dict = tablemodel.get_column_data(model_row, column)
+        cell.setObjectValue_(value_dict)
+        cell_height = cell.calcHeight_(view)
+        row_height = max(row_height, cell_height)
     return row_height
 
 class TableViewDelegate(NSObject):
@@ -235,7 +241,7 @@ class TableViewDelegate(NSObject):
 class VariableHeightTableViewDelegate(TableViewDelegate):
     def tableView_heightOfRow_(self, table_view, row):
         iter = table_view.dataSource().model.iter_for_row(table_view, row)
-        return calc_row_height(table_view, iter.value().source_row)
+        return calc_row_height(table_view, iter.value().values)
 
 class OutlineViewDelegate(NSObject):
     def outlineView_willDisplayCell_forTableColumn_item_(self, view, cell,
@@ -248,7 +254,7 @@ class OutlineViewDelegate(NSObject):
 
 class VariableHeightOutlineViewDelegate(OutlineViewDelegate):
     def outlineView_heightOfRowByItem_(self, outline_view, item):
-        return calc_row_height(outline_view, item.source_row)
+        return calc_row_height(outline_view, item.values)
 
 # TableViewCommon is a hack to do a Mixin class.  We want the same behaviour
 # for our table views and our outline views.  Normally we would use a Mixin,
@@ -474,8 +480,8 @@ class TableView(Widget):
         self.selection_removed = self.reload_needed = False
         self.iters_to_update = []
 
-    def add_column(self, title, model_index, renderer, min_width):
-        column = NSTableColumn.alloc().initWithIdentifier_(model_index)
+    def add_column(self, title, renderer, min_width, **attrs):
+        column = NSTableColumn.alloc().initWithIdentifier_(attrs)
         column.headerCell().setStringValue_(title)
         column.setEditable_(NO)
         column.setMinWidth_(min_width)

@@ -28,6 +28,8 @@
 
 """tablemodel.py -- Model classes for TableView.  """
 
+import itertools
+
 from AppKit import NSDragOperationNone, NSTableViewDropOn, protocols
 from Foundation import NSObject
 from objc import YES, NO, nil
@@ -36,29 +38,6 @@ from miro import fasttypes
 from miro import signals
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets.simple import Image
-
-class WrappedValue(NSObject):
-    # NSOutlineView and NSTableView don't retain references to their values,
-    # so we need to make sure those references stay alive
-
-    def initWithValue_(self, value):
-        self.value = value
-        return self
-
-    @staticmethod
-    def create_(value):
-        return WrappedValue.alloc().initWithValue_(value)
-
-def wrap_value(object):
-    if isinstance(object, NSObject):
-        return object
-    elif isinstance(object, Image):
-        return object.nsimage
-    else:
-        return WrappedValue.create_(object)
-
-def wrap_values(values):
-    return tuple(wrap_value(v) for v in values)
 
 class RowList(object):
     """RowList is a Linked list that has some optimizations for looking up
@@ -127,6 +106,10 @@ class TableModelBase(signals.SignalEmitter):
             raise ValueError("Wrong number of columns")
         # We might want to do more typechecking here
 
+    def update_value(self, iter, index, value):
+        iter.value().values[index] = value
+        self.emit('row-changed', iter)
+
     def update(self, iter, *column_values):
         iter.value().update_values(column_values)
         self.emit('row-changed', iter)
@@ -175,17 +158,16 @@ class TableRow(object):
         self.update_values(column_values)
 
     def update_values(self, column_values):
-        self.data_source_row = wrap_values(column_values)
-        self.source_row = column_values
+        self.values = list(column_values)
 
     def __getitem__(self, index):
-        return self.source_row[index]
+        return self.values[index]
 
     def __len__(self):
-        return len(self.source_row)
+        return len(self.values)
 
     def __iter__(self):
-        return iter(self.source_row)
+        return iter(self.values)
 
 class TableModel(TableModelBase):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView for a description of the API for this class."""
@@ -331,6 +313,10 @@ class TreeTableModel(TableModelBase):
     def iter_for_row(self, tableview, row):
         return self.iter_for_item[tableview.itemAtRow_(row)]
 
+def get_column_data(row, column):
+    attr_map = column.identifier()
+    return dict((name, row[index]) for name, index in attr_map.items())
+
 class DataSourceBase(NSObject):
     def initWithModel_(self, model):
         self.model = model
@@ -393,7 +379,7 @@ class MiroTableViewDataSource(DataSourceBase, protocols.NSTableDataSource):
     def tableView_objectValueForTableColumn_row_(self, table_view, column, row):
         node = self.model.nth_iter(row).value()
         self.model.remember_row_at_index(node, row)
-        return node.data_source_row[column.identifier()]
+        return get_column_data(node.values, column)
 
     def tableView_writeRowIndexes_toPasteboard_(self, tableview, rowIndexes,
             pasteboard):
@@ -444,11 +430,11 @@ class MiroOutlineViewDataSource(DataSourceBase, protocols.NSOutlineViewDataSourc
 
     def outlineView_objectValueForTableColumn_byItem_(self, view, column,
             item):
-        return item.data_source_row[column.identifier()]
+        return get_column_data(item.values, column)
 
     def outlineView_writeItems_toPasteboard_(self, outline_view, items, 
             pasteboard):
-        data = [i.source_row for i in items]
+        data = [i.values for i in items]
         return self.view_writeColumnData_ToPasteboard_(outline_view, data, 
                 pasteboard)
 
