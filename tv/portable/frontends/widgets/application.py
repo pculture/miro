@@ -59,6 +59,7 @@ class Application:
         self.ignoreErrors = False
         self.message_handler = WidgetsMessageHandler()
         self.default_guide_info = None
+        self.window = None
         messages.FrontendMessage.install_handler(self.message_handler)
 
     def startup(self):

@@ -26,13 +26,11 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-import traceback
 import gtk
 import os
 import gconf
 
 from miro import app
-from miro import eventloop
 from miro.frontends.widgets.application import Application
 from miro.plat.frontends.widgets import threads
 from miro.plat import mozsetup, renderers
@@ -45,7 +43,7 @@ from miro.frontends.widgets.gtk.widgetset import Rect
 
 import logging
 
-def _getPref(key, getter_name):
+def _get_pref(key, getter_name):
     gconf_lock.acquire()
     try:
         client = gconf.client_get_default()
@@ -59,7 +57,7 @@ def _getPref(key, getter_name):
     finally:
         gconf_lock.release()
 
-def _setPref(key, setter_name, value):
+def _set_pref(key, setter_name, value):
     gconf_lock.acquire()
     try:
         client = gconf.client_get_default()
@@ -69,15 +67,15 @@ def _setPref(key, setter_name, value):
     finally:
         gconf_lock.release()
 
-def getInt(key): return _getPref('window/' + key, 'get_int')
-def getBool(key): return _getPref('window/' + key, 'get_bool')
-def getPlayerInt(key): return _getPref(key, 'get_int')
-def getPlayerBool(key): return _getPref(key, 'get_bool')
+def get_int(key): return _get_pref('window/' + key, 'get_int')
+def get_bool(key): return _get_pref('window/' + key, 'get_bool')
+def get_player_int(key): return _get_pref(key, 'get_int')
+def get_player_bool(key): return _get_pref(key, 'get_bool')
 
-def setInt(key, value): return _setPref('window/' + key, 'set_int', value)
-def setBool(key, value): return _setPref('window/' + key, 'set_bool', value)
-def setPlayerInt(key, value): return _setPref(key, 'set_int', value)
-def setPlayerBool(key, value): return _setPref(key, 'set_bool', value)
+def set_int(key, value): return _set_pref('window/' + key, 'set_int', value)
+def set_bool(key, value): return _set_pref('window/' + key, 'set_bool', value)
+def set_player_int(key, value): return _set_pref(key, 'set_int', value)
+def set_player_bool(key, value): return _set_pref(key, 'set_bool', value)
 
 
 class GtkX11Application(Application):
@@ -110,7 +108,7 @@ class GtkX11Application(Application):
             else:
                 self.window._window.unmaximize()
 
-        if getPlayerBool("showTrayicon") and trayicon.trayicon_is_supported:
+        if get_player_bool("showTrayicon") and trayicon.trayicon_is_supported:
             self.trayicon = trayicon.Trayicon(resources.sharePath("pixmaps/miro-24x24.png"), self)
             self.trayicon.set_visible(True)
 
@@ -162,21 +160,21 @@ class GtkX11Application(Application):
         return self.in_kde
 
     def get_main_window_dimensions(self):
-        x = getInt("x") or 100
-        y = getInt("y") or 300
-        width = getInt("width") or 800
-        height = getInt("height") or 600
+        x = get_int("x") or 100
+        y = get_int("y") or 300
+        width = get_int("width") or 800
+        height = get_int("height") or 600
 
         return Rect(x, y, width, height)
 
     def get_main_window_maximized(self):
-        return getBool("maximized") == True
+        return get_bool("maximized") == True
 
     def set_main_window_dimensions(self, window, x, y, width, height):
-        setInt("width", width)
-        setInt("height", height)
-        setInt("x", x)
-        setInt("y", y)
+        set_int("width", width)
+        set_int("height", height)
+        set_int("x", x)
+        set_int("y", y)
 
     def set_main_window_maximized(self, window, maximized):
-        setBool("maximized", maximized)
+        set_bool("maximized", maximized)

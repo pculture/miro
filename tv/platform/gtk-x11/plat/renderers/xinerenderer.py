@@ -26,7 +26,6 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-import os
 import traceback
 import logging
 
@@ -35,10 +34,7 @@ import gobject
 
 from miro import app
 from miro import config
-from miro import eventloop
-from miro import prefs
 from miro import xine
-from miro.download_utils import nextFreeFilename
 from miro.plat import options
 from miro.plat import resources
 from miro.plat.utils import confirmMainThread
@@ -89,7 +85,7 @@ class Renderer:
         for func, args in self.attach_queue:
             try:
                 func(self, *args)
-            except Exception, e:
+            except:
                 print "Exception in attach_queue function"
                 traceback.print_exc()
         self.attach_queue = []
@@ -142,8 +138,8 @@ class Renderer:
     @wait_for_attach
     def select_file(self, filename):
         confirmMainThread()
-        viz = config.get(options.XINE_VIZ);
-        self.xine.setViz(viz);
+        viz = config.get(options.XINE_VIZ)
+        self.xine.setViz(viz)
         self.xine.selectFile(filename)
         def expose_workaround():
             try:
