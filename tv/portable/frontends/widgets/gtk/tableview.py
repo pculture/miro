@@ -725,25 +725,11 @@ class TableModel(object):
     def append(self, *column_values):
         return self._model.append(self.convert_for_gtk(column_values))
 
+    def update_value(self, iter, index, value):
+        self._model.set(iter, index, self.convert_value_for_gtk(value))
+
     def update(self, iter, *column_values):
-        converted_values = self.convert_for_gtk(column_values)
-
-        # So sometimes the number of items stored in the data is
-        # longer than the column values currently in place.  If that's
-        # the case, use the pre-existing column values for the ones
-        # that aren't provided.
-        # (This is used, for example, because the ItemRenderer needs
-        # both the ItemInfo object and a boolean for show_details.
-        # But sometimes when the state changes, only a new,
-        # regenerated ItemInfo gets sent in here.
-        if len(converted_values) == len(self._model[iter]):
-            new_values = converted_values
-        else:
-            new_values = list(converted_values)
-            for i in range(len(column_values), len(self._model[iter])):
-                new_values.append(self._model[iter][i])
-
-        self._model[iter] = new_values
+        self._model[iter] = self.convert_for_gtk(column_values)
 
     def remove(self, iter):
         if self._model.remove(iter):

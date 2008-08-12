@@ -103,12 +103,7 @@ class ItemListBase(widgetset.TableView):
         elif name == 'delete':
             messages.DeleteVideo(item_info.id).send_to_backend()
         elif name == 'details_toggle':
-            if show_details == False:
-                show_details = True
-            else:
-                show_details = False
-            item_info.show_details = show_details
-            self.model.update(iter, item_info, show_details)
+            self.model.update_value(iter, 1, not show_details)
             self.model_changed()
         elif name == 'visit_webpage':
             app.widgetapp.open_url(item_info.permalink)
@@ -163,7 +158,7 @@ class ItemListBase(widgetset.TableView):
 
     def update_item(self, iter, item_info):
         self.setup_info(item_info)
-        self.model.update(iter, item_info)
+        self.model.update_value(iter, 0, item_info)
 
     def on_context_menu(self, tableview):
         selected = [self.model[iter][0] for iter in self.get_selection()]
