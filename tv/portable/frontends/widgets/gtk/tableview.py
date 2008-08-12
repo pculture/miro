@@ -43,10 +43,6 @@ from miro.frontends.widgets.gtk.simple import Image
 from miro.frontends.widgets.gtk.layoutmanager import LayoutManager
 from miro.frontends.widgets.gtk.weakconnect import weak_connect
 
-def apply_attr_map(model_row, renderer):
-    for attr_name, col_index in renderer.MODEL_ATTR_MAP.iteritems():
-        setattr(renderer, attr_name, model_row[col_index])
-
 def rect_contains_rect(outside, inside):
     return (outside.x <= inside.x and 
             outside.y <= inside.y and 
@@ -63,8 +59,8 @@ class CellRenderer(object):
     def __init__(self):
         self._renderer = gtk.CellRendererText()
 
-    def setup_attributes(self, column, model_index): 
-        column.add_attribute(self._renderer, 'text', model_index)
+    def setup_attributes(self, column, attr_map): 
+        column.add_attribute(self._renderer, 'text', attr_map['value'])
 
 class ImageCellRenderer(object):
     """Cell Renderer for images
@@ -72,25 +68,20 @@ class ImageCellRenderer(object):
     def __init__(self):
         self._renderer = gtk.CellRendererPixbuf()
 
-    def setup_attributes(self, column, model_index):
-        column.add_attribute(self._renderer, 'pixbuf', model_index)
+    def setup_attributes(self, column, attr_map):
+        column.add_attribute(self._renderer, 'pixbuf', attr_map['image'])
 
 class GTKCustomCellRenderer(gtk.GenericCellRenderer):
     """Handles the GTK hide of CustomCellRenderer
     https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView"""
 
-    @property
-    def MODEL_ATTR_MAP(self):
-        wrapper = wrappermap.wrapper(self)
-        return wrapper.MODEL_ATTR_MAP
-
     def on_get_size(self, widget, cell_area=None):
         wrapper = wrappermap.wrapper(self)
         widget_wrapper = wrappermap.wrapper(widget)
         style = drawing.DrawingStyle(widget_wrapper, use_base_color=True)
-        for attr_name in self.MODEL_ATTR_MAP.keys():
-            setattr(wrapper, attr_name, getattr(self, attr_name))
-        wrapper.data = self.data
+        # NOTE: CustomCellRenderer.cell_data_func() sets up its attributes
+        # from the model itself, so we don't have to worry about setting them
+        # here.
         width, height = wrapper.get_size(style, widget_wrapper.layout_manager)
         x_offset = self.props.xpad
         y_offset = self.props.ypad
@@ -126,8 +117,6 @@ class GTKCustomCellRenderer(gtk.GenericCellRenderer):
         context.style = drawing.DrawingStyle(widget_wrapper,
                 use_base_color=True, state=state)
         owner = wrappermap.wrapper(self)
-        for attr_name in self.MODEL_ATTR_MAP.keys():
-            setattr(owner, attr_name, getattr(self, attr_name))
         widget_wrapper.layout_manager.update_cairo_context(context.context)
         hotspot_tracker = widget_wrapper.hotspot_tracker
         if (hotspot_tracker and hotspot_tracker.hit and 
@@ -137,6 +126,9 @@ class GTKCustomCellRenderer(gtk.GenericCellRenderer):
         else:
             hotspot = None
         widget_wrapper.layout_manager.reset()
+        # NOTE: CustomCellRenderer.cell_data_func() sets up its attributes
+        # from the model itself, so we don't have to worry about setting them
+        # here.
         owner.render(context, widget_wrapper.layout_manager, selected,
                 hotspot)
 
@@ -156,14 +148,18 @@ class CustomCellRenderer(object):
         self._renderer = GTKCustomCellRenderer()
         wrappermap.add(self._renderer, self)
 
-    def setup_attributes(self, column, model_index):
-        column.set_cell_data_func(
-            self._renderer, self.cell_data_func, self._renderer.MODEL_ATTR_MAP)
+    def setup_attributes(self, column, attr_map):
+        column.set_cell_data_func(self._renderer, self.cell_data_func,
+                attr_map)
 
     def cell_data_func(self, column, cell, model, iter, attr_map):
         cell.column = column
         cell.path = model.get_path(iter)
-        apply_attr_map(model[iter], cell)
+        row = model[iter]
+        # Set attributes on self instead cell This works because cell is just
+        # going to turn around and call our methods to do the renderering.
+        for name, index in attr_map.items():
+            setattr(self, name, row[index])
 
     def hotspot_test(self, style, layout, x, y, width, height):
         return None
@@ -277,6 +273,7 @@ class HotspotTracker(object):
         # We always pack 1 renderer for each column
         gtk_renderer = self.column.get_cell_renderers()[0]
         self.renderer = wrappermap.wrapper(gtk_renderer)
+        self.attr_map = self.treeview_wrapper.attr_map_for_column[self.column]
         cell_area = treeview.get_cell_area(self.path, self.column)
         if not rect_contains_point(cell_area, event.x, event.y):
             # Mouse is in the padding around the actual cell area
@@ -304,7 +301,8 @@ class HotspotTracker(object):
         cell_area = self.treeview.get_cell_area(self.path, self.column)
         if rect_contains_point(cell_area, self.x, self.y):
             model = self.treeview.get_model()
-            apply_attr_map(model[self.iter], self.renderer)
+            self.renderer.cell_data_func(self.column, self.renderer._renderer,
+                    model, self.iter, self.attr_map)
             style = drawing.DrawingStyle(self.treeview_wrapper,
                 use_base_color=True, state=self.calc_cell_state())
             x = self.x - cell_area.x
@@ -337,6 +335,7 @@ class TableView(Widget):
         self.set_widget(MiroTreeView(model._model))
         self.selection = self._widget.get_selection()
         self.renderers = []
+        self.attr_map_for_column = {}
         self.background_color = None
         self.drag_button_down = False
         self.context_menu_callback = self.drag_source = self.drag_dest = None
@@ -384,13 +383,23 @@ class TableView(Widget):
                     renderer._renderer.set_property('cell-background-set', 
                             False)
 
-    def add_column(self, title, model_index, renderer, min_width):
+    def _check_attr_map(self, attrs):
+        for value in attrs.values():
+            if not isinstance(value, int):
+                msg = "Attribute values must be integers, not %r" % value
+                raise TypeError(msg)
+            if value < 0 or value >= len(self.model._column_types):
+                raise ValueError("Attribute index out of range: %s" % value)
+
+    def add_column(self, title, renderer, min_width, **attrs):
+        self._check_attr_map(attrs)
         column = gtk.TreeViewColumn(title, renderer._renderer)
         column.set_sizing(gtk.TREE_VIEW_COLUMN_FIXED)
-        renderer.setup_attributes(column, model_index)
+        renderer.setup_attributes(column, attrs)
         self._widget.append_column(column)
         column.props.min_width = min_width
         self.renderers.append(renderer)
+        self.attr_map_for_column[column] = attrs
         self.set_renderer_properties(renderer)
 
     def set_renderer_properties(self, renderer):
@@ -402,6 +411,8 @@ class TableView(Widget):
         return len(self._widget.get_columns())
 
     def remove_column(self, index):
+        column = self._widget.get_columns()[index]
+        del self.attr_map_for_column[column]
         self._widget.remove_column(index)
         self.renderers.pop(index)
 
@@ -686,6 +697,7 @@ class TableModel(object):
 
     def __init__(self, *column_types):
         self._model = self.MODEL_CLASS(*self.map_types(column_types))
+        self._column_types = column_types
 
     def map_types(self, miro_column_types):
         type_map = {

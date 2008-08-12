@@ -78,7 +78,8 @@ class ItemListBase(widgetset.TableView):
         widgetset.TableView.__init__(self, model)
         self.set_draws_selection(False)
         renderer = style.ItemRenderer()
-        self.add_column('item', 0, renderer, renderer.MIN_WIDTH)
+        self.add_column('item', renderer, renderer.MIN_WIDTH, data=0,
+                show_details=1)
         self.set_show_headers(False)
         self.allow_multiple_select(True)
         self.create_signal('play-video')

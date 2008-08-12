@@ -57,8 +57,6 @@ class TabRenderer(widgetset.CustomCellRenderer):
     BOLD_TITLE = False
     UNWATCHED_BUBBLE_COLOR = (0.31, 0.75, 0.12)
     AVAILABLE_BUBBLE_COLOR = (0.60, 0.68, 0.80)
-    MODEL_ATTR_MAP = {
-        'data': 0}
 
     def get_size(self, style, layout):
         return (self.MIN_WIDTH, max(self.MIN_HEIGHT,
@@ -109,8 +107,6 @@ class TabRenderer(widgetset.CustomCellRenderer):
 class StaticTabRenderer(TabRenderer):
     BOLD_TITLE = True
     DOWNLOADING_BUBBLE_COLOR = (0.90, 0.45, 0.08)
-    MODEL_ATTR_MAP = {
-        'data': 0}
 
     def pack_bubbles(self, hbox, layout):
         if self.data.unwatched > 0:
@@ -139,10 +135,6 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     ITEM_DESC_COLOR = (0.4, 0.4, 0.4)
     EMBLEM_FONT_SIZE = 0.77
     GRADIENT_HEIGHT = 25
-    MODEL_ATTR_MAP = {
-        'data': 0,
-        'show_details': 1}
-
 
     def __init__(self):
         widgetset.CustomCellRenderer.__init__(self)
