@@ -158,7 +158,7 @@ class LayoutManager(object):
     def textbox(self, text, underline=False):
         layout_manager = nslayout_manager_pool.get()
         color = NSColor.colorWithDeviceRed_green_blue_alpha_(self.text_color[0], self.text_color[1], self.text_color[2], 1.0)
-        textbox = TextBox(layout_manager, text, self.current_font, color, self.shadow)
+        textbox = TextBox(layout_manager, text, self.current_font, color, self.shadow, underline)
         nslayout_manager_pool.monitor_owner(textbox, layout_manager)
         return textbox
 
@@ -172,7 +172,7 @@ class LayoutManager(object):
         self.set_text_shadow(None)
 
 class TextBox(object):
-    def __init__(self, layout_manager, text, font, color, shadow=None):
+    def __init__(self, layout_manager, text, font, color, shadow, underline):
         self.layout_manager = layout_manager
         self.font = font
         self.color = color
@@ -184,7 +184,7 @@ class TextBox(object):
         self.paragraph_style = NSMutableParagraphStyle.alloc().init()
         self.width = None
         self.text_storage.setFont_(font.nsfont)
-        self.set_text(text)
+        self.set_text(text, underline=underline)
 
     def make_attr_string(self, text, color, font, underline):
         attributes = { }
