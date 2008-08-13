@@ -62,24 +62,26 @@ class DatabaseThreadError(Exception):
     """
     pass
 
-##
-# Raised when an attempt is made to restore a database newer than the
-# one we support
 class DatabaseVersionError(StandardError):
+    """Raised when an attempt is made to restore a database newer than the
+    one we support
+    """
     pass
 
-##
-# Raised when an attempt is made to remove an object that doesn't exist
 class ObjectNotFoundError(StandardError):
+    """Raised when an attempt is made to remove an object that doesn't exist
+    """
     pass
 
-# Raised when an attempt is made to call a function that's only
-# allowed to be called from the root database
 class NotRootDBError(StandardError):
+    """Raised when an attempt is made to call a function that's only
+    allowed to be called from the root database
+    """
     pass
 
-# Used as a dummy value so that "None" can be treated as a valid value
 class NoValue:
+    """Used as a dummy value so that "None" can be treated as a valid value
+    """
     pass
 
 # begin* and end* no longer actually lock the database.  Instead
@@ -88,7 +90,7 @@ class NoValue:
 # purposes.
 
 event_thread = None
-def set_thread (thread):
+def set_thread(thread):
     global event_thread
     if event_thread is None:
         event_thread = thread
@@ -104,7 +106,7 @@ def confirmDBThread():
         traceback.print_stack()
         raise DatabaseThreadError, errorString
 
-def findUnpicklableParts(obj, seen = {}, depth=0):
+def findUnpicklableParts(obj, seen={}, depth=0):
     thisId = id(obj)
     out = ""
 
@@ -150,7 +152,7 @@ class IndexMap:
     to efficently locate objects after their mapped value changes.
     """
 
-    def __init__(self, indexFunc, parentDB, sortFunc = None, resort = False):
+    def __init__(self, indexFunc, parentDB, sortFunc=None, resort=False):
         self.indexFunc = indexFunc
         self.sortFunc = sortFunc
         if self.sortFunc is None:
@@ -162,14 +164,16 @@ class IndexMap:
         self.mappings = {} # maps object id -> index value
 
     def addObject(self, newobject, value):
-        """Add a new object to the IndexMap."""
+        """Add a new object to the IndexMap.
+        """
 
         indexValue = self.indexFunc(value)
         self.mappings[newobject.getID()] = indexValue
         self.getViewForValue(indexValue).addBeforeCursor(newobject, value)
 
     def removeObject(self, obj):
-        """Remove an object from the IndexMap."""
+        """Remove an object from the IndexMap.
+        """
         indexValue = self.mappings.pop(obj.getID())
         self.views[indexValue].removeObj(obj)
 
@@ -255,15 +259,16 @@ class MultiIndexMap(IndexMap):
     """
 
     def addObject(self, newobject, value):
-        """Add a new object to the IndexMap."""
-
+        """Add a new object to the IndexMap.
+        """
         indexValues = set(self.indexFunc(value))
         self.mappings[newobject.getID()] = indexValues
         for indexValue in indexValues:
             self.getViewForValue(indexValue).addBeforeCursor(newobject, value)
 
     def removeObject(self, obj):
-        """Remove an object from the IndexMap."""
+        """Remove an object from the IndexMap.
+        """
         indexValues = self.mappings.pop(obj.getID())
         for indexValue in indexValues:
             self.views[indexValue].removeObj(obj)
@@ -329,19 +334,21 @@ class MultiIndexMap(IndexMap):
     def getViews(self):
         return self.views.values()
 
-##
-# Implements a view of the database
-#
-# A Dynamic Database is a list of objects that can be filtered,
-# sorted, and mapped. It can also give notification when an object is
-# added, removed, or changed.
 class DynamicDatabase:
-    ##
-    # Create a view of a list of objects.
-    # @param objects A list of object/mapped value pairs to create the
-    # initial view
-    # @param rootDB true iff this is not a subview of another DD. Should never be used outside of this class.
-    def __init__(self, objects = [], rootDB = True, sortFunc = None, filterFunc = None, mapFunc = None, cursorID = None, parent = None, resort = False):
+    """Implements a view of the database
+
+    A Dynamic Database is a list of objects that can be filtered,
+    sorted, and mapped. It can also give notification when an object is
+    added, removed, or changed.
+    """
+
+    def __init__(self, objects=[], rootDB=True, sortFunc=None, filterFunc=None, mapFunc=None, cursorID=None, parent=None, resort=False):
+        """Create a view of a list of objects.
+
+        @param objects A list of object/mapped value pairs to create the
+        initial view
+        @param rootDB true iff this is not a subview of another DD. Should never be used outside of this class.
+        """
         self.rootDB = rootDB
         self.cursor = None
         self.parent = parent
@@ -380,7 +387,7 @@ class DynamicDatabase:
                 self.objectLocs[id] = it
         #self.checkObjLocs()
 
-    def count_databases (self):
+    def count_databases(self):
         count = 1
         size = len(self.objects)
         for (db, func) in self.subFilters:
@@ -405,11 +412,12 @@ class DynamicDatabase:
             size = size + new[1]
         return (count, size)
 
-    # Checks to make the sure object location dictionary is accurate
-    #
-    # Uncomment the calls to this when you change the location
-    # dictionary code
 #     def checkObjLocs(self):
+#         """Checks to make the sure object location dictionary is accurate
+#
+#         Uncomment the calls to this when you change the location
+#         dictionary code
+#         """
 #         self.confirmDBThread()
 #         if len(self.objectLocs) != len(self.objects):
 #             raise Exception, "ERROR -- %d objects and %d locations" % (len(self.objects), len(self.objectLocs))
@@ -454,38 +462,38 @@ class DynamicDatabase:
 #             if temp[count] is not temp2[count]:
 #                 raise Exception, "%s filtered incorrectly to %s (%d)" % (temp[count],temp2[count],count)
 
-    ##
-    # This is needed for the class to function as an iterator
     def __iter__(self):
+        """This is needed for the class to function as an iterator
+        """
         self.confirmDBThread()
         self.cursor = None
         return self    
 
-    ##
-    # Saves the current position of the cursor on the stack
-    #
-    # Usage:
-    #
-    # view.saveCursor()
-    # try:
-    #     ...
-    # finally:
-    #     view.restoreCursor()
     def saveCursor(self):
-         if self.cursor is not None:
-             self.cursorStack.append(self.cursor.copy())
-         else:
-             self.cursorStack.append(None)
+        """Saves the current position of the cursor on the stack
+
+        Usage:
+
+            view.saveCursor()
+            try:
+                ...
+            finally:
+                view.restoreCursor()
+        """
+        if self.cursor is not None:
+            self.cursorStack.append(self.cursor.copy())
+        else:
+            self.cursorStack.append(None)
 
 
-    ##
-    # Restores the position of the cursor
     def restoreCursor(self):
+        """Restores the position of the cursor
+        """
         self.cursor = self.cursorStack.pop()
 
-    ##
-    # Returns the nth item in the View
-    def __getitem__(self,n):
+    def __getitem__(self, n):
+        """Returns the nth item in the View
+        """
         #print "DTV: Database Warning: numeric subscripts are deprecated"
         self.confirmDBThread()
         try:
@@ -493,28 +501,29 @@ class DynamicDatabase:
         except IndexError:
             return None
 
-    # Returns the number of items in the database
     def __len__(self):
+        """Returns the number of items in the database
+        """
         return self.len()
     def len(self):
         self.confirmDBThread()
         length = len(self.objects)
         return length
         
-    ##
-    # Call before accessing the database
-    #
-    # Usage:
-    #
-    # view.confirmDBThread()
-    # ..access database..
     def confirmDBThread(self):
+        """Call before accessing the database
+
+        Usage:
+
+            view.confirmDBThread()
+            ..access database..
+        """
         confirmDBThread()
 
-    ##
-    # Returns the object that the cursor is currently pointing to or
-    # None if it's not pointing to an object
     def cur(self):
+        """Returns the object that the cursor is currently pointing to or
+        None if it's not pointing to an object
+        """
         self.confirmDBThread()
         try:
             return self.objects[self.cursor][1]
@@ -522,9 +531,9 @@ class DynamicDatabase:
             self.cursor = None
             return None
 
-    ##
-    # next() function used by iterator
     def next(self):
+        """next() function used by iterator
+        """
         self.confirmDBThread()
         try:
             if self.cursor is None:
@@ -538,10 +547,9 @@ class DynamicDatabase:
             except TypeError:
                 raise StopIteration
 
-    ##
-    # returns the next object in the view
-    # None if it is not set
     def getNext(self):
+        """Returns the next object in the view None if it is not set
+        """
         self.confirmDBThread()
         if self.cursor is None:
             self.cursor = self.objects.firstIter().copy()
@@ -550,10 +558,9 @@ class DynamicDatabase:
         ret = self.cur()
         return ret
 
-    ##
-    # returns the previous object in the view
-    # None if it is not set
     def getPrev(self):
+        """Returns the previous object in the view None if it is not set
+        """
         self.confirmDBThread()
         ret = None
         if self.cursor is not None:
@@ -561,21 +568,21 @@ class DynamicDatabase:
             ret = self.cur()
         return ret
 
-    ##
-    # sets the current cursor position to the beginning of the list
     def resetCursor(self):
+        """Sets the current cursor position to the beginning of the list
+        """
         self.confirmDBThread()
         self.cursor = None
 
-    ##
-    # sets the current cursor position to point to a given object
     def moveCursorToObject(self, obj):
+        """Sets the current cursor position to point to a given object
+        """
         self.confirmDBThread()
         self.moveCursorToID(obj.id)
 
-    ##
-    # sets the current cursor position to point the object with a given id
     def moveCursorToID(self, id):
+        """Sets the current cursor position to point the object with a given id
+        """
         self.confirmDBThread()
         try:
             self.cursor = self.objectLocs[id].copy()
@@ -583,39 +590,39 @@ class DynamicDatabase:
             msg = "No object with id %s in the database" % id
             raise ObjectNotFoundError, msg
 
-    ##
-    # returns a View of the data filtered through a boolean function
-    # @param f boolean function to use as a filter
-    def filter(self, f, sortFunc = None, resort = False):
+    def filter(self, f, sortFunc=None, resort=False):
+        """Returns a View of the data filtered through a boolean function
+        @param f boolean function to use as a filter
+        """
         self.confirmDBThread()
         try:
             curID = self.objects[self.cursor][0].id
         except:
             curID = None
-        new = DynamicDatabase(self.objects,False,cursorID = curID, filterFunc = f, parent = self, sortFunc = sortFunc, resort = resort)
+        new = DynamicDatabase(self.objects, False, cursorID=curID, filterFunc=f, parent=self, sortFunc=sortFunc, resort=resort)
         self.subFilters.append([new, f])
         return new
 
-    ##
-    # returns a View of the database identical to this one. Equivalent
-    # to filter(lambda x:True).
-    #
-    # Private use only
     def clone(self):
+        """Returns a View of the database identical to this one. Equivalent
+        to filter(lambda x:True).
+
+        Private use only
+        """
         self.confirmDBThread()
         try:
             curID = self.objects[self.cursor][0].id
         except:
             curID = None
-        new = DynamicDatabase(self.objects,False,cursorID = curID, parent = self, sortFunc = self.sortFunc, resort = self.resort)
+        new = DynamicDatabase(self.objects, False, cursorID=curID, parent=self, sortFunc=self.sortFunc, resort=self.resort)
         self.clones.append([new])
         return new
 
-    ##
-    # returns a View of the data mapped according to the given function
-    #
-    # @param f function to use as a map
     def map(self, f):
+        """Returns a View of the data mapped according to the given function
+
+        @param f function to use as a map
+        """
         #assert(not self.rootDB) # Dude! Don't map the entire DB! Are you crazy?
 
         self.confirmDBThread()
@@ -623,76 +630,75 @@ class DynamicDatabase:
             curID = self.objects[self.cursor][0].id
         except:
             curID = None
-        new = DynamicDatabase(self.objects,False, cursorID = curID, mapFunc = f, parent = self)
-        self.subMaps.append([new,f])
+        new = DynamicDatabase(self.objects, False, cursorID=curID, mapFunc=f, parent=self)
+        self.subMaps.append([new, f])
         return new
 
-    ##
-    # returns a View of the data filtered through a sort function
-    # @param f comparision function to use for sorting
-    def sort(self, f, resort = False):
+    def sort(self, f, resort=False):
+        """Returns a View of the data filtered through a sort function
+        @param f comparision function to use for sorting
+        """
         #assert(not self.rootDB) # Dude! Don't sort the entire DB! Are you crazy?
         self.confirmDBThread()
         try:
             curID = self.objects[self.cursor][0].id
         except:
             curID = None
-        new = DynamicDatabase(self.objects,False, sortFunc = f, cursorID = curID, parent = self, resort = resort)
-        self.subSorts.append([new,f])
+        new = DynamicDatabase(self.objects, False, sortFunc=f, cursorID=curID, parent=self, resort=resort)
+        self.subSorts.append([new, f])
         return new
 
-    ##
-    # registers a function to call when an item in the view changes
-    #
-    # @param function a function that takes in one parameter: the
-    # index of the changed object
     def addChangeCallback(self, function):
+        """Registers a function to call when an item in the view changes
+
+        @param function a function that takes in one parameter: the
+        index of the changed object
+        """
         self.confirmDBThread()
         self.changeCallbacks.add(function)
 
-    ##
-    # registers a function to call when an item is added to the list
-    #
-    # @param function a function that takes in one parameter: the
-    # index of the new object
     def addAddCallback(self, function):
+        """Registers a function to call when an item is added to the list
+
+        @param function a function that takes in one parameter: the
+        index of the new object
+        """
         self.confirmDBThread()
         self.addCallbacks.add(function)
 
-    ##
-    # registers a function to call when an item is removed from the view
-    #
-    # @param function a function that takes in one parameter: the
-    # object to be deleted
     def addRemoveCallback(self, function):
+        """Registers a function to call when an item is removed from the view
+
+        @param function a function that takes in one parameter: the
+        object to be deleted
+        """
         self.confirmDBThread()
         self.removeCallbacks.add(function)
 
-    ##
-    # registers a function to call when the view is updated, even if no items change.
-    #
-    # @param function a function that takes in no parameters
     def addViewChangeCallback(self, function):
+        """Registers a function to call when the view is updated, even if no items change.
+
+        @param function a function that takes in no parameters
+        """
         self.confirmDBThread()
         self.viewChangeCallbacks.add(function)
 
-    ##
-    # registers a function to call when the view is resorted
-    #
-    # @param function a function that takes in one parameter: the
-    # index of the new object
     def addResortCallback(self, function):
+        """Registers a function to call when the view is resorted
+
+        @param function a function that takes in one parameter: the
+        index of the new object
+        """
         self.confirmDBThread()
         self.resortCallbacks.add(function)
 
-    ##
-    # registers a function to call when the view is about to be unlinked
-    #
-    # @param function a function that takes in no parameters
     def addViewUnlinkCallback(self, function):
+        """Registers a function to call when the view is about to be unlinked
+
+        @param function a function that takes in no parameters
+        """
         self.confirmDBThread()
         self.viewUnlinkCallbacks.add(function)
-
 
     def removeChangeCallback(self, function):
         self.confirmDBThread()
@@ -718,10 +724,10 @@ class DynamicDatabase:
         self.confirmDBThread()
         self.viewUnlinkCallbacks.remove(function)
 
-    ##
-    # Adds an item to the object database, filtering changes to subViews
-    # @param object the object to add
-    def addBeforeCursor(self, newobject,value=NoValue):
+    def addBeforeCursor(self, newobject, value=NoValue):
+        """Adds an item to the object database, filtering changes to subViews
+        @param object the object to add
+        """
         self.confirmDBThread()
         if self.objectLocs.has_key(newobject.id):
             raise DatabaseConsistencyError,("%s (%d) is already in the database" % (newobject, newobject.id))
@@ -730,7 +736,7 @@ class DynamicDatabase:
             point = self.objects.firstIter().copy()
         if value is NoValue:
             value = newobject
-        it = self.objects.insertBefore(point, (newobject,value))
+        it = self.objects.insertBefore(point, (newobject, value))
         self.objectLocs[newobject.id] = it
         # If this database is sorted, the cursor might not have
         # actually inserted at that point
@@ -743,7 +749,7 @@ class DynamicDatabase:
             origObj = None
 
         #self.checkObjLocs()
-        for [view, f] in self.subMaps:
+        for view, f in self.subMaps:
             view.confirmDBThread()
             view.saveCursor()
             #FIXME setting the cursor directly is bad karma
@@ -751,7 +757,7 @@ class DynamicDatabase:
                 view.cursor = view.objects.lastIter().copy()
             else:
                 view.cursor = view.objectLocs[origObj[0].id].copy()
-            view.addBeforeCursor(newobject,f(value))
+            view.addBeforeCursor(newobject, f(value))
             view.restoreCursor()
 #             try:
 #                 self.checkMappedView(view)
@@ -771,13 +777,13 @@ class DynamicDatabase:
 #                     print obj[0]                    
 #                 print e
 #                 print "--------------"
-        for [view, f] in self.subSorts:
-            view.addBeforeCursor(newobject,value)
-        for [view, f] in self.subFilters:
+        for view, f in self.subSorts:
+            view.addBeforeCursor(newobject, value)
+        for view, f in self.subFilters:
             if f(value):
-                view.addBeforeCursor(newobject,value)
+                view.addBeforeCursor(newobject, value)
 #             try:
-#                 self.checkFilteredView(view,f)
+#                 self.checkFilteredView(view, f)
 #             except Exception, e:
 #                 print "--------------"
 #                 print "sub filter failed"
@@ -798,34 +804,34 @@ class DynamicDatabase:
 #                 print e
 #                 print "--------------"
         for [view] in self.clones:
-            view.addBeforeCursor(newobject,value)
+            view.addBeforeCursor(newobject, value)
         for indexFunc, indexMap in self.indexes.iteritems():
             indexMap.addObject(newobject, value)
 
         if self.liveStorage:
-            self.liveStorage.update (newobject)
+            self.liveStorage.update(newobject)
         for callback in self.addCallbacks:
-            callback(value,newobject.id)
+            callback(value, newobject.id)
         #self.checkObjLocs()
 
-    ##
-    # Adds an item to the object database, filtering changes to subViews
-    # @param object the object to add
-    def addAfterCursor(self, newobject, value = NoValue):
+    def addAfterCursor(self, newobject, value=NoValue):
+        """Adds an item to the object database, filtering changes to subViews
+        @param object the object to add
+        """
         self.confirmDBThread()
         try:
             self.saveCursor()
             if (self.cursor != self.objects.lastIter() and 
-                self.cursor is not None):
+                    self.cursor is not None):
                 self.cursor.forward()
             self.addBeforeCursor(newobject, value)
         finally:
             self.restoreCursor()
         #self.checkObjLocs()
 
-    #
-    # Removes the object from the database
     def removeObj(self, obj):
+        """Removes the object from the database
+        """
         self.confirmDBThread()
         if self.objectLocs.has_key(obj.id):
             self.remove(self.objectLocs[obj.id])
@@ -846,9 +852,9 @@ class DynamicDatabase:
                     cursor.back()
         self.objects.remove(it)
 
-    #
-    # Removes the object from the database
     def changeObj(self, obj, needsSave=True):
+        """Removes the object from the database
+        """
         changed = False
         self.confirmDBThread()
         if self.objectLocs.has_key(obj.id):
@@ -856,12 +862,12 @@ class DynamicDatabase:
             self.change(self.objectLocs[obj.id], needsSave=needsSave)
         return changed
 
-    ##
-    # remove the object the given iterator points to
-    #
-    # Private function. Should only be called by DynmaicDatabase class members
-    # @param item optional position of item to remove
-    def remove(self, it = NoValue):
+    def remove(self, it=NoValue):
+        """Remove the object the given iterator points to
+
+        Private function. Should only be called by DynmaicDatabase class members
+        @param item optional position of item to remove
+        """
         self.confirmDBThread()
         point = it
         if point is NoValue:
@@ -873,7 +879,7 @@ class DynamicDatabase:
             point = point.copy()
         if point is None:
             raise ObjectNotFoundError, "No object with id %s in database" % point
-        
+
         #Save a reference to the item to compare with subViews
         temp = self.objects[point]
         tempobj = temp[0]
@@ -888,32 +894,32 @@ class DynamicDatabase:
         self._removeIter(point)
         #self.checkObjLocs()
 
-         #Perform callbacks
+        #Perform callbacks
         for callback in self.removeCallbacks:
             callback(tempmapped, tempid)
 
         if self.liveStorage:
-            self.liveStorage.remove (tempobj)
+            self.liveStorage.remove(tempobj)
 
-         #Pass the remove on to subViews
-        for [view, f] in self.subMaps:
+        #Pass the remove on to subViews
+        for view, f in self.subMaps:
             view.removeObj(tempobj)
-        for [view, f] in self.subSorts:
+        for view, f in self.subSorts:
             view.removeObj(tempobj)
-        for [view, f] in self.subFilters:
+        for view, f in self.subFilters:
             view.removeObj(tempobj)
         for [view] in self.clones:
             view.removeObj(tempobj)
-        for (indexFunc, indexMap) in self.indexes.iteritems():
+        for indexFunc, indexMap in self.indexes.iteritems():
             indexMap.removeObject(tempobj)
         #self.checkObjLocs()
 
-    ##
-    # Signals that object on cursor has changed
-    #
-    # Private function. Should only be called by DynmaicDatabase class members
-    # @param item optional position of item to remove in place of cursor
-    def change(self, it = None, needsSave=True):
+    def change(self, it=None, needsSave=True):
+        """Signals that object on cursor has changed
+
+        Private function. Should only be called by DynmaicDatabase class members
+        @param item optional position of item to remove in place of cursor
+        """
         self.confirmDBThread()
         madeCallback = False
         if it is None:
@@ -965,12 +971,12 @@ class DynamicDatabase:
                     for callback in self.removeCallbacks:
                         callback(tempmapped, tempid)
                     for callback in self.addCallbacks:
-                        callback(tempmapped,tempid)
+                        callback(tempmapped, tempid)
                     try:
                         nextId = self.objects[iterAfter][0].id
                     except IndexError:
                         nextId = None
-                    for [view, f] in self.subMaps:
+                    for view, f in self.subMaps:
                         view.saveCursor()
                         try:
                             if nextId is not None:
@@ -987,12 +993,12 @@ class DynamicDatabase:
 
         if not madeCallback:
             for callback in self.changeCallbacks:
-                callback(tempmapped,tempid)
-        for [view, f] in self.subMaps:
+                callback(tempmapped, tempid)
+        for view, f in self.subMaps:
             view.changeObj(tempobj, needsSave=needsSave)
-        for [view, f] in self.subSorts:
+        for view, f in self.subSorts:
             view.changeObj(tempobj, needsSave=needsSave)
-        for [view, f] in self.subFilters:
+        for view, f in self.subFilters:
             #view.checkObjLocs()
             if f(tempmapped):
                 if view.objectLocs.has_key(tempid):
@@ -1008,11 +1014,12 @@ class DynamicDatabase:
         for indexFunc, indexMap in self.indexes.iteritems():
             indexMap.changeObject(tempobj, tempmapped)
 
-    # Recomputes a single filter in the database
-    def recomputeFilter(self,filter, all = False):
+    def recomputeFilter(self, filter, all=False):
+        """Recomputes a single filter in the database
+        """
         self.confirmDBThread()
         # Go through each one of the filter subviews
-        for [view, f] in self.subFilters:
+        for view, f in self.subFilters:
             if all or view is filter:
                 self.saveCursor()
                 self.resetCursor()
@@ -1027,7 +1034,7 @@ class DynamicDatabase:
                             view.removeObj(myObjObj)
                     else:
                         if f(myObjVal):
-                            view.addBeforeCursor(myObjObj,myObjVal)
+                            view.addBeforeCursor(myObjObj, myObjVal)
 
                 self.restoreCursor()
                 view.restoreCursor()
@@ -1036,7 +1043,7 @@ class DynamicDatabase:
                     callback()
         #self.checkObjLocs()
 
-    def recomputeIndex(self,filter, all = False):
+    def recomputeIndex(self, filter, all=False):
         self.confirmDBThread()
         # Go through each one of the filter subviews
         for indexFunc, indexMap in self.indexes.iteritems():
@@ -1086,20 +1093,20 @@ class DynamicDatabase:
                 callback()
 
         # Only recompute sorts that asked to be resorted
-        for [subView, f] in view.subSorts:
+        for subView, f in view.subSorts:
             if subView.resort:
                 view.recomputeSort(subView)
             else:
                 subView.recomputeFilters()
 
         # Recompute all filters, resorting where necessary
-        for [subView, f] in view.subFilters:
+        for subView, f in view.subFilters:
             if subView.resort:
                 view._recomputeSingleSort(subView, subView.sortFunc)
             view.recomputeFilter(subView)
 
         # Recompute everything below maps
-        for [subView, f] in view.subMaps:
+        for subView, f in view.subMaps:
             subView.recomputeFilters()
 
         # Recompute indexes
@@ -1107,52 +1114,50 @@ class DynamicDatabase:
             if index.resort:
                 for key, subView in index.views.iteritems():
                     view._recomputeSingleSort(subView, subView.sortFunc)
-        view.recomputeIndex(None,all=True)
+        view.recomputeIndex(None, all=True)
 
         for [subView] in view.clones:
             if subView.resort:
                 view._recomputeSingleSort(subView, subView.sortFunc)
             view.recomputeFilter(subView)
-            
 
         for callback in view.viewChangeCallbacks:
             callback()
 
-    #Recompute a single subSort
-    def recomputeSort(self,sort, all = False):
+    def recomputeSort(self, sort, all=False):
+        """Recompute a single subSort
+        """
         self.confirmDBThread()
-        for [view, f] in self.subSorts:
+        for view, f in self.subSorts:
             if all or view is sort:
-                self._recomputeSingleSort(view,f)
+                self._recomputeSingleSort(view, f)
         if sort is not None and all == False:
-            for [view, f] in self.subFilters:
+            for view, f in self.subFilters:
                 if view is sort:
-                    self._recomputeSingleSort(view,view.sortFunc)
+                    self._recomputeSingleSort(view, view.sortFunc)
         #self.checkObjLocs()
 
-    ##
-    # This is called when the criteria for one of the filters changes. It
-    # calls the appropriate add callbacks to deal with objects that have
-    # appeared and disappeared.
     def recomputeFilters(self):
+        """This is called when the criteria for one of the filters changes. It
+        calls the appropriate add callbacks to deal with objects that have
+        appeared and disappeared.
+        """
         self.confirmDBThread()
-        self.recomputeFilter(None,True)
+        self.recomputeFilter(None, True)
         self.recomputeSort(None, True)
-        for [view, f] in self.subMaps:
+        for view, f in self.subMaps:
             view.recomputeFilters()
-        self.recomputeIndex(None,True)
+        self.recomputeIndex(None, True)
         #self.checkObjLocs()
 
-    # Used to sort objects
     def getVal(self, obj):
+        """Used to sort objects
+        """
         return obj[1]
     
-    ##
-    # Restores this database
-    #
     def restoreFromObjectList(self, objectList):
-        """Restore the database using a list of DDBObjects."""
-
+        """Restore the database using a list of DDBObjects.
+        """
         self.confirmDBThread()
         #Initialize the object location dictionary
         self.objectLocs = {}
@@ -1179,32 +1184,32 @@ class DynamicDatabase:
                 last = temp
         return last
 
-    ##
-    # Removes this view from the hierarchy of views
     def unlink(self):
+        """Removes this view from the hierarchy of views
+        """
         for callback in self.viewUnlinkCallbacks:
             callback()
         self.parent.removeView(self)
 
-    ##
-    # Removes a filter that's currently not being used from the database
-    # This should be called when a filter is no longer in use
-    def removeView(self,oldView):
+    def removeView(self, oldView):
+        """Removes a filter that's currently not being used from the database
+        This should be called when a filter is no longer in use
+        """
         #FIXME: We should keep indexes to make this faster
         self.confirmDBThread()
-        for count in range(0,len(self.subFilters)):
+        for count in range(0, len(self.subFilters)):
             if self.subFilters[count][0] is oldView:
                 self.subFilters[count:count+1] =  []
                 return
-        for count in range(0,len(self.clones)):
+        for count in range(0, len(self.clones)):
             if self.clones[count][0] is oldView:
                 self.clones[count:count+1] =  []
                 return
-        for count in range(0,len(self.subSorts)):
+        for count in range(0, len(self.subSorts)):
             if self.subSorts[count][0] is oldView:
                 self.subSorts[count:count+1] =  []
                 return
-        for count in range(0,len(self.subMaps)):
+        for count in range(0, len(self.subMaps)):
             if self.subMaps[count][0] is oldView:
                 self.subMaps[count:count+1] =  []
                 return
@@ -1213,14 +1218,14 @@ class DynamicDatabase:
             for view in indexMap.getViews():
                 if view is oldView:
                     raise DatabaseConsistencyError, "Indexed views should never be directly returned"
-                for count in range(0,len(view.clones)):
+                for count in range(0, len(view.clones)):
                     if view.clones[count][0] is oldView:
                         view.clones[count:count+1] = []
                         return
 
-    ##
-    # returns the object with the given id
     def getObjectByID(self, id):
+        """Returns the object with the given id
+        """
         self.confirmDBThread()
         try:
             return self.objects[self.objectLocs[id]][1]
@@ -1231,18 +1236,18 @@ class DynamicDatabase:
         self.confirmDBThread()
         return id in self.objectLocs
 
-    ##
-    # returns the id of the object the cursor is currently pointing to
     def getCurrentID(self):
+        """Returns the id of the object the cursor is currently pointing to
+        """
         self.confirmDBThread()
         try:
             return self.objects[self.cursor][0].id
         except:
             raise ObjectNotFoundError, "No object at current cursor position"
 
-    ##
-    # returns the id of the object after the object identified by id
     def getNextID(self, id):
+        """Returns the id of the object after the object identified by id
+        """
         self.confirmDBThread()
         try:
             pos = self.objectLocs[id].copy()
@@ -1251,9 +1256,9 @@ class DynamicDatabase:
         except:
             return None
 
-    ##
-    # returns the id of the object before the object identified by id
     def getPrevID(self, id):
+        """Returns the id of the object before the object identified by id
+        """
         self.confirmDBThread()
         try:
             pos = self.objectLocs[id].copy()
@@ -1262,12 +1267,12 @@ class DynamicDatabase:
         except:
             return None
 
-    def createIndex(self, indexFunc, sortFunc = None, multiValued=False, resort = False):
+    def createIndex(self, indexFunc, sortFunc=None, multiValued=False, resort=False):
         self.confirmDBThread()
         if not multiValued:
-            indexMap = IndexMap(indexFunc, self, sortFunc = sortFunc, resort = resort)
+            indexMap = IndexMap(indexFunc, self, sortFunc=sortFunc, resort=resort)
         else:
-            indexMap = MultiIndexMap(indexFunc, self, sortFunc = sortFunc, resort = resort)
+            indexMap = MultiIndexMap(indexFunc, self, sortFunc=sortFunc, resort=resort)
         for obj, value in self.objects:
             indexMap.addObject(obj, value)
         self.indexes[indexFunc] = indexMap
@@ -1276,11 +1281,12 @@ class DynamicDatabase:
         # Throw an exception if there's no filter for this func
         return self.indexes[indexFunc].getViewForValue(value).clone()
 
-    # Changes the index associated with the current view. This should
-    # only be called on views created by filterWithIndex. Useful for
-    # cases where indexed views need to change on the fly.
     def changeIndexValue(self, indexFunc, value):
-        for (obj, mapped) in self.objects:
+        """Changes the index associated with the current view. This should
+        only be called on views created by filterWithIndex. Useful for
+        cases where indexed views need to change on the fly.
+        """
+        for obj, mapped in self.objects:
             self.remove(self.objectLocs[obj.id])
 
         # Remove references to the cloned view
@@ -1311,27 +1317,27 @@ class DynamicDatabase:
 
         If there isn't an index for indexFunc, a KeyError will be raised.
         """
-
         return self.indexes[indexFunc].getItemForValue(value, default)
 
 ##
 # Global default database
 defaultDatabase = DynamicDatabase()
 
-# Dynamic Database object
 class DDBObject(signals.SignalEmitter):
+    """Dynamic Database object
+    """
     #The last ID used in this class
     lastID = 0
 
     #The database associated with this object
     dd = defaultDatabase
 
-    ##
-    #
-    # @param dd optional DynamicDatabase to associate with this object
-    #        -- if ommitted the global database is used
-    # @param add Iff true, object is added to the database
-    def __init__(self, dd = None,add = True):
+    def __init__(self, dd=None, add=True):
+        """
+        @param dd optional DynamicDatabase to associate with this object
+               -- if ommitted the global database is used
+        @param add Iff true, object is added to the database
+        """
         signals.SignalEmitter.__init__(self, 'removed')
         if dd != None:
             self.dd = dd
@@ -1347,31 +1353,30 @@ class DDBObject(signals.SignalEmitter):
     def onRestore(self):
         signals.SignalEmitter.__init__(self, 'removed')
 
-    ##
-    # returns unique integer assocaited with this object
     def getID(self):
+        """Returns unique integer assocaited with this object
+        """
         return self.id
 
     def idExists(self):
         self.confirmDBThread()
         return self.dd.idExists(self.id)
 
-    #
-    #Call this after you've removed all references to the object
     def remove(self):
+        """Call this after you've removed all references to the object
+        """
         self.dd.confirmDBThread()
         self.dd.removeObj(self)
         self.emit('removed')
 
-    ##
-    # Call this before you grab data from an object
-    #
-    # Usage:
-    #
-    # view.confirmDBThread()
-    #  ...
-    #
     def confirmDBThread(self):
+        """Call this before you grab data from an object
+
+        Usage:
+
+            view.confirmDBThread()
+            ...
+        """
         confirmDBThread()
 
     def checkConstraints(self):
@@ -1381,9 +1386,9 @@ class DDBObject(signals.SignalEmitter):
         """
         pass
 
-    ##
-    # Call this after you change the object
     def signalChange(self, needsSave=True):
+        """Call this after you change the object
+        """
         self.dd.confirmDBThread()
         if not self.dd.idExists(self.id):
             msg = "signalChange() called on non-existant object (id is %s)" \
@@ -1397,8 +1402,9 @@ class DDBObject(signals.SignalEmitter):
         finally:
             self.dd.restoreCursor()
 
-# Erases the current database and replaces it with a blank slate
 def resetDefaultDatabase():
+    """Erases the current database and replaces it with a blank slate
+    """
     global defaultDatabase
     defaultDatabase.__init__()
     import views
