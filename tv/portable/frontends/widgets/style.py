@@ -157,8 +157,25 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         self.thumb_overlay_large = imagepool.get_surface(resources.path(
             'wimages/thumb-overlay-large.png'))
         self.html_stripper = util.HTMLStripper()
+        # We cache the size of our rows to save us from re-caclulating all the
+        # time.  cached_size_parameters stores things like the base font size
+        # that the cached value depends on.
+        self.cached_size = None
+        self.cached_size_parameters = None 
 
     def get_size(self, style, layout):
+        if self.show_details:
+            return self._calculate_size(style, layout)
+        cached_size_parameters = (style.use_custom_style, layout.font)
+        if cached_size_parameters != self.cached_size_parameters:
+            # Reset the cache values
+            self.cached_size = None
+            self.cached_size_parameters = cached_size_parameters
+        if self.cached_size is None:
+            self.cached_size = self._calculate_size(style, layout)
+        return self.cached_size
+
+    def _calculate_size(self, style, layout):
         # The right side of the cell is what's going to drive the height and
         # the right side is the tallest when we're downloading something.  So
         # use that to calculate the height.
@@ -251,32 +268,31 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         else:
             layout.set_text_color(self.text_color)
 
+    def create_pseudo_table(self, layout, rows):
+        table = cellpack.Table(len(rows), 2, col_spacing=10)
+
+        row_counter = 0
+        for left_col, right_col, hotspot in rows:
+            layout.set_font(0.85)
+            if self.use_custom_style:
+                layout.set_text_color((0.66, 0.66, 0.66))
+            else:
+                layout.set_text_color(self.text_color)
+            table.pack(layout.textbox(left_col), row_counter, 0)
+
+            layout.set_font(0.85, bold=True)
+            self.set_info_right_color(layout)
+            if hotspot:
+                pack_widget = cellpack.Hotspot(
+                    hotspot,
+                    layout.textbox(right_col, underline=True))
+            else:
+                pack_widget = layout.textbox(right_col)
+            table.pack(pack_widget, row_counter, 1)
+
+            row_counter += 1
+        return table
     def pack_info(self, layout):
-        def create_pseudo_table(rows):
-            table = cellpack.Table(len(rows), 2, col_spacing=10)
-
-            row_counter = 0
-            for left_col, right_col, hotspot in rows:
-                layout.set_font(0.85)
-                if self.use_custom_style:
-                    layout.set_text_color((0.66, 0.66, 0.66))
-                else:
-                    layout.set_text_color(self.text_color)
-                table.pack(layout.textbox(left_col), row_counter, 0)
-
-                layout.set_font(0.85, bold=True)
-                self.set_info_right_color(layout)
-                if hotspot:
-                    pack_widget = cellpack.Hotspot(
-                        hotspot,
-                        layout.textbox(right_col, underline=True))
-                else:
-                    pack_widget = layout.textbox(right_col)
-                table.pack(pack_widget, row_counter, 1)
-
-                row_counter += 1
-            return table
-        
         vbox = cellpack.VBox(3)
 
         # Create the "normal info" box
@@ -288,7 +304,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             duration = displaytext.time(self.data.duration)
         else:
             duration = ''
-        info_box = create_pseudo_table(
+        info_box = self.create_pseudo_table(layout,
             ((_("Date:"), release_date, None),
              (_("Length:"), duration, None),
              (_('Size:'), displaytext.size(self.data.size), None)))
@@ -301,11 +317,11 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         if not self.show_details:
             # Ok, we're done.  Pack in the Show Details button and
             # let's go home.
-            show_details_text = layout.textbox(_(u'Show Details'), underline=True)
+            show_details_text = layout.textbox(_('Show Details'), underline=True)
             vbox.pack(cellpack.Hotspot('details_toggle', show_details_text))
             return vbox
         
-        hide_details_text = layout.textbox(_(u'Hide Details'), underline=True)
+        hide_details_text = layout.textbox(_('Hide Details'), underline=True)
         vbox.pack(cellpack.Hotspot('details_toggle', hide_details_text))
 
         ### Create the "details info" box
@@ -314,31 +330,31 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             basename = util.clampText(
                 os.path.basename(self.data.video_path), 20)
         else:
-            basename = u''
+            basename = ''
 
         ## set up rows
         details_rows = []
-        details_rows.append((_(u'Web page'), _(u'permalink'), 'visit_webpage'))
+        details_rows.append((_('Web page'), _('permalink'), 'visit_webpage'))
         if self.data.file_url and not self.data.file_url.startswith('file:'):
             details_rows.append(
-                (_(u'File link'), _(u'direct link to file'), 'visit_filelink'))
-        details_rows.append((_(u'File type'), self.data.file_format, None))
+                (_('File link'), _('direct link to file'), 'visit_filelink'))
+        details_rows.append((_('File type'), self.data.file_format, None))
         if self.data.license_name:
             details_rows.append(
-                (_(u'License'), self.data.license_name, 'visit_license'))
+                (_('License'), self.data.license_name, 'visit_license'))
         else:
-            details_rows.append((_(u'License'), _(u'see permalink'), None))
+            details_rows.append((_('License'), _('see permalink'), None))
         if self.data.downloaded:
-            details_rows.append((_(u'Filename'), basename, None))
+            details_rows.append((_('Filename'), basename, None))
             if self.data.is_container_item:
                 details_rows.append(
-                    (_(u'Local directory'), _(u'show'), 'show_local_file'))
+                    (_('Local directory'), _('show'), 'show_local_file'))
             else:
                 details_rows.append(
-                    (_(u'Local file'), _(u'show'), 'show_local_file'))
+                    (_('Local file'), _('show'), 'show_local_file'))
 
         ## Now pack them in...
-        details_box = create_pseudo_table(details_rows)
+        details_box = self.create_pseudo_table(layout, details_rows)
         vbox.pack(details_box)
 
         return vbox
@@ -405,7 +421,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             extra = self.pack_download_status(layout)
         else:
             layout.set_font(0.77)
-            if self.data.file_type == u'application/x-bittorrent':
+            if self.data.file_type == 'application/x-bittorrent':
                 button = layout.button(_('Download Torrent'), self.hotspot=='download')
             else:
                 button = layout.button(_('Download'), self.hotspot=='download')

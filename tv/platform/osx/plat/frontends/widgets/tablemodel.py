@@ -107,12 +107,14 @@ class TableModelBase(signals.SignalEmitter):
         # We might want to do more typechecking here
 
     def update_value(self, iter, index, value):
+        old_row = list(iter.value().values)
         iter.value().values[index] = value
-        self.emit('row-changed', iter)
+        self.emit('row-changed', iter, old_row)
 
     def update(self, iter, *column_values):
+        old_row = list(iter.value().values)
         iter.value().update_values(column_values)
-        self.emit('row-changed', iter)
+        self.emit('row-changed', iter, old_row)
 
     def remove(self, iter):
         row_list = self.containing_list(iter)

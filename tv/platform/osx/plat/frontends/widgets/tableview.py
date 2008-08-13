@@ -376,7 +376,7 @@ class TableView(Widget):
         self.model.connect_weak('row-added', self.on_row_added)
         self.model.connect_weak('row-will-be-removed', self.on_row_removed)
         self.iters_to_update = []
-        self.selection_removed = self.reload_needed = False
+        self.height_changed = self.selection_removed = self.reload_needed = False
 
     def send_hotspot_clicked(self):
         tracker = self.view.hotspot_tracker
@@ -393,8 +393,13 @@ class TableView(Widget):
             offset +=  _disclosure_button_width + EXPANDER_PADDING
         return offset
 
-    def on_row_change(self, model, iter):
+    def on_row_change(self, model, iter, old_row):
         self.iters_to_update.append(iter)
+        if not self.fixed_height:
+            old_height = calc_row_height(self.view, old_row)
+            new_height = calc_row_height(self.view, self.model[iter])
+            if new_height != old_height:
+                self.height_changed = True
         if self.view.hotspot_tracker is not None:
             self.view.hotspot_tracker.update_hit()
 
@@ -465,19 +470,28 @@ class TableView(Widget):
             if self.selection_removed:
                 self.emit('selection-changed')
         elif self.iters_to_update:
-            if self.is_tree():
-                for iter in self.iters_to_update:
-                    self.view.reloadItem_(iter.value())
+            if self.fixed_height or not self.height_changed:
+                # our rows don't change height, just update cell areas
+                if self.is_tree():
+                    for iter in self.iters_to_update:
+                        self.view.reloadItem_(iter.value())
+                else:
+                    for iter in self.iters_to_update:
+                        row = self.row_for_iter(iter)
+                        rect = self.view.rectOfRow_(row)
+                        self.view.setNeedsDisplayInRect_(rect)
             else:
+                # our rows can change height inform Cocoa that their heights
+                # might have changed (this will redraw them)
+                rows_to_change = [ self.row_for_iter(iter) for iter in \
+                    self.iters_to_update]
+                index_set = NSMutableIndexSet.alloc().init()
                 for iter in self.iters_to_update:
-                    row = self.row_for_iter(iter)
-                    rect = self.view.rectOfRow_(row)
-                    self.view.setNeedsDisplayInRect_(rect)
-            if not self.fixed_height:
-                self.invalidate_size_request()
+                    index_set.addIndex_(self.row_for_iter(iter))
+                self.view.noteHeightOfRowsWithIndexesChanged_(index_set)
         else:
             return
-        self.selection_removed = self.reload_needed = False
+        self.height_changed = self.selection_removed = self.reload_needed = False
         self.iters_to_update = []
 
     def add_column(self, title, renderer, min_width, **attrs):

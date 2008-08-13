@@ -30,10 +30,7 @@
 buttons, getting font metrics and other tasks that are required to size
 things.
 """
-
-import logging
 import math
-import weakref
 
 from AppKit import *
 from Foundation import *
@@ -81,61 +78,37 @@ class MiroLayoutManager(NSLayoutManager):
         offset = max(1.0, round(0.1 * height))
         return height, offset
 
-class NSLayoutManagerPool(object):
-    """Handles a pool of NSLayoutManager objects.  We monitor what objects are
-    using them and when those objects die, we reclaim the NSLayoutManager for
-    the pool.
+class TextBoxPool(object):
+    """Handles a pool of TextBox objects.  We monitor the TextBox objects and
+    when those objects die, we reclaim them for the pool.
 
-    NSLayoutManager do a lot of caching, so it's useful to keep them around
-    rather than destroying them.
+    Creating TextBoxes is fairly expensive and NSLayoutManager do a lot of
+    caching, so it's useful to keep them around rather than destroying them.
     """
-    POOL_SIZE = 5
 
     def __init__(self):
-        self.used_layout_managers = {}
-        self.available_layout_managers = []
+        self.used_text_boxes = []
+        self.available_text_boxes = []
 
     def get(self):
         """Get a NSLayoutManager, either from the pool or by creating a new
         one.
         """
         try:
-            return self.available_layout_managers.pop()
+            rv = self.available_text_boxes.pop()
         except IndexError:
-            layout_manager = MiroLayoutManager.alloc().init()
-            container = NSTextContainer.alloc().init()
-            container.setLineFragmentPadding_(0)
-            layout_manager.addTextContainer_(container)
-            return layout_manager
+            rv = TextBox()
+        self.used_text_boxes.append(rv)
+        return rv
 
-    def release(self, layout_manager):
-        """Release an NSLayoutManager"""
-        self.available_layout_managers.append(layout_manager)
-
-    def monitor_owner(self, owner, layout_manager):
-        """Monitor the owner of an NSLayoutManager.  When the owner is garbage
-        collected, the NSLayoutManager will go back to the pool.
+    def reclaim_textboxes(self):
+        """Move used TextBoxes back to the available pool.  This should be
+        called after the code using text boxes is done using all of them.
         """
-        ref = weakref.ref(owner, self.owner_dead)
-        self.used_layout_managers[ref] = layout_manager
+        self.available_text_boxes.extend(self.used_text_boxes)
+        self.used_text_boxes[:] = []
 
-    def owner_dead(self, ref):
-        layout_manager = self.used_layout_managers.pop(ref)
-        self.release(layout_manager)
-
-    def trim_pool(self):
-        """Keep the pool to a reasonable size.
-        """
-        if len(self.used_layout_managers) > 0:
-            # We have a simplistic view here.  We asume that by the time
-            # trim_pool() is called, all the owners of NSLayoutManager have
-            # been garbage collected.  There's no point in keeping a reference
-            # to a TextBox around, so this seems okay for now.
-            logging.warn("We're leaking NSLayoutManagers!")
-        removing = len(self.available_layout_managers) - self.POOL_SIZE
-        self.available_layout_managers = self.available_layout_managers[:self.POOL_SIZE]
-
-nslayout_manager_pool = NSLayoutManagerPool()
+text_box_pool = TextBoxPool()
 
 class LayoutManager(object):
     def __init__(self):
@@ -156,51 +129,63 @@ class LayoutManager(object):
         self.shadow = shadow
 
     def textbox(self, text, underline=False):
-        layout_manager = nslayout_manager_pool.get()
+        text_box = text_box_pool.get()
         color = NSColor.colorWithDeviceRed_green_blue_alpha_(self.text_color[0], self.text_color[1], self.text_color[2], 1.0)
-        textbox = TextBox(layout_manager, text, self.current_font, color, self.shadow, underline)
-        nslayout_manager_pool.monitor_owner(textbox, layout_manager)
-        return textbox
+        text_box.reset(text, self.current_font, color, self.shadow, underline)
+        return text_box
 
     def button(self, text, pressed):
         return Button(text, self.current_font, pressed)
 
     def reset(self):
-        nslayout_manager_pool.trim_pool()
+        text_box_pool.reclaim_textboxes()
         self.set_font(1.0)
         self.set_text_color((0, 0, 0))
         self.set_text_shadow(None)
 
 class TextBox(object):
-    def __init__(self, layout_manager, text, font, color, shadow, underline):
-        self.layout_manager = layout_manager
+    def __init__(self):
+        self.layout_manager = MiroLayoutManager.alloc().init()
+        container = NSTextContainer.alloc().init()
+        container.setLineFragmentPadding_(0)
+        self.layout_manager.addTextContainer_(container)
+        self.text_storage = NSTextStorage.alloc().init()
+        self.text_storage.addLayoutManager_(self.layout_manager)
+        self.text_container = self.layout_manager.textContainers()[0]
+
+    def reset(self, text, font, color, shadow, underline):
+        """Reset the text box so it's ready to be used by a new owner."""
+        self.text_storage.deleteCharactersInRange_(NSRange(0, 
+            self.text_storage.length()))
+        self.text_container.setContainerSize_(NSSize(INFINITE, INFINITE))
+        self.paragraph_style = NSMutableParagraphStyle.alloc().init()
         self.font = font
         self.color = color
         self.shadow = shadow
-        self.text_storage = NSTextStorage.alloc().init()
-        self.text_storage.addLayoutManager_(self.layout_manager)
-        self.text_container = layout_manager.textContainers()[0]
-        self.text_container.setContainerSize_(NSSize(INFINITE, INFINITE))
-        self.paragraph_style = NSMutableParagraphStyle.alloc().init()
         self.width = None
-        self.text_storage.setFont_(font.nsfont)
         self.set_text(text, underline=underline)
 
     def make_attr_string(self, text, color, font, underline):
-        attributes = { }
+        attributes = NSMutableDictionary.alloc().init()
         if color is not None:
             nscolor = NSColor.colorWithDeviceRed_green_blue_alpha_(color[0], color[1], color[2], 1.0)
-            attributes[NSForegroundColorAttributeName] = nscolor
+            attributes.setObject_forKey_(nscolor,
+                    NSForegroundColorAttributeName)
         else:
-            attributes[NSForegroundColorAttributeName] = self.color
+            attributes.setObject_forKey_(self.color,
+                    NSForegroundColorAttributeName)
         if font is not None:
-            attributes[NSFontAttributeName] = font.nsfont
+            attributes.setObject_forKey_(font.nsfont, NSFontAttributeName)
         else:
-            attributes[NSFontAttributeName] = self.font.nsfont
-        attributes[NSParagraphStyleAttributeName] = self.paragraph_style.copy()
+            attributes.setObject_forKey_(self.font.nsfont,
+                    NSFontAttributeName)
         if underline:
-            attributes[NSUnderlineStyleAttributeName] = NSUnderlineStyleSingle
-        return NSAttributedString.alloc().initWithString_attributes_(text, attributes)
+            attributes.setObject_forKey_(NSUnderlineStyleSingle,
+                    NSUnderlineStyleAttributeName)
+        attributes.setObject_forKey_(self.paragraph_style.copy(),
+                NSParagraphStyleAttributeName)
+        return NSAttributedString.alloc().initWithString_attributes_(text,
+            attributes)
 
     def set_text(self, text, color=None, font=None, underline=False):
         string = self.make_attr_string(text, color, font, underline)
@@ -292,6 +277,8 @@ class TextBox(object):
         context.path.removeAllPoints()
 
 class Font(object):
+    line_height_sizer = NSLayoutManager.alloc().init()
+
     def __init__(self, nsfont):
         self.nsfont = nsfont
 
@@ -302,11 +289,7 @@ class Font(object):
         return -self.nsfont.descender()
 
     def line_height(self):
-        layout_manager = nslayout_manager_pool.get()
-        try:
-            return layout_manager.defaultLineHeightForFont_(self.nsfont)
-        finally:
-            nslayout_manager_pool.release(layout_manager)
+        return Font.line_height_sizer.defaultLineHeightForFont_(self.nsfont)
 
 class Button(object):
     PAD_WIDTH = 0
