@@ -122,7 +122,7 @@ class VideoRenderer (Widget):
         self.video_view.setMovie_(nil)
         self.movie_notifications = None
         self.movie = None
-        self.cachedMovie = None
+        self.cached_movie = None
 
     def adjust_video_frame(self):
         frame = self.view.frame()
@@ -154,7 +154,7 @@ class VideoRenderer (Widget):
             qtmovie = self.cached_movie
         else:
             (qtmovie, error) = QTMovie.alloc().initWithURL_error_(url)
-            self.cachedMovie = qtmovie
+            self.cached_movie = qtmovie
         return qtmovie
 
     def get_elapsed_playback_time(self):
