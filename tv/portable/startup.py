@@ -103,8 +103,7 @@ def setupGlobalFeed(url, *args, **kwargs):
     try:
         if feedView.len() == 0:
             logging.info ("Spawning global feed %s", url)
-            # FIXME - variable d never gets used.
-            d = feed.Feed(url, *args, **kwargs)
+            feed.Feed(url, *args, **kwargs)
         elif feedView.len() > 1:
             allFeeds = [f for f in feedView]
             for extra in allFeeds[1:]:
