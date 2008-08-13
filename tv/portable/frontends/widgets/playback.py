@@ -54,6 +54,11 @@ class PlaybackManager (signals.SignalEmitter):
         self.create_signal('did-stop')
         self.create_signal('playback-did-progress')
     
+    def set_volume(self, volume):
+        self.volume = volume
+        if self.video_display is not None:
+            self.video_display.set_volume(volume)
+    
     def play_pause(self):
         if not self.is_playing or self.is_paused:
             self.play()
@@ -155,7 +160,8 @@ class PlaybackManager (signals.SignalEmitter):
         self.video_display.stop()
         if 0 <= self.position < len(self.playlist):
             path = self.playlist[self.position].video_path
-            self.video_display.setup(path)
+            volume = config.get(prefs.VOLUME_LEVEL)
+            self.video_display.setup(path, volume)
             self.schedule_mark_as_watched()
         else:
             self.stop()

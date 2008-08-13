@@ -73,6 +73,9 @@ class VideoRenderer (Widget):
     def get_total_playback_time(self):
         return self.renderer.get_duration()
 
+    def set_volume(self, volume):
+        pass
+
     def play(self):
         self.renderer.play()
 

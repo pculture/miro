@@ -215,8 +215,12 @@ class VideoDisplay(Display):
         Display.__init__(self)
         self.widget = widgetset.VideoRenderer()
 
-    def setup(self, path):
+    def setup(self, path, volume):
         self.widget.set_movie_file(path)
+        self.set_volume(volume)
+
+    def set_volume(self, volume):
+        self.widget.set_volume(volume)
 
     def get_elapsed_playback_time(self):
         return self.widget.get_elapsed_playback_time()

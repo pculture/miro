@@ -164,6 +164,9 @@ class VideoRenderer (Widget):
     def get_total_playback_time(self):
         return movieDuration(self.movie)
 
+    def set_volume(self, volume):
+        self.movie.setVolume_(volume)
+
     def play(self):
         threads.warn_if_not_on_main_thread('VideoRenderer.play')
         self.video_view.play_(nil)
