@@ -31,8 +31,8 @@ import glob
 import logging
 
 from objc import YES, NO, nil, pathForFramework, loadBundleFunctions
-from Foundation import NSURL, NSZeroPoint, NSTimer
-from AppKit import NSApplication, NSEvent, NSMouseMoved, NSLeftMouseDown, NSPointInRect
+from Foundation import NSURL, NSZeroPoint, NSTimer, NSPointInRect
+from AppKit import NSApplication, NSEvent, NSMouseMoved, NSLeftMouseDown
 from AppKit import NSWindow, NSBorderlessWindowMask, NSBackingStoreBuffered, NSWindowAbove
 from AppKit import NSView, NSColor, NSNotificationCenter, NSScreen, NSBundle, NSCursor
 from QTKit import QTMovieView, QTMovie, QTMovieURLAttribute, QTMovieDidEndNotification
@@ -179,7 +179,7 @@ class VideoRenderer (Widget):
     def stop(self):
         threads.warn_if_not_on_main_thread('VideoRenderer.stop')
         self.video_view.pause_(nil)
-        self.teardown()
+        self.reset()
     
     def seek_to(self, position):
         qttime = self.movie.duration()

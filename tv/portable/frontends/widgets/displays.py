@@ -248,6 +248,7 @@ class VideoDisplay(Display):
 
     def cleanup(self):
         self.widget.stop()
+        self.widget.teardown()
 
 class DummyDisplay(TabDisplay):
     @staticmethod

@@ -57,7 +57,7 @@ class VideoRenderer (Widget):
         self._widget.add_events(gtk.gdk.POINTER_MOTION_MASK)
         self.renderer.set_widget(self._widget)
 
-    def reset(self):
+    def teardown(self):
         self.renderer.reset()
     
     def can_play_movie_file(self, path):
