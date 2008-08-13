@@ -348,6 +348,12 @@ class DownloadURL(BackendMessage):
     def __init__(self, url):
         self.url = util.toUni(url)
 
+class Search(BackendMessage):
+    """Search a search engine with a search term."""
+    def __init__(self, searchengine_id, terms):
+        self.id = searchengine_id
+        self.terms = terms
+
 class StartDownload(BackendMessage):
     """Start downloading an item."""
     def __init__(self, id):

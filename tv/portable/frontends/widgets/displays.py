@@ -79,6 +79,7 @@ class DisplayManager(object):
                 FeedDisplay,
                 PlaylistDisplay,
                 SiteDisplay,
+                SearchDisplay,
                 LibraryDisplay,
                 IndividualDownloadsDisplay,
                 NewVideosDisplay,
@@ -194,6 +195,14 @@ class NewVideosDisplay(ItemListDisplay):
 
     def make_view(self, tab):
         return itemlist.NewView()
+
+class SearchDisplay(ItemListDisplay):
+    @staticmethod
+    def should_display(type, selected_tabs):
+        return type == 'static' and selected_tabs[0].id == 'search'
+
+    def make_view(self, tab):
+        return itemlist.SearchView()
 
 class LibraryDisplay(ItemListDisplay):
     @staticmethod

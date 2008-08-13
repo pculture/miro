@@ -38,6 +38,7 @@ from miro import downloader
 from miro import messages
 from miro import signals
 from miro import util
+from miro import searchengines
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import style
@@ -522,6 +523,42 @@ class NewView(SimpleItemContainer):
     id = None
     image_filename = 'icon-new_large.png'
     title = _("New Videos")
+
+class SearchView(SimpleItemContainer):
+    type = 'search'
+    id = None
+    image_filename = 'icon-search_large.png'
+    title = _("Video Search")
+
+    def build_titlebar(self):
+        titlebar_hbox = SimpleItemContainer.build_titlebar(self)
+
+        vbox = widgetset.VBox()
+        hbox = widgetset.HBox()
+
+        engines = searchengines.get_search_engines()
+        search_dropdown = widgetset.OptionMenu([se.title for se in engines])
+        hbox.pack_start(search_dropdown, padding=5)
+
+        search_box = widgetset.TextEntry()
+        hbox.pack_start(search_box)
+
+        search_button = widgetset.Button(_('Search'))
+        search_button.set_size(0.85)
+        hbox.pack_start(search_button, padding=5)
+
+        vbox.pack_start(hbox)
+        titlebar_hbox.pack_start(widgetutil.align_middle(vbox, right_pad=20))
+
+        def handle_search_clicked(widget,
+                                  engines=engines,
+                                  search_dropdown=search_dropdown,
+                                  search_box=search_box):
+            selected = engines[search_dropdown.get_selected()]
+            messages.Search(selected.name, search_box.get_text()).send_to_backend()
+
+        search_button.connect('clicked', handle_search_clicked)
+        return titlebar_hbox
 
 class LibraryView(SimpleItemContainer):
     type = 'library'

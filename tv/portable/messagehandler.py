@@ -259,6 +259,13 @@ class LibraryItemsTracker(ItemTrackerBase):
         self.view = views.uniqueWatchableItems
         ItemTrackerBase.__init__(self)
 
+class SearchItemsTracker(ItemTrackerBase):
+    type = 'search'
+    id = None
+    def __init__(self):
+        self.view = views.searchItems
+        ItemTrackerBase.__init__(self)
+
 def make_item_tracker(message):
     if message.type == 'downloads':
         return DownloadingItemsTracker()
@@ -268,6 +275,8 @@ def make_item_tracker(message):
         return NewItemsTracker()
     elif message.type == 'library':
         return LibraryItemsTracker()
+    elif message.type == 'search':
+        return SearchItemsTracker()
     elif message.type == 'feed':
         try:
             feed = views.feeds.getObjectByID(message.id)
@@ -621,6 +630,18 @@ class BackendMessageHandler(messages.MessageHandler):
                 to_remove.append(id)
         if to_remove:
             playlist.handleRemove(to_remove)
+
+    def handle_search(self, message):
+        searchengine_id = message.id
+        terms = message.terms
+
+        search_feed = app.controller.getGlobalFeed('dtv:search')
+        search_downloads_feed = app.controller.getGlobalFeed('dtv:searchDownloads')
+
+        search_feed.lastEngine = searchengine_id
+        search_feed.lastQuery = terms
+        search_feed.preserveDownloads(search_downloads_feed)
+        search_feed.lookup(searchengine_id, terms)
 
     def item_tracker_key(self, message):
         return (message.type, message.id)
