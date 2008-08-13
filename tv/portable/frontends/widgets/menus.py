@@ -186,7 +186,7 @@ def on_down_volume():
 
 @action_handler("Fullscreen")
 def on_fullscreen():
-    app.widgetapp.fullscreen()
+    app.widgetapp.toggle_fullscreen()
 
 # Help menu
 

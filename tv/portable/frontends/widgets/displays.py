@@ -236,6 +236,12 @@ class VideoDisplay(Display):
     def seek_to(self, position):
         self.widget.seek_to(position)
 
+    def enter_fullscreen(self):
+        self.widget.enter_fullscreen()
+    
+    def exit_fullscreen(self):
+        self.widget.exit_fullscreen()
+
     def cleanup(self):
         self.widget.stop()
 

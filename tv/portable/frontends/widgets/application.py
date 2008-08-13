@@ -139,8 +139,8 @@ class Application:
     def down_volume(self):
         pass
 
-    def fullscreen(self):
-        pass
+    def toggle_fullscreen(self):
+        app.playback_manager.toggle_fullscreen()
 
     def open_video(self):
         title = _('Open Files...')

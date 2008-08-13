@@ -42,6 +42,7 @@ class PlaybackManager (signals.SignalEmitter):
         signals.SignalEmitter.__init__(self)
         self.previous_left_width = 0
         self.video_display = None
+        self.is_fullscreen = False
         self.is_playing = False
         self.is_paused = False
         self.playlist = None
@@ -179,3 +180,17 @@ class PlaybackManager (signals.SignalEmitter):
             return
         self.position -= 1
         self._play_current()
+
+    def toggle_fullscreen(self):
+        if self.is_fullscreen:
+            self.exit_fullscreen()
+        else:
+            self.enter_fullscreen()
+
+    def enter_fullscreen(self):
+        self.video_display.enter_fullscreen()
+        self.is_fullscreen = True
+    
+    def exit_fullscreen(self):
+        self.video_display.exit_fullscreen()
+        self.is_fullscreen = False

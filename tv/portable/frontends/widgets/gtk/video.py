@@ -85,3 +85,9 @@ class VideoRenderer (Widget):
     def seek_to(self, position):
         time = self.get_total_playback_time() * position
         self.renderer.set_current_time(time)
+
+    def enter_fullscreen(self):
+        pass
+
+    def exit_fullscreen(self):
+        pass
