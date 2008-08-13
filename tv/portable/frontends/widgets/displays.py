@@ -92,7 +92,8 @@ class DisplayManager(object):
     def select_display_for_tabs(self, selected_tab_list, selected_tabs):
         """Select a display to show in the right-hand side.  """
         if (selected_tab_list is self.selected_tab_list and 
-                selected_tabs == self.selected_tabs):
+                selected_tabs == self.selected_tabs and 
+                isinstance(self.current_display, TabDisplay)):
             print 'not reselecting'
             return
 
