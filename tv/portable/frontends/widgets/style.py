@@ -292,8 +292,11 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
             row_counter += 1
         return table
+
     def pack_info(self, layout):
         vbox = cellpack.VBox(3)
+        alignment = cellpack.Alignment(cellpack.pad(vbox, right=10), 
+            xalign=0.0, min_width=180)
 
         # Create the "normal info" box
         if self.data.release_date > datetime.datetime.min:
@@ -319,7 +322,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             # let's go home.
             show_details_text = layout.textbox(_('Show Details'), underline=True)
             vbox.pack(cellpack.Hotspot('details_toggle', show_details_text))
-            return vbox
+            return alignment
         
         hide_details_text = layout.textbox(_('Hide Details'), underline=True)
         vbox.pack(cellpack.Hotspot('details_toggle', hide_details_text))
@@ -357,7 +360,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         details_box = self.create_pseudo_table(layout, details_rows)
         vbox.pack(details_box)
 
-        return vbox
+        return alignment
 
     def pack_emblem(self, layout):
         layout.set_font(0.77, bold=True)

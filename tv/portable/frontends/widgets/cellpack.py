@@ -344,15 +344,19 @@ class Table(Packer):
 
 class Alignment(Packer):
     """Positions a child inside a larger space.  """
-    def __init__(self, child, xscale=1.0, yscale=1.0, xalign=0.0, yalign=0.0):
+    def __init__(self, child, xscale=1.0, yscale=1.0, xalign=0.0, yalign=0.0,
+            min_width=0, min_height=0):
         self.child = child
         self.xscale = xscale
         self.yscale = yscale
         self.xalign = xalign
         self.yalign = yalign
+        self.min_width = min_width
+        self.min_height = min_height
 
     def _calc_size(self):
-        return self.child.get_size()
+        width, height = self.child.get_size()
+        return max(self.min_width, width), max(self.min_height, height)
 
     def _calc_child_position(self, width, height):
         req_width, req_height = self.child.get_size()
@@ -528,4 +532,4 @@ def align_center(packer):
 
 def pad(packer, top=0, left=0, bottom=0, right=0):
     """Add padding to a packer."""
-    return Padding(packer, top, left, bottom, right)
+    return Padding(packer, top, right, bottom, left)
