@@ -68,8 +68,11 @@ class PlaybackManager (signals.SignalEmitter):
     def start_with_items(self, item_infos):
         self.video_display = VideoDisplay()
         self.video_display.connect('removed', self.on_display_removed)
-        self.previous_left_width = app.widgetapp.window.splitter.get_left_width()
-        app.widgetapp.window.splitter.set_left_width(0)
+        splitter = app.widgetapp.window.splitter
+        self.previous_left_width = splitter.get_left_width()
+        self.previous_left_widget = splitter.left
+        splitter.remove_left()
+        splitter.set_left_width(0)
         app.display_manager.select_display(self.video_display)
         app.menu_manager.handle_playing_selection()
         self.playlist = item_infos
@@ -120,6 +123,8 @@ class PlaybackManager (signals.SignalEmitter):
         self.video_display.stop()
         app.tab_list_manager.recalc_selection()
         app.widgetapp.window.splitter.set_left_width(self.previous_left_width)
+        app.widgetapp.window.splitter.set_left(self.previous_left_widget)
+        self.previous_left_widget = None
         self.video_display = None
         self.position = self.playlist = None
         self.emit('did-stop')
