@@ -197,6 +197,8 @@ class ItemListBase(widgetset.TableView):
                     item.download_info.state != 'uploading'):
                 menu.append((_('Restart Upload'),
                     messages.RestartUpload(item.id).send_to_backend))
+            menu.append((_('Reveal File'),
+                lambda : app.widgetapp.open_file(item.video_path)))
         elif item.download_info is not None:
             menu = [
                     (_('Cancel Download'), 
