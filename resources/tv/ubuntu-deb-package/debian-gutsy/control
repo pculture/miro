@@ -35,7 +35,7 @@ Depends: ${shlibs:Depends},
          imagemagick, 
          libxine1-plugins, 
          libxine1 (<< 1.1.8), libxine1 (>= 1.1.7), 
-         miro-data (>= 1.2.3)
+         miro-data (>= 1.2.5)
 Suggests: ttf-bitstream-vera
 Conflicts: democracyplayer (<< 0.9.8)
 Replaces: democracyplayer
