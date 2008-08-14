@@ -53,9 +53,9 @@ class TextEntry(Widget):
         self.view.setFont_(self.font)
         self.view.setEditable_(YES)
         self.sizer_cell = self.view.cell().copy()
-        if intial_text:
-            self.view.setStringValue_(intial_text)
-            self.set_width(len(intial_text))
+        if initial_text:
+            self.view.setStringValue_(initial_text)
+            self.set_width(len(initial_text))
         else:
             self.set_width(10)
 
