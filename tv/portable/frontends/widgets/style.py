@@ -275,18 +275,18 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             layout.set_text_color(self.text_color)
 
     def create_pseudo_table(self, layout, rows):
-        table = cellpack.Table(len(rows), 2, col_spacing=10)
+        table = cellpack.Table(len(rows), 2, col_spacing=10, row_spacing=2)
 
         row_counter = 0
         for left_col, right_col, hotspot in rows:
-            layout.set_font(0.85)
+            layout.set_font(0.80)
             if self.use_custom_style:
                 layout.set_text_color((0.66, 0.66, 0.66))
             else:
                 layout.set_text_color(self.text_color)
             table.pack(layout.textbox(left_col), row_counter, 0)
 
-            layout.set_font(0.85, bold=True)
+            layout.set_font(0.80, bold=True)
             self.set_info_right_color(layout)
             if hotspot:
                 pack_widget = cellpack.Hotspot(
@@ -407,8 +407,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         return layout.textbox(' - '.join(parts))
 
     def pack_download_status(self, layout):
-        vbox = cellpack.VBox(spacing=5)
-        vbox.pack(self.download_textbox(layout))
+        vbox = cellpack.VBox()
+        vbox.pack(cellpack.pad(self.download_textbox(layout), left=3))
         hbox = cellpack.HBox(spacing=5)
         progress_bar = cellpack.DrawingArea(131, 9, self.draw_progress_bar)
         hbox.pack(cellpack.align_middle(progress_bar))
@@ -421,8 +421,6 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         return vbox
 
     def pack_right(self, layout):
-        vbox = cellpack.VBox()
-        vbox.pack(self.pack_info(layout))
 
         if self.show_progress_bar:
             extra = self.pack_download_status(layout)
@@ -438,10 +436,12 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             hotspot = cellpack.Hotspot('download', button)
             extra = cellpack.align_left(hotspot)
         if extra is None:
+            vbox = cellpack.VBox()
+            vbox.pack(self.pack_info(layout))
             return vbox
         outer_vbox = cellpack.VBox()
-        outer_vbox.pack(cellpack.align_right(vbox))
-        outer_vbox.pack_space(15, expand=True)
+        outer_vbox.pack(cellpack.align_right(self.pack_info(layout)))
+        outer_vbox.pack_space(10, expand=True)
         outer_vbox.pack(extra)
         return outer_vbox
 
