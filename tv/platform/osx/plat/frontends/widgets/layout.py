@@ -322,6 +322,8 @@ class MiroSplitView (NSSplitView):
         space_taken = left_width + self.dividerThickness()
         right_view.setFrame_ (NSMakeRect(space_taken, 0,
             my_size.width - space_taken, my_size.height))
+        left_view.display()
+        right_view.display()
 
     def placeViewsWithRightWidth_(self, right_width):
         if self.subviews().count() != 2:
