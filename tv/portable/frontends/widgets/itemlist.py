@@ -413,6 +413,10 @@ class SimpleItemContainer(ItemContainerView):
         vbox.pack_start(scroller, expand=True)
         return vbox
 
+    def build_titlebar_extra(self):
+        """Override this to add additional stuff to the titlebar."""
+        pass
+
     def build_titlebar(self):
         hbox = widgetset.HBox()
         image_path = resources.path("wimages/%s" % self.image_filename)
@@ -422,6 +426,13 @@ class SimpleItemContainer(ItemContainerView):
         hbox.pack_start(im)
         from miro.frontends.widgets.feedview import TitleDrawer
         hbox.pack_start(TitleDrawer(self.title), padding=15, expand=True)
+
+        extra = self.build_titlebar_extra()
+        if extra:
+            if isinstance(extra, list):
+                [hbox.pack_start(w) for w in extra]
+            else:
+                hbox.pack_start(extra)
 
         if not use_custom_titlebar_background:
             return hbox
@@ -530,9 +541,7 @@ class SearchView(SimpleItemContainer):
     image_filename = 'icon-search_large.png'
     title = _("Video Search")
 
-    def build_titlebar(self):
-        titlebar_hbox = SimpleItemContainer.build_titlebar(self)
-
+    def build_titlebar_extra(self):
         vbox = widgetset.VBox()
         hbox = widgetset.HBox()
 
@@ -548,7 +557,6 @@ class SearchView(SimpleItemContainer):
         hbox.pack_start(search_button, padding=5)
 
         vbox.pack_start(hbox)
-        titlebar_hbox.pack_start(widgetutil.align_middle(vbox, right_pad=20))
 
         def handle_search_clicked(widget,
                                   engines=engines,
@@ -558,7 +566,7 @@ class SearchView(SimpleItemContainer):
             messages.Search(selected.name, search_box.get_text()).send_to_backend()
 
         search_button.connect('clicked', handle_search_clicked)
-        return titlebar_hbox
+        return widgetutil.align_middle(vbox, right_pad=20)
 
 class LibraryView(SimpleItemContainer):
     type = 'library'
