@@ -42,6 +42,7 @@ from miro.plat import resources
 from miro.frontends.widgets.gtk.widgetset import Rect
 
 import logging
+import sys
 
 def _get_pref(key, getter_name):
     gconf_lock.acquire()
@@ -86,6 +87,7 @@ class GtkX11Application(Application):
         setProperties(props_to_set)
         self.in_kde = None
 
+        logging.info("Python version:    %s", sys.version)
         logging.info("Gtk+ version:      %s", gtk.gtk_version)
         logging.info("PyGObject version: %s", gtk.ver)
         logging.info("PyGtk version:     %s", gtk.pygtk_version)
