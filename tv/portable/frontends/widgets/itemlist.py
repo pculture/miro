@@ -549,8 +549,9 @@ class SearchView(SimpleItemContainer):
         search_dropdown = widgetset.OptionMenu([se.title for se in engines])
         hbox.pack_start(search_dropdown, padding=5)
 
-        search_box = widgetset.TextEntry()
-        hbox.pack_start(search_box)
+        search_box = widgetset.TextEntry(initial_text=_('Search terms'))
+        search_box.set_width(15)
+        hbox.pack_start(widgetutil.align_middle(search_box))
 
         search_button = widgetset.Button(_('Search'))
         search_button.set_size(0.85)
