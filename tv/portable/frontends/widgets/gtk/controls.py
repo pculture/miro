@@ -34,11 +34,13 @@ import weakref
 from miro.frontends.widgets.gtk.base import Widget
 
 class TextEntry(Widget):
-    def __init__(self, text=None):
+    def __init__(self, initial_text=None, hidden=False):
         Widget.__init__(self)
         self.set_widget(gtk.Entry())
-        if text is not None:
-            self._widget.set_text(text)
+        if initial_text is not None:
+            self._widget.set_text(initial_text)
+        if hidden:
+            self.set_invisible(hidden)
 
     def set_text(self, text):
         self._widget.set_text(text)
