@@ -180,14 +180,20 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         # the right side is the tallest when we're downloading something.  So
         # use that to calculate the height.
         self.download_info = FakeDownloadInfo()
+        self.show_progress_bar = True
         self.setup_style(style)
         self.hotspot = None
         self.selected = False
         sizer = self.add_background(self.pack_right(layout))
         return self.MIN_WIDTH, max(140, sizer.get_size()[1])
 
+    def calc_show_progress_bar(self):
+        self.show_progress_bar = (not self.data.downloaded and
+                self.download_info is not None)
+
     def hotspot_test(self, style, layout, x, y, width, height):
         self.download_info = self.data.download_info
+        self.calc_show_progress_bar()
         self.setup_style(style)
         self.hotspot = None
         self.selected = False
@@ -418,10 +424,10 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         vbox = cellpack.VBox()
         vbox.pack(self.pack_info(layout))
 
-        if self.data.downloaded:
-            extra = self.pack_emblem(layout)
-        elif self.download_info is not None:
+        if self.show_progress_bar:
             extra = self.pack_download_status(layout)
+        elif self.data.downloaded:
+            extra = self.pack_emblem(layout)
         else:
             layout.set_font(0.77)
             if self.data.file_type == 'application/x-bittorrent':
@@ -508,6 +514,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
     def render(self, context, layout, selected, hotspot):
         self.download_info = self.data.download_info
+        self.calc_show_progress_bar()
         self.setup_style(context.style)
         self.hotspot = hotspot
         self.selected = selected
