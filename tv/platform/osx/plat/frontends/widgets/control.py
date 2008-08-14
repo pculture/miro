@@ -42,7 +42,7 @@ def round_up(float):
 
 class TextEntry(Widget):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
-    def __init__(self, intial_text=None, hidden=False):
+    def __init__(self, initial_text=None, hidden=False):
         Widget.__init__(self)
         self.font = NSFont.systemFontOfSize_(NSFont.systemFontSize())
         self.height = self.font.pointSize() + self.font.leading()
