@@ -224,6 +224,7 @@ class VideoDisplay(Display):
     def __init__(self):
         Display.__init__(self)
         self.widget = widgetset.VideoRenderer()
+        self.in_fullscreen = False
 
     def setup(self, path, volume):
         self.widget.set_movie_file(path)
@@ -252,11 +253,15 @@ class VideoDisplay(Display):
 
     def enter_fullscreen(self):
         self.widget.enter_fullscreen()
+        self.in_fullscreen = True
     
     def exit_fullscreen(self):
         self.widget.exit_fullscreen()
+        self.in_fullscreen = False
 
     def cleanup(self):
+        if self.in_fullscreen:
+            self.exit_fullscreen()
         self.widget.stop()
         self.widget.teardown()
 

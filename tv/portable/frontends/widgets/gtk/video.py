@@ -28,10 +28,12 @@
 
 """video.py -- Video code. """
 
+import gobject
 import gtk
 
 from miro import app
 from miro.frontends.widgets.gtk.widgetset import Widget
+from miro.frontends.widgets.gtk import wrappermap
 
 class NullRenderer(object):
     def can_play_file(self, path):
@@ -56,6 +58,8 @@ class VideoRenderer (Widget):
         self._widget.set_double_buffered(False)
         self._widget.add_events(gtk.gdk.POINTER_MOTION_MASK)
         self.renderer.set_widget(self._widget)
+        self.hide_controls_timeout = None
+        self.motion_handler_id = None
 
     def teardown(self):
         self.renderer.reset()
@@ -90,7 +94,32 @@ class VideoRenderer (Widget):
         self.renderer.set_current_time(time)
 
     def enter_fullscreen(self):
-        pass
+        self.motion_handler_id = self.wrapped_widget_connect(
+                'motion-notify-event', self.on_mouse_motion)
+        app.widgetapp.window.menubar.hide()
+        self.schedule_hide_controls()
+        app.widgetapp.window._window.fullscreen()
+
+    def on_mouse_motion(self, widget, event):
+        app.widgetapp.window.videobox._widget.show()
+        self.cancel_hide_controls()
+        self.schedule_hide_controls()
+
+    def hide_controls(self):
+        app.widgetapp.window.videobox._widget.hide()
+        self.hide_controls_timeout = None
+
+    def cancel_hide_controls(self):
+        if self.hide_controls_timeout is not None:
+            gobject.source_remove(self.hide_controls_timeout)
+
+    def schedule_hide_controls(self):
+        self.hide_controls_timeout = gobject.timeout_add(1500, 
+                self.hide_controls)
 
     def exit_fullscreen(self):
-        pass
+        app.widgetapp.window.menubar.show()
+        app.widgetapp.window.videobox._widget.show()
+        app.widgetapp.window._window.unfullscreen()
+        self._widget.disconnect(self.motion_handler_id)
+        self.cancel_hide_controls()
