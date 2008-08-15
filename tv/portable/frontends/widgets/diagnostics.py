@@ -61,12 +61,12 @@ OPEN = _("Open")
 # Note for data that changes over time, stick the calculation in a lambda so
 # that the diagnostics dialog shows the most recent calculation.
 ITEMS = [
-    { "label": _("Movies location:"), 
-      "data": config.get(prefs.MOVIES_DIRECTORY), 
+    { "label": _("Movies location:"),
+      "data": config.get(prefs.MOVIES_DIRECTORY),
       "button_face": OPEN,
       "button_fun": open_helper(config.get(prefs.MOVIES_DIRECTORY)) },
 
-    { "label": _("Icon cache location:"), 
+    { "label": _("Icon cache location:"),
       "data": config.get(prefs.ICON_CACHE_DIRECTORY),
       "button_face": OPEN,
       "button_fun": open_helper(config.get(prefs.ICON_CACHE_DIRECTORY)) },
@@ -76,19 +76,19 @@ ITEMS = [
       "button_face": OPEN,
       "button_fun": open_helper(config.get(prefs.LOG_PATHNAME)) },
 
-    { "label": _("Downloader log file location:"), 
+    { "label": _("Downloader log file location:"),
       "data": config.get(prefs.DOWNLOADER_LOG_PATHNAME),
       "button_face": OPEN,
       "button_fun": open_helper(config.get(prefs.DOWNLOADER_LOG_PATHNAME)) },
 
-    { "label": _("Database file location:"), 
+    { "label": _("Database file location:"),
       "data": config.get(prefs.SQLITE_PATHNAME),
       "button_face": OPEN,
       "button_fun": open_helper(config.get(prefs.SQLITE_PATHNAME)) },
 
     SEPARATOR,
 
-    { "label": _("Space free on disk:"), 
+    { "label": _("Space free on disk:"),
       "data": lambda : util.formatSizeForUser(getAvailableBytesForMovies(), "0B", False) }
 ]
 
