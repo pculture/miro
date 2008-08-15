@@ -6,7 +6,13 @@ if [ ! -e ./pbuilder/ ]; then
     mkdir ./pbuilder/
 fi
 
-function create_or_update {
+if [ ! -f ~/.pbuilderrc ]; then
+    echo "Creating .pbuilderrc file...."
+    echo "COMPONENTS=\"main restricted universe multiverse\"" > ~/.pbuilderrc;
+fi
+
+if [ ${1} ]
+then
     if [ -f ./pbuilder/$1-base.tgz ]; then
         echo "Updating $1";
         sudo pbuilder update --distribution $1 --basetgz ./pbuilder/$1-base.tgz;
@@ -16,15 +22,6 @@ function create_or_update {
            --othermirror "deb http://archive.ubuntu.com/ubuntu $1 universe multiverse" \
            --basetgz ./pbuilder/$1-base.tgz;
     fi
-}
-
-if [ ! -f ~/.pbuilderrc ]; then
-    echo "Creating .pbuilderrc file...."
-    echo "COMPONENTS=\"main restricted universe multiverse\"" > ~/.pbuilderrc;
+else
+    echo "Syntax: buildenv <dir>";
 fi
-
-# create_or_update dapper ;
-# create_or_update feisty ;
-
-create_or_update gutsy ;
-create_or_update hardy ;
