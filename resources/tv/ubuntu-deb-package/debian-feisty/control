@@ -32,7 +32,7 @@ Depends: ${shlibs:Depends},
          python-gnome2,
          python-gnome2-extras (>= 2.14.0-2),
          python-glade2,
-         miro-data (>= 1.2.5),
+         miro-data (>= 1.2.6),
          imagemagick,
          libxine1-plugins
 Suggests: ttf-bitstream-vera
