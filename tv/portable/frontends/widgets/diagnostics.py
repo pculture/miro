@@ -54,7 +54,7 @@ def open_helper(d):
     return _open_handler
 
 SEPARATOR = None
-OPEN = _("Open")
+SHOW = _("Show")
 
 # The list of (label, data) pairs to display in the diagnostics.
 # 
@@ -63,27 +63,27 @@ OPEN = _("Open")
 ITEMS = [
     { "label": _("Movies location:"),
       "data": config.get(prefs.MOVIES_DIRECTORY),
-      "button_face": OPEN,
+      "button_face": SHOW,
       "button_fun": open_helper(config.get(prefs.MOVIES_DIRECTORY)) },
 
     { "label": _("Icon cache location:"),
       "data": config.get(prefs.ICON_CACHE_DIRECTORY),
-      "button_face": OPEN,
+      "button_face": SHOW,
       "button_fun": open_helper(config.get(prefs.ICON_CACHE_DIRECTORY)) },
 
     { "label": _("Log file location:"),
       "data": config.get(prefs.LOG_PATHNAME),
-      "button_face": OPEN,
+      "button_face": SHOW,
       "button_fun": open_helper(config.get(prefs.LOG_PATHNAME)) },
 
     { "label": _("Downloader log file location:"),
       "data": config.get(prefs.DOWNLOADER_LOG_PATHNAME),
-      "button_face": OPEN,
+      "button_face": SHOW,
       "button_fun": open_helper(config.get(prefs.DOWNLOADER_LOG_PATHNAME)) },
 
     { "label": _("Database file location:"),
       "data": config.get(prefs.SQLITE_PATHNAME),
-      "button_face": OPEN,
+      "button_face": SHOW,
       "button_fun": open_helper(config.get(prefs.SQLITE_PATHNAME)) },
 
     SEPARATOR,
