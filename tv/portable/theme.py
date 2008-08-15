@@ -133,12 +133,17 @@ class ThemeHistory(DDBObject):
                 usingMiroURL = u'http://www.getmiro.com/screencasts/mac/mac.feed.rss'
             else:
                 usingMiroURL = u'http://www.getmiro.com/screencasts/windows/win.feed.rss'
-            defaultFeedURLs = [ (_('Starter Channels'),
-                                      [u'http://richie-b.blip.tv/posts/?skin=rss',
-                                       u'http://feeds.pbs.org/pbs/kcet/wiredscience-video',
-                                       u'http://www.jpl.nasa.gov/multimedia/rss/podfeed-hd.xml',
-                                       u'http://www.linktv.org/rss/hq/mosaic.xml']),
-                                   ]
+
+            defaultFeedURLs = [u'http://feeds.feedburner.com/miroguide/featured',
+                               u'http://feeds.feedburner.com/miroguide/toprated',
+                               u'http://feeds.feedburner.com/miroguide/new',
+                               u'http://feeds.feedburner.com/miroguide/popular',
+
+                               (_('Sample Channels'),
+                                   [u'http://feeds.pbs.org/pbs/moyers/journal-video',
+                                    u'http://www.washingtonpost.com/wp-srv/mmedia/hd_podcast.xml',
+                                    u'http://www.fileden.com/files/2008/5/14/1911312/timostrailers.rss'
+                               ])]
 
             # Using Miro is set to auto-download
             feed.Feed(usingMiroURL, initiallyAutoDownloadable=True)
