@@ -41,7 +41,7 @@ from miro import prefs
 from miro import config
 from miro.frontends.widgets.application import Application
 from miro.plat import migrateappname
-from miro.plat.utils import ensureDownloadDaemonIsTerminated
+from miro.plat.utils import ensureDownloadDaemonIsTerminated, filenameTypeToOSFilename
 from miro.plat.frontends.widgets import osxmenus
 from miro.plat.frontends.widgets.rect import Rect
 
@@ -97,6 +97,10 @@ class OSXApplication(Application):
         # unfortunately, it doesn't have the same semantics under UNIX
         # as under other OSes. Sometimes it blocks, sometimes it doesn't.
         NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
+
+    def open_file(self, fn):
+        filename = filenameTypeToOSFilename(fn)
+        NSWorkspace.sharedWorkspace().selectFile_inFileViewerRootedAtPath_(filename, nil)
     
     def get_main_window_dimensions(self):
         windowFrame = config.get(prefs.MAIN_WINDOW_FRAME)
