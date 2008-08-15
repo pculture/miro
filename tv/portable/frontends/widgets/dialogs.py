@@ -37,19 +37,13 @@ they can present a somewhat nicer API.  One important difference is that all
 of the dialogs run modally.
 """
 
-from miro.gtcache import gettext as _
-
-from miro import searchengines
-
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
 from miro.dialogs import BUTTON_OK, BUTTON_CANCEL, BUTTON_IGNORE, \
         BUTTON_SUBMIT_REPORT, BUTTON_YES, BUTTON_NO, BUTTON_KEEP_VIDEOS, \
-        BUTTON_DELETE_VIDEOS, BUTTON_CANCEL, BUTTON_DELETE_FILE, \
+        BUTTON_DELETE_VIDEOS, BUTTON_DELETE_FILE, \
         BUTTON_REMOVE_ENTRY, BUTTON_REMOVE, BUTTON_SUBSCRIBE, \
         BUTTON_CREATE_CHANNEL
-
-import logging
 
 def show_about():
     window = widgetset.AboutDialog()
@@ -133,100 +127,5 @@ def ask_for_save_pathname(title, initial_filename=None):
         response = window.run()
         if response == 0:
             return window.get_filename()
-    finally:
-        window.destroy()
-
-def new_search_channel(title, description, channels):
-    """Returns a tuple of:
-
-    * ("channel", ChannelInfo, search_term str)
-    * ("search_engine", SearchEngineInfo, search_term str)
-    * ("url", url str, search_term str)
-
-    if the user selected something in the dialog or None if they didn't.
-    """
-    window = widgetset.Dialog(title, description)
-    try:
-        window.add_button(BUTTON_CREATE_CHANNEL.text)
-        window.add_button(BUTTON_CANCEL.text)
-
-        extra = widgetset.VBox()
-
-        hb1 = widgetset.HBox()
-        hb1.pack_start(widgetset.Label(_('Search for:')), padding=5)
-        searchterm = widgetset.TextEntry()
-        hb1.pack_start(searchterm, expand=True)
-        extra.pack_start(hb1)
-
-        hb2 = widgetset.HBox()
-        hb2.pack_start(widgetutil.align_top(widgetset.Label(_('In this:')), top_pad=3), padding=5)
-
-        choice_table = widgetset.Table(columns=2, rows=3)
-        choice_table.set_column_spacing(5)
-        choice_table.set_row_spacing(5)
-        rbg = widgetset.RadioButtonGroup()
-
-        channel_rb = widgetset.RadioButton("Channel:", rbg)
-        channel_option = widgetset.OptionMenu([ci.name for ci in channels])
-        choice_table.set_cell(channel_rb, 0, 0)
-        choice_table.set_cell(channel_option, 1, 0)
-
-        search_engine_rb = widgetset.RadioButton("Search engine:", rbg)
-        search_engines = searchengines.get_search_engines()
-        search_engine_option = widgetset.OptionMenu([se.title for se in search_engines])
-        choice_table.set_cell(search_engine_rb, 0, 1)
-        choice_table.set_cell(search_engine_option, 1, 1)
-
-        url_rb = widgetset.RadioButton("URL:", rbg)
-        url_text = widgetset.TextEntry()
-        choice_table.set_cell(url_rb, 0, 2)
-        choice_table.set_cell(url_text, 1, 2)
-
-        hb2.pack_start(choice_table, expand=True)
-
-        # only the channel row is enabled
-        choice_table.disable_widget(row=1, column=1)
-        choice_table.disable_widget(row=2, column=1)
-
-        def handle_clicked(widget, *args):
-            # this enables and disables the fields in the table
-            # based on which radio button is selected
-            if widget is channel_rb:
-                choice_table.enable_widget(row=0, column=1)
-                choice_table.disable_widget(row=1, column=1)
-                choice_table.disable_widget(row=2, column=1)
-            elif widget is search_engine_rb:
-                choice_table.disable_widget(row=0, column=1)
-                choice_table.enable_widget(row=1, column=1)
-                choice_table.disable_widget(row=2, column=1)
-            else:
-                choice_table.disable_widget(row=0, column=1)
-                choice_table.disable_widget(row=1, column=1)
-                choice_table.enable_widget(row=2, column=1)
-
-        channel_rb.connect('clicked', handle_clicked)
-        search_engine_rb.connect('clicked', handle_clicked)
-        url_rb.connect('clicked', handle_clicked)
-
-        extra.pack_start(widgetutil.align_top(hb2, top_pad=6))
-
-        window.set_extra_widget(extra)
-        response = window.run()
-
-        if response == 0 and searchterm.get_text():
-            term = searchterm.get_text()
-            selected_option = rbg.get_selected()
-            if selected_option is channel_rb:
-                return ("channel",
-                        channels[channel_option.get_selected()],
-                        term)
-            elif selected_option is search_engine_rb:
-                return ("search_engine",
-                        search_engines[search_engine_option.get_selected()],
-                        term)
-            else:
-                return ("url",
-                        url_text.get_text(),
-                        term)
     finally:
         window.destroy()

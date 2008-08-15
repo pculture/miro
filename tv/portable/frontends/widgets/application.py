@@ -43,6 +43,7 @@ from miro import signals
 from miro import messages
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
+from miro.frontends.widgets import newsearchchannel
 from miro.frontends.widgets import displays
 from miro.frontends.widgets import itemlistmanager
 from miro.frontends.widgets import menus
@@ -303,11 +304,8 @@ class Application:
             messages.NewChannel(url).send_to_backend()
 
     def add_new_search_channel(self):
-        channel_options = app.tab_list_manager.feed_list.get_feeds()
-        channel_options = [ci for ci in channel_options if not ci.is_folder]
-        data = dialogs.new_search_channel(_('New Search Channel'),
-                                          _('A search channel contains items that match a search term.'),
-                                          channel_options)
+        data = newsearchchannel.run_dialog()
+
         if not data:
             return
 
