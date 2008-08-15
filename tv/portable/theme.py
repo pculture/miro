@@ -131,15 +131,19 @@ class ThemeHistory(DDBObject):
             logging.info("Adding default feeds")
             if platform.system() == 'Darwin':
                 defaultFeedURLs = [u'http://www.getmiro.com/screencasts/mac/mac.feed.rss']
-            elif platform.system() == 'Windows':
-                defaultFeedURLs = [u'http://www.getmiro.com/screencasts/windows/win.feed.rss']
             else:
                 defaultFeedURLs = [u'http://www.getmiro.com/screencasts/windows/win.feed.rss']
-            defaultFeedURLs.extend([ (_('Starter Channels'),
-                                      [u'http://richie-b.blip.tv/posts/?skin=rss',
-                                       u'http://feeds.pbs.org/pbs/kcet/wiredscience-video',
-                                       u'http://www.jpl.nasa.gov/multimedia/rss/podfeed-hd.xml',
-                                       u'http://www.linktv.org/rss/hq/mosaic.xml']),
+
+            defaultFeedURLs.extend([u'http://feeds.feedburner.com/miroguide/featured',
+                                    u'http://feeds.feedburner.com/miroguide/toprated',
+                                    u'http://feeds.feedburner.com/miroguide/new',
+                                    u'http://feeds.feedburner.com/miroguide/popular'
+                                   ])
+
+            defaultFeedURLs.extend([ (_('Sample Channels'),
+                                      [u'http://feeds.pbs.org/pbs/moyers/journal-video',
+                                       u'http://www.washingtonpost.com/wp-srv/mmedia/hd_podcast.xml',
+                                       u'http://www.fileden.com/files/2008/5/14/1911312/timostrailers.rss']),
                                    ])
 
             for default in defaultFeedURLs:
