@@ -97,7 +97,7 @@ class DownloadsHidableList(HidableItemList):
 
     def update_counts(self, downloads, watchable):
         if downloads > 0:
-            self.header_label.set_text(_("%d Downloads") % downloads)
+            self.header_label.set_text(_("%d Downloading") % downloads)
             self.show()
         else:
             self.hide()
