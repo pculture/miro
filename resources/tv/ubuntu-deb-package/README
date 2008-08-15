@@ -66,15 +66,18 @@ Packaging steps
 
 1. Update your environment.
 
-   You can either run::
+   You can run::
 
       % apt-get upgrade
       % sudo pbuilder update --distribution <distro> \
                              --basetgz ./pbuilder/<basetgz-file>
 
-   to upgrade the pbuilder environment for that distribution or you can use
-   the ``buildenv`` script which will update the pbuilder environments if they
-   exist or create new ones.
+   to upgrade the pbuilder environment for that distribution.
+
+   Alternatively, you can use the ``buildenv`` script to install necessary
+   packages and update or create the pbuilder environment::
+
+      % sudo buildenv <distro>
 
 2. Add a new entry to ``debian-<distro>/changelog``.  Use the previous entries 
    as your template.
@@ -157,5 +160,3 @@ Cleanup
       $ fakeroot debian/rules clean
 
    Then check in the updated ``debian-*/`` directories to svn.
-
-
