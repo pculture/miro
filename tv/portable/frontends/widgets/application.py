@@ -44,6 +44,7 @@ from miro import messages
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import newsearchchannel
+from miro.frontends.widgets import diagnostics
 from miro.frontends.widgets import displays
 from miro.frontends.widgets import itemlistmanager
 from miro.frontends.widgets import menus
@@ -597,6 +598,9 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
 
     def about(self):
         dialogs.show_about()
+
+    def diagnostics(self):
+        diagnostics.run_dialog()
 
     def uiThreadFinished(self):
         """Called by the UI event thread when is finished processing and is

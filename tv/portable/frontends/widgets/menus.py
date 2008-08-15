@@ -202,6 +202,10 @@ def on_donate():
 def on_help():
     app.widgetapp.open_url(config.get(prefs.HELP_URL))
 
+@action_handler("Diagnostics")
+def on_diagnostics():
+    app.widgetapp.diagnostics()
+
 @action_handler("ReportBug")
 def on_report_bug():
     app.widgetapp.open_url(config.get(prefs.BUG_REPORT_URL))

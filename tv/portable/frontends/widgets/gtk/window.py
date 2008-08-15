@@ -260,7 +260,7 @@ _stock = { dialogs.BUTTON_OK.text : gtk.STOCK_OK,
     }
 
 class Dialog(WindowBase):
-    def __init__(self, title, description):
+    def __init__(self, title, description=None):
         """Create a dialog."""
         WindowBase.__init__(self)
         self.set_window(gtk.Dialog(title))
@@ -268,11 +268,12 @@ class Dialog(WindowBase):
         self.packing_vbox = gtk.VBox(spacing=20)
         self.packing_vbox.set_border_width(6)
         self._window.vbox.pack_start(self.packing_vbox, True, True)
-        label = gtk.Label(description)
-        label.set_line_wrap(True)
-        label.set_size_request(390, -1)
-        label.set_selectable(True)
-        self.packing_vbox.pack_start(label)
+        if description:
+            label = gtk.Label(description)
+            label.set_line_wrap(True)
+            label.set_size_request(390, -1)
+            label.set_selectable(True)
+            self.packing_vbox.pack_start(label)
         self.extra_widget = None
         self.buttons_to_add = []
         wrappermap.add(self._window, self)

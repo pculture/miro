@@ -132,7 +132,7 @@ class MainWindow(Window):
         self.nswindow.setReleasedWhenClosed_(NO)
 
 class Dialog:
-    def __init__(self, title, description):
+    def __init__(self, title, description=None):
         self.title = title
         self.description = description
         self.buttons = []
@@ -149,10 +149,11 @@ class Dialog:
 
     def build_text(self):
         vbox = VBox(spacing=6)
-        description_label = Label(self.description, wrap=True)
-        description_label.set_bold(True)
-        description_label.set_size_request(360, -1)
-        vbox.pack_start(description_label)
+        if self.description:
+            description_label = Label(self.description, wrap=True)
+            description_label.set_bold(True)
+            description_label.set_size_request(360, -1)
+            vbox.pack_start(description_label)
         return vbox
 
     def build_buttons(self):

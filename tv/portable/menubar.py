@@ -270,6 +270,7 @@ HelpItems = [
     MenuItem(_("_Donate"), "Donate", ()),
     MenuItem(_("_Help"), "Help", (Key(F1),)),
     Separator(),
+    MenuItem(_("Diagnostics"), "Diagnostics", ()),
     MenuItem(_("Report a _Bug"), "ReportBug", ()),
     MenuItem(_("_Translate"), "Translate", ()),
     MenuItem(_("_Planet Miro"), "Planet", ()),
