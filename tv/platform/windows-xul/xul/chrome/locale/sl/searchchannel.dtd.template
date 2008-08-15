@@ -1,8 +1,0 @@
-<!ENTITY searchchannel.description	"Iskalni kanali vsebujejo predmete, ki sovpadajo z iskanimi pojmi.">
-<!ENTITY searchchannel.termlabel 	"Poišči:">
-<!ENTITY searchchannel.title            "Dodaj kanal iskanja">
-<!ENTITY searchchannel.inthis "V tem:">
-<!ENTITY searchchannel.channel "Kanal:">
-<!ENTITY searchchannel.searchengine "Način iskanja:">
-<!ENTITY searchchannel.url "URL:">
-<!ENTITY searchchannel.createchannel "Ustvari kanal">

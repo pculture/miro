@@ -1,7 +1,0 @@
-<!ENTITY bugreport.title     "$longAppName programında bir hata buldunuz!">
-<!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the
-information into our bug tracker and tell us what you were doing when the
-problem occurred.">
-<!ENTITY bugreport.openbugtracker "Hata takip sistemini aç">
-<!ENTITY bugreport.copytoclipboard "Günlüğü panoya kopyala">
-<!ENTITY bugreport.pleaserestart "Lütfen $longAppName programını yeniden başlatın (yoksa bu konuyla ilgili hata mesajları devam edebilir). Sizi zor durumda bıraktığımız için özür dileriz. $longAppName hala beta testi aşamasında, ama sizin de yardımınızla sorunları hızla çözmekteyiz!">

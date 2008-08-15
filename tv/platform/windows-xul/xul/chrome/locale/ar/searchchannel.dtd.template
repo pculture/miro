@@ -1,8 +1,0 @@
-<!ENTITY searchchannel.description	"قناة البحث تحتوي على عناصر توافق كلمة البحث.">
-<!ENTITY searchchannel.termlabel 	"البحث عن:">
-<!ENTITY searchchannel.title            "قناة بحث جديدة">
-<!ENTITY searchchannel.inthis "في هذا:">
-<!ENTITY searchchannel.channel "قناة:">
-<!ENTITY searchchannel.searchengine "محرك البحث:">
-<!ENTITY searchchannel.url "عنوان المورد النظامي:">
-<!ENTITY searchchannel.createchannel "إنشاء قناة">

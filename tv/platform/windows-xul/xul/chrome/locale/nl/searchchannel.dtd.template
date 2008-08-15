@@ -1,8 +1,0 @@
-<!ENTITY searchchannel.description	"Een zoekkanaal bevat items die overeenkomen met een zoekopdracht.">
-<!ENTITY searchchannel.termlabel 	"Zoek naar:">
-<!ENTITY searchchannel.title            "Nieuw zoekkanaal">
-<!ENTITY searchchannel.inthis "In deze:">
-<!ENTITY searchchannel.channel "Kanaal:">
-<!ENTITY searchchannel.searchengine "Zoekmachine:">
-<!ENTITY searchchannel.url "URL:">
-<!ENTITY searchchannel.createchannel "Nieuw kanaal">

@@ -1,4 +1,0 @@
-<!ENTITY migrate.title "转移已存在的电影？">
-<!ENTITY migrate.accept "迁移">
-<!ENTITY migrate.cancel "不要迁移">
-<!ENTITY migrate.description "您选择了一个新的下载目录,您希望$shortAppName 转移您已经存在的下载到那儿吗?(现在正下载的视频不会转移直到他们完成)">

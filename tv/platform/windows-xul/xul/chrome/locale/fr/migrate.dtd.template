@@ -1,4 +1,0 @@
-<!ENTITY migrate.title "Déplacer les videos existantes?">
-<!ENTITY migrate.accept "Migrer">
-<!ENTITY migrate.cancel "Ne pas déplacer">
-<!ENTITY migrate.description "Vous avez choisi un nouveau dossier pour y télécharger les films. Est-ce que $shortAppName doit y déplacer vos téléchargements actuels (les films en cours de téléchargement ne seront déplacés qu'à la fin de celui-ci) ?">

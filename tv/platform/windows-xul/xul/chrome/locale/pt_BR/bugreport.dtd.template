@@ -1,7 +1,0 @@
-<!ENTITY bugreport.title     "Você encontrou um erro no $longAppName">
-<!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the
-information into our bug tracker and tell us what you were doing when the
-problem occurred.">
-<!ENTITY bugreport.openbugtracker "Abrir o rastreador de erros">
-<!ENTITY bugreport.copytoclipboard "Copiar log para a área de transferência">
-<!ENTITY bugreport.pleaserestart "Então, por favor re-inicie o $longAppName (ou você continuará tendo erros semelhantes). Lamentamos pela incoveniência. $longAppName ainda é um programa beta, mas com sua ajuda estamos corrigindo os problemas rapidamente!">

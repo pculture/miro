@@ -1,8 +1,0 @@
-<!ENTITY searchchannel.description	"Hakukanavalla on kohteita, jotka vastaavat hakutermiä.">
-<!ENTITY searchchannel.termlabel 	"Etsi:">
-<!ENTITY searchchannel.title            "Uusi hakukanava">
-<!ENTITY searchchannel.inthis "Tässä:">
-<!ENTITY searchchannel.channel "Kanava:">
-<!ENTITY searchchannel.searchengine "Hakukone:">
-<!ENTITY searchchannel.url "URL:">
-<!ENTITY searchchannel.createchannel "Luo kanava">

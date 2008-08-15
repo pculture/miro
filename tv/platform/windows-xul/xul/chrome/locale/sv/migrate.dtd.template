@@ -1,4 +1,0 @@
-<!ENTITY migrate.title "Migrera existerande filmer?">
-<!ENTITY migrate.accept "Migrera">
-<!ENTITY migrate.cancel "Migrera inte">
-<!ENTITY migrate.description "Du har valt en ny katalog att ladda ner filmer till. Ska $shortAppName flytta dina redan hämtade filmer dit? (Filmer som laddas ner just nu flyttas inte förrän de är klara)">

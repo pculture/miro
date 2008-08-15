@@ -1,8 +1,0 @@
-<!ENTITY searchchannel.description	"En sökkanal innehåller objekt som passar med en sökterm.">
-<!ENTITY searchchannel.termlabel 	"Sök efter:">
-<!ENTITY searchchannel.title            "Ny sökkanal">
-<!ENTITY searchchannel.inthis "I denna:">
-<!ENTITY searchchannel.channel "Kanal:">
-<!ENTITY searchchannel.searchengine "Sökmotor:">
-<!ENTITY searchchannel.url "URL:">
-<!ENTITY searchchannel.createchannel "Skapa Kanal">

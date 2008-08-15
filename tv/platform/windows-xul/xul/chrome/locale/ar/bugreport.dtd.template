@@ -1,7 +1,0 @@
-<!ENTITY bugreport.title     "لقد وجت علة في $longAppName!">
-<!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the
-information into our bug tracker and tell us what you were doing when the
-problem occurred.">
-<!ENTITY bugreport.openbugtracker "فتح متابع الأخطاء">
-<!ENTITY bugreport.copytoclipboard "نسخ السجل إلى الحافظة">
-<!ENTITY bugreport.pleaserestart "عقب، رجاء إعادة تشغيل $longAppName (وإلا سوف تجد المزيد من الأخطأ المتعلقة بهذه المشكلة). نتعذر بسبب الخطأ. مازال $longAppName تحت التجربة، لكن بمساعدتكم سوف نصلح المشاكل سريعاً!">

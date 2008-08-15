@@ -1,8 +1,0 @@
-<!ENTITY searchchannel.description	"חיפוש בערוץ מכיל פריט שלא מתאים לתנאים">
-<!ENTITY searchchannel.termlabel 	"חיפוש אחר:">
-<!ENTITY searchchannel.title            "חיפוש חדש בערוץ">
-<!ENTITY searchchannel.inthis "בתוך זה:">
-<!ENTITY searchchannel.channel "ערוץ:">
-<!ENTITY searchchannel.searchengine "מנוע חיפוש:">
-<!ENTITY searchchannel.url "כתובת אינטרנט (URL):">
-<!ENTITY searchchannel.createchannel "יצירת ערוץ">

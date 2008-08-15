@@ -1,4 +1,0 @@
-<!ENTITY migrate.title "Siirretäänkö olemassa olevat videot?">
-<!ENTITY migrate.accept "Siirrä tiedot">
-<!ENTITY migrate.cancel "Älä siirrä tietoja">
-<!ENTITY migrate.description "Olet valinnut uuden kansion, jonne videot ladataan. Pitäisikö $shortAppName :n siirtää olemassa olevat lataukset sinne? (Tällä hetkellä ladattavat videot siirretään vasta, kun ne ovat latautuneet)">

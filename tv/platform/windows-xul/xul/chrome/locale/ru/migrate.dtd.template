@@ -1,4 +1,0 @@
-<!ENTITY migrate.title "Переместить текущие фильмы?">
-<!ENTITY migrate.accept "Переместить">
-<!ENTITY migrate.cancel "Не перемещать">
-<!ENTITY migrate.description "Вы выбрали новую папку для загрузки фильма. Переместить $shortAppName существующие загрузки? (Загружаемые фильмы не будут перемещаться до их завершения)">

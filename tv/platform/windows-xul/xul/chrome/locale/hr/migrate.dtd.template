@@ -1,4 +1,0 @@
-<!ENTITY migrate.title "Migrate existing movies?">
-<!ENTITY migrate.accept "Premjestiti">
-<!ENTITY migrate.cancel "Ne premjestiti">
-<!ENTITY migrate.description "Izabrali ste novu mapu da bi skinuli filmove. Da li $shortAppName mora premjestiti skidanja koja su u tijeku ? (filmovi koji su u fazi skidanja neće biti premješteni prije nego budu završeni)">

@@ -1,7 +1,0 @@
-<!ENTITY bugreport.title     "Našli ste pogrešku u $longAppName !">
-<!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the
-information into our bug tracker and tell us what you were doing when the
-problem occurred.">
-<!ENTITY bugreport.openbugtracker "Open up the bug tracker">
-<!ENTITY bugreport.copytoclipboard "Copy log to clipboard">
-<!ENTITY bugreport.pleaserestart "Nakon toga, pokreni $longAppName (da bi se ubuduće izbjeglo takve pogreške). Oprostite na smetnjama, $longAppName je i dalje u beta verziji, ali mi ćemo ubrzo rješiti sve nastale probleme !">

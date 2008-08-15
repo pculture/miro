@@ -1,4 +1,0 @@
-<!ENTITY migrate.title "Flytta lagra filmar?">
-<!ENTITY migrate.accept "Flytt">
-<!ENTITY migrate.cancel "Ikkje flytt">
-<!ENTITY migrate.description "Du har vald ei ny mappe for nedlasting av filmar. Vil du at $shortAppName skal flytta ferdige nedlastingar der? (Filmar som er i ferd med å lastast ned vert ikkje flytta før dei er ferdig nedlasta.)">

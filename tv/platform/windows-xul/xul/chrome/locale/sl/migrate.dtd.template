@@ -1,4 +1,0 @@
-<!ENTITY migrate.title "Preselim obstoječe posnetke?">
-<!ENTITY migrate.accept "Preselitev">
-<!ENTITY migrate.cancel "Brez preselitve">
-<!ENTITY migrate.description "Izbrali ste novo mapo za prenos posnetkov. Ali naj$shortAppName prestavi obstoječe datoteke na to mesto? (Trenutno dejavni prenosi bodo preneseni, ko se prenos zaključi)">

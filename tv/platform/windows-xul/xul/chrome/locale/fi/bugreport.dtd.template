@@ -1,7 +1,0 @@
-<!ENTITY bugreport.title     "Löysit virheen $longAppName :ssa!">
-<!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the
-information into our bug tracker and tell us what you were doing when the
-problem occurred.">
-<!ENTITY bugreport.openbugtracker "Avaa virheentallennusjärjestelmä.">
-<!ENTITY bugreport.copytoclipboard "Kopioi loki leikepöydälle">
-<!ENTITY bugreport.pleaserestart "Sitten käynnistä $longAppName uudestaan (tai saatat yhä saada tähän liittyviä virheitä). Pahoittelemme tästä aiheutuvaa vaivaa. $longAppName on yhä kehitysversio, mutta sinun avullasi korjaamme ongelmat nopeasti!">

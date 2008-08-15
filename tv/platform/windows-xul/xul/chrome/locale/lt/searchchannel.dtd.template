@@ -1,8 +1,0 @@
-<!ENTITY searchchannel.description	"Paieškos kanale yra elementų, kurie atitinka paieškos kriterijų.">
-<!ENTITY searchchannel.termlabel 	"Ieškoti:">
-<!ENTITY searchchannel.title            "Naujas paieškos kanalas">
-<!ENTITY searchchannel.inthis "Šiame:">
-<!ENTITY searchchannel.channel "Kanalas:">
-<!ENTITY searchchannel.searchengine "Paieškos variklis:">
-<!ENTITY searchchannel.url "URL:">
-<!ENTITY searchchannel.createchannel "Sukurti kanalą">

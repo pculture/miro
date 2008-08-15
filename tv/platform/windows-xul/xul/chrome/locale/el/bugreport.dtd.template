@@ -1,7 +1,0 @@
-<!ENTITY bugreport.title     "Βρήκατε ενα σφάλμα στο $longAppName!">
-<!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the
-information into our bug tracker and tell us what you were doing when the
-problem occurred.">
-<!ENTITY bugreport.openbugtracker "Άνοιξε τον ανιχνευτή σφαλμάτων">
-<!ENTITY bugreport.copytoclipboard "Αντιγραφή του log στην προσωρινή μνήμη (clipboard)">
-<!ENTITY bugreport.pleaserestart "Μετά, κάντε επανεκκίνηση του $longAppName (αλλιώς θα συνεχίζετε να λαμβάνετε ανάλογα μηνύματα λαθών). Λυπούμαστε για την δύσκολη θεση που σας φέραμε. Το $longAppName είναι ακόμα σε δοκιμαστική έκδοση-'βήτα'(beta), αλλά με την βοήθειά σας λύνουμε τα προβλήματα που προκύπτουν σύντομα!">

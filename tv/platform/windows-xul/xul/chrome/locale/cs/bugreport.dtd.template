@@ -1,7 +1,0 @@
-<!ENTITY bugreport.title     "Nalezl jste chybu v $longAppName!">
-<!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the
-information into our bug tracker and tell us what you were doing when the
-problem occurred.">
-<!ENTITY bugreport.openbugtracker "Otevřít správu chyb">
-<!ENTITY bugreport.copytoclipboard "Kopíruj výpis do schránky">
-<!ENTITY bugreport.pleaserestart "Poté, prosíme, ukončete $longAppName (nebo se můžou vyskytnout související chyby). Omlouváme se za potíže. $longAppName je stále ve vývoji, ale s vaší pomocí opravujeme chyby rychle.">

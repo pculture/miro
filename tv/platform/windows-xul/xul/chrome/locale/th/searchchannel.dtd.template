@@ -1,8 +1,0 @@
-<!ENTITY searchchannel.description	"A search channel contains items that match a search term.">
-<!ENTITY searchchannel.termlabel 	"ค้นหา:">
-<!ENTITY searchchannel.title            "เพิ่มแชนแนลค้นหา">
-<!ENTITY searchchannel.inthis "ใน:">
-<!ENTITY searchchannel.channel "แชนเนล:">
-<!ENTITY searchchannel.searchengine "ค้นหา:">
-<!ENTITY searchchannel.url "URL:">
-<!ENTITY searchchannel.createchannel "Create Channel">

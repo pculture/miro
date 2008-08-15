@@ -1,4 +1,0 @@
-<!ENTITY migrate.title "合併既存影片？">
-<!ENTITY migrate.accept "搬移">
-<!ENTITY migrate.cancel "不要搬移">
-<!ENTITY migrate.description "您選擇了一個新的資料夾作為影片下載目的地。$shortAppName需要將舊的影片移動到新的資料夾中嗎？(目前正在下載的影片不會被移動直到下載完成。)">

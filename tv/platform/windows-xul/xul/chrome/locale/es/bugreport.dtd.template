@@ -1,7 +1,0 @@
-<!ENTITY bugreport.title     "¡Encontró una falla en $longAppName!">
-<!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the
-information into our bug tracker and tell us what you were doing when the
-problem occurred.">
-<!ENTITY bugreport.openbugtracker "Abrir el sistema de seguimiento de fallas">
-<!ENTITY bugreport.copytoclipboard "Copiar el registro al portapapeles">
-<!ENTITY bugreport.pleaserestart "A continuación, reinicie $longAppName para evitar que le aparezcan más errores relacionados con el anterior. Le ofrecemos disculpas por las molestias. $longAppName todavía está en fase beta, pero con su ayuda solucionaremos los problemas rápidamente.">

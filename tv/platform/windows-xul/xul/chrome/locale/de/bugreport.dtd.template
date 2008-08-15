@@ -1,7 +1,0 @@
-<!ENTITY bugreport.title     "Sie haben einen Fehler in $longAppName gefunden!">
-<!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the
-information into our bug tracker and tell us what you were doing when the
-problem occurred.">
-<!ENTITY bugreport.openbugtracker "Die Fehlerverwaltung öffnen">
-<!ENTITY bugreport.copytoclipboard "Logdatei in die Zwischenablage kopieren">
-<!ENTITY bugreport.pleaserestart "Dann starten Sie $longAppName bitte neu (oder Sie erhalten möglicherweise weiterhin ähnliche Fehlermeldungen). Entschuldigung für die Unannehmlichkeiten. $longAppName befindet sich noch in der Beta-Phase, aber mit Ihrer Hilfe beheben wir die Fehler schnell!">

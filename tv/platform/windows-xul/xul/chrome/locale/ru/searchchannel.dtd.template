@@ -1,8 +1,0 @@
-<!ENTITY searchchannel.description	"По поисковому термину найдены видео в канале.">
-<!ENTITY searchchannel.termlabel 	"Искать:">
-<!ENTITY searchchannel.title            "Новый поисковой канал">
-<!ENTITY searchchannel.inthis "В этом:">
-<!ENTITY searchchannel.channel "Канал:">
-<!ENTITY searchchannel.searchengine "Поисковая машина:">
-<!ENTITY searchchannel.url "Адрес:">
-<!ENTITY searchchannel.createchannel "Создать канал">

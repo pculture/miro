@@ -1,4 +1,0 @@
-<!ENTITY migrate.title "هجّر الأفلام الموجودة؟">
-<!ENTITY migrate.accept "تهجير">
-<!ENTITY migrate.cancel "لا تهجّر">
-<!ENTITY migrate.description "لقد إخترت مجلّد جديد لتنزيل الأفلام فيه. هل تريد $shortAppName أن يهجّر الملفات المنزلة إلى هناك؟ (كل الأفلام الجارية تنزيلها لن تهجّر حتى تنتهي من التنزيل)">

@@ -1,2 +1,0 @@
-<!ENTITY about.title         "เกี่ยวกับ $longAppName"> 
-<!ENTITY about.body          "$longAppName รุ่น $appVersion ($appRevision); ลิขสิทธิ์ถูกต้อง (c) 2005-2008 $publisher. $longAppName และสัญลักษณ์ $longAppName เป็นเครื่องหมายการค้าของ $publisher."> 

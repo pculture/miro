@@ -1,7 +1,0 @@
-<!ENTITY bugreport.title     "你找到$longAppName的錯誤了！">
-<!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the
-information into our bug tracker and tell us what you were doing when the
-problem occurred.">
-<!ENTITY bugreport.openbugtracker "開啟錯誤追蹤器">
-<!ENTITY bugreport.copytoclipboard "複製到剪貼簿">
-<!ENTITY bugreport.pleaserestart "然後，請重新啟動$longAppName(如果持去發生相似的錯誤)。造成您的不便，我們感到抱歉。$longAppName還是在測試中，但擁有您的協助，我們將可以盡速修復。">

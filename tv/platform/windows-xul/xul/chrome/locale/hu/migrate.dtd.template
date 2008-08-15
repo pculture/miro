@@ -1,4 +1,0 @@
-<!ENTITY migrate.title "Mozgassuk a már létező filmeket?">
-<!ENTITY migrate.accept "Áthelyezés">
-<!ENTITY migrate.cancel "Ne legyen áthelyezés">
-<!ENTITY migrate.description "Új letöltési mappát adott meg. Helyezze át a $shortAppName a korábban letöltött fájlokat is ide? (A még folyamatban lévő letöltések addig nem lesznek áthelyezve, amíg a letöltésük be nem fejeződik)">

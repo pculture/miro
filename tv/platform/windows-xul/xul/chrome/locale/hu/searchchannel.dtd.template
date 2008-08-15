@@ -1,8 +1,0 @@
-<!ENTITY searchchannel.description	"A Keresési Csatorna olyan elemeket tartalmaz, amelyek megfelelnek egy keresési kifejezésnek.">
-<!ENTITY searchchannel.termlabel 	"Keresés erre:">
-<!ENTITY searchchannel.title            "Új Keresési Csatorna">
-<!ENTITY searchchannel.inthis "Ebben:">
-<!ENTITY searchchannel.channel "Csatorna:">
-<!ENTITY searchchannel.searchengine "Keresőmotor:">
-<!ENTITY searchchannel.url "Cím:">
-<!ENTITY searchchannel.createchannel "Csatorna létrehozása">

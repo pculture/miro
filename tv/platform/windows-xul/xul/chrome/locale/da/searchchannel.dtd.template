@@ -1,8 +1,0 @@
-<!ENTITY searchchannel.description	"En søge kanal indeholder emner, der matcher søgeord.">
-<!ENTITY searchchannel.termlabel 	"Søg efter:">
-<!ENTITY searchchannel.title            "Ny søgekanal">
-<!ENTITY searchchannel.inthis "I dette:">
-<!ENTITY searchchannel.channel "Kanal:">
-<!ENTITY searchchannel.searchengine "Søgemaskine:">
-<!ENTITY searchchannel.url "Adresse(URL):">
-<!ENTITY searchchannel.createchannel "Opret Kanal">

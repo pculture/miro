@@ -1,4 +1,0 @@
-<!ENTITY migrate.title "Migrar les pel·lícules existents?">
-<!ENTITY migrate.accept "Mou">
-<!ENTITY migrate.cancel "No moguis">
-<!ENTITY migrate.description "Heu seleccionat una carpeta nova per descarregar les pel·lícules. Hauria $shortAppName de moure aquí les descarregues existents? (Normalment les pel·lícules no seran mogudes fins que no acavin)">

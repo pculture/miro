@@ -1,4 +1,0 @@
-<!ENTITY migrate.title "Migrer eksisterende videoer?">
-<!ENTITY migrate.accept "Migrer">
-<!ENTITY migrate.cancel "Migrer ikke">
-<!ENTITY migrate.description "Du har valgt en ny mappe at gemme dine hentede emner i. Skal $shortAppName flytte dine eksisterende emner til denne mappe? (Igangværende downloads flyttes først når de er færdige).">

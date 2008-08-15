@@ -1,4 +1,0 @@
-<!ENTITY migrate.title "既存の映像を移動しますか？">
-<!ENTITY migrate.accept "移動する">
-<!ENTITY migrate.cancel "移動しない">
-<!ENTITY migrate.description "映像をダウンロードするための新しいフォルダが選択されました。$shortAppNameで、ダウンロードされた既存のものをそこへ移動しますか？　（現在ダウンロード中の映像は、ダウンロードが完了するまでは移動されません。）">

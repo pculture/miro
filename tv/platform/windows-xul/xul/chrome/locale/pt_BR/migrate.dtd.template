@@ -1,4 +1,0 @@
-<!ENTITY migrate.title "Migrar filmes existentes?">
-<!ENTITY migrate.accept "Migrar">
-<!ENTITY migrate.cancel "Não Migrar">
-<!ENTITY migrate.description "Você selecionou uma nova pasta para os arquivos baixados serem salvos. O $shortAppName deveria migrar todos seus downloads existentes para esta pasta? (Arquivos atualmente sendo baixados não serão movidos enquanto não terminarem)">

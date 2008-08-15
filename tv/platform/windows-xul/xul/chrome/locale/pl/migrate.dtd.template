@@ -1,4 +1,0 @@
-<!ENTITY migrate.title "Przenieść istniejące filmy?">
-<!ENTITY migrate.accept "Przenieś">
-<!ENTITY migrate.cancel "Nie przenoś">
-<!ENTITY migrate.description "Wybrano nowy folder do przechowywania pobieranych filmów. Czy $shortAppName powinien przenieść tam istniejące pobrania? (Aktualnie pobierane filmy nie zostaną przeniesione dopóki pobieranie nie zostanie zakończone).">

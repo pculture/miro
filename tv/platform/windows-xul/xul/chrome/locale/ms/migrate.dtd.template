@@ -1,4 +1,0 @@
-<!ENTITY migrate.title "Alih filem sedia ada?">
-<!ENTITY migrate.accept "Pindah">
-<!ENTITY migrate.cancel "Jangan Pindah">
-<!ENTITY migrate.description "You've selected a new folder to download movies to.  Should $shortAppName migrate your existing downloads there?(Currently dowloading movies will not be moved until they finish)">

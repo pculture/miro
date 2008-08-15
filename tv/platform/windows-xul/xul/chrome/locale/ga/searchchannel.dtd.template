@@ -1,8 +1,0 @@
-<!ENTITY searchchannel.description	"Tá mhíreanna a chomhoiriúnaíonn le téarma cuardaigh i mbealach cuardaigh.">
-<!ENTITY searchchannel.termlabel 	"Cuardaigh Do:">
-<!ENTITY searchchannel.title            "Cuardaigh Bealach Nua">
-<!ENTITY searchchannel.inthis "Sa:">
-<!ENTITY searchchannel.channel "Bealach">
-<!ENTITY searchchannel.searchengine "Inneall Cuardaigh:">
-<!ENTITY searchchannel.url "URL:">
-<!ENTITY searchchannel.createchannel "Cruthaigh Bealach">

@@ -1,8 +1,0 @@
-<!ENTITY searchchannel.description	"Kanał wyszukiwania zawiera elementy pasujące do wyszukiwanego zwrotu.">
-<!ENTITY searchchannel.termlabel 	"Szukaj:">
-<!ENTITY searchchannel.title            "Nowy kanał wyszukiwania">
-<!ENTITY searchchannel.inthis "W:">
-<!ENTITY searchchannel.channel "Kanał:">
-<!ENTITY searchchannel.searchengine "Wyszukiwarka:">
-<!ENTITY searchchannel.url "Adres URL:">
-<!ENTITY searchchannel.createchannel "Utwórz kanał">

@@ -1,2 +1,0 @@
-<!ENTITY about.title         "Sobre $longAppName"> 
-<!ENTITY about.body          "$longAppName versão $appVersion ($appRevision); direito de autor (c) 2005-2008 $publisher.  $longAppName e o logo do $longAppName são marcas registadas do $publisher."> 

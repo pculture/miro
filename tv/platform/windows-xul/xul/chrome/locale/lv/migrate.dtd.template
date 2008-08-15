@@ -1,4 +1,0 @@
-<!ENTITY migrate.title "Pārcelt esošos video?">
-<!ENTITY migrate.accept "Migrēt">
-<!ENTITY migrate.cancel "Nemigrēt">
-<!ENTITY migrate.description "Jūs esat izvēlējies jaunu mapi uz kuru lejupielādēt video.  Vai $shortAppName vajadzētu pārcelt esošos video uz turieni? (Pašreizējās lejupielādes netiks paŗvietotas līdz nebūš lejupielādējušās)">

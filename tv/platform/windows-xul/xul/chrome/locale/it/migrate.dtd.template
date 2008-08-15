@@ -1,4 +1,0 @@
-<!ENTITY migrate.title "Migro i video esistenti?">
-<!ENTITY migrate.accept "Migra">
-<!ENTITY migrate.cancel "Non migrare">
-<!ENTITY migrate.description "Hai selezionato una nuova cartella per scaricare i film. $shortAppName deve spostare i download correnti in questa nuova cartella?(Attualmente i film in download non saranno spostati finchè non saranno terminati)">

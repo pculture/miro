@@ -1,8 +1,0 @@
-<!ENTITY searchchannel.description	"La cerca de canal conté objectes que parteixen d'un terme de cerca.">
-<!ENTITY searchchannel.termlabel 	"Cerca:">
-<!ENTITY searchchannel.title            "Cerca de Canal nova">
-<!ENTITY searchchannel.inthis "En aquest:">
-<!ENTITY searchchannel.channel "Canal:">
-<!ENTITY searchchannel.searchengine "Cercador:">
-<!ENTITY searchchannel.url "URL:">
-<!ENTITY searchchannel.createchannel "Crea Canal">

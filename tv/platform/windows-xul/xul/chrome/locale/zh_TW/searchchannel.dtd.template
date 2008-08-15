@@ -1,8 +1,0 @@
-<!ENTITY searchchannel.description	"內含符合搜尋字串之影片的頻道">
-<!ENTITY searchchannel.termlabel 	"Search For:">
-<!ENTITY searchchannel.title            "新增搜尋頻道">
-<!ENTITY searchchannel.inthis "In This:">
-<!ENTITY searchchannel.channel "Channel:">
-<!ENTITY searchchannel.searchengine "Search Engine:">
-<!ENTITY searchchannel.url "URL:">
-<!ENTITY searchchannel.createchannel "建立頻道">

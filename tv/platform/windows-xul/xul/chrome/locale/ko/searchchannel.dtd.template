@@ -1,8 +1,0 @@
-<!ENTITY searchchannel.description	"검색 채널에는 검색어와 부합하는 항목이 포함됩니다.">
-<!ENTITY searchchannel.termlabel 	"검색 하기:">
-<!ENTITY searchchannel.title            "새 검색 채널">
-<!ENTITY searchchannel.inthis "현재 항목:">
-<!ENTITY searchchannel.channel "채널:">
-<!ENTITY searchchannel.searchengine "검색 엔진:">
-<!ENTITY searchchannel.url "URL:">
-<!ENTITY searchchannel.createchannel "채널 만들기">

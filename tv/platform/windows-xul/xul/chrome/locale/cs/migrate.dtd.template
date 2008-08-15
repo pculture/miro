@@ -1,4 +1,0 @@
-<!ENTITY migrate.title "Přesunout existující filmy?">
-<!ENTITY migrate.accept "Migrovat">
-<!ENTITY migrate.cancel "Nemigrovat">
-<!ENTITY migrate.description "Vybrali jste novou složku pro ukládání filmů. Chcete aby sem $shortAppName přesunul vaše stažené filmy? (Stahované filmy se přesunou až po skončení stahování)">

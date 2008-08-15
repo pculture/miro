@@ -1,7 +1,0 @@
-<!ENTITY bugreport.title     "Heu trobat un error de programació en $longAppName!">
-<!ENTITY bugreport.pleasehelpus "Please help us fix it. Copy and paste all the
-information into our bug tracker and tell us what you were doing when the
-problem occurred.">
-<!ENTITY bugreport.openbugtracker "Obre el registre d'errors">
-<!ENTITY bugreport.copytoclipboard "Còpia el registre al portapapers">
-<!ENTITY bugreport.pleaserestart "Així doncs, si-us-plau, reinicieu $longAppName (sinó continuarà havent-hi errades). Disculpeu les molèsties. $longAppName encara és beta, però amb el vostre suport podrem solventar els problemes ràpidament!.">

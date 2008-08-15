@@ -1,8 +1,0 @@
-<!ENTITY searchchannel.description	"Bir arama kanalı arama şartına uyan ögeler içerir.">
-<!ENTITY searchchannel.termlabel 	"Aranacak Kelime:">
-<!ENTITY searchchannel.title            "Yeni Arama Kanalı">
-<!ENTITY searchchannel.inthis "Bunda:">
-<!ENTITY searchchannel.channel "Kanal:">
-<!ENTITY searchchannel.searchengine "Arama Motoru:">
-<!ENTITY searchchannel.url "Adres:">
-<!ENTITY searchchannel.createchannel "Kanal Yarat">

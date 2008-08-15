@@ -1,4 +1,0 @@
-<!ENTITY migrate.title "Reeds bestaande video's overzetten?">
-<!ENTITY migrate.accept "Zet over">
-<!ENTITY migrate.cancel "Zet niet over">
-<!ENTITY migrate.description "U heeft de locatie voor nieuwe downloads gewijzigd. Wilt u dat $shortAppName uw reeds gedownloade bestanden verplaatst naar deze nieuwe locatie? (Downloads die nog bezig zijn, zullen achteraf overgezet worden.)">

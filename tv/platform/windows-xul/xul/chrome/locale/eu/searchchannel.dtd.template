@@ -1,8 +1,0 @@
-<!ENTITY searchchannel.description	"Bilaketa kanal batek bilaketa baten emaitza diren elementuak erakusten ditu.">
-<!ENTITY searchchannel.termlabel 	"Bilatu:">
-<!ENTITY searchchannel.title            "New Search Channel">
-<!ENTITY searchchannel.inthis "In This:">
-<!ENTITY searchchannel.channel "Kanala:">
-<!ENTITY searchchannel.searchengine "Bilaketa Motorra:">
-<!ENTITY searchchannel.url "URL:">
-<!ENTITY searchchannel.createchannel "Kanala Sortu">
