@@ -481,8 +481,9 @@ class Table(Container):
         for column in xrange(self.columns):
             width = 0
             for child in self.cells.column(column):
-                child_width, child_height = child.get_size_request()
-                width = max(width, child_width)
+                if child:
+                    child_width, child_height = child.get_size_request()
+                    width = max(width, child_width)
             self.column_widths.append(width)
             self.total_width += width
         self.total_width += self.column_spacing * (self.columns - 1)
@@ -493,8 +494,9 @@ class Table(Container):
         for row in xrange(self.rows):
             height = 0
             for child in self.cells.row(row):
-                child_width, child_height = child.get_size_request()
-                height = max(height, child_height)
+                if child:
+                    child_width, child_height = child.get_size_request()
+                    height = max(height, child_height)
             self.row_heights.append(height)
             self.total_height += height
         self.total_height += self.row_spacing * (self.rows - 1)
@@ -509,9 +511,10 @@ class Table(Container):
         x = self.viewport.placement.origin.x
         for column in xrange(self.columns):
             child = self.cells[column, row]
-            child_rect = NSMakeRect(x, y, 
-                    self.column_widths[column], self.row_heights[row])
-            child.place(child_rect, self.viewport.view)
+            if child:
+                child_rect = NSMakeRect(x, y, 
+                        self.column_widths[column], self.row_heights[row])
+                child.place(child_rect, self.viewport.view)
             x += self.column_widths[column] + self.column_spacing
 
     def set_cell(self, widget, column, row):
