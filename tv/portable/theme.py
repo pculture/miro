@@ -129,31 +129,37 @@ class ThemeHistory(DDBObject):
             app.controller.initial_feeds = True
         else:
             logging.info("Adding default feeds")
+
+            defaultFeedURLs = []
+
             if platform.system() == 'Darwin':
-                usingMiroURL = u'http://www.getmiro.com/screencasts/mac/mac.feed.rss'
+                defaultFeedURLs.append((u'http://www.getmiro.com/screencasts/mac/mac.feed.rss', True))
             else:
-                usingMiroURL = u'http://www.getmiro.com/screencasts/windows/win.feed.rss'
+                defaultFeedURLs.append((u'http://www.getmiro.com/screencasts/windows/win.feed.rss', True))
 
-            defaultFeedURLs = [u'http://feeds.feedburner.com/miroguide/featured',
-                               u'http://feeds.feedburner.com/miroguide/toprated',
-                               u'http://feeds.feedburner.com/miroguide/new',
-                               u'http://feeds.feedburner.com/miroguide/popular',
+            defaultFeedURLs.extend([
+                (u'http://feeds.miroguide.com/miroguide/featured', True),
+                (u'http://feeds.miroguide.com/miroguide/toprated', False),
+                (u'http://feeds.miroguide.com/miroguide/new', True),
+                (u'http://feeds.miroguide.com/miroguide/popular', False),
 
-                               (_('Sample Channels'),
-                                   [u'http://feeds.pbs.org/pbs/moyers/journal-video',
-                                    u'http://www.washingtonpost.com/wp-srv/mmedia/hd_podcast.xml',
-                                    u'http://www.fileden.com/files/2008/5/14/1911312/timostrailers.rss'
-                               ])]
+                (_('Sample Channels'), [
+                    (u'http://feeds.pbs.org/pbs/moyers/journal-video', False),
+                    (u'http://www.washingtonpost.com/wp-srv/mmedia/hd_podcast.xml', False),
+                    (u'http://www.fileden.com/files/2008/5/14/1911312/timostrailers.rss', False),
+                ])
+            ])
 
-            # Using Miro is set to auto-download
-            feed.Feed(usingMiroURL, initiallyAutoDownloadable=True)
             for default in defaultFeedURLs:
-                if isinstance(default, tuple): # folder
+                # folder
+                if isinstance(default, tuple) and isinstance(default[1], list):
                     defaultFolder = default
                     c_folder = folder.ChannelFolder(defaultFolder[0])
-                    for url in defaultFolder[1]:
-                        d_feed = feed.Feed(url, initiallyAutoDownloadable=False)
+                    for url, autodownload in defaultFolder[1]:
+                        d_feed = feed.Feed(url, initiallyAutoDownloadable=autodownload)
                         d_feed.setFolder(c_folder)
-                else: # feed
-                    d_feed = feed.Feed(default, initiallyAutoDownloadable=False)
+
+                # feed
+                else:
+                    d_feed = feed.Feed(default[0], initiallyAutoDownloadable=default[1])
             playlist.SavedPlaylist(_(u"Example Playlist"))
