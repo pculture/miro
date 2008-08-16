@@ -362,6 +362,23 @@ class ItemRenderer(widgetset.CustomCellRenderer):
                 details_rows.append(
                     (_('Local file'), _('show'), 'show_local_file'))
 
+        if self.data.file_type == 'application/x-bittorrent':
+            # if self.data.leechers is None (rather than say, 0 or
+            # some positive integer) then it wasn't transferring, and
+            # thus these next four don't apply
+            if self.data.leechers is not None:
+                details_rows.append(
+                    (_('Leechers'), str(self.data.leechers), None))
+                details_rows.append(
+                    (_('Seeders'), str(self.data.seeders), None))
+                details_rows.append(
+                    (_('Up Rate'), self.data.up_rate, None))
+                details_rows.append(
+                    (_('Down Rate'), self.data.down_rate, None))
+
+            details_rows.append((_('Up Total'), self.data.up_total, None))
+            details_rows.append((_('Down Total'), self.data.down_total, None))
+
         ## Now pack them in...
         details_box = self.create_pseudo_table(layout, details_rows)
         vbox.pack(details_box)

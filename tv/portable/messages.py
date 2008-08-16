@@ -584,6 +584,12 @@ class ItemInfo(object):
         (or None)
     is_container_item -- whether or not this item is actually a
         collection of files as opposed to an individual item
+    self.leechers -- (Torrent only) number of leeching clients
+    self.seeders -- (Torrent only) number of seeding clients
+    self.up_rate -- (Torrent only) how fast we're uploading data
+    self.down_rate -- (Torrent only) how fast we're downloading data
+    self.up_total -- (Torrent only) total amount we've uploaded
+    self.down_total -- (Torrent only) total amount we've downloaded
     """
     def __init__(self, item):
         self.name = item.getTitle()
@@ -625,6 +631,27 @@ class ItemInfo(object):
             self.download_info = DownloadInfo(item.downloader)
         else:
             self.download_info = None
+
+        ## Torrent-specific stuff
+        self.leechers = self.seeders = self.up_rate = None
+        self.down_rate = self.up_total = self.down_total = None
+        if item.looksLikeTorrent() and hasattr(item.downloader, 'status'):
+            status = item.downloader.status
+            if item.isTransferring():
+                # gettorrentdetails only
+                self.leechers = status.get('seeders', 0)
+                self.seeders = status.get('leechers', 0)
+                self.up_rate = util.formatSizeForUser(
+                    status.get('upRate', 0), zeroString=u"-")
+                self.down_rate = util.formatSizeForUser(
+                    status.get('rate', 0), zeroString=u"-")
+
+            # gettorrentdetailsfinished & gettorrentdetails
+            self.up_total = util.formatSizeForUser(
+                status.get('uploaded', 0), zeroString=u"-")
+            self.down_total = util.formatSizeForUser(
+                status.get('currentSize', 0), zeroString=u"-")
+
 
 class DownloadInfo(object):
     """Tracks the download state of an item.
