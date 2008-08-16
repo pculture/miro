@@ -11,7 +11,7 @@ resources/tv/maketarball $2$3
 cp Miro-$2$3.tar.gz $2$3/src/
 
 #Get the spec
-svn cat https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$2/resources/tv/Miro-FC5.spec > Miro.spec
+svn cat https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$2/resources/tv/fedora/Miro-FC5.spec > Miro.spec
 sudo cp Miro-$2$3.tar.gz /usr/src/redhat/SOURCES 
 sudo cp Miro.spec /usr/src/redhat/SPECS 
 

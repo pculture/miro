@@ -11,7 +11,7 @@ resources/tv/maketarball $2$3
 #cp Democracy-$2$3.tar.gz $2$3/src/
 
 #Get the spec
-svn cat https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$2/resources/tv/Democracy.spec > Democracy.spec
+svn cat https://svn.participatoryculture.org/svn/dtv/tags/Democracy-Player-$2/resources/tv/fedora/Democracy.spec > Democracy.spec
 cp Democracy-$2$3.tar.gz /usr/src/redhat/SOURCES 
 cp Democracy.spec /usr/src/redhat/SPECS/Democracy.spec
 
