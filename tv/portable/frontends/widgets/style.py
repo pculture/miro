@@ -585,6 +585,9 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
     def draw_progress_bar(self, context, x, y, width, height):
         dl_info = self.download_info
-        split = float(width) * dl_info.downloaded_size / self.data.size
+        if self.data.size:
+            split = float(width) * dl_info.downloaded_size / self.data.size
+        else:
+            split = 0.0
         self.progress_bar_bg.draw(context, x, y, width, height)
         self.progress_bar.draw(context, x, y, split, height)
