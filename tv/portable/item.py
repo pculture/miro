@@ -983,25 +983,6 @@ class Item(DDBObject):
             details.append((_('Error:'), status['reasonFailed']))
         return details
 
-    def getTorrentDetails(self):
-        status = self.downloader.status
-        retval = []
-        seeders = status.get('seeders', -1)
-        leechers = status.get('leechers', -1)
-        if seeders != -1:
-            retval.append((_('Seeders:'), seeders))
-        if leechers != -1:
-            retval.append((_('Leechers:'), leechers))
-        retval.extend ([
-            (_('Down Rate:'), formatRateForDetails(status.get('rate', 0))),
-            (_('Down Total:'), formatSizeForDetails(
-                status.get('currentSize', 0))),
-            (_('Up Rate:'), formatRateForDetails(status.get('upRate', 0))),
-            (_('Up Total:'), formatSizeForDetails(status.get('uploaded', 0))),
-        ])
-
-        return retval
-
     def getItemDetails(self):
         rv = []
         
@@ -1045,14 +1026,6 @@ class Item(DDBObject):
             rv.append((_('Filename:'), u"%s<BR />%s" % (filenameToUnicode(basename), link)))
         return rv
 
-    def getTorrentDetailsFinished(self):
-        status = self.downloader.status
-        return [
-            (_('Down Total'), formatSizeForDetails(
-                status.get('currentSize', 0))),
-            (_('Up Total'), formatSizeForDetails(status.get('uploaded', 0))),
-        ]
-
     def makeMoreInfoTable(self, title, moreInfoData):
         lines = []
         #lines.append(u'<h3>%s</h3>' % title)
@@ -1062,27 +1035,6 @@ class Item(DDBObject):
                     u'<td><b>%s</b></td></tr>' % (label, text))
         #lines.append(u'</table>')
         return u'\n'.join(lines)
-
-    @returnsUnicode
-    def getMoreInfo(self):
-        """Returns formatted XHTML with download info.
-        """
-        details = [
-            self.makeMoreInfoTable(_('Item Details'), self.getItemDetails()),
-        ]
-        # helper function to keep things from getting too verbose below
-        def addTable(label, data):
-            details.append(self.makeMoreInfoTable(label, data))
-        if self.looksLikeTorrent():
-            if self.isTransferring():
-                addTable(_('Torrent Details'), self.getTorrentDetails())
-            elif self.downloader and self.downloader.isFinished():
-                addTable(_('Torrent Details <i>stopped</i>'),
-                        self.getTorrentDetailsFinished())
-        elif ((self.getState() == u'downloading' and not self.pendingManualDL)
-                or self.isFailedDownload()):
-            addTable(_('Download Details'), self.getDownloadDetails())
-        return u'\n'.join(details)
 
     def deleteFiles(self):
         """Stops downloading the item.
@@ -1938,17 +1890,3 @@ any items inside that folder will also be removed or deleted.""")
                 if item.idExists():
                     item.expire()
     d.run(callback)
-
-@returnsUnicode
-def formatRateForDetails(bytes):
-    """Format a download/upload rate for the more-details view."""
-    sizeFmt = util.formatSizeForUser(bytes, zeroString=u"-")
-    if bytes > 0:
-        return sizeFmt + u"/s"
-    else:
-        return sizeFmt
-
-@returnsUnicode
-def formatSizeForDetails(bytes):
-    """Format a disk size for the more-details view."""
-    return util.formatSizeForUser(bytes, zeroString=u"-")
