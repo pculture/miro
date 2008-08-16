@@ -135,9 +135,9 @@ _("""An Effortless Way to Help Miro
 
 Miro is open-source and built by a non-profit.  We need your help to continue our work.
 
-I Heart Miro is a simple %s extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.
+I Heart Miro is a simple %(installer)s extension that gives a referral fee to the Miro organization when you shop at Amazon.  You'll never notice it, it doesn't cost you a thing, and it's easy to uninstall at any time.
 
-%s""") % (installer, instructions)
+%(instructions)s""") % { 'installer': installer, 'instructions': instructions }
 
     title = _("Install iHeartMiro?")
 #    again = _ ("Ask me again later")

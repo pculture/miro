@@ -971,8 +971,8 @@ class Feed(DDBObject):
         self.signalChange()
         if self.informOnError:
             title = _('Error loading feed')
-            description = _("Couldn't load the feed at %s (%s).") % (
-                    self.url, errorDescription)
+            description = _("Couldn't load the feed at %(url)s (%(errordescription)s).") % \
+                          { "url": self.url, "errordescription": errorDescription }
             description += "\n\n"
             description += _("Would you like to keep the feed?")
             d = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_KEEP,
