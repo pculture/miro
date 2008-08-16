@@ -635,8 +635,8 @@ class BackendMessageHandler(messages.MessageHandler):
         searchengine_id = message.id
         terms = message.terms
 
-        search_feed = app.controller.getGlobalFeed('dtv:search')
-        search_downloads_feed = app.controller.getGlobalFeed('dtv:searchDownloads')
+        search_feed = app.controller.get_global_feed('dtv:search')
+        search_downloads_feed = app.controller.get_global_feed('dtv:searchDownloads')
 
         search_feed.lastEngine = searchengine_id
         search_feed.lastQuery = terms
