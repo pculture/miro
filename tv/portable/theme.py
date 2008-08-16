@@ -134,10 +134,10 @@ class ThemeHistory(DDBObject):
             else:
                 defaultFeedURLs = [u'http://www.getmiro.com/screencasts/windows/win.feed.rss']
 
-            defaultFeedURLs.extend([u'http://feeds.feedburner.com/miroguide/featured',
-                                    u'http://feeds.feedburner.com/miroguide/toprated',
-                                    u'http://feeds.feedburner.com/miroguide/new',
-                                    u'http://feeds.feedburner.com/miroguide/popular'
+            defaultFeedURLs.extend([u'http://feeds.miroguide.com/miroguide/featured',
+                                    u'http://feeds.miroguide.com/miroguide/toprated',
+                                    u'http://feeds.miroguide.com/miroguide/new',
+                                    u'http://feeds.miroguide.com/miroguide/popular'
                                    ])
 
             defaultFeedURLs.extend([ (_('Sample Channels'),
