@@ -36,7 +36,6 @@ import threading
 import Queue
 
 from miro import app
-from miro import eventloop
 import logging
 from miro import config
 from miro import prefs
@@ -56,13 +55,12 @@ thumbnailSuccessRE = re.compile("Miro-Movie-Data-Thumbnail: Success")
 thumbnailRE = re.compile("Miro-Movie-Data-Thumbnail: (Success|Failure)")
 
 def thumbnailDirectory():
-    dir = os.path.join(config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
+    dir_ = os.path.join(config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
     try:
-        fileutil.makedirs(dir)
+        fileutil.makedirs(dir_)
     except:
         pass
-    return dir
-
+    return dir_
 
 class MovieDataInfo:
     """Little utility class to keep track of data associated with each movie.
@@ -178,14 +176,14 @@ class MovieDataUpdater:
             return -1
 
     @asIdle
-    def updateFinished (self, item, duration, screenshot):
+    def updateFinished(self, item, duration, screenshot):
         if item.idExists():
             item.duration = duration
             item.screenshot = screenshot
             item.updating_movie_info = False
             item.signalChange()
 
-    def requestUpdate (self, item):
+    def requestUpdate(self, item):
         if self.inShutdown:
             return
         filename = item.getVideoFilename()
@@ -199,7 +197,7 @@ class MovieDataUpdater:
         item.updating_movie_info = True
         self.queue.put(MovieDataInfo(item))
 
-    def shutdown (self):
+    def shutdown(self):
         self.inShutdown = True
         self.queue.put(None) # wake up our thread
         if self.thread is not None:
