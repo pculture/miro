@@ -124,6 +124,7 @@ class PlaybackManager (signals.SignalEmitter):
         app.tab_list_manager.recalc_selection()
         app.widgetapp.window.splitter.set_left_width(self.previous_left_width)
         app.widgetapp.window.splitter.set_left(self.previous_left_widget)
+        self.is_fullscreen = False
         self.previous_left_widget = None
         self.video_display = None
         self.position = self.playlist = None
