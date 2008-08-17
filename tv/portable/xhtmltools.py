@@ -33,11 +33,12 @@ from urllib import quote, quote_plus, unquote
 from HTMLParser import HTMLParser
 import types
 import random
+import logging
 
 ##
 # very simple parser to convert HTML to XHTML
 class XHTMLifier(HTMLParser):
-    def convert(self,data, addTopTags=False, filterFontTags=False):
+    def convert(self, data, addTopTags=False, filterFontTags=False):
         if addTopTags:
             self.output = u'<html><head></head><body>'
         else:
@@ -79,48 +80,45 @@ class XHTMLifier(HTMLParser):
     def handle_startendtag(self, tag, attrs):
         self.output += u'<'+tag+u'/>'
     def handle_data(self, data):
-        data = data.replace(u'&',u'&amp;')
-        data = data.replace(u'<',u'&lt;')
+        data = data.replace(u'&', u'&amp;')
+        data = data.replace(u'<', u'&lt;')
         self.output += data
     def handle_charref(self, name):
         self.output += u'&#'+name+';'
     def handle_entityref(self, name):
         self.output += u'&'+name+';'
 
-##
-# Parses HTML entities in data
 def unescape(data):
+    """Parses HTML entities in data"""
     return xml.sax.saxutils.unescape(data)
 
-#
-# encodes string for use in a URL
 def urlencode(data):
-    if type(data) == unicode:
-        data = data.encode('utf-8','replace')
+    """Encodes string for use in a URL"""
+    if isinstance(data, unicode):
+        data = data.encode('utf-8', 'replace')
     else:
         data = str(data)
     return unicode(quote(data))
 
-#
-# gets a string from a URL
 def urldecode(data):
+    """Gets a string from a URL"""
     return unquote(data)
 
-##
-# Returns XHTMLified version of HTML document
-def xhtmlify(data,addTopTags=False, filterFontTags=False):
+def xhtmlify(data, addTopTags=False, filterFontTags=False):
+    """Returns XHTMLified version of HTML document"""
     x = XHTMLifier()
     return x.convert(data, addTopTags, filterFontTags)
 
 xmlheaderRE = re.compile("^\<\?xml\s*(.*?)\s*\?\>(.*)", re.S)
-##
-# Adds a <?xml ?> header to the given xml data or replaces an
-# existing one without a charset with one that has a charset
-def fixXMLHeader(data,charset):
+
+def fixXMLHeader(data, charset):
+    """Adds a <?xml ?> header to the given xml data or replaces an
+    existing one without a charset with one that has a charset
+    """
     header = xmlheaderRE.match(data)
     if header is None:
         #print "Adding header %s" % charset
-        return '<?xml version="1.0" encoding="%s"?>%s' % (charset,data)
+        return '<?xml version="1.0" encoding="%s"?>%s' % (charset, data)
     else:
         xmlDecl = header.expand('\\1')
         theRest = header.expand('\\2')
@@ -128,40 +126,43 @@ def fixXMLHeader(data,charset):
             return data
         else:
             #print "Changing header to include charset"
-            return '<?xml %s encoding="%s"?>%s' % (xmlDecl,charset,theRest)
+            return '<?xml %s encoding="%s"?>%s' % (xmlDecl, charset, theRest)
 
 
-HTMLHeaderRE = re.compile(u"^(.*)\<\s*head\s*(.*?)\s*\>(.*?)\</\s*head\s*\>(.*)",re.I | re.S)
+HTMLHeaderRE = re.compile(u"^(.*)\<\s*head\s*(.*?)\s*\>(.*?)\</\s*head\s*\>(.*)", re.I | re.S)
 
-##
-# Adds a <meta http-equiv="Content-Type" content="text/html;
-# charset=blah"> tag to an HTML document
-#
-# Since we're only feeding this to our own HTML Parser anyway, we
-# don't care that it might bung up XHTML
-def fixHTMLHeader(data,charset):
+def fixHTMLHeader(data, charset):
+    """Adds a <meta http-equiv="Content-Type" content="text/html;
+    charset=blah"> tag to an HTML document
+
+    Since we're only feeding this to our own HTML Parser anyway, we
+    don't care that it might bung up XHTML.
+    """
     header = HTMLHeaderRE.match(data)
     if header is None:
-        #Something is very wrong with this HTML
+        # something is very wrong with this HTML
         return data
     else:
         headTags = header.expand('\\3')
-        #This isn't exactly robust, but neither is scraping HTML
+        # this isn't exactly robust, but neither is scraping HTML
         if headTags.lower().find('content-type') != -1:
             return data
         else:
             #print " adding %s Content-Type to HTML" % charset
             return header.expand('\\1<head \\2><meta http-equiv="Content-Type" content="text/html; charset=')+charset+header.expand('">\\3</head>\\4')
 
-# Converts a Python dictionary to data suitable for a POST or GET submission
-def URLEncodeDict(orig):
+def url_encode_dict(orig):
+    """Converts a Python dictionary to data suitable for a POST or GET submission
+    """
     output = []
-    for key in orig.keys():
-        if type(orig[key]) is types.ListType:
-            for value in orig[key]:
-                output.append('%s=%s' % (quote_plus(key), quote_plus(value)))
-        else:
+    for key, val in orig.items():
+        if isinstance(val, list) or isinstance(val, tuple):
+            for v in val:
+                output.append('%s=%s' % (quote_plus(key), quote_plus(v)))
+        elif isinstance(val, basestring):
             output.append('%s=%s' % (quote_plus(key), quote_plus(orig[key])))
+        else:
+            logging.warning("url_encode_dict: trying to encode non-string: '%s'", repr(val))
     return '&'.join(output)
 
 def multipartEncode(postVars, files):

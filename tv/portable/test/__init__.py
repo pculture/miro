@@ -52,5 +52,6 @@ from miro.test.databaseupgradetest import *
 from miro.test.signalstest import *
 from miro.test.messagetest import *
 from miro.test.strippertest import *
+from miro.test.xhtmltest import *
 
 import miro.test.bmachinetest
