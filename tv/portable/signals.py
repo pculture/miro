@@ -232,7 +232,7 @@ class SystemSignals(SignalEmitter):
     def shutdown(self):
         self.emit('shutdown')
 
-    def loadedCustomChannels():
+    def loadedCustomChannels(self):
         self.emit('loaded-custom-channels')
 
     def updateAvailable(self, latest):
