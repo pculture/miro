@@ -35,7 +35,7 @@ any other Miro modules.
 import os
 import random
 import re
-import sys
+# import sys
 import sha
 import time
 import string
@@ -48,8 +48,6 @@ import tempfile
 import threading
 import traceback
 import subprocess
-
-from types import UnicodeType, StringType
 
 
 # Should we print out warning messages.  Turn off in the unit tests.
@@ -384,18 +382,18 @@ def setupLogging():
 
 
 # Returned when input to a template function isn't unicode
-class DemocracyUnicodeError(StandardError):
+class MiroUnicodeError(StandardError):
     pass
 
 # Raise an exception if input isn't unicode
 def checkU(text):
-    if text is not None and not isinstance(text, UnicodeType):
-        raise DemocracyUnicodeError(u"text %r is not a unicode string (type:%s)" % (text, type(text)))
+    if text is not None and not isinstance(text, unicode):
+        raise MiroUnicodeError(u"text %r is not a unicode string (type:%s)" % (text, type(text)))
 
 # Decorator that raised an exception if the function doesn't return unicode
 def returnsUnicode(func):
     def checkFunc(*args, **kwargs):
-        result = func(*args,**kwargs)
+        result = func(*args, **kwargs)
         if result is not None:
             checkU(result)
         return result
@@ -403,14 +401,14 @@ def returnsUnicode(func):
 
 # Raise an exception if input isn't a binary string
 def checkB(text):
-    if text is not None and type(text) != StringType:
-        raise DemocracyUnicodeError, (u"text \"%s\" is not a binary string" %
+    if text is not None and not isinstance(text, str):
+        raise MiroUnicodeError, (u"text \"%s\" is not a binary string" %
                                      text)
 
 # Decorator that raised an exception if the function doesn't return unicode
 def returnsBinary(func):
     def checkFunc(*args, **kwargs):
-        result = func(*args,**kwargs)
+        result = func(*args, **kwargs)
         if result is not None:
             checkB(result)
         return result
@@ -418,19 +416,19 @@ def returnsBinary(func):
 
 # Raise an exception if input isn't a URL type
 def checkURL(text):
-    if type(text) != UnicodeType:
-        raise DemocracyUnicodeError, (u"url \"%s\" is not unicode" %
+    if not isinstance(text, unicode):
+        raise MiroUnicodeError, (u"url \"%s\" is not unicode" %
                                      text)
     try:
         text.encode('ascii')
     except:
-        raise DemocracyUnicodeError, (u"url \"%s\" contains extended characters" %
+        raise MiroUnicodeError, (u"url \"%s\" contains extended characters" %
                                      text)
 
 # Decorator that raised an exception if the function doesn't return a filename
 def returnsURL(func):
     def checkFunc(*args, **kwargs):
-        result = func(*args,**kwargs)
+        result = func(*args, **kwargs)
         if result is not None:
             checkURL(result)
         return result
@@ -439,14 +437,14 @@ def returnsURL(func):
 # Returns exception if input isn't a filename type
 def checkF(text):
     from miro.plat.utils import FilenameType
-    if text is not None and type(text) != FilenameType:
-        raise DemocracyUnicodeError, (u"text %r is not a valid filename type" %
+    if text is not None and not isinstance(text, FilenameType):
+        raise MiroUnicodeError, (u"text %r is not a valid filename type" %
                                      text)
 
 # Decorator that raised an exception if the function doesn't return a filename
 def returnsFilename(func):
     def checkFunc(*args, **kwargs):
-        result = func(*args,**kwargs)
+        result = func(*args, **kwargs)
         if result is not None:
             checkF(result)
         return result
@@ -461,7 +459,7 @@ def unicodify(d):
     elif isinstance(d, list):
         for key in range(len(d)):
             d[key] = unicodify(d[key])
-    elif type(d) == StringType:
+    elif isinstance(d, str):
         d = d.decode('ascii','replace')
     return d
 
@@ -546,7 +544,7 @@ def getsize(path):
     else:
         return os.path.getsize(path)
 
-def partition(list, size):
+def partition(list_, size):
     """Partiction list into smaller lists such that none is larger than
     size elements.
 
@@ -554,8 +552,8 @@ def partition(list, size):
     list.
     """
     retval = []
-    for start in range(0, len(list), size):
-        retval.append(list[start:start+size])
+    for start in range(0, len(list_), size):
+        retval.append(list_[start:start+size])
     return retval
 
 def directoryWritable(directory):
@@ -641,7 +639,7 @@ def import_last(module_name):
 
 def quoteattr(orig):
     orig = unicode(orig)
-    return orig.replace(u'"',u'&quot;')
+    return orig.replace(u'"', u'&quot;')
 
 
 # Takes a string and do whatever needs to be done to make it into a
@@ -654,15 +652,14 @@ defaultEncoding = "iso-8859-1" # aka Latin-1
 _utf8cache = {}
 
 def toUTF8Bytes(s, encoding=None):
-    global _utf8cache
     try:
         return _utf8cache[(s, encoding)]
     except KeyError:
         result = None
         # If we got a Unicode string, half of our work is already done.
-        if isinstance(s, UnicodeType):
+        if isinstance(s, unicode):
             result = s.encode('utf-8')
-        elif not isinstance(s, StringType):
+        elif not isinstance(s, str):
             s = str(s)
         if result is None and encoding is not None:
             # If we knew the encoding of the s, try that.
@@ -685,7 +682,6 @@ _unicache = {}
 _escapecache = {}
 
 def escape(orig):
-    global _escapecache
     orig = unicode(orig)
     try:
         return _escapecache[orig]
@@ -697,12 +693,12 @@ def toUni(orig, encoding = None):
     try:
         return _unicache[orig]
     except:
-        if isinstance(orig, UnicodeType):
+        if isinstance(orig, unicode):
             # Let's not bother putting this in the cache.  Calculating
             # it is very fast, and since this is a very common case,
             # not caching here should help with memory usage.
             return orig
-        elif not isinstance(orig, StringType):
+        elif not isinstance(orig, str):
             _unicache[orig] = unicode(orig)
         else:
             orig = toUTF8Bytes(orig, encoding)
