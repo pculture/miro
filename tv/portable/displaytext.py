@@ -42,7 +42,7 @@ def download_rate(rate):
     elif rate >= (1 << 10):
         return _("%sKB/s") % ("%.1f" % (rate / float(1 << 10)))
     else:
-        return _("%sB/s") % (rate)
+        return _("%sB/s") % ("%.1f" % rate)
 
 def time(secs):
     if secs > 3600:
