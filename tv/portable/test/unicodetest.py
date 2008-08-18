@@ -16,10 +16,7 @@ from miro import gtcache
 import gettext
 from miro import signals
 from miro.plat import resources
-from miro.frontends.html import template
 from miro import util
-from miro.frontends.html.template_compiler import TemplateError
-from miro.frontends.html import template_compiler
 
 from miro.test.framework import MiroTestCase
 
@@ -318,81 +315,3 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
             del os.environ["LANGUAGE"]
         else:
             os.environ["LANGUAGE"] = oldLang
-
-    def testTemplates(self):
-        # This tests that templates output valid UTF-8
-        
-        # FIXME this only works on GTK platforms. See #3831
-        oldLang = None
-        try:
-            oldLang = os.environ["LANGUAGE"]
-        except:
-            pass
-        os.environ["LANGUAGE"] = "fr"
-        gtcache._gtcache = {}
-
-        gettext.bindtextdomain("miro",resources.path("../../locale"))
-        gettext.textdomain("miro")
-        gettext.bind_textdomain_codeset("miro","UTF-8")
-
-        out = template.fillStaticTemplate("unittest/simpleunicode", "gtk-x11", "noCookie")
-        self.assert_(type(out)==types.UnicodeType)
-        # We shouldn't find utf-8 versions of this text
-        self.assert_(out.find(u'<h1>H\xc3\xa4ppy Birthday</h1>') == -1)
-        self.assert_(out.find(u'<p>R\xc3\xa9glages</p>') == -1)
-
-        # We should find the unicode string
-        self.assert_(out.find(u"<h1>H\xe4ppy Birthday</h1>") != -1)
-        self.assert_(out.find(u"<p>R\xe9glages</p>") != -1)
-        if oldLang is None:
-            del os.environ["LANGUAGE"]
-        else:
-            os.environ["LANGUAGE"] = oldLang
-
-class TemplateCompilerTest(framework.MiroTestCase):
-    def testNonUnicode(self):
-        # genRepeatText
-        self.assertRaises(util.MiroUnicodeError,
-                          lambda : template_compiler.genRepeatText("out","123","    ","boo"))
-        self.assertRaises(util.MiroUnicodeError,
-                          lambda : template_compiler.genRepeatText("out","123","    ","Chinese Numbers \x25cb\x4e00\x4e8c\x4e09\x56db\x4e94\x516d\x4e03\x516b\x4e5d"))
-        self.assertEqual(u"    out.write(u'Chinese Numbers \\u25cb\\u4e00\\u4e8c\\u4e09\\u56db\\u4e94\\u516d\\u4e03\\u516b\\u4e5d')\n",
-                         template_compiler.genRepeatText("out","123","    ",u"Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d"))
-
-
-        # genRepeatTranslate
-        self.assertRaises(util.MiroUnicodeError,
-                          lambda : template_compiler.genRepeatTranslate("out","123","    ",("boo",{})))
-        self.assertRaises(util.MiroUnicodeError,
-                          lambda : template_compiler.genRepeatTranslate("out","123","    ",("Chinese Numbers \x25cb\x4e00\x4e8c\x4e09\x56db\x4e94\x516d\x4e03\x516b\x4e5d",{})))
-
-
-        # genRepeatTextHide
-        self.assertRaises(util.MiroUnicodeError,
-                          lambda : template_compiler.genRepeatTextHide("out","123","    ",(False,"boo")))
-        self.assertRaises(util.MiroUnicodeError,
-                          lambda : template_compiler.genRepeatTextHide("out","123","    ",(False, "Chinese Numbers \x25cb\x4e00\x4e8c\x4e09\x56db\x4e94\x516d\x4e03\x516b\x4e5d")))
-        self.assertRaises(util.MiroUnicodeError,
-                          lambda : template_compiler.genRepeatTextHide("out","123","    ",(True,"boo")))
-        self.assertRaises(util.MiroUnicodeError,
-                          lambda : template_compiler.genRepeatTextHide("out","123","    ",(True, "Chinese Numbers \x25cb\x4e00\x4e8c\x4e09\x56db\x4e94\x516d\x4e03\x516b\x4e5d")))
-
-        self.assertEqual(u"    if not (True):\n        out.write(u'Chinese Numbers \\u25cb\\u4e00\\u4e8c\\u4e09\\u56db\\u4e94\\u516d\\u4e03\\u516b\\u4e5d')\n",
-                         template_compiler.genRepeatTextHide("out","123","    ",(True, u"Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d")))
-
-        # genHideSection
-        self.assertRaises(util.MiroUnicodeError,
-                          lambda : template_compiler.genHideSection("out","123","    ",(False,[(lambda a,b,c,d: "boo","ignored")])))
-        self.assertRaises(util.MiroUnicodeError,
-                          lambda : template_compiler.genHideSection("out","123","    ",(False,[(lambda a,b,c,d: "Chinese Numbers \x25cb\x4e00\x4e8c\x4e09\x56db\x4e94\x516d\x4e03\x516b\x4e5d","ignored")])))
-        self.assertEqual(u'    if not (False):\nChinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d',
-                          template_compiler.genHideSection("out","123","    ",(False,[(lambda a,b,c,d: u"Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d","ignored")])))
-
-        # genQuoteAndFillAttr
-        self.assertRaises(util.MiroUnicodeError,
-                          lambda:template_compiler.genQuoteAndFillAttr("out","123","    ","boo"))
-        self.assertRaises(util.MiroUnicodeError,
-                          lambda:template_compiler.genQuoteAndFillAttr("out","123","    ","Chinese Numbers \x25cb\x4e00\x4e8c\x4e09\x56db\x4e94\x516d\x4e03\x516b\x4e5d"))
-        self.assertEqual(u"    out.write(quoteAndFillAttr(u'Chinese Numbers \\u25cb\\u4e00\\u4e8c\\u4e09\\u56db\\u4e94\\u516d\\u4e03\\u516b\\u4e5d',locals()))\n",
-                         template_compiler.genQuoteAndFillAttr("out","123","    ",u"Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d"))
-

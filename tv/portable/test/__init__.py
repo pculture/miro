@@ -31,7 +31,7 @@
 
 # FIXME - this needs to be re-tooled to use new frontend or a testing
 # front end
-#from miro.test.unicodetest import *
+from miro.test.unicodetest import *
 
 from miro.test.databasetest import *
 from miro.test.fasttypestest import *
