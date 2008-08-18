@@ -38,11 +38,6 @@ selection -- Handles selected objects
 renderers -- List of active renderers
 db -- Database object
 
-The html frontend adds:
-
-delegate -- UIBackendDelegate that handles platform-specific UI tasks.
-htmlapp -- HTMLApplication object
-
 The widget frontend adds:
 
 widgetapp -- Application object

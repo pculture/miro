@@ -317,41 +317,6 @@ class Item(DDBObject):
                 pass
         DDBObject.signalChange(self, needsSave=needsSave)
 
-    def getItemXML(self, viewName):
-        """Returns the rendered download-item template, hopefully from the cache
-
-        viewName - name of the view we're in.
-        view - actual view object that we're in.
-
-        Almost all of the search string is cached, but there are several pieces
-        of data that must be generated on the fly:
-         * The name of the view, used for things like action:playNamedView
-         * The dragdesttype attribute -- it's based on the current selection
-         * The selected css class -- it's depends on whether the view that this
-            item is in is the view that's selected.  This matters when an item
-            is shown multiple times on a page, in different views.
-         * The channel name -- it's not displayed in the channel template.
-        """
-        try:
-            xml = self._itemXML
-        except AttributeError:
-            self._calcItemXML()
-            xml = self._itemXML
-        return xml.replace(self._XMLViewName, viewName)
-
-    def _calcItemXML(self):
-        """Regenerates an expired item XML from the download-item template.
-
-        _XMLViewName - random string we use for the name of the view
-        _itemXML - rendered XML
-        """
-        from miro.frontends.html import template
-        self._XMLViewName = "view%dview" % random.randint(9999999,99999999)
-        self._itemXML = template.fillStaticTemplate(
-            'download-item-inner', onlyBody=True, this=self,
-            viewName=self._XMLViewName,templateState='unknown')
-        checkU(self._itemXML)
-
     def getViewed(self):
         """Returns True iff this item has never been viewed in the interface.
 
