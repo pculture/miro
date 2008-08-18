@@ -35,7 +35,7 @@ Depends: ${shlibs:Depends},
          libxine1-plugins, 
          libxine1, 
          xulrunner-1.9,
-         miro-data (>= 1.2.6)
+         miro-data (>= 1.2.7)
 Recommends: libxine1-ffmpeg
 Suggests: python-psyco [i386 hurd-i386 netbsd-i386 kfreebsd-i386]
 Description: GTK+ based RSS video aggregator
