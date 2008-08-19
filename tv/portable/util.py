@@ -156,7 +156,7 @@ def queryRevision(f):
 def absolutePathToFileURL(path):
     if isinstance(path, unicode):
         path = path.encode("utf-8")
-    parts = string.split(path, os.sep)
+    parts = path.split(os.sep)
     parts = [urllib.quote(x, ':') for x in parts]
     return "file://" + '/'.join(parts)
 

@@ -32,13 +32,10 @@ import platform
 from miro import config
 from miro import prefs
 from miro import app
-from miro import views
-from miro import indexes
 import os
 from miro.eventloop import asUrgent
 from miro.database import DDBObject
 from miro import opml
-from miro import iconcache
 from miro.plat import resources
 from miro import guide
 from miro import feed

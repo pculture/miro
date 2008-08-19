@@ -31,7 +31,6 @@ import xml.dom
 import re
 from urllib import quote, quote_plus, unquote
 from HTMLParser import HTMLParser
-import types
 import random
 import logging
 

@@ -27,7 +27,6 @@
 # statement from all source files in the program, then also delete it here.
 
 
-from threading import Condition
 initialized = False
     
 def initialize():

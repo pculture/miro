@@ -89,7 +89,7 @@ def switchNewItemsChannel(newChannel):
     newChannel should be the channel/channel folder object that's being
     displayed.
     """
-    global newMemoryFor, newMemory, newlyDownloadedMemory
+    global newMemoryFor
     if newMemoryFor != newChannel:
         newMemory.clear()
         newlyDownloadedMemory.clear()

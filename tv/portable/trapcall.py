@@ -76,11 +76,11 @@ def timeTrapCall(when, function, *args, **kwargs):
             total = 0
         total += end - start
         cumulative[when] = total
-        return retval
         if total > 5.0:
             logging.timing ("%s cumulative is too slow (%.3f secs)",
                 when, total)
             cumulative[when] = 0
+        return retval
     cancel = True
     return retval
 
