@@ -28,16 +28,16 @@
 
 from base64 import b64encode
 from miro.gtcache import gettext as _
-from threading import RLock
+# from threading import RLock
 import os
-import re
-import shutil
+# import re
+# import shutil
 
 from miro.database import DDBObject, defaultDatabase
 from miro.dl_daemon import daemon, command
 from miro.download_utils import nextFreeFilename, getFileURLPath, filterDirectoryName
-from miro.util import getTorrentInfoHash, returnsUnicode, checkU, returnsFilename, unicodify, checkF, stringify, toUni
-from miro import app
+from miro.util import getTorrentInfoHash, returnsUnicode, checkU, returnsFilename, unicodify, checkF, toUni
+# from miro import app
 from miro import config
 from miro import httpclient
 from miro import indexes
@@ -55,7 +55,7 @@ _downloads = {}
 
 # Returns an HTTP auth object corresponding to the given host, path or
 # None if it doesn't exist
-def findHTTPAuth(host,path,realm = None,scheme = None):
+def findHTTPAuth(host, path, realm=None, scheme=None):
     checkU(host)
     checkU(path)
     if realm:
@@ -73,17 +73,17 @@ def findHTTPAuth(host,path,realm = None,scheme = None):
 
 
 class HTTPAuthPassword(DDBObject):
-    def __init__(self,username,password,host, realm, path, authScheme=u"Basic"):
+    def __init__(self, username, password, host, realm, path, authScheme=u"Basic"):
         checkU(username)
         checkU(password)
         checkU(host)
         checkU(realm)
         checkU(path)
         checkU(authScheme)
-        oldAuth = findHTTPAuth(host,path,realm,authScheme)
+        oldAuth = findHTTPAuth(host, path, realm, authScheme)
         while not oldAuth is None:
             oldAuth.remove()
-            oldAuth = findHTTPAuth(host,path,realm,authScheme)
+            oldAuth = findHTTPAuth(host, path, realm, authScheme)
         self.username = username
         self.password = password
         self.host = host
@@ -105,20 +105,20 @@ class HTTPAuthPassword(DDBObject):
 totalUpRate = 0
 totalDownRate = 0
 
-def _getDownloader (dlid):
+def _getDownloader(dlid):
     return views.remoteDownloads.getItemWithIndex(indexes.downloadsByDLID, dlid)
 
 @returnsUnicode
 def generateDownloadID():
-    dlid = u"download%08d" % random.randint(0,99999999)
+    dlid = u"download%08d" % random.randint(0, 99999999)
     while _getDownloader (dlid=dlid):
-        dlid = u"download%08d" % random.randint(0,99999999)
+        dlid = u"download%08d" % random.randint(0, 99999999)
     return dlid
 
 class RemoteDownloader(DDBObject):
     """Download a file using the downloader daemon."""
 
-    def __init__(self, url, item, contentType = None, channelName = None):
+    def __init__(self, url, item, contentType=None, channelName=None):
         checkU(url)
         if contentType:
             checkU(contentType)
@@ -149,13 +149,13 @@ class RemoteDownloader(DDBObject):
         else:
             self.runDownloader()
 
-    def signalChange (self, needsSave=True, needsSignalItem=True):
+    def signalChange(self, needsSave=True, needsSignalItem=True):
         if needsSignalItem:
             for item in self.itemList:
                 item.signalChange(needsSave=False)
-        DDBObject.signalChange (self, needsSave=needsSave)
+        DDBObject.signalChange(self, needsSave=needsSave)
 
-    def onContentType (self, info):
+    def onContentType(self, info):
         if not self.idExists():
             return
 
@@ -171,7 +171,7 @@ class RemoteDownloader(DDBObject):
             error = httpclient.UnexpectedStatusCode(info['status'])
             self.onContentTypeError(error)
 
-    def onContentTypeError (self, error):
+    def onContentTypeError(self, error):
         if not self.idExists():
             return
 
@@ -212,9 +212,9 @@ class RemoteDownloader(DDBObject):
     @classmethod
     def updateStatus(cls, data):
         for field in data:
-            if field not in ['filename','shortFilename','channelName','metainfo','fastResumeData']:
+            if field not in ['filename', 'shortFilename', 'channelName', 'metainfo', 'fastResumeData']:
                 data[field] = unicodify(data[field])
-        self = _getDownloader (dlid=data['dlid'])
+        self = _getDownloader(dlid=data['dlid'])
         # print data
         if self is not None:
             try:
@@ -242,14 +242,14 @@ class RemoteDownloader(DDBObject):
             if self.getState() == u'uploading' and not self.manualUpload and self.getUploadRatio() > 1.5:
                 self.stopUpload()
 
-            self.signalChange(needsSignalItem=not finished)
+            self.signalChange(needsSignalItem = not finished)
             if finished:
                 for item in self.itemList:
                     item.onDownloadFinished()
 
-    ##
-    # This is the actual download thread.
     def runDownloader(self):
+        """This is the actual download thread.
+        """
         flashscraper.tryScrapingURL(self.url, self._runDownloader)
 
     def _runDownloader(self, url, contentType = None):
@@ -269,9 +269,8 @@ class RemoteDownloader(DDBObject):
             self.status["reasonFailed"] = _('Flash URL Scraping Error')
         self.signalChange()
 
-    ##
-    # Pauses the download.
     def pause(self, block=False):
+        """Pauses the download."""
         if _downloads.has_key(self.dlid):
             c = command.PauseDownloadCommand(RemoteDownloader.dldaemon, self.dlid)
             c.send()
@@ -281,11 +280,11 @@ class RemoteDownloader(DDBObject):
             self.afterChangingStatus()
             self.signalChange()
 
-    ##
-    # Stops the download and removes the partially downloaded
-    # file.
     def stop(self, delete):
-        if ((self.getState() in [u'downloading',u'uploading', u'paused'])):
+        """Stops the download and removes the partially downloaded
+        file.
+        """
+        if self.getState() in [u'downloading', u'uploading', u'paused']:
             if _downloads.has_key(self.dlid):
                 c = command.StopDownloadCommand(RemoteDownloader.dldaemon,
                                                 self.dlid, delete)
@@ -320,9 +319,9 @@ class RemoteDownloader(DDBObject):
                 logging.warn("Error deleting empty download directory: %s\n%s" %
                         (toUni(parent), traceback.format_exc()))
 
-    ##
-    # Continues a paused, stopped, or failed download thread
     def start(self):
+        """Continues a paused, stopped, or failed download thread
+        """
         if self.getState() == u'failed':
             if _downloads.has_key (self.dlid):
                 del _downloads[self.dlid]
@@ -395,9 +394,9 @@ URL was %s""" % self.url
                 checkF(channelName)
             self.channelName = channelName
 
-    ##
-    # Removes downloader from the database and deletes the file.
     def remove(self):
+        """Removes downloader from the database and deletes the file.
+        """
         global totalDownRate
         global totalUpRate
         rates = self._getRates()
@@ -416,10 +415,10 @@ URL was %s""" % self.url
         else:
             return u"http"
 
-    ##
-    # In case multiple downloaders are getting the same file, we can support
-    # multiple items
-    def addItem(self,item):
+    def addItem(self, item):
+        """In case multiple downloaders are getting the same file, we can support
+        multiple items
+        """
         if item not in self.itemList:
             self.itemList.append(item)
 
@@ -445,11 +444,11 @@ URL was %s""" % self.url
         else:
             return activity
 
-    ##
-    # Returns the reason for the failure of this download
-    # This should only be called when the download is in the failed state
     @returnsUnicode
     def getReasonFailed(self):
+        """Returns the reason for the failure of this download
+        This should only be called when the download is in the failed state
+        """
         if not self.getState() == u'failed':
             msg = u"getReasonFailed() called on a non-failed downloader"
             raise ValueError(msg)
@@ -463,41 +462,42 @@ URL was %s""" % self.url
             raise ValueError(msg)
         self.confirmDBThread()
         return self.status['shortReasonFailed']
-    ##
-    # Returns the URL we're downloading
+
     @returnsUnicode
     def getURL(self):
+        """Returns the URL we're downloading
+        """
         self.confirmDBThread()
         return self.url
 
-    ##    
-    # Returns the state of the download: downloading, paused, stopped,
-    # failed, or finished
     @returnsUnicode    
     def getState(self):
+        """Returns the state of the download: downloading, paused, stopped,
+        failed, or finished
+        """
         self.confirmDBThread()
         return self.status.get('state', u'downloading')
 
     def isFinished(self):
         return self.getState() in (u'finished', u'uploading', u'uploading-paused')
 
-    ##
-    # Returns the total size of the download in bytes
     def getTotalSize(self):
+        """Returns the total size of the download in bytes
+        """
         self.confirmDBThread()
         return self.status.get(u'totalSize', -1)
 
-    ##
-    # Returns the current amount downloaded in bytes
     def getCurrentSize(self):
+        """Returns the current amount downloaded in bytes
+        """
         self.confirmDBThread()
         return self.status.get(u'currentSize', 0)
 
-    ##
-    # Returns the filename that we're downloading to. Should not be
-    # called until state is "finished."
     @returnsFilename
     def getFilename(self):
+        """Returns the filename that we're downloading to. Should not be
+        called until state is "finished."
+        """
         self.confirmDBThread()
         return self.status.get('filename', FilenameType(''))
 
@@ -519,7 +519,7 @@ URL was %s""" % self.url
         return self.status.get('uploaded', 0) / size
     
     def restartIfNeeded(self):
-        if self.getState() in (u'downloading',u'offline'):
+        if self.getState() in (u'downloading', u'offline'):
             self.restart()
         if self.getState() in (u'uploading'):
             if self.manualUpload or self.getUploadRatio() < 1.5:
@@ -648,7 +648,7 @@ def startupDownloader():
     limitUploaders()
     restartDownloads()
 
-def shutdownDownloader(callback = None):
+def shutdownDownloader(callback=None):
     if hasattr(RemoteDownloader, 'dldaemon') and RemoteDownloader.dldaemon is not None:
         RemoteDownloader.dldaemon.shutdownDownloaderDaemon(callback=callback)
     else:

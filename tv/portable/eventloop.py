@@ -36,7 +36,7 @@ TODO:
 """
 
 import threading
-import socket
+# import socket
 import errno
 import select
 import heapq
@@ -78,8 +78,8 @@ class DelayedCall(object):
             trapcall.trapCall(when, self.function, *self.args, **self.kwargs)
             end = clock()
             if end-start > 0.5:
-                logging.timing ("%s too slow (%.3f secs)",
-                                self.name, end-start)
+                logging.timing("%s too slow (%.3f secs)",
+                               self.name, end-start)
             try:
                 total = cumulative[self.name]
             except KeyboardInterrupt:
@@ -89,8 +89,8 @@ class DelayedCall(object):
             total += end - start
             cumulative[self.name] = total
             if total > 5.0:
-                logging.timing ("%s cumulative is too slow (%.3f secs)",
-                                self.name, total)
+                logging.timing("%s cumulative is too slow (%.3f secs)",
+                               self.name, total)
                 cumulative[self.name] = 0
         self._unlink()
 
@@ -134,19 +134,13 @@ class CallQueue(object):
             args = ()
         if kwargs is None:
             kwargs = {}
-        dc = DelayedCall (function, "idle (%s)" % (name,), args, kwargs)
-        self.queue.put (dc)
-        #self.queue.put((dc, clock()))
+        dc = DelayedCall(function, "idle (%s)" % (name,), args, kwargs)
+        self.queue.put(dc)
         return dc
 
     def processNextIdle(self):
         dc = self.queue.get()
-        #dc, requested = self.queue.get()
-        #start = clock()
         dc.dispatch()
-        #if start - requested > 1.0:
-        #    print "WARNING: %s took too long to fire (%.3f secs)" % (
-        #        dc.name, start - requested)
 
     def hasPendingIdle(self):
         return not self.queue.empty()
@@ -403,7 +397,7 @@ def startup():
         import profile
         def start_loop():
             _eventLoop.loop()
-        profile.runctx ('_eventLoop.loop()', globals(), locals(), profile_file + ".event_loop")
+        profile.runctx('_eventLoop.loop()', globals(), locals(), profile_file + ".event_loop")
 
     global lt
     if profile_file:
@@ -415,7 +409,6 @@ def startup():
     _eventLoop.loop_ready.wait()
 
 def join():
-    global lt
     if lt is not None:
         lt.join()
 
@@ -480,4 +473,3 @@ def asUrgent(func):
 def checkHeapSize():
     logging.info ("Heap size: %d.", len(_eventLoop.scheduler.heap))
     addTimeout(5, checkHeapSize, "Check Heap Size")
-#addTimeout(5, checkHeapSize, "Check Heap Size")

@@ -1546,7 +1546,7 @@ if _XML_AVAILABLE:
                 givenprefix = None
             prefix = self._matchnamespaces.get(lowernamespace, givenprefix)
             if givenprefix and (prefix == None or (prefix == '' and lowernamespace == '')) and not self.namespacesInUse.has_key(givenprefix):
-                    raise UndeclaredNamespace, "'%s' is not associated with a namespace" % givenprefix
+                raise UndeclaredNamespace, "'%s' is not associated with a namespace" % givenprefix
             if prefix:
                 localname = prefix + ':' + localname
             localname = str(localname).lower()
@@ -2322,7 +2322,7 @@ def _parse_date_w3dtf(dateString):
                         day = 31
                 elif jday < julian:
                     if day + diff < 28:
-                       day = day + diff
+                        day = day + diff
                     else:
                         month = month + 1
             return year, month, day

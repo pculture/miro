@@ -30,7 +30,7 @@ from os import access, F_OK
 from urlparse import urlparse
 import os.path
 import re
-import urllib
+# import urllib
 import logging
 
 from miro import filetypes
@@ -120,9 +120,10 @@ def getFileURLPath(url):
         raise ValueError("%r is not a file URL" % url)
     return unmakeURLSafe(path)
 
-# If a filename doesn't have an extension, this tries to find a suitable one
-# based on the HTTP content-type info and add it if one is available.
 def checkFilenameExtension(filename, contentType):
+    """If a filename doesn't have an extension, this tries to find a suitable
+    one based on the HTTP content-type info and add it if one is available.
+    """
     checkF(filename)
     if contentType is not None and not filetypes.isAllowedFilename(filename):
         guessedExt = filetypes.guessExtension(contentType)
@@ -130,34 +131,34 @@ def checkFilenameExtension(filename, contentType):
             filename += guessedExt
     return filename
 
-##
-# Finds a filename that's unused and similar the the file we want
-# to download
 @returnsFilename
 def nextFreeFilename(name):
+    """Finds a filename that's unused and similar the the file we want
+    to download
+    """
     checkF(name)
-    if not access(expand_filename(name),F_OK):
+    if not access(expand_filename(name), F_OK):
         return name
     parts = name.split('.')
     count = 1
     if len(parts) == 1:
         newname = "%s.%s" % (name, count)
-        while access(expand_filename(newname),F_OK):
+        while access(expand_filename(newname), F_OK):
             count += 1
             newname = "%s.%s" % (name, count)
     else:
         parts[-1:-1] = [str(count)]
         newname = '.'.join(parts)
-        while access(expand_filename(newname),F_OK):
+        while access(expand_filename(newname), F_OK):
             count += 1
             parts[-2] = str(count)
             newname = '.'.join(parts)
     return newname
 
-##
-# Returns a reasonable filename for saving the given url
 @returnsFilename
 def filenameFromURL(url, clean=False):
+    """Returns a reasonable filename for saving the given url
+    """
     checkU(url)
     try:
         match = URIPattern.match(url)
@@ -182,10 +183,11 @@ def filenameFromURL(url, clean=False):
     except:
         return unicodeToFilename(u'unknown')
 
-# Given either a filename or a unicode "filename" return a valid clean
-# version of it
 @returnsFilename
 def cleanFilename(filename):
+    """Given either a filename or a unicode "filename" return a valid clean
+    version of it
+    """
     for char in ( ':', '?', '<', '>', '|', '*', '\\', '/', '"', '\'', ' ', '%'):
         filename = filename.replace(char, '')
     if len(filename) == 0:
@@ -200,8 +202,9 @@ def cleanFilename(filename):
     else:
         return unicodeToFilename(filename)
 
-# Saves data, returns filename, doesn't write over existing files.
-def saveData (target, suggested_basename, data):
+def saveData(target, suggested_basename, data):
+    """Saves data, returns filename, doesn't write over existing files.
+    """
     try:
         fileutil.makedirs(target)
     except:
@@ -212,33 +215,32 @@ def saveData (target, suggested_basename, data):
     try:
         # Write to a temp file.
         tmp_filename = filename + ".part"
-#        tmp_filename = shortenFilename (tmp_filename)
-        tmp_filename = nextFreeFilename (tmp_filename)
-        output = file (tmp_filename, 'wb')
+        tmp_filename = nextFreeFilename(tmp_filename)
+        output = file(tmp_filename, 'wb')
         output.write(data)
         output.close()
     except IOError:
         try:
-            fileutil.remove (tmp_filename)
+            fileutil.remove(tmp_filename)
         except:
             pass
         raise
 
-#    filename = shortenFilename (filename)
-    filename = nextFreeFilename (filename)
+    filename = nextFreeFilename(filename)
     needsSave = True
     try:
-        fileutil.remove (filename)
+        fileutil.remove(filename)
     except:
         pass
 
-    fileutil.rename (tmp_filename, filename)
+    fileutil.rename(tmp_filename, filename)
 
     return filename
 
-# Filter out all non alpha-numeric characters from a future directory name so we 
-# can create a corresponding directory on disk without bumping into platform 
-# specific pathname limitations.
 def filterDirectoryName(name):
+    """Filter out all non alpha-numeric characters from a future directory
+    name so we can create a corresponding directory on disk without bumping
+    into platform specific pathname limitations.
+    """
     return re.sub(r'[^a-zA-Z0-9]', '-', name)
 

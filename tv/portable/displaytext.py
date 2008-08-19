@@ -62,8 +62,8 @@ def size(bytes):
     else:
         return _("%sB") % (bytes)
 
-def expiration_date(expiration_date):
-    offset = expiration_date - datetime.datetime.now()
+def expiration_date(exp_date):
+    offset = exp_date - datetime.datetime.now()
     if offset.days > 0:
         return ngettext("Expires in %d day", "Expires in %d days",
                 offset.days) % offset.days
