@@ -27,15 +27,11 @@
 # statement from all source files in the program, then also delete it here.
 
 from threading import RLock
-import os
-import traceback
 
 from miro.appconfig import AppConfig
 from miro import app
-from miro import util
 from miro import prefs
 from miro.plat import config as platformcfg
-from miro.plat import resources
 import urllib
 import logging
 
@@ -49,9 +45,10 @@ def addChangeCallback(callback):
 def removeChangeCallback(callback):
     __callbacks.discard(callback)
 
-# The theme parameter is a horrible hack to load the theme before we
-# can import other modules. pybridge makes the extra, early call
-def load(theme = None):
+def load(theme=None):
+    """The theme parameter is a horrible hack to load the theme before we
+    can import other modules.  pybridge makes the extra, early call
+    """
     global __data
     __lock.acquire()
     try:
@@ -63,7 +60,7 @@ def load(theme = None):
 
         # This is a bit of a hack to automagically get the serial
         # number for this platform
-        prefs.APP_SERIAL.key = ('appSerial-%s' % get(prefs.APP_PLATFORM))
+        prefs.APP_SERIAL.key = 'appSerial-%s' % get(prefs.APP_PLATFORM)
 
     finally:
         __lock.release()
@@ -100,8 +97,8 @@ def set(descriptor, value):
     logging.debug("Setting %s to %s", descriptor.key, value)
     try:
         __checkValidity()
-        if descriptor.key not in __data or __data[ descriptor.key ] != value:
-            __data[ descriptor.key ] = value
+        if descriptor.key not in __data or __data[descriptor.key] != value:
+            __data[descriptor.key] = value
             __notifyListeners(descriptor.key, value)
     finally:
         __lock.release()
@@ -116,5 +113,4 @@ def __checkValidity():
 def __notifyListeners(key, value):
     from miro import eventloop
     for callback in __callbacks:
-        eventloop.addIdle(callback, 'config callback: %s' % callback,
-                args=(key,value))
+        eventloop.addIdle(callback, 'config callback: %s' % callback, args=(key, value))

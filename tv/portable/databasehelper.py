@@ -28,8 +28,6 @@
 
 from itertools import count
 
-from miro import database
-
 def makeSimpleGetSet(attributeName, changeNeedsSave=True):
     """Creates a simple DDBObject getter and setter for an attribute.
 
@@ -94,11 +92,11 @@ class TrackedIDList(object):
     def sort(self, a, b):
         return self.positions[a[1].getID()] < self.positions[b[1].getID()]
 
-    def filter(self, object):
-        return object.getID() in self.trackedIDs
+    def filter(self, obj):
+        return obj.getID() in self.trackedIDs
 
-    def extraFilter(self, object):
-        return self.extraFilterFunc(object)
+    def extraFilter(self, obj):
+        return self.extraFilterFunc(obj)
 
     def setFilter(self, extraFilterFunc):
         self.extraFilterFunc = extraFilterFunc
@@ -153,10 +151,10 @@ class TrackedIDList(object):
         currentPos = self.positions[id]
         if currentPos > pos:
             minChange = pos
-            maxChange = currentPos-1
+            maxChange = currentPos - 1
             delta = 1
         else:
-            minChange = currentPos+1
+            minChange = currentPos + 1
             maxChange = pos
             delta = -1
         for toMove, oldPos in self.positions.items():

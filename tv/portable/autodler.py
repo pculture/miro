@@ -26,13 +26,10 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from miro import filters
 from miro import views
 from miro import config
 from miro import prefs
 from miro import eventloop
-from miro import httpclient
-from miro.clock import clock
 from datetime import datetime
 from fasttypes import SortedList
 
@@ -67,11 +64,11 @@ class Downloader:
         self.feed_time = {}
         self.is_auto = is_auto
         if is_auto:
-            self.pendingItems = views.items.filter (autoPendingFilter)
+            self.pendingItems = views.items.filter(autoPendingFilter)
             self.runningItems = views.autoDownloads
             self.MAX = config.get(prefs.DOWNLOADS_TARGET)
         else:
-            self.pendingItems = views.items.filter (manualPendingFilter)
+            self.pendingItems = views.items.filter(manualPendingFilter)
             self.runningItems = views.manualDownloads
             self.MAX = config.get(prefs.MAX_MANUAL_DOWNLOADS)
 
@@ -116,7 +113,7 @@ class Downloader:
                         continue
                 if self.feed_pending_count.get(feed, 0) <= 0:
                     continue
-                sorted.append ((feed, self.feed_running_count.get(feed, 0), self.feed_time.get(feed, datetime.min)))
+                sorted.append((feed, self.feed_running_count.get(feed, 0), self.feed_time.get(feed, datetime.min)))
             for feed, count, time in sorted:
                 if self.is_auto:
                     feed.startAutoDownload()
@@ -174,7 +171,7 @@ class Downloader:
     def resume(self):
         if self.paused:
             self.paused = False
-            eventloop.addTimeout (5, self.startDownloads, "delayed start downloads")
+            eventloop.addTimeout(5, self.startDownloads, "delayed start downloads")
 
 
 manualDownloader = None
@@ -200,4 +197,4 @@ def _updatePrefs(key, value):
     elif key == prefs.MAX_MANUAL_DOWNLOADS.key:
         manualDownloader.updateMAX()
 
-config.addChangeCallback (_updatePrefs)
+config.addChangeCallback(_updatePrefs)

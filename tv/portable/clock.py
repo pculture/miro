@@ -3,7 +3,7 @@
 #
 # Rewritten by Nick Nassar <nassar@pculture dotorg> to be thread safe.
 
-from time import *
+from time import time
 import sys
 import threading
 

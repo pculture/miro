@@ -35,7 +35,6 @@ olddatabaseupgrade.py)
 from miro import schema
 from miro import util
 import types
-from urlparse import urlparse
 from miro import config
 from miro import prefs
 
@@ -193,8 +192,8 @@ def upgrade13(objectList):
     case it has only been half done."""
     changed = set()
     todelete = []
-    for i in xrange (len(objectList) - 1, -1, -1):
-        o = objectList [i]
+    for i in xrange(len(objectList) - 1, -1, -1):
+        o = objectList[i]
         if o.classString in ('item', 'file-item'):
             if o.savedData['feed_id'] == None:
                 del objectList[i]
@@ -368,7 +367,7 @@ def upgrade27(objectList):
 
 def upgrade28(objectList):
     from miro import filetypes
-    objectList.sort(key=lambda o:o.savedData['id'])
+    objectList.sort(key=lambda o: o.savedData['id'])
     changed = set()
     items = set()
     removed = set()
@@ -386,8 +385,8 @@ def upgrade28(objectList):
                 return enclosure
         return None
     
-    for i in xrange (len(objectList) - 1, -1, -1):
-        o = objectList [i]
+    for i in xrange(len(objectList) - 1, -1, -1):
+        o = objectList[i]
         if o.classString == 'item':
             entry = o.savedData['entry']
             videoEnc = getFirstVideoEnclosure(entry)
@@ -399,14 +398,14 @@ def upgrade28(objectList):
             feed_id = o.savedData['feed_id']
             if title is not None or entryURL is not None:
                 if (feed_id, entryURL, title) in items:
-                    removed.add (o.savedData['id'])
+                    removed.add(o.savedData['id'])
                     changed.add(o)
                     del objectList[i]
                 else:
                     items.add((feed_id, entryURL, title))
 
-    for i in xrange (len(objectList) - 1, -1, -1):
-        o = objectList [i]
+    for i in xrange(len(objectList) - 1, -1, -1):
+        o = objectList[i]
         if o.classString == 'file-item':
             if o.savedData['parent_id'] in removed:
                 changed.add(o)
@@ -496,15 +495,15 @@ def upgrade37(objectList):
     if id == 0:
         return changed
 
-    for i in xrange (len(objectList) - 1, -1, -1):
-        o = objectList [i]
+    for i in xrange(len(objectList) - 1, -1, -1):
+        o = objectList[i]
         if o.classString == 'file-item' and o.savedData['feed_id'] == id:
-            removed.add (o.savedData['id'])
+            removed.add(o.savedData['id'])
             changed.add(o)
             del objectList[i]
 
-    for i in xrange (len(objectList) - 1, -1, -1):
-        o = objectList [i]
+    for i in xrange(len(objectList) - 1, -1, -1):
+        o = objectList[i]
         if o.classString == 'file-item':
             if o.savedData['parent_id'] in removed:
                 changed.add(o)
@@ -529,8 +528,8 @@ def upgrade39(objectList):
     changed = set()
     removed = set()
     id = 0
-    for i in xrange (len(objectList) - 1, -1, -1):
-        o = objectList [i]
+    for i in xrange(len(objectList) - 1, -1, -1):
+        o = objectList[i]
         if o.classString in ('item', 'file-item'):
             changed.add(o)
             if o.savedData['parent_id']:
@@ -578,14 +577,14 @@ def upgrade41(objectList):
     from miro.plat.utils import FilenameType
     # This is where John Lennon's ghost sings "Binary Fields Forever"
     if FilenameType == str:
-        binaryFields = ['filename','videoFilename', 'shortFilename',
-                        'offsetPath','initialHTML','status','channelName']
-        icStrings = ['etag','modified','url']
+        binaryFields = ['filename', 'videoFilename', 'shortFilename',
+                        'offsetPath', 'initialHTML', 'status', 'channelName']
+        icStrings = ['etag', 'modified', 'url']
         icBinary = ['filename']
-        statusBinary = ['channelName','shortFilename','filename','metainfo']
+        statusBinary = ['channelName', 'shortFilename', 'filename', 'metainfo']
     else:
-        binaryFields = ['initialHTML','status']
-        icStrings = ['etag','modified','url','filename']
+        binaryFields = ['initialHTML', 'status']
+        icStrings = ['etag', 'modified', 'url', 'filename']
         icBinary = []
         statusBinary = ['metainfo']
         
@@ -598,34 +597,28 @@ def upgrade41(objectList):
 
                 # These get skipped because they're a level lower
                 if field == 'actualFeed':
-                    o.savedData[field].__dict__ = \
-                         unicodify(o.savedData[field].__dict__)
+                    o.savedData[field].__dict__ = unicodify(o.savedData[field].__dict__)
                 elif (field == 'iconCache' and
                       o.savedData['iconCache'] is not None):
                     for icfield in icStrings:
-                        o.savedData['iconCache'].savedData[icfield] = \
-                          unicodify(o.savedData['iconCache'].savedData[icfield])
+                        o.savedData['iconCache'].savedData[icfield] = unicodify(o.savedData['iconCache'].savedData[icfield])
                     for icfield in icBinary:
-                        if (type(o.savedData['iconCache'].savedData[icfield])
-                               == unicode):
-                            o.savedData['iconCache'].savedData[icfield] =\
-                               o.savedData['iconCache'].savedData[icfield].encode('ascii','replace')
+                        if (type(o.savedData['iconCache'].savedData[icfield]) == unicode):
+                            o.savedData['iconCache'].savedData[icfield] = o.savedData['iconCache'].savedData[icfield].encode('ascii','replace')
 
             else:
                 if field == 'status':
                     for subfield in o.savedData['status']:
                         if (type(o.savedData[field][subfield]) == unicode
-                            and subfield in statusBinary):
-                                o.savedData[field][subfield] = \
-                             o.savedData[field][subfield].encode('ascii',
+                                and subfield in statusBinary):
+                            o.savedData[field][subfield] = o.savedData[field][subfield].encode('ascii',
                                                                  'replace')
                         elif (type(o.savedData[field][subfield]) == str
-                            and subfield not in statusBinary):
-                                o.savedData[field][subfield] = \
-                             o.savedData[field][subfield].decode('ascii',
+                                and subfield not in statusBinary):
+                            o.savedData[field][subfield] = o.savedData[field][subfield].decode('ascii',
                                                                  'replace')
                 elif type(o.savedData[field]) == unicode:
-                    o.savedData[field] = o.savedData[field].encode('ascii','replace')
+                    o.savedData[field] = o.savedData[field].encode('ascii', 'replace')
         if o.classString == 'channel-guide':
             del o.savedData['cachedGuideBody']
         changed.add(o)
@@ -643,23 +636,23 @@ def upgrade43(objectList):
     changed = set()
     removed = set()
     id = 0
-    for i in xrange (len(objectList) - 1, -1, -1):
-        o = objectList [i]
+    for i in xrange(len(objectList) - 1, -1, -1):
+        o = objectList[i]
         if o.classString == 'feed':
             feedImpl = o.savedData['actualFeed']
             if feedImpl.classString == 'manual-feed-impl':
                 id = o.savedData['id']
                 break
 
-    for i in xrange (len(objectList) - 1, -1, -1):
-        o = objectList [i]
+    for i in xrange(len(objectList) - 1, -1, -1):
+        o = objectList[i]
         if o.classString == 'file-item' and o.savedData['feed_id'] == id and o.savedData['deleted'] == True:
-            removed.add (o.savedData['id'])
+            removed.add(o.savedData['id'])
             changed.add(o)
             del objectList[i]
 
-    for i in xrange (len(objectList) - 1, -1, -1):
-        o = objectList [i]
+    for i in xrange(len(objectList) - 1, -1, -1):
+        o = objectList[i]
         if o.classString == 'file-item':
             if o.savedData['parent_id'] in removed:
                 changed.add(o)
@@ -715,15 +708,15 @@ def upgrade48(objectList):
     if len(ids) == 0:
         return changed
 
-    for i in xrange (len(objectList) - 1, -1, -1):
+    for i in xrange(len(objectList) - 1, -1, -1):
         o = objectList [i]
         if o.classString == 'file-item' and o.savedData['feed_id'] in ids:
-            removed.add (o.savedData['id'])
+            removed.add(o.savedData['id'])
             changed.add(o)
             del objectList[i]
 
-    for i in xrange (len(objectList) - 1, -1, -1):
-        o = objectList [i]
+    for i in xrange(len(objectList) - 1, -1, -1):
+        o = objectList[i]
         if o.classString == 'file-item':
             if o.savedData['parent_id'] in removed:
                 changed.add(o)
@@ -781,7 +774,6 @@ def upgrade52(objectList):
         title = entry.get('title')
         return (url, id, title)
 
-
     for o in objectList:
         if o.classString == 'feed':
             feedImpl = o.savedData['actualFeed']
@@ -802,8 +794,8 @@ def upgrade52(objectList):
                     if url and title:
                         items_by_titleURL[(title, url)] = o
     if downloads_id != 0:
-        for i in xrange (len(objectList) - 1, -1, -1):
-            o = objectList [i]
+        for i in xrange(len(objectList) - 1, -1, -1):
+            o = objectList[i]
             if o.classString == 'item':
                 if o.savedData['feed_id'] == downloads_id:
                     remove = False
@@ -819,11 +811,11 @@ def upgrade52(objectList):
                         else:
                             items_by_titleURL[(title, url)] = o
                     if remove:
-                        removed.add (o.savedData['id'])
+                        removed.add(o.savedData['id'])
                         changed.add(o)
                         del objectList[i]
 
-        for i in xrange (len(objectList) - 1, -1, -1):
+        for i in xrange(len(objectList) - 1, -1, -1):
             o = objectList [i]
             if o.classString == 'file-item':
                 if o.savedData['parent_id'] in removed:

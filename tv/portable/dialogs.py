@@ -68,7 +68,6 @@ Frontend requirements:
     them.  
 """
 
-from miro import app
 from miro import eventloop
 from miro import signals
 from miro.gtcache import gettext as _

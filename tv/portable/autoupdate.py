@@ -28,19 +28,18 @@
 
 from miro import prefs
 from miro import config
-from miro import dialogs
 import logging
 from miro import eventloop
 from miro import feedparser
 from miro import signals
 
 from miro.httpclient import grabURL
-from miro.gtcache import gettext as _
 
 checkInProgress = False
 
-# Trigger the version checking process
 def checkForUpdates(upToDateCallback=None):
+    """Trigger the version checking process
+    """
     global checkInProgress
     if not checkInProgress:
         checkInProgress = True
@@ -50,15 +49,17 @@ def checkForUpdates(upToDateCallback=None):
         errorHandler = _handleError
         grabURL(url, updateHandler, errorHandler)
 
-# Error handler
 def _handleError(error):
+    """Error handler
+    """
     global checkInProgress
     checkInProgress = False
     logging.warn("HTTP error while checking for updates")
     eventloop.addTimeout (86400, checkForUpdates, "Check for updates")
 
-# Handle appcast data when it's correctly fetched
 def _handleAppCast(data, upToDateCallback):
+    """Handle appcast data when it's correctly fetched
+    """
     try:
         try:
             appcast = feedparser.parse(data['body'])
@@ -81,15 +82,17 @@ def _handleAppCast(data, upToDateCallback):
                 logging.info('Up to date.')
         except:
             logging.warn("Error while handling appcast data.")
-            import traceback; traceback.print_exc()
+            import traceback
+            traceback.print_exc()
     finally:
         global checkInProgress
         checkInProgress = False
-        eventloop.addTimeout (86400, checkForUpdates, "Check for updates")
+        eventloop.addTimeout(86400, checkForUpdates, "Check for updates")
 
-# Filter out non platform items, sort remaining from latest to oldest and return
-# the item corresponding to the latest known version.
 def _getItemForLatest(appcast):
+    """Filter out non platform items, sort remaining from latest to oldest
+    and return the item corresponding to the latest known version.
+    """
     platform = config.get(prefs.APP_PLATFORM)
     rejectedItems = list()
     for item in appcast['entries']:
@@ -112,7 +115,7 @@ def _getItemForLatest(appcast):
     except:
         return None
 
-# Returns the serial of the first enclosure of the passed item
 def _getItemSerial(item):
+    """Returns the serial of the first enclosure of the passed item
+    """
     return int(item['enclosures'][0]['dtv:serial'])
-

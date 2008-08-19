@@ -47,7 +47,7 @@ class DatabaseInsaneError(Exception):
 class SanityTest(object):
     """Base class for the sanity test objects."""
 
-    def checkObject(self, object):
+    def checkObject(self, obj):
         """checkObject will be called for each object in the object list.
         If there is an error return a string describing it.  If not return
         None (or just let the function hit the bottom).
@@ -99,11 +99,11 @@ class PhontomFeedTest(SanityTest):
         for i in reversed(xrange(len(objectList))):
             if (isinstance(objectList[i], item.Item) and 
                     objectList[i].feed_id is not None and
-                objectList[i].feed_id not in self.topLevelFeeds):
+                    objectList[i].feed_id not in self.topLevelFeeds):
                 del objectList[i]
             elif (isinstance(objectList[i], item.Item) and 
                     objectList[i].parent_id is not None and
-                objectList[i].parent_id not in self.topLevelParents):
+                    objectList[i].parent_id not in self.topLevelParents):
                 del objectList[i]
 
 class SingletonTest(SanityTest):
