@@ -36,7 +36,6 @@ TODO:
 """
 
 import threading
-# import socket
 import errno
 import select
 import heapq

@@ -30,7 +30,6 @@ from os import access, F_OK
 from urlparse import urlparse
 import os.path
 import re
-# import urllib
 import logging
 
 from miro import filetypes

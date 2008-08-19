@@ -28,10 +28,7 @@
 
 from base64 import b64encode
 from miro.gtcache import gettext as _
-# from threading import RLock
 import os
-# import re
-# import shutil
 
 from miro.database import DDBObject, defaultDatabase
 from miro.dl_daemon import daemon, command
