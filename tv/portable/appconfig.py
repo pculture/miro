@@ -37,18 +37,19 @@ This is setup in config.load().
 import logging
 import traceback
 
-from miro import app
 from miro import util
 from miro.plat import resources
 
 class AppConfig(object):
     def __init__(self, theme=None):
+        self.theme_vars = {}
+
         app_config_path = resources.path('app.config')
         self.default_vars = util.readSimpleConfigFile(app_config_path)
+
         self.load_theme(theme)
 
     def load_theme(self, theme):
-        self.theme_vars = {}
         if theme is not None:
             logging.info("Using theme %s" % theme)
             theme_app_config = resources.theme_path(theme, 'app.config')

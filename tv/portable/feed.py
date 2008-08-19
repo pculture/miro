@@ -27,40 +27,33 @@
 # statement from all source files in the program, then also delete it here.
 
 
-from HTMLParser import HTMLParser,HTMLParseError
+from HTMLParser import HTMLParser, HTMLParseError
 from cStringIO import StringIO
-from copy import copy
 from datetime import datetime, timedelta
 from miro.gtcache import gettext as _
 from miro.feedparser import FeedParserDict
-from inspect import isfunction
-from new import instancemethod
-from urlparse import urlparse, urljoin
-from miro.xhtmltools import unescape,xhtmlify,fixXMLHeader, fixHTMLHeader, urlencode, urldecode
+from urlparse import urljoin
+from miro.xhtmltools import unescape, xhtmlify, fixXMLHeader, fixHTMLHeader, urlencode, urldecode
 import os
-import string
 import re
-import traceback
 import xml
 
-from miro.database import defaultDatabase, DatabaseConstraintError, DDBObject
+from miro.database import DDBObject
 from miro.databasehelper import makeSimpleGetSet
-from miro.httpclient import grabURL, NetworkError
+from miro.httpclient import grabURL
 from string import Template
-from miro import app
 from miro import config
 from miro import iconcache
 from miro import dialogs
 from miro import eventloop
 from miro import feedupdate
 from miro import filters
-from miro import folder
 from miro import prefs
 from miro.plat import resources
 from miro import downloader
-from miro.util import (returnsUnicode, returnsFilename, unicodify, chatter, checkU, checkF, quoteUnicodeURL, getFirstVideoEnclosure, escape, toUni)
+from miro.util import returnsUnicode, returnsFilename, unicodify, checkU, checkF, quoteUnicodeURL, getFirstVideoEnclosure, escape, toUni
 from miro import fileutil
-from miro.plat.utils import filenameToUnicode, makeURLSafe, unmakeURLSafe, osFilenameToFilenameType, FilenameType
+from miro.plat.utils import filenameToUnicode, makeURLSafe, unmakeURLSafe, FilenameType
 from miro import filetypes
 from miro import item as itemmod
 from miro import views
@@ -68,7 +61,6 @@ from miro import indexes
 from miro import searchengines
 from miro import sorts
 import logging
-import shutil
 from miro.clock import clock
 
 whitespacePattern = re.compile(r"^[ \t\r\n]*$")
@@ -107,11 +99,11 @@ def defaultTablistFeedIconPath():
 # Licensed under Python license
 from miro import feedparser
 
-def addFeedFromFile(file):
+def addFeedFromFile(fn):
     """Adds a new feed using USM
     """
-    checkF(file)
-    d = feedparser.parse(file)
+    checkF(fn)
+    d = feedparser.parse(fn)
     if d.feed.has_key('links'):
         for link in d.feed['links']:
             if link['rel'] == 'start' or link['rel'] == 'self':
@@ -125,7 +117,7 @@ def addFeedFromWebPage(url):
     """
     checkU(url)
     def callback(info):
-        url = HTMLFeedURLParser().getLink(info['updated-url'],info['body'])
+        url = HTMLFeedURLParser().getLink(info['updated-url'], info['body'])
         if url:
             Feed(url)
     def errback(error):
@@ -169,7 +161,7 @@ def normalizeFeedURL(url):
     # Check valid schemes with invalid separator
     match = re.match(r"^(http|https):/*(.*)$", url)
     if match is not None:
-        url = "%s://%s" % match.group(1,2)
+        url = "%s://%s" % match.group(1, 2)
 
     # Replace invalid schemes by http
     match = re.match(r"^(([A-Za-z]*):/*)*(.*)$", url)
@@ -236,10 +228,10 @@ class FeedImpl:
         self.items = views.toplevelItems.filterWithIndex(indexes.itemsByFeed, self.ufeed.id)
         self.availableItems = self.items.filter(lambda x: x.getState() == 'new')
         self.unwatchedItems = self.items.filter(lambda x: x.getState() == 'newly-downloaded')
-        self.availableItems.addAddCallback(lambda x,y:self.ufeed.signalChange(needsSignalFolder = True))
-        self.availableItems.addRemoveCallback(lambda x,y:self.ufeed.signalChange(needsSignalFolder = True))
-        self.unwatchedItems.addAddCallback(lambda x,y:self.ufeed.signalChange(needsSignalFolder = True))
-        self.unwatchedItems.addRemoveCallback(lambda x,y:self.ufeed.signalChange(needsSignalFolder = True))
+        self.availableItems.addAddCallback(lambda x, y: self.ufeed.signalChange(needsSignalFolder=True))
+        self.availableItems.addRemoveCallback(lambda x, y: self.ufeed.signalChange(needsSignalFolder=True))
+        self.unwatchedItems.addAddCallback(lambda x, y: self.ufeed.signalChange(needsSignalFolder=True))
+        self.unwatchedItems.addRemoveCallback(lambda x, y: self.ufeed.signalChange(needsSignalFolder=True))
         
     def signalChange(self):
         self.ufeed.signalChange()
@@ -264,8 +256,7 @@ class FeedImpl:
             self.cancelUpdateEvents()
             self.updateFreq = -1
         else:
-            newFreq = max(config.get(prefs.CHECK_CHANNELS_EVERY_X_MN),
-                          frequency)*60
+            newFreq = max(config.get(prefs.CHECK_CHANNELS_EVERY_X_MN), frequency)*60
             if newFreq != self.updateFreq:
                 self.updateFreq = newFreq
                 self.scheduleUpdateEvents(-1)
@@ -458,7 +449,7 @@ class FeedImpl:
         self.ufeed.confirmDBThread()
         expireAfterSetting = config.get(prefs.EXPIRE_AFTER_X_DAYS)
         if (self.ufeed.expireTime is None or self.ufeed.expire == 'never' or 
-            (self.ufeed.expire == 'system' and expireAfterSetting <= 0)):
+                (self.ufeed.expire == 'system' and expireAfterSetting <= 0)):
             return 0
         else:
             return (self.ufeed.expireTime.days * 24 + 
@@ -648,8 +639,8 @@ class Feed(DDBObject):
         self.origURL = url
         self.errorState = False
         self.loading = True
-        self.actualFeed = FeedImpl(url,self)
-        self.iconCache = iconcache.IconCache(self, is_vital = True)
+        self.actualFeed = FeedImpl(url, self)
+        self.iconCache = iconcache.IconCache(self, is_vital=True)
         self.informOnError = True
         self.folder_id = None
         self.searchTerm = None
@@ -679,8 +670,7 @@ class Feed(DDBObject):
         self.itemSortWatchable = sorts.ItemSortUnwatchedFirst()
         self.inlineSearchTerm = None
 
-    isBlinking, setBlinking = makeSimpleGetSet('blinking',
-            changeNeedsSave=False)
+    isBlinking, setBlinking = makeSimpleGetSet('blinking', changeNeedsSave=False)
 
     def setInlineSearchTerm(self, term):
         self.inlineSearchTerm = term
@@ -865,8 +855,8 @@ class Feed(DDBObject):
             maxOldItems = None
         self.maxOldItems = maxOldItems
         self.signalChange()
-        if maxOldItems is not None and (
-            oldMaxOldItems is None or oldMaxOldItems > maxOldItems):
+        if (maxOldItems is not None and
+                (oldMaxOldItems is None or oldMaxOldItems > maxOldItems)):
             # the actual feed updating code takes care of expiring the old
             # items
             self.actualFeed.cleanOldItems()
@@ -917,23 +907,23 @@ class Feed(DDBObject):
 
     def generateFeed(self, removeOnError=False):
         newFeed = None
-        if (self.origURL == u"dtv:directoryfeed"):
+        if self.origURL == u"dtv:directoryfeed":
             newFeed = DirectoryFeedImpl(self)
         elif (self.origURL.startswith(u"dtv:directoryfeed:")):
             url = self.origURL[len(u"dtv:directoryfeed:"):]
             dir = unmakeURLSafe(url)
             newFeed = DirectoryWatchFeedImpl(self, dir)
-        elif (self.origURL == u"dtv:search"):
+        elif self.origURL == u"dtv:search":
             newFeed = SearchFeedImpl(self)
-        elif (self.origURL == u"dtv:searchDownloads"):
+        elif self.origURL == u"dtv:searchDownloads":
             newFeed = SearchDownloadsFeedImpl(self)
-        elif (self.origURL == u"dtv:manualFeed"):
+        elif self.origURL == u"dtv:manualFeed":
             newFeed = ManualFeedImpl(self)
-        elif (self.origURL == u"dtv:singleFeed"):
+        elif self.origURL == u"dtv:singleFeed":
             newFeed = SingleFeedImpl(self)
-        elif (self.origURL.startswith (u"dtv:multi:")):
+        elif self.origURL.startswith(u"dtv:multi:"):
             newFeed = RSSMultiFeedImpl(self.origURL, self)
-        elif (self.origURL.startswith (u"dtv:searchTerm:")):
+        elif self.origURL.startswith(u"dtv:searchTerm:"):
 
             url = self.origURL[len(u"dtv:searchTerm:"):]
             (url, search) = url.rsplit("?", 1)
@@ -988,8 +978,8 @@ class Feed(DDBObject):
     def _generateFeedErrback(self, error, removeOnError):
         if not self.idExists():
             return
-        logging.info ("Warning couldn't load feed at %s (%s)",
-                      self.origURL, error)
+        logging.info("Warning couldn't load feed at %s (%s)",
+                     self.origURL, error)
         self._handleFeedLoadingError(error.getFriendlyDescription())
 
     def _generateFeedCallback(self, info, removeOnError):
@@ -1022,11 +1012,11 @@ class Feed(DDBObject):
  
         #Definitely an HTML feed
         if (contentType.startswith(u'text/html') or 
-            contentType.startswith(u'application/xhtml+xml')) and not apparentlyRSS:
+                contentType.startswith(u'application/xhtml+xml')) and not apparentlyRSS:
             #print "Scraping HTML"
             html = info['body']
             if info.has_key('charset'):
-                html = fixHTMLHeader(html,info['charset'])
+                html = fixHTMLHeader(html, info['charset'])
                 charset = unicodify(info['charset'])
             else:
                 charset = None
@@ -1037,7 +1027,7 @@ class Feed(DDBObject):
             #print "ATOM or RDF"
             html = info['body']
             if info.has_key('charset'):
-                xmldata = fixXMLHeader(html,info['charset'])
+                xmldata = fixXMLHeader(html, info['charset'])
             else:
                 xmldata = html
             self.finishGenerateFeed(RSSFeedImpl(unicodify(info['updated-url']),
@@ -1061,8 +1051,8 @@ class Feed(DDBObject):
             #print " It's doesn't look like HTML..."
             html = info["body"]
             if info.has_key('charset'):
-                xmldata = fixXMLHeader(html,info['charset'])
-                html = fixHTMLHeader(html,info['charset'])
+                xmldata = fixXMLHeader(html, info['charset'])
+                html = fixHTMLHeader(html, info['charset'])
                 charset = unicodify(info['charset'])
             else:
                 xmldata = html
@@ -1074,7 +1064,7 @@ class Feed(DDBObject):
                 parser.setFeature(xml.sax.handler.feature_external_ges, 0)
             except:
                 pass
-            handler = RSSLinkGrabber(unicodify(info['redirected-url']),charset)
+            handler = RSSLinkGrabber(unicodify(info['redirected-url']), charset)
             parser.setContentHandler(handler)
             parser.setErrorHandler(handler)
             try:
@@ -1147,7 +1137,7 @@ $shortAppName.\n\nDo you want to try to load this channel anyway?"""))
 
         self.confirmDBThread()
 
-        if isinstance (self.actualFeed, DirectoryWatchFeedImpl):
+        if isinstance(self.actualFeed, DirectoryWatchFeedImpl):
             moveItemsTo = None
         self.cancelUpdateEvents()
         if self.download is not None:
@@ -1230,8 +1220,8 @@ $shortAppName.\n\nDo you want to try to load this channel anyway?"""))
 
     def onRestore(self):
         DDBObject.onRestore(self)
-        if (self.iconCache == None):
-            self.iconCache = iconcache.IconCache (self, is_vital = True)
+        if self.iconCache == None:
+            self.iconCache = iconcache.IconCache(self, is_vital = True)
         else:
             self.iconCache.dbItem = self
             self.iconCache.requestUpdate(True)
@@ -1281,7 +1271,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
     """
     Base class from which RSSFeedImpl and RSSMultiFeedImpl derive.
     """
-    firstImageRE = re.compile('\<\s*img\s+[^>]*src\s*=\s*"(.*?)"[^>]*\>',re.I|re.M)
+    firstImageRE = re.compile('\<\s*img\s+[^>]*src\s*=\s*"(.*?)"[^>]*\>', re.I | re.M)
 
     def __init__(self, url, ufeed, title, visible):
         FeedImpl.__init__(self, url, ufeed, title, visible=visible)
@@ -1343,7 +1333,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             if channelTitle != None:
                 self.title = channelTitle
             if (parsed.feed.has_key('image') and 
-                parsed.feed.image.has_key('url')):
+                    parsed.feed.image.has_key('url')):
                 self.thumbURL = parsed.feed.image.url
                 self.ufeed.iconCache.requestUpdate(is_vital=True)
 
@@ -1356,7 +1346,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             try:
                 items_byid[item.getRSSID()] = item
             except KeyError:
-                items_nokey.append (item)
+                items_nokey.append(item)
             entry = item.getRSSEntry()
             videoEnc = getFirstVideoEnclosure(entry)
             if videoEnc is not None:
@@ -1385,7 +1375,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                     entryURL = None
                 title = entry.get("title")
                 if title is not None or entryURL is not None:
-                    if items_byURLTitle.has_key ((entryURL, title)):
+                    if items_byURLTitle.has_key((entryURL, title)):
                         item = items_byURLTitle[(entryURL, title)]
                         if not _entry_equal(entry, item.getRSSEntry()):
                             self._handleNewEntryForItem(item, entry, channelTitle)
@@ -1443,8 +1433,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         """
         limit = self.getMaxOldItems()
         if len(self.items) > config.get(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS):
-            truncate = len(self.items) - config.get(
-                prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS)
+            truncate = len(self.items) - config.get(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS)
             if truncate > len(old_items):
                 truncate = 0
             limit = min(limit, truncate)
@@ -1530,7 +1519,7 @@ class RSSFeedImpl(RSSFeedImplBase):
     def feedparser_errback(self, e):
         if not self.ufeed.idExists():
             return
-        logging.info ("Error updating feed: %s: %s", self.url, e)
+        logging.info("Error updating feed: %s: %s", self.url, e)
         self.feedparser_finished()
 
     def feedparser_callback(self, parsed):
@@ -1551,11 +1540,11 @@ class RSSFeedImpl(RSSFeedImplBase):
         self.feedparser_finished()
         end = clock()
         if end - start > 1.0:
-            logging.timing ("feed update for: %s too slow (%.3f secs)", self.url, end - start)
+            logging.timing("feed update for: %s too slow (%.3f secs)", self.url, end - start)
 
     def call_feedparser(self, html):
         self.ufeed.confirmDBThread()
-        eventloop.callInThread (self.feedparser_callback, self.feedparser_errback, feedparser.parse, "Feedparser callback - %s" % self.url, html)
+        eventloop.callInThread(self.feedparser_callback, self.feedparser_errback, feedparser.parse, "Feedparser callback - %s" % self.url, html)
 
     def update(self):
         """Updates a feed
@@ -1571,7 +1560,7 @@ class RSSFeedImpl(RSSFeedImplBase):
         if hasattr(self, 'initialHTML') and self.initialHTML is not None:
             html = self.initialHTML
             self.initialHTML = None
-            self.call_feedparser (html)
+            self.call_feedparser(html)
         else:
             try:
                 etag = self.etag
@@ -1583,12 +1572,12 @@ class RSSFeedImpl(RSSFeedImplBase):
                 modified = None
             logging.info("updating %s", self.url)
             self.download = grabURL(self.url, self._updateCallback,
-                    self._updateErrback, etag=etag,modified=modified,defaultMimeType=u'application/rss+xml',)
+                    self._updateErrback, etag=etag, modified=modified, defaultMimeType=u'application/rss+xml')
 
     def _updateErrback(self, error):
         if not self.ufeed.idExists():
             return
-        logging.info ("WARNING: error in Feed.update for %s -- %s", self.ufeed, error)
+        logging.info("WARNING: error in Feed.update for %s -- %s", self.ufeed, error)
         self.scheduleUpdateEvents(-1)
         self.updating = False
         self.ufeed.signalChange(needsSave=False)
@@ -1603,7 +1592,7 @@ class RSSFeedImpl(RSSFeedImplBase):
             return
         html = info['body']
         if info.has_key('charset'):
-            html = fixXMLHeader(html,info['charset'])
+            html = fixXMLHeader(html, info['charset'])
 
         # FIXME HTML can be non-unicode here --NN        
         self.url = unicodify(info['updated-url'])
@@ -1635,7 +1624,6 @@ class RSSFeedImpl(RSSFeedImplBase):
     def onRestore(self):
         """Called by pickle during deserialization
         """
-        #self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
         #FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
         FeedImpl.onRestore(self)
@@ -1650,7 +1638,7 @@ class RSSFeedImpl(RSSFeedImplBase):
 class RSSMultiFeedImpl(RSSFeedImplBase):
     
     def __init__(self, url, ufeed, title=None, visible=True):
-        RSSFeedImplBase.__init__(self,url,ufeed,title,visible)
+        RSSFeedImplBase.__init__(self, url, ufeed, title, visible)
         self.oldItems = []
         self.etag = {}
         self.modified = {}
@@ -1692,9 +1680,9 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         if not self.ufeed.idExists():
             return
         if e:
-            logging.info ("Error updating feed: %s (%s): %s", self.url, url, e)
+            logging.info("Error updating feed: %s (%s): %s", self.url, url, e)
         else:
-            logging.info ("Error updating feed: %s (%s)", self.url, url)
+            logging.info("Error updating feed: %s (%s)", self.url, url)
         self.feedparser_finished(url, True)
 
     def feedparser_callback(self, parsed, url):
@@ -1708,7 +1696,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         self.feedparser_finished(url)
         end = clock()
         if end - start > 1.0:
-            logging.timing ("feed update for: %s too slow (%.3f secs)", self.url, end - start)
+            logging.timing("feed update for: %s too slow (%.3f secs)", self.url, end - start)
 
     def call_feedparser(self, html, url):
         self.ufeed.confirmDBThread()
@@ -1721,9 +1709,9 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
                 self.feedparser_errback(self, None, url)
                 raise
         else:
-            eventloop.callInThread (lambda parsed, url=url: self.feedparser_callback(parsed, url),
-                                    lambda e, url=url: self.feedparser_errback(e, url),
-                                    feedparser.parse, "Feedparser callback - %s" % url, html)
+            eventloop.callInThread(lambda parsed, url=url: self.feedparser_callback(parsed, url),
+                                   lambda e, url=url: self.feedparser_errback(e, url),
+                                   feedparser.parse, "Feedparser callback - %s" % url, html)
 
     def update(self):
         self.ufeed.confirmDBThread()
@@ -1736,8 +1724,8 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
             etag = self.etag.get(url)
             modified = self.modified.get(url)
             self.download_dc[url] = grabURL(url,
-                                            lambda x, url=url:self._updateCallback(x, url),
-                                            lambda x, url=url:self._updateErrback(x, url),
+                                            lambda x, url=url: self._updateCallback(x, url),
+                                            lambda x, url=url: self._updateErrback(x, url),
                                             etag=etag, modified=modified,
                                             defaultMimeType=u'application/rss+xml',)
             self.updating += 1
@@ -1745,7 +1733,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
     def _updateErrback(self, error, url):
         if not self.ufeed.idExists():
             return
-        logging.info ("WARNING: error in Feed.update for %s (%s) -- %s", self.ufeed, url, error)
+        logging.info("WARNING: error in Feed.update for %s (%s) -- %s", self.ufeed, url, error)
         self.scheduleUpdateEvents(-1)
         self.updating -= 1
         self.checkUpdateFinished()
@@ -1762,7 +1750,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
             return
         html = info['body']
         if info.has_key('charset'):
-            html = fixXMLHeader(html,info['charset'])
+            html = fixXMLHeader(html, info['charset'])
 
         # FIXME HTML can be non-unicode here --NN
         if info.get('updated-url'):
@@ -1788,7 +1776,6 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
     def onRestore(self):
         """Called by pickle during deserialization
         """
-        #self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
         #FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
         FeedImpl.onRestore(self)
@@ -1807,7 +1794,7 @@ class Collection(FeedImpl):
     """A DTV Collection of items -- similar to a playlist
     """
     def __init__(self, ufeed, title=None):
-        FeedImpl.__init__(self,ufeed,url = "dtv:collection",title = title,visible = False)
+        FeedImpl.__init__(self, ufeed, url="dtv:collection", title=title, visible=False)
 
     def addItem(self, item):
         """Adds an item to the collection
@@ -1834,7 +1821,7 @@ class Collection(FeedImpl):
         """Removes an item from the collection
         """
         self.ufeed.confirmDBThread()
-        for x in range(0,len(self.items)):
+        for x in range(0, len(self.items)):
             if self.items[x] == item:
                 self.items[x:x+1] = []
                 break
@@ -1844,7 +1831,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
     """A feed based on un unformatted HTML or pre-enclosure RSS
     """
     def __init__(self, url, ufeed, title=None, visible=True, initialHTML=None, etag=None, modified=None, charset=None):
-        FeedImpl.__init__(self,url,ufeed,title,visible)
+        FeedImpl.__init__(self, url, ufeed, title, visible)
         self.initialHTML = initialHTML
         self.initialCharset = charset
         self.linkHistory = {}
@@ -1889,14 +1876,14 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
                 return
             self.downloads.discard(download)
             try:
-                self.processDownloadedHTML(info, urlList, depth,linkNumber, top)
+                self.processDownloadedHTML(info, urlList, depth, linkNumber, top)
             finally:
                 self.checkDone()
         def errback(error):
             if not self.ufeed.idExists():
                 return
             self.downloads.discard(download)
-            logging.info ("WARNING unhandled error for ScraperFeedImpl.getHTML: %s", error)
+            logging.info("WARNING unhandled error for ScraperFeedImpl.getHTML: %s", error)
             self.checkDone()
         download = grabURL(url, callback, errback, etag=etag,
                 modified=modified,defaultMimeType='text/html',)
@@ -1915,13 +1902,13 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
 
         if (info['status'] != 304) and (info.has_key('body')):
             if info.has_key('charset'):
-                subLinks = self.scrapeLinks(info['body'], info['redirected-url'],charset=info['charset'], setTitle = top)
+                subLinks = self.scrapeLinks(info['body'], info['redirected-url'], charset=info['charset'], setTitle=top)
             else:
-                subLinks = self.scrapeLinks(info['body'], info['redirected-url'], setTitle = top)
+                subLinks = self.scrapeLinks(info['body'], info['redirected-url'], setTitle=top)
             if top:
-                self.processLinks(subLinks,0,linkNumber)
+                self.processLinks(subLinks, 0, linkNumber)
             else:
-                self.processLinks(subLinks,depth+1,linkNumber)
+                self.processLinks(subLinks, depth+1, linkNumber)
         if len(urlList) > 0:
             self.getHTML(urlList, depth, linkNumber)
 
@@ -1932,21 +1919,29 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
             self.ufeed.signalChange()
             self.scheduleUpdateEvents(-1)
 
-    def addVideoItem(self, link, dict, linkNumber):
+    def addVideoItem(self, link, dict_, linkNumber):
         link = unicodify(link.strip())
-        if dict.has_key('title'):
-            title = dict['title']
+        if dict_.has_key('title'):
+            title = dict_['title']
         else:
             title = link
         for item in self.items:
             if item.getURL() == link:
                 return
         # Anywhere we call this, we need to convert the input back to unicode
-        title = feedparser.sanitizeHTML (title, "utf-8").decode('utf-8')
-        if dict.has_key('thumbnail') > 0:
-            i=itemmod.Item(FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link,'thumbnail':FeedParserDict({'url':dict['thumbnail']})})]}),linkNumber = linkNumber, feed_id=self.ufeed.id)
+        title = feedparser.sanitizeHTML(title, "utf-8").decode('utf-8')
+        if dict_.has_key('thumbnail') > 0:
+            i = itemmod.Item(FeedParserDict({'title': title,
+                                             'enclosures': [FeedParserDict({'url': link,
+                                                                            'thumbnail': FeedParserDict({'url': dict_['thumbnail']})
+                                                                          })]
+                                           }),
+                             linkNumber=linkNumber, feed_id=self.ufeed.id)
         else:
-            i=itemmod.Item(FeedParserDict({'title':title,'enclosures':[FeedParserDict({'url':link})]}),linkNumber = linkNumber, feed_id=self.ufeed.id)
+            i = itemmod.Item(FeedParserDict({'title': title,
+                                             'enclosures': [FeedParserDict({'url': link})]
+                                           }),
+                             linkNumber=linkNumber, feed_id=self.ufeed.id)
         if self.ufeed.searchTerm is not None and not filters.matchingItems(i, self.ufeed.searchTerm):
             i.remove()
             return
@@ -1959,7 +1954,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
         # List of URLs that should be downloaded
         newURLs = []
         
-        if depth<maxDepth:
+        if depth < maxDepth:
             for link in urls:
                 if depth == 0:
                     linkNumber += 1
@@ -1994,13 +1989,13 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
                       mimetype == "application/ogg" or
                       mimetype == "application/x-annodex" or
                       mimetype == "application/x-bittorrent"):
-                    self.addVideoItem(link, links[link],linkNumber)
+                    self.addVideoItem(link, links[link], linkNumber)
             if len(newURLs) > 0:
                 self.getHTML(newURLs, depth, linkNumber)
 
     def onRemove(self):
         for download in self.downloads:
-            logging.info ("canceling download: %s", download.url)
+            logging.info("canceling download: %s", download.url)
             download.cancel()
         self.downloads = set()
 
@@ -2018,25 +2013,27 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
         if not self.initialHTML is None:
             html = self.initialHTML
             self.initialHTML = None
-            redirURL=self.url
+            redirURL = self.url
             status = 200
             charset = self.initialCharset
             self.initialCharset = None
-            subLinks = self.scrapeLinks(html, redirURL, charset=charset, setTitle = True)
-            self.processLinks(subLinks,0,0)
+            subLinks = self.scrapeLinks(html, redirURL, charset=charset, setTitle=True)
+            self.processLinks(subLinks, 0, 0)
             self.checkDone()
         else:
-            self.getHTML([self.url], top = True)
+            self.getHTML([self.url], top=True)
 
     def scrapeLinks(self, html, baseurl, setTitle=False, charset=None):
         try:
             if not charset is None:
-                html = fixHTMLHeader(html,charset)
+                html = fixHTMLHeader(html, charset)
             xmldata = html
             parser = xml.sax.make_parser()
             parser.setFeature(xml.sax.handler.feature_namespaces, 1)
-            try: parser.setFeature(xml.sax.handler.feature_external_ges, 0)
-            except: pass
+            try:
+                parser.setFeature(xml.sax.handler.feature_external_ges, 0)
+            except:
+                pass
             if charset is not None:
                 handler = RSSLinkGrabber(baseurl,charset)
             else:
@@ -2054,21 +2051,21 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
             linkDict = {}
             for link in links:
                 if link[0].startswith('http://') or link[0].startswith('https://'):
-                    if not linkDict.has_key(toUni(link[0],charset)):
-                        linkDict[toUni(link[0],charset)] = {}
+                    if not linkDict.has_key(toUni(link[0], charset)):
+                        linkDict[toUni(link[0], charset)] = {}
                     if not link[1] is None:
-                        linkDict[toUni(link[0],charset)]['title'] = toUni(link[1],charset).strip()
+                        linkDict[toUni(link[0], charset)]['title'] = toUni(link[1], charset).strip()
                     if not link[2] is None:
-                        linkDict[toUni(link[0],charset)]['thumbnail'] = toUni(link[2],charset)
+                        linkDict[toUni(link[0], charset)]['thumbnail'] = toUni(link[2], charset)
             if setTitle and not handler.title is None:
                 self.ufeed.confirmDBThread()
                 try:
-                    self.title = toUni(handler.title,charset)
+                    self.title = toUni(handler.title, charset)
                 finally:
                     self.ufeed.signalChange()
             return ([x[0] for x in links if x[0].startswith('http://') or x[0].startswith('https://')], linkDict)
         except (xml.sax.SAXException, ValueError, IOError, xml.sax.SAXNotRecognizedException):
-            (links, linkDict) = self.scrapeHTMLLinks(html,baseurl,setTitle=setTitle, charset=charset)
+            (links, linkDict) = self.scrapeHTMLLinks(html, baseurl, setTitle=setTitle, charset=charset)
             return (links, linkDict)
 
     def scrapeHTMLLinks(self, html, baseurl, setTitle=False, charset=None):
@@ -2087,19 +2084,18 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
         linkDict = {}
         for link in links:
             if link[0].startswith('http://') or link[0].startswith('https://'):
-                if not linkDict.has_key(toUni(link[0],charset)):
-                    linkDict[toUni(link[0],charset)] = {}
+                if not linkDict.has_key(toUni(link[0], charset)):
+                    linkDict[toUni(link[0], charset)] = {}
                 if not link[1] is None:
-                    linkDict[toUni(link[0],charset)]['title'] = toUni(link[1],charset).strip()
+                    linkDict[toUni(link[0], charset)]['title'] = toUni(link[1], charset).strip()
                 if not link[2] is None:
-                    linkDict[toUni(link[0],charset)]['thumbnail'] = toUni(link[2],charset)
-        return ([x[0] for x in links if x[0].startswith('http://') or x[0].startswith('https://')],linkDict)
+                    linkDict[toUni(link[0], charset)]['thumbnail'] = toUni(link[2], charset)
+        return ([x[0] for x in links if x[0].startswith('http://') or x[0].startswith('https://')], linkDict)
         
     def onRestore(self):
         """Called by pickle during deserialization
         """
         FeedImpl.onRestore(self)
-        #self.itemlist = defaultDatabase.filter(lambda x:isinstance(x,Item) and x.feed is self)
 
         #FIXME: the update dies if all of the items aren't restored, so we 
         # wait a little while before we start the update
@@ -2112,14 +2108,14 @@ class DirectoryWatchFeedImpl(FeedImpl):
         self.dir = directory
         self.firstUpdate = True
         if directory is not None:
-            url = u"dtv:directoryfeed:%s" % (makeURLSafe (directory),)
+            url = u"dtv:directoryfeed:%s" % makeURLSafe(directory)
         else:
             url = u"dtv:directoryfeed"
         title = directory
         if title[-1] == '/':
             title = title[:-1]
         title = filenameToUnicode(os.path.basename(title)) + "/"
-        FeedImpl.__init__(self,url = url,ufeed=ufeed,title = title,visible = visible)
+        FeedImpl.__init__(self, url=url, ufeed=ufeed, title=title, visible=visible)
 
         self.setUpdateFrequency(5)
         self.scheduleUpdateEvents(0)
@@ -2203,7 +2199,7 @@ class DirectoryFeedImpl(FeedImpl):
     will continue to remember movies in the old folder.
     """
     def __init__(self, ufeed):
-        FeedImpl.__init__(self,url = u"dtv:directoryfeed",ufeed=ufeed,title = u"Feedless Videos",visible = False)
+        FeedImpl.__init__(self, url=u"dtv:directoryfeed", ufeed=ufeed, title=u"Feedless Videos", visible=False)
 
         self.setUpdateFrequency(5)
         self.scheduleUpdateEvents(0)
@@ -2216,8 +2212,8 @@ class DirectoryFeedImpl(FeedImpl):
     def setUpdateFrequency(self, frequency):
         newFreq = frequency*60
         if newFreq != self.updateFreq:
-                self.updateFreq = newFreq
-                self.scheduleUpdateEvents(-1)
+            self.updateFreq = newFreq
+            self.scheduleUpdateEvents(-1)
 
     def update(self):
         self.ufeed.confirmDBThread()
@@ -2454,7 +2450,7 @@ class HTMLLinkGrabber(HTMLParser):
                     thumb = None
             else:
                 thumb = None
-            desc =  HTMLLinkGrabber.tagPattern.sub(' ',desc)
+            desc =  HTMLLinkGrabber.tagPattern.sub(' ', desc)
             self.links.append((link, desc, thumb))
             match = HTMLLinkGrabber.linkPattern.search(match.group(5))
         return self.links
@@ -2485,7 +2481,7 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler, xml.sax.handler.ErrorHandle
         tag = name[1]
         if self.firstTag:
             self.firstTag = False
-            if tag not in ['rss','feed']:
+            if tag not in ['rss', 'feed']:
                 raise xml.sax.SAXNotRecognizedException, "Not an RSS file"
         if tag.lower() == 'enclosure' or tag.lower() == 'content':
             self.enclosureCount += 1
@@ -2507,18 +2503,18 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler, xml.sax.handler.ErrorHandle
         if tag.lower() == 'description':
             lg = HTMLLinkGrabber()
             try:
-                html = xhtmlify(unescape(self.descHTML),addTopTags=True)
+                html = xhtmlify(unescape(self.descHTML), addTopTags=True)
                 if not self.charset is None:
-                    html = fixHTMLHeader(html,self.charset)
+                    html = fixHTMLHeader(html, self.charset)
                 self.links[:0] = lg.getLinks(html,self.baseurl)
             except HTMLParseError: # Don't bother with bad HTML
                 logging.info ("bad HTML in description for %s", self.baseurl)
             self.inDescription = False
         elif tag.lower() == 'link':
-            self.links.append((self.theLink,None,None))
+            self.links.append((self.theLink, None, None))
             self.inLink = False
         elif tag.lower() == 'item':
-            self.inItem == False
+            self.inItem = False
         elif tag.lower() == 'title' and not self.inItem:
             self.inTitle = False
 
@@ -2560,15 +2556,15 @@ class HTMLFeedURLParser(HTMLParser):
         for (key, value) in attrs:
             attrdict[key.lower()] = value
         if (tag.lower() == 'link' and attrdict.has_key('rel') and 
-            attrdict.has_key('type') and attrdict.has_key('href') and
-            attrdict['rel'].lower() == 'alternate' and 
-            attrdict['type'].lower() in ['application/rss+xml',
-                                         'application/podcast+xml',
-                                         'application/rdf+xml',
-                                         'application/atom+xml',
-                                         'text/xml',
-                                         'application/xml']):
-            self.link = urljoin(self.baseurl,attrdict['href'])
+                attrdict.has_key('type') and attrdict.has_key('href') and
+                attrdict['rel'].lower() == 'alternate' and
+                attrdict['type'].lower() in ['application/rss+xml',
+                                             'application/podcast+xml',
+                                             'application/rdf+xml',
+                                             'application/atom+xml',
+                                             'text/xml',
+                                             'application/xml']):
+            self.link = urljoin(self.baseurl, attrdict['href'])
 
 def expireItems():
     try:

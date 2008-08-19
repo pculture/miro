@@ -40,14 +40,12 @@ import errno
 import select
 import heapq
 import Queue
-from miro import util
 import logging
 from miro import trapcall
 from miro import signals
+from miro import util
 
 from miro.clock import clock
-
-from miro import util
 
 cumulative = {}
 
@@ -435,6 +433,7 @@ def disconnect(signal, callback):
     _eventLoop.disconnect(signal, callback)
 
 def resetEventLoop():
+    global _eventLoop
     _eventLoop = EventLoop()
 
 def threadPoolQuit():
