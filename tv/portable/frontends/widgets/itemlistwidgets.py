@@ -170,8 +170,7 @@ class HideableSection(widgetutil.HideableWidget):
 
     The label for a HideableSection expander is made up of 2 parts.  The header
     is displayed first using a bold text, then the info is displayed using
-    normal font.  The header is a static piece of text, while the info can
-    change.
+    normal font.
     """
 
     def __init__(self, header_text, item_view):
@@ -183,6 +182,9 @@ class HideableSection(widgetutil.HideableWidget):
 
     def set_info(self, text):
         self.info_label.set_text(text)
+
+    def set_header(self, text):
+        self.header_label.set_text(text)
 
     def expand(self):
         self.expander.set_expanded(True)

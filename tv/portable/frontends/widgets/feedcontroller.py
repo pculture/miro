@@ -129,14 +129,15 @@ class FeedController(itemlistcontroller.ItemListController):
     def _update_counts(self):
         downloads = self.downloading_view.item_list.get_count()
         watchable = self.downloaded_view.item_list.get_count()
+        full_count = self.full_view.item_list.get_count()
         self._update_downloading_section(downloads)
         self._update_downloaded_section(watchable)
-        self._update_full_section(downloads, watchable)
+        self._update_full_section(downloads, full_count)
 
     def _update_downloading_section(self, downloads):
         if downloads > 0:
             text = _("%d Downloading") % downloads
-            self.downloading_section.set_info(text)
+            self.downloading_section.set_header(text)
             self.downloading_section.show()
         else:
             self.downloading_section.hide()
@@ -149,7 +150,7 @@ class FeedController(itemlistcontroller.ItemListController):
         else:
             self.downloaded_section.hide()
 
-    def _update_full_section(self, downloads, watchable):
+    def _update_full_section(self, downloads, videos):
         text = _("  |  %(videos)d Videos  |  %(downloads)d Downloading") % \
-                { 'videos': watchable, 'downloads': downloads }
+                { 'videos': videos, 'downloads': downloads }
         self.full_section.set_info(text)
