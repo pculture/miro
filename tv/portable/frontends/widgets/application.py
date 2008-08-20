@@ -88,6 +88,7 @@ class Application:
         videobox.controls.stop.connect('clicked', self.on_stop_clicked)
         videobox.controls.forward.connect('clicked', self.on_forward_clicked)
         videobox.controls.previous.connect('clicked', self.on_previous_clicked)
+        videobox.controls.fullscreen.connect('clicked', self.on_fullscreen_clicked)
         self.window.show()
         messages.TrackChannels().send_to_backend()
         messages.TrackPlaylists().send_to_backend()
@@ -126,6 +127,9 @@ class Application:
 
     def on_previous_clicked(self, button):
         app.playback_manager.play_prev_movie()
+
+    def on_fullscreen_clicked(self, button):
+        app.playback_manager.fullscreen()
 
     def next_video(self):
         pass

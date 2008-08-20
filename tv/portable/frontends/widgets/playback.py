@@ -52,6 +52,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.create_signal('will-pause')
         self.create_signal('will-stop')
         self.create_signal('did-stop')
+        self.create_signal('will-fullscreen')
         self.create_signal('playback-did-progress')
     
     def set_volume(self, volume):
@@ -112,6 +113,12 @@ class PlaybackManager (signals.SignalEmitter):
             self.emit('will-pause')
             self.video_display.pause()
             self.is_paused = True
+
+    def fullscreen(self):
+        if not self.is_playing:
+            return
+        self.emit('will-fullscreen')
+        self.toggle_fullscreen()
 
     def stop(self):
         if not self.is_playing:
