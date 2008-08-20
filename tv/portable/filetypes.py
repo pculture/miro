@@ -28,7 +28,7 @@
 
 import os
 
-VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid', '.rmvb', '.mkv', '.m2v', '.ogm']
+VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.ogv', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid', '.rmvb', '.mkv', '.m2v', '.ogm']
 AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka']
 FEED_EXTENSIONS = ['.xml', '.rss', '.atom']
 
@@ -45,6 +45,7 @@ MIMETYPES_EXT_MAP = {
     'video/x-msvideo':  ['.avi'],
     'video/x-matroska': ['.mkv'],
     'application/ogg':  ['.ogg'],
+    'video/ogg':        ['.ogv'],
 
     'audio/mpeg':       ['.mp3'],
     'audio/mp4':        ['.m4a'],
