@@ -50,7 +50,7 @@ class ShortCut:
 Key = ShortCut
 
 class MenuItem:
-    def __init__(self, label, action, shortcuts, impl = None, enabled = True, **stateLabels):
+    def __init__(self, label, action, shortcuts, impl=None, enabled=True, **stateLabels):
         self.label = label
         self.action = action
         self.shortcuts = shortcuts
@@ -182,7 +182,6 @@ class MenuBar:
 VideoItems = [
     MenuItem(_("_Open..."), "Open", (Key("o", MOD),)),
     MenuItem(_("_Download Video..."), "NewDownload", ()),
-    #MenuItem(_("Op_en Recent"), "OpenRecent", ()),
     MenuItem(_("Check _Version"), "CheckVersion", ()),
     Separator(),
     MenuItem(_("_Remove Video..."), "RemoveVideos", (Key(DELETE),Key(BKSPACE, MOD)), enabled=False,
@@ -196,6 +195,7 @@ VideoItems = [
     MenuItem(_("_Quit"), "Quit", (Key("q",MOD),)),
 ]
 
+# FIXME - move this to platform-specific code
 if platform == "gtk-x11":
     del VideoItems[2] # No "Check version" on GTK platforms. We use
                       # the package management system instead
@@ -230,6 +230,7 @@ ChannelItems = [
     MenuItem(_("_Send this channel to a friend"), "MailChannel", (), enabled=False),
     MenuItem(_("Copy Channel _Link"), "CopyChannelURL", (), enabled=False),
 ]
+
 PlaylistItems = [
     MenuItem(_("New _Playlist..."), "NewPlaylist", (Key("p",MOD),)),
     MenuItem(_("New Playlist Fol_der..."), "NewPlaylistFolder",(Key("p",MOD,SHIFT),)),
@@ -242,6 +243,7 @@ PlaylistItems = [
              ),
 ]
 
+# FIXME - move this to platform-specific code
 if platform == "windows-xul":
     fullscreen_shortcuts = (Key("f", MOD), Key(ENTER, ALT))
 else:
@@ -276,11 +278,15 @@ HelpItems = [
     MenuItem(_("_Planet Miro"), "Planet", ()),
 ]
 
+# FIXME - move this to platform-specific code
 if platform == "gtk-x11":
     main_title = _("_Video")
 else:
     main_title = _("_File")
 
+# FIXME - changes this so that computations are performed as needed
+# allowing platforms to change the menu structures before computing
+# menubar.
 menubar = MenuBar(Menu(main_title, "Video", *VideoItems),
                   Menu(_("_Channels"), "Channels", *ChannelItems),
                   Menu(_("_Playlists"), "Playlists", *PlaylistItems),
@@ -288,7 +294,7 @@ menubar = MenuBar(Menu(main_title, "Video", *VideoItems),
                   Menu(_("_Help"), "Help", *HelpItems),
                  )
 
-traymenu = Menu("Miro","Miro",
+traymenu = Menu("Miro", "Miro",
                 MenuItem(_("Play Unwatched ($numUnwatched)"), "PlayUnwatched", ()),
                 MenuItem(_("Pause All Downloads ($numDownloading)"), "PauseDownloads", ()),
                 MenuItem(_("Resume All Downloads ($numPaused)"), "ResumeDownloads", ()),
@@ -296,5 +302,5 @@ traymenu = Menu("Miro","Miro",
                 MenuItem(_("Options..."), "EditPreferences", ()),
                 Separator(),
                 MenuItem(_("Hide Window"), "RestoreWindow", (), restore=_("Show Window")),
-                MenuItem(_("Quit"),"Quit", ()),
+                MenuItem(_("Quit"), "Quit", ()),
                 )                
