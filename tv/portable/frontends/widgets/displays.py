@@ -33,8 +33,8 @@ app.
 from miro import app
 from miro import signals
 from miro.frontends.widgets import browser
-from miro.frontends.widgets import feedview
-from miro.frontends.widgets import itemlist
+from miro.frontends.widgets import feedcontroller
+from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import playlist
 from miro.plat.frontends.widgets import widgetset
 
@@ -116,7 +116,6 @@ class DisplayManager(object):
         app.widgetapp.window.set_main_area(display.widget)
 
     def unselect_current_display(self):
-        app.item_list_manager.reset()
         if self.current_display:
             self.current_display.cleanup()
             self.current_display.emit("removed")
@@ -144,40 +143,34 @@ class ItemListDisplay(TabDisplay):
     def __init__(self, type, selected_tabs):
         Display.__init__(self)
         tab = selected_tabs[0]
-        self.view = self.make_view(tab)
-        self.id = self.view.id
-        self.view.connect('play-videos', self.on_play_videos)
-        self.widget = self.view.widget
+        self.controller = self.make_controller(tab)
+        self.widget = self.controller.widget
 
     def on_selected(self):
-        app.item_list_manager.default_item_list = self.view.default_item_list()
-        for item_list in self.view.all_item_lists():
-            app.item_list_manager.manage_item_list(item_list)
-
-    def on_play_videos(self, view, item_infos):
-        app.playback_manager.start_with_items(item_infos)
+        app.item_list_controller = self.controller
+        self.controller.start_tracking()
 
     def cleanup(self):
-        self.view.stop_tracking()
-        app.item_list_manager.default_item_list = None
+        app.item_list_controller = None
+        self.controller.stop_tracking()
 
-    def make_view(self, tab):
-        pass
+    def make_controller(self, tab):
+        raise NotImplementedError()
 
 class FeedDisplay(ItemListDisplay):
     @staticmethod
     def should_display(type, selected_tabs):
         return type == 'feed' and len(selected_tabs) == 1
 
-    def make_view(self, tab):
-        return feedview.FeedView(tab.id, tab.is_folder)
+    def make_controller(self, tab):
+        return feedcontroller.FeedController(tab.id, tab.is_folder)
 
 class PlaylistDisplay(ItemListDisplay):
     @staticmethod
     def should_display(type, selected_tabs):
         return type == 'playlist' and len(selected_tabs) == 1
 
-    def make_view(self, playlist_info):
+    def make_controller(self, playlist_info):
         return playlist.PlaylistView(playlist_info)
 
 class DownloadingDisplay(ItemListDisplay):
@@ -185,40 +178,40 @@ class DownloadingDisplay(ItemListDisplay):
     def should_display(type, selected_tabs):
         return type == 'static' and selected_tabs[0].id == 'downloading'
 
-    def make_view(self, tab):
-        return itemlist.DownloadsView()
+    def make_controller(self, tab):
+        return itemlistcontroller.DownloadsController()
 
 class NewVideosDisplay(ItemListDisplay):
     @staticmethod
     def should_display(type, selected_tabs):
         return type == 'static' and selected_tabs[0].id == 'new'
 
-    def make_view(self, tab):
-        return itemlist.NewView()
+    def make_controller(self, tab):
+        return itemlistcontroller.NewController()
 
 class SearchDisplay(ItemListDisplay):
     @staticmethod
     def should_display(type, selected_tabs):
         return type == 'static' and selected_tabs[0].id == 'search'
 
-    def make_view(self, tab):
-        return itemlist.SearchView()
+    def make_controller(self, tab):
+        return itemlistcontroller.SearchController()
 
 class LibraryDisplay(ItemListDisplay):
     @staticmethod
     def should_display(type, selected_tabs):
         return type == 'static' and selected_tabs[0].id == 'library'
 
-    def make_view(self, tab):
-        return itemlist.LibraryView()
+    def make_controller(self, tab):
+        return itemlistcontroller.LibraryController()
 
 class IndividualDownloadsDisplay(ItemListDisplay):
     @staticmethod
     def should_display(type, selected_tabs):
         return type == 'static' and selected_tabs[0].id == 'individual_downloads'
 
-    def make_view(self, tab):
-        return itemlist.IndividualDownloadsView()
+    def make_controller(self, tab):
+        return itemlistcontroller.IndividualDownloadsController()
 
 class VideoDisplay(Display):
     def __init__(self):

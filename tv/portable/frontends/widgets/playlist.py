@@ -28,70 +28,22 @@
 
 """playlist.py -- Handle displaying a playlist."""
 
+import itertools
+
 from miro import messages
+from miro import signals
 from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import widgetset
+from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
+from miro.frontends.widgets import itemlistcontroller
 
-class ItemReorderer(object):
-    """Handles re-ordering items for DnD"""
-    def __init__(self):
-        self.removed_rows = []
-
-    def calc_drop_id(self, model):
-        if self.drop_row_iter is not None:
-            self.drop_id = model[self.drop_row_iter][0].id
-        else:
-            self.drop_id = None
-
-    def reorder(self, model, position, dragged_ids):
-        if position >= 0:
-            self.drop_row_iter = model.nth_iter(position)
-        else:
-            self.drop_row_iter = None
-        self.calc_drop_id(model)
-        self.remove_dragged_rows(model, dragged_ids)
-        return self.put_rows_back(model)
-
-    def remove_row(self, model, iter, row):
-        self.removed_rows.append(row)
-        if row[0].id == self.drop_id:
-            self.drop_row_iter = model.next_iter(self.drop_row_iter)
-            self.calc_drop_id(model)
-        return model.remove(iter)
-
-    def remove_dragged_rows(self, model, dragged_ids):
-        # iterating through the entire table seems inefficient, but we have to
-        # know the order of dragged rows so we can insert them back in the
-        # right order.
-        iter = model.first_iter()
-        while iter is not None:
-            row = model[iter]
-            row_dragged = (row[0].id in dragged_ids)
-            if row_dragged:
-                # need to make a copy of the row data, since we're removing it
-                # from the table
-                iter = self.remove_row(model, iter, tuple(row))
-            else:
-                iter = model.next_iter(iter)
-
-    def put_rows_back(self, model):
-        if self.drop_row_iter is None:
-            def put_back(moved_row):
-                return model.append(*moved_row)
-        else:
-            def put_back(moved_row):
-                return model.insert_before(self.drop_row_iter, *moved_row)
-        retval = {}
-        for removed_row in self.removed_rows:
-            iter = put_back(removed_row)
-            retval[removed_row[0].id] = iter
-        return retval
-
-class DropHandler(object):
-    def __init__(self, playlist_id, item_list):
+class DropHandler(signals.SignalEmitter):
+    def __init__(self, playlist_id, item_view):
+        signals.SignalEmitter.__init__(self)
+        self.create_signal('new-order')
         self.playlist_id = playlist_id
-        self.item_list = item_list
+        self.item_view = item_view
 
     def allowed_actions(self):
         return widgetset.DRAG_ACTION_MOVE
@@ -108,45 +60,74 @@ class DropHandler(object):
     def accept_drop(self, table_view, model, type, source_actions, parent,
             position, data):
         dragged_ids = set([int(id) for id in data.split('-')])
+        if position >= 0:
+            insert_iter = model.nth_iter(position)
+        else:
+            insert_iter = None
         try:
-            new_iters = ItemReorderer().reorder(model, position, dragged_ids)
-            self.item_list.item_iters.update(new_iters)
+            self.item_view.item_list.move_items(insert_iter, dragged_ids)
         finally:
-            self.item_list.model_changed()
-        self.send_new_order()
+            self.item_view.model_changed()
+        self.emit('new-order', [row[0].id for row in model])
         return False
 
-    def send_new_order(self):
-        item_ids = [row[0].id for row in self.item_list.model]
-        messages.PlaylistReordered(self.playlist_id,
-                item_ids).send_to_backend()
+class PlaylistSort(itemlist.ItemSort):
+    """Sort that orders items by their order in the playlist.
+    """
 
-class PlaylistItemList(itemlist.ItemList):
-    def __init__(self, playlist_id, is_folder):
-        itemlist.ItemList.__init__(self)
-        self.playlist_id = playlist_id
-        self.is_folder = is_folder
-        self.set_drag_dest(DropHandler(self.playlist_id, self))
+    def __init__(self):
+        self.positions = {}
+        self.current_postion = itertools.count()
 
-    def _remove_context_menu_item(self, selection):
-        if self.is_folder:
-            return None
-        def do_remove():
-            ids = [info.id for info in selection]
-            messages.RemoveVideosFromPlaylist(self.playlist_id,
-                    ids).send_to_backend()
-        return (_('Remove From Playlist'), do_remove)
+    def add_items(self, item_list):
+        for item in item_list:
+            self.positions[item.id] = self.current_postion.next()
 
-class PlaylistView(itemlist.SimpleItemContainer):
-    SORT_ITEMS = False
+    def forget_items(self, item_list):
+        for item in item_list:
+            del self.positions[item.id]
+
+    def set_new_order(self, id_order):
+        self.positions = dict((id, self.current_postion.next())
+            for id in id_order)
+
+    def sort_key(self, item):
+        return self.positions[item.id]
+
+class PlaylistView(itemlistcontroller.SimpleItemListController):
     image_filename = 'playlist-icon.png'
-
-    def make_item_list(self):
-        return PlaylistItemList(self.id, self.is_folder)
 
     def __init__(self, playlist_info):
         self.type = 'playlist'
         self.id = playlist_info.id
         self.title = playlist_info.name
         self.is_folder = playlist_info.is_folder
-        itemlist.SimpleItemContainer.__init__(self)
+        self._sorter = PlaylistSort()
+        itemlistcontroller.SimpleItemListController.__init__(self)
+        self.item_list_group.set_sort(self._sorter)
+
+    def make_drop_handler(self):
+        handler = DropHandler(self.id, self.item_view)
+        handler.connect('new-order', self._on_new_order)
+        return handler
+
+    def make_context_menu_handler(self):
+        if self.is_folder:
+            return itemcontextmenu.ItemContextMenuHandlerPlaylistFolder()
+        else:
+            return itemcontextmenu.ItemContextMenuHandlerPlaylist(self.id)
+
+    def handle_item_list(self, message):
+        self._sorter.add_items(message.items)
+        itemlistcontroller.SimpleItemListController.handle_item_list(self,
+                message)
+
+    def handle_items_changed(self, message):
+        self._sorter.add_items(message.added)
+        self._sorter.forget_items(message.removed)
+        itemlistcontroller.SimpleItemListController.handle_items_changed(self,
+                message)
+
+    def _on_new_order(self, drop_handler, order):
+        self._sorter.set_new_order(order)
+        messages.PlaylistReordered(self.id, order).send_to_backend()

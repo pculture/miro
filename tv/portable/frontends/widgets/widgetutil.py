@@ -134,6 +134,24 @@ class ThreeImageSurface(object):
         self.center.draw(context, x, y, center_width, self.height, fraction)
         self.right.draw(context, x + center_width, y, right_width, self.height, fraction)
 
+class HideableWidget(widgetset.VBox):
+    """Widget that can be hidden and shown."""
+
+    def __init__(self, child):
+        widgetset.VBox.__init__(self)
+        self._child = child
+        self.shown = False
+
+    def show(self):
+        if not self.shown:
+            self.pack_start(self._child)
+            self.shown = True
+
+    def hide(self):
+        if self.shown:
+            self.remove(self._child)
+            self.shown = False
+
 class Shadow(object):
     """Encapsulates all parameters required to draw shadows"""
     def __init__(self, color, opacity, offset, blur_radius):
@@ -151,4 +169,3 @@ class Shadow(object):
 
 def get_feed_info(feed_id):
     return app.tab_list_manager.feed_list.get_info(feed_id)
-

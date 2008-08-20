@@ -31,7 +31,6 @@
 from miro import app
 from miro import messages
 from miro.frontends.widgets import displays
-from miro.frontends.widgets import feedview
 from miro.frontends.widgets import menus
 from miro.frontends.widgets import tablist
 from miro.frontends.widgets import widgetutil

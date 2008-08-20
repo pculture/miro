@@ -35,6 +35,8 @@ slashkiller = re.compile(r'\\.')
 searchObjects = {}
 
 def match (searchString, comparisons):
+    searchString = searchString.lower()
+    comparisons = [c.lower() for c in comparisons]
     if not searchObjects.has_key(searchString):
         searchObjects[searchString] = BooleanSearch(searchString)
     return searchObjects[searchString].match(comparisons)

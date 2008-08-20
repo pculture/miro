@@ -26,559 +26,340 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""itemlist.py -- Classes that display a list of items.
+"""itemlist.py -- Handles TableModel objects that store items.
+
+itemlist, itemlistcontroller and itemlistwidgets work togetherusing the MVC
+pattern.  itemlist handles the Model, itemlistwidgets handles the View and
+itemlistcontroller handles the Controller.
+
+ItemList manages a TableModel that stores ItemInfo objects.  It handles
+filtering out items from the list (for example in the Downloading items list).
+They also handle temporarily filtering out items based the user's search
+terms.
 """
 
-import itertools
-import os
-from urlparse import urljoin
-
-from miro import app
-from miro import downloader
-from miro import messages
-from miro import signals
-from miro import util
-from miro import searchengines
-from miro.gtcache import gettext as _
-from miro.frontends.widgets import dialogs
-from miro.frontends.widgets import style
-from miro.frontends.widgets import separator
+from miro import search
 from miro.frontends.widgets import imagepool
-from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
-from miro.plat.frontends.widgets import use_custom_titlebar_background
-from miro.plat import resources
-from miro.plat.utils import getAvailableBytesForMovies
 
-def sort_items(item_list):
-    item_list.sort(key=lambda i: i.release_date, reverse=True)
+def item_matches_search(item_info, search_text):
+    """Check if an item matches search text."""
+    if search_text == '':
+        return True
+    match_against = [item_info.name, item_info.description]
+    if item_info.video_path is not None:
+        match_against.append(item_info.video_path)
+    return search.match(search_text, match_against)
 
-class ItemListDragHandler(object):
-    def allowed_actions(self):
-        return widgetset.DRAG_ACTION_COPY
+class ItemSort(object):
+    """Class that sorts items in an item list."""
 
-    def allowed_types(self):
-        return ('downloaded-item',)
+    def sort_key(self, item):
+        """Return a value that can be used to sort item.
+        
+        Must be implemented by sublcasses.
+        """
+        raise NotImplentedError()
 
-    def begin_drag(self, tableview, rows):
-        videos = []
-        for row in rows:
-            item_info = row[0]
-            if item_info.downloaded:
-                videos.append(item_info)
-        if videos:
-            data = '-'.join(str(info.id) for info in videos)
-            return {'downloaded-item':  data }
-        else:
-            return None
+    def compare(self, item, other):
+        """Compare two items
+        
+        Returns -1 if item < other, 1 if other > item and 0 if item == other
+        (same as cmp)
+        """
+        return cmp(self.sort_key(item), self.sort_key(other))
 
-class ItemListBase(widgetset.TableView):
-    """TableView containing a list of items."""
-    def __init__(self):
-        model = widgetset.TableModel('object', 'boolean')
-        widgetset.TableView.__init__(self, model)
-        self.set_draws_selection(False)
-        renderer = style.ItemRenderer()
-        self.add_column('item', renderer, renderer.MIN_WIDTH, data=0,
-                show_details=1)
-        self.set_show_headers(False)
-        self.allow_multiple_select(True)
-        self.create_signal('play-video')
-        self.item_iters = {}
-        self.set_context_menu_callback(self.on_context_menu)
-        self.set_drag_source(ItemListDragHandler())
-        self.set_background_color(widgetutil.WHITE)
+    def sort_items(self, item_list):
+        """Sort a list of items (in place)."""
+        item_list.sort(key=self.sort_key)
 
-    def do_hotspot_clicked(self, name, iter):
-        item_info, show_details = self.model[iter]
-        if name == 'download':
-            messages.StartDownload(item_info.id).send_to_backend()
-        elif name == 'pause':
-            messages.PauseDownload(item_info.id).send_to_backend()
-        elif name == 'resume':
-            messages.ResumeDownload(item_info.id).send_to_backend()
-        elif name == 'cancel':
-            messages.CancelDownload(item_info.id).send_to_backend()
-        elif name == 'keep':
-            messages.KeepVideo(item_info.id).send_to_backend()
-        elif name == 'delete':
-            messages.DeleteVideo(item_info.id).send_to_backend()
-        elif name == 'details_toggle':
-            self.model.update_value(iter, 1, not show_details)
-            self.model_changed()
-        elif name == 'visit_webpage':
-            app.widgetapp.open_url(item_info.permalink)
-        elif name == 'visit_filelink':
-            app.widgetapp.open_url(item_info.file_url)
-        elif name == 'visit_license':
-            app.widgetapp.open_url(item_info.license)
-        elif name == 'show_local_file':
-            if not os.path.exists(item_info.video_path):
-                basename = os.path.basename(item_info.video_path)
-                dialogs.show_message(
-                    _("Error Revealing File"),
-                    _("The file \"%s\" was deleted "
-                      "from outside Miro.") % basename)
-            else:
-                app.widgetapp.open_file(item_info.video_path)
-        elif name.startswith('description-link:'):
-            url = name.split(':', 1)[1]
-            base_href = widgetutil.get_feed_info(item_info.feed_id).base_href
-            app.widgetapp.open_url(urljoin(base_href, url))
-        elif name == 'play':
-            self.emit('play-video', item_info.id)
-        else:
-            print 'hotspot clicked: ', name, item_info.name
+class DateSort(ItemSort):
+    def sort_key(self, item):
+        return item.release_date
 
-    def setup_info(self, info):
+class ItemListGroup(object):
+    """Manages a set of ItemLists.
+
+    ItemListGroup keep track of one or more ItemLists.  When items are
+    added/changed/removed they take care of making sure each child list
+    updates itself.  
+    
+    ItemLists maintain an item sorting and a search filter that are shared by
+    each child list.
+    """
+
+    def __init__(self, item_lists):
+        """Construct in ItemLists.  
+        
+        item_lists is a list of ItemList objects that should be grouped
+        together.
+        """
+        self.item_lists = item_lists
+        self.set_sort(DateSort())
+
+    def _setup_info(self, info):
         """Initialize a newly recieved ItemInfo."""
         info.icon = imagepool.LazySurface(info.thumbnail, (154, 105))
 
-    def get_items(self):
-        return [row[0] for row in self.model]
-
-    def get_watchable_videos(self, start_id=None):
-        infos = self.get_items()
-        if start_id is not None:
-            for i in xrange(len(infos)):
-                if infos[i].id == start_id:
-                    break
-            infos = infos[i:]
-        return filter(lambda info: info.downloaded, infos)
-
-    def insert_sorted_items(self, item_list):
-        insert_pos = self.model.first_iter()
+    def add_items(self, item_list):
+        """Add a list of new items to the item list.
+        
+        Note: This method will sort item_list
+        """
+        self._sorter.sort_items(item_list)
         for item_info in item_list:
-            self.setup_info(item_info)
-            while (insert_pos is not None and 
-                    self.model[insert_pos][0].release_date > 
-                    item_info.release_date):
-                insert_pos = self.model.next_iter(insert_pos)
-            iter = self.model.insert_before(insert_pos, item_info, False)
-            self.item_iters[item_info.id] = iter
+            self._setup_info(item_info)
+        for sublist in self.item_lists:
+            sublist.add_items(item_list, already_sorted=True)
 
-    def update_item(self, iter, item_info):
-        self.setup_info(item_info)
-        self.model.update_value(iter, 0, item_info)
+    def update_items(self, changed_items):
+        """Update items.
+        
+        Note: This method will sort changed_items
+        """
+        self._sorter.sort_items(changed_items)
+        for item_info in changed_items:
+            self._setup_info(item_info)
+        for sublist in self.item_lists:
+            sublist.update_items(changed_items, already_sorted=True)
 
-    def on_context_menu(self, tableview):
-        selected = [self.model[iter][0] for iter in self.get_selection()]
-        if len(selected) == 1:
-            return self.make_context_menu_single(selected[0])
-        else:
-            return self.make_context_menu_multiple(selected)
+    def remove_items(self, removed_ids):
+        """Remove items from the list."""
+        for sublist in self.item_lists:
+            sublist.remove_items(removed_ids)
 
-    def _remove_context_menu_item(self, selection):
-        return (_('Remove From the Library'), app.widgetapp.remove_videos)
+    def set_sort(self, sorter):
+        """Change the way items are sorted in the list (and filtered lists)
 
-    def _add_remove_context_menu_item(self, menu, selection):
-        remove = self._remove_context_menu_item(selection)
-        if remove is not None:
-            menu.append(remove)
+        sorter must be a subclass of ItemSort.
+        """
+        self._sorter = sorter
+        for sublist in self.item_lists:
+            sublist.set_sort(sorter)
 
-    def make_context_menu_single(self, item):
-        if item.downloaded:
-            def play_and_stop():
-                app.playback_manager.start_with_items([item])
+    def set_search_text(self, search_text):
+        """Update the search for each child list."""
+        for sublist in self.item_lists:
+            sublist.set_search_text(search_text)
 
-            menu = [
-                (_('Play'), app.widgetapp.play_selection),
-                (_('Play Just this Video'), play_and_stop),
-                (_('Add to New Playlist'), app.widgetapp.add_new_playlist),
-            ]
-            self._add_remove_context_menu_item(menu, [item])
-            if item.video_watched:
-                menu.append((_('Mark as Unwatched'),
-                    messages.MarkItemUnwatched(item.id).send_to_backend))
-            else:
-                menu.append((_('Mark as Watched'),
-                    messages.MarkItemWatched(item.id).send_to_backend))
-            if (item.download_info and item.download_info.torrent and
-                    item.download_info.state != 'uploading'):
-                menu.append((_('Restart Upload'),
-                    messages.RestartUpload(item.id).send_to_backend))
-            menu.append((_('Reveal File'),
-                lambda : app.widgetapp.open_file(item.video_path)))
-        elif item.download_info is not None:
-            menu = [
-                    (_('Cancel Download'), 
-                        messages.CancelDownload(item.id).send_to_backend)
-            ]
-            if item.download_info.state != 'paused':
-                menu.append((_('Pause Download'),
-                        messages.PauseDownload(item.id).send_to_backend))
-            else:
-                menu.append((_('Resume Download'),
-                        messages.ResumeDownload(item.id).send_to_backend))
-        else:
-            menu = [
-                (_('Download'),
-                    messages.StartDownload(item.id).send_to_backend)
-            ]
-        return menu
-
-    def make_context_menu_multiple(self, selection):
-        watched = unwatched = downloaded = downloading = available = uploadable = 0
-        for info in selection:
-            if info.downloaded:
-                downloaded += 1
-                if info.video_watched:
-                    watched += 1
-                else:
-                    unwatched += 1
-            elif info.download_info is not None:
-                downloading += 1
-                if (info.download_info.torrent and
-                        info.download_info.state != 'uploading'):
-                    uploadable += 1
-            else:
-                available += 1
-
-        menu = []
-        if downloaded > 0:
-            menu.append((_('%d Downloaded Items') % downloaded, None))
-            menu.append((_('Play'), app.widgetapp.play_selection)),
-            menu.append((_('Add to New Playlist'),
-                app.widgetapp.add_new_playlist))
-            self._add_remove_context_menu_item(menu, selection)
-            if watched:
-                def mark_unwatched():
-                    for item in selection:
-                        messages.MarkItemUnwatched(item.id).send_to_backend()
-                menu.append((_('Mark as Unwatched'), mark_unwatched))
-            if unwatched:
-                def mark_watched():
-                    for item in selection:
-                        messages.MarkItemWatched(item.id).send_to_backend()
-                menu.append((_('Mark as Watched'), mark_watched))
-
-        if available > 0:
-            if len(menu) > 0:
-                menu.append(None)
-            menu.append((_('%d Available Items') % available, None))
-            def download_all():
-                for item in selection:
-                    messages.StartDownload(item.id).send_to_backend()
-            menu.append((_('Download'), download_all))
-
-        if downloading:
-            if len(menu) > 0:
-                menu.append(None)
-            menu.append((_('%d Downloading Items') % downloading, None))
-            def cancel_all():
-                for item in selection:
-                    messages.CancelDownload(item.id).send_to_backend()
-            def pause_all():
-                for item in selection:
-                    messages.PauseDownload(item.id).send_to_backend()
-            menu.append((_('Cancel Download'), cancel_all))
-            menu.append((_('Pause Download'), pause_all))
-
-        if uploadable > 0:
-            def restart_all():
-                for item in selection:
-                    messages.RestartUpload(item.id).send_to_backend()
-            menu.append((_('Restart Upload'), restart_all))
-
-        return menu
-
-class ItemList(ItemListBase):
-    def items_added(self, item_list):
-        self.insert_sorted_items(item_list)
-
-    def items_removed(self, id_list):
-        for id in id_list:
-            iter = self.item_iters.pop(id)
-            self.model.remove(iter)
-
-    def items_changed(self, item_list):
-        for item_info in item_list:
-            iter = self.item_iters[item_info.id]
-            self.update_item(iter, item_info)
-
-class FilteredItemList(ItemListBase):
-    """ItemListBase that only contains a portion of the items (downloading and
-    downloaded lists.)
+class ItemList(object):
     """
+    Attributes:
+
+    model -- TableModel for this item list.  It contains 2 columns, ItemInfo
+    objects and a show_details boolean flag.
+    """
+
+    def __init__(self):
+        self.model = widgetset.TableModel('object', 'boolean')
+        self._iter_map = {}
+        self._sorter = None
+        self._search_text = ''
+        self._non_matching_items = {} 
+        # maps ids -> items that don't match the search
+
+    def set_sort(self, sorter):
+        self._sorter = sorter
+        self._resort_items()
+
+    def get_count(self):
+        """Get the number of items in this list."""
+        return len(self.model)
+
+    def get_items(self, start_id=None):
+        """Get a list of ItemInfo objects in this list"""
+        if start_id is None:
+            return [row[0] for row in self.model]
+        else:
+            iter = self._iter_map[start_id]
+            retval = []
+            while iter is not None:
+                retval.append(self.model[iter][0])
+                iter = self.model.next_iter(iter)
+            return retval
+
+    def _resort_items(self):
+        rows = []
+        iter = self.model.first_iter()
+        while iter is not None:
+            rows.append(tuple(self.model[iter]))
+            iter = self.model.remove(iter)
+        rows.sort(key=lambda row: self._sorter.sort_key(row[0]))
+        for row in rows:
+            self._iter_map[row[0].id] = self.model.append(row)
+
     def filter(self, item_info):
-        raise NotImplentedError()
+        """Can be overrided by subclasses to filter out items from the list.
+        """
+        return True
 
-    def items_added(self, item_list):
-        item_list = [info for info in item_list if self.filter(info)]
-        self.insert_sorted_items(item_list)
-
-    def items_removed(self, id_list):
-        for id in id_list:
+    def _should_show_item(self, item_info):
+        """Decide if an item should be shown."""
+        if not self.filter(item_info):
+            return False
+        if not item_matches_search(item_info, self._search_text):
+            self._non_matching_items[item_info.id] = item_info
+            return False
+        else:
             try:
-                iter = self.item_iters.pop(id)
+                del self._non_matching_items[item_info.id]
             except KeyError:
                 pass
-            else:
-                self.model.remove(iter)
+            return True
 
-    def items_changed(self, item_list):
-        to_add = []
+    def set_show_details(self, item_id, value):
+        """Change the show details value for an item"""
+        iter = self._iter_map[item_id]
+        self.model.update_value(iter, 1, value)
+
+    def _insert_sorted_items(self, item_list):
+        pos = self.model.first_iter()
         for item_info in item_list:
-            try:
-                iter = self.item_iters[item_info.id]
-            except KeyError:
-                if self.filter(item_info):
-                    to_add.append(item_info)
-            else:
-                if self.filter(item_info):
-                    self.update_item(iter, item_info)
+            while (pos is not None and 
+                    self._sorter.compare(self.model[pos][0], item_info) < 0):
+                pos = self.model.next_iter(pos)
+            iter = self.model.insert_before(pos, item_info, False)
+            self._iter_map[item_info.id] = iter
+
+    def add_items(self, item_list, already_sorted=False):
+        if not already_sorted:
+            self._sorter.sort_items(item_list)
+        self._insert_sorted_items(info for info in item_list 
+                if self._should_show_item(info))
+
+    def update_items(self, changed_items, already_sorted=False):
+        if not already_sorted:
+            self._sorter.sort_items(changed_items)
+        to_add = []
+        for info in changed_items:
+            show = self._should_show_item(info)
+            if info.id in self._iter_map:
+                if not show:
+                    self.remove_item(info.id)
                 else:
-                    self.model.remove(iter)
-                    del self.item_iters[item_info.id]
-        sort_items(to_add)
-        self.insert_sorted_items(to_add)
+                    self.update_item(info)
+            elif show:
+                to_add.append(info)
+        self._insert_sorted_items(to_add)
 
-class ItemContainerView(signals.SignalEmitter):
-    """Base class for views that display objects that contain items (feeds,
-    playlists, folders, downloads tab, etc).
-    """
-    SORT_ITEMS = True
+    def remove_item(self, id):
+        iter = self._iter_map.pop(id)
+        self.model.remove(iter)
 
-    def __init__(self, type, id):
-        signals.SignalEmitter.__init__(self)
-        self.create_signal('play-videos')
-        self.type = type
-        self.id = id
-        self.widget = self.build_widget()
-        self.start_tracking()
+    def update_item(self, info):
+        iter = self._iter_map[info.id]
+        self.model.update_value(iter, 0, info)
 
-    def build_widget(self):
-        raise NotImplementedError()
+    def remove_items(self, id_list):
+        for id in id_list:
+            self.remove_item(id)
 
-    def all_item_lists(self):
-        """Return a list of all the ItemLists contained in this view."""
+    def set_search_text(self, search_text):
+        newly_matching = self._find_newly_matching_items(search_text)
+        removed = self._remove_non_matching_items(search_text)
+        self._sorter.sort_items(newly_matching)
+        self._insert_sorted_items(newly_matching)
+        self._search_text = search_text
+        for item in removed:
+            self._non_matching_items[item.id] = item
+        for item in newly_matching:
+            del self._non_matching_items[item.id]
 
-    def default_item_list(self):
-        """Item list to play from if no videos are selected."""
-        raise NotImplementedError()
+    def move_items(self, insert_before, item_ids):
+        """Move a group of items inside the list.
 
-    def should_handle_message(self, message):
-        """Inspect a ItemList or ItemsChanged message and figure out if it's
-        meant for this ItemList.
+        The items for item_ids will be positioned before insert_before.
+        insert_before should be an iterator, or None to position the items at
+        the end of the list.
         """
-        return message.type == self.type and message.id == self.id
 
-    def do_handle_item_list(self, message):
-        """Handle an incomming item list.  They will be already sorted.
-        """
-        pass
+        new_iters = _ItemReorderer().reorder(self.model, insert_before,
+                item_ids)
+        self._iter_map.update(new_iters)
 
-    def do_handle_items_changed(self, message):
-        """Handle an items changed message.  They will already be sorted.
-        """
-        pass
+    def _find_newly_matching_items(self, search_text):
+        retval = []
+        for item in self._non_matching_items.values():
+            if item_matches_search(item, search_text):
+                retval.append(item)
+        return retval
 
-    def handle_item_list(self, message):
-        if self.SORT_ITEMS:
-            sort_items(message.items)
-        self.do_handle_item_list(message)
-
-    def handle_items_changed(self, message):
-        sort_items(message.added)
-        self.do_handle_items_changed(message)
-
-    def on_play_video(self, item_list, id):
-        self.emit('play-videos', item_list.get_watchable_videos(start_id=id))
-
-    def start_tracking(self):
-        messages.TrackItems(self.type, self.id).send_to_backend()
-
-    def stop_tracking(self):
-        messages.StopTrackingItems(self.type, self.id).send_to_backend()
-
-class SimpleItemContainer(ItemContainerView):
-    def __init__(self):
-        ItemContainerView.__init__(self, self.type, self.id)
-
-    def make_item_list(self):
-        return ItemList()
-
-    def all_item_lists(self):
-        return [self.item_list]
-
-    def default_item_list(self):
-        return self.item_list
-
-    def build_widget(self):
-        vbox = widgetset.VBox()
-        vbox.pack_start(self.build_titlebar())
-        vbox.pack_start(separator.HThinSeparator((0.7, 0.7, 0.7)))
-        self.item_list = self.make_item_list()
-        self.item_list.connect('play-video', self.on_play_video)
-        scroller = widgetset.Scroller(False, True)
-        scroller.add(self.item_list)
-        vbox.pack_start(scroller, expand=True)
-        return vbox
-
-    def build_titlebar_extra(self):
-        """Override this to add additional stuff to the titlebar."""
-        pass
-
-    def build_titlebar(self):
-        hbox = widgetset.HBox()
-        image_path = resources.path("wimages/%s" % self.image_filename)
-        im = widgetutil.align(widgetset.ImageDisplay(imagepool.get(image_path)),
-                              xscale=1, yscale=1)
-        im.set_size_request(61, 61)
-        hbox.pack_start(im)
-        from miro.frontends.widgets.feedview import TitleDrawer
-        hbox.pack_start(TitleDrawer(self.title), padding=15, expand=True)
-
-        extra = self.build_titlebar_extra()
-        if extra:
-            if isinstance(extra, list):
-                [hbox.pack_start(w) for w in extra]
+    def _remove_non_matching_items(self, search_text):
+        removed = []
+        iter = self.model.first_iter()
+        while iter is not None:
+            item = self.model[iter][0]
+            if not item_matches_search(item, search_text):
+                iter = self.model.remove(iter)
+                removed.append(item)
             else:
-                hbox.pack_start(extra)
+                iter = self.model.next_iter(iter)
+        return removed
 
-        if not use_custom_titlebar_background:
-            return hbox
+class DownloadingItemList(ItemList):
+    """ItemList that only displays downloading items."""
+    def filter(self, item_info):
+        return (item_info.download_info and 
+                not item_info.download_info.finished)
+        
+class DownloadedItemList(ItemList):
+    """ItemList that only displays downloaded items."""
+    def filter(self, item_info):
+        return (item_info.download_info and 
+                item_info.download_info.finished)
+
+class _ItemReorderer(object):
+    """Handles re-ordering items inside an itemlist.
+    
+    This object is just around for utility sake.  It's only created to track
+    the state during the call to ItemList.move_items()
+    """
+
+    def __init__(self):
+        self.removed_rows = []
+
+    def calc_insert_id(self, model):
+        if self.insert_iter is not None:
+            self.insert_id = model[self.insert_iter][0].id
         else:
-            from miro.frontends.widgets.feedview import TitlebarBackground
-            background = TitlebarBackground()
-            background.add(hbox)
-            return background
+            self.insert_id = None
 
-    def do_handle_item_list(self, message):
-        self.item_list.items_added(message.items)
-        self.item_list.model_changed()
+    def reorder(self, model, insert_iter, ids):
+        self.insert_iter = insert_iter
+        self.calc_insert_id(model)
+        self.remove_rows(model, ids)
+        return self.put_rows_back(model)
 
-    def do_handle_items_changed(self, message):
-        self.item_list.items_added(message.added)
-        self.item_list.items_changed(message.changed)
-        self.item_list.items_removed(message.removed)
-        self.item_list.model_changed()
+    def remove_row(self, model, iter, row):
+        self.removed_rows.append(row)
+        if row[0].id == self.insert_id:
+            self.insert_iter = model.next_iter(self.insert_iter)
+            self.calc_insert_id(model)
+        return model.remove(iter)
 
-class DownloadsView(SimpleItemContainer):
-    type = 'downloads'
-    id = None
-    image_filename = 'icon-downloading_large.png'
-    title = _("Downloads")
+    def remove_rows(self, model, ids):
+        # iterating through the entire table seems inefficient, but we have to
+        # know the order of rows so we can insert them back in the right
+        # order.
+        iter = model.first_iter()
+        while iter is not None:
+            row = model[iter]
+            if row[0].id in ids:
+                # need to make a copy of the row data, since we're removing it
+                # from the table
+                iter = self.remove_row(model, iter, tuple(row))
+            else:
+                iter = model.next_iter(iter)
 
-    def get_free_space(self):
-        bytes_ = getAvailableBytesForMovies()
-        return util.formatSizeForUser(bytes_, "0B", False)
-
-    def get_up_rate(self):
-        up = downloader.totalUpRate
-        if up < 10:
-            return u""
-        return _("%0.1f KB/s uploading") % (up / 1024.0)
-
-    def get_down_rate(self):
-        down = downloader.totalDownRate
-        if down < 10:
-            return u""
-        return _("%0.1f KB/s downloading") % (down / 1024.0)
-
-    def build_titlebar(self):
-        v = widgetset.VBox()
-        tv = SimpleItemContainer.build_titlebar(self)
-        v.pack_start(tv)
-
-        v.pack_start(separator.HSeparator())
-
-        h = widgetset.HBox(spacing=10)
-
-        free_disk_label = widgetset.Label(_("%s free on disk") % self.get_free_space())
-        free_disk_label.set_bold(True)
-        self._free_disk_label = free_disk_label
-
-        h.pack_start(widgetutil.align_left(free_disk_label, top_pad=5, left_pad=10), expand=True)
-
-        uploading_label = widgetset.Label("")
-        uploading_label.set_bold(True)
-        self._uploading_label = uploading_label
-
-        h.pack_start(widgetutil.pad(uploading_label, top=5))
-
-        downloading_label = widgetset.Label("")
-        downloading_label.set_bold(True)
-        self._downloading_label = downloading_label
-
-        h.pack_start(widgetutil.pad(downloading_label, top=5))
-
-        pause_button = widgetset.Button(_('Pause All'), style='smooth')
-        pause_button.set_size(0.85)
-        pause_button.set_color(style.TOOLBAR_GRAY)
-        pause_button.connect('clicked', self.on_pause_button_clicked)
-        h.pack_start(widgetutil.align_right(pause_button, top_pad=5, bottom_pad=5))
-
-        resume_button = widgetset.Button(_('Resume All'), style='smooth')
-        resume_button.set_size(0.85)
-        resume_button.set_color(style.TOOLBAR_GRAY)
-        resume_button.connect('clicked', self.on_resume_button_clicked)
-        h.pack_start(widgetutil.align_right(resume_button, top_pad=5, bottom_pad=5, right_pad=10))
-
-        v.pack_start(h)
-        return v
-
-    def on_pause_button_clicked(self, widget):
-        messages.PauseAllDownloads().send_to_backend()
-
-    def on_resume_button_clicked(self, widget):
-        messages.ResumeAllDownloads().send_to_backend()
-
-    def do_handle_items_changed(self, message):
-        # piggy-backing on the items_changed signal to update the upload/download
-        # rates
-        SimpleItemContainer.do_handle_items_changed(self, message)
-        self._downloading_label.set_text(self.get_down_rate())
-        self._uploading_label.set_text(self.get_up_rate())
-
-class NewView(SimpleItemContainer):
-    type = 'new'
-    id = None
-    image_filename = 'icon-new_large.png'
-    title = _("New Videos")
-
-class SearchView(SimpleItemContainer):
-    type = 'search'
-    id = None
-    image_filename = 'icon-search_large.png'
-    title = _("Video Search")
-
-    def build_titlebar_extra(self):
-        vbox = widgetset.VBox()
-        hbox = widgetset.HBox()
-
-        engines = searchengines.get_search_engines()
-        search_dropdown = widgetset.OptionMenu([se.title for se in engines])
-        hbox.pack_start(search_dropdown, padding=5)
-
-        search_box = widgetset.TextEntry(initial_text=_('Search terms'))
-        search_box.set_width(15)
-        hbox.pack_start(widgetutil.align_middle(search_box))
-
-        search_button = widgetset.Button(_('Search'))
-        search_button.set_size(0.85)
-        hbox.pack_start(search_button, padding=5)
-
-        vbox.pack_start(hbox)
-
-        def handle_search_clicked(widget,
-                                  engines=engines,
-                                  search_dropdown=search_dropdown,
-                                  search_box=search_box):
-            selected = engines[search_dropdown.get_selected()]
-            messages.Search(selected.name, search_box.get_text()).send_to_backend()
-
-        search_button.connect('clicked', handle_search_clicked)
-        return widgetutil.align_middle(vbox, right_pad=20)
-
-class LibraryView(SimpleItemContainer):
-    type = 'library'
-    id = None
-    image_filename = 'icon-library_large.png'
-    title = _("Library")
-
-class IndividualDownloadsView(SimpleItemContainer):
-    type = 'individual_downloads'
-    id = None
-    image_filename = 'icon-individual_large.png'
-    title = _("Single Items")
+    def put_rows_back(self, model):
+        if self.insert_iter is None:
+            def put_back(moved_row):
+                return model.append(*moved_row)
+        else:
+            def put_back(moved_row):
+                return model.insert_before(self.insert_iter, *moved_row)
+        retval = {}
+        for removed_row in self.removed_rows:
+            iter = put_back(removed_row)
+            retval[removed_row[0].id] = iter
+        return retval

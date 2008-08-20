@@ -46,7 +46,6 @@ from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import newsearchchannel
 from miro.frontends.widgets import diagnostics
 from miro.frontends.widgets import displays
-from miro.frontends.widgets import itemlistmanager
 from miro.frontends.widgets import menus
 from miro.frontends.widgets import tablistmanager
 from miro.frontends.widgets import playback
@@ -75,7 +74,7 @@ class Application:
 
     def build_window(self):
         app.tab_list_manager = tablistmanager.TabListManager()
-        app.item_list_manager = itemlistmanager.ItemListManager()
+        app.item_list_controller = None
         app.display_manager = displays.DisplayManager()
         app.menu_manager = menus.MenuManager()
         app.playback_manager = playback.PlaybackManager()
@@ -116,9 +115,8 @@ class Application:
             self.play_selection()
 
     def play_selection(self):
-        infos_to_play = app.item_list_manager.calc_videos_to_play()
-        if infos_to_play:
-            app.playback_manager.start_with_items(infos_to_play)
+        if app.item_list_controller is not None:
+            app.item_list_controller.play_selection()
 
     def on_stop_clicked(self, button):
         app.playback_manager.stop()
@@ -200,8 +198,14 @@ class Application:
         if url is not None:
             messages.DownloadURL(url).send_to_backend()
 
+    def _get_selected_items(self):
+        if app.item_list_controller is None:
+            return []
+        else:
+            return app.item_list_controller.get_selection()
+
     def remove_videos(self):
-        selection = app.item_list_manager.get_selection()
+        selection = self._get_selected_items()
         selection = [s for s in selection if s.downloaded]
 
         if not selection:
@@ -252,7 +256,7 @@ class Application:
                     messages.DeleteVideo(mem.id).send_to_backend()
 
     def rename_video(self):
-        selection = app.item_list_manager.get_selection()
+        selection = self._get_selected_items()
         selection = [s for s in selection if s.downloaded]
 
         if not selection:
@@ -269,7 +273,7 @@ class Application:
             messages.RenameVideo(video_item.id, name).send_to_backend()
 
     def save_video(self):
-        selection = app.item_list_manager.get_selection()
+        selection = self._get_selected_items()
         selection = [s for s in selection if s.downloaded]
 
         if not selection:
@@ -286,7 +290,7 @@ class Application:
         messages.SaveItemAs(selection[0].id, filename).send_to_backend()
 
     def copy_item_url(self):
-        selection = app.item_list_manager.get_selection()
+        selection = self._get_selected_items()
         selection = [s for s in selection if s.downloaded]
 
         if not selection:
@@ -496,7 +500,7 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
             app.widgetapp.copy_text_to_clipboard(site_infos[0].url)
 
     def add_new_playlist(self):
-        selection = app.item_list_manager.get_selection()
+        selection = self._get_selected_items()
         ids = [s.id for s in selection if s.downloaded]
 
         title = _('Create Playlist')
@@ -722,22 +726,22 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def handle_item_list(self, message):
         current_display = app.display_manager.current_display
         if isinstance(current_display, displays.ItemListDisplay):
-            if current_display.view.should_handle_message(message):
-                current_display.view.handle_item_list(message)
+            if current_display.controller.should_handle_message(message):
+                current_display.controller.handle_item_list(message)
             else:
-                logging.warn("wrong id for feed view (%s feed view: %s)",
-                        message.feed_id, current_display.feed_id)
+                logging.warn("wrong message for item controller (%s %s %s)",
+                        message.type, message.id, current_display.controller)
         else:
             logging.warn("got item list, but display is: %s", current_display)
 
     def handle_items_changed(self, message):
         current_display = app.display_manager.current_display
         if isinstance(current_display, displays.ItemListDisplay):
-            if current_display.view.should_handle_message(message):
-                current_display.view.handle_items_changed(message)
+            if current_display.controller.should_handle_message(message):
+                current_display.controller.handle_items_changed(message)
             else:
-                logging.warn("wrong id for feed view (%s feed view: %s)",
-                        message.id, current_display.id)
+                logging.warn("wrong message for item controller (%s %s %s)",
+                        message.type, message.id, current_display.controller)
         else:
             logging.warn("got item list, but display is: %s", current_display)
 

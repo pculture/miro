@@ -36,7 +36,11 @@ from miro.frontends.widgets.gtk.base import Widget
 class TextEntry(Widget):
     def __init__(self, initial_text=None, hidden=False):
         Widget.__init__(self)
+        self.create_signal('activate')
+        self.create_signal('changed')
         self.set_widget(gtk.Entry())
+        self.forward_signal('activate')
+        self.forward_signal('changed')
         if initial_text is not None:
             self._widget.set_text(initial_text)
         if hidden:
