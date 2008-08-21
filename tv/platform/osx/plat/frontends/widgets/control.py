@@ -44,6 +44,7 @@ class TextEntry(Widget):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, initial_text=None, hidden=False):
         Widget.__init__(self)
+        self.create_signal('changed')
         self.font = NSFont.systemFontOfSize_(NSFont.systemFontSize())
         self.height = self.font.pointSize() + self.font.leading()
         if hidden:
