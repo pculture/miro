@@ -238,29 +238,14 @@ class DownloadToolbar(widgetset.HBox):
         pause_button.set_size(0.85)
         pause_button.set_color(style.TOOLBAR_GRAY)
         pause_button.connect('clicked', self._on_pause_button_clicked)
-        self.pause_widget = widgetutil.HideableWidget(
-                widgetutil.align_middle(pause_button))
-        self.pack_start(self.pause_widget)
+        self.pack_start(widgetutil.align_middle(pause_button))
 
         resume_button = widgetset.Button(_('Resume All'), style='smooth')
         resume_button.set_size(0.85)
         resume_button.set_color(style.TOOLBAR_GRAY)
         resume_button.connect('clicked', self._on_resume_button_clicked)
-        self.resume_widget = widgetutil.HideableWidget(
-                widgetutil.align_middle(resume_button))
-        self.pack_start(widgetutil.pad(self.resume_widget, right=10))
-
-    def set_pause_button_shown(self, shown):
-        if shown:
-            self.pause_widget.show()
-        else:
-            self.pause_widget.hide()
-
-    def set_resume_button_shown(self, shown):
-        if shown:
-            self.resume_widget.show()
-        else:
-            self.resume_widget.hide()
+        self.pack_start(widgetutil.align_middle(resume_button, top_pad=5,
+            bottom_pad = 5, right_pad=10))
 
     def _on_pause_button_clicked(self, widget):
         self.emit('pause-all')

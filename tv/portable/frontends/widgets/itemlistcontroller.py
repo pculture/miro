@@ -312,15 +312,6 @@ class DownloadsController(SimpleItemListController):
         self.toolbar.update_downloading_rate(downloader.totalDownRate)
         self.toolbar.update_uploading_rate(downloader.totalUpRate)
 
-        items_downloading = items_paused = False
-        for item in self.item_list.get_items():
-            if item.download_info.state == 'downloading':
-                items_downloading = True
-            elif item.download_info.state == 'paused':
-                items_paused = True
-        self.toolbar.set_pause_button_shown(items_downloading)
-        self.toolbar.set_resume_button_shown(items_paused)
-
 class NewController(SimpleItemListController):
     type = 'new'
     id = None
