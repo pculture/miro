@@ -73,6 +73,8 @@ class Checkbox(Widget):
     def __init__(self, label):
         Widget.__init__(self)
         self.set_widget(gtk.CheckButton(label))
+        self.create_signal('toggled')
+        self.forward_signal('toggled')
 
     def get_checked(self):
         return self._widget.get_active()

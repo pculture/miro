@@ -86,6 +86,7 @@ class Checkbox(Widget):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, label):
         Widget.__init__(self)
+        self.create_signal('toggled')
         self.label = label
         self.view = NSButton.alloc().init()
         self.view.setButtonType_(NSSwitchButton)
