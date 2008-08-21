@@ -60,7 +60,8 @@ class FeedController(itemlistcontroller.ItemListController):
         self.titlebar.connect('search-changed', self._on_search_changed)
         widget.titlebar_vbox.pack_start(self.titlebar)
         if not self.is_folder:
-            widget.titlebar_vbox.pack_start(separator.HSeparator())
+            sep = separator.HSeparator((0.85, 0.85, 0.85), (0.95, 0.95, 0.95))
+            widget.titlebar_vbox.pack_start(sep)
             widget.titlebar_vbox.pack_start(self._make_toolbar(feed_info))
         widget.content_vbox.pack_start(self.downloading_section)
         widget.content_vbox.pack_start(self.full_section)
