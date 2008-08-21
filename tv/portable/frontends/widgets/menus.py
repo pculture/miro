@@ -75,7 +75,9 @@ def on_save_video():
 def on_copy_video_url():
     app.widgetapp.copy_item_url()
 
-# FIXME - EditPreferences
+@action_handler("EditPreferences")
+def on_edit_preferences():
+    app.widgetapp.preferences()
 
 @action_handler("Quit")
 def on_quit():

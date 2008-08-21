@@ -45,6 +45,7 @@ from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import newsearchchannel
 from miro.frontends.widgets import diagnostics
+from miro.frontends.widgets import preferencespanel
 from miro.frontends.widgets import displays
 from miro.frontends.widgets import menus
 from miro.frontends.widgets import tablistmanager
@@ -207,6 +208,9 @@ class Application:
             return []
         else:
             return app.item_list_controller.get_selection()
+
+    def preferences(self):
+        preferencespanel.run_dialog()
 
     def remove_videos(self):
         selection = self._get_selected_items()
