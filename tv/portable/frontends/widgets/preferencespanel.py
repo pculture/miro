@@ -35,6 +35,8 @@ from miro.plat.frontends.widgets.widgetset import Rect
 from miro.dialogs import BUTTON_CLOSE
 from miro.gtcache import gettext as _
 
+# FIXME - comment this module and add notes about how to use it externally.
+
 def _hbox(*items):
     h = widgetset.HBox()
     [h.pack_start(item, padding=5) for item in items]
@@ -281,8 +283,9 @@ def build_downloads_panel():
 def build_folders_panel():
     v = widgetset.VBox()
 
-    note = widgetset.Label(_('Store downloads in this folder:'))
     # FIXME - finish implementing this pane
+
+    note = widgetset.Label(_('Store downloads in this folder:'))
     v.pack_start(widgetutil.align_left(note))
     v.pack_start(widgetset.Label("FIXME - implement this."))
 
@@ -367,129 +370,53 @@ def run_dialog():
         
         splitter = widgetset.Splitter()
 
-        def switcher(widget):
-            text, panel_builder = PANEL[widget.panel_index]
-            main_area_holder.set(create_panel(text, panel_builder()))
+        panels = []
+        buttons = []
+        buttons_vbox = widgetset.VBox()
 
-        buttons = widgetset.VBox()
+        def switcher(widget):
+            text, panel = panels[widget.panel_index]
+            main_area_holder.set(create_panel(text, panel))
+
+            [b.enable_widget() for b in buttons]
+            widget.disable_widget()
+
+        max_height = max_width = 0
         for i, (text, panel_builder) in enumerate(PANEL):
             b = widgetset.Button(text, style="smooth")
             b.connect('clicked', switcher)
             b.panel_index = i
-            buttons.pack_start(b)
+            buttons.append(b)
+            buttons_vbox.pack_start(b)
 
-        splitter.set_left(buttons)
+            panel = panel_builder()
+            # FIXME - this isn't working on gtk.  the width and height
+            # returned are 0 and 0.  so the maxes don't get calculated
+            # correctly.
+            w, h = panel.get_size_request()
+            max_width = max(max_width, w)
+            max_height = max(max_height, h)
+            panels.append((text, panel))
+
+        # FIXME - when maxes are calculated correctly, uncomment the
+        # following line and remove the hard-coded one below it.
+        # main_area_holder.set_size_request(max_width, max_height)
+        main_area_holder.set_size_request(600, 400)
+
+        splitter.set_left(buttons_vbox)
         splitter.set_left_width(200)
 
         splitter.set_right(main_area_holder)
-        main_area_holder.set(create_panel(PANEL[0][0], PANEL[0][1]()))
+        buttons[0].disable_widget()
+        main_area_holder.set(create_panel(panels[0][0], panels[0][1]))
 
         v.pack_start(splitter)
 
         pref_window.set_extra_widget(v)
         pref_window.add_button(BUTTON_CLOSE.text)
         pref_window.run()
+    except:
+        logging.exception("preferencespanel threw exception.")
+
     finally:
         pref_window.destroy()
-
-"""
-General
-
-    Automatically run Miro when I log in
-    RUN_DTV_AT_STARTUP - boolean
-
-    Warn me if I attempt to quit with downloads in progress
-    WARN_IF_DOWNLOADING_ON_QUIT - boolean
-
-Channels
-
-    [] Check channels for new content xxx
-    CHECK_CHANNELS_EVERY_X_MN - integer > 0
-    every day, every hour, every 30 minutes, manually
-
-    Note: you can set the frequency channels are checked for each
-    channel in the channel's settings pane.
-
-    Auto download default settings for new channels:
-    CHANNEL_AUTO_DEFAULT - choice "new", "auto", "off"
-
-    By default, remember xxx old items in addition to the current contents.
-    MAX_OLD_iTEMS_DEFAULT - integer > 0
-    0, 20, 50, 100, 1000
-
-    Clear old items in all feeds now button
-
-Downloads
-
-    Maximum number of manual downloads at a time:
-    MAX_MANUAL_DOWNLOADS - integer > 0
-
-    Maximum number of auto-downloads at a time:
-    DOWNLOADS_TARGET - integer > 0
-
-    Bittorrent:
-    [] To avoid internet slowdowns, limit upstream to: xxx KB/s
-    LIMIT_UPSTREAM - boolean
-    UPSTREAM_LIMIT_IN_KBS - integer > 0
- 
-    [] Limit torrent downstream to: xxx KB/s
-    LIMIT_DOWNSTREAM_BT - boolean
-    DOWNSTREAM_BT_LIMIT_IN_KBS - integer > 0
-
-    [] Limit torrent connections to: xxx
-    LIMIT_CONNECTIONS_BT - boolean
-    CONNECTION_LIMIT_BT_NUM - integer > 0
-
-    Use ports: xyz - xyz
-    BT_MIN_PORT - integer 0 < i < 64,000 (FIXME check actual number)
-    BT_MAX_PORT - integer 0 < i < 64,000 (FIXME check actual number)
-        BT_MIN_PORT > BT_MAX_PORT
-
-    [] Automatically forward ports.
-    USE_UPNP - boolean
-
-    [] Ignore unencrypted connections.
-    BT_ENC_REQ - boolean
-
-    [] Stop torrent uploads when this ratio is reached: xyz
-    LIMIT_UPLOAD_RATIO - boolean
-    UPLOAD_RATIO - float > 0.0
-
-Folders
-
-    Store downloads in this folder:
-    MOVIES_DIRECTORY - file path
-
-    Watch for new videos in these folders and include them in library:
-    ???
-
-Disk space
-
-    [] Keep at least this much free space on my drive: xyz GB
-    PRESERVE_DISK_SPACE - boolean
-    PRESERVE_X_GB_FREE - float > 0.0
-
-    By default, videos expire after
-    EXPIRE_AFTER_X_DAYS - integer > 0
-    1 day, 3 days, 6 days, 10 days, 1 month, never
-
-Playback
-
-    [] Resume playing a video from the point it was last stopped.
-    RESUME_VIDEOS_MODE - boolean
-
-    () Play videos one after another
-    () Stop after each video
-    SINGLE_VIDEO_PLAYBACK_MODE - boolean
-
-Platform
-
-    Use this renderer to play videos: xyz
-
-    Note: If you change the renderer used to play videos, you MUST restart
-    Miro for the changes to take effect.
-
-    xine
-    Use this for video when listening to audio: xyz
-
-"""
