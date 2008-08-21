@@ -127,7 +127,6 @@ class ItemListController(object):
 
     def _play_item_list(self, items):
         playable = [i for i in items if i.video_path is not None]
-        print 'play: ', items, playable
         app.playback_manager.start_with_items(playable)
 
     def on_hotspot_clicked(self, itemview, name, iter):
