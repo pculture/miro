@@ -77,43 +77,13 @@ def notDeleted(obj):
     from miro import item
     return not (isinstance (obj, item.FileItem) and obj.deleted)
 
-newMemory = {}
-newlyDownloadedMemory = {}
-newMemoryFor = None
-
-def switchNewItemsChannel(newChannel):
-    """The newItems() filter normally remembers which items were unwatched.
-    This way items don't leave the new section while the user is viewing a
-    channel.  This method takes care of resetting the memory when the user
-    switches channels.  Call it before using the newItems() filter.
-    newChannel should be the channel/channel folder object that's being
-    displayed.
-    """
-    global newMemoryFor
-    if newMemoryFor != newChannel:
-        newMemory.clear()
-        newlyDownloadedMemory.clear()
-        newMemoryFor = newChannel
-
-
 # This is "new" for the channel template
 def newItems(obj):
-    try:
-        rv = newMemory[obj.getID()]
-    except KeyError:
-        rv = not obj.getViewed()
-        newMemory[obj.getID()] = rv
-    return rv
+    return not obj.getViewed()
 
 def newWatchableItems(obj):
-    if not obj.isDownloaded() or obj.isNonVideoFile():
-        return False
-    try:
-        rv = newlyDownloadedMemory[obj.getID()]
-    except KeyError:
-        rv = (obj.getState() == u"newly-downloaded")
-        newlyDownloadedMemory[obj.getID()] = rv
-    return rv
+    return (obj.isDownloaded() and not obj.isNonVideoFile()
+            and (obj.getState() == u"newly-downloaded"))
 
 # Return True if a tab should be shown for obj in the frontend. The filter
 # used on the database to get the list of tabs.
