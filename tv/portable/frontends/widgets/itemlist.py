@@ -54,6 +54,13 @@ def item_matches_search(item_info, search_text):
 class ItemSort(object):
     """Class that sorts items in an item list."""
 
+    def __init__(self):
+        self.reverse = False
+
+    def reverse(self):
+        """Reverse the order of the sort."""
+        self.reverse = not self.reverse
+
     def sort_key(self, item):
         """Return a value that can be used to sort item.
         
@@ -71,9 +78,12 @@ class ItemSort(object):
 
     def sort_items(self, item_list):
         """Sort a list of items (in place)."""
-        item_list.sort(key=self.sort_key)
+        item_list.sort(key=self.sort_key, reverse=self.reverse)
 
 class DateSort(ItemSort):
+    def __init__(self):
+        self.reverse = True
+
     def sort_key(self, item):
         return item.release_date
 
