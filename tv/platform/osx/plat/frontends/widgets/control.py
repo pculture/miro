@@ -36,6 +36,7 @@ import weakref
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets import layoutmanager
 from miro.plat.frontends.widgets.base import Widget
+from miro.plat.frontends.widgets.helpers import NotificationForwarder
 
 def round_up(float):
     return int(round(float + 0.5))
@@ -44,7 +45,6 @@ class TextEntry(Widget):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, initial_text=None, hidden=False):
         Widget.__init__(self)
-        self.create_signal('changed')
         self.font = NSFont.systemFontOfSize_(NSFont.systemFontSize())
         self.height = self.font.pointSize() + self.font.leading()
         if hidden:
@@ -59,6 +59,14 @@ class TextEntry(Widget):
             self.set_width(len(initial_text))
         else:
             self.set_width(10)
+
+        self.create_signal('changed')
+        self.notifications = NotificationForwarder.create(self.view)
+        self.notifications.connect(self.on_changed,
+                'NSControlTextDidChangeNotification')
+
+    def on_changed(self, notification):
+        self.emit('changed')
 
     def calc_size_request(self):
         size = self.sizer_cell.cellSize()
