@@ -144,6 +144,9 @@ class RadioButton(Widget):
     def get_selected(self):
         return self._widget.get_active()
 
+    def set_selected(self):
+        radio_button_to_group_mapping[id(self)].set_selected(self)
+
     def enable_widget(self):
         self._widget.set_sensitive(True)
 

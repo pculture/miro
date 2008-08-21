@@ -285,10 +285,12 @@ class RadioButton(Widget):
         self.view.setButtonType_(NSRadioButton)
         self.view.setTitle_(label)
 
-        if group:
-            group.add_button(self)
-        else:
+        if not group:
             group = RadioButtonGroup() 
+
+        group.add_button(self)
+        oid = id(self)
+        radio_button_to_group_mapping[oid] = group
 
     def calc_size_request(self):
         size = self.view.cell().cellSize()
@@ -299,6 +301,9 @@ class RadioButton(Widget):
 
     def get_selected(self):
         return self.view.state() == NSOnState
+
+    def set_selected(self):
+        radio_button_to_group_mapping[id(self)].set_selected(self)
 
     def enable_widget(self):
         self.view.setEnabled_(True)
