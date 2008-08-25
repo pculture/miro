@@ -42,7 +42,7 @@ from miro import config
 from miro.frontends.widgets.application import Application
 from miro.plat import migrateappname
 from miro.plat.utils import ensureDownloadDaemonIsTerminated, filenameTypeToOSFilename
-from miro.plat.frontends.widgets import osxmenus
+from miro.plat.frontends.widgets import video, osxmenus
 from miro.plat.frontends.widgets.rect import Rect
 
 class OSXApplication(Application):
@@ -60,6 +60,7 @@ class OSXApplication(Application):
         migrateappname.migrateVideos('Democracy', 'Miro')
         osxmenus.populate_menu()
         Application.handleStartupSuccess(self, obj)
+        video.register_quicktime_components()
 
     ### eventloop (our own one, not the Cocoa one) delegate methods
     def beginLoop(self, loop):

@@ -65,7 +65,7 @@ loadBundleFunctions(coreServicesBundle, globals(), ((u'UpdateSystemActivity', 'I
 
 ###############################################################################
 
-def initializeVideoRendering():
+def register_quicktime_components():
     bundlePath = bundle.getBundlePath()
     componentsDirectoryPath = os.path.join(bundlePath, 'Contents', 'Components')
     components = glob.glob(os.path.join(componentsDirectoryPath, '*.component'))
