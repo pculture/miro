@@ -55,11 +55,11 @@ class ItemSort(object):
     """Class that sorts items in an item list."""
 
     def __init__(self):
-        self.reverse = False
+        self._reverse = False
 
     def reverse(self):
         """Reverse the order of the sort."""
-        self.reverse = not self.reverse
+        self._reverse = not self._reverse
 
     def sort_key(self, item):
         """Return a value that can be used to sort item.
@@ -78,11 +78,11 @@ class ItemSort(object):
 
     def sort_items(self, item_list):
         """Sort a list of items (in place)."""
-        item_list.sort(key=self.sort_key, reverse=self.reverse)
+        item_list.sort(key=self.sort_key, reverse=self._reverse)
 
 class DateSort(ItemSort):
     def __init__(self):
-        self.reverse = True
+        self._reverse = True
 
     def sort_key(self, item):
         return item.release_date

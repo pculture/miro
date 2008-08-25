@@ -76,6 +76,7 @@ class PlaylistSort(itemlist.ItemSort):
     """
 
     def __init__(self):
+        itemlist.ItemSort.__init__(self)
         self.positions = {}
         self.current_postion = itertools.count()
 
