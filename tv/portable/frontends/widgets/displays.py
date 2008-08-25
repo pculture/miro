@@ -241,6 +241,9 @@ class VideoDisplay(Display):
     def stop(self):
         self.widget.stop()
 
+    def set_playback_rate(self, rate):
+        self.widget.set_playback_rate(rate)
+
     def seek_to(self, position):
         self.widget.seek_to(position)
 

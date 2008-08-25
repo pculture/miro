@@ -137,6 +137,10 @@ class PlaybackManager (signals.SignalEmitter):
         self.position = self.playlist = None
         self.emit('did-stop')
 
+    def set_playback_rate(self, rate):
+        if self.is_playing:
+            self.video_display.set_playback_rate(rate)
+
     def suspend(self):
         if self.is_playing and not self.is_paused:
             self.video_display.pause()

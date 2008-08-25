@@ -89,6 +89,9 @@ class VideoRenderer (Widget):
     def stop(self):
         self.renderer.stop()
 
+    def set_playback_rate(self, rate):
+        pass
+
     def seek_to(self, position):
         time = self.get_total_playback_time() * position
         self.renderer.set_current_time(time)

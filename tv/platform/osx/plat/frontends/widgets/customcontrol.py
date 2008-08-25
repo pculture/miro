@@ -92,8 +92,11 @@ class ContinuousDrawableButton(DrawableButton):
         self.releaseInbounds = self.stopTracking = self.firedOnce = False
         self.cell().trackMouse_inRect_ofView_untilMouseUp_(event,
                 self.bounds(), self, YES)
-        if not self.firedOnce and self.releaseInbounds:
-            wrappermap.wrapper(self).emit('clicked')
+        if self.releaseInbounds:
+            if self.firedOnce:
+                wrappermap.wrapper(self).emit('released')
+            else:
+                wrappermap.wrapper(self).emit('clicked')
 
     def sendAction_to_(self, action, to):
         if self.stopTracking:
@@ -177,6 +180,7 @@ class ContinuousCustomButton(CustomButton):
     def __init__(self):
         CustomButton.__init__(self)
         self.create_signal('held-down')
+        self.create_signal('released')
         self.view = ContinuousDrawableButton.alloc().init()
         self.view.setRefusesFirstResponder_(NO)
 

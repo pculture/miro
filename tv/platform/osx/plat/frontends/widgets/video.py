@@ -180,6 +180,9 @@ class VideoRenderer (Widget):
         threads.warn_if_not_on_main_thread('VideoRenderer.stop')
         self.video_view.pause_(nil)
         self.reset()
+
+    def set_playback_rate(self, rate):
+        self.movie.setRate_(rate)
     
     def seek_to(self, position):
         qttime = self.movie.duration()

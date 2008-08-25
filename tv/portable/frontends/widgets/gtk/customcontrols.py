@@ -184,6 +184,7 @@ class ContinuousCustomButton(Drawable, Widget):
         self.timeout = None
         self.create_signal('clicked')
         self.create_signal('held-down')
+        self.create_signal('released')
         self.wrapped_widget_connect('pressed', self.on_pressed)
         self.wrapped_widget_connect('released', self.on_released)
         self.wrapped_widget_connect('clicked', self.on_clicked)
@@ -212,6 +213,7 @@ class ContinuousCustomButton(Drawable, Widget):
         self.timeout = None
         self.button_down = self.button_held = False
         self.queue_redraw()
+        self.emit('released')
 
     def on_clicked(self, widget):
         if self.timeout:

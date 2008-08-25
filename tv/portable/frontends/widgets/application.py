@@ -88,7 +88,11 @@ class Application:
         videobox.controls.play.connect('clicked', self.on_play_clicked)
         videobox.controls.stop.connect('clicked', self.on_stop_clicked)
         videobox.controls.forward.connect('clicked', self.on_forward_clicked)
+        videobox.controls.forward.connect('held-down', self.on_fast_forward)
+        videobox.controls.forward.connect('released', self.on_stop_fast_playback)
         videobox.controls.previous.connect('clicked', self.on_previous_clicked)
+        videobox.controls.previous.connect('held-down', self.on_fast_backward)
+        videobox.controls.previous.connect('released', self.on_stop_fast_playback)
         videobox.controls.fullscreen.connect('clicked', self.on_fullscreen_clicked)
         self.window.show()
         messages.TrackChannels().send_to_backend()
@@ -128,6 +132,15 @@ class Application:
 
     def on_previous_clicked(self, button):
         app.playback_manager.play_prev_movie()
+
+    def on_fast_forward(self, button):
+        app.playback_manager.set_playback_rate(3.0)
+
+    def on_fast_backward(self, button):
+        app.playback_manager.set_playback_rate(-3.0)
+
+    def on_stop_fast_playback(self, button):
+        app.playback_manager.set_playback_rate(1.0)
 
     def on_fullscreen_clicked(self, button):
         app.playback_manager.fullscreen()
