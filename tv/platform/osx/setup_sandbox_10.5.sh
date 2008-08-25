@@ -54,8 +54,8 @@ for proj in altgraph \
             pyobjc-core \
             pyobjc-metadata \
             pyobjc-framework-Cocoa \
-            pyobjc-framework-QTKit \
             pyobjc-framework-Quartz \
+            pyobjc-framework-QTKit \
             pyobjc-framework-WebKit \
             pyobjc-framework-ExceptionHandling
 do
