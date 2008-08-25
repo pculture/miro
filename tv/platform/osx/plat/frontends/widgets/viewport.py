@@ -39,6 +39,10 @@ class Viewport(object):
         self.view = view
         self.view.setFrame_(initial_frame)
 
+    def at_position(self, rect):
+        """Check if a viewport is currently positioned at rect."""
+        return self.view.frame() == rect
+
     def reposition(self, rect):
         """Move the viewport to a differennt position."""
         self.view.setFrame_(rect)
@@ -72,6 +76,9 @@ class BorrowedViewport(Viewport):
     def __init__(self, view, placement):
         self.view = view
         self.placement = placement
+
+    def at_position(self, rect):
+        return self.placement == rect
 
     def reposition(self, rect):
         self.placement = rect

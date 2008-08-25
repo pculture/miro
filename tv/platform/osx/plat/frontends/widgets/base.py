@@ -100,8 +100,9 @@ class Widget(signals.SignalEmitter):
                 self.viewport = BorrowedViewport(containing_view, rect)
             self.viewport_created()
         else:
-            self.viewport.reposition(rect)
-            self.viewport_repositioned()
+            if not self.viewport.at_position(rect):
+                self.viewport.reposition(rect)
+                self.viewport_repositioned()
 
     def remove_viewport(self):
         self.viewport.remove()

@@ -365,6 +365,14 @@ class MiroSplitView (NSSplitView):
         self.color.set()
         NSBezierPath.strokeLineFromPoint_toPoint_(p1, p2)
 
+    def setDividerNeedsDisplay(self):
+        if self.subviews().count() != 2:
+            return # no divider needed
+        left_frame = self.subviews()[0].frame()
+        rect = NSMakeRect(left_frame.size.width, 0,
+                self.dividerThickness(), self.bounds().size.height)
+        self.setNeedsDisplayInRect_(rect)
+
 class Splitter(Container):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self):
@@ -401,13 +409,13 @@ class Splitter(Container):
 
     def on_views_resized(self, notification):
         self.place_children()
+        self.view.setDividerNeedsDisplay()
 
     def place_children(self):
         if self.left:
             self.left.place(self.left_view.bounds(), self.left_view)
         if self.right:
             self.right.place(self.right_view.bounds(), self.right_view)
-        self.view.setNeedsDisplay_(YES)
 
     def set_left(self, widget):
         """Set the left child widget."""
@@ -426,6 +434,7 @@ class Splitter(Container):
     def set_left_width(self, width):
         self.view.placeViewsWithLeftWidth_(width)
         self.place_children()
+        self.view.setDividerNeedsDisplay()
 
     def get_left_width(self):
         left, right = self.view.subviews()
@@ -434,6 +443,7 @@ class Splitter(Container):
     def set_right_width(self, width):
         self.view.placeViewsWithRightWidth_(width)
         self.place_children()
+        self.view.setDividerNeedsDisplay()
 
     def set_min_right_width(self):
         min_width = self.right.get_size_request()[0]
