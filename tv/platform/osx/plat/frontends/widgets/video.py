@@ -153,7 +153,7 @@ class VideoRenderer (Widget):
         if self.cached_movie is not None and self.cached_movie.attributeForKey_(QTMovieURLAttribute) == url:
             qtmovie = self.cached_movie
         else:
-            (qtmovie, error) = QTMovie.alloc().initWithURL_error_(url)
+            (qtmovie, error) = QTMovie.alloc().initWithURL_error_(url, None)
             self.cached_movie = qtmovie
         return qtmovie
 

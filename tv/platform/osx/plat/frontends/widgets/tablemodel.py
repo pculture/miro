@@ -225,7 +225,7 @@ class TreeNode(NSObject, TableRow):
     # Implementation note: these need to be NSObjects because we return them 
     # to the NSOutlineView.
 
-    def initWithValues_(self, column_values, parent):
+    def initWithValues_parent_(self, column_values, parent):
         self.children = RowList()
         self.update_values(column_values)
         self.parent = parent
@@ -233,7 +233,7 @@ class TreeNode(NSObject, TableRow):
 
     @staticmethod
     def create_(values, parent):
-        return TreeNode.alloc().initWithValues_(values, parent)
+        return TreeNode.alloc().initWithValues_parent_(values, parent)
 
     def iterchildren(self):
         iter = self.children.firstIter()
