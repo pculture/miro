@@ -69,7 +69,7 @@ class FeedController(itemlistcontroller.ItemListController):
         return widget
 
     def _on_search_changed(self, widget, search_text):
-        self.item_list_group.set_search_text(search_text)
+        self.set_search(search_text)
 
     def _make_item_views(self):
         self.downloading_view = itemlistwidgets.ItemView(

@@ -129,6 +129,12 @@ class ItemListController(object):
         playable = [i for i in items if i.video_path is not None]
         app.playback_manager.start_with_items(playable)
 
+    def set_search(self, search_text):
+        """Set the search for all ItemViews managed by this controller.  """
+        self.item_list_group.set_search_text(search_text)
+        for item_view in self.all_item_views():
+            item_view.model_changed()
+
     def on_hotspot_clicked(self, itemview, name, iter):
         """Hotspot handler for ItemViews."""
 
@@ -273,7 +279,7 @@ class SimpleItemListController(ItemListController):
         return titlebar
 
     def _on_search_changed(self, widget, search_text):
-        self.item_list_group.set_search_text(search_text)
+        self.set_search(search_text)
 
     def all_item_views(self):
         return [self.item_view]
