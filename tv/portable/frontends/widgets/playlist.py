@@ -84,9 +84,9 @@ class PlaylistSort(itemlist.ItemSort):
         for item in item_list:
             self.positions[item.id] = self.current_postion.next()
 
-    def forget_items(self, item_list):
-        for item in item_list:
-            del self.positions[item.id]
+    def forget_items(self, id_list):
+        for id in id_list:
+            del self.positions[id]
 
     def set_new_order(self, id_order):
         self.positions = dict((id, self.current_postion.next())
