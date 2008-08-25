@@ -365,58 +365,58 @@ def run_dialog():
     """Displays the preferences dialog."""
     pref_window = widgetset.Dialog(_("Preferences"))
     try:
-        v = widgetset.VBox()
-        main_area_holder = window.WidgetHolder()
-        
-        splitter = widgetset.Splitter()
+        try:
+            v = widgetset.VBox()
+            main_area_holder = window.WidgetHolder()
+            
+            splitter = widgetset.Splitter()
 
-        panels = []
-        buttons = []
-        buttons_vbox = widgetset.VBox()
+            panels = []
+            buttons = []
+            buttons_vbox = widgetset.VBox()
 
-        def switcher(widget):
-            text, panel = panels[widget.panel_index]
-            main_area_holder.set(create_panel(text, panel))
+            def switcher(widget):
+                text, panel = panels[widget.panel_index]
+                main_area_holder.set(create_panel(text, panel))
 
-            [b.enable_widget() for b in buttons]
-            widget.disable_widget()
+                [b.enable_widget() for b in buttons]
+                widget.disable_widget()
 
-        max_height = max_width = 0
-        for i, (text, panel_builder) in enumerate(PANEL):
-            b = widgetset.Button(text, style="smooth")
-            b.connect('clicked', switcher)
-            b.panel_index = i
-            buttons.append(b)
-            buttons_vbox.pack_start(b)
+            max_height = max_width = 0
+            for i, (text, panel_builder) in enumerate(PANEL):
+                b = widgetset.Button(text, style="smooth")
+                b.connect('clicked', switcher)
+                b.panel_index = i
+                buttons.append(b)
+                buttons_vbox.pack_start(b)
 
-            panel = panel_builder()
-            # FIXME - this isn't working on gtk.  the width and height
-            # returned are 0 and 0.  so the maxes don't get calculated
-            # correctly.
-            w, h = panel.get_size_request()
-            max_width = max(max_width, w)
-            max_height = max(max_height, h)
-            panels.append((text, panel))
+                panel = panel_builder()
+                # FIXME - this isn't working on gtk.  the width and height
+                # returned are 0 and 0.  so the maxes don't get calculated
+                # correctly.
+                w, h = panel.get_size_request()
+                max_width = max(max_width, w)
+                max_height = max(max_height, h)
+                panels.append((text, panel))
 
-        # FIXME - when maxes are calculated correctly, uncomment the
-        # following line and remove the hard-coded one below it.
-        # main_area_holder.set_size_request(max_width, max_height)
-        main_area_holder.set_size_request(600, 400)
+            # FIXME - when maxes are calculated correctly, uncomment the
+            # following line and remove the hard-coded one below it.
+            # main_area_holder.set_size_request(max_width, max_height)
+            main_area_holder.set_size_request(600, 400)
 
-        splitter.set_left(buttons_vbox)
-        splitter.set_left_width(200)
+            splitter.set_left(buttons_vbox)
+            splitter.set_left_width(200)
 
-        splitter.set_right(main_area_holder)
-        buttons[0].disable_widget()
-        main_area_holder.set(create_panel(panels[0][0], panels[0][1]))
+            splitter.set_right(main_area_holder)
+            buttons[0].disable_widget()
+            main_area_holder.set(create_panel(panels[0][0], panels[0][1]))
 
-        v.pack_start(splitter)
+            v.pack_start(splitter)
 
-        pref_window.set_extra_widget(v)
-        pref_window.add_button(BUTTON_CLOSE.text)
-        pref_window.run()
-    except:
-        logging.exception("preferencespanel threw exception.")
-
+            pref_window.set_extra_widget(v)
+            pref_window.add_button(BUTTON_CLOSE.text)
+            pref_window.run()
+        except:
+            logging.exception("preferencespanel threw exception.")
     finally:
         pref_window.destroy()
