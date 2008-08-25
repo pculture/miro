@@ -253,8 +253,12 @@ class ItemList(object):
         self._insert_sorted_items(to_add)
 
     def remove_item(self, id):
-        iter = self._iter_map.pop(id)
-        self.model.remove(iter)
+        try:
+            iter = self._iter_map.pop(id)
+        except KeyError:
+            pass # The item isn't in our current list, just skip it
+        else:
+            self.model.remove(iter)
 
     def update_item(self, info):
         iter = self._iter_map[info.id]
