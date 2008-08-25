@@ -69,7 +69,7 @@ class DropHandler(signals.SignalEmitter):
         finally:
             self.item_view.model_changed()
         self.emit('new-order', [row[0].id for row in model])
-        return False
+        return True
 
 class PlaylistSort(itemlist.ItemSort):
     """Sort that orders items by their order in the playlist.

@@ -407,10 +407,10 @@ class MiroTableViewDataSource(DataSourceBase, protocols.NSTableDataSource):
         return self.validateDrop_dragInfo_parentIter_position_(tableview,
                 drag_info, parent, position)
 
-    def tableView_acceptDrop_proposedRow_proposedDropOperation_(self,
+    def tableView_acceptDrop_row_dropOperation_(self,
             tableview, drag_info, row, operation):
         parent, position = self.translateRow_operation_(row, operation)
-        return self.acceptDrop_dragInfo_parentIter_position_(outlineview, 
+        return self.acceptDrop_dragInfo_parentIter_position_(tableview, 
                 drag_info, parent, position)
 
 class MiroOutlineViewDataSource(DataSourceBase, protocols.NSOutlineViewDataSource):

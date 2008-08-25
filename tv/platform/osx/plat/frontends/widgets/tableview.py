@@ -593,16 +593,16 @@ class TableView(Widget):
     def set_drag_source(self, drag_source):
         self.drag_source = drag_source
         if drag_source is None:
-            self.view.unregisterDraggedTypes()
             self.data_source.setDragSource_(None)
         else:
-            types = drag_source.allowed_types()
-            self.view.registerForDraggedTypes_(types)
             self.data_source.setDragSource_(drag_source)
 
     def set_drag_dest(self, drag_dest):
         self.drag_dest = drag_dest
         if drag_dest is None:
+            self.view.unregisterDraggedTypes()
             self.data_source.setDragDest_(None)
         else:
+            types = drag_dest.allowed_types()
+            self.view.registerForDraggedTypes_(types)
             self.data_source.setDragDest_(drag_dest)

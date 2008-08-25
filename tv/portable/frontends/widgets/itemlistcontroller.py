@@ -57,7 +57,7 @@ from miro.plat.utils import getAvailableBytesForMovies
 
 class ItemListDragHandler(object):
     def allowed_actions(self):
-        return widgetset.DRAG_ACTION_COPY
+        return widgetset.DRAG_ACTION_COPY | widgetset.DRAG_ACTION_MOVE
 
     def allowed_types(self):
         return ('downloaded-item',)
