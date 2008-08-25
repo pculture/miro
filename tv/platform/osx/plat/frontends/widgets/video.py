@@ -124,12 +124,16 @@ class VideoRenderer (Widget):
         self.movie = None
         self.cached_movie = None
 
-    def adjust_video_frame(self):
+    def get_video_frame(self):
         frame = self.view.frame()
         frame.origin = self.view.convertPoint_toView_(NSZeroPoint, nil)
         frame.origin.x = 0
         frame.origin = self.view.window().convertBaseToScreen_(frame.origin)
         frame.size = (self.view.window().frame().size.width, frame.size.height)
+        return frame
+        
+    def adjust_video_frame(self):
+        frame = self.get_video_frame()
         self.video_window.setFrame_display_(frame, YES)
     
     def can_play_movie_file(self, path):
@@ -193,7 +197,8 @@ class VideoRenderer (Widget):
         self.video_window.enter_fullscreen()
     
     def exit_fullscreen(self):
-        self.video_window.exit_fullscreen()
+        frame = self.get_video_frame()
+        self.video_window.exit_fullscreen(frame)
 
     def handle_movie_notification(self, notification):
         if notification.name() == QTMovieDidEndNotification:
@@ -220,7 +225,6 @@ class VideoWindow (NSWindow):
     def initWithContentRect_styleMask_backing_defer_(self, rect, style, backing, defer):
         self = super(VideoWindow, self).initWithContentRect_styleMask_backing_defer_(rect,  style, backing, defer)
         self.setBackgroundColor_(NSColor.blackColor())
-        self.previousFrame = None
         return self
 
     def canBecomeMainWindow(self):
@@ -236,14 +240,13 @@ class VideoWindow (NSWindow):
             screenWithMenuBar = screens[0]
             if self.screen() == screenWithMenuBar:
                 SetSystemUIMode(kUIModeAllHidden, 0)
-        self.previousFrame = self.frame()
         self.setFrame_display_animate_(self.screen().frame(), YES, YES)
         #self.palette.enterFullScreen(self)
 
-    def exit_fullscreen(self):
+    def exit_fullscreen(self, frame):
         NSCursor.setHiddenUntilMouseMoves_(NO)
         #self.palette.exitFullScreen(self)
-        self.setFrame_display_animate_(self.previousFrame, YES, YES)
+        self.setFrame_display_animate_(frame, YES, YES)
         SetSystemUIMode(kUIModeNormal, 0)
 
     def updateSystemActivity_(self, timer):
