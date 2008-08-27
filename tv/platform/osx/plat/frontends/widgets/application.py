@@ -34,6 +34,7 @@ from objc import YES, NO, nil
 from AppKit import *
 from Foundation import *
 from PyObjCTools import AppHelper
+from ExceptionHandling import NSExceptionHandler, NSLogAndHandleEveryExceptionMask
 
 from miro import app
 from miro import eventloop
@@ -121,6 +122,9 @@ class AppController(NSObject):
 
     def applicationDidFinishLaunching_(self, notification):
         try:
+            NSExceptionHandler.defaultExceptionHandler().setExceptionHandlingMask_(NSLogAndHandleEveryExceptionMask)
+            NSExceptionHandler.defaultExceptionHandler().setDelegate_(self)
+
             self.application.startup()
         except:
             traceback.print_exc()
@@ -150,3 +154,9 @@ class AppController(NSObject):
 
         ensureDownloadDaemonIsTerminated()    
         app.controller.onShutdown()
+
+    def exceptionHandler_shouldLogException_mask_(self, handler, exception, mask):
+        logging.warn("Unhandled exception: %s", exception.name())
+        import traceback
+        traceback.print_stack()
+        return NO
