@@ -38,6 +38,7 @@ from AppKit import NSView, NSColor, NSNotificationCenter, NSScreen, NSBundle, NS
 from QTKit import QTMovieView, QTMovie, QTMovieURLAttribute, QTMovieDidEndNotification
 
 from miro import app
+from miro.plat import utils
 from miro.plat import bundle
 from miro.plat import qtcomp
 from miro.plat.utils import filenameTypeToOSFilename
@@ -157,7 +158,10 @@ class VideoRenderer (Widget):
         if self.cached_movie is not None and self.cached_movie.attributeForKey_(QTMovieURLAttribute) == url:
             qtmovie = self.cached_movie
         else:
-            (qtmovie, error) = QTMovie.alloc().initWithURL_error_(url, None)
+            if utils.get_pyobjc_major_version() == 2:
+                qtmovie, error = QTMovie.alloc().initWithURL_error_(url, None)
+            else:
+                qtmovie, error = QTMovie.alloc().initWithURL_error_(url)
             self.cached_movie = qtmovie
         return qtmovie
 
