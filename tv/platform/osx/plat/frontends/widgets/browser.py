@@ -28,10 +28,16 @@
 
 """miro.plat.frontends.widgets.browser -- Web Browser widget. """
 
+import os
+import logging
+
 from AppKit import *
 from Foundation import *
-import WebKit
+from WebKit import *
+from PyObjCTools import AppHelper
 
+from miro import prefs
+from miro import config
 from miro.plat.frontends.widgets.base import Widget
 
 class Browser(Widget):
@@ -39,7 +45,16 @@ class Browser(Widget):
     def __init__(self):
         Widget.__init__(self)
         self.url = None
-        self.view = WebKit.WebView.alloc().init()
+        self.view = WebView.alloc().init()
+        self.delegate = BrowserDelegate.alloc().initWithBrowser_(self)
+        self.view.setPolicyDelegate_(self.delegate)
+        self.view.setResourceLoadDelegate_(self.delegate)
+        self.view.setFrameLoadDelegate_(self.delegate)
+        self.view.setUIDelegate_(self.delegate)
+        self.view.setCustomUserAgent_(u"%s/%s (%s)" % \
+                                      (config.get(prefs.SHORT_APP_NAME),
+                                       config.get(prefs.APP_VERSION),
+                                       config.get(prefs.PROJECT_URL),))
 
     def calc_size_request(self):
         return (200, 100) # Seems like a reasonable minimum size
@@ -54,3 +69,87 @@ class Browser(Widget):
             return self.url.absoluteURL()
         else:
             return None
+
+###############################################################################
+
+class BrowserDelegate (NSObject):
+
+    def initWithBrowser_(self, browser):
+        self = super(BrowserDelegate, self).init()
+        self.browser = browser
+        self.openPanelContextID = 1
+        self.openPanelContext = dict()
+        return self
+
+    # Intercept navigation actions and give program a chance to respond
+    def webView_decidePolicyForNavigationAction_request_frame_decisionListener_(self, webview, action, request, frame, listener):
+        method = request.HTTPMethod()
+        url = unicode(request.URL())
+        body = request.HTTPBody()
+        ntype = action['WebActionNavigationTypeKey']
+        #print "policy %d for url %s" % (ntype, url)
+        if ntype in (WebNavigationTypeLinkClicked, WebNavigationTypeFormSubmitted, WebNavigationTypeOther):
+            if self.browser.should_load_url(url):
+                listener.use()
+            else:
+                listener.ignore()
+        else:
+            listener.use()
+
+    # Intercept external links requests
+    def webView_decidePolicyForNewWindowAction_request_newFrameName_decisionListener_(self, webView, info, request, name, listener):
+        url = info["WebActionOriginalURLKey"]
+        NSWorkspace.sharedWorkspace().openURL_(url)
+        listener.ignore()
+
+    def webView_createWebViewWithRequest_(self, webView, request):
+        global jsOpened
+        webView = WebView.alloc().init()
+        webView.setFrameLoadDelegate_(jsOpened)
+        webView.mainFrame().loadRequest_(request)
+        return webView
+
+    def webView_resource_willSendRequest_redirectResponse_fromDataSource_(self, webview, resourceCookie, request, redirectResponse, dataSource):
+        url = request.URL().absoluteString()
+        if isinstance(request, NSMutableURLRequest):
+            language = os.environ['LANGUAGE'].split(':')[0].replace('_', '-')
+            request.setValue_forHTTPHeaderField_(language, u'Accept-Language')
+            request.setValue_forHTTPHeaderField_(u'1', u'X-Miro')        
+        return request
+
+    def webView_runOpenPanelForFileButtonWithResultListener_(self, webview, listener):
+        self.openPanelContextID += 1
+        self.openPanelContext[self.openPanelContextID] = listener
+        panel = NSOpenPanel.openPanel()
+        panel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
+            NSHomeDirectory(),
+            nil,
+            nil,
+            self.view.window(),
+            self,
+            'openPanelDidEnd:returnCode:contextInfo:',
+            self.openPanelContextID)
+
+    @AppHelper.endSheetMethod
+    def openPanelDidEnd_returnCode_contextInfo_(self, panel, result, contextID):
+        listener = self.openPanelContext[contextID]
+        del self.openPanelContext[contextID]
+        if result == NSOKButton:
+            filenames = panel.filenames()
+            listener.chooseFilename_(filenames[0])
+
+    def webView_addMessageToConsole_(self, webview, message):
+        logging.jsalert(message)
+
+    def webView_runJavaScriptAlertPanelWithMessage_(self, webview, message):
+        logging.jsalert(message)
+
+###############################################################################
+
+class JSOpened (NSObject):
+    
+    def webView_willPerformClientRedirectToURL_delay_fireDate_forFrame_(self, webView, url, delay, fireDate, frame):
+        webView.stopLoading_(nil)
+        NSWorkspace.sharedWorkspace().openURL_(url)
+
+jsOpened = JSOpened.alloc().init()

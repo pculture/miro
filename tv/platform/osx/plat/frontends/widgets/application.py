@@ -27,22 +27,26 @@
 # statement from all source files in the program, then also delete it here.
 
 import sys
+import struct
 import logging
 import traceback
 
-from objc import YES, NO, nil
+from objc import YES, NO, nil, signature
 from AppKit import *
 from Foundation import *
 from PyObjCTools import AppHelper
 from ExceptionHandling import NSExceptionHandler, NSLogAndHandleEveryExceptionMask
 
 from miro import app
-from miro import eventloop
 from miro import prefs
+from miro import views
 from miro import config
+from miro import filetypes
+from miro import eventloop
+from miro import singleclick
 from miro.frontends.widgets.application import Application
 from miro.plat import migrateappname
-from miro.plat.utils import ensureDownloadDaemonIsTerminated, filenameTypeToOSFilename
+from miro.plat.utils import ensureDownloadDaemonIsTerminated, filenameTypeToOSFilename, osFilenamesToFilenameTypes
 from miro.plat.frontends.widgets import video, osxmenus
 from miro.plat.frontends.widgets.rect import Rect
 
@@ -125,6 +129,18 @@ class AppController(NSObject):
             NSExceptionHandler.defaultExceptionHandler().setExceptionHandlingMask_(NSLogAndHandleEveryExceptionMask)
             NSExceptionHandler.defaultExceptionHandler().setDelegate_(self)
 
+            man = NSAppleEventManager.sharedAppleEventManager()
+            man.setEventHandler_andSelector_forEventClass_andEventID_(
+                self,
+                "openURL:withReplyEvent:",
+                struct.unpack(">i", "GURL")[0],
+                struct.unpack(">i", "GURL")[0])
+
+            ws = NSWorkspace.sharedWorkspace()
+            wsnc = ws.notificationCenter()
+            wsnc.addObserver_selector_name_object_(self, 'workspaceWillSleep:', NSWorkspaceWillSleepNotification, nil)
+            wsnc.addObserver_selector_name_object_(self, 'workspaceDidWake:',   NSWorkspaceDidWakeNotification,   nil)
+
             self.application.startup()
         except:
             traceback.print_exc()
@@ -160,3 +176,75 @@ class AppController(NSObject):
         import traceback
         traceback.print_stack()
         return NO
+
+    def applicationShouldHandleReopen_hasVisibleWindows_(self, appl, flag):
+        if not flag:
+            self.showMainWindow_(appl)
+        if app.widgetapp is not None and app.widgetapp.window is not None:
+            mainWindow = app.widgetapp.window.nswindow
+            if mainWindow.isMiniaturized():
+                mainWindow.deminiaturize_(appl)            
+        return NO
+
+    def application_openFiles_(self, nsapp, filenames):
+        filenames = osFilenamesToFilenameTypes(filenames)
+        eventloop.addUrgentCall(lambda:singleclick.handleCommandLineArgs(filenames), "Open local file(s)")
+        nsapp.replyToOpenOrPrint_(NSApplicationDelegateReplySuccess)
+
+    def workspaceWillSleep_(self, notification):
+        def pauseRunningDownloaders(self=self):
+            if views.initialized:
+                views.remoteDownloads.confirmDBThread()
+                self.pausedDownloaders = list()
+                for dl in views.remoteDownloads:
+                    if dl.getState() == 'downloading':
+                        self.pausedDownloaders.append(dl)
+                dlCount = len(self.pausedDownloaders)
+                if dlCount > 0:
+                    logging.info("System is going to sleep, suspending %d download(s)." % dlCount)
+                    for dl in self.pausedDownloaders:
+                        dl.pause(block=True)
+        dc = eventloop.addUrgentCall(lambda:pauseRunningDownloaders(), "Suspending downloaders for sleep")
+        # Until we can get proper delayed call completion notification, we're
+        # just going to wait a few seconds here :)
+        time.sleep(3)
+        #dc.waitCompletion()
+
+    def workspaceDidWake_(self, notification):
+        def restartPausedDownloaders(self=self):
+            dlCount = len(self.pausedDownloaders)
+            if dlCount > 0:
+                logging.info("System is awake from sleep, resuming %s download(s)." % dlCount)
+                try:
+                    for dl in self.pausedDownloaders:
+                        dl.start()
+                finally:
+                    self.pausedDownloaders = list()
+        eventloop.addUrgentCall(lambda:restartPausedDownloaders(), "Resuming downloaders after sleep")
+
+    @signature('v@:@@')
+    def openURL_withReplyEvent_(self, event, replyEvent):
+        keyDirectObject = struct.unpack(">i", "----")[0]
+        url = event.paramDescriptorForKeyword_(keyDirectObject).stringValue().decode('utf8')
+
+        urlPattern = re.compile(r"^(.*?)://(.*)$")
+        match = urlPattern.match(url)
+        if match and match.group(1) == 'feed':
+            url = match.group(2)
+            match = urlPattern.match(url)
+            if not match:
+                url = u'http://%s' % url
+
+        if url.startswith('http'):
+            components = urlparse.urlparse(url)
+            path = components[2]
+            if filetypes.isVideoFilename(path):
+                command = [lambda:app.htmlapp.newDownload(url), "Open HTTP Movie"]
+            else:
+                command = [lambda:app.htmlapp.addAndSelectFeed(url), "Open HTTP URL"]
+        elif url.startswith('miro:'):
+            command = [lambda:singleclick.addSubscriptionURL('miro:', 'application/x-miro', url), "Open Miro URL"]
+        elif url.startswith('democracy:'):
+            command = [lambda:singleclick.addSubscriptionURL('democracy:', 'application/x-democracy', url), "Open Democracy URL"]
+
+        eventloop.addIdle(*command)
