@@ -41,10 +41,17 @@ PYTHON=$SBOX_DIR/Library/Frameworks/Python.framework/Versions/$PYTHON_VERSION/bi
 export CFLAGS="-mmacosx-version-min=$TARGET_OS_VERSION -isysroot $SDK_DIR -arch ppc -arch i386"
 export LDFLAGS=$CFLAGS
 
+# setuptools ==================================================================
+
+cd $WORK_DIR
+svn co http://svn.python.org/projects/sandbox/trunk/setuptools
+cd setuptools
+$PYTHON setup.py install
+
 # PyObjC ======================================================================
 
 cd $WORK_DIR
-svn co -r 1992 http://svn.red-bean.com/pyobjc/trunk/pyobjc PyObjC-2.0
+svn co http://svn.red-bean.com/pyobjc/trunk/pyobjc PyObjC-2.0
 cd PyObjC-2.0
 
 for proj in altgraph \
