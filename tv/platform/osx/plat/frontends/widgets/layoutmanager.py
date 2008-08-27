@@ -177,23 +177,19 @@ class TextBox(object):
         attributes = NSMutableDictionary.alloc().init()
         if color is not None:
             nscolor = NSColor.colorWithDeviceRed_green_blue_alpha_(color[0], color[1], color[2], 1.0)
-            attributes.setObject_forKey_(nscolor,
-                    NSForegroundColorAttributeName)
+            attributes.setObject_forKey_(nscolor, NSForegroundColorAttributeName)
         else:
-            attributes.setObject_forKey_(self.color,
-                    NSForegroundColorAttributeName)
+            attributes.setObject_forKey_(self.color, NSForegroundColorAttributeName)
         if font is not None:
             attributes.setObject_forKey_(font.nsfont, NSFontAttributeName)
         else:
-            attributes.setObject_forKey_(self.font.nsfont,
-                    NSFontAttributeName)
+            attributes.setObject_forKey_(self.font.nsfont, NSFontAttributeName)
         if underline:
-            attributes.setObject_forKey_(NSUnderlineStyleSingle,
-                    NSUnderlineStyleAttributeName)
-        attributes.setObject_forKey_(self.paragraph_style.copy(),
-                NSParagraphStyleAttributeName)
-        return NSAttributedString.alloc().initWithString_attributes_(text,
-            attributes)
+            attributes.setObject_forKey_(NSUnderlineStyleSingle, NSUnderlineStyleAttributeName)
+        attributes.setObject_forKey_(self.paragraph_style.copy(), NSParagraphStyleAttributeName)
+        if text is None:
+            text = ""
+        return NSAttributedString.alloc().initWithString_attributes_(text, attributes)
 
     def set_text(self, text, color=None, font=None, underline=False):
         string = self.make_attr_string(text, color, font, underline)
