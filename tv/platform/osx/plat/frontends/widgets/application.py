@@ -179,7 +179,7 @@ class AppController(NSObject):
 
     def applicationShouldHandleReopen_hasVisibleWindows_(self, appl, flag):
         if not flag:
-            self.showMainWindow_(appl)
+            app.widgetapp.window.nswindow.makeKeyAndOrderFront_(nil)
         if app.widgetapp is not None and app.widgetapp.window is not None:
             mainWindow = app.widgetapp.window.nswindow
             if mainWindow.isMiniaturized():
