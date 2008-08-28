@@ -28,6 +28,8 @@
 
 """Defines the preferences panel."""
 
+import logging
+
 from miro import config, prefs
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil, window
@@ -375,41 +377,32 @@ def run_dialog():
             buttons = []
             buttons_vbox = widgetset.VBox()
 
-            def switcher(widget):
-                text, panel = panels[widget.panel_index]
-                main_area_holder.set(create_panel(text, panel))
-
+            def switcher(widget, panel_index):
+                main_area_holder.set(panels[panel_index])
                 [b.enable_widget() for b in buttons]
                 widget.disable_widget()
 
             max_height = max_width = 0
             for i, (text, panel_builder) in enumerate(PANEL):
                 b = widgetset.Button(text, style="smooth")
-                b.connect('clicked', switcher)
-                b.panel_index = i
+                b.connect('clicked', switcher, i)
                 buttons.append(b)
                 buttons_vbox.pack_start(b)
 
-                panel = panel_builder()
-                # FIXME - this isn't working on gtk.  the width and height
-                # returned are 0 and 0.  so the maxes don't get calculated
-                # correctly.
+                panel = create_panel(text, panel_builder())
                 w, h = panel.get_size_request()
                 max_width = max(max_width, w)
                 max_height = max(max_height, h)
-                panels.append((text, panel))
+                panels.append(panel)
 
-            # FIXME - when maxes are calculated correctly, uncomment the
-            # following line and remove the hard-coded one below it.
-            # main_area_holder.set_size_request(max_width, max_height)
-            main_area_holder.set_size_request(600, 400)
+            main_area_holder.set_size_request(max_width, max_height)
 
             splitter.set_left(buttons_vbox)
             splitter.set_left_width(200)
 
             splitter.set_right(main_area_holder)
             buttons[0].disable_widget()
-            main_area_holder.set(create_panel(panels[0][0], panels[0][1]))
+            main_area_holder.set(panels[0])
 
             v.pack_start(splitter)
 

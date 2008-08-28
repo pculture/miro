@@ -132,7 +132,7 @@ class Widget(signals.SignalEmitter):
         return wrappermap.wrapper(gtk_window)
 
     def get_size_request(self):
-        return self._widget.get_size_request()
+        return self._widget.size_request()
 
     def set_size_request(self, width, height):
         self._widget.set_size_request(width, height)
