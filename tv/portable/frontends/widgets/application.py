@@ -79,10 +79,11 @@ class Application:
         app.menu_manager = menus.MenuManager()
         app.playback_manager = playback.PlaybackManager()
         app.search_manager = search.SearchManager()
-
-    def build_window(self):
         app.tab_list_manager = tablistmanager.TabListManager()
         self.window = MiroWindow(_("Miro"), self.get_main_window_dimensions())
+
+    def build_window(self):
+        app.tab_list_manager.populate_tab_list()
         for info in self.message_handler.initial_guides:
             app.tab_list_manager.site_list.add(info)
         app.tab_list_manager.site_list.model_changed()

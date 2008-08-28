@@ -43,9 +43,13 @@ class TabListManager(object):
         self.feed_list = tablist.FeedList()
         self.playlist_list = tablist.PlaylistList()
         self.widget_to_tablist = {}
-        self.select_guide()
         for tab_list in self.all_tab_lists():
             self.widget_to_tablist[tab_list.view] = tab_list
+
+    def populate_tab_list(self):
+        self.static_tab_list.build_tabs()
+        self.select_guide()
+        for tab_list in self.all_tab_lists():
             tab_list.view.connect('selection-changed',
                     self.on_selection_changed)
 

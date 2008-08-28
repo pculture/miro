@@ -55,6 +55,12 @@ class StaticTabList(object):
         self.view = TabListView(style.StaticTabRenderer())
         self.view.allow_multiple_select(False)
         self.iter_map = {}
+        self.doing_change = False 
+        # doing_change will be True if we are changing a bunch of tabs.  This
+        # will cause us to not try to update things based on the selection
+        # changing.
+
+    def build_tabs(self):
         self.add(statictabs.ChannelGuideTab())
         self.add(statictabs.SearchTab())
         self.add(statictabs.LibraryTab())
@@ -62,10 +68,6 @@ class StaticTabList(object):
         self.add(statictabs.IndividualDownloadsTab())
         self.add(statictabs.DownloadsTab())
         self.view.model_changed()
-        self.doing_change = False 
-        # doing_change will be True if we are changing a bunch of tabs.  This
-        # will cause us to not try to update things based on the selection
-        # changing.
 
     def add(self, tab):
         iter = self.view.model.append(tab)
