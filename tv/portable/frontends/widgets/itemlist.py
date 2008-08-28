@@ -305,6 +305,7 @@ class ItemList(object):
             item = self.model[iter][0]
             if not item_matches_search(item, search_text):
                 iter = self.model.remove(iter)
+                del self._iter_map[item.id]
                 removed.append(item)
             else:
                 iter = self.model.next_iter(iter)
