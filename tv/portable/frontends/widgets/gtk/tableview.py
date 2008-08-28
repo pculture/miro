@@ -452,7 +452,7 @@ class TableView(Widget):
 
     def get_selected(self):
         model, iter = self.selection.get_selected()
-        return model.get_path(iter)
+        return iter
 
     def num_rows_selected(self):
         return self.selection.count_selected_rows()

@@ -32,7 +32,8 @@ import logging
 
 from miro import config, prefs
 from miro.plat.frontends.widgets import widgetset
-from miro.frontends.widgets import widgetutil, window
+from miro.frontends.widgets import cellpack, imagepool, widgetutil, window
+from miro.plat import resources
 from miro.plat.frontends.widgets.widgetset import Rect
 from miro.dialogs import BUTTON_CLOSE
 from miro.gtcache import gettext as _
@@ -350,18 +351,49 @@ def create_panel(title_text, panel_contents):
 
     return v
 
+class TabRenderer(widgetset.CustomCellRenderer):
+    def get_size(self, style, layout):
+        return self.pack_tab(layout).get_size()
+
+    def pack_tab(self, layout):
+        #layout.set_font(0.77)
+        titlebox = layout.textbox(self.tab_title)
+
+        hbox = cellpack.HBox(spacing=4)
+        hbox.pack(cellpack.align_middle(self.icon))
+        hbox.pack(cellpack.align_middle(titlebox))
+        return hbox
+
+    def render(self, context, layout, selected, hotspot):
+        layout.set_text_color(context.style.text_color)
+        self.pack_tab(layout).render_layout(context)
+
+class PreferenceTabList(widgetset.TableView):
+    def __init__(self, widget_holder):
+        # The model stores the title, image, and right-side widget for each
+        # tab
+        self.widget_holder = widget_holder
+        model = widgetset.TableModel('text', 'object', 'object')
+        widgetset.TableView.__init__(self, model)
+        self.set_show_headers(False)
+        self.add_column('tab', TabRenderer(), 150, tab_title=0, icon=1)
+
+    def do_selection_changed(self):
+        widget = self.model[self.get_selected()][2]
+        self.widget_holder.set(widget)
+
 PANEL = [
-    (_("General"), build_general_panel),
-    (_("Channels"), build_channels_panel),
-    (_("Downloads"), build_downloads_panel),
-    (_("Folders"), build_folders_panel),
-    (_("Disk space"), build_disk_space_panel),
-    (_("Playback"), build_playback_panel)
+    (_("General"), 'wimages/pref-tab-general.png', build_general_panel),
+    (_("Channels"), 'wimages/pref-tab-channels.png', build_channels_panel),
+    (_("Downloads"), 'wimages/pref-tab-downloads.png', build_downloads_panel),
+    (_("Folders"), 'wimages/pref-tab-folders.png', build_folders_panel),
+    (_("Disk space"), 'wimages/pref-tab-disk-space.png', build_disk_space_panel),
+    (_("Playback"), 'wimages/pref-tab-playback.png', build_playback_panel)
 ]
 
-def add_panel(name, panel_builder_function):
+def add_panel(name, image_name, panel_builder_function):
     global PANEL
-    PANEL.append( (name, panel_builder_function) )
+    PANEL.append( (name, image_name, panel_builder_function) )
 
 def run_dialog():
     """Displays the preferences dialog."""
@@ -373,36 +405,25 @@ def run_dialog():
             
             splitter = widgetset.Splitter()
 
-            panels = []
-            buttons = []
-            buttons_vbox = widgetset.VBox()
-
-            def switcher(widget, panel_index):
-                main_area_holder.set(panels[panel_index])
-                [b.enable_widget() for b in buttons]
-                widget.disable_widget()
+            tab_list = PreferenceTabList(main_area_holder)
 
             max_height = max_width = 0
-            for i, (text, panel_builder) in enumerate(PANEL):
-                b = widgetset.Button(text, style="smooth")
-                b.connect('clicked', switcher, i)
-                buttons.append(b)
-                buttons_vbox.pack_start(b)
+            for title, image_name, panel_builder in PANEL:
+                panel = create_panel(title, panel_builder())
+                image = imagepool.get_surface(resources.path(image_name))
+                tab_list.model.append(title, image, panel)
 
-                panel = create_panel(text, panel_builder())
                 w, h = panel.get_size_request()
                 max_width = max(max_width, w)
                 max_height = max(max_height, h)
-                panels.append(panel)
 
             main_area_holder.set_size_request(max_width, max_height)
 
-            splitter.set_left(buttons_vbox)
+            splitter.set_left(tab_list)
             splitter.set_left_width(200)
+            tab_list.select(tab_list.model.first_iter())
 
             splitter.set_right(main_area_holder)
-            buttons[0].disable_widget()
-            main_area_holder.set(panels[0])
 
             v.pack_start(splitter)
 
