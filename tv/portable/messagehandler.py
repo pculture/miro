@@ -641,7 +641,10 @@ class BackendMessageHandler(messages.MessageHandler):
         search_feed.lastEngine = searchengine_id
         search_feed.lastQuery = terms
         search_feed.preserveDownloads(search_downloads_feed)
-        search_feed.lookup(searchengine_id, terms)
+        if terms:
+            search_feed.lookup(searchengine_id, terms)
+        else:
+            search_feed.reset()
 
     def item_tracker_key(self, message):
         return (message.type, message.id)
