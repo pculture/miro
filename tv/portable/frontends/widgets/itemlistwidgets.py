@@ -107,9 +107,12 @@ class ItemListTitlebar(widgetset.Background):
         """
 
         self.create_signal('search-changed')
-        searchbox = widgetset.TextEntry()
-        searchbox.connect('changed', self._on_search_changed)
-        return widgetutil.align_middle(searchbox, right_pad=35)
+        self.searchbox = widgetset.TextEntry()
+        self.searchbox.connect('changed', self._on_search_changed)
+        return widgetutil.align_middle(self.searchbox, right_pad=35)
+
+    def _on_save_search(self, button):
+        self.emit('save-search')
 
     def _on_search_changed(self, searchbox):
         self.emit('search-changed', searchbox.get_text())
@@ -117,6 +120,35 @@ class ItemListTitlebar(widgetset.Background):
     def set_title(self, title):
         self.title_drawer = title
         self.title_drawer.queue_redraw()
+
+class ChannelTitlebar(ItemListTitlebar):
+    """Titlebar for a channel
+
+    signals:
+      save-search (self, search_text) -- The current search should be saved 
+          as a search channel.
+    """
+
+    def _build_titlebar_extra(self):
+        self.create_signal('save-search')
+        button = widgetset.Button(_('Save Search'))
+        button.connect('clicked', self._on_save_search)
+        self.save_button = widgetutil.HideableWidget(
+                widgetutil.pad(button, right=10))
+        return [
+                widgetutil.align_middle(self.save_button),
+                ItemListTitlebar._build_titlebar_extra(self),
+        ]
+
+    def _on_save_search(self, button):
+        self.emit('save-search', self.searchbox.get_text())
+
+    def _on_search_changed(self, searchbox):
+        if searchbox.get_text() == '':
+            self.save_button.hide()
+        else:
+            self.save_button.show()
+        self.emit('search-changed', searchbox.get_text())
 
 class SearchListTitlebar(ItemListTitlebar):
     """Titlebar for the search page.

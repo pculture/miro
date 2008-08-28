@@ -56,8 +56,9 @@ class FeedController(itemlistcontroller.ItemListController):
         self._make_item_views()
 
         widget = itemlistwidgets.ItemContainerWidget()
-        self.titlebar = itemlistwidgets.ItemListTitlebar(feed_info.name, icon)
+        self.titlebar = itemlistwidgets.ChannelTitlebar(feed_info.name, icon)
         self.titlebar.connect('search-changed', self._on_search_changed)
+        self.titlebar.connect('save-search', self._on_save_search)
         widget.titlebar_vbox.pack_start(self.titlebar)
         if not self.is_folder:
             sep = separator.HSeparator((0.85, 0.85, 0.85), (0.95, 0.95, 0.95))
@@ -70,6 +71,10 @@ class FeedController(itemlistcontroller.ItemListController):
 
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
+
+    def _on_save_search(self, widget, search_text):
+        info = widgetutil.get_feed_info(self.id)
+        messages.NewChannelSearchChannel(info, search_text).send_to_backend()
 
     def _make_item_views(self):
         self.downloading_view = itemlistwidgets.ItemView(
