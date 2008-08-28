@@ -166,6 +166,9 @@ class Window(WindowBase):
     def is_active(self):
         return self._window.is_active()
 
+    def is_visible(self):
+        return self._window.props.visible
+
     def set_content_widget(self, widget):
         """Set the widget that will be drawn in the content area for this
         window.

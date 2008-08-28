@@ -31,6 +31,8 @@ pygtk.require("2.0")
 import gtk
 from gettext import gettext as _
 
+from miro import app
+
 trayicon_is_supported = False
 
 # first check to see whether the version of GTK+ natively supports
@@ -45,34 +47,42 @@ if gtk.check_version(2,10,0) == None:
             self.main_frame = main_frame
             self.set_from_file(icon)
             self.set_visible(False)
-            self.connect("activate", self.onClick)
+            self.connect("activate", self.on_click)
             self.connect("popup-menu", self.on_popup_menu)
+
         def make_popup_menu_items(self):
-            cb_handler = self.main_frame.callbackHandler
+            #cb_handler = self.main_frame.callbackHandler
             menu_items = []
-            menu_items.append((_("Settings"), cb_handler.on_preference))
-            window = self.main_frame.widgetTree['main-window']
-            if window.get_property('visible') == True:
-                menu_items.append((_("Hide"), self.onClick))
+            window = self.main_frame.window
+            if window.is_visible():
+                menu_items.append((_("Hide"), self.on_click))
             else:
-                menu_items.append((_("Show"), self.onClick))
-            menu_items.append((_("Quit"), cb_handler.on_quit_activate))
+                menu_items.append((_("Show"), self.on_click))
+            menu_items.append((gtk.STOCK_PREFERENCES, self.on_preferences))
+            menu_items.append((gtk.STOCK_QUIT, self.on_quit))
             return menu_items
 
         def on_popup_menu(self, status_icon, button, activate_time):
             popup_menu = gtk.Menu()
             for label, callback in self.make_popup_menu_items():
-                item = gtk.MenuItem(label)
+                item = gtk.ImageMenuItem(label)
                 item.connect('activate', callback)
                 popup_menu.append(item)
+
             popup_menu.show_all()
             popup_menu.popup(None, None, gtk.status_icon_position_menu,
                     button, activate_time, status_icon)
 
-        def onClick(self, widget):
-            window = self.main_frame.widgetTree['main-window']
-            if window.get_property('visible') == True:
-                window.hide()
+        def on_preferences(self, widget):
+            app.widgetapp.preferences()
+
+        def on_quit(self, widget):
+            app.widgetapp.quit()
+
+        def on_click(self, widget):
+            window = self.main_frame.window
+            if window.is_visible():
+                window.close()
             else:
                 window.show()
 
