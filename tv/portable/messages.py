@@ -136,6 +136,9 @@ class StopTrackingChannels(BackendMessage):
     """Stop tracking channels."""
     pass
 
+class QuerySearchInfo(BackendMessage):
+    """Ask the backend to send a CurrentSearchInfo message.  """
+
 class TrackPlaylists(BackendMessage):
     """Begin tracking playlists.
 
@@ -772,6 +775,12 @@ class ItemsChanged(FrontendMessage):
         self.added = added
         self.changed = changed
         self.removed = removed
+
+class CurrentSearchInfo(FrontendMessage):
+    """Informs the frontend of the current search settings """
+    def __init__(self, engine, text):
+        self.engine = engine
+        self.text = text
 
 class DownloadCountChanged(FrontendMessage):
     """Informs the frontend that number of downloads has changed """

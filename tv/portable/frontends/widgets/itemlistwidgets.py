@@ -158,9 +158,14 @@ class SearchListTitlebar(ItemListTitlebar):
           search.
     """
 
+    def get_engine(self):
+        return self.engines[self.search_dropdown.get_selected()].name
+
+    def get_text(self):
+        return self.searchbox.get_text()
+
     def _on_search_activate(self, widget):
-        engine = self.engines[self.search_dropdown.get_selected()]
-        self.emit('search', engine.name, self.searchbox.get_text())
+        self.emit('search', self.get_engine(), self.get_text())
 
     def _build_titlebar_extra(self):
         self.create_signal('search')
@@ -181,6 +186,13 @@ class SearchListTitlebar(ItemListTitlebar):
         self.search_button.connect('clicked', self._on_search_activate)
         hbox.pack_start(self.search_button, padding=5)
         return widgetutil.align_middle(hbox, right_pad=20)
+
+    def set_search_text(self, text):
+        self.searchbox.set_text(text)
+
+    def set_search_engine(self, engine):
+        index = [e.name for e in self.engines].index(engine)
+        self.search_dropdown.set_selected(index)
 
 class ItemView(widgetset.TableView):
     """TableView that displays a list of items.  """
@@ -233,6 +245,27 @@ class HideableSection(widgetutil.HideableWidget):
         self.info_label.set_color((0.72, 0.72, 0.72))
         hbox.pack_start(self.info_label)
         self.expander.set_label(hbox)
+
+class SearchToolbar(widgetutil.HideableWidget):
+    """Toolbar for the search page.  
+    
+    It's a hidable widget that contains the save search button.
+
+    signals:
+
+       save-search (self) -- The current search should be saved as a search
+           channel.
+    """
+
+    def __init__(self):
+        save_button = widgetset.Button(_('Save as a Channel'))
+        save_button.connect('clicked', self._on_save_clicked)
+        child = widgetutil.align_left(save_button, left_pad=5, bottom_pad=5)
+        widgetutil.HideableWidget.__init__(self, child)
+        self.create_signal('save-search')
+
+    def _on_save_clicked(self, button):
+        self.emit('save-search')
 
 class DownloadToolbar(widgetset.HBox):
     """Widget that shows the info and pause/resume buttons for the downloads 

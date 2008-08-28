@@ -330,6 +330,15 @@ class SearchController(SimpleItemListController):
     image_filename = 'icon-search_large.png'
     title = _("Video Search")
 
+    def __init__(self):
+        SimpleItemListController.__init__(self)
+        self.toolbar = itemlistwidgets.SearchToolbar()
+        self.toolbar.connect("save-search", self._on_save_search)
+        self.widget.titlebar_vbox.pack_start(self.toolbar)
+        if app.search_manager.text != '':
+            self.toolbar.show()
+            self.titlebar.set_search_text(app.search_manager.text)
+        self.titlebar.set_search_engine(app.search_manager.engine)
 
     def make_titlebar(self):
         icon = self._make_icon()
@@ -338,7 +347,18 @@ class SearchController(SimpleItemListController):
         return titlebar
 
     def _on_search(self, widget, engine_name, search_text):
-        messages.Search(engine_name, search_text).send_to_backend()
+        app.search_manager.perform_search(engine_name, search_text)
+        if search_text != '':
+            self.toolbar.show()
+        else:
+            self.toolbar.hide()
+
+    def _on_save_search(self, widget):
+        engine = self.titlebar.get_engine()
+        search_text = self.titlebar.get_text()
+        app.search_manager.perform_search(engine, search_text)
+        if search_text != '':
+            app.search_manager.save_search()
 
 class LibraryController(SimpleItemListController):
     type = 'library'

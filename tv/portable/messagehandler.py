@@ -361,6 +361,11 @@ class BackendMessageHandler(messages.MessageHandler):
         else:
             raise ValueError("Unknown Type: %s" % type)
 
+    def handle_query_search_info(self, message):
+        search_feed = app.controller.get_global_feed('dtv:search')
+        messages.CurrentSearchInfo(search_feed.lastEngine,
+                search_feed.lastQuery).send_to_frontend()
+
     def handle_track_channels(self, message):
         if not self.channel_tracker:
             self.channel_tracker = ChannelTracker()

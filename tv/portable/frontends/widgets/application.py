@@ -50,6 +50,7 @@ from miro.frontends.widgets import displays
 from miro.frontends.widgets import menus
 from miro.frontends.widgets import tablistmanager
 from miro.frontends.widgets import playback
+from miro.frontends.widgets import search
 from miro.frontends.widgets import rundialog
 from miro.frontends.widgets.window import MiroWindow
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
@@ -69,17 +70,22 @@ class Application:
         startup.startup()
 
     def startup_ui(self):
-        # We need to wait until we have info about the channel guide before we
-        # can show the ui
+        # Send a couple messages to the backend, when we get responses,
+        # WidgetsMessageHandler() will call build_window()
         messages.TrackGuides().send_to_backend()
-
-    def build_window(self):
-        app.tab_list_manager = tablistmanager.TabListManager()
+        messages.QuerySearchInfo().send_to_backend()
         app.item_list_controller = None
         app.display_manager = displays.DisplayManager()
         app.menu_manager = menus.MenuManager()
         app.playback_manager = playback.PlaybackManager()
+        app.search_manager = search.SearchManager()
+
+    def build_window(self):
+        app.tab_list_manager = tablistmanager.TabListManager()
         self.window = MiroWindow(_("Miro"), self.get_main_window_dimensions())
+        for info in self.message_handler.initial_guides:
+            app.tab_list_manager.site_list.add(info)
+        app.tab_list_manager.site_list.model_changed()
         app.tab_list_manager.handle_startup_selection()
         videobox = self.window.videobox
         videobox.volume_slider.set_value(config.get(prefs.VOLUME_LEVEL))
@@ -687,8 +693,25 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
         logging.info('Shutting down...')
 
 class WidgetsMessageHandler(messages.MessageHandler):
+    def __init__(self):
+        messages.MessageHandler.__init__(self)
+        # Messages that we need to see before the UI is ready
+        self._pre_startup_messages = set([
+            'guide-list',
+            'search-info'
+        ])
+
+    def _saw_pre_startup_message(self, name):
+        self._pre_startup_messages.remove(name)
+        if len(self._pre_startup_messages) == 0:
+            app.widgetapp.build_window()
+
     def call_handler(self, method, message):
         call_on_ui_thread(method, message)
+
+    def handle_current_search_info(self, message):
+        app.search_manager.set_search_info(message.engine, message.text)
+        self._saw_pre_startup_message('search-info')
 
     def tablist_for_message(self, message):
         if message.type == 'feed':
@@ -715,13 +738,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
     def handle_guide_list(self, message):
         app.widgetapp.default_guide_info = message.default_guide
-        # We had to wait until we have the default channel guide info to show
-        # the UI
-        app.widgetapp.build_window()
-        tablist = app.tab_list_manager.site_list
-        for info in message.added_guides:
-            tablist.add(info)
-        tablist.model_changed()
+        self.initial_guides = message.added_guides
+        self._saw_pre_startup_message('guide-list')
 
     def update_default_guide(self, guide_info):
         app.widgetapp.default_guide_info = guide_info

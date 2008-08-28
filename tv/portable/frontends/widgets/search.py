@@ -26,30 +26,39 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""app.py -- Stores singleton objects.
-
-App.py is a respository for high-level singleton objects.  Most of these
-objects get set in startup.py, but some get set in frontend code as well.
-
-Here is the list of objects that app currently stores:
-
-controller -- Handle High-level control of Miro
-selection -- Handles selected objects
-renderers -- List of active renderers
-db -- Database object
-
-The widget frontend adds:
-
-widgetapp -- Application object
-display_manger -- Handles the right-hand display.
-tab_list_manager -- Handles the tab lists and selection.
-item_list_controller -- Currently active ItemListController (or None)
-renderer -- Video rendering object (or None if the platform code can't
-        initialize a suitable renderer)
-search_manager -- Manages the search state
+"""search.py -- Manages video searches.
 """
 
-renderers = []
-# NOTE: we could set controller, db, etc. to None here, but it seems better
-# not do.  This way if we call "from miro.app import controller" before the
-# controller singleton is created, then we will immediately get an error.
+from miro import messages
+from miro import searchengines
+
+class SearchManager(object):
+    """Keeps track of search terms.
+
+    Attributes:
+
+      engine -- Last used search engine
+      text -- Last search text
+    """
+
+    def __init__(self):
+        self.engine = 'all'
+        self.text = ''
+
+    def set_search_info(self, engine, text):
+        self.engine = engine
+        self.text = text
+
+    def perform_search(self, engine, text):
+        self.set_search_info(engine, text)
+        messages.Search(engine, text).send_to_backend()
+
+    def save_search(self):
+        m = messages.NewChannelSearchEngine(self._lookup_engine(), self.text)
+        m.send_to_backend()
+
+    def _lookup_engine(self):
+        for engine in searchengines.get_search_engines():
+            if engine.name == self.engine:
+                return engine
+        raise LookupError("Couldn't find search engine %r" % name)
