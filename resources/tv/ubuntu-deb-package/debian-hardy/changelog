@@ -1,3 +1,10 @@
+miro (1.2.7-0pcf2) hardy; urgency=low
+
+  * Fixed not installing xine_extrator
+  * Fix for the movies dir patch
+
+ -- Ben Dean-Kawamura <ben@pculture.org>  Fri, 29 Aug 2008 14:49:54 -0400
+
 miro (1.2.7-0pcf1) hardy; urgency=low
 
   * #10291 FIXED adding channels via the command line crashed miro

@@ -1,7 +1,7 @@
-Index: platform/gtk-x11/plat/config.py
+Index: platform/gtk-x11/platform/config.py
 ===================================================================
---- platform/gtk-x11/plat/config.py	(revision 6519)
-+++ platform/gtk-x11/plat/config.py	(working copy)
+--- platform/gtk-x11/platform/config.py	(revision 6519)
++++ platform/gtk-x11/platform/config.py	(working copy)
 @@ -103,13 +103,13 @@
      value = descriptor.default
  
@@ -18,10 +18,10 @@ Index: platform/gtk-x11/plat/config.py
  
      elif descriptor == prefs.GETTEXT_PATHNAME:
          value = resources.path("../../locale")
-Index: platform/gtk-x11/plat/upgrade.py
+Index: platform/gtk-x11/platform/upgrade.py
 ===================================================================
---- platform/gtk-x11/plat/upgrade.py	(revision 6519)
-+++ platform/gtk-x11/plat/upgrade.py	(working copy)
+--- platform/gtk-x11/platform/upgrade.py	(revision 6519)
++++ platform/gtk-x11/platform/upgrade.py	(working copy)
 @@ -32,6 +32,29 @@
  import gconf
  
