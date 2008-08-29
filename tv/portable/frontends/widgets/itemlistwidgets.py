@@ -203,7 +203,7 @@ class ItemView(widgetset.TableView):
         self.set_draws_selection(False)
         renderer = style.ItemRenderer()
         self.add_column('item', renderer, renderer.MIN_WIDTH, data=0,
-                show_details=1)
+                show_details=1, throbber_counter=2)
         self.set_show_headers(False)
         self.allow_multiple_select(True)
         self.set_background_color(widgetutil.WHITE)

@@ -703,6 +703,7 @@ class TableModel(object):
         type_map = {
                 'boolean': bool,
                 'numeric': float,
+                'integer': int,
                 'text': str,
                 'image': gtk.gdk.Pixbuf,
                 'datetime': object,

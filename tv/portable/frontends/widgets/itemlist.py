@@ -40,6 +40,7 @@ terms.
 
 from miro import search
 from miro.frontends.widgets import imagepool
+from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
 
 def item_matches_search(item_info, search_text):
@@ -106,10 +107,31 @@ class ItemListGroup(object):
         """
         self.item_lists = item_lists
         self.set_sort(DateSort())
+        self._throbber_timeouts = {}
+
+    def _throbber_timeout(self, id):
+        for item_list in self.item_lists:
+            item_list.update_throbber(id)
+        self._schedule_throbber_timeout(id)
+
+    def _schedule_throbber_timeout(self, id):
+        timeout = timer.add(0.4, self._throbber_timeout, id)
+        self._throbber_timeouts[id] = timeout
 
     def _setup_info(self, info):
         """Initialize a newly recieved ItemInfo."""
         info.icon = imagepool.LazySurface(info.thumbnail, (154, 105))
+        download_info = info.download_info
+        if (download_info is not None and 
+                not download_info.finished and
+                download_info.state != 'paused' and
+                download_info.downloaded_size > 0 and info.size == -1):
+            # We are downloading an item without a content-length.  Take steps
+            # to update the progress throbbers.
+            if info.id not in self._throbber_timeouts:
+                self._schedule_throbber_timeout(info.id)
+        elif info.id in self._throbber_timeouts:
+            timer.cancel(self._throbber_timeouts.pop(info.id))
 
     def add_items(self, item_list):
         """Add a list of new items to the item list.
@@ -156,12 +178,13 @@ class ItemList(object):
     """
     Attributes:
 
-    model -- TableModel for this item list.  It contains 2 columns, ItemInfo
-    objects and a show_details boolean flag.
+    model -- TableModel for this item list.  It contains 3 columns, an
+    ItemInfo object, a show_details flag and a counter used to change the
+    progress throbber
     """
 
     def __init__(self):
-        self.model = widgetset.TableModel('object', 'boolean')
+        self.model = widgetset.TableModel('object', 'boolean', 'integer')
         self._iter_map = {}
         self._sorter = None
         self._search_text = ''
@@ -222,13 +245,22 @@ class ItemList(object):
         iter = self._iter_map[item_id]
         self.model.update_value(iter, 1, value)
 
+    def update_throbber(self, item_id):
+        try:
+            iter = self._iter_map[item_id]
+        except KeyError:
+            pass
+        else:
+            counter = self.model[iter][2]
+            self.model.update_value(iter, 2, counter + 1)
+
     def _insert_sorted_items(self, item_list):
         pos = self.model.first_iter()
         for item_info in item_list:
             while (pos is not None and 
                     self._sorter.compare(self.model[pos][0], item_info) < 0):
                 pos = self.model.next_iter(pos)
-            iter = self.model.insert_before(pos, item_info, False)
+            iter = self.model.insert_before(pos, item_info, False, 0)
             self._iter_map[item_info.id] = iter
 
     def add_items(self, item_list, already_sorted=False):

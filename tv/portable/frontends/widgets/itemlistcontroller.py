@@ -138,7 +138,7 @@ class ItemListController(object):
     def on_hotspot_clicked(self, itemview, name, iter):
         """Hotspot handler for ItemViews."""
 
-        item_info, show_details = itemview.model[iter]
+        item_info, show_details, counter = itemview.model[iter]
         if name == 'download':
             messages.StartDownload(item_info.id).send_to_backend()
         elif name == 'pause':

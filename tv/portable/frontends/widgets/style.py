@@ -142,6 +142,12 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             'wimages/progress-bar.png'))
         self.progress_bar_bg = imagepool.get_surface(resources.path(
             'wimages/progress-bar-bg.png'))
+        self.progress_throbbers = [
+                imagepool.get_surface(resources.path(
+                    'wimages/progress-throbber-1.png')),
+                imagepool.get_surface(resources.path(
+                    'wimages/progress-throbber-2.png')),
+        ]
         self.cancel_button = imagepool.get_surface(resources.path(
             'wimages/video-download-cancel.png'))
         self.pause_button = imagepool.get_surface(resources.path(
@@ -414,6 +420,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         if self.data.size > 0:
             percent = round(100.0 * dl_info.downloaded_size / self.data.size)
             parts.append("%d%%" % percent)
+        elif self.data.size < 0:
+            parts.append(displaytext.size(dl_info.downloaded_size))
         if dl_info.rate > 0:
             parts.append(displaytext.download_rate(dl_info.rate))
         if self.data.size > 0 and dl_info.rate > 0:
@@ -427,7 +435,11 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         vbox = cellpack.VBox()
         vbox.pack(cellpack.pad(self.download_textbox(layout), left=3))
         hbox = cellpack.HBox(spacing=5)
-        progress_bar = cellpack.DrawingArea(131, 9, self.draw_progress_bar)
+        if self.data.size >= 0 or self.download_info.downloaded_size == 0:
+            progress_draw_func = self.draw_progress_bar
+        else:
+            progress_draw_func = self.draw_progress_throbber
+        progress_bar = cellpack.DrawingArea(131, 9, progress_draw_func)
         hbox.pack(cellpack.align_middle(progress_bar))
         if self.download_info.state != 'paused':
             hbox.pack(cellpack.Hotspot('pause', self.pause_button))
@@ -602,9 +614,13 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
     def draw_progress_bar(self, context, x, y, width, height):
         dl_info = self.download_info
-        if self.data.size:
+        if self.data.size > 0:
             split = float(width) * dl_info.downloaded_size / self.data.size
         else:
             split = 0.0
         self.progress_bar_bg.draw(context, x, y, width, height)
         self.progress_bar.draw(context, x, y, split, height)
+
+    def draw_progress_throbber(self, context, x, y, width, height):
+        index = self.throbber_counter % 2
+        self.progress_throbbers[index].draw(context, x, y, width, height)
