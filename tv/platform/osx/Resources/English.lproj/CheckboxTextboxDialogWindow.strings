@@ -1,9 +1,0 @@
-/* NSPanel () : <title:> (oid:5) */
-"" = "";
-
-/* NSButton (Cancel) : <title:Cancel> (oid:10) */
-"Cancel" = "Cancel";
-
-/* NSButton (Ok) : <title:Ok> (oid:9) */
-"Ok" = "Ok";
-

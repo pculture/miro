@@ -45,19 +45,7 @@ def registerQuicktimeComponents():
     components = glob.glob(os.path.join(componentsDirectoryPath, '*.component'))
     for component in components:
         cmpName = os.path.basename(component)
-        if checkComponentCompatibility(cmpName):
-            qtcomp.register(component.encode('utf-8'))
-
-def checkComponentCompatibility(name):
-    if "Perian" in name or "AC3" in name or "A52" in name:
-        if getMajorOSVersion() <= 7:
-            return False
-    return True
-
-def getMajorOSVersion():
-    versionInfo = os.uname()
-    versionInfo = versionInfo[2].split('.')
-    return int(versionInfo[0])
+        ok = qtcomp.register(component.encode('utf-8'))
 
 # =============================================================================
 

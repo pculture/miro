@@ -295,8 +295,7 @@ class MiroBuild (py2app):
             'miro.frontends.widgets',
             'miro.plat',
             'miro.plat.frontends',
-            'miro.plat.frontends.widgets',
-            'miro.plat.renderers',
+            'miro.plat.frontends.widgets'
         ]
 
         self.distribution.package_dir = {
