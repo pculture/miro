@@ -200,7 +200,7 @@ class Dialog:
         return response
 
     def destroy(self):
-        for attr in ('window', 'content_widget', 'buttons'):
+        for attr in ('window', 'buttons'):
             if hasattr(self, attr):
                 delattr(self, attr)
 
