@@ -26,7 +26,24 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Defines the preferences panel."""
+"""Defines the preferences panel and provides an API for adding new panels
+and attaching items in the panel to preferences that are persisted between
+Miro runs.
+
+To build a new panel
+====================
+
+1. Define a function that takes no arguments and returns a widget.  This
+   widget is a container that holds all the widgets that make up your panel.
+
+2. Call ``add_panel`` with the name of your panel and your panel builder 
+   function.
+
+When building a preference panel, it'll help to use the functions that begin
+with ``attach_`` and ``create_``.
+
+Refer to documentation for those functions for help.
+"""
 
 import logging
 
@@ -38,12 +55,6 @@ from miro.plat.frontends.widgets.widgetset import Rect
 from miro.dialogs import BUTTON_CLOSE
 from miro.gtcache import gettext as _
 
-# FIXME - comment this module and add notes about how to use it externally.
-
-def _hbox(*items):
-    h = widgetset.HBox()
-    [h.pack_start(item, padding=5) for item in items]
-    return h
 
 def create_integer_checker(min=None, max=None):
     """Returns a checker function that checks bounds."""
@@ -155,6 +166,13 @@ def attach_float(widget, descriptor, check_function=None):
     widget.connect('changed', float_changed)
 
 def attach_combo(widget, descriptor, values):
+    """This is for preferences implemented as an option menu where there
+    is a set of possible values of which only one can be chosen.
+
+    widget - widget
+    descriptor - prefs preference
+    values - the list of all possible values as strings
+    """
     def combo_changed(widget, index):
         config.set(descriptor, values[index])
 
@@ -165,7 +183,7 @@ def attach_combo(widget, descriptor, values):
         widget.set_selected(1)
     widget.connect('changed', combo_changed)
 
-def build_general_panel():
+def _build_general_panel():
     """Build's the General tab and returns it."""
     v = widgetset.VBox()
 
@@ -180,7 +198,12 @@ def build_general_panel():
 
     return v
 
-def build_channels_panel():
+def _hbox(*items):
+    h = widgetset.HBox()
+    [h.pack_start(item, padding=5) for item in items]
+    return h
+
+def _build_channels_panel():
     """Build's the Channels tab and returns it."""
     v = widgetset.VBox()
 
@@ -223,7 +246,7 @@ def build_channels_panel():
 
     return v
 
-def build_downloads_panel():
+def _build_downloads_panel():
     v = widgetset.VBox()
 
     note = widgetset.Label(_('Maximum number of manual downloads at a time:'))
@@ -283,7 +306,7 @@ def build_downloads_panel():
 
     return v
 
-def build_folders_panel():
+def _build_folders_panel():
     v = widgetset.VBox()
 
     # FIXME - finish implementing this pane
@@ -298,7 +321,7 @@ def build_folders_panel():
 
     return v
 
-def build_disk_space_panel():
+def _build_disk_space_panel():
     v = widgetset.VBox()
 
     cbx = widgetset.Checkbox(_('Keep at least this much free space on my drive:'))
@@ -324,7 +347,7 @@ def build_disk_space_panel():
 
     return v
 
-def build_playback_panel():
+def _build_playback_panel():
     v = widgetset.VBox()
 
     cbx = widgetset.Checkbox(_('Resume playing a video from the point it was last stopped.'))
@@ -382,18 +405,27 @@ class PreferenceTabList(widgetset.TableView):
         widget = self.model[self.get_selected()][2]
         self.widget_holder.set(widget)
 
-PANEL = [
-    (_("General"), 'wimages/pref-tab-general.png', build_general_panel),
-    (_("Channels"), 'wimages/pref-tab-channels.png', build_channels_panel),
-    (_("Downloads"), 'wimages/pref-tab-downloads.png', build_downloads_panel),
-    (_("Folders"), 'wimages/pref-tab-folders.png', build_folders_panel),
-    (_("Disk space"), 'wimages/pref-tab-disk-space.png', build_disk_space_panel),
-    (_("Playback"), 'wimages/pref-tab-playback.png', build_playback_panel)
-]
+__PANEL = []
 
-def add_panel(name, image_name, panel_builder_function):
-    global PANEL
-    PANEL.append( (name, image_name, panel_builder_function) )
+def add_panel(name, panel_builder_function, image_name='wimages/pref-tab-general.png'):
+    """Adds a panel to the preferences panel list.
+
+    name -- the name of the panel; appears in tabs on the side and the top of
+            the panel
+    panel_builder_function -- function ``None -> widget`` that builds the panel
+            and returns it
+    image_name -- the image to use in the tabs; defaults to the general tab image
+    """
+    global __PANEL
+    __PANEL.append( (name, image_name, panel_builder_function) )
+
+# add initial panels
+add_panel(_("General"), _build_general_panel, 'wimages/pref-tab-general.png')
+add_panel(_("Channels"), _build_channels_panel, 'wimages/pref-tab-channels.png')
+add_panel(_("Downloads"), _build_downloads_panel, 'wimages/pref-tab-downloads.png')
+add_panel(_("Folders"), _build_folders_panel, 'wimages/pref-tab-folders.png')
+add_panel(_("Disk space"), _build_disk_space_panel, 'wimages/pref-tab-disk-space.png')
+add_panel(_("Playback"), _build_playback_panel, 'wimages/pref-tab-playback.png')
 
 def run_dialog():
     """Displays the preferences dialog."""
@@ -408,7 +440,7 @@ def run_dialog():
             tab_list = PreferenceTabList(main_area_holder)
 
             max_height = max_width = 0
-            for title, image_name, panel_builder in PANEL:
+            for title, image_name, panel_builder in __PANEL:
                 panel = create_panel(title, panel_builder())
                 image = imagepool.get_surface(resources.path(image_name))
                 tab_list.model.append(title, image, panel)
