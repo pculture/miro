@@ -33,6 +33,7 @@ from AppKit import *
 from Foundation import *
 
 from miro import app
+from miro import messages
 from miro.plat.frontends.widgets import threads
 
 ###############################################################################
@@ -82,7 +83,7 @@ class OverlayPalette (NSWindowController):
 
     def init(self):
         self = super(OverlayPalette, self).initWithWindowNibName_owner_('OverlayPalette', self)
-        self.playingItem = None
+        self.item_info = None
         self.autoHidingTimer = nil
         self.updateTimer = nil
         self.holdStartTime = 0.0
@@ -128,7 +129,7 @@ class OverlayPalette (NSWindowController):
 
     def setup(self, item_info, renderer):
         from miro.frontends.widgets import widgetutil
-        self.playingItem = item_info
+        self.item_info = item_info
         self.renderer = renderer
         self.titleLabel.setStringValue_(item_info.name)
         try:
@@ -223,7 +224,16 @@ class OverlayPalette (NSWindowController):
     
     def resetAutoHiding(self):
         self.holdStartTime = time.time()
-        
+    
+    def suspendAutoHiding(self):
+        self.autoHidingTimer.invalidate()
+        self.autoHidingTimer = nil
+    
+    def resumeAutoHiding(self):
+        self.holdStartTime = time.time()
+        self.autoHidingTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
+            1.0, self, 'hideAfterDelay:', nil, YES)
+    
     def animate(self, params, duration):
         self.anim = NSViewAnimation.alloc().initWithDuration_animationCurve_(duration, 0)
         self.anim.setViewAnimations_(NSArray.arrayWithObject_(params))
@@ -233,9 +243,7 @@ class OverlayPalette (NSWindowController):
     def animationDidEnd_(self, anim):
         parent = self.window().parentWindow()
         if self.revealing:
-            self.holdStartTime = time.time()
-            self.autoHidingTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
-                1.0, self, 'hideAfterDelay:', nil, YES)
+            self.resumeAutoHiding()
             self.updateTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
                 0.5, self, 'update:', nil, YES)
             NSRunLoop.currentRunLoop().addTimer_forMode_(self.updateTimer, NSEventTrackingRunLoopMode)
@@ -255,15 +263,10 @@ class OverlayPalette (NSWindowController):
         self.volumeSlider.setFloatValue_(volume)
     
     def keep_(self, sender):
-        def doKeep(item):
-            ModelActionHandler().keepItem(self.playingItem.id)
-            sender.setEnabled_(NO)
-        eventloop.addUrgentCall(lambda:doKeep(self.playingItem), "Keeping Video")
+        messages.KeepVideo(self.item_info.id).send_to_backend()
     
     def expireNow_(self, sender):
-        def doExpire(item):
-            ModelActionHandler().expirePlayingItem(self.playingItem.id)
-        eventloop.addUrgentCall(lambda:doExpire(self.playingItem), "Expiring Video")
+        messages.DeleteVideo(self.item_info.id).send_to_backend()
         
     def share_(self, sender):
         event = NSApplication.sharedApplication().currentEvent()
@@ -276,22 +279,31 @@ class OverlayPalette (NSWindowController):
         app.playback_manager.toggle_fullscreen()
 
     def skipBackward_(self, sender):
-        eventloop.addUrgentCall(lambda:app.playback_manager.play_prev_movie(), "Skip Backward")
+        app.playback_manager.play_prev_movie()
 
     def fastBackward_(self, sender):
         self.fastSeek(-1)
 
     def skipForward_(self, sender):
-        eventloop.addUrgentCall(lambda:app.playback_manager.play_next_movie(), "Skip Forward")
+        app.playback_manager.play_next_movie()
 
     def fastForward_(self, sender):
         self.fastSeek(1)
 
     def fastSeek(self, direction):
-        if not self.videoDisplay.isPlaying:
-            self.updatePlayPauseButton('pause')
+#        if not app.playback_manager.is_playing:
+#            self.updatePlayPauseButton('pause')
         rate = 3 * direction
-        self.videoDisplay.activeRenderer.setRate(rate)
+        app.playback_manager.set_playback_rate(rate)
+        self.suspendAutoHiding()
+
+    def stopSeeking(self):
+        rate = 1.0
+#        if not self.videoDisplay.isPlaying:
+#            rate = 0.0
+#            self.updatePlayPauseButton('play')
+        app.playback_manager.set_playback_rate(rate)
+        self.resumeAutoHiding()
 
     def stop_(self, sender):
         self.remove()
