@@ -492,6 +492,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('updated_url', SchemaURL(noneOk=True)),
         ('favicon', SchemaURL(noneOk=True)),
         ('title', SchemaString(noneOk=True)),
+        ('userTitle', SchemaString(noneOk=True)),
         ('iconCache', SchemaObject(IconCache, noneOk=True)),
         ('firstTime', SchemaBool()),
     ]
@@ -504,7 +505,7 @@ class ThemeHistorySchema(DDBObjectSchema):
         ('pastThemes', SchemaList(SchemaString(noneOk=True), noneOk=False)),
     ]
 
-VERSION = 66
+VERSION = 67
 objectSchemas = [
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,

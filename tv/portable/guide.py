@@ -73,6 +73,7 @@ class ChannelGuide(DDBObject):
         self.url = url
         self.updated_url = url
         self.title = None
+        self.userTitle = None
         self.lastVisitedURL = None
         self.iconCache = iconcache.IconCache(self, is_vital=True)
         self.favicon = None
@@ -97,6 +98,7 @@ class ChannelGuide(DDBObject):
         else:
             self.iconCache.dbItem = self
             self.iconCache.requestUpdate(True)
+        
         self.downloadGuide()
 
     def __str__(self):
@@ -139,17 +141,18 @@ class ChannelGuide(DDBObject):
     def getFolder(self):
         return None
 
-    # For the tabs
     @returnsUnicode
     def getTitle(self):
-        if self.title:
+        if self.userTitle:
+            return self.userTitle
+        elif self.title:
             return self.title
         else:
             return self.getURL()
 
     def setTitle(self, title):
         self.confirmDBThread()
-        self.title = title
+        self.userTitle = title
         self.signalChange(needsSave=True)
 
     def guideDownloaded(self, info):
