@@ -45,6 +45,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.is_fullscreen = False
         self.is_playing = False
         self.is_paused = False
+        self.is_suspended = False
         self.playlist = None
         self.position = None
         self.mark_as_watched_timeout = None

@@ -242,7 +242,7 @@ class VideoRenderer (Widget):
         self.video_window.exit_fullscreen(frame)
 
     def handle_movie_notification(self, notification):
-        if notification.name() == QTMovieDidEndNotification:
+        if notification.name() == QTMovieDidEndNotification and not app.playback_manager.is_suspended:
             app.playback_manager.on_movie_finished()
 
     def prevent_system_sleep(self, prevent):
