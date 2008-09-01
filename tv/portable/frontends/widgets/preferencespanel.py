@@ -200,7 +200,7 @@ def build_channels_panel():
 
     ad_label = widgetset.Label(_("Auto download default settings for new channels:"))
     ad_options = [("new", _("New")),
-                  ("auto", _("Auto")),
+                  ("all", _("All")),
                   ("off", _("Off"))]
     ad_option_menu = widgetset.OptionMenu([op[1] for op in ad_options])
 
