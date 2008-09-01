@@ -308,9 +308,11 @@ class MiroBuild (py2app):
         excludedResources = ['.svn', '.DS_Store']
         self.resources = [
             os.path.join('Resources-Widgets', 'MainMenu.nib'),
+            os.path.join('Resources-Widgets', 'OverlayPalette.nib'),
             os.path.join('Resources-Widgets', 'Credits.html'),
-            'qt_extractor.py',
+            'qt_extractor.py'
         ]
+        self.resources.extend(glob(os.path.join('Resources-Widgets', '*.png')))
     
     def setup_options(self):
         self.bundleRoot = os.path.join(self.dist_dir, '%s.app/Contents' % self.config.get('shortAppName'))

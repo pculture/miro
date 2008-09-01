@@ -31,11 +31,9 @@ import glob
 import logging
 
 from objc import YES, NO, nil, pathForFramework, loadBundleFunctions
-from Foundation import NSURL, NSZeroPoint, NSTimer, NSPointInRect
-from AppKit import NSApplication, NSEvent, NSMouseMoved, NSLeftMouseDown
-from AppKit import NSWindow, NSBorderlessWindowMask, NSBackingStoreBuffered, NSWindowAbove
-from AppKit import NSView, NSColor, NSNotificationCenter, NSScreen, NSBundle, NSCursor
-from QTKit import QTMovieView, QTMovie, QTMovieURLAttribute, QTMovieDidEndNotification
+from Foundation import *
+from AppKit import *
+from QTKit import *
 
 from miro import app
 from miro.plat import utils
@@ -43,6 +41,7 @@ from miro.plat import bundle
 from miro.plat import qtcomp
 from miro.plat.utils import filenameTypeToOSFilename
 from miro.plat.frontends.widgets import threads
+from miro.plat.frontends.widgets import overlay
 from miro.plat.frontends.widgets.base import Widget
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
 
@@ -77,6 +76,12 @@ def register_quicktime_components():
             logging.info('Successfully registered embedded component: %s' % cmpName)
         else:
             logging.warn('Error while registering embedded component: %s' % cmpName)
+
+###############################################################################
+
+SUPPORTED_VIDEO_MEDIA_TYPES = (QTMediaTypeVideo, QTMediaTypeMPEG, QTMediaTypeMovie, QTMediaTypeFlash)
+SUPPORTED_AUDIO_MEDIA_TYPES = (QTMediaTypeSound, QTMediaTypeMusic)
+ALL_SUPPORTED_MEDIA_TYPES   = SUPPORTED_VIDEO_MEDIA_TYPES + SUPPORTED_AUDIO_MEDIA_TYPES
 
 ###############################################################################
 
@@ -139,16 +144,46 @@ class VideoRenderer (Widget):
     
     def can_play_movie_file(self, path):
         threads.warn_if_not_on_main_thread('VideoRenderer.can_play_movie_file')
-        return True
+        canPlay = False
+        qtmovie = self.get_movie_from_file(filename)
 
-    def set_movie_file(self, path):
-        threads.warn_if_not_on_main_thread('VideoRenderer.set_movie_file')
-        qtmovie = self.get_movie_from_file(path)
+        # Purely referential movies have a no duration, no track and need to be 
+        # streamed first. Since we don't support this yet, we delegate the 
+        # streaming to the standalone QT player to avoid any problem (like the 
+        # crash in #944) by simply declaring that we can't play the corresponding item.
+        # Note that once the movie is fully streamed and cached by QT, DTV will
+        # be able to play it internally just fine -- luc
+        
+        # [UPDATE - 26 Feb, 2006]
+        # Actually, streaming movies *can* have tracks as shown in #1124. We
+        # therefore need to drill down and find out if we have a zero length
+        # video track/media.
+        
+        if qtmovie is not nil and qtmovie.duration().timeValue > 0:
+            allTracks = qtmovie.tracks()
+            if len(qtmovie.tracks()) > 0:
+                # First make sure we have at least one video track with a non zero length
+                allMedia = [track.media() for track in allTracks]
+                for media in allMedia:
+                    mediaType = media.attributeForKey_(QTMediaTypeAttribute)
+                    mediaDuration = media.attributeForKey_(QTMediaDurationAttribute).QTTimeValue().timeValue
+                    if mediaType in ALL_SUPPORTED_MEDIA_TYPES and mediaDuration > 0:
+                        canPlay = True
+                        break
+        else:
+            self.cachedMovie = nil
+
+        return canPlay
+
+    def set_movie_item(self, item_info):
+        threads.warn_if_not_on_main_thread('VideoRenderer.set_movie_item')
+        qtmovie = self.get_movie_from_file(item_info.video_path)
         self.reset()
         if qtmovie is not nil:
             self.movie = qtmovie
             self.video_view.setMovie_(self.movie)
             self.video_view.setNeedsDisplay_(YES)
+            self.video_window.palette.setup(item_info, self)
             self.movie_notifications = NotificationForwarder.create(self.movie)
             self.movie_notifications.connect(self.handle_movie_notification, QTMovieDidEndNotification)
 
@@ -174,6 +209,7 @@ class VideoRenderer (Widget):
 
     def set_volume(self, volume):
         self.movie.setVolume_(volume)
+        self.video_window.palette.set_volume(volume)
 
     def play(self):
         threads.warn_if_not_on_main_thread('VideoRenderer.play')
@@ -229,6 +265,9 @@ class VideoWindow (NSWindow):
     def initWithContentRect_styleMask_backing_defer_(self, rect, style, backing, defer):
         self = super(VideoWindow, self).initWithContentRect_styleMask_backing_defer_(rect,  style, backing, defer)
         self.setBackgroundColor_(NSColor.blackColor())
+        self.palette = overlay.OverlayPalette.alloc().init()
+        self.setAcceptsMouseMovedEvents_(YES)
+        self.is_fullscreen = False
         return self
 
     def canBecomeMainWindow(self):
@@ -236,6 +275,11 @@ class VideoWindow (NSWindow):
     
     def canBecomeKeyWindow(self):
         return NO
+
+    def setFrame_display_(self, frame, display):
+        super(VideoWindow, self).setFrame_display_(frame, display)
+        if self.palette.window().isVisible():
+            self.palette.adjustPosition(self)
 
     def enter_fullscreen(self):
         NSCursor.setHiddenUntilMouseMoves_(YES)
@@ -245,11 +289,13 @@ class VideoWindow (NSWindow):
             if self.screen() == screenWithMenuBar:
                 SetSystemUIMode(kUIModeAllHidden, 0)
         self.setFrame_display_animate_(self.screen().frame(), YES, YES)
-        #self.palette.enterFullScreen(self)
+        self.is_fullscreen = True
+        self.palette.enter_fullscreen(self)
 
     def exit_fullscreen(self, frame):
         NSCursor.setHiddenUntilMouseMoves_(NO)
-        #self.palette.exitFullScreen(self)
+        self.is_fullscreen = False
+        self.palette.exit_fullscreen(self)
         self.setFrame_display_animate_(frame, YES, YES)
         SetSystemUIMode(kUIModeNormal, 0)
 
@@ -259,8 +305,7 @@ class VideoWindow (NSWindow):
     def sendEvent_(self, event):
         if event.type() == NSMouseMoved:
             if NSPointInRect(NSEvent.mouseLocation(), self.frame()):
-                #self.palette.reveal(self)
-                pass
+                self.palette.reveal(self)
         elif event.type() == NSLeftMouseDown:
             if NSApplication.sharedApplication().isActive():
                 if event.clickCount() > 1:
@@ -270,7 +315,8 @@ class VideoWindow (NSWindow):
             else:
                 NSApplication.sharedApplication().activateIgnoringOtherApps_(YES)
         else:
-            super(VideoWindow, self).sendEvent_(event)
+            #super(VideoWindow, self).sendEvent_(event)
+            self.parentWindow().sendEvent_(event)
 
 ###############################################################################
 

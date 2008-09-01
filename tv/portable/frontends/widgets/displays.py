@@ -219,8 +219,8 @@ class VideoDisplay(Display):
         self.widget = widgetset.VideoRenderer()
         self.in_fullscreen = False
 
-    def setup(self, path, volume):
-        self.widget.set_movie_file(path)
+    def setup(self, item_info, volume):
+        self.widget.set_movie_item(item_info)
         self.set_volume(volume)
 
     def set_volume(self, volume):

@@ -67,8 +67,8 @@ class VideoRenderer (Widget):
     def can_play_movie_file(self, path):
         return self.renderer.can_play_file(path)
     
-    def set_movie_file(self, path):
-        self.renderer.select_file(path)
+    def set_movie_item(self, item_info):
+        self.renderer.select_file(item_info.video_path)
 
     def get_elapsed_playback_time(self):
         # FIXME, why use a callback here?

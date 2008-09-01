@@ -570,6 +570,8 @@ class ItemInfo(object):
     size -- size of the item in bytes
     duration -- length of the video in seconds
     permalink -- URL to a permalink to the item (or None)
+    has_sharable_url -- does this item have a sharable URL?
+    can_be_saved -- is this an expiring downloaded item?
     downloaded -- has the item been downloaded?
     is_external -- is this item external (true) or from a channel (false)?
     expiration_date -- datetime object for when the item will expire (or None)
@@ -603,6 +605,8 @@ class ItemInfo(object):
         self.size = item.getSize()
         self.duration = item.getDurationValue()
         self.permalink = item.getLink()
+        self.has_sharable_url = item.hasSharableURL()
+        self.can_be_saved = item.showSaveButton()
         if not item.keep:
             self.expiration_date = item.getExpirationTime()
         else:

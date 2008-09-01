@@ -176,9 +176,9 @@ class PlaybackManager (signals.SignalEmitter):
         self.cancel_mark_as_watched()
         self.video_display.stop()
         if 0 <= self.position < len(self.playlist):
-            path = self.playlist[self.position].video_path
+            item_info = self.playlist[self.position]
             volume = config.get(prefs.VOLUME_LEVEL)
-            self.video_display.setup(path, volume)
+            self.video_display.setup(item_info, volume)
             self.schedule_mark_as_watched()
         else:
             self.stop()
