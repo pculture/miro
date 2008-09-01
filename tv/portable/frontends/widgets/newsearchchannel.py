@@ -33,6 +33,7 @@ code for the New Search Channel dialog.
 from miro.gtcache import gettext as _
 from miro import searchengines
 
+from miro.util import clampText
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
 from miro.dialogs import BUTTON_CANCEL, BUTTON_CREATE_CHANNEL
@@ -79,7 +80,7 @@ def run_dialog():
         rbg = widgetset.RadioButtonGroup()
 
         channel_rb = widgetset.RadioButton("Channel:", rbg)
-        channel_option = widgetset.OptionMenu([ci.name for ci in channels])
+        channel_option = widgetset.OptionMenu([clampText(ci.name) for ci in channels])
         choice_table.set_cell(channel_rb, 0, 0)
         choice_table.set_cell(channel_option, 1, 0)
 
