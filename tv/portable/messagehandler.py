@@ -577,10 +577,12 @@ class BackendMessageHandler(messages.MessageHandler):
         if isinstance(term, unicode):
             term = term.encode("utf-8")
 
+        normalized = feed.normalizeFeedURL(url)
+
         if isinstance(url, unicode):
             url = url.encode("utf-8")
 
-        url = u"dtv:searchTerm:%s?%s" % (urlencode(url), urlencode(term))
+        url = u"dtv:searchTerm:%s?%s" % (urlencode(normalized), urlencode(term))
         if not getFeedByURL(url):
             Feed(url)
 
