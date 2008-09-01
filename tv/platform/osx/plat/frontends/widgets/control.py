@@ -87,9 +87,24 @@ class TextEntry(Widget):
 
     def enable_widget(self):
         self.view.setEnabled_(True)
+        self.view.setEditable_(True)
 
     def disable_widget(self):
         self.view.setEnabled_(False)
+        self.view.setEditable_(False)
+
+class MiroButton(NSButton):
+    
+    def initWithSignal_(self, signal):
+        self = super(MiroButton, self).init()
+        self.signal = signal
+        return self
+    
+    def sendAction_to_(self, action, to):
+        # We override the Cocoa machinery here and just send it to our wrapper
+        # widget.
+        wrappermap.wrapper(self).emit(self.signal)
+        return YES
 
 class Checkbox(Widget):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
@@ -97,7 +112,7 @@ class Checkbox(Widget):
         Widget.__init__(self)
         self.create_signal('toggled')
         self.label = label
-        self.view = NSButton.alloc().init()
+        self.view = MiroButton.alloc().initWithSignal_('toggled')
         self.view.setButtonType_(NSSwitchButton)
         self.view.setTitle_(self.label)
 
@@ -119,13 +134,6 @@ class Checkbox(Widget):
 
     def disable_widget(self):
         self.view.setEnabled_(False)
-
-class MiroButton(NSButton):
-    def sendAction_to_(self, action, to):
-        # We override the Cocoa machinery here and just send it to our wrapper
-        # widget.
-        wrappermap.wrapper(self).emit('clicked')
-        return YES
 
 class AttributedStringStyler(Widget):
     def __init__(self):
@@ -160,7 +168,7 @@ class Button(AttributedStringStyler):
         AttributedStringStyler.__init__(self)
         self.label = label
         self.create_signal('clicked')
-        self.view = MiroButton.alloc().init()
+        self.view = MiroButton.alloc().initWithSignal_('clicked')
         self.view.setButtonType_(NSMomentaryPushInButton)
         self.view.setTitle_(self.label)
         self.setup_style(style)
@@ -297,7 +305,7 @@ class RadioButton(Widget):
     def __init__(self, label, group=None):
         Widget.__init__(self)
         self.create_signal('clicked')
-        self.view = MiroButton.alloc().init()
+        self.view = MiroButton.alloc().initWithSignal_('clicked')
         self.view.setButtonType_(NSRadioButton)
         self.view.setTitle_(label)
 
