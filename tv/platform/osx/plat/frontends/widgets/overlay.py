@@ -94,9 +94,8 @@ class OverlayPalette (NSWindowController):
         self.anim = None
         self.videoWindow = None
 
-#        nc = NSNotificationCenter.defaultCenter()
-#        nc.addObserver_selector_name_object_(self, 'videoWillPlay:', u'videoWillPlay', nil)
-#        nc.addObserver_selector_name_object_(self, 'videoWillPause:', u'videoWillPause', nil)
+        app.playback_manager.connect('will-play', self.video_will_play)
+        app.playback_manager.connect('will-pause', self.video_will_pause)
 
         return self
 
@@ -291,17 +290,14 @@ class OverlayPalette (NSWindowController):
         self.fastSeek(1)
 
     def fastSeek(self, direction):
-#        if not app.playback_manager.is_playing:
-#            self.updatePlayPauseButton('pause')
         rate = 3 * direction
         app.playback_manager.set_playback_rate(rate)
         self.suspendAutoHiding()
 
     def stopSeeking(self):
         rate = 1.0
-#        if not self.videoDisplay.isPlaying:
-#            rate = 0.0
-#            self.updatePlayPauseButton('play')
+        if app.playback_manager.is_paused:
+            rate = 0.0
         app.playback_manager.set_playback_rate(rate)
         self.resumeAutoHiding()
 
@@ -339,11 +335,11 @@ class OverlayPalette (NSWindowController):
         app.playback_manager.set_volume(slider.floatValue())
         self.resetAutoHiding()
 
-    def videoWillPlay_(self, notification):
+    def video_will_play(self, obj, duration):
         self.playPauseButton.setImage_(NSImage.imageNamed_(u'fs-button-pause'))
         self.playPauseButton.setAlternateImage_(NSImage.imageNamed_(u'fs-button-pause-alt'))
 
-    def videoWillPause_(self, notification):
+    def video_will_pause(self, obj):
         self.playPauseButton.setImage_(NSImage.imageNamed_(u'fs-button-play'))
         self.playPauseButton.setAlternateImage_(NSImage.imageNamed_(u'fs-button-play-alt'))
 

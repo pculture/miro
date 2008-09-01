@@ -67,9 +67,11 @@ class PlaybackControls(widgetset.HBox):
     
     def handle_play(self, obj, duration):
         self.play.set_image('pause')
+        self.play.queue_redraw()
     
     def handle_pause(self, obj):
         self.play.set_image('play')
+        self.play.queue_redraw()
 
 class ProgressTime(widgetset.DrawingArea):
     def __init__(self):
