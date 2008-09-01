@@ -320,7 +320,7 @@ def makeEventURL(label, eventURL):
     return '<a href="#" onclick="return eventURL(\'action:%s\');">%s</a>' % \
             (eventURL, label)
 
-def clampText(text, maxLength):
+def clampText(text, maxLength=20):
     if len(text) > maxLength:
         return text[:maxLength-3] + '...'
     else:
