@@ -435,6 +435,7 @@ class Splitter(Container):
         self.view.placeViewsWithLeftWidth_(width)
         self.place_children()
         self.view.setDividerNeedsDisplay()
+        self.view.setNeedsDisplay_(YES)
 
     def get_left_width(self):
         left, right = self.view.subviews()
