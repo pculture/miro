@@ -223,6 +223,7 @@ class VideoRenderer (Widget):
     def stop(self):
         threads.warn_if_not_on_main_thread('VideoRenderer.stop')
         self.video_view.pause_(nil)
+        self.video_window.palette.remove()
         self.reset()
 
     def set_playback_rate(self, rate):
