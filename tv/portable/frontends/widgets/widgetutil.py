@@ -102,6 +102,14 @@ def pad(widget, top=0, bottom=0, left=0, right=0):
     alignment.add(widget)
     return alignment
 
+def build_hbox(items, padding=5):
+    """Builds an HBox and packs with the list of widgets.  Padding defaults to
+    5 pixels.
+    """
+    h = widgetset.HBox()
+    [h.pack_start(item, padding=padding) for item in items]
+    return h
+
 def make_surface(image_name):
     path = resources.path("wimages/%s.png" % image_name)
     return imagepool.get_surface(path)

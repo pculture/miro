@@ -50,6 +50,7 @@ import logging
 from miro import config, prefs
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import cellpack, imagepool, widgetutil, window
+from miro.frontends.widgets.widgetutil import build_hbox
 from miro.plat import resources
 from miro.plat.frontends.widgets.widgetset import Rect
 from miro.dialogs import BUTTON_CLOSE
@@ -184,14 +185,6 @@ def attach_combo(widget, descriptor, values):
         widget.set_selected(1)
     widget.connect('changed', combo_changed)
 
-def build_hbox(*items):
-    """Helper function for packing a list of widgets into an HBox in order
-    with padding=5.
-    """
-    h = widgetset.HBox()
-    [h.pack_start(item, padding=5) for item in items]
-    return h
-
 def note_label(text):
     """Helper function for building a Note: xxx label.
     """
@@ -199,7 +192,7 @@ def note_label(text):
     note.set_bold(True)
     note2 = widgetset.Label(text)
     note2.set_wrap(True)
-    return build_hbox(widgetutil.align_top(note), note2)
+    return build_hbox((widgetutil.align_top(note), note2))
 
 
 # Note: This has to be here so that the above functions have been defined
@@ -259,7 +252,7 @@ def _build_channels_panel():
 
     attach_combo(cc_option_menu, prefs.CHECK_CHANNELS_EVERY_X_MN, 
         [op[0] for op in cc_options])
-    v.pack_start(build_hbox(note, cc_option_menu))
+    v.pack_start(build_hbox((note, cc_option_menu)))
 
     
     note = note_label(_("You can set the frequency channels are checked for each channel in the channel's settings pane."))
@@ -273,7 +266,7 @@ def _build_channels_panel():
 
     attach_combo(ad_option_menu, prefs.CHANNEL_AUTO_DEFAULT, 
         [op[0] for op in ad_options])
-    v.pack_start(build_hbox(ad_label, ad_option_menu))
+    v.pack_start(build_hbox((ad_label, ad_option_menu)))
 
     note = widgetset.Label(_("By default, remember "))
     max_options = [(0, "0"),
@@ -286,7 +279,7 @@ def _build_channels_panel():
 
     attach_combo(max_option_menu, prefs.MAX_OLD_ITEMS_DEFAULT, 
         [op[0] for op in max_options])
-    v.pack_start(build_hbox(note, max_option_menu, note2))
+    v.pack_start(build_hbox((note, max_option_menu, note2)))
 
     return v
 
@@ -297,13 +290,13 @@ def _build_downloads_panel():
     max_manual = widgetset.TextEntry()
     max_manual.set_width(5)
     attach_integer(max_manual, prefs.MAX_MANUAL_DOWNLOADS, create_integer_checker(min=0))
-    v.pack_start(build_hbox(note, max_manual))
+    v.pack_start(build_hbox((note, max_manual)))
 
     note = widgetset.Label(_('Maximum number of auto-downloads at a time:'))
     max_auto = widgetset.TextEntry()
     max_auto.set_width(5)
     attach_integer(max_auto, prefs.DOWNLOADS_TARGET, create_integer_checker(min=0))
-    v.pack_start(build_hbox(note, max_auto))
+    v.pack_start(build_hbox((note, max_auto)))
 
     note = widgetset.Label(_('Bittorrent:'))
     note.set_bold(True)
@@ -315,7 +308,7 @@ def _build_downloads_panel():
     note = widgetset.Label(_('KB/s'))
     attach_boolean(cbx, prefs.LIMIT_UPSTREAM, (limit,))
     attach_integer(limit, prefs.UPSTREAM_LIMIT_IN_KBS, create_integer_checker(min=0))
-    v.pack_start(build_hbox(cbx, limit, note))
+    v.pack_start(build_hbox((cbx, limit, note)))
 
     cbx = widgetset.Checkbox(_('Limit torrent downstream to:'))
     limit = widgetset.TextEntry()
@@ -323,7 +316,7 @@ def _build_downloads_panel():
     note = widgetset.Label(_('KB/s'))
     attach_boolean(cbx, prefs.LIMIT_DOWNSTREAM_BT, (limit,))
     attach_integer(limit, prefs.DOWNSTREAM_BT_LIMIT_IN_KBS, create_integer_checker(min=0))
-    v.pack_start(build_hbox(cbx, limit, note))
+    v.pack_start(build_hbox((cbx, limit, note)))
 
     note = widgetset.Label(_('Use ports:'))
     min_port = widgetset.TextEntry()
@@ -332,7 +325,7 @@ def _build_downloads_panel():
     max_port.set_width(5)
     attach_integer(min_port, prefs.BT_MIN_PORT, create_integer_checker(min=0, max=65535))
     attach_integer(max_port, prefs.BT_MAX_PORT, create_integer_checker(min=0, max=65535))
-    v.pack_start(build_hbox(note, min_port, widgetset.Label("-"), max_port))
+    v.pack_start(build_hbox((note, min_port, widgetset.Label("-"), max_port)))
 
     cbx = widgetset.Checkbox(_('Automatically forward ports.  (UPNP)'))
     attach_boolean(cbx, prefs.USE_UPNP)
@@ -346,7 +339,7 @@ def _build_downloads_panel():
     limit = widgetset.TextEntry()
     attach_boolean(cbx, prefs.LIMIT_UPLOAD_RATIO, (limit,))
     attach_float(limit, prefs.UPLOAD_RATIO, create_float_checker(0.0, 1.0))
-    v.pack_start(build_hbox(cbx, limit))
+    v.pack_start(build_hbox((cbx, limit)))
 
     return v
 
@@ -375,7 +368,7 @@ def _build_disk_space_panel():
     attach_boolean(cbx, prefs.PRESERVE_DISK_SPACE, (limit,))
     attach_float(limit, prefs.PRESERVE_X_GB_FREE, create_float_checker(min=0.0))
 
-    v.pack_start(build_hbox(cbx, limit, note))
+    v.pack_start(build_hbox((cbx, limit, note)))
 
     note = widgetset.Label(_('By default, videos expire after'))
     expire_ops = [(1, _('1 day')),
@@ -387,7 +380,7 @@ def _build_disk_space_panel():
     expire_menu = widgetset.OptionMenu([op[1] for op in expire_ops])
     attach_combo(expire_menu, prefs.EXPIRE_AFTER_X_DAYS,
         [op[0] for op in expire_ops])
-    v.pack_start(build_hbox(note, expire_menu))    
+    v.pack_start(build_hbox((note, expire_menu)))
 
     return v
 
@@ -396,14 +389,14 @@ def _build_playback_panel():
 
     cbx = widgetset.Checkbox(_('Resume playing a video from the point it was last stopped.'))
     attach_boolean(cbx, prefs.RESUME_VIDEOS_MODE)
-    v.pack_start(build_hbox(cbx))
+    v.pack_start(widgetutil.align_left(cbx))
 
     rbg = widgetset.RadioButtonGroup()
     play_rb = widgetset.RadioButton("Play videos one after another", rbg)
     stop_rb = widgetset.RadioButton("Stop after each video", rbg)
     attach_radio( [(play_rb, True), (stop_rb, False)], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
-    v.pack_start(build_hbox(play_rb))
-    v.pack_start(build_hbox(stop_rb))
+    v.pack_start(widgetutil.align_left(play_rb))
+    v.pack_start(widgetutil.align_left(stop_rb))
 
     extras = get_platform_specific("playback")
     if extras:

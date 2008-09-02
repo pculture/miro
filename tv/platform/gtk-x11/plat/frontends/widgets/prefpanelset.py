@@ -35,7 +35,8 @@ See portable/frontends/widgets/prefpanel.py for more information.
 from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
-from miro.frontends.widgets.prefpanel import attach_radio, attach_combo, note_label, build_hbox
+from miro.frontends.widgets.widgetutil import build_hbox
+from miro.frontends.widgets.prefpanel import attach_radio, attach_combo, note_label
 
 from miro.plat import options 
 
@@ -59,14 +60,14 @@ def _playback_panel():
     attach_radio([(gstreamer_radio, "gstreamer"), (xine_radio, "xine")],
                  options.USE_RENDERER)
 
-    extras.append(build_hbox(lab, gstreamer_radio, xine_radio))
+    extras.append(build_hbox((lab, gstreamer_radio, xine_radio)))
 
     xine_vbox = widgetset.VBox()
     audio_lab = widgetset.Label(_("Use this for video when playing audio:"))
     audio_options = ["none", "goom", "oscope"]
     audio_combo = widgetset.OptionMenu(audio_options)
     attach_combo(audio_combo, options.XINE_VIZ, audio_options)
-    xine_vbox.pack_start(build_hbox(audio_lab, audio_combo))        
+    xine_vbox.pack_start(build_hbox((audio_lab, audio_combo)))
 
     extras.append(xine_vbox)
 
