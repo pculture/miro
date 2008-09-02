@@ -52,7 +52,7 @@ XINE_VIZ = Pref( key="xineViz",
                  default=u"goom", 
                  platformSpecific=False,
                  alias="xine-viz",
-                 help="Which visualization plugin to use.  (goom, none)" )
+                 help="Which visualization plugin to use.  (goom, oscope, none)" )
 
 USE_XINE_XV_HACK = Pref(key="UseXineXVHack", 
                         default=True, 
