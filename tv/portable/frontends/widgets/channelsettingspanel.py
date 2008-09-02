@@ -145,8 +145,8 @@ def _build_auto_download(channel):
             auto_download_entry.disable_widget()
             messages.SetChannelMaxNew(channel, u"unlimited").send_to_backend()
 
-    auto_download_entry.connect('changed', textentry_changed) 
-    auto_download_cbx.connect('toggled', checkbox_changed) 
+    auto_download_entry.connect('changed', textentry_changed)
+    auto_download_cbx.connect('toggled', checkbox_changed)
 
     return build_hbox((auto_download_cbx, auto_download_entry, lab), padding=2)
 

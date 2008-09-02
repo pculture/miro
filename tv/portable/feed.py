@@ -157,7 +157,7 @@ def normalizeFeedURL(url):
 
     originalURL = url
     url = url.strip()
-    
+
     # Check valid schemes with invalid separator
     match = re.match(r"^(http|https):/*(.*)$", url)
     if match is not None:
@@ -230,7 +230,7 @@ class FeedImpl:
         self.availableItems.addRemoveCallback(lambda x, y: self.ufeed.signalChange(needsSignalFolder=True))
         self.unwatchedItems.addAddCallback(lambda x, y: self.ufeed.signalChange(needsSignalFolder=True))
         self.unwatchedItems.addRemoveCallback(lambda x, y: self.ufeed.signalChange(needsSignalFolder=True))
-        
+
     def signalChange(self):
         self.ufeed.signalChange()
 
@@ -242,7 +242,7 @@ class FeedImpl:
         return escape(self.url)
 
     def setUpdateFrequency(self, frequency):
-        """Sets the update frequency (in minutes). 
+        """Sets the update frequency (in minutes).
         A frequency of -1 means that auto-update is disabled.
         """
         try:
@@ -307,7 +307,7 @@ class FeedImpl:
         return self.showU() and self.showA()
 
     def showU(self):
-        """Returns true iff unwatched should be shown 
+        """Returns true iff unwatched should be shown
         """
         return len(self.unwatchedItems) > 0
 
@@ -319,7 +319,7 @@ class FeedImpl:
     def markAsViewed(self):
         """Sets the last time the feed was viewed to now
         """
-        self.lastViewed = datetime.now() 
+        self.lastViewed = datetime.now()
         for item in self.items:
             if item.getState() == "new":
                 item.signalChange(needsSave=False)
@@ -364,7 +364,7 @@ class FeedImpl:
         """
         for item in self.items:
             expireTime = item.getExpirationTime()
-            if (item.getState() == 'expiring' and expireTime is not None and 
+            if (item.getState() == 'expiring' and expireTime is not None and
                     expireTime < datetime.now()):
                 item.expire()
 
@@ -386,7 +386,7 @@ class FeedImpl:
         return self.ufeed.expire
 
     def getMaxFallBehind(self):
-        """Returns"unlimited" or the maximum number of items this feed can fall 
+        """Returns"unlimited" or the maximum number of items this feed can fall
         behind
         """
         self.ufeed.confirmDBThread()
@@ -407,7 +407,7 @@ class FeedImpl:
     def get_max_old_items(self):
         """Returns the number of items to remember past the current contents of
         the feed.  If self.ufeed.maxOldItems is None, then this returns "system"
-        indicating that the caller should look up the default in 
+        indicating that the caller should look up the default in
         prefs.MAX_OLD_ITEMS_DEFAULT.
         """
         self.ufeed.confirmDBThread()
@@ -423,11 +423,11 @@ class FeedImpl:
         delta = None
         self.ufeed.confirmDBThread()
         expireAfterSetting = config.get(prefs.EXPIRE_AFTER_X_DAYS)
-        if (self.ufeed.expireTime is None or self.ufeed.expire == 'never' or 
+        if (self.ufeed.expireTime is None or self.ufeed.expire == 'never' or
                 (self.ufeed.expire == 'system' and expireAfterSetting <= 0)):
             return 0
         else:
-            return (self.ufeed.expireTime.days * 24 + 
+            return (self.ufeed.expireTime.days * 24 +
                     self.ufeed.expireTime.seconds / 3600)
 
     def getExpireDays(self):
@@ -452,7 +452,7 @@ class FeedImpl:
 
     def getExpires(self):
         expireAfterSetting = config.get(prefs.EXPIRE_AFTER_X_DAYS)
-        return (self.ufeed.expireTime is None or self.ufeed.expire == 'never' or 
+        return (self.ufeed.expireTime is None or self.ufeed.expire == 'never' or
                 (self.ufeed.expire == 'system' and expireAfterSetting <= 0))
 
     def isAutoDownloadable(self):
@@ -599,7 +599,7 @@ class Feed(DDBObject):
                 self.autoDownloadable = False
             else:
                 raise ValueError("Bad auto-download mode: %s" % mode)
-    
+
         else:
             self.autoDownloadable = initiallyAutoDownloadable
             self.getEverything = False
@@ -835,7 +835,7 @@ class Feed(DDBObject):
             # the actual feed updating code takes care of expiring the old
             # items
             self.actualFeed.cleanOldItems()
-        
+
     def rename(self):
         title = _("Rename Channel")
         text = _("Enter a new name for the channel %s" % self.getTitle())
@@ -980,13 +980,13 @@ class Feed(DDBObject):
         modified = unicodify(info.get('last-modified'))
         etag = unicodify(info.get('etag'))
         contentType = unicodify(info.get('content-type', u'text/html'))
-        
+
         # Some smarty pants serve RSS feeds with a text/html content-type...
         # So let's do some really simple sniffing first.
-        apparentlyRSS = filetypes.isMaybeRSS(info['body']) 
- 
+        apparentlyRSS = filetypes.isMaybeRSS(info['body'])
+
         #Definitely an HTML feed
-        if (contentType.startswith(u'text/html') or 
+        if (contentType.startswith(u'text/html') or
                 contentType.startswith(u'application/xhtml+xml')) and not apparentlyRSS:
             #print "Scraping HTML"
             html = info['body']
@@ -1018,7 +1018,7 @@ class Feed(DDBObject):
         elif (apparentlyRSS or
               contentType.startswith(u'application/rss+xml') or
               contentType.startswith(u'application/podcast+xml') or
-              contentType.startswith(u'text/xml') or 
+              contentType.startswith(u'text/xml') or
               contentType.startswith(u'application/xml') or
               (contentType.startswith(u'text/plain') and
                (unicodify(info['updated-url']).endswith(u'.xml') or
@@ -1035,7 +1035,7 @@ class Feed(DDBObject):
             # FIXME html and xmldata can be non-unicode at this point
             parser = xml.sax.make_parser()
             parser.setFeature(xml.sax.handler.feature_namespaces, 1)
-            try: 
+            try:
                 parser.setFeature(xml.sax.handler.feature_external_ges, 0)
             except:
                 pass
@@ -1092,7 +1092,7 @@ $shortAppName.\n\nDo you want to try to load this channel anyway?"""))
                 impl = ScraperFeedImpl(uinfo['updated-url'],
                     initialHTML=initialHTML, etag=uinfo.get('etag'),
                     modified=uinfo.get('modified'), charset=charset,
-                    ufeed=self) 
+                    ufeed=self)
                 self.finishGenerateFeed(impl)
             else:
                 self.remove()
@@ -1307,7 +1307,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         if not self.url.startswith("dtv:multi:"):
             if channelTitle != None:
                 self.title = channelTitle
-            if (parsed.feed.has_key('image') and 
+            if (parsed.feed.has_key('image') and
                     parsed.feed.image.has_key('url')):
                 self.thumbURL = parsed.feed.image.url
                 self.ufeed.iconCache.requestUpdate(is_vital=True)
@@ -1376,7 +1376,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
     def updateFinished(self, old_items):
         """
         Called by subclasses to finish the update.
-        """        
+        """
         if self.initialUpdate:
             self.initialUpdate = False
             startfrom = None
@@ -1395,7 +1395,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             self.ufeed.signalChange()
 
         self.truncateOldItems(old_items)
-        
+
     def truncateOldItems(self, old_items):
         """Truncate items so that the number of items in this feed doesn't
         exceed self.get_max_old_items()
@@ -1442,9 +1442,9 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         if not desc is None:
             entry['thumbnail'] = FeedParserDict({'url': desc.expand("\\1")})
         return entry
-        
+
 class RSSFeedImpl(RSSFeedImplBase):
-    
+
     def __init__(self, url, ufeed, title=None, initialHTML=None, etag=None, modified=None, visible=True):
         RSSFeedImplBase.__init__(self, url, ufeed, title, visible)
         self.initialHTML = initialHTML
@@ -1572,7 +1572,7 @@ class RSSFeedImpl(RSSFeedImplBase):
         if info.has_key('charset'):
             html = fixXMLHeader(html, info['charset'])
 
-        # FIXME HTML can be non-unicode here --NN        
+        # FIXME HTML can be non-unicode here --NN
         self.url = unicodify(info['updated-url'])
         if info.has_key('etag'):
             self.etag = unicodify(info['etag'])
@@ -1602,7 +1602,7 @@ class RSSFeedImpl(RSSFeedImplBase):
     def onRestore(self):
         """Called by pickle during deserialization
         """
-        #FIXME: the update dies if all of the items aren't restored, so we 
+        #FIXME: the update dies if all of the items aren't restored, so we
         # wait a little while before we start the update
         FeedImpl.onRestore(self)
         self.download = None
@@ -1612,9 +1612,9 @@ class RSSFeedImpl(RSSFeedImplBase):
         self.modified = None
         self.etag = None
         self.update()
-        
+
 class RSSMultiFeedImpl(RSSFeedImplBase):
-    
+
     def __init__(self, url, ufeed, title=None, visible=True):
         RSSFeedImplBase.__init__(self, url, ufeed, title, visible)
         self.oldItems = []
@@ -1722,7 +1722,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
             return
         if info.get('status') == 304:
             self.scheduleUpdateEvents(-1)
-            self.updating -= 1 
+            self.updating -= 1
             self.checkUpdateFinished()
             self.ufeed.signalChange()
             return
@@ -1754,7 +1754,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
     def onRestore(self):
         """Called by pickle during deserialization
         """
-        #FIXME: the update dies if all of the items aren't restored, so we 
+        #FIXME: the update dies if all of the items aren't restored, so we
         # wait a little while before we start the update
         FeedImpl.onRestore(self)
         self.download_dc = {}
@@ -1870,7 +1870,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
     def processDownloadedHTML(self, info, urlList, depth, linkNumber, top=False):
         self.ufeed.confirmDBThread()
         #print "Done grabbing %s" % info['updated-url']
-        
+
         if not self.tempHistory.has_key(info['updated-url']):
             self.tempHistory[info['updated-url']] = {}
         if info.has_key('etag'):
@@ -1931,7 +1931,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
         links = links[1]
         # List of URLs that should be downloaded
         newURLs = []
-        
+
         if depth < maxDepth:
             for link in urls:
                 if depth == 0:
@@ -1951,7 +1951,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
 
                 #This is text of some sort: HTML, XML, etc.
                 if ((mimetype.startswith('text/html') or
-                     mimetype.startswith('application/xhtml+xml') or 
+                     mimetype.startswith('application/xhtml+xml') or
                      mimetype.startswith('text/xml')  or
                      mimetype.startswith('application/xml') or
                      mimetype.startswith('application/rss+xml') or
@@ -1962,7 +1962,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
                     newURLs.append(link)
 
                 #This is a video
-                elif (mimetype.startswith('video/') or 
+                elif (mimetype.startswith('video/') or
                       mimetype.startswith('audio/') or
                       mimetype == "application/ogg" or
                       mimetype == "application/x-annodex" or
@@ -2058,7 +2058,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
                 self.title = toUni(lg.title, charset)
             finally:
                 self.ufeed.signalChange()
-            
+
         linkDict = {}
         for link in links:
             if link[0].startswith('http://') or link[0].startswith('https://'):
@@ -2069,13 +2069,13 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
                 if not link[2] is None:
                     linkDict[toUni(link[0], charset)]['thumbnail'] = toUni(link[2], charset)
         return ([x[0] for x in links if x[0].startswith('http://') or x[0].startswith('https://')], linkDict)
-        
+
     def onRestore(self):
         """Called by pickle during deserialization
         """
         FeedImpl.onRestore(self)
 
-        #FIXME: the update dies if all of the items aren't restored, so we 
+        #FIXME: the update dies if all of the items aren't restored, so we
         # wait a little while before we start the update
         self.downloads = set()
         self.tempHistory = {}
@@ -2167,7 +2167,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
 
     def onRestore(self):
         FeedImpl.onRestore(self)
-        #FIXME: the update dies if all of the items aren't restored, so we 
+        #FIXME: the update dies if all of the items aren't restored, so we
         # wait a little while before we start the update
         self.scheduleUpdateEvents(.1)
 
@@ -2233,7 +2233,7 @@ class DirectoryFeedImpl(FeedImpl):
 
     def onRestore(self):
         FeedImpl.onRestore(self)
-        #FIXME: the update dies if all of the items aren't restored, so we 
+        #FIXME: the update dies if all of the items aren't restored, so we
         # wait a little while before we start the update
         self.scheduleUpdateEvents(.1)
 
@@ -2291,7 +2291,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
             self.ufeed.iconCache.requestUpdate(is_vital=True)
         finally:
             self.ufeed.signalChange()
-    
+
     def preserveDownloads(self, downloadsFeed):
         self.ufeed.confirmDBThread()
         for item in self.items:
@@ -2347,7 +2347,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
 
 class SearchDownloadsFeedImpl(FeedImpl):
     def __init__(self, ufeed):
-        FeedImpl.__init__(self, url=u'dtv:searchDownloads', ufeed=ufeed, 
+        FeedImpl.__init__(self, url=u'dtv:searchDownloads', ufeed=ufeed,
                 title=None, visible=False)
         self.setUpdateFrequency(-1)
 
@@ -2360,7 +2360,7 @@ class ManualFeedImpl(FeedImpl):
     user opening them with democracy.
     """
     def __init__(self, ufeed):
-        FeedImpl.__init__(self, url=u'dtv:manualFeed', ufeed=ufeed, 
+        FeedImpl.__init__(self, url=u'dtv:manualFeed', ufeed=ufeed,
                 title=None, visible=False)
         self.ufeed.expire = u'never'
         self.setUpdateFrequency(-1)
@@ -2379,7 +2379,7 @@ class SingleFeedImpl(FeedImpl):
     opening them with democracy.
     """
     def __init__(self, ufeed):
-        FeedImpl.__init__(self, url=u'dtv:singleFeed', ufeed=ufeed, 
+        FeedImpl.__init__(self, url=u'dtv:singleFeed', ufeed=ufeed,
                 title=None, visible=False)
         self.ufeed.expire = u'never'
         self.setUpdateFrequency(-1)
@@ -2533,7 +2533,7 @@ class HTMLFeedURLParser(HTMLParser):
         attrdict = {}
         for (key, value) in attrs:
             attrdict[key.lower()] = value
-        if (tag.lower() == 'link' and attrdict.has_key('rel') and 
+        if (tag.lower() == 'link' and attrdict.has_key('rel') and
                 attrdict.has_key('type') and attrdict.has_key('href') and
                 attrdict['rel'].lower() == 'alternate' and
                 attrdict['type'].lower() in ['application/rss+xml',
