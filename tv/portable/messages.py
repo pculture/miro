@@ -218,6 +218,25 @@ class StopTrackingNewCount(BackendMessage):
     """Stop tracking the new videos count."""
     pass
 
+class SetChannelExpire(BackendMessage):
+    """Sets the expiration for a channel."""
+    def __init__(self, channel_info, expire_type, expire_time):
+        self.channel_info = channel_info
+        self.expire_type = expire_type
+        self.expire_time = expire_time
+
+class SetChannelMaxNew(BackendMessage):
+    """Sets the channel's max new property."""
+    def __init__(self, channel_info, max_new):
+        self.channel_info = channel_info
+        self.max_new = max_new
+
+class SetChannelMaxOldItems(BackendMessage):
+    """Sets the channels max old items property."""
+    def __init__(self, channel_info, max_old_items):
+        self.channel_info = channel_info
+        self.max_old_items = max_old_items
+
 class ImportChannels(BackendMessage):
     """Tell the backend to import channels from an .opml file.
 
@@ -496,6 +515,10 @@ class ChannelInfo(object):
       This will be None for ChannelFolders.
     autodownload_mode -- current autodownload mode ('all', 'new' or 'off')
     search_term -- the search term used for this feed or None
+    expire -- expire type ("system", "never", or "feed")
+    expire_time -- expire time in hours
+    max_new -- maximum number of items this feed wants
+    max_old_items -- maximum number of old items to remember
     """
     def __init__(self, channel_obj):
         self.name = channel_obj.getTitle()
@@ -515,6 +538,10 @@ class ChannelInfo(object):
             self.is_folder = False
             self.tab_icon = resources.path('wimages/icon-rss.png')
             self.is_directory_feed = False
+            self.expire = channel_obj.get_expiration_type()
+            self.expire_time = channel_obj.get_expiration_time()
+            self.max_new = channel_obj.get_max_new()
+            self.max_old_items = channel_obj.get_max_old_items()
         else:
             self.url = None
             self.thumbnail = resources.path('wimages/folder-icon.png')
@@ -523,6 +550,10 @@ class ChannelInfo(object):
             self.tab_icon = resources.path('wimages/icon-folder.png')
             self.is_directory_feed = (self.url is not None and 
                     self.url.startswith('dtv:directoryfeed'))
+            self.expire = None
+            self.expire_time = None
+            self.max_new = None
+            self.max_old_items = None
 
 class PlaylistInfo(object):
     """Tracks the state of a playlist

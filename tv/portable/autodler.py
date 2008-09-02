@@ -108,7 +108,7 @@ class Downloader:
             sorted = SortedList (pendingSort)
             for feed in views.feeds:
                 if self.is_auto:
-                    max_new = feed.getMaxNew()
+                    max_new = feed.get_max_new()
                     if max_new != "unlimited" and max_new <= self.feed_new_count.get(feed, 0) + self.feed_running_count.get(feed, 0):
                         continue
                 if self.feed_pending_count.get(feed, 0) <= 0:

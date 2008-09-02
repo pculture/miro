@@ -116,7 +116,7 @@ class Exporter (object):
             expiryTime = thefeed.expire
             if expiryTime != 'system':
                 if expiryTime == 'feed':
-                    expiryTime = unicode(thefeed.getExpirationTime())
+                    expiryTime = unicode(thefeed.get_expiration_time())
                 extraArgs.append('expiryTime=%s' % saxutils.quoteattr(expiryTime))
             extraArgs = u' '.join(extraArgs)
         else:

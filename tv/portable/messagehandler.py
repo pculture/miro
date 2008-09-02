@@ -408,6 +408,49 @@ class BackendMessageHandler(messages.MessageHandler):
         item = views.items.getObjectByID(message.id)
         item.markItemUnseen()
 
+    def handle_set_channel_expire(self, message):
+        channel_info = message.channel_info
+        expire_type = message.expire_type
+        expire_time = message.expire_time
+
+        try:
+            channel = views.feeds.getObjectByID(channel_info.id)
+            if expire_type == "never":
+                channel.setExpiration(u"never", 0)
+            elif expire_type == "system":
+                channel.setExpiration(u"system", expire_time)
+            else:
+                channel.setExpiration(u"feed", expire_time)
+
+        except database.ObjectNotFoundError:
+            logging.warning("handle_set_channel_expire: can't find channel by id %s", channel_info.id)
+
+    def handle_set_channel_max_new(self, message):
+        channel_info = message.channel_info
+        value = message.max_new
+
+        try:
+            channel = views.feeds.getObjectByID(channel_info.id)
+            if value == u"unlimited":
+                channel.set_max_new(-1)
+            else:
+                channel.set_max_new(value)
+
+        except database.ObjectNotFoundError:
+            logging.warning("handle_set_channel_max_new: can't find channel by id %s", channel_info.id)
+
+    def handle_set_channel_max_old_items(self, message):
+        channel_info = message.channel_info
+        max_old_items = message.max_old_items
+
+        try:
+            channel = views.feeds.getObjectByID(channel_info.id)
+            channel.setMaxOldItems(max_old_items)
+
+        except database.ObjectNotFoundError:
+            logging.warning("handle_set_channel_max_new: can't find channel by id %s", channel_info.id)
+
+
     def handle_import_channels(self, message):
         opml.Importer().importSubscriptionsFrom(message.filename)
 

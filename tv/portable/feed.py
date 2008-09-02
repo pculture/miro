@@ -186,8 +186,6 @@ def normalizeFeedURL(url):
     else:
         return url
 
-
-
 def configDidChange(key, value):
     """Handle configuration changes so we can update feed update frequencies
     """
@@ -380,31 +378,8 @@ class FeedImpl:
         for item in self.items:
             item.signalChange(needsSave=False)
 
-    def getDefaultExpiration(self):
-        """Return the 'system' expiration delay, in days (can be < 1.0)
-        """
-        return float(config.get(prefs.EXPIRE_AFTER_X_DAYS))
-
     @returnsUnicode
-    def getFormattedDefaultExpiration(self):
-        """Returns the 'system' expiration delay as a formatted string
-        """
-        expiration = self.getDefaultExpiration()
-        formattedExpiration = u''
-        if expiration < 0:
-            formattedExpiration = _('never')
-        elif expiration < 1.0:
-            formattedExpiration = _('%d hours') % int(expiration * 24.0)
-        elif expiration == 1:
-            formattedExpiration = _('%d day') % int(expiration)
-        elif expiration > 1 and expiration < 30:
-            formattedExpiration = _('%d days') % int(expiration)
-        elif expiration >= 30:
-            formattedExpiration = _('%d months') % int(expiration / 30)
-        return formattedExpiration
-
-    @returnsUnicode
-    def getExpirationType(self):
+    def get_expiration_type(self):
         """Returns "feed," "system," or "never"
         """
         self.ufeed.confirmDBThread()
@@ -420,7 +395,7 @@ class FeedImpl:
         else:
             return self.ufeed.fallBehind
 
-    def getMaxNew(self):
+    def get_max_new(self):
         """Returns "unlimited" or the maximum number of items this feed wants
         """
         self.ufeed.confirmDBThread()
@@ -429,19 +404,19 @@ class FeedImpl:
         else:
             return self.ufeed.maxNew
 
-    def getMaxOldItems(self):
-        """
-        Returns the number of items to remember past the current contents of
-        the feed.  If self.ufeed.maxOldItems is None, that means look up the
-        default in prefs.MAX_OLD_ITEMS_DEFAULT.
+    def get_max_old_items(self):
+        """Returns the number of items to remember past the current contents of
+        the feed.  If self.ufeed.maxOldItems is None, then this returns "system"
+        indicating that the caller should look up the default in 
+        prefs.MAX_OLD_ITEMS_DEFAULT.
         """
         self.ufeed.confirmDBThread()
         if self.ufeed.maxOldItems is None:
-            return config.get(prefs.MAX_OLD_ITEMS_DEFAULT)
-        else:
-            return self.ufeed.maxOldItems
+            return u"system"
 
-    def getExpirationTime(self):
+        return self.ufeed.maxOldItems
+
+    def get_expiration_time(self):
         """Returns the total absolute expiration time in hours.
         WARNING: 'system' and 'never' expiration types return 0
         """
@@ -837,12 +812,12 @@ class Feed(DDBObject):
         for item in self.items:
             item.signalChange(needsSave=False)
 
-    def setMaxNew(self, maxNew):
+    def set_max_new(self, max_new):
         """Sets the maxNew attributes. -1 means unlimited.
         """
         self.confirmDBThread()
         oldMaxNew = self.maxNew
-        self.maxNew = maxNew
+        self.maxNew = max_new
         self.signalChange()
         if self.maxNew >= oldMaxNew or self.maxNew < 0:
             from miro import autodler
@@ -1423,7 +1398,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         
     def truncateOldItems(self, old_items):
         """Truncate items so that the number of items in this feed doesn't
-        exceed self.getMaxOldItems()
+        exceed self.get_max_old_items()
 
         old_items should be an iterable that contains items that aren't in the
         feed anymore.
@@ -1431,7 +1406,10 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         Items are only truncated if they don't exist in the feed anymore, and
         if the user hasn't downloaded them.
         """
-        limit = self.getMaxOldItems()
+        limit = self.get_max_old_items()
+        if limit == u"system":
+            limit = config.get(prefs.MAX_OLD_ITEMS_DEFAULT)
+
         if len(self.items) > config.get(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS):
             truncate = len(self.items) - config.get(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS)
             if truncate > len(old_items):

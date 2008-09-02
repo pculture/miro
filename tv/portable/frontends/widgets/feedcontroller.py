@@ -32,6 +32,7 @@ import logging
 
 from miro.gtcache import gettext as _
 from miro import messages
+from miro.frontends.widgets import channelsettingspanel
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistcontroller
@@ -105,7 +106,8 @@ class FeedController(itemlistcontroller.ItemListController):
         return self.downloaded_view
 
     def _on_show_settings(self, widget):
-        logging.warn('should display settings menu')
+        info = widgetutil.get_feed_info(self.id)
+        channelsettingspanel.run_dialog(info)
 
     def _on_send_to_a_friend(self, widget):
         logging.warn('should send to friend')
