@@ -28,7 +28,7 @@
 
 from miro.plat.frontends.widgets.widgetset import DrawingArea
 
-class Separator (DrawingArea):
+class Separator(DrawingArea):
     def __init__(self, color1=None, color2=None):
         DrawingArea.__init__(self)
         self.set_color1(color1)
@@ -46,7 +46,7 @@ class Separator (DrawingArea):
         else:
             self.color2 = color
         
-class HSeparator (Separator):
+class HSeparator(Separator):
     def draw(self, context, layout_manager):
         context.set_line_width(1)
         context.set_color(self.color1)
@@ -57,10 +57,11 @@ class HSeparator (Separator):
         context.move_to(0, 1.5)
         context.line_to(context.width, 1.5)
         context.stroke()
+
     def size_request(self, layout):
         return (0, 2)
         
-class VSeparator (Separator):
+class VSeparator(Separator):
     def draw(self, context, layout_manager):
         context.set_line_width(1)
         context.set_color(self.color1)
@@ -71,29 +72,31 @@ class VSeparator (Separator):
         context.move_to(1.5, 0)
         context.line_to(1.5, context.height)
         context.stroke()
+
     def size_request(self, layout):
         return (2, 0)
 
-
-class ThinSeparator (DrawingArea):
+class ThinSeparator(DrawingArea):
     def __init__(self, color):
         DrawingArea.__init__(self)
         self.color = color
 
-class HThinSeparator (ThinSeparator):
+class HThinSeparator(ThinSeparator):
     def draw(self, context, layout_manager):
         context.set_color(self.color)
         context.move_to(0, 0)
         context.line_to(context.width, 0)
         context.stroke()
+
     def size_request(self, layout):
         return (0, 1)
 
-class VThinSeparator (ThinSeparator):
+class VThinSeparator(ThinSeparator):
     def draw(self, context, layout_manager):
         context.set_color(self.color)
         context.move_to(0, 0)
         context.line_to(0, context.height)
         context.stroke()
+
     def size_request(self, layout):
         return (1, 0)
