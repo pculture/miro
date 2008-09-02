@@ -183,6 +183,35 @@ def attach_combo(widget, descriptor, values):
         widget.set_selected(1)
     widget.connect('changed', combo_changed)
 
+
+
+# the panel list holding tuples of (name, image_name, panel_builder_function)
+__PANEL = []
+
+def add_panel(name, panel_builder_function, image_name='wimages/pref-tab-general.png'):
+    """Adds a panel to the preferences panel list.
+
+    name -- the name of the panel; appears in tabs on the side and the top of
+            the panel
+    panel_builder_function -- function ``None -> widget`` that builds the panel
+            and returns it
+    image_name -- the image to use in the tabs; defaults to the general tab image
+    """
+    global __PANEL
+    __PANEL.append( (name, image_name, panel_builder_function) )
+
+def _hbox(*items):
+    """Helper function for packing a list of widgets into an HBox in order
+    with padding=5.
+    """
+    h = widgetset.HBox()
+    [h.pack_start(item, padding=5) for item in items]
+    return h
+
+
+# -----------------------
+# Panel builder functions
+
 def _build_general_panel():
     """Build's the General tab and returns it."""
     v = widgetset.VBox()
@@ -197,11 +226,6 @@ def _build_general_panel():
     attach_boolean(warn_if_downloading_cbx, prefs.WARN_IF_DOWNLOADING_ON_QUIT)
 
     return v
-
-def _hbox(*items):
-    h = widgetset.HBox()
-    [h.pack_start(item, padding=5) for item in items]
-    return h
 
 def _build_channels_panel():
     """Build's the Channels tab and returns it."""
@@ -363,7 +387,16 @@ def _build_playback_panel():
 
     return v
 
-def create_panel(title_text, panel_contents):
+
+# Add the initial panels
+add_panel(_("General"), _build_general_panel, 'wimages/pref-tab-general.png')
+add_panel(_("Channels"), _build_channels_panel, 'wimages/pref-tab-channels.png')
+add_panel(_("Downloads"), _build_downloads_panel, 'wimages/pref-tab-downloads.png')
+add_panel(_("Folders"), _build_folders_panel, 'wimages/pref-tab-folders.png')
+add_panel(_("Disk space"), _build_disk_space_panel, 'wimages/pref-tab-disk-space.png')
+add_panel(_("Playback"), _build_playback_panel, 'wimages/pref-tab-playback.png')
+
+def _create_panel(title_text, panel_contents):
     title = widgetset.Label(title_text)
     title.set_bold(True)
     title.set_size(1.2)
@@ -405,28 +438,6 @@ class PreferenceTabList(widgetset.TableView):
         widget = self.model[self.get_selected()][2]
         self.widget_holder.set(widget)
 
-__PANEL = []
-
-def add_panel(name, panel_builder_function, image_name='wimages/pref-tab-general.png'):
-    """Adds a panel to the preferences panel list.
-
-    name -- the name of the panel; appears in tabs on the side and the top of
-            the panel
-    panel_builder_function -- function ``None -> widget`` that builds the panel
-            and returns it
-    image_name -- the image to use in the tabs; defaults to the general tab image
-    """
-    global __PANEL
-    __PANEL.append( (name, image_name, panel_builder_function) )
-
-# add initial panels
-add_panel(_("General"), _build_general_panel, 'wimages/pref-tab-general.png')
-add_panel(_("Channels"), _build_channels_panel, 'wimages/pref-tab-channels.png')
-add_panel(_("Downloads"), _build_downloads_panel, 'wimages/pref-tab-downloads.png')
-add_panel(_("Folders"), _build_folders_panel, 'wimages/pref-tab-folders.png')
-add_panel(_("Disk space"), _build_disk_space_panel, 'wimages/pref-tab-disk-space.png')
-add_panel(_("Playback"), _build_playback_panel, 'wimages/pref-tab-playback.png')
-
 def run_dialog():
     """Displays the preferences dialog."""
     pref_window = widgetset.Dialog(_("Preferences"))
@@ -441,7 +452,7 @@ def run_dialog():
 
             max_height = max_width = 0
             for title, image_name, panel_builder in __PANEL:
-                panel = create_panel(title, panel_builder())
+                panel = _create_panel(title, panel_builder())
                 image = imagepool.get_surface(resources.path(image_name))
                 tab_list.model.append(title, image, panel)
 
