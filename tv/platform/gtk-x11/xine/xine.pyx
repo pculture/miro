@@ -110,7 +110,7 @@ cdef class Xine:
         xineSetPlaying(self.xine, 0)
     def setViz(self, viz):
         xineSetViz(self.xine, viz)
-    def setVolume(self, volume):
+    def set_volume(self, volume):
         volume = min(max(volume, 0), 100)
         xineSetVolume(self.xine, volume)
     def getVolume(self):
