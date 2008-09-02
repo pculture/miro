@@ -190,7 +190,7 @@ class IconCache:
         needsSave = False
         needsChange = False
 
-        if info == None or (info['status'] != 304 and info['status'] != 200):
+        if info == None or (info['status'] != 304 and info['status'] != 200) or info['content-type'].startswith('text'):
             self.errorCallback(url)
             return
         try:
