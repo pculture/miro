@@ -420,7 +420,6 @@ class FeedImpl:
         """Returns the total absolute expiration time in hours.
         WARNING: 'system' and 'never' expiration types return 0
         """
-        delta = None
         self.ufeed.confirmDBThread()
         expireAfterSetting = config.get(prefs.EXPIRE_AFTER_X_DAYS)
         if (self.ufeed.expireTime is None or self.ufeed.expire == 'never' or
@@ -433,7 +432,6 @@ class FeedImpl:
     def getExpireDays(self):
         """Returns the number of days until a video expires
         """
-        ret = 0
         self.ufeed.confirmDBThread()
         try:
             return self.ufeed.expireTime.days
@@ -443,7 +441,6 @@ class FeedImpl:
     def getExpireHours(self):
         """Returns the number of hours until a video expires
         """
-        ret = 0
         self.ufeed.confirmDBThread()
         try:
             return int(self.ufeed.expireTime.seconds/3600)
@@ -795,12 +792,12 @@ class Feed(DDBObject):
                 if not item.isEligibleForAutoDownload():
                     item.signalChange(needsSave=False)
 
-    def setExpiration(self, type, time):
+    def setExpiration(self, type_, time):
         """Sets the expiration attributes. Valid types are 'system', 'feed' and 'never'
         Expiration time is in hour(s).
         """
         self.confirmDBThread()
-        self.expire = type
+        self.expire = type_
         self.expireTime = timedelta(hours=time)
 
         if self.expire == "never":
@@ -886,8 +883,8 @@ class Feed(DDBObject):
             newFeed = DirectoryFeedImpl(self)
         elif (self.origURL.startswith(u"dtv:directoryfeed:")):
             url = self.origURL[len(u"dtv:directoryfeed:"):]
-            dir = unmakeURLSafe(url)
-            newFeed = DirectoryWatchFeedImpl(self, dir)
+            dir_ = unmakeURLSafe(url)
+            newFeed = DirectoryWatchFeedImpl(self, dir_)
         elif self.origURL == u"dtv:search":
             newFeed = SearchFeedImpl(self)
         elif self.origURL == u"dtv:searchDownloads":
@@ -1335,9 +1332,9 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             entry = self.addScrapedThumbnail(entry)
             new = True
             if entry.has_key("id"):
-                id = entry["id"]
-                if items_byid.has_key (id):
-                    item = items_byid[id]
+                id_ = entry["id"]
+                if items_byid.has_key(id_):
+                    item = items_byid[id_]
                     if not _entry_equal(entry, item.getRSSEntry()):
                         self._handleNewEntryForItem(item, entry, channelTitle)
                     new = False
@@ -2013,7 +2010,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
             except:
                 pass
             if charset is not None:
-                handler = RSSLinkGrabber(baseurl,charset)
+                handler = RSSLinkGrabber(baseurl, charset)
             else:
                 handler = RSSLinkGrabber(baseurl)
             parser.setContentHandler(handler)
@@ -2145,15 +2142,15 @@ class DirectoryWatchFeedImpl(FeedImpl):
         if fileutil.isdir(self.dir):
             all_files = []
             files, dirs = fileutil.miro_listdir(self.dir)
-            for file in files:
-                all_files.append(file)
-            for dir in dirs:
-                subfiles, subdirs = fileutil.miro_listdir(dir)
+            for file_ in files:
+                all_files.append(file_)
+            for dir_ in dirs:
+                subfiles, subdirs = fileutil.miro_listdir(dir_)
                 for subfile in subfiles:
                     all_files.append(subfile)
-            for file in all_files:
-                if file not in knownFiles and filetypes.isVideoFilename(filenameToUnicode(file)):
-                    itemmod.FileItem(file, feed_id=self.ufeed.id)
+            for file_ in all_files:
+                if file_ not in knownFiles and filetypes.isVideoFilename(filenameToUnicode(file_)):
+                    itemmod.FileItem(file_, feed_id=self.ufeed.id)
 
         for item in self.items:
             if not fileutil.isfile(item.getFilename()):
@@ -2221,9 +2218,9 @@ class DirectoryFeedImpl(FeedImpl):
         #Files on the filesystem
         if fileutil.isdir(moviesDir):
             all_files = fileutil.miro_allfiles(moviesDir)
-            for file in all_files:
-                if file not in knownFiles and filetypes.isVideoFilename(filenameToUnicode(file)):
-                    itemmod.FileItem(file, feed_id=self.ufeed.id)
+            for file_ in all_files:
+                if file_ not in knownFiles and filetypes.isVideoFilename(filenameToUnicode(file_)):
+                    itemmod.FileItem(file_, feed_id=self.ufeed.id)
 
         for item in self.items:
             if not fileutil.exists(item.getFilename()):
@@ -2484,7 +2481,7 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler, xml.sax.handler.ErrorHandle
                 html = xhtmlify(unescape(self.descHTML), addTopTags=True)
                 if not self.charset is None:
                     html = fixHTMLHeader(html, self.charset)
-                self.links[:0] = lg.getLinks(html,self.baseurl)
+                self.links[:0] = lg.getLinks(html, self.baseurl)
             except HTMLParseError: # Don't bother with bad HTML
                 logging.info ("bad HTML in description for %s", self.baseurl)
             self.inDescription = False
