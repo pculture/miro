@@ -103,7 +103,7 @@ def get_urls_from_query(query):
             additional = {}
             for key2 in ADDITIONAL_KEYS:
                 if '%s%s' % (key2, urlId) in parsedQuery:
-                    additional[key2] = unicode(parsedQuery['%s%s' % (key2, urlId)][0])
+                    additional[key2] = unicode(parsedQuery['%s%s' % (key2, urlId)][0], "utf-8")
             urls.append((unicode(value[0]), additional))
     return urls
 
