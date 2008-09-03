@@ -27,10 +27,10 @@
 # statement from all source files in the program, then also delete it here.
 
 from miro.plat.utils import filenameToUnicode
-import logging
 
-# Returns items that match search
 def matchingItems(obj, searchString):
+    """Returns items that match search
+    """
     from miro import search
     if searchString is None:
         return True
@@ -38,12 +38,12 @@ def matchingItems(obj, searchString):
     title = obj.getTitle() or u''
     desc = obj.getRawDescription() or u''
     filename = filenameToUnicode(obj.getFilename()) or u''
-    if search.match (searchString, [title.lower(), desc.lower(), filename.lower()]):
+    if search.match(searchString, [title.lower(), desc.lower(), filename.lower()]):
         return True
     if not obj.isContainerItem:
         parent = obj.getParent()
         if parent != obj:
-            return matchingItems (parent, searchString)
+            return matchingItems(parent, searchString)
     return False
 
 def downloadingItems(obj):
@@ -79,19 +79,21 @@ def autoUploadingDownloaders(obj):
 
 def notDeleted(obj):
     from miro import item
-    return not (isinstance (obj, item.FileItem) and obj.deleted)
+    return not (isinstance(obj, item.FileItem) and obj.deleted)
 
-# This is "new" for the channel template
 def newItems(obj):
+    """This is "new" for the channel template
+    """
     return not obj.getViewed()
 
 def newWatchableItems(obj):
     return (obj.isDownloaded() and not obj.isNonVideoFile()
             and (obj.getState() == u"newly-downloaded"))
 
-# Return True if a tab should be shown for obj in the frontend. The filter
-# used on the database to get the list of tabs.
 def mappableToTab(obj):
+    """Return True if a tab should be shown for obj in the frontend. The filter
+    used on the database to get the list of tabs.
+    """
     from miro import tabs
     from miro import feed
     from miro import folder
