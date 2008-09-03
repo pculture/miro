@@ -144,6 +144,8 @@ class TextBox(object):
         self.append_text(text, font, color, underline)
 
     def append_text(self, text, font=None, color=None, underline=False):
+        if text == None:
+            text = u""
         startpos = self.text_length
         self.text_chunks.append(text)
         endpos = self.text_length = self.text_length + len(text)
