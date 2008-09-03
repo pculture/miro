@@ -30,7 +30,7 @@
 
 In general, frontends should do the following to handle startup.
 
-    - (optional) call startup.installMoviesGoneHandler()
+    - (optional) call startup.install_movies_gone_handler()
     - Call startup.initialize()
     - Wait for either the 'startup-success', or 'startup-failure' signal
 """
@@ -56,15 +56,11 @@ from miro import iconcache
 from miro import indexes
 from miro import item
 from miro import feed
-from miro import folder
-from miro import guide
 from miro import messages
 from miro import messagehandler
 from miro import moviedata
-from miro import playlist
 from miro import prefs
 from miro import selection
-from miro.plat import resources
 from miro.plat.utils import setupLogging
 from miro import signals
 from miro import tabs
@@ -73,18 +69,16 @@ from miro import util
 from miro import searchengines
 from miro import storedatabase
 from miro import views
-from miro import opml
 
 class StartupError(Exception):
     def __init__(self, summary, description):
         self.summary = summary
         self.description = description
 
-def startupFunction(func):
+def startup_function(func):
     """Decorator for startup functions.  This decorator catches exceptions and
     turns them into startup-failure signals.
     """
-
     def wrapped(*args, **kwargs):
         try:
             func(*args, **kwargs)
@@ -98,11 +92,11 @@ def startupFunction(func):
                     (config.get(prefs.BUG_REPORT_URL)))
     return wrapped
 
-def setupGlobalFeed(url, *args, **kwargs):
+def setup_global_feed(url, *args, **kwargs):
     feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)
     try:
         if feedView.len() == 0:
-            logging.info ("Spawning global feed %s", url)
+            logging.info("Spawning global feed %s", url)
             feed.Feed(url, *args, **kwargs)
         elif feedView.len() > 1:
             allFeeds = [f for f in feedView]
@@ -134,53 +128,51 @@ def startup():
 
     initialize() must be called before startup().
     """
-    logging.info ("Starting up %s", config.get(prefs.LONG_APP_NAME))
-    logging.info ("Version:    %s", config.get(prefs.APP_VERSION))
-    logging.info ("OS:         %s %s %s", platform.system(), platform.release(), platform.machine())
-    logging.info ("Revision:   %s", config.get(prefs.APP_REVISION))
-    logging.info ("Builder:    %s", config.get(prefs.BUILD_MACHINE))
-    logging.info ("Build Time: %s", config.get(prefs.BUILD_TIME))
+    logging.info("Starting up %s", config.get(prefs.LONG_APP_NAME))
+    logging.info("Version:    %s", config.get(prefs.APP_VERSION))
+    logging.info("OS:         %s %s %s", platform.system(), platform.release(), platform.machine())
+    logging.info("Revision:   %s", config.get(prefs.APP_REVISION))
+    logging.info("Builder:    %s", config.get(prefs.BUILD_MACHINE))
+    logging.info("Build Time: %s", config.get(prefs.BUILD_TIME))
     util.print_mem_usage("Pre everything memory check")
-    eventloop.connect('thread-started', 
-            lambda obj, thread: database.set_thread(thread))
-    logging.info ("Starting event loop thread")
+    eventloop.connect('thread-started', lambda obj, thread: database.set_thread(thread))
+    logging.info("Starting event loop thread")
     eventloop.startup()
     eventloop.addIdle(finishStartup, "finish startup")
 
-@startupFunction
+@startup_function
 def finishStartup():
     views.initialize()
     util.print_mem_usage("Pre-database memory check:")
-    logging.info ("Restoring database...")
+    logging.info("Restoring database...")
     try:
         database.defaultDatabase.liveStorage = storedatabase.LiveStorage()
     except databaseupgrade.DatabaseTooNewError:
         summary = _("Database too new")
         description = Template(_("""\
 You have a database that was saved with a newer version of $shortAppName. \
-You must download the latest version of $shortAppName and run that.""")).substitute(shortAppName = config.get(prefs.SHORT_APP_NAME))
+You must download the latest version of $shortAppName and run that.""")).substitute(shortAppName=config.get(prefs.SHORT_APP_NAME))
         raise StartupError(summary, description)
     database.defaultDatabase.recomputeFilters()
 
-    if moviesDirectoryGone():
-        global moviesGoneHandler
-        moviesGoneHandler()
+    if movies_directory_gone():
+        __movies_gone_handler()
     else:
         eventloop.addUrgentCall(finalizeStartup, "finalizing startup")
 
-@startupFunction
+@startup_function
 def finalizeStartup():
     downloader.startupDownloader()
 
     util.print_mem_usage("Post-downloader memory check")
-    setupGlobalFeeds()
-    setupTabs()
+    setup_global_feeds()
+    setup_tabs()
     searchengines.create_engines()
-    setupTheme()
-    installMessageHandler()
+    setup_theme()
+    install_message_handler()
 
     # Start the automatic downloader daemon
-    logging.info ("Spawning auto downloader...")
+    logging.info("Spawning auto downloader...")
     autodler.startDownloader()
 
     item.reconnectDownloaders()
@@ -188,33 +180,33 @@ def finalizeStartup():
 
     starttime = clock()
     iconcache.clearOrphans()
-    logging.timing ("Icon clear: %.3f", clock() - starttime)
-    logging.info ("Starting movie data updates")
+    logging.timing("Icon clear: %.3f", clock() - starttime)
+    logging.info("Starting movie data updates")
     moviedata.movieDataUpdater.startThread()
 
     app.selection = selection.SelectionHandler()
 
     signals.system.startupSuccess()
 
-def setupGlobalFeeds():
-    setupGlobalFeed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
-    setupGlobalFeed(u'dtv:singleFeed', initiallyAutoDownloadable=False)
-    setupGlobalFeed(u'dtv:search', initiallyAutoDownloadable=False)
-    setupGlobalFeed(u'dtv:searchDownloads')
-    setupGlobalFeed(u'dtv:directoryfeed')
+def setup_global_feeds():
+    setup_global_feed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
+    setup_global_feed(u'dtv:singleFeed', initiallyAutoDownloadable=False)
+    setup_global_feed(u'dtv:search', initiallyAutoDownloadable=False)
+    setup_global_feed(u'dtv:searchDownloads')
+    setup_global_feed(u'dtv:directoryfeed')
 
-def setupTabs():
+def setup_tabs():
     def setupTabOrder(view, key):
         try:
             tabOrder = util.getSingletonDDBObject(view)
         except LookupError:
-            logging.info ("Creating %s tab order" % key)
+            logging.info("Creating %s tab order" % key)
             tabs.TabOrder(key)
     setupTabOrder(views.siteTabOrder, u'site')
     setupTabOrder(views.channelTabOrder, u'channel')
     setupTabOrder(views.playlistTabOrder, u'playlist')
 
-def moviesDirectoryGone():
+def movies_directory_gone():
     movies_dir = fileutil.expand_filename(config.get(prefs.MOVIES_DIRECTORY))
     if not movies_dir.endswith(os.path.sep):
         movies_dir += os.path.sep
@@ -229,22 +221,23 @@ def moviesDirectoryGone():
         return False
     # make sure that we have actually downloaded something into the movies
     # directory. 
-    for downloader in views.remoteDownloads:
-        if (downloader.isFinished() and
-                downloader.getFilename().startswith(movies_dir)):
+    for downloader_ in views.remoteDownloads:
+        if (downloader_.isFinished() and
+                downloader_.getFilename().startswith(movies_dir)):
             return True
     return False
 
-def defaultMoviesGoneHandler():
+def default_movies_gone_handler():
     summary = _("Video Directory Missing")
     description = Template(_("""
 Miro can't find your primary video directory $moviesDirectory.  This may be because it's \
 located on an external drive that is currently disconnected.  Please, connect the drive \
 or create the directory, then start Miro again.""")).substitute(moviesDirectory = config.get(prefs.MOVIES_DIRECTORY))
     signals.system.startupFailure(summary, description)
-moviesGoneHandler =  defaultMoviesGoneHandler
 
-def installMoviesGoneHandler(callback):
+__movies_gone_handler =  default_movies_gone_handler
+
+def install_movies_gone_handler(callback):
     """Install a new movies gone handler.  This method handles the annoying
     case where we are trying to start up, but detect that the movies directory
     appears missing.  By default this causes us to fail starting up, but some
@@ -252,21 +245,19 @@ def installMoviesGoneHandler(callback):
     call startup.finalizeStartup().
     """
 
-    global moviesGoneHandler
-    moviesGoneHandler = callback
+    global __movies_gone_handler
+    __movies_gone_handler = callback
 
-def setupTheme():
-    themeHistory = _getThemeHistory()
+def setup_theme():
+    themeHistory = _get_theme_history()
     themeHistory.checkNewTheme()
 
-def installMessageHandler():
+def install_message_handler():
     handler = messagehandler.BackendMessageHandler()
     messages.BackendMessage.install_handler(handler)
 
-def _getThemeHistory():
+def _get_theme_history():
     if len(views.themeHistories) > 0:
         return views.themeHistories[0]
     else:
         return theme.ThemeHistory()
-
-
