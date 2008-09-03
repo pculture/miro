@@ -83,8 +83,7 @@ class HTTPAuthDialogRunner(DialogRunner):
         self.username_entry.set_width(20)
         table.set_cell(self.username_entry, 1, 0)
         table.set_cell(widgetset.Label(_("Password:")), 0, 1)
-        self.password_entry = widgetset.TextEntry(self.dialog.prefillPassword,
-                hidden=True)
+        self.password_entry = widgetset.SecureTextEntry(self.dialog.prefillPassword)
         self.password_entry.set_activates_default(True)
         table.set_cell(self.password_entry, 1, 1)
         window.set_extra_widget(widgetutil.align_center(table))

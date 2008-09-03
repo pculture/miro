@@ -34,7 +34,7 @@ import weakref
 from miro.frontends.widgets.gtk.base import Widget
 
 class TextEntry(Widget):
-    def __init__(self, initial_text=None, hidden=False):
+    def __init__(self, initial_text=None):
         Widget.__init__(self)
         self.create_signal('activate')
         self.create_signal('changed')
@@ -43,8 +43,6 @@ class TextEntry(Widget):
         self.forward_signal('changed')
         if initial_text is not None:
             self._widget.set_text(initial_text)
-        if hidden:
-            self.set_invisible(hidden)
 
     def set_text(self, text):
         self._widget.set_text(text)
@@ -66,6 +64,14 @@ class TextEntry(Widget):
 
     def disable_widget(self):
         self._widget.set_sensitive(False)
+
+class SecureTextEntry(TextEntry):
+    def __init__(self, initial_text=None):
+        TextEntry.__init__(self, initial_text)
+        self.set_invisible(True)
+
+class SearchTextEntry(TextEntry):
+    pass
 
 class Checkbox(Widget):
     """Widget that the user can toggle on or off."""

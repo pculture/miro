@@ -38,19 +38,13 @@ from miro.plat.frontends.widgets import layoutmanager
 from miro.plat.frontends.widgets.base import Widget
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
 
-def round_up(float):
-    return int(round(float + 0.5))
-
-class TextEntry(Widget):
+class BaseTextEntry(Widget):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
-    def __init__(self, initial_text=None, hidden=False):
+    def __init__(self, initial_text=None):
         Widget.__init__(self)
+        self.view = self.make_view()
         self.font = NSFont.systemFontOfSize_(NSFont.systemFontSize())
         self.height = self.font.pointSize() + self.font.leading()
-        if hidden:
-            self.view = NSSecureTextField.alloc().init()
-        else:
-            self.view = NSTextField.alloc().init()
         self.view.setFont_(self.font)
         self.view.setEditable_(YES)
         self.sizer_cell = self.view.cell().copy()
@@ -60,19 +54,14 @@ class TextEntry(Widget):
         else:
             self.set_width(10)
 
-        self.create_signal('changed')
         self.notifications = NotificationForwarder.create(self.view)
-        self.notifications.connect(self.on_changed,
-                'NSControlTextDidChangeNotification')
+        self.notifications.connect(self.on_changed, 'NSControlTextDidChangeNotification')
 
         self.create_signal('activate')
-        # FIXME - need to hook up the activate signal to on_activated
+        self.create_signal('changed')
 
     def on_changed(self, notification):
         self.emit('changed')
-
-    def on_activated(self, notification):
-        self.emit('activate')
 
     def calc_size_request(self):
         size = self.sizer_cell.cellSize()
@@ -98,6 +87,34 @@ class TextEntry(Widget):
     def disable_widget(self):
         self.view.setEnabled_(False)
         self.view.setEditable_(False)
+
+class MiroTextField(NSTextField):
+    def becomeFirstResponder(self):
+        wrappermap.wrapper(self).emit('activate')
+        return YES
+
+class TextEntry(BaseTextEntry):
+    def make_view(self):
+        return MiroTextField.alloc().init()
+
+class MiroSecureTextField(NSSecureTextField):
+    def becomeFirstResponder(self):
+        wrappermap.wrapper(self).emit('activate')
+        return YES
+
+class SecureTextEntry(BaseTextEntry):
+    def make_view(self):
+        return MiroSecureTextField.alloc().init()
+
+class MiroSearchTextField(NSSearchField):
+    def becomeFirstResponder(self):
+        wrappermap.wrapper(self).emit('activate')
+        return YES
+
+class SearchTextEntry(BaseTextEntry):
+    def make_view(self):
+        return MiroSearchTextField.alloc().init()
+
 
 class MiroButton(NSButton):
     

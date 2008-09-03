@@ -107,7 +107,7 @@ class ItemListTitlebar(widgetset.Background):
         """
 
         self.create_signal('search-changed')
-        self.searchbox = widgetset.TextEntry()
+        self.searchbox = widgetset.SearchTextEntry()
         self.searchbox.connect('changed', self._on_search_changed)
         return widgetutil.align_middle(self.searchbox, right_pad=35)
 
@@ -176,7 +176,7 @@ class SearchListTitlebar(ItemListTitlebar):
         self.search_dropdown = widgetset.OptionMenu(engine_names)
         hbox.pack_start(self.search_dropdown, padding=5)
 
-        self.searchbox = widgetset.TextEntry(initial_text=_('Search terms'))
+        self.searchbox = widgetset.SearchTextEntry(initial_text=_('Search terms'))
         self.searchbox.set_width(15)
         self.searchbox.connect('activate', self._on_search_activate)
         hbox.pack_start(widgetutil.align_middle(self.searchbox))
