@@ -41,7 +41,6 @@ to be called in the existing democracy process.
 from miro.gtcache import gettext as _
 import os
 import logging
-import urllib
 
 from miro.util import getTorrentInfoHash
 from miro import app
@@ -60,7 +59,7 @@ from miro import util
 from miro import config
 from miro import prefs
 from string import Template
-from miro.plat.utils import samefile, filenameToUnicode
+from miro.plat.utils import samefile, filenameToUnicode, unicodeToFilename
 
 _commandLineArgs = []
 commandLineVideoIds = None
@@ -71,7 +70,7 @@ def getManualFeed():
     manualFeed.confirmDBThread()
     return manualFeed
 
-def addVideo(path, single = False):
+def addVideo(path, single=False):
     path = os.path.abspath(path)
     views.items.confirmDBThread()
     for i in views.items:
@@ -82,7 +81,7 @@ def addVideo(path, single = False):
             print "Not adding duplicate video: %s" % path.decode('ascii', 'ignore')
             commandLineVideoIds.add(i.getID())
             return
-    if (single):
+    if single:
         correctFeed = util.getSingletonDDBObject(views.singleFeed)
         items = [i for i in correctFeed.items]
         for i in items:
@@ -96,7 +95,7 @@ def addVideo(path, single = False):
 def checkURLExists(url):
     manualFeed = getManualFeed()
     for i in manualFeed.items:
-        if (i.getURL() == url):
+        if i.getURL() == url:
             title = _("Download already exists")
             text1 = _("That URL is already an external download.")
             downloadState = None
@@ -145,13 +144,13 @@ def addDownload(url, additional=None):
 Miro is not able to download a file at this URL:
 
 URL: %s""") % url
+        logging.info("can't download '%s'", url)
         dialogs.MessageBoxDialog(title, text).run()
 
     def callback_peek(data):
         """Takes the data returned from a GET and peeks at it to see if it's a
         feed despite the fact that it has the wrong content-type.
         """
-
         if data["body"]:
             if filetypes.isMaybeRSS(data["body"]):
                 # FIXME - this is silly since we just did a GET and we do 
@@ -190,8 +189,7 @@ URL: %s""") % url
 
 def downloadUnknownMimeType(url):
     title = _('File Download')
-    text = _("""\
-This file at %s does not appear to be audio, video, or an RSS feed.""") % url
+    text = _('This file at %s does not appear to be audio, video, or an RSS feed.') % url
     dialog = dialogs.ChoiceDialog(title, text, 
             dialogs.BUTTON_DOWNLOAD_ANYWAY, dialogs.BUTTON_CANCEL)
     def callback(dialog):
@@ -213,8 +211,7 @@ def addTorrent(path, torrentInfohash):
     for i in manualFeed.items:
         if (i.downloader is not None and
                 i.downloader.status.get('infohash') == torrentInfohash):
-            print ("Not downloading %s, it's already a "
-                    "download for %s" % (path, i))
+            logging.info("not downloading %s, it's already a download for %s" % (path, i))
             if i.downloader.getState() in ('paused', 'stopped'):
                 i.download()
             return
@@ -228,10 +225,11 @@ def resetCommandLineView():
         commandLineView = None
     commandLineVideoIds = set()
 
-def inCommandLineVideoIDs(item):
-    return item.getID() in commandLineVideoIds
+def inCommandLineVideoIDs(item_):
+    return item_.getID() in commandLineVideoIds
+
 def playCommandLineView():
-    global commandLineView, commandLineVideoIds
+    global commandLineView
     if len(commandLineVideoIds) == 0:
         return
     commandLineView = views.items.filter(inCommandLineVideoIDs)
@@ -240,16 +238,16 @@ def playCommandLineView():
 def addFeed(path):
     feed.addFeedFromFile(path)
 
-def addSubscriptions(type, urls):
+def addSubscriptions(type_, urls):
     if urls is not None:
-        if type == 'rss':
+        if type_ == 'rss':
             if len(urls) > 1:
                 askForMultipleFeeds(urls)
             else:
                 addFeeds(urls)
-        elif type == 'download':
+        elif type_ == 'download':
             [addDownload(url, additional) for url, additional in urls]
-        elif type == 'guide':
+        elif type_ == 'guide':
             for url in urls:
                 if guide.getGuideByURL(url) is None:
                     guide.ChannelGuide(url, [u'*'])
@@ -320,16 +318,17 @@ def addSubscriptionURL(prefix, expectedContentType, url):
     realURL = url[len(prefix):]
     def callback(info):
         if info.get('content-type') == expectedContentType:
-            type, urls = subscription.parseContent(info['body'])
+            type_, urls = subscription.parseContent(info['body'])
             if urls is None:
                 complainAboutSubscriptionURL(
                     Template(_("This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file.")).substitute(url=realURL,shortAppName=config.get(prefs.SHORT_APP_NAME)))
             else:
-                addSubscriptions(type, urls)
+                addSubscriptions(type_, urls)
         else:
             complainAboutSubscriptionURL(
                 Template(_("This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file.")).substitute(
                 url=realURL,shortAppName=config.get(prefs.SHORT_APP_NAME)))
+
     def errback(error):
         complainAboutSubscriptionURL(
                 Template(_("Could not download the $shortAppName channel file: $url.")).substitute(url=realURL,shortAppName=config.get(prefs.SHORT_APP_NAME)))
@@ -342,8 +341,7 @@ def handleCommandLineArgs(args):
         setCommandLineArgs(args)
 
 def setCommandLineArgs(args):
-    global _commandLineArgs
-    _commandLineArgs.extend (args)
+    _commandLineArgs.extend(args)
 
 def downloadURL(url):
     if url.startswith('http:') or url.startswith('https:'):
@@ -357,10 +355,9 @@ def downloadURL(url):
         url = "https:" + url[len("feeds:"):]
         addDownload(url)
     else:
-        parseCommandLineArgs ([unicodeToFilename(url)])
+        parseCommandLineArgs([unicodeToFilename(url)])
 
 def parseCommandLineArgs(args=None):
-
     if args is None:
         global _commandLineArgs
         args = _commandLineArgs
@@ -387,8 +384,7 @@ def parseCommandLineArgs(args=None):
                     torrentInfohash = getTorrentInfoHash(arg)
                 except ValueError:
                     title = _("Invalid Torrent")
-                    msg = _("The torrent file %s appears to be corrupt and "
-                            "cannot be opened. [OK]") % os.path.basename(arg)
+                    msg = _("The torrent file %s appears to be corrupt and cannot be opened. [OK]") % os.path.basename(arg)
                     dialogs.MessageBoxDialog(title, msg).run()
                     continue
                 addTorrent(arg, torrentInfohash)
@@ -403,7 +399,7 @@ def parseCommandLineArgs(args=None):
                 addVideo(arg, len(args) == 1)
                 addedVideos = True
         else:
-            print "WARNING: %s doesn't exist" % arg
+            logging.warning("parseCommandLineArgs: %s doesn't exist", arg)
 
     if addedVideos:
         app.selection.selectTabByTemplateBase('librarytab', False)
