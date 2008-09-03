@@ -360,12 +360,6 @@ class Item(DDBObject):
         else:
             return u''
 
-    @returnsUnicode
-    def getQuotedURL(self):
-        """Returns the title of the item quoted for inclusion in URLs.
-        """
-        return urllib.quote_plus(urllib.unquote(self.getURL().encode('ascii'))).decode('ascii')
-
     def hasSharableURL(self):
         """Does this item have a URL that the user can share with others?
 
@@ -480,58 +474,6 @@ class Item(DDBObject):
         else:
             result = _("%d minutes") % (ceil(offset.seconds/60.0))
         return result
-
-    @returnsUnicode
-    def getExpirationString(self):
-        """Get the expiration time a string to display to the user."""
-        expireTime = self.getExpirationTime()
-        if expireTime is None:
-            return u""
-        else:
-            return _('Expires in %s') % self.getString (expireTime)
-
-    @returnsUnicode
-    def getPausedString(self):
-        """Get the expiration time a string to display to the user."""
-        retryTime = None
-        if self.downloader:
-            if self.downloader.getState() == u'offline':
-                retryTime = self.downloader.status['retryTime']
-                if retryTime is None:
-                    return ""
-                else:
-                    return _('Will retry in %s') % self.getString (retryTime)
-            else:
-                return _('Paused')
-        else:
-            return u""
-
-    @returnsUnicode
-    def getDragType(self):
-        if self.isDownloaded():
-            return u'downloadeditem'
-        else:
-            return u'item'
-
-    @returnsUnicode
-    def getEmblemCSSClass(self):
-        if self.getState() == u'newly-downloaded':
-            return u'newly-downloaded'
-        elif self.getState() == u'new':
-            return u'new'
-        elif self.getState() == u'downloading':
-            return u'downloading'
-        else:
-            return u''
-
-    @returnsUnicode
-    def getEmblemCSSString(self):
-        if self.getState() == u'newly-downloaded':
-            return u'Unwatched'
-        elif self.getState() == u'new':
-            return u'New'
-        else:
-            return u''
 
     def getUandA(self):
         """Get whether this item is new, or newly-downloaded, or neither."""
@@ -1286,7 +1228,7 @@ class Item(DDBObject):
         """
         self.confirmDBThread()
         try:
-            return self.entry.link.decode('ascii','replace')
+            return self.entry.link.decode('ascii', 'replace')
         except:
             return u""
 
