@@ -243,11 +243,15 @@ class Button(AttributedStringStyler):
         self.view.setEnabled_(False)
 
 class MiroPopupButton(NSPopUpButton):
-    def sendAction_to_(self, action, to):
-        # We override the Cocoa machinery here and just send it to our wrapper
-        # widget.
+
+    def init(self):
+        self = NSPopUpButton.init(self)
+        self.setTarget_(self)
+        self.setAction_('handleChange:')
+        return self
+
+    def handleChange_(self, sender):
         wrappermap.wrapper(self).emit('changed', self.indexOfSelectedItem())
-        return YES
 
 class OptionMenu(AttributedStringStyler):
     def __init__(self, options):
