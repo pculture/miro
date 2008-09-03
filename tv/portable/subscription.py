@@ -91,6 +91,10 @@ def parseContent(content):
 
 def get_urls_from_query(query):
     urls = []
+    # the query string shouldn't be a unicode.  if we pass it in as a unicode
+    # then parse_qs returns unicode values which aren't properly converted
+    # and then we end up with boxes instead of ' and " characters.
+    query = str(query)
     parsedQuery = cgi.parse_qs(query)
     for key, value in parsedQuery.items():
         match = re.match(r'^url(\d+)$', key)
@@ -99,8 +103,8 @@ def get_urls_from_query(query):
             additional = {}
             for key2 in ADDITIONAL_KEYS:
                 if '%s%s' % (key2, urlId) in parsedQuery:
-                    additional[key2] = parsedQuery['%s%s' % (key2, urlId)][0]
-            urls.append((value[0], additional))
+                    additional[key2] = unicode(parsedQuery['%s%s' % (key2, urlId)][0])
+            urls.append((unicode(value[0]), additional))
     return urls
 
 def isSubscribeLink(url):
