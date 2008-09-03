@@ -363,12 +363,12 @@ class FeedToolbar(widgetset.Background):
         self.autdownload_menu.connect('changed', self._on_autodownload_changed)
         
         send_button = widgetset.Button(_("Send to a friend"), style='smooth')
-        send_button.set_size(0.85)
+        send_button.set_size(widgetset.FEEDVIEW_BUTTONS_TEXT_SIZE)
         send_button.set_color(style.TOOLBAR_GRAY)
         send_button.connect('clicked', self._on_send_clicked)
 
         settings_button = widgetset.Button(_("Settings"), style='smooth')
-        settings_button.set_size(0.85)
+        settings_button.set_size(widgetset.FEEDVIEW_BUTTONS_TEXT_SIZE)
         settings_button.set_color(style.TOOLBAR_GRAY)
         settings_button.connect('clicked', self._on_settings_clicked)
 

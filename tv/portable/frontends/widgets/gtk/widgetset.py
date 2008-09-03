@@ -48,3 +48,9 @@ from miro.frontends.widgets.gtk.video import VideoRenderer
 
 # Just use the GDK Rectangle class
 Rect = gtk.gdk.Rectangle
+
+"""
+Some controls styling slightly differ between platforms. Specify styles here.
+"""
+
+FEEDVIEW_BUTTONS_TEXT_SIZE = 0.85
