@@ -885,20 +885,6 @@ class Item(DDBObject):
                 logging.exception("getDescription threw error.")
                 return u'<span />'
 
-    def getAd(self):
-        """Returns valid XHTML containing the ad (str).
-        """
-        rawDescription = self.getRawDescription()
-
-        # FIXME - clean this up in regards to exception handling.
-        try:
-            rawAd = adscraper.scrape(rawDescription)
-            return xhtmlify (u'<span>%s</span>' % (unescape(rawAd),))
-
-        except Exception:
-            logging.exception("getAd threw error.")
-            return u'<span />'
-
     def looksLikeTorrent(self):
         """Returns true if we think this item is a torrent.  (For items that
         haven't been downloaded this uses the file extension which isn't
@@ -910,96 +896,8 @@ class Item(DDBObject):
         else:
             return filetypes.isTorrentFilename(self.getURL())
 
-    @returnsUnicode
-    def getDetails(self):
-        """Returns formatted XHTML with release date, duration, format, and size.
-        """
-        details = []
-        reldate = self.getReleaseDate()
-        format = self.getFormat()
-        size = self.getSizeForDisplay()
-        link = self.getLink()
-
-        if self.isContainerItem:
-            children = self.getChildren()
-            details.append(u'<span class="details-count">%s items</span>' % len(children))
-        if len(reldate) > 0:
-            details.append(u'<span class="details-date">%s</span>' % util.escape(reldate))
-        if len(size) > 0:
-            details.append(u'<span class="details-size">%s</span>' % util.escape(size))
-        if len(format) > 0:
-            details.append(u'<span class="details-format">%s</span>' % util.escape(format))
-        if self.looksLikeTorrent():
-            details.append(u'<span class="details-torrent">%s</span>' % _("TORRENT"))
-        if len(link) > 0 and link != self.getURL():
-            details.append(u'<a class="details-link" href="%s">%s</span>' % (util.quoteattr(link), _("WEB PAGE")))
-        out = u'<BR>'.join(details)
-        return out
-
     def isTransferring(self):
         return self.downloader and self.downloader.getState() in (u'uploading', u'downloading')
-
-    def getDownloadDetails(self):
-        status = self.downloader.status
-        details = [
-            (_('Total Down:'), formatSizeForDetails(status.get('currentSize', 0))),
-        ]
-        if status.get("reasonFailed"):
-            details.append((_('Error:'), status['reasonFailed']))
-        return details
-
-    def getItemDetails(self):
-        rv = []
-        
-        # prefer a comments link if it exists; if not, use the permalink
-        comments = self.getCommentsLink()
-        if comments:
-            rv.append((_('Web page:'), util.makeAnchor(_('comments'), comments)))
-
-        else:
-            link = self.getLink()
-            if link:
-                rv.append((_('Web page:'), util.makeAnchor(_('permalink'), link)))
-
-        url = self.getURL()
-        if url and not url.startswith("file:"):
-            rv.append((_('File link:'), util.makeAnchor(_('direct link to file'),
-                                              url)))
-        rv.append((_('File type:'), self.getFormat()))
-
-        if self.getLicence():
-            # check the license to see if it's a url by seeing if it has a 
-            # protocol
-            if urlparse.urlparse(self.getLicence())[0]:
-                ln = license.license_name(self.getLicence())
-                rv.append((_('License:'), util.makeAnchor(ln,
-                                                          self.getLicence())))
-            else:
-                rv.append((_('License:'), _('see permalink')))
-        else:
-            rv.append((_('License:'), _('see permalink')))
- 
-        if self.isDownloaded():
-            basename = os.path.basename(self.getFilename())
-            basename = util.clampText(basename, 20)
-            linkEventURL = u'revealItem?item=%d' % self.getID()
-            if self.isContainerItem:
-                label = _("SHOW LOCAL FOLDER")
-            else:
-                label = _("SHOW LOCAL FILE")
-            link = util.makeEventURL(label, linkEventURL)
-            rv.append((_('Filename:'), u"%s<BR />%s" % (filenameToUnicode(basename), link)))
-        return rv
-
-    def makeMoreInfoTable(self, title, moreInfoData):
-        lines = []
-        #lines.append(u'<h3>%s</h3>' % title)
-        #lines.append(u'<table cellpadding="0" cellspacing="0">')
-        for label, text in moreInfoData:
-            lines.append(u'<tr><td class="col1">%s</td>'
-                    u'<td><b>%s</b></td></tr>' % (label, text))
-        #lines.append(u'</table>')
-        return u'\n'.join(lines)
 
     def deleteFiles(self):
         """Stops downloading the item.
@@ -1383,23 +1281,6 @@ class Item(DDBObject):
 
         return u""
 
-    @returnsUnicode
-    def getPeople(self):
-        """Return the people associated with the video, separated by commas.
-        """
-        ret = []
-        self.confirmDBThread()
-        try:
-            for role in self.getFirstVideoEnclosure().roles:
-                for person in self.getFirstVideoEnclosure().roles[role]:
-                    ret.append(person)
-            for role in self.entry.roles:
-                for person in self.entry.roles[role]:
-                    ret.append(person)
-        except:
-            pass
-        return u', '.join(ret)
-
     def getLink(self):
         """Returns the URL of the webpage associated with the item.
         """
@@ -1408,36 +1289,6 @@ class Item(DDBObject):
             return self.entry.link.decode('ascii','replace')
         except:
             return u""
-
-    def getPaymentLink(self):
-        """Returns the URL of the payment page associated with the item.
-        """
-        self.confirmDBThread()
-        try:
-            return self.getFirstVideoEnclosure().payment_url.decode('ascii','replace')
-        except:
-            try:
-                return self.entry.payment_url.decode('ascii','replace')
-            except:
-                return u""
-
-    @returnsUnicode
-    def getPaymentHTML(self):
-        """returns a snippet of HTML containing a link to the payment page
-        HTML has already been sanitized by feedparser.
-        """
-        self.confirmDBThread()
-        try:
-            ret = self.getFirstVideoEnclosure().payment_html
-        except:
-            try:
-                ret = self.entry.payment_html
-            except:
-                ret = u""
-        # feedparser returns escaped CDATA so we either have to change its
-        # behavior when it parses dtv:paymentlink elements, or simply unescape
-        # here...
-        return u'<span>' + unescape(ret) + u'</span>'
 
     def update(self, entry):
         """Updates an item with new data
@@ -1543,7 +1394,6 @@ class Item(DDBObject):
             for item in self.getChildren():
                 item.migrate(newdir)
         
-
     def remove(self):
         if self.downloader is not None:
             self.downloader.removeItem(self)
@@ -1709,16 +1559,16 @@ class FileItem(Item):
         if self.isContainerItem:
             for item in self.getChildren():
                 item.remove()
-        if not fileutil.exists (self.filename):
-            # item whose file has been deleted outside of DP
+        if not fileutil.exists(self.filename):
+            # item whose file has been deleted outside of Miro
             self.remove()
         elif self.feed_id is None: 
             self.deleted = True
             self.signalChange()
         else:
-            # external item that the user deleted in DP
+            # external item that the user deleted in Miro
             url = self.getFeedURL()
-            if url.startswith ("dtv:manualFeed") or url.startswith ("dtv:singleFeed"):
+            if url.startswith("dtv:manualFeed") or url.startswith("dtv:singleFeed"):
                 self.remove()
             else:
                 self.deleted = True
@@ -1807,51 +1657,3 @@ filename was %s""", stringify(self.filename))
                             self.filename, parent_file)
         self.updateReleaseDate()
         Item.setupLinks(self)
-
-def expireItems(items):
-    if len(items) == 1:
-        return items[0].expire()
-
-    hasContainers = False
-    hasExternalItems = False
-    for item in items:
-        if item.isContainerItem:
-            hasContainers = True
-        elif item.isExternal():
-            hasExternalItems = True
-        if hasContainers and hasExternalItems:
-            break
-
-    title = _("Removing %s items") % len(items)
-    if hasExternalItems:
-        description = _("""One or more of these videos was not downloaded \
-from a channel.  Would you like to delete these items or just remove their \
-entries from the Library?""")
-    else:
-        description = u"Are you sure you want to delete all %s videos?" % \
-                len(items)
-
-    if hasContainers:
-        description += u"\n\n" + _("""\
-One or more of these items is a folder.  When you remove or delete a folder, \
-any items inside that folder will also be removed or deleted.""")
-
-    if hasExternalItems:
-        d = dialogs.ThreeChoiceDialog(title, description,
-                dialogs.BUTTON_REMOVE_ENTRY, dialogs.BUTTON_DELETE_FILES,
-                dialogs.BUTTON_CANCEL)
-    else:
-        d = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_OK,
-                dialogs.BUTTON_CANCEL)
-
-    def callback(dialog):
-        if dialog.choice == dialogs.BUTTON_DELETE_FILES:
-            for item in items:
-                if item.idExists() and isinstance (item, FileItem):
-                    item.deleteFiles()
-        if dialog.choice in (dialogs.BUTTON_OK, dialogs.BUTTON_REMOVE_ENTRY,
-                dialogs.BUTTON_DELETE_FILES):
-            for item in items:
-                if item.idExists():
-                    item.expire()
-    d.run(callback)
