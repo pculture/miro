@@ -349,7 +349,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         ## set up rows
         details_rows = []
-        details_rows.append((_('Web page'), _('permalink'), 'visit_webpage'))
+        if self.data.permalink:
+            details_rows.append((_('Web page'), _('permalink'), 'visit_webpage'))
         if self.data.file_url and not self.data.file_url.startswith('file:'):
             details_rows.append(
                 (_('File link'), _('direct link to file'), 'visit_filelink'))
