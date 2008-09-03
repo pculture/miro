@@ -318,6 +318,13 @@ def _build_downloads_panel():
     attach_integer(limit, prefs.DOWNSTREAM_BT_LIMIT_IN_KBS, create_integer_checker(min=0))
     v.pack_start(build_hbox((cbx, limit, note)))
 
+    cbx = widgetset.Checkbox(_('Limit torrent connections to:'))
+    limit = widgetset.TextEntry()
+    limit.set_width(5)
+    attach_boolean(cbx, prefs.LIMIT_CONNECTIONS_BT, (limit,))
+    attach_integer(limit, prefs.CONNECTION_LIMIT_BT_NUM, create_integer_checker(min=0))
+    v.pack_start(build_hbox((cbx, limit)))
+
     note = widgetset.Label(_('Use ports:'))
     min_port = widgetset.TextEntry()
     min_port.set_width(5)
