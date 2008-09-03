@@ -65,8 +65,14 @@ class TextEntry(Widget):
         self.notifications.connect(self.on_changed,
                 'NSControlTextDidChangeNotification')
 
+        self.create_signal('activate')
+        # FIXME - need to hook up the activate signal to on_activated
+
     def on_changed(self, notification):
         self.emit('changed')
+
+    def on_activated(self, notification):
+        self.emit('activate')
 
     def calc_size_request(self):
         size = self.sizer_cell.cellSize()
