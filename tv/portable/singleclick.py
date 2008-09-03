@@ -33,9 +33,9 @@ Frontends should call setCommandLineArgs() passing it a list of arguments that
 the users gives.  This should just be suspected torrents/videos, not things
 like '--help', '--version', etc.
 
-Frontends should trap when a user opens a torrent/video with democracy while
-democracy is already running.  They should arange for addVideo or addTorrent
-to be called in the existing democracy process.
+Frontends should trap when a user opens a torrent/video with Miro while
+Miro is already running.  They should arrange for addVideo or addTorrent
+to be called in the existing Miro process.
 """
 
 from miro.gtcache import gettext as _
@@ -336,7 +336,7 @@ def addSubscriptionURL(prefix, expectedContentType, url):
 
 def handleCommandLineArgs(args):
     if app.controller.finishedStartup:
-        parseCommandLineArgs(args)
+        parse_command_line_args(args)
     else:
         setCommandLineArgs(args)
 
@@ -355,9 +355,9 @@ def downloadURL(url):
         url = "https:" + url[len("feeds:"):]
         addDownload(url)
     else:
-        parseCommandLineArgs([unicodeToFilename(url)])
+        parse_command_line_args([unicodeToFilename(url)])
 
-def parseCommandLineArgs(args=None):
+def parse_command_line_args(args=None):
     if args is None:
         global _commandLineArgs
         args = _commandLineArgs
@@ -399,7 +399,7 @@ def parseCommandLineArgs(args=None):
                 addVideo(arg, len(args) == 1)
                 addedVideos = True
         else:
-            logging.warning("parseCommandLineArgs: %s doesn't exist", arg)
+            logging.warning("parse_command_line_args: %s doesn't exist", arg)
 
     if addedVideos:
         app.selection.selectTabByTemplateBase('librarytab', False)
@@ -408,4 +408,4 @@ def parseCommandLineArgs(args=None):
         app.selection.selectTabByTemplateBase('downloadtab')
 
 def openFile(path):
-    parseCommandLineArgs([path])
+    parse_command_line_args([path])

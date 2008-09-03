@@ -69,6 +69,7 @@ from miro import util
 from miro import searchengines
 from miro import storedatabase
 from miro import views
+from miro.singleclick import parse_command_line_args
 
 class StartupError(Exception):
     def __init__(self, summary, description):
@@ -187,6 +188,8 @@ def finalizeStartup():
     app.selection = selection.SelectionHandler()
 
     signals.system.startupSuccess()
+
+    eventloop.addIdle(parse_command_line_args, "parsing command line args")
 
 def setup_global_feeds():
     setup_global_feed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
