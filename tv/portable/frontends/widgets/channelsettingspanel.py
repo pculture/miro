@@ -87,11 +87,15 @@ def _build_video_expires(channel):
     expire_combo = widgetset.OptionMenu([e[1] for e in expire_options])
 
     if channel.expire == "system":
-        expire_combo.set_selected(0)
+        selected = expire_values.index("system")
     elif channel.expire == "never":
-        expire_combo.set_selected(7)
+        selected = expire_values.index("never")
     else:
-        expire_combo.set_selected(expire_values.index(str(channel.expire_time)))
+        try:
+            selected = expire_values.index(str(channel.expire_time))
+        except ValueError:
+            selected = 0
+    expire_combo.set_selected(selected)
 
     def expire_changed(widget, index):
         value = expire_options[index][0]
@@ -163,14 +167,13 @@ def _build_remember_items(channel):
     lab2 = widgetset.Label(_("older items in this feed in addition to the current contents."))
 
     if channel.max_old_items == u"system":
-        older_combo.set_selected(0)
+        selected = older_values.index("-1")
     else:
         try:
             selected = older_values.index(str(channel.max_old_items))
-        except:
-            channel.max_old_items = -1
+        except ValueError:
             selected = 0
-        older_combo.set_selected(selected)
+    older_combo.set_selected(selected)
 
     def older_changed(widget, index):
         value = older_options[index][0]
