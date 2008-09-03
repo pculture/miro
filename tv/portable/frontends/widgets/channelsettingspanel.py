@@ -165,7 +165,12 @@ def _build_remember_items(channel):
     if channel.max_old_items == u"system":
         older_combo.set_selected(0)
     else:
-        older_combo.set_selected(older_values.index(str(channel.max_old_items)))
+        try:
+            selected = older_values.index(str(channel.max_old_items))
+        except:
+            channel.max_old_items = -1
+            selected = 0
+        older_combo.set_selected(selected)
 
     def older_changed(widget, index):
         value = older_options[index][0]
