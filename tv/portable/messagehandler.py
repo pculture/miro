@@ -581,7 +581,6 @@ class BackendMessageHandler(messages.MessageHandler):
                         lambda x: None, lambda x: None)
 
     def handle_new_channel_search_channel(self, message):
-        logging.info("handle_new_channel_search_channel")
         term = message.search_term
         channel_info = message.channel_info
         location = channel_info.base_href
