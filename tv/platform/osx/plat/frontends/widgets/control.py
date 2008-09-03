@@ -47,6 +47,7 @@ class BaseTextEntry(Widget):
         self.height = self.font.pointSize() + self.font.leading()
         self.view.setFont_(self.font)
         self.view.setEditable_(YES)
+        self.view.cell().setLineBreakMode_(NSLineBreakByTruncatingTail)
         self.sizer_cell = self.view.cell().copy()
         if initial_text:
             self.view.setStringValue_(initial_text)
@@ -82,11 +83,9 @@ class BaseTextEntry(Widget):
 
     def enable_widget(self):
         self.view.setEnabled_(True)
-        self.view.setEditable_(True)
 
     def disable_widget(self):
         self.view.setEnabled_(False)
-        self.view.setEditable_(False)
 
 class MiroTextField(NSTextField):
     def becomeFirstResponder(self):
