@@ -157,10 +157,10 @@ class ImageCellRenderer(object):
 
 class CustomTableCell(NSCell):
     def init(self):
-        NSCell.init(self)
+        self = NSCell.init(self)
         self.layout_manager = LayoutManager()
         self.hotspot = None
-        return NSCell.init(self)
+        return self
 
     def highlightColorWithFrame_inView_(self, frame, view):
         if wrappermap.wrapper(view).draws_selection:
@@ -177,7 +177,11 @@ class CustomTableCell(NSCell):
     def make_drawing_style(self, frame, view):
         if self.isHighlighted() and frame is not None:
             highlight = NSCell.highlightColorWithFrame_inView_(self, frame, view)
-            return DrawingStyle(highlight, NSColor.whiteColor())
+            text_color = None
+            table_view = self.wrapper.column.tableView()
+            if table_view.isDescendantOf_(table_view.window().firstResponder()):
+                text_color = NSColor.whiteColor()
+            return DrawingStyle(highlight, text_color)
         else:
             return DrawingStyle()
 
@@ -203,6 +207,7 @@ class CustomTableCell(NSCell):
 class CustomCellRenderer(object):
     def __init__(self):
         self.outline_column = False
+        self.column = None
 
     def setDataCell_(self, column):
         # Note that the ownership is the opposite of what happens in widgets.
@@ -216,6 +221,7 @@ class CustomCellRenderer(object):
         nscell = CustomTableCell.alloc().init()
         nscell.wrapper = self
         column.setDataCell_(nscell)
+        self.column = column
 
     def hotspot_test(self, style, layout, x, y, width, height):
         return None
