@@ -27,6 +27,7 @@
 # statement from all source files in the program, then also delete it here.
 
 from miro.plat.utils import filenameToUnicode
+import logging
 
 # Returns items that match search
 def matchingItems(obj, searchString):
@@ -49,7 +50,10 @@ def downloadingItems(obj):
     return obj.getState() == 'downloading'
 
 def downloadingOrPausedItems(obj):
-    return obj.getState() in ('downloading', 'paused')
+    return (obj.getState() in ('downloading', 'paused')
+            or (hasattr(obj, "downloader")
+                and obj.downloader != None
+                and obj.downloader.getState() == u'uploading'))
 
 def unwatchedItems(obj):
     return obj.getState() == 'newly-downloaded' and not obj.isNonVideoFile()
