@@ -334,13 +334,7 @@ def addSubscriptionURL(prefix, expectedContentType, url):
                 Template(_("Could not download the $shortAppName channel file: $url.")).substitute(url=realURL,shortAppName=config.get(prefs.SHORT_APP_NAME)))
     httpclient.grabURL(realURL, callback, errback)
 
-def handleCommandLineArgs(args):
-    if app.controller.finishedStartup:
-        parse_command_line_args(args)
-    else:
-        setCommandLineArgs(args)
-
-def setCommandLineArgs(args):
+def set_command_line_args(args):
     _commandLineArgs.extend(args)
 
 def downloadURL(url):

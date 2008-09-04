@@ -152,7 +152,7 @@ def startapp():
         if args[i].startswith('file://'):
             args[i] = args[i][len('file://'):]
 
-    singleclick.setCommandLineArgs(args)
+    singleclick.set_command_line_args(args)
     startup(props_to_set)
 
 def print_version():

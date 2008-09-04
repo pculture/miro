@@ -42,7 +42,6 @@ if getattr(dbus, 'version', (0, 0, 0)) >= (0, 41, 0):
 # (0, 80, 0) is the first version that has do_not_queue
 if getattr(dbus, 'version', (0, 0, 0)) >= (0, 80, 0):
     BusName = dbus.service.BusName
-
     NameExistsException = dbus.NameExistsException
 
 else:
@@ -126,22 +125,21 @@ else:
 
     BusName = BusNameFlags
 
-class OneTime (dbus.service.Object):
+class OneTime(dbus.service.Object):
     """This makes sure we've only got one instance of Miro running at any given time.
     """
     def __init__(self):
         bus = dbus.SessionBus()
-        bus_name = BusName('org.participatoryculture.dtv.onetime', bus=bus, do_not_queue = True)
+        bus_name = BusName('org.participatoryculture.dtv.onetime', bus=bus, do_not_queue=True)
         dbus.service.Object.__init__(self, bus_name, '/org/participatoryculture/dtv/OneTime')
 
     @dbus.service.method('org.participatoryculture.dtv.OneTimeIface')
-    def handle_args (self, args):
+    def handle_args(self, args):
         from miro import singleclick
-        from miro import app
         from miro import eventloop
         for i in xrange(len(args)):
             args[i] = args[i].encode('latin1')
             if args[i].startswith('file://'):
                 args[i] = args[i][len('file://'):]
-        eventloop.addIdle(lambda:singleclick.handleCommandLineArgs (args), "Open Files from dbus")
-        app.htmlapp.frame.widgetTree['main-window'].present()
+
+        eventloop.addIdle(lambda: singleclick.parse_command_line_args(args), "Open Files from dbus")
