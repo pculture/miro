@@ -1603,7 +1603,8 @@ class RSSFeedImpl(RSSFeedImplBase):
         # wait a little while before we start the update
         FeedImpl.onRestore(self)
         self.download = None
-        self.scheduleUpdateEvents(INITIAL_FEED_UPDATE_DELAY)
+        if not config.get(prefs.CHECK_CHANNELS_EVERY_X_MN) == -1:
+            self.scheduleUpdateEvents(INITIAL_FEED_UPDATE_DELAY)
 
     def cleanOldItems(self):
         self.modified = None
