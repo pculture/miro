@@ -174,7 +174,7 @@ def finalizeStartup():
 
     # Start the automatic downloader daemon
     logging.info("Spawning auto downloader...")
-    autodler.startDownloader()
+    autodler.start_downloader()
 
     item.reconnectDownloaders()
     feed.expireItems()
