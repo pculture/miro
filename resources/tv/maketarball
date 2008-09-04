@@ -37,6 +37,14 @@ else
     fi
 fi
 
+if [ -e tv ]
+then
+    echo "Checkout successful."
+else
+    echo "Checkout failed!  See above for details."
+    exit $?;
+fi
+
 cd tv
 
 # go through app.config.template and expand the revision-related properties
