@@ -130,20 +130,21 @@ class ThemeHistory(DDBObject):
             defaultFeedURLs = []
 
             if platform.system() == 'Darwin':
-                defaultFeedURLs.append((u'http://www.getmiro.com/screencasts/mac/mac.feed.rss', True))
+                defaultFeedURLs.append((u'http://www.getmiro.com/screencasts/mac/mac.feed.rss', False))
             else:
-                defaultFeedURLs.append((u'http://www.getmiro.com/screencasts/windows/win.feed.rss', True))
+                defaultFeedURLs.append((u'http://www.getmiro.com/screencasts/windows/win.feed.rss', False))
 
             defaultFeedURLs.extend([
-                (u'http://feeds.miroguide.com/miroguide/featured', True),
+                (u'http://feeds.miroguide.com/miroguide/featured', False),
                 (u'http://feeds.miroguide.com/miroguide/toprated', False),
-                (u'http://feeds.miroguide.com/miroguide/new', True),
                 (u'http://feeds.miroguide.com/miroguide/popular', False),
+                (u'http://feeds.miroguide.com/miroguide/new', False),
 
                 (_('Sample Channels'), [
-                    (u'http://feeds.pbs.org/pbs/moyers/journal-video', False),
+                    (u'http://tedtalks.blip.tv/rss', False),
+                    (u'http://feeds.theonion.com/OnionNewsNetwork', False),
+                    (u'http://ewheel.democracynow.org/rss.xml', False),
                     (u'http://www.washingtonpost.com/wp-srv/mmedia/hd_podcast.xml', False),
-                    (u'http://www.fileden.com/files/2008/5/14/1911312/timostrailers.rss', False),
                 ])
             ])
 
