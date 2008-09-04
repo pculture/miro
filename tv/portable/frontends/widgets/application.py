@@ -35,12 +35,14 @@ import traceback
 import urllib
 
 from miro import app
+from miro import autoupdate
 from miro import config
 from miro import prefs
 from miro import feed
 from miro import startup
 from miro import signals
 from miro import messages
+from miro import eventloop
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import newsearchchannel
@@ -81,6 +83,8 @@ class Application:
         app.search_manager = search.SearchManager()
         app.tab_list_manager = tablistmanager.TabListManager()
         self.window = MiroWindow(_("Miro"), self.get_main_window_dimensions())
+
+        # FIXME - first-time startup somewhere around here
 
     def build_window(self):
         app.tab_list_manager.populate_tab_list()
@@ -653,6 +657,7 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
     def connect_to_signals(self):
         signals.system.connect('error', self.handleError)
         signals.system.connect('download-complete', self.handleDownloadComplete)
+        signals.system.connect('update-available', self.handle_update_available)
         signals.system.connect('startup-success', self.handleStartupSuccess)
         signals.system.connect('startup-failure', self.handleStartupFailure)
         signals.system.connect('new-dialog', self.handleDialog)
@@ -667,9 +672,16 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
 
     def handleStartupSuccess(self, obj):
         call_on_ui_thread(self.startup_ui)
+        eventloop.addTimeout(3, autoupdate.check_for_updates, "Check for updates")
 
     def handleDownloadComplete(self, obj, item):
         print "DOWLOAD COMPLETE"
+
+    def handle_update_available(self, obj, item):
+        print "update available!"
+
+    def handle_up_to_date(self):
+        print "up to date!"
 
     def handleError(self, obj, report):
         # FIXME - I don't want to write the code in dialogs.py yet

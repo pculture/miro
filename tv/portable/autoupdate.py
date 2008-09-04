@@ -26,6 +26,12 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+"""Checks the AUTOUPDATE_URL to see if there's a more recent version
+of the application.
+
+Call ``check_for_updates``.
+"""
+
 from miro import prefs
 from miro import config
 import logging
@@ -35,66 +41,71 @@ from miro import signals
 
 from miro.httpclient import grabURL
 
-checkInProgress = False
+check_in_progress = False
 
-def checkForUpdates(upToDateCallback=None):
-    """Trigger the version checking process
-    """
-    global checkInProgress
-    if not checkInProgress:
-        checkInProgress = True
+def check_for_updates(up_to_date_callback=None):
+    """Checks the AUTOUPDATE_URL for the recent version."""
+    global check_in_progress
+    if not check_in_progress:
+        check_in_progress = True
         logging.info("Checking for updates...")
         url = config.get(prefs.AUTOUPDATE_URL)
-        updateHandler = lambda data: _handleAppCast(data, upToDateCallback)
-        errorHandler = _handleError
-        grabURL(url, updateHandler, errorHandler)
+        update_handler = lambda data: _handle_app_cast(data, up_to_date_callback)
+        error_handler = _handle_error
+        grabURL(url, update_handler, error_handler)
 
-def _handleError(error):
-    """Error handler
-    """
-    global checkInProgress
-    checkInProgress = False
+def _handle_error(error):
+    """Error handler"""
+    global check_in_progress
+    check_in_progress = False
     logging.warn("HTTP error while checking for updates")
-    eventloop.addTimeout (86400, checkForUpdates, "Check for updates")
+    eventloop.addTimeout(86400, check_for_updates, "Check for updates")
 
-def _handleAppCast(data, upToDateCallback):
+def _handle_app_cast(data, up_to_date_callback):
     """Handle appcast data when it's correctly fetched
     """
     try:
-        try:
-            appcast = feedparser.parse(data['body'])
-            if appcast['bozo'] == '1':
-                return
+        appcast = feedparser.parse(data['body'])
+        if appcast['bozo'] == '1':
+            return
 
-            upToDate = True
-            latest = _getItemForLatest(appcast)
-            if latest is not None:
-                serial = int(config.get(prefs.APP_SERIAL))
-                upToDate = (serial >= _getItemSerial(latest))
-        
-            if not upToDate:
-                logging.info('New update available.')
-                signals.system.updateAvailable(latest)
-            elif upToDateCallback:
-                logging.info('Up to date. Notifying')
-                upToDateCallback()
-            else:
-                logging.info('Up to date.')
-        except:
-            logging.warn("Error while handling appcast data.")
-            import traceback
-            traceback.print_exc()
+        up_to_date = True
+        latest = _get_item_for_latest(appcast)
+        if latest is None:
+            logging.info('No updates for this platform.')
+            # this will go through the finally clause below
+            return
+
+        serial = int(config.get(prefs.APP_SERIAL))
+        up_to_date = (serial >= _get_item_serial(latest))
+    
+        if not up_to_date:
+            logging.info('New update available.')
+            signals.system.updateAvailable(latest)
+        elif up_to_date_callback:
+            logging.info('Up to date.  Notifying callback.')
+            up_to_date_callback()
+        else:
+            logging.info('Up to date.')
+
+    except:
+        logging.exception("Error while handling appcast data.")
+
     finally:
-        global checkInProgress
-        checkInProgress = False
-        eventloop.addTimeout(86400, checkForUpdates, "Check for updates")
+        global check_in_progress
+        check_in_progress = False
+        eventloop.addTimeout(86400, check_for_updates, "Check for updates")
 
-def _getItemForLatest(appcast):
+def _get_item_for_latest(appcast):
     """Filter out non platform items, sort remaining from latest to oldest
     and return the item corresponding to the latest known version.
+
+    If there are no entries for this platform (this happens with Linux), then
+    this returns None.
     """
     platform = config.get(prefs.APP_PLATFORM)
     rejectedItems = list()
+
     for item in appcast['entries']:
         rejectedEnclosures = list()
         for enclosure in item['enclosures']:
@@ -106,16 +117,20 @@ def _getItemForLatest(appcast):
             item['enclosures'].remove(enclosure)
         if len(item['enclosures']) == 0:
             rejectedItems.append(item)
+
     for item in rejectedItems:
         appcast['entries'].remove(item)
 
-    try:
-        appcast['entries'].sort(key=_getItemSerial, reverse=True)
-        return appcast['entries'][0]
-    except:
+    # we've removed all entries that aren't relevant to this platform.
+    # if there aren't any left, we return None and the caller can deal
+    # with things.
+    if not appcast['entries']:
         return None
 
-def _getItemSerial(item):
+    appcast['entries'].sort(key=_get_item_serial, reverse=True)
+    return appcast['entries'][0]
+
+def _get_item_serial(item):
     """Returns the serial of the first enclosure of the passed item
     """
     return int(item['enclosures'][0]['dtv:serial'])
