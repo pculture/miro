@@ -1534,6 +1534,7 @@ class HTTPClient(object):
         if not self.modified is None:
             self.headers["If-Modified-Since"] = self.modified
         self.headers['User-Agent'] = self.userAgent
+        self.headers['Referer'] = "http://getmiro.com/"
         self.setCookieHeader()
 
     def setCookieHeader(self):
