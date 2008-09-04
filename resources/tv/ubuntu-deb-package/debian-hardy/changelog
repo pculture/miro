@@ -1,0 +1,55 @@
+miro (1.2.7-0pcf2) hardy; urgency=low
+
+  * Fixed not installing xine_extrator
+  * Fix for the movies dir patch
+
+ -- Ben Dean-Kawamura <ben@pculture.org>  Fri, 29 Aug 2008 14:49:54 -0400
+
+miro (1.2.7-0pcf1) hardy; urgency=low
+
+  * #10291 FIXED adding channels via the command line crashed miro
+
+ -- Will Guaraldi <will.guaraldi@pculture.org>  Mon, 18 Aug 2008 17:55:29 -0400
+
+miro (1.2.6-0pcf1) hardy; urgency=low
+
+  * #10209 FIXED changed default channels
+
+ -- Will Guaraldi <will.guaraldi@pculture.org>  Fri, 15 Aug 2008 00:45:53 -0400
+
+miro (1.2.5-0pcf1) hardy; urgency=low
+
+  * #10197 FIXED better options in dialog when videos directory is missing
+  * FIXED gstreamer renderer to use gconfvideosink if possible
+  * FIXED gstreamer renderer to play from savepoint
+
+ -- Will Guaraldi <will.guaraldi@pculture.org>  Thu, 14 Aug 2008 16:45:56 -0400
+
+miro (1.2.3-0pcf1) hardy; urgency=low
+
+  * #9685 NEW Download mp4 from YouTube? if available and download flv if not
+  * #9841 FIXED Downloaded torrents disappear when play selected
+  * #9787 FIXED New counter doesn't update until selected
+  * #9727 FIXED Feeds duplicated when updating to co-branded version
+  * #9880, #8104 FIXED Problems with menus not being translated for windows-xul 
+    and gtkx11 platforms
+  * #8378 FIXED httpclient error 
+  * #9740 FIXED Thumbnails are downloaded but not displayed in Hardy
+  * #9860 FIXED Drag and drop does not work in Hardy
+  * #9692 FIXED Fix gtkx11 code so it works with xulrunner 1.9 
+
+ -- Will Guaraldi <will.guaraldi@pculture.org>  Tue, 22 Apr 2008 17:14:14 -0400
+
+miro (1.2.2-0pcf2) hardy; urgency=low
+
+  * Removed the gstreamer-as-default patch--there are issues, so it doesn't make
+    sense to do.
+
+ -- Will Guaraldi <will.guaraldi@pculture.org>  Mon, 31 Mar 2008 15:16:27 -0400
+
+miro (1.2.2-0pcf1) hardy; urgency=low
+
+  * First Hardy release.
+  * Setting gstreamer as default--it seems to work better.
+
+ -- Will Guaraldi <will.guaraldi@pculture.org>  Mon, 31 Mar 2008 12:18:21 -0400

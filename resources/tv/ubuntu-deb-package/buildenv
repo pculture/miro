@@ -1,23 +1,27 @@
 #!/bin/bash
 
-apt-get install debhelper fakeroot cdbs pbuilder lintian linda
+apt-get install debhelper fakeroot cdbs pbuilder lintian
 
-mkdir ./pbuilder/
+if [ ! -e ./pbuilder/ ]; then
+    mkdir ./pbuilder/
+fi
 
-function create_or_update {
+if [ ! -f ~/.pbuilderrc ]; then
+    echo "Creating .pbuilderrc file...."
+    echo "COMPONENTS=\"main restricted universe multiverse\"" > ~/.pbuilderrc;
+fi
+
+if [ ${1} ]
+then
     if [ -f ./pbuilder/$1-base.tgz ]; then
-        echo "";
-        echo "updating $1";
+        echo "Updating $1";
         sudo pbuilder update --distribution $1 --basetgz ./pbuilder/$1-base.tgz;
     else
-        echo "";
-        echo "creating $1";
+        echo "Creating $1";
         sudo pbuilder create --distribution $1 \
            --othermirror "deb http://archive.ubuntu.com/ubuntu $1 universe multiverse" \
            --basetgz ./pbuilder/$1-base.tgz;
     fi
-}
-
-create_or_update dapper ;
-create_or_update feisty ;
-create_or_update gutsy ;
+else
+    echo "Syntax: buildenv <dir>";
+fi

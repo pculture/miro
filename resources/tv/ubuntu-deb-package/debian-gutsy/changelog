@@ -1,8 +1,43 @@
+miro (1.2.7-0pcf1) gutsy; urgency=low
+
+  * #10291 FIXED adding channels via the command line crashed miro
+
+ -- Will Guaraldi <will.guaraldi@pculture.org>  Mon, 18 Aug 2008 17:55:29 -0400
+
+miro (1.2.6-0pcf1) gutsy; urgency=low
+
+  * #10209 FIXED changed default channels
+
+ -- Will Guaraldi <will.guaraldi@pculture.org>  Fri, 15 Aug 2008 00:45:53 -0400
+
+miro (1.2.5-0pcf1) gutsy; urgency=low
+
+  * #10197 FIXED better options in dialog when videos directory is missing
+  * FIXED gstreamer renderer to use gconfvideosink if possible
+  * FIXED gstreamer renderer to play from savepoint
+
+ -- Will Guaraldi <will.guaraldi@pculture.org>  Thu, 14 Aug 2008 16:45:56 -0400
+
+miro (1.2.3-0pcf1) gutsy; urgency=low
+
+  * #9685 NEW Download mp4 from YouTube? if available and download flv if not
+  * #9841 FIXED Downloaded torrents disappear when play selected
+  * #9787 FIXED New counter doesn't update until selected
+  * #9727 FIXED Feeds duplicated when updating to co-branded version
+  * #9880, #8104 FIXED Problems with menus not being translated for windows-xul 
+    and gtkx11 platforms
+  * #8378 FIXED httpclient error 
+  * #9740 FIXED Thumbnails are downloaded but not displayed in Hardy
+  * #9860 FIXED Drag and drop does not work in Hardy
+  * #9692 FIXED Fix gtkx11 code so it works with xulrunner 1.9 
+
+ -- Will Guaraldi <will.guaraldi@pculture.org>  Tue, 22 Apr 2008 17:14:14 -0400
+
 miro (1.2-0pcf1) gutsy; urgency=low
 
   * New upstream release.
 
- -- Will Guaraldi <will.guaraldi@pculture.org>  Wed, 12 Mar 2008 13:15:44 -0400
+ -- Will Guaraldi <will.guaraldi@pculture.org>  Fri, 21 Mar 2008 16:05:35 -0400
 
 miro (1.1.2-0pcf2) gutsy; urgency=low
 

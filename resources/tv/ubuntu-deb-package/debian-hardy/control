@@ -5,22 +5,21 @@ Maintainer: Will Guaraldi <will.guaraldi@pculture.org>
 Build-Depends: cdbs, 
                debhelper (>= 5), 
                python2.5, 
+               python-support, 
                python-pyrex, 
+               python-dev, 
                libboost-python-dev, 
+               libboost-filesystem-dev, 
+               libboost-date-time-dev, 
+               libboost-thread-dev, 
+               libboost-serialization-dev, 
                python-gtk2-dev, 
                python-gnome2-extras-dev (>= 2.14.0-2), 
-               firefox-dev, 
                libxine-dev, 
-               python-dev, 
-               python-support, 
                libxv-dev, 
-               libx11-dev, 
                libssl-dev, 
-               libboost-date-time-dev, 
-               libboost-filesystem-dev, 
-               libboost-serialization-dev, 
-               libboost-thread-dev
-Standards-Version: 3.7.2
+               xulrunner-1.9-dev
+Standards-Version: 3.7.3
 
 Package: miro
 Architecture: any
@@ -29,16 +28,16 @@ Depends: ${shlibs:Depends},
          ${python:Depends}, 
          python-gtk2, 
          python-gnome2, 
-         python-gnome2-extras (>= 2.14.0-2),
+         python-gnome2-extras (>= 2.14.0-2), 
          python-glade2, 
-         python2.5-dbus, 
          imagemagick, 
+         python2.5-dbus, 
          libxine1-plugins, 
-         libxine1 (<< 1.1.8), libxine1 (>= 1.1.7), 
+         libxine1, 
+         xulrunner-1.9,
          miro-data (>= 1.2.7)
-Suggests: ttf-bitstream-vera
-Conflicts: democracyplayer (<< 0.9.8)
-Replaces: democracyplayer
+Recommends: libxine1-ffmpeg
+Suggests: python-psyco [i386 hurd-i386 netbsd-i386 kfreebsd-i386]
 Description: GTK+ based RSS video aggregator
  Miro is a platform for Internet television and video.
  It allows you to download and watch videos from RSS feeds (including
@@ -46,8 +45,6 @@ Description: GTK+ based RSS video aggregator
 
 Package: miro-data
 Architecture: all
-Conflicts: democracyplayer-data (<< 0.9.8)
-Replaces: democracyplayer-data
 Description: GTK+ based RSS video aggregator data files
  Miro is a platform for Internet television and video.
  It allows you to download and watch videos from RSS feeds (including
