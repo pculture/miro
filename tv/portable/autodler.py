@@ -188,7 +188,7 @@ def start_downloader():
 #     manual_downloader.pause()
 #     auto_downloader.pause()
 
-def resumeDownloader():
+def resume_downloader():
     manual_downloader.resume()
     auto_downloader.resume()
 
