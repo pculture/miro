@@ -94,13 +94,12 @@ def mappableToTab(obj):
     """Return True if a tab should be shown for obj in the frontend. The filter
     used on the database to get the list of tabs.
     """
-    from miro import tabs
     from miro import feed
     from miro import folder
     from miro import playlist
     from miro import guide
     return ((isinstance(obj, feed.Feed) and obj.isVisible()) or
-            obj.__class__ in (tabs.StaticTab,
+            obj.__class__ in (
                 folder.ChannelFolder, playlist.SavedPlaylist,
                 folder.PlaylistFolder, guide.ChannelGuide))
 

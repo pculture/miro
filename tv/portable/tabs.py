@@ -48,69 +48,6 @@ import logging
 ###############################################################################
 
 
-# Database object representing a static (non-feed-associated) tab.
-class StaticTab(database.DDBObject):
-    tabTitles = {
-        'librarytab': _('Library'),
-        'indytab': _('Individual Downloads'),
-        'newtab': _('New'),
-        'searchtab': _('Video Search'),
-        'downloadtab': _('Downloading'),
-    }
-
-    tabIcons = {
-        'librarytab': 'collection-icon-tablist.png',
-        'indytab': 'collection-icon-tablist.png',
-        'newtab': 'newvideos-icon-tablist.png',
-        'searchtab': 'search-icon-tablist.png',
-        'downloadtab': 'download-icon-tab.png',
-    }
-
-    def __init__(self, tabTemplateBase, contentsTemplate, state, order):
-        self.tabTemplateBase = tabTemplateBase
-        self.contentsTemplate = contentsTemplate
-        self.order = order
-        self.templateState = state
-        database.DDBObject.__init__(self)
-
-    def getVisible(self):
-        if self.tabTemplateBase in ('downloadtab', 'newtab', 'indytab'):
-            return self.getNumber() > 0
-        return True
-
-    def getTitle(self):
-        return self.tabTitles[self.tabTemplateBase]
-
-    def getIconURL(self):
-        return resources.url("images/%s" % self.tabIcons[self.tabTemplateBase])
-
-    def getNumberColor(self):
-        if self.tabTemplateBase == 'downloadtab':
-            return 'orange'
-        elif self.tabTemplateBase == 'newtab':
-            return 'green'
-        elif self.tabTemplateBase == 'indytab':
-            return 'green'
-        else:
-            return None
-
-    def getNumber(self):
-        if self.tabTemplateBase == 'downloadtab':
-            return views.downloadingItems.len() + views.items.filter(lambda x: x.downloader and x.downloader.getState() == 'uploading' and not (x.getFeed().url == 'dtv:manualFeed' and x.isNonVideoFile())).len()
-        elif self.tabTemplateBase == 'newtab':
-            return views.unwatchedItems.len()
-        elif self.tabTemplateBase == 'indytab':
-            return views.manualItems.len()
-        else:
-            return 0
-
-    def enableNewVideoPlayButton(self):
-        if self.tabTemplateBase == 'newtab':
-            return views.unwatchedItems.len() > 0
-        elif self.tabTemplateBase == 'indytab':
-            return views.manualItems.len() > 0
-        return False
-
 class Tab:
     idCounter = 0
 
@@ -130,8 +67,6 @@ class Tab:
                 self.type = 'guide'
             else:
                 self.type = 'site'
-        elif obj.__class__ == StaticTab: 
-            self.type = 'statictab'
         elif obj.__class__ in (feed.Feed, folder.ChannelFolder): 
             self.type = 'feed'
         elif obj.__class__ in (playlist.SavedPlaylist, folder.PlaylistFolder):
@@ -153,11 +88,6 @@ class Tab:
         self.obj.confirmDBThread()
         return self.selected
 
-    def getVisible(self):
-        if self.obj.__class__ == StaticTab: 
-            return self.obj.getVisible()
-        return True
-
     def getActive(self):
         self.obj.confirmDBThread()
         return self.active
@@ -175,10 +105,6 @@ class Tab:
         # Force a redraw by sending a change notification on the underlying
         # DB object.
         self.obj.signalChange()
-
-    def isStatic(self):
-        """True if this Tab represents a StaticTab."""
-        return isinstance(self.obj, StaticTab)
 
     def isFeed(self):
         """True if this Tab represents a Feed."""
@@ -228,7 +154,7 @@ class Tab:
 
     def signalChange(self, needsSave=True):
         """Call signalChange on the object that is mapped to this tab (the
-        StaticTab, Feed, Playlist, etc.)
+        Feed, Playlist, etc.)
         """
         self.obj.signalChange(needsSave=needsSave)
 
@@ -352,12 +278,6 @@ class TabOrder(database.DDBObject):
 
     def reorder(self, newOrder):
         self.trackedTabs.reorder(newOrder)
-
-# Remove all static tabs from the database
-def removeStaticTabs():
-    app.db.confirmDBThread()
-    for obj in views.staticTabsObjects:
-        obj.remove()
 
 def tabIterator():
     """Iterates over all tabs in order"""
