@@ -150,16 +150,6 @@ class Item(DDBObject):
             changeNeedsSave=False)
     getActive, setActive = makeSimpleGetSet(u'active', changeNeedsSave=False)
 
-    @returnsUnicode
-    def getSelectedState(self, view):
-        currentView = app.selection.itemListSelection.currentView
-        if not self.selected or view != currentView:
-            return u'normal'
-        elif not self.active:
-            return u'selected-inactive'
-        else:
-            return u'selected'
-
     def toggleShowMoreInfo(self):
         self.showMoreInfo = not self.showMoreInfo
         self.signalChange(needsSave=False, needsUpdateXML=True)

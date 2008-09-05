@@ -33,11 +33,11 @@ class PlaylistTestBase(EventLoopTest):
         self.assertEquals(realPositions, playlist.trackedItems.positions)
         self.assertEquals(playlist.getItems(), correctOrder)
 
-    def doAppend(self, playlist, objects):
-        playlist.handleDNDAppend(set([i.getID() for i in objects]))
+#    def doAppend(self, playlist, objects):
+#        [playlist.addId(i.getID()) for i in objects]
 
-    def doReorder(self, playlist, anchor, objects):
-        playlist.handleDNDReorder(anchor, set([i.getID() for i in objects]))
+#     def doReorder(self, playlist, anchor, objects):
+#         playlist.handleDNDReorder(anchor, set([i.getID() for i in objects]))
 
 class PlaylistTestCase(PlaylistTestBase):
     def setUp(self):
@@ -98,34 +98,6 @@ class PlaylistTestCase(PlaylistTestBase):
         playlist.moveItem(self.i3, 0)
         self.checkCallbacks([self.i2, self.i3])
 
-    def testHandleDrop(self):
-        playlist = SavedPlaylist("rocketboom")
-        self.doAppend(playlist, [self.i1])
-        self.checkList(playlist, [self.i1])
-        self.doAppend(playlist, [self.i3])
-        self.checkList(playlist, [self.i1, self.i3])
-        self.doAppend(playlist, [self.i3, self.i4])
-        self.checkList(playlist, [self.i1, self.i3, self.i4])
-
-    def testMoveSelectionAboveItem(self):
-        playlist = SavedPlaylist("rocketboom",
-                                 [i.id for i in [self.i1, self.i2, self.i3, self.i4]])
-        view = playlist.getView()
-        self.doReorder(playlist, self.i3, [self.i1])
-        self.checkList(playlist, [self.i2, self.i1, self.i3, self.i4])
-        self.doReorder(playlist, None, [self.i1])
-        self.checkList(playlist, [self.i2, self.i3, self.i4, self.i1])
-        self.doReorder(playlist, self.i2, [self.i1])
-        self.checkList(playlist, [self.i1, self.i2, self.i3, self.i4])
-        self.doReorder(playlist, self.i1, [self.i2, self.i3, self.i4])
-        self.checkList(playlist, [self.i2, self.i3, self.i4, self.i1])
-        self.doReorder(playlist, self.i4, [self.i2, self.i1])
-        self.checkList(playlist, [self.i3, self.i2, self.i1, self.i4])
-        self.doReorder(playlist, None, [self.i1, self.i3])
-        self.checkList(playlist, [self.i2, self.i4, self.i3, self.i1])
-        self.doReorder(playlist, None, [self.i2, self.i3, self.i4])
-        self.checkList(playlist, [self.i1, self.i2, self.i4, self.i3])
-
     def testExpireRemovesItem(self):
         checkList = [self.i1, self.i2, self.i3, self.i4]
         playlist = SavedPlaylist("rocketboom", [i.id for i in checkList])
@@ -146,74 +118,40 @@ class PlaylistFolderTestCase(PlaylistTestBase):
         self.runPendingIdles() # The TabOrder gets updated in an idle call
 
     def doTabReorder(self, anchorID, items):
-        self.playlistTabOrder.handleDNDReorder(anchorID, 
-                set([i.getID() for i in items]))
+        pass
 
     def doPlaylistRemove(self, playlist, items):
         playlist.handleRemove(set([i.getID() for i in items]))
 
-    def testHandleDrop(self):
-        self.doAppend(self.folder, [self.p1])
-        self.checkList(self.folder, [self.i1, self.i3])
-        self.doAppend(self.folder, [self.p2])
-        self.checkList(self.folder, [self.i1, self.i3, self.i4])
-        self.doAppend(self.folder, [self.p1, self.p2, self.p3])
-        self.checkList(self.folder, [self.i1, self.i3, self.i4, self.i2])
+#    def testExpireRemovesItem(self):
+#        self.doAppend(self.folder, [self.p1])
+#        self.checkList(self.folder, [self.i1, self.i3])
+#        self.i1.expire()
+#        self.checkList(self.folder, [self.i3])
+#        self.i3.expire()
+#        self.checkList(self.folder, [])
 
-    def testHandleDropUnexpanded(self):
-        self.folder.setExpanded(False)
-        app.selection.selectItem('tablist', self.playlistTabOrder.getView(), 
-                self.p1.getID(), shiftSelect=False, controlSelect=False)
-        self.doAppend(self.folder, [self.p1])
-        selectedTabIDs = app.selection.tabListSelection.currentSelection
-        self.assertEquals(selectedTabIDs, set([self.folder.getID()]))
+#    def testRemovePlaylistRemovesItem(self):
+#        for pl in [self.p1, self.p2, self.p3]:
+#            self.doAppend(self.folder, [pl])
+#        self.checkList(self.folder, [self.i1, self.i3, self.i4, self.i2])
+#        self.doTabReorder(None, [self.p3])
+#        self.checkList(self.folder, [self.i1, self.i3, self.i4])
+#        self.doTabReorder(None, [self.p2])
+#        self.checkList(self.folder, [self.i1, self.i3])
+#        self.doTabReorder(None, [self.p1])
+#        self.checkList(self.folder, [])
 
-    def testExpireRemovesItem(self):
-        self.doAppend(self.folder, [self.p1])
-        self.checkList(self.folder, [self.i1, self.i3])
-        self.i1.expire()
-        self.checkList(self.folder, [self.i3])
-        self.i3.expire()
-        self.checkList(self.folder, [])
+#    def testRemoveItemFromPlaylist(self):
+#        for pl in [self.p1, self.p2, self.p3]:
+#            self.doAppend(self.folder, [pl])
+#        self.checkList(self.folder, [self.i1, self.i3, self.i4, self.i2])
+#        self.doPlaylistRemove(self.p1, [self.i1])
+#        self.checkList(self.folder, [self.i1, self.i3, self.i4, self.i2])
+#        self.doPlaylistRemove(self.p3, [self.i1])
+#        self.checkList(self.folder, [self.i3, self.i4, self.i2])
 
-    def testRemovePlaylistRemovesItem(self):
-        for pl in [self.p1, self.p2, self.p3]:
-            self.doAppend(self.folder, [pl])
-        self.checkList(self.folder, [self.i1, self.i3, self.i4, self.i2])
-        self.doTabReorder(None, [self.p3])
-        self.checkList(self.folder, [self.i1, self.i3, self.i4])
-        self.doTabReorder(None, [self.p2])
-        self.checkList(self.folder, [self.i1, self.i3])
-        self.doTabReorder(None, [self.p1])
-        self.checkList(self.folder, [])
-
-    def testReorder(self):
-        for pl in [self.p1, self.p2, self.p3]:
-            self.doAppend(self.folder, [pl])
-        self.checkList(self.folder, [self.i1, self.i3, self.i4, self.i2])
-        # reordering the playlist doesn't change the folder
-        self.doReorder(self.p1, None, [self.i1])
-        self.checkList(self.folder, [self.i1, self.i3, self.i4, self.i2])
-        # reordering the folder doesn't change the playlists
-        self.doReorder(self.folder, None, [self.i2])
-        self.checkList(self.p1, [self.i3, self.i1])
-        self.checkList(self.p2, [self.i4, self.i3])
-        self.checkList(self.p3, [self.i1, self.i2, self.i3, self.i4])
-
-        self.p1 = SavedPlaylist("rocketboom", [self.i1.id, self.i3.id])
-        self.p2 = SavedPlaylist("telemusicvision", [self.i4.id, self.i3.id])
-        self.p3 = SavedPlaylist("digg", [self.i1.id, self.i2.id, self.i3.id, self.i4.id])
-
-    def testRemoveItemFromPlaylist(self):
-        for pl in [self.p1, self.p2, self.p3]:
-            self.doAppend(self.folder, [pl])
-        self.checkList(self.folder, [self.i1, self.i3, self.i4, self.i2])
-        self.doPlaylistRemove(self.p1, [self.i1])
-        self.checkList(self.folder, [self.i1, self.i3, self.i4, self.i2])
-        self.doPlaylistRemove(self.p3, [self.i1])
-        self.checkList(self.folder, [self.i3, self.i4, self.i2])
-
-    def testRemoveFolderRemovesPlaylist(self):
-        self.doAppend(self.folder, [self.p1, self.p2, self.p3])
-        self.folder.remove()
-        self.assertEquals(len(views.playlists), 0)
+#    def testRemoveFolderRemovesPlaylist(self):
+#        self.doAppend(self.folder, [self.p1, self.p2, self.p3])
+#        self.folder.remove()
+#        self.assertEquals(len(views.playlists), 0)

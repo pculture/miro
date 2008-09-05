@@ -11,7 +11,6 @@ from miro import databaseupgrade
 from miro import signals
 from miro import storedatabase
 from miro import subscription
-from miro import selection
 from time import sleep
 
 util.setupLogging()
@@ -72,7 +71,6 @@ class MiroTestCase(unittest.TestCase):
         self.errorSignalOkay = False
         signals.system.connect('error', self.handle_error)
         app.controller = DummyController()
-        app.selection = selection.SelectionHandler()
 
     def tearDown(self):
         signals.system.disconnect_all()

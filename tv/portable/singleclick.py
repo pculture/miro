@@ -204,7 +204,6 @@ def downloadVideo(entry):
     manualFeed = getManualFeed()
     newItem = item.Item(entry, feed_id=manualFeed.getID())
     newItem.download()
-    app.selection.selectTabByTemplateBase('downloadtab')
 
 def addTorrent(path, torrentInfohash):
     manualFeed = getManualFeed()
@@ -260,26 +259,12 @@ def addFeeds(urls, newFolderName=None):
         lastFeed = None
         if newFolderName is not None:
             newFolder = folder.ChannelFolder(newFolderName)
+
         for url in filterExistingFeedURLs(urls):
             f = feed.Feed(url)
             if newFolderName is not None:
                 f.setFolder(newFolder)
             lastFeed = f
-        if newFolderName is None:
-            if lastFeed:
-                for url in urls:
-                    f = feed.getFeedByURL(url)
-                    if f is lastFeed:
-                        app.selection.selectTabByObject(f)
-                    else:
-                        f.blink()
-            else:
-                for i in xrange (len(urls) - 1):
-                    feed.getFeedByURL(urls[i]).blink()
-                f = feed.getFeedByURL(urls[-1])
-                app.selection.selectTabByObject(f)
-        else:
-            app.selection.selectTabByObject(newFolder)
 
 def askForMultipleFeeds(urls):
     title = _("Subscribing to multiple channels") 
@@ -394,12 +379,6 @@ def parse_command_line_args(args=None):
                 addedVideos = True
         else:
             logging.warning("parse_command_line_args: %s doesn't exist", arg)
-
-    if addedVideos:
-        app.selection.selectTabByTemplateBase('librarytab', False)
-        playCommandLineView()
-    elif addedDownloads:
-        app.selection.selectTabByTemplateBase('downloadtab')
 
 def openFile(path):
     parse_command_line_args([path])

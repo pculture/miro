@@ -139,25 +139,6 @@ class Tab:
         else:
             raise TypeError("Bad tab object type: %s" % type(obj))
 
-    def getDragSourceType(self):
-        selection = app.selection.tabListSelection
-        if self.type == 'feed':
-            if (isinstance(self.obj, folder.ChannelFolder) or
-                    (self.selected and selection.isFolderSelected())):
-                return 'channelfolder'
-            else:
-                return 'channel'
-        elif self.type == 'playlist':
-            if (isinstance(self.obj, folder.PlaylistFolder) or
-                    (self.selected and selection.isFolderSelected())):
-                return 'playlistfolder'
-            else:
-                return 'playlist'
-        elif self.type == 'site':
-            return 'site'
-        else:
-            return ''
-
     def setActive(self, newValue):
         self.obj.confirmDBThread()
         self.active = newValue

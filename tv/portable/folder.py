@@ -75,20 +75,6 @@ class FolderBase(DDBObject):
                 return tab.obj
         return None
 
-    def handleDNDAppend(self, draggedIDs):
-        tabOrder = self.getTabOrder()
-        for id in draggedIDs:
-            tab = tabOrder.tabView.getObjectByID(id)
-            tab.obj.setFolder(self)
-        tabOrder.moveTabs(self.getNextTab(), draggedIDs)
-        selection = app.selection.tabListSelection
-        if len(selection.currentSelection) == 0:
-            # we appended tabs to a non-expanded folder and now nothing is
-            # selected.  Select that folder.
-            app.selection.selectItem('tablist', tabOrder.tabView,
-                    self.getID(), False, False)
-        self.signalChange()
-
     def remove(self, moveItemsTo=None):
         children = [child for child in self.getChildrenView()]
         for child in children:
