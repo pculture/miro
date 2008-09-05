@@ -188,10 +188,9 @@ def start_downloader():
 #     manual_downloader.pause()
 #     auto_downloader.pause()
 
-# FIXME - doesn't seem to be used
-# def resumeDownloader():
-#     manual_downloader.resume()
-#     auto_downloader.resume()
+def resumeDownloader():
+    manual_downloader.resume()
+    auto_downloader.resume()
 
 def update_prefs(key, value):
     if key == prefs.DOWNLOADS_TARGET.key:

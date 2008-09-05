@@ -637,7 +637,7 @@ class Item(DDBObject):
     def download(self, autodl=False):
         """Starts downloading the item.
         """
-        autodler.resumeDownloader()
+        autodler.resume_downloader()
         self.confirmDBThread()
         manualDownloadCount = views.manualDownloads.len()
         self.expired = self.keep = self.seen = False
