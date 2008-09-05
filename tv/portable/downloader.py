@@ -627,7 +627,7 @@ def configChangeUploaders(key, value):
 
 def limitUploaders():
     views.autoUploads.addAddCallback(killUploaders)
-    config.addChangeCallback(configChangeUploaders)
+    config.add_change_callback(configChangeUploaders)
     killUploaders()
         
 

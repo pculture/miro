@@ -96,13 +96,13 @@ class ViewTracker(object):
         for view in self.get_object_views():
             view.addAddCallback(self.on_object_added)
             view.addRemoveCallback(self.on_object_removed)
-            view.addChangeCallback(self.on_object_changed)
+            view.add_change_callback(self.on_object_changed)
 
     def remove_callbacks(self):
         for view in self.get_object_views():
             view.removeAddCallback(self.on_object_added)
             view.removeRemoveCallback(self.on_object_removed)
-            view.removeChangeCallback(self.on_object_changed)
+            view.remove_change_callback(self.on_object_changed)
 
     def on_object_added(self, obj, id):
         if obj in self.removed:
@@ -131,13 +131,13 @@ class TabTracker(ViewTracker):
         for view in self.get_object_views():
             view.addAddCallback(self.on_object_added)
             view.addRemoveCallback(self.on_object_removed)
-            view.addChangeCallback(self.on_object_changed)
+            view.add_change_callback(self.on_object_changed)
 
     def remove_callbacks(self):
         for view in self.get_object_views():
             view.removeAddCallback(self.on_object_added)
             view.removeRemoveCallback(self.on_object_removed)
-            view.removeChangeCallback(self.on_object_changed)
+            view.remove_change_callback(self.on_object_changed)
 
     def send_initial_list(self):
         response = messages.TabList(self.type)

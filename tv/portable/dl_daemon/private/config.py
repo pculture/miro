@@ -9,10 +9,10 @@ _ready = Event()
 
 __callbacks = set()
 
-def addChangeCallback(callback):
+def add_change_callback(callback):
     __callbacks.add(callback)
 
-def removeChangeCallback(callback):
+def remove_change_callback(callback):
     __callbacks.discard(callback)
 
 def setDictionary(d):

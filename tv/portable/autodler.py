@@ -192,10 +192,10 @@ def resume_downloader():
     manual_downloader.resume()
     auto_downloader.resume()
 
-def update_prefs(key, value):
+def _update_prefs(key, value):
     if key == prefs.DOWNLOADS_TARGET.key:
         auto_downloader.update_max_downloads()
     elif key == prefs.MAX_MANUAL_DOWNLOADS.key:
         manual_downloader.update_max_downloads()
 
-config.addChangeCallback(update_prefs)
+config.add_change_callback(_update_prefs)

@@ -186,7 +186,7 @@ def normalizeFeedURL(url):
     else:
         return url
 
-def configDidChange(key, value):
+def _config_change(key, value):
     """Handle configuration changes so we can update feed update frequencies
     """
     if key is prefs.CHECK_CHANNELS_EVERY_X_MN.key:
@@ -198,7 +198,7 @@ def configDidChange(key, value):
                 pass
             feed.setUpdateFrequency(updateFreq)
 
-config.addChangeCallback(configDidChange)
+config.add_change_callback(_config_change)
 
 """Wait X seconds before updating the feeds at startup"""
 INITIAL_FEED_UPDATE_DELAY = 5.0

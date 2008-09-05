@@ -216,7 +216,7 @@ class ControllerDaemon(Daemon):
             data[desc.key] = config.get(desc)
         c = command.InitialConfigCommand(self, data)
         c.send()
-        config.addChangeCallback (self.updateConfig)
+        config.add_change_callback(self.updateConfig)
 
     def updateConfig (self, key, value):
         if not self.shutdown:
@@ -229,7 +229,7 @@ class ControllerDaemon(Daemon):
             # FIXME: replace with code to recover here, but for now,
             # stop sending.
             self.shutdown = True
-            config.removeChangeCallback (self.updateConfig)
+            config.remove_change_callback(self.updateConfig)
 
     def shutdown_timeout_cb(self):
         logging.warning ("killing download daemon")
@@ -251,6 +251,6 @@ class ControllerDaemon(Daemon):
         c = command.ShutDownCommand(self)
         c.send()
         self.shutdown = True
-        config.removeChangeCallback (self.updateConfig)
+        config.remove_change_callback(self.updateConfig)
         self.shutdown_timeout_dc = eventloop.addTimeout(timeout, self.shutdown_timeout_cb, "Waiting for dl_daemon shutdown")
 

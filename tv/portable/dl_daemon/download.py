@@ -173,7 +173,7 @@ class TorrentSession:
         self.setUploadLimit()
         self.setDownloadLimit()
         self.setEncryption()
-        config.addChangeCallback(self.configChanged)
+        config.add_change_callback(self.configChanged)
 
     def listen(self):
         self.session.listen_on(config.get(prefs.BT_MIN_PORT), config.get(prefs.BT_MAX_PORT))
@@ -220,7 +220,7 @@ class TorrentSession:
             self.session.set_pe_settings(self.pe_set)
 
     def shutdown(self):
-        config.removeChangeCallback(self.configChanged)
+        config.remove_change_callback(self.configChanged)
         del self.session
 
     def configChanged(self, key, value):

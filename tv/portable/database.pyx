@@ -648,7 +648,7 @@ class DynamicDatabase:
         self.subSorts.append([new, f])
         return new
 
-    def addChangeCallback(self, function):
+    def add_change_callback(self, function):
         """Registers a function to call when an item in the view changes
 
         @param function a function that takes in one parameter: the
@@ -700,7 +700,7 @@ class DynamicDatabase:
         self.confirmDBThread()
         self.viewUnlinkCallbacks.add(function)
 
-    def removeChangeCallback(self, function):
+    def remove_change_callback(self, function):
         self.confirmDBThread()
         self.changeCallbacks.remove(function)
 

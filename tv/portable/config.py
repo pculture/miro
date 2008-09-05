@@ -39,10 +39,21 @@ __data = None
 __lock = RLock()
 __callbacks = set()
 
-def addChangeCallback(callback):
+def add_change_callback(callback):
+    """Attaches change notification callback functions.
+
+    Callback functions should have a signature like 
+    ``callback_function: key * value -> None``.  Example::
+
+        def callback_function(key, value):
+            if key == prefs.PRESERVE_X_GB_FREE:
+               blah blah blah
+    """
     __callbacks.add(callback)
 
-def removeChangeCallback(callback):
+def remove_change_callback(callback):
+    """Removes change notification callback functions.
+    """
     __callbacks.discard(callback)
 
 def load(theme=None):

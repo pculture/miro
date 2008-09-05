@@ -342,7 +342,7 @@ class CallbackViewTestCase(MiroTestCase):
         self.x = database.DDBObject()
         self.assertEqual(self.callcount,1)
     def testChange(self):
-        self.everything.addChangeCallback(self.call)
+        self.everything.add_change_callback(self.call)
         self.x = database.DDBObject()
         self.x.signalChange()
         self.assertEqual(self.callcount,1)
@@ -512,8 +512,8 @@ class FilterSortMapTestCase(MiroTestCase):
         filted2 = self.everything.filter(filtFunc2)
         sorted2 = filted2.sort(self.sortFunc)
         mapped2 = sorted2.map(lambda x:x)
-        self.mapped.addChangeCallback(self.call)
-        mapped2.addChangeCallback(call2)
+        self.mapped.add_change_callback(self.call)
+        mapped2.add_change_callback(call2)
         if self.myfiltFunc(self.objlist[0]):
             self.objlist[1].signalChange()
         else:
@@ -546,8 +546,8 @@ class FilterSortMapTestCase(MiroTestCase):
         filted2 = self.everything.filter(filtFunc2)
         sorted2 = filted2.sort(self.sortFunc)
         mapped2 = sorted2.map(lambda x:x)
-        self.mapped.addChangeCallback(self.call)
-        mapped2.addChangeCallback(call2)
+        self.mapped.add_change_callback(self.call)
+        mapped2.add_change_callback(call2)
         self.mapped.addAddCallback(self.call)
         mapped2.addAddCallback(call2)
         self.mapped.addRemoveCallback(self.call)
@@ -689,7 +689,7 @@ class RecomputeMapTestCase(MiroTestCase):
     def changeCall(self,item,id):
         self.changeCalls +=1
     def test(self):
-        self.objs.addChangeCallback(self.changeCall)
+        self.objs.add_change_callback(self.changeCall)
         self.everything.recomputeFilters()
         self.everything.recomputeFilters()
         temp = self.everything.getNext()
@@ -863,7 +863,7 @@ class IndexFilterTest(IndexFilterTestBase):
         self.assertEqual(obj, 123123)
         filtered.addAddCallback(self.addCallback)
         filtered.addRemoveCallback(self.removeCallback)
-        filtered.addChangeCallback(self.changeCallback)
+        filtered.add_change_callback(self.changeCallback)
         for x in range(0,50):
             database.DDBObject()
 
@@ -1028,7 +1028,7 @@ class IndexFilterTest(IndexFilterTestBase):
         filtered = self.everything.filterWithIndex(self.mod10,0)
         filtered.addAddCallback(self.addCallback)
         filtered.addRemoveCallback(self.removeCallback)
-        filtered.addChangeCallback(self.changeCallback)
+        filtered.add_change_callback(self.changeCallback)
 
         filtered.changeIndexValue(self.mod10, 1)
         self.assertEqual(filtered.len(),10)
@@ -1130,7 +1130,7 @@ class MultiIndexTestCase(IndexFilterTestBase):
         filtered = self.everything.filterWithIndex(testMultiIndex, 0)
         filtered.addAddCallback(self.addCallback)
         filtered.addRemoveCallback(self.removeCallback)
-        filtered.addChangeCallback(self.changeCallback)
+        filtered.add_change_callback(self.changeCallback)
         addCallbackGoal = removeCallbackGoal = changeCallbackGoal = 0
         for obj in self.allObjects:
             newValues = self.genRandomValues()
@@ -1160,7 +1160,7 @@ class ReSortTestCase(MiroTestCase):
         self.sorted = self.everything.sort(self.sortFunc, resort = True)
         self.sorted.addAddCallback(self.addCall)
         self.sorted.addRemoveCallback(self.removeCall)
-        self.sorted.addChangeCallback(self.changeCall)
+        self.sorted.add_change_callback(self.changeCall)
 
     def sortFunc(self, x, y):
         return x[1].value < y[1].value
