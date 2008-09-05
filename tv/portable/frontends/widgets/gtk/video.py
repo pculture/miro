@@ -32,6 +32,7 @@ import gobject
 import gtk
 
 from miro import app
+from miro.plat import screensaver
 from miro.frontends.widgets.gtk.widgetset import Widget
 from miro.frontends.widgets.gtk import wrappermap
 
@@ -41,6 +42,11 @@ class NullRenderer(object):
 
     def reset(self):
         pass
+
+def make_hidden_cursor():
+    pixmap = gtk.gdk.Pixmap(None, 1, 1, 1)
+    color = gtk.gdk.Color()
+    return gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
 
 class VideoRenderer (Widget):
     """Video renderer widget.  NOTE app.renderer must be initialized before
@@ -60,6 +66,7 @@ class VideoRenderer (Widget):
         self.renderer.set_widget(self._widget)
         self.hide_controls_timeout = None
         self.motion_handler_id = None
+        self.hidden_cursor = make_hidden_cursor()
 
     def teardown(self):
         self.renderer.reset()
@@ -97,6 +104,9 @@ class VideoRenderer (Widget):
         self.renderer.set_current_time(time)
 
     def enter_fullscreen(self):
+        self.screensaver_manager = screensaver.create_manager()
+        if self.screensaver_manager is not None:
+            self.screensaver_manager.disable()
         self.motion_handler_id = self.wrapped_widget_connect(
                 'motion-notify-event', self.on_mouse_motion)
         app.widgetapp.window.menubar.hide()
@@ -104,11 +114,16 @@ class VideoRenderer (Widget):
         app.widgetapp.window._window.fullscreen()
 
     def on_mouse_motion(self, widget, event):
-        app.widgetapp.window.videobox._widget.show()
+        self.show_controls()
         self.cancel_hide_controls()
         self.schedule_hide_controls()
 
+    def show_controls(self):
+        app.widgetapp.window.videobox._widget.show()
+        app.widgetapp.window._window.window.set_cursor(None)
+
     def hide_controls(self):
+        app.widgetapp.window._window.window.set_cursor(self.hidden_cursor)
         app.widgetapp.window.videobox._widget.hide()
         self.hide_controls_timeout = None
 
@@ -121,6 +136,9 @@ class VideoRenderer (Widget):
                 self.hide_controls)
 
     def exit_fullscreen(self):
+        if self.screensaver_manager is not None:
+            self.screensaver_manager.enable()
+            self.screensaver_manager = None
         app.widgetapp.window.menubar.show()
         app.widgetapp.window.videobox._widget.show()
         app.widgetapp.window._window.unfullscreen()
