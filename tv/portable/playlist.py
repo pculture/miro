@@ -241,21 +241,3 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
         if moveItemsTo is not None:
             raise StandardError("Cannot 'move' a playlist to %s" % repr(moveItemsTo))
         database.DDBObject.remove(self)
-
-def createNewPlaylist(childIDs=None):
-    """Start the new playlist creation process.  This should be called in
-    response to the user clicking on the new playlist menu option.
-    """
-
-    title = _("Create Playlist")
-    description = _("Enter a name for the new playlist")
-
-    def callback(dialog):
-        if dialog.choice == dialogs.BUTTON_CREATE:
-            playlist = SavedPlaylist(dialog.value)
-            app.selection.selectTabByObject(playlist)
-            if childIDs:
-                playlist.handleDNDAppend(childIDs)
-
-    dialogs.TextEntryDialog(title, description, dialogs.BUTTON_CREATE,
-            dialogs.BUTTON_CANCEL).run(callback)

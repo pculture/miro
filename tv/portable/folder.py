@@ -89,13 +89,6 @@ class FolderBase(DDBObject):
                     self.getID(), False, False)
         self.signalChange()
 
-    def rename(self):
-        def callback(dialog):
-            if self.idExists() and dialog.choice == dialogs.BUTTON_OK:
-                self.setTitle(dialog.value)
-        dialogs.TextEntryDialog(self.renameTitle(), self.renameText(), 
-                dialogs.BUTTON_OK, dialogs.BUTTON_CANCEL).run(callback)
-
     def remove(self, moveItemsTo=None):
         children = [child for child in self.getChildrenView()]
         for child in children:
@@ -112,12 +105,6 @@ class FolderBase(DDBObject):
         if newFolder is not None:
             raise TypeError("Nested folders not allowed")
 
-    def renameTitle(self):
-        """Return the title to use for the rename dialog"""
-        raise NotImplementedError()
-    def renameText(self):
-        """Return the description text to use for the rename dialog"""
-        raise NotImplementedError()
     def getTabOrder(self):
         """Return the TabOrder object that this folder belongs to."""
         raise NotImplementedError()
@@ -139,11 +126,6 @@ class ChannelFolder(FolderBase):
         self.itemSortDownloading = sorts.ItemSort()
         self.itemSortWatchable = sorts.ItemSortUnwatchedFirst()
 
-    def renameTitle(self):
-        return _("Rename Channel Folder")
-    def renameText(self):
-        return _("Enter a new name for the channel folder %s" % 
-                self.getTitle())
     def getTabOrder(self):
         return util.getSingletonDDBObject(views.channelTabOrder)
     def getChildrenView(self):
@@ -219,42 +201,8 @@ class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
         if id not in self.trackedItems:
             self.trackedItems.appendID(id)
 
-    def renameTitle(self):
-        return _("Rename Playlist Folder")
-    def renameText(self):
-        return _("Enter a new name for the playlist folder %s") % self.getTitle()
     def getTabOrder(self):
         return util.getSingletonDDBObject(views.playlistTabOrder)
+
     def getChildrenView(self):
         return views.playlists.filterWithIndex(indexes.byFolder, self)
-
-def createNewChannelFolder(childIDs=None):
-    title = _("Create Channel Folder")
-    description = _("Enter a name for the new channel folder")
-
-    def callback(dialog):
-        if dialog.choice == dialogs.BUTTON_CREATE:
-            folder = ChannelFolder(dialog.value)
-            app.selection.selectTabByObject(folder)
-            if childIDs:
-                folder.handleDNDAppend(childIDs)
-
-    dialogs.TextEntryDialog(title, description, dialogs.BUTTON_CREATE,
-            dialogs.BUTTON_CANCEL).run(callback)
-
-def createNewPlaylistFolder(childIDs=None):
-    title = _("Create Playlist Folder")
-    description = _("Enter a name for the new playlist folder")
-
-    def callback(dialog):
-        if dialog.choice == dialogs.BUTTON_CREATE:
-            folder = PlaylistFolder(dialog.value)
-            app.selection.selectTabByObject(folder)
-            if childIDs:
-                folder.handleDNDAppend(childIDs)
-
-    dialogs.TextEntryDialog(title, description, dialogs.BUTTON_CREATE,
-            dialogs.BUTTON_CANCEL).run(callback)
-
-def getFolderByTitle(title):
-    return views.channelFolders.getItemWithIndex(indexes.foldersByTitle, title)
