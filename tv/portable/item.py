@@ -929,6 +929,12 @@ class Item(DDBObject):
         else:
             return u'saved'
 
+    def isUploading(self):
+        """Returns true if this item is currently uploading.  This only
+        happens for torrents.
+        """
+        return self.downloader and self.downloader.getState() == u'uploading'
+
     def isDownloadable(self):
         return self.getState() in (u'new', u'not-downloaded', u'expired')
 
