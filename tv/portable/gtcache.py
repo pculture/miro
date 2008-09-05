@@ -33,7 +33,6 @@ import locale
 from miro import config
 from miro import prefs
 import miro.plat.utils
-import os
 
 _gtcache = None
 
@@ -47,16 +46,24 @@ def init():
     # log a message and set it to C.
     try:
         locale.setlocale(locale.LC_ALL, '')
-    except locale.Error, e:
+    except locale.Error:
         import logging
 	logging.warn("gtcache.init: setlocale failed.  setting locale to 'C'")
         locale.setlocale(locale.LC_ALL, 'C')
 
     _gt.bindtextdomain("miro", config.get(prefs.GETTEXT_PATHNAME))
     _gt.textdomain("miro")
-    _gt.bind_textdomain_codeset("miro","UTF-8")
+    _gt.bind_textdomain_codeset("miro", "UTF-8")
 
 def gettext(text):
+    """Given a string, returns the translated form of that string.
+
+    Note that this converts unicode strings to strings in utf-8 encoding
+    before translating.  This definitely slows things down, so if you
+    don't need unicode characters, use a string and not a unicode.
+
+    Returns a unicode string.
+    """
     text = text.encode('utf-8')
     try:
         return _gtcache[text]
@@ -65,17 +72,30 @@ def gettext(text):
         _gtcache[text] = out
         return out
     except TypeError:
-        print "DTV: WARNING: gettext not initialized for string \"%s\"" % text
+        print "MIRO: WARNING: gettext not initialized for string \"%s\"" % text
         import traceback
         traceback.print_stack()
         return text
 
 def ngettext(text1, text2, count):
+    """Given two strings and a count.
+
+    text1 - the singular form of the string to be translated
+    text2 - the plural form of the string to be translated
+    count - the number of things involved
+
+    See Python ``gettext.ngettext`` documentation and the GNU gettext
+    documentation for more details.
+
+    http://www.gnu.org/software/gettext/manual/gettext.html#Plural-forms
+
+    Returns a unicode string.
+    """
     text1 = text1.encode('utf-8')
     text2 = text2.encode('utf-8')
     try:
-        return _gtcache[(text1,text2,count)]
+        return _gtcache[(text1, text2, count)]
     except:
         out = _gt.ngettext(text1, text2, count).decode('utf-8')
-        _gtcache[(text1,text2,count)] = out
+        _gtcache[(text1, text2, count)] = out
         return out
