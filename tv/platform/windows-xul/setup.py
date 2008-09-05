@@ -100,7 +100,7 @@ PYGOBJECT_INCLUDE_DIR = os.path.join(BINARY_KIT_ROOT, 'pygobject')
 XULRUNNER_SDK_PATH = os.path.join(BINARY_KIT_ROOT, 'xulrunner-sdk')
 XULRUNNER_SDK_BIN_PATH = os.path.join(XULRUNNER_SDK_PATH, 'bin')
 
-VLC_PATH = os.path.join(BINARY_KIT_ROOT, 'vlc')
+VLC_PATH = os.path.join(BINARY_KIT_ROOT, 'libvlc')
 
 # Path to a build of the convert utility from imagemagick
 IMAGEMAGICK_DIR = os.path.join(BINARY_KIT_ROOT, 'imagemagick')
@@ -289,8 +289,9 @@ data_files.extend(find_data_files(image_loader_path,
     os.path.join(GTK_ROOT_PATH, image_loader_path)))
 data_files.append(('', iglob(os.path.join(GTK_BIN_PATH, '*.dll'))))
 data_files.extend(find_data_files('vlc-plugins', 
-    os.path.join(VLC_PATH, 'plugins')))
+    os.path.join(VLC_PATH, 'vlc-plugins')))
 data_files.append(('', [os.path.join(VLC_PATH, 'libvlc.dll')]))
+data_files.append(('', [os.path.join(VLC_PATH, 'libvlccore.dll')]))
 
 # handle the resources subdirectories.
 for dir in ('searchengines', 'wimages'):

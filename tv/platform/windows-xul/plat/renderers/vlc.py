@@ -37,10 +37,25 @@ from miro.plat import resources
 # load the DLL
 libvlc = ctypes.cdll.libvlc
 # set up the function signatures
+
+# These next three return libvlc_instance_t, libvlc_media_player_t and
+# libvlc_media_t pointers, but we can fake it with void pointers
 libvlc.libvlc_new.restype = ctypes.c_void_p
-libvlc.libvlc_playlist_get_input.restype = ctypes.c_void_p
-libvlc.libvlc_input_get_position.restype = ctypes.c_float
-libvlc.libvlc_input_get_length.restype = ctypes.c_longlong
+libvlc.libvlc_media_player_new.restype = ctypes.c_void_p
+libvlc.libvlc_media_new.restype = ctypes.c_void_p
+libvlc.libvlc_media_player_get_time.restype = ctypes.c_longlong
+libvlc.libvlc_media_player_get_length.restype = ctypes.c_longlong
+
+libvlc.libvlc_audio_set_volume.restype = None
+libvlc.libvlc_exception_init.restype = None
+libvlc.libvlc_exception_clear.restype = None
+libvlc.libvlc_media_player_set_drawable.restype = None
+libvlc.libvlc_media_player_stop.restype = None
+libvlc.libvlc_media_player_set_time.restype = None
+libvlc.libvlc_media_player_pause.restype = None
+libvlc.libvlc_media_player_play.restype = None
+libvlc.libvlc_media_release.restype = None
+libvlc.libvlc_media_player_set_media.restype = None
 
 class VLCError(Exception):
     pass
@@ -81,6 +96,9 @@ class VLCRenderer:
         self.vlc = libvlc.libvlc_new(len(vlc_args),
                 make_string_list(vlc_args), self.exc.ref())
         self.exc.check()
+        self.media_player = libvlc.libvlc_media_player_new(self.vlc,
+                self.exc.ref())
+        self.exc.check()
 
     def set_widget(self, widget):
         widget.connect("realize", self.on_realize)
@@ -92,99 +110,85 @@ class VLCRenderer:
 
     def on_realize(self, widget):
         hwnd = widget.window.handle
-        libvlc.libvlc_video_set_parent(self.vlc, hwnd, self.exc.ref())
+        libvlc.libvlc_media_player_set_drawable(self.media_player, hwnd, 
+                self.exc.ref())
         self.exc.check()
 
     def on_unrealize(self, widget):
         self.reset()
-        libvlc.libvlc_video_set_parent(self.vlc, 0, self.exc.ref())
+        libvlc.libvlc_media_player_set_drawable(self.media_player, 0,
+                self.exc.ref())
         self.exc.check()
 
     def can_play_file(self, filename):
         """whether or not this renderer can play this data"""
         return True
 
-    def go_fullscreen(self):
-        """Handle when the video window goes fullscreen."""
-        logging.debug("haven't implemented go_fullscreen method yet!")
-
-    def exit_fullscreen(self):
-        """Handle when the video window exits fullscreen mode."""
-        logging.debug("haven't implemented exit_fullscreen method yet!")
-
     def select_file(self, filename):
         """starts playing the specified file"""
         mrl = 'file://%s' % filename
-        libvlc.libvlc_playlist_clear(self.vlc, self.exc.ref())
+        media = libvlc.libvlc_media_new(self.vlc, ctypes.c_char_p(mrl),
+                self.exc.ref())
         self.exc.check()
-        libvlc.libvlc_playlist_add(self.vlc, ctypes.c_char_p(mrl), self.exc.ref())
-        self.exc.check()
+        if media is None:
+            raise AssertionError("libvlc_media_new returned NULL for %s"
+                    % filename)
+        try:
+            libvlc.libvlc_media_player_set_media(self.media_player, media,
+                    self.exc.ref())
+            self.exc.check()
+        finally:
+            libvlc.libvlc_media_release(media)
 
     def play(self):
-        libvlc.libvlc_playlist_play(self.vlc, 0, None, self.exc.ref())
+        libvlc.libvlc_media_player_play(self.media_player, self.exc.ref())
         self.exc.check()
 
     def pause(self):
-        libvlc.libvlc_playlist_pause(self.vlc, self.exc.ref())
+        libvlc.libvlc_media_player_pause(self.media_player, self.exc.ref())
         self.exc.check()
 
     def stop(self):
-        libvlc.libvlc_playlist_stop(self.vlc, self.exc.ref())
+        libvlc.libvlc_media_player_stop(self.media_player, self.exc.ref())
         self.exc.check()
 
     def reset(self):
-        libvlc.libvlc_playlist_stop(self.vlc, self.exc.ref())
-        self.exc.check()
-        libvlc.libvlc_playlist_clear(self.vlc, self.exc.ref())
-        self.exc.check()
-
-    def _get_input(self):
-        input = libvlc.libvlc_playlist_get_input(self.vlc, self.exc.ref())
-        self.exc.check()
-        return input
+        self.stop()
 
     def get_current_time(self):
+        time = libvlc.libvlc_media_player_get_time(self.media_player, self.exc.ref())
         try:
-            input = self._get_input()
-            try:
-                time = libvlc.libvlc_input_get_time(input, self.exc.ref())
-                self.exc.check()
-            finally:
-                libvlc.libvlc_input_free(input)
+            self.exc.check()
         except VLCError, e:
             logging.warn("exception getting time: %s" % e)
-            time = 0
-        time = time / 1000.0
-
-        return time
+            return None
+        else:
+            return time / 1000.0
 
     def set_current_time(self, seconds):
-        self.seek(seconds)
-
-    def seek(self, seconds):
         time = int(seconds * 1000)
-        try:
-            input = self._get_input()
-            try:
-                libvlc.libvlc_input_set_time(input, ctypes.c_longlong(time),
-                        self.exc.ref())
-                self.exc.check()
-            finally:
-                libvlc.libvlc_input_free(input)
-        except VLCError, e:
-            logging.warn("exception seeking: %s" % e)
+        logging.warn('set time: %s %s' % (seconds, time))
+        libvlc.libvlc_media_player_set_time(self.media_player,
+                ctypes.c_longlong(time), self.exc.ref())
+        self.exc.check()
 
     def get_duration(self):
+        length = libvlc.libvlc_media_player_get_length(self.media_player,
+                self.exc.ref())
         try:
-            input = self._get_input()
-            try:
-                duration = libvlc.libvlc_input_get_length(input, self.exc.ref())
-                self.exc.check()
-            finally:
-                libvlc.libvlc_input_free(input)
+            self.exc.check()
         except VLCError, e:
-            logging.warn("exception getting duration: %s" % e)
-            duration = 0
-        duration = duration / 1000.0
+            logging.warn("exception getting time: %s" % e)
+            return None
+        else:
+            return length / 1000.0
 
-        return duration
+    def set_volume(self, volume):
+        volume = int(volume * 100)
+        libvlc.libvlc_audio_set_volume(self.vlc, volume, self.exc.ref())
+        self.exc.check()
+
+    def get_volume(self, volume):
+        rv = libvlc.libvlc_audio_get_volume(self.vlc, self.exc.ref())
+        self.exc.check()
+        return rv / 100.0
