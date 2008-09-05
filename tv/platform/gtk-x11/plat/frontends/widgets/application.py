@@ -99,6 +99,9 @@ class GtkX11Application(Application):
         gtk.main()
         app.controller.onShutdown()
 
+    def on_trayicon_pref_changed(self, key, value):
+        self.trayicon.set_visible(value)
+
     def build_window(self):
         Application.build_window(self)
         self.window.connect('save-dimensions', self.set_main_window_dimensions)
@@ -111,10 +114,11 @@ class GtkX11Application(Application):
             else:
                 self.window._window.unmaximize()
 
-        if config.get(options.SHOW_TRAYICON) and trayicon.trayicon_is_supported:
-            self.trayicon = trayicon.Trayicon(
-                resources.sharePath("pixmaps/miro-24x24.png"), self)
-            self.trayicon.set_visible(True)
+        if trayicon.trayicon_is_supported:
+            if config.get(options.SHOW_TRAYICON):
+                self.trayicon = trayicon.Trayicon(resources.sharePath("pixmaps/miro-24x24.png"), self)
+                self.trayicon.set_visible(True)
+            config.add_change_callback(self.on_trayicon_pref_changed)
 
         self.window._window.set_icon_from_file(resources.sharePath('pixmaps/miro-128x128.png'))
 
