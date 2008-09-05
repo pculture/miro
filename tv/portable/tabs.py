@@ -187,7 +187,7 @@ class TabOrder(database.DDBObject):
         self.type = type
         self.tab_ids = []
         database.DDBObject.__init__(self)
-        self._initRestore()
+        self._init_restore()
         decorated = [(t.obj.getTitle().lower(), t) for t in self.tabView]
         decorated.sort()
         for sortkey, tab in decorated:
@@ -195,11 +195,11 @@ class TabOrder(database.DDBObject):
 
     def onRestore(self):
         database.DDBObject.onRestore(self)
-        self._initRestore()
+        self._init_restore()
         eventloop.addIdle(self.checkForNonExistentIds, 
                 "checking for non-existent TabOrder ids")
 
-    def _initRestore(self):
+    def _init_restore(self):
         self.create_signal('tab-added')
         if self.type == u'site':
             self.tabView = views.siteTabs

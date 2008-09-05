@@ -108,9 +108,9 @@ class Item(DDBObject):
         # a page. 0 is the topmost, 1 is the next, and so on
         self.linkNumber = linkNumber
         self.creationTime = datetime.now()
-        self.updateReleaseDate()
-        self._initRestore()
-        self._lookForFinishedDownloader()
+        self._update_release_date()
+        self._init_restore()
+        self._look_for_finished_downloader()
         DDBObject.__init__(self)
         self.splitItem()
 
@@ -128,9 +128,9 @@ class Item(DDBObject):
         # a db upgrade (#8819).
         if not hasattr(self, 'isContainerItem'):
             self.isContainerItem = None
-        self._initRestore()
+        self._init_restore()
 
-    def _initRestore(self):
+    def _init_restore(self):
         """Common code shared between onRestore and __init__."""
         self.selected = False
         self.active = False
@@ -140,7 +140,7 @@ class Item(DDBObject):
         self.showMoreInfo = False
         self.updating_movie_info = False
 
-    def _lookForFinishedDownloader(self):
+    def _look_for_finished_downloader(self):
         dler = downloader.lookupDownloader(self.getURL())
         if dler and dler.isFinished():
             self.downloader = dler
@@ -150,21 +150,10 @@ class Item(DDBObject):
             changeNeedsSave=False)
     getActive, setActive = makeSimpleGetSet(u'active', changeNeedsSave=False)
 
-    def toggleShowMoreInfo(self):
-        self.showMoreInfo = not self.showMoreInfo
-        self.signalChange(needsSave=False, needsUpdateXML=True)
-
-    @returnsUnicode
-    def getMoreInfoState(self):
-        if self.showMoreInfo:
-            return u'more-info'
-        return u''
-
-    def findChildVideos(self):
+    def _find_child_videos(self):
         """If this item points to a directory, return the set all video files
         under that directory.
         """
-
         videos = set()
         filename_root = self.getFilename()
         if fileutil.isdir(filename_root):
@@ -174,12 +163,11 @@ class Item(DDBObject):
                     videos.add(filename)
         return videos
 
-    def findNewChildren(self):
+    def find_new_children(self):
         """If this feed is a container item, walk through its directory and
         find any new children.  Returns True if it found childern and ran
         signalChange().
         """
-
         filename_root = self.getFilename()
         if not self.isContainerItem:
             return False
@@ -187,7 +175,7 @@ class Item(DDBObject):
             # don't try to find videos that we're in the middle of
             # re-downloading
             return False
-        videos = self.findChildVideos()
+        videos = self._find_child_videos()
         for child in self.getChildren():
             videos.discard(child.getFilename())
         for video in videos:
@@ -204,12 +192,12 @@ class Item(DDBObject):
     def splitItem(self):
         """returns True if it ran signalChange()"""
         if self.isContainerItem is not None:
-            return self.findNewChildren()
+            return self.find_new_children()
         if not isinstance (self, FileItem) and (self.downloader is None or not self.downloader.isFinished()):
             return False
         filename_root = self.getFilename()
         if fileutil.isdir(filename_root):
-            videos = self.findChildVideos()
+            videos = self._find_child_videos()
             if len(videos) > 1:
                 self.isContainerItem = True
                 for video in videos:
@@ -242,7 +230,7 @@ class Item(DDBObject):
         self.signalChange()
         return True
 
-    def removeFromPlaylists(self):
+    def _remove_from_playlists(self):
         itemIDIndex = indexes.playlistsByItemID
         view = views.playlists.filterWithIndex(itemIDIndex, self.getID())
         for playlist in view:
@@ -251,7 +239,7 @@ class Item(DDBObject):
         for playlist in view:
             playlist.removeItem(self)
 
-    def updateReleaseDate(self):
+    def _update_release_date(self):
         # This should be called whenever we get a new entry
         try:
             self.releaseDateObj = datetime(*self.getFirstVideoEnclosure().updated_parsed[0:7])
@@ -409,9 +397,9 @@ class Item(DDBObject):
 
     def expire(self):
         self.confirmDBThread()
-        self.removeFromPlaylists()
+        self._remove_from_playlists()
         UandA = self.getUandA()
-        if not self.isExternal():
+        if not self.is_external():
             self.deleteFiles()
         self.expired = True
         if self.isContainerItem:
@@ -430,7 +418,7 @@ class Item(DDBObject):
                 pass
         # This should be done even if screenshot = ""
         self.screenshot = None
-        if self.isExternal():
+        if self.is_external():
             if self.isDownloaded():
                 new_item = FileItem (self.getVideoFilename(), feed_id=self.feed_id, parent_id=self.parent_id, deleted=True)
                 if self.downloader is not None:
@@ -856,11 +844,11 @@ class Item(DDBObject):
         try:
             return self._state
         except AttributeError:
-            self._calcState()
+            self._calc_state()
             return self._state
 
     @returnsUnicode
-    def _calcState(self):
+    def _calc_state(self):
         """Recalculate the state of an item after a change
         """
         self.confirmDBThread()
@@ -1238,7 +1226,7 @@ class Item(DDBObject):
         try:
             self.entry = entry
             self.iconCache.requestUpdate()
-            self.updateReleaseDate()
+            self._update_release_date()
             self._calcFirstEnc()
         finally:
             self.signalChange()
@@ -1304,7 +1292,7 @@ class Item(DDBObject):
         # isContainerItem can be False or None.
         return self.isContainerItem != True and not self.isVideo
 
-    def isExternal(self):
+    def is_external(self):
         """Returns True iff this item was not downloaded from a Democracy
         channel.
         """
@@ -1327,7 +1315,7 @@ class Item(DDBObject):
         self.confirmDBThread()
         return self.entry
 
-    def migrateChildren (self, newdir):
+    def migrate_children (self, newdir):
         if self.isContainerItem:
             for item in self.getChildren():
                 item.migrate(newdir)
@@ -1344,7 +1332,7 @@ class Item(DDBObject):
                 item.remove()
         DDBObject.remove(self)
 
-    def setupLinks(self):
+    def setup_links(self):
         """This is called after we restore the database.  Since we don't store
         references between objects, we need a way to reconnect downloaders to
         the items after the restore.
@@ -1396,7 +1384,7 @@ class Item(DDBObject):
 def reconnectDownloaders():
     reconnected = set()
     for item in views.items:
-        item.setupLinks()
+        item.setup_links()
         reconnected.add(item.downloader)
     for downloader in views.remoteDownloads:
         if downloader not in reconnected:
@@ -1488,12 +1476,12 @@ class FileItem(Item):
     def getViewed(self):
         return True
 
-    def isExternal(self):
+    def is_external(self):
         return self.parent_id is None
 
     def expire(self):
         self.confirmDBThread()
-        self.removeFromPlaylists()
+        self._remove_from_playlists()
         if self.isContainerItem:
             for item in self.getChildren():
                 item.remove()
@@ -1544,7 +1532,7 @@ class FileItem(Item):
         self.deleted = False
         self.signalChange()
 
-    def updateReleaseDate(self):
+    def _update_release_date(self):
         # This should be called whenever we get a new entry
         try:
             self.releaseDateObj = datetime.fromtimestamp(fileutil.getmtime(self.filename))
@@ -1580,9 +1568,9 @@ filename was %s""", stringify(self.filename))
         elif fileutil.exists(newFilename):
             self.filename = newFilename
             self.signalChange()
-        self.migrateChildren(newDir)
+        self.migrate_children(newDir)
 
-    def setupLinks(self):
+    def setup_links(self):
         if self.shortFilename is None:
             if self.parent_id is None:
                 self.shortFilename = cleanFilename(os.path.basename(self.filename))
@@ -1593,5 +1581,5 @@ filename was %s""", stringify(self.filename))
                 else:
                     logging.warn("%s is not a subdirectory of %s",
                             self.filename, parent_file)
-        self.updateReleaseDate()
-        Item.setupLinks(self)
+        self._update_release_date()
+        Item.setup_links(self)

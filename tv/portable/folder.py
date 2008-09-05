@@ -101,13 +101,13 @@ class FolderBase(DDBObject):
 class ChannelFolder(FolderBase):
     def __init__(self, title):
         FolderBase.__init__(self, title)
-        self._initRestore()
+        self._init_restore()
 
     def onRestore(self):
         FolderBase.onRestore(self)
-        self._initRestore()
+        self._init_restore()
 
-    def _initRestore(self):
+    def _init_restore(self):
         self.itemSort = sorts.ItemSort()
         self.itemSortDownloading = sorts.ItemSort()
         self.itemSortWatchable = sorts.ItemSortUnwatchedFirst()

@@ -644,7 +644,7 @@ class ItemInfo(object):
             self.expiration_date = None
         self.item_viewed = item.getViewed()
         self.downloaded = item.isDownloaded()
-        self.is_external = item.isExternal()
+        self.is_external = item.is_external()
         self.video_watched = item.getSeen()
         self.video_path = item.getVideoFilename()
         self.thumbnail = item.getThumbnail()

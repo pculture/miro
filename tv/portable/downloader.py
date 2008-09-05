@@ -380,7 +380,7 @@ URL was %s""" % self.url
                     self.signalChange()
                 fileutil.migrate_file(filename, newfilename, callback)
         for i in self.itemList:
-            i.migrateChildren(directory)
+            i.migrate_children(directory)
 
     def setDeleteFiles(self, deleteFiles):
         self.deleteFiles = deleteFiles

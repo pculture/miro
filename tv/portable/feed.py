@@ -617,7 +617,7 @@ class Feed(DDBObject):
         self.folder_id = None
         self.searchTerm = None
         self.userTitle = None
-        self._initRestore()
+        self._init_restore()
         self.dd.addAfterCursor(self)
         self.generateFeed(True)
 
@@ -632,7 +632,7 @@ class Feed(DDBObject):
         self.wasUpdating = isUpdating
         DDBObject.signalChange (self, needsSave=needsSave)
 
-    def _initRestore(self):
+    def _init_restore(self):
         self.create_signal('update-finished')
         self.download = None
         self.wasUpdating = False
@@ -1198,7 +1198,7 @@ $shortAppName.\n\nDo you want to try to load this channel anyway?"""))
             self.iconCache.dbItem = self
             self.iconCache.requestUpdate(True)
         self.informOnError = False
-        self._initRestore()
+        self._init_restore()
         if self.actualFeed.__class__ == FeedImpl:
             # Our initial FeedImpl was never updated, call generateFeed again
             self.loading = True
@@ -2200,7 +2200,7 @@ class DirectoryFeedImpl(FeedImpl):
             if item.feed_id is not self.ufeed.id:
                 knownFiles.add(item.getFilename())
             if item.isContainerItem:
-                item.findNewChildren()
+                item.find_new_children()
 
         knownFiles.add(os.path.join(moviesDir, "Incomplete Downloads"))
 
