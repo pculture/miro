@@ -307,9 +307,10 @@ class TableViewCommon(object):
             index_set = NSIndexSet.alloc().initWithIndex_(row)
             self.selectRowIndexes_byExtendingSelection_(index_set, NO)
         wrapper = wrappermap.wrapper(self)
-        menu_items = wrapper.context_menu_callback(wrapper)
-        menu = osxmenus.make_context_menu(menu_items)
-        NSMenu.popUpContextMenu_withEvent_forView_(menu, event, self)
+        if wrapper.context_menu_callback is not None:
+            menu_items = wrapper.context_menu_callback(wrapper)
+            menu = osxmenus.make_context_menu(menu_items)
+            NSMenu.popUpContextMenu_withEvent_forView_(menu, event, self)
 
     def mouseDragged_(self, event):
         if self.hotspot_tracker is not None:
