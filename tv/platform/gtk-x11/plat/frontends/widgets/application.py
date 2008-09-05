@@ -31,9 +31,10 @@ import os
 import gconf
 
 from miro import app
+from miro import config
 from miro.frontends.widgets.application import Application
 from miro.plat.frontends.widgets import threads
-from miro.plat import mozsetup, renderers
+from miro.plat import mozsetup, renderers, options
 from miro.plat.utils import setProperties
 from miro.plat.config import gconf_lock
 from miro.plat.frontends.widgets import trayicon
@@ -110,7 +111,7 @@ class GtkX11Application(Application):
             else:
                 self.window._window.unmaximize()
 
-        if get_player_bool("showTrayicon") and trayicon.trayicon_is_supported:
+        if config.get(options.SHOW_TRAYICON) and trayicon.trayicon_is_supported:
             self.trayicon = trayicon.Trayicon(
                 resources.sharePath("pixmaps/miro-24x24.png"), self)
             self.trayicon.set_visible(True)

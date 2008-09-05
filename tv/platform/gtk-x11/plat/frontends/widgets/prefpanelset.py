@@ -34,20 +34,34 @@ See portable/frontends/widgets/prefpanel.py for more information.
 
 from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import widgetset
-from miro.frontends.widgets import widgetutil
-from miro.frontends.widgets.widgetutil import build_hbox
+from miro.frontends.widgets.widgetutil import build_hbox, align_left
 from miro.frontends.widgets.prefpanel import attach_radio, attach_combo, note_label
 
 from miro.plat import options 
 
 from miro import config
 
+def _general_panel():
+    extras = []
+    lab = widgetset.Label(_("Tray icon:"))
+
+    rbg = widgetset.RadioButtonGroup()
+
+    show_rad = widgetset.RadioButton(_("show"), rbg)
+    hide_rad = widgetset.RadioButton(_("hide"), rbg)
+
+    attach_radio([(show_rad, True), (hide_rad, False)], options.SHOW_TRAYICON)
+
+    extras.append(build_hbox((lab, show_rad, hide_rad)))
+
+    return extras
+
 def _playback_panel():
     extras = []
 
     lab = widgetset.Label(_("Renderer options:"))
     lab.set_bold(True)
-    extras.append(widgetutil.align_left(lab))
+    extras.append(align_left(lab))
 
     note = note_label(_("You must restart Miro for renderer changes to take effect."))
     extras.append(note)
@@ -95,5 +109,7 @@ def _playback_panel():
     return extras
 
 def get_platform_specific(panel_name):
-    if panel_name == "playback":
+    if panel_name == "general":
+        return _general_panel()
+    elif panel_name == "playback":
         return _playback_panel()

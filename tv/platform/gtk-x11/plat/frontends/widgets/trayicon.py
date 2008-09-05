@@ -39,7 +39,7 @@ trayicon_is_supported = False
 # trayicons (the GtkStatusIcon widget).  Specifically we are looking
 # for GTK+ version 2.10 or newer.  If we have it, we use our native
 # python implementation.
-if gtk.check_version(2,10,0) == None:        
+if gtk.check_version(2, 10, 0) == None:
     trayicon_is_supported = True
     class Trayicon(gtk.StatusIcon):
         def __init__(self, icon, main_frame):
@@ -94,14 +94,3 @@ if gtk.check_version(2,10,0) == None:
             n = pynotify.Notification()
             n.set_property("status-icon", self)
             n.show()
-
-# if we don't have GTK+ 2.10, then try to import our custom module,
-# based on the older libegg code.
-else:
-    try:
-        import _trayicon
-        class Trayicon(_trayicon.Trayicon):
-            pass
-        trayicon_is_supported = True
-    except ImportError:
-        pass

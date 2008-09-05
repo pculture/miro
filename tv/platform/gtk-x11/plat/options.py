@@ -72,9 +72,13 @@ GSTREAMER_IMAGESINK = Pref(key="DefaultGstreamerImagesink",
                            alias="gstreamer-imagesink",
                            help="Which GStreamer image sink to use for video.  (ximagesink, xvimagesink, gconfvideosink, ...)")
 
+SHOW_TRAYICON = Pref(key="showTrayicon",
+                     default=True,
+                     platformSpecific=False)
+
 # build a lookup for preferences by alias
 PREFERENCES = {}
 for mem in dir():
     p = locals()[mem]
-    if isinstance(p, Pref):
+    if isinstance(p, Pref) and hasattr(p, "alias"):
         PREFERENCES[p.alias] = p
