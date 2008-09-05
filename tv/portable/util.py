@@ -35,7 +35,6 @@ any other Miro modules.
 import os
 import random
 import re
-# import sys
 import sha
 import time
 import string
@@ -61,8 +60,9 @@ PREFERRED_TYPES = [
     'video/x-msmpeg', 'video/x-flv']
 
 
-# Perform escapes needed for Javascript string contents.
 def quoteJS(x):
+    """Perform escapes needed for Javascript string contents.
+    """
     x = x.replace("\\", "\\\\") # \       -> \\
     x = x.replace("\"", "\\\"") # "       -> \"  
     x = x.replace("'",  "\\'")  # '       -> \'
@@ -89,12 +89,13 @@ def getNiceStack():
     stack = [i for i in stack if 'trapCall' in i]
     return stack
 
-# Parse a configuration file in a very simple format. Each line is
-# either whitespace or "Key = Value". Whitespace is ignored at the
-# beginning of Value, but the remainder of the line is taken
-# literally, including any whitespace. There is no way to put a
-# newline in a value. Returns the result as a dict.
 def readSimpleConfigFile(path):
+    """Parse a configuration file in a very simple format. Each line is
+    either whitespace or "Key = Value". Whitespace is ignored at the
+    beginning of Value, but the remainder of the line is taken
+    literally, including any whitespace. There is no way to put a
+    newline in a value. Returns the result as a dict.
+    """
     ret = {}
 
     f = open(path, "rt")
@@ -119,21 +120,23 @@ def readSimpleConfigFile(path):
 
     return ret
 
-# Given a dict, write a configuration file in the format that
-# readSimpleConfigFile reads.
 def writeSimpleConfigFile(path, data):
+    """Given a dict, write a configuration file in the format that
+    readSimpleConfigFile reads.
+    """
     f = open(path, "wt")
 
-    for (k, v) in data.iteritems():
+    for k, v in data.iteritems():
         f.write("%s = %s\n" % (k, v))
     
     f.close()
 
-# Called at build-time to ask Subversion for the revision number of
-# this checkout. Going to fail without Cygwin. Yeah, oh well. Pass the
-# file or directory you want to use as a reference point. Returns an
-# integer on success or None on failure.
 def queryRevision(f):
+    """Called at build-time to ask Subversion for the revision number of
+    this checkout. Going to fail without Cygwin. Yeah, oh well. Pass the
+    file or directory you want to use as a reference point. Returns an
+    integer on success or None on failure.
+    """
     try:
         p = subprocess.Popen(["svn", "info", f], stdout=subprocess.PIPE) 
         info = p.stdout.read()
@@ -150,10 +153,11 @@ def queryRevision(f):
     except Exception, e:
         print "Exception thrown when querying revision: %s" % e
 
-# 'path' is a path that could be passed to open() to open a file on
-# this platform. It must be an absolute path. Return the file:// URL
-# that would refer to the same file.
 def absolutePathToFileURL(path):
+    """'path' is a path that could be passed to open() to open a file on
+    this platform. It must be an absolute path. Return the file:// URL
+    that would refer to the same file.
+    """
     if isinstance(path, unicode):
         path = path.encode("utf-8")
     parts = path.split(os.sep)
@@ -161,18 +165,20 @@ def absolutePathToFileURL(path):
     return "file://" + '/'.join(parts)
 
 
-# Shortcut for 'failed' with the exception flag.
 def failedExn(when, **kwargs):
-    failed(when, withExn = True, **kwargs)
+    """Shortcut for 'failed' with the exception flag.
+    """
+    failed(when, withExn=True, **kwargs)
 
-# Puts up a dialog with debugging information encouraging the user to
-# file a ticket. (Also print a call trace to stderr or whatever, which
-# hopefully will end up on the console or in a log.) 'when' should be
-# something like "when trying to play a video." The user will see
-# it. If 'withExn' is true, last-exception information will be printed
-# to. If 'detail' is true, it will be included in the report and the
-# the console/log, but not presented in the dialog box flavor text.
 def failed(when, withExn = False, details = None):
+    """Puts up a dialog with debugging information encouraging the user to
+    file a ticket. (Also print a call trace to stderr or whatever, which
+    hopefully will end up on the console or in a log.) 'when' should be
+    something like "when trying to play a video." The user will see
+    it. If 'withExn' is true, last-exception information will be printed
+    to. If 'detail' is true, it will be included in the report and the
+    the console/log, but not presented in the dialog box flavor text.
+    """
     logging.warn("util.failed is deprecated.  Use system.signals.failed\n"
             "stack:\n%s" % ''.join(traceback.format_stack()))
     from miro import signals
@@ -185,13 +191,16 @@ class AutoflushingStream:
     """
     def __init__(self, stream):
         self.__dict__['stream'] = stream
+
     def write(self, data):
         if isinstance(data, unicode):
             data = data.encode('ascii', 'backslashreplace')
         self.stream.write(data)
         self.stream.flush()
+
     def __getattr__(self, name):
         return getattr(self.stream, name)
+
     def __setattr__(self, name, value):
         return setattr(self.stream, name, value)
 
@@ -199,9 +208,8 @@ def makeDummySocketPair():
     """Create a pair of sockets connected to each other on the local
     interface.  Used to implement SocketHandler.wakeup().
     """
-
     dummy_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    dummy_server.bind( ('127.0.0.1', 0) )
+    dummy_server.bind(('127.0.0.1', 0))
     dummy_server.listen(1)
     server_address = dummy_server.getsockname()
     first = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -233,8 +241,9 @@ class ExponentialBackoffTracker:
         self.currentDelay = self.baseDelay
 
 
-# Gather movie files on the disk. Used by the startup dialog.
 def gatherVideos(path, progressCallback):
+    """Gather movie files on the disk. Used by the startup dialog.
+    """
     from miro import prefs
     from miro import config
     keepGoing = True
@@ -317,8 +326,8 @@ def makeAnchor(label, href):
     return '<a href="%s">%s</a>' % (href, label)
 
 def makeEventURL(label, eventURL):
-    return '<a href="#" onclick="return eventURL(\'action:%s\');">%s</a>' % \
-            (eventURL, label)
+    return ('<a href="#" onclick="return eventURL(\'action:%s\');">%s</a>' %
+            (eventURL, label))
 
 def clampText(text, maxLength=20):
     if len(text) > maxLength:
@@ -330,7 +339,7 @@ def print_mem_usage(message):
     pass
 # Uncomment for memory usage printouts on linux.
 #    print message
-#    os.system ("ps huwwwp %d" % (os.getpid(),))
+#    os.system("ps huwwwp %d" % (os.getpid(),))
 
 class TooManySingletonsError(Exception):
     pass
@@ -380,18 +389,20 @@ def setupLogging():
     logging.addLevelName(26, "JSALERT")
     logging.jsalert = lambda msg, *args, **kargs: logging.log(26, msg, *args, **kargs)
 
-
-# Returned when input to a template function isn't unicode
 class MiroUnicodeError(StandardError):
+    """Returned when input to a template function isn't unicode
+    """
     pass
 
-# Raise an exception if input isn't unicode
 def checkU(text):
+    """Raise an exception if input isn't unicode
+    """
     if text is not None and not isinstance(text, unicode):
         raise MiroUnicodeError(u"text %r is not a unicode string (type:%s)" % (text, type(text)))
 
-# Decorator that raised an exception if the function doesn't return unicode
 def returnsUnicode(func):
+    """Decorator that raised an exception if the function doesn't return unicode
+    """
     def checkFunc(*args, **kwargs):
         result = func(*args, **kwargs)
         if result is not None:
@@ -399,14 +410,15 @@ def returnsUnicode(func):
         return result
     return checkFunc
 
-# Raise an exception if input isn't a binary string
 def checkB(text):
+    """Raise an exception if input isn't a binary string
+    """
     if text is not None and not isinstance(text, str):
-        raise MiroUnicodeError, (u"text \"%s\" is not a binary string" %
-                                     text)
+        raise MiroUnicodeError, (u"text \"%s\" is not a binary string" % text)
 
-# Decorator that raised an exception if the function doesn't return unicode
 def returnsBinary(func):
+    """Decorator that raised an exception if the function doesn't return unicode
+    """
     def checkFunc(*args, **kwargs):
         result = func(*args, **kwargs)
         if result is not None:
@@ -414,19 +426,19 @@ def returnsBinary(func):
         return result
     return checkFunc
 
-# Raise an exception if input isn't a URL type
 def checkURL(text):
+    """Raise an exception if input isn't a URL type
+    """
     if not isinstance(text, unicode):
-        raise MiroUnicodeError, (u"url \"%s\" is not unicode" %
-                                     text)
+        raise MiroUnicodeError, (u"url \"%s\" is not unicode" % text)
     try:
         text.encode('ascii')
     except:
-        raise MiroUnicodeError, (u"url \"%s\" contains extended characters" %
-                                     text)
+        raise MiroUnicodeError, (u"url \"%s\" contains extended characters" % text)
 
-# Decorator that raised an exception if the function doesn't return a filename
 def returnsURL(func):
+    """Decorator that raised an exception if the function doesn't return a filename
+    """
     def checkFunc(*args, **kwargs):
         result = func(*args, **kwargs)
         if result is not None:
@@ -434,15 +446,17 @@ def returnsURL(func):
         return result
     return checkFunc
 
-# Returns exception if input isn't a filename type
 def checkF(text):
+    """Returns exception if input isn't a filename type
+    """
     from miro.plat.utils import FilenameType
     if text is not None and not isinstance(text, FilenameType):
         raise MiroUnicodeError, (u"text %r is not a valid filename type" %
                                      text)
 
-# Decorator that raised an exception if the function doesn't return a filename
 def returnsFilename(func):
+    """Decorator that raised an exception if the function doesn't return a filename
+    """
     def checkFunc(*args, **kwargs):
         result = func(*args, **kwargs)
         if result is not None:
@@ -487,7 +501,7 @@ def quoteUnicodeURL(url):
     <http://www.w3.org/International/O-URL-code.html>
     """
     checkU(url)
-    quotedChars = list()
+    quotedChars = []
     for c in url.encode('utf8'):
         if ord(c) > 127:
             quotedChars.append(urllib.quote(c))
@@ -686,10 +700,10 @@ def escape(orig):
     try:
         return _escapecache[orig]
     except:
-        _escapecache[orig] = orig.replace('&','&amp;').replace('<','&lt;').replace('>','&gt;')
+        _escapecache[orig] = orig.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
         return _escapecache[orig]
 
-def toUni(orig, encoding = None):
+def toUni(orig, encoding=None):
     try:
         return _unicache[orig]
     except:
@@ -702,7 +716,7 @@ def toUni(orig, encoding = None):
             _unicache[orig] = unicode(orig)
         else:
             orig = toUTF8Bytes(orig, encoding)
-            _unicache[orig] = unicode(orig,'utf-8')
+            _unicache[orig] = unicode(orig, 'utf-8')
         return _unicache[orig]
 
 import sgmllib
@@ -797,7 +811,7 @@ class HTMLStripper(sgmllib.SGMLParser):
             return
 
         self.__flush()
-        self.__links.append( (len(self.__data), -1, href) )
+        self.__links.append((len(self.__data), -1, href))
 
     def end_a(self):
         self.__flush()
