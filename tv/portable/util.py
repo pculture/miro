@@ -310,13 +310,6 @@ def formatTimeForUser(seconds, sign=1):
     else:
         return "%s%d:%02u:%02u" % (sign, h, m, s)
 
-def makeAnchor(label, href):
-    return '<a href="%s">%s</a>' % (href, label)
-
-def makeEventURL(label, eventURL):
-    return ('<a href="#" onclick="return eventURL(\'action:%s\');">%s</a>' %
-            (eventURL, label))
-
 def clampText(text, maxLength=20):
     if len(text) > maxLength:
         return text[:maxLength-3] + '...'
@@ -558,16 +551,6 @@ def partition(list_, size):
         retval.append(list_[start:start+size])
     return retval
 
-def directoryWritable(directory):
-    """Check if we can write to a directory."""
-    try:
-        f = tempfile.TemporaryFile(dir=directory)
-    except OSError:
-        return False
-    else:
-        f.close()
-        return True
-
 def random_string(length):
     return ''.join(random.choice(string.ascii_letters) for i in xrange(length))
 
@@ -644,16 +627,17 @@ def quoteattr(orig):
     return orig.replace(u'"', u'&quot;')
 
 
-# Takes a string and do whatever needs to be done to make it into a
-# UTF-8 string. If a Unicode string is given, it is just encoded in
-# UTF-8. Otherwise, if an encoding hint is given, first try to decode
-# the string as if it were in that encoding; if that fails (or the
-# hint isn't given), liberally (if necessary lossily) interpret it as
-# defaultEncoding, as declared on the next line:
-defaultEncoding = "iso-8859-1" # aka Latin-1
+_default_encoding = "iso-8859-1" # aka Latin-1
 _utf8cache = {}
 
-def toUTF8Bytes(s, encoding=None):
+def _to_utf8_bytes(s, encoding=None):
+    """Takes a string and do whatever needs to be done to make it into a
+    UTF-8 string. If a Unicode string is given, it is just encoded in
+    UTF-8. Otherwise, if an encoding hint is given, first try to decode
+    the string as if it were in that encoding; if that fails (or the
+    hint isn't given), liberally (if necessary lossily) interpret it as
+    _default_encoding.
+    """
     try:
         return _utf8cache[(s, encoding)]
     except KeyError:
@@ -673,8 +657,8 @@ def toUTF8Bytes(s, encoding=None):
                 result = decoded.encode('utf-8')
         if result is None:
             # Encoding wasn't provided, or it was wrong. Interpret provided string
-            # liberally as a fixed defaultEncoding (see above.)
-            result = s.decode(defaultEncoding, 'replace').encode('utf-8')
+            # liberally as a fixed _default_encoding (see above.)
+            result = s.decode(_default_encoding, 'replace').encode('utf-8')
 
         _utf8cache[(s, encoding)] = result
         return _utf8cache[(s, encoding)]
@@ -703,7 +687,7 @@ def toUni(orig, encoding=None):
         elif not isinstance(orig, str):
             _unicache[orig] = unicode(orig)
         else:
-            orig = toUTF8Bytes(orig, encoding)
+            orig = _to_utf8_bytes(orig, encoding)
             _unicache[orig] = unicode(orig, 'utf-8')
         return _unicache[orig]
 
