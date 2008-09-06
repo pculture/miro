@@ -34,9 +34,9 @@ from HTMLParser import HTMLParser
 import random
 import logging
 
-##
-# very simple parser to convert HTML to XHTML
 class XHTMLifier(HTMLParser):
+    """Very simple parser to convert HTML to XHTML
+    """
     def convert(self, data, addTopTags=False, filterFontTags=False):
         if addTopTags:
             self.output = u'<html><head></head><body>'
