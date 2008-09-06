@@ -106,7 +106,7 @@ class Controller:
                 logging.info("%s", thread)
 
         except:
-            signals.system.failedExn("while shutting down")
+            signals.system.failed_exn("while shutting down")
             exit(1)
 
     @eventloop.asUrgent

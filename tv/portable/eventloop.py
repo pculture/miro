@@ -212,7 +212,7 @@ class EventLoop(signals.SignalEmitter):
         self.threadPool = ThreadPool(self)
         self.readCallbacks = {}
         self.writeCallbacks = {}
-        self.wakeSender, self.wakeReceiver = util.makeDummySocketPair()
+        self.wakeSender, self.wakeReceiver = util.make_dummy_socket_pair()
         self.addReadCallback(self.wakeReceiver, self._slurpWakerData)
         self.quitFlag = False
         self.clearRemovedCallbacks()

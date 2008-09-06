@@ -470,7 +470,7 @@ class install_data (distutils.command.install_data.install_data):
     def install_app_config(self):
         source = os.path.join(resource_dir, 'app.config.template')
         dest = '/usr/share/miro/resources/app.config'
-        revision = util.queryRevision(root_dir)
+        revision = util.query_revision(root_dir)
         if revision is None:
             revision = "unknown"
             revisionurl = "unknown"

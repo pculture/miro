@@ -33,7 +33,7 @@ import os
 from miro.database import DDBObject, defaultDatabase
 from miro.dl_daemon import daemon, command
 from miro.download_utils import nextFreeFilename, getFileURLPath, filterDirectoryName
-from miro.util import getTorrentInfoHash, returnsUnicode, checkU, returnsFilename, unicodify, checkF, toUni
+from miro.util import get_torrent_info_hash, returnsUnicode, checkU, returnsFilename, unicodify, checkF, toUni
 # from miro import app
 from miro import config
 from miro import httpclient
@@ -675,7 +675,7 @@ def getDownloader(item):
     if url.startswith(u'file://'):
         path = getFileURLPath(url)
         try:
-            getTorrentInfoHash(path)
+            get_torrent_info_hash(path)
         except ValueError:
             raise ValueError("Don't know how to handle %s" % url)
         except IOError:

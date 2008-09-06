@@ -53,7 +53,7 @@ from os.path import samefile
 #### movies are stored                                                     ####
 ###############################################################################
 
-def getAvailableBytesForMovies():
+def get_available_bytes_for_movies():
     dir_ = config.get(prefs.MOVIES_DIRECTORY)
     # Create the download directory if it doesn't already exist.
     try:

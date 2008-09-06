@@ -250,7 +250,7 @@ class SystemSignals(SignalEmitter):
     def videosAdded(self, view):
         self.emit('videos-added', view)
 
-    def failedExn(self, when, details=None):
+    def failed_exn(self, when, details=None):
         self.failed(when, withExn=True, details=details)
 
     def failed(self, when, withExn=False, details=None):

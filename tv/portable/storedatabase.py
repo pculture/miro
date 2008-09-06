@@ -546,7 +546,7 @@ def getObjects(pathname, convertOnFail):
         databasesanity.checkSanity(objects, quiet=True, 
                 reallyQuiet=(not util.chatter))
     except databasesanity.DatabaseInsaneError, e:
-        signals.system.failedExn("When restoring database", e)
+        signals.system.failed_exn("When restoring database", e)
         # if the database fails the sanity check, try to restore it anyway.
         # It's better than notheing
     skipOnRestore = oldSkipOnRestore

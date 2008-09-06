@@ -134,7 +134,7 @@ class MovieDataUpdater:
             except:
                 if self.inShutdown:
                     break
-                signals.system.failedExn("When running external movie data program")
+                signals.system.failed_exn("When running external movie data program")
                 self.updateFinished(movieDataInfo.item, -1, None)
 
     def runMovieDataProgram(self, commandLine, env):

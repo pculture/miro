@@ -44,7 +44,7 @@ from miro import config
 from miro import prefs
 from miro import util
 
-from miro.plat.utils import getAvailableBytesForMovies
+from miro.plat.utils import get_available_bytes_for_movies
 
 import logging
 
@@ -89,7 +89,7 @@ ITEMS = [
     SEPARATOR,
 
     { "label": _("Space free on disk:"),
-      "data": lambda : util.formatSizeForUser(getAvailableBytesForMovies(), "0B", False) }
+      "data": lambda : util.formatSizeForUser(get_available_bytes_for_movies(), "0B", False) }
 ]
 
 def run_dialog():

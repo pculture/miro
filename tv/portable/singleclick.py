@@ -42,7 +42,7 @@ from miro.gtcache import gettext as _
 import os
 import logging
 
-from miro.util import getTorrentInfoHash
+from miro.util import get_torrent_info_hash
 from miro import app
 from miro import dialogs
 from miro import download_utils
@@ -360,7 +360,7 @@ def parse_command_line_args(args=None):
             ext = os.path.splitext(arg)[1].lower()
             if ext in ('.torrent', '.tor'):
                 try:
-                    torrentInfohash = getTorrentInfoHash(arg)
+                    torrentInfohash = get_torrent_info_hash(arg)
                 except ValueError:
                     title = _("Invalid Torrent")
                     msg = _("The torrent file %s appears to be corrupt and cannot be opened. [OK]") % os.path.basename(arg)

@@ -45,7 +45,7 @@ def trapCall(when, function, *args, **kwargs):
     except KeyboardInterrupt:
         raise
     except:
-        signals.system.failedExn(when)
+        signals.system.failed_exn(when)
         return False
 
 # Turn the next flag on to track the cumulative time for each when argument to

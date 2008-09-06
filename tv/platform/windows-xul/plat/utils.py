@@ -60,8 +60,7 @@ def getLongPathName(path):
     else:
         return buf.value
 
-def getAvailableBytesForMovies():
-    # TODO: windows implementation
+def get_available_bytes_for_movies():
     moviesDir = fileutil.expand_filename(config.get(prefs.MOVIES_DIRECTORY))
     freeSpace = ctypes.c_ulonglong(0)
     availableSpace = ctypes.c_ulonglong(0)

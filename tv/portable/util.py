@@ -73,7 +73,7 @@ def get_nice_stack():
     # remove after the call to signals.system.failed
     for i in xrange(len(stack)):
         if (os.path.basename(stack[i][0]) == 'signals.py'
-                and stack[i][2] in ('system.failed', 'system.failedExn')):
+                and stack[i][2] in ('system.failed', 'system.failed_exn')):
             stack = stack[:i+1]
             break
 
@@ -128,14 +128,15 @@ def write_simple_config_file(path, data):
     
     f.close()
 
-def queryRevision(f):
+def query_revision(fn):
     """Called at build-time to ask Subversion for the revision number of
-    this checkout. Going to fail without Cygwin. Yeah, oh well. Pass the
-    file or directory you want to use as a reference point. Returns an
-    integer on success or None on failure.
+    this checkout.  Going to fail without Cygwin. Yeah, oh well.  Pass the
+    file or directory you want to use as a reference point.
+
+    Returns the (url, revision) on success and None on failure.
     """
     try:
-        p = subprocess.Popen(["svn", "info", f], stdout=subprocess.PIPE) 
+        p = subprocess.Popen(["svn", "info", fn], stdout=subprocess.PIPE) 
         info = p.stdout.read()
         p.stdout.close()
         url = re.search("URL: (.*)", info).group(1)
@@ -150,30 +151,21 @@ def queryRevision(f):
     except Exception, e:
         print "Exception thrown when querying revision: %s" % e
 
-def absolutePathToFileURL(path):
-    """'path' is a path that could be passed to open() to open a file on
-    this platform. It must be an absolute path. Return the file:// URL
-    that would refer to the same file.
-    """
-    if isinstance(path, unicode):
-        path = path.encode("utf-8")
-    parts = path.split(os.sep)
-    parts = [urllib.quote(x, ':') for x in parts]
-    return "file://" + '/'.join(parts)
-
-
-def failedExn(when, **kwargs):
+def failed_exn(when, **kwargs):
     """Shortcut for 'failed' with the exception flag.
     """
     failed(when, withExn=True, **kwargs)
 
-def failed(when, withExn = False, details = None):
+def failed(when, withExn=False, details=None):
     """Puts up a dialog with debugging information encouraging the user to
-    file a ticket. (Also print a call trace to stderr or whatever, which
+    file a ticket.  (Also print a call trace to stderr or whatever, which
     hopefully will end up on the console or in a log.) 'when' should be
-    something like "when trying to play a video." The user will see
-    it. If 'withExn' is true, last-exception information will be printed
-    to. If 'detail' is true, it will be included in the report and the
+    something like "when trying to play a video."  The user will see
+    it.
+
+    If 'withExn' is true, last-exception information will be printed to.
+
+    If 'detail' is true, it will be included in the report and the
     the console/log, but not presented in the dialog box flavor text.
     """
     logging.warn("util.failed is deprecated.  Use system.signals.failed\n"
@@ -201,7 +193,7 @@ class AutoflushingStream:
     def __setattr__(self, name, value):
         return setattr(self.stream, name, value)
 
-def makeDummySocketPair():
+def make_dummy_socket_pair():
     """Create a pair of sockets connected to each other on the local
     interface.  Used to implement SocketHandler.wakeup().
     """
@@ -215,7 +207,7 @@ def makeDummySocketPair():
     dummy_server.close()
     return first, second
 
-def getTorrentInfoHash(path):
+def get_torrent_info_hash(path):
     import miro.libtorrent as lt
     f = open(path, 'rb')
     try:
@@ -237,15 +229,14 @@ class ExponentialBackoffTracker:
     def reset(self):
         self.currentDelay = self.baseDelay
 
-
-def gatherVideos(path, progressCallback):
-    """Gather movie files on the disk. Used by the startup dialog.
+def gather_videos(path, progress_callback):
+    """Gather movie files on the disk.  Used by the startup dialog.
     """
     from miro import prefs
     from miro import config
     keepGoing = True
     parsed = 0
-    found = list()
+    found = []
     try:
         for root, dirs, files in os.walk(path):
             for f in files:
@@ -258,7 +249,7 @@ def gatherVideos(path, progressCallback):
                     adjustedParsed = int(parsed / 10.0) * 10
                 else:
                     adjustedParsed = parsed
-                keepGoing = progressCallback(adjustedParsed, len(found))
+                keepGoing = progress_callback(adjustedParsed, len(found))
                 if not keepGoing:
                     found = None
                     raise

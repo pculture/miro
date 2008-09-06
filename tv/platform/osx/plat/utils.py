@@ -66,7 +66,7 @@ def get_pyobjc_major_version():
 #### movies are stored                                                     ####
 ###############################################################################
 
-def getAvailableBytesForMovies():
+def get_available_bytes_for_movies():
     pool = NSAutoreleasePool.alloc().init()
     fm = NSFileManager.defaultManager()
     info = fm.fileSystemAttributesAtPath_(config.get(prefs.MOVIES_DIRECTORY))

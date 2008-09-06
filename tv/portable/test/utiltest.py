@@ -92,15 +92,6 @@ class UtilTest(MiroTestCase):
              'type': u'video/mpeg',
              'filesize': u'244700'}]
 
-    def testAbsolutePathToFileURL(self):
-        testPaths = {
-            '/ben/dean/kawamura' : 'file:///ben/dean/kawamura',
-            '/eight/bit/path/\xe4' : 'file:///eight/bit/path/%E4',
-            u'/unicode/path/\xe4' : 'file:///unicode/path/%C3%A4',
-        }
-        for source, target in testPaths.items():
-            self.assertEquals(util.absolutePathToFileURL(source), target)
-
     def testStringify(self):
         # input, handleerror, expected output
         # if handlerror is None, then it isn't passed in as an argument

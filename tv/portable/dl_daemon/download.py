@@ -25,7 +25,7 @@ from sha import sha
 from miro.dl_daemon import command, daemon
 from datetime import timedelta
 from miro.util import checkF, checkU, stringify
-from miro.plat.utils import getAvailableBytesForMovies
+from miro.plat.utils import get_available_bytes_for_movies
 
 import string
 
@@ -487,7 +487,7 @@ class BGDownloader:
             if size < 0:
                 size = 0
             preserved = config.get(prefs.PRESERVE_X_GB_FREE) * 1024 * 1024 * 1024
-            available = getAvailableBytesForMovies() - preserved
+            available = get_available_bytes_for_movies() - preserved
             accept = (size <= available)
         return accept
 

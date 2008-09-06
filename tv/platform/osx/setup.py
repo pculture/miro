@@ -245,7 +245,7 @@ class MiroBuild (py2app):
 
     def setup_config(self):
         # Get subversion revision information.
-        revision = util.queryRevision(ROOT_DIR)
+        revision = util.query_revision(ROOT_DIR)
         if revision is None:
             revisionURL = 'unknown'
             revisionNum = '0000'

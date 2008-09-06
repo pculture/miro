@@ -53,7 +53,7 @@ from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
 from miro.plat import resources
-from miro.plat.utils import getAvailableBytesForMovies
+from miro.plat.utils import get_available_bytes_for_movies
 
 class ItemListDragHandler(object):
     def allowed_actions(self):
@@ -306,7 +306,7 @@ class DownloadsController(SimpleItemListController):
         self.widget.titlebar_vbox.pack_start(self.toolbar)
 
     def _update_free_space(self):
-        self.toolbar.update_free_space(getAvailableBytesForMovies())
+        self.toolbar.update_free_space(get_available_bytes_for_movies())
 
     def _on_pause_all(self, widget):
         messages.PauseAllDownloads().send_to_backend()
