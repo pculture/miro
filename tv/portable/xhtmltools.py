@@ -128,27 +128,27 @@ def fix_xml_header(data, charset):
     return '<?xml %s encoding="%s"?>%s' % (xml_decl, charset, the_rest)
 
 
-HTMLHeaderRE = re.compile(u"^(.*)\<\s*head\s*(.*?)\s*\>(.*?)\</\s*head\s*\>(.*)", re.I | re.S)
+_html_header_re = re.compile(u"^(.*)\<\s*head\s*(.*?)\s*\>(.*?)\</\s*head\s*\>(.*)", re.I | re.S)
 
-def fixHTMLHeader(data, charset):
+def fix_html_header(data, charset):
     """Adds a <meta http-equiv="Content-Type" content="text/html;
     charset=blah"> tag to an HTML document
 
     Since we're only feeding this to our own HTML Parser anyway, we
     don't care that it might bung up XHTML.
     """
-    header = HTMLHeaderRE.match(data)
+    header = _html_header_re.match(data)
     if header is None:
         # something is very wrong with this HTML
         return data
-    else:
-        headTags = header.expand('\\3')
-        # this isn't exactly robust, but neither is scraping HTML
-        if headTags.lower().find('content-type') != -1:
-            return data
-        else:
-            #print " adding %s Content-Type to HTML" % charset
-            return header.expand('\\1<head \\2><meta http-equiv="Content-Type" content="text/html; charset=')+charset+header.expand('">\\3</head>\\4')
+
+    head_tags = header.expand('\\3')
+    # this isn't exactly robust, but neither is scraping HTML
+    if head_tags.lower().find('content-type') != -1:
+        return data
+
+    #print " adding %s Content-Type to HTML" % charset
+    return header.expand('\\1<head\\2><meta http-equiv="Content-Type" content="text/html; charset=') + charset + header.expand('">\\3</head>\\4')
 
 def url_encode_dict(orig):
     """Converts a Python dictionary to data suitable for a POST or GET submission

@@ -33,7 +33,7 @@ from datetime import datetime, timedelta
 from miro.gtcache import gettext as _
 from miro.feedparser import FeedParserDict
 from urlparse import urljoin
-from miro.xhtmltools import unescape, xhtmlify, fix_xml_header, fixHTMLHeader, urlencode, urldecode
+from miro.xhtmltools import unescape, xhtmlify, fix_xml_header, fix_html_header, urlencode, urldecode
 import os
 import re
 import xml
@@ -988,7 +988,7 @@ class Feed(DDBObject):
             #print "Scraping HTML"
             html = info['body']
             if info.has_key('charset'):
-                html = fixHTMLHeader(html, info['charset'])
+                html = fix_html_header(html, info['charset'])
                 charset = unicodify(info['charset'])
             else:
                 charset = None
@@ -1024,7 +1024,7 @@ class Feed(DDBObject):
             html = info["body"]
             if info.has_key('charset'):
                 xmldata = fix_xml_header(html, info['charset'])
-                html = fixHTMLHeader(html, info['charset'])
+                html = fix_html_header(html, info['charset'])
                 charset = unicodify(info['charset'])
             else:
                 xmldata = html
@@ -2002,7 +2002,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
     def scrapeLinks(self, html, baseurl, setTitle=False, charset=None):
         try:
             if not charset is None:
-                html = fixHTMLHeader(html, charset)
+                html = fix_html_header(html, charset)
             xmldata = html
             parser = xml.sax.make_parser()
             parser.setFeature(xml.sax.handler.feature_namespaces, 1)
@@ -2481,7 +2481,7 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler, xml.sax.handler.ErrorHandle
             try:
                 html = xhtmlify(unescape(self.descHTML), addTopTags=True)
                 if not self.charset is None:
-                    html = fixHTMLHeader(html, self.charset)
+                    html = fix_html_header(html, self.charset)
                 self.links[:0] = lg.getLinks(html, self.baseurl)
             except HTMLParseError: # Don't bother with bad HTML
                 logging.info ("bad HTML in description for %s", self.baseurl)

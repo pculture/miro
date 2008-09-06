@@ -22,20 +22,56 @@ class Test_fix_xml_header(MiroTestCase):
 """.strip()
 
         self.assertEquals(xhtmltools.fix_xml_header(doc1, "utf-8"),
-                          """\
+                          """
 <?xml version="1.0" encoding="utf-8"?><xml>
 </xml>
 """.strip())
 
         self.assertEquals(xhtmltools.fix_xml_header(doc2, "utf-8"), doc2)
         self.assertEquals(xhtmltools.fix_xml_header(doc3, "utf-8"),
-                          """\
+                          """
 <?xml version="1.0" encoding="utf-8"?>
 <xml>
 </xml>
 """.strip())
 
 
+
+class Test_fix_html_header(MiroTestCase):
+    def test(self):
+        doc1 = """
+<html>
+</html>
+""".strip()
+
+        doc2 = """
+<html>
+<head>
+<meta http=equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+</html>
+""".strip()
+
+        doc3 = """
+<html>
+<head>
+</head>
+</html>
+""".strip()
+
+        # doc1 is missing head tags, so we don't touch it.
+        self.assertEquals(xhtmltools.fix_html_header(doc1, "utf-8"), doc1)
+
+        # doc2 looks fine, so we don't touch it.
+        self.assertEquals(xhtmltools.fix_html_header(doc2, "utf-8"), doc2)
+
+        self.assertEquals(xhtmltools.fix_html_header(doc3, "utf-8"), 
+                          """
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+</html>
+""".strip())
 
 class Test_url_encode_dict(MiroTestCase):
     def test(self):
