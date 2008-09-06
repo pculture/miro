@@ -42,7 +42,7 @@ sys.path.insert(0, os.path.join(root, 'portable'))
 
 from miro import util
 
-templateVars = util.readSimpleConfigFile(os.path.join(root, 'resources', 'app.config'))
+templateVars = util.read_simple_config_file(os.path.join(root, 'resources', 'app.config'))
 
 script_path = os.path.join(os.path.dirname(__file__), 'moviedata_util.py')
 

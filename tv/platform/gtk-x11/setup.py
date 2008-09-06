@@ -138,7 +138,7 @@ from miro import setup_portable
 # little hack to get the version from the current app.config.template
 from miro import util
 app_config = os.path.join(resource_dir, 'app.config.template')
-appVersion = util.readSimpleConfigFile(app_config)['appVersion']
+appVersion = util.read_simple_config_file(app_config)['appVersion']
 
 # RPM hack
 if 'bdist_rpm' in sys.argv:
@@ -519,7 +519,7 @@ class build_py (distutils.command.build_py.build_py):
     """
 
     def expand_templates(self):
-        conf = util.readSimpleConfigFile(app_config)
+        conf = util.read_simple_config_file(app_config)
         for path in [os.path.join(portable_dir,'dl_daemon','daemon.py')]:
             template = Template(read_file(path+".template"))
             expanded = template.substitute(**conf)

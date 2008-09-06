@@ -49,7 +49,7 @@ ext_modules=[
         core_setup.libtorrent_ext,
 ]
 
-templateVars = util.readSimpleConfigFile(os.path.join(root, 'resources', 'app.config'))
+templateVars = util.read_simple_config_file(os.path.join(root, 'resources', 'app.config'))
 
 wrapper_module = os.path.join(core_setup.portable_dir, 'dl_daemon',
         'Democracy_Downloader.py')

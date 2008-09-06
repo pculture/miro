@@ -161,13 +161,13 @@ def extract_binaries(source, target, force=True):
 class Config (object):
     
     def __init__(self, path, themePath=None):
-        self.config = util.readSimpleConfigFile(path)
+        self.config = util.read_simple_config_file(path)
         self.themeDir = os.path.join(ROOT_DIR, 'platform', 'osx', 'build', 'theme')
         self.themeConfig = None
         if themePath is not None:
             self.extract_theme_content(themePath, self.themeDir)
             themeConfigPath = os.path.join(self.themeDir, "app.config")
-            self.themeConfig = util.readSimpleConfigFile(themeConfigPath)
+            self.themeConfig = util.read_simple_config_file(themeConfigPath)
         elif os.path.exists(self.themeDir):
             shutil.rmtree(self.themeDir)
         

@@ -283,7 +283,7 @@ class SystemSignals(SignalEmitter):
             header += "Details: %s\n" % (details, )
         header += "Call stack\n----------\n"
         try:
-            stack = util.getNiceStack()
+            stack = util.get_nice_stack()
         except KeyboardInterrupt:
             raise
         except:

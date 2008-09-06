@@ -1,4 +1,5 @@
 import os
+import os.path
 import tempfile
 
 from miro.test.framework import MiroTestCase
@@ -203,6 +204,52 @@ class DownloadUtilsTest(MiroTestCase):
             'abc' + longExtension)
         self.checkCleanFilename(longFilename + longExtension,
             longFilename[:50] + longExtension[:50])
+
+class Test_simple_config_file(MiroTestCase):
+    def test_read_simple_config_file(self):
+        t = tempfile.gettempprefix()
+        fn = os.path.join(t, "temp.config")
+
+        if not os.path.exists(os.path.dirname(fn)):
+            os.makedirs(os.path.dirname(fn))
+
+        try:
+            f = open(fn, "w")
+            f.write("""
+a = b
+c = dSSS
+
+E = F
+""".strip().replace("S", " "))
+            f.close()
+
+            cfg = util.read_simple_config_file(fn)
+            self.assertEquals(cfg["a"], "b")
+            self.assertEquals(cfg["c"], "d   ")
+            self.assertEquals(cfg["E"], "F")
+            self.assertEquals(cfg.get("G"), None)
+        finally:
+            os.remove(fn)
+
+    def test_write_simple_config_file(self):
+        t = tempfile.gettempprefix()
+        fn = os.path.join(t, "temp.config")
+
+        if not os.path.exists(os.path.dirname(fn)):
+            os.makedirs(os.path.dirname(fn))
+
+        try:
+            cfg = {"a": "b",
+                   "c": "d",
+                   "E": "F   "}
+            util.write_simple_config_file(fn, cfg)
+
+            cfg2 = util.read_simple_config_file(fn)
+            self.assertEquals(cfg2["a"], cfg["a"])
+            self.assertEquals(cfg2["c"], cfg["c"])
+            self.assertEquals(cfg2["E"], cfg["E"])
+        finally:
+            os.remove(fn)
 
 class MatrixTest(MiroTestCase):
     def testMatrixInit(self):

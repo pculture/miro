@@ -60,52 +60,49 @@ PREFERRED_TYPES = [
     'video/x-msmpeg', 'video/x-flv']
 
 
-def quoteJS(x):
-    """Perform escapes needed for Javascript string contents.
-    """
-    x = x.replace("\\", "\\\\") # \       -> \\
-    x = x.replace("\"", "\\\"") # "       -> \"  
-    x = x.replace("'",  "\\'")  # '       -> \'
-    x = x.replace("\n", "\\n")  # newline -> \n
-    x = x.replace("\r", "\\r")  # CR      -> \r
-    return x
-
-def getNiceStack():
-    """Get a stack trace that's a easier to read that the full one.  """
+def get_nice_stack():
+    """Get a stack trace that's a easier to read that the full one."""
     stack = traceback.extract_stack()
     # We don't care about the unit test lines
-    while (len(stack) > 0 and
-        os.path.basename(stack[0][0]) == 'unittest.py' or 
-        (isinstance(stack[0][3], str) and 
-            stack[0][3].startswith('unittest.main'))):
+    while (len(stack) > 0
+            and os.path.basename(stack[0][0]) == 'unittest.py'
+            or (isinstance(stack[0][3], str)
+                and stack[0][3].startswith('unittest.main'))):
         stack = stack[1:]
+
     # remove after the call to signals.system.failed
     for i in xrange(len(stack)):
-        if (os.path.basename(stack[i][0]) == 'signals.py' and 
-                stack[i][2] in ('system.failed', 'system.failedExn')):
+        if (os.path.basename(stack[i][0]) == 'signals.py'
+                and stack[i][2] in ('system.failed', 'system.failedExn')):
             stack = stack[:i+1]
             break
+
     # remove trapCall calls
     stack = [i for i in stack if 'trapCall' in i]
     return stack
 
-def readSimpleConfigFile(path):
-    """Parse a configuration file in a very simple format. Each line is
-    either whitespace or "Key = Value". Whitespace is ignored at the
-    beginning of Value, but the remainder of the line is taken
-    literally, including any whitespace. There is no way to put a
-    newline in a value. Returns the result as a dict.
+_config_line_re = re.compile(r"^([^ ]+) *= *([^\r\n]*)[\r\n]*$")
+
+def read_simple_config_file(path):
+    """Parse a configuration file in a very simple format and return contents
+    as a dict.
+
+    Each line is either whitespace or "Key = Value".  Whitespace is ignored
+    at the beginning of Value, but the remainder of the line is taken
+    literally, including any whitespace.
+
+    Note: There is no way to put a newline in a value.
     """
     ret = {}
 
     f = open(path, "rt")
     for line in f.readlines():
         # Skip blank lines
-        if re.match("^[ \t]*$", line):
+        if not line.strip():
             continue
 
         # Otherwise it'd better be a configuration setting
-        match = re.match(r"^([^ ]+) *= *([^\r\n]*)[\r\n]*$", line)
+        match = _config_line_re.match(line)
         if not match:
             print "WARNING: %s: ignored bad configuration directive '%s'" % (path, line)
             continue
@@ -120,9 +117,9 @@ def readSimpleConfigFile(path):
 
     return ret
 
-def writeSimpleConfigFile(path, data):
+def write_simple_config_file(path, data):
     """Given a dict, write a configuration file in the format that
-    readSimpleConfigFile reads.
+    read_simple_config_file reads.
     """
     f = open(path, "wt")
 

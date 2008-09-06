@@ -45,7 +45,7 @@ class AppConfig(object):
         self.theme_vars = {}
 
         app_config_path = resources.path('app.config')
-        self.default_vars = util.readSimpleConfigFile(app_config_path)
+        self.default_vars = util.read_simple_config_file(app_config_path)
 
         self.load_theme(theme)
 
@@ -54,7 +54,7 @@ class AppConfig(object):
             logging.info("Using theme %s" % theme)
             theme_app_config = resources.theme_path(theme, 'app.config')
             try:
-                self.theme_vars = util.readSimpleConfigFile(theme_app_config)
+                self.theme_vars = util.read_simple_config_file(theme_app_config)
             except EnvironmentError:
                 logging.warn("Error loading theme: %s\n%s", 
                         theme_app_config, traceback.format_exc())

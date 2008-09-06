@@ -301,7 +301,7 @@ for dir in ('searchengines', 'wimages'):
 
 def get_template_variables():
     app_config = os.path.join(resources_dir, 'app.config.template')
-    return util.readSimpleConfigFile(app_config)
+    return util.read_simple_config_file(app_config)
 
 ###############################################################################
 
