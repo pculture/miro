@@ -99,13 +99,6 @@ def _playback_panel():
     else:
         handle_clicked(xine_radio)
 
-    h = widgetset.HBox()
-    h.pack_start(lab, padding=5)
-    h.pack_start(gstreamer_radio, padding=5)
-    h.pack_start(xine_radio, padding=5)
-
-    extras.append(h)
-
     return extras
 
 def get_platform_specific(panel_name):
