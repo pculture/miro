@@ -26,7 +26,6 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from miro import item
 import re
 
 quotekiller = re.compile(r'(?<!\\)"')
@@ -34,7 +33,7 @@ slashkiller = re.compile(r'\\.')
 
 searchObjects = {}
 
-def match (searchString, comparisons):
+def match(searchString, comparisons):
     searchString = searchString.lower()
     comparisons = [c.lower() for c in comparisons]
     if not searchObjects.has_key(searchString):
@@ -42,8 +41,8 @@ def match (searchString, comparisons):
     return searchObjects[searchString].match(comparisons)
 
 class BooleanSearch:
-    def __init__ (self, string):
-        self.string = string
+    def __init__ (self, s):
+        self.string = s
         self.parse_string()
 
     def parse_string(self):
@@ -71,7 +70,7 @@ class BooleanSearch:
                 i += 1
             laststart = i
 
-    def process (self, substring):
+    def process(self, substring):
         positive = True
         if substring[0] == '-':
             substring = substring[1:]
@@ -81,7 +80,7 @@ class BooleanSearch:
         #print substring
         return [positive, substring]
 
-    def match (self, comparisons):
+    def match(self, comparisons):
         for rule in self.rules:
             matched = False
             for comparison in comparisons:
@@ -91,8 +90,6 @@ class BooleanSearch:
             if rule[0] != matched:
                 return False
         return True
-
-#        r'(([^" ]\"|"([^"]|\")*")*)'
 
     def as_string(self):
         return self.string
