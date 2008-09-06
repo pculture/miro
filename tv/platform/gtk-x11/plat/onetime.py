@@ -37,7 +37,7 @@ if getattr(dbus, 'version', (0, 0, 0)) >= (0, 41, 0):
 # stop supporting Dapper, we can rip this whole section out.
 # This section was re-written so that it doesn't trigger the dbus-python
 # deprecation warning and is localized so we can just delete it and
-# move on with our lives when the time comes. - willguaraldi 10-29-2007
+# move on with our lives when the time comes. - willkahn-greene10-29-2007
 
 # (0, 80, 0) is the first version that has do_not_queue
 if getattr(dbus, 'version', (0, 0, 0)) >= (0, 80, 0):
