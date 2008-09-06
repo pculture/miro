@@ -36,7 +36,6 @@ In general, frontends should do the following to handle startup.
 """
 
 from miro.gtcache import gettext as _
-from string import Template
 import logging
 import os
 import traceback
@@ -83,10 +82,10 @@ def startup_function(func):
         try:
             func(*args, **kwargs)
         except StartupError, e:
-            signals.system.startupFailure(e.summary, e.description)
+            signals.system.startup_failure(e.summary, e.description)
         except:
             logging.warn("Unknown startup error: %s", traceback.format_exc())
-            signals.system.startupFailure(_("Unknown Error"),
+            signals.system.startup_failure(_("Unknown Error"),
                     _("An unkown error prevented Miro from startup.  Please "
                         "file a bug report at %s") %
                     (config.get(prefs.BUG_REPORT_URL)))
@@ -138,10 +137,10 @@ def startup():
     eventloop.connect('thread-started', lambda obj, thread: database.set_thread(thread))
     logging.info("Starting event loop thread")
     eventloop.startup()
-    eventloop.addIdle(finishStartup, "finish startup")
+    eventloop.addIdle(finish_startup, "finish startup")
 
 @startup_function
-def finishStartup():
+def finish_startup():
     views.initialize()
     util.print_mem_usage("Pre-database memory check:")
     logging.info("Restoring database...")
@@ -149,19 +148,19 @@ def finishStartup():
         database.defaultDatabase.liveStorage = storedatabase.LiveStorage()
     except databaseupgrade.DatabaseTooNewError:
         summary = _("Database too new")
-        description = Template(_("""\
-You have a database that was saved with a newer version of $shortAppName. \
-You must download the latest version of $shortAppName and run that.""")).substitute(shortAppName=config.get(prefs.SHORT_APP_NAME))
+        description = _("""You have a database that was saved with a newer \
+version of %(shortAppName)s. You must download the latest version of %(shortAppName)s \
+and run that.""") % {"shortAppName": config.get(prefs.SHORT_APP_NAME)}
         raise StartupError(summary, description)
     database.defaultDatabase.recomputeFilters()
 
     if movies_directory_gone():
         __movies_gone_handler()
     else:
-        eventloop.addUrgentCall(finalizeStartup, "finalizing startup")
+        eventloop.addUrgentCall(finalize_startup, "finalizing startup")
 
 @startup_function
-def finalizeStartup():
+def finalize_startup():
     downloader.startupDownloader()
 
     util.print_mem_usage("Post-downloader memory check")
@@ -196,15 +195,15 @@ def setup_global_feeds():
     setup_global_feed(u'dtv:directoryfeed')
 
 def setup_tabs():
-    def setupTabOrder(view, key):
+    def setup_tab_order(view, key):
         try:
             tabOrder = util.getSingletonDDBObject(view)
         except LookupError:
             logging.info("Creating %s tab order" % key)
             tabs.TabOrder(key)
-    setupTabOrder(views.siteTabOrder, u'site')
-    setupTabOrder(views.channelTabOrder, u'channel')
-    setupTabOrder(views.playlistTabOrder, u'playlist')
+    setup_tab_order(views.siteTabOrder, u'site')
+    setup_tab_order(views.channelTabOrder, u'channel')
+    setup_tab_order(views.playlistTabOrder, u'playlist')
 
 def movies_directory_gone():
     movies_dir = fileutil.expand_filename(config.get(prefs.MOVIES_DIRECTORY))
@@ -215,25 +214,25 @@ def movies_directory_gone():
     except OSError:
         # We can't access the directory.  Seems like it's gone.
         return True
-    if contents != []:
-        # There's something inside the directory consider it present  (even
+    if contents:
+        # There's something inside the directory consider it present (even
         # if all our items are missing.
         return False
     # make sure that we have actually downloaded something into the movies
     # directory. 
     for downloader_ in views.remoteDownloads:
-        if (downloader_.isFinished() and
-                downloader_.getFilename().startswith(movies_dir)):
+        if (downloader_.isFinished()
+                and downloader_.getFilename().startswith(movies_dir)):
             return True
     return False
 
 def default_movies_gone_handler():
     summary = _("Video Directory Missing")
-    description = Template(_("""
-Miro can't find your primary video directory $moviesDirectory.  This may be because it's \
-located on an external drive that is currently disconnected.  Please, connect the drive \
-or create the directory, then start Miro again.""")).substitute(moviesDirectory = config.get(prefs.MOVIES_DIRECTORY))
-    signals.system.startupFailure(summary, description)
+    description = _("""Miro can't find your primary video directory \
+%(moviesDirectory)s.  This may be because it's located on an external drive \
+that is currently disconnected.  Please, connect the drive or create the \
+directory, then start Miro again.""") % {"moviesDirectory": config.get(prefs.MOVIES_DIRECTORY)}
+    signals.system.startup_failure(summary, description)
 
 __movies_gone_handler =  default_movies_gone_handler
 
@@ -242,9 +241,8 @@ def install_movies_gone_handler(callback):
     case where we are trying to start up, but detect that the movies directory
     appears missing.  By default this causes us to fail starting up, but some
     frontends may want to allow the user to continue.  To do that, they must
-    call startup.finalizeStartup().
+    call startup.finalize_startup().
     """
-
     global __movies_gone_handler
     __movies_gone_handler = callback
 

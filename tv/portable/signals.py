@@ -226,7 +226,7 @@ class SystemSignals(SignalEmitter):
     def startupSuccess(self):
         self.emit('startup-success')
 
-    def startupFailure(self, summary, description):
+    def startup_failure(self, summary, description):
         self.emit('startup-failure', summary, description)
 
     def shutdown(self):
