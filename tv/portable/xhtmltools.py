@@ -164,9 +164,9 @@ def url_encode_dict(orig):
             logging.warning("url_encode_dict: trying to encode non-string: '%s'", repr(val))
     return '&'.join(output)
 
-def multipartEncode(postVars, files):
+def multipart_encode(postVars, files):
     # Generate a random 64bit number for our boundaries
-    boundary = 'dp%s'% (hex(random.getrandbits(64))[2:-1])
+    boundary = 'dp%s'% hex(random.getrandbits(64))[2:-1]
     output = []
     if postVars is not None:
         for key, value in postVars.items():

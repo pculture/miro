@@ -1,4 +1,5 @@
 from miro.test.framework import MiroTestCase
+from StringIO import StringIO
 
 from miro import xhtmltools
 
@@ -94,3 +95,18 @@ class Test_url_encode_dict(MiroTestCase):
         # test weird stuff
         self.assertEquals(urlencodedict({"a": "<foo>&blah;\'\""}), 
                           "a=%3Cfoo%3E%26blah%3B%27%22")
+
+class Test_multipart_encode(MiroTestCase):
+    def test(self):
+        vars = {
+                'foo': u'123',  # unicode string
+        }
+
+        files = {
+            'baz': {"filename":"binarydata.zip",
+                 "mimetype":"application/octet-stream",
+                 "handle": StringIO('\xf8'), 
+             } # baz has invalid unicode data
+        }
+
+        boundary, data = xhtmltools.multipart_encode(vars, files)

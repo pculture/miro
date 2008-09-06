@@ -54,7 +54,7 @@ from miro import httpauth
 from miro import config
 from miro import prefs
 from miro.download_utils import URIPattern, cleanFilename, parseURL, defaultPort, getFileURLPath, filenameFromURL
-from miro.xhtmltools import url_encode_dict, multipartEncode
+from miro.xhtmltools import url_encode_dict, multipart_encode
 from miro import eventloop
 from miro import util
 import sys
@@ -838,7 +838,7 @@ class HTTPConnection(ConnectionHandler):
             headers['Content-Type'] = 'application/x-www-form-urlencoded'
             headers['Content-Length'] = '%d' % len(postData)
         elif method == "POST" and postFiles is not None:
-            (postData, boundary) = multipartEncode(postVariables, postFiles)
+            (postData, boundary) = multipart_encode(postVariables, postFiles)
             headers['Content-Type'] = 'multipart/form-data; boundary=%s' % boundary
             headers['Content-Length'] = '%d' % len(postData)
         else:

@@ -1,12 +1,9 @@
-from StringIO import StringIO
-
 import os
 import tempfile
 
 from miro.test.framework import MiroTestCase
 from miro import download_utils
 from miro import util
-from miro import xhtmltools
 
 
 # We're going to override this so we can guarantee that if the order
@@ -187,21 +184,6 @@ class UtilTest(MiroTestCase):
         self.assertEqual(selected_type['href'], u'http://example.org/4.torrent')
         self.assertEqual(selected_combination['href'],
                          u'http://example.org/1.ogg')
-
-class XHTMLToolsTest(MiroTestCase):
-    def testMultipartEncode(self):
-        vars = {
-                'foo': u'123',  # unicode string
-        }
-
-        files = {
-            'baz': {"filename":"binarydata.zip",
-                 "mimetype":"application/octet-stream",
-                 "handle": StringIO('\xf8'), 
-             } # baz has invalid unicode data
-        }
-
-        boundary, data = xhtmltools.multipartEncode(vars, files)
 
 class DownloadUtilsTest(MiroTestCase):
     def checkCleanFilename(self, filename, test_against):
