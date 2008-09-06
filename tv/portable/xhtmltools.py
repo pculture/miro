@@ -108,24 +108,24 @@ def xhtmlify(data, addTopTags=False, filterFontTags=False):
     x = XHTMLifier()
     return x.convert(data, addTopTags, filterFontTags)
 
-xmlheaderRE = re.compile("^\<\?xml\s*(.*?)\s*\?\>(.*)", re.S)
+_xml_header_re = re.compile("^\<\?xml\s*(.*?)\s*\?\>(.*)", re.S)
 
-def fixXMLHeader(data, charset):
+def fix_xml_header(data, charset):
     """Adds a <?xml ?> header to the given xml data or replaces an
     existing one without a charset with one that has a charset
     """
-    header = xmlheaderRE.match(data)
+    header = _xml_header_re.match(data)
     if header is None:
-        #print "Adding header %s" % charset
+        # print "Adding header %s" % charset
         return '<?xml version="1.0" encoding="%s"?>%s' % (charset, data)
-    else:
-        xmlDecl = header.expand('\\1')
-        theRest = header.expand('\\2')
-        if xmlDecl.find('encoding'):
-            return data
-        else:
-            #print "Changing header to include charset"
-            return '<?xml %s encoding="%s"?>%s' % (xmlDecl, charset, theRest)
+
+    xml_decl = header.expand('\\1')
+    the_rest = header.expand('\\2')
+    if xml_decl.find('encoding') != -1:
+        return data
+
+    # print "Changing header to include charset"
+    return '<?xml %s encoding="%s"?>%s' % (xml_decl, charset, the_rest)
 
 
 HTMLHeaderRE = re.compile(u"^(.*)\<\s*head\s*(.*?)\s*\>(.*?)\</\s*head\s*\>(.*)", re.I | re.S)

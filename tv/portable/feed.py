@@ -33,7 +33,7 @@ from datetime import datetime, timedelta
 from miro.gtcache import gettext as _
 from miro.feedparser import FeedParserDict
 from urlparse import urljoin
-from miro.xhtmltools import unescape, xhtmlify, fixXMLHeader, fixHTMLHeader, urlencode, urldecode
+from miro.xhtmltools import unescape, xhtmlify, fix_xml_header, fixHTMLHeader, urlencode, urldecode
 import os
 import re
 import xml
@@ -999,7 +999,7 @@ class Feed(DDBObject):
             #print "ATOM or RDF"
             html = info['body']
             if info.has_key('charset'):
-                xmldata = fixXMLHeader(html, info['charset'])
+                xmldata = fix_xml_header(html, info['charset'])
             else:
                 xmldata = html
             self.finishGenerateFeed(RSSFeedImpl(unicodify(info['updated-url']),
@@ -1023,7 +1023,7 @@ class Feed(DDBObject):
             #print " It's doesn't look like HTML..."
             html = info["body"]
             if info.has_key('charset'):
-                xmldata = fixXMLHeader(html, info['charset'])
+                xmldata = fix_xml_header(html, info['charset'])
                 html = fixHTMLHeader(html, info['charset'])
                 charset = unicodify(info['charset'])
             else:
@@ -1567,7 +1567,7 @@ class RSSFeedImpl(RSSFeedImplBase):
             return
         html = info['body']
         if info.has_key('charset'):
-            html = fixXMLHeader(html, info['charset'])
+            html = fix_xml_header(html, info['charset'])
 
         # FIXME HTML can be non-unicode here --NN
         self.url = unicodify(info['updated-url'])
@@ -1726,7 +1726,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
             return
         html = info['body']
         if info.has_key('charset'):
-            html = fixXMLHeader(html, info['charset'])
+            html = fix_xml_header(html, info['charset'])
 
         # FIXME HTML can be non-unicode here --NN
         if info.get('updated-url'):
