@@ -174,6 +174,7 @@ class ChannelGuide(DDBObject):
             self.signalChange()
 
     def guideError(self, error):
+        # FIXME - this should display some kind of error page to the user
         logging.warn("Error downloading guide: %s", error)
 
     def downloadGuide(self):
