@@ -113,7 +113,7 @@ def _build_video_expires(channel):
         messages.SetChannelExpire(channel, expire_type, expire_time).send_to_backend()
     expire_combo.connect('changed', expire_changed)
 
-    return build_hbox((lab, expire_combo))
+    return build_hbox((lab, expire_combo), padding=2)
 
 def _build_auto_download(channel):
     auto_download_cbx = widgetset.Checkbox(_("Don't Auto Download when more than"))
@@ -192,12 +192,12 @@ def run_dialog(channel):
     pref_window = widgetset.Dialog(_("Channel Settings"))
     try:
         try:
-            v = widgetset.VBox()
+            v = widgetset.VBox(spacing=10)
 
             v.pack_start(_build_header(channel))
             v.pack_start(_build_video_expires(channel))
-            v.pack_start(_build_auto_download(channel))
             v.pack_start(_build_remember_items(channel))
+            v.pack_start(_build_auto_download(channel))
 
             pref_window.set_extra_widget(v)
             pref_window.add_button(BUTTON_DONE.text)
