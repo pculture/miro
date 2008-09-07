@@ -64,10 +64,15 @@ class TabRenderer(widgetset.CustomCellRenderer):
 
     def render(self, context, layout, selected, hotspot):
         layout.set_text_color(context.style.text_color)
-        layout.set_font(self.TITLE_FONT_SIZE, bold=self.BOLD_TITLE)
+        if not hasattr(self.data, "bolded") or self.data.bolded:
+            layout.set_font(self.TITLE_FONT_SIZE, bold=self.BOLD_TITLE)
+        else:
+            layout.set_font(self.TITLE_FONT_SIZE)
         titlebox = layout.textbox(self.data.name)
 
         hbox = cellpack.HBox(spacing=4)
+        if hasattr(self.data, "indent") and self.data.indent:
+            hbox.pack_space(15)
         hbox.pack(cellpack.align_middle(self.data.icon))
         hbox.pack(cellpack.align_middle(cellpack.TruncatedTextLine(titlebox)), expand=True)
         layout.set_font(0.77)

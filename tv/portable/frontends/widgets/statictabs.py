@@ -58,6 +58,7 @@ class ChannelGuideTab(StaticTab):
 
 class DummyView(widgetset.Alignment):
     def __init__(self, title):
+        # FIXME - it looks like this is ignored by render in style module
         widgetset.Alignment.__init__(self, xalign=0.5, yalign=0.5)
         label = widgetset.Label(title)
         label.set_size(3)
@@ -83,13 +84,19 @@ class IndividualDownloadsTab(DummyTab):
     id = 'individual_downloads'
     name = _('Single Items')
     icon_name = 'icon-individual'
+    indent = True
+    bolded = False
 
 class NewVideosTab(DummyTab):
     id = 'new'
     name = _('New')
     icon_name = 'icon-new'
+    indent = True
+    bolded = False
 
 class DownloadsTab(DummyTab):
     id = 'downloading'
     name = _('Downloading')
     icon_name = 'icon-downloading'
+    indent = True
+    bolded = False
