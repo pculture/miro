@@ -180,7 +180,7 @@ def finalize_startup():
     feed.expireItems()
 
     starttime = clock()
-    iconcache.clearOrphans()
+    iconcache.clear_orphans()
     logging.timing("Icon clear: %.3f", clock() - starttime)
     logging.info("Starting movie data updates")
     moviedata.movieDataUpdater.startThread()

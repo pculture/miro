@@ -1176,7 +1176,7 @@ $shortAppName.\n\nDo you want to try to load this channel anyway?"""))
         return False
 
     def updateIcons(self):
-        iconcache.iconCacheUpdater.clearVital()
+        iconcache.iconCacheUpdater.clear_vital()
         for item in self.items:
             item.iconCache.requestUpdate(True)
         for feed in views.feeds:
