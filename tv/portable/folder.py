@@ -26,10 +26,6 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from miro.gtcache import gettext as _
-
-from miro import app
-from miro import dialogs
 from miro import indexes
 from miro import playlist
 from miro import sorts
@@ -63,8 +59,6 @@ class FolderBase(DDBObject):
         """Get the first tab that isn't in this folder our.  If there are no
         items afterwards, return None.
         """
-
-        anchorItem = None
         seenSelf = False
         # Find the tab directly after this folder and move the tabs above
         # that one.
@@ -94,6 +88,7 @@ class FolderBase(DDBObject):
     def getTabOrder(self):
         """Return the TabOrder object that this folder belongs to."""
         raise NotImplementedError()
+
     def getChildrenView(self):
         """Return the children of this folder."""
         raise NotImplementedError()
@@ -166,15 +161,6 @@ class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
     def onRestore(self):
         FolderBase.onRestore(self)
         self.setupTrackedItemView()
-
-    def handleDNDAppend(self, draggedIDs):
-        FolderBase.handleDNDAppend(self, draggedIDs)
-        for id in draggedIDs:
-            tab = self.getTabOrder().tabView.getObjectByID(id)
-            for item in tab.obj.getView():
-                if item.getID() not in self.trackedItems:
-                    self.trackedItems.appendID(item.getID())
-        self.signalChange()
 
     def checkItemIDRemoved(self, id):
         index = indexes.playlistsByItemAndFolderID
