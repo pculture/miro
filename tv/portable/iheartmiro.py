@@ -138,10 +138,17 @@ def check_iheartmiro_install():
 
     if _is_firefox_installed():
         installer = 'Firefox'
-        instructions = _("""If you click 'Install iHeartMiro' below, Firefox will launch and ask if it's ok.   Just say yes and you're done!   It takes about 7 seconds.  And thanks for your help.""")
+        instructions = _(
+            "If you click 'Install iHeartMiro' below, Firefox will launch and "
+            "ask if it's ok.   Just say yes and you're done!   It takes about "
+            "7 seconds.  And thanks for your help."
+        )
     else:
         installer = 'Internet Explorer 7'
-        instructions = _("""If you click 'Install iHeartMiro' below, we'll install the extension.  Thanks for your help.""")
+        instructions = _(
+            "If you click 'Install iHeartMiro' below, we'll install the "
+            "extension.  Thanks for your help."
+        )
 
     def callback(dialog):
         count = request_count

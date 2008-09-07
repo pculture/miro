@@ -200,7 +200,7 @@ def _config_change(key, value):
 
 config.add_change_callback(_config_change)
 
-"""Wait X seconds before updating the feeds at startup"""
+# Wait X seconds before updating the feeds at startup
 INITIAL_FEED_UPDATE_DELAY = 5.0
 
 class FeedImpl:
@@ -933,8 +933,9 @@ class Feed(DDBObject):
         self.signalChange()
         if self.informOnError:
             title = _('Error loading feed')
-            description = _("Couldn't load the feed at %(url)s (%(errordescription)s).") % \
-                          { "url": self.url, "errordescription": errorDescription }
+            description = _(
+                "Couldn't load the feed at %(url)s (%(errordescription)s)."
+            ) % { "url": self.url, "errordescription": errorDescription }
             description += "\n\n"
             description += _("Would you like to keep the feed?")
             d = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_KEEP,
@@ -1070,14 +1071,17 @@ class Feed(DDBObject):
         self.signalChange()
 
     def askForScrape(self, info, initialHTML, charset):
-        title = Template(_("Channel is not compatible with $shortAppName!")).substitute(shortAppName=config.get(prefs.SHORT_APP_NAME))
-        descriptionTemplate = Template(_("""\
-But we'll try our best to grab the files. It may take extra time to list the \
-videos, and descriptions may look funny.  Please contact the publishers of \
-$url and ask if they can supply a feed in a format that will work with \
-$shortAppName.\n\nDo you want to try to load this channel anyway?"""))
-        description = descriptionTemplate.substitute(url=info['updated-url'],
-                                shortAppName=config.get(prefs.SHORT_APP_NAME))
+        title = Template(_(
+            "Channel is not compatible with $shortAppName!"
+        )).substitute(shortAppName=config.get(prefs.SHORT_APP_NAME))
+        description = Template(_(
+            "But we'll try our best to grab the files. It may take extra time "
+            "to list the videos, and descriptions may look funny.  Please "
+            "contact the publishers of $url and ask if they can supply a feed "
+            "in a format that will work with $shortAppName.\n"
+            "\n"
+            "Do you want to try to load this channel anyway?"
+        )).substitute(url=info['updated-url'], shortAppName=config.get(prefs.SHORT_APP_NAME))
         dialog = dialogs.ChoiceDialog(title, description, dialogs.BUTTON_YES,
                 dialogs.BUTTON_NO)
 

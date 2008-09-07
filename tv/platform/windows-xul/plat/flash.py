@@ -95,8 +95,10 @@ def installFlash():
                 os.system("explorer %s" % FLASH_EULA_URL)
 
             title = _("Restart %s?") % config.get(prefs.SHORT_APP_NAME)
-            description = _("To enable the Flash plugin, %(miro)s needs to be restarted.  Click Yes to shut %(miro)s down, or No to do it later.")
-            description = description % { "miro": config.get(prefs.SHORT_APP_NAME) }
+            description = _(
+                "To enable the Flash plugin, %(miro)s needs to be restarted.  "
+                "Click Yes to shut %(miro)s down, or No to do it later."
+            ) % {"miro": config.get(prefs.SHORT_APP_NAME)}
             
             dialog = dialogs.ChoiceDialog(title, description,
                                           dialogs.BUTTON_YES,

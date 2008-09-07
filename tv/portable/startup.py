@@ -86,9 +86,10 @@ def startup_function(func):
         except:
             logging.warn("Unknown startup error: %s", traceback.format_exc())
             signals.system.startup_failure(_("Unknown Error"),
-                    _("An unkown error prevented Miro from startup.  Please "
-                        "file a bug report at %s") %
-                    (config.get(prefs.BUG_REPORT_URL)))
+                    _(
+                        "An unknown error prevented Miro from startup.  Please "
+                        "file a bug report at %s"
+                    ) % config.get(prefs.BUG_REPORT_URL))
     return wrapped
 
 def setup_global_feed(url, *args, **kwargs):

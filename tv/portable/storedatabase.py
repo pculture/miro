@@ -857,16 +857,22 @@ class LiveStorageBDB:
             self.toUpdate = set()
             self.toRemove = set()
             if self.errorState:
-                title = _("%s database save succeeded") % (config.get(prefs.SHORT_APP_NAME), )
-                description = _("The database has been successfully saved. "
-                               "It is now safe to quit without losing any "
-                               "data.")
+                title = _("%s database save succeeded") % config.get(prefs.SHORT_APP_NAME)
+                description = _(
+                    "The database has been successfully saved. It is now safe "
+                    "to quit without losing any data."
+                )
                 dialogs.MessageBoxDialog(title, description).run()
                 self.errorState = False
         except bsddb.db.DBNoSpaceError, err:
             if not self.errorState:
                 title = _("%s database save failed") % (config.get(prefs.SHORT_APP_NAME), )
-                description = _("%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost.") % (config.get(prefs.LONG_APP_NAME)) 
+                description = _(
+                    "%s was unable to save its database: Disk Full.\n"
+                    "We suggest deleting files from the full disk or simply "
+                    "deleting some movies from your collection.\n"
+                    "Recent changes may be lost."
+                ) % config.get(prefs.LONG_APP_NAME)
                 dialogs.MessageBoxDialog(title, description).run()
                 self.errorState = True
             try:
@@ -1259,17 +1265,23 @@ class LiveStorage:
             self.toUpdate = set()
             self.toRemove = set()
             if self.errorState:
-                title = _("%s database save succeeded") % (config.get(prefs.SHORT_APP_NAME), )
-                description = _("The database has been successfully saved. "
-                               "It is now safe to quit without losing any "
-                               "data.")
+                title = _("%s database save succeeded") % config.get(prefs.SHORT_APP_NAME)
+                description = _(
+                    "The database has been successfully saved. It is now safe to quit "
+                    "without losing any data."
+                )
                 dialogs.MessageBoxDialog(title, description).run()
                 self.errorState = False
         except sql.DatabaseError, e:
             print e
             if not self.errorState:
-                title = _("%s database save failed") % (config.get(prefs.SHORT_APP_NAME), )
-                description = _("%s was unable to save its database: Disk Full.\nWe suggest deleting files from the full disk or simply deleting some movies from your collection.\nRecent changes may be lost.") % (config.get(prefs.LONG_APP_NAME)) 
+                title = _("%s database save failed") % config.get(prefs.SHORT_APP_NAME)
+                description = _(
+                    "%s was unable to save its database: Disk Full.\n"
+                    "We suggest deleting files from the full disk or simply deleting "
+                    "some movies from your collection.\n"
+                    "Recent changes may be lost."
+                ) % config.get(prefs.LONG_APP_NAME)
                 dialogs.MessageBoxDialog(title, description).run()
                 self.errorState = True
                 self.updating=False

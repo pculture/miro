@@ -159,6 +159,7 @@ class FeedController(itemlistcontroller.ItemListController):
             self.downloaded_section.hide()
 
     def _update_full_section(self, downloads, videos):
-        text = _("  |  %(videos)d Videos  |  %(downloads)d Downloading") % \
-                { 'videos': videos, 'downloads': downloads }
+        text = _(
+            "  |  %(videos)d Videos  |  %(downloads)d Downloading"
+        ) % { 'videos': videos, 'downloads': downloads }
         self.full_section.set_info(text)

@@ -140,10 +140,11 @@ def addDownload(url, additional=None):
 
     def errback(error):
         title = _("Download Error")
-        text = _("""\
-Miro is not able to download a file at this URL:
-
-URL: %s""") % url
+        text = _(
+            "Miro is not able to download a file at this URL:\n"
+            "\n"
+            "URL: %s"
+        ) % url
         logging.info("can't download '%s'", url)
         dialogs.MessageBoxDialog(title, text).run()
 
@@ -285,9 +286,10 @@ def askForNewFolderName(urls):
     description = _("Enter a name for the new channel folder")
     if existingURLCount > 0:
         description += "\n\n"
-        description += _("""\
-NOTE: You are already subscribed to %d of these channels.  These channels \
-will stay where they currently are.""" % existingURLCount)
+        description += _(
+            "NOTE: You are already subscribed to %d of these channels.  These "
+            "channels will stay where they currently are."
+        ) % existingURLCount
 
     def callback(d):
         if d.choice == dialogs.BUTTON_CREATE:
@@ -306,13 +308,18 @@ def addSubscriptionURL(prefix, expectedContentType, url):
             type_, urls = subscription.parseContent(info['body'])
             if urls is None:
                 complainAboutSubscriptionURL(
-                    Template(_("This $shortAppName channel file has an invalid format: $url. Please notify the publisher of this file.")).substitute(url=realURL,shortAppName=config.get(prefs.SHORT_APP_NAME)))
+                    Template(_(
+                        "This $shortAppName channel file has an invalid format: "
+                        "$url. Please notify the publisher of this file."
+                    )).substitute(url=realURL, shortAppName=config.get(prefs.SHORT_APP_NAME)))
             else:
                 addSubscriptions(type_, urls)
         else:
             complainAboutSubscriptionURL(
-                Template(_("This $shortAppName channel file has the wrong content type: $url. Please notify the publisher of this file.")).substitute(
-                url=realURL,shortAppName=config.get(prefs.SHORT_APP_NAME)))
+                Template(_(
+                    "This $shortAppName channel file has the wrong content type: "
+                    "$url. Please notify the publisher of this file."
+                )).substitute(url=realURL, shortAppName=config.get(prefs.SHORT_APP_NAME)))
 
     def errback(error):
         complainAboutSubscriptionURL(
@@ -363,7 +370,9 @@ def parse_command_line_args(args=None):
                     torrentInfohash = get_torrent_info_hash(arg)
                 except ValueError:
                     title = _("Invalid Torrent")
-                    msg = _("The torrent file %s appears to be corrupt and cannot be opened. [OK]") % os.path.basename(arg)
+                    msg = _(
+                        "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
+                    ) % os.path.basename(arg)
                     dialogs.MessageBoxDialog(title, msg).run()
                     continue
                 addTorrent(arg, torrentInfohash)

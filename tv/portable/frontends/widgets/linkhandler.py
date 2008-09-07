@@ -54,10 +54,12 @@ def handle_external_url(url):
 def ask_for_feed_subscribe(url):
     url = feed.normalizeFeedURL(url)
     title = _("Subscribe to Feed")
-    text = _("""This link appears to be a feed.  Do you want to \
-add it to your subscriptions?
-
-%s""") % url
+    text = _(
+        "This link appears to be a feed.  Do you want to add it to "
+        "your subscriptions?\n"
+        "\n"
+        "%s"
+    ) % url
     choices = (dialogs.BUTTON_SUBSCRIBE, dialogs.BUTTON_CANCEL)
     ret = dialogs.show_choice_dialog(title, text, choices)
     if ret == dialogs.BUTTON_SUBSCRIBE:

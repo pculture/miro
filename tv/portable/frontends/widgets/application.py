@@ -262,8 +262,10 @@ class Application:
         else:
             title = _('Removing %d items') % total_count
             if external_count > 0:
-                description = _('One or more of these items was not downloaded from a channel.  ' \
-                                'Would you like to delete these items or just remove them from the Library?')
+                description = _(
+                    'One or more of these items was not downloaded from a channel. '
+                    'Would you like to delete these items or just remove them from the Library?'
+                )
                 ret = dialogs.show_choice_dialog(title, description,
                                                  [dialogs.BUTTON_REMOVE_ENTRY,
                                                   dialogs.BUTTON_DELETE_FILE,
@@ -403,14 +405,16 @@ class Application:
     def remove_feeds_with_downloads(self, channel_infos):
         if len(channel_infos) == 1:
             title = _('Remove %s') % channel_infos[0].name
-            description = _("""\
-What would you like to do with the videos in this channel that you've \
-downloaded?""")
+            description = _(
+                 "What would you like to do with the videos in this channel that you've "
+                 "downloaded?"
+            )
         else:
             title = _('Remove %s channels') % len(channel_infos)
-            description = _("""\
-What would you like to do with the videos in these channels that you've \
-downloaded?""")
+            description = _(
+                "What would you like to do with the videos in these channels that you've "
+                "downloaded?"
+            )
 
         ret = dialogs.show_choice_dialog(title, description,
                                          [dialogs.BUTTON_KEEP_VIDEOS, 
@@ -428,14 +432,16 @@ downloaded?""")
     def remove_feeds_with_downloading(self, channel_infos):
         if len(channel_infos) == 1:
             title = _('Remove %s') % channel_infos[0].name
-            description = _("""\
-Are you sure you want to remove %s?  Any downloads in progress will \
-be canceled.""") % channel_infos[0].name
+            description = _(
+                "Are you sure you want to remove %s?  Any downloads in progress will "
+                "be canceled."
+            ) % channel_infos[0].name
         else:
             title = _('Remove %s channels') % len(channel_infos)
-            description = _("""\
-Are you sure you want to remove these %s channels?  Any downloads in \
-progress will be canceled.""") % len(channel_infos)
+            description = _(
+                "Are you sure you want to remove these %s channels?  Any downloads in "
+                "progress will be canceled."
+            ) % len(channel_infos)
 
         ret = dialogs.show_choice_dialog(title, description,
                                          [dialogs.BUTTON_REMOVE, 
@@ -448,12 +454,14 @@ progress will be canceled.""") % len(channel_infos)
     def remove_feeds_normal(self, channel_infos):
         if len(channel_infos) == 1:
             title = _('Remove %s') % channel_infos[0].name
-            description = _("""\
-Are you sure you want to remove %s?""") % channel_infos[0].name
+            description = _(
+                "Are you sure you want to remove %s?"
+            ) % channel_infos[0].name
         else:
             title = _('Remove %s channels') % len(channel_infos)
-            description = _("""\
-Are you sure you want to remove these %s channels?""") % len(channel_infos)
+            description = _(
+                "Are you sure you want to remove these %s channels?"
+            ) % len(channel_infos)
 
         ret = dialogs.show_choice_dialog(title, description,
                                          [dialogs.BUTTON_REMOVE, 
@@ -465,12 +473,14 @@ Are you sure you want to remove these %s channels?""") % len(channel_infos)
     def remove_directory_feeds(self, channel_infos):
         if len(channel_infos) == 1:
             title = _('Stop watching %s') % channel_infos[0].name
-            description = _("""\
-Are you sure you want to stop watching %s?""") % channel_infos[0].name
+            description = _(
+                "Are you sure you want to stop watching %s?"
+            ) % channel_infos[0].name
         else:
             title = _('Stop watching %s directories') % len(channel_infos)
-            description = _("""\
-Are you sure you want to stop watching these %s directories?""") % len(channel_infos)
+            description = _(
+                "Are you sure you want to stop watching these %s directories?"
+            ) % len(channel_infos)
         ret = dialogs.show_choice_dialog(title, description,
                                          [dialogs.BUTTON_STOP_WATCHING, 
                                           dialogs.BUTTON_CANCEL])
@@ -561,27 +571,22 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
 
         if t == 'feed-folder':
             title = _('Rename Channel Folder')
-            description = _('Enter a new name for the channel folder %s') % \
-                            info.name
+            description = _('Enter a new name for the channel folder %s') % info.name
 
         elif t == 'feed' and not info.is_folder:
             title = _('Rename Channel')
-            description = _('Enter a new name for the channel %s') % \
-                            info.name
+            description = _('Enter a new name for the channel %s') % info.name
 
         elif t == 'playlist':
             title = _('Rename Playlist')
-            description = _('Enter a new name for the playlist %s') % \
-                            info.name
+            description = _('Enter a new name for the playlist %s') % info.name
 
         elif t == 'playlist-folder':
             title = _('Rename Playlist Folder')
-            description = _('Enter a new name for the playlist folder %s') % \
-                            info.name
+            description = _('Enter a new name for the playlist folder %s') % info.name
         elif t == 'site':
             title = _('Rename Site')
-            description = _('Enter a new name for the site %s') % \
-                            info.name
+            description = _('Enter a new name for the site %s') % info.name
 
         else:
             raise AssertionError("Unknown tab type: %s" % t)
@@ -599,13 +604,12 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
     def remove_playlists(self, playlist_infos):
         if len(playlist_infos) == 1:
             title = _('Remove %s') % playlist_infos[0].name
-            description = _('Are you sure you want to remove %s') % \
-                    playlist_infos[0].name
+            description = _('Are you sure you want to remove %s') % playlist_infos[0].name
         else:
             title = _('Remove %s playlists') % len(playlist_infos)
-            description = \
-                    _('Are you sure you want to remove these %s playlists') % \
-                    len(playlist_infos)
+            description = _(
+                'Are you sure you want to remove these %s playlists'
+            ) % len(playlist_infos)
 
         ret = dialogs.show_choice_dialog(title, description,
                                          [dialogs.BUTTON_REMOVE,
@@ -620,8 +624,7 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
         if t == 'site':
             info = infos[0] # Multiple guide selection is not allowed
             title = _('Remove %s') % info.name
-            description = _('Are you sure you want to remove %s') % \
-                    info.name
+            description = _('Are you sure you want to remove %s') % info.name
             ret = dialogs.show_choice_dialog(title, description,
                     [dialogs.BUTTON_REMOVE, dialogs.BUTTON_CANCEL])
 
@@ -699,7 +702,7 @@ Are you sure you want to stop watching these %s directories?""") % len(channel_i
                 app.controller.sendBugReport(report, dialog.textbox_value,
                         dialog.checkbox_value)
 
-        chkboxdialog = dialogs.CheckboxTextboxDialog(_("Internal Error"),_("Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report."), _("Include entire program database including all video and channel metadata with crash report"), False, _("Describe what you were doing that caused this error"), dialogs.BUTTON_SUBMIT_REPORT, dialogs.BUTTON_IGNORE)
+        chkboxdialog = dialogs.CheckboxTextboxDialog(_("Internal Error"), _("Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report."), _("Include entire program database including all video and channel metadata with crash report"), False, _("Describe what you were doing that caused this error"), dialogs.BUTTON_SUBMIT_REPORT, dialogs.BUTTON_IGNORE)
         chkboxdialog.run(callback)
 
     def onBackendShutdown(self, obj):

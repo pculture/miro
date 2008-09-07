@@ -255,7 +255,10 @@ def _build_channels_panel():
     v.pack_start(build_hbox((note, cc_option_menu)))
 
     
-    note = note_label(_("You can set the frequency channels are checked for each channel in the channel's settings pane."))
+    note = note_label(_(
+        "You can set the frequency channels are checked for each channel in "
+        "the channel's settings pane."
+    ))
     v.pack_start(note)
 
     ad_label = widgetset.Label(_("Auto download default settings for new channels:"))
@@ -359,7 +362,9 @@ def _build_folders_panel():
     v.pack_start(widgetutil.align_left(note))
     v.pack_start(widgetset.Label("FIXME - implement this."))
 
-    note = widgetset.Label(_('Watch for new videos in these folders and include them in library:'))
+    note = widgetset.Label(_(
+        'Watch for new videos in these folders and include them in library:'
+    ))
     v.pack_start(widgetutil.align_left(note))
     v.pack_start(widgetset.Label("FIXME - implement this."))
 
