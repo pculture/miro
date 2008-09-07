@@ -117,7 +117,7 @@ def initialize(themeName):
 
 def startup():
     """Startup Miro.
-    
+
     This method starts up the eventloop and schedules the rest of the startup
     to run in the event loop.
 
@@ -148,9 +148,11 @@ def finish_startup():
         database.defaultDatabase.liveStorage = storedatabase.LiveStorage()
     except databaseupgrade.DatabaseTooNewError:
         summary = _("Database too new")
-        description = _("""You have a database that was saved with a newer \
-version of %(shortAppName)s. You must download the latest version of %(shortAppName)s \
-and run that.""") % {"shortAppName": config.get(prefs.SHORT_APP_NAME)}
+        description = _(
+            "You have a database that was saved with a newer version of "
+            "%(shortAppName)s. You must download the latest version of "
+            "%(shortAppName)s and run that."
+        ) % {"shortAppName": config.get(prefs.SHORT_APP_NAME)}
         raise StartupError(summary, description)
     database.defaultDatabase.recomputeFilters()
 
@@ -206,6 +208,11 @@ def setup_tabs():
     setup_tab_order(views.playlistTabOrder, u'playlist')
 
 def movies_directory_gone():
+    """Checks to see if the MOVIES_DIRECTORY exists.
+
+    True if it exists and is probably fine.
+    False if not.
+    """
     movies_dir = fileutil.expand_filename(config.get(prefs.MOVIES_DIRECTORY))
     if not movies_dir.endswith(os.path.sep):
         movies_dir += os.path.sep
@@ -219,7 +226,7 @@ def movies_directory_gone():
         # if all our items are missing.
         return False
     # make sure that we have actually downloaded something into the movies
-    # directory. 
+    # directory.
     for downloader_ in views.remoteDownloads:
         if (downloader_.isFinished()
                 and downloader_.getFilename().startswith(movies_dir)):
@@ -228,10 +235,12 @@ def movies_directory_gone():
 
 def default_movies_gone_handler():
     summary = _("Video Directory Missing")
-    description = _("""Miro can't find your primary video directory \
-%(moviesDirectory)s.  This may be because it's located on an external drive \
-that is currently disconnected.  Please, connect the drive or create the \
-directory, then start Miro again.""") % {"moviesDirectory": config.get(prefs.MOVIES_DIRECTORY)}
+    description = _(
+        "Miro can't find your primary video directory %(moviesDirectory)s. "
+        "This may be because it's located on an external drive that is "
+        "currently disconnected.  Please, connect the drive or create "
+        "the directory, then start Miro again."
+    ) % {"moviesDirectory": config.get(prefs.MOVIES_DIRECTORY)}
     signals.system.startup_failure(summary, description)
 
 __movies_gone_handler =  default_movies_gone_handler
@@ -239,9 +248,11 @@ __movies_gone_handler =  default_movies_gone_handler
 def install_movies_gone_handler(callback):
     """Install a new movies gone handler.  This method handles the annoying
     case where we are trying to start up, but detect that the movies directory
-    appears missing.  By default this causes us to fail starting up, but some
-    frontends may want to allow the user to continue.  To do that, they must
-    call startup.finalize_startup().
+    appears missing.
+
+    By default this causes us to fail starting up, but some frontends may want
+    to allow the user to continue.  To do that, they must call
+    ``startup.finalize_startup()``.
     """
     global __movies_gone_handler
     __movies_gone_handler = callback
