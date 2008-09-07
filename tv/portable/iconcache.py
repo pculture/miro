@@ -140,7 +140,8 @@ class IconCache:
 
     def remove(self):
         self.removed = True
-        self.remove_file(self.filename)
+        if self.filename:
+            self.remove_file(self.filename)
 
     def reset(self):
         self.remove_file(self.filename)
