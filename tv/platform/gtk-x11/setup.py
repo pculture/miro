@@ -28,41 +28,81 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-# This needs to be above Paths and configuration :(
-#
-# This isn't being used right now, as it doesn't detect all the cases
-# in which we need the xine hack
-def use_xine_hack_default():
-    try:
-        # Non-debian based system will throw an exception here
-        f = open('/etc/debian_version')
-        osname = f.read().strip()
-        f.close()
-        # Debian Etch
-        if osname == '4.0':
-            return True
-
-        # Ubuntu Feisty et al is Debian-based but lists testing/unstable
-        # and similar things in /etc/debian_version, so we check /etc/issue.
-        f.close()
-        f = open('/etc/issue')
-        osname = f.read()
-        f.close()
-
-        if ((osname.find("Ubuntu") > -1) and 
-                ((osname.find("7.04")>-1) or (osname.find("7.10")>-1) or (osname.find("hardy")>-1))):
-            return True
-    except:
-        pass
-    return False
-
-##############################################################################
+###############################################################################
 ## Paths and configuration                                                   ##
 ###############################################################################
 
+# The xine hack helps some systems.
+# FIXME - document
+USE_XINE_HACK = True
+
+
+# Location of the libxpcom.so file that's used for runtime.
+# This is used to set the LD_LIBRARY_PATH environment variable.
+#
+# It's possible that this path is already in your LD_LIBRARY_PATH in
+# which case you don't have to set it at all.
+#
+# Leave this set to None and Miro will attempt to guess at where it
+# is.  This sometimes works.  If it doesn't on your system, let us know
+# and we'll try to fix the guessing code.
+#
+# NOTE: Make sure this comes from the same xulrunner/firefox runtime that
+# Miro is compiled against.  If it's wrong, you'll likely see complaints
+# of missing symbols when you try to run Miro.
+#
+# Examples:
+# XPCOM_RUNTIME_PATH = "/usr/lib/firefox"
+# XPCOM_RUNTIME_PATH = "/usr/lib/xulrunner-1.9.0.1"
+XPCOM_RUNTIME_PATH = None
+
+# Location of xulrunner/firefox components for gtkmozembed.set_comp_path.
+# See documentation for set_comp_path here:
+# http://www.mozilla.org/unix/gtk-embedding.html
+#
+# Leave this set to None and Miro will attempt to guess at where it
+# is.  This sometimes works.  If it doesn't on your system, let us know
+# and we'll try to fix the guessing code.
+#
+# Examples:
+# MOZILLA_LIB_PATH = "/usr/lib/xulrunner-1.9.0.1"
+MOZILLA_LIB_PATH = None
+
+# The name of the library for the xpcom and gtkmozembed you want to compile
+# against on this system.  These strings are passed to pkg-config to get all
+# the information Miro needs to compile our browser widget.
+#
+# You should be able to do the following with the libraries you provide:
+#
+#    pkg-config --cflags --libs --define-variable=includetype=unstable \
+#        <xpcom-library> <gtkmozembed-library>
+#
+# and get back lots of exciting data.
+#
+# Set the XULRUNNER_19 flag to True if compiling against xulrunner 1.9 or
+# False if compiling against xulrunner 1.8 or some earlier version.
+#
+# Leave these three set to None and Miro will attempt to guess at values.
+# This sometimes works.  If it doesn't on your system, let us know and we'll
+# try to fix the guessing code.
+#
+# NOTE: If you set one of these, you should set all of them.
+#
+# Examples:
+# XPCOM_LIB = "libxul"
+# GTKMOZEMBED_LIB = "libxul"
+# XULRUNNER_19 = True
+#
+# XPCOM_LIB = "firefox-xpcom"
+# GTKMOZEMBED_LIB = "firefox-gtkmozembed"
+# XULRUNNER_19 = False
+XPCOM_LIB = None
+GTKMOZEMBED_LIB = None
+XULRUNNER_19 = None
+
+# The name of the boost library.  Used for building extensions.
 BOOST_LIB = 'boost_python'
 
-USE_XINE_HACK = True #use_xine_hack_default()
 
 ###############################################################################
 ## End of configuration. No user-servicable parts inside                     ##
@@ -90,13 +130,13 @@ import shutil
 from Pyrex.Distutils import build_ext
 
 #### usefull paths to have around ####
-def is_root_dir(dir):
+def is_root_dir(d):
     """
     bdist_rpm and possibly other commands copies setup.py into a subdir of
     platform/gtk-x11.  This makes it hard to find the root directory.  We work
     our way up the path until our is_root_dir test passes.
     """
-    return os.path.exists(os.path.join(dir, "MIRO_ROOT"))
+    return os.path.exists(os.path.join(d, "MIRO_ROOT"))
 
 def get_root_dir():
     root_try = os.path.abspath(os.path.dirname(__file__))
@@ -126,7 +166,7 @@ debian_package_dir = os.path.join(platform_dir, 'debian_package')
 # pick up portable and other packages
 sys.path.insert(0, root_dir)
 
-# later when we install the portable modules, they will be in the miro package, 
+# later when we install the portable modules, they will be in the miro package,
 # but at this point, they are in a package named "portable", so let's hack it
 import portable
 sys.modules['miro'] = portable
@@ -156,7 +196,7 @@ def getlogin():
         return os.environ['USER']
     except KeyError:
         pass
-    pwd.getpwuid(os.getuid())[0] 
+    pwd.getpwuid(os.getuid())[0]
 
 def read_file(path):
     f = open(path)
@@ -174,30 +214,28 @@ def write_file(path, contents):
 
 def expand_file_contents(path, **values):
     """Do a string expansion on the contents of a file using the same rules as
-    string.Template from the standard library.  
+    string.Template from the standard library.
     """
     template = Template(read_file(path))
     expanded = template.substitute(**values)
     write_file(path, expanded)
 
-def getCommandOutput(cmd, warnOnStderr = True, warnOnReturnCode = True):
+def get_command_output(cmd, warnOnStderr=True, warnOnReturnCode=True):
     """Wait for a command and return its output.  Check for common errors and
     raise an exception if one of these occurs.
     """
 
-    p = subprocess.Popen(cmd, shell=True, close_fds = True,
-                         stdout=subprocess.PIPE, stderr = subprocess.PIPE)
+    p = subprocess.Popen(cmd, shell=True, close_fds=True,
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = p.communicate()
     if warnOnStderr and stderr != '':
-        raise RuntimeError("%s outputted the following error:\n%s" % 
-                (cmd, stderr))
+        raise RuntimeError("%s outputted the following error:\n%s" % (cmd, stderr))
     if warnOnReturnCode and p.returncode != 0:
-        raise RuntimeError("%s had non-zero return code %d" % 
-                (cmd, p.returncode))
+        raise RuntimeError("%s had non-zero return code %d" % (cmd, p.returncode))
     return stdout
 
-def parsePkgConfig(command, components, options_dict = None):
-    """Helper function to parse compiler/linker arguments from 
+def parse_pkg_config(command, components, options_dict = None):
+    """Helper function to parse compiler/linker arguments from
     pkg-config/mozilla-config and update include_dirs, library_dirs, etc.
 
     We return a dict with the following keys, which match up with keyword
@@ -218,7 +256,7 @@ def parsePkgConfig(command, components, options_dict = None):
             'extra_compile_args' : []
         }
     commandLine = "%s --cflags --libs %s" % (command, components)
-    output = getCommandOutput(commandLine).strip()
+    output = get_command_output(commandLine).strip()
     for comp in output.split():
         prefix, rest = comp[:2], comp[2:]
         if prefix == '-I':
@@ -236,18 +274,16 @@ def compile_xine_extractor():
     if rv != 0:
         raise RuntimeError("xine_extractor compilation failed.  Possibly missing libxine, gdk-pixbuf-2.0, or glib-2.0.")
 
-def generate_miro():
+def generate_miro(xpcom_path):
     # build a miro script that wraps the miro.real script with an LD_LIBRARY_PATH
     # environment variable to pick up the xpcom we decided to use.
-    try:
-        runtimelib = getCommandOutput("pkg-config --variable=libdir %s" % xpcom).strip()
+    runtimelib = ""
 
-        # print "Using xpcom: %s and gtkmozembed: %s runtimelib: %s" % (xpcom, gtkmozembed, runtimelib)
-        f = open(os.path.join(platform_dir, "miro"), "w")
-        if runtimelib:
-            runtimelib = "LD_LIBRARY_PATH=%s " % runtimelib
+    f = open(os.path.join(platform_dir, "miro"), "w")
+    if xpcom_path:
+        runtimelib = "LD_LIBRARY_PATH=%s " % xpcom_path
 
-        f.write( \
+    f.write( \
 """#!/bin/sh
 # This file is generated by setup.py.
 DEBUG=0
@@ -276,16 +312,12 @@ else
     %(runtimelib)smiro.real "$@"
 fi
 """ % { "runtimelib": runtimelib})
-        f.close()
-
-    except RuntimeError, error:
-        sys.exit("Package config error:\n%s" % (error,))
-
+    f.close()
 
 
 #### The fasttypes extension ####
 fasttypes_ext = \
-    Extension("miro.fasttypes", 
+    Extension("miro.fasttypes",
         sources = [os.path.join(portable_dir, 'fasttypes.cpp')],
         libraries = [BOOST_LIB],
     )
@@ -296,81 +328,116 @@ libtorrent_ext = setup_portable.libtorrent_extension(portable_dir)
 
 
 #### MozillaBrowser Extension ####
-try:
-    packages = getCommandOutput("pkg-config --list-all")
-except RuntimeError, error:
-    sys.exit("Package config error:\n%s" % (error,))
+def get_mozilla_stuff():
+    try:
+        packages = get_command_output("pkg-config --list-all")
+    except RuntimeError, error:
+        sys.exit("Package config error:\n%s" % (error,))
 
-xulrunner19 = False
-if re.search("^libxul", packages, re.MULTILINE):
-    xulrunner19 = True
-    xpcom = 'libxul'
-    gtkmozembed = 'libxul'
-elif re.search("^xulrunner-xpcom", packages, re.MULTILINE):
-    xpcom = 'xulrunner-xpcom'
-    gtkmozembed = 'xulrunner-gtkmozembed'
-elif re.search("^mozilla-xpcom", packages, re.MULTILINE):
-    xpcom = 'mozilla-xpcom'
-    gtkmozembed = 'mozilla-gtkmozembed'
-elif re.search("^firefox-xpcom", packages, re.MULTILINE):
-    xpcom = 'firefox-xpcom'
-    gtkmozembed = 'firefox-gtkmozembed'
-else:
-    sys.exit("Can't find libxul, xulrunner-xpcom, mozilla-xpcom or firefox-xpcom")
+    if XPCOM_LIB and GTKMOZEMBED_LIB and XULRUNNER_19 != None:
+        print "\nUsing XPCOM_LIB, GTKMOZEMBED_LIB and XULRUNNER_19 values...."
+        xulrunner19 = XULRUNNER_19
+        xpcom_lib = XPCOM_LIB
+        gtkmozembed_lib = GTKMOZEMBED_LIB
 
-mozilla_browser_options = parsePkgConfig("pkg-config" , 
-        "gtk+-2.0 glib-2.0 pygtk-2.0 --define-variable=includetype=unstable %s %s" % (gtkmozembed, xpcom))
-mozilla_lib_path = parsePkgConfig('pkg-config', 
-        '%s' % gtkmozembed)['library_dirs']
-# Find the base mozilla directory, and add the subdirs we need.
-def allInDir(directory, subdirs):
-    for subdir in subdirs:
-        if not os.path.exists(os.path.join(directory, subdir)):
-            return False
-    return True
-xpcom_includes = parsePkgConfig("pkg-config", xpcom)
-mozIncludeBase = None
-for dir in xpcom_includes['include_dirs']:
-    if allInDir(dir, ['dom', 'gfx', 'widget']):
-        # we can be pretty confident that dir is the mozilla/firefox/xulrunner
-        # base include directory
-        mozIncludeBase = dir
-        break
-
-
-# xulrunner 1.9 has a different directory structure where all the headers are
-# in the same directory.
-if mozIncludeBase is None:
-    if xulrunner19 == True:
-        mozilla_browser_options['include_dirs'].append(dir)
     else:
-        raise ValueError("Can't find mozilla include base directory")
+        print "\nTrying to figure out xpcom_lib, gtkmozembed_lib, and xulrunner_19 values...."
+        xulrunner19 = False
+        if re.search("^libxul", packages, re.MULTILINE):
+            xulrunner19 = True
+            xpcom_lib = 'libxul'
+            gtkmozembed_lib = 'libxul'
 
-else:
-    for subdir in ['dom', 'gfx', 'widget', 'commandhandler', 'uriloader',
-                   'webbrwsr', 'necko', 'windowwatcher']:
-        path = os.path.join(mozIncludeBase, subdir)
-        mozilla_browser_options['include_dirs'].append(path)
+        elif re.search("^xulrunner-xpcom", packages, re.MULTILINE):
+            xpcom_lib = 'xulrunner-xpcom'
+            gtkmozembed_lib = 'xulrunner-gtkmozembed'
 
+        elif re.search("^mozilla-xpcom", packages, re.MULTILINE):
+            xpcom_lib = 'mozilla-xpcom'
+            gtkmozembed_lib = 'mozilla-gtkmozembed'
 
-nsI = True
-for dir in mozilla_browser_options['include_dirs']:
-    if os.path.exists(os.path.join (dir, "nsIServiceManagerUtils.h")):
-        nsI = True
-        break
-    if os.path.exists(os.path.join (dir, "nsServiceManagerUtils.h")):
-        nsI = False
-        break
+        elif re.search("^firefox-xpcom", packages, re.MULTILINE):
+            xpcom_lib = 'firefox-xpcom'
+            gtkmozembed_lib = 'firefox-gtkmozembed'
 
-if nsI:
-    mozilla_browser_options['extra_compile_args'].append('-DNS_I_SERVICE_MANAGER_UTILS=1')
-# define PCF_USING_XULRUNNER19 if we're on xulrunner 1.9
-if xulrunner19:
-    mozilla_browser_options['extra_compile_args'].append('-DPCF_USING_XULRUNNER19=1')
+        else:
+            sys.exit("Can't find libxul, xulrunner-xpcom, mozilla-xpcom or firefox-xpcom")
+
+    print "using xpcom_lib: ", repr(xpcom_lib)
+    print "using gtkmozembed_lib: ", repr(gtkmozembed_lib)
+    print "using xulrunner19: ", repr(xulrunner19)
+
+    # use the XPCOM_RUNTIME_PATH that's set if there's one that's set
+    if XPCOM_RUNTIME_PATH:
+        print "\nUsing XPCOM_RUNTIME_PATH value...."
+        xpcom_runtime_path = XPCOM_RUNTIME_PATH
+    else:
+        print "\nTrying to figure out xpcom_runtime_path value...."
+        xpcom_runtime_path = get_command_output("pkg-config --variable=libdir %s" % xpcom_lib).strip()
+    print "using xpcom_runtime_path: ", repr(xpcom_runtime_path)
+
+    mozilla_browser_options = parse_pkg_config("pkg-config",
+            "gtk+-2.0 glib-2.0 pygtk-2.0 --define-variable=includetype=unstable %s %s" % (gtkmozembed_lib, xpcom_lib))
+
+    if MOZILLA_LIB_PATH:
+        print "\nUsing MOZILLA_LIB_PATH value...."
+        mozilla_lib_path = MOZILLA_LIB_PATH
+    else:
+        print "\nTrying to figure out mozilla_lib_path value...."
+        mozilla_lib_path = parse_pkg_config('pkg-config', '%s' % gtkmozembed_lib)['library_dirs']
+        mozilla_lib_path = mozilla_lib_path[0]
+    print "using mozilla_lib_path: ", repr(mozilla_lib_path)
+
+    # Find the base mozilla directory, and add the subdirs we need.
+    def allInDir(directory, subdirs):
+        for subdir in subdirs:
+            if not os.path.exists(os.path.join(directory, subdir)):
+                return False
+        return True
+
+    xpcom_includes = parse_pkg_config("pkg-config", xpcom_lib)
+
+    # xulrunner 1.9 has a different directory structure where all the headers
+    # are in the same directory and that's already in include_dirs.  so we don't
+    # need to do this.
+    if not xulrunner19:
+        mozIncludeBase = None
+        for dir in xpcom_includes['include_dirs']:
+            if allInDir(dir, ['dom', 'gfx', 'widget']):
+                # we can be pretty confident that dir is the mozilla/firefox/xulrunner
+                # base include directory
+                mozIncludeBase = dir
+                break
+
+        if mozIncludeBase is not None:
+            for subdir in ['dom', 'gfx', 'widget', 'commandhandler', 'uriloader',
+                           'webbrwsr', 'necko', 'windowwatcher']:
+                path = os.path.join(mozIncludeBase, subdir)
+                mozilla_browser_options['include_dirs'].append(path)
+
+    nsI = True
+    for dir in mozilla_browser_options['include_dirs']:
+        if os.path.exists(os.path.join(dir, "nsIServiceManagerUtils.h")):
+            nsI = True
+            break
+        if os.path.exists(os.path.join(dir, "nsServiceManagerUtils.h")):
+            nsI = False
+            break
+
+    if nsI:
+        mozilla_browser_options['extra_compile_args'].append('-DNS_I_SERVICE_MANAGER_UTILS=1')
+
+    # define PCF_USING_XULRUNNER19 if we're on xulrunner 1.9
+    if xulrunner19:
+        mozilla_browser_options['extra_compile_args'].append('-DPCF_USING_XULRUNNER19=1')
+
+    return mozilla_browser_options, mozilla_lib_path, xpcom_runtime_path
+
+mozilla_browser_options, mozilla_lib_path, xpcom_runtime_path = get_mozilla_stuff()
 
 #### Xlib Extension ####
 xlib_ext = \
-    Extension("miro.plat.xlibhelper", 
+    Extension("miro.plat.xlibhelper",
         [ os.path.join(platform_package_dir,'xlibhelper.pyx') ],
         library_dirs = ['/usr/X11R6/lib'],
         libraries = ['X11'],
@@ -378,15 +445,15 @@ xlib_ext = \
 
 pygtkhacks_ext = \
     Extension("miro.frontends.widgets.gtk.pygtkhacks",
-        [ os.path.join(portable_frontend_dir, 'widgets', 'gtk', 
+        [ os.path.join(portable_frontend_dir, 'widgets', 'gtk',
             'pygtkhacks.pyx') ],
-        **parsePkgConfig('pkg-config', 
+        **parse_pkg_config('pkg-config',
             'pygobject-2.0 gtk+-2.0 glib-2.0 gthread-2.0')
     )
 
 mozprompt_ext = \
     Extension("miro.plat.frontends.widgets.mozprompt",
-        [ 
+        [
             os.path.join(platform_widgets_dir, 'mozprompt.pyx'),
             os.path.join(platform_widgets_dir, 'PromptService.cc'),
         ],
@@ -395,7 +462,7 @@ mozprompt_ext = \
 
 
 #### Xine Extension ####
-xine_options = parsePkgConfig('pkg-config', 
+xine_options = parse_pkg_config('pkg-config',
         'libxine pygtk-2.0 gtk+-2.0 glib-2.0 gthread-2.0')
 
 # If you get XINE crashes, uncommenting this might fix it. It's
@@ -435,11 +502,11 @@ for dir in ('searchengines', 'wimages', 'testdata',
 
 # add the desktop file, icons, mime data, and man page.
 data_files += [
-    ('/usr/share/pixmaps', 
+    ('/usr/share/pixmaps',
      glob(os.path.join(platform_dir, 'miro-*.png'))),
-    ('/usr/share/applications', 
+    ('/usr/share/applications',
      [os.path.join(platform_dir, 'miro.desktop')]),
-    ('/usr/share/mime/packages', 
+    ('/usr/share/mime/packages',
      [os.path.join(platform_dir, 'miro.xml')]),
     ('/usr/share/man/man1',
      [os.path.join(platform_dir, 'miro.1.gz')]),
@@ -454,7 +521,7 @@ data_files += [
 # that have file-related side-effects
 if not "clean" in sys.argv:
     compile_xine_extractor()
-    generate_miro()
+    generate_miro(xpcom_runtime_path)
     # gzip the man page
     os.system ("gzip -9 < %s > %s" % (os.path.join(platform_dir, 'miro.1'), os.path.join(platform_dir, 'miro.1.gz')))
     # copy miro.1.gz to miro.real.1.gz so that lintian complains less
@@ -484,7 +551,7 @@ class install_data (distutils.command.install_data.install_data):
         self.mkpath(os.path.dirname(dest))
         # We don't use the dist utils copy_file() because it only copies
         # the file if the timestamp is newer
-        shutil.copyfile(source,dest)
+        shutil.copyfile(source, dest)
         expand_file_contents(dest, APP_REVISION=revision,
                              APP_REVISION_NUM=revisionnum,
                              APP_REVISION_URL=revisionurl,
@@ -492,7 +559,7 @@ class install_data (distutils.command.install_data.install_data):
                              BUILD_MACHINE="%s@%s" % (getlogin(),
                                                       os.uname()[1]),
                              BUILD_TIME=str(time.time()),
-                             MOZILLA_LIB_PATH=mozilla_lib_path[0])
+                             MOZILLA_LIB_PATH=mozilla_lib_path)
         self.outfiles.append(dest)
 
         locale_dir = os.path.join (resource_dir, "locale")
@@ -511,6 +578,21 @@ class install_data (distutils.command.install_data.install_data):
         self.install_app_config()
 
 
+class test_system(Command):
+    description = "Allows you to test configurations without compiling or running."
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        # FIXME - try importing and all that other stuff to make sure
+        # we have most of the pieces here?
+        pass
+
 #### Our specialized build_py command ####
 class build_py (distutils.command.build_py.build_py):
     """build_py extends the default build_py implementation so that the
@@ -520,11 +602,11 @@ class build_py (distutils.command.build_py.build_py):
 
     def expand_templates(self):
         conf = util.read_simple_config_file(app_config)
-        for path in [os.path.join(portable_dir,'dl_daemon','daemon.py')]:
-            template = Template(read_file(path+".template"))
+        for path in [os.path.join(portable_dir, 'dl_daemon', 'daemon.py')]:
+            template = Template(read_file(path + ".template"))
             expanded = template.substitute(**conf)
             write_file(path, expanded)
-        
+
     def run (self):
         """Extend build_py's module list to include the miro modules."""
         self.expand_templates()
@@ -532,19 +614,19 @@ class build_py (distutils.command.build_py.build_py):
 
 
 #### bdist_deb builds the miro debian package ####
-class bdist_deb (Command):
+class bdist_deb(Command):
     description = "Create a deb package"
-    user_options = [ ]
+    user_options = []
 
-    def initialize_options (self):
+    def initialize_options(self):
         pass
 
-    def finalize_options (self):
+    def finalize_options(self):
         bdist_base = self.get_finalized_command('bdist').bdist_base
         self.bdist_dir = os.path.join(bdist_base, 'deb')
         self.dist_dir = self.get_finalized_command('bdist').dist_dir
 
-    def run (self):
+    def run(self):
         # buzild all python modules/extensions
         self.run_command('build')
         # copy the built files
@@ -567,7 +649,7 @@ class bdist_deb (Command):
             os.system('strip %s' % path)
         # calculate the dependancies for extension modules
         cmd = 'dpkg-shlibdeps -O %s' % ' '.join(extensions)
-        extension_deps = getCommandOutput(cmd, warnOnStderr=False).strip()
+        extension_deps = get_command_output(cmd, warnOnStderr=False).strip()
         extension_deps = extension_deps.replace('shlibs:Depends=', '')
         # copy over the debian package files
         debian_source = os.path.join(debian_package_dir, 'DEBIAN')
@@ -579,7 +661,7 @@ class bdist_deb (Command):
                 EXTENSION_DEPS=extension_deps)
         # copy the copyright file
         copyright_source = os.path.join(debian_package_dir, 'copyright')
-        copyright_dest = os.path.join(self.bdist_dir, 'usr', 'share', 'doc', 
+        copyright_dest = os.path.join(self.bdist_dir, 'usr', 'share', 'doc',
                     'python-democracy-player')
         self.mkpath(copyright_dest)
         self.copy_file(copyright_source, copyright_dest)
@@ -589,8 +671,7 @@ class bdist_deb (Command):
         package_basename = "miro_%s_i386.deb" % \
                 self.distribution.get_version()
         package_path  = os.path.join(self.dist_dir, package_basename)
-        dpkg_command = "fakeroot dpkg --build %s %s" % (self.bdist_dir, 
-                package_path)
+        dpkg_command = "fakeroot dpkg --build %s %s" % (self.bdist_dir, package_path)
         log.info("running %s" % dpkg_command)
         os.system(dpkg_command)
         dir_util.remove_tree(self.bdist_dir)
@@ -652,26 +733,24 @@ To use this theme, run:
 
 
 #### Run setup ####
-setup(name='miro', 
+setup(name='miro',
     version=appVersion,
     author='Participatory Culture Foundation',
     author_email='feedback@pculture.org',
     url='http://www.getmiro.com/',
     download_url='http://www.getmiro.com/downloads/',
     scripts = [
-        os.path.join(platform_dir, 'miro'), 
+        os.path.join(platform_dir, 'miro'),
         os.path.join(platform_dir, 'miro.real')
     ],
     data_files=data_files,
     ext_modules = [
         fasttypes_ext, xine_ext, xlib_ext, libtorrent_ext, pygtkhacks_ext,
         mozprompt_ext,
-        Extension("miro.database", 
+        Extension("miro.database",
                 [os.path.join(portable_dir, 'database.pyx')]),
-        Extension("miro.sorts", 
+        Extension("miro.sorts",
                 [os.path.join(portable_dir, 'sorts.pyx')]),
-        #Extension("miro.template", 
-        #        [os.path.join(portable_dir, 'template.pyx')]),
     ],
     packages = [
         'miro',
@@ -689,15 +768,15 @@ setup(name='miro',
     ],
     package_dir = {
         'miro': portable_dir,
-        'miro.test' : test_dir,
+        'miro.test': test_dir,
         'miro.plat': platform_package_dir,
     },
     cmdclass = {
-        'build_ext': build_ext, 
+        'test_system': test_system,
+        'build_ext': build_ext,
         'build_py': build_py,
         'bdist_deb': bdist_deb,
         'install_data': install_data,
         'install_theme': install_theme,
     }
 )
-
