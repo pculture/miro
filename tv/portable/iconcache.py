@@ -229,7 +229,8 @@ class IconCache:
                 self.remove_file(tmp_filename)
                 return
 
-            self.remove_file(self.filename)
+            if self.filename:
+                self.remove_file(self.filename)
 
             # Create a new filename always to avoid browser caching in case a 
             # file changes.
