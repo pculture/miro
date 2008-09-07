@@ -74,7 +74,6 @@ def warn(filename, message):
     logging.warn("Error parsing searchengine: %s: %s", filename, message)
 
 def load_search_engine(filename):
-    global _engines
     try:
         dom = parse(filename)
         id_ = displayname = url = sort = None
@@ -102,9 +101,9 @@ def load_search_engine(filename):
                     if sort != None:
                         warn(filename, "Duplicated sort tag")
                         return
-                    sort = float (text)
+                    sort = float(text)
                 else:
-                    warn(filename, "Unrecognized tag %s" % (tag,))
+                    warn(filename, "Unrecognized tag %s" % tag)
                     return
         dom.unlink()
         if id_ == None:
@@ -127,7 +126,8 @@ def load_search_engine(filename):
 def create_engines():
     delete_engines()
     engines = search_for_search_engines(resources.path("searchengines"))
-    engines.update(search_for_search_engines(os.path.join(config.get(prefs.SUPPORT_DIRECTORY), "searchengines")))
+    engines_dir = os.path.join(config.get(prefs.SUPPORT_DIRECTORY), "searchengines")
+    engines.update(search_for_search_engines(engines_dir))
     for fn in engines.itervalues():
         load_search_engine(fn)
 
