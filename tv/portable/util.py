@@ -43,7 +43,6 @@ import socket
 import logging
 from miro import filetypes
 from miro import fileutil
-import tempfile
 import threading
 import traceback
 import subprocess
@@ -455,7 +454,7 @@ def unicodify(d):
         for key in range(len(d)):
             d[key] = unicodify(d[key])
     elif isinstance(d, str):
-        d = d.decode('ascii','replace')
+        d = d.decode('ascii', 'replace')
     return d
 
 def stringify(u, handleerror="xmlcharrefreplace"):
