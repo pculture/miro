@@ -103,7 +103,7 @@ class WindowsApplication(Application):
                 "There was an error opening %s.  Please try again in a few "
                 "seconds"
             ) % shortURL
-            dialogs.show_message(title, msg)
+            dialogs.show_message(title, msg, dialogs.WARNING_MESSAGE)
 
     def open_file(self, fn):
         if not os.path.isdir(fn):

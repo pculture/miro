@@ -45,6 +45,10 @@ from miro.dialogs import BUTTON_OK, BUTTON_CANCEL, BUTTON_IGNORE, \
         BUTTON_REMOVE_ENTRY, BUTTON_REMOVE, BUTTON_SUBSCRIBE, \
         BUTTON_CREATE_CHANNEL
 
+WARNING_MESSAGE = 0
+INFO_MESSAGE = 1
+CRITICAL_MESSAGE = 2
+
 def show_about():
     window = widgetset.AboutDialog()
     try:
@@ -52,9 +56,9 @@ def show_about():
     finally:
         window.destroy()
 
-def show_message(title, description):
+def show_message(title, description, alert_type=INFO_MESSAGE):
     """Display a message to the user and wait for them to click OK"""
-    window = widgetset.Dialog(title, description)
+    window = widgetset.AlertDialog(title, description, alert_type)
     try:
         window.add_button(BUTTON_OK.text)
         window.run()

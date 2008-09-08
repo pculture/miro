@@ -411,3 +411,6 @@ class AboutDialog:
 
     def run(self):
         self._window.run()
+
+class AlertDialog(Dialog):
+    pass

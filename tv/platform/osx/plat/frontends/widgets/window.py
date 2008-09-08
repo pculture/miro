@@ -275,3 +275,17 @@ class AboutDialog:
         NSApplication.sharedApplication().orderFrontStandardAboutPanel_(nil)
     def destroy(self):
         pass
+
+class AlertDialog:
+    def __init__(self, title, message, alert_type):
+        print alert_type
+        self._nsalert = NSAlert.alloc().init();
+        self._nsalert.setMessageText_(title)
+        self._nsalert.setInformativeText_(message)
+        self._nsalert.setAlertStyle_(alert_type)
+    def add_button(self, text):
+        self._nsalert.addButtonWithTitle_(text)
+    def run(self):
+        self._nsalert.runModal()
+    def destroy(self):
+        self._nsalert = nil

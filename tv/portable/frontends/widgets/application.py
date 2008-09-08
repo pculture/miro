@@ -189,8 +189,9 @@ class Application:
             # FIXME - play this file
             pass
         else:
-            dialogs.show_message(_('Open Files... - Error'),
-                                 _('File %s does not exist.') % filename)
+            dialogs.show_message(_('Open Files - Error'),
+                                 _('File %s does not exist.') % filename,
+                                 dialogs.WARNING_MESSAGE)
 
     def ask_for_url(self, title, description, error_title, error_description):
         """Ask the user to enter a url in a TextEntry box.  
@@ -509,7 +510,8 @@ class Application:
             messages.ImportChannels(filename).send_to_backend()
         else:
             dialogs.show_message(_('Import OPML File - Error'),
-                                 _('File %s does not exist.') % filename)
+                                 _('File %s does not exist.') % filename,
+                                 dialogs.WARNING_MESSAGE)
 
     def export_channels(self):
         title = _('Export OPML File')
@@ -670,7 +672,7 @@ class Application:
         call_on_ui_thread(rundialog.run, dialog)
 
     def handleStartupFailure(self, obj, summary, description):
-        dialogs.show_message(summary, description)
+        dialogs.show_message(summary, description, dialogs.CRITICAL_MESSAGE)
         app.controller.shutdown()
 
     def handleStartupSuccess(self, obj):
