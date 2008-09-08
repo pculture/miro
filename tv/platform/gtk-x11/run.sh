@@ -44,4 +44,8 @@ export MIRO_RESOURCE_ROOT=dist/$PREFIX/share/miro/resources/
 #
 # export LD_LIBRARY_PATH=/usr/lib/firefox${LD_LIBRARY_PATH:+:}${LD_LIBRARY_PATH}
 
-$PYTHON setup.py install --root=./dist --prefix=$PREFIX && PATH=dist/$PREFIX/bin:$PATH PYTHONPATH=dist/$PREFIX/lib/python$PYTHON_VERSION/site-packages/ dist/$PREFIX/bin/miro "$@"
+MIROPYTHONPATH=dist/$PREFIX/lib/python$PYTHON_VERSION/site-packages/
+MIROPYTHONPATH=$MIROPYTHONPATH:dist/$PREFIX/lib64/python$PYTHON_VERSION/site-packages/
+MIROPYTHONPATH=$MIROPYTHONPATH:$PYTHONPATH
+
+$PYTHON setup.py install --root=./dist --prefix=$PREFIX && PATH=dist/$PREFIX/bin:$PATH PYTHONPATH=$MIROPYTHONPATH dist/$PREFIX/bin/miro "$@"
