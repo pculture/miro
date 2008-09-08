@@ -64,32 +64,35 @@ def _handle_error(error):
 def _handle_app_cast(data, up_to_date_callback):
     """Handle appcast data when it's correctly fetched
     """
+    # python 2.4 requires that except and finally clauses be in different
+    # try blocks.
     try:
-        appcast = feedparser.parse(data['body'])
-        if appcast['bozo'] == '1':
-            return
+        try:
+            appcast = feedparser.parse(data['body'])
+            if appcast['bozo'] == '1':
+                return
 
-        up_to_date = True
-        latest = _get_item_for_latest(appcast)
-        if latest is None:
-            logging.info('No updates for this platform.')
-            # this will go through the finally clause below
-            return
+            up_to_date = True
+            latest = _get_item_for_latest(appcast)
+            if latest is None:
+                logging.info('No updates for this platform.')
+                # this will go through the finally clause below
+                return
 
-        serial = int(config.get(prefs.APP_SERIAL))
-        up_to_date = (serial >= _get_item_serial(latest))
+            serial = int(config.get(prefs.APP_SERIAL))
+            up_to_date = (serial >= _get_item_serial(latest))
     
-        if not up_to_date:
-            logging.info('New update available.')
-            signals.system.updateAvailable(latest)
-        elif up_to_date_callback:
-            logging.info('Up to date.  Notifying callback.')
-            up_to_date_callback()
-        else:
-            logging.info('Up to date.')
+            if not up_to_date:
+                logging.info('New update available.')
+                signals.system.updateAvailable(latest)
+            elif up_to_date_callback:
+                logging.info('Up to date.  Notifying callback.')
+                up_to_date_callback()
+            else:
+                logging.info('Up to date.')
 
-    except:
-        logging.exception("Error while handling appcast data.")
+        except:
+            logging.exception("Error while handling appcast data.")
 
     finally:
         global check_in_progress
