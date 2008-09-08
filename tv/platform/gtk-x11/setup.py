@@ -37,6 +37,17 @@
 USE_XINE_HACK = True
 
 
+# The following properties allow you to explicitly set xulrunner paths and
+# library names in the case that Miro guesses them wrong for your system.
+# When setting these, you must make sure that:
+#
+# 1. The gtkmozembed Python module is compiled against the same xulrunner
+#    that you're compiling AND running Miro against.
+#
+# 2. That you compile and run Miro with xulrunner 1.8 OR 1.9--you can't
+#    use both.
+
+
 # Location of the libxpcom.so file that's used for runtime.
 # This is used to set the LD_LIBRARY_PATH environment variable.
 #
