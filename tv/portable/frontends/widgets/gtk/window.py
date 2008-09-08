@@ -413,4 +413,5 @@ class AboutDialog:
         self._window.run()
 
 class AlertDialog(Dialog):
-    pass
+    def __init__(self, title, description, alert_type):
+        Dialog.__init__(self, title, description)
