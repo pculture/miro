@@ -75,6 +75,9 @@ class ItemContextMenuHandler(object):
             else:
                 menu.append((_('Mark as Watched'),
                     messages.MarkItemWatched(item.id).send_to_backend))
+            if item.expiration_date:
+                menu.append((_('Keep'),
+                    messages.KeepVideo(item.id).send_to_backend))
             if (item.download_info and item.download_info.torrent and
                     item.download_info.state != 'uploading'):
                 menu.append((_('Restart Upload'),
@@ -101,12 +104,15 @@ class ItemContextMenuHandler(object):
 
     def _make_context_menu_multiple(self, selection):
         """Make the context menu for multiple items."""
-        watched = unwatched = downloaded = downloading = available = uploadable = 0
+        watched = unwatched = downloaded = downloading = available = \
+                uploadable = expiring = 0
         for info in selection:
             if info.downloaded:
                 downloaded += 1
                 if info.video_watched:
                     watched += 1
+                    if info.expiration_date:
+                        expiring += 1
                 else:
                     unwatched += 1
             elif info.download_info is not None:
@@ -134,6 +140,12 @@ class ItemContextMenuHandler(object):
                     for item in selection:
                         messages.MarkItemWatched(item.id).send_to_backend()
                 menu.append((_('Mark as Watched'), mark_watched))
+            if expiring:
+                def keep_videos():
+                    for item in selection:
+                        if item.expiration_date:
+                            messages.KeepVideo(item.id).send_to_backend()
+                menu.append((_('Keep'), keep_videos))
 
         if available > 0:
             if len(menu) > 0:
