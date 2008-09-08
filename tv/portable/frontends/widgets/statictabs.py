@@ -42,59 +42,44 @@ class StaticTab(object):
     def __init__(self):
         self.unwatched = self.downloading = 0
         self.icon = widgetutil.make_surface(self.icon_name)
-        self.view = self.make_view()
 
 class ChannelGuideTab(StaticTab):
     id = 'guide'
     name = _('Miro Guide')
     icon_name = 'icon-guide'
 
-    def make_view(self):
+    def __init__(self):
+        StaticTab.__init__(self)
         self.browser = browser.Browser(app.widgetapp.default_guide_info)
-        return self.browser
 
     def update(self, guide_info):
         self.browser.guide_info = guide_info
 
-class DummyView(widgetset.Alignment):
-    def __init__(self, title):
-        # FIXME - it looks like this is ignored by render in style module
-        widgetset.Alignment.__init__(self, xalign=0.5, yalign=0.5)
-        label = widgetset.Label(title)
-        label.set_size(3)
-        label.set_bold(True)
-        label.set_color((1.0, 0, 0))
-        self.add(label)
-
-class DummyTab(StaticTab):
-    def make_view(self):
-        return DummyView(self.name)
-
-class SearchTab(DummyTab):
+class SearchTab(StaticTab):
     id = 'search'
     name = _('Video Search')
     icon_name = 'icon-search'
 
-class LibraryTab(DummyTab):
+class LibraryTab(StaticTab):
     id = 'library'
     name = _('Library')
     icon_name = 'icon-library'
 
-class IndividualDownloadsTab(DummyTab):
+class IndividualDownloadsTab(StaticTab):
     id = 'individual_downloads'
     name = _('Single Items')
     icon_name = 'icon-individual'
     indent = True
     bolded = False
 
-class NewVideosTab(DummyTab):
+class NewVideosTab(StaticTab):
     id = 'new'
     name = _('New')
     icon_name = 'icon-new'
     indent = True
     bolded = False
 
-class DownloadsTab(DummyTab):
+class DownloadsTab(StaticTab):
     id = 'downloading'
     name = _('Downloading')
     icon_name = 'icon-downloading'

@@ -84,7 +84,7 @@ class DisplayManager(object):
                 IndividualDownloadsDisplay,
                 NewVideosDisplay,
                 DownloadingDisplay,
-                StaticTabDisplay,
+                GuideDisplay,
                 DummyDisplay,
         ]
         self.current_display = None
@@ -120,15 +120,14 @@ class DisplayManager(object):
             self.current_display.cleanup()
             self.current_display.emit("removed")
 
-class StaticTabDisplay(TabDisplay):
+class GuideDisplay(TabDisplay):
     @staticmethod
     def should_display(type, selected_tabs):
-        return type == 'static'
+        return type == 'static' and selected_tabs[0].id == 'guide'
 
     def __init__(self, type, selected_tabs):
         Display.__init__(self)
-        # There is always exactly 1 selected static tab
-        self.widget = selected_tabs[0].view
+        self.widget = selected_tabs[0].browser
 
 class SiteDisplay(TabDisplay):
     @staticmethod
