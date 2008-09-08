@@ -99,6 +99,13 @@ class ItemListController(object):
             item_view.set_context_menu_callback(context_callback)
             item_view.set_drag_source(self.make_drag_handler())
             item_view.set_drag_dest(self.make_drop_handler())
+        self.initialize_search()
+
+    def initialize_search(self):
+        search = app.inline_search_memory.get_search(self.type, self.id)
+        if search != '':
+            self.titlebar.set_search_text(search)
+            self.set_search(search)
 
     def get_selection(self):
         """Get the currently selected items.  Returns a list of ItemInfos."""
@@ -134,6 +141,7 @@ class ItemListController(object):
         self.item_list_group.set_search_text(search_text)
         for item_view in self.all_item_views():
             item_view.model_changed()
+        app.inline_search_memory.set_search(self.type, self.id, search_text)
 
     def on_hotspot_clicked(self, itemview, name, iter):
         """Hotspot handler for ItemViews."""
@@ -335,9 +343,12 @@ class SearchController(SimpleItemListController):
         SimpleItemListController.__init__(self)
         self.toolbar = itemlistwidgets.SearchToolbar()
         self.toolbar.connect("save-search", self._on_save_search)
-        self.widget.titlebar_vbox.pack_start(self.toolbar)
         if app.search_manager.text != '':
             self.toolbar.show()
+        self.widget.titlebar_vbox.pack_start(self.toolbar)
+
+    def initialize_search(self):
+        if app.search_manager.text != '':
             self.titlebar.set_search_text(app.search_manager.text)
         self.titlebar.set_search_engine(app.search_manager.engine)
 

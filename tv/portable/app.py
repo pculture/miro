@@ -47,6 +47,7 @@ item_list_controller -- Currently active ItemListController (or None)
 renderer -- Video rendering object (or None if the platform code can't
         initialize a suitable renderer)
 search_manager -- Manages the search state
+inline_search_memory -- Remembers inline search terms
 """
 
 renderers = []

@@ -62,3 +62,23 @@ class SearchManager(object):
             if engine.name == self.engine:
                 return engine
         raise LookupError("Couldn't find search engine %r" % name)
+
+class InlineSearchMemory(object):
+    """Remembers inline searches the user has performed """
+
+    def __init__(self):
+        self._memory = {}
+
+    def set_search(self, type, id, text):
+        self._memory[(type, id)] = text
+
+    def get_search(self, type, id):
+        return self._memory.get((type, id), '')
+
+    def forget_search(self, type, id):
+        # We should call this when channels/playlists get deleted to free up
+        # the memory, but it's so small that it's not worth worrying about.
+        try:
+            del self._memory[(type, id)]
+        except KeyError:
+            pass

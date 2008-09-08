@@ -121,6 +121,9 @@ class ItemListTitlebar(widgetset.Background):
         self.title_drawer = title
         self.title_drawer.queue_redraw()
 
+    def set_search_text(self, text):
+        self.searchbox.set_text(text)
+
 class ChannelTitlebar(ItemListTitlebar):
     """Titlebar for a channel
 
@@ -186,9 +189,6 @@ class SearchListTitlebar(ItemListTitlebar):
         self.search_button.connect('clicked', self._on_search_activate)
         hbox.pack_start(self.search_button, padding=5)
         return widgetutil.align_middle(hbox, right_pad=20)
-
-    def set_search_text(self, text):
-        self.searchbox.set_text(text)
 
     def set_search_engine(self, engine):
         index = [e.name for e in self.engines].index(engine)
