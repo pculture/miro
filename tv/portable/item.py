@@ -775,7 +775,7 @@ class Item(DDBObject):
 
         try:
             enclosure = self.getFirstVideoEnclosure()
-            if "text" in enclosure:
+            if hasattr(enclosure, "text"):
                 return enclosure["text"]
 
             if hasattr(self.entry, "description"):
