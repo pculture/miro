@@ -217,24 +217,33 @@ def movies_directory_gone():
     movies_dir = fileutil.expand_filename(config.get(prefs.MOVIES_DIRECTORY))
     if not movies_dir.endswith(os.path.sep):
         movies_dir += os.path.sep
+    logging.info("Checking movies directory '%s'..." % movies_dir)
+
     try:
+        if not os.path.exists(movies_dir):
+            return True
+
         contents = os.listdir(movies_dir)
     except OSError:
         # We can't access the directory.  Seems like it's gone.
         return True
+
     if contents:
         # There's something inside the directory consider it present (even
         # if all our items are missing.
         return False
+
     # make sure that we have actually downloaded something into the movies
     # directory.
     for downloader_ in views.remoteDownloads:
         if (downloader_.isFinished()
                 and downloader_.getFilename().startswith(movies_dir)):
             return True
+
     return False
 
 def default_movies_gone_handler():
+    print "MOVIES GONE!"
     summary = _("Video Directory Missing")
     description = _(
         "Miro can't find your primary video directory %(moviesDirectory)s. "
