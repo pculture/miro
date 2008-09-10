@@ -40,6 +40,7 @@ from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
+from miro.plat.frontends.widgets import widgetset
 
 class FeedController(itemlistcontroller.ItemListController):
     """Controller object for feeds."""
@@ -70,6 +71,10 @@ class FeedController(itemlistcontroller.ItemListController):
         widget.content_vbox.pack_start(self.downloaded_section)
         return widget
 
+    def _on_show_more(self, button):
+        self.full_view.item_list.set_new_only(False)
+        self.show_more_container.hide()
+
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
 
@@ -87,8 +92,16 @@ class FeedController(itemlistcontroller.ItemListController):
                 "", self.downloading_view)
         self.downloaded_section = itemlistwidgets.HideableSection(
                 _("Downloaded"), self.downloaded_view)
+
+        self.show_more_button = widgetset.Button('')
+        self.show_more_button.connect('clicked', self._on_show_more)
+        self.show_more_container = widgetutil.HideableWidget(
+                widgetutil.align_left(self.show_more_button, 2, 2, 10, 0))
+        full_section_vbox = widgetset.VBox(spacing=2)
+        full_section_vbox.pack_start(self.full_view, expand=True)
+        full_section_vbox.pack_start(self.show_more_container)
         self.full_section = itemlistwidgets.HideableSection(
-                _("Full Channel"), self.full_view)
+                _("Full Channel"), full_section_vbox)
 
     def _make_toolbar(self, feed_info):
         toolbar = itemlistwidgets.FeedToolbar()
@@ -119,11 +132,16 @@ class FeedController(itemlistcontroller.ItemListController):
         video_downloaded = self.downloaded_view.item_list.get_count() > 0
         feed_info = widgetutil.get_feed_info(self.id)
         autodownload_mode = feed_info.autodownload_mode
-        if (not video_downloaded or autodownload_mode is None or
-                autodownload_mode == 'off'):
-            self.full_section.expand()
+        self.full_section.expand()
         self.full_section.show()
         self.downloaded_section.expand()
+        all_items = self.full_view.item_list.get_items()
+        viewed_items = [item for item in all_items if item.item_viewed]
+        if video_downloaded and len(viewed_items) > 0:
+            text = _('Show %d more items') % len(viewed_items)
+            self.show_more_button.set_text(text)
+            self.show_more_container.show()
+            self.full_view.item_list.set_new_only(True)
 
     def on_initial_list(self):
         # We wait for the initial list of items to pack our item views because

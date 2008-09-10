@@ -188,8 +188,10 @@ class ItemList(object):
         self._iter_map = {}
         self._sorter = None
         self._search_text = ''
-        self._non_matching_items = {} 
-        # maps ids -> items that don't match the search
+        self._new_only = False
+        self._hidden_items = {} 
+        # maps ids -> items that should be in this list, but are filtered out
+        # for some reason
 
     def set_sort(self, sorter):
         self._sorter = sorter
@@ -227,18 +229,10 @@ class ItemList(object):
         return True
 
     def _should_show_item(self, item_info):
-        """Decide if an item should be shown."""
         if not self.filter(item_info):
             return False
-        if not item_matches_search(item_info, self._search_text):
-            self._non_matching_items[item_info.id] = item_info
-            return False
-        else:
-            try:
-                del self._non_matching_items[item_info.id]
-            except KeyError:
-                pass
-            return True
+        return (not (self._new_only and item_info.item_viewed) and
+                item_matches_search(item_info, self._search_text))
 
     def set_show_details(self, item_id, value):
         """Change the show details value for an item"""
@@ -264,24 +258,34 @@ class ItemList(object):
             self._iter_map[item_info.id] = iter
 
     def add_items(self, item_list, already_sorted=False):
+        to_add = []
+        for item in item_list:
+            if self._should_show_item(item):
+                to_add.append(item)
+            else:
+                self._hidden_items[item.id] = item
         if not already_sorted:
-            self._sorter.sort_items(item_list)
-        self._insert_sorted_items(info for info in item_list 
-                if self._should_show_item(info))
+            self._sorter.sort_items(to_add)
+        self._insert_sorted_items(to_add)
 
     def update_items(self, changed_items, already_sorted=False):
-        if not already_sorted:
-            self._sorter.sort_items(changed_items)
         to_add = []
         for info in changed_items:
-            show = self._should_show_item(info)
+            should_show = self._should_show_item(info)
             if info.id in self._iter_map:
-                if not show:
+                # Item already displayed
+                if not should_show:
                     self.remove_item(info.id)
+                    self._hidden_items[info.id] = info
                 else:
                     self.update_item(info)
-            elif show:
-                to_add.append(info)
+            else:
+                # Item not already displayed
+                if should_show:
+                    to_add.append(info)
+                    del self._hidden_items[info.id]
+        if not already_sorted:
+            self._sorter.sort_items(to_add)
         self._insert_sorted_items(to_add)
 
     def remove_item(self, id):
@@ -300,16 +304,24 @@ class ItemList(object):
         for id in id_list:
             self.remove_item(id)
 
+    def set_new_only(self, new_only):
+        """Set if only new items are to be displayed (default False)."""
+        self._new_only = new_only
+        self._recalulate_hidden_items()
+
     def set_search_text(self, search_text):
-        newly_matching = self._find_newly_matching_items(search_text)
-        removed = self._remove_non_matching_items(search_text)
+        self._search_text = search_text
+        self._recalulate_hidden_items()
+
+    def _recalulate_hidden_items(self):
+        newly_matching = self._find_newly_matching_items()
+        removed = self._remove_non_matching_items()
         self._sorter.sort_items(newly_matching)
         self._insert_sorted_items(newly_matching)
-        self._search_text = search_text
         for item in removed:
-            self._non_matching_items[item.id] = item
+            self._hidden_items[item.id] = item
         for item in newly_matching:
-            del self._non_matching_items[item.id]
+            del self._hidden_items[item.id]
 
     def move_items(self, insert_before, item_ids):
         """Move a group of items inside the list.
@@ -323,19 +335,19 @@ class ItemList(object):
                 item_ids)
         self._iter_map.update(new_iters)
 
-    def _find_newly_matching_items(self, search_text):
+    def _find_newly_matching_items(self):
         retval = []
-        for item in self._non_matching_items.values():
-            if item_matches_search(item, search_text):
+        for item in self._hidden_items.values():
+            if self._should_show_item(item):
                 retval.append(item)
         return retval
 
-    def _remove_non_matching_items(self, search_text):
+    def _remove_non_matching_items(self):
         removed = []
         iter = self.model.first_iter()
         while iter is not None:
             item = self.model[iter][0]
-            if not item_matches_search(item, search_text):
+            if not self._should_show_item(item):
                 iter = self.model.remove(iter)
                 del self._iter_map[item.id]
                 removed.append(item)
