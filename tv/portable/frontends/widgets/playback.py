@@ -75,7 +75,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.previous_left_widget = splitter.left
         splitter.remove_left()
         splitter.set_left_width(0)
-        app.display_manager.select_display(self.video_display)
+        app.display_manager.push_display(self.video_display)
         app.menu_manager.handle_playing_selection()
         self.playlist = item_infos
         self.position = 0
@@ -129,7 +129,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.is_paused = False
         self.emit('will-stop')
         self.video_display.stop()
-        app.tab_list_manager.recalc_selection()
+        app.display_manager.pop_display()
         app.widgetapp.window.splitter.set_left_width(self.previous_left_width)
         app.widgetapp.window.splitter.set_left(self.previous_left_widget)
         self.is_fullscreen = False

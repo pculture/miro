@@ -76,6 +76,14 @@ class TabDisplay(Display):
         raise NotImplementedError()
 
 class DisplayManager(object):
+    """Handles managing the display in the right-side of miro.
+
+    DisplayManagers keep a stack of Displays that are currently is use.  This
+    is used to allow us to switch to a new display, but still keep the old
+    display's state.  For example, when we switch to a video display, we want
+    to keep around the channel display that we switched from and go back to it
+    when the playback is finished.
+    """
     def __init__(self):
         self.display_classes = [
                 FeedDisplay,
@@ -89,14 +97,22 @@ class DisplayManager(object):
                 GuideDisplay,
                 DummyDisplay,
         ]
-        self.current_display = None
+        self.display_stack = []
         self.selected_tab_list = self.selected_tabs = None
+
+    def get_current_display(self):
+        try:
+            return self.display_stack[-1]
+        except IndexError:
+            return None
+    current_display = property(get_current_display)
 
     def select_display_for_tabs(self, selected_tab_list, selected_tabs):
         """Select a display to show in the right-hand side.  """
         if (selected_tab_list is self.selected_tab_list and 
                 selected_tabs == self.selected_tabs and 
-                isinstance(self.current_display, TabDisplay)):
+                len(self.display_stack) > 0 and
+                isinstance(self.display_stack[-1], TabDisplay)):
             print 'not reselecting'
             return
 
@@ -112,15 +128,28 @@ class DisplayManager(object):
             selected_tabs))
 
     def select_display(self, display):
-        self.unselect_current_display()
-        self.current_display = display
-        self.current_display.on_selected()
+        """Select a display and clear out the current display stack."""
+        for old_display in self.display_stack:
+            self._unselect_display(old_display)
+        self.display_stack = []
+        self.push_display(display)
+
+    def push_display(self, display):
+        """Select a display and push it on top of the display stack"""
+        self.display_stack.append(display)
+        display.on_selected()
         app.widgetapp.window.set_main_area(display.widget)
 
-    def unselect_current_display(self):
-        if self.current_display:
-            self.current_display.cleanup()
-            self.current_display.emit("removed")
+    def pop_display(self):
+        """Remove the current display, then select the next one in the display
+        stack.
+        """
+        self._unselect_display(self.display_stack.pop())
+        app.widgetapp.window.set_main_area(self.current_display.widget)
+
+    def _unselect_display(self, display):
+        display.cleanup()
+        display.emit("removed")
 
 class GuideDisplay(TabDisplay):
     @staticmethod
