@@ -31,11 +31,13 @@ app.
 """
 
 from miro import app
+from miro import messages
 from miro import signals
 from miro.frontends.widgets import browser
 from miro.frontends.widgets import feedcontroller
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import playlist
+from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
 
 class Display(signals.SignalEmitter):
@@ -161,7 +163,14 @@ class FeedDisplay(ItemListDisplay):
     def should_display(type, selected_tabs):
         return type == 'feed' and len(selected_tabs) == 1
 
+
+    def cleanup(self):
+        ItemListDisplay.cleanup(self)
+        if widgetutil.feed_exists(self.feed_id):
+            messages.MarkChannelSeen(self.feed_id).send_to_backend()
+
     def make_controller(self, tab):
+        self.feed_id = tab.id
         return feedcontroller.FeedController(tab.id, tab.is_folder)
 
 class PlaylistDisplay(ItemListDisplay):

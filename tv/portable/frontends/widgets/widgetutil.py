@@ -177,3 +177,11 @@ class Shadow(object):
 
 def get_feed_info(feed_id):
     return app.tab_list_manager.feed_list.get_info(feed_id)
+
+def feed_exists(feed_id):
+    try:
+        app.tab_list_manager.feed_list.get_info(feed_id)
+    except KeyError:
+        return False
+    else:
+        return True
