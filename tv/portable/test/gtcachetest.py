@@ -1,0 +1,101 @@
+# -*- coding: utf-8 -*-
+import os
+import os.path
+import unittest
+import gettext
+
+from miro import gtcache
+from miro.test.framework import MiroTestCase
+from miro.plat import resources
+
+# FIXME this only works on GTK platforms. See #3831
+
+# The miro.po/miro.mo file for this are in 
+# resources/testdata/locale/fr/LC_MESSAGES/ .
+#
+# If you need to add messages:
+# 1. add new strings to teststring.py
+# 2. run:
+#
+#    xgettext -k_ -kN_ -o messages.pot teststring.py
+# 
+# 3. merge the differences between messages.pot and miro.po file
+# 4. translate the new strings in miro.po
+# 5. run:
+# 
+#    msgfmt miro.po -o miro.mo
+
+class GettextTest(MiroTestCase):
+    def test_gettext(self):
+        oldLang = None
+        try:
+            try:
+                oldLang = os.environ["LANGUAGE"]
+            except:
+                pass
+            os.environ["LANGUAGE"] = "fr"
+            gtcache._gtcache = {}
+
+            gettext.bindtextdomain("miro", resources.path("testdata/locale"))
+            gettext.textdomain("miro")
+            gettext.bind_textdomain_codeset("miro", "UTF-8")
+
+            self.assertEqual(gtcache.gettext("OK"), u'Valider')
+            self.assertEqual(gtcache.gettext("Channels"), u"Chaînes")
+
+        finally:
+            if oldLang is None:
+                del os.environ["LANGUAGE"]
+            else:
+                os.environ["LANGUAGE"] = oldLang
+
+    def test_gettext_values(self):
+        oldLang = None
+        try:
+            try:
+                oldLang = os.environ["LANGUAGE"]
+            except:
+                pass
+            os.environ["LANGUAGE"] = "fr"
+            gtcache._gtcache = {}
+
+            gettext.bindtextdomain("miro", resources.path("testdata/locale"))
+            gettext.textdomain("miro")
+            gettext.bind_textdomain_codeset("miro", "UTF-8")
+
+            input = "parsed %(countfiles)d files - found %(countvideos)d videos"
+            output = u'%(countfiles)d fichiers analys\xe9s  - %(countvideos)d vid\xe9os trouv\xe9es'
+
+            # test with no value expansion
+            self.assertEqual(gtcache.gettext(input), output)
+
+            # test with old value expansion
+            self.assertEqual(gtcache.gettext(input) % {"countfiles": 1, "countvideos": 2},
+                             output % {"countfiles": 1, "countvideos": 2})
+
+            # test with value expansion done by gtcache.gettext
+            self.assertEqual(gtcache.gettext(input, {"countfiles": 1, "countvideos": 2}),
+                             output % {"countfiles": 1, "countvideos": 2})
+
+
+            # try gettext with a bad translation.  the string is fine, but
+            # the translated version of the string is missing the d characters
+            # which causes a Python formatting syntax error.
+            input2 = "bad parsed %(countfiles)d files - found %(countvideos)d videos"
+
+            # first we call gettext on the string by itself--this is fine, so
+            # we should get the translated version of the string.
+            self.assertEqual(gtcache.gettext(input2),
+                             u'bad %(countfiles) fichiers analys\xe9s  - %(countvideos) vid\xe9os trouv\xe9es')
+
+            # now we pass in a values dict which will kick up a ValueError
+            # when trying to expand the values.  that causes gettext to
+            # return the english form of the string with values expanded.
+            self.assertEqual(gtcache.gettext(input2, {"countfiles": 1, "countvideos": 2}),
+                             input2 % {"countfiles": 1, "countvideos": 2})
+
+        finally:
+            if oldLang is None:
+                del os.environ["LANGUAGE"]
+            else:
+                os.environ["LANGUAGE"] = oldLang

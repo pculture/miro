@@ -505,7 +505,8 @@ files = [f for f in listfiles(resource_dir) \
 data_files.append(('/usr/share/miro/resources/', files))
 # handle the sub directories.
 for dir in ('searchengines', 'wimages', 'testdata',
-        os.path.join('testdata', 'stripperdata')):
+        os.path.join('testdata', 'stripperdata'),
+        os.path.join('testdata', 'locale', 'fr', 'LC_MESSAGES')):
     source_dir = os.path.join(resource_dir, dir)
     dest_dir = os.path.join('/usr/share/miro/resources/', dir)
     data_files.append((dest_dir, listfiles(source_dir)))

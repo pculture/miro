@@ -48,15 +48,27 @@ def init():
         locale.setlocale(locale.LC_ALL, '')
     except locale.Error:
         import logging
-	logging.warn("gtcache.init: setlocale failed.  setting locale to 'C'")
+        logging.warn("gtcache.init: setlocale failed.  setting locale to 'C'")
         locale.setlocale(locale.LC_ALL, 'C')
 
     _gt.bindtextdomain("miro", config.get(prefs.GETTEXT_PATHNAME))
     _gt.textdomain("miro")
     _gt.bind_textdomain_codeset("miro", "UTF-8")
 
-def gettext(text):
-    """Given a string, returns the translated form of that string.
+def gettext(text, values=None):
+    """Returns the translated form of the given text.  If values are provided,
+    expands the string with the given values.
+
+    In the case where the translated string is improperly formed and throws
+    a ValueError when expanded, this caches and returns the original text.
+    This reduces the likelihood that Miro will throw an error and stop
+    functioning with bad translated strings.
+
+    For example, if the string is:
+
+        %(countfiles) fichiers analyses ...
+
+    the d is missing.
 
     Note that this converts unicode strings to strings in utf-8 encoding
     before translating.  This definitely slows things down, so if you
@@ -66,16 +78,28 @@ def gettext(text):
     """
     text = text.encode('utf-8')
     try:
-        return _gtcache[text]
+        s = _gtcache[text]
+
     except KeyError:
-        out = _gt.gettext(text).decode('utf-8')
-        _gtcache[text] = out
-        return out
+        s = _gt.gettext(text).decode('utf-8')
+        _gtcache[text] = s
+
     except TypeError:
-        print "MIRO: WARNING: gettext not initialized for string \"%s\"" % text
+        print "gtcache.gettext: not initialized for string \"%s\"" % text
         import traceback
         traceback.print_stack()
         return text
+
+    try:
+        if values:
+            s = s % values
+        return s
+
+    except ValueError:
+        import logging
+        logging.warn("gtcache.gettext: translation has bad formatting characters.  returning english form.  '%s'", text)
+        _gtcache[text] = text
+        return text % values
 
 def ngettext(text1, text2, count):
     """Given two strings and a count.

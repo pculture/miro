@@ -1,0 +1,42 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Democracy Player 0.8.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-05-13 19:11-0400\n"
+"PO-Revision-Date: 2008-05-19 22:34+0000\n"
+"Last-Translator: benefred <Unknown>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Launchpad-Export-Date: 2008-05-27 16:36+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+"X-Poedit-Language: French\n"
+
+#: teststring.py:3
+msgid "OK"
+msgstr "Valider"
+
+#: teststring.py:5
+msgid "Cancel"
+msgstr "Annuler"
+
+#: teststring.py:7
+msgid "Channels"
+msgstr "Chaînes"
+
+#: teststring.py:9
+#, python-format
+msgid "parsed %(countfiles)d files - found %(countvideos)d videos"
+msgstr "%(countfiles)d fichiers analysés  - %(countvideos)d vidéos trouvées"
+
+#: teststring.py:11
+msgid "bad parsed %(countfiles)d files - found %(countvideos)d videos"
+msgstr "bad %(countfiles) fichiers analysés  - %(countvideos) vidéos trouvées"

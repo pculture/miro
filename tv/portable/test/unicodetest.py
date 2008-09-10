@@ -296,22 +296,3 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.forceFeedParserCallback(myFeed)
         for item in myFeed.items:
             u'booya' in item.getTitle().lower()
-
-    def testGetText(self):
-        # FIXME this only works on GTK platforms. See #3831
-        oldLang = None
-        try:
-            oldLang = os.environ["LANGUAGE"]
-        except:
-            pass
-        os.environ["LANGUAGE"] = "fr"
-        gtcache._gtcache = {}
-
-        gettext.bindtextdomain("miro",resources.path("../../locale"))
-        gettext.textdomain("miro")
-        gettext.bind_textdomain_codeset("miro","UTF-8")
-        self.assertEqual(gtcache.gettext("Settings"),u'R\xe9glages')
-        if oldLang is None:
-            del os.environ["LANGUAGE"]
-        else:
-            os.environ["LANGUAGE"] = oldLang
