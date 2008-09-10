@@ -144,7 +144,8 @@ class IconCache:
             self.remove_file(self.filename)
 
     def reset(self):
-        self.remove_file(self.filename)
+        if self.filename:
+            self.remove_file(self.filename)
         self.filename = None
         self.resized_filenames = {}
         self.url = None
@@ -249,7 +250,7 @@ class IconCache:
 
             try:
                 fileutil.rename(tmp_filename, self.filename)
-            except:
+            except OSError:
                 self.filename = None
                 needsSave = True
 
