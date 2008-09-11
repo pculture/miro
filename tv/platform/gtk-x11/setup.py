@@ -549,15 +549,23 @@ class install_data (distutils.command.install_data.install_data):
     def install_app_config(self):
         source = os.path.join(resource_dir, 'app.config.template')
         dest = '/usr/share/miro/resources/app.config'
-        revision = util.query_revision(root_dir)
-        if revision is None:
-            revision = "unknown"
-            revisionurl = "unknown"
-            revisionnum = "unknown"
+
+        config_file = util.read_simple_config_file(source)
+        if config_file["appVersion"].endswith("svn"):
+            revision = util.query_revision(root_dir)
+            if revision is None:
+                revision = "unknown"
+                revisionurl = "unknown"
+                revisionnum = "unknown"
+            else:
+                revisionurl = revision[0]
+                revisionnum = revision[1]
+                revision = "%s - %s" % revision
         else:
-            revisionurl = revision[0]
-            revisionnum = revision[1]
-            revision = "%s - %s" % revision
+            revisionurl = ""
+            revisionnum = ""
+            revision = ""
+
         if self.root:
             dest = change_root(self.root, dest)
         self.mkpath(os.path.dirname(dest))

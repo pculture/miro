@@ -393,9 +393,12 @@ class AboutDialog:
 
         ab = gtk.AboutDialog()
         ab.set_name(config.get(prefs.SHORT_APP_NAME))
-        ab.set_version( "%s (r%s)" % \
-                        (config.get(prefs.APP_VERSION), 
-                         config.get(prefs.APP_REVISION_NUM)))
+        if config.get(prefs.APP_REVISION_NUM):
+            ab.set_version("%s (r%s)" %
+                           (config.get(prefs.APP_VERSION),
+                            config.get(prefs.APP_REVISION_NUM)))
+        else:
+            ab.set_version("%s" % config.get(prefs.APP_VERSION))
         ab.set_website(config.get(prefs.PROJECT_URL))
         ab.set_copyright(_('%s.  See LICENSE file for details.\n' +
                            'Miro and Miro logo are trademarks of ' +
