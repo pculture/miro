@@ -20,23 +20,37 @@ msgstr ""
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Language: French\n"
 
-#: teststring.py:3
+#: teststring.py:4
 msgid "OK"
 msgstr "Valider"
 
-#: teststring.py:5
+#: teststring.py:6
 msgid "Cancel"
 msgstr "Annuler"
 
-#: teststring.py:7
+#: teststring.py:8
 msgid "Channels"
 msgstr "Chaînes"
 
-#: teststring.py:9
+#: teststring.py:10
 #, python-format
 msgid "parsed %(countfiles)d files - found %(countvideos)d videos"
 msgstr "%(countfiles)d fichiers analysés  - %(countvideos)d vidéos trouvées"
 
-#: teststring.py:11
+#: teststring.py:12
 msgid "bad parsed %(countfiles)d files - found %(countvideos)d videos"
 msgstr "bad %(countfiles) fichiers analysés  - %(countvideos) vidéos trouvées"
+
+#: teststring.py:14
+#, python-format
+msgid "%(count)d video found"
+msgid_plural "%(count)d videos found"
+msgstr[0] "%(count)d vidéo trouvée"
+msgstr[1] "%(count)d vidéos trouvées"
+
+#: teststring.py:16
+#, python-format
+msgid "bad %(count)d video found"
+msgid_plural "bad %(count)d videos found"
+msgstr[0] "bad %(count) vidéo trouvée"
+msgstr[1] "bad %(count) vidéos trouvées"

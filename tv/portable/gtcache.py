@@ -101,12 +101,13 @@ def gettext(text, values=None):
         _gtcache[text] = text
         return text % values
 
-def ngettext(text1, text2, count):
+def ngettext(text1, text2, count, values=None):
     """Given two strings and a count.
 
     text1 - the singular form of the string to be translated
     text2 - the plural form of the string to be translated
     count - the number of things involved
+    values - the dict of values to expand the string with
 
     See Python ``gettext.ngettext`` documentation and the GNU gettext
     documentation for more details.
@@ -118,8 +119,24 @@ def ngettext(text1, text2, count):
     text1 = text1.encode('utf-8')
     text2 = text2.encode('utf-8')
     try:
-        return _gtcache[(text1, text2, count)]
+        s = _gtcache[(text1, text2, count)]
     except:
-        out = _gt.ngettext(text1, text2, count).decode('utf-8')
-        _gtcache[(text1, text2, count)] = out
-        return out
+        s = _gt.ngettext(text1, text2, count).decode('utf-8')
+        _gtcache[(text1, text2, count)] = s
+
+    try:
+        if values:
+            s = s % values
+        return s
+
+    except ValueError:
+        import logging
+        # FIXME - not sure if this is the most useful logging statement in 
+        # the world
+        logging.warn("gtcache.ngettext: translation has bad formatting characters.  returning english form.  '%s'", text1)
+        if count <= 1:
+            _gtcache[(text1, text2, count)] = text1
+            return text1 % values
+        else:
+            _gtcache[(text1, text2, count)] = text2
+            return text2 % values
