@@ -135,15 +135,25 @@ def query_revision(fn):
     Returns the (url, revision) on success and None on failure.
     """
     try:
-        p = subprocess.Popen(["svn", "info", fn], stdout=subprocess.PIPE) 
+        # first try straight-up svn
+        p = subprocess.Popen(["svn", "info", fn], stdout=subprocess.PIPE)
         info = p.stdout.read()
         p.stdout.close()
-        url = re.search("URL: (.*)", info).group(1)
-        url = url.strip()
+        url_match = re.search("URL: (.*)", info)
         # FIXME - this doesn't work on non English systems because the word
         # we're looking for will be in another language!
-        revision = re.search("Revision: (.*)", info).group(1)
-        revision = revision.strip()
+        revision_match = re.search("Revision: (.*)", info)
+
+        # if that doesn't work, try git over svn.
+        if not url_match:
+            p = subprocess.Popen(["git", "svn", "info"], stdout=subprocess.PIPE)
+            info = p.stdout.read()
+            p.stdout.close()
+            url_match = re.search("URL: (.*)", info)
+            revision_match = re.search("Revision: (.*)", info)
+
+        url = url_match.group(1).strip()
+        revision = revision_match.group(1).strip()
         return (url, revision)
     except KeyboardInterrupt:
         raise
