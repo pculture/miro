@@ -100,7 +100,8 @@ class GtkX11Application(Application):
         app.controller.onShutdown()
 
     def on_trayicon_pref_changed(self, key, value):
-        self.trayicon.set_visible(value)
+        if key == options.SHOW_TRAYICON.key:
+            self.trayicon.set_visible(value)
 
     def build_window(self):
         Application.build_window(self)
