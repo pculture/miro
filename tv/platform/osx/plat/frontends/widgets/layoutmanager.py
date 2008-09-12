@@ -263,7 +263,10 @@ class TextBox(object):
     def char_at(self, x, y):
         width, height = self.get_size()
         if 0 <= x < width and 0 <= y < height:
-            index, _ = self.layout_manager.glyphIndexForPoint_inTextContainer_fractionOfDistanceThroughGlyph_(NSPoint(x, y), self.text_container)
+            if utils.get_pyobjc_major_version() == 2:
+                index, _ = self.layout_manager.glyphIndexForPoint_inTextContainer_fractionOfDistanceThroughGlyph_(NSPoint(x, y), self.text_container, None)
+            else:
+                index, _ = self.layout_manager.glyphIndexForPoint_inTextContainer_fractionOfDistanceThroughGlyph_(NSPoint(x, y), self.text_container)
             return index
         else:
             return None
