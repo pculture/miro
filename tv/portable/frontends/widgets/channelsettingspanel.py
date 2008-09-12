@@ -75,14 +75,17 @@ def _build_header(channel):
 
 def _build_video_expires(channel):
     lab = widgetset.Label(_("Videos expire after"))
-    expire_options = [("system", _("Default (%s)") % get_formatted_default_expiration()),
-                      ("3", _("3 hours")),
-                      ("24", _("1 day")),
-                      ("72", _("3 days")),
-                      ("144", _("6 days")),
-                      ("240", _("10 days")),
-                      ("720", _("1 month")),
-                      ("never", _("never"))]
+    expire_options = [
+        ("system", _("Default (%(expiration)s)",
+                     {"expiration": get_formatted_default_expiration()})),
+        ("3", _("3 hours")),
+        ("24", _("1 day")),
+        ("72", _("3 days")),
+        ("144", _("6 days")),
+        ("240", _("10 days")),
+        ("720", _("1 month")),
+        ("never", _("never"))
+    ]
     expire_values = [e[0] for e in expire_options]
     expire_combo = widgetset.OptionMenu([e[1] for e in expire_options])
 
@@ -156,12 +159,15 @@ def _build_auto_download(channel):
 
 def _build_remember_items(channel):
     lab = widgetset.Label(_("Remember"))
-    older_options = [("-1", _("Default (%s)") % config.get(prefs.MAX_OLD_ITEMS_DEFAULT)),
-                     ("0", "0"),
-                     ("20", "20"),
-                     ("50", "50"),
-                     ("100", "100"),
-                     ("1000", "1000")]
+    older_options = [
+        ("-1", _("Default (%(number)s)",
+                 {"number": config.get(prefs.MAX_OLD_ITEMS_DEFAULT)})),
+        ("0", "0"),
+        ("20", "20"),
+        ("50", "50"),
+        ("100", "100"),
+        ("1000", "1000")
+    ]
     older_values = [o[0] for o in older_options]
     older_combo = widgetset.OptionMenu([o[1] for o in older_options])
     lab2 = widgetset.Label(_("older items in this feed in addition to the current contents."))

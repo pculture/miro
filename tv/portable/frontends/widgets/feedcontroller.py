@@ -162,7 +162,7 @@ class FeedController(itemlistcontroller.ItemListController):
 
     def _update_downloading_section(self, downloads):
         if downloads > 0:
-            text = _("%d Downloading") % downloads
+            text = _("%(count)d Downloading", {"count": downloads})
             self.downloading_section.set_header(text)
             self.downloading_section.show()
         else:
@@ -170,7 +170,7 @@ class FeedController(itemlistcontroller.ItemListController):
 
     def _update_downloaded_section(self, watchable):
         if watchable > 0:
-            text = _("  |  %d Videos  ") % watchable
+            text = _("  |  %(count)d Videos  ", {"count": watchable})
             self.downloaded_section.set_info(text)
             self.downloaded_section.show()
         else:
@@ -178,6 +178,7 @@ class FeedController(itemlistcontroller.ItemListController):
 
     def _update_full_section(self, downloads, videos):
         text = _(
-            "  |  %(videos)d Videos  |  %(downloads)d Downloading"
-        ) % { 'videos': videos, 'downloads': downloads }
+            "  |  %(videos)d Videos  |  %(downloads)d Downloading",
+            { 'videos': videos, 'downloads': downloads }
+        )
         self.full_section.set_info(text)

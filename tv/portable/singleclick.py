@@ -39,6 +39,7 @@ to be called in the existing Miro process.
 """
 
 from miro.gtcache import gettext as _
+from miro.gtcache import ngettext
 import os
 import logging
 
@@ -269,7 +270,10 @@ def addFeeds(urls, newFolderName=None):
 
 def askForMultipleFeeds(urls):
     title = _("Subscribing to multiple channels") 
-    description = _("Create %d channels?") % len(urls)
+    description = ngettext("Create channel?",
+                           "Create %(count)d channels?",
+                           len(urls),
+                           {"count": len(urls)})
     d = dialogs.ThreeChoiceDialog(title, description, dialogs.BUTTON_ADD,
             dialogs.BUTTON_ADD_INTO_NEW_FOLDER, dialogs.BUTTON_CANCEL)
     def callback(d):
@@ -282,14 +286,21 @@ def askForMultipleFeeds(urls):
 def askForNewFolderName(urls):
     newURLCount = len(filterExistingFeedURLs(urls))
     existingURLCount = len(urls) - newURLCount
-    title = _("Adding %d channels to a new folder") % newURLCount
+    title = ngettext("Adding channel to a new folder"
+                     "Adding %(count)d channels to a new folder",
+                     newURLCount,
+                     {"count": newURLCount})
     description = _("Enter a name for the new channel folder")
     if existingURLCount > 0:
         description += "\n\n"
-        description += _(
-            "NOTE: You are already subscribed to %d of these channels.  These "
-            "channels will stay where they currently are."
-        ) % existingURLCount
+        description += ngettext(
+            "NOTE: You are already subscribed to one of these channels.  These "
+            "channels will stay where they currently are.",
+            "NOTE: You are already subscribed to %(count)d of these channels.  These "
+            "channels will stay where they currently are.",
+            existingURLCount,
+            {"count": existingURLCount}
+        )
 
     def callback(d):
         if d.choice == dialogs.BUTTON_CREATE:
@@ -307,23 +318,29 @@ def addSubscriptionURL(prefix, expectedContentType, url):
         if info.get('content-type') == expectedContentType:
             type_, urls = subscription.parseContent(info['body'])
             if urls is None:
-                complainAboutSubscriptionURL(
-                    Template(_(
-                        "This $shortAppName channel file has an invalid format: "
-                        "$url. Please notify the publisher of this file."
-                    )).substitute(url=realURL, shortAppName=config.get(prefs.SHORT_APP_NAME)))
+                text = _(
+                    "This %(appname)s channel file has an invalid format: "
+                    "%(url).  Please notify the publisher of this file.",
+                    {"appname": config.get(prefs.SHORT_APP_NAME), "url": realURL}
+                )
+                complainAboutSubscriptionURL(text)
             else:
                 addSubscriptions(type_, urls)
         else:
-            complainAboutSubscriptionURL(
-                Template(_(
-                    "This $shortAppName channel file has the wrong content type: "
-                    "$url. Please notify the publisher of this file."
-                )).substitute(url=realURL, shortAppName=config.get(prefs.SHORT_APP_NAME)))
+            text = _(
+                "This %(appname)s channel file has the wrong content type: "
+                "%(url). Please notify the publisher of this file.",
+                {"appname": config.get(prefs.SHORT_APP_NAME), "url": realURL}
+            )
+            complainAboutSubscriptionURL(text)
 
     def errback(error):
-        complainAboutSubscriptionURL(
-                Template(_("Could not download the $shortAppName channel file: $url.")).substitute(url=realURL,shortAppName=config.get(prefs.SHORT_APP_NAME)))
+        text = _(
+            "Could not download the %(appname)s channel file: %(url)",
+            {"appname": config.get(prefs.SHORT_APP_NAME), "url": realURL}
+        )
+        complainAboutSubscriptionURL(text)
+
     httpclient.grabURL(realURL, callback, errback)
 
 def set_command_line_args(args):
@@ -371,8 +388,9 @@ def parse_command_line_args(args=None):
                 except ValueError:
                     title = _("Invalid Torrent")
                     msg = _(
-                        "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-                    ) % os.path.basename(arg)
+                        "The torrent file %(filename)s appears to be corrupt and cannot be opened. [OK]",
+                        {"filename": os.path.basename(arg)}
+                    )
                     dialogs.MessageBoxDialog(title, msg).run()
                     continue
                 addTorrent(arg, torrentInfohash)

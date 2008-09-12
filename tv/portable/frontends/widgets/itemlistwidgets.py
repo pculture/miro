@@ -319,19 +319,19 @@ class DownloadToolbar(widgetset.HBox):
         self.emit('resume-all')
 
     def update_free_space(self, bytes):
-        text =_("%s free on disk") % displaytext.size(bytes)
+        text = _("%(amount)s free on disk", {"amount": displaytext.size(bytes)})
         self._free_disk_label.set_text(text)
 
     def update_uploading_rate(self, bps):
         if bps >= 10:
-            text =_("%s uploading") % displaytext.download_rate(bps)
+            text = _("%(rate)s uploading", {"rate": displaytext.download_rate(bps)})
         else:
             text = ''
         self._uploading_label.set_text(text)
 
     def update_downloading_rate(self, bps):
         if bps >= 10:
-            text =_("%s downloading") % displaytext.download_rate(bps)
+            text = _("%(rate)s downloading", {"rate": displaytext.download_rate(bps)})
         else:
             text = ''
         self._downloading_label.set_text(text)

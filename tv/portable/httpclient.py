@@ -87,7 +87,7 @@ class NetworkError(Exception):
     def __init__(self, shortDescription, longDescription=None):
         if longDescription is None:
             longDescription = shortDescription
-        self.friendlyDescription = _("Error: %s") % shortDescription
+        self.friendlyDescription = _("Error: %(msg)s", {"msg": shortDescription})
         self.longDescription = longDescription
 
     def getFriendlyDescription(self):
@@ -103,8 +103,8 @@ class NetworkError(Exception):
 class ConnectionError(NetworkError):
     def __init__(self, errorMessage):
         self.friendlyDescription = _("Can't connect")
-        self.longDescription = _("Connection Error: %s") % \
-                               util.unicodify(errorMessage)
+        self.longDescription = _("Connection Error: %(msg)s",
+                                 {"msg": util.unicodify(errorMessage)})
 
 class SSLConnectionError(ConnectionError):
     def __init__(self):
@@ -114,24 +114,30 @@ class SSLConnectionError(ConnectionError):
 class HTTPError(NetworkError):
     def __init__(self, longDescription):
         NetworkError.__init__(self, _("HTTP error"), longDescription)
+
 class BadStatusLine(HTTPError):
     def __init__(self, line):
-        HTTPError.__init__(self, _("Bad Status Line: %s") % 
-                util.unicodify(line))
+        HTTPError.__init__(self, _("Bad Status Line: %(msg)s",
+                                   {"msg": util.unicodify(line)}))
+
 class BadHeaderLine(HTTPError):
     def __init__(self, line):
-        HTTPError.__init__(self, _("Bad Header Line: %s") % 
-                util.unicodify(line))
+        HTTPError.__init__(self, _("Bad Header Line: %(msg)s",
+                                   {"msg": util.unicodify(line)}))
+
 class BadChunkSize(HTTPError):
     def __init__(self, line):
-        HTTPError.__init__(self, _("Bad Chunk size: %s") % 
-                util.unicodify(line))
+        HTTPError.__init__(self, _("Bad Chunk size: %(msg)s",
+                                   {"msg": util.unicodify(line)}))
+
 class CRLFExpected(HTTPError):
     def __init__(self, crlf):
-        HTTPError.__init__(self, _("Expected CRLF got: %r") % crlf)
+        HTTPError.__init__(self, _("Expected CRLF got: %(character)r",
+                                   {"character": crlf}))
+
 class ServerClosedConnection(HTTPError):
     def __init__(self, host):
-        HTTPError.__init__(self, _('%s closed connection') % host)
+        HTTPError.__init__(self, _('%(host)s closed connection', {"host": host}))
 
 class UnexpectedStatusCode(HTTPError):
     def __init__(self, code):
@@ -139,8 +145,8 @@ class UnexpectedStatusCode(HTTPError):
             self.friendlyDescription = _("File not found")
             self.longDescription = _("Got 404 status code")
         else:
-            HTTPError.__init__(self, _("Bad Status Code: %s") % 
-                    util.unicodify(code))
+            HTTPError.__init__(self, _("Bad Status Code: %(code)s",
+                                       {"code": util.unicodify(code)}))
 
 class AuthorizationFailed(NetworkError):
     def __init__(self):
@@ -155,23 +161,23 @@ class PipelinedRequestNeverStarted(NetworkError):
 class ConnectionTimeout(NetworkError):
     def __init__(self, host):
         NetworkError.__init__(self, _('Timeout'),
-                _('Connection to %s timed out') % host)
+                _('Connection to %(host)s timed out', {"host": host}))
 
 class MalformedURL(NetworkError):
     def __init__(self, url):
         NetworkError.__init__(self, _('Invalid URL'),
-                _('"%s" is not a valid URL') % url)
+                _('"%(url)s" is not a valid URL', {"url": url}))
 
 class FileURLNotFoundError(NetworkError):
     """A file: URL doesn't exist"""
     def __init__(self, path):
         NetworkError.__init__(self, _('File not found'),
-            _('The file: "%s" doesn\'t exist') % path)
+            _('The file: "%(path)s" doesn\'t exist', {"path": path}))
 
 class FileURLReadError(NetworkError):
     def __init__(self, path):
         NetworkError.__init__(self, _('Read error'),
-            _('Error while reading from "%s"') % path)
+            _('Error while reading from "%(path)s"', {"path": path}))
 
 def trapCall(object, function, *args, **kwargs):
     """Convenience function do a trapcall.trapCall, where when is

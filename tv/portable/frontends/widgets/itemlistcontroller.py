@@ -173,8 +173,8 @@ class ItemListController(object):
                 basename = os.path.basename(item_info.video_path)
                 dialogs.show_message(
                     _("Error Revealing File"),
-                    _("The file \"%s\" was deleted "
-                      "from outside Miro.") % basename,
+                    _("The file \"%(filename)s\" was deleted from outside Miro.",
+                      {"filename": basename}),
                     dialogs.WARNING_MESSAGE)
             else:
                 app.widgetapp.open_file(item_info.video_path)

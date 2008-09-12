@@ -28,6 +28,7 @@
 
 from datetime import datetime, timedelta
 from miro.gtcache import gettext as _
+from miro.gtcache import ngettext
 from math import ceil
 from miro.xhtmltools import unescape,xhtmlify
 from xml.sax.saxutils import unescape
@@ -443,14 +444,21 @@ class Item(DDBObject):
     def getString(self, when):
         """Get the expiration time a string to display to the user."""
         offset = when - datetime.now()
-        if offset.days == 1:
-            result = _("1 day")
-        elif offset.days > 0:
-            result = _("%d days") % offset.days
+        if offset.days > 0:
+            result = ngettext("1 day",
+                              "%(count)d days",
+                              offset.days,
+                              {"count": offset.days})
         elif offset.seconds > 3600:
-            result = _("%d hours") % (ceil(offset.seconds/3600.0))
+            result = ngettext("1 hour",
+                              "%(count)d hours",
+                              ceil(offset.seconds/3600.0),
+                              {"count": ceil(offset.seconds/3600.0)})
         else:
-            result = _("%d minutes") % (ceil(offset.seconds/60.0))
+            result = ngettext("1 minute",
+                              "%(count)d minutes",
+                              ceil(offset.seconds/60.0),
+                              {"count": ceil(offset.seconds/60.0)})
         return result
 
     def getUandA(self):
@@ -1052,11 +1060,11 @@ class Item(DDBObject):
         mins, secs = divmod(totalSecs, 60)
         hours, mins = divmod(mins, 60)
         if hours > 0:
-            time = u"%d:%02d:%02d" % (hours, mins, secs)
-            return _("%s left") % time
+            t = u"%d:%02d:%02d" % (hours, mins, secs)
+            return _("%(time)s left", {"time": t})
         else:
-            time = u"%d:%02d" % (mins, secs)
-            return _("%s left") % time
+            t = u"%d:%02d" % (mins, secs)
+            return _("%(time)s left", {"time": t})
 
     @returnsUnicode
     def getStartupActivity(self):

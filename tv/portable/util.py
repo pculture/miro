@@ -278,46 +278,31 @@ def formatSizeForUser(bytes, zeroString="", withDecimals=True, kbOnly=False):
     if bytes > (1 << 30) and not kbOnly:
         value = (bytes / (1024.0 * 1024.0 * 1024.0))
         if withDecimals:
-            format = _("%1.1fGB")
+            # we do the string composing this way so as to make it easier
+            # on translators.
+            return _("%(size)sGB", {"size": "%1.1f" % value})
         else:
-            format = _("%dGB")
+            return _("%(size)sGB", {"size": "%d" % value})
     elif bytes > (1 << 20) and not kbOnly:
         value = (bytes / (1024.0 * 1024.0))
         if withDecimals:
-            format = _("%1.1fMB")
+            return _("%(size)sMB", {"size": "%1.1f" % value})
         else:
-            format = _("%dMB")
+            return _("%(size)sMB", {"size": "%d" % value})
     elif bytes > (1 << 10):
         value = (bytes / 1024.0)
         if withDecimals:
-            format = _("%1.1fKB")
+            return _("%(size)sKB", {"size": "%1.1f" % value})
         else:
-            format = _("%dKB")
+            return _("%(size)sKB", {"size": "%d" % value})
     elif bytes > 1:
         value = bytes
         if withDecimals:
-            format = _("%1.1fB")
+            return _("%(size)sB", {"size": "%1.1f" % value})
         else:
-            format = _("%dB")
+            return _("%(size)sB", {"size": "%d" % value})
     else:
         return zeroString
-
-    return format % value
-
-def formatTimeForUser(seconds, sign=1):
-    """Format a duration in seconds into a string suitable for display, using
-    the minimum amount of digits. Negative durations used for remaining times
-    display a '-' sign.
-    """
-    _, _, _, h, m, s, _, _, _ = time.gmtime(seconds)
-    if sign < 0:
-        sign = '-'
-    else:
-        sign = ''
-    if int(seconds) in range(0, 3600):
-        return "%s%d:%02u" % (sign, m, s)
-    else:
-        return "%s%d:%02u:%02u" % (sign, h, m, s)
 
 def clampText(text, maxLength=20):
     if len(text) > maxLength:

@@ -563,8 +563,11 @@ class HTTPDownloader(BGDownloader):
         self.cancelRequest()
 
     def handleWriteError(self, error):
-        self.handleGenericError(_("Could not write to %s") % 
-                                  stringify(self.filename))
+        text = _(
+            "Could not write to %(filename)s",
+            {"filename": stringify(self.filename)}
+        )
+        self.handleGenericError(text)
         if self.filehandle is not None:
             try:
                 self.filehandle.close()
@@ -584,8 +587,8 @@ class HTTPDownloader(BGDownloader):
             return
         if not self.acceptDownloadSize(self.totalSize):
             self.handleError(_("Not enough disk space"),
-                _("%s MB required to store this video") % 
-                (self.totalSize / (2 ** 20)))
+                _("%(amount)s MB required to store this video",
+                  {"amount": self.totalSize / (2 ** 20)}))
             return
         #We have a success
         self.retryCount = -1
@@ -599,8 +602,8 @@ class HTTPDownloader(BGDownloader):
         try:
             self.filehandle = fileutil.open_file(self.filename,"w+b")
         except IOError:
-            self.handleGenericError("Couldn't open %s for writing" % 
-                stringify(self.filename))
+            self.handleGenericError(_("Couldn't open %(filename)s for writing",
+                                    {"filename": stringify(self.filename)}))
             return
         if self.totalSize > 0:
             try:
@@ -627,8 +630,8 @@ class HTTPDownloader(BGDownloader):
         try:
             self.parseContentRange(info['content-range'])
         except ValueError:
-            logging.info ("WARNING, bad content-range: %r", info['content-range'])
-            logging.info ("currentSize: %d totalSize: %d", self.currentSize,
+            logging.info("WARNING, bad content-range: %r", info['content-range'])
+            logging.info("currentSize: %d totalSize: %d", self.currentSize,
                           self.totalSize)
             self.cancelRequest()
             self.startNewDownload()
@@ -792,8 +795,8 @@ class BTDownloader(BGDownloader):
 
             if self.firstTime and not self.acceptDownloadSize(self.totalSize):
                 self.handleError(_("Not enough disk space"),
-                                 _("%s MB required to store this video") % 
-                                 (self.totalSize / (2 ** 20)))
+                                 _("%(amount)s MB required to store this video",
+                                   {"amount": self.totalSize / (2 ** 20)}))
                 return
 
             name = os.path.dirname(fileutil.expand_filename(stringify(self.filename)))
@@ -982,7 +985,8 @@ class BTDownloader(BGDownloader):
                 name = metainfo['info']['name']
             except (RuntimeError):
                 self.handleError(_("Corrupt Torrent"),
-                                 _("The torrent file at %s was not valid") % stringify(self.url))
+                                 _("The torrent file at %(url)s was not valid",
+                                   {"url": stringify(self.url)}))
                 return
             name = name.decode('utf-8', 'replace')
             self.shortFilename = cleanFilename(name)

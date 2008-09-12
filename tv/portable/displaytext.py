@@ -53,23 +53,34 @@ def time(secs):
         return '%02d:%02d' % divmod(secs, 60)
 
 def size(bytes):
+    # FIXME this is a repeat of util.formatSizeForUser ...  should
+    # probably ditch one of them.
     if bytes >= (1 << 30):
-        return _("%sGB") % ("%.1f" % (bytes / float(1 << 30)))
+        value = "%.1f" % (bytes / float(1 << 30))
+        return _("%(size)sGB", {"size": value})
     elif bytes >= (1 << 20):
-        return _("%sMB") % ("%.1f" % (bytes / float(1 << 20)))
+        value = "%.1f" % (bytes / float(1 << 20))
+        return _("%(size)sMB", {"size": value})
     elif bytes >= (1 << 10):
-        return _("%sKB") % ("%.1f" % (bytes / float(1 << 10)))
+        value = "%.1f" % (bytes / float(1 << 10))
+        return _("%(size)sKB", {"size": value})
     else:
-        return _("%sB") % (bytes)
+        return _("%(size)sB", {"size": bytes})
 
 def expiration_date(exp_date):
     offset = exp_date - datetime.datetime.now()
     if offset.days > 0:
-        return ngettext("Expires in %d day", "Expires in %d days",
-                offset.days) % offset.days
+        return ngettext("Expires in %(count)d day",
+                        "Expires in %(count)d days",
+                        offset.days,
+                        {"count": offset.days})
     elif offset.seconds > 3600:
-        return ngettext("Expires in %d hour", "Expires in %d hours",
-                offset.days) % math.ceil(offset.seconds/3600.0)
+        return ngettext("Expires in %(count)d hour",
+                        "Expires in %(count)d hours",
+                        math.ceil(offset.secounds/3600.0),
+                        {"count": math.ceil(offset.seconds/3600.0)})
     else:
-        return ngettext("Expires in %d minute", "Expires in %d minutes",
-                offset.days) % math.ceil(offset.seconds/60.0)
+        return ngettext("Expires in %d minute",
+                        "Expires in %d minutes",
+                        math.ceil(offset.seconds/60.0),
+                        {"count": math.ceil(offset.seconds/60.0)})

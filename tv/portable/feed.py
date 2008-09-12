@@ -835,7 +835,7 @@ class Feed(DDBObject):
 
     def rename(self):
         title = _("Rename Channel")
-        text = _("Enter a new name for the channel %s" % self.getTitle())
+        text = _("Enter a new name for the channel %(name)s", {"name": self.getTitle()})
         def callback(dialog):
             if self.idExists() and dialog.choice == dialogs.BUTTON_OK:
                 self.setTitle(dialog.value)

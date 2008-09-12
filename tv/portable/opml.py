@@ -159,10 +159,16 @@ class Importer (object):
 
     def showImportSummary(self):
         title = _(u"OPML Import summary")
-        message = ngettext(u"Successfully imported %d feed.", u"Successfully imported %d feeds.", self.importedFeeds) % self.importedFeeds
+        message = ngettext("Successfully imported %(count)d feed.",
+                           "Successfully imported %(count)d feeds.",
+                           self.importedFeeds,
+                           {"count": self.importedFeeds})
         if self.ignoredFeeds > 0:
             message += "\n"
-            message += ngettext(u"Skipped %d feed already present.", u"Skipped %d feeds already present.", self.ignoredFeeds) % self.ignoredFeeds
+            message += ngettext("Skipped %(count)d feed already present.",
+                                "Skipped %(count)d feeds already present.",
+                                self.ignoredFeeds,
+                                {"count": self.importedFeeds})
         dialog = dialogs.MessageBoxDialog(title, message)
         dialog.run()
         

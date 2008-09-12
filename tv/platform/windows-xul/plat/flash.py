@@ -94,10 +94,10 @@ def installFlash():
                 # fake it by calling explorer
                 os.system("explorer %s" % FLASH_EULA_URL)
 
-            title = _("Restart %s?") % config.get(prefs.SHORT_APP_NAME)
+            title = _("Restart %(appname)s?", {"appname": config.get(prefs.SHORT_APP_NAME)})
             description = _(
-                "To enable the Flash plugin, %(miro)s needs to be restarted.  "
-                "Click Yes to shut %(miro)s down, or No to do it later."
+                "To enable the Flash plugin, %(appname)s needs to be restarted.  "
+                "Click Yes to shut %(appname)s down, or No to do it later."
             ) % {"miro": config.get(prefs.SHORT_APP_NAME)}
             
             dialog = dialogs.ChoiceDialog(title, description,
@@ -123,8 +123,10 @@ def checkFlashInstall():
         return
 
     title = _("Install Flash?")
-    description = _("For the best %s experience, you should install Adobe Flash.  Do this now?")
-    description = description % config.get(prefs.SHORT_APP_NAME)
+    description = _(
+        "For the best %(appname)s experience, you should install Adobe Flash.  Do this now?",
+        {"appname": config.get(prefs.SHORT_APP_NAME)}
+    )
 
     dialog = dialogs.ThreeChoiceDialog(title, description,
                                        dialogs.BUTTON_YES,
