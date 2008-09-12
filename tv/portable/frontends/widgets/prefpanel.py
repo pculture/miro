@@ -406,7 +406,7 @@ def _build_playback_panel():
     rbg = widgetset.RadioButtonGroup()
     play_rb = widgetset.RadioButton("Play videos one after another", rbg)
     stop_rb = widgetset.RadioButton("Stop after each video", rbg)
-    attach_radio( [(play_rb, True), (stop_rb, False)], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
+    attach_radio( [(stop_rb, True), (play_rb, False)], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
     v.pack_start(widgetutil.align_left(play_rb))
     v.pack_start(widgetutil.align_left(stop_rb))
 
