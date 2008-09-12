@@ -77,7 +77,7 @@ def expiration_date(exp_date):
     elif offset.seconds > 3600:
         return ngettext("Expires in %(count)d hour",
                         "Expires in %(count)d hours",
-                        math.ceil(offset.secounds/3600.0),
+                        math.ceil(offset.seconds/3600.0),
                         {"count": math.ceil(offset.seconds/3600.0)})
     else:
         return ngettext("Expires in %d minute",
