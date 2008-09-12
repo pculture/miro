@@ -288,6 +288,12 @@ class MarkItemUnwatched(BackendMessage):
     def __init__(self, id):
         self.id = id
 
+class SetItemResumeTime(BackendMessage):
+    """Set an item resume time"""
+    def __init__(self, id, time):
+        self.id = id
+        self.resume_time = time
+
 class UpdateAllChannels(BackendMessage):
     """Updates all channels."""
     pass
@@ -600,6 +606,7 @@ class ItemInfo(object):
     release_date -- datetime object when the item was published
     size -- size of the item in bytes
     duration -- length of the video in seconds
+    resume_time -- time at which playback should restart
     permalink -- URL to a permalink to the item (or None)
     has_sharable_url -- does this item have a sharable URL?
     can_be_saved -- is this an expiring downloaded item?
@@ -635,6 +642,7 @@ class ItemInfo(object):
         self.release_date = item.getReleaseDateObj()
         self.size = item.getSize()
         self.duration = item.getDurationValue()
+        self.resume_time = item.resumeTime
         self.permalink = item.getLink()
         self.has_sharable_url = item.hasSharableURL()
         self.can_be_saved = item.showSaveButton()

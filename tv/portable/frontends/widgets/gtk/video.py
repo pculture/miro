@@ -90,6 +90,10 @@ class VideoRenderer (Widget):
     def play(self):
         self.renderer.play()
 
+    def play_from_time(self, resume_time=0):
+        self.seek_to_time(resume_time)
+        self.play()
+
     def pause(self):
         self.renderer.pause()
 
@@ -101,6 +105,9 @@ class VideoRenderer (Widget):
 
     def seek_to(self, position):
         time = self.get_total_playback_time() * position
+        self.seek_to_time(time)
+
+    def seek_to_time(self, time_pos):
         self.renderer.set_current_time(time)
 
     def enter_fullscreen(self):

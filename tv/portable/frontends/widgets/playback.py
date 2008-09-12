@@ -102,7 +102,11 @@ class PlaybackManager (signals.SignalEmitter):
     def play(self):
         duration = self.video_display.get_total_playback_time()
         self.emit('will-play', duration)
-        self.video_display.play()
+        resume_time = self.playlist[self.position].resume_time
+        if config.get(prefs.RESUME_VIDEOS_MODE) and resume_time > 10:
+            self.video_display.play_from_time(resume_time)
+        else:
+            self.video_display.play()
         self.notify_update()
         self.schedule_update()
         self.is_playing = True
@@ -124,6 +128,7 @@ class PlaybackManager (signals.SignalEmitter):
     def stop(self):
         if not self.is_playing:
             return
+        self.update_current_resume_time()
         self.cancel_mark_as_watched()
         self.is_playing = False
         self.is_paused = False
@@ -137,6 +142,15 @@ class PlaybackManager (signals.SignalEmitter):
         self.video_display = None
         self.position = self.playlist = None
         self.emit('did-stop')
+
+    def update_current_resume_time(self, resume_time=-1):
+        if config.get(prefs.RESUME_VIDEOS_MODE):
+            if resume_time == -1:
+                resume_time = self.video_display.get_elapsed_playback_time()
+        else:
+            resume_time = 0
+        id = self.playlist[self.position].id
+        messages.SetItemResumeTime(id, resume_time).send_to_backend()
 
     def set_playback_rate(self, rate):
         if self.is_playing:
@@ -158,6 +172,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.emit('playback-did-progress', progress * total, total)
 
     def on_movie_finished(self):
+        self.update_current_resume_time(0)
         self.play_next_movie()
 
     def schedule_mark_as_watched(self):

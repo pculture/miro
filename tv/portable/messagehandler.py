@@ -406,6 +406,10 @@ class BackendMessageHandler(messages.MessageHandler):
         item = views.items.getObjectByID(message.id)
         item.markItemUnseen()
 
+    def handle_set_item_resume_time(self, message):
+        item = views.items.getObjectByID(message.id)
+        item.setResumeTime(message.resume_time)
+        
     def handle_set_channel_expire(self, message):
         channel_info = message.channel_info
         expire_type = message.expire_type

@@ -272,6 +272,9 @@ class VideoDisplay(Display):
     def play(self):
         self.widget.play()
 
+    def play_from_time(self, resume_time=0):
+        self.widget.play_from_time(resume_time)
+
     def pause(self):
         self.widget.pause()
 
