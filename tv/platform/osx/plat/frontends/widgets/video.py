@@ -120,7 +120,7 @@ class VideoRenderer (Widget):
         self.reset()
         self.prevent_system_sleep(False)
         self.view.window().removeChildWindow_(self.video_window)
-        self.video_window.orderOut_(nil)
+        self.video_window.close()
         self.video_window = None
 
     def reset(self):
@@ -270,6 +270,11 @@ class VideoWindow (NSWindow):
         self.setAcceptsMouseMovedEvents_(YES)
         self.is_fullscreen = False
         return self
+
+    def close(self):
+        super(VideoWindow, self).close()
+        self.palette.close()
+        self.palette = None
 
     def canBecomeMainWindow(self):
         return NO

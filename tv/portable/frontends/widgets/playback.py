@@ -175,7 +175,8 @@ class PlaybackManager (signals.SignalEmitter):
 
     def _select_current(self):
         self.cancel_mark_as_watched()
-        self.video_display.stop()
+        if self.is_playing:
+            self.video_display.stop()
         if 0 <= self.position < len(self.playlist):
             item_info = self.playlist[self.position]
             volume = config.get(prefs.VOLUME_LEVEL)
