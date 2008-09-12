@@ -144,8 +144,9 @@ def addDownload(url, additional=None):
         text = _(
             "Miro is not able to download a file at this URL:\n"
             "\n"
-            "URL: %s"
-        ) % url
+            "URL: %(url)s",
+            {"url": url}
+        )
         logging.info("can't download '%s'", url)
         dialogs.MessageBoxDialog(title, text).run()
 
@@ -321,7 +322,7 @@ def addSubscriptionURL(prefix, expectedContentType, url):
             if urls is None:
                 text = _(
                     "This %(appname)s channel file has an invalid format: "
-                    "%(url).  Please notify the publisher of this file.",
+                    "%(url)s.  Please notify the publisher of this file.",
                     {"appname": config.get(prefs.SHORT_APP_NAME), "url": realURL}
                 )
                 complainAboutSubscriptionURL(text)
@@ -330,14 +331,14 @@ def addSubscriptionURL(prefix, expectedContentType, url):
         else:
             text = _(
                 "This %(appname)s channel file has the wrong content type: "
-                "%(url). Please notify the publisher of this file.",
+                "%(url)s. Please notify the publisher of this file.",
                 {"appname": config.get(prefs.SHORT_APP_NAME), "url": realURL}
             )
             complainAboutSubscriptionURL(text)
 
     def errback(error):
         text = _(
-            "Could not download the %(appname)s channel file: %(url)",
+            "Could not download the %(appname)s channel file: %(url)s",
             {"appname": config.get(prefs.SHORT_APP_NAME), "url": realURL}
         )
         complainAboutSubscriptionURL(text)

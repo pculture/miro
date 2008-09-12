@@ -214,14 +214,14 @@ def _searchOPMLNodeRecursively(node, urls, urlsType=None):
         for child in children:
             if hasattr(child, 'getAttribute'):
                 if child.hasAttribute("xmlUrl"):
-                     newType, newURL = _handleOPMLChild(child)
-                     if urlsType is None:
-                         urlsType = newType
-                         urls.append(newURL)
-                     elif urlsType == newType:
-                         urls.append(newURL)
-                     else:
-                         logging.debug('%s != %s, ignoring' % (urlsType, newType))
+                    newType, newURL = _handleOPMLChild(child)
+                    if urlsType is None:
+                        urlsType = newType
+                        urls.append(newURL)
+                    elif urlsType == newType:
+                        urls.append(newURL)
+                    else:
+                        logging.debug('%s != %s, ignoring' % (urlsType, newType))
                 else:
                     urlsType = _searchOPMLNodeRecursively(child, urls, urlsType)
     except Exception, e:

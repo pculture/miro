@@ -88,8 +88,9 @@ def startup_function(func):
             signals.system.startup_failure(_("Unknown Error"),
                     _(
                         "An unknown error prevented Miro from startup.  Please "
-                        "file a bug report at %s"
-                    ) % config.get(prefs.BUG_REPORT_URL))
+                        "file a bug report at %(url)s.",
+                        {"url": config.get(prefs.BUG_REPORT_URL)}
+                    ))
     return wrapped
 
 def setup_global_feed(url, *args, **kwargs):
@@ -151,9 +152,10 @@ def finish_startup():
         summary = _("Database too new")
         description = _(
             "You have a database that was saved with a newer version of "
-            "%(shortAppName)s. You must download the latest version of "
-            "%(shortAppName)s and run that."
-        ) % {"shortAppName": config.get(prefs.SHORT_APP_NAME)}
+            "%(appname)s. You must download the latest version of "
+            "%(appname)s and run that.",
+            {"appname": config.get(prefs.SHORT_APP_NAME)},
+        )
         raise StartupError(summary, description)
     database.defaultDatabase.recomputeFilters()
 
@@ -249,8 +251,9 @@ def default_movies_gone_handler():
         "Miro can't find your primary video directory %(moviesDirectory)s. "
         "This may be because it's located on an external drive that is "
         "currently disconnected.  Please, connect the drive or create "
-        "the directory, then start Miro again."
-    ) % {"moviesDirectory": config.get(prefs.MOVIES_DIRECTORY)}
+        "the directory, then start Miro again.",
+        {"moviesDirectory": config.get(prefs.MOVIES_DIRECTORY)}
+    )
     signals.system.startup_failure(summary, description)
 
 __movies_gone_handler =  default_movies_gone_handler

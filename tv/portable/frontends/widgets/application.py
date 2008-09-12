@@ -485,7 +485,7 @@ class Application:
                          len(channel_infos),
                          {"count": len(channel_infos)})
         description = ngettext(
-            "Are you sure you want to stop watching %{name}s?",
+            "Are you sure you want to stop watching %(name)s?",
             "Are you sure you want to stop watching these %(count)s directories?",
             len(channel_infos),
             {"count": len(channel_infos), "name": channel_infos[0].name}

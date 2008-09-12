@@ -172,7 +172,7 @@ class FileURLNotFoundError(NetworkError):
     """A file: URL doesn't exist"""
     def __init__(self, path):
         NetworkError.__init__(self, _('File not found'),
-            _('The file: "%(path)s" doesn\'t exist', {"path": path}))
+            _('The file "%(path)s" doesn\'t exist', {"path": path}))
 
 class FileURLReadError(NetworkError):
     def __init__(self, path):
@@ -1421,7 +1421,7 @@ class HTTPConnectionPool(object):
             for candidate in conns['free']:
                 if candidate.idleSince < firstTime:
                     toDrop = candidate
-                    firstTime= candidate.idleSince
+                    firstTime = candidate.idleSince
         if toDrop is not None:
             toDrop.closeConnection()
 

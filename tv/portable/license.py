@@ -70,9 +70,9 @@ def license_name(license_uri):
 
         # note this is parser-specific; swapping out rdfa.py
         # may invalidate this extraction 
-        return_name = license_name[1:license_name.find('"',1)]
+        return_name = license_name[1:license_name.find('"', 1)]
 
-    except (IOError, KeyError, SAXParseException), e:
+    except (IOError, KeyError, SAXParseException):
         return_name = _('license page')
 
     URI_CACHE[license_uri] = return_name

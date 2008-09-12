@@ -58,8 +58,6 @@ def get_formatted_default_expiration():
                                         hours,
                                         {"count": hours})
     elif expiration >= 1 and expiration < 30:
-        formatted_expiration = _('%d day') % int(expiration)
-    elif expiration > 1 and expiration < 30:
         days = int(expiration)
         formatted_expiration = ngettext("%(count)d day",
                                         "%(count)d days",

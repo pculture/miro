@@ -58,8 +58,9 @@ def ask_for_feed_subscribe(url):
         "This link appears to be a feed.  Do you want to add it to "
         "your subscriptions?\n"
         "\n"
-        "%s"
-    ) % url
+        "%(url)s",
+        {"url": url}
+    )
     choices = (dialogs.BUTTON_SUBSCRIBE, dialogs.BUTTON_CANCEL)
     ret = dialogs.show_choice_dialog(title, text, choices)
     if ret == dialogs.BUTTON_SUBSCRIBE:

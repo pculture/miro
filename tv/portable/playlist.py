@@ -237,7 +237,7 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
     # in certain places, but still catches logic problem. Maybe
     # eventually, playlists and folders should derive from the same
     # parent --NN
-    def remove(self,moveItemsTo=None):
+    def remove(self, moveItemsTo=None):
         if moveItemsTo is not None:
             raise StandardError("Cannot 'move' a playlist to %s" % repr(moveItemsTo))
         database.DDBObject.remove(self)

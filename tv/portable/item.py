@@ -30,7 +30,7 @@ from datetime import datetime, timedelta
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from math import ceil
-from miro.xhtmltools import unescape,xhtmlify
+from miro.xhtmltools import unescape, xhtmlify
 from xml.sax.saxutils import unescape
 from miro.util import checkU, returnsUnicode, checkF, returnsFilename, quoteUnicodeURL, stringify, getFirstVideoEnclosure
 from miro.plat.utils import FilenameType, filenameToUnicode, unicodeToFilename

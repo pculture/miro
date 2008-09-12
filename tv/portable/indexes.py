@@ -52,7 +52,7 @@ def downloadsByURL(x):
 def objectsByClass(x):
     from miro import item
 
-    if isinstance(x,item.Item):
+    if isinstance(x, item.Item):
         return item.Item
     else:
         return x.__class__

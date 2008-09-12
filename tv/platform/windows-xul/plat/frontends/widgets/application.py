@@ -100,9 +100,10 @@ class WindowsApplication(Application):
             scheme, host, path, params, query, fragment = urlparse(url)
             shortURL = '%s:%s%s' % (scheme, host, path)
             msg = _(
-                "There was an error opening %s.  Please try again in a few "
-                "seconds"
-            ) % shortURL
+                "There was an error opening %(url)s.  Please try again in a few "
+                "seconds",
+                {"url": shortURL}
+            )
             dialogs.show_message(title, msg, dialogs.WARNING_MESSAGE)
 
     def open_file(self, fn):

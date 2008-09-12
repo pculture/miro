@@ -42,9 +42,9 @@ def mapToTab(obj):
     elif isinstance(obj, folder.ChannelFolder):
         return tabs.Tab('channelfoldertab', 'channel-folder', 'default', obj)
     elif isinstance(obj, folder.PlaylistFolder):
-        return tabs.Tab('playlistfoldertab','playlist-folder', 'default', obj)
+        return tabs.Tab('playlistfoldertab', 'playlist-folder', 'default', obj)
     elif isinstance(obj, playlist.SavedPlaylist):
-        return tabs.Tab('playlisttab','playlist', 'default', obj)
+        return tabs.Tab('playlisttab', 'playlist', 'default', obj)
     else:
         raise StandardError
     

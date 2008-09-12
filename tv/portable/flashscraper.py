@@ -38,7 +38,7 @@ from miro.util import checkU
 
 def tryScrapingURL(url, callback):
     checkU(url)
-    scrape =_getScrapeFunctionFor(url)
+    scrape = _getScrapeFunctionFor(url)
     if scrape is not None:
         scrape(url, lambda x, y=u"video/x-flv": _actualURLCallback(url, callback, x, y))
     else:

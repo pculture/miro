@@ -122,10 +122,11 @@ class ThemeHistory(DDBObject):
                 for url in urls:
                     feed.Feed(url, initiallyAutoDownloadable=False)
             dialog = dialogs.MessageBoxDialog(_("Custom Channels"),
-                    Template(_(
-                        "You are running a version of $longAppName with a "
-                        "custom set of channels."
-                    )).substitute(longAppName=config.get(prefs.LONG_APP_NAME)))
+                    text = _(
+                        "You are running a version of %(appname)s with a "
+                        "custom set of channels.",
+                        {"appname": config.get(prefs.LONG_APP_NAME)}
+                    ))
             dialog.run()
             app.controller.initial_feeds = True
         else:

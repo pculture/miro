@@ -217,9 +217,9 @@ class SchemaStatusContainer(SchemaSimpleContainer):
 
     def validate(self, data):
         if FilenameType == unicode:
-            binaryFields = ['metainfo','fastResumeData']
+            binaryFields = ['metainfo', 'fastResumeData']
         else:
-            binaryFields = ['channelName','shortFilename','filename','metainfo','fastResumeData']
+            binaryFields = ['channelName', 'shortFilename', 'filename', 'metainfo', 'fastResumeData']
         self.validateType(data, dict)
         for key, value in data.items():
             self.validateTypes(key, [bool, int, long, float, unicode,

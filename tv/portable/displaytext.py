@@ -36,13 +36,17 @@ from miro.gtcache import ngettext
 
 def download_rate(rate):
     if rate >= (1 << 30):
-        return _("%sGB/s") % ("%.1f" % (rate / float(1 << 30)))
+        value = "%1.1f" % (rate / float(1 << 30))
+        return _("%(size)sGB/s", {"size": value})
     elif rate >= (1 << 20):
-        return _("%sMB/s") % ("%.1f" % (rate / float(1 << 20)))
+        value = "%1.1f" % (rate / float(1 << 20))
+        return _("%(size)sMB/s", {"size": value})
     elif rate >= (1 << 10):
-        return _("%sKB/s") % ("%.1f" % (rate / float(1 << 10)))
+        value = "%1.1f" % (rate / float(1 << 10))
+        return _("%(size)sKB/s", {"size": value})
     else:
-        return _("%sB/s") % ("%.1f" % rate)
+        value = "%1.1f" % rate
+        return _("%(size)sB/s", {"size": value})
 
 def time(secs):
     if secs > 3600:
@@ -80,7 +84,7 @@ def expiration_date(exp_date):
                         math.ceil(offset.seconds/3600.0),
                         {"count": math.ceil(offset.seconds/3600.0)})
     else:
-        return ngettext("Expires in %d minute",
-                        "Expires in %d minutes",
+        return ngettext("Expires in %(count)d minute",
+                        "Expires in %(count)d minutes",
                         math.ceil(offset.seconds/60.0),
                         {"count": math.ceil(offset.seconds/60.0)})

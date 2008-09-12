@@ -141,7 +141,7 @@ def check_iheartmiro_install():
         instructions = _(
             "If you click 'Install iHeartMiro' below, Firefox will launch and "
             "ask if it's ok.   Just say yes and you're done!   It takes about "
-            "7 seconds.  And thanks for your help."
+            "7 seconds.  Thanks for your help."
         )
     else:
         installer = 'Internet Explorer 7'
