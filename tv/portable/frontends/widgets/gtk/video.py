@@ -48,10 +48,11 @@ def make_hidden_cursor():
     color = gtk.gdk.Color()
     return gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
 
-class VideoRenderer (Widget):
-    """Video renderer widget.  NOTE app.renderer must be initialized before
-    instantiating this class.  If no renderers can be found, set app.renderer
-    to None.
+class VideoRenderer(Widget):
+    """Video renderer widget.
+
+    Note: app.renderer must be initialized before instantiating this class.
+    If no renderers can be found, set app.renderer to None.
     """
 
     def __init__(self):
@@ -78,7 +79,6 @@ class VideoRenderer (Widget):
         self.renderer.select_file(item_info.video_path)
 
     def get_elapsed_playback_time(self):
-        # FIXME, why use a callback here?
         return self.renderer.get_current_time()
 
     def get_total_playback_time(self):
@@ -101,14 +101,14 @@ class VideoRenderer (Widget):
         self.renderer.stop()
 
     def set_playback_rate(self, rate):
-        pass
+        print "set_playback_rate: implement me!"
 
     def seek_to(self, position):
         time = self.get_total_playback_time() * position
         self.seek_to_time(time)
 
     def seek_to_time(self, time_pos):
-        self.renderer.set_current_time(time)
+        self.renderer.set_current_time(time_pos)
 
     def enter_fullscreen(self):
         self.screensaver_manager = screensaver.create_manager()

@@ -104,8 +104,10 @@ class Renderer:
         self.playbin = gst.element_factory_make("playbin", "player")
         self.bus = self.playbin.get_bus()
         self.bus.add_signal_watch()
-        self.bus.enable_sync_message_emission()        
-        self.watch_id = self.bus.connect("message", self.on_bus_message)
+        self.bus.enable_sync_message_emission()
+
+        self.bus.connect("message::eos", self.on_bus_message)
+        self.bus.connect("message::error", self.on_bus_message)
         self.bus.connect('sync-message::element', self.on_sync_message)
 
         videosink = config.get(options.GSTREAMER_IMAGESINK)
@@ -133,7 +135,7 @@ class Renderer:
         if message_name == 'prepare-xwindow-id':
             imagesink = message.src
             imagesink.set_property('force-aspect-ratio', True)
-            imagesink.set_xwindow_id(self.widget.window.xid)        
+            imagesink.set_xwindow_id(self.widget.window.xid)
 
     def on_bus_message(self, bus, message):
         """recieves message posted on the GstBus"""
@@ -141,6 +143,7 @@ class Renderer:
         if message.type == gst.MESSAGE_ERROR:
             err, debug = message.parse_error()
             logging.error("on_bus_message: gstreamer error: %s", err)
+
         elif message.type == gst.MESSAGE_EOS:
             app.playback_manager.on_movie_finished()
 
@@ -208,6 +211,7 @@ class Renderer:
         confirmMainThread()
         self.stop()
         self.playbin.set_property("uri", "file://%s" % filename)
+        self.playbin.set_state(gst.STATE_PAUSED)
 
     def get_progress(self):
         confirmMainThread()
@@ -222,29 +226,28 @@ class Renderer:
             logging.error("get_current_time: caught exception: %s" % e)
             return None
 
-    def set_current_time(self, seconds):
-        self.seek(seconds)
-
-    def seek(self, seconds):
-        confirmMainThread()
+    def __seek(self, seconds):
         event = gst.event_new_seek(1.0,
                                    gst.FORMAT_TIME,
                                    gst.SEEK_FLAG_FLUSH | gst.SEEK_FLAG_ACCURATE,
-                                   gst.SEEK_TYPE_SET,
-                                   from_seconds(seconds),
+                                   gst.SEEK_TYPE_SET, from_seconds(seconds),
                                    gst.SEEK_TYPE_NONE, 0)
         result = self.playbin.send_event(event)
         if not result:
             logging.error("seek failed")
 
-    def play_from_time(self, seconds):
-        confirmMainThread()
-        self.playbin.set_state(gst.STATE_PAUSED)
+    def __on_state_changed(self, bus, message, seconds):
+        if self.playbin.get_state(0)[1] in (gst.STATE_PAUSED, gst.STATE_PLAYING):
+            self.__seek(seconds)
+            self.bus.disconnect(self.__on_state_changed_id)
 
-        self.playbin.get_state()
+    def set_current_time(self, seconds):
+        # only want to kick these off when PAUSED or PLAYING
+        if self.playbin.get_state(0)[1] not in (gst.STATE_PAUSED, gst.STATE_PLAYING):
+            self.__on_state_changed_id = self.bus.connect("message::state-changed", self.__on_state_changed, seconds)
+            return
 
-        self.seek(seconds)
-        self.play()
+        self.__seek(seconds)
 
     def get_duration(self):
         confirmMainThread()
@@ -274,7 +277,7 @@ class Renderer:
     def stop(self):
         confirmMainThread()
         self.playbin.set_state(gst.STATE_NULL)
- 
+
     def get_rate(self):
         confirmMainThread()
         return 256
