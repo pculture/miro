@@ -123,9 +123,8 @@ from distutils.cmd import Command
 from distutils.core import setup
 from distutils.extension import Extension
 from distutils.errors import DistutilsOptionError
-from distutils import dir_util
-from distutils import log
 from distutils.util import change_root
+from distutils import dir_util, log, sysconfig
 from glob import glob
 from string import Template
 import distutils.command.build_py
@@ -133,6 +132,7 @@ import distutils.command.install_data
 import os
 import pwd
 import subprocess
+import platform
 import sys
 import re
 import time
@@ -160,6 +160,9 @@ def get_root_dir():
         root_try = os.path.abspath(os.path.join(root_try, '..'))
     return root_dir
 
+def is_x64():
+    return platform.machine() == "x86_64" or platform.machine() == "amd64"
+
 root_dir = get_root_dir()
 portable_dir = os.path.join(root_dir, 'portable')
 portable_frontend_dir = os.path.join(portable_dir, 'frontends')
@@ -183,8 +186,6 @@ import portable
 sys.modules['miro'] = portable
 import plat
 sys.modules['miro'].plat = plat
-
-from miro import setup_portable
 
 # little hack to get the version from the current app.config.template
 from miro import util
@@ -281,7 +282,8 @@ def parse_pkg_config(command, components, options_dict = None):
     return options_dict
 
 def compile_xine_extractor():
-    rv = os.system ("gcc %s -o %s `pkg-config --libs --cflags gdk-pixbuf-2.0 glib-2.0 libxine`" % (os.path.join(platform_dir, "xine/xine_extractor.c"), os.path.join(platform_dir, "xine/xine_extractor")))
+    rv = os.system("gcc %s -o %s `pkg-config --libs --cflags gdk-pixbuf-2.0 glib-2.0 libxine`" % 
+                   (os.path.join(platform_dir, "xine/xine_extractor.c"), os.path.join(platform_dir, "xine/xine_extractor")))
     if rv != 0:
         raise RuntimeError("xine_extractor compilation failed.  Possibly missing libxine, gdk-pixbuf-2.0, or glib-2.0.")
 
@@ -335,7 +337,63 @@ fasttypes_ext = \
 
 
 ##### The libtorrent extension ####
-libtorrent_ext = setup_portable.libtorrent_extension(portable_dir)
+def fetch_sources(portable_dir):
+    sources = []
+    for root, dirs, files in os.walk(os.path.join(portable_dir, 'libtorrent')):
+        if '.svn' in dirs:
+            dirs.remove('.svn')
+        for file in files:
+            if file.endswith('.cpp'):
+                sources.append(os.path.join(root, file))
+    return sources
+
+def get_libtorrent_extension(portable_dir):
+    include_dirs = [os.path.join(portable_dir, x) for x in
+                            ['libtorrent/include', 'libtorrent/include/libtorrent']]
+
+    extra_compile_args = ["-Wno-missing-braces",
+                          "-DHAVE_INCLUDE_LIBTORRENT_ASIO____ASIO_HPP=1",
+                          "-DHAVE_INCLUDE_LIBTORRENT_ASIO_SSL_STREAM_HPP=1",
+                          "-DHAVE_INCLUDE_LIBTORRENT_ASIO_IP_TCP_HPP=1",
+                          "-DHAVE_PTHREAD=1", "-DTORRENT_USE_OPENSSL=1", "-DHAVE_SSL=1",
+                          "-DNDEBUG=1", "-O2"]
+
+    if is_x64():
+        extra_compile_args.append("-DAMD64")
+
+    # check for mt
+    if not os.path.exists(os.path.join(sysconfig.PREFIX, "lib", "libboost_filesystem.so")):
+        libraries = ['boost_python', 'boost_filesystem-mt', 'boost_date_time-mt',
+            'boost_thread-mt', 'z', 'pthread', 'ssl'
+        ]
+        print 'using boost mt'
+
+    else:
+        libraries = ['boost_python', 'boost_filesystem', 'boost_date_time',
+            'boost_thread', 'z', 'pthread', 'ssl'
+        ]
+        print 'using boost no mt'
+
+    config_vars = sysconfig.get_config_vars()
+    if "CFLAGS" in config_vars:
+        if "-Wstrict-prototypes" in config_vars["CFLAGS"]:
+            config_vars["CFLAGS"] = config_vars["CFLAGS"].replace("-Wstrict-prototypes", " ")
+
+    if "OPT" in config_vars:
+        if "-Wstrict-prototypes" in config_vars["OPT"]:
+            config_vars["OPT"] = config_vars["OPT"].replace("-Wstrict-prototypes", " ")
+
+    sources = fetch_sources(portable_dir)
+
+    sources.remove(os.path.join(portable_dir, 'libtorrent/src/file_win.cpp'))
+
+    return Extension("miro.libtorrent",
+                     include_dirs=include_dirs,
+                     libraries=libraries,
+                     extra_compile_args=extra_compile_args,
+                     sources=sources)
+
+libtorrent_ext = get_libtorrent_extension(portable_dir)
 
 
 #### MozillaBrowser Extension ####
@@ -446,6 +504,7 @@ def get_mozilla_stuff():
 
 mozilla_browser_options, mozilla_lib_path, xpcom_runtime_path = get_mozilla_stuff()
 
+
 #### Xlib Extension ####
 xlib_ext = \
     Extension("miro.plat.xlibhelper",
@@ -487,6 +546,7 @@ if USE_XINE_HACK:
         xine_options['define_macros'].append(('INCLUDE_XINE_DRIVER_HACK', '1'))
     else:
         xine_options['define_macros'] = [('INCLUDE_XINE_DRIVER_HACK', '1')]
+
 xine_ext = Extension('miro.xine', [
                          os.path.join(xine_dir, 'xine.pyx'),
                          os.path.join(xine_dir, 'xine_impl.c'),],
@@ -541,7 +601,7 @@ if not "clean" in sys.argv:
 
 
 #### Our specialized install_data command ####
-class install_data (distutils.command.install_data.install_data):
+class install_data(distutils.command.install_data.install_data):
     """install_data extends to default implementation so that it automatically
     installs app.config from app.config.template.
     """
@@ -614,7 +674,7 @@ class test_system(Command):
         pass
 
 #### Our specialized build_py command ####
-class build_py (distutils.command.build_py.build_py):
+class build_py(distutils.command.build_py.build_py):
     """build_py extends the default build_py implementation so that the
     platform and portable directories get merged into the miro
     package.
@@ -631,70 +691,6 @@ class build_py (distutils.command.build_py.build_py):
         """Extend build_py's module list to include the miro modules."""
         self.expand_templates()
         return distutils.command.build_py.build_py.run(self)
-
-
-#### bdist_deb builds the miro debian package ####
-class bdist_deb(Command):
-    description = "Create a deb package"
-    user_options = []
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        bdist_base = self.get_finalized_command('bdist').bdist_base
-        self.bdist_dir = os.path.join(bdist_base, 'deb')
-        self.dist_dir = self.get_finalized_command('bdist').dist_dir
-
-    def run(self):
-        # buzild all python modules/extensions
-        self.run_command('build')
-        # copy the built files
-        install = self.reinitialize_command('install', reinit_subcommands=1)
-        install.root = self.bdist_dir
-        install.skip_build = 1
-        install.warn_dir = 0
-        install.compile = 0
-        install.optimize = 0
-        log.info("installing to %s" % self.bdist_dir)
-        self.run_command('install')
-        # strip all extension modules
-        extensions = []
-        for path, dir, files in os.walk(self.bdist_dir):
-            for f in files:
-                if f.endswith('.so'):
-                    extensions.append(os.path.join(path, f))
-        for path in extensions:
-            log.info('stripping %s' % path)
-            os.system('strip %s' % path)
-        # calculate the dependancies for extension modules
-        cmd = 'dpkg-shlibdeps -O %s' % ' '.join(extensions)
-        extension_deps = get_command_output(cmd, warnOnStderr=False).strip()
-        extension_deps = extension_deps.replace('shlibs:Depends=', '')
-        # copy over the debian package files
-        debian_source = os.path.join(debian_package_dir, 'DEBIAN')
-        debian_dest = os.path.join(self.bdist_dir, 'DEBIAN')
-        self.copy_tree(debian_source, debian_dest)
-        # Fill in the version number in the control file
-        expand_file_contents(os.path.join(debian_dest, 'control'),
-                VERSION=self.distribution.get_version(),
-                EXTENSION_DEPS=extension_deps)
-        # copy the copyright file
-        copyright_source = os.path.join(debian_package_dir, 'copyright')
-        copyright_dest = os.path.join(self.bdist_dir, 'usr', 'share', 'doc',
-                    'python-democracy-player')
-        self.mkpath(copyright_dest)
-        self.copy_file(copyright_source, copyright_dest)
-        # ensure the dist directory is around
-        self.mkpath(self.dist_dir)
-        # create the debian package
-        package_basename = "miro_%s_i386.deb" % \
-                self.distribution.get_version()
-        package_path  = os.path.join(self.dist_dir, package_basename)
-        dpkg_command = "fakeroot dpkg --build %s %s" % (self.bdist_dir, package_path)
-        log.info("running %s" % dpkg_command)
-        os.system(dpkg_command)
-        dir_util.remove_tree(self.bdist_dir)
 
 
 #### install_theme installs a specifified theme .zip
@@ -795,7 +791,6 @@ setup(name='miro',
         'test_system': test_system,
         'build_ext': build_ext,
         'build_py': build_py,
-        'bdist_deb': bdist_deb,
         'install_data': install_data,
         'install_theme': install_theme,
     }
