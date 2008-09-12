@@ -36,7 +36,6 @@ import os
 import random
 import re
 import sha
-import time
 import string
 import urllib
 import socket

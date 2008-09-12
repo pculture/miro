@@ -64,15 +64,15 @@ from miro import prefs
 from miro import util
 from miro import schema as schema_mod
 from miro import eventloop
-from miro import app
 from miro import dialogs
 import logging
 from zipfile import ZipFile
 import tempfile
-from random import randrange, seed
+from random import randrange
 import os.path
 from miro.plat.utils import exit
 
+# FIXME - bsddb3.db is never used
 try:
     import bsddb.db
 except ImportError:

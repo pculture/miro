@@ -62,7 +62,7 @@ BT_MAX_PORT                 = Pref( key='BitTorrentMaxPort',     default=8600,  
 UPLOAD_RATIO                = Pref( key='uploadRatio',           default=2.0,   platformSpecific=False )
 LIMIT_UPLOAD_RATIO          = Pref( key='limitUploadRatio',      default=False, platformSpecific=False )
 STARTUP_TASKS_DONE          = Pref( key='startupTasksDone',      default=False, platformSpecific=False )
-SINGLE_VIDEO_PLAYBACK_MODE  = Pref( key='singleVideoPlaybackMode', default=False,platformSpecific=False )
+SINGLE_VIDEO_PLAYBACK_MODE  = Pref( key='singleVideoPlaybackMode', default=False, platformSpecific=False )
 RESUME_VIDEOS_MODE          = Pref( key='resumeVideosMode',      default=True,  platformSpecific=False )
 WARN_IF_DOWNLOADING_ON_QUIT = Pref( key='warnIfDownloadingOnQuit', default=True, platformSpecific=False )
 TRUNCATE_CHANNEL_AFTER_X_ITEMS = Pref( key='TruncateChannelAFterXItems',  default=1000, platformSpecific=False)

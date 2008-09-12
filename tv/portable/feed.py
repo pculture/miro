@@ -41,7 +41,6 @@ import xml
 from miro.database import DDBObject
 from miro.databasehelper import makeSimpleGetSet
 from miro.httpclient import grabURL
-from string import Template
 from miro import config
 from miro import iconcache
 from miro import dialogs

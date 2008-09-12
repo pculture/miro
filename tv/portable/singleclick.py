@@ -44,7 +44,6 @@ import os
 import logging
 
 from miro.util import get_torrent_info_hash
-from miro import app
 from miro import dialogs
 from miro import download_utils
 from miro import item
@@ -59,7 +58,6 @@ from miro import subscription
 from miro import util
 from miro import config
 from miro import prefs
-from string import Template
 from miro.plat.utils import samefile, filenameToUnicode, unicodeToFilename
 
 _commandLineArgs = []

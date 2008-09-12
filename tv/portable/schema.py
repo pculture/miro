@@ -43,7 +43,6 @@ Module-level variables:
 Go to the bottom of this file for the current database schema.
 """
 
-import cPickle
 import datetime
 import time
 import logging

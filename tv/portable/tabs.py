@@ -27,20 +27,15 @@
 # statement from all source files in the program, then also delete it here.
 
 from miro import database
-from miro import app
 from miro import views
 from miro import eventloop
 from miro import feed
 from miro import folder
-from miro.plat import resources
 from miro import guide
 from miro import playlist
-from miro import signals
-from miro import sorts
 from miro.util import checkU, getSingletonDDBObject
 from miro.databasehelper import TrackedIDList
 
-from miro.gtcache import gettext as _
 import logging
 
 ###############################################################################

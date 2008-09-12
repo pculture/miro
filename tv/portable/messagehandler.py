@@ -34,13 +34,11 @@ from miro import app
 from miro import database
 from miro import eventloop
 from miro import feed
-from miro import filters
 from miro import guide
 from miro import httpclient
 from miro import indexes
 from miro import messages
 from miro import singleclick
-from miro import sorts
 from miro import subscription
 from miro import views
 from miro import opml

@@ -39,27 +39,22 @@ import os
 import os.path
 import urllib
 import urlparse
-import shutil
 import traceback
 
 from miro.download_utils import cleanFilename, nextFreeFilename
 from miro.feedparser import FeedParserDict
 
-from miro.database import DDBObject, defaultDatabase, ObjectNotFoundError
+from miro.database import DDBObject, ObjectNotFoundError
 from miro.database import DatabaseConstraintError
 from miro.databasehelper import makeSimpleGetSet
 from miro.iconcache import IconCache
-import types
-from miro import app
 from miro import downloader
 from miro import config
-from miro import dialogs
 from miro import eventloop
 from miro import filters
 from miro import prefs
 from miro.plat import resources
 from miro import views
-import random
 from miro import indexes
 from miro import util
 from miro import adscraper
@@ -70,7 +65,6 @@ from miro import filetypes
 from miro import searchengines
 from miro import fileutil
 from miro import signals
-from miro import license
 
 _charset = locale.getpreferredencoding()
 

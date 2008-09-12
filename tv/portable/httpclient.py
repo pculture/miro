@@ -53,7 +53,7 @@ from miro.clock import clock
 from miro import httpauth
 from miro import config
 from miro import prefs
-from miro.download_utils import URIPattern, cleanFilename, parseURL, defaultPort, getFileURLPath, filenameFromURL
+from miro.download_utils import cleanFilename, parseURL, defaultPort, getFileURLPath, filenameFromURL
 from miro.xhtmltools import url_encode_dict, multipart_encode
 from miro import eventloop
 from miro import util
