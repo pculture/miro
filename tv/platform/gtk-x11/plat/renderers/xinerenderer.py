@@ -172,10 +172,6 @@ class Renderer:
         confirmMainThread()
         self.seek(seconds)
 
-    def play_from_time(self, seconds):
-        confirmMainThread()
-        self.seek(seconds)
-
     @wait_for_attach
     def seek(self, seconds):
         confirmMainThread()
