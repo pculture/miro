@@ -400,10 +400,12 @@ class AboutDialog:
         else:
             ab.set_version("%s" % config.get(prefs.APP_VERSION))
         ab.set_website(config.get(prefs.PROJECT_URL))
-        ab.set_copyright(_('%s.  See LICENSE file for details.\n' +
-                           'Miro and Miro logo are trademarks of ' +
-                           'the Participatory Culture Foundation.') \
-                           % config.get(prefs.COPYRIGHT))
+        ab.set_copyright(_(
+            '%(copyright)s.  See LICENSE file for details.\n'
+            'Miro and Miro logo are trademarks of the Participatory '
+            'Culture Foundation.',
+            {"copyright": config.get(prefs.COPYRIGHT)}
+        ))
         self._window = ab
 
     def close(self):

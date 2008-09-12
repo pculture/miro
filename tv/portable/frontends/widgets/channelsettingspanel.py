@@ -37,6 +37,7 @@ from miro.plat import resources
 from miro.plat.frontends.widgets.widgetset import Rect
 from miro.dialogs import BUTTON_DONE
 from miro.gtcache import gettext as _
+from miro.gtcache import ngettext
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import style
 from miro.frontends.widgets.widgetutil import build_hbox
@@ -51,13 +52,25 @@ def get_formatted_default_expiration():
     if expiration < 0:
         formatted_expiration = _('never')
     elif expiration < 1.0:
-        formatted_expiration = _('%d hours') % int(expiration * 24.0)
-    elif expiration == 1:
+        hours = int(expiration * 24.0)
+        formatted_expiration = ngettext("%(count)d hour",
+                                        "%(count)d hours",
+                                        hours,
+                                        {"count": hours})
+    elif expiration >= 1 and expiration < 30:
         formatted_expiration = _('%d day') % int(expiration)
     elif expiration > 1 and expiration < 30:
-        formatted_expiration = _('%d days') % int(expiration)
+        days = int(expiration)
+        formatted_expiration = ngettext("%(count)d day",
+                                        "%(count)d days",
+                                        days,
+                                        {"count": days})
     elif expiration >= 30:
-        formatted_expiration = _('%d months') % int(expiration / 30)
+        months = int(expiration / 30)
+        formatted_expiration = ngettext("%(count)d month",
+                                        "%(count)d months",
+                                        months,
+                                        {"count": months})
     return formatted_expiration
 
 def _build_header(channel):

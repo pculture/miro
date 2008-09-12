@@ -191,7 +191,8 @@ def addDownload(url, additional=None):
 
 def downloadUnknownMimeType(url):
     title = _('File Download')
-    text = _('This file at %s does not appear to be audio, video, or an RSS feed.') % url
+    text = _('This file at %(url)s does not appear to be audio, video, or an RSS feed.',
+             {"url": url})
     dialog = dialogs.ChoiceDialog(title, text, 
             dialogs.BUTTON_DOWNLOAD_ANYWAY, dialogs.BUTTON_CANCEL)
     def callback(dialog):
@@ -212,7 +213,7 @@ def addTorrent(path, torrentInfohash):
     for i in manualFeed.items:
         if (i.downloader is not None and
                 i.downloader.status.get('infohash') == torrentInfohash):
-            logging.info("not downloading %s, it's already a download for %s" % (path, i))
+            logging.info("not downloading %s, it's already a download for %s", path, i)
             if i.downloader.getState() in ('paused', 'stopped'):
                 i.download()
             return

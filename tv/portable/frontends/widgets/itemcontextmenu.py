@@ -32,13 +32,14 @@
 from miro import app
 from miro import messages
 from miro.gtcache import gettext as _
+from miro.gtcache import ngettext
 
 class ItemContextMenuHandler(object):
     """Handles the context menus for rows in an item list."""
 
     def callback(self, tableview):
         """Callback to handle the context menu.
-        
+
         This method can be passed into TableView.set_context_menu_callback
         """
         selected = [tableview.model[iter][0] for iter in \
@@ -125,7 +126,11 @@ class ItemContextMenuHandler(object):
 
         menu = []
         if downloaded > 0:
-            menu.append((_('%d Downloaded Items') % downloaded, None))
+            menu.append((ngettext('1 Downloaded Item',
+                                  '%(count)d Downloaded Items',
+                                  downloaded,
+                                  {"count": downloaded}),
+                         None))
             menu.append((_('Play'), app.widgetapp.play_selection)),
             menu.append((_('Add to New Playlist'),
                 app.widgetapp.add_new_playlist))
@@ -150,7 +155,11 @@ class ItemContextMenuHandler(object):
         if available > 0:
             if len(menu) > 0:
                 menu.append(None)
-            menu.append((_('%d Available Items') % available, None))
+            menu.append((ngettext('1 Available Item',
+                                  '%(count)d Available Items',
+                                  available,
+                                  {"count": available}),
+                         None))
             def download_all():
                 for item in selection:
                     messages.StartDownload(item.id).send_to_backend()
@@ -159,7 +168,11 @@ class ItemContextMenuHandler(object):
         if downloading:
             if len(menu) > 0:
                 menu.append(None)
-            menu.append((_('%d Downloading Items') % downloading, None))
+            menu.append((ngettext('1 Downloading Item',
+                                  '%(count)d Downloading Items',
+                                  downloading,
+                                  {"count": downloading}),
+                         None))
             def cancel_all():
                 for item in selection:
                     messages.CancelDownload(item.id).send_to_backend()

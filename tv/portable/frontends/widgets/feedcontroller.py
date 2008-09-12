@@ -31,6 +31,7 @@
 import logging
 
 from miro.gtcache import gettext as _
+from miro.gtcache import ngettext
 from miro import messages
 from miro.frontends.widgets import channelsettingspanel
 from miro.frontends.widgets import itemcontextmenu
@@ -138,7 +139,10 @@ class FeedController(itemlistcontroller.ItemListController):
         all_items = self.full_view.item_list.get_items()
         viewed_items = [item for item in all_items if item.item_viewed]
         if video_downloaded and len(viewed_items) > 0:
-            text = _('Show %d more items') % len(viewed_items)
+            text = ngettext('Show 1 more item',
+                            'Show %(count)d more items',
+                            len(viewed_items),
+                            {"count": len(viewed_items)})
             self.show_more_button.set_text(text)
             self.show_more_container.show()
             self.full_view.item_list.set_new_only(True)
@@ -162,7 +166,10 @@ class FeedController(itemlistcontroller.ItemListController):
 
     def _update_downloading_section(self, downloads):
         if downloads > 0:
-            text = _("%(count)d Downloading", {"count": downloads})
+            text = ngettext("%(count)d Downloading",
+                            "%(count)d Downloading",
+                            downloads,
+                            {"count": downloads})
             self.downloading_section.set_header(text)
             self.downloading_section.show()
         else:
@@ -170,15 +177,24 @@ class FeedController(itemlistcontroller.ItemListController):
 
     def _update_downloaded_section(self, watchable):
         if watchable > 0:
-            text = _("  |  %(count)d Videos  ", {"count": watchable})
+            text = ngettext("%(count)d Video",
+                            "%(count)d Videos",
+                            watchable,
+                            {"count": watchable})
+            text = u"  |  %s  " % text
             self.downloaded_section.set_info(text)
             self.downloaded_section.show()
         else:
             self.downloaded_section.hide()
 
     def _update_full_section(self, downloads, videos):
-        text = _(
-            "  |  %(videos)d Videos  |  %(downloads)d Downloading",
-            { 'videos': videos, 'downloads': downloads }
-        )
+        videotext = ngettext("%(count)d Video",
+                             "%(count)d Videos",
+                             videos,
+                             {"count": videos})
+        downloadingtext = ngettext("%(count)d Downloading",
+                                   "%(count)d Downloading",
+                                   downloads,
+                                   {"count": downloads})
+        text = u"  |  %s  |  %s" % (videotext, downloadingtext)
         self.full_section.set_info(text)

@@ -44,6 +44,7 @@ from miro import signals
 from miro import messages
 from miro import eventloop
 from miro.gtcache import gettext as _
+from miro.gtcache import ngettext
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import newsearchchannel
 from miro.frontends.widgets import diagnostics
@@ -121,7 +122,7 @@ class Application:
 
     def on_volume_change(self, slider, volume):
         app.playback_manager.set_volume(volume)
-        
+
     def on_volume_set(self, slider):
         config.set(prefs.VOLUME_LEVEL, slider.get_value())
         config.save()
@@ -191,12 +192,13 @@ class Application:
             pass
         else:
             dialogs.show_message(_('Open Files - Error'),
-                                 _('File %s does not exist.') % filename,
+                                 _('File %(filename)s does not exist.',
+                                   {"filename": filename}),
                                  dialogs.WARNING_MESSAGE)
 
     def ask_for_url(self, title, description, error_title, error_description):
-        """Ask the user to enter a url in a TextEntry box.  
-        
+        """Ask the user to enter a url in a TextEntry box.
+
         If the URL the user enters is invalid, she will be asked to re-enter
         it again.  This process repeats until the user enters a valid URL, or
         clicks Cancel.
@@ -248,36 +250,40 @@ class Application:
         external_count = len([s for s in selection if s.is_external])
         total_count = len(selection)
 
-        if len(selection) == 1:
-            if external_count == 0:
-                messages.DeleteVideo(selection[0].id).send_to_backend()
-                return
+        if total_count == 1 and external_count == 0:
+            messages.DeleteVideo(selection[0].id).send_to_backend()
+            return
 
-            else:
-                title = _('Remove %s') % selection[0].name
-                description = _('Would you like to delete this file or just remove its entry from the Library?')
-                ret = dialogs.show_choice_dialog(title, description,
-                                                 [dialogs.BUTTON_REMOVE_ENTRY,
-                                                  dialogs.BUTTON_DELETE_FILE,
-                                                  dialogs.BUTTON_CANCEL])
+        title = ngettext('Remove %(name)s',
+                         'Remove %(count)d items',
+                         total_count,
+                         {"count": total_count, "name": selection[0].name})
+
+        if external_count > 0:
+            description = ngettext(
+                'One of these items was not downloaded from a channel. '
+                'Would you like to delete it or just remove it from the Library?',
+
+                'Some of these items were not downloaded from a channel. '
+                'Would you like to delete them or just remove them from the Library?',
+
+                external_count
+            )
+            ret = dialogs.show_choice_dialog(title, description,
+                                             [dialogs.BUTTON_REMOVE_ENTRY,
+                                              dialogs.BUTTON_DELETE_FILE,
+                                              dialogs.BUTTON_CANCEL])
 
         else:
-            title = _('Removing %d items') % total_count
-            if external_count > 0:
-                description = _(
-                    'One or more of these items was not downloaded from a channel. '
-                    'Would you like to delete these items or just remove them from the Library?'
-                )
-                ret = dialogs.show_choice_dialog(title, description,
-                                                 [dialogs.BUTTON_REMOVE_ENTRY,
-                                                  dialogs.BUTTON_DELETE_FILE,
-                                                  dialogs.BUTTON_CANCEL])
-
-            else:
-                description = _('Are you sure you want to delete all %d items?') % total_count
-                ret = dialogs.show_choice_dialog(title, description,
-                                                 [dialogs.BUTTON_DELETE,
-                                                  dialogs.BUTTON_CANCEL])
+            description = ngettext(
+                'Are you sure you want to delete the item?',
+                'Are you sure you want to delete all %(count)d items?',
+                total_count,
+                {"count": total_count}
+            )
+            ret = dialogs.show_choice_dialog(title, description,
+                                             [dialogs.BUTTON_DELETE,
+                                              dialogs.BUTTON_CANCEL])
 
         if ret in (dialogs.BUTTON_OK, dialogs.BUTTON_DELETE_FILE,
                 dialogs.BUTTON_DELETE):
@@ -383,6 +389,9 @@ class Application:
         # FIXME - this doesn't look right.  i would think we'd want to ask
         # a bunch of appropriate questions and then flip through the items
         # one by one.
+
+        # FIXME - this is wrong.  it uses potentially old channel_infos and
+        # we need to query current ones.  Bug #10392.
         downloads = False
         downloading = False
         allDirectories = True
@@ -391,7 +400,6 @@ class Application:
                 allDirectories = False
                 if ci.unwatched > 0:
                     downloads = True
-                    break
                 if ci.has_downloading:
                     downloading = True
 
@@ -405,21 +413,18 @@ class Application:
             self.remove_feeds_normal(channel_infos)
 
     def remove_feeds_with_downloads(self, channel_infos):
-        if len(channel_infos) == 1:
-            title = _('Remove %s') % channel_infos[0].name
-            description = _(
-                 "What would you like to do with the videos in this channel that you've "
-                 "downloaded?"
-            )
-        else:
-            title = _('Remove %s channels') % len(channel_infos)
-            description = _(
-                "What would you like to do with the videos in these channels that you've "
-                "downloaded?"
-            )
+        title = ngettext('Remove %(name)s',
+                         'Remove %(count)d channels',
+                         len(channel_infos),
+                         {"count": len(channel_infos), "name": channel_infos[0].name})
+
+        description = _(
+            "What would you like to do with the videos in this channel that you've "
+            "downloaded?"
+        )
 
         ret = dialogs.show_choice_dialog(title, description,
-                                         [dialogs.BUTTON_KEEP_VIDEOS, 
+                                         [dialogs.BUTTON_KEEP_VIDEOS,
                                           dialogs.BUTTON_DELETE_VIDEOS,
                                           dialogs.BUTTON_CANCEL])
 
@@ -432,21 +437,21 @@ class Application:
                 messages.DeleteChannel(ci.id, ci.is_folder, False).send_to_backend()
 
     def remove_feeds_with_downloading(self, channel_infos):
-        if len(channel_infos) == 1:
-            title = _('Remove %s') % channel_infos[0].name
-            description = _(
-                "Are you sure you want to remove %s?  Any downloads in progress will "
-                "be canceled."
-            ) % channel_infos[0].name
-        else:
-            title = _('Remove %s channels') % len(channel_infos)
-            description = _(
-                "Are you sure you want to remove these %s channels?  Any downloads in "
-                "progress will be canceled."
-            ) % len(channel_infos)
+        title = ngettext('Remove %(name)s channel',
+                         'Remove %(count)d channels',
+                         len(channel_infos),
+                         {"count": len(channel_infos), "name": channel_infos[0].name})
+        description = ngettext(
+            "Are you sure you want to remove %(name)s?  Any downloads in progress will "
+            "be canceled.",
+            "Are you sure you want to remove these %(count)s channels?  Any downloads in "
+            "progress will be canceled.",
+            len(channel_infos),
+            {"count": len(channel_infos), "name": channel_infos[0].name}
+        )
 
         ret = dialogs.show_choice_dialog(title, description,
-                                         [dialogs.BUTTON_REMOVE, 
+                                         [dialogs.BUTTON_REMOVE,
                                           dialogs.BUTTON_CANCEL])
 
         if ret == dialogs.BUTTON_REMOVE:
@@ -454,37 +459,39 @@ class Application:
                 messages.DeleteChannel(ci.id, ci.is_folder, False).send_to_backend()
 
     def remove_feeds_normal(self, channel_infos):
-        if len(channel_infos) == 1:
-            title = _('Remove %s') % channel_infos[0].name
-            description = _(
-                "Are you sure you want to remove %s?"
-            ) % channel_infos[0].name
-        else:
-            title = _('Remove %s channels') % len(channel_infos)
-            description = _(
-                "Are you sure you want to remove these %s channels?"
-            ) % len(channel_infos)
+        title = ngettext('Remove %(name)s',
+                         'Remove %(count)s channels',
+                         len(channel_infos),
+                         {"count": len(channel_infos), "name": channel_infos[0].name})
+        description = ngettext(
+            "Are you sure you want to remove %(name)s?",
+
+            "Are you sure you want to remove these %(count)d channels?",
+
+            len(channel_infos),
+            {"count": len(channel_infos), "name": channel_infos[0].name}
+        )
 
         ret = dialogs.show_choice_dialog(title, description,
-                                         [dialogs.BUTTON_REMOVE, 
+                                         [dialogs.BUTTON_REMOVE,
                                           dialogs.BUTTON_CANCEL])
         if ret == dialogs.BUTTON_REMOVE:
             for ci in channel_infos:
                 messages.DeleteChannel(ci.id, ci.is_folder, False).send_to_backend()
 
     def remove_directory_feeds(self, channel_infos):
-        if len(channel_infos) == 1:
-            title = _('Stop watching %s') % channel_infos[0].name
-            description = _(
-                "Are you sure you want to stop watching %s?"
-            ) % channel_infos[0].name
-        else:
-            title = _('Stop watching %s directories') % len(channel_infos)
-            description = _(
-                "Are you sure you want to stop watching these %s directories?"
-            ) % len(channel_infos)
+        title = ngettext('Stop watching directory',
+                         'Stop watching %(count)d directories',
+                         len(channel_infos),
+                         {"count": len(channel_infos)})
+        description = ngettext(
+            "Are you sure you want to stop watching %{name}s?",
+            "Are you sure you want to stop watching these %(count)s directories?",
+            len(channel_infos),
+            {"count": len(channel_infos), "name": channel_infos[0].name}
+        )
         ret = dialogs.show_choice_dialog(title, description,
-                                         [dialogs.BUTTON_STOP_WATCHING, 
+                                         [dialogs.BUTTON_STOP_WATCHING,
                                           dialogs.BUTTON_CANCEL])
         if ret == dialogs.BUTTON_STOP_WATCHING:
             for ci in channel_infos:
@@ -511,7 +518,8 @@ class Application:
             messages.ImportChannels(filename).send_to_backend()
         else:
             dialogs.show_message(_('Import OPML File - Error'),
-                                 _('File %s does not exist.') % filename,
+                                 _('File %(filename)s does not exist.',
+                                   {"filename": filename}),
                                  dialogs.WARNING_MESSAGE)
 
     def export_channels(self):
@@ -574,22 +582,27 @@ class Application:
 
         if t == 'feed-folder':
             title = _('Rename Channel Folder')
-            description = _('Enter a new name for the channel folder %s') % info.name
+            description = _('Enter a new name for the channel folder %(name)s',
+                            {"name": info.name})
 
         elif t == 'feed' and not info.is_folder:
             title = _('Rename Channel')
-            description = _('Enter a new name for the channel %s') % info.name
+            description = _('Enter a new name for the channel %(name)s',
+                            {"name": info.name})
 
         elif t == 'playlist':
             title = _('Rename Playlist')
-            description = _('Enter a new name for the playlist %s') % info.name
+            description = _('Enter a new name for the playlist %(name)s',
+                            {"name": info.name})
 
         elif t == 'playlist-folder':
             title = _('Rename Playlist Folder')
-            description = _('Enter a new name for the playlist folder %s') % info.name
+            description = _('Enter a new name for the playlist folder %(name)s',
+                            {"name": info.name})
         elif t == 'site':
             title = _('Rename Site')
-            description = _('Enter a new name for the site %s') % info.name
+            description = _('Enter a new name for the site %(name)s',
+                            {"name": info.name})
 
         else:
             raise AssertionError("Unknown tab type: %s" % t)
@@ -605,14 +618,16 @@ class Application:
             self.remove_playlists(infos)
 
     def remove_playlists(self, playlist_infos):
-        if len(playlist_infos) == 1:
-            title = _('Remove %s') % playlist_infos[0].name
-            description = _('Are you sure you want to remove %s') % playlist_infos[0].name
-        else:
-            title = _('Remove %s playlists') % len(playlist_infos)
-            description = _(
-                'Are you sure you want to remove these %s playlists'
-            ) % len(playlist_infos)
+        title = ngettext('Remove playlist',
+                         'Remove %(count)d playlists',
+                         len(playlist_infos),
+                         {"count": len(playlist_infos)})
+        description = ngettext(
+            'Are you sure you want to remove %(name)s?',
+            'Are you sure you want to remove these %(count)s playlists?',
+            len(playlist_infos),
+            {"count": len(playlist_infos), "name": playlist_infos[0].name}
+            )
 
         ret = dialogs.show_choice_dialog(title, description,
                                          [dialogs.BUTTON_REMOVE,
@@ -626,8 +641,9 @@ class Application:
         t, infos = app.tab_list_manager.get_selection()
         if t == 'site':
             info = infos[0] # Multiple guide selection is not allowed
-            title = _('Remove %s') % info.name
-            description = _('Are you sure you want to remove %s') % info.name
+            title = _('Remove %(name)s', {"name": info.name})
+            description = _('Are you sure you want to remove %(name)s?',
+                            {"name": info.name})
             ret = dialogs.show_choice_dialog(title, description,
                     [dialogs.BUTTON_REMOVE, dialogs.BUTTON_CANCEL])
 
@@ -646,7 +662,7 @@ class Application:
 
     def uiThreadFinished(self):
         """Called by the UI event thread when is finished processing and is
-        about to exit. 
+        about to exit.
         """
         app.controller.onShutdown()
 
