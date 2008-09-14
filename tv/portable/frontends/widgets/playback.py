@@ -207,7 +207,8 @@ class PlaybackManager (signals.SignalEmitter):
 
     def play_next_movie(self):
         self.cancel_mark_as_watched()
-        if config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
+        if (config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE)
+               or self.position == len(self.playlist) - 1):
             self.stop()
             return
         self.position += 1
