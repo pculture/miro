@@ -151,7 +151,7 @@ class TabTracker(ViewTracker):
                 else:
                     current_folder_id = None
             else:
-                if (current_folder_id is None or 
+                if (current_folder_id is None or
                         tab.obj.getFolder().id != current_folder_id):
                     raise AssertionError("Tab ordering is wrong")
                 response.append_child(current_folder_id, info)
@@ -194,7 +194,7 @@ class ItemTrackerBase(ViewTracker):
     InfoClass = messages.ItemInfo
 
     def make_changed_message(self, added, changed, removed):
-        return messages.ItemsChanged(self.type, self.id, 
+        return messages.ItemsChanged(self.type, self.id,
                 added, changed, removed)
 
     def get_object_views(self):
@@ -213,7 +213,7 @@ class FeedItemTracker(ItemTrackerBase):
 class FeedFolderItemTracker(ItemTrackerBase):
     type = 'feed'
     def __init__(self, folder):
-        self.view = views.items.filterWithIndex(indexes.itemsByChannelFolder, 
+        self.view = views.items.filterWithIndex(indexes.itemsByChannelFolder,
                 folder)
         self.id = folder.id
         ItemTrackerBase.__init__(self)
@@ -409,7 +409,7 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_set_item_resume_time(self, message):
         item = views.items.getObjectByID(message.id)
         item.setResumeTime(message.resume_time)
-        
+
     def handle_set_channel_expire(self, message):
         channel_info = message.channel_info
         expire_type = message.expire_type
@@ -464,7 +464,7 @@ class BackendMessageHandler(messages.MessageHandler):
         try:
             obj = view.getObjectByID(message.id)
         except database.ObjectNotFoundError:
-            logging.warn("object not found (type: %s, id: %s)" % 
+            logging.warn("object not found (type: %s, id: %s)" %
                     (message.type, message.id))
         else:
             obj.setTitle(message.new_name)
@@ -559,7 +559,7 @@ class BackendMessageHandler(messages.MessageHandler):
             try:
                 playlist = views.playlistFolders.getObjectByID(message.id)
             except database.ObjectNotFoundError:
-                logging.warn("PlaylistReordered: Playlist not found -- %s", 
+                logging.warn("PlaylistReordered: Playlist not found -- %s",
                         message.id)
                 return
 
@@ -579,7 +579,7 @@ class BackendMessageHandler(messages.MessageHandler):
         if not getFeedByURL(url):
             Feed(url)
             if message.trackback:
-                httpclient.grabURL(message.trackback, 
+                httpclient.grabURL(message.trackback,
                         lambda x: None, lambda x: None)
 
     def handle_new_channel_search_channel(self, message):
@@ -650,7 +650,7 @@ class BackendMessageHandler(messages.MessageHandler):
         try:
             playlist = views.playlists.getObjectByID(message.playlist_id)
         except database.ObjectNotFoundError:
-            logging.warn("AddVideosToPlaylist: Playlist not found -- %s", 
+            logging.warn("AddVideosToPlaylist: Playlist not found -- %s",
                     message.playlist_id)
             return
         for id in message.video_ids:
@@ -669,7 +669,7 @@ class BackendMessageHandler(messages.MessageHandler):
         try:
             playlist = views.playlists.getObjectByID(message.playlist_id)
         except database.ObjectNotFoundError:
-            logging.warn("RemoveVideosFromPlaylist: Playlist not found -- %s", 
+            logging.warn("RemoveVideosFromPlaylist: Playlist not found -- %s",
                     message.playlist_id)
             return
         to_remove = []
@@ -706,7 +706,7 @@ class BackendMessageHandler(messages.MessageHandler):
             item_tracker = make_item_tracker(message)
             if item_tracker is None:
                 # message type was wrong
-                return 
+                return
             self.item_trackers[key] = item_tracker
         else:
             item_tracker = self.item_trackers[key]
@@ -807,7 +807,7 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warn("SaveVideoAs: Item not found -- %s", message.id)
         else:
-            logging.info("saving video %s to %s" % (item.getVideoFilename(), 
+            logging.info("saving video %s to %s" % (item.getVideoFilename(),
                                                     message.filename))
             try:
                 shutil.copyfile(item.getVideoFilename(), message.filename)
