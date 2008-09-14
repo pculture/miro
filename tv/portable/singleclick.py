@@ -237,7 +237,7 @@ def playCommandLineView():
     signals.system.videosAdded(commandLineView)
 
 def addFeed(path):
-    feed.addFeedFromFile(path)
+    feed.add_feed_from_file(path)
 
 def addSubscriptions(type_, urls):
     if urls is not None:

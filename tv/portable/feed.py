@@ -68,17 +68,13 @@ DEFAULT_FEED_ICON = "wimages/feedicon.png"
 DEFAULT_FEED_ICON_TABLIST = "wimages/feedicon-tablist.png"
 
 @returnsUnicode
-def defaultFeedIconURL():
+def default_feed_icon_url():
     return resources.url(DEFAULT_FEED_ICON)
 
-def defaultFeedIconPath():
+def default_feed_icon_path():
     return resources.path(DEFAULT_FEED_ICON)
 
-@returnsUnicode
-def defaultTablistFeedIconURL():
-    return resources.url(DEFAULT_FEED_ICON_TABLIST)
-
-def defaultTablistFeedIconPath():
+def default_tablist_feed_icon_path():
     return resources.path(DEFAULT_FEED_ICON_TABLIST)
 
 # Notes on character set encoding of feeds:
@@ -98,7 +94,7 @@ def defaultTablistFeedIconPath():
 # Licensed under Python license
 from miro import feedparser
 
-def addFeedFromFile(fn):
+def add_feed_from_file(fn):
     """Adds a new feed using USM
     """
     checkF(fn)
@@ -109,9 +105,9 @@ def addFeedFromFile(fn):
                 Feed(link['href'])
                 return
     if d.feed.has_key('link'):
-        addFeedFromWebPage(d.feed.link)
+        add_feed_from_web_page(d.feed.link)
 
-def addFeedFromWebPage(url):
+def add_feed_from_web_page(url):
     """Adds a new feed based on a link tag in a web page
     """
     checkU(url)
@@ -120,10 +116,10 @@ def addFeedFromWebPage(url):
         if url:
             Feed(url)
     def errback(error):
-        logging.warning ("unhandled error in addFeedFromWebPage: %s", error)
+        logging.warning ("unhandled error in add_feed_from_web_page: %s", error)
     grabURL(url, callback, errback)
 
-def validateFeedURL(url):
+def validate_feed_url(url):
     """URL validitation and normalization
     """
     checkU(url)
@@ -135,17 +131,17 @@ def validateFeedURL(url):
     if re.match(r"^file://.", url) is not None:
         return True
     match = re.match(r"^dtv:searchTerm:(.*)\?(.*)$", url)
-    if match is not None and validateFeedURL(urldecode(match.group(1))):
+    if match is not None and validate_feed_url(urldecode(match.group(1))):
         return True
     match = re.match(r"^dtv:multi:", url)
     if match is not None:
         return True
     return False
 
-def normalizeFeedURL(url):
+def normalize_feed_url(url):
     checkU(url)
     # Valid URL are returned as-is
-    if validateFeedURL(url):
+    if validate_feed_url(url):
         return url
 
     searchTerm = None
@@ -179,7 +175,7 @@ def normalizeFeedURL(url):
     else:
         url = quoteUnicodeURL(url)
 
-    if not validateFeedURL(url):
+    if not validate_feed_url(url):
         logging.info ("unable to normalize URL %s", originalURL)
         return originalURL
     else:
@@ -217,7 +213,7 @@ class FeedImpl:
         self.visible = visible
         self.updating = False
         self.lastViewed = datetime.min
-        self.thumbURL = defaultFeedIconURL()
+        self.thumbURL = default_feed_icon_url()
         self.initialUpdate = True
         self.updateFreq = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)*60
 
@@ -1136,13 +1132,13 @@ class Feed(DDBObject):
         if self.thumbnailValid():
             return fileutil.expand_filename(self.iconCache.getFilename())
         else:
-            return defaultFeedIconPath()
+            return default_feed_icon_path()
 
     def calcTablistThumbnail(self):
         if self.thumbnailValid():
             return fileutil.expand_filename(self.iconCache.getFilename())
         else:
-            return defaultTablistFeedIconPath()
+            return default_tablist_feed_icon_path()
 
     @returnsUnicode
     def getThumbnail(self):
@@ -2288,7 +2284,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
             self.modified = {}
             self.title = self.url
             self.ufeed.iconCache.reset()
-            self.thumbURL = defaultFeedIconURL()
+            self.thumbURL = default_feed_icon_url()
             self.ufeed.iconCache.requestUpdate(is_vital=True)
         finally:
             self.ufeed.signalChange()

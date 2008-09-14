@@ -621,7 +621,7 @@ class BackendMessageHandler(messages.MessageHandler):
         if isinstance(term, unicode):
             term = term.encode("utf-8")
 
-        normalized = feed.normalizeFeedURL(url)
+        normalized = feed.normalize_feed_url(url)
 
         if isinstance(url, unicode):
             url = url.encode("utf-8")
@@ -873,8 +873,8 @@ class BackendMessageHandler(messages.MessageHandler):
         type, subscribeURLs = subscription.findSubscribeLinks(url)
         normalizedURLs = []
         for url, additional in subscribeURLs:
-            normalized = feed.normalizeFeedURL(url)
-            if feed.validateFeedURL(normalized):
+            normalized = feed.normalize_feed_url(url)
+            if feed.validate_feed_url(normalized):
                 normalizedURLs.append((normalized, additional))
         if normalizedURLs:
             if type == 'feed':

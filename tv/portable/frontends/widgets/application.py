@@ -207,8 +207,8 @@ class Application:
         it is a valid URL).
         """
         text = app.widgetapp.get_clipboard_text()
-        if text is not None and feed.validateFeedURL(text):
-            text = feed.normalizeFeedURL(text)
+        if text is not None and feed.validate_feed_url(text):
+            text = feed.normalize_feed_url(text)
         else:
             text = ""
         while 1:
@@ -216,8 +216,8 @@ class Application:
             if text == None:
                 return
 
-            normalized_url = feed.normalizeFeedURL(text)
-            if feed.validateFeedURL(normalized_url):
+            normalized_url = feed.normalize_feed_url(text)
+            if feed.validate_feed_url(normalized_url):
                 return normalized_url
 
             title = error_title

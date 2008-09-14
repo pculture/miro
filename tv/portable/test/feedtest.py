@@ -6,7 +6,7 @@ from miro import config
 from miro import prefs
 from miro import dialogs
 from miro import database
-from miro.feed import validateFeedURL, normalizeFeedURL, Feed
+from miro.feed import validate_feed_url, normalize_feed_url, Feed
 
 from miro.test.framework import MiroTestCase, EventLoopTest
 
@@ -28,44 +28,44 @@ class AcceptScrapeTestDelegate:
 
 class FeedURLValidationTest(MiroTestCase):
     def test(self):
-        self.assertEqual(validateFeedURL(u"http://foo.bar.com/"), True)
-        self.assertEqual(validateFeedURL(u"https://foo.bar.com/"), True)
+        self.assertEqual(validate_feed_url(u"http://foo.bar.com/"), True)
+        self.assertEqual(validate_feed_url(u"https://foo.bar.com/"), True)
                          
-        self.assertEqual(validateFeedURL(u"feed://foo.bar.com/"), False)
-        self.assertEqual(validateFeedURL(u"http://foo.bar.com"), False)
-        self.assertEqual(validateFeedURL(u"http:foo.bar.com/"), False)
-        self.assertEqual(validateFeedURL(u"https:foo.bar.com/"), False)
-        self.assertEqual(validateFeedURL(u"feed:foo.bar.com/"), False)
-        self.assertEqual(validateFeedURL(u"http:/foo.bar.com/"), False)
-        self.assertEqual(validateFeedURL(u"https:/foo.bar.com/"), False)
-        self.assertEqual(validateFeedURL(u"feed:/foo.bar.com/"), False)
-        self.assertEqual(validateFeedURL(u"http:///foo.bar.com/"), False)
-        self.assertEqual(validateFeedURL(u"https:///foo.bar.com/"), False)
-        self.assertEqual(validateFeedURL(u"feed:///foo.bar.com/"), False)
+        self.assertEqual(validate_feed_url(u"feed://foo.bar.com/"), False)
+        self.assertEqual(validate_feed_url(u"http://foo.bar.com"), False)
+        self.assertEqual(validate_feed_url(u"http:foo.bar.com/"), False)
+        self.assertEqual(validate_feed_url(u"https:foo.bar.com/"), False)
+        self.assertEqual(validate_feed_url(u"feed:foo.bar.com/"), False)
+        self.assertEqual(validate_feed_url(u"http:/foo.bar.com/"), False)
+        self.assertEqual(validate_feed_url(u"https:/foo.bar.com/"), False)
+        self.assertEqual(validate_feed_url(u"feed:/foo.bar.com/"), False)
+        self.assertEqual(validate_feed_url(u"http:///foo.bar.com/"), False)
+        self.assertEqual(validate_feed_url(u"https:///foo.bar.com/"), False)
+        self.assertEqual(validate_feed_url(u"feed:///foo.bar.com/"), False)
 
-        self.assertEqual(validateFeedURL(u"foo.bar.com"), False)
-        self.assertEqual(validateFeedURL(u"crap:foo.bar.com"), False)
-        self.assertEqual(validateFeedURL(u"crap:/foo.bar.com"), False)
-        self.assertEqual(validateFeedURL(u"crap://foo.bar.com"), False)
-        self.assertEqual(validateFeedURL(u"crap:///foo.bar.com"), False)
+        self.assertEqual(validate_feed_url(u"foo.bar.com"), False)
+        self.assertEqual(validate_feed_url(u"crap:foo.bar.com"), False)
+        self.assertEqual(validate_feed_url(u"crap:/foo.bar.com"), False)
+        self.assertEqual(validate_feed_url(u"crap://foo.bar.com"), False)
+        self.assertEqual(validate_feed_url(u"crap:///foo.bar.com"), False)
 
 class FeedURLNormalizationTest(MiroTestCase):
     def test(self):
-        self.assertEqual(normalizeFeedURL(u"http://foo.bar.com"), u"http://foo.bar.com/")
-        self.assertEqual(normalizeFeedURL(u"https://foo.bar.com"), u"https://foo.bar.com/")
-        self.assertEqual(normalizeFeedURL(u"feed://foo.bar.com"), u"http://foo.bar.com/")
+        self.assertEqual(normalize_feed_url(u"http://foo.bar.com"), u"http://foo.bar.com/")
+        self.assertEqual(normalize_feed_url(u"https://foo.bar.com"), u"https://foo.bar.com/")
+        self.assertEqual(normalize_feed_url(u"feed://foo.bar.com"), u"http://foo.bar.com/")
 
-        self.assertEqual(normalizeFeedURL(u"http:foo.bar.com"), u"http://foo.bar.com/")
-        self.assertEqual(normalizeFeedURL(u"https:foo.bar.com"), u"https://foo.bar.com/")
-        self.assertEqual(normalizeFeedURL(u"feed:foo.bar.com"), u"http://foo.bar.com/")
-        self.assertEqual(normalizeFeedURL(u"http:/foo.bar.com"), u"http://foo.bar.com/")
-        self.assertEqual(normalizeFeedURL(u"https:/foo.bar.com"), u"https://foo.bar.com/")
-        self.assertEqual(normalizeFeedURL(u"feed:/foo.bar.com"), u"http://foo.bar.com/")
-        self.assertEqual(normalizeFeedURL(u"http:///foo.bar.com"), u"http://foo.bar.com/")
-        self.assertEqual(normalizeFeedURL(u"https:///foo.bar.com"), u"https://foo.bar.com/")
-        self.assertEqual(normalizeFeedURL(u"feed:///foo.bar.com"), u"http://foo.bar.com/")
+        self.assertEqual(normalize_feed_url(u"http:foo.bar.com"), u"http://foo.bar.com/")
+        self.assertEqual(normalize_feed_url(u"https:foo.bar.com"), u"https://foo.bar.com/")
+        self.assertEqual(normalize_feed_url(u"feed:foo.bar.com"), u"http://foo.bar.com/")
+        self.assertEqual(normalize_feed_url(u"http:/foo.bar.com"), u"http://foo.bar.com/")
+        self.assertEqual(normalize_feed_url(u"https:/foo.bar.com"), u"https://foo.bar.com/")
+        self.assertEqual(normalize_feed_url(u"feed:/foo.bar.com"), u"http://foo.bar.com/")
+        self.assertEqual(normalize_feed_url(u"http:///foo.bar.com"), u"http://foo.bar.com/")
+        self.assertEqual(normalize_feed_url(u"https:///foo.bar.com"), u"https://foo.bar.com/")
+        self.assertEqual(normalize_feed_url(u"feed:///foo.bar.com"), u"http://foo.bar.com/")
 
-        self.assertEqual(normalizeFeedURL(u"foo.bar.com"), u"http://foo.bar.com/")
+        self.assertEqual(normalize_feed_url(u"foo.bar.com"), u"http://foo.bar.com/")
 
 class FeedTestCase(EventLoopTest):
     def setUp(self):

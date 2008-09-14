@@ -52,7 +52,7 @@ def handle_external_url(url):
         app.widgetapp.open_url(url)
 
 def ask_for_feed_subscribe(url):
-    url = feed.normalizeFeedURL(url)
+    url = feed.normalize_feed_url(url)
     title = _("Subscribe to Feed")
     text = _(
         "This link appears to be a feed.  Do you want to add it to "
