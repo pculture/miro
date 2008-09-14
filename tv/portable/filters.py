@@ -50,7 +50,7 @@ def downloadingItems(obj):
     return obj.getState() == 'downloading'
 
 def downloadingOrPausedItems(obj):
-    return obj.getState() in ('downloading', 'paused') or obj.isUploading()
+    return obj.getState() in ('downloading', 'paused') or obj.isUploading() or obj.isUploadingPaused()
 
 def unwatchedItems(obj):
     return obj.getState() == 'newly-downloaded' and not obj.isNonVideoFile()

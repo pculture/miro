@@ -925,6 +925,12 @@ class Item(DDBObject):
         """
         return self.downloader and self.downloader.getState() == u'uploading'
 
+    def isUploadingPaused(self):
+        """Returns true if this item is uploading but paused.  This only
+        happens for torrents.
+        """
+        return self.downloader and self.downloader.getState() == u'uploading-paused'
+
     def isDownloadable(self):
         return self.getState() in (u'new', u'not-downloaded', u'expired')
 

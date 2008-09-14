@@ -739,6 +739,7 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_pause_all_downloads(self, message):
         for item in views.downloadingItems:
+            print item
             item.pause()
 
     def handle_pause_download(self, message):
@@ -751,6 +752,7 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_resume_all_downloads(self, message):
         for item in views.pausedItems:
+            print item
             item.resume()
 
     def handle_resume_download(self, message):
@@ -760,6 +762,13 @@ class BackendMessageHandler(messages.MessageHandler):
             logging.warn("ResumeDownload: Item not found -- %s", message.id)
         else:
             item.resume()
+
+    def handle_cancel_all_downloads(self, message):
+        for item in views.pausedItems:
+            item.expire()
+
+        for item in views.downloadingItems:
+            item.expire()
 
     def handle_restart_upload(self, message):
         try:
@@ -772,6 +781,16 @@ class BackendMessageHandler(messages.MessageHandler):
             elif item.downloader.state == 'uploading':
                 logging.warn("%s is currently uploading", item)
             else:
+                item.startUpload()
+
+    def handle_pause_all_uploads(self, message):
+        for item in views.allDownloadingItems:
+            if item.isUploading():
+                item.pauseUpload()
+
+    def handle_resume_all_uploads(self, message):
+        for item in views.allDownloadingItems:
+            if item.isUploadingPaused():
                 item.startUpload()
 
     def handle_keep_video(self, message):

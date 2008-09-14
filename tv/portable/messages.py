@@ -392,6 +392,10 @@ class CancelDownload(BackendMessage):
     def __init__(self, id):
         self.id = id
 
+class CancelAllDownloads(BackendMessage):
+    """Cancels all downloading items."""
+    pass
+
 class PauseAllDownloads(BackendMessage):
     """Pauses all downloading items."""
     pass
@@ -414,6 +418,14 @@ class RestartUpload(BackendMessage):
     """Start uploading a torrent again."""
     def __init__(self, id):
         self.id = id
+
+class PauseAllUploads(BackendMessage):
+    """Pauses all uploading items."""
+    pass
+
+class ResumeAllUploads(BackendMessage):
+    """Resumes all uploading items."""
+    pass
 
 class KeepVideo(BackendMessage):
     """Cancel the auto-expiration of an item's video"""

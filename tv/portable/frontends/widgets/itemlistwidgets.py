@@ -267,24 +267,94 @@ class SearchToolbar(widgetutil.HideableWidget):
     def _on_save_clicked(self, button):
         self.emit('save-search')
 
-class DownloadToolbar(widgetset.HBox):
-    """Widget that shows the info and pause/resume buttons for the downloads 
+class DownloadButtonToolbar(widgetset.HBox):
+    """Widget that shows the pause/resume/... buttons for the downloads
 
     signals:
 
        pause-all -- All downloads should be paused
        resume-all -- All downloads should be resumed
+       cancel-all -- All downloads should be canceled
+       pause-all-uploading -- All uploads should be paused
+       resume-all-uploading -- All uploads should be resumed
     """
 
     def __init__(self):
         widgetset.HBox.__init__(self, spacing=10)
+
         self.create_signal('pause-all')
         self.create_signal('resume-all')
+        self.create_signal('cancel-all')
+
+        self.create_signal('pause-all-uploading')
+        self.create_signal('resume-all-uploading')
+
+        pause_button = widgetset.Button(_('Pause All'), style='smooth')
+        pause_button.set_size(0.85)
+        pause_button.set_color(style.TOOLBAR_GRAY)
+        pause_button.connect('clicked', self._on_pause_button_clicked)
+        self.pack_start(widgetutil.align_right(pause_button, top_pad=5,
+            bottom_pad=5), expand=True)
+
+        resume_button = widgetset.Button(_('Resume All'), style='smooth')
+        resume_button.set_size(0.85)
+        resume_button.set_color(style.TOOLBAR_GRAY)
+        resume_button.connect('clicked', self._on_resume_button_clicked)
+        self.pack_start(widgetutil.align_middle(resume_button, top_pad=5,
+            bottom_pad=5))
+
+        cancel_button = widgetset.Button(_('Cancel All'), style='smooth')
+        cancel_button.set_size(0.85)
+        cancel_button.set_color(style.TOOLBAR_GRAY)
+        cancel_button.connect('clicked', self._on_cancel_button_clicked)
+        self.pack_start(widgetutil.align_middle(cancel_button, top_pad=5,
+            bottom_pad=5))
+
+        lab = widgetset.Label("|")
+        lab.set_color(style.TOOLBAR_GRAY)
+        self.pack_start(widgetutil.align_middle(lab))
+
+        pause_uploading_button = widgetset.Button(_('Pause All Uploading'), style='smooth')
+        pause_uploading_button.set_size(0.85)
+        pause_uploading_button.set_color(style.TOOLBAR_GRAY)
+        pause_uploading_button.connect('clicked', self._on_pause_uploading_button_clicked)
+        self.pack_start(widgetutil.align_middle(pause_uploading_button, top_pad=5,
+            bottom_pad=5))
+
+        resume_uploading_button = widgetset.Button(_('Resume All Uploading'), style='smooth')
+        resume_uploading_button.set_size(0.85)
+        resume_uploading_button.set_color(style.TOOLBAR_GRAY)
+        resume_uploading_button.connect('clicked', self._on_resume_uploading_button_clicked)
+        self.pack_start(widgetutil.align_middle(resume_uploading_button, top_pad=5,
+            right_pad=10, bottom_pad=5))
+
+
+    def _on_pause_button_clicked(self, widget):
+        self.emit('pause-all')
+
+    def _on_resume_button_clicked(self, widget):
+        self.emit('resume-all')
+
+    def _on_cancel_button_clicked(self, widget):
+        self.emit('cancel-all')
+
+    def _on_pause_uploading_button_clicked(self, widget):
+        self.emit('pause-all-uploading')
+
+    def _on_resume_uploading_button_clicked(self, widget):
+        self.emit('resume-all-uploading')
+
+class DownloadLabelToolbar(widgetset.HBox):
+    """Widget that shows the info.
+    """
+
+    def __init__(self):
+        widgetset.HBox.__init__(self, spacing=10)
 
         self._free_disk_label = widgetset.Label("")
         self._free_disk_label.set_bold(True)
 
-        self.pack_start(widgetutil.align_left(self._free_disk_label, 
+        self.pack_start(widgetutil.align_left(self._free_disk_label,
             top_pad=5, left_pad=10), expand=True)
 
         uploading_label = widgetset.Label("")
@@ -297,26 +367,7 @@ class DownloadToolbar(widgetset.HBox):
         downloading_label.set_bold(True)
         self._downloading_label = downloading_label
 
-        self.pack_start(widgetutil.pad(downloading_label, top=5))
-
-        pause_button = widgetset.Button(_('Pause All'), style='smooth')
-        pause_button.set_size(0.85)
-        pause_button.set_color(style.TOOLBAR_GRAY)
-        pause_button.connect('clicked', self._on_pause_button_clicked)
-        self.pack_start(widgetutil.align_middle(pause_button))
-
-        resume_button = widgetset.Button(_('Resume All'), style='smooth')
-        resume_button.set_size(0.85)
-        resume_button.set_color(style.TOOLBAR_GRAY)
-        resume_button.connect('clicked', self._on_resume_button_clicked)
-        self.pack_start(widgetutil.align_middle(resume_button, top_pad=5,
-            bottom_pad = 5, right_pad=10))
-
-    def _on_pause_button_clicked(self, widget):
-        self.emit('pause-all')
-
-    def _on_resume_button_clicked(self, widget):
-        self.emit('resume-all')
+        self.pack_start(widgetutil.pad(downloading_label, top=5, right=10))
 
     def update_free_space(self, bytes):
         text = _("%(amount)s free on disk", {"amount": displaytext.size(bytes)})

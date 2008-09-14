@@ -308,14 +308,19 @@ class DownloadsController(SimpleItemListController):
 
     def __init__(self):
         SimpleItemListController.__init__(self)
-        self.toolbar = itemlistwidgets.DownloadToolbar()
-        self.toolbar.connect("pause-all", self._on_pause_all)
-        self.toolbar.connect("resume-all", self._on_resume_all)
+        self.button_toolbar = itemlistwidgets.DownloadButtonToolbar()
+        self.button_toolbar.connect("pause-all", self._on_pause_all)
+        self.button_toolbar.connect("resume-all", self._on_resume_all)
+        self.button_toolbar.connect("cancel-all", self._on_cancel_all)
+        self.button_toolbar.connect("pause-all-uploading", self._on_pause_all_uploading)
+        self.button_toolbar.connect("resume-all-uploading", self._on_resume_all_uploading)
+        self.label_toolbar = itemlistwidgets.DownloadLabelToolbar()
         self._update_free_space()
-        self.widget.titlebar_vbox.pack_start(self.toolbar)
+        self.widget.titlebar_vbox.pack_start(self.label_toolbar)
+        self.widget.titlebar_vbox.pack_start(self.button_toolbar)
 
     def _update_free_space(self):
-        self.toolbar.update_free_space(get_available_bytes_for_movies())
+        self.label_toolbar.update_free_space(get_available_bytes_for_movies())
 
     def _on_pause_all(self, widget):
         messages.PauseAllDownloads().send_to_backend()
@@ -323,9 +328,18 @@ class DownloadsController(SimpleItemListController):
     def _on_resume_all(self, widget):
         messages.ResumeAllDownloads().send_to_backend()
 
+    def _on_cancel_all(self, widget):
+        messages.CancelAllDownloads().send_to_backend()
+
+    def _on_pause_all_uploading(self, widget):
+        messages.PauseAllUploads().send_to_backend()
+
+    def _on_resume_all_uploading(self, widget):
+        messages.ResumeAllUploads().send_to_backend()
+
     def on_items_changed(self):
-        self.toolbar.update_downloading_rate(downloader.totalDownRate)
-        self.toolbar.update_uploading_rate(downloader.totalUpRate)
+        self.label_toolbar.update_downloading_rate(downloader.totalDownRate)
+        self.label_toolbar.update_uploading_rate(downloader.totalUpRate)
 
 class NewController(SimpleItemListController):
     type = 'new'
