@@ -362,17 +362,28 @@ def get_libtorrent_extension(portable_dir):
         extra_compile_args.append("-DAMD64")
 
     # check for mt
-    if not os.path.exists(os.path.join(sysconfig.PREFIX, "lib", "libboost_filesystem.so")):
-        libraries = ['boost_python', 'boost_filesystem-mt', 'boost_date_time-mt',
-            'boost_thread-mt', 'z', 'pthread', 'ssl'
-        ]
-        print 'using boost mt'
+    libraries = ['boost_python', 'z', 'pthread', 'ssl']
+    for mem in os.listdir(os.path.join(sysconfig.PREFIX, "lib")):
+        if mem.startswith("libboost_filesystem.so"):
+            print "found boost_filesystem"
+            libraries += ["boost_filesystem"]
+        elif mem.startswith("libbost_filesystem-mt"):
+            print "found boost_filesystem-mt"
+            libraries += ["boost_filesystem-mt"]
 
-    else:
-        libraries = ['boost_python', 'boost_filesystem', 'boost_date_time',
-            'boost_thread', 'z', 'pthread', 'ssl'
-        ]
-        print 'using boost no mt'
+        elif mem.startswith("libboost_date_time.so"):
+            print "found boost_date_time"
+            libraries += ["boost_date_time"]
+        elif mem.startswith("libbost_date_time-mt.so"):
+            print "found boost_date_time-mt"
+            libraries += ["boost_date_time-mt"]
+
+        elif mem.startswith("libboost_thread.so"):
+            print "found boost_thread"
+            libraries += ["boost_thread"]
+        elif mem.startswith("libbost_thread-mt"):
+            print "found boost_thread-mt"
+            libraries += ["boost_thread-mt"]
 
     config_vars = sysconfig.get_config_vars()
     if "CFLAGS" in config_vars:
