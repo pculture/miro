@@ -351,7 +351,7 @@ class install_data (distutils.command.install_data.install_data):
             APP_REVISION=revision,
             APP_REVISION_NUM=revisionnum,
             APP_REVISION_URL=revisionurl,
-            APP_PLATFORM='gtk-x11',
+            APP_PLATFORM='windows-xul',
             BUILD_MACHINE="%s@%s" % (os.environ['username'],
                 socket.gethostname()),
             BUILD_TIME=str(time.time()))
