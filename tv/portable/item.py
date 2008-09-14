@@ -273,7 +273,7 @@ class Item(DDBObject):
         if self.parent_id is not None and self.feed_id is not None:
             raise DatabaseConstraintError ("feed_id and parent_id both not None")
 
-    def signalChange(self, needsSave=True, needsUpdateXML=True):
+    def signalChange(self, needsSave=True):
         self.expiring = None
         try:
             del self._state
@@ -283,11 +283,6 @@ class Item(DDBObject):
             del self._size
         except:
             pass
-        if needsUpdateXML:
-            try:
-                del self._itemXML
-            except:
-                pass
         DDBObject.signalChange(self, needsSave=needsSave)
 
     def getViewed(self):
@@ -597,22 +592,11 @@ class Item(DDBObject):
             self.resumeTime = position
             self.signalChange()
 
-    @returnsUnicode
-    def getPendingReason(self):
-        self.confirmDBThread()
-        return self.pendingReason
-
     def getAutoDownloaded(self):
         """Returns true iff item was auto downloaded.
         """
         self.confirmDBThread()
         return self.autoDownloaded
-
-    def getLinkNumber(self):
-        """Returns the linkNumber.
-        """
-        self.confirmDBThread()
-        return self.linkNumber
 
     def download(self, autodl=False):
         """Starts downloading the item.
@@ -669,9 +653,6 @@ class Item(DDBObject):
     def isPendingAutoDownload(self):
         return (self.getFeed().isAutoDownloadable() and
                 self.isEligibleForAutoDownload())
-
-    def isFailedDownload(self):
-        return self.downloader and self.downloader.getState() == u'failed'
 
     @returnsUnicode
     def getThumbnailURL(self):
@@ -745,12 +726,6 @@ class Item(DDBObject):
             enc = self.getFirstVideoEnclosure()
             self.title = enc.get("url", _("no title")).decode("ascii", "replace")
         self.signalChange()
-
-    @returnsUnicode
-    def getQuotedTitle(self):
-        """Returns the title of the item quoted for inclusion in URLs.
-        """
-        return urllib.quote_plus(self.getTitle().encode('utf8')).decode('ascii', 'replace')
 
     def setChannelTitle(self, title):
         checkU(title)
@@ -940,13 +915,6 @@ class Item(DDBObject):
     def showSaveButton(self):
         return self.getState() in (u'newly-downloaded', u'expiring') and not self.keep
 
-    def showSaved(self):
-        return self.getState() in (u'saved',) or (self.getState() in (u'newly-downloaded', u'expiring') and self.keep)
-
-    def showTrashButton(self):
-        return self.isDownloaded() or (self.getFeedURL() == u'dtv:manualFeed'
-                and self.getState() not in (u'downloading', u'paused'))
-
     @returnsUnicode
     def getFailureReason(self):
         self.confirmDBThread()
@@ -997,7 +965,7 @@ class Item(DDBObject):
             size = 0
         return util.formatSizeForUser(size)
 
-    def downloadProgress(self):
+    def download_progress(self):
         """Returns the download progress in absolute percentage [0.0 - 100.0].
         """
         progress = 0
@@ -1012,60 +980,6 @@ class Item(DDBObject):
             else:
                 return (100.0*dled) / size
 
-    def gotContentLength(self):
-        if self.downloader is None:
-            return False
-        else:
-            return self.downloader.getTotalSize() != -1
-
-    def downloadProgressWidth(self):
-        """Returns the width of the progress bar corresponding to the current
-        download progress. This doesn't really belong here and even forces
-        to use a hardcoded constant, but the templating system doesn't
-        really leave any other choice.
-        """
-        fullWidth = 131  # width of resource:channelview-progressbar-bg.png
-        progress = self.downloadProgress() / 100.0
-        if progress == 0:
-            return 0
-        return int(progress * fullWidth)
-
-    @returnsUnicode
-    def threeDigitPercentDone(self):
-        """Returns string containing three digit percent finished
-        "000" through "100".
-        """
-        return u'%03d' % int(self.downloadProgress())
-
-    def twoDigitPercentDone(self):
-        if int(self.downloadProgress()) < 10:
-          out = u'%d' % int(self.downloadProgress())
-        else:
-          out = u'%02d' % int(self.downloadProgress())
-        return out + u'%'
-          
-    def downloadInProgress(self):
-        return self.downloader is not None and self.downloader.getETA() != 0
-
-    @returnsUnicode
-    def downloadETA(self):
-        """Returns string with estimate time until download completes.
-        """
-        if self.downloader is not None:
-            totalSecs = self.downloader.getETA()
-            if totalSecs <= 0:
-                return _('downloading...')
-        else:
-            totalSecs = 0
-        mins, secs = divmod(totalSecs, 60)
-        hours, mins = divmod(mins, 60)
-        if hours > 0:
-            t = u"%d:%02d:%02d" % (hours, mins, secs)
-            return _("%(time)s left", {"time": t})
-        else:
-            t = u"%d:%02d" % (mins, secs)
-            return _("%(time)s left", {"time": t})
-
     @returnsUnicode
     def getStartupActivity(self):
         if self.pendingManualDL:
@@ -1074,26 +988,6 @@ class Item(DDBObject):
             return self.downloader.getStartupActivity()
         else:
             return _("starting up...")
-
-    @returnsUnicode
-    def downloadRate(self):
-        """Returns the download rate.
-        """
-        rate = 0
-        unit = u"KB/s"
-        if self.downloader is not None:
-            rate = self.downloader.getRate()
-        else:
-            rate = 0
-        rate /= 1024
-        if rate > 1024:
-            rate /= 1024
-            unit = u"MB/s"
-        if rate > 1024:
-            rate /= 1024
-            unit = u"GB/s"
-            
-        return u"%d%s" % (rate, unit)
 
     @returnsUnicode
     def getPubDate(self):

@@ -229,7 +229,7 @@ class MiroInterpreter(cmd.Cmd):
                 for item in view:
                     state = item.getState()
                     if state == 'downloading':
-                        state += ' (%0.0f%%)' % item.downloadProgress()
+                        state += ' (%0.0f%%)' % item.download_progress()
                     print "%-20s %-10s %s" % (state, item.getSizeForDisplay(),
                             item.getTitle())
             print
