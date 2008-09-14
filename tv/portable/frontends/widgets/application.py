@@ -231,6 +231,15 @@ class Application:
         if url is not None:
             messages.DownloadURL(url).send_to_backend()
 
+    def check_version(self):
+        # this gets called by the backend, so it has to send a message to
+        # the frontend to open a dialog
+        def up_to_date_callback():
+            messages.MessageToUser(_("Miro is up to date"),
+                                   _("Miro is up to date!")).send_to_frontend()
+
+        messages.CheckVersion(up_to_date_callback).send_to_backend()
+
     def _get_selected_items(self):
         if app.item_list_controller is None:
             return []
@@ -826,3 +835,9 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def handle_new_count_changed(self, message):
         static_tab_list = app.tab_list_manager.static_tab_list
         static_tab_list.update_new_count(message.count)
+
+    def handle_message_to_user(self, message):
+        title = message.title or _("Message")
+        desc = message.desc
+        print "handle_message_to_user"
+        dialogs.show_message(title, desc)

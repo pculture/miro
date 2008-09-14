@@ -57,7 +57,9 @@ def on_open():
 def on_new_download():
     app.widgetapp.new_download()
 
-# FIXME - CheckVersion
+@action_handler("CheckVersion")
+def on_check_version():
+    app.widgetapp.check_version()
 
 @action_handler("RemoveVideos")
 def on_remove_videos():

@@ -376,6 +376,10 @@ class DownloadURL(BackendMessage):
     def __init__(self, url):
         self.url = util.toUni(url)
 
+class CheckVersion(BackendMessage):
+    def __init__(self, up_to_date_callback):
+        self.up_to_date_callback = up_to_date_callback
+
 class Search(BackendMessage):
     """Search a search engine with a search term."""
     def __init__(self, searchengine_id, terms):
@@ -848,3 +852,9 @@ class NewCountChanged(FrontendMessage):
 
     def __init__(self, count):
         self.count = count
+
+class MessageToUser(FrontendMessage):
+    """Lets the backend send messages directly to the user."""
+    def __init__(self, title, desc):
+        self.title = title
+        self.desc = desc
