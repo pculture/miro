@@ -151,3 +151,4 @@ class VideoRenderer(Widget):
         app.widgetapp.window._window.unfullscreen()
         self._widget.disconnect(self.motion_handler_id)
         self.cancel_hide_controls()
+        app.widgetapp.window._window.window.set_cursor(None)
