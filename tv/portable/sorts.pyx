@@ -52,7 +52,7 @@ def item(x,y):
             # a valid sort.
             if x.__class__ is itemmod.FileItem:
                 if y.__class__ is itemmod.FileItem:
-                    return x.getTitle() < y.getTitle()
+                    return x.get_title() < y.get_title()
                 else:
                     return False
             else:
@@ -115,7 +115,7 @@ class ItemSort:
         elif self.sortBy == 'size':
             return x[1].getSize() < y[1].getSize()
         elif self.sortBy == 'name':
-            return x[1].getTitle().lower() < y[1].getTitle().lower()
+            return x[1].get_title().lower() < y[1].get_title().lower()
         elif self.sortBy == 'duration':
             return x[1].getDurationValue() < y[1].getDurationValue()
 
@@ -181,7 +181,7 @@ def guideTabs(x, y):
         return True
     if not xguide.getDefault() and yguide.getDefault():
         return False
-    return xguide.getTitle() < yguide.getTitle()
+    return xguide.get_title() < yguide.get_title()
 
 def staticTabs(x, y):
     return x[1].obj.order < y[1].obj.order

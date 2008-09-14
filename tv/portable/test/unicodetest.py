@@ -74,8 +74,8 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         # We need to explicitly check that the type is unicode because
         # Python automatically converts bytes strings to unicode strings
         # using the current system character set
-        self.assertEqual(type(myFeed.getTitle()), types.UnicodeType)
-        self.assertEqual(u"Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d",myFeed.getTitle())
+        self.assertEqual(type(myFeed.get_title()), types.UnicodeType)
+        self.assertEqual(u"Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d",myFeed.get_title())
 
         # The description is the same, but surrounded by a <span>
         self.assertEqual(type(myFeed.getDescription()), types.UnicodeType)
@@ -84,8 +84,8 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         items = database.defaultDatabase.filter(lambda x:x.__class__ == item.Item)
         self.assertEqual(items.len(),1)
         i = items[0]
-        self.assertEqual(type(i.getTitle()), types.UnicodeType)
-        self.assertEqual(u"\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d",i.getTitle())
+        self.assertEqual(type(i.get_title()), types.UnicodeType)
+        self.assertEqual(u"\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d",i.get_title())
 
         self.assertEqual(type(i.getDescription()), types.UnicodeType)
         self.assertEqual(u"<span>\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d</span>",i.getDescription())
@@ -110,8 +110,8 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.processIdles()
         self.assertEqual(len(myFeed.items), 1)
         myItem = myFeed.items[0]
-        self.assertEqual(len(myItem.getTitle()), 14)
-        self.assertEqual(myItem.getTitle(), u"H\xe4ppy Birthday")
+        self.assertEqual(len(myItem.get_title()), 14)
+        self.assertEqual(myItem.get_title(), u"H\xe4ppy Birthday")
 
     # This is latin1 HTML that claims to be Latin 1
     def testLatin1HTML(self):
@@ -128,8 +128,8 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         myFeed.update()
         self.assertEqual(len(myFeed.items), 1)
         myItem = myFeed.items[0]
-        self.assertEqual(len(myItem.getTitle()), 14)
-        self.assertEqual(myItem.getTitle(), u"H\xe4ppy Birthday")
+        self.assertEqual(len(myItem.get_title()), 14)
+        self.assertEqual(myItem.get_title(), u"H\xe4ppy Birthday")
 
     # This is latin1 HTML that claims to be UTF-8
     def testInvalidLatin1HTML(self):
@@ -146,8 +146,8 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         myFeed.update()
         self.assertEqual(len(myFeed.items),1)
         myItem = myFeed.items[0]
-        self.assertEqual(len(myItem.getTitle()),14)
-        self.assertEqual(myItem.getTitle(), u"H\xe4ppy Birthday")
+        self.assertEqual(len(myItem.get_title()),14)
+        self.assertEqual(myItem.get_title(), u"H\xe4ppy Birthday")
 
     # This is utf-8 HTML that claims to be utf-8
     def testUTF8HTML(self):
@@ -164,8 +164,8 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         myFeed.update()
         self.assertEqual(len(myFeed.items),1)
         myItem = myFeed.items[0]
-        self.assertEqual(len(myItem.getTitle()),14)
-        self.assertEqual(myItem.getTitle(), u"H\xe4ppy Birthday")
+        self.assertEqual(len(myItem.get_title()),14)
+        self.assertEqual(myItem.get_title(), u"H\xe4ppy Birthday")
 
     def testUTF8HTMLLinks(self):
         [handle, self.filename] = mkstemp(".html")
@@ -295,4 +295,4 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         myFeed = feed.Feed(url)
         self.forceFeedParserCallback(myFeed)
         for item in myFeed.items:
-            u'booya' in item.getTitle().lower()
+            u'booya' in item.get_title().lower()

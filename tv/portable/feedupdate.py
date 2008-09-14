@@ -45,7 +45,7 @@ class FeedUpdateQueue(object):
         self.currently_updating = set()
 
     def schedule_update(self, delay, feed, update_callback):
-        name = "Feed update (%s)" % feed.getTitle()
+        name = "Feed update (%s)" % feed.get_title()
         self.timeouts[feed.id] = eventloop.addTimeout(delay, self.do_update, 
                 name, args=(feed, update_callback))
 

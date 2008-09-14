@@ -42,7 +42,7 @@ class FolderBase(DDBObject):
         self.expanded = True
         DDBObject.__init__(self)
 
-    getTitle, setTitle = makeSimpleGetSet('title')
+    get_title, setTitle = makeSimpleGetSet('title')
 
     def getExpanded(self):
         self.confirmDBThread()

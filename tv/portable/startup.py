@@ -180,7 +180,7 @@ def finalize_startup():
     autodler.start_downloader()
 
     item.reconnectDownloaders()
-    feed.expireItems()
+    feed.expire_items()
 
     starttime = clock()
     iconcache.clear_orphans()

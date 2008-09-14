@@ -700,7 +700,7 @@ class Item(DDBObject):
                 return resources.path("wimages/thumb-default_large.png")
 
     @returnsUnicode
-    def getTitle(self):
+    def get_title(self):
         """Returns the title of the item.
         """
         if not self.title:
@@ -736,7 +736,7 @@ class Item(DDBObject):
         from miro import feed
         implClass = self.getFeed().actualFeed.__class__
         if implClass in (feed.RSSFeedImpl, feed.ScraperFeedImpl):
-            return self.getFeed().getTitle()
+            return self.getFeed().get_title()
         elif implClass == feed.SearchFeedImpl and allowSearchFeedTitle:
             return searchengines.get_last_engine_title()
         elif self.channelTitle:
@@ -1109,7 +1109,7 @@ class Item(DDBObject):
 
         return u""
 
-    def getLink(self):
+    def get_link(self):
         """Returns the URL of the webpage associated with the item.
         """
         self.confirmDBThread()
@@ -1281,7 +1281,7 @@ class Item(DDBObject):
                 self.videoFilename = FilenameType("")
 
     def __str__(self):
-        return "Item - %s" % self.getTitle()
+        return "Item - %s" % self.get_title()
 
 def reconnectDownloaders():
     reconnected = set()

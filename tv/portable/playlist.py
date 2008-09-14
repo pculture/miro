@@ -176,7 +176,7 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
         database.DDBObject.onRestore(self)
         self.setupTrackedItemView()
 
-    getTitle, setTitle = makeSimpleGetSet('title')
+    get_title, setTitle = makeSimpleGetSet('title')
 
     def getFolder(self):
         self.confirmDBThread()
@@ -222,7 +222,7 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
 
     def rename(self):
         title = _("Rename Playlist")
-        description = _("Enter a new name for the playlist %s" % self.getTitle())
+        description = _("Enter a new name for the playlist %s" % self.get_title())
 
         def callback(dialog):
             if self.idExists() and dialog.choice == dialogs.BUTTON_OK:

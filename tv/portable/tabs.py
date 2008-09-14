@@ -183,7 +183,7 @@ class TabOrder(database.DDBObject):
         self.tab_ids = []
         database.DDBObject.__init__(self)
         self._init_restore()
-        decorated = [(t.obj.getTitle().lower(), t) for t in self.tabView]
+        decorated = [(t.obj.get_title().lower(), t) for t in self.tabView]
         decorated.sort()
         for sortkey, tab in decorated:
             self.trackedTabs.appendID(tab.getID())

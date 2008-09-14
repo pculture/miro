@@ -142,7 +142,7 @@ class ChannelGuide(DDBObject):
         return None
 
     @returnsUnicode
-    def getTitle(self):
+    def get_title(self):
         if self.userTitle:
             return self.userTitle
         elif self.title:

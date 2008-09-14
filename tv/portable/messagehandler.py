@@ -43,7 +43,7 @@ from miro import subscription
 from miro import views
 from miro import opml
 from miro import searchengines
-from miro.feed import Feed, getFeedByURL
+from miro.feed import Feed, get_feed_by_url
 from miro.playlist import SavedPlaylist
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
 from miro.util import getSingletonDDBObject
@@ -576,7 +576,7 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_new_channel(self, message):
         url = message.url
-        if not getFeedByURL(url):
+        if not get_feed_by_url(url):
             Feed(url)
             if message.trackback:
                 httpclient.grabURL(message.trackback,
@@ -597,7 +597,7 @@ class BackendMessageHandler(messages.MessageHandler):
             term = term + " " + channel_info.search_term
 
         url = u"dtv:searchTerm:%s?%s" % (urlencode(location), urlencode(term))
-        if not getFeedByURL(url):
+        if not get_feed_by_url(url):
             Feed(url)
 
     def handle_new_channel_search_engine(self, message):
@@ -610,7 +610,7 @@ class BackendMessageHandler(messages.MessageHandler):
         if not url:
             return
 
-        if not getFeedByURL(url):
+        if not get_feed_by_url(url):
             f = Feed(url)
             f.setTitle(title)
 
@@ -627,7 +627,7 @@ class BackendMessageHandler(messages.MessageHandler):
             url = url.encode("utf-8")
 
         url = u"dtv:searchTerm:%s?%s" % (urlencode(normalized), urlencode(term))
-        if not getFeedByURL(url):
+        if not get_feed_by_url(url):
             Feed(url)
 
     def handle_new_channel_folder(self, message):

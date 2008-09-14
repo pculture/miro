@@ -35,7 +35,7 @@ def matchingItems(obj, searchString):
     if searchString is None:
         return True
     searchString = searchString.lower()
-    title = obj.getTitle() or u''
+    title = obj.get_title() or u''
     desc = obj.getRawDescription() or u''
     filename = filenameToUnicode(obj.getFilename()) or u''
     if search.match(searchString, [title.lower(), desc.lower(), filename.lower()]):

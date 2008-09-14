@@ -89,7 +89,7 @@ class Exporter (object):
         if self.currentFolder is not None:
             self._closeFolderEntry()
         self.currentFolder = folder
-        self.io.write(u'\t\t<outline text=%s>\n' % saxutils.quoteattr(folder.getTitle()))
+        self.io.write(u'\t\t<outline text=%s>\n' % saxutils.quoteattr(folder.get_title()))
 
     def _closeFolderEntry(self):
         self.io.write(u'\t\t</outline>\n')
@@ -123,7 +123,7 @@ class Exporter (object):
             feedtype = u'type="mirofeed"'
             extraArgs = u''
 
-        self.io.write(u'%s<outline %s text=%s xmlUrl=%s %s/>\n' % (spacer, feedtype, saxutils.quoteattr(thefeed.getTitle()), saxutils.quoteattr(thefeed.getURL()), extraArgs))
+        self.io.write(u'%s<outline %s text=%s xmlUrl=%s %s/>\n' % (spacer, feedtype, saxutils.quoteattr(thefeed.get_title()), saxutils.quoteattr(thefeed.getURL()), extraArgs))
 
 # =============================================================================
 
@@ -188,7 +188,7 @@ class Importer (object):
 
     def _handleFeedEntry(self, entry):
         url = entry.getAttribute("xmlUrl")
-        f = feed.getFeedByURL(url)
+        f = feed.get_feed_by_url(url)
         if f is None:
             f = feed.Feed(url, False)
             title = entry.getAttribute("text")

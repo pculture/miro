@@ -77,13 +77,13 @@ class MiroInterpreter(cmd.Cmd):
             self.selection_type = None
         elif self.tab.type == 'feed':
             if isinstance(self.tab.obj, folder.ChannelFolder):
-                self.prompt = "channel folder: %s > " % self.tab.obj.getTitle()
+                self.prompt = "channel folder: %s > " % self.tab.obj.get_title()
                 self.selection_type = 'channel-folder'
             else:
-                self.prompt = "channel: %s > " % self.tab.obj.getTitle()
+                self.prompt = "channel: %s > " % self.tab.obj.get_title()
                 self.selection_type = 'feed'
         elif self.tab.type == 'playlist':
-            self.prompt = "playlist: %s > " % self.tab.obj.getTitle()
+            self.prompt = "playlist: %s > " % self.tab.obj.get_title()
             self.selection_type = 'playlist'
         elif (self.tab.type == 'statictab' and 
                 self.tab.tabTemplateBase == 'downloadtab'):
@@ -112,7 +112,7 @@ class MiroInterpreter(cmd.Cmd):
     @runInEventLoop
     def do_feed(self, line):
         for tab in self.channelTabs.getView():
-            if tab.obj.getTitle() == line:
+            if tab.obj.get_title() == line:
                 self.tab = tab
                 self.tab_changed()
                 return
@@ -121,7 +121,7 @@ class MiroInterpreter(cmd.Cmd):
     @runInEventLoop
     def do_rmfeed(self, line):
         for tab in self.channelTabs.getView():
-            if tab.obj.getTitle() == line:
+            if tab.obj.get_title() == line:
                 tab.obj.remove()
                 return
         print "Error: %s not found" % line
@@ -142,17 +142,17 @@ class MiroInterpreter(cmd.Cmd):
         text = text.lower()
         matches = []
         for tab in view:
-            if tab.obj.getTitle().lower().startswith(text):
-                matches.append(tab.obj.getTitle())
+            if tab.obj.get_title().lower().startswith(text):
+                matches.append(tab.obj.get_title())
         return matches
 
     def handle_item_complete(self, text, view, filterFunc=lambda i: True):
         text = text.lower()
         matches = []
         for item in view:
-            if (item.getTitle().lower().startswith(text) and 
+            if (item.get_title().lower().startswith(text) and 
                     filterFunc(item)):
-                matches.append(item.getTitle())
+                matches.append(item.get_title())
         return matches
 
     @runInEventLoop
@@ -164,21 +164,21 @@ class MiroInterpreter(cmd.Cmd):
             elif tab.obj.getFolder() is not current_folder:
                 current_folder = None
             if current_folder is None:
-                print tab.obj.getTitle()
+                print tab.obj.get_title()
             elif current_folder is tab.obj:
-                print "[Folder] %s" % tab.obj.getTitle()
+                print "[Folder] %s" % tab.obj.get_title()
             else:
-                print " - %s" % tab.obj.getTitle()
+                print " - %s" % tab.obj.get_title()
 
     @runInEventLoop
     def do_playlists(self, line):
         for tab in self.playlistTabs.getView():
-            print tab.obj.getTitle()
+            print tab.obj.get_title()
 
     @runInEventLoop
     def do_playlist(self, line):
         for tab in self.playlistTabs.getView():
-            if tab.obj.getTitle() == line:
+            if tab.obj.get_title() == line:
                 self.tab = tab
                 self.tab_changed()
                 return
@@ -231,7 +231,7 @@ class MiroInterpreter(cmd.Cmd):
                     if state == 'downloading':
                         state += ' (%0.0f%%)' % item.download_progress()
                     print "%-20s %-10s %s" % (state, item.getSizeForDisplay(),
-                            item.getTitle())
+                            item.get_title())
             print
         else:
             print "No items"
@@ -256,7 +256,7 @@ class MiroInterpreter(cmd.Cmd):
     def _find_item(self, line):
         line = line.lower()
         for item in self._get_item_view():
-            if item.getTitle().lower() == line:
+            if item.get_title().lower() == line:
                 return item
 
     @runInEventLoop
@@ -271,7 +271,7 @@ class MiroInterpreter(cmd.Cmd):
         if item.getState() in ('downloading', 'paused'):
             item.expire()
         else:
-            print '%s is not being downloaded' % item.getTitle()
+            print '%s is not being downloaded' % item.get_title()
 
     @runInEventLoop
     def complete_stop(self, text, line, begidx, endidx):
@@ -288,9 +288,9 @@ class MiroInterpreter(cmd.Cmd):
             print "No item named %r" % line
             return
         if item.getState() == 'downloading':
-            print '%s is currently being downloaded' % item.getTitle()
+            print '%s is currently being downloaded' % item.get_title()
         elif item.isDownloaded():
-            print '%s is already downloaded' % item.getTitle()
+            print '%s is already downloaded' % item.get_title()
         else:
             item.download()
 
@@ -311,7 +311,7 @@ class MiroInterpreter(cmd.Cmd):
         if item.getState() == 'downloading':
             item.pause()
         else:
-            print '%s is not being downloaded' % item.getTitle()
+            print '%s is not being downloaded' % item.get_title()
 
     @runInEventLoop
     def complete_pause(self, text, line, begidx, endidx):
@@ -330,7 +330,7 @@ class MiroInterpreter(cmd.Cmd):
         if item.getState() == 'paused':
             item.resume()
         else:
-            print '%s is not a paused download' % item.getTitle()
+            print '%s is not a paused download' % item.get_title()
 
     @runInEventLoop
     def complete_resume(self, text, line, begidx, endidx):
@@ -349,7 +349,7 @@ class MiroInterpreter(cmd.Cmd):
         if item.isDownloaded():
             item.expire()
         else:
-            print '%s is not downloaded' % item.getTitle()
+            print '%s is not downloaded' % item.get_title()
 
     @runInEventLoop
     def complete_rm(self, text, line, begidx, endidx):

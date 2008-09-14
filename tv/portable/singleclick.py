@@ -109,7 +109,7 @@ def checkURLExists(url):
                 text2 = _("It has already been downloaded.")
             dialogs.MessageBoxDialog(title, "%s  %s" % (text1, text2)).run()
             return True
-    existingFeed = feed.getFeedByURL(url)
+    existingFeed = feed.get_feed_by_url(url)
     if existingFeed is not None:
         existingFeed.blink()
         return True
@@ -254,7 +254,7 @@ def addSubscriptions(type_, urls):
                     guide.ChannelGuide(url, [u'*'])
                     
 def filterExistingFeedURLs(urls):
-    return [u for u in urls if feed.getFeedByURL(u) is None]
+    return [u for u in urls if feed.get_feed_by_url(u) is None]
 
 def addFeeds(urls, newFolderName=None):
     if len(urls) > 0:

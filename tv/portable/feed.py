@@ -116,7 +116,7 @@ def addFeedFromWebPage(url):
     """
     checkU(url)
     def callback(info):
-        url = HTMLFeedURLParser().getLink(info['updated-url'], info['body'])
+        url = HTMLFeedURLParser().get_link(info['updated-url'], info['body'])
         if url:
             Feed(url)
     def errback(error):
@@ -262,10 +262,10 @@ class FeedImpl:
     def scheduleUpdateEvents(self, firstTriggerDelay):
         self.cancelUpdateEvents()
         if firstTriggerDelay >= 0:
-            self.scheduler = eventloop.addTimeout(firstTriggerDelay, self.update, "Feed update (%s)" % self.getTitle())
+            self.scheduler = eventloop.addTimeout(firstTriggerDelay, self.update, "Feed update (%s)" % self.get_title())
         else:
             if self.updateFreq > 0:
-                self.scheduler = eventloop.addTimeout(self.updateFreq, self.update, "Feed update (%s)" % self.getTitle())
+                self.scheduler = eventloop.addTimeout(self.updateFreq, self.update, "Feed update (%s)" % self.get_title())
 
     def cancelUpdateEvents(self):
         if hasattr(self, 'scheduler') and self.scheduler is not None:
@@ -358,7 +358,7 @@ class FeedImpl:
         if next is not None:
             next.download(autodl = True)
 
-    def expireItems(self):
+    def expire_items(self):
         """Returns marks expired items as expired
         """
         for item in self.items:
@@ -465,7 +465,7 @@ class FeedImpl:
             return u"OFF"
 
     @returnsUnicode
-    def getTitle(self):
+    def get_title(self):
         """Returns the title of the feed
         """
         try:
@@ -507,7 +507,7 @@ class FeedImpl:
         return u"<span />"
 
     @returnsUnicode
-    def getLink(self):
+    def get_link(self):
         """Returns a link to a webpage associated with the feed
         """
         return self.ufeed.getBaseHref()
@@ -563,7 +563,7 @@ class FeedImpl:
         pass
 
     def __str__(self):
-        return "FeedImpl - %s" % self.getTitle()
+        return "FeedImpl - %s" % self.get_title()
 
     def cleanOldItems(self):
         """
@@ -681,11 +681,11 @@ class Feed(DDBObject):
         return isinstance(self.actualFeed, ScraperFeedImpl)
 
     @returnsUnicode
-    def getTitle(self):
+    def get_title(self):
         if self.userTitle is not None:
             return self.userTitle
         else:
-            title = self.actualFeed.getTitle()
+            title = self.actualFeed.get_title()
             if self.searchTerm is not None:
                 title = u"'%s' on %s" % (self.searchTerm, title)
             return title
@@ -834,12 +834,12 @@ class Feed(DDBObject):
 
     def rename(self):
         title = _("Rename Channel")
-        text = _("Enter a new name for the channel %(name)s", {"name": self.getTitle()})
+        text = _("Enter a new name for the channel %(name)s", {"name": self.get_title()})
         def callback(dialog):
             if self.idExists() and dialog.choice == dialogs.BUTTON_OK:
                 self.setTitle(dialog.value)
         dialogs.TextEntryDialog(title, text, dialogs.BUTTON_OK,
-            dialogs.BUTTON_CANCEL, prefillCallback=lambda:self.getTitle()).run(callback)
+            dialogs.BUTTON_CANCEL, prefillCallback=lambda:self.get_title()).run(callback)
 
     def update(self):
         self.confirmDBThread()
@@ -969,7 +969,7 @@ class Feed(DDBObject):
             return
         if info['updated-url'] != self.origURL and \
                 not self.origURL.startswith('dtv:'): # we got redirected
-            f = getFeedByURL(info['updated-url'])
+            f = get_feed_by_url(info['updated-url'])
             if f is not None: # already have this feed, so delete us
                 self.remove()
                 return
@@ -1208,7 +1208,7 @@ class Feed(DDBObject):
             eventloop.addIdle(lambda:self.generateFeed(True), "generateFeed")
 
     def __str__(self):
-        return "Feed - %s" % self.getTitle()
+        return "Feed - %s" % self.get_title()
 
 def _entry_equal(a, b):
     if type(a) == list and type(b) == list:
@@ -1470,7 +1470,7 @@ class RSSFeedImpl(RSSFeedImplBase):
             return u"<span />"
 
     @returnsUnicode
-    def getLink(self):
+    def get_link(self):
         """Returns a link to a webpage associated with the feed
         """
         self.ufeed.confirmDBThread()
@@ -2052,7 +2052,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
         links to titles and thumbnails
         """
         lg = HTMLLinkGrabber()
-        links = lg.getLinks(html, baseurl)
+        links = lg.get_links(html, baseurl)
         if setTitle and not lg.title is None:
             self.ufeed.confirmDBThread()
             try:
@@ -2099,7 +2099,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
         self.setUpdateFrequency(5)
         self.scheduleUpdateEvents(0)
 
-    def expireItems(self):
+    def expire_items(self):
         """Directory Items shouldn't automatically expire
         """
         pass
@@ -2183,7 +2183,7 @@ class DirectoryFeedImpl(FeedImpl):
         self.setUpdateFrequency(5)
         self.scheduleUpdateEvents(0)
 
-    def expireItems(self):
+    def expire_items(self):
         """Directory Items shouldn't automatically expire
         """
         pass
@@ -2261,7 +2261,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
         return u'dtv:search'
 
     @returnsUnicode
-    def getTitle(self):
+    def get_title(self):
         return _(u'Search')
 
     @returnsUnicode
@@ -2353,7 +2353,7 @@ class SearchDownloadsFeedImpl(FeedImpl):
         self.setUpdateFrequency(-1)
 
     @returnsUnicode
-    def getTitle(self):
+    def get_title(self):
         return _(u'Search')
 
 class ManualFeedImpl(FeedImpl):
@@ -2372,7 +2372,7 @@ class ManualFeedImpl(FeedImpl):
         self.lastViewed = datetime.max
 
     @returnsUnicode
-    def getTitle(self):
+    def get_title(self):
         return _(u'Local Files')
 
 class SingleFeedImpl(FeedImpl):
@@ -2386,7 +2386,7 @@ class SingleFeedImpl(FeedImpl):
         self.setUpdateFrequency(-1)
 
     @returnsUnicode
-    def getTitle(self):
+    def get_title(self):
         return _(u'Playing File')
 
 class HTMLLinkGrabber(HTMLParser):
@@ -2397,7 +2397,7 @@ class HTMLLinkGrabber(HTMLParser):
     linkPattern = re.compile("<(a|embed)\s[^>]*(href|src)\s*=\s*\"([^\"]*)\"[^>]*>(.*?)</a(.*)", re.S)
     imgPattern = re.compile(".*<img\s.*?src\s*=\s*\"(.*?)\".*?>", re.S)
     tagPattern = re.compile("<.*?>")
-    def getLinks(self, data, baseurl):
+    def get_links(self, data, baseurl):
         self.links = []
         self.lastLink = None
         self.inLink = False
@@ -2453,7 +2453,7 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler, xml.sax.handler.ErrorHandle
         self.title = None
         self.firstTag = True
         self.errors = 0
-        self.fatalErrors = 0
+        self.fatal_errors = 0
 
     def startElementNS(self, name, qname, attrs):
         uri = name[0]
@@ -2485,7 +2485,7 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler, xml.sax.handler.ErrorHandle
                 html = xhtmlify(unescape(self.descHTML), addTopTags=True)
                 if not self.charset is None:
                     html = fix_html_header(html, self.charset)
-                self.links[:0] = lg.getLinks(html, self.baseurl)
+                self.links[:0] = lg.get_links(html, self.baseurl)
             except HTMLParseError: # Don't bother with bad HTML
                 logging.info ("bad HTML in description for %s", self.baseurl)
             self.inDescription = False
@@ -2512,12 +2512,12 @@ class RSSLinkGrabber(xml.sax.handler.ContentHandler, xml.sax.handler.ErrorHandle
         self.errors += 1
 
     def fatalError(self, exception):
-        self.fatalErrors += 1
+        self.fatal_errors += 1
 
 class HTMLFeedURLParser(HTMLParser):
     """Grabs the feed link from the given webpage
     """
-    def getLink(self, baseurl, data):
+    def get_link(self, baseurl, data):
         self.baseurl = baseurl
         self.link = None
         try:
@@ -2545,12 +2545,12 @@ class HTMLFeedURLParser(HTMLParser):
                                              'application/xml']):
             self.link = urljoin(self.baseurl, attrdict['href'])
 
-def expireItems():
+def expire_items():
     try:
         for feed in views.feeds:
-            feed.expireItems()
+            feed.expire_items()
     finally:
-        eventloop.addTimeout(300, expireItems, "Expire Items")
+        eventloop.addTimeout(300, expire_items, "Expire Items")
 
-def getFeedByURL(url):
+def get_feed_by_url(url):
     return views.feeds.getItemWithIndex(indexes.feedsByURL, url)

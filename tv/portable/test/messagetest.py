@@ -120,7 +120,7 @@ class GuideTrackTest(TrackerTest):
         self.runUrgentCalls()
 
     def checkInfo(self, guideInfo, guide):
-        self.assertEquals(guideInfo.name, guide.getTitle())
+        self.assertEquals(guideInfo.name, guide.get_title())
         self.assertEquals(guideInfo.id, guide.id)
         self.assertEquals(guideInfo.url, guide.getURL())
         self.assertEquals(guideInfo.default, guide.getDefault())
@@ -186,7 +186,7 @@ class PlaylistTrackTest(TrackerTest):
 #        self.assertEquals(len(message.folder_children), 1)
 
     def checkInfo(self, playlistInfo, playlist):
-        self.assertEquals(playlistInfo.name, playlist.getTitle())
+        self.assertEquals(playlistInfo.name, playlist.get_title())
         self.assertEquals(playlistInfo.id, playlist.id)
         self.assertEquals(playlistInfo.is_folder,
                 isinstance(playlist, PlaylistFolder))
@@ -268,7 +268,7 @@ class FeedTrackTest(TrackerTest):
 #        self.assertEquals(len(message.folder_children), 1)
 
     def checkInfo(self, channelInfo, feed):
-        self.assertEquals(channelInfo.name, feed.getTitle())
+        self.assertEquals(channelInfo.name, feed.get_title())
         self.assertEquals(channelInfo.id, feed.id)
         self.assertEquals(channelInfo.unwatched, feed.numUnwatched())
         self.assertEquals(channelInfo.available, feed.numAvailable())
@@ -366,11 +366,11 @@ class FeedItemTrackTest(TrackerTest):
         self.assertEquals(info.state, downlader.getState())
 
     def checkInfo(self, itemInfo, item):
-        self.assertEquals(itemInfo.name, item.getTitle())
+        self.assertEquals(itemInfo.name, item.get_title())
         self.assertEquals(itemInfo.description, item.getDescription())
         self.assertEquals(itemInfo.release_date, item.getReleaseDateObj())
         self.assertEquals(itemInfo.size, item.getSize())
-        self.assertEquals(itemInfo.permalink, item.getLink())
+        self.assertEquals(itemInfo.permalink, item.get_link())
         self.assertEquals(itemInfo.id, item.id)
         self.assertEquals(itemInfo.expiration_date, item.getExpirationTime())
         self.assertEquals(itemInfo.thumbnail, item.getThumbnail())
@@ -449,11 +449,11 @@ class PlaylistItemTrackTest(TrackerTest):
         self.assertEquals(info.state, downlader.getState())
 
     def checkInfo(self, itemInfo, item):
-        self.assertEquals(itemInfo.name, item.getTitle())
+        self.assertEquals(itemInfo.name, item.get_title())
         self.assertEquals(itemInfo.description, item.getDescription())
         self.assertEquals(itemInfo.release_date, item.getReleaseDateObj())
         self.assertEquals(itemInfo.size, item.getSize())
-        self.assertEquals(itemInfo.permalink, item.getLink())
+        self.assertEquals(itemInfo.permalink, item.get_link())
         self.assertEquals(itemInfo.id, item.id)
         self.assertEquals(itemInfo.expiration_date, item.getExpirationTime())
         self.assertEquals(itemInfo.thumbnail, item.getThumbnail())

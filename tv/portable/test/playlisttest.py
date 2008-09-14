@@ -53,7 +53,7 @@ class PlaylistTestCase(PlaylistTestBase):
 
     def testBasicOperations(self):
         playlist = SavedPlaylist("rocketboom")
-        self.assertEquals(playlist.getTitle(), 'rocketboom')
+        self.assertEquals(playlist.get_title(), 'rocketboom')
         self.assertEquals(playlist.getItems(), [])
         playlist.addItem(self.i4)
         playlist.addItem(self.i1)
@@ -80,7 +80,7 @@ class PlaylistTestCase(PlaylistTestBase):
     def testInitialList(self):
         initialList = [self.i1, self.i2, self.i3]
         playlist = SavedPlaylist("rocketboom", [i.id for i in initialList])
-        self.assertEquals(playlist.getTitle(), 'rocketboom')
+        self.assertEquals(playlist.get_title(), 'rocketboom')
         self.checkList(playlist, initialList)
 
     def checkCallbacks(self, movedItems):

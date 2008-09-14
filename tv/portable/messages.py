@@ -539,7 +539,7 @@ class ChannelInfo(object):
     max_old_items -- maximum number of old items to remember
     """
     def __init__(self, channel_obj):
-        self.name = channel_obj.getTitle()
+        self.name = channel_obj.get_title()
         self.id = channel_obj.id
         self.unwatched = channel_obj.numUnwatched()
         self.available = channel_obj.numAvailable()
@@ -584,7 +584,7 @@ class PlaylistInfo(object):
     """
 
     def __init__(self, playlist_obj):
-        self.name = playlist_obj.getTitle()
+        self.name = playlist_obj.get_title()
         self.id = playlist_obj.id
         self.is_folder = isinstance(playlist_obj, PlaylistFolder)
 
@@ -600,7 +600,7 @@ class GuideInfo(object):
     default -- is this the default channel guide?
     """
     def __init__(self, guide):
-        self.name = guide.getTitle()
+        self.name = guide.get_title()
         self.id = guide.id
         self.url = guide.getURL()
         self.default = guide.getDefault()
@@ -647,7 +647,7 @@ class ItemInfo(object):
     self.down_total -- (Torrent only) total amount we've downloaded
     """
     def __init__(self, item):
-        self.name = item.getTitle()
+        self.name = item.get_title()
         self.id = item.id
         self.feed_id = item.feed_id
         self.description = item.getDescription()
@@ -655,7 +655,7 @@ class ItemInfo(object):
         self.size = item.getSize()
         self.duration = item.getDurationValue()
         self.resume_time = item.resumeTime
-        self.permalink = item.getLink()
+        self.permalink = item.get_link()
         self.has_sharable_url = item.hasSharableURL()
         self.can_be_saved = item.showSaveButton()
         if not item.keep:
