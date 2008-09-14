@@ -32,9 +32,10 @@ of the application.
 Call ``check_for_updates``.
 """
 
+import logging
+
 from miro import prefs
 from miro import config
-import logging
 from miro import eventloop
 from miro import feedparser
 from miro import signals
@@ -44,7 +45,11 @@ from miro.httpclient import grabURL
 check_in_progress = False
 
 def check_for_updates(up_to_date_callback=None):
-    """Checks the AUTOUPDATE_URL for the recent version."""
+    """Checks the AUTOUPDATE_URL for the recent version.
+    
+    The ``up_to_date_callback`` is a function that should take no
+    arguments and return nothing.
+    """
     global check_in_progress
     if not check_in_progress:
         check_in_progress = True
@@ -107,10 +112,10 @@ def _get_item_for_latest(appcast):
     this returns None.
     """
     platform = config.get(prefs.APP_PLATFORM)
-    rejectedItems = list()
+    rejectedItems = []
 
     for item in appcast['entries']:
-        rejectedEnclosures = list()
+        rejectedEnclosures = []
         for enclosure in item['enclosures']:
             if enclosure['dtv:platform'] != platform:
                 rejectedEnclosures.append(enclosure)
