@@ -362,28 +362,45 @@ def get_libtorrent_extension(portable_dir):
         extra_compile_args.append("-DAMD64")
 
     # check for mt
-    libraries = ['boost_python', 'z', 'pthread', 'ssl']
-    for mem in os.listdir(os.path.join(sysconfig.PREFIX, "lib")):
-        if mem.startswith("libbost_filesystem-mt"):
-            print "found boost_filesystem-mt"
+    libraries = ['z', 'pthread', 'ssl']
+    all_libs = os.listdir(os.path.join(sysconfig.PREFIX, "lib"))
+    all_libs = [mem for mem in all_libs if mem.startswith("libboost")]
+
+    for mem in all_libs:
+        if mem.startswith("libboost_python-mt"):
+            print "using boost_ptyhon-mt"
+            libraries += ["boost_python-mt"]
+            break
+    else:
+        print "using boost_python"
+        libraries += ["boost_python"]
+
+    for mem in all_libs:
+        if mem.startswith("libboost_filesystem-mt"):
+            print "using boost_filesystem-mt"
             libraries += ["boost_filesystem-mt"]
-        elif mem.startswith("libboost_filesystem.so"):
-            print "found boost_filesystem"
-            libraries += ["boost_filesystem"]
+            break
+    else:
+        print "using boost_filesystem"
+        libraries += ["boost_filesystem"]
 
-        elif mem.startswith("libbost_date_time-mt.so"):
-            print "found boost_date_time-mt"
+    for mem in all_libs:
+        if mem.startswith("libboost_date_time-mt"):
+            print "using boost_date_time-mt"
             libraries += ["boost_date_time-mt"]
-        elif mem.startswith("libboost_date_time.so"):
-            print "found boost_date_time"
-            libraries += ["boost_date_time"]
+            break
+    else:
+        print "using boost_date_time"
+        libraries += ["boost_date_time"]
 
-        elif mem.startswith("libbost_thread-mt"):
-            print "found boost_thread-mt"
+    for mem in all_libs:
+        if mem.startswith("libboost_thread-mt"):
+            print "using boost_thread-mt"
             libraries += ["boost_thread-mt"]
-        elif mem.startswith("libboost_thread.so"):
-            print "found boost_thread"
-            libraries += ["boost_thread"]
+            break
+    else:
+        print "using boost_thread"
+        libraries += ["boost_thread"]
 
     config_vars = sysconfig.get_config_vars()
     if "CFLAGS" in config_vars:
