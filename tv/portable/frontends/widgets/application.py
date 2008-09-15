@@ -676,6 +676,9 @@ class Application:
 
     def do_quit(self):
         if hasattr(self, 'window'):
+            self.window.close()
+        app.display_manager.deselect_all_displays()
+        if hasattr(self, 'window'):
             self.window.destroy()
         app.controller.shutdown()
         self.quit_ui()
