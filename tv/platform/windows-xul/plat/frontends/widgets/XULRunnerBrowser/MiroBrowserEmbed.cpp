@@ -88,6 +88,31 @@ nsresult MiroBrowserEmbed::init(unsigned long parentWindow, int x,
     return NS_OK;
 }
 
+nsresult MiroBrowserEmbed::disable()
+{
+    nsresult rv;
+    nsCOMPtr<nsIBaseWindow> browserBaseWindow(do_QueryInterface(mWebBrowser));
+
+    rv = browserBaseWindow->SetVisibility(PR_FALSE);
+    NS_ENSURE_SUCCESS(rv, rv);
+    rv = browserBaseWindow->SetEnabled(PR_FALSE);
+    NS_ENSURE_SUCCESS(rv, rv);
+    return NS_OK;
+}
+
+nsresult MiroBrowserEmbed::enable()
+{
+    nsresult rv;
+    nsCOMPtr<nsIBaseWindow> browserBaseWindow(do_QueryInterface(mWebBrowser));
+
+    rv = browserBaseWindow->SetVisibility(PR_TRUE);
+    NS_ENSURE_SUCCESS(rv, rv);
+    rv = browserBaseWindow->SetEnabled(PR_TRUE);
+    NS_ENSURE_SUCCESS(rv, rv);
+    rv = browserBaseWindow->Repaint(PR_FALSE);
+    NS_ENSURE_SUCCESS(rv, rv);
+    return NS_OK;
+}
 
 void MiroBrowserEmbed::destroy()
 {

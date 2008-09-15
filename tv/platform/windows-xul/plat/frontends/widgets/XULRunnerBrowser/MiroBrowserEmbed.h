@@ -80,6 +80,10 @@ public:
     // be called before any other methods.  
     nsresult init(unsigned long parentWindow, int x, int y, int width, 
             int height);
+    // Stop the browser from painting to the screen or handling input
+    nsresult disable();
+    // Startup the browser again after a call to disable()
+    nsresult enable();
     // Load a URI into the browser
     nsresult loadURI(const char* uri);
     // Call when the parent window changes size

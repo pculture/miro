@@ -48,6 +48,8 @@ cdef extern from "MiroBrowserEmbed.h":
     ctypedef struct MiroBrowserEmbed:
         nsresult (*init)(unsigned long parentWindow, int x, int y, int width, 
                 int height)
+        nsresult (*disable)()
+        nsresult (*enable)()
         nsresult (*destroy)()
         nsresult (*loadURI)(char* uri)
         nsresult (*resize)(int x, int y, int width, int height)
@@ -100,6 +102,16 @@ cdef class XULRunnerBrowser:
         if rv != NS_OK:
             release(self.browser)
             raise XPCOMError("MiroBrowserEmbed.init() failed")
+
+    def disable(self):
+        rv = self.browser.disable()
+        if rv != NS_OK:
+            raise XPCOMError("MiroBrowserEmbed.disable() failed")
+
+    def enable(self):
+        rv = self.browser.enable()
+        if rv != NS_OK:
+            raise XPCOMError("MiroBrowserEmbed.enabled() failed")
 
     def destroy(self):
         self.browser.destroy()

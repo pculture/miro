@@ -80,6 +80,7 @@ LRESULT CALLBACK ToplevelFocusHackWndProc(HWND hwnd, UINT uMsg, WPARAM wParam,
             }
             break;
 
+        case WM_DESTROY:
         case WM_NCDESTROY:
             // The Window is about to be destroyed -- Cleanup
             SetWindowLongPtr(hwnd, GWL_WNDPROC, (LONG_PTR)old_window_proc);
