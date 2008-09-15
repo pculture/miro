@@ -428,6 +428,16 @@ class RestartUpload(BackendMessage):
     def __init__(self, id):
         self.id = id
 
+class StartUpload(BackendMessage):
+    """Start uploading a torrent."""
+    def __init__(self, id):
+        self.id = id
+
+class StopUpload(BackendMessage):
+    """Stop uploading a torrent."""
+    def __init__(self, id):
+        self.id = id
+
 class KeepVideo(BackendMessage):
     """Cancel the auto-expiration of an item's video"""
     def __init__(self, id):

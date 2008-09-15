@@ -798,7 +798,7 @@ class BackendMessageHandler(messages.MessageHandler):
         try:
             item = views.items.getObjectByID(message.id)
         except database.ObjectNotFoundError:
-            logging.warn("ResumeDownload: Item not found -- %s", message.id)
+            logging.warn("handle_restart_upload: Item not found -- %s", message.id)
         else:
             if item.downloader.getType() != 'bittorrent':
                 logging.warn("%s is not a torrent", item)
@@ -806,6 +806,32 @@ class BackendMessageHandler(messages.MessageHandler):
                 logging.warn("%s is currently uploading", item)
             else:
                 item.startUpload()
+
+    def handle_start_upload(self, message):
+        try:
+            item = views.items.getObjectByID(message.id)
+        except database.ObjectNotFoundError:
+            logging.warn("handle_start_upload: Item not found -- %s", message.id)
+        else:
+            if item.downloader.getType() != 'bittorrent':
+                logging.warn("%s is not a torrent", item)
+            elif item.isUploading():
+                logging.warn("%s is already uploading", item)
+            else:
+                item.startUpload()
+
+    def handle_stop_upload(self, message):
+        try:
+            item = views.items.getObjectByID(message.id)
+        except database.ObjectNotFoundError:
+            logging.warn("handle_stop_upload: Item not found -- %s", message.id)
+        else:
+            if item.downloader.getType() != 'bittorrent':
+                logging.warn("%s is not a torrent", item)
+            elif not item.isUploading():
+                logging.warn("%s is already stopped", item)
+            else:
+                item.stopUpload()
 
     def handle_keep_video(self, message):
         try:

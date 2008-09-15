@@ -257,6 +257,16 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             button = layout.button(_('Keep'), self.hotspot=='keep')
             button.set_min_width(65)
             hbox.pack(cellpack.Hotspot('keep', button))
+        if (self.data.download_info is not None
+                and self.data.download_info.torrent):
+            if self.data.download_info.state == "uploading":
+                button = layout.button(_('Stop seeding'), self.hotspot=='stop_seeding')
+                button.set_min_width(80)
+                hbox.pack(cellpack.Hotspot('stop_seeding', button))
+            else:
+                button = layout.button(_('Start seeding'), self.hotspot=='start_seeding')
+                button.set_min_width(80)
+                hbox.pack(cellpack.Hotspot('start_seeding', button))
         button = layout.button(_('Delete'), self.hotspot=='delete')
         button.set_min_width(65)
         hbox.pack(cellpack.Hotspot('delete', button))

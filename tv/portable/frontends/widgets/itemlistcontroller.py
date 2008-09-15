@@ -157,6 +157,10 @@ class ItemListController(object):
             messages.CancelDownload(item_info.id).send_to_backend()
         elif name == 'keep':
             messages.KeepVideo(item_info.id).send_to_backend()
+        elif name == 'stop_seeding':
+            messages.StopUpload(item_info.id).send_to_backend()
+        elif name == 'start_seeding':
+            messages.StartUpload(item_info.id).send_to_backend()
         elif name == 'delete':
             messages.DeleteVideo(item_info.id).send_to_backend()
         elif name == 'details_toggle':
