@@ -13,7 +13,7 @@ from miro import storedatabase
 from miro import subscription
 from time import sleep
 
-util.setupLogging()
+util.setup_logging()
 
 # Generally, all test cases should extend MiroTestCase or
 # EventLoopTest.  MiroTestCase cleans up any database changes you

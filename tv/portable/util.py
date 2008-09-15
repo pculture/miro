@@ -357,7 +357,7 @@ class ThreadSafeCounter:
         finally:
             self.lock.release()
 
-def setupLogging():
+def setup_logging():
     logging.addLevelName(25, "TIMING")
     logging.timing = lambda msg, *args, **kargs: logging.log(25, msg, *args, **kargs)
     logging.addLevelName(26, "JSALERT")
@@ -516,36 +516,20 @@ def call_command(*args, **kwargs):
     else:
         return stdout
 
-def getsize(path):
-    """Get the size of a path.  If it's a file, return the size of the file.
-    If it's a directory return the total size of all the files it contains.
-    """
-
-    path = fileutil.expand_filename(path)
-    if os.path.isdir(path):
-        size = 0
-        for (dirpath, dirnames, filenames) in os.walk(path):
-            for name in filenames:
-                size += os.path.getsize(os.path.join(dirpath, name))
-            size += os.path.getsize(dirpath)
-        return size
-    else:
-        return os.path.getsize(path)
-
-def partition(list_, size):
-    """Partiction list into smaller lists such that none is larger than
-    size elements.
-
-    Returns a list of lists.  The lists appended together will be the original
-    list.
-    """
-    retval = []
-    for start in range(0, len(list_), size):
-        retval.append(list_[start:start+size])
-    return retval
-
 def random_string(length):
     return ''.join(random.choice(string.ascii_letters) for i in xrange(length))
+
+def _get_enclosure_index(enclosure):
+    try:
+        return PREFERRED_TYPES.index(enclosure.get('type'))
+    except ValueError:
+        return None
+
+def _get_enclosure_size(enclosure):
+    if 'filesize' in enclosure and enclosure['filesize'].isdigit():
+        return int(enclosure['filesize'])
+    else:
+        return None
 
 def cmp_enclosures(enclosure1, enclosure2):
     """
@@ -554,28 +538,16 @@ def cmp_enclosures(enclosure1, enclosure2):
       zero if there is no preference between the two of them
     """
     # first let's try sorting by preference
-    def get_enclosure_index(enclosure):
-        try:
-            return PREFERRED_TYPES.index(enclosure.get('type'))
-        except ValueError:
-            return None
-
-    enclosure1_index = get_enclosure_index(enclosure1)
-    enclosure2_index = get_enclosure_index(enclosure2)
+    enclosure1_index = _get_enclosure_index(enclosure1)
+    enclosure2_index = _get_enclosure_index(enclosure2)
     if enclosure1_index < enclosure2_index:
         return -1
     elif enclosure2_index < enclosure1_index:
         return 1
 
     # next, let's try sorting by filesize..
-    def get_enclosure_size(enclosure):
-        if 'filesize' in enclosure and enclosure['filesize'].isdigit():
-            return int(enclosure['filesize'])
-        else:
-            return None
-
-    enclosure1_size = get_enclosure_size(enclosure1)
-    enclosure2_size = get_enclosure_size(enclosure2)
+    enclosure1_size = _get_enclosure_size(enclosure1)
+    enclosure2_size = _get_enclosure_size(enclosure2)
     if enclosure1_size > enclosure2_size:
         return -1
     elif enclosure2_size > enclosure1_size:
@@ -600,20 +572,6 @@ def getFirstVideoEnclosure(entry):
 
     enclosures.sort(cmp_enclosures)
     return enclosures[0]
-
-def import_last(module_name):
-    """Handles runtime importing when you want to import the last module in
-    a list of modules.  
-
-    The difference between this function and __import__ is if you do
-    __import__('foo.bar.baz') it will return the foo package.  If you use
-    import_last, it will return baz.
-    """
-    components = module_name.split('.')
-    mod = __import__(module_name)
-    for comp in components[1:]:
-        mod = getattr(mod, comp)
-    return mod
 
 def quoteattr(orig):
     orig = unicode(orig)

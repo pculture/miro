@@ -97,9 +97,8 @@ def initializeLocale():
     del pool
 
 # XXX this is duplicated in tv/platform/gtk-x11/plat/utils.py
-def setupLogging (inDownloader=False):
+def setup_logging (inDownloader=False):
     if inDownloader:
-
         logging.basicConfig(level=logging.INFO,
                             format='%(levelname)-8s %(message)s',
                             stream=sys.stdout)

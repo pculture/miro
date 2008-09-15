@@ -2,7 +2,7 @@ import os
 import sys
 import shutil
 import types
-from gettext import gettext as _
+from miro.gtcache import gettext as _
 import re
 from threading import RLock, Event, Thread
 import traceback
@@ -563,10 +563,8 @@ class HTTPDownloader(BGDownloader):
         self.cancelRequest()
 
     def handleWriteError(self, error):
-        text = _(
-            "Could not write to %(filename)s",
-            {"filename": stringify(self.filename)}
-        )
+        text = (_("Could not write to %(filename)s") %
+                {"filename": stringify(self.filename)})
         self.handleGenericError(text)
         if self.filehandle is not None:
             try:
@@ -587,8 +585,8 @@ class HTTPDownloader(BGDownloader):
             return
         if not self.acceptDownloadSize(self.totalSize):
             self.handleError(_("Not enough disk space"),
-                _("%(amount)s MB required to store this video",
-                  {"amount": self.totalSize / (2 ** 20)}))
+                _("%(amount)s MB required to store this video") %
+                  {"amount": self.totalSize / (2 ** 20)})
             return
         #We have a success
         self.retryCount = -1
@@ -602,8 +600,7 @@ class HTTPDownloader(BGDownloader):
         try:
             self.filehandle = fileutil.open_file(self.filename,"w+b")
         except IOError:
-            self.handleGenericError(_("Couldn't open %(filename)s for writing",
-                                    {"filename": stringify(self.filename)}))
+            self.handleGenericError(_("Couldn't open %(filename)s for writing") % {"filename": stringify(self.filename)})
             return
         if self.totalSize > 0:
             try:
@@ -795,8 +792,7 @@ class BTDownloader(BGDownloader):
 
             if self.firstTime and not self.acceptDownloadSize(self.totalSize):
                 self.handleError(_("Not enough disk space"),
-                                 _("%(amount)s MB required to store this video",
-                                   {"amount": self.totalSize / (2 ** 20)}))
+                                 _("%(amount)s MB required to store this video") % {"amount": self.totalSize / (2 ** 20)})
                 return
 
             name = os.path.dirname(fileutil.expand_filename(stringify(self.filename)))
@@ -985,8 +981,7 @@ class BTDownloader(BGDownloader):
                 name = metainfo['info']['name']
             except (RuntimeError):
                 self.handleError(_("Corrupt Torrent"),
-                                 _("The torrent file at %(url)s was not valid",
-                                   {"url": stringify(self.url)}))
+                                 _("The torrent file at %(url)s was not valid") % {"url": stringify(self.url)})
                 return
             name = name.decode('utf-8', 'replace')
             self.shortFilename = cleanFilename(name)

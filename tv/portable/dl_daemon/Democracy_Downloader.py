@@ -59,9 +59,9 @@ def launch():
 
     override_modules()
 
-    from miro.plat.utils import setupLogging, initializeLocale
-    setupLogging(inDownloader=True)
-    util.setupLogging()
+    from miro.plat.utils import setup_logging, initializeLocale
+    setup_logging(inDownloader=True)
+    util.setup_logging()
     initializeLocale()
 
     if os.environ.get('DEMOCRACY_DOWNLOADER_FIRST_LAUNCH') != '1':

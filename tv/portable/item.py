@@ -944,7 +944,7 @@ class Item(DDBObject):
         if self.isDownloaded():
             try:
                 fname = self.getFilename()
-                return util.getsize(fname)
+                return os.path.getsize(fname)
             except OSError:
                 return 0
         elif self.downloader is not None:

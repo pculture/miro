@@ -118,7 +118,7 @@ def initializeLocale():
     localeInitialized = True
 
 _loggingSetup = False
-def setupLogging (inDownloader=False):
+def setup_logging (inDownloader=False):
     global _loggingSetup
     if _loggingSetup:
         return

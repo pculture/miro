@@ -59,7 +59,7 @@ from miro import messages
 from miro import messagehandler
 from miro import moviedata
 from miro import prefs
-from miro.plat.utils import setupLogging
+from miro.plat.utils import setup_logging
 from miro import signals
 from miro import tabs
 from miro import theme
@@ -111,8 +111,10 @@ def initialize(themeName):
     """Initialize Miro.  This sets up things like logging and the config
     system and should be called as early as possible.
     """
-    setupLogging()
-    util.setupLogging()
+    # this is platform specific
+    setup_logging()
+    # this is portable general
+    util.setup_logging()
     app.db = database.defaultDatabase
     app.controller = controller.Controller()
     config.load(themeName)
