@@ -124,7 +124,7 @@ class Dialog(object):
     def run(self, callback):
         self.callback = callback
         self.choice = None
-        signals.system.newDialog(self)
+        signals.system.new_dialog(self)
 
     def runCallback(self, choice):
         """Run the callback for this dialog.  Choice should be the button that

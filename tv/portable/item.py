@@ -1148,7 +1148,7 @@ class Item(DDBObject):
                 self.downloader.addItem(other)
                 other.signalChange(needsSave=False)
         
-        signals.system.downloadComplete(self)
+        signals.system.download_complete(self)
 
     def save(self):
         self.confirmDBThread()

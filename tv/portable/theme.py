@@ -111,7 +111,7 @@ class ThemeHistory(DDBObject):
                 self._installDefaultFeeds()
         else: # no theme
             self._installDefaultFeeds()
-        signals.system.themeFirstRun(self.theme)
+        signals.system.theme_first_run(self.theme)
 
     @asUrgent
     def _installDefaultFeeds(self):

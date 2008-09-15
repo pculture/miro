@@ -185,11 +185,6 @@ class SystemSignals(SignalEmitter):
 
         No arguments.
 
-    "loaded-custom-channels" - We loaded the initial channels from an OPML
-        file.
-
-        No arguments.
-
     "update-available" - A new version of Miro is available.
      
         Arguments:
@@ -219,11 +214,11 @@ class SystemSignals(SignalEmitter):
     """
     def __init__(self):
         SignalEmitter.__init__(self, 'error', 'startup-success',
-                'startup-failure', 'shutdown', 'loaded-custom-channels',
+                'startup-failure', 'shutdown',
                 'update-available', 'download-complete', 'new-dialog',
                 'theme-first-run', 'videos-added')
 
-    def startupSuccess(self):
+    def startup_success(self):
         self.emit('startup-success')
 
     def startup_failure(self, summary, description):
@@ -232,22 +227,19 @@ class SystemSignals(SignalEmitter):
     def shutdown(self):
         self.emit('shutdown')
 
-    def loadedCustomChannels(self):
-        self.emit('loaded-custom-channels')
-
-    def updateAvailable(self, latest):
+    def update_available(self, latest):
         self.emit('update-available', latest)
 
-    def downloadComplete(self, item):
+    def download_complete(self, item):
         self.emit('download-complete', item)
 
-    def newDialog(self, dialog):
+    def new_dialog(self, dialog):
         self.emit('new-dialog', dialog)
 
-    def themeFirstRun(self, theme):
+    def theme_first_run(self, theme):
         self.emit('theme-first-run', theme)
 
-    def videosAdded(self, view):
+    def videos_added(self, view):
         self.emit('videos-added', view)
 
     def failed_exn(self, when, details=None):
@@ -257,9 +249,9 @@ class SystemSignals(SignalEmitter):
         """Used to emit the error signal.  Formats a nice crash report."""
 
         logging.info ("failed() called; generating crash report.")
-        self.emit('error', self._formatCrashReport(when, withExn, details))
+        self.emit('error', self._format_crash_report(when, withExn, details))
 
-    def _formatCrashReport(self, when, withExn, details):
+    def _format_crash_report(self, when, withExn, details):
         header = ""
         header += "App:        %s\n" % config.get(prefs.LONG_APP_NAME)
         header += "Publisher:  %s\n" % config.get(prefs.PUBLISHER)
@@ -305,7 +297,7 @@ class SystemSignals(SignalEmitter):
         # report is pasted into a ticket.
         report = "{{{\n%s}}}\n" % header
 
-        def readLog(logFile, logName="Log"):
+        def read_log(logFile, logName="Log"):
             try:
                 f = open(logFile, "rt")
                 logContents = "%s\n---\n" % logName
@@ -322,12 +314,12 @@ class SystemSignals(SignalEmitter):
         if logFile is None:
             logContents = "No logfile available on this platform.\n"
         else:
-            logContents = readLog(logFile)
+            logContents = read_log(logFile)
         if downloaderLogFile is not None:
             if logContents is not None:
-                logContents += "\n" + readLog(downloaderLogFile, "Downloader Log")
+                logContents += "\n" + read_log(downloaderLogFile, "Downloader Log")
             else:
-                logContents = readLog(downloaderLogFile)
+                logContents = read_log(downloaderLogFile)
 
         if logContents is not None:
             report += "{{{\n%s}}}\n" % util.stringify(logContents)

@@ -190,7 +190,7 @@ def finalize_startup():
     logging.info("Starting movie data updates")
     moviedata.movieDataUpdater.startThread()
 
-    signals.system.startupSuccess()
+    signals.system.startup_success()
 
     eventloop.addIdle(parse_command_line_args, "parsing command line args")
 

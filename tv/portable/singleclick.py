@@ -234,7 +234,7 @@ def playCommandLineView():
     if len(commandLineVideoIds) == 0:
         return
     commandLineView = views.items.filter(inCommandLineVideoIDs)
-    signals.system.videosAdded(commandLineView)
+    signals.system.videos_added(commandLineView)
 
 def addFeed(path):
     feed.add_feed_from_file(path)
