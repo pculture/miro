@@ -130,7 +130,8 @@ class ItemListController(object):
             items = item_view.item_list.get_items(start_id=id)
         else:
             items = selection
-        self._play_item_list(items)
+        if len(items) > 0:
+            self._play_item_list(items)
 
     def _play_item_list(self, items):
         playable = [i for i in items if i.video_path is not None]
