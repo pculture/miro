@@ -189,7 +189,7 @@ class Application:
 
         if os.path.isfile(filename):
             # FIXME - play this file
-            pass
+            messages.OpenIndividualFile(filename).send_to_backend()
         else:
             dialogs.show_message(_('Open Files - Error'),
                                  _('File %(filename)s does not exist.',

@@ -643,6 +643,9 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_download_url(self, message):
         singleclick.addDownload(message.url)
 
+    def handle_open_individual_file(self, message):
+        singleclick.parse_command_line_args([message.filename])
+
     def handle_check_version(self, message):
         up_to_date_callback = message.up_to_date_callback
         from miro import autoupdate

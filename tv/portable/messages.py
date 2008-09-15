@@ -45,6 +45,7 @@ import urlparse
 from miro import license
 from miro.folder import ChannelFolder, PlaylistFolder
 from miro.plat import resources
+from miro import singleclick
 from miro import util
 
 class MessageHandler(object):
@@ -375,6 +376,10 @@ class RemoveVideosFromPlaylist(BackendMessage):
 class DownloadURL(BackendMessage):
     def __init__(self, url):
         self.url = util.toUni(url)
+
+class OpenIndividualFile(BackendMessage):
+    def __init__(self, filename):
+        self.filename = filename
 
 class CheckVersion(BackendMessage):
     def __init__(self, up_to_date_callback):
