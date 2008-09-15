@@ -423,11 +423,6 @@ class ResumeDownload(BackendMessage):
     def __init__(self, id):
         self.id = id
 
-class RestartUpload(BackendMessage):
-    """Start uploading a torrent again."""
-    def __init__(self, id):
-        self.id = id
-
 class StartUpload(BackendMessage):
     """Start uploading a torrent."""
     def __init__(self, id):

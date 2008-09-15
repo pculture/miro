@@ -794,19 +794,6 @@ class BackendMessageHandler(messages.MessageHandler):
             if item.isUploading() or item.isUploadingPaused():
                 item.expire()
 
-    def handle_restart_upload(self, message):
-        try:
-            item = views.items.getObjectByID(message.id)
-        except database.ObjectNotFoundError:
-            logging.warn("handle_restart_upload: Item not found -- %s", message.id)
-        else:
-            if item.downloader.getType() != 'bittorrent':
-                logging.warn("%s is not a torrent", item)
-            elif item.downloader.state == 'uploading':
-                logging.warn("%s is currently uploading", item)
-            else:
-                item.startUpload()
-
     def handle_start_upload(self, message):
         try:
             item = views.items.getObjectByID(message.id)

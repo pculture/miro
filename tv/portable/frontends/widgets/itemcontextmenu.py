@@ -79,10 +79,11 @@ class ItemContextMenuHandler(object):
             if item.expiration_date:
                 menu.append((_('Keep'),
                     messages.KeepVideo(item.id).send_to_backend))
-            if (item.download_info and item.download_info.torrent and
-                    item.download_info.state != 'uploading'):
-                menu.append((_('Restart Upload'),
-                    messages.RestartUpload(item.id).send_to_backend))
+            if item.download_info and item.download_info.torrent:
+                if item.download_info.state == 'uploading':
+                    menu.append((_('Stop seeding'), messages.StopUpload(item.id).send_to_backend))
+                else:
+                    menu.append((_('Start seeding'), messages.StartUpload(item.id).send_to_backend))
             menu.append((_('Reveal File'),
                 lambda : app.widgetapp.open_file(item.video_path)))
         elif item.download_info is not None:
@@ -185,7 +186,7 @@ class ItemContextMenuHandler(object):
         if uploadable > 0:
             def restart_all():
                 for item in selection:
-                    messages.RestartUpload(item.id).send_to_backend()
+                    messages.StartUpload(item.id).send_to_backend()
             menu.append((_('Restart Upload'), restart_all))
 
         return menu
