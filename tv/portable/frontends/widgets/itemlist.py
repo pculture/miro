@@ -181,6 +181,8 @@ class ItemList(object):
     model -- TableModel for this item list.  It contains 3 columns, an
     ItemInfo object, a show_details flag and a counter used to change the
     progress throbber
+
+    new_only -- Are we only displaying the new items?
     """
 
     def __init__(self):
@@ -188,7 +190,7 @@ class ItemList(object):
         self._iter_map = {}
         self._sorter = None
         self._search_text = ''
-        self._new_only = False
+        self.new_only = False
         self._hidden_items = {} 
         # maps ids -> items that should be in this list, but are filtered out
         # for some reason
@@ -198,8 +200,12 @@ class ItemList(object):
         self._resort_items()
 
     def get_count(self):
-        """Get the number of items in this list."""
+        """Get the number of items in this list that are displayed."""
         return len(self.model)
+
+    def get_hidden_count(self):
+        """Get the number of items in this list that are hidden."""
+        return len(self._hidden_items)
 
     def get_items(self, start_id=None):
         """Get a list of ItemInfo objects in this list"""
@@ -231,7 +237,7 @@ class ItemList(object):
     def _should_show_item(self, item_info):
         if not self.filter(item_info):
             return False
-        return (not (self._new_only and item_info.item_viewed) and
+        return (not (self.new_only and item_info.item_viewed) and
                 item_matches_search(item_info, self._search_text))
 
     def set_show_details(self, item_id, value):
@@ -308,7 +314,7 @@ class ItemList(object):
 
     def set_new_only(self, new_only):
         """Set if only new items are to be displayed (default False)."""
-        self._new_only = new_only
+        self.new_only = new_only
         self._recalulate_hidden_items()
 
     def set_search_text(self, search_text):

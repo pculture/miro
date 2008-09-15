@@ -243,7 +243,7 @@ class HideableSection(widgetutil.HideableWidget):
         self.info_label = widgetset.Label("")
         self.info_label.set_size(0.85)
         self.info_label.set_color((0.72, 0.72, 0.72))
-        hbox.pack_start(self.info_label)
+        hbox.pack_start(widgetutil.pad(self.info_label, left=7))
         self.expander.set_label(hbox)
 
 class SearchToolbar(widgetutil.HideableWidget):

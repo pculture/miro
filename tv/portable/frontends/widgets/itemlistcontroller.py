@@ -87,6 +87,7 @@ class ItemListController(object):
         self.type = type
         self.id = id
         self.current_item_view = None
+        self._search_text = ''
         self.widget = self.build_widget()
         item_lists = [iv.item_list for iv in self.all_item_views()]
         self.item_list_group = itemlist.ItemListGroup(item_lists)
@@ -138,6 +139,7 @@ class ItemListController(object):
 
     def set_search(self, search_text):
         """Set the search for all ItemViews managed by this controller.  """
+        self._search_text = search_text
         self.item_list_group.set_search_text(search_text)
         for item_view in self.all_item_views():
             item_view.model_changed()

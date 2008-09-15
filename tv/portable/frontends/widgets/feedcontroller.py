@@ -72,13 +72,20 @@ class FeedController(itemlistcontroller.ItemListController):
         widget.content_vbox.pack_start(self.downloaded_section)
         return widget
 
-    def _on_show_more(self, button):
+    def _show_all(self):
+        self._show_more_count = 0
         self.full_view.item_list.set_new_only(False)
         self.full_view.model_changed()
         self.show_more_container.hide()
 
+    def _on_show_more(self, button):
+        self._show_all()
+
     def _on_search_changed(self, widget, search_text):
+        if self.full_view.item_list.new_only:
+            self._show_all()
         self.set_search(search_text)
+        self._update_counts()
 
     def _on_save_search(self, widget, search_text):
         info = widgetutil.get_feed_info(self.id)
@@ -134,12 +141,13 @@ class FeedController(itemlistcontroller.ItemListController):
         video_downloaded = self.downloaded_view.item_list.get_count() > 0
         feed_info = widgetutil.get_feed_info(self.id)
         autodownload_mode = feed_info.autodownload_mode
-        self.full_section.expand()
-        self.full_section.show()
         self.downloaded_section.expand()
+        self.full_section.show()
         all_items = self.full_view.item_list.get_items()
         viewed_items = [item for item in all_items if item.item_viewed]
-        if video_downloaded and len(viewed_items) > 0:
+        if not (video_downloaded and len(all_items) == len(viewed_items)):
+            self.full_section.expand()
+        if video_downloaded and 0 < len(viewed_items) < len(all_items):
             text = ngettext('Show 1 more item',
                             'Show %(count)d more items',
                             len(viewed_items),
@@ -149,6 +157,9 @@ class FeedController(itemlistcontroller.ItemListController):
             self.show_more_container.show()
             self.full_view.item_list.set_new_only(True)
             self.full_view.model_changed()
+            self._show_more_count = len(viewed_items)
+        else:
+            self._show_more_count = 0
 
     def on_initial_list(self):
         # We wait for the initial list of items to pack our item views because
@@ -162,7 +173,8 @@ class FeedController(itemlistcontroller.ItemListController):
     def _update_counts(self):
         downloads = self.downloading_view.item_list.get_count()
         watchable = self.downloaded_view.item_list.get_count()
-        full_count = self.full_view.item_list.get_count()
+        full_count = (self.full_view.item_list.get_count() +
+                self._show_more_count)
         self._update_downloading_section(downloads)
         self._update_downloaded_section(watchable)
         self._update_full_section(downloads, full_count)
@@ -184,20 +196,27 @@ class FeedController(itemlistcontroller.ItemListController):
                             "%(count)d Videos",
                             watchable,
                             {"count": watchable})
-            text = u"  |  %s  " % text
+            text = u"|  %s  " % text
             self.downloaded_section.set_info(text)
             self.downloaded_section.show()
         else:
             self.downloaded_section.hide()
 
     def _update_full_section(self, downloads, videos):
-        videotext = ngettext("%(count)d Video",
-                             "%(count)d Videos",
-                             videos,
-                             {"count": videos})
-        downloadingtext = ngettext("%(count)d Downloading",
-                                   "%(count)d Downloading",
-                                   downloads,
-                                   {"count": downloads})
-        text = u"  |  %s  |  %s" % (videotext, downloadingtext)
+        if self._search_text == '':
+            videotext = ngettext("%(count)d Video",
+                                 "%(count)d Videos",
+                                 videos,
+                                 {"count": videos})
+            downloadingtext = ngettext("%(count)d Downloading",
+                                       "%(count)d Downloading",
+                                       downloads,
+                                       {"count": downloads})
+            text = u"|  %s  |  %s" % (videotext, downloadingtext)
+        elif self.full_view.item_list.get_hidden_count() > 0:
+            text = ngettext("|  %(count)d Video Matches Search",
+                    "|  %(count)d Videos Match Search",
+                    videos, {"count": videos})
+        else:
+            text = _("|  All Videos Match Search")
         self.full_section.set_info(text)
