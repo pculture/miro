@@ -49,6 +49,8 @@ from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
 from miro.util import getSingletonDDBObject
 from miro.xhtmltools import urlencode
 
+from miro.plat.utils import unicodeToFilename
+
 import shutil
 
 class ViewTracker(object):
@@ -644,7 +646,9 @@ class BackendMessageHandler(messages.MessageHandler):
         singleclick.addDownload(message.url)
 
     def handle_open_individual_file(self, message):
-        singleclick.parse_command_line_args([message.filename])
+        fn = unicodeToFilename(message.filename.decode('utf-8'))
+
+        singleclick.parse_command_line_args([fn])
 
     def handle_check_version(self, message):
         up_to_date_callback = message.up_to_date_callback
