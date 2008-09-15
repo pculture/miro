@@ -38,11 +38,6 @@ from miro.databasehelper import TrackedIDList
 
 import logging
 
-###############################################################################
-#### Tabs                                                                  ####
-###############################################################################
-
-
 class Tab:
     idCounter = 0
 
@@ -69,11 +64,6 @@ class Tab:
         else:
             raise TypeError("Bad tab object type: %s" % type(obj))
 
-    def setActive(self, newValue):
-        self.obj.confirmDBThread()
-        self.active = newValue
-        self.obj.signalChange(needsSave=False)
-
     def setSelected(self, newValue):
         self.obj.confirmDBThread()
         self.selected = newValue
@@ -83,12 +73,9 @@ class Tab:
         self.obj.confirmDBThread()
         return self.selected
 
-    def getActive(self):
-        self.obj.confirmDBThread()
-        return self.active
-
-    # Returns "normal" "selected" or "selected-inactive"
     def getState(self):
+        """Returns "normal" "selected" or "selected-inactive"
+        """
         if not self.selected:
             return 'normal'
         elif not self.active:
@@ -97,8 +84,9 @@ class Tab:
             return 'selected'
 
     def redraw(self):
-        # Force a redraw by sending a change notification on the underlying
-        # DB object.
+        """Force a redraw by sending a change notification on the underlying
+        DB object.
+        """
         self.obj.signalChange()
 
     def isFeed(self):
@@ -160,15 +148,8 @@ class Tab:
 
         return self.obj.idExists()
 
-    def onDeselected(self, frame):
-        self.display.onDeselect(frame)
-
-def expandedFolderFilter(tab):
-    folder = tab.obj.getFolder()
-    return folder is None or folder.getExpanded()
-
 class TabOrder(database.DDBObject):
-    """TabOrder objects keep track of the order of the tabs.  Democracy
+    """TabOrder objects keep track of the order of the tabs.  Miro
     creates 2 of these, one to track channels/channel folders and another to
     track playlists/playlist folders.
 
@@ -241,28 +222,6 @@ class TabOrder(database.DDBObject):
             self.trackedTabs.removeID(id)
         self.signalChange()
 
-    def handleDNDReorder(self, anchorItem, draggedIDs):
-        """Handle drag-and-drop reordering of the tab order."""
-
-        for iid in draggedIDs:
-            if iid not in self.trackedTabs:
-                raise ValueError("ID not in TabOrder: %s", iid)
-        if anchorItem is None:
-            newFolder = None
-        else:
-            newFolder = anchorItem.getFolder()
-
-        childrenIDs = set()
-        for id in draggedIDs:
-            tab = self.trackedTabs.view.getObjectByID(id)
-            tab.obj.setFolder(newFolder)
-            if isinstance(tab.obj, folder.FolderBase):
-                for child in tab.obj.getChildrenView():
-                    childrenIDs.add(child.getID())
-        toMove = draggedIDs.union(childrenIDs)
-        self.moveTabs(anchorItem, toMove, sendSignalChange=False)
-        self.signalChange()
-
     def moveTabs(self, anchorItem, toMove, sendSignalChange=True):
         if anchorItem is not None:
             self.trackedTabs.moveIDList(toMove, anchorItem.getID())
@@ -273,29 +232,3 @@ class TabOrder(database.DDBObject):
 
     def reorder(self, newOrder):
         self.trackedTabs.reorder(newOrder)
-
-def tabIterator():
-    """Iterates over all tabs in order"""
-    for tab in views.guideTabs:
-        yield tab
-    for tab in views.staticTabs:
-        yield tab
-    for tab in getSingletonDDBObject(views.siteTabOrder).getView():
-        yield tab
-    for tab in getSingletonDDBObject(views.channelTabOrder).getView():
-        yield tab
-    for tab in getSingletonDDBObject(views.playlistTabOrder).getView():
-        yield tab
-
-def getViewForTab(tab):
-    if tab.type == 'guide':
-        return views.guideTabs
-    elif tab.type == 'statictab':
-        return views.staticTabs
-    elif tab.type == 'site':
-        return getSingletonDDBObject(views.siteTabOrder).getView()
-    elif tab.type == 'feed':
-        return getSingletonDDBObject(views.channelTabOrder).getView()
-    elif tab.type == 'playlist':
-        return getSingletonDDBObject(views.playlistTabOrder).getView()
-    raise AssertionError("Unknown tab type")

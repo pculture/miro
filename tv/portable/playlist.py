@@ -57,21 +57,6 @@ class PlaylistMixin:
     def getView(self):
         return self.trackedItems.view
 
-    def setSearch(self, searchTerms):
-        """Set a search to limit the items in this playlist.  
-
-        NOTE: When this is called by the template code, it will change the
-        results of getView() and getItems().  I (BDK), feel like this is a
-        kind of ugly design, but I don't want to change things right now,
-        because that would involve extra sorts on the playlist view.  Right
-        now the only time we use getView() is in the template code, so I
-        didn't want to fix an issue that doesn't matter.
-        """
-
-        def searchFilter(obj):
-            return filters.matchingItems(obj, searchTerms)
-        self.trackedItems.setFilter(searchFilter)
-    
     def getFolder(self):
         return None
 
@@ -127,31 +112,9 @@ class PlaylistMixin:
     def moveItem(self, item, newPosition):
         return self.moveID(item.getID(), newPosition)
 
-    def handleDNDAppend(self, draggedIDs):
-        for id in draggedIDs:
-            if not views.items.idExists(id):
-                raise KeyError("%s is not an item id" % id)
-            item = views.items.getObjectByID(id)
-            if not item.isContainerItem:
-                self.addID(id)
-            else:
-                for child in item.getChildren():
-                    self.addID(child.getID())
-
     def reorder(self, newOrder):
         self.trackedItems.reorder(newOrder)
 
-    def handleDNDReorder(self, anchorItem, draggedItems):
-        """Handle drag-and-drop reordering of the playlist."""
-        for iid in draggedItems:
-            if iid not in self.trackedItems:
-                raise ValueError("id not in playlist folder: %s", iid)
-        if anchorItem is not None:
-            self.trackedItems.moveIDList(draggedItems, anchorItem.getID())
-        else:
-            self.trackedItems.moveIDList(draggedItems, None)
-        self.signalChange()
-        
     def recomputeSort(self):
         self.trackedItems.recomputeSort()
 
@@ -212,13 +175,6 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
         if folder:
             for id in ids:
                 folder.checkItemIDRemoved(id)
-
-    def getDragDestType(self):
-        self.confirmDBThread()
-        if self.folder_id is not None:
-            return 'playlist'
-        else:
-            return 'playlist:playlistfolder'
 
     def rename(self):
         title = _("Rename Playlist")

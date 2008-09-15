@@ -866,7 +866,7 @@ class Feed(DDBObject):
             self.folder_id = None
         self.signalChange()
         for item in self.items:
-            item.signalChange(needsSave=False, needsUpdateXML=False)
+            item.signalChange(needsSave=False)
         if newFolder:
             newFolder.signalChange(needsSave=False)
         if oldFolder:
@@ -1180,14 +1180,6 @@ class Feed(DDBObject):
             item.iconCache.requestUpdate(True)
         for feed in views.feeds:
             feed.iconCache.requestUpdate(True)
-
-    @returnsUnicode
-    def getDragDestType(self):
-        self.confirmDBThread()
-        if self.folder_id is not None:
-            return u'channel'
-        else:
-            return u'channel:channelfolder'
 
     def onRestore(self):
         DDBObject.onRestore(self)
