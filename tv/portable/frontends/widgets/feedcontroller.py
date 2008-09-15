@@ -74,6 +74,7 @@ class FeedController(itemlistcontroller.ItemListController):
 
     def _on_show_more(self, button):
         self.full_view.item_list.set_new_only(False)
+        self.full_view.model_changed()
         self.show_more_container.hide()
 
     def _on_search_changed(self, widget, search_text):
@@ -144,8 +145,10 @@ class FeedController(itemlistcontroller.ItemListController):
                             len(viewed_items),
                             {"count": len(viewed_items)})
             self.show_more_button.set_text(text)
+            self.show_more_button.set_size(0.85)
             self.show_more_container.show()
             self.full_view.item_list.set_new_only(True)
+            self.full_view.model_changed()
 
     def on_initial_list(self):
         # We wait for the initial list of items to pack our item views because
