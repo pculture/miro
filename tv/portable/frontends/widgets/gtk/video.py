@@ -28,6 +28,8 @@
 
 """video.py -- Video code. """
 
+import time
+
 import gobject
 import gtk
 
@@ -48,12 +50,22 @@ def make_hidden_cursor():
     color = gtk.gdk.Color()
     return gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
 
+# Couple of utility functions to grab GTK widgets out of the widget tree for
+# fullscreen code
+def _videobox_widget():
+    return app.widgetapp.window.videobox._widget
+
+def _window():
+    return app.widgetapp.window._window
+
 class VideoRenderer(Widget):
     """Video renderer widget.
 
     Note: app.renderer must be initialized before instantiating this class.
     If no renderers can be found, set app.renderer to None.
     """
+
+    HIDE_CONTROLS_TIMEOUT = 2000
 
     def __init__(self):
         Widget.__init__(self)
@@ -66,7 +78,8 @@ class VideoRenderer(Widget):
         self._widget.add_events(gtk.gdk.POINTER_MOTION_MASK)
         self.renderer.set_widget(self._widget)
         self.hide_controls_timeout = None
-        self.motion_handler_id = None
+        self.motion_handler = None
+        self.videobox_motion_handler = None
         self.hidden_cursor = make_hidden_cursor()
 
     def teardown(self):
@@ -114,41 +127,53 @@ class VideoRenderer(Widget):
         self.screensaver_manager = screensaver.create_manager()
         if self.screensaver_manager is not None:
             self.screensaver_manager.disable()
-        self.motion_handler_id = self.wrapped_widget_connect(
+        self.motion_handler = self.wrapped_widget_connect(
+                'motion-notify-event', self.on_mouse_motion)
+        self.videobox_motion_handler = _videobox_widget().connect(
                 'motion-notify-event', self.on_mouse_motion)
         app.widgetapp.window.menubar.hide()
-        self.schedule_hide_controls()
-        app.widgetapp.window._window.fullscreen()
+        self.schedule_hide_controls(self.HIDE_CONTROLS_TIMEOUT)
+        _window().fullscreen()
 
     def on_mouse_motion(self, widget, event):
-        self.show_controls()
-        self.cancel_hide_controls()
-        self.schedule_hide_controls()
+        if not _videobox_widget().props.visible:
+            self.show_controls()
+            self.schedule_hide_controls(self.HIDE_CONTROLS_TIMEOUT)
+        else:
+            self.last_motion_time = time.time()
 
     def show_controls(self):
-        app.widgetapp.window.videobox._widget.show()
-        app.widgetapp.window._window.window.set_cursor(None)
+        _videobox_widget().show()
+        _window().window.set_cursor(None)
 
-    def hide_controls(self):
-        app.widgetapp.window._window.window.set_cursor(self.hidden_cursor)
-        app.widgetapp.window.videobox._widget.hide()
-        self.hide_controls_timeout = None
+    def on_hide_controls_timeout(self):
+        # Check if the mouse moved before the timeout
+        time_since_motion = int((time.time() - self.last_motion_time) * 1000)
+        timeout_left = self.HIDE_CONTROLS_TIMEOUT - time_since_motion
+        if timeout_left <= 0:
+            _window().window.set_cursor(self.hidden_cursor)
+            _videobox_widget().hide()
+            self.hide_controls_timeout = None
+        else:
+            self.schedule_hide_controls(timeout_left)
 
     def cancel_hide_controls(self):
         if self.hide_controls_timeout is not None:
             gobject.source_remove(self.hide_controls_timeout)
 
-    def schedule_hide_controls(self):
-        self.hide_controls_timeout = gobject.timeout_add(1500, 
-                self.hide_controls)
+    def schedule_hide_controls(self, time):
+        self.hide_controls_timeout = gobject.timeout_add(time,
+                self.on_hide_controls_timeout)
+        self.last_motion_time = 0
 
     def exit_fullscreen(self):
         if self.screensaver_manager is not None:
             self.screensaver_manager.enable()
             self.screensaver_manager = None
         app.widgetapp.window.menubar.show()
-        app.widgetapp.window.videobox._widget.show()
-        app.widgetapp.window._window.unfullscreen()
-        self._widget.disconnect(self.motion_handler_id)
+        _videobox_widget().show()
+        _window().unfullscreen()
+        self._widget.disconnect(self.motion_handler)
+        _videobox_widget().disconnect(self.videobox_motion_handler)
         self.cancel_hide_controls()
-        app.widgetapp.window._window.window.set_cursor(None)
+        _window().window.set_cursor(None)
