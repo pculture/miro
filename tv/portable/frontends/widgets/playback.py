@@ -125,10 +125,11 @@ class PlaybackManager (signals.SignalEmitter):
         self.emit('will-fullscreen')
         self.toggle_fullscreen()
 
-    def stop(self):
+    def stop(self, save_resume_time=True):
         if not self.is_playing:
             return
-        self.update_current_resume_time()
+        if save_resume_time:
+            self.update_current_resume_time()
         self.cancel_mark_as_watched()
         self.is_playing = False
         self.is_paused = False
@@ -173,7 +174,7 @@ class PlaybackManager (signals.SignalEmitter):
 
     def on_movie_finished(self):
         self.update_current_resume_time(0)
-        self.play_next_movie()
+        self.play_next_movie(False)
 
     def schedule_mark_as_watched(self):
         self.mark_as_watched_timeout = timer.add(3, self.mark_as_watched)
@@ -205,22 +206,21 @@ class PlaybackManager (signals.SignalEmitter):
         if self.is_playing:
             self.video_display.play()
 
-    def play_next_movie(self):
+    def play_next_movie(self, save_current_resume_time=True):
         self.cancel_mark_as_watched()
-        if (config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE)
-               or self.position == len(self.playlist) - 1):
-            self.stop()
-            return
-        self.position += 1
-        self._play_current()
+        if config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE) or (self.position == len(self.playlist) - 1):
+            self.stop(save_current_resume_time)
+        else:
+            self.position += 1
+            self._play_current()
 
     def play_prev_movie(self):
         self.cancel_mark_as_watched()
         if config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
             self.stop()
-            return
-        self.position -= 1
-        self._play_current()
+        else:
+            self.position -= 1
+            self._play_current()
 
     def toggle_fullscreen(self):
         if self.is_fullscreen:
