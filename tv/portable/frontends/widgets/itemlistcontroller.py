@@ -313,8 +313,6 @@ class DownloadsController(SimpleItemListController):
         self.button_toolbar.connect("pause-all", self._on_pause_all)
         self.button_toolbar.connect("resume-all", self._on_resume_all)
         self.button_toolbar.connect("cancel-all", self._on_cancel_all)
-        self.button_toolbar.connect("pause-all-uploading", self._on_pause_all_uploading)
-        self.button_toolbar.connect("resume-all-uploading", self._on_resume_all_uploading)
         self.label_toolbar = itemlistwidgets.DownloadLabelToolbar()
         self._update_free_space()
         self.widget.titlebar_vbox.pack_start(self.label_toolbar)
@@ -331,12 +329,6 @@ class DownloadsController(SimpleItemListController):
 
     def _on_cancel_all(self, widget):
         messages.CancelAllDownloads().send_to_backend()
-
-    def _on_pause_all_uploading(self, widget):
-        messages.PauseAllUploads().send_to_backend()
-
-    def _on_resume_all_uploading(self, widget):
-        messages.ResumeAllUploads().send_to_backend()
 
     def on_items_changed(self):
         self.label_toolbar.update_downloading_rate(downloader.totalDownRate)

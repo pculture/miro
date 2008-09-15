@@ -428,14 +428,6 @@ class RestartUpload(BackendMessage):
     def __init__(self, id):
         self.id = id
 
-class PauseAllUploads(BackendMessage):
-    """Pauses all uploading items."""
-    pass
-
-class ResumeAllUploads(BackendMessage):
-    """Resumes all uploading items."""
-    pass
-
 class KeepVideo(BackendMessage):
     """Cancel the auto-expiration of an item's video"""
     def __init__(self, id):

@@ -750,9 +750,13 @@ class BackendMessageHandler(messages.MessageHandler):
             item.expire()
 
     def handle_pause_all_downloads(self, message):
+        """Pauses all downloading and uploading items"""
         for item in views.downloadingItems:
-            print item
             item.pause()
+
+        for item in views.allDownloadingItems:
+            if item.isUploading():
+                item.pauseUpload()
 
     def handle_pause_download(self, message):
         try:
@@ -763,9 +767,13 @@ class BackendMessageHandler(messages.MessageHandler):
             item.pause()
 
     def handle_resume_all_downloads(self, message):
+        """Resumes downloading and uploading items"""
         for item in views.pausedItems:
-            print item
             item.resume()
+
+        for item in views.allDownloadingItems:
+            if item.isUploadingPaused():
+                item.startUpload()
 
     def handle_resume_download(self, message):
         try:
@@ -782,6 +790,10 @@ class BackendMessageHandler(messages.MessageHandler):
         for item in views.downloadingItems:
             item.expire()
 
+        for item in views.allDownloadingItems:
+            if item.isUploading() or item.isUploadingPaused():
+                item.expire()
+
     def handle_restart_upload(self, message):
         try:
             item = views.items.getObjectByID(message.id)
@@ -793,16 +805,6 @@ class BackendMessageHandler(messages.MessageHandler):
             elif item.downloader.state == 'uploading':
                 logging.warn("%s is currently uploading", item)
             else:
-                item.startUpload()
-
-    def handle_pause_all_uploads(self, message):
-        for item in views.allDownloadingItems:
-            if item.isUploading():
-                item.pauseUpload()
-
-    def handle_resume_all_uploads(self, message):
-        for item in views.allDownloadingItems:
-            if item.isUploadingPaused():
                 item.startUpload()
 
     def handle_keep_video(self, message):

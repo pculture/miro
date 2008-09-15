@@ -275,8 +275,6 @@ class DownloadButtonToolbar(widgetset.HBox):
        pause-all -- All downloads should be paused
        resume-all -- All downloads should be resumed
        cancel-all -- All downloads should be canceled
-       pause-all-uploading -- All uploads should be paused
-       resume-all-uploading -- All uploads should be resumed
     """
 
     def __init__(self):
@@ -285,9 +283,6 @@ class DownloadButtonToolbar(widgetset.HBox):
         self.create_signal('pause-all')
         self.create_signal('resume-all')
         self.create_signal('cancel-all')
-
-        self.create_signal('pause-all-uploading')
-        self.create_signal('resume-all-uploading')
 
         pause_button = widgetset.Button(_('Pause All'), style='smooth')
         pause_button.set_size(0.85)
@@ -310,25 +305,6 @@ class DownloadButtonToolbar(widgetset.HBox):
         self.pack_start(widgetutil.align_middle(cancel_button, top_pad=5,
             bottom_pad=5))
 
-        lab = widgetset.Label("|")
-        lab.set_color(style.TOOLBAR_GRAY)
-        self.pack_start(widgetutil.align_middle(lab))
-
-        pause_uploading_button = widgetset.Button(_('Pause All Uploading'), style='smooth')
-        pause_uploading_button.set_size(0.85)
-        pause_uploading_button.set_color(style.TOOLBAR_GRAY)
-        pause_uploading_button.connect('clicked', self._on_pause_uploading_button_clicked)
-        self.pack_start(widgetutil.align_middle(pause_uploading_button, top_pad=5,
-            bottom_pad=5))
-
-        resume_uploading_button = widgetset.Button(_('Resume All Uploading'), style='smooth')
-        resume_uploading_button.set_size(0.85)
-        resume_uploading_button.set_color(style.TOOLBAR_GRAY)
-        resume_uploading_button.connect('clicked', self._on_resume_uploading_button_clicked)
-        self.pack_start(widgetutil.align_middle(resume_uploading_button, top_pad=5,
-            right_pad=10, bottom_pad=5))
-
-
     def _on_pause_button_clicked(self, widget):
         self.emit('pause-all')
 
@@ -337,12 +313,6 @@ class DownloadButtonToolbar(widgetset.HBox):
 
     def _on_cancel_button_clicked(self, widget):
         self.emit('cancel-all')
-
-    def _on_pause_uploading_button_clicked(self, widget):
-        self.emit('pause-all-uploading')
-
-    def _on_resume_uploading_button_clicked(self, widget):
-        self.emit('resume-all-uploading')
 
 class DownloadLabelToolbar(widgetset.HBox):
     """Widget that shows the info.
