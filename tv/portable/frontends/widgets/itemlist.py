@@ -284,6 +284,8 @@ class ItemList(object):
                 if should_show:
                     to_add.append(info)
                     del self._hidden_items[info.id]
+                else:
+                    self._hidden_items[info.id] = info
         if not already_sorted:
             self._sorter.sort_items(to_add)
         self._insert_sorted_items(to_add)
