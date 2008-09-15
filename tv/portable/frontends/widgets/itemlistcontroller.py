@@ -41,7 +41,6 @@ import os
 from urlparse import urljoin
 
 from miro import app
-from miro import downloader
 from miro import messages
 from miro import util
 from miro.gtcache import gettext as _
@@ -53,7 +52,6 @@ from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
 from miro.plat import resources
-from miro.plat.utils import get_available_bytes_for_movies
 
 class ItemListDragHandler(object):
     def allowed_actions(self):
@@ -300,39 +298,6 @@ class SimpleItemListController(ItemListController):
     def _make_icon(self):
         image_path = resources.path("wimages/%s" % self.image_filename)
         return imagepool.get(image_path)
-
-class DownloadsController(SimpleItemListController):
-    type = 'downloads'
-    id = None
-    image_filename = 'icon-downloading_large.png'
-    title = _("Downloads")
-
-    def __init__(self):
-        SimpleItemListController.__init__(self)
-        self.button_toolbar = itemlistwidgets.DownloadButtonToolbar()
-        self.button_toolbar.connect("pause-all", self._on_pause_all)
-        self.button_toolbar.connect("resume-all", self._on_resume_all)
-        self.button_toolbar.connect("cancel-all", self._on_cancel_all)
-        self.label_toolbar = itemlistwidgets.DownloadLabelToolbar()
-        self._update_free_space()
-        self.widget.titlebar_vbox.pack_start(self.label_toolbar)
-        self.widget.titlebar_vbox.pack_start(self.button_toolbar)
-
-    def _update_free_space(self):
-        self.label_toolbar.update_free_space(get_available_bytes_for_movies())
-
-    def _on_pause_all(self, widget):
-        messages.PauseAllDownloads().send_to_backend()
-
-    def _on_resume_all(self, widget):
-        messages.ResumeAllDownloads().send_to_backend()
-
-    def _on_cancel_all(self, widget):
-        messages.CancelAllDownloads().send_to_backend()
-
-    def on_items_changed(self):
-        self.label_toolbar.update_downloading_rate(downloader.totalDownRate)
-        self.label_toolbar.update_uploading_rate(downloader.totalUpRate)
 
 class NewController(SimpleItemListController):
     type = 'new'

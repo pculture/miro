@@ -34,6 +34,7 @@ from miro import app
 from miro import messages
 from miro import signals
 from miro.frontends.widgets import browser
+from miro.frontends.widgets import downloadscontroller
 from miro.frontends.widgets import feedcontroller
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import playlist
@@ -216,7 +217,7 @@ class DownloadingDisplay(ItemListDisplay):
         return type == 'static' and selected_tabs[0].id == 'downloading'
 
     def make_controller(self, tab):
-        return itemlistcontroller.DownloadsController()
+        return downloadscontroller.DownloadsController()
 
 class NewVideosDisplay(ItemListDisplay):
     @staticmethod
