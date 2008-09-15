@@ -37,6 +37,7 @@ that work for the static tabs which are pretty simple cases.
 """
 
 import itertools
+import logging
 import os
 from urlparse import urljoin
 
@@ -355,3 +356,54 @@ class IndividualDownloadsController(SimpleItemListController):
     id = None
     image_filename = 'icon-individual_large.png'
     title = _("Single Items")
+
+class ItemListControllerManager(object):
+    """Manages ItemListController objects.
+
+    Attributes:
+
+    displayed -- Currently displayed ItemListController or None (this one is
+        currently being displayed in the right-hand side)
+    all_controllers -- Set of all ItemListControllers in use (these are
+        somewhere in the display stack, but not neccesarily displayed
+        currently).
+    """
+
+    def __init__(self):
+        self.displayed = None
+        self.all_controllers = set()
+
+    def controller_displayed(self, item_list_controller):
+        self.displayed = item_list_controller
+
+    def controller_no_longer_displayed(self, item_list_controller):
+        if item_list_controller is not self.displayed:
+            logging.warn("controller is not displayed in "
+                    "controller_no_longer_displayed()")
+        self.displayed = None
+
+    def controller_created(self, item_list_controller):
+        self.all_controllers.add(item_list_controller)
+
+    def controller_destroyed(self, item_list_controller):
+        self.all_controllers.remove(item_list_controller)
+
+    def play_selection(self):
+        if self.displayed is not None:
+            self.displayed.play_selection()
+
+    def get_selection(self):
+        if self.displayed is None:
+            return []
+        else:
+            return self.displayed.get_selection()
+
+    def handle_item_list(self, message):
+        for controller in self.all_controllers:
+            if controller.should_handle_message(message):
+                controller.handle_item_list(message)
+
+    def handle_items_changed(self, message):
+        for controller in self.all_controllers:
+            if controller.should_handle_message(message):
+                controller.handle_items_changed(message)

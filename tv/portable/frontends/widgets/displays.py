@@ -58,6 +58,19 @@ class Display(signals.SignalEmitter):
         """Perform any code that needs to be run every time the display is
         selected.
         """
+        pass
+
+    def on_activate(self):
+        """Perform code that needs to be run when the display becomes the
+        active display (the one on the top of the display stack).
+        """
+        pass
+
+    def on_deactivate(self):
+        """Perform code that needs to be run when another display gets pushed
+        on top of this display.
+        """
+        pass
 
     def cleanup(self):
         """Cleanup any resources allocated in create.  This will be called
@@ -137,8 +150,11 @@ class DisplayManager(object):
 
     def push_display(self, display):
         """Select a display and push it on top of the display stack"""
+        if len(self.display_stack) > 0:
+            self.current_display.on_deactivate()
         self.display_stack.append(display)
         display.on_selected()
+        display.on_activate()
         app.widgetapp.window.set_main_area(display.widget)
 
     def pop_display(self):
@@ -146,9 +162,11 @@ class DisplayManager(object):
         stack.
         """
         self._unselect_display(self.display_stack.pop())
+        self.current_display.on_activate()
         app.widgetapp.window.set_main_area(self.current_display.widget)
 
     def _unselect_display(self, display):
+        display.on_deactivate()
         display.cleanup()
         display.emit("removed")
 
@@ -178,12 +196,19 @@ class ItemListDisplay(TabDisplay):
         self.widget = self.controller.widget
 
     def on_selected(self):
-        app.item_list_controller = self.controller
+        app.item_list_controller_manager.controller_created(self.controller)
         self.controller.start_tracking()
 
+    def on_activate(self):
+        app.item_list_controller_manager.controller_displayed(self.controller)
+
+    def on_deactivate(self):
+        app.item_list_controller_manager.controller_no_longer_displayed(
+                self.controller)
+
     def cleanup(self):
-        app.item_list_controller = None
         self.controller.stop_tracking()
+        app.item_list_controller_manager.controller_destroyed(self.controller)
 
     def make_controller(self, tab):
         raise NotImplementedError()

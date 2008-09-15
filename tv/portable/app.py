@@ -43,7 +43,7 @@ The widget frontend adds:
 widgetapp -- Application object
 display_manger -- Handles the right-hand display.
 tab_list_manager -- Handles the tab lists and selection.
-item_list_controller -- Currently active ItemListController (or None)
+item_list_controller_manager -- Manages ItemListControllers
 renderer -- Video rendering object (or None if the platform code can't
         initialize a suitable renderer)
 search_manager -- Manages the search state
