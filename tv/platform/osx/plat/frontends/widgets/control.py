@@ -31,12 +31,17 @@
 from AppKit import *
 from Foundation import *
 from objc import YES, NO, nil
+
+import os
 import weakref
 
+from miro.plat import resources
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets import layoutmanager
 from miro.plat.frontends.widgets.base import Widget
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
+
+from miro import searchengines
 
 class BaseTextEntry(Widget):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
@@ -360,3 +365,120 @@ class RadioButton(Widget):
 
     def disable_widget(self):
         self.view.setEnabled_(False)
+
+
+class VideoSearchTextEntry (SearchTextEntry):
+    def make_view(self):
+        return NSVideoSearchField.alloc().init()
+
+class NSVideoSearchField (MiroSearchTextField):
+
+    def init(self):
+        self = MiroSearchTextField.init(self)
+        self.setCell_(VideoSearchFieldCell.alloc().initWithCell_(self.cell()))
+        self.setTarget_(self)
+        self.setAction_('search:')
+        self.initFromLastEngine()
+        return self
+        
+    def search_(self, sender):
+        engine = self.selectedEngine()
+        query = unicode(self.stringValue())
+        if query != '':
+            # TODO: call search :)
+            pass
+
+    def initFromLastEngine(self):
+        self.setStringValue_("")
+        lastEngine = searchengines.get_last_engine()
+        for engine in searchengines.get_search_engines():
+            if engine.name == lastEngine:
+                menu = self.searchMenuTemplate()
+                index = menu.indexOfItemWithRepresentedObject_(engine)
+                menu.performActionForItemAtIndex_(index)
+                return
+
+    def selectedEngine(self):
+        return self.cell().currentItem.representedObject().name
+        
+class VideoSearchFieldCell (NSSearchFieldCell):
+    
+    def initWithCell_(self, cell):
+        self = super(VideoSearchFieldCell, self).initTextCell_('')
+        self.setBezeled_(cell.isBezeled())
+        self.setBezelStyle_(cell.bezelStyle())
+        self.setEnabled_(cell.isEnabled())
+        self.setPlaceholderString_(cell.placeholderString())
+        self.setEditable_(cell.isEditable())
+        self.setSearchButtonCell_(cell.searchButtonCell())
+        self.setCancelButtonCell_(cell.cancelButtonCell())
+        self.cancelButtonCell().setTarget_(self)
+        self.setSearchMenuTemplate_(self.makeSearchMenuTemplate())
+        self.setSendsWholeSearchString_(YES)
+        self.setScrollable_(YES)
+        self.currentItem = nil
+        return self
+    
+    def makeSearchMenuTemplate(self):
+        menu = NSMenu.alloc().initWithTitle_("Search Menu")
+        for engine in reversed(searchengines.get_search_engines()):
+            nsitem = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_(engine.title, 'selectEngine:', '')
+            nsitem.setTarget_(self)
+            nsitem.setImage_(_getEngineIcon(engine))
+            nsitem.setRepresentedObject_(engine)
+            menu.insertItem_atIndex_(nsitem, 0)
+        return menu
+
+    def selectEngine_(self, sender):
+        if self.currentItem is not nil:
+            self.currentItem.setState_(NSOffState)
+        self.currentItem = sender
+        sender.setState_(NSOnState)
+        engine = sender.representedObject()
+        self.searchButtonCell().setImage_(_getSearchIcon(engine))
+    
+    def searchButtonRectForBounds_(self, bounds):
+        return NSRect(NSPoint(8.0, 3.0), NSSize(25.0, 16.0))
+        
+    def searchTextRectForBounds_(self, bounds):
+        cancelButtonBounds = super(VideoSearchFieldCell, self).cancelButtonRectForBounds_(bounds)
+        searchButtonBounds = self.searchButtonRectForBounds_(bounds)
+        x = searchButtonBounds.origin.x + searchButtonBounds.size.width + 2
+        width = bounds.size.width - x - cancelButtonBounds.size.width
+        return ((x, 3.0), (width, 16.0))
+
+def _getEngineIcon(engine):
+    engineIconPath = resources.path('wimages/search_icon_%s.png' % engine.name)
+    if not os.path.exists(engineIconPath):
+        return nil
+    return NSImage.alloc().initByReferencingFile_(engineIconPath)
+
+searchIcons = dict()
+def _getSearchIcon(engine):
+    if engine.name not in searchIcons:
+        searchIcons[engine.name] = _makeSearchIcon(engine)
+    return searchIcons[engine.name]        
+
+def _makeSearchIcon(engine):
+    popupRectangle = NSImage.imageNamed_(u'search_popup_triangle')
+    popupRectangleSize = popupRectangle.size()
+
+    engineIconPath = resources.path('wimages/search_icon_%s.png' % engine.name)
+    if not os.path.exists(engineIconPath):
+        return nil
+    engineIcon = NSImage.alloc().initByReferencingFile_(engineIconPath)
+    engineIconSize = engineIcon.size()
+
+    searchIconSize = (engineIconSize.width + popupRectangleSize.width + 2, engineIconSize.height)
+    searchIcon = NSImage.alloc().initWithSize_(searchIconSize)
+    
+    searchIcon.lockFocus()
+    try:
+        engineIcon.compositeToPoint_operation_((0,0), NSCompositeSourceOver)
+        popupRectangleX = engineIconSize.width + 2
+        popupRectangleY = (engineIconSize.height - popupRectangleSize.height) / 2
+        popupRectangle.compositeToPoint_operation_((popupRectangleX, popupRectangleY), NSCompositeSourceOver)
+    finally:
+        searchIcon.unlockFocus()
+
+    return searchIcon

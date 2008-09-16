@@ -31,6 +31,7 @@ video controls).
 """
 
 from miro import app
+from miro.frontends.widgets import style
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import imagebutton
@@ -292,20 +293,13 @@ class VolumeSlider(widgetset.CustomSlider):
         self.knob.draw(context, slider_x, slider_y, self.knob.width,
                 self.knob.height)
 
-class VideoBox(widgetset.Background):
+class VideoBox(style.LowerBox):
     def __init__(self):
-        widgetset.Background.__init__(self)
+        style.LowerBox.__init__(self)
         self.controls = PlaybackControls()
         self.timeline = ProgressTimeline()
         self.volume_slider = VolumeSlider()
         self.time_slider = self.timeline.slider
-
-        self.image = widgetutil.make_surface('wtexture')
-        self.separator_color = (170.0/255.0, 170.0/255.0, 170.0/255.0)
-        self.highlight_color = (218.0/255.0, 218.0/255.0, 218.0/255.0)
-
-        self.image_inactive = widgetutil.make_surface('wtexture_inactive')
-        self.highlight_color_inactive = (239.0/255.0, 239.0/255.0, 239.0/255.0)
 
         hbox = widgetset.HBox(spacing=35)
         hbox.pack_start(self.controls, expand=False)
@@ -318,27 +312,3 @@ class VideoBox(widgetset.Background):
         hbox.pack_start(volume_hbox)
         self.add(widgetutil.align_middle(hbox, 0, 0, 30, 30))
 
-    def size_request(self, layout):
-        return (0, 63)
-
-    def draw(self, context, layout):
-        if self.get_window().is_active():
-            image = self.image
-            highlight_color = self.highlight_color
-        else:
-            image = self.image_inactive
-            highlight_color = self.highlight_color_inactive
-        image.draw(context, 0, 0, context.width, context.height)
-
-        context.move_to(0, 0)
-        context.line_to(context.width, 0)
-        context.set_color(self.separator_color)
-        context.stroke()
-
-        context.move_to(0, 1)
-        context.line_to(context.width, 1)
-        context.set_color(highlight_color)
-        context.stroke()
-
-    def is_opaque(self):
-        return True

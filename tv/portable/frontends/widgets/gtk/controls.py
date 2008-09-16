@@ -73,6 +73,9 @@ class SecureTextEntry(TextEntry):
 class SearchTextEntry(TextEntry):
     pass
 
+class VideoSearchTextEntry(SearchTextEntry):
+    pass
+
 class Checkbox(Widget):
     """Widget that the user can toggle on or off."""
 

@@ -32,6 +32,7 @@ from miro import app
 
 from miro.frontends.widgets import tablist
 from miro.frontends.widgets import videobox
+from miro.frontends.widgets import searchbox
 from miro.plat.frontends.widgets import widgetset
 
 class WidgetHolder(widgetset.VBox):
@@ -53,19 +54,28 @@ class WidgetHolder(widgetset.VBox):
 class MiroWindow(widgetset.MainWindow):
     def __init__(self, title, rect):
         widgetset.MainWindow.__init__(self, title, rect)
-        self.splitter = widgetset.Splitter()
+        
         self.videobox = videobox.VideoBox()
+        self.search_box = searchbox.SearchBox()
+        left_vbox = widgetset.VBox()
+        left_vbox.pack_start(tablist.TabListBox(), True)
+        left_vbox.pack_start(self.search_box)
+
         self.main_area_holder = WidgetHolder()
-        vbox = widgetset.VBox()
-        vbox.pack_start(self.main_area_holder, True)
-        vbox.pack_start(self.videobox)
-        self.splitter.set_left(tablist.TabListBox())
-        self.splitter.set_right(vbox)
+        right_vbox = widgetset.VBox()
+        right_vbox.pack_start(self.main_area_holder, True)
+        right_vbox.pack_start(self.videobox)
+
+        self.splitter = widgetset.Splitter()
+        self.splitter.set_left(left_vbox)
+        self.splitter.set_right(right_vbox)
         self.splitter.set_left_width(200)
+
         self.set_content_widget(self.splitter)
         self.connect("active-change", self.on_active_change)
 
     def on_active_change(self, window):
+        self.search_box.queue_redraw()
         self.videobox.queue_redraw()
 
     def set_main_area(self, widget):

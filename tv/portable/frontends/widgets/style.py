@@ -50,6 +50,44 @@ TAB_LIST_SEPARATOR_COLOR = (209/255.0, 216/255.0, 220/255.0)
 
 TOOLBAR_GRAY = (0.43, 0.43, 0.43)
 
+class LowerBox(widgetset.Background):
+
+    def __init__(self):
+        widgetset.Background.__init__(self)
+
+        self.image = widgetutil.make_surface('wtexture')
+        self.separator_color = (170.0/255.0, 170.0/255.0, 170.0/255.0)
+        self.highlight_color = (218.0/255.0, 218.0/255.0, 218.0/255.0)
+
+        self.image_inactive = widgetutil.make_surface('wtexture_inactive')
+        self.highlight_color_inactive = (239.0/255.0, 239.0/255.0, 239.0/255.0)
+
+    def size_request(self, layout):
+        return (0, 63)
+
+    def draw(self, context, layout):
+        if self.get_window().is_active():
+            image = self.image
+            highlight_color = self.highlight_color
+        else:
+            image = self.image_inactive
+            highlight_color = self.highlight_color_inactive
+        image.draw(context, 0, 0, context.width, context.height)
+
+        context.move_to(0, 0)
+        context.line_to(context.width, 0)
+        context.set_color(self.separator_color)
+        context.stroke()
+
+        context.move_to(0, 1)
+        context.line_to(context.width, 1)
+        context.set_color(highlight_color)
+        context.stroke()
+
+    def is_opaque(self):
+        return True
+
+
 class TabRenderer(widgetset.CustomCellRenderer):
     MIN_WIDTH = 175
     MIN_HEIGHT = 25
