@@ -58,16 +58,18 @@ ADDITIONAL_KEYS =  ('title', 'description', 'length', 'type', 'thumbnail',
 
 reflexiveAutoDiscoveryOpener = urllib2.urlopen
 
-def parseFile(path):
+def parse_file(path):
     try:
         subscriptionFile = open(path, "r")
         content = subscriptionFile.read()
         subscriptionFile.close()
-        return parseContent(content)
+        return parse_content(content)
+    except (KeyboardInterrupt, SystemExit):
+        raise
     except:
         pass
 
-def parseContent(content):
+def parse_content(content):
     try:
         dom = xml.dom.minidom.parseString(content)
         try:
@@ -84,6 +86,8 @@ def parseContent(content):
             return urlsType, urls
         finally:
             dom.unlink()
+    except (KeyboardInterrupt, SystemExit):
+        raise
     except:
         if util.chatter:
             logging.warn("Error parsing OPML content...\n%s",
@@ -107,10 +111,20 @@ def get_urls_from_query(query):
             urls.append((unicode(value[0]), additional))
     return urls
 
-def isSubscribeLink(url):
+def is_subscribe_link(url):
+    """Returns whether this is a subscribe url or not.
+
+    It's pretty hearty and shouldn't throw exceptions.
+    """
     try:
+        if not isinstance(url, basestring):
+            return False
         scheme, host, path, params, query, frag = urlparse.urlparse(url)
+    except (KeyboardInterrupt, SystemExit):
+        raise
     except:
+        logging.warn("is_subscribe_link: Error parsing '%s'\n%s", url,
+                traceback.format_exc())
         return False
     return host in SUBSCRIBE_HOSTS
 
@@ -120,8 +134,10 @@ def findSubscribeLinks(url):
     """
     try:
         scheme, host, path, params, query, frag = urlparse.urlparse(url)
+    except (KeyboardInterrupt, SystemExit):
+        raise
     except:
-        logging.warn("Error parsing %s in findSubscribeLinks()\n%s", url,
+        logging.warn("find_subscribe_links: Error parsing '%s'\n%s", url,
                 traceback.format_exc())
         return 'none', []
     if host not in SUBSCRIBE_HOSTS:
@@ -147,6 +163,8 @@ def _getSubscriptionsFromRSSChannel(root):
             link = channel.getElementsByTagName("link").pop()
             href = link.firstChild.data
             return _getSubscriptionsFromReflexiveAutoDiscovery(href, "application/rss+xml")
+    except (KeyboardInterrupt, SystemExit):
+        raise
     except:
         pass
 
@@ -161,6 +179,8 @@ def _getSubscriptionsFromAtomFeed(root):
             if rel == "alternate":
                 href = link.getAttribute("href")
                 return _getSubscriptionsFromReflexiveAutoDiscovery(href, "application/atom+xml")
+    except (KeyboardInterrupt, SystemExit):
+        raise
     except:
         pass
 
@@ -170,6 +190,8 @@ def _getSubscriptionsFromAtomLinkConstruct(node):
         if link.getAttribute("rel") in ("self", "start"):
             href = link.getAttribute("href")
             return [href]
+    except (KeyboardInterrupt, SystemExit):
+        raise
     except:
         pass
 
@@ -184,6 +206,8 @@ def _getSubscriptionsFromReflexiveAutoDiscovery(url, ltype):
             if None not in (altMatch, typeMatch, hrefMatch):
                 href = hrefMatch.group(1)
                 urls.append(href)
+    except (KeyboardInterrupt, SystemExit):
+        raise
     except:
         urls = None
     else:
@@ -201,6 +225,8 @@ def _getSubscriptionsFromOPMLOutline(root):
         urls = list()
         body = root.getElementsByTagName("body").pop()
         urlsType = _searchOPMLNodeRecursively(body, urls)
+    except (KeyboardInterrupt, SystemExit):
+        raise
     except:
         urls = None
     else:
@@ -224,7 +250,9 @@ def _searchOPMLNodeRecursively(node, urls, urlsType=None):
                         logging.debug('%s != %s, ignoring' % (urlsType, newType))
                 else:
                     urlsType = _searchOPMLNodeRecursively(child, urls, urlsType)
-    except Exception, e:
+    except (KeyboardInterrupt, SystemExit):
+        raise
+    except Exception:
         logging.exception('error searching OPML')
     return urlsType
 

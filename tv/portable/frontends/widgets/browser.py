@@ -52,7 +52,7 @@ class Browser(widgetset.Browser):
         # FIXME, this seems really weird.  How are we supposed to pick an
         # encoding?
         url = util.toUni(url)
-        if subscription.isSubscribeLink(url):
+        if subscription.is_subscribe_link(url):
             messages.SubscriptionLinkClicked(url).send_to_backend()
             return False
         if (guide.isPartOfGuide(url, self.guide_info.url,

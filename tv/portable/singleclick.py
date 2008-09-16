@@ -316,7 +316,7 @@ def addSubscriptionURL(prefix, expectedContentType, url):
     realURL = url[len(prefix):]
     def callback(info):
         if info.get('content-type') == expectedContentType:
-            type_, urls = subscription.parseContent(info['body'])
+            type_, urls = subscription.parse_content(info['body'])
             if urls is None:
                 text = _(
                     "This %(appname)s channel file has an invalid format: "
@@ -398,7 +398,7 @@ def parse_command_line_args(args=None):
             elif ext in ('.rss', '.rdf', '.atom', '.ato'):
                 addFeed(arg)
             elif ext in ('.miro', '.democracy', '.dem', '.opml'):
-                ret = subscription.parseFile(arg)
+                ret = subscription.parse_file(arg)
                 if ret is not None:
                     addSubscriptions(ret[0], ret[1])
             else:

@@ -117,7 +117,7 @@ class ThemeHistory(DDBObject):
     def _installDefaultFeeds(self):
         initialFeeds = resources.path("initial-feeds.democracy")
         if os.path.exists(initialFeeds):
-            type, urls = subscription.parseFile(initialFeeds)
+            type, urls = subscription.parse_file(initialFeeds)
             if urls is not None and type == 'rss':
                 for url in urls:
                     feed.Feed(url, initiallyAutoDownloadable=False)
