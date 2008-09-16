@@ -159,14 +159,14 @@ def get_search_engines():
     return list(_engines)
 
 def get_last_engine_title():
-    return get_engine_title(get_last_engine())
-
-def get_engine_title(name):
-    for engine in _engines:
-        if engine.name == name:
-            return engine.title
-    return u''
+    try:
+        return get_last_engine().title
+    except:
+        return ''
 
 def get_last_engine():
     # FIXME - this needs to be re-written
-    return u"youtube"
+    return _engines[0]
+
+def get_last_engine_name():
+    return get_last_engine().name

@@ -75,11 +75,24 @@ class TabListManager(object):
         return (self.static_tab_list, self.site_list, self.feed_list, self.playlist_list)
 
     def select_guide(self):
+        self.select_static_tab(0)
+        
+    def select_search(self):
+        self.select_static_tab(1)
+
+    def select_static_tab(self, index):
         view = self.static_tab_list.view
-        iter = view.model.first_iter()
+        previously_selected = view.get_selected()
+        iter = view.model.nth_iter(index)
         view.select(iter)
+        if previously_selected is not None:
+            # We unselect *after* having made the new selection because if we
+            # unselect first and the selection is empty, the on_selection_changed
+            # callback forces the guide to be selected.
+            view.unselect(previously_selected)
         self.selected_tab_list = self.static_tab_list
         self.selected_tabs = [view.model[iter][0]]
+        self.handle_new_selection()
 
     def handle_tablist_change(self, new_tablist):
         self.selected_tab_list = new_tablist

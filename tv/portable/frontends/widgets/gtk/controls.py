@@ -31,6 +31,7 @@
 import gtk
 import weakref
 
+from miro import searchengines
 from miro.frontends.widgets.gtk.base import Widget
 
 class TextEntry(Widget):
@@ -38,6 +39,7 @@ class TextEntry(Widget):
         Widget.__init__(self)
         self.create_signal('activate')
         self.create_signal('changed')
+        self.create_signal('validate')
         self.set_widget(gtk.Entry())
         self.forward_signal('activate')
         self.forward_signal('changed')
@@ -74,7 +76,9 @@ class SearchTextEntry(TextEntry):
     pass
 
 class VideoSearchTextEntry(SearchTextEntry):
-    pass
+    # TODO: implement the inline engines popup menu
+    def selected_engine(self):
+        return searchengines.get_last_engine()
 
 class Checkbox(Widget):
     """Widget that the user can toggle on or off."""

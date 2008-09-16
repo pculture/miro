@@ -52,7 +52,7 @@ class BaseTextEntry(Widget):
         self.height = self.font.pointSize() + self.font.leading()
         self.view.setFont_(self.font)
         self.view.setEditable_(YES)
-        self.view.cell().setLineBreakMode_(NSLineBreakByTruncatingTail)
+        self.view.cell().setLineBreakMode_(NSLineBreakByClipping)
         self.sizer_cell = self.view.cell().copy()
         if initial_text:
             self.view.setStringValue_(initial_text)
@@ -65,6 +65,7 @@ class BaseTextEntry(Widget):
 
         self.create_signal('activate')
         self.create_signal('changed')
+        self.create_signal('validate')
 
     def on_changed(self, notification):
         self.emit('changed')
@@ -368,53 +369,43 @@ class RadioButton(Widget):
 
 
 class VideoSearchTextEntry (SearchTextEntry):
+
     def make_view(self):
         return NSVideoSearchField.alloc().init()
+
+    def selected_engine(self):
+        return self.view.cell().currentItem.representedObject()
 
 class NSVideoSearchField (MiroSearchTextField):
 
     def init(self):
         self = MiroSearchTextField.init(self)
-        self.setCell_(VideoSearchFieldCell.alloc().initWithCell_(self.cell()))
         self.setTarget_(self)
         self.setAction_('search:')
         self.initFromLastEngine()
         return self
-        
+    
     def search_(self, sender):
-        engine = self.selectedEngine()
-        query = unicode(self.stringValue())
-        if query != '':
-            # TODO: call search :)
-            pass
+        wrappermap.wrapper(self).emit('validate')
 
     def initFromLastEngine(self):
         self.setStringValue_("")
         lastEngine = searchengines.get_last_engine()
         for engine in searchengines.get_search_engines():
-            if engine.name == lastEngine:
+            if engine.name == lastEngine.name:
                 menu = self.searchMenuTemplate()
                 index = menu.indexOfItemWithRepresentedObject_(engine)
                 menu.performActionForItemAtIndex_(index)
                 return
 
-    def selectedEngine(self):
-        return self.cell().currentItem.representedObject().name
-        
 class VideoSearchFieldCell (NSSearchFieldCell):
     
-    def initWithCell_(self, cell):
-        self = super(VideoSearchFieldCell, self).initTextCell_('')
-        self.setBezeled_(cell.isBezeled())
-        self.setBezelStyle_(cell.bezelStyle())
-        self.setEnabled_(cell.isEnabled())
-        self.setPlaceholderString_(cell.placeholderString())
-        self.setEditable_(cell.isEditable())
-        self.setSearchButtonCell_(cell.searchButtonCell())
-        self.setCancelButtonCell_(cell.cancelButtonCell())
-        self.cancelButtonCell().setTarget_(self)
+    def init(self):
+        self = NSSearchFieldCell.init(self)
+        self.setBezeled_(YES)
         self.setSearchMenuTemplate_(self.makeSearchMenuTemplate())
         self.setSendsWholeSearchString_(YES)
+        self.setSendsSearchStringImmediately_(NO)
         self.setScrollable_(YES)
         self.currentItem = nil
         return self
@@ -436,16 +427,23 @@ class VideoSearchFieldCell (NSSearchFieldCell):
         sender.setState_(NSOnState)
         engine = sender.representedObject()
         self.searchButtonCell().setImage_(_getSearchIcon(engine))
-    
+
     def searchButtonRectForBounds_(self, bounds):
         return NSRect(NSPoint(8.0, 3.0), NSSize(25.0, 16.0))
         
     def searchTextRectForBounds_(self, bounds):
-        cancelButtonBounds = super(VideoSearchFieldCell, self).cancelButtonRectForBounds_(bounds)
+        textBounds = NSSearchFieldCell.searchTextRectForBounds_(self, bounds)
+        cancelButtonBounds = NSSearchFieldCell.cancelButtonRectForBounds_(self, bounds)
         searchButtonBounds = self.searchButtonRectForBounds_(bounds)
-        x = searchButtonBounds.origin.x + searchButtonBounds.size.width + 2
+
+        x = searchButtonBounds.origin.x + searchButtonBounds.size.width + 4
+        y = textBounds.origin.y
         width = bounds.size.width - x - cancelButtonBounds.size.width
-        return ((x, 3.0), (width, 16.0))
+        height = textBounds.size.height
+
+        return ((x, y), (width, height))
+
+NSVideoSearchField.setCellClass_(VideoSearchFieldCell)
 
 def _getEngineIcon(engine):
     engineIconPath = resources.path('wimages/search_icon_%s.png' % engine.name)

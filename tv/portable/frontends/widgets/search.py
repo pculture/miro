@@ -49,9 +49,10 @@ class SearchManager(object):
         self.engine = engine
         self.text = text
 
-    def perform_search(self, engine, text):
-        self.set_search_info(engine, text)
-        messages.Search(engine, text).send_to_backend()
+    def perform_search(self, engine=None, text=None):
+        if engine is not None and text is not None:
+            self.set_search_info(engine, text)
+        messages.Search(self.engine, self.text).send_to_backend()
 
     def save_search(self):
         m = messages.NewChannelSearchEngine(self._lookup_engine(), self.text)

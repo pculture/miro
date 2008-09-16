@@ -31,6 +31,7 @@ Contains the search box
 (the widget on the bottom of the left side with the video search field).
 """
 
+from miro import app
 from miro.frontends.widgets import style
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
@@ -40,4 +41,10 @@ class SearchBox(style.LowerBox):
     def __init__(self):
         style.LowerBox.__init__(self)
         self.search_field = widgetset.VideoSearchTextEntry()
+        self.search_field.connect('validate', self.on_search)
         self.add(widgetutil.align_middle(self.search_field, 0, 0, 16, 16))
+
+    def on_search(self, obj):
+        app.search_manager.set_search_info(obj.selected_engine().name, obj.get_text())
+        app.tab_list_manager.select_search()
+        app.search_manager.perform_search()

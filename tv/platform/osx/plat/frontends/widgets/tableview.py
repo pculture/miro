@@ -578,6 +578,8 @@ class TableView(Widget):
         if self.view.allowsMultipleSelection():
             raise ValueError("Table allows multiple selection")
         row = self.view.selectedRow()
+        if row == -1:
+            return None
         return self.model.iter_for_row(self.view, row)
 
     def num_rows_selected(self):
