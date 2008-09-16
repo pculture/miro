@@ -171,6 +171,7 @@ class CustomTableCell(NSCell):
     def calcHeight_(self, view):
         self.layout_manager.reset()
         style = self.make_drawing_style(None, view)
+        self.set_wrapper_data()
         cell_size = self.wrapper.get_size(style, self.layout_manager)
         return cell_size[1]
 
@@ -196,12 +197,16 @@ class CustomTableCell(NSCell):
         context = DrawingContext(view, drawing_rect, drawing_rect)
         context.style = self.make_drawing_style(frame, view)
         self.layout_manager.reset()
+        self.set_wrapper_data()
         self.wrapper.render(context, self.layout_manager, self.isHighlighted(),
                 self.hotspot)
         NSGraphicsContext.currentContext().restoreGraphicsState()
 
     def setObjectValue_(self, value_dict):
-        for name, value in value_dict.items():
+        self.value_dict = value_dict
+
+    def set_wrapper_data(self):
+        for name, value in self.value_dict.items():
             setattr(self.wrapper, name, value)
 
 class CustomCellRenderer(object):
