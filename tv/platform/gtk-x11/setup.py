@@ -363,7 +363,11 @@ def get_libtorrent_extension(portable_dir):
 
     # check for mt
     libraries = ['z', 'pthread', 'ssl']
-    all_libs = os.listdir(os.path.join(sysconfig.PREFIX, "lib"))
+    all_libs = []
+    if os.path.exists(os.path.join(sysconfig.PREFIX, "lib")):
+        all_libs.extend(os.listdir(os.path.join(sysconfig.PREFIX, "lib")))
+    if os.path.exists(os.path.join(sysconfig.PREFIX, "lib64")):
+        all_libs.extend(os.listdir(os.path.join(sysconfig.PREFIX, "lib64")))
     all_libs = [mem for mem in all_libs if mem.startswith("libboost")]
 
     for mem in all_libs:
