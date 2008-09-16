@@ -49,11 +49,11 @@ class ImageButtonMixin(object):
         return self.image.width, self.image.height
 
     def draw(self, context, layout):
-        self.image.draw(context, 0, 0, self.image.width, self.image.height)
-
-    def draw_pressed(self, context, layout):
-        self.pressed_image.draw(context, 0, 0, self.image.width,
-                self.image.height)
+        if self.state == 'pressed':
+            self.pressed_image.draw(context, 0, 0, self.image.width,
+                    self.image.height)
+        else:
+            self.image.draw(context, 0, 0, self.image.width, self.image.height)
 
 class ImageButton(ImageButtonMixin, widgetset.CustomButton):
     def __init__(self, image_name):

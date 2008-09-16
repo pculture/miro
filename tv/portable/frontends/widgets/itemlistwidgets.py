@@ -425,6 +425,111 @@ class FeedToolbar(widgetset.Background):
     def _on_autodownload_changed(self, widget, option):
         self.emit('auto-download-changed', widget.options[option])
 
+class SortBar(widgetset.Background):
+    """Bar used to sort items.
+    
+    Signals:
+
+    sort-changed (widget, sort_key, ascending) -- User changed the sort.  
+       sort_key will be one of 'name', 'date', 'size' or 'length'
+    """
+
+    def __init__(self):
+        widgetset.Background.__init__(self)
+        self.create_signal('sort-changed')
+        self._hbox = widgetset.HBox()
+        alignment = widgetset.Alignment(xalign=1.0, yalign=0.5)
+        alignment.add(self._hbox)
+        self.add(alignment)
+        self._current_sort_key = 'date'
+        self._ascending = False
+        self._button_map = {}
+        self._make_button(_('Name'), 'name')
+        self._make_button(_('Date'), 'date')
+        self._make_button(_('Size'), 'size')
+        self._make_button(_('Length'), 'length')
+        self._button_map['date'].set_sort_state(SortBarButton.SORT_DOWN)
+
+    def _make_button(self, text, sort_key):
+        button = SortBarButton(text)
+        button.connect('clicked', self._on_button_clicked, sort_key)
+        self._button_map[sort_key] = button
+        self._hbox.pack_start(button)
+
+    def _on_button_clicked(self, button, sort_key):
+        if self._current_sort_key == sort_key:
+            self._ascending = not self._ascending
+        else:
+            self._ascending = False
+            old_button = self._button_map[self._current_sort_key]
+            old_button.set_sort_state(SortBarButton.SORT_NONE)
+            self._current_sort_key = sort_key
+        if self._ascending:
+            button.set_sort_state(SortBarButton.SORT_UP)
+        else:
+            button.set_sort_state(SortBarButton.SORT_DOWN)
+        self.emit('sort-changed', self._current_sort_key, self._ascending)
+
+    def size_request(self, layout):
+        width = self._hbox.get_size_request()[0]
+        return width, 30
+
+    def draw(self, context, layout):
+        gradient = widgetset.Gradient(0, 0, 0, context.height)
+        gradient.set_start_color((0.49, 0.49, 0.49))
+        gradient.set_end_color((0.42, 0.42, 0.42))
+        context.rectangle(0, 0, context.width, context.height)
+        context.gradient_fill(gradient)
+
+class SortBarButton(widgetset.CustomButton):
+    SORT_NONE = 0
+    SORT_UP = 1
+    SORT_DOWN = 2
+
+    def __init__(self, text):
+        widgetset.CustomButton.__init__(self)
+        self._text = text
+        self._sort_state = self.SORT_NONE
+
+    def set_sort_state(self, sort_state):
+        self._sort_state = sort_state
+        self.queue_redraw()
+
+    def size_request(self, layout):
+        layout.set_font(0.82, bold=True)
+        text_size = layout.textbox(self._text).get_size()
+        return text_size[0] + 16, text_size[1] + 6
+
+    def draw(self, context, layout):
+        layout.set_font(0.82, bold=True)
+        layout.set_text_color((1, 1, 1))
+        textbox = layout.textbox(self._text)
+        text_size = textbox.get_size()
+        y = int((context.height - textbox.get_size()[1]) / 2)
+        textbox.draw(context, y, 2, text_size[0], text_size[1])
+        context.set_color((1, 1, 1))
+        self._draw_trangle(context, text_size[0] + 6)
+        if self.state == 'hover' or self.state == 'pressed':
+            widgetutil.round_rect(context, 0.5, 0.5, context.width - 2,
+                    context.height - 2, 4)
+            context.set_line_width(1)
+            context.stroke()
+
+    def _draw_trangle(self, context, left):
+        top = int((context.height - 8) / 2)
+        if self._sort_state == self.SORT_DOWN:
+            context.move_to(left, top)
+            context.rel_line_to(8, 0)
+            context.rel_line_to(-4, 8)
+            context.rel_line_to(-4, -8)
+            context.fill()
+        elif self._sort_state == self.SORT_UP:
+            context.move_to(left, top + 8)
+            context.rel_line_to(8, 0)
+            context.rel_line_to(-4, -8)
+            context.rel_line_to(-4, 8)
+            context.fill()
+
 class ItemListBackground(widgetset.Background):
     """Plain white background behind the item lists.  """
 
@@ -442,14 +547,16 @@ class ItemContainerWidget(widgetset.VBox):
 
        titlebar_vbox - VBox for the title bar
        content_vbox - VBox for content of the widget
+       sort_bar -- SortBar for the widget
     """
 
     def __init__(self):
         widgetset.VBox.__init__(self)
         self.content_vbox = widgetset.VBox()
         self.titlebar_vbox = widgetset.VBox()
+        self.sort_bar = SortBar()
         self.pack_start(self.titlebar_vbox)
-        self.pack_start(separator.HThinSeparator((0.7, 0.7, 0.7)))
+        self.pack_start(self.sort_bar)
         background = ItemListBackground()
         background.add(self.content_vbox)
         scroller = widgetset.Scroller(False, True)

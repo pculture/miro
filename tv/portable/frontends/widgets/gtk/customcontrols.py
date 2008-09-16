@@ -60,10 +60,13 @@ class CustomControlMixin(CustomDrawingMixin):
 
 class CustomButtonWidget(CustomControlMixin, gtk.Button):
     def draw(self, wrapper, context):
-        if not self.is_active():
-            wrapper.draw(context, wrapper.layout_manager)
+        if self.is_active():
+            wrapper.state = 'pressed'
+        elif self.state == gtk.STATE_PRELIGHT:
+            wrapper.state = 'hover'
         else:
-            wrapper.draw_pressed(context, wrapper.layout_manager)
+            wrapper.state = 'normal'
+        wrapper.draw(context, wrapper.layout_manager)
 
     def is_active(self):
         return self.state == gtk.STATE_ACTIVE

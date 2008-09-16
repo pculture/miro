@@ -144,6 +144,8 @@ class ProgressTimeRemaining(widgetset.CustomButton):
         self.queue_redraw()
 
     def draw(self, context, layout):
+        # Maybe we should have different style when self.state == 'pressed'
+        # for user feed back?
         if not app.playback_manager.is_playing:
             return
         if self.current_time is None or self.duration is None:
@@ -157,10 +159,6 @@ class ProgressTimeRemaining(widgetset.CustomButton):
         text = layout.textbox(text)
         width, height = text.get_size()
         text.draw(context, 10, 0, width, height)
-
-    def draw_pressed(self, context, layout):
-        # Maybe we should have a different style here for user feed back?
-        self.draw(context, layout)
 
 class ProgressSlider(widgetset.CustomSlider):
     def __init__(self):

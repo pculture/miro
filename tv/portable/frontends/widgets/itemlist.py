@@ -55,12 +55,8 @@ def item_matches_search(item_info, search_text):
 class ItemSort(object):
     """Class that sorts items in an item list."""
 
-    def __init__(self):
-        self._reverse = False
-
-    def reverse(self):
-        """Reverse the order of the sort."""
-        self._reverse = not self._reverse
+    def __init__(self, ascending):
+        self._reverse = not ascending
 
     def sort_key(self, item):
         """Return a value that can be used to sort item.
@@ -75,18 +71,34 @@ class ItemSort(object):
         Returns -1 if item < other, 1 if other > item and 0 if item == other
         (same as cmp)
         """
-        return cmp(self.sort_key(item), self.sort_key(other))
+        if self._reverse:
+            return -cmp(self.sort_key(item), self.sort_key(other))
+        else:
+            return cmp(self.sort_key(item), self.sort_key(other))
 
     def sort_items(self, item_list):
         """Sort a list of items (in place)."""
         item_list.sort(key=self.sort_key, reverse=self._reverse)
 
-class DateSort(ItemSort):
-    def __init__(self):
-        self._reverse = True
+    def sort_item_rows(self, rows):
+        rows.sort(key=lambda row: self.sort_key(row[0]),
+                reverse=self._reverse)
 
+class DateSort(ItemSort):
     def sort_key(self, item):
         return item.release_date
+
+class NameSort(ItemSort):
+    def sort_key(self, item):
+        return item.name
+
+class LengthSort(ItemSort):
+    def sort_key(self, item):
+        return item.duration
+
+class SizeSort(ItemSort):
+    def sort_key(self, item):
+        return item.size
 
 class ItemListGroup(object):
     """Manages a set of ItemLists.
@@ -106,7 +118,7 @@ class ItemListGroup(object):
         together.
         """
         self.item_lists = item_lists
-        self.set_sort(DateSort())
+        self.set_sort(DateSort(False))
         self._throbber_timeouts = {}
 
     def _throbber_timeout(self, id):
@@ -225,9 +237,9 @@ class ItemList(object):
         while iter is not None:
             rows.append(tuple(self.model[iter]))
             iter = self.model.remove(iter)
-        rows.sort(key=lambda row: self._sorter.sort_key(row[0]))
+        self._sorter.sort_item_rows(rows)
         for row in rows:
-            self._iter_map[row[0].id] = self.model.append(row)
+            self._iter_map[row[0].id] = self.model.append(*row)
 
     def filter(self, item_info):
         """Can be overrided by subclasses to filter out items from the list.

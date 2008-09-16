@@ -55,7 +55,34 @@ class DrawableButton(NSButton):
     def init(self):
         NSButton.init(self)
         self.layout_manager = LayoutManager()
+        self.tracking_rect = None
+        self.mouse_inside = False
         return self
+
+    def viewDidMoveToWindow(self):
+        self.reset_tracking_rect()
+
+    def setFrame_(self, rect):
+        NSButton.setFrame_(self, rect)
+        self.reset_tracking_rect()
+
+    def setBounds_(self, rect):
+        NSButton.setBounds_(self, rect)
+        self.reset_tracking_rect()
+    
+    def reset_tracking_rect(self):
+        if self.tracking_rect is not None:
+            self.removeTrackingRect_(self.tracking_rect)
+        self.tracking_rect = self.addTrackingRect_owner_userData_assumeInside_(
+                self.bounds(), self, 0, NO)
+
+    def mouseEntered_(self, event):
+        self.mouse_inside = True
+        self.setNeedsDisplay_(YES)
+
+    def mouseExited_(self, event):
+        self.mouse_inside = False
+        self.setNeedsDisplay_(YES)
 
     def isOpaque(self):
         return wrappermap.wrapper(self).is_opaque()
@@ -63,10 +90,15 @@ class DrawableButton(NSButton):
     def drawRect_(self, rect):
         context = drawing.DrawingContext(self, self.bounds(), rect)
         context.style = drawing.DrawingStyle()
+        wrapper = wrappermap.wrapper(self)
         if self.state() == NSOnState:
-            wrappermap.wrapper(self).draw_pressed(context, self.layout_manager)
+            wrapper.state = 'pressed'
+        elif self.mouse_inside:
+            wrapper.state = 'hover'
         else:
-            wrappermap.wrapper(self).draw(context, self.layout_manager)
+            wrapper.state = 'normal'
+
+        wrappermap.wrapper(self).draw(context, self.layout_manager)
         self.layout_manager.reset()
 
     def sendAction_to_(self, action, to):

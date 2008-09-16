@@ -145,6 +145,18 @@ class ItemListController(object):
             item_view.model_changed()
         app.inline_search_memory.set_search(self.type, self.id, search_text)
 
+    def on_sort_changed(self, sort_bar, sort_key, ascending):
+        sort_key_map = {
+                'date': itemlist.DateSort,
+                'name': itemlist.NameSort,
+                'length': itemlist.LengthSort,
+                'size': itemlist.SizeSort
+        }
+        sorter = sort_key_map[sort_key](ascending)
+        for item_view in self.all_item_views():
+            item_view.item_list.set_sort(sorter)
+            item_view.model_changed()
+
     def on_hotspot_clicked(self, itemview, name, iter):
         """Hotspot handler for ItemViews."""
 
@@ -280,6 +292,7 @@ class SimpleItemListController(ItemListController):
 
     def build_widget(self):
         widget = itemlistwidgets.ItemContainerWidget()
+        widget.sort_bar.connect('sort-changed', self.on_sort_changed)
         self.titlebar = self.make_titlebar()
         self.item_list = itemlist.ItemList()
         self.item_view = itemlistwidgets.ItemView(self.item_list)
