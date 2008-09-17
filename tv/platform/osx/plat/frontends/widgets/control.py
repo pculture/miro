@@ -374,42 +374,23 @@ class VideoSearchTextEntry (SearchTextEntry):
         return NSVideoSearchField.alloc().init()
 
     def selected_engine(self):
-        return self.view.cell().currentItem.representedObject()
+        return self.view.currentItem.representedObject()
 
 class NSVideoSearchField (MiroSearchTextField):
 
     def init(self):
         self = MiroSearchTextField.init(self)
+        self.currentItem = nil
         self.setTarget_(self)
         self.setAction_('search:')
+        self.cell().setBezeled_(YES)
+        self.cell().setSearchMenuTemplate_(self.makeSearchMenuTemplate())
+        self.cell().setSendsWholeSearchString_(YES)
+        self.cell().setSendsSearchStringImmediately_(NO)
+        self.cell().setScrollable_(YES)
         self.initFromLastEngine()
         return self
-    
-    def search_(self, sender):
-        wrappermap.wrapper(self).emit('validate')
 
-    def initFromLastEngine(self):
-        self.setStringValue_("")
-        lastEngine = searchengines.get_last_engine()
-        for engine in searchengines.get_search_engines():
-            if engine.name == lastEngine.name:
-                menu = self.searchMenuTemplate()
-                index = menu.indexOfItemWithRepresentedObject_(engine)
-                menu.performActionForItemAtIndex_(index)
-                return
-
-class VideoSearchFieldCell (NSSearchFieldCell):
-    
-    def init(self):
-        self = NSSearchFieldCell.init(self)
-        self.setBezeled_(YES)
-        self.setSearchMenuTemplate_(self.makeSearchMenuTemplate())
-        self.setSendsWholeSearchString_(YES)
-        self.setSendsSearchStringImmediately_(NO)
-        self.setScrollable_(YES)
-        self.currentItem = nil
-        return self
-    
     def makeSearchMenuTemplate(self):
         menu = NSMenu.alloc().initWithTitle_("Search Menu")
         for engine in reversed(searchengines.get_search_engines()):
@@ -426,8 +407,23 @@ class VideoSearchFieldCell (NSSearchFieldCell):
         self.currentItem = sender
         sender.setState_(NSOnState)
         engine = sender.representedObject()
-        self.searchButtonCell().setImage_(_getSearchIcon(engine))
+        self.cell().searchButtonCell().setImage_(_getSearchIcon(engine))
 
+    def search_(self, sender):
+        wrappermap.wrapper(self).emit('validate')
+
+    def initFromLastEngine(self):
+        self.setStringValue_("")
+        lastEngine = searchengines.get_last_engine()
+        for engine in searchengines.get_search_engines():
+            if engine.name == lastEngine.name:
+                menu = self.searchMenuTemplate()
+                index = menu.indexOfItemWithRepresentedObject_(engine)
+                menu.performActionForItemAtIndex_(index)
+                return
+
+class VideoSearchFieldCell (NSSearchFieldCell):
+    
     def searchButtonRectForBounds_(self, bounds):
         return NSRect(NSPoint(8.0, 3.0), NSSize(25.0, 16.0))
         
