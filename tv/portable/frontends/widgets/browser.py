@@ -41,6 +41,14 @@ from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.frontends.widgets import linkhandler
 
+PROTOCOLS_MIRO_HANDLES = ("http:", "https:", "ftp:", "feed:", "feeds:", "mailto:")
+
+def _should_miro_handle(url):
+    for mem in PROTOCOLS_MIRO_HANDLES:
+        if url.startswith(mem):
+            return True
+    return False
+
 class Browser(widgetset.Browser):
     def __init__(self, guide_info):
         widgetset.Browser.__init__(self)
@@ -55,18 +63,18 @@ class Browser(widgetset.Browser):
         if subscription.is_subscribe_link(url):
             messages.SubscriptionLinkClicked(url).send_to_backend()
             return False
+
         if (guide.isPartOfGuide(url, self.guide_info.url,
                 self.guide_info.allowed_urls) and
                 not filetypes.isFeedFilename(url) and
                 not filetypes.isAllowedFilename(url)):
             return True
-        if not (url.startswith(u'http://')
-                or url.startswith(u'https://') or
-                url.startswith(u'ftp://') or url.startswith(u'mailto:') or
-                url.startswith(u'feed://')):
+
+        if not _should_miro_handle(url):
             # javascript: link, or some other weird URL scheme.  Let the
             # browser handle it.
             return True
+
         # handle_external_url could pop up dialogs and other complex things.
         # Let's return from the callback before we call it.
         call_on_ui_thread(linkhandler.handle_external_url, url)

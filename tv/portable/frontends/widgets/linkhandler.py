@@ -38,7 +38,7 @@ from miro import guide
 from miro.frontends.widgets import dialogs
 
 def handle_external_url(url):
-    if url.startswith(u'feed://'):
+    if url.startswith(u'feed://') or url.startswith(u'feeds://'):
         feed_info = app.tab_list_manager.feed_list.find_feed_with_url(url)
         if feed_info is not None:
             print 'SHOULD BLINK: %r' % feed_info.name
