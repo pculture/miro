@@ -675,6 +675,8 @@ class Application:
         self.do_quit()
 
     def do_quit(self):
+        if app.playback_manager.is_playing:
+            app.playback_manager.stop()
         if hasattr(self, 'window'):
             self.window.close()
         app.display_manager.deselect_all_displays()

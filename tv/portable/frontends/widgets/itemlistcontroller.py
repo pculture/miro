@@ -134,7 +134,7 @@ class ItemListController(object):
             self._play_item_list(items)
 
     def _play_item_list(self, items):
-        playable = [i for i in items if i.video_path is not None]
+        playable = [i for i in items if i.video_path is not None and i.video_path is not '']
         app.playback_manager.start_with_items(playable)
 
     def set_search(self, search_text):
