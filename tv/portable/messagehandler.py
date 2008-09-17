@@ -904,7 +904,7 @@ class BackendMessageHandler(messages.MessageHandler):
         normalizedURLs = []
         for url, additional in subscribeURLs:
             normalized = feed.normalize_feed_url(url)
-            if feed.validate_feed_url(normalized):
+            if feed.validate_feed_url(normalized) and not feed.get_feed_by_url(normalized):
                 normalizedURLs.append((normalized, additional))
         if normalizedURLs:
             if type == 'feed':
