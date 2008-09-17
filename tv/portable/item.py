@@ -769,18 +769,12 @@ class Item(DDBObject):
         """
         rawDescription = self.getRawDescription()
 
-        # FIXME - clean this up in regards to exception handling.
-        try:
-            purifiedDescription = adscraper.purify(rawDescription)
-            return xhtmlify (u'<span>%s</span>' % (unescape(purifiedDescription),), filterFontTags=True)
+        purifiedDescription = adscraper.purify(rawDescription)
+        ret = xhtmlify(u'<span>%s</span>' % unescape(purifiedDescription), filterFontTags=True)
+        if ret:
+            return ret
 
-        except Exception:
-            logging.exception("getDescription threw error.")
-            try:
-                return xhtmlify (u'<span>%s</span>' % (unescape(rawDescription),))
-            except Exception:
-                logging.exception("getDescription threw error.")
-                return u'<span />'
+        return u'<span />'
 
     def looksLikeTorrent(self):
         """Returns true if we think this item is a torrent.  (For items that

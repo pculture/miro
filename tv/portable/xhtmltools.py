@@ -30,7 +30,7 @@ import xml.sax.saxutils
 import xml.dom
 import re
 from urllib import quote, quote_plus, unquote
-from HTMLParser import HTMLParser
+from HTMLParser import HTMLParser, HTMLParseError
 import random
 import logging
 
@@ -38,23 +38,25 @@ class XHTMLifier(HTMLParser):
     """Very simple parser to convert HTML to XHTML
     """
     def convert(self, data, addTopTags=False, filterFontTags=False):
-        if addTopTags:
-            self.output = u'<html><head></head><body>'
-        else:
-            self.output = ''
-        self.stack = []
-        self.filterFontTags = filterFontTags
-        self.feed(data)
         try:
+            if addTopTags:
+                self.output = u'<html><head></head><body>'
+            else:
+                self.output = ''
+            self.stack = []
+            self.filterFontTags = filterFontTags
+            self.feed(data)
             self.close()
-        except:
-            print 'DTV: unexpected error while parsing html data.'
-        while len(self.stack) > 0:
-            temp = self.stack.pop()
-            self.output += u'</'+temp+'>'
-        if addTopTags:
-            self.output += u'</body></html>'
-        return self.output
+            while len(self.stack) > 0:
+                temp = self.stack.pop()
+                self.output += u'</'+temp+'>'
+            if addTopTags:
+                self.output += u'</body></html>'
+            return self.output
+
+        except HTMLParseError:
+            logging.warn("xhtmlifier: parse exception on '%s'", data)
+
     def handle_starttag(self, tag, attrs):
         if tag.lower() == 'br':
             self.output += u'<br/>'
@@ -68,6 +70,7 @@ class XHTMLifier(HTMLParser):
                         self.output += u' '+attr[0]+u'='+xml.sax.saxutils.quoteattr(attr[1])
                 self.output += u'>'
             self.stack.append(tag)
+
     def handle_endtag(self, tag):
         if tag.lower() != 'br' and len(self.stack) > 1:
             temp = self.stack.pop()
@@ -76,14 +79,18 @@ class XHTMLifier(HTMLParser):
                 while temp != tag and len(self.stack) > 1:
                     temp = self.stack.pop()
                     self.output += u'</'+temp+u'>'
+
     def handle_startendtag(self, tag, attrs):
         self.output += u'<'+tag+u'/>'
+
     def handle_data(self, data):
         data = data.replace(u'&', u'&amp;')
         data = data.replace(u'<', u'&lt;')
         self.output += data
+
     def handle_charref(self, name):
         self.output += u'&#'+name+';'
+
     def handle_entityref(self, name):
         self.output += u'&'+name+';'
 
@@ -106,7 +113,27 @@ def urldecode(data):
 def xhtmlify(data, addTopTags=False, filterFontTags=False):
     """Returns XHTMLified version of HTML document"""
     x = XHTMLifier()
-    return x.convert(data, addTopTags, filterFontTags)
+    ret = x.convert(data, addTopTags, filterFontTags)
+
+    # if we got a bad return, try it again without filtering font
+    # tags
+    if ret is None and filterFontTags:
+        print "trying filterfonttags=false"
+        x = XHTMLifier()
+        ret = x.convert(data, addTopTags, filterFontTags=False)
+
+    # if that's still bad, try converting &quot; to "
+    # this fixes bug #10095 where Google Video items are sometimes half
+    # quoted.
+    if ret is None:
+        print "trying quot replacement"
+        x = XHTMLifier()
+        ret = x.convert(data.replace("&quot;", '"'), addTopTags, filterFontTags=False)
+    if ret is None:
+        print "returning empty"
+        ret = u""
+
+    return ret
 
 _xml_header_re = re.compile("^\<\?xml\s*(.*?)\s*\?\>(.*)", re.S)
 
