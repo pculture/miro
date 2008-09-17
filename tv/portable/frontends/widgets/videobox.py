@@ -168,7 +168,9 @@ class ProgressSlider(widgetset.CustomSlider):
         self.progress_surface = widgetutil.ThreeImageSurface('playback_track_progress')
         self.progress_cursor = widgetutil.make_surface('playback_cursor')
         app.playback_manager.connect('playback-did-progress', self.handle_progress)
+        app.playback_manager.connect('will-play', self.handle_play)
         app.playback_manager.connect('did-stop', self.handle_stop)
+        self.disable_widget()
 
     def handle_progress(self, obj, elapsed, total):
         if elapsed is None or total is None:
@@ -178,8 +180,12 @@ class ProgressSlider(widgetset.CustomSlider):
         else:
             self.set_value(0)
 
+    def handle_play(self, obj, duration):
+        self.enable_widget()
+
     def handle_stop(self, obj):
         self.set_value(0)
+        self.disable_widget()
 
     def is_horizontal(self):
         return True
