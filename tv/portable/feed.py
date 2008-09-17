@@ -1720,7 +1720,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
             html = fix_xml_header(html, info['charset'])
 
         # FIXME HTML can be non-unicode here --NN
-        if info.get('updated-url'):
+        if info.get('updated-url') and url in self.urls:
             index = self.urls.index(url)
             self.urls[index] = unicodify(info['updated-url'])
 
