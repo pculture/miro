@@ -96,7 +96,6 @@ def initializeLocale():
     localeInitialized = True
     del pool
 
-# XXX this is duplicated in tv/platform/gtk-x11/plat/utils.py
 def setup_logging (inDownloader=False):
     if inDownloader:
         logging.basicConfig(level=logging.INFO,
@@ -108,7 +107,12 @@ def setup_logging (inDownloader=False):
                             filename=config.get(prefs.LOG_PATHNAME),
                             filemode="w")
         console = logging.StreamHandler (sys.stdout)
-        console.setLevel(logging.WARN)
+
+        if config.get(prefs.APP_VERSION).endswith("svn"):
+            level = logging.DEBUG
+        else:
+            level = logging.WARN
+        console.setLevel(level)
     
         formatter = logging.Formatter('%(levelname)-8s %(message)s')
         console.setFormatter(formatter)

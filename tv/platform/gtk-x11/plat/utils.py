@@ -81,7 +81,6 @@ def confirmMainThread():
 def initializeLocale():
     pass
 
-# XXX this is duplicated in tv/platform/osxx/plat/utils.py
 def setup_logging(inDownloader=False):
     if inDownloader:
         if os.environ.get('MIRO_FRONTEND') == 'cli':
@@ -97,7 +96,9 @@ def setup_logging(inDownloader=False):
                             filename=config.get(prefs.LOG_PATHNAME),
                             filemode="w")
         console = logging.StreamHandler(sys.stdout)
-        if options.frontend != 'cli':
+        if config.get(prefs.APP_VERSION).endswith("svn"):
+            level = logging.DEBUG
+        elif options.frontend != 'cli':
             level = logging.INFO
         else:
             level = logging.WARN

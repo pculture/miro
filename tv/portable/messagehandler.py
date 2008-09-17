@@ -337,6 +337,7 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def call_handler(self, method, message):
         name = 'handling backend message: %s' % message
+        logging.debug("handling %s", message)
         eventloop.addUrgentCall(method, name, args=(message,))
 
     def folder_view_for_type(self, type):
