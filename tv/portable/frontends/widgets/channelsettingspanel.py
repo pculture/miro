@@ -89,7 +89,6 @@ def _build_video_expires(channel):
     expire_options = [
         ("system", _("Default (%(expiration)s)",
                      {"expiration": get_formatted_default_expiration()})),
-        ("3", _("3 hours")),
         ("24", _("1 day")),
         ("72", _("3 days")),
         ("144", _("6 days")),
