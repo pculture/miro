@@ -41,6 +41,7 @@ from miro import app
 from miro import prefs
 from miro import views
 from miro import config
+from miro import messages
 from miro import filetypes
 from miro import eventloop
 from miro import singleclick
@@ -188,7 +189,7 @@ class AppController(NSObject):
 
     def application_openFiles_(self, nsapp, filenames):
         filenames = osFilenamesToFilenameTypes(filenames)
-        eventloop.addUrgentCall(lambda:singleclick.handleCommandLineArgs(filenames), "Open local file(s)")
+        messages.OpenIndividualFiles(filenames).send_to_backend()
         nsapp.replyToOpenOrPrint_(NSApplicationDelegateReplySuccess)
 
     def workspaceWillSleep_(self, notification):

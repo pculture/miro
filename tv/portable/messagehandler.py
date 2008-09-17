@@ -647,8 +647,11 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_open_individual_file(self, message):
         fn = unicodeToFilename(message.filename.decode('utf-8'))
-
         singleclick.parse_command_line_args([fn])
+
+    def handle_open_individual_files(self, message):
+        fns = [unicodeToFilename(fn.decode('utf-8')) for fn in message.filenames]
+        singleclick.parse_command_line_args(fns)
 
     def handle_check_version(self, message):
         up_to_date_callback = message.up_to_date_callback

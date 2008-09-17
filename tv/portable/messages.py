@@ -381,6 +381,10 @@ class OpenIndividualFile(BackendMessage):
     def __init__(self, filename):
         self.filename = filename
 
+class OpenIndividualFiles(BackendMessage):
+    def __init__(self, filenames):
+        self.filenames = filenames
+
 class CheckVersion(BackendMessage):
     def __init__(self, up_to_date_callback):
         self.up_to_date_callback = up_to_date_callback
