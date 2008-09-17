@@ -93,6 +93,7 @@ LRESULT CALLBACK ToplevelFocusHackWndProc(HWND hwnd, UINT uMsg, WPARAM wParam,
 LRESULT CALLBACK BrowserFocusHackWndProc(HWND hwnd, UINT uMsg, WPARAM wParam,
         LPARAM lParam)
 {
+    HWND parent;
     WNDPROC old_window_proc  = (WNDPROC)GetProp(hwnd,
             "BrowserFocusHackOldProc");
     if(!old_window_proc) {
@@ -102,8 +103,13 @@ LRESULT CALLBACK BrowserFocusHackWndProc(HWND hwnd, UINT uMsg, WPARAM wParam,
         case WM_MOUSEACTIVATE:
             // The user clicked on a xulrunner browser.  Have the GTK widget
             // grab focus.
+
+            // NOTE: the window that we are handling messages for is the child
+            // ofthe actual GTK widget.  See browser.py for info on why this
+            // is.
+            parent = GetParent(hwnd);
             GdkWindow* window;
-            window = gdk_window_lookup((GdkNativeWindow)hwnd);
+            window = gdk_window_lookup((GdkNativeWindow)parent);
             if(window) {
                 GtkWidget* browser_widget;
                 gdk_window_get_user_data(window, (gpointer*)&browser_widget);
