@@ -178,12 +178,6 @@ class CustomButton(Drawable, Widget):
         self.create_signal('clicked')
         self.forward_signal('clicked')
 
-    def enable_widget(self):
-        self._widget.set_sensitive(True)
-
-    def disable_widget(self):
-        self._widget.set_sensitive(False)
-
 class ContinuousCustomButton(Drawable, Widget):
     def __init__(self):
         Widget.__init__(self)
@@ -264,9 +258,3 @@ class CustomSlider(Drawable, Widget):
 
     def set_increments(self, increment, big_increment):
         self._widget.set_increments(increment, big_increment)
-
-    def enable_widget(self):
-        self._widget.set_sensitive(True)
-
-    def disable_widget(self):
-        self._widget.set_sensitive(False)

@@ -187,10 +187,10 @@ class Widget(signals.SignalEmitter):
         return color
 
     def enable_widget(self):
-        pass
+        self._widget.set_sensitive(True)
 
     def disable_widget(self):
-        pass
+        self._widget.set_sensitive(False)
 
 class Bin(Widget):
     def __init__(self):

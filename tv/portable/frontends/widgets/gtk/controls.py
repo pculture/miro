@@ -61,12 +61,6 @@ class TextEntry(Widget):
     def set_activates_default(self, setting):
         self._widget.set_activates_default(setting)
 
-    def enable_widget(self):
-        self._widget.set_sensitive(True)
-
-    def disable_widget(self):
-        self._widget.set_sensitive(False)
-
 class SecureTextEntry(TextEntry):
     def __init__(self, initial_text=None):
         TextEntry.__init__(self, initial_text)
@@ -94,12 +88,6 @@ class Checkbox(Widget):
 
     def set_checked(self, value):
         self._widget.set_active(value)
-
-    def enable_widget(self):
-        self._widget.set_sensitive(True)
-
-    def disable_widget(self):
-        self._widget.set_sensitive(False)
 
 class RadioButtonGroup:
     """RadioButtonGroup.
@@ -159,9 +147,3 @@ class RadioButton(Widget):
 
     def set_selected(self):
         radio_button_to_group_mapping[id(self)].set_selected(self)
-
-    def enable_widget(self):
-        self._widget.set_sensitive(True)
-
-    def disable_widget(self):
-        self._widget.set_sensitive(False)
