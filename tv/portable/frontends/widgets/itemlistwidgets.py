@@ -285,25 +285,25 @@ class DownloadButtonToolbar(widgetset.HBox):
         self.create_signal('cancel-all')
 
         pause_button = widgetset.Button(_('Pause All'), style='smooth')
-        pause_button.set_size(0.85)
+        pause_button.set_size(widgetset.FEEDVIEW_BUTTONS_TEXT_SIZE)
         pause_button.set_color(style.TOOLBAR_GRAY)
         pause_button.connect('clicked', self._on_pause_button_clicked)
         self.pack_start(widgetutil.align_right(pause_button, top_pad=5,
             bottom_pad=5), expand=True)
 
         resume_button = widgetset.Button(_('Resume All'), style='smooth')
-        resume_button.set_size(0.85)
+        resume_button.set_size(widgetset.FEEDVIEW_BUTTONS_TEXT_SIZE)
         resume_button.set_color(style.TOOLBAR_GRAY)
         resume_button.connect('clicked', self._on_resume_button_clicked)
         self.pack_start(widgetutil.align_middle(resume_button, top_pad=5,
             bottom_pad=5))
 
         cancel_button = widgetset.Button(_('Cancel All'), style='smooth')
-        cancel_button.set_size(0.85)
+        cancel_button.set_size(widgetset.FEEDVIEW_BUTTONS_TEXT_SIZE)
         cancel_button.set_color(style.TOOLBAR_GRAY)
         cancel_button.connect('clicked', self._on_cancel_button_clicked)
         self.pack_start(widgetutil.align_middle(cancel_button, top_pad=5,
-            bottom_pad=5))
+            bottom_pad=5, right_pad=16))
 
     def _on_pause_button_clicked(self, widget):
         self.emit('pause-all')
