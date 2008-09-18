@@ -26,7 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-# Miro download daemon - background process
+"""Miro download daemon - background process
+"""
 
 def override_modules():
     import miro
@@ -39,7 +40,7 @@ def override_modules():
 
 def launch():
     # Make all output flush immediately.
-    # Don't add extra import statements here.  If there's a problem importting
+    # Don't add extra import statements here.  If there's a problem importing
     # something we want to see the error in the log.
     import sys
     import os
@@ -68,7 +69,6 @@ def launch():
         logging.info ("*** Starting new downloader log ***")
     else:
         logging.info ("*** Launching Downloader Daemon ****")
-
 
     # Start of normal imports
     import threading
