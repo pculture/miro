@@ -55,7 +55,8 @@ class XHTMLifier(HTMLParser):
             return self.output
 
         except HTMLParseError:
-            logging.warn("xhtmlifier: parse exception on '%s'", data)
+            logging.warn("xhtmlifier: parse exception")
+            logging.debug("data: '%s'", data)
 
     def handle_starttag(self, tag, attrs):
         if tag.lower() == 'br':
@@ -118,7 +119,6 @@ def xhtmlify(data, addTopTags=False, filterFontTags=False):
     # if we got a bad return, try it again without filtering font
     # tags
     if ret is None and filterFontTags:
-        print "trying filterfonttags=false"
         x = XHTMLifier()
         ret = x.convert(data, addTopTags, filterFontTags=False)
 
@@ -126,11 +126,10 @@ def xhtmlify(data, addTopTags=False, filterFontTags=False):
     # this fixes bug #10095 where Google Video items are sometimes half
     # quoted.
     if ret is None:
-        print "trying quot replacement"
         x = XHTMLifier()
         ret = x.convert(data.replace("&quot;", '"'), addTopTags, filterFontTags=False)
+
     if ret is None:
-        print "returning empty"
         ret = u""
 
     return ret
