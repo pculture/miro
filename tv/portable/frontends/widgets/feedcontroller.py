@@ -215,9 +215,11 @@ class FeedController(itemlistcontroller.ItemListController):
                                        {"count": downloads})
             text = u"|  %s  |  %s" % (videotext, downloadingtext)
         elif self.full_view.item_list.get_hidden_count() > 0:
-            text = ngettext("|  %(count)d Video Matches Search",
-                    "|  %(count)d Videos Match Search",
+            text = ngettext("%(count)d Video Matches Search",
+                    "%(count)d Videos Match Search",
                     videos, {"count": videos})
+            text = u"|  %s" % text
         else:
-            text = _("|  All Videos Match Search")
+            text = _("All Videos Match Search")
+            text = u"|  %s" % text
         self.full_section.set_info(text)
