@@ -502,6 +502,8 @@ def run_dialog():
             pref_window.set_extra_widget(v)
             pref_window.add_button(BUTTON_CLOSE.text)
             pref_window.run()
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             logging.exception("preferencespanel threw exception.")
     finally:

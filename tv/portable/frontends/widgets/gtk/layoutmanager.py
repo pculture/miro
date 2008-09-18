@@ -252,6 +252,8 @@ class UnderlineDrawer(object):
     def next_underline(self):
         try:
             self.startpos, self.endpos = self.underline_iter.next()
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             self.finished = True
         else:

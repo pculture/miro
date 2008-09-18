@@ -218,6 +218,8 @@ def run_dialog(channel):
             pref_window.set_extra_widget(v)
             pref_window.add_button(BUTTON_DONE.text)
             pref_window.run()
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             logging.exception("channel settings panel threw exception.")
     finally:

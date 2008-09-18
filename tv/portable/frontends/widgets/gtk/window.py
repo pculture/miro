@@ -48,6 +48,8 @@ alive_windows = set() # Keeps the objects alive until destroy() is called
 def __get_fullscreen_stock_id():
     try:
         return gtk.STOCK_FULLSCREEN
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         pass
 
