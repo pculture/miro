@@ -790,14 +790,17 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_cancel_all_downloads(self, message):
         for item in views.pausedItems:
-            item.expire()
+            if item.isUploading() or item.isUploadingPaused():
+                item.stopUpload()
+            else:
+                item.expire()
 
         for item in views.downloadingItems:
             item.expire()
 
         for item in views.allDownloadingItems:
             if item.isUploading() or item.isUploadingPaused():
-                item.expire()
+                item.stopUpload()
 
     def handle_start_upload(self, message):
         try:
