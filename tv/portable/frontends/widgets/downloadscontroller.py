@@ -30,30 +30,74 @@
 
 from miro.gtcache import gettext as _
 
-from miro.frontends.widgets.itemlistcontroller import SimpleItemListController
-from miro.frontends.widgets import itemlistwidgets
+from miro.frontends.widgets import itemlistcontroller
+from miro.frontends.widgets.itemlistwidgets import ItemView, HideableSection, ItemContainerWidget, DownloadButtonToolbar, DownloadLabelToolbar, ItemListTitlebar
+from miro.frontends.widgets import itemcontextmenu
+from miro.frontends.widgets import imagepool
+from miro.frontends.widgets import itemlist
 
 from miro import messages
 from miro import downloader
+from miro.plat import resources
 
 from miro.plat.utils import get_available_bytes_for_movies
 
-class DownloadsController(SimpleItemListController):
-    type = 'downloads'
-    id = None
-    image_filename = 'icon-downloading_large.png'
-    title = _("Downloads")
-
+class DownloadsController(itemlistcontroller.ItemListController):
     def __init__(self):
-        SimpleItemListController.__init__(self)
-        self.button_toolbar = itemlistwidgets.DownloadButtonToolbar()
+        itemlistcontroller.ItemListController.__init__(self, 'downloads', None)
+
+    def build_widget(self):
+        self._make_item_views()
+
+        widget = ItemContainerWidget()
+        widget.sort_bar.connect('sort-changed', self.on_sort_changed)
+
+        widget.titlebar_vbox.pack_start(self.make_titlebar())
+
+        self.button_toolbar = DownloadButtonToolbar()
         self.button_toolbar.connect("pause-all", self._on_pause_all)
         self.button_toolbar.connect("resume-all", self._on_resume_all)
         self.button_toolbar.connect("cancel-all", self._on_cancel_all)
-        self.label_toolbar = itemlistwidgets.DownloadLabelToolbar()
+        self.label_toolbar = DownloadLabelToolbar()
         self._update_free_space()
-        self.widget.titlebar_vbox.pack_start(self.label_toolbar)
-        self.widget.titlebar_vbox.pack_start(self.button_toolbar)
+
+        widget.titlebar_vbox.pack_start(self.label_toolbar)
+        widget.titlebar_vbox.pack_start(self.button_toolbar)
+
+        widget.content_vbox.pack_start(self.indydownloads_section)
+        widget.content_vbox.pack_start(self.downloads_section)
+        widget.content_vbox.pack_start(self.seeding_section)
+
+        return widget
+
+    def make_titlebar(self):
+        image_path = resources.path("wimages/icon-downloading_large.png")
+        icon = imagepool.get(image_path)
+        titlebar = ItemListTitlebar(_("Downloads"), icon)
+        titlebar.connect('search-changed', self._on_search_changed)
+        return titlebar
+
+    def make_context_menu_handler(self):
+        return itemcontextmenu.ItemContextMenuHandler()
+
+    def _make_item_views(self):
+        self.indydownloads_view = ItemView(itemlist.IndividualDownloadItemList())
+        self.indydownloads_section = HideableSection(_("Single and external downloads"), self.indydownloads_view)
+
+        self.downloads_view = ItemView(itemlist.ChannelDownloadItemList())
+        self.downloads_section = HideableSection(_("Channel downloads"), self.downloads_view)
+
+        self.seeding_view = ItemView(itemlist.SeedingItemList())
+        self.seeding_section = HideableSection(_("Seeding"), self.seeding_view)
+
+    def all_item_views(self):
+        return [self.indydownloads_view, self.downloads_view, self.seeding_view]
+
+    def default_item_view(self):
+        return self.downloads_view
+
+    def _on_search_changed(self, widget, search_text):
+        self.set_search(search_text)
 
     def _update_free_space(self):
         self.label_toolbar.update_free_space(get_available_bytes_for_movies())
@@ -66,6 +110,19 @@ class DownloadsController(SimpleItemListController):
 
     def _on_cancel_all(self, widget):
         messages.CancelAllDownloads().send_to_backend()
+
+    def _expand_lists_initially(self):
+        # show everything
+        self.indydownloads_section.show()
+        self.downloads_section.show()
+        self.seeding_section.show()
+
+        # only expand the download views
+        self.indydownloads_section.expand()
+        self.downloads_section.expand()
+
+    def on_initial_list(self):
+        self._expand_lists_initially()
 
     def on_items_changed(self):
         self.label_toolbar.update_downloading_rate(downloader.totalDownRate)

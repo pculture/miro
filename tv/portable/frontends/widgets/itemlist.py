@@ -60,14 +60,14 @@ class ItemSort(object):
 
     def sort_key(self, item):
         """Return a value that can be used to sort item.
-        
+
         Must be implemented by sublcasses.
         """
         raise NotImplentedError()
 
     def compare(self, item, other):
         """Compare two items
-        
+
         Returns -1 if item < other, 1 if other > item and 0 if item == other
         (same as cmp)
         """
@@ -105,15 +105,15 @@ class ItemListGroup(object):
 
     ItemListGroup keep track of one or more ItemLists.  When items are
     added/changed/removed they take care of making sure each child list
-    updates itself.  
-    
+    updates itself.
+
     ItemLists maintain an item sorting and a search filter that are shared by
     each child list.
     """
 
     def __init__(self, item_lists):
-        """Construct in ItemLists.  
-        
+        """Construct in ItemLists.
+
         item_lists is a list of ItemList objects that should be grouped
         together.
         """
@@ -134,7 +134,7 @@ class ItemListGroup(object):
         """Initialize a newly recieved ItemInfo."""
         info.icon = imagepool.LazySurface(info.thumbnail, (154, 105))
         download_info = info.download_info
-        if (download_info is not None and 
+        if (download_info is not None and
                 not download_info.finished and
                 download_info.state != 'paused' and
                 download_info.downloaded_size > 0 and info.size == -1):
@@ -147,7 +147,7 @@ class ItemListGroup(object):
 
     def add_items(self, item_list):
         """Add a list of new items to the item list.
-        
+
         Note: This method will sort item_list
         """
         self._sorter.sort_items(item_list)
@@ -158,7 +158,7 @@ class ItemListGroup(object):
 
     def update_items(self, changed_items):
         """Update items.
-        
+
         Note: This method will sort changed_items
         """
         self._sorter.sort_items(changed_items)
@@ -203,7 +203,7 @@ class ItemList(object):
         self._sorter = None
         self._search_text = ''
         self.new_only = False
-        self._hidden_items = {} 
+        self._hidden_items = {}
         # maps ids -> items that should be in this list, but are filtered out
         # for some reason
 
@@ -269,7 +269,7 @@ class ItemList(object):
     def _insert_sorted_items(self, item_list):
         pos = self.model.first_iter()
         for item_info in item_list:
-            while (pos is not None and 
+            while (pos is not None and
                     self._sorter.compare(self.model[pos][0], item_info) < 0):
                 pos = self.model.next_iter(pos)
             iter = self.model.insert_before(pos, item_info, False, 0)
@@ -375,21 +375,47 @@ class ItemList(object):
                 iter = self.model.next_iter(iter)
         return removed
 
+class IndividualDownloadItemList(ItemList):
+    """ItemList that only displays single downloads items.
+
+    Used in the downloads tab."""
+    def filter(self, item_info):
+        return (item_info.is_external
+                and not (item_info.download_info
+                         and item_info.download_info.state == 'uploading'))
+
+class ChannelDownloadItemList(ItemList):
+    """ItemList that only displays channel downloads items.
+
+    Used in the downloads tab."""
+    def filter(self, item_info):
+        return (not item_info.is_external
+                and not (item_info.download_info
+                         and item_info.download_info.state == 'uploading'))
+
+class SeedingItemList(ItemList):
+    """ItemList that only displays seeding items.
+
+    Used in the downloads tab."""
+    def filter(self, item_info):
+        return (item_info.download_info
+                and item_info.download_info.state == 'uploading')
+
 class DownloadingItemList(ItemList):
     """ItemList that only displays downloading items."""
     def filter(self, item_info):
-        return (item_info.download_info and 
-                not item_info.download_info.finished)
-        
+        return (item_info.download_info
+                and not item_info.download_info.finished)
+
 class DownloadedItemList(ItemList):
     """ItemList that only displays downloaded items."""
     def filter(self, item_info):
-        return (item_info.download_info and 
+        return (item_info.download_info and
                 item_info.download_info.finished)
 
 class _ItemReorderer(object):
     """Handles re-ordering items inside an itemlist.
-    
+
     This object is just around for utility sake.  It's only created to track
     the state during the call to ItemList.move_items()
     """
