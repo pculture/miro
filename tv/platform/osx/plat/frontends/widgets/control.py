@@ -96,7 +96,7 @@ class BaseTextEntry(Widget):
 class MiroTextField(NSTextField):
     def becomeFirstResponder(self):
         wrappermap.wrapper(self).emit('activate')
-        return YES
+        return NSTextField.becomeFirstResponder(self)
 
 class TextEntry(BaseTextEntry):
     def make_view(self):
@@ -105,7 +105,7 @@ class TextEntry(BaseTextEntry):
 class MiroSecureTextField(NSSecureTextField):
     def becomeFirstResponder(self):
         wrappermap.wrapper(self).emit('activate')
-        return YES
+        return NSSecureTextField.becomeFirstResponder(self)
 
 class SecureTextEntry(BaseTextEntry):
     def make_view(self):
@@ -114,7 +114,7 @@ class SecureTextEntry(BaseTextEntry):
 class MiroSearchTextField(NSSearchField):
     def becomeFirstResponder(self):
         wrappermap.wrapper(self).emit('activate')
-        return YES
+        return NSSearchField.becomeFirstResponder(self)
 
 class SearchTextEntry(BaseTextEntry):
     def make_view(self):
