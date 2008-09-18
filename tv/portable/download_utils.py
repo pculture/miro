@@ -86,6 +86,8 @@ def parseURL(url, split_path=False):
         host, port = host.split(':')
         try:
             port = int(port)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             logging.warn("invalid port for %r" % url)
             port = defaultPort(scheme)
@@ -179,6 +181,8 @@ def filenameFromURL(url, clean=False):
             return cleanFilename(ret)
         else:
             return unicodeToFilename(ret)
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         return unicodeToFilename(u'unknown')
 
@@ -206,6 +210,8 @@ def saveData(target, suggested_basename, data):
     """
     try:
         fileutil.makedirs(target)
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         pass
 
@@ -221,6 +227,8 @@ def saveData(target, suggested_basename, data):
     except IOError:
         try:
             fileutil.remove(tmp_filename)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             pass
         raise
@@ -229,6 +237,8 @@ def saveData(target, suggested_basename, data):
     needsSave = True
     try:
         fileutil.remove(filename)
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         pass
 

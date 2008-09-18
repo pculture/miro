@@ -120,6 +120,8 @@ def load_search_engine(filename):
 
         _engines.append(SearchEngineInfo(id_, displayname, url))
 
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         warn(filename, "Exception parsing file")
 
@@ -161,6 +163,8 @@ def get_search_engines():
 def get_last_engine_title():
     try:
         return get_last_engine().title
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         return ''
 

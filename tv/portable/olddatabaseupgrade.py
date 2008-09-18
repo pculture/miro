@@ -139,6 +139,8 @@ class OldItem(OldDDBObject):
         if not issubclass(self.feed.__class__, OldDDBObject):
             try:
                 self.feed = self.feed.ufeed
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 self.__class__ = DropItLikeItsHot
             if self.__class__ is OldFileItem:
@@ -384,6 +386,8 @@ class SchemaSimpleContainer(SchemaSimpleItem):
                         NoneType, datetime, time.struct_time])
             try:
                 data = toValidate.pop()
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 data = None
 

@@ -161,6 +161,8 @@ class RemoteDownloader(DDBObject):
             self.contentType = None
             try:
                 self.contentType = info['content-type'].decode('ascii','replace')
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 self.contentType = None
             self.runDownloader()
@@ -300,9 +302,10 @@ class RemoteDownloader(DDBObject):
             return
         try:
             fileutil.delete(filename)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
-            logging.warn("Error deleting downloaded file: %s\n%s" % 
-                    (toUni(filename), traceback.format_exc()))
+            logging.exception("Error deleting downloaded file: %s", toUni(filename))
 
         parent = os.path.join(fileutil.expand_filename(filename), os.path.pardir)
         parent = os.path.normpath(parent)
@@ -312,9 +315,10 @@ class RemoteDownloader(DDBObject):
                 len(os.listdir(parent)) == 0):
             try:
                 os.rmdir(parent)
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
-                logging.warn("Error deleting empty download directory: %s\n%s" %
-                        (toUni(parent), traceback.format_exc()))
+                logging.exception("Error deleting empty download directory: %s", toUni(parent))
 
     def start(self):
         """Continues a paused, stopped, or failed download thread
@@ -369,6 +373,8 @@ URL was %s""" % self.url
                     directory = os.path.join (directory, channelName)
                 try:
                     fileutil.makedirs(directory)
+                except (SystemExit, KeyboardInterrupt):
+                    raise
                 except:
                     pass
                 newfilename = os.path.join(directory, shortFilename)
@@ -607,6 +613,8 @@ def cleanupIncompleteDownloads():
                     fileutil.remove (f)
                 elif fileutil.isdir(f):
                     fileutil.rmtree (f)
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 # FIXME - maybe a permissions error?
                 pass

@@ -1668,6 +1668,8 @@ class HTTPClient(object):
         response['charset'] = self.getCharsetFromResponse(response)
         try:
             response['cookies'] = self.getCookiesFromResponse(response)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             print "ERROR in getCookiesFromResponse()"
             traceback.print_exc()
@@ -1872,6 +1874,8 @@ def grabURL(url, callback, errback, headerCallback=None,
         else:
             try:
                 data = f.read()
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 errback(FileURLReadError(path))
             else:

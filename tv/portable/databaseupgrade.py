@@ -178,9 +178,13 @@ def upgrade12(objectList):
                             enclosure = enc
                             break
                     o.savedData['releaseDateObj'] = datetime(*enclosure.updated_parsed[0:7])
+                except (SystemExit, KeyboardInterrupt):
+                    raise
                 except:
                     try:
                         o.savedData['releaseDateObj'] = datetime(*o.savedData['entry'].updated_parsed[0:7])
+                    except (SystemExit, KeyboardInterrupt):
+                        raise
                     except:
                         o.savedData['releaseDateObj'] = datetime.min
                 changed.add(o)
@@ -520,6 +524,8 @@ def upgrade38(objectList):
                                                                                                             ord('\\') : u'-',
                                                                                                             ord(':')  : u'-' })
                     changed.add(o)
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 pass
     return changed
@@ -682,6 +688,8 @@ def upgrade46(objectList):
                 if type (o.savedData['status']['fastResumeData']) == unicode:
                     o.savedData['status']['fastResumeData'] = o.savedData['status']['fastResumeData'].encode('ascii','replace')
                 changed.add(o)
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 pass
     return changed
@@ -877,6 +885,8 @@ def upgrade58(objectList):
             try:
                 o.savedData['status']['fastResumeData'] = None
                 changed.add(o)
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 pass
     return changed

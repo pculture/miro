@@ -189,6 +189,8 @@ def _config_change(key, value):
             updateFreq = 0
             try:
                 updateFreq = feed.parsed["feed"]["ttl"]
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 pass
             feed.setUpdateFrequency(updateFreq)
@@ -283,6 +285,8 @@ class FeedImpl:
         """
         try:
             return self.ufeed.getID()
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             logging.info ("%s has no ufeed", self)
 
@@ -430,6 +434,8 @@ class FeedImpl:
         self.ufeed.confirmDBThread()
         try:
             return self.ufeed.expireTime.days
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS)).days
 
@@ -439,6 +445,8 @@ class FeedImpl:
         self.ufeed.confirmDBThread()
         try:
             return int(self.ufeed.expireTime.seconds/3600)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return int(timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS)).seconds/3600)
 
@@ -472,6 +480,8 @@ class FeedImpl:
                 else:
                     title = self.url
             return title
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return u""
 
@@ -484,6 +494,8 @@ class FeedImpl:
                 return self.url
             else:
                 return u"dtv:searchTerm:%s?%s" % (urlencode(self.url), urlencode(self.ufeed.searchTerm))
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return u""
 
@@ -493,6 +505,8 @@ class FeedImpl:
         """
         try:
             return self.url
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return u""
 
@@ -545,6 +559,8 @@ class FeedImpl:
             try:
                 if item.getState() == u'newly-downloaded':
                     count += 1
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 pass
         return count
@@ -1030,6 +1046,8 @@ class Feed(DDBObject):
             parser.setFeature(xml.sax.handler.feature_namespaces, 1)
             try:
                 parser.setFeature(xml.sax.handler.feature_external_ges, 0)
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 pass
             handler = RSSLinkGrabber(unicodify(info['redirected-url']), charset)
@@ -1042,6 +1060,8 @@ class Feed(DDBObject):
                 self.finishGenerateFeed(None)
                 if removeOnError:
                     self.remove()
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 #it doesn't parse as RSS, so it must be HTML
                 #print " Nevermind! it's HTML"
@@ -1208,9 +1228,13 @@ def _entry_equal(a, b):
         return True
     try:
         return a.equal(b)
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         try:
             return b.equal(a)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return a == b
 
@@ -1276,6 +1300,8 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             if 'enclosures' not in entry:
                 try:
                     url = entry['link']
+                except (SystemExit, KeyboardInterrupt):
+                    raise
                 except:
                     continue
                 mimetype = filetypes.guessMimeType(url)
@@ -1354,6 +1380,8 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                                 self._handleNewEntryForItem(item, entry, channelTitle)
                                 new = False
                                 old_items.discard(item)
+                        except (SystemExit, KeyboardInterrupt):
+                            raise
                         except:
                             pass
             if (new and entry.has_key('enclosures') and
@@ -1444,6 +1472,8 @@ class RSSFeedImpl(RSSFeedImplBase):
     def getBaseHref(self):
         try:
             return escape(self.parsed.link)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return FeedImpl.getBaseHref(self)
 
@@ -1454,6 +1484,8 @@ class RSSFeedImpl(RSSFeedImplBase):
         self.ufeed.confirmDBThread()
         try:
             return xhtmlify(u'<span>'+unescape(self.parsed.feed.description)+u'</span>')
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return u"<span />"
 
@@ -1464,6 +1496,8 @@ class RSSFeedImpl(RSSFeedImplBase):
         self.ufeed.confirmDBThread()
         try:
             return self.parsed.link
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return u""
 
@@ -1474,6 +1508,8 @@ class RSSFeedImpl(RSSFeedImplBase):
         self.ufeed.confirmDBThread()
         try:
             return self.parsed.libraryLink
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return u""
 
@@ -1530,10 +1566,14 @@ class RSSFeedImpl(RSSFeedImplBase):
         else:
             try:
                 etag = self.etag
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 etag = None
             try:
                 modified = self.modified
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 modified = None
             logging.info("updating %s", self.url)
@@ -1578,6 +1618,8 @@ class RSSFeedImpl(RSSFeedImplBase):
         """
         try:
             ret = self.parsed["feed"]["license"]
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             ret = u""
         return ret
@@ -1627,6 +1669,8 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         self.ufeed.confirmDBThread()
         try:
             return u'<span>Search All</span>'
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return u"<span />"
 
@@ -1672,6 +1716,8 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
             try:
                 parsed = feedparser.parse(html)
                 feedparser_callback(parsed, url)
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 self.feedparser_errback(self, None, url)
                 raise
@@ -1999,6 +2045,8 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
             parser.setFeature(xml.sax.handler.feature_namespaces, 1)
             try:
                 parser.setFeature(xml.sax.handler.feature_external_ges, 0)
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 pass
             if charset is not None:

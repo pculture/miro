@@ -120,6 +120,8 @@ def ngettext(text1, text2, count, values=None):
     text2 = text2.encode('utf-8')
     try:
         s = _gtcache[(text1, text2, count)]
+    except (KeyboardInterrupt, SystemExit):
+        raise
     except:
         s = _gt.ngettext(text1, text2, count).decode('utf-8')
         _gtcache[(text1, text2, count)] = s

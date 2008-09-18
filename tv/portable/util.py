@@ -263,7 +263,7 @@ def gather_videos(path, progress_callback):
                     raise
             if config.get(prefs.SHORT_APP_NAME) in dirs:
                 dirs.remove(config.get(prefs.SHORT_APP_NAME))
-    except KeyboardInterrupt:
+    except (SystemExit, KeyboardInterrupt):
         raise
     except:
         pass
@@ -407,6 +407,8 @@ def checkURL(text):
         raise MiroUnicodeError, (u"url \"%s\" is not unicode" % text)
     try:
         text.encode('ascii')
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         raise MiroUnicodeError, (u"url \"%s\" contains extended characters" % text)
 
@@ -622,6 +624,8 @@ def escape(orig):
     orig = unicode(orig)
     try:
         return _escapecache[orig]
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         _escapecache[orig] = orig.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
         return _escapecache[orig]
@@ -629,6 +633,8 @@ def escape(orig):
 def toUni(orig, encoding=None):
     try:
         return _unicache[orig]
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         if isinstance(orig, unicode):
             # Let's not bother putting this in the cache.  Calculating

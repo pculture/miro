@@ -205,6 +205,8 @@ class SchemaSimpleContainer(SchemaSimpleItem):
                         NoneType, datetime.datetime, time.struct_time])
             try:
                 data = toValidate.pop()
+            except (KeyboardInterrupt, SystemExit):
+                raise
             except:
                 data = None
 

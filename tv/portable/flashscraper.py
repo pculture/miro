@@ -74,6 +74,8 @@ def _youTubeCallback(info, callback):
         url = u"http://youtube.com/get_video.php?video_id=%s&t=%s&fmt=18" % (videoID, t)
         httpclient.grabHeaders(url, lambda x: _youTubeCallback2(redirected_url, url, x, callback),
                                lambda x: _youTubeErrback(x, callback))
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         print "DTV: WARNING, unable to scrape You Tube Video URL: %s" % redirected_url
         callback(None)
@@ -90,6 +92,8 @@ def _youTubeCallback2(redirected_url, hidef_url, info, callback):
             t = params['t'][0]
             url = u"http://youtube.com/get_video.php?video_id=%s&t=%s" % (videoID, t)
             callback(url)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             print "DTV: WARNING, unable to scrape You Tube Video URL: %s" % redirected_url
             callback(None)
@@ -108,6 +112,8 @@ def _scrapeGoogleVideoURL(url, callback):
         docId = params['docId'][0]
         url = u"http://video.google.com/videofile/%s.flv?docid=%s&itag=5" % (docId, docId)
         callback(url)
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         print "DTV: WARNING, unable to scrape Google Video URL: %s" % url
         callback(None)
@@ -118,6 +124,8 @@ def _scrapeLuLuVideoURL(url, callback):
         params = cgi.parse_qs(components[3])
         url = unquote_plus(params['file'][0]).decode('ascii','replace')
         callback(url)
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         print "DTV: WARNING, unable to scrape LuLu.tv Video URL: %s" % url
         callback(None)
@@ -133,6 +141,8 @@ def _scrapeVMixVideoURL(url, callback):
         httpclient.grabURL(url, lambda x: _scrapeVMixCallback(x, callback),
                            lambda x: _scrapeVMixErrback(x, callback))
 
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         print "DTV: WARNING, unable to scrape VMix Video URL: %s" % url
         callback(None)
@@ -142,6 +152,8 @@ def _scrapeVMixCallback(info, callback):
         doc = minidom.parseString(info['body'])
         url = doc.getElementsByTagName('file').item(0).firstChild.data.decode('ascii', 'replace')
         callback(url)
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         print "DTV: WARNING, unsable to scrape XML for VMix Video URL %s" % info['redirected-url']
         callback(None)
@@ -164,6 +176,8 @@ def _scrapeDailyMotionCallback(info, callback):
         url = url.split("@@")[0]
         url = u"http://www.dailymotion.com%s" % url
         callback(url)
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         print "DTV: WARNING, unable to scrape Daily Motion URL: %s" % url
         callback(None)
@@ -179,6 +193,8 @@ def _scrapeVSocialVideoURL(url, callback):
         v = params['v'][0]
         url = u'http://static.vsocial.com/varmedia/vsocial/flv/%s_out.flv' % v
         callback(url)
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         print "DTV: WARNING, unable to scrape VSocial URL: %s" % url
         callback(None)
@@ -192,6 +208,8 @@ def _scrapeVeohTVVideoURL(url, callback):
         url = u'http://www.veoh.com/movieList.html?type=%s&permalinkId=%s&numResults=45' % (t, permalinkId)
         httpclient.grabURL(url, lambda x: _scrapeVeohTVCallback(x, callback),
                            lambda x: _scrapeVeohTVErrback(x, callback))
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         print "DTV: WARNING, unable to scrape Veoh URL: %s" % url
         callback(None)
@@ -205,6 +223,8 @@ def _scrapeVeohTVCallback(info, callback):
             fileHash = fileHash[:-1]
         url = u'http://ll-previews.veoh.com/previews/get.jsp?fileHash=%s' % fileHash
         callback(url)
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         print "DTV: WARNING, unable to scrape Veoh URL data: %s" % url
         callback(None)
@@ -224,6 +244,8 @@ def _scrapeBreakCallback(info, callback):
         params = cgi.parse_qs(components[3])
         url = unquote_plus(params['sVidLoc'][0]).decode('ascii', 'replace')
         callback(url)
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         print "DTV: WARNING, unable to scrape Break URL: %s" % url
         callback(None)

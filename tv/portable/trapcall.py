@@ -42,7 +42,7 @@ def trapCall(when, function, *args, **kwargs):
     try:
         function(*args, **kwargs)
         return True
-    except KeyboardInterrupt:
+    except (SystemExit, KeyboardInterrupt):
         raise
     except:
         signals.system.failed_exn(when)
@@ -70,7 +70,7 @@ def timeTrapCall(when, function, *args, **kwargs):
     if TRACK_CUMULATIVE:
         try:
             total = cumulative[when]
-        except KeyboardInterrupt:
+        except (SystemExit, KeyboardInterrupt):
             raise
         except:
             total = 0

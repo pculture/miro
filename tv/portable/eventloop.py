@@ -79,7 +79,7 @@ class DelayedCall(object):
                                self.name, end-start)
             try:
                 total = cumulative[self.name]
-            except KeyboardInterrupt:
+            except (SystemExit, KeyboardInterrupt):
                 raise
             except:
                 total = 0
@@ -200,6 +200,8 @@ class ThreadPool(object):
             x = self.threads.pop()
             try:
                 x.join()
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 pass
             

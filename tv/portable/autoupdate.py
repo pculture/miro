@@ -96,6 +96,8 @@ def _handle_app_cast(data, up_to_date_callback):
             else:
                 logging.info('Up to date.')
 
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             logging.exception("Error while handling appcast data.")
 

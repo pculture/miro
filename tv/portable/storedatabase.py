@@ -595,14 +595,14 @@ class LiveStorageBDB:
                         self.closeInvalidDB()
                         try:
                             restoreDatabase()
-                        except KeyboardInterrupt:
+                        except (SystemExit, KeyboardInterrupt):
                             raise
                         except:
                             logging.exception ("Error restoring old database")
                         self.saveDatabase()
                     else:
                         self.loadDatabase()
-                except KeyboardInterrupt:
+                except (SystemExit, KeyboardInterrupt):
                     raise
                 except databaseupgrade.DatabaseTooNewError:
                     raise
@@ -696,7 +696,7 @@ class LiveStorageBDB:
         database.confirmDBThread()
         try:
             os.makedirs(self.dbPath)
-        except KeyboardInterrupt:
+        except (SystemExit, KeyboardInterrupt):
             raise
         except:
             pass
@@ -711,7 +711,7 @@ class LiveStorageBDB:
         database.confirmDBThread()
         try:
             self.db.close()
-        except KeyboardInterrupt:
+        except (SystemExit, KeyboardInterrupt):
             raise
         except:
             pass
@@ -731,7 +731,7 @@ class LiveStorageBDB:
                 try:
                     savable = cPickle.loads(data)
                     savables.append(savable)
-                except KeyboardInterrupt:
+                except (SystemExit, KeyboardInterrupt):
                     raise
                 except:
                     logging.info ('Error loading data in upgradeDatabase')
@@ -802,7 +802,7 @@ class LiveStorageBDB:
                     savable = cPickle.loads(data)
                     object = savableToObject(savable)
                     objects.append(object)
-                except KeyboardInterrupt:
+                except (SystemExit, KeyboardInterrupt):
                     raise
                 except:
                     logging.info ("Error loading data in loadDatabase")
@@ -880,7 +880,7 @@ class LiveStorageBDB:
                 self.errorState = True
             try:
                 self.txn.abort()
-            except KeyboardInterrupt:
+            except (SystemExit, KeyboardInterrupt):
                 raise
             except:
                 # if we tried to do a commit and failed an abort doesn't work
@@ -912,7 +912,7 @@ class LiveStorageBDB:
             self.toRemove.add (object)
             try:
                 self.toUpdate.remove (object)
-            except KeyboardInterrupt:
+            except (SystemExit, KeyboardInterrupt):
                 raise
             except:
                 pass
@@ -931,7 +931,7 @@ class LiveStorageBDB:
             for logfile in self.dbenv.log_archive(bsddb.db.DB_ARCH_ABS):
                 try:
                     os.remove(logfile)
-                except KeyboardInterrupt:
+                except (SystemExit, KeyboardInterrupt):
                     raise
                 except:
                     pass
@@ -979,10 +979,12 @@ class LiveStorage:
                             logging.info("Upgrading from previous version of database")
                             try:
                                 LiveStorageBDB()
+                            except (SystemExit, KeyboardInterrupt):
+                                raise
                             except:
                                 logging.warning("Upgrading from previous version of database failed")
                         self.saveDatabase()
-                except KeyboardInterrupt:
+                except (SystemExit, KeyboardInterrupt):
                     raise
                 except databaseupgrade.DatabaseTooNewError:
                     raise
@@ -1083,6 +1085,8 @@ class LiveStorage:
         if not self.closed:
             try:
                 self.conn.close()
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 traceback.print_exc()
         try:
@@ -1103,6 +1107,8 @@ class LiveStorage:
                 zipfile.close()
                 logging.info("Database backed up to %s" % tempfilename)
                 return tempfilename
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 traceback.print_exc()
         finally:
@@ -1148,7 +1154,7 @@ class LiveStorage:
                 try:
                     savable = cPickle.loads(str(data))
                     savables.append(savable)
-                except KeyboardInterrupt:
+                except (SystemExit, KeyboardInterrupt):
                     raise
                 except:
                     logging.info ('Error loading data in upgradeDatabase')
@@ -1211,7 +1217,7 @@ class LiveStorage:
                 savable = cPickle.loads(str(data))
                 object = savableToObject(savable)
                 objects.append(object)
-            except KeyboardInterrupt:
+            except (SystemExit, KeyboardInterrupt):
                 raise
             except:
                 logging.info ("Error loading data in loadDatabase")
@@ -1318,7 +1324,7 @@ class LiveStorage:
             self.toRemove.add (object)
             try:
                 self.toUpdate.remove (object)
-            except KeyboardInterrupt:
+            except (SystemExit, KeyboardInterrupt):
                 raise
             except:
                 pass

@@ -276,7 +276,7 @@ class SystemSignals(SignalEmitter):
         header += "Call stack\n----------\n"
         try:
             stack = util.get_nice_stack()
-        except KeyboardInterrupt:
+        except (SystemExit, KeyboardInterrupt):
             raise
         except:
             stack = traceback.extract_stack()
@@ -303,7 +303,7 @@ class SystemSignals(SignalEmitter):
                 logContents = "%s\n---\n" % logName
                 logContents += f.read()
                 f.close()
-            except KeyboardInterrupt:
+            except (SystemExit, KeyboardInterrupt):
                 raise
             except:
                 logContents = ''

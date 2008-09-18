@@ -83,6 +83,8 @@ def startup_function(func):
             func(*args, **kwargs)
         except StartupError, e:
             signals.system.startup_failure(e.summary, e.description)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             logging.warn("Unknown startup error: %s", traceback.format_exc())
             signals.system.startup_failure(_("Unknown Error"),

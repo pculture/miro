@@ -185,9 +185,13 @@ def _entry_equal(a, b):
         return True
     try:
         return a.equal(b)
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         try:
             return b.equal(a)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return a == b
 
@@ -253,6 +257,8 @@ class FeedParserDict(UserDict):
     def equal (self, other):
         try:
             iter = other.get_iter()
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             iter = other.__iter__()
         try:
@@ -265,6 +271,8 @@ class FeedParserDict(UserDict):
                 if not checked.has_key (key):
                     return False
             return True
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return False
 
@@ -311,6 +319,8 @@ class FeedParserDict(UserDict):
         try:
             assert not key.startswith('_')
             return self.__getitem__(key)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             raise AttributeError, "object has no attribute '%s'" % key
 
@@ -732,6 +742,8 @@ class _FeedParserMixin:
         if self.encoding and type(output) != type(u''):
             try:
                 output = unicode(output, self.encoding)
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 pass
 
@@ -974,6 +986,8 @@ class _FeedParserMixin:
         value = self.pop('width')
         try:
             value = int(value)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             value = 0
         if self.inimage:
@@ -987,6 +1001,8 @@ class _FeedParserMixin:
         value = self.pop('height')
         try:
             value = int(value)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             value = 0
         if self.inimage:
@@ -1408,6 +1424,8 @@ class _FeedParserMixin:
         self.push('media:people',1)
         try:
             self.peoplerole = attrsD['role']
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             self.peoplerole = 'unknown'
 
@@ -1635,6 +1653,8 @@ class _BaseHTMLProcessor(sgmllib.SGMLParser):
         try:
             if self.get_starttag_text()[-2:] == "/>":
                 self.finish_endtag(self.lasttag)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             pass
         return retval
@@ -1861,6 +1881,8 @@ def sanitizeHTML(htmlSource, encoding):
                         nerrors, nwarnings, data, errordata = _mxtidy.tidy(data, **kwargs)
                         return data
                     break
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 pass
         if _tidy:
@@ -1930,6 +1952,8 @@ class _FeedURLHandler(urllib2.HTTPDigestAuthHandler, urllib2.HTTPRedirectHandler
             retry = self.http_error_auth_reqed('www-authenticate', host, req, headers)
             self.reset_retry_count()
             return retry
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return self.http_error_default(req, fp, code, msg, headers)
 
@@ -2017,6 +2041,8 @@ def _open_resource(url_file_stream_or_string, etag, modified, agent, referrer, h
     # try to open with native open function (if url_file_stream_or_string is a filename)
     try:
         return open(url_file_stream_or_string)
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         pass
 
@@ -2241,6 +2267,8 @@ def _parse_date_greek(dateString):
     try:
         wday = _greek_wdays[m.group(1)]
         month = _greek_months[m.group(3)]
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         return
     rfc822date = '%(wday)s, %(day)s %(month)s %(year)s %(hour)s:%(minute)s:%(second)s %(zonediff)s' % \
@@ -2283,6 +2311,8 @@ def _parse_date_hungarian(dateString):
         hour = m.group(4)
         if len(hour) == 1:
             hour = '0' + hour
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         return
     w3dtfdate = '%(year)s-%(month)s-%(day)sT%(hour)s:%(minute)s%(zonediff)s' % \
@@ -2543,6 +2573,8 @@ def _getCharacterEncoding(http_headers, xml_data):
             # ASCII-compatible
             pass
         xml_encoding_match = re.compile('^<\?.*encoding=[\'"](.*?)[\'"].*\?>').match(xml_data)
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         xml_encoding_match = None
     if xml_encoding_match:
@@ -2740,6 +2772,8 @@ def parse(url_file_stream_or_string, etag=None, modified=None, agent=None, refer
             data = _toUTF8(data, proposed_encoding)
             known_encoding = use_strict_parser = 1
             break
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             pass
     # if no luck and we have auto-detection library, try that
@@ -2750,6 +2784,8 @@ def parse(url_file_stream_or_string, etag=None, modified=None, agent=None, refer
                 tried_encodings.append(proposed_encoding)
                 data = _toUTF8(data, proposed_encoding)
                 known_encoding = use_strict_parser = 1
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             pass
     # if still no luck and we haven't tried utf-8 yet, try that
@@ -2759,6 +2795,8 @@ def parse(url_file_stream_or_string, etag=None, modified=None, agent=None, refer
             tried_encodings.append(proposed_encoding)
             data = _toUTF8(data, proposed_encoding)
             known_encoding = use_strict_parser = 1
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             pass
     # if still no luck and we haven't tried windows-1252 yet, try that
@@ -2768,6 +2806,8 @@ def parse(url_file_stream_or_string, etag=None, modified=None, agent=None, refer
             tried_encodings.append(proposed_encoding)
             data = _toUTF8(data, proposed_encoding)
             known_encoding = use_strict_parser = 1
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             pass
     # if still no luck, give up

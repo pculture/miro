@@ -94,6 +94,8 @@ class Menu:
     def getShortcuts(self, action):
         try:
             return self.shortcuts[action]
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return ()
     

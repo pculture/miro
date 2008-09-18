@@ -112,5 +112,7 @@ def manualDownloads(item):
 def uniqueItems(item):
     try:
         return item.downloader.itemList[0] == item
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
         return True

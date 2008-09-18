@@ -161,6 +161,8 @@ class ChannelGuide(DDBObject):
             parser = GuideHTMLParser(self.updated_url)
             parser.feed(info["body"])
             parser.close()
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             pass
         else:

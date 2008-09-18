@@ -134,6 +134,8 @@ class IconCache:
     def icon_changed(self, needsSave=True):
         try:
             self.dbItem.iconChanged(needsSave=needsSave)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             # FIXME - bad code; what exceptions get thrown here?
             self.dbItem.signalChange(needsSave=needsSave)
@@ -287,6 +289,8 @@ class IconCache:
             return
         try:
             url = self.dbItem.getThumbnailURL()
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             # FIXME - bad code; what exceptions get thrown here?
             url = self.url

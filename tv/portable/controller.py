@@ -105,6 +105,8 @@ class Controller:
             for thread in threading.enumerate():
                 logging.info("%s", thread)
 
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             signals.system.failed_exn("while shutting down")
             exit(1)
@@ -122,10 +124,14 @@ class Controller:
             # Pass in case they don't exist or are not empty:
             try:
                 fileutil.rmdir(os.path.join(oldDir, 'Incomplete Downloads'))
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 pass
             try:
                 fileutil.rmdir(oldDir)
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 pass
         util.getSingletonDDBObject(views.directoryFeed).update()
@@ -147,9 +153,10 @@ class Controller:
                 logging.info("Sending entire database")
                 from miro import database
                 backupfile = database.defaultDatabase.liveStorage.backupDatabase()
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
-                traceback.print_exc()
-                logging.warning(u"Failed to backup database")
+                logging.exception("Failed to backup database")
 
         description = description.encode("utf-8")
         postVars = {"description": description,

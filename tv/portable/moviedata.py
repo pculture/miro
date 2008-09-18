@@ -58,6 +58,8 @@ def thumbnailDirectory():
     dir_ = os.path.join(config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
     try:
         fileutil.makedirs(dir_)
+    except (KeyboardInterrupt, SystemExit):
+        raise
     except:
         pass
     return dir_
@@ -131,6 +133,8 @@ class MovieDataUpdater:
                     # try to take the screenshot again.
                     screenshot = FilenameType("")
                 self.updateFinished(movieDataInfo.item, duration, screenshot)
+            except (KeyboardInterrupt, SystemExit):
+                raise
             except:
                 if self.inShutdown:
                     break
@@ -159,6 +163,8 @@ class MovieDataUpdater:
     def killProcess(self, pid):
         try:
             killProcess(pid)
+        except (KeyboardInterrupt, SystemExit):
+            raise
         except:
             logging.warn("Error trying to kill the movie data process:\n%s", traceback.format_exc())
         else:

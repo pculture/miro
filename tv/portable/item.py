@@ -238,9 +238,13 @@ class Item(DDBObject):
         # This should be called whenever we get a new entry
         try:
             self.releaseDateObj = datetime(*self.getFirstVideoEnclosure().updated_parsed[0:7])
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             try:
                 self.releaseDateObj = datetime(*self.entry.updated_parsed[0:7])
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 self.releaseDateObj = datetime.min
 
@@ -277,10 +281,14 @@ class Item(DDBObject):
         self.expiring = None
         try:
             del self._state
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             pass
         try:
             del self._size
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             pass
         DDBObject.signalChange(self, needsSave=needsSave)
@@ -293,6 +301,8 @@ class Item(DDBObject):
         try:
             # optimizing by trying the cached feed
             return self._feed.lastViewed >= self.creationTime
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return self.creationTime <= self.getFeed().lastViewed 
 
@@ -301,6 +311,8 @@ class Item(DDBObject):
         """
         try:
             return self._firstVidEnc
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             self._calcFirstEnc()
             return self._firstVidEnc
@@ -342,6 +354,8 @@ class Item(DDBObject):
         try:
             # optimizing by caching the feed
             return self._feed
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             if self.feed_id is not None:
                 self._feed = self.dd.getObjectByID(self.feed_id)
@@ -354,6 +368,8 @@ class Item(DDBObject):
     def getParent(self):
         try:
             return self._parent
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             if self.parent_id is not None:
                 self._parent = self.dd.getObjectByID(self.parent_id)
@@ -404,6 +420,8 @@ class Item(DDBObject):
         if self.screenshot:
             try:
                 fileutil.remove(self.screenshot)
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 pass
         # This should be done even if screenshot = ""
@@ -664,6 +682,8 @@ class Item(DDBObject):
         if videoEnclosure is not None:
             try:
                 return videoEnclosure["thumbnail"]["url"].decode("ascii","replace")
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 pass 
         # Try to get any enclosure thumbnail
@@ -675,6 +695,8 @@ class Item(DDBObject):
         # Try to get the thumbnail for our entry
         try:
             return self.entry["thumbnail"]["url"].decode('ascii','replace')
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return None
 
@@ -946,6 +968,8 @@ class Item(DDBObject):
         else:
             try:
                 return int(self.getFirstVideoEnclosure()['length'])
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 return 0
 
@@ -1000,6 +1024,8 @@ class Item(DDBObject):
         """
         try:
             return self.getReleaseDateObj().strftime("%b %d %Y").decode(_charset)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return u""
 
@@ -1043,6 +1069,8 @@ class Item(DDBObject):
             enclosure = self.getFirstVideoEnclosure()
             try:
                 extension = enclosure['url'].split('.')[-1].lower().decode('ascii','replace')
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 extension == u''
             # Hack for mp3s, "mpeg audio" isn't clear enough
@@ -1060,6 +1088,8 @@ class Item(DDBObject):
                     return u'.%s' % self.MIME_SUBSITUTIONS.get(format, format).lower()
             if extension in self.KNOWN_MIME_SUBTYPES:
                 return u'.%s' % extension
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             pass
         if emptyForUnknown:
@@ -1074,6 +1104,8 @@ class Item(DDBObject):
         self.confirmDBThread()
         try:
             return self.entry.categories.join(u", ")
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return u""
 
@@ -1084,9 +1116,13 @@ class Item(DDBObject):
         self.confirmDBThread()
         try:
             return self.entry.license
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             try:
                 return self.getFeed().getLicense()
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 pass
         return u""
@@ -1098,6 +1134,8 @@ class Item(DDBObject):
         self.confirmDBThread()
         try:
             return self.entry.comments
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             pass
 
@@ -1109,6 +1147,8 @@ class Item(DDBObject):
         self.confirmDBThread()
         try:
             return self.entry.link.decode('ascii', 'replace')
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return u""
 
@@ -1169,6 +1209,8 @@ class Item(DDBObject):
         self.confirmDBThread()
         try:
             return self.downloader.getFilename()
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return FilenameType("")
 
@@ -1270,6 +1312,8 @@ class Item(DDBObject):
                         os.remove(turd)
                     fileutil.rmdir(filenamePath)
                     fileutil.rename(temp, filenamePath)
+                except (SystemExit, KeyboardInterrupt):
+                    raise
                 except:
                     pass
                 self.videoFilename = FilenameType("")
@@ -1406,6 +1450,8 @@ class FileItem(Item):
                 fileutil.remove(self.filename)
             elif fileutil.isdir(self.filename):
                 fileutil.rmtree(self.filename)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             logging.warn("WARNING: error deleting files:\n%s",
                     traceback.format_exc())
@@ -1414,6 +1460,8 @@ class FileItem(Item):
         self.confirmDBThread()
         try:
             return datetime.fromtimestamp(fileutil.getctime(self.filename))
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return datetime.min
 
@@ -1421,6 +1469,8 @@ class FileItem(Item):
     def getFilename(self):
         try:
             return self.filename
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             return FilenameType("")
 
@@ -1432,6 +1482,8 @@ class FileItem(Item):
         # This should be called whenever we get a new entry
         try:
             self.releaseDateObj = datetime.fromtimestamp(fileutil.getmtime(self.filename))
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             self.releaseDateObj = datetime.min
 
