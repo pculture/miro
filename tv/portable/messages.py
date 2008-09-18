@@ -630,6 +630,7 @@ class ItemInfo(object):
     duration -- length of the video in seconds
     resume_time -- time at which playback should restart
     permalink -- URL to a permalink to the item (or None)
+    commentslink -- URL to a comments page for the item (or None)
     has_sharable_url -- does this item have a sharable URL?
     can_be_saved -- is this an expiring downloaded item?
     downloaded -- has the item been downloaded?
@@ -666,6 +667,7 @@ class ItemInfo(object):
         self.duration = item.getDurationValue()
         self.resume_time = item.resumeTime
         self.permalink = item.get_link()
+        self.commentslink = item.get_comments_link()
         self.has_sharable_url = item.hasSharableURL()
         self.can_be_saved = item.showSaveButton()
         if not item.keep:

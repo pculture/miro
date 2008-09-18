@@ -404,6 +404,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         details_rows = []
         if self.data.permalink:
             details_rows.append((_('Web page'), _('permalink'), 'visit_webpage'))
+        if self.data.commentslink:
+            details_rows.append((_('Comments'), _('commentslink'), 'visit_comments'))
         if self.data.file_url and not self.data.file_url.startswith('file:'):
             details_rows.append(
                 (_('File link'), _('direct link to file'), 'visit_filelink'))

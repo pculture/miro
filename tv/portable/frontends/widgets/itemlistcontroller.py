@@ -182,6 +182,8 @@ class ItemListController(object):
             itemview.model_changed()
         elif name == 'visit_webpage':
             app.widgetapp.open_url(item_info.permalink)
+        elif name == 'visit_comments':
+            app.widgetapp.open_url(item_info.comments)
         elif name == 'visit_filelink':
             app.widgetapp.open_url(item_info.file_url)
         elif name == 'visit_license':

@@ -1128,7 +1128,7 @@ class Item(DDBObject):
         return u""
 
     @returnsUnicode
-    def getCommentsLink(self):
+    def get_comments_link(self):
         """Returns the comments link if it exists in the feed item.
         """
         self.confirmDBThread()
