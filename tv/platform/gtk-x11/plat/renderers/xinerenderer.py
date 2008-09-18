@@ -26,7 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-import traceback
+import os.path
 import logging
 
 import gtk
@@ -59,6 +59,7 @@ class Renderer:
         self.attached = False
         self.driver = config.get(options.XINE_DRIVER)
         logging.info("Xine video driver: %s", self.driver)
+        self.__playing = False
 
     def set_widget(self, widget):
         confirmMainThread()
@@ -76,18 +77,19 @@ class Renderer:
         # flush gdk output to ensure that our window is created
         gtk.gdk.flush()
         displayName = gtk.gdk.display_get_default().get_name()
-        self.xine.attach(displayName, 
-                         widget.window.xid, 
-                         self.driver, 
-                         int(options.shouldSyncX), 
+        self.xine.attach(displayName,
+                         widget.window.xid,
+                         self.driver,
+                         int(options.shouldSyncX),
                          int(config.get(options.USE_XINE_XV_HACK)))
         self.attached = True
         for func, args in self.attach_queue:
             try:
                 func(self, *args)
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
-                print "Exception in attach_queue function"
-                traceback.print_exc()
+                logging.exception("Exception in attach_queue function")
         self.attach_queue = []
 
     def on_unrealize(self, widget):
@@ -120,6 +122,8 @@ class Renderer:
             try:
                 _, _, width, height, _ = self.widget.window.get_geometry()
                 self.xine.gotExposeEvent(0, 0, width, height)
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 return True
             return False
@@ -145,6 +149,8 @@ class Renderer:
             try:
                 _, _, width, height, _ = self.widget.window.get_geometry()
                 self.xine.gotExposeEvent(0, 0, width, height)
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 return True
             return False
@@ -156,6 +162,8 @@ class Renderer:
         confirmMainThread()
         try:
             pos, length = self.xine.getPositionAndLength()
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             pass
 
@@ -175,21 +183,23 @@ class Renderer:
     @wait_for_attach
     def seek(self, seconds):
         confirmMainThread()
+        # FIXME - this is icky.  self.xine.seek autoamtically kicks us into playing
+        # mode which seems hard to undo since xine-lib doesn't seem to have a
+        # non-playing seek function.
+        # so we check to see if we know we're playing and if not, we stop playing.
         self.xine.seek(int(seconds * 1000))
+        if not self.__playing:
+            self.pause()
 
     def get_duration(self):
         confirmMainThread()
         try:
             pos, length = self.xine.getPositionAndLength()
             return length / 1000.0
-        except Exception, e:
-            logging.error("get_duration: caught exception: %s" % e)
-            return None
-
-    # @wait_for_attach  -- Not necessary because stop does this
-    def reset(self):
-        # confirmMainThread() -- Not necessary because stop does this
-        self.stop()
+        except (SystemExit, KeyboardInterrupt):
+            raise
+        except:
+            logging.exception("get_duration: caught exception")
 
     @wait_for_attach
     def set_volume(self, level):
@@ -200,16 +210,16 @@ class Renderer:
     def play(self):
         confirmMainThread()
         self.xine.play()
+        self.__playing = True
 
     @wait_for_attach
     def pause(self):
         confirmMainThread()
         self.xine.pause()
+        self.__playing = False
 
-    #@wait_for_attach -- Not necessary because pause does this
-    def stop(self):
-        # confirmMainThread() -- Not necessary since pause does this
-        self.pause()
+    stop = pause
+    reset = pause
 
     def getRate(self):
         confirmMainThread()
@@ -221,4 +231,8 @@ class Renderer:
         self.xine.set_rate(rate)
 
     def movie_data_program_info(self, movie_path, thumbnail_path):
-        return ((resources.path('../../../lib/miro/xine_extractor'), movie_path, thumbnail_path), None)
+        if os.path.exists(resources.path('../../../lib/miro/xine_extractor')):
+            path = resources.path('../../../lib/miro/xine_extractor')
+        else:
+            logging.error("xine_extractor cannot be found.")
+        return ((path, movie_path, thumbnail_path), None)
