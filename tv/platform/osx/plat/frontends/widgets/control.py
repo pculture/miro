@@ -410,7 +410,8 @@ class NSVideoSearchField (MiroSearchTextField):
         self.cell().searchButtonCell().setImage_(_getSearchIcon(engine))
 
     def search_(self, sender):
-        wrappermap.wrapper(self).emit('validate')
+        if self.stringValue() != "":
+            wrappermap.wrapper(self).emit('validate')
 
     def initFromLastEngine(self):
         self.setStringValue_("")
