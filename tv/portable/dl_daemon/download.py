@@ -60,6 +60,8 @@ def startNewDownload(url, dlid, contentType, channelName):
 def pauseDownload(dlid):
     try:
         download = _downloads[dlid]
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except: # There is no download with this id
         return True
     return download.pause()
@@ -82,6 +84,8 @@ def stopDownload(dlid, delete):
             del _downloads[dlid]
         finally:
             _lock.release()
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except: # There is no download with this id
         return True
     return download.stop(delete)
@@ -96,6 +100,8 @@ def stopUpload(dlid):
             del _downloads[dlid]
         finally:
             _lock.release()
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except: # There is no download with this id
         return
     return download.stopUpload()
@@ -110,6 +116,8 @@ def pauseUpload(dlid):
             del _downloads[dlid]
         finally:
             _lock.release()
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except: # There is no download with this id
         return
     return download.pauseUpload()
@@ -118,6 +126,8 @@ def migrateDownload(dlid, directory):
     checkF(directory)
     try:
         download = _downloads[dlid]
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except: # There is no download with this id
         pass
     else:
@@ -130,6 +140,8 @@ def getDownloadStatus(dlids = None):
         if ((dlids is None)  or (dlids == key) or (key in dlids)):
             try:
                 statuses[key] = _downloads[key].getStatus()
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 pass
     return statuses
@@ -247,6 +259,8 @@ class TorrentSession:
     def removeTorrent(self, torrent):
         try:
             self.torrents.remove(torrent)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             pass
 
@@ -371,6 +385,8 @@ class BGDownloader:
         # Create the download directory if it doesn't already exist.
         try:
             fileutil.makedirs(downloadDir)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             pass
         cleaned = cleanFilename(self.shortFilename + suffix)
@@ -391,6 +407,8 @@ class BGDownloader:
             directory = os.path.join (directory, channelName)
             try:
                 fileutil.makedirs(directory)
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 pass
         newfilename = os.path.join(directory, self.shortFilename)
@@ -553,6 +571,8 @@ class HTTPDownloader(BGDownloader):
         self.cancelRequest()
         try:
             fileutil.remove(self.filename)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             pass
         self.currentSize = 0
@@ -569,10 +589,14 @@ class HTTPDownloader(BGDownloader):
         if self.filehandle is not None:
             try:
                 self.filehandle.close()
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 pass
         try:
             fileutil.remove(self.filename)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             pass
 
@@ -733,6 +757,8 @@ class HTTPDownloader(BGDownloader):
                     if not self.filehandle.closed:
                         self.filehandle.close()
                     fileutil.remove(self.filename)
+                except (SystemExit, KeyboardInterrupt):
+                    raise
                 except:
                     pass
         if delete:
@@ -741,6 +767,8 @@ class HTTPDownloader(BGDownloader):
                     fileutil.rmtree(self.filename)
                 else:
                     fileutil.remove(self.filename)
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 pass
         self.currentSize = 0
@@ -800,6 +828,8 @@ class BTDownloader(BGDownloader):
                 self.torrent = torrentSession.session.add_torrent(torrent_info, name, lt.bdecode(self.fastResumeData), lt.storage_mode_t.storage_mode_allocate)
             else:
                 self.torrent = torrentSession.session.add_torrent(torrent_info, name, None, lt.storage_mode_t.storage_mode_allocate)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             self.handleError(_('BitTorrent failure'), 
                              _('BitTorrent failed to startup'))
@@ -814,6 +844,8 @@ class BTDownloader(BGDownloader):
                 self.fastResumeData = lt.bencode(self.torrent.write_resume_data())
                 torrentSession.session.remove_torrent(self.torrent, 0)
                 self.torrent = None
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             logging.exception ("DTV: Warning: Error shutting down torrent")
 
@@ -822,6 +854,8 @@ class BTDownloader(BGDownloader):
             torrentSession.removeTorrent (self)
             if self.torrent is not None:
                 self.torrent.pause()
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
             logging.exception ("DTV: Warning: Error pausing torrent")
 
@@ -830,6 +864,8 @@ class BTDownloader(BGDownloader):
             try:
                 self.torrent.resume()
                 torrentSession.addTorrent (self)
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 logging.exception ("DTV: Warning: Error resuming torrent")
         else:
@@ -943,6 +979,8 @@ class BTDownloader(BGDownloader):
                     fileutil.rmtree(self.filename)
                 else:
                     fileutil.remove(self.filename)
+            except (SystemExit, KeyboardInterrupt):
+                raise
             except:
                 pass
 
