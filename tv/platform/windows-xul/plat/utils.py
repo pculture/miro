@@ -26,10 +26,9 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-###############################################################################
-#### Helper method used to get the free space on the disk where downloaded ####
-#### movies are stored                                                     ####
-###############################################################################
+"""
+Holds utility methods that are platform-specific.
+"""
 
 import ctypes
 import _winreg
@@ -107,7 +106,9 @@ def _getLocale():
     code = ctypes.windll.kernel32.GetUserDefaultUILanguage()
     try:
         return _langs[code]
-    except:  # Hmmmmm, we don't know the language for this code
+
+    # Hmmmmm, we don't know the language for this code
+    except:
         return None
 
 def initializeLocale():
@@ -118,7 +119,7 @@ def initializeLocale():
     localeInitialized = True
 
 _loggingSetup = False
-def setup_logging (inDownloader=False):
+def setup_logging(inDownloader=False):
     global _loggingSetup
     if _loggingSetup:
         return
@@ -143,13 +144,14 @@ def setup_logging (inDownloader=False):
         xpcomLogger.removeHandler(handler)
     _loggingSetup = True
 
-# Takes in a unicode string representation of a filename and creates a
-# valid byte representation of it attempting to preserve extensions
-#
-# This is not guaranteed to give the same results every time it is run,
-# not is it garanteed to reverse the results of filenameToUnicode
 @returnsUnicode
 def unicodeToFilename(filename, path = None):
+    """Takes in a unicode string representation of a filename and creates a
+    valid byte representation of it attempting to preserve extensions
+
+    This is not guaranteed to give the same results every time it is run,
+    not is it garanteed to reverse the results of filenameToUnicode
+    """
     @returnsUnicode
     def shortenFilename(filename):
         checkU(filename)
@@ -184,20 +186,22 @@ def unicodeToFilename(filename, path = None):
 
     return newFilename
 
-# Given a filename in raw bytes, return the unicode representation
-#
-# Since this is not guaranteed to give the same results every time it is run,
-# not is it garanteed to reverse the results of unicodeToFilename
 @returnsUnicode
 def filenameToUnicode(filename, path = None):
+    """Given a filename in raw bytes, return the unicode representation
+
+    Since this is not guaranteed to give the same results every time it is run,
+    not is it garanteed to reverse the results of unicodeToFilename
+    """
     if path:
         checkU(path)
     checkU(filename)
     return filename
 
-# Takes filename given by the OS and turn it into a FilenameType
-# where FilenameType is unicode.
 def osFilenameToFilenameType(filename):
+    """Takes filename given by the OS and turn it into a FilenameType
+    where FilenameType is unicode.
+    """
     # the filesystem encoding for Windows is "mbcs" so we have to
     # use that for decoding--can't use the default utf8
     try:
@@ -205,24 +209,29 @@ def osFilenameToFilenameType(filename):
     except UnicodeDecodeError, ude:
         return filename.decode("utf-8")
 
-# Takes an array of filenames given by the OS and turn them into a FilenameTypes
 def osFilenamesToFilenameTypes(filenames):
+    """Takes an array of filenames given by the OS and turn them into a 
+    FilenameTypes
+    """
     return [osFilenameToFilenameType(filename) for filename in filenames]
 
-# Takes a FilenameType and turn it into something the OS accepts.
 def filenameTypeToOSFilename(filename):
+    """Takes a FilenameType and turn it into something the OS accepts.
+    """
     return filename
 
-# Takes in a byte string or a unicode string and does the right thing
-# to make a URL
 @returnsUnicode
 def makeURLSafe(string, safe = '/'):
+    """Takes in a byte string or a unicode string and does the right thing
+    to make a URL
+    """
     checkU(string)
     return urllib.quote(string.encode('utf_8'), safe=safe).decode('ascii')
 
-# Undoes makeURLSafe
 @returnsUnicode
 def unmakeURLSafe(string):
+    """Undoes makeURLSafe
+    """
     checkU(string)
     return urllib.unquote(string.encode('ascii')).decode('utf_8')
 
@@ -292,8 +301,8 @@ def launchDownloadDaemon(oldpid, env):
             stdin=subprocess.PIPE,
             startupinfo=startupinfo)
 
-# Python's sys.exit isn't sufficient in a Windows application. It's not
-# clear why.
-# NEEDS: this is probably *not* what we want to do under XUL.
 def exit(returnCode):
+    """Python's sys.exit isn't sufficient in a Windows application. It's not
+    clear why.
+    """
     ctypes.windll.kernel32.ExitProcess(returnCode)
