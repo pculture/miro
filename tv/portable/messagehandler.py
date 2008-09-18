@@ -49,7 +49,7 @@ from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
 from miro.util import getSingletonDDBObject
 from miro.xhtmltools import urlencode
 
-from miro.plat.utils import unicodeToFilename
+from miro.plat.utils import osFilenameToFilenameType
 
 import shutil
 
@@ -647,7 +647,8 @@ class BackendMessageHandler(messages.MessageHandler):
         singleclick.addDownload(message.url)
 
     def handle_open_individual_file(self, message):
-        fn = unicodeToFilename(message.filename.decode('utf-8'))
+        fn = message.filename
+        fn = osFilenameToFilenameType(fn)
         singleclick.parse_command_line_args([fn])
 
     def handle_open_individual_files(self, message):
