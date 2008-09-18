@@ -157,6 +157,7 @@ class TextBox(object):
         container = NSTextContainer.alloc().init()
         container.setLineFragmentPadding_(0)
         self.layout_manager.addTextContainer_(container)
+        self.layout_manager.setUsesFontLeading_(NO)
         self.text_storage = NSTextStorage.alloc().init()
         self.text_storage.addLayoutManager_(self.layout_manager)
         self.text_container = self.layout_manager.textContainers()[0]
