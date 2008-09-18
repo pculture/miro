@@ -60,6 +60,7 @@ class Renderer:
         self.driver = config.get(options.XINE_DRIVER)
         logging.info("Xine video driver: %s", self.driver)
         self.__playing = False
+        self.__volume = 0
 
     def set_widget(self, widget):
         confirmMainThread()
@@ -183,13 +184,22 @@ class Renderer:
     @wait_for_attach
     def seek(self, seconds):
         confirmMainThread()
-        # FIXME - this is icky.  self.xine.seek autoamtically kicks us into playing
-        # mode which seems hard to undo since xine-lib doesn't seem to have a
-        # non-playing seek function.
-        # so we check to see if we know we're playing and if not, we stop playing.
-        self.xine.seek(int(seconds * 1000))
-        if not self.__playing:
+
+        # this is really funky.  what's going on here is that xine-lib doesn't
+        # provide a way to seek while paused.  if you seek, then it induces
+        # playing, but that's not what we want.
+        # so we do this sneaky thing where if we're paused, we shut the volume
+        # off, seek, pause, and turn the volume back on.  that allows us to
+        # seek, remain paused, and doesn't cause a hiccup in sound.
+
+        if self.__playing:
+            self.xine.seek(int(seconds * 1000))
+
+        else:
+            self.xine.set_volume(0)
+            self.xine.seek(int(seconds * 1000))
             self.pause()
+            self.set_volume(self.__volume)
 
     def get_duration(self):
         confirmMainThread()
@@ -204,6 +214,7 @@ class Renderer:
     @wait_for_attach
     def set_volume(self, level):
         confirmMainThread()
+        self.__volume = level
         self.xine.set_volume(int(level * 100))
 
     @wait_for_attach
