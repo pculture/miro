@@ -577,7 +577,7 @@ class FeedImpl:
     def __str__(self):
         return "FeedImpl - %s" % self.get_title()
 
-    def cleanOldItems(self):
+    def clean_old_items(self):
         """
         Called to remove old items which are no longer in the feed.
 
@@ -842,7 +842,7 @@ class Feed(DDBObject):
                 (oldMaxOldItems is None or oldMaxOldItems > maxOldItems)):
             # the actual feed updating code takes care of expiring the old
             # items
-            self.actualFeed.cleanOldItems()
+            self.actualFeed.clean_old_items()
 
     def rename(self):
         title = _("Rename Channel")
@@ -1639,7 +1639,7 @@ class RSSFeedImpl(RSSFeedImplBase):
         if not config.get(prefs.CHECK_CHANNELS_EVERY_X_MN) == -1:
             self.scheduleUpdateEvents(INITIAL_FEED_UPDATE_DELAY)
 
-    def cleanOldItems(self):
+    def clean_old_items(self):
         self.modified = None
         self.etag = None
         self.update()
@@ -1797,7 +1797,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         self.splitURLs()
         self.scheduleUpdateEvents(INITIAL_FEED_UPDATE_DELAY)
 
-    def cleanOldItems(self):
+    def clean_old_items(self):
         self.modified = {}
         self.etag = {}
         self.update()

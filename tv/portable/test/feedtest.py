@@ -292,14 +292,14 @@ class OldItemExpireTest(FeedTestCase):
         self.assertEquals(self.items.len(), 4)
         self.parseNewFeed()
         self.feed.setMaxOldItems(4)
-        self.feed.cleanOldItems()
+        self.feed.clean_old_items()
         while self.feed.actualFeed.updating:
             self.processThreads()
             self.processIdles()
             sleep(0.1)
         self.assertEquals(self.items.len(), 6)            
         self.feed.setMaxOldItems(2)
-        self.feed.cleanOldItems()
+        self.feed.clean_old_items()
         while self.feed.actualFeed.updating:
             self.processThreads()
             self.processIdles()
@@ -314,14 +314,14 @@ class OldItemExpireTest(FeedTestCase):
         self.assertEquals(self.items.len(), 4)
         self.parseNewFeed()
         config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 4)
-        self.feed.cleanOldItems()
+        self.feed.clean_old_items()
         while self.feed.actualFeed.updating:
             self.processThreads()
             self.processIdles()
             sleep(0.1)
         self.assertEquals(self.items.len(), 6)
         config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 2)
-        self.feed.cleanOldItems()
+        self.feed.clean_old_items()
         while self.feed.actualFeed.updating:
             self.processThreads()
             self.processIdles()
