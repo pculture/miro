@@ -31,6 +31,7 @@
 import gtk
 import pango
 
+from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets.gtk.base import Widget, Bin
 
 class Image(object):
@@ -65,7 +66,7 @@ class Label(Widget):
         if text:
             self.set_text(text)
         self.attr_list = pango.AttrList()
-        self.font_description = pango.FontDescription('sans')
+        self.font_description = self._widget.style.font_desc.copy()
         self.scale_factor = 1.0
 
     def set_bold(self, bold):
@@ -76,10 +77,15 @@ class Label(Widget):
         self.font_description.set_weight(weight)
         self.set_attr(pango.AttrFontDesc(self.font_description))
 
-    def set_size(self, scale_factor):
-        self.scale_factor = scale_factor
+    def set_size(self, size):
+        if size == widgetconst.SIZE_NORMAL:
+            self.scale_factor = 1
+        elif size == widgetconst.SIZE_SMALL:
+            self.scale_factor = 0.85
+        else:
+            self.scale_factor = size
         baseline = self._widget.style.font_desc.get_size()
-        self.font_description.set_size(int(baseline * scale_factor))
+        self.font_description.set_size(int(baseline * self.scale_factor))
         self.set_attr(pango.AttrFontDesc(self.font_description))
 
     def on_style_set(self, widget, old_style):
@@ -106,6 +112,11 @@ class Label(Widget):
         for state in xrange(5):
             self.modify_style('fg', state, self.make_color(color))
             self.modify_style('text', state, self.make_color(color))
+
+    def baseline(self):
+        pango_context = self._widget.get_pango_context()
+        metrics = pango_context.get_metrics(self.font_description)
+        return pango.PIXELS(metrics.get_descent())
 
 class Scroller(Bin):
     def __init__(self, horizontal, vertical):
@@ -164,64 +175,3 @@ class Expander(Bin):
 
     def set_expanded(self, expanded):
         self._widget.set_expanded(expanded)
-
-class OptionMenu(Widget):
-    def __init__(self, options):
-        Widget.__init__(self)
-        self.create_signal('changed')
-
-        self.set_widget(gtk.ComboBox(gtk.ListStore(str, str)))
-        self.cell = gtk.CellRendererText()
-        self._widget.pack_start(self.cell, True)
-        self._widget.add_attribute(self.cell, 'text', 0)
-        if options:
-            for option in options:
-                self._widget.get_model().append((option, 'booya'))
-            self._widget.set_active(0)
-        self.options = options
-        self.wrapped_widget_connect('changed', self.on_changed)
-
-    def set_bold(self, bold):
-        if bold:
-            self.cell.props.weight = pango.WEIGHT_BOLD
-        else:
-            self.cell.props.weight = pango.WEIGHT_NORMAL
-
-    def set_size(self, scale_factor):
-        self.cell.props.scale = scale_factor
-
-    def set_color(self, color):
-        self.cell.props.foreground_gdk = self.make_color(color)
-
-    def set_selected(self, index):
-        self._widget.set_active(index)
-
-    def get_selected(self):
-        return self._widget.get_active()
-
-    def on_changed(self, widget):
-        index = widget.get_active()
-        self.emit('changed', index)
-
-class Button(Widget):
-    def __init__(self, text, style='normal'):
-        Widget.__init__(self)
-        # We just ignore style here, GTK users expect their own buttons.
-        self.set_widget(gtk.Button())
-        self.create_signal('clicked')
-        self.forward_signal('clicked')
-        self.label = Label(text)
-        self._widget.add(self.label._widget)
-        self.label._widget.show()
-
-    def set_text(self, title):
-        self.label.set_text(title)
-
-    def set_bold(self, bold):
-        self.label.set_bold(bold)
-
-    def set_size(self, scale_factor):
-        self.label.set_size(scale_factor)
-
-    def set_color(self, color):
-        self.label.set_color(color)

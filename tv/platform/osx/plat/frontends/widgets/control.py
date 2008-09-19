@@ -35,6 +35,7 @@ from objc import YES, NO, nil
 import os
 import weakref
 
+from miro.frontends.widgets import widgetconst
 from miro.plat import resources
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets import layoutmanager
@@ -43,10 +44,22 @@ from miro.plat.frontends.widgets.helpers import NotificationForwarder
 
 from miro import searchengines
 
-class BaseTextEntry(Widget):
+class SizedControl(Widget):
+    def set_size(self, size):
+        if size == widgetconst.SIZE_NORMAL:
+            self.view.cell().setControlSize_(NSRegularControlSize)
+            font = NSFont.systemFontOfSize_(NSFont.systemFontSize())
+        elif size == widgetconst.SIZE_SMALL:
+            font = NSFont.systemFontOfSize_(NSFont.smallSystemFontSize())
+            self.view.cell().setControlSize_(NSSmallControlSize)
+        else:
+            raise ValueError("Unknown size: %s" % size)
+        self.view.setFont_(font)
+
+class BaseTextEntry(SizedControl):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, initial_text=None):
-        Widget.__init__(self)
+        SizedControl.__init__(self)
         self.view = self.make_view()
         self.font = NSFont.systemFontOfSize_(NSFont.systemFontSize())
         self.height = self.font.pointSize() + self.font.leading()
@@ -66,6 +79,9 @@ class BaseTextEntry(Widget):
         self.create_signal('activate')
         self.create_signal('changed')
         self.create_signal('validate')
+
+    def baseline(self):
+        return -self.view.font().descender() + 2
 
     def on_changed(self, notification):
         self.emit('changed')
@@ -134,10 +150,10 @@ class MiroButton(NSButton):
         wrappermap.wrapper(self).emit(self.signal)
         return YES
 
-class Checkbox(Widget):
+class Checkbox(SizedControl):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, label):
-        Widget.__init__(self)
+        SizedControl.__init__(self)
         self.create_signal('toggled')
         self.label = label
         self.view = MiroButton.alloc().initWithSignal_('toggled')
@@ -147,6 +163,9 @@ class Checkbox(Widget):
     def calc_size_request(self):
         size = self.view.cell().cellSize()
         return (size.width, size.height)
+
+    def baseline(self):
+        return -self.view.font().descender() + 1
 
     def get_checked(self):
         return self.view.state() == NSOnState
@@ -163,61 +182,43 @@ class Checkbox(Widget):
     def disable_widget(self):
         self.view.setEnabled_(False)
 
-class AttributedStringStyler(Widget):
-    def __init__(self):
-        Widget.__init__(self)
-        self.bold = False
-        self.color = None
-        self.scale = 1
-
-    def set_bold(self, bold):
-        self.bold = bold
-        self.update_attributes()
-
-    def set_size(self, scale):
-        self.scale = scale
-        self.update_attributes()
-
-    def set_color(self, color):
-        self.color = self.make_color(color)
-        self.update_attributes()
-
-    def update_attributes(self):
-        font = layoutmanager.get_font(self.scale, bold=self.bold)
-        attributes = { NSFontAttributeName: font }
-        if self.color:
-            attributes[NSForegroundColorAttributeName] = self.color
-        self.handle_new_attributes(attributes)
-        self.invalidate_size_request()
-
-class Button(AttributedStringStyler):
+class Button(SizedControl):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, label, style='normal'):
-        AttributedStringStyler.__init__(self)
-        self.label = label
+        SizedControl.__init__(self)
+        self.color = None
+        self.title = label
         self.create_signal('clicked')
         self.view = MiroButton.alloc().initWithSignal_('clicked')
         self.view.setButtonType_(NSMomentaryPushInButton)
-        self.view.setTitle_(self.label)
+        self._set_title()
         self.setup_style(style)
         self.min_width = 0
 
-    def set_text(self, title):
-        self.label = title
-        self.view.setTitle_(title)
+    def set_text(self, label):
+        self.title = label
+        self._set_title()
 
-    def set_size(self, scale):
-        AttributedStringStyler.set_size(self, scale)
-        if scale >= 1.0:
-            self.min_width = 84
+    def set_color(self, color):
+        self.color = self.make_color(color)
+        self._set_title()
+
+    def _set_title(self):
+        if self.color is None:
+            self.view.setTitle_(self.title)
         else:
-            self.min_width = 72
-            self.view.cell().setControlSize_(NSSmallControlSize)
+            attributes = {
+                NSForegroundColorAttributeName: self.color,
+                NSFontAttributeName: self.view.font()
+            }
+            string = NSAttributedString.alloc().initWithString_attributes_(
+                    self.title, attributes)
+            self.view.setAttributedTitle_(string)
 
     def setup_style(self, style):
         if style == 'normal':
             self.view.setBezelStyle_(NSRoundedBezelStyle)
-            self.pad_width = self.pad_height = 0
+            self.pad_height = 0
             self.pad_width = 10
             self.min_width = 112
         elif style == 'smooth':
@@ -236,11 +237,8 @@ class Button(AttributedStringStyler):
         height = size.height + self.pad_height
         return width, height
 
-    def handle_new_attributes(self, attributes):
-        attributes[NSParagraphStyleAttributeName] = self.paragraph_style
-        string = NSAttributedString.alloc().initWithString_attributes_(
-                self.label, attributes)
-        self.view.setAttributedTitle_(string)
+    def baseline(self):
+        -self.view.font().descender() + 2
 
     def enable_widget(self):
         self.view.setEnabled_(True)
@@ -259,21 +257,20 @@ class MiroPopupButton(NSPopUpButton):
     def handleChange_(self, sender):
         wrappermap.wrapper(self).emit('changed', self.indexOfSelectedItem())
 
-class OptionMenu(AttributedStringStyler):
+class OptionMenu(SizedControl):
     def __init__(self, options):
-        AttributedStringStyler.__init__(self)
+        SizedControl.__init__(self)
         self.create_signal('changed')
         self.view = MiroPopupButton.alloc().init()
         self.options = options
         for option in options:
             self.view.addItemWithTitle_(option)
 
-    def set_size(self, scale):
-        AttributedStringStyler.set_size(self, scale)
-        if scale == 0.85:
-            self.view.cell().setControlSize_(NSSmallControlSize)
+    def baseline(self):
+        if self.view.cell().controlSize() == NSRegularControlSize:
+            return -self.view.font().descender() + 6
         else:
-            self.view.cell().setControlSize_(NSRegularControlSize)
+            return -self.view.font().descender() + 5
 
     def calc_size_request(self):
         return self.view.cell().cellSize()
@@ -283,15 +280,6 @@ class OptionMenu(AttributedStringStyler):
 
     def get_selected(self):
         return self.view.indexOfSelectedItem()
-
-    def handle_new_attributes(self, attributes):
-        menu = self.view.menu()
-        for i in xrange(menu.numberOfItems()):
-            menu_item = menu.itemAtIndex_(i)
-            string = NSAttributedString.alloc().initWithString_attributes_(
-                    menu_item.title(), attributes)
-            menu_item.setAttributedTitle_(string)
-        self.view.setFont_(attributes[NSFontAttributeName])
 
     def enable_widget(self):
         self.view.setEnabled_(True)
@@ -333,9 +321,9 @@ class RadioButtonGroup:
 # RadioButtons and RadioButtonGroups
 radio_button_to_group_mapping = weakref.WeakValueDictionary()
 
-class RadioButton(Widget):
+class RadioButton(SizedControl):
     def __init__(self, label, group=None):
-        Widget.__init__(self)
+        SizedControl.__init__(self)
         self.create_signal('clicked')
         self.view = MiroButton.alloc().initWithSignal_('clicked')
         self.view.setButtonType_(NSRadioButton)
@@ -351,6 +339,9 @@ class RadioButton(Widget):
     def calc_size_request(self):
         size = self.view.cell().cellSize()
         return (size.width, size.height)
+
+    def baseline(self):
+        -self.view.font().descender() + 2
 
     def get_group(self):
         return radio_button_to_group_mapping[id(self)]

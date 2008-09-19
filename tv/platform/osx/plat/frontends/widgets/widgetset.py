@@ -44,9 +44,3 @@ from miro.plat.frontends.widgets.simple import Image, ImageDisplay, Label, Solid
 from miro.plat.frontends.widgets.tableview import TableView, CellRenderer, CustomCellRenderer, ImageCellRenderer
 from miro.plat.frontends.widgets.tablemodel import TableModel, TreeTableModel
 from miro.plat.frontends.widgets.video import VideoRenderer
-
-"""
-Some controls styling slightly differ between platforms. Specify styles here.
-"""
-
-FEEDVIEW_BUTTONS_TEXT_SIZE = 0.7

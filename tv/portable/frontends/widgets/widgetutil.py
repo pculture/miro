@@ -110,6 +110,19 @@ def build_hbox(items, padding=5):
     [h.pack_start(item, padding=padding) for item in items]
     return h
 
+def build_control_line(items, padding=5):
+    max_baseline = -1
+    for item in items:
+        max_baseline = max(max_baseline, item.baseline())
+    padded_items = []
+    for item in items:
+        if item.baseline() == max_baseline:
+            padded_items.append(item)
+        else:
+            pad = int(round(max_baseline - item.baseline()))
+            padded_items.append(align_bottom(item, bottom_pad=pad))
+    return build_hbox(padded_items, padding)
+
 def make_surface(image_name):
     path = resources.path("wimages/%s.png" % image_name)
     return imagepool.get_surface(path)

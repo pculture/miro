@@ -26,26 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-import gtk
+"""Constants for the widgets frontend."""
 
-from miro.frontends.widgets.gtk.base import Widget, Bin
-from miro.frontends.widgets.gtk.const import *
-from miro.frontends.widgets.gtk.controls import TextEntry, SecureTextEntry, \
-        SearchTextEntry, VideoSearchTextEntry, Checkbox, RadioButton, \
-        RadioButtonGroup, OptionMenu, Button
-from miro.frontends.widgets.gtk.customcontrols import CustomButton, \
-        ContinuousCustomButton, CustomSlider
-from miro.frontends.widgets.gtk.drawing import ImageSurface, DrawingContext, \
-        DrawingArea, Background, Gradient
-from miro.frontends.widgets.gtk.layout import HBox, VBox, Alignment, \
-        Splitter, Table
-from miro.frontends.widgets.gtk.window import Window, MainWindow, Dialog, \
-        FileOpenDialog, FileSaveDialog, AboutDialog, AlertDialog
-from miro.frontends.widgets.gtk.tableview import TableView, TableModel, \
-        TreeTableModel, CellRenderer, ImageCellRenderer, CustomCellRenderer
-from miro.frontends.widgets.gtk.simple import Image, ImageDisplay, Label, \
-        Scroller, Expander, SolidBackground
-from miro.frontends.widgets.gtk.video import VideoRenderer
-
-# Just use the GDK Rectangle class
-Rect = gtk.gdk.Rectangle
+# Control sizes
+SIZE_NORMAL = -1
+SIZE_SMALL = -2

@@ -40,6 +40,7 @@ from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import imagepool
+from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
 
@@ -154,7 +155,7 @@ class FeedController(itemlistcontroller.ItemListController):
                             len(viewed_items),
                             {"count": len(viewed_items)})
             self.show_more_button.set_text(text)
-            self.show_more_button.set_size(0.85)
+            self.show_more_button.set_size(widgetconst.SIZE_SMALL)
             self.show_more_container.show()
             self.full_view.item_list.set_new_only(True)
             self.full_view.model_changed()

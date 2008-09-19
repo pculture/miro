@@ -30,6 +30,7 @@ from AppKit import *
 from Foundation import *
 from objc import YES, NO, nil
 
+from miro.frontends.widgets import widgetconst
 from miro.plat.frontends.widgets.base import Widget, SimpleBin, FlippedView
 
 """A collection of various simple widgets."""
@@ -84,8 +85,16 @@ class Label(Widget):
         self.bold = bold
         self.set_font()
 
-    def set_size(self, ratio):
-        self.size = NSFont.systemFontSize() * ratio
+    def set_size(self, size):
+        if size > 0:
+            self.size = NSFont.systemFontSize() * size
+        elif size == widgetconst.SIZE_SMALL:
+            self.size = NSFont.smallSystemFontSize()
+        elif size == widgetconst.SIZE_NORMAL:
+            self.size = NSFont.systemFontSize()
+        else:
+            raise ValueError("Unknown size constant: %s" % size)
+
         self.set_font()
 
     def set_color(self, color):
@@ -118,6 +127,9 @@ class Label(Widget):
         else:
             size = self.sizer_cell.cellSize()
         return size.width, size.height
+
+    def baseline(self):
+        return -self.view.font().descender()
 
     def set_text(self, text):
         self.view.setStringValue_(text)

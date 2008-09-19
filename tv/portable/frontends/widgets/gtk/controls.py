@@ -28,11 +28,29 @@
 
 """miro.frontends.widgets.gtk.controls -- Control Widgets."""
 
-import gtk
 import weakref
 
+import gtk
+import pango
+
 from miro import searchengines
+from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets.gtk.base import Widget
+from miro.frontends.widgets.gtk.simple import Label
+
+class BinBaselineCalculator(object):
+    """Mixin class that defines the baseline method for gtk.Bin subclasses,
+    where the child is the label that we are trying to get the baseline for.
+    """
+
+    def baseline(self):
+        my_size = self._widget.size_request()
+        child_size = self._widget.child.size_request()
+        ypad = (my_size[1] - child_size[1]) / 2
+
+        pango_context = self._widget.get_pango_context()
+        metrics = pango_context.get_metrics(self._widget.style.font_desc)
+        return pango.PIXELS(metrics.get_descent()) + ypad
 
 class TextEntry(Widget):
     def __init__(self, initial_text=None):
@@ -61,6 +79,13 @@ class TextEntry(Widget):
     def set_activates_default(self, setting):
         self._widget.set_activates_default(setting)
 
+    def baseline(self):
+        layout_height = pango.PIXELS(self._widget.get_layout().get_size()[1])
+        ypad = (self._widget.size_request()[1] - layout_height) / 2
+        pango_context = self._widget.get_pango_context()
+        metrics = pango_context.get_metrics(self._widget.style.font_desc)
+        return pango.PIXELS(metrics.get_descent()) + ypad
+
 class SecureTextEntry(TextEntry):
     def __init__(self, initial_text=None):
         TextEntry.__init__(self, initial_text)
@@ -74,7 +99,7 @@ class VideoSearchTextEntry(SearchTextEntry):
     def selected_engine(self):
         return searchengines.get_last_engine()
 
-class Checkbox(Widget):
+class Checkbox(Widget, BinBaselineCalculator):
     """Widget that the user can toggle on or off."""
 
     def __init__(self, label):
@@ -120,7 +145,7 @@ class RadioButtonGroup:
 # RadioButtons and RadioButtonGroups
 radio_button_to_group_mapping = weakref.WeakValueDictionary()
 
-class RadioButton(Widget):
+class RadioButton(Widget, BinBaselineCalculator):
     """RadioButton."""
     def __init__(self, label, group=None):
         Widget.__init__(self)
@@ -147,3 +172,77 @@ class RadioButton(Widget):
 
     def set_selected(self):
         radio_button_to_group_mapping[id(self)].set_selected(self)
+
+class Button(Widget, BinBaselineCalculator):
+    def __init__(self, text, style='normal'):
+        Widget.__init__(self)
+        # We just ignore style here, GTK users expect their own buttons.
+        self.set_widget(gtk.Button())
+        self.create_signal('clicked')
+        self.forward_signal('clicked')
+        self.label = Label(text)
+        self._widget.add(self.label._widget)
+        self.label._widget.show()
+
+    def set_text(self, title):
+        self.label.set_text(title)
+
+    def set_bold(self, bold):
+        self.label.set_bold(bold)
+
+    def set_size(self, scale_factor):
+        self.label.set_size(scale_factor)
+
+    def set_color(self, color):
+        self.label.set_color(color)
+
+class OptionMenu(Widget):
+    def __init__(self, options):
+        Widget.__init__(self)
+        self.create_signal('changed')
+
+        self.set_widget(gtk.ComboBox(gtk.ListStore(str, str)))
+        self.cell = gtk.CellRendererText()
+        self._widget.pack_start(self.cell, True)
+        self._widget.add_attribute(self.cell, 'text', 0)
+        if options:
+            for option in options:
+                self._widget.get_model().append((option, 'booya'))
+            self._widget.set_active(0)
+        self.options = options
+        self.wrapped_widget_connect('changed', self.on_changed)
+
+    def baseline(self):
+        my_size = self._widget.size_request()
+        child_size = self._widget.child.size_request()
+        ypad = (my_size[1] - child_size[1]) / 2
+
+        cell = self._widget.get_cells()[0]
+        pango_context = self._widget.get_pango_context()
+        metrics = pango_context.get_metrics(self._widget.style.font_desc)
+        return pango.PIXELS(metrics.get_descent()) + ypad + cell.props.ypad
+
+    def set_bold(self, bold):
+        if bold:
+            self.cell.props.weight = pango.WEIGHT_BOLD
+        else:
+            self.cell.props.weight = pango.WEIGHT_NORMAL
+
+    def set_size(self, size):
+        if size == widgetconst.SIZE_NORMAL:
+            self.cell.props.scale = 1
+        else:
+            self.cell.props.scale = 0.85
+
+    def set_color(self, color):
+        self.cell.props.foreground_gdk = self.make_color(color)
+
+    def set_selected(self, index):
+        self._widget.set_active(index)
+
+    def get_selected(self):
+        return self._widget.get_active()
+
+    def on_changed(self, widget):
+        index = widget.get_active()
+        self.emit('changed', index)

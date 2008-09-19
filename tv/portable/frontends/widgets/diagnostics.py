@@ -37,6 +37,7 @@ from miro.gtcache import gettext as _
 
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
+from miro.frontends.widgets import widgetconst
 from miro.dialogs import BUTTON_OK
 
 from miro import app
@@ -120,7 +121,7 @@ def run_dialog():
 
             if item.get("button_face"):
                 b = widgetset.Button(item["button_face"])
-                b.set_size(0.85)
+                b.set_size(widgetconst.SIZE_SMALL)
                 b.connect('clicked', item["button_fun"])
                 t.set_cell(widgetutil.align_left(b), 2, row_num)
 

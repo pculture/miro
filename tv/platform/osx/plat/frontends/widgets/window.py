@@ -140,7 +140,6 @@ class Dialog:
 
     def add_button(self, text):
         button = Button(text)
-        button.set_size(1.0)
         button.connect('clicked', self.on_button_clicked, len(self.buttons))
         self.buttons.append(button)
 

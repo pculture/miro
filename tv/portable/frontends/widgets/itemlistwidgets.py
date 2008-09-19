@@ -45,6 +45,7 @@ from miro.gtcache import gettext as _
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import style
+from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
 
@@ -185,7 +186,7 @@ class SearchListTitlebar(ItemListTitlebar):
         hbox.pack_start(widgetutil.align_middle(self.searchbox))
 
         self.search_button = widgetset.Button(_('Search'))
-        self.search_button.set_size(0.85)
+        self.search_button.set_size(widgetconst.SIZE_SMALL)
         self.search_button.connect('clicked', self._on_search_activate)
         hbox.pack_start(self.search_button, padding=5)
         return widgetutil.align_middle(hbox, right_pad=20)
@@ -285,21 +286,21 @@ class DownloadButtonToolbar(widgetset.HBox):
         self.create_signal('cancel-all')
 
         pause_button = widgetset.Button(_('Pause All'), style='smooth')
-        pause_button.set_size(widgetset.FEEDVIEW_BUTTONS_TEXT_SIZE)
+        pause_button.set_size(widgetconst.SIZE_SMALL)
         pause_button.set_color(style.TOOLBAR_GRAY)
         pause_button.connect('clicked', self._on_pause_button_clicked)
         self.pack_start(widgetutil.align_right(pause_button, top_pad=5,
             bottom_pad=5), expand=True)
 
         resume_button = widgetset.Button(_('Resume All'), style='smooth')
-        resume_button.set_size(widgetset.FEEDVIEW_BUTTONS_TEXT_SIZE)
+        resume_button.set_size(widgetconst.SIZE_SMALL)
         resume_button.set_color(style.TOOLBAR_GRAY)
         resume_button.connect('clicked', self._on_resume_button_clicked)
         self.pack_start(widgetutil.align_middle(resume_button, top_pad=5,
             bottom_pad=5))
 
         cancel_button = widgetset.Button(_('Cancel All'), style='smooth')
-        cancel_button.set_size(widgetset.FEEDVIEW_BUTTONS_TEXT_SIZE)
+        cancel_button.set_size(widgetconst.SIZE_SMALL)
         cancel_button.set_color(style.TOOLBAR_GRAY)
         cancel_button.connect('clicked', self._on_cancel_button_clicked)
         self.pack_start(widgetutil.align_middle(cancel_button, top_pad=5,
@@ -375,21 +376,21 @@ class FeedToolbar(widgetset.Background):
         hbox = widgetset.HBox(spacing=5)
 
         label = widgetset.Label(_('Auto Download'))
-        label.set_size(0.85)
+        label.set_size(widgetconst.SIZE_SMALL)
         label.set_color(style.TOOLBAR_GRAY)
 
         self.autdownload_menu = widgetset.OptionMenu(
                 (_("all"), _("new"), _("off")))
-        self.autdownload_menu.set_size(0.85)
+        self.autdownload_menu.set_size(widgetconst.SIZE_SMALL)
         self.autdownload_menu.connect('changed', self._on_autodownload_changed)
         
         send_button = widgetset.Button(_("Send to a friend"), style='smooth')
-        send_button.set_size(widgetset.FEEDVIEW_BUTTONS_TEXT_SIZE)
+        send_button.set_size(widgetconst.SIZE_SMALL)
         send_button.set_color(style.TOOLBAR_GRAY)
         send_button.connect('clicked', self._on_send_clicked)
 
         settings_button = widgetset.Button(_("Settings"), style='smooth')
-        settings_button.set_size(widgetset.FEEDVIEW_BUTTONS_TEXT_SIZE)
+        settings_button.set_size(widgetconst.SIZE_SMALL)
         settings_button.set_color(style.TOOLBAR_GRAY)
         settings_button.connect('clicked', self._on_settings_clicked)
 
