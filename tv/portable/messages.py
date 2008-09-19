@@ -238,6 +238,12 @@ class SetChannelMaxOldItems(BackendMessage):
         self.channel_info = channel_info
         self.max_old_items = max_old_items
 
+class CleanChannel(BackendMessage):
+    """Tells the backend to clean the old items from a channel.
+    """
+    def __init__(self, channel_id):
+        self.channel_id = channel_id
+
 class ImportChannels(BackendMessage):
     """Tell the backend to import channels from an .opml file.
 

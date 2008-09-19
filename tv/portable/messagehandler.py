@@ -455,6 +455,14 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warning("handle_set_channel_max_new: can't find channel by id %s", channel_info.id)
 
+    def handle_clean_channel(self, message):
+        channel_id = message.channel_id
+        try:
+            obj = views.feeds.getObjectByID(channel_id)
+        except database.ObjectNotFoundError:
+            logging.warn("handle_clean_channel: object not found id: %s" % channel_id)
+        else:
+            obj.clean_old_items()
 
     def handle_import_channels(self, message):
         opml.Importer().importSubscriptionsFrom(message.filename)

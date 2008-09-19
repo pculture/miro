@@ -203,6 +203,21 @@ def _build_remember_items(channel):
 
     return build_hbox((lab, older_combo, lab2), padding=2)
 
+def _build_clear_older_items_now(channel):
+    button = widgetset.Button(_("Clear older items now"))
+    lab = widgetset.Label("")
+
+    def _handle_clicked(widget):
+        messages.CleanChannel(channel.id).send_to_backend()
+        # FIXME - we don't really know if it got cleaned or if it errored out
+        # at this point.  but ...  we need to give some kind of feedback to
+        # the user and it's not likely that it failed and if it did, it'd
+        # be in the logs.
+        lab.set_text(_("Old items have been removed."))
+    button.connect('clicked', _handle_clicked)
+
+    return build_hbox((button, lab), padding=2)
+
 def run_dialog(channel):
     """Displays the channel settings panel dialog."""
     pref_window = widgetset.Dialog(_("Channel Settings"))
@@ -214,6 +229,7 @@ def run_dialog(channel):
             v.pack_start(_build_video_expires(channel))
             v.pack_start(_build_remember_items(channel))
             v.pack_start(_build_auto_download(channel))
+            v.pack_start(_build_clear_older_items_now(channel))
 
             pref_window.set_extra_widget(v)
             pref_window.add_button(BUTTON_DONE.text)
