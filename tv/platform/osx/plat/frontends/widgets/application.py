@@ -179,12 +179,13 @@ class AppController(NSObject):
         return NO
 
     def applicationShouldHandleReopen_hasVisibleWindows_(self, appl, flag):
-        if not flag:
-            app.widgetapp.window.nswindow.makeKeyAndOrderFront_(nil)
         if app.widgetapp is not None and app.widgetapp.window is not None:
             mainWindow = app.widgetapp.window.nswindow
-            if mainWindow.isMiniaturized():
-                mainWindow.deminiaturize_(appl)            
+            if mainWindow is not None:
+                if not flag:
+                    app.widgetapp.window.nswindow.makeKeyAndOrderFront_(nil)
+                if mainWindow.isMiniaturized():
+                    mainWindow.deminiaturize_(appl)            
         return NO
 
     def application_openFiles_(self, nsapp, filenames):
