@@ -117,9 +117,9 @@ class DownloadsController(itemlistcontroller.ItemListController):
         self.downloads_section.show()
         self.seeding_section.show()
 
-        # only expand the download views
         self.indydownloads_section.expand()
         self.downloads_section.expand()
+        self.seeding_section.expand()
 
     def on_initial_list(self):
         self._expand_lists_initially()
