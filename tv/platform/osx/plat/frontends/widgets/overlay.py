@@ -59,6 +59,8 @@ class OverlayPaletteWindow (NSWindow):
 
 ###############################################################################
 
+overlay = None
+
 class OverlayPalette (NSWindowController):
     
     titleLabel          = IBOutlet('titleLabel')
@@ -80,6 +82,13 @@ class OverlayPalette (NSWindowController):
     volumeSlider        = IBOutlet('volumeSlider')
     
     HOLD_TIME = 2
+
+    @classmethod
+    def get_instance(cls):
+        global overlay
+        if overlay is None:
+            overlay = OverlayPalette.alloc().init()
+        return overlay
 
     def init(self):
         self = super(OverlayPalette, self).initWithWindowNibName_owner_('OverlayPalette', self)
