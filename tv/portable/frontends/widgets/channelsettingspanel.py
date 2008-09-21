@@ -32,9 +32,7 @@ import logging
 
 from miro import config, prefs, messages
 from miro.plat.frontends.widgets import widgetset
-from miro.frontends.widgets import cellpack, imagepool, widgetutil, window
-from miro.plat import resources
-from miro.plat.frontends.widgets.widgetset import Rect
+from miro.frontends.widgets import widgetutil
 from miro.dialogs import BUTTON_DONE
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext

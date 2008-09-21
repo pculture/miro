@@ -28,7 +28,6 @@
 
 """Main Miro widget."""
 
-from miro import app
 
 from miro.frontends.widgets import tablist
 from miro.frontends.widgets import videobox

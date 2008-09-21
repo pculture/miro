@@ -29,11 +29,7 @@
 """Manages the tab lists from a high level perspective."""
 
 from miro import app
-from miro import messages
-from miro.frontends.widgets import displays
-from miro.frontends.widgets import menus
 from miro.frontends.widgets import tablist
-from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
 
 class TabListManager(object):

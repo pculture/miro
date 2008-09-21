@@ -32,7 +32,6 @@ import datetime
 import math
 import os
 
-from miro import license
 from miro import util
 from miro import displaytext
 from miro.gtcache import gettext as _

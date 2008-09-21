@@ -34,8 +34,6 @@ inside the cell renderers, so we just set up the objects at the start, then
 use them to calculate info.
 """
 
-import math
-
 class Margin(object):
     """Helper object used to calculate margins."""
     def __init__(self , margin):

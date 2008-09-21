@@ -31,7 +31,6 @@
 
 import os
 import logging
-import traceback
 import urllib
 
 from miro import app

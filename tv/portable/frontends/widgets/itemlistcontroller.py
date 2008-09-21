@@ -36,14 +36,12 @@ This module contains the ItemListController base class along with controllers
 that work for the static tabs which are pretty simple cases.
 """
 
-import itertools
 import logging
 import os
 from urlparse import urljoin
 
 from miro import app
 from miro import messages
-from miro import util
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import itemcontextmenu

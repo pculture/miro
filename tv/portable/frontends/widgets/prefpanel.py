@@ -50,9 +50,8 @@ import logging
 from miro import config, prefs
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import cellpack, imagepool, widgetutil, window
-from miro.frontends.widgets.widgetutil import build_hbox, build_control_line
+from miro.frontends.widgets.widgetutil import build_control_line
 from miro.plat import resources
-from miro.plat.frontends.widgets.widgetset import Rect
 from miro.dialogs import BUTTON_CLOSE
 from miro.gtcache import gettext as _
 

@@ -47,8 +47,6 @@ from miro import util
 
 from miro.plat.utils import get_available_bytes_for_movies
 
-import logging
-
 def open_helper(d):
     def _open_handler(widget):
         app.widgetapp.open_file(d)
