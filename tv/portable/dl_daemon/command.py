@@ -1,7 +1,6 @@
 import time
 
 import random
-import socket
 from miro import eventloop
 import logging
 

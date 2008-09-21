@@ -1,11 +1,7 @@
 import os
-import sys
-import shutil
-import types
 from miro.gtcache import gettext as _
 import re
-from threading import RLock, Event, Thread
-import traceback
+from threading import RLock
 from copy import copy
 
 import miro.libtorrent as lt
@@ -20,14 +16,10 @@ from miro import fileutil
 
 from miro import config
 from miro import prefs
-from sha import sha
 
 from miro.dl_daemon import command, daemon
-from datetime import timedelta
 from miro.util import checkF, checkU, stringify
 from miro.plat.utils import get_available_bytes_for_movies
-
-import string
 
 chatter = True
 
