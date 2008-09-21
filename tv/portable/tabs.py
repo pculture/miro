@@ -33,7 +33,7 @@ from miro import feed
 from miro import folder
 from miro import guide
 from miro import playlist
-from miro.util import checkU, getSingletonDDBObject
+from miro.util import checkU
 from miro.databasehelper import TrackedIDList
 
 import logging

@@ -44,7 +44,6 @@ from miro import views
 from miro.plat.utils import samefile, FilenameType, unicodeToFilename
 from miro import flashscraper
 import logging
-import traceback
 from miro import fileutil
 
 # a hash of download ids that the server knows about.

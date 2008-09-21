@@ -41,7 +41,6 @@ import urllib
 import socket
 import logging
 from miro import filetypes
-from miro import fileutil
 import threading
 import traceback
 import subprocess

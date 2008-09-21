@@ -45,7 +45,6 @@ import urlparse
 from miro import license
 from miro.folder import ChannelFolder, PlaylistFolder
 from miro.plat import resources
-from miro import singleclick
 from miro import util
 
 class MessageHandler(object):

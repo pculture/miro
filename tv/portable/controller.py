@@ -33,7 +33,6 @@ of Miro.
 import logging
 import os
 import threading
-import traceback
 
 from miro import app
 from miro import config

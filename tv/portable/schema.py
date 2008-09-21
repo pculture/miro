@@ -45,7 +45,6 @@ Go to the bottom of this file for the current database schema.
 
 import datetime
 import time
-import logging
 from types import NoneType
 from fasttypes import LinkedList
 from miro.plat.utils import FilenameType

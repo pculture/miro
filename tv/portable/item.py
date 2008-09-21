@@ -37,7 +37,6 @@ from miro.plat.utils import FilenameType, filenameToUnicode, unicodeToFilename
 import locale
 import os
 import os.path
-import urllib
 import urlparse
 import traceback
 
@@ -51,7 +50,6 @@ from miro.iconcache import IconCache
 from miro import downloader
 from miro import config
 from miro import eventloop
-from miro import filters
 from miro import prefs
 from miro.plat import resources
 from miro import views
