@@ -39,6 +39,12 @@ and what preferences are available, do::
 
    ./run.sh --help
 
+Set the ``HOME`` environment variable to switch where Miro saves database
+and other files::
+
+   mkdir /tmp/foo
+   HOME=/tmp/foo ./run.sh
+
 
 Unittest instructions
 =====================
