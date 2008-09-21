@@ -150,11 +150,11 @@ class FeedController(itemlistcontroller.ItemListController):
         if not (video_downloaded and len(all_items) == len(viewed_items)):
             self.full_section.expand()
         if video_downloaded and 0 < len(viewed_items) < len(all_items):
-            text = ngettext('Show 1 more item',
-                            'Show %(count)d more items',
+            text = ngettext('Show 1 More Item',
+                            'Show %(count)d More Items',
                             len(viewed_items),
                             {"count": len(viewed_items)})
-            self.show_more_button.set_text(text)
+            self.show_more_button.set_text(text + u" >>")
             self.show_more_button.set_size(widgetconst.SIZE_SMALL)
             self.show_more_container.show()
             self.full_view.item_list.set_new_only(True)
