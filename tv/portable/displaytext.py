@@ -57,6 +57,13 @@ def time(secs):
         return '%02d:%02d' % divmod(secs, 60)
 
 def size(bytes):
+    # when switching from the enclosure reported size to the downloader
+    # reported size, it takes a while to get the new size and the downloader
+    # returns -1.  the user sees the size go to -1B which is weird....
+    # better to return an empty string.
+    if bytes == -1:
+        return ""
+
     # FIXME this is a repeat of util.formatSizeForUser ...  should
     # probably ditch one of them.
     if bytes >= (1 << 30):
