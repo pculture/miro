@@ -223,7 +223,7 @@ class Renderer:
             position, format = self.playbin.query_position(gst.FORMAT_TIME)
             return to_seconds(position)
         except Exception, e:
-            logging.error("get_current_time: caught exception: %s" % e)
+            logging.warn("get_current_time: caught exception: %s" % e)
             return None
 
     def __seek(self, seconds):
@@ -255,7 +255,7 @@ class Renderer:
             duration, format = self.playbin.query_duration(gst.FORMAT_TIME)
             return to_seconds(duration)
         except Exception, e:
-            logging.error("get_duration: caught exception: %s" % e)
+            logging.warn("get_duration: caught exception: %s" % e)
             return None
 
     def reset(self):

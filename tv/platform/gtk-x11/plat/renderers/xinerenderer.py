@@ -174,7 +174,7 @@ class Renderer:
             pos, length = self.xine.getPositionAndLength()
             return pos / 1000.0
         except Exception, e:
-            logging.error("get_current_time: caught exception: %s" % e)
+            logging.warn("get_current_time: caught exception: %s" % e)
             return None
 
     def set_current_time(self, seconds):
