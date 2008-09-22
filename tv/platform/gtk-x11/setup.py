@@ -779,6 +779,24 @@ To use this theme, run:
     miro --theme="%s"
 """ % (self.theme_name, self.theme_name)
 
+class clean(Command):
+    description = 'Cleans the build and dist directories'
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        if os.path.exists('./build/'):
+            print "removing build directory"
+            shutil.rmtree('./build/')
+
+        if os.path.exists('./dist/'):
+            print "removing dist directory"
+            shutil.rmtree('./dist/')
 
 #### Run setup ####
 setup(name='miro',
@@ -825,5 +843,6 @@ setup(name='miro',
         'build_py': build_py,
         'install_data': install_data,
         'install_theme': install_theme,
+        'clean': clean,
     }
 )
