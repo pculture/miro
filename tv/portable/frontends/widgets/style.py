@@ -43,6 +43,12 @@ from miro.plat.frontends.widgets import widgetset
 
 PI = math.pi
 
+AVAILABLE_COLOR = (38/255.0, 140/255.0, 250/255.0) # blue
+UNWATCHED_COLOR = (0.31, 0.75, 0.12) # green
+DOWNLOADING_COLOR = (0.90, 0.45, 0.08) # orange
+WATCHED_COLOR = (0.33, 0.33, 0.33) # dark grey
+EXPIRING_COLOR = (0.95, 0.82, 0.11) # yellow-ish
+
 TAB_LIST_BACKGROUND_COLOR = (221/255.0, 227/255.0, 234/255.0)
 TAB_LIST_HEADER_COLOR = (128/255.0, 137/255.0, 153/255.0)
 TAB_LIST_SEPARATOR_COLOR = (209/255.0, 216/255.0, 220/255.0)
@@ -92,8 +98,6 @@ class TabRenderer(widgetset.CustomCellRenderer):
     MIN_HEIGHT = 25
     TITLE_FONT_SIZE = 0.82
     BOLD_TITLE = False
-    UNWATCHED_BUBBLE_COLOR = (0.31, 0.75, 0.12)
-    AVAILABLE_BUBBLE_COLOR = (0.60, 0.68, 0.80)
 
     def get_size(self, style, layout):
         return (self.MIN_WIDTH, max(self.MIN_HEIGHT,
@@ -121,10 +125,10 @@ class TabRenderer(widgetset.CustomCellRenderer):
     def pack_bubbles(self, hbox, layout):
         if self.data.unwatched > 0:
             self.pack_bubble(hbox, layout, self.data.unwatched,
-                    self.UNWATCHED_BUBBLE_COLOR)
+                    UNWATCHED_COLOR)
         if self.data.available > 0:
             self.pack_bubble(hbox, layout, self.data.available,
-                    self.AVAILABLE_BUBBLE_COLOR)
+                    AVAILABLE_COLOR)
 
     def pack_bubble(self, hbox, layout, count, color):
         radius = (layout.current_font.line_height() + 2) / 2.0
@@ -153,10 +157,10 @@ class StaticTabRenderer(TabRenderer):
     def pack_bubbles(self, hbox, layout):
         if self.data.unwatched > 0:
             self.pack_bubble(hbox, layout, self.data.unwatched,
-                    self.UNWATCHED_BUBBLE_COLOR)
+                    UNWATCHED_COLOR)
         if self.data.downloading > 0:
             self.pack_bubble(hbox, layout, self.data.downloading,
-                    self.DOWNLOADING_BUBBLE_COLOR)
+                    DOWNLOADING_COLOR)
 
 class FakeDownloadInfo(object):
     # Fake download info object used to size items
@@ -167,13 +171,9 @@ class FakeDownloadInfo(object):
 
 class ItemRenderer(widgetset.CustomCellRenderer):
     MIN_WIDTH = 600
-    UNWATCHED_COLOR = (0.26, 0.71, 0.11)
-    EXPIRING_COLOR = (0.95, 0.82, 0.11)
     BORDER_COLOR = (0.78, 0.78, 0.78)
     SELECTED_BACKGROUND_COLOR = (0.92, 0.95, 0.97)
     SELECTED_HIGHLIGHT_COLOR = (0.43, 0.63, 0.82)
-    UNWATCHED_ITEM_TITLE_COLOR = (0.41, 0.70, 0.08)
-    WATCHED_ITEM_TITLE_COLOR = (0.33, 0.33, 0.33)
     ITEM_DESC_COLOR = (0.4, 0.4, 0.4)
     EMBLEM_FONT_SIZE = 0.77
     GRADIENT_HEIGHT = 25
@@ -310,9 +310,13 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         vbox = cellpack.VBox()
         layout.set_font(1.1, family="Helvetica", bold=True)
         if self.data.downloaded and not self.data.video_watched:
-            layout.set_text_color(self.UNWATCHED_ITEM_TITLE_COLOR)
+            layout.set_text_color(UNWATCHED_COLOR)
+        elif not self.data.item_viewed:
+            layout.set_text_color(AVAILABLE_COLOR)
+        elif not self.data.downloaded and self.download_info is not None:
+            layout.set_text_color(DOWNLOADING_COLOR)
         else:
-            layout.set_text_color(self.WATCHED_ITEM_TITLE_COLOR)
+            layout.set_text_color(WATCHED_COLOR)
         title = layout.textbox(self.data.name)
         vbox.pack(cellpack.TruncatedTextLine(title, 150))
         description = cellpack.ClippedTextBox(self.make_description(layout))
@@ -447,11 +451,11 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         layout.set_text_color((1, 1, 1))
         if not self.data.video_watched:
             emblem_text = layout.textbox(_('Unwatched'))
-            emblem_color = self.UNWATCHED_COLOR
+            emblem_color = UNWATCHED_COLOR
         elif self.data.expiration_date:
             text = displaytext.expiration_date(self.data.expiration_date)
             emblem_text = layout.textbox(text)
-            emblem_color = self.EXPIRING_COLOR
+            emblem_color = EXPIRING_COLOR
         else:
             return None
         emblem = cellpack.Background(emblem_text, margin=(4, 0, 4, 0))
