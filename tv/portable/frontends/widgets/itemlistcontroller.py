@@ -175,6 +175,8 @@ class ItemListController(object):
             messages.StartUpload(item_info.id).send_to_backend()
         elif name == 'delete':
             messages.DeleteVideo(item_info.id).send_to_backend()
+        elif name == 'remove':
+            messages.RemoveVideosFromPlaylist(itemview.playlist_id, [item_info.id]).send_to_backend()
         elif name == 'details_toggle':
             itemview.model.update_value(iter, 1, not show_details)
             itemview.model_changed()
@@ -295,10 +297,13 @@ class SimpleItemListController(ItemListController):
         widget.sort_bar.connect('sort-changed', self.on_sort_changed)
         self.titlebar = self.make_titlebar()
         self.item_list = itemlist.ItemList()
-        self.item_view = itemlistwidgets.ItemView(self.item_list)
+        self.item_view = self.build_item_view()
         widget.titlebar_vbox.pack_start(self.titlebar)
         widget.content_vbox.pack_start(self.item_view)
         return widget
+
+    def build_item_view(self):
+        return itemlistwidgets.ItemView(self.item_list)
 
     def make_titlebar(self):
         icon = self._make_icon()

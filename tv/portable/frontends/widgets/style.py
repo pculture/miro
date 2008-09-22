@@ -675,3 +675,16 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     def draw_progress_throbber(self, context, x, y, width, height):
         index = self.throbber_counter % 2
         self.progress_throbbers[index].draw(context, x, y, width, height)
+
+class PlaylistItemRenderer(ItemRenderer):
+    def pack_video_buttons(self, layout):
+        hbox = cellpack.HBox(spacing=5)
+        layout.set_font(0.77)
+        if self.data.expiration_date:
+            button = layout.button(_('Keep'), self.hotspot=='keep')
+            button.set_min_width(65)
+            hbox.pack(cellpack.Hotspot('keep', button))
+        button = layout.button(_('Remove'), self.hotspot=='remove')
+        button.set_min_width(65)
+        hbox.pack(cellpack.Hotspot('remove', button))
+        return hbox

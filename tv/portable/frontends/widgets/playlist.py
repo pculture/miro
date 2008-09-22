@@ -36,6 +36,8 @@ from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistcontroller
+from miro.frontends.widgets import itemlistwidgets
+from miro.frontends.widgets import style
 
 class DropHandler(signals.SignalEmitter):
     def __init__(self, playlist_id, item_view):
@@ -94,6 +96,14 @@ class PlaylistSort(itemlist.ItemSort):
     def sort_key(self, item):
         return self.positions[item.id]
 
+class PlaylistItemView(itemlistwidgets.ItemView):
+    def __init__(self, item_list, playlist_id):
+        itemlistwidgets.ItemView.__init__(self, item_list)
+        self.playlist_id = playlist_id
+
+    def build_renderer(self):
+        return style.PlaylistItemRenderer()
+
 class PlaylistView(itemlistcontroller.SimpleItemListController):
     image_filename = 'playlist-icon.png'
 
@@ -105,6 +115,9 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
         self._sorter = PlaylistSort()
         itemlistcontroller.SimpleItemListController.__init__(self)
         self.item_list_group.set_sort(self._sorter)
+
+    def build_item_view(self):
+        return PlaylistItemView(self.item_list, self.id)
 
     def make_drop_handler(self):
         handler = DropHandler(self.id, self.item_view)

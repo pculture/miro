@@ -200,12 +200,15 @@ class ItemView(widgetset.TableView):
         widgetset.TableView.__init__(self, item_list.model)
         self.item_list = item_list
         self.set_draws_selection(False)
-        renderer = style.ItemRenderer()
+        renderer = self.build_renderer()
         self.add_column('item', renderer, renderer.MIN_WIDTH, data=0,
                 show_details=1, throbber_counter=2)
         self.set_show_headers(False)
         self.allow_multiple_select(True)
         self.set_background_color(widgetutil.WHITE)
+
+    def build_renderer(self):
+        return style.ItemRenderer()
 
 class HideableSection(widgetutil.HideableWidget):
     """Widget that contains an ItemView, along with an expander to show/hide
