@@ -146,7 +146,7 @@ class ThemeHistory(DDBObject):
                 (u'http://feeds.miroguide.com/miroguide/new', False),
 
                 (_('Sample Channels'), [
-                    (u'http://tedtalks.blip.tv/rss', False),
+                    (u'http://feeds.feedburner.com/tedtalks_video', False),
                     (u'http://feeds.theonion.com/OnionNewsNetwork', False),
                     (u'http://ewheel.democracynow.org/rss.xml', False),
                     (u'http://www.washingtonpost.com/wp-srv/mmedia/hd_podcast.xml', False),
