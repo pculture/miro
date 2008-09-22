@@ -266,8 +266,8 @@ class SearchToolbar(widgetutil.HideableWidget):
     def _on_save_clicked(self, button):
         self.emit('save-search')
 
-class DownloadButtonToolbar(widgetset.HBox):
-    """Widget that shows the pause/resume/... buttons for the downloads
+class DownloadStaticToolbar(widgetset.HBox):
+    """Widget that shows free space and pause/resume/... buttons for downloads.
 
     signals:
 
@@ -278,6 +278,12 @@ class DownloadButtonToolbar(widgetset.HBox):
 
     def __init__(self):
         widgetset.HBox.__init__(self, spacing=10)
+
+        self._free_disk_label = widgetset.Label("")
+        self._free_disk_label.set_bold(True)
+
+        self.pack_start(widgetutil.align_left(self._free_disk_label,
+            top_pad=5, left_pad=10), expand=True)
 
         self.create_signal('pause-all')
         self.create_signal('resume-all')
@@ -304,6 +310,10 @@ class DownloadButtonToolbar(widgetset.HBox):
         self.pack_start(widgetutil.align_middle(cancel_button, top_pad=5,
             bottom_pad=5, right_pad=16))
 
+    def update_free_space(self, bytes):
+        text = _("%(amount)s free on disk", {"amount": displaytext.size(bytes)})
+        self._free_disk_label.set_text(text)
+
     def _on_pause_button_clicked(self, widget):
         self.emit('pause-all')
 
@@ -313,48 +323,46 @@ class DownloadButtonToolbar(widgetset.HBox):
     def _on_cancel_button_clicked(self, widget):
         self.emit('cancel-all')
 
-class DownloadLabelToolbar(widgetset.HBox):
+class DownloadDataToolbar(widgetset.HBox):
     """Widget that shows the info.
     """
 
     def __init__(self):
         widgetset.HBox.__init__(self, spacing=10)
 
-        self._free_disk_label = widgetset.Label("")
-        self._free_disk_label.set_bold(True)
+        first_label = widgetset.Label("")
+        first_label.set_bold(True)
+        self._first_label = first_label
 
-        self.pack_start(widgetutil.align_left(self._free_disk_label,
-            top_pad=5, left_pad=10), expand=True)
+        self.pack_start(widgetutil.align_left(self._first_label, 
+            left_pad=10, bottom_pad=5))
 
-        uploading_label = widgetset.Label("")
-        uploading_label.set_bold(True)
-        self._uploading_label = uploading_label
+        second_label = widgetset.Label("")
+        second_label.set_bold(True)
+        self._second_label = second_label
 
-        self.pack_start(widgetutil.pad(uploading_label, top=5))
+        self.pack_start(widgetutil.align_left(self._second_label, 
+            bottom_pad=5))
 
-        downloading_label = widgetset.Label("")
-        downloading_label.set_bold(True)
-        self._downloading_label = downloading_label
+    def update_rates(self, down_bps, up_bps):
+        text_up = text_down = ''
+        if up_bps >= 10:
+            text_up = _("%(rate)s uploading", {"rate": displaytext.download_rate(up_bps)})
+        if down_bps >= 10:
+            text_down = _("%(rate)s downloading", {"rate": displaytext.download_rate(down_bps)})
 
-        self.pack_start(widgetutil.pad(downloading_label, top=5, right=10))
-
-    def update_free_space(self, bytes):
-        text = _("%(amount)s free on disk", {"amount": displaytext.size(bytes)})
-        self._free_disk_label.set_text(text)
-
-    def update_uploading_rate(self, bps):
-        if bps >= 10:
-            text = _("%(rate)s uploading", {"rate": displaytext.download_rate(bps)})
+        if text_up and text_down:
+            self._first_label.set_text(text_down)
+            self._second_label.set_text(text_up)
+        elif text_up:
+            self._first_label.set_text(text_up)
+            self._second_label.set_text('')
+        elif text_down:
+            self._first_label.set_text(text_down)
+            self._second_label.set_text('')
         else:
-            text = ''
-        self._uploading_label.set_text(text)
-
-    def update_downloading_rate(self, bps):
-        if bps >= 10:
-            text = _("%(rate)s downloading", {"rate": displaytext.download_rate(bps)})
-        else:
-            text = ''
-        self._downloading_label.set_text(text)
+            self._first_label.set_text('')
+            self._second_label.set_text('')
 
 class FeedToolbar(widgetset.Background):
     """Toolbar that appears below the title in a feed.

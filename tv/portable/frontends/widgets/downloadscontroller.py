@@ -31,7 +31,7 @@
 from miro.gtcache import gettext as _
 
 from miro.frontends.widgets import itemlistcontroller
-from miro.frontends.widgets.itemlistwidgets import ItemView, HideableSection, ItemContainerWidget, DownloadButtonToolbar, DownloadLabelToolbar, ItemListTitlebar
+from miro.frontends.widgets.itemlistwidgets import ItemView, HideableSection, ItemContainerWidget, DownloadStaticToolbar, DownloadDataToolbar, ItemListTitlebar
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import itemlist
@@ -54,15 +54,16 @@ class DownloadsController(itemlistcontroller.ItemListController):
 
         widget.titlebar_vbox.pack_start(self.make_titlebar())
 
-        self.button_toolbar = DownloadButtonToolbar()
-        self.button_toolbar.connect("pause-all", self._on_pause_all)
-        self.button_toolbar.connect("resume-all", self._on_resume_all)
-        self.button_toolbar.connect("cancel-all", self._on_cancel_all)
-        self.label_toolbar = DownloadLabelToolbar()
+        self.static_toolbar = DownloadStaticToolbar()
+        self.static_toolbar.connect("pause-all", self._on_pause_all)
+        self.static_toolbar.connect("resume-all", self._on_resume_all)
+        self.static_toolbar.connect("cancel-all", self._on_cancel_all)
+
+        self.data_toolbar = DownloadDataToolbar()
         self._update_free_space()
 
-        widget.titlebar_vbox.pack_start(self.label_toolbar)
-        widget.titlebar_vbox.pack_start(self.button_toolbar)
+        widget.titlebar_vbox.pack_start(self.static_toolbar)
+        widget.titlebar_vbox.pack_start(self.data_toolbar)
 
         widget.content_vbox.pack_start(self.indydownloads_section)
         widget.content_vbox.pack_start(self.downloads_section)
@@ -100,7 +101,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
         self.set_search(search_text)
 
     def _update_free_space(self):
-        self.label_toolbar.update_free_space(get_available_bytes_for_movies())
+        self.static_toolbar.update_free_space(get_available_bytes_for_movies())
 
     def _on_pause_all(self, widget):
         messages.PauseAllDownloads().send_to_backend()
@@ -112,7 +113,6 @@ class DownloadsController(itemlistcontroller.ItemListController):
         messages.CancelAllDownloads().send_to_backend()
 
     def _expand_lists_initially(self):
-        # show everything
         self.indydownloads_section.show()
         self.downloads_section.show()
         self.seeding_section.show()
@@ -125,5 +125,4 @@ class DownloadsController(itemlistcontroller.ItemListController):
         self._expand_lists_initially()
 
     def on_items_changed(self):
-        self.label_toolbar.update_downloading_rate(downloader.totalDownRate)
-        self.label_toolbar.update_uploading_rate(downloader.totalUpRate)
+        self.data_toolbar.update_rates(downloader.totalDownRate, downloader.totalUpRate)
