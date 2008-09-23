@@ -569,7 +569,7 @@ class ChannelInfo(object):
             self.base_href = channel_obj.getBaseHref()
             self.autodownload_mode = channel_obj.getAutoDownloadMode()
             self.is_folder = False
-            self.tab_icon = resources.path('wimages/icon-rss.png')
+            self.tab_icon = channel_obj.getThumbnailPath()
             self.is_directory_feed = False
             self.expire = channel_obj.get_expiration_type()
             self.expire_time = channel_obj.get_expiration_time()
