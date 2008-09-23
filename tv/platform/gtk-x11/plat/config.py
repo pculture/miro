@@ -43,26 +43,26 @@ from miro.plat import resources
 client = gconf.client_get_default()
 gconf_lock = threading.RLock()
 
-def _get_gconf(fullkey, default = None):
+def _get_gconf(fullkey, default=None):
     gconf_lock.acquire()
     try:
-        value = client.get (fullkey)
-        if (value != None):
-            if (value.type == gconf.VALUE_STRING):
+        value = client.get(fullkey)
+        if value != None:
+            if value.type == gconf.VALUE_STRING:
                 return value.get_string()
-            if (value.type == gconf.VALUE_INT):
+            if value.type == gconf.VALUE_INT:
                 return value.get_int()
-            if (value.type == gconf.VALUE_BOOL):
+            if value.type == gconf.VALUE_BOOL:
                 return value.get_bool()
-            if (value.type == gconf.VALUE_FLOAT):
+            if value.type == gconf.VALUE_FLOAT:
                 return value.get_float()
         return default
     finally:
         gconf_lock.release()
 
 class GconfDict:
-    def get(self, key, default = None):
-        if (type(key) != str):
+    def get(self, key, default=None):
+        if not isinstance(key, str):
             raise TypeError()
         fullkey = '/apps/miro/' + key
         return _get_gconf(fullkey, default)
@@ -113,10 +113,7 @@ def get(descriptor):
 
     if descriptor == prefs.MOVIES_DIRECTORY:
         value = os.path.expanduser('~/Movies/Miro')
-        try:
-            os.makedirs (value)
-        except:
-            pass
+
     elif descriptor == prefs.NON_VIDEO_DIRECTORY:
         value = os.path.expanduser('~/Desktop')
 
