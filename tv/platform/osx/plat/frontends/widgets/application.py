@@ -62,10 +62,10 @@ class OSXApplication(Application):
         eventloop.connect('begin-loop', self.beginLoop)
         eventloop.connect('end-loop', self.endLoop)
 
-    def handleStartupSuccess(self, obj):
+    def handle_startup_success(self, obj):
         migrateappname.migrateVideos('Democracy', 'Miro')
         osxmenus.populate_menu()
-        Application.handleStartupSuccess(self, obj)
+        Application.handle_startup_success(self, obj)
         video.register_quicktime_components()
 
     ### eventloop (our own one, not the Cocoa one) delegate methods
