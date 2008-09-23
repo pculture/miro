@@ -309,12 +309,13 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         layout.set_text_color(self.text_color)
         vbox = cellpack.VBox()
         layout.set_font(1.1, family="Helvetica", bold=True)
-        if self.data.downloaded and not self.data.video_watched:
+        # this should match calc_status_bump
+        if not self.data.downloaded and self.download_info is not None:
+            layout.set_text_color(DOWNLOADING_COLOR)
+        elif self.data.downloaded and not self.data.video_watched:
             layout.set_text_color(UNWATCHED_COLOR)
         elif not self.data.item_viewed:
             layout.set_text_color(AVAILABLE_COLOR)
-        elif not self.data.downloaded and self.download_info is not None:
-            layout.set_text_color(DOWNLOADING_COLOR)
         else:
             layout.set_text_color(WATCHED_COLOR)
         title = layout.textbox(self.data.name)
