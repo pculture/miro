@@ -664,12 +664,6 @@ class Application:
     def diagnostics(self):
         diagnostics.run_dialog()
 
-    def uiThreadFinished(self):
-        """Called by the UI event thread when is finished processing and is
-        about to exit.
-        """
-        app.controller.onShutdown()
-
     def quit(self):
         # here we should should check if there are active downloads, etc.
         self.do_quit()
@@ -686,26 +680,26 @@ class Application:
         self.quit_ui()
 
     def connect_to_signals(self):
-        signals.system.connect('error', self.handleError)
-        signals.system.connect('download-complete', self.handleDownloadComplete)
+        signals.system.connect('error', self.handle_error)
+        signals.system.connect('download-complete', self.handle_download_complete)
         signals.system.connect('update-available', self.handle_update_available)
-        signals.system.connect('startup-success', self.handleStartupSuccess)
-        signals.system.connect('startup-failure', self.handleStartupFailure)
-        signals.system.connect('new-dialog', self.handleDialog)
-        signals.system.connect('shutdown', self.onBackendShutdown)
+        signals.system.connect('startup-success', self.handle_startup_success)
+        signals.system.connect('startup-failure', self.handle_startup_failure)
+        signals.system.connect('new-dialog', self.handle_dialog)
+        signals.system.connect('shutdown', self.on_backend_shutdown)
 
-    def handleDialog(self, obj, dialog):
+    def handle_dialog(self, obj, dialog):
         call_on_ui_thread(rundialog.run, dialog)
 
-    def handleStartupFailure(self, obj, summary, description):
+    def handle_startup_failure(self, obj, summary, description):
         dialogs.show_message(summary, description, dialogs.CRITICAL_MESSAGE)
         app.controller.shutdown()
 
-    def handleStartupSuccess(self, obj):
+    def handle_startup_success(self, obj):
         call_on_ui_thread(self.startup_ui)
         eventloop.addTimeout(3, autoupdate.check_for_updates, "Check for updates")
 
-    def handleDownloadComplete(self, obj, item):
+    def handle_download_complete(self, obj, item):
         print "DOWLOAD COMPLETE"
 
     def handle_update_available(self, obj, item):
@@ -714,7 +708,7 @@ class Application:
     def handle_up_to_date(self):
         print "up to date!"
 
-    def handleError(self, obj, report):
+    def handle_error(self, obj, report):
         # FIXME - I don't want to write the code in dialogs.py yet
         print 'INTERNAL ERROR:'
         print report
@@ -733,7 +727,7 @@ class Application:
         chkboxdialog = dialogs.CheckboxTextboxDialog(_("Internal Error"), _("Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report."), _("Include entire program database including all video and channel metadata with crash report"), False, _("Describe what you were doing that caused this error"), dialogs.BUTTON_SUBMIT_REPORT, dialogs.BUTTON_IGNORE)
         chkboxdialog.run(callback)
 
-    def onBackendShutdown(self, obj):
+    def on_backend_shutdown(self, obj):
         logging.info('Shutting down...')
 
 class WidgetsMessageHandler(messages.MessageHandler):
