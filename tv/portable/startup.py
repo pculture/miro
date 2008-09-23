@@ -290,8 +290,7 @@ def is_movies_directory_gone():
     movies_dir = fileutil.expand_filename(config.get(prefs.MOVIES_DIRECTORY))
     if not movies_dir.endswith(os.path.sep):
         movies_dir += os.path.sep
-    logging.info("Checking movies directory '%s'..." % movies_dir)
-
+    logging.info("Checking movies directory '%s'...", movies_dir)
     try:
         if os.path.exists(movies_dir):
             contents = os.listdir(movies_dir)
@@ -307,6 +306,7 @@ def is_movies_directory_gone():
 
     # make sure that we have actually downloaded something into the movies
     # directory.
+    movies_dir = config.get(prefs.MOVIES_DIRECTORY)
     for downloader_ in views.remoteDownloads:
         if (downloader_.isFinished()
                 and downloader_.getFilename().startswith(movies_dir)):

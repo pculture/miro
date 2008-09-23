@@ -43,14 +43,6 @@ from miro.plat import specialfolders
 
 proxy_info = proxyfind.get_proxy_info()
 
-def _getMoviesDirectory():
-    path = os.path.join(specialfolders.baseMoviesDirectory, app.configfile['shortAppName'])
-    try:
-        fileutil.makedirs(os.path.join(path, 'Incomplete Downloads'))
-    except:
-        pass
-    return path
-
 def _getSupportDirectory():
     if u3info.u3_active:
         path = u3info.APP_DATA_PREFIX
@@ -71,17 +63,11 @@ def _getConfigFile():
     return fileutil.expand_filename(os.path.join(_getSupportDirectory(), "preferences.bin"))
 
 def load():
-#    try:
-        filename = _getConfigFile()
-        if os.path.exists(filename):
-            return cPickle.load(open(filename))
-        else:
-            return {}
-#    except:
-#        import traceback
-#        print "Error loading preferences. Resetting prefs."
-#        traceback.print_exc()
-#        return {}
+    filename = _getConfigFile()
+    if os.path.exists(filename):
+        return cPickle.load(open(filename))
+    else:
+        return {}
 
 def save(data):
     file = _getConfigFile()
@@ -89,7 +75,7 @@ def save(data):
 
 def get(descriptor):
     if descriptor == prefs.MOVIES_DIRECTORY:
-        return _getMoviesDirectory()
+        return os.path.join(specialfolders.baseMoviesDirectory, app.configfile['shortAppName'])
 
     elif descriptor == prefs.NON_VIDEO_DIRECTORY:
         return specialfolders.nonVideoDirectory
