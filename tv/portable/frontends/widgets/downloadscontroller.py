@@ -35,6 +35,7 @@ from miro.frontends.widgets.itemlistwidgets import ItemView, HideableSection, It
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import itemlist
+from miro.frontends.widgets import prefpanel
 
 from miro import messages
 from miro import downloader
@@ -56,6 +57,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
         self.toolbar.connect("pause-all", self._on_pause_all)
         self.toolbar.connect("resume-all", self._on_resume_all)
         self.toolbar.connect("cancel-all", self._on_cancel_all)
+        self.toolbar.connect("settings", self._on_settings)
 
         self._update_free_space()
 
@@ -107,6 +109,9 @@ class DownloadsController(itemlistcontroller.ItemListController):
 
     def _on_cancel_all(self, widget):
         messages.CancelAllDownloads().send_to_backend()
+
+    def _on_settings(self, widget):
+        prefpanel.run_dialog("downloads")
 
     def _expand_lists_initially(self):
         self.indydownloads_section.show()

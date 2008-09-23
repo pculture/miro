@@ -281,6 +281,7 @@ class DownloadToolbar(widgetset.VBox):
        pause-all -- All downloads should be paused
        resume-all -- All downloads should be resumed
        cancel-all -- All downloads should be canceled
+       settings -- The preferences panel downloads tab should be opened
     """
 
     def __init__(self):
@@ -297,6 +298,7 @@ class DownloadToolbar(widgetset.VBox):
         self.create_signal('pause-all')
         self.create_signal('resume-all')
         self.create_signal('cancel-all')
+        self.create_signal('settings')
 
         pause_button = widgetset.Button(_('Pause All'), style='smooth')
         pause_button.set_size(widgetconst.SIZE_SMALL)
@@ -317,6 +319,19 @@ class DownloadToolbar(widgetset.VBox):
         cancel_button.set_color(style.TOOLBAR_GRAY)
         cancel_button.connect('clicked', self._on_cancel_button_clicked)
         h.pack_start(widgetutil.align_middle(cancel_button, top_pad=5,
+            bottom_pad=5))
+
+        lab = widgetset.Label("|")
+        lab.set_color((0.27, 0.27, 0.27))
+        lab.set_size(0.85)
+
+        h.pack_start(lab)
+
+        settings_button = widgetset.Button(_('Settings'), style='smooth')
+        settings_button.set_size(widgetconst.SIZE_SMALL)
+        settings_button.set_color(style.TOOLBAR_GRAY)
+        settings_button.connect('clicked', self._on_settings_button_clicked)
+        h.pack_start(widgetutil.align_middle(settings_button, top_pad=5,
             bottom_pad=5, right_pad=16))
 
         self.pack_start(h)
@@ -372,6 +387,9 @@ class DownloadToolbar(widgetset.VBox):
 
     def _on_cancel_button_clicked(self, widget):
         self.emit('cancel-all')
+
+    def _on_settings_button_clicked(self, widget):
+        self.emit('settings')
 
     def update_rates(self, down_bps, up_bps):
         text_up = text_down = ''

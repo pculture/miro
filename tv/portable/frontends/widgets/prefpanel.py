@@ -36,8 +36,8 @@ To build a new panel
 1. Define a function that takes no arguments and returns a widget.  This
    widget is a container that holds all the widgets that make up your panel.
 
-2. Call ``add_panel`` with the name of your panel and your panel builder 
-   function.
+2. Call ``add_panel`` with the name, title, and function to build the
+   panel.  Title should be translated text.
 
 When building a preference panel, it'll help to use the functions that begin
 with ``attach_`` and ``create_``.
@@ -205,17 +205,18 @@ from miro.plat.frontends.widgets.prefpanelset import get_platform_specific
 # the panel list holding tuples of (name, image_name, panel_builder_function)
 __PANEL = []
 
-def add_panel(name, panel_builder_function, image_name='wimages/pref-tab-general.png'):
+def add_panel(name, title, panel_builder_function, image_name='wimages/pref-tab-general.png'):
     """Adds a panel to the preferences panel list.
 
-    name -- the name of the panel; appears in tabs on the side and the top of
-            the panel
+    name -- a name for the panel--this is used internally
+    title -- the name of the panel; appears in tabs on the side and the top of
+             the panel
     panel_builder_function -- function ``None -> widget`` that builds the panel
             and returns it
     image_name -- the image to use in the tabs; defaults to the general tab image
     """
     global __PANEL
-    __PANEL.append( (name, image_name, panel_builder_function) )
+    __PANEL.append( (name, title, image_name, panel_builder_function) )
 
 
 # -----------------------
@@ -418,12 +419,12 @@ def _build_playback_panel():
 
 
 # Add the initial panels
-add_panel(_("General"), _build_general_panel, 'wimages/pref-tab-general.png')
-add_panel(_("Channels"), _build_channels_panel, 'wimages/pref-tab-channels.png')
-add_panel(_("Downloads"), _build_downloads_panel, 'wimages/pref-tab-downloads.png')
-add_panel(_("Folders"), _build_folders_panel, 'wimages/pref-tab-folders.png')
-add_panel(_("Disk space"), _build_disk_space_panel, 'wimages/pref-tab-disk-space.png')
-add_panel(_("Playback"), _build_playback_panel, 'wimages/pref-tab-playback.png')
+add_panel("general", _("General"), _build_general_panel, 'wimages/pref-tab-general.png')
+add_panel("channels", _("Channels"), _build_channels_panel, 'wimages/pref-tab-channels.png')
+add_panel("downloads", _("Downloads"), _build_downloads_panel, 'wimages/pref-tab-downloads.png')
+add_panel("folders", _("Folders"), _build_folders_panel, 'wimages/pref-tab-folders.png')
+add_panel("disk_space", _("Disk space"), _build_disk_space_panel, 'wimages/pref-tab-disk-space.png')
+add_panel("playback", _("Playback"), _build_playback_panel, 'wimages/pref-tab-playback.png')
 
 def _create_panel(title_text, panel_contents):
     title = widgetset.Label(title_text)
@@ -467,7 +468,7 @@ class PreferenceTabList(widgetset.TableView):
         widget = self.model[self.get_selected()][2]
         self.widget_holder.set(widget)
 
-def run_dialog():
+def run_dialog(tab=None):
     """Displays the preferences dialog."""
     pref_window = widgetset.Dialog(_("Preferences"))
     try:
@@ -480,7 +481,7 @@ def run_dialog():
             tab_list = PreferenceTabList(main_area_holder)
 
             max_height = max_width = 0
-            for title, image_name, panel_builder in __PANEL:
+            for name, title, image_name, panel_builder in __PANEL:
                 panel = _create_panel(title, panel_builder())
                 image = imagepool.get_surface(resources.path(image_name))
                 tab_list.model.append(title, image, panel)
@@ -493,7 +494,16 @@ def run_dialog():
 
             splitter.set_left(tab_list)
             splitter.set_left_width(200)
-            tab_list.select(tab_list.model.first_iter())
+
+            if tab == None:
+                tab_list.select(tab_list.model.first_iter())
+            else:
+                for i, bits in enumerate(__PANEL):
+                    if bits[0] == tab:
+                        tab_list.select(tab_list.model.nth_iter(i))
+                        break
+                else:
+                    tab_list.select(tab_list.model.first_iter())
 
             splitter.set_right(main_area_holder)
 
