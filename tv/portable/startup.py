@@ -29,7 +29,7 @@
 """Startup code.
 
 In general, frontends should do the following to handle startup.
-
+FIXME
     - (optional) call startup.install_movies_gone_handler()
     - Call startup.initialize()
     - Wait for either the 'startup-success', or 'startup-failure' signal
@@ -95,6 +95,18 @@ def startup_function(func):
                     ))
     return wrapped
 
+__movies_directory_gone_handler = None
+
+def install_movies_directory_gone_handler(callback):
+    global __movies_directory_gone_handler
+    __movies_directory_gone_handler = callback
+
+__first_time_handler = None
+
+def install_first_time_handler(callback):
+    global __first_time_handler
+    __first_time_handler = callback
+
 def setup_global_feed(url, *args, **kwargs):
     feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)
     try:
@@ -127,9 +139,12 @@ def startup():
     This method starts up the eventloop and schedules the rest of the startup
     to run in the event loop.
 
-    Frontends should call this method, then wait for 1 of 2 system signals.
+    Frontends should call this method, then wait for 1 of 2 system signals:
+
     "startup-success" is fired once the startup is done and the backend is
-    ready to go.  "startup-failure" is fired if something bad happned
+    ready to go.
+
+    "startup-failure" is fired if something bad happened.
 
     initialize() must be called before startup().
     """
@@ -152,6 +167,7 @@ def finish_startup():
     logging.info("Restoring database...")
     try:
         database.defaultDatabase.liveStorage = storedatabase.LiveStorage()
+
     except databaseupgrade.DatabaseTooNewError:
         summary = _("Database too new")
         description = _(
@@ -163,21 +179,55 @@ def finish_startup():
         raise StartupError(summary, description)
     database.defaultDatabase.recomputeFilters()
 
-    if movies_directory_gone():
-        __movies_gone_handler()
-    else:
-        eventloop.addUrgentCall(finalize_startup, "finalizing startup")
-
-@startup_function
-def finalize_startup():
-    downloader.startupDownloader()
-
-    util.print_mem_usage("Post-downloader memory check")
     setup_global_feeds()
     setup_tabs()
     searchengines.create_engines()
     setup_theme()
     install_message_handler()
+
+    signals.system.startup_success()
+
+    eventloop.addUrgentCall(check_firsttime, "check first time")
+
+@startup_function
+def check_firsttime():
+    """Run the first time wizard if need be.
+    """
+    if is_first_time():
+        if __first_time_handler:
+            logging.info("First time -- calling handler.")
+            __first_time_handler(lambda: eventloop.addUrgentCall(check_movies_gone, "check movies gone"))
+            return
+        else:
+            logging.warn("First time -- no handler installed!")
+
+    eventloop.addUrgentCall(check_movies_gone, "check movies gone")
+
+@startup_function
+def check_movies_gone():
+    """Checks to see if the movies directory is gone.
+    """
+    if is_movies_directory_gone():
+        if __movies_directory_gone_handler:
+            logging.info("Movies directory is gone -- calling handler.")
+            __movies_directory_gone_handler(lambda: eventloop.addUrgentCall(finalize_startup, "finalize startup"))
+            return
+        else:
+            logging.warn("Movies directory is gone -- no handler installed!")
+
+    eventloop.addUrgentCall(finalize_startup, "finalize startup")
+
+@startup_function
+def finalize_startup():
+    eventloop.addIdle(startup_network_stuff, "startup network stuff")
+    eventloop.addTimeout(5, startup_compute_stuff, "startup compute stuff")
+    eventloop.addIdle(parse_command_line_args, "parsing command line args")
+
+@startup_function
+def startup_network_stuff():
+    downloader.startupDownloader()
+
+    util.print_mem_usage("Post-downloader memory check")
 
     # Start the automatic downloader daemon
     logging.info("Spawning auto downloader...")
@@ -186,15 +236,13 @@ def finalize_startup():
     item.reconnectDownloaders()
     feed.expire_items()
 
+@startup_function
+def startup_compute_stuff():
     starttime = clock()
     iconcache.clear_orphans()
     logging.timing("Icon clear: %.3f", clock() - starttime)
     logging.info("Starting movie data updates")
     moviedata.movieDataUpdater.startThread()
-
-    signals.system.startup_success()
-
-    eventloop.addIdle(parse_command_line_args, "parsing command line args")
 
 def setup_global_feeds():
     setup_global_feed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
@@ -214,11 +262,30 @@ def setup_tabs():
     setup_tab_order(views.channelTabOrder, u'channel')
     setup_tab_order(views.playlistTabOrder, u'playlist')
 
-def movies_directory_gone():
+def is_first_time():
+    """Checks to see if this is the first time that Miro has been run.
+    This is to do any first-time setup, show the user the first-time
+    wizard, ...
+
+    Returns True if yes, False if no.
+    """
+    marker = os.path.join(config.get(prefs.SUPPORT_DIRECTORY), "MIRO_MARKER")
+    if not os.path.exists(marker):
+        return True
+
+    return False
+
+def mark_first_time():
+    marker = os.path.join(config.get(prefs.SUPPORT_DIRECTORY), "MIRO_MARKER")
+
+    f = open(marker, "w")
+    f.write("This is a Miro directory.  Please don't delete this file.\n")
+    f.close()
+
+def is_movies_directory_gone():
     """Checks to see if the MOVIES_DIRECTORY exists.
 
-    True if it exists and is probably fine.
-    False if not.
+    Returns True if yes, False if no.
     """
     movies_dir = fileutil.expand_filename(config.get(prefs.MOVIES_DIRECTORY))
     if not movies_dir.endswith(os.path.sep):
@@ -226,53 +293,27 @@ def movies_directory_gone():
     logging.info("Checking movies directory '%s'..." % movies_dir)
 
     try:
-        if not os.path.exists(movies_dir):
-            return True
+        if os.path.exists(movies_dir):
+            contents = os.listdir(movies_dir)
+            if contents:
+                # There's something inside the directory consider it present (even
+                # if all our items are missing.
+                return False
 
-        contents = os.listdir(movies_dir)
     except OSError:
         # We can't access the directory.  Seems like it's gone.
+        logging.info("Can't access directory.")
         return True
-
-    if contents:
-        # There's something inside the directory consider it present (even
-        # if all our items are missing.
-        return False
 
     # make sure that we have actually downloaded something into the movies
     # directory.
     for downloader_ in views.remoteDownloads:
         if (downloader_.isFinished()
                 and downloader_.getFilename().startswith(movies_dir)):
+            logging.info("Directory there, but missing files.")
             return True
 
     return False
-
-def default_movies_gone_handler():
-    print "MOVIES GONE!"
-    summary = _("Video Directory Missing")
-    description = _(
-        "Miro can't find your primary video directory %(moviesDirectory)s. "
-        "This may be because it's located on an external drive that is "
-        "currently disconnected.  Please, connect the drive or create "
-        "the directory, then start Miro again.",
-        {"moviesDirectory": config.get(prefs.MOVIES_DIRECTORY)}
-    )
-    signals.system.startup_failure(summary, description)
-
-__movies_gone_handler =  default_movies_gone_handler
-
-def install_movies_gone_handler(callback):
-    """Install a new movies gone handler.  This method handles the annoying
-    case where we are trying to start up, but detect that the movies directory
-    appears missing.
-
-    By default this causes us to fail starting up, but some frontends may want
-    to allow the user to continue.  To do that, they must call
-    ``startup.finalize_startup()``.
-    """
-    global __movies_gone_handler
-    __movies_gone_handler = callback
 
 def setup_theme():
     themeHistory = _get_theme_history()

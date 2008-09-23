@@ -70,6 +70,8 @@ class Application:
 
     def startup(self):
         self.connect_to_signals()
+        startup.install_movies_directory_gone_handler(self.handle_movies_gone)
+        startup.install_first_time_handler(self.handle_first_time)
         startup.startup()
 
     def startup_ui(self):
@@ -77,6 +79,7 @@ class Application:
         # WidgetsMessageHandler() will call build_window()
         messages.TrackGuides().send_to_backend()
         messages.QuerySearchInfo().send_to_backend()
+
         app.item_list_controller_manager = \
                 itemlistcontroller.ItemListControllerManager()
         app.display_manager = displays.DisplayManager()
@@ -85,10 +88,53 @@ class Application:
         app.search_manager = search.SearchManager()
         app.inline_search_memory = search.InlineSearchMemory()
         app.tab_list_manager = tablistmanager.TabListManager()
+
         self.window = MiroWindow(config.get(prefs.LONG_APP_NAME),
                                  self.get_main_window_dimensions())
 
-        # FIXME - first-time startup somewhere around here
+    def handle_movies_gone(self, continue_callback):
+        call_on_ui_thread(lambda: self.__handle_movies_gone(continue_callback))
+
+    def __handle_movies_gone(self, continue_callback):
+        title = _("Movies directory gone")
+        description = _(
+            "%(shortappname)s can't find the primary video directory "
+            "located at:\n"
+            "\n"
+            "%(moviedirectory)s\n"
+            "\n"
+            "This may be because it is located on an external drive that "
+            "is not connected.\n"
+            "\n"
+            "If you continue, the primary video directory will be reset "
+            "to a location on this drive.  If you had videos downloaded "
+            "this will cause %(shortappname)s to lose details about those "
+            "videos.\n"
+            "\n"
+            "If you quit, then you can connect the drive or otherwise "
+            "fix the problem and relaunch %(shortappname)s.",
+            {"shortappname": config.get(prefs.SHORT_APP_NAME),
+             "moviedirectory": config.get(prefs.MOVIES_DIRECTORY)}
+        )
+        ret = dialogs.show_choice_dialog(title, description,
+                [dialogs.BUTTON_CONTINUE, dialogs.BUTTON_QUIT])
+
+        if ret == dialogs.BUTTON_QUIT:
+            self.do_quit()
+            return
+
+        continue_callback()
+
+    def handle_first_time(self, continue_callback):
+        call_on_ui_thread(lambda: self.__handle_first_time(continue_callback))
+
+    def __handle_first_time(self, continue_callback):
+        # FIXME - implement me!
+        logging.info("whee!  first time!")
+
+        startup.mark_first_time()
+
+        continue_callback()
 
     def build_window(self):
         app.tab_list_manager.populate_tab_list()
