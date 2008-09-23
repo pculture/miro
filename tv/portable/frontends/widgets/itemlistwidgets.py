@@ -65,10 +65,10 @@ class TitleDrawer(widgetset.DrawingArea):
         textbox.draw(context, 0, y, context.width, height)
 
 class ItemListTitlebar(widgetset.Background):
-    """Titlebar for feeds, playlists and static tabs that display items.  
+    """Titlebar for feeds, playlists and static tabs that display items.
 
     signals:
-      search-changed (self, search_text) -- The value in the search box 
+      search-changed (self, search_text) -- The value in the search box
           changed and the items listed should be filtered
     """
     def __init__(self, title, icon):
@@ -127,7 +127,7 @@ class ChannelTitlebar(ItemListTitlebar):
     """Titlebar for a channel
 
     signals:
-      save-search (self, search_text) -- The current search should be saved 
+      save-search (self, search_text) -- The current search should be saved
           as a search channel.
     """
 
@@ -154,7 +154,7 @@ class ChannelTitlebar(ItemListTitlebar):
 
 class SearchListTitlebar(ItemListTitlebar):
     """Titlebar for the search page.
-    
+
     signals:
       search(self, engine_name search_text) -- The user is requesting a new
           search.
@@ -249,8 +249,8 @@ class HideableSection(widgetutil.HideableWidget):
         self.expander.set_label(hbox)
 
 class SearchToolbar(widgetutil.HideableWidget):
-    """Toolbar for the search page.  
-    
+    """Toolbar for the search page.
+
     It's a hidable widget that contains the save search button.
 
     signals:
@@ -269,8 +269,9 @@ class SearchToolbar(widgetutil.HideableWidget):
     def _on_save_clicked(self, button):
         self.emit('save-search')
 
-class DownloadStaticToolbar(widgetset.HBox):
-    """Widget that shows free space and pause/resume/... buttons for downloads.
+class DownloadToolbar(widgetset.VBox):
+    """Widget that shows free space, pause/resume/... buttons for downloads,
+    and other data.
 
     signals:
 
@@ -280,12 +281,14 @@ class DownloadStaticToolbar(widgetset.HBox):
     """
 
     def __init__(self):
-        widgetset.HBox.__init__(self, spacing=10)
+        widgetset.VBox.__init__(self, spacing=5)
+
+        h = widgetset.HBox(spacing=10)
 
         self._free_disk_label = widgetset.Label("")
         self._free_disk_label.set_bold(True)
 
-        self.pack_start(widgetutil.align_left(self._free_disk_label,
+        h.pack_start(widgetutil.align_left(self._free_disk_label,
             top_pad=5, left_pad=10), expand=True)
 
         self.create_signal('pause-all')
@@ -296,22 +299,42 @@ class DownloadStaticToolbar(widgetset.HBox):
         pause_button.set_size(widgetconst.SIZE_SMALL)
         pause_button.set_color(style.TOOLBAR_GRAY)
         pause_button.connect('clicked', self._on_pause_button_clicked)
-        self.pack_start(widgetutil.align_right(pause_button, top_pad=5,
+        h.pack_start(widgetutil.align_right(pause_button, top_pad=5,
             bottom_pad=5), expand=True)
 
         resume_button = widgetset.Button(_('Resume All'), style='smooth')
         resume_button.set_size(widgetconst.SIZE_SMALL)
         resume_button.set_color(style.TOOLBAR_GRAY)
         resume_button.connect('clicked', self._on_resume_button_clicked)
-        self.pack_start(widgetutil.align_middle(resume_button, top_pad=5,
+        h.pack_start(widgetutil.align_middle(resume_button, top_pad=5,
             bottom_pad=5))
 
         cancel_button = widgetset.Button(_('Cancel All'), style='smooth')
         cancel_button.set_size(widgetconst.SIZE_SMALL)
         cancel_button.set_color(style.TOOLBAR_GRAY)
         cancel_button.connect('clicked', self._on_cancel_button_clicked)
-        self.pack_start(widgetutil.align_middle(cancel_button, top_pad=5,
+        h.pack_start(widgetutil.align_middle(cancel_button, top_pad=5,
             bottom_pad=5, right_pad=16))
+
+        self.pack_start(h)
+
+        h = widgetset.HBox(spacing=10)
+
+        first_label = widgetset.Label("")
+        first_label.set_bold(True)
+        self._first_label = first_label
+
+        h.pack_start(widgetutil.align_left(self._first_label,
+            left_pad=10, bottom_pad=5))
+
+        second_label = widgetset.Label("")
+        second_label.set_bold(True)
+        self._second_label = second_label
+
+        h.pack_start(widgetutil.align_left(self._second_label,
+            bottom_pad=5))
+
+        self.pack_start(h)
 
     def update_free_space(self, bytes):
         text = _("%(amount)s free on disk", {"amount": displaytext.size(bytes)})
@@ -325,27 +348,6 @@ class DownloadStaticToolbar(widgetset.HBox):
 
     def _on_cancel_button_clicked(self, widget):
         self.emit('cancel-all')
-
-class DownloadDataToolbar(widgetset.HBox):
-    """Widget that shows the info.
-    """
-
-    def __init__(self):
-        widgetset.HBox.__init__(self, spacing=10)
-
-        first_label = widgetset.Label("")
-        first_label.set_bold(True)
-        self._first_label = first_label
-
-        self.pack_start(widgetutil.align_left(self._first_label, 
-            left_pad=10, bottom_pad=5))
-
-        second_label = widgetset.Label("")
-        second_label.set_bold(True)
-        self._second_label = second_label
-
-        self.pack_start(widgetutil.align_left(self._second_label, 
-            bottom_pad=5))
 
     def update_rates(self, down_bps, up_bps):
         text_up = text_down = ''
@@ -369,7 +371,7 @@ class DownloadDataToolbar(widgetset.HBox):
 
 class FeedToolbar(widgetset.Background):
     """Toolbar that appears below the title in a feed.
-    
+
     signals:
        show-settings (widget) -- The show settings button was pressed
        send-to-friend (widget) -- The "send to a friend" button was pressed
@@ -392,7 +394,7 @@ class FeedToolbar(widgetset.Background):
                 (_("all"), _("new"), _("off")))
         self.autdownload_menu.set_size(widgetconst.SIZE_SMALL)
         self.autdownload_menu.connect('changed', self._on_autodownload_changed)
-        
+
         send_button = widgetset.Button(_("Send to a friend"), style='smooth')
         send_button.set_size(widgetconst.SIZE_SMALL)
         send_button.set_color(style.TOOLBAR_GRAY)
@@ -437,10 +439,10 @@ class FeedToolbar(widgetset.Background):
 
 class SortBar(widgetset.Background):
     """Bar used to sort items.
-    
+
     Signals:
 
-    sort-changed (widget, sort_key, ascending) -- User changed the sort.  
+    sort-changed (widget, sort_key, ascending) -- User changed the sort.
        sort_key will be one of 'name', 'date', 'size' or 'length'
     """
 
