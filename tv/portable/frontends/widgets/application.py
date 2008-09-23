@@ -85,7 +85,8 @@ class Application:
         app.search_manager = search.SearchManager()
         app.inline_search_memory = search.InlineSearchMemory()
         app.tab_list_manager = tablistmanager.TabListManager()
-        self.window = MiroWindow(_("Miro"), self.get_main_window_dimensions())
+        self.window = MiroWindow(config.get(prefs.LONG_APP_NAME),
+                                 self.get_main_window_dimensions())
 
         # FIXME - first-time startup somewhere around here
 
