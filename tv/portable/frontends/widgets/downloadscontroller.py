@@ -116,7 +116,21 @@ class DownloadsController(itemlistcontroller.ItemListController):
     def _expand_lists_initially(self):
         self.indydownloads_section.show()
         self.downloads_section.show()
-        self.seeding_section.show()
+
+        if len(self.indydownloads_view.item_list.get_items()) > 0:
+            self.indydownloads_section.show()
+        else:
+            self.indydownloads_section.hide()
+
+        if len(self.downloads_view.item_list.get_items()) > 0:
+            self.downloads_section.show()
+        else:
+            self.downloads_section.hide()
+
+        if len(self.seeding_view.item_list.get_items()) > 0:
+            self.seeding_section.show()
+        else:
+            self.seeding_section.hide()
 
         self.indydownloads_section.expand()
         self.downloads_section.expand()
@@ -127,3 +141,18 @@ class DownloadsController(itemlistcontroller.ItemListController):
 
     def on_items_changed(self):
         self.toolbar.update_rates(downloader.totalDownRate, downloader.totalUpRate)
+
+        if len(self.indydownloads_view.item_list.get_items()) > 0:
+            self.indydownloads_section.show()
+        else:
+            self.indydownloads_section.hide()
+
+        if len(self.downloads_view.item_list.get_items()) > 0:
+            self.downloads_section.show()
+        else:
+            self.downloads_section.hide()
+
+        if len(self.seeding_view.item_list.get_items()) > 0:
+            self.seeding_section.show()
+        else:
+            self.seeding_section.hide()
