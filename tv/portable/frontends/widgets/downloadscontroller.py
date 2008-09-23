@@ -40,8 +40,6 @@ from miro import messages
 from miro import downloader
 from miro.plat import resources
 
-from miro.plat.utils import get_available_bytes_for_movies
-
 class DownloadsController(itemlistcontroller.ItemListController):
     def __init__(self):
         itemlistcontroller.ItemListController.__init__(self, 'downloads', None)
@@ -99,7 +97,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
         self.set_search(search_text)
 
     def _update_free_space(self):
-        self.toolbar.update_free_space(get_available_bytes_for_movies())
+        self.toolbar.update_free_space()
 
     def _on_pause_all(self, widget):
         messages.PauseAllDownloads().send_to_backend()

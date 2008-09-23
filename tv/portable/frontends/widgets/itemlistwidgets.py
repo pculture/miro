@@ -39,6 +39,8 @@ on.  It's the job of ItemListController subclasses to handle the logic
 involved.
 """
 
+from miro import config
+from miro import prefs
 from miro import displaytext
 from miro import searchengines
 from miro.gtcache import gettext as _
@@ -46,6 +48,7 @@ from miro.frontends.widgets import style
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
+from miro.plat.utils import get_available_bytes_for_movies
 
 class TitleDrawer(widgetset.DrawingArea):
     """Draws the title of an item list."""
@@ -336,8 +339,29 @@ class DownloadToolbar(widgetset.VBox):
 
         self.pack_start(h)
 
-    def update_free_space(self, bytes):
-        text = _("%(amount)s free on disk", {"amount": displaytext.size(bytes)})
+        config.add_change_callback(self.handle_config_change)
+
+    def handle_config_change(self, key, value):
+        if key == prefs.PRESERVE_X_GB_FREE.key or key == prefs.PRESERVE_DISK_SPACE.key:
+            self.update_free_space()
+
+    def update_free_space(self):
+        """Updates the free space text on the downloads tab.
+
+        amount -- the total number of bytes free.
+        """
+        amount = get_available_bytes_for_movies()
+        if config.get(prefs.PRESERVE_DISK_SPACE):
+            available = config.get(prefs.PRESERVE_X_GB_FREE) * (1024 * 1024 * 1024)
+            available = amount - available
+            text = _(
+                "%(amount)s free on disk (%(available)s available for downloads)",
+                {"amount": displaytext.size(amount),
+                 "available": displaytext.size(available)}
+            )
+        else:
+            text = _("%(amount)s free on disk",
+                     {"amount": displaytext.size(amount)})
         self._free_disk_label.set_text(text)
 
     def _on_pause_button_clicked(self, widget):
