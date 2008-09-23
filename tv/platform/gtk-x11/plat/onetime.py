@@ -56,7 +56,7 @@ else:
     REQUEST_NAME_REPLY_EXISTS = 3
     REQUEST_NAME_REPLY_ALREADY_OWNER = 4
     NAME_FLAG_DO_NOT_QUEUE = 4
-    
+
     class BusNameFlags(object):
         """A base class for exporting your own Named Services across the Bus
         """
@@ -67,11 +67,11 @@ else:
             # get default bus
             if bus == None:
                 bus = dbus.Bus()
-    
+
             # otherwise register the name
             conn = bus.get_connection()
             retval = dbus.dbus_bindings.bus_request_name(conn, name, flags)
-    
+
             # TODO: more intelligent tracking of bus name states?
             if retval == REQUEST_NAME_REPLY_PRIMARY_OWNER:
                 pass
@@ -88,37 +88,37 @@ else:
                 pass
             else:
                 raise RuntimeError('requesting bus name %s returned unexpected value %s' % (name, retval))
-    
+
             # and create the object
             bus_name = object.__new__(cls)
             bus_name._bus = bus
             bus_name._name = name
             bus_name._conn = conn
-    
+
             return bus_name
-    
+
         # do nothing because this is called whether or not the bus name
         # object was retrieved from the cache or created new
         def __init__(self, *args, **keywords):
             pass
-    
+
         # we can delete the low-level name here because these objects
         # are guaranteed to exist only once for each bus name
         def __del__(self):
             dbus.dbus_bindings.bus_release_name(self._bus.get_connection(), self._name)
-    
+
         def get_bus(self):
             """Get the Bus this Service is on"""
             return self._bus
-    
+
         def get_name(self):
             """Get the name of this service"""
             return self._name
-    
-        def get_connection(self): 
-            """Get the connection for this service""" 
-            return self._conn 
-    
+
+        def get_connection(self):
+            """Get the connection for this service"""
+            return self._conn
+
         def __repr__(self):
             return '<dbus.service.BusName %s on %r at %#x>' % (self._name, self._bus, id(self))
         __str__ = __repr__
@@ -131,7 +131,8 @@ class OneTime(dbus.service.Object):
     def __init__(self):
         bus = dbus.SessionBus()
         bus_name = BusName('org.participatoryculture.dtv.onetime', bus=bus, do_not_queue=True)
-        dbus.service.Object.__init__(self, bus_name, '/org/participatoryculture/dtv/OneTime')
+        dbus.service.Object.__init__(self, bus_name=bus_name,
+                object_path='/org/participatoryculture/dtv/OneTime')
 
     @dbus.service.method('org.participatoryculture.dtv.OneTimeIface')
     def handle_args(self, args):
