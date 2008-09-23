@@ -55,12 +55,10 @@ from os.path import samefile
 
 def get_available_bytes_for_movies():
     dir_ = config.get(prefs.MOVIES_DIRECTORY)
-    # Create the download directory if it doesn't already exist.
-    try:
-        os.makedirs(dir_)
-    except:
-        pass
-    
+
+    if not os.path.exists(dir_):
+        return 0
+
     statinfo = os.statvfs(dir_)
     return statinfo.f_frsize * statinfo.f_bavail
 
@@ -77,7 +75,7 @@ def confirmMainThread():
         print "UI function called from thread %s" % threading.currentThread()
         traceback.print_stack()
 
-# Gettext understands *NIX locales, so we don't have to do anything
+# gettext understands *NIX locales, so we don't have to do anything
 def initializeLocale():
     pass
 
@@ -103,7 +101,7 @@ def setup_logging(inDownloader=False):
         else:
             level = logging.WARN
         console.setLevel(level)
-    
+
         formatter = logging.Formatter('%(levelname)-8s %(message)s')
         console.setFormatter(formatter)
 
@@ -111,8 +109,9 @@ def setup_logging(inDownloader=False):
 
 @returnsBinary
 def unicodeToFilename(filename, path=None):
-    """Takes in a unicode string representation of a filename and creates a
-    valid byte representation of it attempting to preserve extensions
+    """Takes in a unicode string representation of a filename (NOT a file
+    path) and creates a valid byte representation of it attempting to preserve
+    extensions.
 
     Note: This is not guaranteed to give the same results every time it is run,
     nor is it garanteed to reverse the results of filenameToUnicode.
@@ -136,15 +135,17 @@ def unicodeToFilename(filename, path=None):
     # Keep this a little shorter than the max length, so we can run
     # nextFilename
     max_len = os.statvfs(path)[statvfs.F_NAMEMAX]-5
-    
+
     for mem in ("/", "\000", "\\", ":", "*", "?", "\"", "<", ">", "|", "&"):
         filename = filename.replace(mem, "_")
 
     def encodef(filename):
         try:
             return filename.encode(locale.getpreferredencoding())
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
-            return filename.encode('ascii','replace')
+            return filename.encode('ascii', 'replace')
 
     new_filename = encodef(filename)
 
@@ -157,7 +158,7 @@ def unicodeToFilename(filename, path=None):
 @returnsUnicode
 def filenameToUnicode(filename, path=None):
     """Given a filename in raw bytes, return the unicode representation
-    
+
     Note: This is not guaranteed to give the same results every time it is run,
     not is it garanteed to reverse the results of unicodeToFilename.
     """
@@ -166,8 +167,10 @@ def filenameToUnicode(filename, path=None):
     checkB(filename)
     try:
         return filename.decode(locale.getpreferredencoding())
+    except (SystemExit, KeyboardInterrupt):
+        raise
     except:
-        return filename.decode('ascii','replace')
+        return filename.decode('ascii', 'replace')
 
 # Takes filename given by the OS and turn it into a FilenameType
 def osFilenameToFilenameType(filename):
@@ -191,9 +194,11 @@ def makeURLSafe(s, safe='/'):
     else:
         try:
             return urllib.quote(s.encode(locale.getpreferredencoding()), safe=safe).decode('ascii')
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
-            return s.decode('ascii','replace')
-    
+            return s.decode('ascii', 'replace')
+
 # Undoes makeURLSafe (assuming it was passed a filenameType)
 @returnsBinary
 def unmakeURLSafe(s):
@@ -237,8 +242,10 @@ def killProcess(pid):
                 if not pidIsRunning(pid):
                     return
             os.kill(pid, signal.SIGKILL)
+        except (SystemExit, KeyboardInterrupt):
+            raise
         except:
-            logging.exception ("error killing download daemon")
+            logging.exception("error killing download daemon")
 
 def launchDownloadDaemon(oldpid, env):
     # Use UNIX style kill
@@ -252,7 +259,7 @@ def launchDownloadDaemon(oldpid, env):
     dl_daemon_path = os.path.join(miro_path, 'dl_daemon')
 
     # run the Miro_Downloader script
-    script = os.path.join(dl_daemon_path,  'Democracy_Downloader.py')
+    script = os.path.join(dl_daemon_path, 'Democracy_Downloader.py')
     os.spawnlpe(os.P_NOWAIT, "python", "python", script, environ)
 
 def exit(return_code):
