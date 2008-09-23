@@ -115,10 +115,13 @@ class GtkX11Application(Application):
             else:
                 self.window._window.unmaximize()
 
+
         if trayicon.trayicon_is_supported:
+            self.trayicon = trayicon.Trayicon(resources.sharePath("pixmaps/miro-24x24.png"), self)
             if config.get(options.SHOW_TRAYICON):
-                self.trayicon = trayicon.Trayicon(resources.sharePath("pixmaps/miro-24x24.png"), self)
                 self.trayicon.set_visible(True)
+            else:
+                self.trayicon.set_visible(False)
             config.add_change_callback(self.on_trayicon_pref_changed)
 
         self.window._window.set_icon_from_file(resources.sharePath('pixmaps/miro-128x128.png'))
