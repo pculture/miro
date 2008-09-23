@@ -86,12 +86,7 @@ def save(data):
 
 def get(descriptor):
     if descriptor == prefs.MOVIES_DIRECTORY:
-        path = os.path.join(MOVIES_DIRECTORY_PARENT, "Miro")
-        try:
-            os.makedirs(path)
-        except:
-            pass
-        return path
+        return os.path.join(MOVIES_DIRECTORY_PARENT, "Miro")
 
     elif descriptor == prefs.NON_VIDEO_DIRECTORY:
         return os.path.expanduser('~/Desktop')
