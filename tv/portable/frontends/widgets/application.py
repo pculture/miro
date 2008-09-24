@@ -47,6 +47,7 @@ from miro.gtcache import ngettext
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import newsearchchannel
 from miro.frontends.widgets import diagnostics
+from miro.frontends.widgets import crashdialog
 from miro.frontends.widgets import itemlistcontroller
 from miro.frontends.widgets import prefpanel
 from miro.frontends.widgets import displays
@@ -755,23 +756,14 @@ class Application:
         print "up to date!"
 
     def handle_error(self, obj, report):
-        # FIXME - I don't want to write the code in dialogs.py yet
-        print 'INTERNAL ERROR:'
-        print report
-        return
+        call_on_ui_thread(self.__handle_error, obj, report)
+
+    def __handle_error(self, obj, report):
         if self.ignoreErrors:
             logging.warn("Ignoring Error:\n%s", report)
             return
 
-        def callback(dialog):
-            if dialog.choice == dialogs.BUTTON_IGNORE:
-                self.ignoreErrors = True
-            else:
-                app.controller.sendBugReport(report, dialog.textbox_value,
-                        dialog.checkbox_value)
-
-        chkboxdialog = dialogs.CheckboxTextboxDialog(_("Internal Error"), _("Miro has encountered an internal error. You can help us track down this problem and fix it by submitting an error report."), _("Include entire program database including all video and channel metadata with crash report"), False, _("Describe what you were doing that caused this error"), dialogs.BUTTON_SUBMIT_REPORT, dialogs.BUTTON_IGNORE)
-        chkboxdialog.run(callback)
+        crashdialog.run_dialog(obj, report)
 
     def on_backend_shutdown(self, obj):
         logging.info('Shutting down...')

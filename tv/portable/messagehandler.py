@@ -936,3 +936,6 @@ class BackendMessageHandler(messages.MessageHandler):
                         guide.ChannelGuide(url, [u'*'])
             else:
                 raise AssertionError("Unknown subscribe type")
+
+    def handle_report_crash(self, message):
+        app.controller.sendBugReport(message.report, message.text, message.send_report)

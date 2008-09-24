@@ -528,6 +528,14 @@ class SubscriptionLinkClicked(BackendMessage):
     def __init__(self, url):
         self.url = url
 
+class ReportCrash(BackendMessage):
+    """Sends a crash report.
+    """
+    def __init__(self, report, text, send_report):
+        self.report = report
+        self.text = text
+        self.send_report = send_report
+
 # Frontend Messages
 class ChannelInfo(object):
     """Tracks the state of a channel
