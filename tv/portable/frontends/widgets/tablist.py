@@ -389,7 +389,7 @@ class FeedList(NestedTabList):
         self.view.set_drag_dest(FeedListDropHandler(self))
 
     def init_info(self, info):
-        info.icon = imagepool.get_surface(info.tab_icon, size=(16, 16))
+        info.icon = imagepool.get_surface(info.tab_icon, size=(20, 20))
 
     def get_feeds(self):
         infos = [self.view.model[i][0] for i in self.iter_map.values()]
