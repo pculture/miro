@@ -478,7 +478,7 @@ class TabListBox(widgetset.Scroller):
         return vbox
 
     def build_header(self, text):
-        hsep = separator.HThinSeparator(style.TAB_LIST_SEPARATOR_COLOR)
+        # hsep = separator.HThinSeparator(style.TAB_LIST_SEPARATOR_COLOR)
 
         label = widgetset.Label(text)
         label.set_bold(True)
@@ -486,7 +486,7 @@ class TabListBox(widgetset.Scroller):
         label.set_color(style.TAB_LIST_HEADER_COLOR)
 
         vbox = widgetset.VBox()
-        vbox.pack_start(widgetutil.pad(hsep, top=5, bottom=10))
-        vbox.pack_start(widgetutil.align_left(label, 0, 5, self.header_left_pad))
+        vbox.pack_start(widgetutil.align_left(label, 
+                top_pad=5, bottom_pad=5, left_pad=self.header_left_pad))
 
         return vbox
