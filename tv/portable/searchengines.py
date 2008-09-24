@@ -140,7 +140,9 @@ def create_engines():
 @returnsUnicode
 def get_request_url(engine_name, query, filter_adult_contents=True, limit=50):
     if query == "LET'S TEST DTV'S CRASH REPORTER TODAY":
+        # FIXME - should change this to a real exception rather than a NameError
         someVariable = intentionallyUndefinedVariableToTestCrashReporter
+        return u""
 
     if query == "LET'S DEBUG DTV: DUMP DATABASE":
         from miro import database
