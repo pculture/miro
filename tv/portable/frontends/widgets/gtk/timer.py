@@ -34,7 +34,7 @@ import gobject
 from miro import trapcall
 
 def timeout_wrapper(func, *args, **kwargs):
-    trapcall.trapCall('GTK Timeout', func, *args, **kwargs)
+    trapcall.trap_call('GTK Timeout', func, *args, **kwargs)
     return False
 
 def add(delay, func, *args, **kwargs):

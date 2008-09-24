@@ -74,8 +74,8 @@ def get_nice_stack():
             stack = stack[:i+1]
             break
 
-    # remove trapCall calls
-    stack = [i for i in stack if 'trapCall' in i]
+    # remove trap_call calls
+    stack = [i for i in stack if 'trap_call' in i]
     return stack
 
 _config_line_re = re.compile(r"^([^ ]+) *= *([^\r\n]*)[\r\n]*$")

@@ -33,12 +33,11 @@ from miro.clock import clock
 import logging
 from miro import signals
 
-def trapCall(when, function, *args, **kwargs):
+def trap_call(when, function, *args, **kwargs):
     """Make a call to a function, but trap any exceptions and convert them int
     error signals.  Return True if the function successfully completed, False
     if it threw an exception
     """
-
     try:
         function(*args, **kwargs)
         return True
@@ -49,24 +48,23 @@ def trapCall(when, function, *args, **kwargs):
         return False
 
 # Turn the next flag on to track the cumulative time for each when argument to
-# timeTrapCall().  Don't do this for production builds though!  Since we never
+# time_trap_call().  Don't do this for production builds though!  Since we never
 # clean up the entries in the cumulative dict, turning this on amounts to a
 # memory leak.
 TRACK_CUMULATIVE = False 
 cumulative = {}
 cancel = False
 
-def timeTrapCall(when, function, *args, **kwargs):
+def time_trap_call(when, function, *args, **kwargs):
     global cancel
     cancel = False
     start = clock()
-    retval = trapCall (when, function, *args, **kwargs)
+    retval = trap_call(when, function, *args, **kwargs)
     end = clock()
     if cancel:
         return retval
     if end-start > 1.0:
-        logging.timing ("WARNING: %s too slow (%.3f secs)",
-            when, end-start)
+        logging.timing("WARNING: %s too slow (%.3f secs)", when, end-start)
     if TRACK_CUMULATIVE:
         try:
             total = cumulative[when]
@@ -77,10 +75,8 @@ def timeTrapCall(when, function, *args, **kwargs):
         total += end - start
         cumulative[when] = total
         if total > 5.0:
-            logging.timing ("%s cumulative is too slow (%.3f secs)",
-                when, total)
+            logging.timing("%s cumulative is too slow (%.3f secs)", when, total)
             cumulative[when] = 0
         return retval
     cancel = True
     return retval
-

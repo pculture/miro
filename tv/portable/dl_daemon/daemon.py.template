@@ -177,7 +177,7 @@ class Daemon(ConnectionHandler):
             self.changeState('ready')
 
     def processCommand(self, comm):
-        trapcall.timeTrapCall("Running: %s" % (comm,), self.runCommand, comm)
+        trapcall.time_trap_call("Running: %s" % (comm,), self.runCommand, comm)
 
     def runCommand(self, comm):
         comm.setDaemon(self)

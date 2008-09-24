@@ -41,7 +41,7 @@ class Timeout(NSObject):
         return self
 
     def run_(self, info):
-        trapcall.trapCall('Timeout', self.func, *self.args, **self.kwargs)
+        trapcall.trap_call('Timeout', self.func, *self.args, **self.kwargs)
 
 def add(timeout, func, *args, **kwargs):
     timeout_obj = Timeout.alloc().initWithFunc_args_kwargs_(func, args, kwargs)

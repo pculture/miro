@@ -72,7 +72,7 @@ class DelayedCall(object):
         if not self.canceled:
             when = "While handling %s" % self.name
             start = clock()
-            trapcall.trapCall(when, self.function, *self.args, **self.kwargs)
+            trapcall.trap_call(when, self.function, *self.args, **self.kwargs)
             end = clock()
             if end-start > 0.5:
                 logging.timing("%s too slow (%.3f secs)",
@@ -307,7 +307,7 @@ class EventLoop(signals.SignalEmitter):
                     continue
                 when = "While talking to the network"
                 def callbackEvent():
-                    if not trapcall.trapCall(when, function):
+                    if not trapcall.trap_call(when, function):
                         del map[fd] 
                 yield callbackEvent
 
