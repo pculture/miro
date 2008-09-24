@@ -285,12 +285,12 @@ class DownloadToolbar(widgetset.VBox):
     """
 
     def __init__(self):
-        widgetset.VBox.__init__(self, spacing=5)
+        widgetset.VBox.__init__(self)
 
         h = widgetset.HBox(spacing=10)
 
         self._free_disk_label = widgetset.Label("")
-        self._free_disk_label.set_bold(True)
+        self._free_disk_label.set_size(widgetconst.SIZE_SMALL)
 
         h.pack_start(widgetutil.align_left(self._free_disk_label,
             top_pad=5, left_pad=10), expand=True)
@@ -321,13 +321,7 @@ class DownloadToolbar(widgetset.VBox):
         h.pack_start(widgetutil.align_middle(cancel_button, top_pad=5,
             bottom_pad=5))
 
-        lab = widgetset.Label("|")
-        lab.set_color((0.27, 0.27, 0.27))
-        lab.set_size(0.85)
-
-        h.pack_start(lab)
-
-        settings_button = widgetset.Button(_('Settings'), style='smooth')
+        settings_button = widgetset.Button(_('Download Settings'), style='smooth')
         settings_button.set_size(widgetconst.SIZE_SMALL)
         settings_button.set_color(style.TOOLBAR_GRAY)
         settings_button.connect('clicked', self._on_settings_button_clicked)
@@ -339,14 +333,14 @@ class DownloadToolbar(widgetset.VBox):
         h = widgetset.HBox(spacing=10)
 
         first_label = widgetset.Label("")
-        first_label.set_bold(True)
+        first_label.set_size(widgetconst.SIZE_SMALL)
         self._first_label = first_label
 
         h.pack_start(widgetutil.align_left(self._first_label,
             left_pad=10, bottom_pad=5))
 
         second_label = widgetset.Label("")
-        second_label.set_bold(True)
+        second_label.set_size(widgetconst.SIZE_SMALL)
         self._second_label = second_label
 
         h.pack_start(widgetutil.align_left(self._second_label,
