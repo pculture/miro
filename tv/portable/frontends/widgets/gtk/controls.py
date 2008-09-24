@@ -95,6 +95,15 @@ class SearchTextEntry(TextEntry):
     pass
 
 class VideoSearchTextEntry(SearchTextEntry):
+    def __init__(self):
+        SearchTextEntry.__init__(self)
+        self.wrapped_widget_connect('key-release-event', self.on_key_release)
+
+    def on_key_release(self, widget, event):
+        # FIXME - not sure if there's a better way to test for Return or not.
+        if gtk.gdk.keyval_name(event.keyval) == 'Return':
+            self.emit('validate')
+
     # TODO: implement the inline engines popup menu
     def selected_engine(self):
         return searchengines.get_last_engine()
