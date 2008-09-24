@@ -153,32 +153,10 @@ def query_revision(fn):
         url = url_match.group(1).strip()
         revision = revision_match.group(1).strip()
         return (url, revision)
-    except KeyboardInterrupt:
+    except (SystemExit, KeyboardInterrupt):
         raise
     except Exception, e:
         print "Exception thrown when querying revision: %s" % e
-
-def failed_exn(when, **kwargs):
-    """Shortcut for 'failed' with the exception flag.
-    """
-    failed(when, withExn=True, **kwargs)
-
-def failed(when, withExn=False, details=None):
-    """Puts up a dialog with debugging information encouraging the user to
-    file a ticket.  (Also print a call trace to stderr or whatever, which
-    hopefully will end up on the console or in a log.) 'when' should be
-    something like "when trying to play a video."  The user will see
-    it.
-
-    If 'withExn' is true, last-exception information will be printed to.
-
-    If 'detail' is true, it will be included in the report and the
-    the console/log, but not presented in the dialog box flavor text.
-    """
-    logging.warn("util.failed is deprecated.  Use system.signals.failed\n"
-            "stack:\n%s" % ''.join(traceback.format_stack()))
-    from miro import signals
-    signals.system.failed(when, withExn, details)
 
 class AutoflushingStream:
     """Converts a stream to an auto-flushing one.  It behaves in exactly the
