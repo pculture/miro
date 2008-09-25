@@ -34,37 +34,35 @@ from xml.dom import minidom
 from urllib import unquote_plus
 from miro.util import checkU
 
-# =============================================================================
-
-def tryScrapingURL(url, callback):
+def try_scraping_url(url, callback):
     checkU(url)
-    scrape = _getScrapeFunctionFor(url)
+    scrape = _get_scrape_function_for(url)
     if scrape is not None:
-        scrape(url, lambda x, y=u"video/x-flv": _actualURLCallback(url, callback, x, y))
+        scrape(url, lambda x, y=u"video/x-flv": _actual_url_callback(url, callback, x, y))
     else:
         callback(url)
     
 # =============================================================================
 
 # The callback is wrapped in this for flv videos
-def _actualURLCallback(url, callback, newURL, contentType):
+def _actual_url_callback(url, callback, newURL, contentType):
     if newURL:
         checkU(newURL)
     callback(newURL, contentType=contentType)
 
-def _getScrapeFunctionFor(url):
+def _get_scrape_function_for(url):
     checkU(url)
     for scrapeInfo in scraperInfoMap:
         if re.compile(scrapeInfo['pattern']).match(url) is not None:
             return scrapeInfo['func']
     return None
 
-def _scrapeYouTubeURL(url, callback):
+def _scrape_youtube_url(url, callback):
     checkU(url)
-    httpclient.grabHeaders(url, lambda x: _youTubeCallback(x, callback),
-                           lambda x:_youTubeErrback(x,callback))
+    httpclient.grabHeaders(url, lambda x: _youtube_callback(x, callback),
+                           lambda x:_youtube_errback(x,callback))
 
-def _youTubeCallback(info, callback):
+def _youtube_callback(info, callback):
     redirected_url = info['redirected-url']
     try:
         components = urlparse.urlsplit(redirected_url)
@@ -72,15 +70,15 @@ def _youTubeCallback(info, callback):
         videoID = params['video_id'][0]
         t = params['t'][0]
         url = u"http://youtube.com/get_video.php?video_id=%s&t=%s&fmt=18" % (videoID, t)
-        httpclient.grabHeaders(url, lambda x: _youTubeCallback2(redirected_url, url, x, callback),
-                               lambda x: _youTubeErrback(x, callback))
+        httpclient.grabHeaders(url, lambda x: _youtube_callback2(redirected_url, url, x, callback),
+                               lambda x: _youtube_errback(x, callback))
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
         print "DTV: WARNING, unable to scrape You Tube Video URL: %s" % redirected_url
         callback(None)
 
-def _youTubeCallback2(redirected_url, hidef_url, info, callback):
+def _youtube_callback2(redirected_url, hidef_url, info, callback):
     status = info['status']
 
     # if the status is a 4xx, then we go for the lodef version
@@ -101,11 +99,11 @@ def _youTubeCallback2(redirected_url, hidef_url, info, callback):
 
     callback(hidef_url, u"video/mpeg4")
 
-def _youTubeErrback(err, callback):
+def _youtube_errback(err, callback):
     print "DTV: WARNING, network error scraping You Tube Video URL"
     callback(None)
 
-def _scrapeGoogleVideoURL(url, callback):
+def _scrape_google_video_url(url, callback):
     try:
         components = urlparse.urlsplit(url)
         params = cgi.parse_qs(components[3])
@@ -118,7 +116,7 @@ def _scrapeGoogleVideoURL(url, callback):
         print "DTV: WARNING, unable to scrape Google Video URL: %s" % url
         callback(None)
 
-def _scrapeLuLuVideoURL(url, callback):
+def _scrape_lulu_video_url(url, callback):
     try:
         components = urlparse.urlsplit(url)
         params = cgi.parse_qs(components[3])
@@ -130,7 +128,7 @@ def _scrapeLuLuVideoURL(url, callback):
         print "DTV: WARNING, unable to scrape LuLu.tv Video URL: %s" % url
         callback(None)
 
-def _scrapeVMixVideoURL(url, callback):
+def _scrape_vmix_video_url(url, callback):
     try:
         components = urlparse.urlsplit(url)
         params = cgi.parse_qs(components[3])
@@ -138,8 +136,8 @@ def _scrapeVMixVideoURL(url, callback):
         ID = params['id'][0]
         l = params['l'][0]
         url = u"http://sdstage01.vmix.com/videos.php?type=%s&id=%s&l=%s" % (t, ID, l)
-        httpclient.grabURL(url, lambda x: _scrapeVMixCallback(x, callback),
-                           lambda x: _scrapeVMixErrback(x, callback))
+        httpclient.grabURL(url, lambda x: _scrape_vmix_callback(x, callback),
+                           lambda x: _scrape_vmix_errback(x, callback))
 
     except (SystemExit, KeyboardInterrupt):
         raise
@@ -147,7 +145,7 @@ def _scrapeVMixVideoURL(url, callback):
         print "DTV: WARNING, unable to scrape VMix Video URL: %s" % url
         callback(None)
 
-def _scrapeVMixCallback(info, callback):
+def _scrape_vmix_callback(info, callback):
     try:
         doc = minidom.parseString(info['body'])
         url = doc.getElementsByTagName('file').item(0).firstChild.data.decode('ascii', 'replace')
@@ -158,15 +156,15 @@ def _scrapeVMixCallback(info, callback):
         print "DTV: WARNING, unsable to scrape XML for VMix Video URL %s" % info['redirected-url']
         callback(None)
 
-def _scrapeVMixErrback(err, callback):
+def _scrape_vmix_errback(err, callback):
     print "DTV: WARNING, network error scraping VMix Video URL"
     callback(None)
 
-def _scrapeDailyMotionVideoURL(url, callback):
-    httpclient.grabHeaders(url, lambda x: _scrapeDailyMotionCallback(x, callback),
-                           lambda x: _scrapeDailyMotionErrback(x, callback))
+def _scrape_dailymotion_video_url(url, callback):
+    httpclient.grabHeaders(url, lambda x: _scrape_dailymotion_callback(x, callback),
+                           lambda x: _scrape_dailymotion_errback(x, callback))
 
-def _scrapeDailyMotionCallback(info, callback):
+def _scrape_dailymotion_callback(info, callback):
     url = info['redirected-url']
     try:
         components = urlparse.urlsplit(url)
@@ -182,11 +180,11 @@ def _scrapeDailyMotionCallback(info, callback):
         print "DTV: WARNING, unable to scrape Daily Motion URL: %s" % url
         callback(None)
 
-def _scrapeDailyMotionErrback(info, callback):
+def _scrape_dailymotion_errback(info, callback):
     print "DTV: WARNING, network error scraping Daily Motion Video URL"
     callback(None)
 
-def _scrapeVSocialVideoURL(url, callback):
+def _scrape_vsocial_video_url(url, callback):
     try:
         components = urlparse.urlsplit(url)
         params = cgi.parse_qs(components[3])
@@ -199,27 +197,27 @@ def _scrapeVSocialVideoURL(url, callback):
         print "DTV: WARNING, unable to scrape VSocial URL: %s" % url
         callback(None)
 
-def _scrapeVeohTVVideoURL(url, callback):
+def _scrape_veohtv_video_url(url, callback):
     try:
         components = urlparse.urlsplit(url)
         params = cgi.parse_qs(components[3])
         t = params['type'][0]
         permalinkId = params['permalinkId'][0]
         url = u'http://www.veoh.com/movieList.html?type=%s&permalinkId=%s&numResults=45' % (t, permalinkId)
-        httpclient.grabURL(url, lambda x: _scrapeVeohTVCallback(x, callback),
-                           lambda x: _scrapeVeohTVErrback(x, callback))
+        httpclient.grabURL(url, lambda x: _scrape_veohtv_callback(x, callback),
+                           lambda x: _scrape_veohtv_errback(x, callback))
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
         print "DTV: WARNING, unable to scrape Veoh URL: %s" % url
         callback(None)
 
-def _scrapeVeohTVCallback(info, callback):
+def _scrape_veohtv_callback(info, callback):
     url = info['redirected-url']
     try:
         params = cgi.parse_qs(info['body'])
         fileHash = params['previewHashLow'][0]
-        if fileHash[-1] == ",":
+        if fileHash.endswith(","):
             fileHash = fileHash[:-1]
         url = u'http://ll-previews.veoh.com/previews/get.jsp?fileHash=%s' % fileHash
         callback(url)
@@ -229,15 +227,15 @@ def _scrapeVeohTVCallback(info, callback):
         print "DTV: WARNING, unable to scrape Veoh URL data: %s" % url
         callback(None)
 
-def _scrapeVeohTVErrback(err, callback):
+def _scrape_veohtv_errback(err, callback):
     print "DTV: WARNING, network error scraping Veoh TV Video URL"
     callback(None)
 
-def _scrapeBreakVideoURL(url, callback):
-    httpclient.grabHeaders(url, lambda x: _scrapeBreakCallback(x, callback),
-                           lambda x: _scrapeBreakErrback(x, callback))
+def _scrape_break_video_url(url, callback):
+    httpclient.grabHeaders(url, lambda x: _scrape_break_callback(x, callback),
+                           lambda x: _scrape_break_errback(x, callback))
 
-def _scrapeBreakCallback(info, callback):
+def _scrape_break_callback(info, callback):
     url = info['redirected-url']
     try:
         components = urlparse.urlsplit(url)
@@ -250,24 +248,24 @@ def _scrapeBreakCallback(info, callback):
         print "DTV: WARNING, unable to scrape Break URL: %s" % url
         callback(None)
 
-def _scrapeBreakErrback(info, callback):
+def _scrape_break_errback(info, callback):
     print "DTV: WARNING, network error scraping Break Video URL"
     callback(None)
 
-def _scrapeGreenPeaceVideoURL(url, callback):
+def _scrape_green_peace_video_url(url, callback):
     print "DTV: Warning, unable to scrape Green peace Video URL %s" % url
     print callback(None)
 
 # =============================================================================
 
 scraperInfoMap = [
-    {'pattern': 'http://([^/]+\.)?youtube.com/(?!get_video(\.php)?)', 'func': _scrapeYouTubeURL},
-    {'pattern': 'http://video.google.com/googleplayer.swf', 'func': _scrapeGoogleVideoURL},
-    {'pattern': 'http://([^/]+\.)?lulu.tv/wp-content/flash_play/flvplayer', 'func': _scrapeLuLuVideoURL},
-    {'pattern': 'http://([^/]+\.)?vmix.com/flash/super_player.swf', 'func': _scrapeVMixVideoURL},
-    {'pattern': 'http://([^/]+\.)?dailymotion.com/swf', 'func': _scrapeDailyMotionVideoURL},
-    {'pattern': 'http://([^/]+\.)?vsocial.com/flash/vp.swf', 'func': _scrapeVSocialVideoURL},
-    {'pattern': 'http://([^/]+\.)?veoh.com/multiplayer.swf', 'func': _scrapeVeohTVVideoURL},
-    {'pattern': 'http://([^/]+\.)?greenpeaceweb.org/GreenpeaceTV1Col.swf', 'func': _scrapeGreenPeaceVideoURL},
-    {'pattern': 'http://([^/]+\.)?break.com/', 'func': _scrapeBreakVideoURL},
+    {'pattern': 'http://([^/]+\.)?youtube.com/(?!get_video(\.php)?)', 'func': _scrape_youtube_url},
+    {'pattern': 'http://video.google.com/googleplayer.swf', 'func': _scrape_google_video_url},
+    {'pattern': 'http://([^/]+\.)?lulu.tv/wp-content/flash_play/flvplayer', 'func': _scrape_lulu_video_url},
+    {'pattern': 'http://([^/]+\.)?vmix.com/flash/super_player.swf', 'func': _scrape_vmix_video_url},
+    {'pattern': 'http://([^/]+\.)?dailymotion.com/swf', 'func': _scrape_dailymotion_video_url},
+    {'pattern': 'http://([^/]+\.)?vsocial.com/flash/vp.swf', 'func': _scrape_vsocial_video_url},
+    {'pattern': 'http://([^/]+\.)?veoh.com/multiplayer.swf', 'func': _scrape_veohtv_video_url},
+    {'pattern': 'http://([^/]+\.)?greenpeaceweb.org/GreenpeaceTV1Col.swf', 'func': _scrape_green_peace_video_url},
+    {'pattern': 'http://([^/]+\.)?break.com/', 'func': _scrape_break_video_url},
 ]

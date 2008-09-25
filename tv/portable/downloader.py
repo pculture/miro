@@ -248,7 +248,7 @@ class RemoteDownloader(DDBObject):
     def runDownloader(self):
         """This is the actual download thread.
         """
-        flashscraper.tryScrapingURL(self.url, self._runDownloader)
+        flashscraper.try_scraping_url(self.url, self._runDownloader)
 
     def _runDownloader(self, url, contentType = None):
         if not self.idExists():
