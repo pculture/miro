@@ -37,15 +37,9 @@ from miro.gtcache import gettext as _
 
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
-from miro.frontends.widgets import widgetconst
 from miro.dialogs import BUTTON_IGNORE, BUTTON_SUBMIT_REPORT
 
-from miro import app
-from miro import config
-from miro import prefs
-from miro import util
-
-from miro.plat.utils import get_available_bytes_for_movies
+IGNORE_ERRORS = -1
 
 def run_dialog(obj, report):
     window = widgetset.Dialog(_("Internal Error"))
@@ -80,6 +74,8 @@ def run_dialog(obj, report):
             ret = window.run()
             if ret == 0:
                 messages.ReportCrash(report, text.get_text(), cbx.get_checked()).send_to_backend()
+            else:
+                return IGNORE_ERRORS
         except (SystemExit, KeyboardInterrupt):
             raise
         except:

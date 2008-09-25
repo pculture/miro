@@ -63,7 +63,7 @@ from miro.plat.frontends.widgets.widgetset import Rect
 class Application:
     def __init__(self):
         app.widgetapp = self
-        self.ignoreErrors = False
+        self.ignore_errors = False
         self.message_handler = WidgetsMessageHandler()
         self.default_guide_info = None
         self.window = None
@@ -759,11 +759,13 @@ class Application:
         call_on_ui_thread(self.__handle_error, obj, report)
 
     def __handle_error(self, obj, report):
-        if self.ignoreErrors:
+        if self.ignore_errors:
             logging.warn("Ignoring Error:\n%s", report)
             return
 
-        crashdialog.run_dialog(obj, report)
+        ret = crashdialog.run_dialog(obj, report)
+        if ret == crashdialog.IGNORE_ERRORS:
+            self.ignore_errors = True
 
     def on_backend_shutdown(self, obj):
         logging.info('Shutting down...')
