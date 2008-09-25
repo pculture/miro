@@ -41,6 +41,7 @@ from miro.plat.utils import unicodeToFilename, unmakeURLSafe
 from miro.fileutil import expand_filename
 
 URIPattern = re.compile(r'^([^?]*/)?([^/?]*)/*(\?(.*))?$')
+
 # filename limits this is mostly for windows where we have a 255 character
 # limit on entire pathname
 MAX_FILENAME_LENGTH = 100 
@@ -100,7 +101,7 @@ def parseURL(url, split_path=False):
     path = path.replace('|', ':') 
     # Windows drive names are often specified as "C|\foo\bar"
 
-    if path == '' or path[0] != '/':
+    if path == '' or path.startswith('/'):
         path = '/' + path
     elif re.match(r'/[a-zA-Z]:', path):
         # Fix "/C:/foo" paths
@@ -215,7 +216,7 @@ def saveData(target, suggested_basename, data):
     except:
         pass
 
-    filename = os.path.join (target, suggested_basename)
+    filename = os.path.join(target, suggested_basename)
 
     try:
         # Write to a temp file.
@@ -252,4 +253,3 @@ def filterDirectoryName(name):
     into platform specific pathname limitations.
     """
     return re.sub(r'[^a-zA-Z0-9]', '-', name)
-
