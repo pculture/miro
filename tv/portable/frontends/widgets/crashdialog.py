@@ -61,7 +61,7 @@ def run_dialog(obj, report):
             vbox.pack_start(widgetutil.align_left(lab))
 
             cbx = widgetset.Checkbox(_(
-                "Include entire program database including all video and\n"
+                "Include entire program database including all video and "
                 "channel metadata with crash report"
             ))
             vbox.pack_start(widgetutil.align_left(cbx))
