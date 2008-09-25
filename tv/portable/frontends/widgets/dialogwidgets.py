@@ -105,22 +105,35 @@ class ControlGrid(object):
             line.add_to_table(table, i, spacing)
         return table
 
-class LabelWithNote(widgetset.VBox):
-    """Object that displays a label with a note under it.  The baseline for
-    will be the baseline of the label on top.
+class ControlList(widgetset.VBox):
+    """VBox containing controls.  The baseline for this widget is the baseline
+    for the top control.
     """
-    def __init__(self, label_text, note_text):
-        self.label = widgetset.Label(label_text)
-        self.note = widgetset.Label(note_text)
-        self.note.set_size(widgetconst.SIZE_SMALL)
-        widgetset.VBox.__init__(self)
-        self.pack_start(self.label)
-        self.pack_start(self.note)
+    def __init__(self, top_control, spacing=0):
+        widgetset.VBox.__init__(self, spacing)
+        self.pack_start(top_control)
+        self.top_control = top_control
 
     def baseline(self):
         bottom_extra = (self.get_size_request()[1] -
-                self.label.get_size_request()[1])
-        return self.label.baseline() + bottom_extra
+                self.top_control.get_size_request()[1])
+        return self.top_control.baseline() + bottom_extra
+
+def label_with_note(label_text, note_text):
+    """Return a ControlList that displays a label with a note under it.  """
+    label = widgetset.Label(label_text)
+    note = widgetset.Label(note_text)
+    note.set_size(widgetconst.SIZE_SMALL)
+    list = ControlList(label)
+    list.pack_start(note)
+    return list
+
+def radio_button_list(*radio_buttons):
+    """List a radio buttons.  """
+    list = ControlList(radio_buttons[0])
+    for radio in radio_buttons[1:]:
+        list.pack_start(radio)
+    return list
 
 def heading(text):
     label = widgetset.Label(text)

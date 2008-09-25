@@ -221,6 +221,12 @@ def add_panel(name, title, panel_builder_function, image_name='wimages/pref-tab-
 # -----------------------
 # Panel builder functions
 
+def pack_extras(vbox, panel):
+    extras = prefpanelset.get_platform_specific(panel)
+    if extras:
+        vbox.pack_start(widgetutil.pad(extras[0], top=12))
+        [vbox.pack_start(mem) for mem in extras[1:]]
+
 def _build_general_panel():
     """Build's the General tab and returns it."""
     v = widgetset.VBox()
@@ -233,9 +239,7 @@ def _build_general_panel():
     attach_boolean(warn_if_downloading_cbx, prefs.WARN_IF_DOWNLOADING_ON_QUIT)
     v.pack_start(warn_if_downloading_cbx)
 
-    extras = prefpanelset.get_platform_specific("general")
-    if extras:
-        [v.pack_start(mem) for mem in extras]
+    pack_extras(v, "general")
 
     return v
 
@@ -288,7 +292,7 @@ def _build_channels_panel():
     grid.pack(ad_option_menu)
     grid.end_line()
 
-    grid.pack(dialogwidgets.LabelWithNote(
+    grid.pack(dialogwidgets.label_with_note(
         _("Remember this many old items:"),
         _("(in addition to the current contents)")), align)
     grid.pack(max_option_menu)
@@ -454,9 +458,7 @@ def _build_playback_panel():
     v.pack_start(widgetutil.align_left(play_rb))
     v.pack_start(widgetutil.align_left(stop_rb))
 
-    extras = prefpanelset.get_platform_specific("playback")
-    if extras:
-        [v.pack_start(mem) for mem in extras]
+    pack_extras(v, "playback")
 
     return v
 

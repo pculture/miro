@@ -36,8 +36,9 @@ OSX_LAYOUT = False
 
 from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import widgetset
+from miro.frontends.widgets import dialogwidgets
 from miro.frontends.widgets.widgetutil import build_hbox, align_left
-from miro.frontends.widgets.prefpanel import attach_radio, attach_combo, note_label
+from miro.frontends.widgets.prefpanel import attach_boolean, attach_radio, attach_combo
 
 from miro.plat import options 
 
@@ -45,17 +46,9 @@ from miro import config
 
 def _general_panel():
     extras = []
-    lab = widgetset.Label(_("Tray icon:"))
-
-    rbg = widgetset.RadioButtonGroup()
-
-    show_rad = widgetset.RadioButton(_("show"), rbg)
-    hide_rad = widgetset.RadioButton(_("hide"), rbg)
-
-    attach_radio([(show_rad, True), (hide_rad, False)], options.SHOW_TRAYICON)
-
-    extras.append(build_hbox((lab, show_rad, hide_rad)))
-
+    cbx = widgetset.Checkbox(_("Enable tray icon"))
+    attach_boolean(cbx, options.SHOW_TRAYICON)
+    extras.append(cbx)
     return extras
 
 def _playback_panel():
@@ -65,33 +58,40 @@ def _playback_panel():
     lab.set_bold(True)
     extras.append(align_left(lab))
 
-    note = note_label(_("You must restart Miro for renderer changes to take effect."))
-    extras.append(note)
+    note = dialogwidgets.note(_("You must restart Miro for renderer changes to take effect."))
+    extras.append(align_left(note, bottom_pad=12))
 
-
-    lab = widgetset.Label(_("Use this renderer to play videos:"))
     rbg = widgetset.RadioButtonGroup()
     gstreamer_radio = widgetset.RadioButton("gstreamer", rbg)
     xine_radio = widgetset.RadioButton("xine", rbg)
     attach_radio([(gstreamer_radio, "gstreamer"), (xine_radio, "xine")],
                  options.USE_RENDERER)
 
-    extras.append(build_hbox((lab, gstreamer_radio, xine_radio)))
+    grid = dialogwidgets.ControlGrid()
+    grid.pack_label(_("Video renderer:"), grid.ALIGN_RIGHT)
+    grid.pack(dialogwidgets.radio_button_list(gstreamer_radio, xine_radio))
 
-    xine_vbox = widgetset.VBox()
-    audio_lab = widgetset.Label(_("Use this for video when playing audio:"))
-    audio_options = ["none", "goom", "oscope"]
-    audio_combo = widgetset.OptionMenu(audio_options)
-    attach_combo(audio_combo, options.XINE_VIZ, audio_options)
-    xine_vbox.pack_start(build_hbox((audio_lab, audio_combo)))
+    rbg = widgetset.RadioButtonGroup()
+    none_radio = widgetset.RadioButton("None", rbg)
+    goom_radio = widgetset.RadioButton("goom", rbg)
+    oscope_radio = widgetset.RadioButton("oscope", rbg)
+    attach_radio([(none_radio, "none"), (goom_radio, "goom"), 
+        (oscope_radio, "oscope")], options.XINE_VIZ)
+    grid.end_line(spacing=12)
 
-    extras.append(xine_vbox)
+    grid.pack_label(_("Use this for video when playing audio:"),
+            grid.ALIGN_RIGHT)
+    xine_radiolist = dialogwidgets.radio_button_list(none_radio, goom_radio,
+            oscope_radio)
+    grid.pack(xine_radiolist)
+
+    extras.append(align_left(grid.make_table()))
 
     def handle_clicked(widget):
         if widget is gstreamer_radio:
-            xine_vbox.disable_widget()
+            xine_radiolist.disable_widget()
         elif widget is xine_radio:
-            xine_vbox.enable_widget()
+            xine_radiolist.enable_widget()
 
     gstreamer_radio.connect('clicked', handle_clicked)
     xine_radio.connect('clicked', handle_clicked)
