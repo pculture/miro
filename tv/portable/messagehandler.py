@@ -660,7 +660,7 @@ class BackendMessageHandler(messages.MessageHandler):
         singleclick.parse_command_line_args([fn])
 
     def handle_open_individual_files(self, message):
-        fns = [unicodeToFilename(fn.decode('utf-8')) for fn in message.filenames]
+        fns = [osFilenameToFilenameType(fn) for fn in message.filenames]
         singleclick.parse_command_line_args(fns)
 
     def handle_check_version(self, message):
