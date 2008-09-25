@@ -40,28 +40,30 @@ def upgrade():
         shutil.rmtree(os.path.join(dst, "icon-cache"), True)
 
     # autostart file
-    config_home = os.environ.get('XDG_CONFIG_HOME', '~/.config')
-    config_home = os.path.expanduser(config_home)
-    autostart_dir = os.path.join(config_home, "autostart")
+    if "KDE_FULL_SESSION" in os.environ:
+        if os.environ.get("KDE_SESSION_VERSION") == "4":
+            autostart_dir = "~/.kde/share/autostart"
+        else:
+            autostart_dir = "~/.kde/Autostart"
+    else:
+        config_home = os.environ.get('XDG_CONFIG_HOME', '~/.config')
+        autostart_dir = os.path.join(config_home, "autostart")
+
+    autostart_dir = os.path.expanduser(autostart_dir)
+
     old_file = os.path.join(autostart_dir, "democracyplayer.desktop")
     destination = os.path.join(autostart_dir, "miro.desktop")
     if os.path.exists(old_file):
         if not os.path.exists(destination):
             try:
-                os.makedirs(autostart_dir)
-            except:
-                pass
-            try:
+                if not os.path.exists(autostart_dir):
+                    os.makedirs(autostart_dir)
                 shutil.copy(resources.sharePath('applications/miro.desktop'), destination)
-            except:
-                pass
-            try: 
                 os.remove(old_file)
-            except:
+            except OSError:
                 pass
 
     # gconf settings
-
     client = gconf.client_get_default()
 
     def _copy_gconf(src, dst):
@@ -78,7 +80,6 @@ def upgrade():
         if client.get("/apps/miro/MoviesDirectory") is None:
             value = os.path.expanduser('~/Movies/Democracy')
             client.set_string("/apps/miro/MoviesDirectory", value)
-            try:
+
+            if not os.path.exists(value):
                 os.makedirs(value)
-            except:
-                pass

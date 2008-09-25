@@ -29,9 +29,11 @@
 import gtk
 import os
 import gconf
+import shutil
 
 from miro import app
 from miro import config
+from miro import prefs
 from miro.frontends.widgets.application import Application
 from miro.plat.frontends.widgets import threads
 from miro.plat import mozsetup, renderers, options
@@ -79,6 +81,8 @@ def set_bool(key, value): return _set_pref('window/' + key, 'set_bool', value)
 def set_player_int(key, value): return _set_pref(key, 'set_int', value)
 def set_player_bool(key, value): return _set_pref(key, 'set_bool', value)
 
+def check_kde():
+    return os.environ.get("KDE_FULL_SESSION", None) != None
 
 class GtkX11Application(Application):
     def run(self, props_to_set):
@@ -86,7 +90,6 @@ class GtkX11Application(Application):
         gtk.gdk.threads_init()
         self.startup()
         setProperties(props_to_set)
-        self.in_kde = None
 
         logging.info("Python version:    %s", sys.version)
         logging.info("Gtk+ version:      %s", gtk.gtk_version)
@@ -99,9 +102,15 @@ class GtkX11Application(Application):
         gtk.main()
         app.controller.onShutdown()
 
-    def on_trayicon_pref_changed(self, key, value):
+    def on_pref_changed(self, key, value):
+        """Any time a preference changes, this gets notified so that we
+        can adjust things.
+        """
         if key == options.SHOW_TRAYICON.key:
             self.trayicon.set_visible(value)
+
+        elif key == prefs.RUN_DTV_AT_STARTUP.key:
+            self.update_autostart()
 
     def build_window(self):
         Application.build_window(self)
@@ -115,25 +124,56 @@ class GtkX11Application(Application):
             else:
                 self.window._window.unmaximize()
 
-
         if trayicon.trayicon_is_supported:
             self.trayicon = trayicon.Trayicon(resources.sharePath("pixmaps/miro-24x24.png"), self)
             if config.get(options.SHOW_TRAYICON):
                 self.trayicon.set_visible(True)
             else:
                 self.trayicon.set_visible(False)
-            config.add_change_callback(self.on_trayicon_pref_changed)
+            config.add_change_callback(self.on_pref_changed)
 
         self.window._window.set_icon_from_file(resources.sharePath('pixmaps/miro-128x128.png'))
 
     def quit_ui(self):
         gtk.main_quit()
 
+    def update_autostart(self):
+        if check_kde():
+            if os.environ.get("KDE_SESSION_VERSION") == "4":
+                autostart_dir = "~/.kde/share/autostart"
+            else:
+                autostart_dir = "~/.kde/Autostart"
+        else:
+            config_home = os.environ.get('XDG_CONFIG_HOME', '~/.config')
+            autostart_dir = os.path.join(config_home, "autostart")
+
+        autostart_dir = os.path.expanduser(autostart_dir)
+        logging.debug("autostart_dir: %s", autostart_dir)
+        destination = os.path.join(autostart_dir, "miro.desktop")
+        if config.get(prefs.RUN_DTV_AT_STARTUP):
+            if os.path.exists(destination):
+                return
+            try:
+                if not os.path.exists(autostart_dir):
+                    os.makedirs(autostart_dir)
+                shutil.copy(resources.sharePath('applications/miro.desktop'),
+                            destination)
+            except OSError:
+                logging.exception("Problems creating or populating autostart dir.")
+
+        else:
+            if not os.path.exists(destination):
+                return
+            try:
+                os.remove(destination)
+            except OSError:
+                logging.exception("Problems removing autostart dir.")
+
     def open_url(self, url):
         # We could use Python's webbrowser.open() here, but
         # unfortunately, it doesn't have the same semantics under UNIX
         # as under other OSes. Sometimes it blocks, sometimes it doesn't.
-        if (self.check_kde()):
+        if check_kde():
             os.spawnlp (os.P_NOWAIT, "kfmclient", "kfmclient", "exec", url)
         else:
             os.spawnlp (os.P_NOWAIT, "gnome-open", "gnome-open", url)
@@ -141,12 +181,11 @@ class GtkX11Application(Application):
     def open_file(self, filename):
         if not os.path.isdir(filename):
             filename = os.path.dirname(filename)
-        if self.check_kde():
-            os.spawnlp(os.P_NOWAIT, "kfmclient", "kfmclient", "exec",
-                       "file://" + filename)
+
+        if check_kde():
+            os.spawnlp(os.P_NOWAIT, "kfmclient", "kfmclient", "exec", "file://" + filename)
         else:
-            os.spawnlp(os.P_NOWAIT, "nautilus", "nautilus",
-                       "file://" + filename)
+            os.spawnlp(os.P_NOWAIT, "nautilus", "nautilus", "file://" + filename)
 
     def get_clipboard_text(self):
         """Pulls text from the clipboard and returns it.
@@ -165,11 +204,6 @@ class GtkX11Application(Application):
     def copy_text_to_clipboard(self, text):
         gtk.Clipboard(selection="CLIPBOARD").set_text(text)
         gtk.Clipboard(selection="PRIMARY").set_text(text)
-
-    def check_kde(self):
-        if self.in_kde is None:
-            self.in_kde = os.environ.get("KDE_FULL_SESSION", False)
-        return self.in_kde
 
     def get_main_window_dimensions(self):
         x = get_int("x") or 100
