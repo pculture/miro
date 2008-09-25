@@ -50,6 +50,8 @@ import logging
 from miro import config, prefs
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import cellpack, imagepool, widgetutil, window
+from miro.frontends.widgets import widgetconst
+from miro.frontends.widgets import dialogwidgets
 from miro.frontends.widgets.widgetutil import build_control_line
 from miro.plat import resources
 from miro.dialogs import BUTTON_CLOSE
@@ -187,19 +189,16 @@ def attach_combo(widget, descriptor, values):
 def note_label(text):
     """Helper function for building a Note: xxx label.
     """
-    note = widgetset.Label(_("Note:"))
-    note.set_bold(True)
-    note2 = widgetset.Label(text)
-    note2.set_wrap(True)
-    return build_control_line((note, note2))
-    #return build_control_line((widgetutil.align_top(note), note2))
-
+    note = widgetset.Label(text)
+    note.set_wrap(True)
+    note.set_size(widgetconst.SIZE_SMALL)
+    return note
 
 # Note: This has to be here so that the above functions have been defined
 # before we try to import stuff from prefpanelset.  This prevents problems 
 # resulting from the circular import.
 
-from miro.plat.frontends.widgets.prefpanelset import get_platform_specific
+from miro.plat.frontends.widgets import prefpanelset
 
 
 # the panel list holding tuples of (name, image_name, panel_builder_function)
@@ -234,7 +233,7 @@ def _build_general_panel():
     attach_boolean(warn_if_downloading_cbx, prefs.WARN_IF_DOWNLOADING_ON_QUIT)
     v.pack_start(warn_if_downloading_cbx)
 
-    extras = get_platform_specific("general")
+    extras = prefpanelset.get_platform_specific("general")
     if extras:
         [v.pack_start(mem) for mem in extras]
 
@@ -242,27 +241,15 @@ def _build_general_panel():
 
 def _build_channels_panel():
     """Build's the Channels tab and returns it."""
-    v = widgetset.VBox()
 
-    note = widgetset.Label(_("Check channels for new content"))
     cc_options = [(1440, _("Every day")),
                   (60, _("Every hour")),
                   (30, _("Every 30 minutes")),
                   (-1 , _("Manually"))]
     cc_option_menu = widgetset.OptionMenu([op[1] for op in cc_options])
-
     attach_combo(cc_option_menu, prefs.CHECK_CHANNELS_EVERY_X_MN, 
         [op[0] for op in cc_options])
-    v.pack_start(build_control_line((note, cc_option_menu)))
 
-    
-    note = note_label(_(
-        "You can set the frequency channels are checked for each channel in "
-        "the channel's settings pane."
-    ))
-    v.pack_start(note)
-
-    ad_label = widgetset.Label(_("Auto download default settings for new channels:"))
     ad_options = [("new", _("New")),
                   ("all", _("All")),
                   ("off", _("Off"))]
@@ -270,89 +257,141 @@ def _build_channels_panel():
 
     attach_combo(ad_option_menu, prefs.CHANNEL_AUTO_DEFAULT, 
         [op[0] for op in ad_options])
-    v.pack_start(build_control_line((ad_label, ad_option_menu)))
 
-    note = widgetset.Label(_("By default, remember "))
     max_options = [(0, "0"),
                    (20, "20"),
                    (50, "50"),
                    (100, "100"),
                    (1000, "1000")]
     max_option_menu = widgetset.OptionMenu([op[1] for op in max_options])
-    note2 = widgetset.Label(_("old items in addition to the current contents."))
-
     attach_combo(max_option_menu, prefs.MAX_OLD_ITEMS_DEFAULT, 
         [op[0] for op in max_options])
-    v.pack_start(build_control_line((note, max_option_menu, note2)))
 
-    return v
+    grid = dialogwidgets.ControlGrid()
+    grid.pack(dialogwidgets.heading(_("Default settings for new channels:")), 
+            grid.ALIGN_LEFT, span=2)
+    grid.end_line(spacing=0)
+    grid.pack(dialogwidgets.note(
+            _("(These can be changed using the channel's settings button)")),
+            grid.ALIGN_LEFT, span=2)
+    grid.end_line(spacing=12)
+
+    if prefpanelset.OSX_LAYOUT:
+        align = grid.ALIGN_RIGHT
+    else:
+        align = grid.ALIGN_LEFT
+    grid.pack_label(_("Check for new content:"), align)
+    grid.pack(cc_option_menu)
+    grid.end_line()
+
+    grid.pack_label(_("Auto download setting:"), align)
+    grid.pack(ad_option_menu)
+    grid.end_line()
+
+    grid.pack(dialogwidgets.LabelWithNote(
+        _("Remember this many old items:"),
+        _("(in addition to the current contents)")), align)
+    grid.pack(max_option_menu)
+    grid.end_line(spacing=0)
+
+    return grid.make_table()
 
 def _build_downloads_panel():
-    v = widgetset.VBox()
+    vbox = widgetset.VBox()
 
-    note = widgetset.Label(_('Maximum number of manual downloads at a time:'))
+    grid = dialogwidgets.ControlGrid()
+
+    grid.pack_label(_('Maximum number of manual downloads at a time:'))
     max_manual = widgetset.TextEntry()
     max_manual.set_width(5)
     attach_integer(max_manual, prefs.MAX_MANUAL_DOWNLOADS, create_integer_checker(min=0))
-    v.pack_start(build_control_line((note, max_manual)))
+    grid.pack(max_manual)
+    grid.end_line()
 
-    note = widgetset.Label(_('Maximum number of auto-downloads at a time:'))
+    grid.pack_label(_('Maximum number of auto-downloads at a time:'))
     max_auto = widgetset.TextEntry()
     max_auto.set_width(5)
     attach_integer(max_auto, prefs.DOWNLOADS_TARGET, create_integer_checker(min=0))
-    v.pack_start(build_control_line((note, max_auto)))
+    grid.pack(max_auto)
+    grid.end_line(spacing=12)
+    
+    vbox.pack_start(grid.make_table())
 
-    note = widgetset.Label(_('Bittorrent:'))
-    note.set_bold(True)
-    v.pack_start(widgetutil.align_left(note))
+    grid = dialogwidgets.ControlGrid()
+    grid.pack(dialogwidgets.heading(_("Bittorrent:")), span=3)
+    grid.end_line(spacing=12)
 
-    cbx = widgetset.Checkbox(_('To avoid internet slowdowns, limit upstream to:'))
+    cbx = widgetset.Checkbox( _('Limit upstream bandwidth to:'))
+                #avoid internet slowdowns'))
     limit = widgetset.TextEntry()
     limit.set_width(5)
-    note = widgetset.Label(_('KB/s'))
     attach_boolean(cbx, prefs.LIMIT_UPSTREAM, (limit,))
     attach_integer(limit, prefs.UPSTREAM_LIMIT_IN_KBS, create_integer_checker(min=0))
-    v.pack_start(build_control_line((cbx, limit, note)))
 
-    cbx = widgetset.Checkbox(_('Limit torrent downstream to:'))
+    grid.pack(cbx)
+    grid.pack(limit)
+    grid.pack_label(_("KB/s"))
+    grid.end_line()
+
+    cbx = widgetset.Checkbox(_('Limit downstream bandwidth to:'))
     limit = widgetset.TextEntry()
     limit.set_width(5)
-    note = widgetset.Label(_('KB/s'))
     attach_boolean(cbx, prefs.LIMIT_DOWNSTREAM_BT, (limit,))
     attach_integer(limit, prefs.DOWNSTREAM_BT_LIMIT_IN_KBS, create_integer_checker(min=0))
-    v.pack_start(build_control_line((cbx, limit, note)))
+
+    grid.pack(cbx)
+    grid.pack(limit)
+    grid.pack_label(_("KB/s"))
+    grid.end_line()
 
     cbx = widgetset.Checkbox(_('Limit torrent connections to:'))
     limit = widgetset.TextEntry()
     limit.set_width(5)
     attach_boolean(cbx, prefs.LIMIT_CONNECTIONS_BT, (limit,))
     attach_integer(limit, prefs.CONNECTION_LIMIT_BT_NUM, create_integer_checker(min=0))
-    v.pack_start(build_control_line((cbx, limit)))
 
-    note = widgetset.Label(_('Use ports:'))
+    grid.pack(cbx)
+    grid.pack(limit)
+    grid.end_line(spacing=6)
+
     min_port = widgetset.TextEntry()
     min_port.set_width(5)
     max_port = widgetset.TextEntry()
     max_port.set_width(5)
     attach_integer(min_port, prefs.BT_MIN_PORT, create_integer_checker(min=0, max=65535))
     attach_integer(max_port, prefs.BT_MAX_PORT, create_integer_checker(min=0, max=65535))
-    v.pack_start(build_control_line((note, min_port, widgetset.Label("-"), max_port)))
+
+    if not prefpanelset.OSX_LAYOUT:
+        vbox.pack_start(widgetutil.align_left(grid.make_table()))
+        grid = dialogwidgets.ControlGrid()
+        align = grid.ALIGN_LEFT
+    else:
+        align = grid.ALIGN_RIGHT
+
+    grid.pack_label(_("Starting port:"), align)
+    grid.pack(min_port)
+    grid.end_line()
+
+    grid.pack_label(_("Ending port:"), align)
+    grid.pack(max_port)
+    grid.end_line(spacing=6)
+    vbox.pack_start(widgetutil.align_left(grid.make_table()))
 
     cbx = widgetset.Checkbox(_('Automatically forward ports.  (UPNP)'))
     attach_boolean(cbx, prefs.USE_UPNP)
-    v.pack_start(cbx)
+    vbox.pack_start(cbx)
 
     cbx = widgetset.Checkbox(_('Ignore unencrypted connections.'))
     attach_boolean(cbx, prefs.BT_ENC_REQ)
-    v.pack_start(cbx)
+    vbox.pack_start(cbx)
 
     cbx = widgetset.Checkbox(_('Stop torrent uploads when this ratio is reached:'))
     limit = widgetset.TextEntry()
     attach_boolean(cbx, prefs.LIMIT_UPLOAD_RATIO, (limit,))
     attach_float(limit, prefs.UPLOAD_RATIO, create_float_checker(0.0, 1.0))
-    v.pack_start(build_control_line((cbx, limit)))
+    vbox.pack_start(cbx)
 
-    return v
+    return vbox
 
 def _build_folders_panel():
     v = widgetset.VBox()
@@ -365,14 +404,14 @@ def _build_folders_panel():
 
     note = widgetset.Label(_(
         'Watch for new videos in these folders and include them in library:'
-    ))
+        ))
     v.pack_start(widgetutil.align_left(note))
     v.pack_start(widgetset.Label("FIXME - implement this."))
 
     return v
 
 def _build_disk_space_panel():
-    v = widgetset.VBox()
+    grid = dialogwidgets.ControlGrid()
 
     cbx = widgetset.Checkbox(_('Keep at least this much free space on my drive:'))
     limit = widgetset.TextEntry()
@@ -381,28 +420,32 @@ def _build_disk_space_panel():
     attach_boolean(cbx, prefs.PRESERVE_DISK_SPACE, (limit,))
     attach_float(limit, prefs.PRESERVE_X_GB_FREE, create_float_checker(min=0.0))
 
-    v.pack_start(build_control_line((cbx, limit, note)))
+    grid.pack(cbx)
+    grid.pack(limit)
+    grid.pack_label(_('GB'))
+    grid.end_line()
 
-    note = widgetset.Label(_('By default, videos expire after'))
     expire_ops = [(1, _('1 day')),
-                  (3, _('3 days')),
-                  (6, _('6 days')),
-                  (10, _('10 days')),
-                  (30, _('1 month')),
-                  (-1, _('never'))]
+            (3, _('3 days')),
+            (6, _('6 days')),
+            (10, _('10 days')),
+            (30, _('1 month')),
+            (-1, _('never'))]
     expire_menu = widgetset.OptionMenu([op[1] for op in expire_ops])
     attach_combo(expire_menu, prefs.EXPIRE_AFTER_X_DAYS,
-        [op[0] for op in expire_ops])
-    v.pack_start(build_control_line((note, expire_menu)))
+            [op[0] for op in expire_ops])
 
-    return v
+    grid.pack_label(_('By default, videos expire after:'))
+    grid.pack(expire_menu)
+
+    return grid.make_table()
 
 def _build_playback_panel():
     v = widgetset.VBox()
 
     cbx = widgetset.Checkbox(_('Resume playing a video from the point it was last stopped.'))
     attach_boolean(cbx, prefs.RESUME_VIDEOS_MODE)
-    v.pack_start(widgetutil.align_left(cbx))
+    v.pack_start(widgetutil.align_left(cbx, bottom_pad=6))
 
     rbg = widgetset.RadioButtonGroup()
     play_rb = widgetset.RadioButton("Play videos one after another", rbg)
@@ -411,7 +454,7 @@ def _build_playback_panel():
     v.pack_start(widgetutil.align_left(play_rb))
     v.pack_start(widgetutil.align_left(stop_rb))
 
-    extras = get_platform_specific("playback")
+    extras = prefpanelset.get_platform_specific("playback")
     if extras:
         [v.pack_start(mem) for mem in extras]
 
@@ -482,9 +525,15 @@ def run_dialog(tab=None):
 
             max_height = max_width = 0
             for name, title, image_name, panel_builder in __PANEL:
-                panel = _create_panel(title, panel_builder())
+                #panel = _create_panel(title, panel_builder())
+                panel = panel_builder()
+                if prefpanelset.OSX_LAYOUT:
+                    alignment = widgetset.Alignment(xalign=0.5, yalign=0.0)
+                else:
+                    alignment = widgetset.Alignment(xalign=0.0, yalign=0.0)
+                alignment.add(panel)
                 image = imagepool.get_surface(resources.path(image_name))
-                tab_list.model.append(title, image, panel)
+                tab_list.model.append(title, image, alignment)
 
                 w, h = panel.get_size_request()
                 max_width = max(max_width, w)

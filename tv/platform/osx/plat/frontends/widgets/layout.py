@@ -51,6 +51,18 @@ from miro.plat.frontends.widgets.base import Container, Bin, FlippedView
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
 from miro.util import Matrix
 
+def _extra_space_iter(extra_length, count):
+    """Utility function to allocate extra space left over in containers."""
+    if count == 0:
+        return
+    extra_space, leftover = divmod(extra_length, count)
+    while leftover >= 1:
+        yield extra_space + 1
+        leftover -= 1
+    yield extra_space + leftover
+    while True:
+        yield extra_space
+
 class BoxPacking:
     """Utility class to store how we are packing a single widget."""
 
@@ -138,23 +150,13 @@ class Box(Container):
         length += spaces * self.spacing
         return self.untranslate_size((length, breadth))
 
-    def _extra_space_iter(self, extra_length):
-        if self.expand_count == 0:
-            return
-        extra_space, leftover = divmod(extra_length, self.expand_count)
-        while leftover >= 1:
-            yield extra_space + 1
-            leftover -= 1
-        yield extra_space + leftover
-        while True:
-            yield extra_space
-
     def place_children(self):
         request_length, request_breadth = self.translate_widget_size(self)
         ps = self.viewport.placement.size
         total_length, dummy = self.translate_size((ps.width, ps.height))
         total_extra_space = total_length - request_length
-        extra_space_iter = self._extra_space_iter(total_extra_space)
+        extra_space_iter = _extra_space_iter(total_extra_space,
+                self.expand_count)
         start_end = self._place_packing_list(self.packing_start, 
                 extra_space_iter, 0)
         if self.expand_count == 0:
@@ -466,78 +468,116 @@ class Splitter(Container):
         self.right = None
         self.child_removed(old_right)
 
+class _TablePacking(object):
+    """Utility class to help with packing Table widgets."""
+    def __init__(self, widget, column, row, column_span, row_span):
+        self.widget = widget
+        self.column = column
+        self.row = row
+        self.column_span = column_span
+        self.row_span = row_span
+
+    def column_indexes(self):
+        return range(self.column, self.column + self.column_span)
+
+    def row_indexes(self):
+        return range(self.row, self.row + self.row_span)
+
 class Table(Container):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     CREATES_VIEW = False
 
     def __init__(self, columns, rows):
         Container.__init__(self)
-        self.cells = Matrix(columns, rows)
+        self._cell_taken = Matrix(columns, rows, initial_value=False)
+        self._children = [] # List of _TablePacking objects
+        self._children_sorted = True
         self.rows = rows
         self.columns = columns
         self.row_spacing = self.column_spacing = 0
 
+    def _ensure_children_sorted(self):
+        if not self._children_sorted:
+            def cell_area(table_packing):
+                return table_packing.column_span * table_packing.row_span
+            self._children.sort(key=cell_area)
+            self._children_sorted = True
+
     def get_children(self):
-        return [cell for cell in self.cells if cell is not None]
+        return [cell.widget for cell in self._children]
     children = property(get_children)
 
     def calc_size_request(self):
-        self.calc_column_widths()
-        self.calc_row_heights()
+        self._ensure_children_sorted()
+        self._calc_dimensions()
         return self.total_width, self.total_height
 
-    def calc_column_widths(self):
-        self.total_width = 0
-        self.column_widths = []
-        for column in xrange(self.columns):
-            width = 0
-            for child in self.cells.column(column):
-                if child:
-                    child_width, child_height = child.get_size_request()
-                    width = max(width, child_width)
-            self.column_widths.append(width)
-            self.total_width += width
-        self.total_width += self.column_spacing * (self.columns - 1)
+    def _calc_dimensions(self):
+        self.column_widths = [0] * self.columns
+        self.row_heights = [0] * self.rows
 
-    def calc_row_heights(self):
-        self.total_height = 0
-        self.row_heights = []
-        for row in xrange(self.rows):
-            height = 0
-            for child in self.cells.row(row):
-                if child:
-                    child_width, child_height = child.get_size_request()
-                    height = max(height, child_height)
-            self.row_heights.append(height)
-            self.total_height += height
-        self.total_height += self.row_spacing * (self.rows - 1)
+        for tp in self._children:
+            child_width, child_height = tp.widget.get_size_request()
+            # recalc the width of the child's columns
+            self._recalc_dimension(child_width, self.column_widths,
+                    tp.column_indexes())
+            # recalc the height of the child's rows
+            self._recalc_dimension(child_height, self.row_heights,
+                    tp.row_indexes())
+
+        self.total_width = (self.column_spacing * (self.columns - 1) +
+                sum(self.column_widths))
+        self.total_height = (self.row_spacing * (self.rows - 1) +
+                sum(self.row_heights))
+
+    def _recalc_dimension(self, child_size, size_array, positions):
+        current_size = sum(size_array[p] for p in positions)
+        child_size_needed = child_size - current_size
+        if child_size_needed > 0:
+            iter = _extra_space_iter(child_size_needed, len(positions))
+            for p in positions:
+                size_array[p] += iter.next()
 
     def place_children(self):
-        y = self.viewport.placement.origin.y
-        for i in xrange(self.rows):
-            self.place_child_row(i, y)
-            y += self.row_heights[i] + self.row_spacing
+        column_positions = [0]
+        for width in self.column_widths[:-1]:
+            column_positions.append(width + column_positions[-1])
+        row_positions = [0]
+        for height in self.row_heights[:-1]:
+            row_positions.append(height + row_positions[-1])
 
-    def place_child_row(self, row, y):
-        x = self.viewport.placement.origin.x
-        for column in xrange(self.columns):
-            child = self.cells[column, row]
-            if child:
-                child_rect = NSMakeRect(x, y, 
-                        self.column_widths[column], self.row_heights[row])
-                child.place(child_rect, self.viewport.view)
-            x += self.column_widths[column] + self.column_spacing
+        my_x= self.viewport.placement.origin.x
+        my_y = self.viewport.placement.origin.y
+        for tp in self._children:
+            x = my_x + column_positions[tp.column]
+            y = my_y + row_positions[tp.row]
+            width = sum(self.column_widths[i] for i in tp.column_indexes())
+            height = sum(self.row_heights[i] for i in tp.row_indexes())
+            rect = NSMakeRect(x, y, width, height)
+            tp.widget.place(rect, self.viewport.view)
 
-    def set_cell(self, widget, column, row):
-        if self.cells[column, row] is not None:
-            raise ValueError("Already a widget in %sx%s" % (column, row))
-        self.cells[column, row] = widget
+    def pack(self, widget, column, row, column_span=1, row_span=1):
+        tp = _TablePacking(widget, column, row, column_span, row_span)
+        for c in tp.column_indexes():
+            for r in tp.row_indexes():
+                if self._cell_taken[c, r]:
+                    raise ValueError("Cell %d x %d is already taken" % (c, r))
+        for c in tp.column_indexes():
+            for r in tp.row_indexes():
+                self._cell_taken[c, r] = True
+        self._children.append(tp)
+        self._children_sorted = False
         self.child_added(widget)
 
-    def get_cell(self, column, row):
-        return self.cells[column, row]
-
     def remove(self, child):
+        for i in xrange(len(self._children)):
+            if self._children[i].widget is child:
+                for c, r in self._children[i].cells():
+                    self._cell_taken[c][r] = False
+                self._children.remove(i)
+                break
+        else:
+            raise ValueError("%s is not a child of this Table" % child)
         self.cells.remove(child)
         self.child_removed(widget)
 

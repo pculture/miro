@@ -732,10 +732,10 @@ class Matrix(object):
     indices, for example matrix[3,4] = foo
     """
 
-    def __init__(self, columns, rows):
+    def __init__(self, columns, rows, initial_value=None):
         self.columns = columns
         self.rows = rows
-        self.data = [None] * (columns * rows)
+        self.data = [ initial_value ] * (columns * rows)
 
     def __getitem__(self, key):
         return self.data[(key[0] * self.rows) + key[1]]
