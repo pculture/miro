@@ -29,6 +29,8 @@
 import dbus
 import dbus.service
 
+from miro import messages
+
 if getattr(dbus, 'version', (0, 0, 0)) >= (0, 41, 0):
     import dbus.glib
 
@@ -126,7 +128,8 @@ else:
     BusName = BusNameFlags
 
 class OneTime(dbus.service.Object):
-    """This makes sure we've only got one instance of Miro running at any given time.
+    """This makes sure we've only got one instance of Miro running at any given
+    time.
     """
     def __init__(self):
         bus = dbus.SessionBus()
@@ -143,4 +146,4 @@ class OneTime(dbus.service.Object):
             if args[i].startswith('file://'):
                 args[i] = args[i][len('file://'):]
 
-        eventloop.addIdle(lambda: singleclick.parse_command_line_args(args), "Open Files from dbus")
+        messages.OpenIndividualFiles(args).send_to_backend()
