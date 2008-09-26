@@ -482,7 +482,7 @@ class TabListBox(widgetset.Scroller):
 
         label = widgetset.Label(text)
         label.set_bold(True)
-        label.set_size(0.92)
+        label.set_size(0.85)
         label.set_color(style.TAB_LIST_HEADER_COLOR)
 
         vbox = widgetset.VBox()
