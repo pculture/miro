@@ -46,6 +46,7 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import newsearchchannel
+from miro.frontends.widgets import removechannelsdialog
 from miro.frontends.widgets import diagnostics
 from miro.frontends.widgets import crashdialog
 from miro.frontends.widgets import itemlistcontroller
@@ -437,117 +438,24 @@ class Application:
             self.remove_feeds(channel_infos)
 
     def remove_feeds(self, channel_infos):
-        # FIXME - this doesn't look right.  i would think we'd want to ask
-        # a bunch of appropriate questions and then flip through the items
-        # one by one.
+        downloaded_videos = False
+        downloading_videos = False
 
-        # FIXME - this is wrong.  it uses potentially old channel_infos and
-        # we need to query current ones.  Bug #10392.
-        downloads = False
-        downloading = False
-        allDirectories = True
         for ci in channel_infos:
             if not ci.is_directory_feed:
-                allDirectories = False
                 if ci.unwatched > 0:
-                    downloads = True
+                    downloaded_videos = True
+
                 if ci.has_downloading:
-                    downloading = True
+                    downloading_videos = True
 
-        if downloads:
-            self.remove_feeds_with_downloads(channel_infos)
-        elif downloading:
-            self.remove_feeds_with_downloading(channel_infos)
-        elif allDirectories:
-            self.remove_directory_feeds(channel_infos)
-        else:
-            self.remove_feeds_normal(channel_infos)
+        ret = removechannelsdialog.run_dialog(channel_infos, downloaded_videos, downloading_videos)
 
-    def remove_feeds_with_downloads(self, channel_infos):
-        title = ngettext('Remove %(name)s',
-                         'Remove %(count)d channels',
-                         len(channel_infos),
-                         {"count": len(channel_infos), "name": channel_infos[0].name})
-
-        description = _(
-            "What would you like to do with the videos in this channel that you've "
-            "downloaded?"
-        )
-
-        ret = dialogs.show_choice_dialog(title, description,
-                                         [dialogs.BUTTON_KEEP_VIDEOS,
-                                          dialogs.BUTTON_DELETE_VIDEOS,
-                                          dialogs.BUTTON_CANCEL])
-
-        if ret == dialogs.BUTTON_KEEP_VIDEOS:
-            for ci in channel_infos:
-                messages.DeleteChannel(ci.id, ci.is_folder, True).send_to_backend()
-
-        elif ret == dialogs.BUTTON_DELETE_VIDEOS:
-            for ci in channel_infos:
-                messages.DeleteChannel(ci.id, ci.is_folder, False).send_to_backend()
-
-    def remove_feeds_with_downloading(self, channel_infos):
-        title = ngettext('Remove %(name)s channel',
-                         'Remove %(count)d channels',
-                         len(channel_infos),
-                         {"count": len(channel_infos), "name": channel_infos[0].name})
-        description = ngettext(
-            "Are you sure you want to remove %(name)s?  Any downloads in progress will "
-            "be canceled.",
-            "Are you sure you want to remove these %(count)s channels?  Any downloads in "
-            "progress will be canceled.",
-            len(channel_infos),
-            {"count": len(channel_infos), "name": channel_infos[0].name}
-        )
-
-        ret = dialogs.show_choice_dialog(title, description,
-                                         [dialogs.BUTTON_REMOVE,
-                                          dialogs.BUTTON_CANCEL])
-
-        if ret == dialogs.BUTTON_REMOVE:
-            for ci in channel_infos:
-                messages.DeleteChannel(ci.id, ci.is_folder, False).send_to_backend()
-
-    def remove_feeds_normal(self, channel_infos):
-        title = ngettext('Remove %(name)s',
-                         'Remove %(count)s channels',
-                         len(channel_infos),
-                         {"count": len(channel_infos), "name": channel_infos[0].name})
-        description = ngettext(
-            "Are you sure you want to remove %(name)s?",
-
-            "Are you sure you want to remove these %(count)d channels?",
-
-            len(channel_infos),
-            {"count": len(channel_infos), "name": channel_infos[0].name}
-        )
-
-        ret = dialogs.show_choice_dialog(title, description,
-                                         [dialogs.BUTTON_REMOVE,
-                                          dialogs.BUTTON_CANCEL])
-        if ret == dialogs.BUTTON_REMOVE:
-            for ci in channel_infos:
-                messages.DeleteChannel(ci.id, ci.is_folder, False).send_to_backend()
-
-    def remove_directory_feeds(self, channel_infos):
-        title = ngettext('Stop watching directory',
-                         'Stop watching %(count)d directories',
-                         len(channel_infos),
-                         {"count": len(channel_infos)})
-        description = ngettext(
-            "Are you sure you want to stop watching %(name)s?",
-            "Are you sure you want to stop watching these %(count)s directories?",
-            len(channel_infos),
-            {"count": len(channel_infos), "name": channel_infos[0].name}
-        )
-        ret = dialogs.show_choice_dialog(title, description,
-                                         [dialogs.BUTTON_STOP_WATCHING,
-                                          dialogs.BUTTON_CANCEL])
-        if ret == dialogs.BUTTON_STOP_WATCHING:
-            for ci in channel_infos:
-                messages.DeleteChannel(ci.id, ci.is_folder, False).send_to_backend()
-
+        for ci in channel_infos:
+            messages.DeleteChannel(ci.id, ci.is_folder, 
+                ret[removechannelsdialog.KEEP_VIDEOS]
+            ).send_to_backend()
+        
     def update_selected_channels(self):
         t, channel_infos = app.tab_list_manager.get_selection()
         if t == 'feed':
