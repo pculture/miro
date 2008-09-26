@@ -101,7 +101,7 @@ def parseURL(url, split_path=False):
     path = path.replace('|', ':') 
     # Windows drive names are often specified as "C|\foo\bar"
 
-    if path == '' or path.startswith('/'):
+    if path == '' or not path.startswith('/'):
         path = '/' + path
     elif re.match(r'/[a-zA-Z]:', path):
         # Fix "/C:/foo" paths
