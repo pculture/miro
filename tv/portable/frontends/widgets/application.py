@@ -693,6 +693,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
             app.widgetapp.build_window()
 
     def call_handler(self, method, message):
+        logging.debug("handling frontend %s", message)
         call_on_ui_thread(method, message)
 
     def handle_current_search_info(self, message):
