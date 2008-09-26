@@ -450,12 +450,12 @@ class Application:
                     downloading_videos = True
 
         ret = removechannelsdialog.run_dialog(channel_infos, downloaded_videos, downloading_videos)
+        if ret:
+            for ci in channel_infos:
+                messages.DeleteChannel(ci.id, ci.is_folder,
+                    ret[removechannelsdialog.KEEP_VIDEOS]
+                ).send_to_backend()
 
-        for ci in channel_infos:
-            messages.DeleteChannel(ci.id, ci.is_folder, 
-                ret[removechannelsdialog.KEEP_VIDEOS]
-            ).send_to_backend()
-        
     def update_selected_channels(self):
         t, channel_infos = app.tab_list_manager.get_selection()
         if t == 'feed':
