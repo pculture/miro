@@ -432,6 +432,7 @@ class Item(DDBObject):
             self.remove()
         else:
             self.signalChange()
+        self.getFeed().signalChange()
 
     def stopUpload(self):
         if self.downloader:
@@ -642,6 +643,7 @@ class Item(DDBObject):
             else:
                 self.downloader.start()
         self.signalChange()
+        self.getFeed().signalChange()
 
     def pause(self):
         if self.downloader:

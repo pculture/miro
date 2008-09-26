@@ -98,6 +98,7 @@ class TabListManager(object):
 
     def update_selected_tabs(self):
         table_view = self.selected_tab_list.view
+        self.__table_view = table_view
         self.selected_tabs = [table_view.model[i][0] for i in
                 table_view.get_selection()]
 
@@ -133,4 +134,7 @@ class TabListManager(object):
             self.selected_tabs = [model[iter][0]]
 
     def get_selection(self):
-        return self.selected_tab_list.type, self.selected_tabs
+        table_view = self.__table_view
+        selected_tabs = [table_view.model[i][0] for i in
+                table_view.get_selection()]
+        return self.selected_tab_list.type, selected_tabs
