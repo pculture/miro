@@ -689,7 +689,7 @@ class PlaylistItemRenderer(ItemRenderer):
             button = layout.button(_('Keep'), self.hotspot=='keep')
             button.set_min_width(65)
             hbox.pack(cellpack.Hotspot('keep', button))
-        button = layout.button(_('Remove'), self.hotspot=='remove')
-        button.set_min_width(65)
+        button = layout.button(_('Remove from playlist'), self.hotspot=='remove')
+        button.set_min_width(125)
         hbox.pack(cellpack.Hotspot('remove', button))
         return hbox
