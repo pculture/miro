@@ -189,6 +189,13 @@ class TabContainer(Widget):
         self.set_widget(gtk.Notebook())
         self._widget.set_tab_pos(gtk.POS_TOP)
         self.children = []
+        self._page_to_select = None
+        self.wrapped_widget_connect('realize', self._on_realize)
+
+    def _on_realize(self, widget):
+        if self._page_to_select is not None:
+            self._widget.set_current_page(self._page_to_select)
+            self._page_to_select = None
 
     def append_tab(self, child_widget, text, image=None):
         if image is not None:
@@ -205,4 +212,7 @@ class TabContainer(Widget):
         self.children.append(child_widget)
 
     def select_tab(self, index):
-        self._widget.set_current_page(index)
+        if self._widget.flags() & gtk.REALIZED:
+            self._widget.set_current_page(index)
+        else:
+            self._page_to_select = index
