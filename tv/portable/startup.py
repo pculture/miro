@@ -233,7 +233,7 @@ def startup_network_stuff():
     logging.info("Spawning auto downloader...")
     autodler.start_downloader()
 
-    item.reconnectDownloaders()
+    item.reconnect_downloaders()
     feed.expire_items()
 
 @startup_function
@@ -309,7 +309,7 @@ def is_movies_directory_gone():
     movies_dir = config.get(prefs.MOVIES_DIRECTORY)
     for downloader_ in views.remoteDownloads:
         if (downloader_.isFinished()
-                and downloader_.getFilename().startswith(movies_dir)):
+                and downloader_.get_filename().startswith(movies_dir)):
             logging.info("Directory there, but missing files.")
             return True
 

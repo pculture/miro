@@ -221,8 +221,8 @@ class FeedImpl:
 
     def calc_item_list(self):
         self.items = views.toplevelItems.filterWithIndex(indexes.itemsByFeed, self.ufeed.id)
-        self.availableItems = self.items.filter(lambda x: x.getState() == 'new')
-        self.unwatchedItems = self.items.filter(lambda x: x.getState() == 'newly-downloaded')
+        self.availableItems = self.items.filter(lambda x: x.get_state() == 'new')
+        self.unwatchedItems = self.items.filter(lambda x: x.get_state() == 'newly-downloaded')
         self.availableItems.addAddCallback(lambda x, y: self.ufeed.signalChange(needsSignalFolder=True))
         self.availableItems.addRemoveCallback(lambda x, y: self.ufeed.signalChange(needsSignalFolder=True))
         self.unwatchedItems.addAddCallback(lambda x, y: self.ufeed.signalChange(needsSignalFolder=True))
@@ -275,7 +275,7 @@ class FeedImpl:
         """
         self.scheduleUpdateEvents(-1)
 
-    def getViewed(self):
+    def get_viewed(self):
         """Returns true iff this feed has been looked at
         """
         return self.lastViewed != datetime.min
@@ -320,7 +320,7 @@ class FeedImpl:
         """
         self.lastViewed = datetime.now()
         for item in self.items:
-            if item.getState() == "new":
+            if item.get_state() == "new":
                 item.signalChange(needsSave=False)
 
         self.ufeed.signalChange()
@@ -342,7 +342,7 @@ class FeedImpl:
             if item.isPendingManualDownload():
                 if next is None:
                     next = item
-                elif item.getPubDateParsed() > next.getPubDateParsed():
+                elif item.get_pub_date_parsed() > next.get_pub_date_parsed():
                     next = item
         if next is not None:
             next.download(autodl = False)
@@ -353,7 +353,7 @@ class FeedImpl:
             if item.isEligibleForAutoDownload():
                 if next is None:
                     next = item
-                elif item.getPubDateParsed() > next.getPubDateParsed():
+                elif item.get_pub_date_parsed() > next.get_pub_date_parsed():
                     next = item
         if next is not None:
             next.download(autodl = True)
@@ -363,7 +363,7 @@ class FeedImpl:
         """
         for item in self.items:
             expireTime = item.getExpirationTime()
-            if (item.getState() == 'expiring' and expireTime is not None and
+            if (item.get_state() == 'expiring' and expireTime is not None and
                     expireTime < datetime.now()):
                 item.expire()
 
@@ -511,7 +511,7 @@ class FeedImpl:
             return u""
 
     @returnsUnicode
-    def getDescription(self):
+    def get_description(self):
         """Returns the description of the feed
         """
         return u"<span />"
@@ -545,7 +545,7 @@ class FeedImpl:
                 item.signalChange(needsSave=False)
 
     @returnsUnicode
-    def getLicense(self):
+    def get_license(self):
         """Returns URL of license assocaited with the feed
         """
         return u""
@@ -557,7 +557,7 @@ class FeedImpl:
         count = 0
         for item in self.items:
             try:
-                if item.getState() == u'newly-downloaded':
+                if item.get_state() == u'newly-downloaded':
                     count += 1
             except (SystemExit, KeyboardInterrupt):
                 raise
@@ -813,7 +813,7 @@ class Feed(DDBObject):
 
         if self.expire == "never":
             for item in self.items:
-                if item.isDownloaded():
+                if item.is_downloaded():
                     item.save()
 
         self.signalChange()
@@ -1086,7 +1086,7 @@ class Feed(DDBObject):
         self.signalChange()
 
     def askForScrape(self, info, initialHTML, charset):
-        title = _("Channel is not compatible with %(appname)s", 
+        title = _("Channel is not compatible with %(appname)s",
                   {"appname": config.get(prefs.SHORT_APP_NAME)})
         description = _(
             "But we'll try our best to grab the files. It may take extra time "
@@ -1135,7 +1135,7 @@ class Feed(DDBObject):
             self.download.cancel()
             self.download = None
         for item in self.items:
-            if moveItemsTo is not None and item.isDownloaded():
+            if moveItemsTo is not None and item.is_downloaded():
                 item.setFeed(moveItemsTo.getID())
             else:
                 item.remove()
@@ -1150,13 +1150,13 @@ class Feed(DDBObject):
 
     def calcThumbnail(self):
         if self.thumbnailValid():
-            return fileutil.expand_filename(self.iconCache.getFilename())
+            return fileutil.expand_filename(self.iconCache.get_filename())
         else:
             return default_feed_icon_path()
 
     def calcTablistThumbnail(self):
         if self.thumbnailValid():
-            return fileutil.expand_filename(self.iconCache.getFilename())
+            return fileutil.expand_filename(self.iconCache.get_filename())
         else:
             return default_tablist_feed_icon_path()
 
@@ -1183,14 +1183,14 @@ class Feed(DDBObject):
     def hasDownloadedItems(self):
         self.confirmDBThread()
         for item in self.items:
-            if item.isDownloaded():
+            if item.is_downloaded():
                 return True
         return False
 
     def hasDownloadingItems(self):
         self.confirmDBThread()
         for item in self.items:
-            if item.getState() in (u'downloading', u'paused'):
+            if item.get_state() in (u'downloading', u'paused'):
                 return True
         return False
 
@@ -1278,7 +1278,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             entryURL = videoEnc.get('url')
         else:
             entryURL = None
-        if item.isDownloaded() and item.getURL() != entryURL:
+        if item.is_downloaded() and item.getURL() != entryURL:
             item.removeRSSID()
             self._handleNewEntry(entry, channelTitle)
         else:
@@ -1289,7 +1289,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         item = itemmod.Item(entry, feed_id=self.ufeed.id)
         if not filters.matchingItems(item, self.ufeed.searchTerm):
             item.remove()
-        item.setChannelTitle(channelTitle)
+        item.set_channel_title(channelTitle)
 
     def createItemsForParsed(self, parsed):
         """Update the feed using parsed XML passed in"""
@@ -1336,7 +1336,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                 items_byid[item.getRSSID()] = item
             except KeyError:
                 items_nokey.append(item)
-            entry = item.getRSSEntry()
+            entry = item.get_rss_entry()
             videoEnc = getFirstVideoEnclosure(entry)
             if videoEnc is not None:
                 entryURL = videoEnc.get('url')
@@ -1352,7 +1352,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                 id_ = entry["id"]
                 if items_byid.has_key(id_):
                     item = items_byid[id_]
-                    if not _entry_equal(entry, item.getRSSEntry()):
+                    if not _entry_equal(entry, item.get_rss_entry()):
                         self._handleNewEntryForItem(item, entry, channelTitle)
                     new = False
                     old_items.discard(item)
@@ -1366,17 +1366,17 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                 if title is not None or entryURL is not None:
                     if items_byURLTitle.has_key((entryURL, title)):
                         item = items_byURLTitle[(entryURL, title)]
-                        if not _entry_equal(entry, item.getRSSEntry()):
+                        if not _entry_equal(entry, item.get_rss_entry()):
                             self._handleNewEntryForItem(item, entry, channelTitle)
                         new = False
                         old_items.discard(item)
             if new:
                 for item in items_nokey:
-                    if _entry_equal(entry, item.getRSSEntry()):
+                    if _entry_equal(entry, item.get_rss_entry()):
                         new = False
                     else:
                         try:
-                            if _entry_equal (entry["enclosures"], item.getRSSEntry()["enclosures"]):
+                            if _entry_equal(entry["enclosures"], item.get_rss_entry()["enclosures"]):
                                 self._handleNewEntryForItem(item, entry, channelTitle)
                                 new = False
                                 old_items.discard(item)
@@ -1398,7 +1398,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             startfrom = None
             itemToUpdate = None
             for item in self.items:
-                itemTime = item.getPubDateParsed()
+                itemTime = item.get_pub_date_parsed()
                 if startfrom is None or itemTime > startfrom:
                     startfrom = itemTime
                     itemToUpdate = item
@@ -1478,7 +1478,7 @@ class RSSFeedImpl(RSSFeedImplBase):
             return FeedImpl.getBaseHref(self)
 
     @returnsUnicode
-    def getDescription(self):
+    def get_description(self):
         """Returns the description of the feed
         """
         self.ufeed.confirmDBThread()
@@ -1613,7 +1613,7 @@ class RSSFeedImpl(RSSFeedImplBase):
         self.call_feedparser (html)
 
     @returnsUnicode
-    def getLicense(self):
+    def get_license(self):
         """Returns the URL of the license associated with the feed
         """
         try:
@@ -1663,7 +1663,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
             self.urls = [self.url]
 
     @returnsUnicode
-    def getDescription(self):
+    def get_description(self):
         """Returns the description of the feed
         """
         self.ufeed.confirmDBThread()
@@ -2164,18 +2164,18 @@ class DirectoryWatchFeedImpl(FeedImpl):
         knownFiles = set()
         for item in views.toplevelItems:
             if not item.getFeed().getURL().startswith("dtv:directoryfeed"):
-                knownFiles.add(item.getFilename())
+                knownFiles.add(item.get_filename())
 
         # Remove items that are in feeds, but we have in our list
         for item in self.items:
-            if item.getFilename() in knownFiles:
+            if item.get_filename() in knownFiles:
                 item.remove()
 
         # Now that we've checked for items that need to be removed, we
         # add our items to knownFiles so that they don't get added
         # multiple times to this feed.
         for x in self.items:
-            knownFiles.add(x.getFilename())
+            knownFiles.add(x.get_filename())
 
         #Adds any files we don't know about
         #Files on the filesystem
@@ -2193,7 +2193,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
                     itemmod.FileItem(file_, feed_id=self.ufeed.id)
 
         for item in self.items:
-            if not fileutil.isfile(item.getFilename()):
+            if not fileutil.isfile(item.get_filename()):
                 item.remove()
         if self.firstUpdate:
             for item in self.items:
@@ -2237,7 +2237,7 @@ class DirectoryFeedImpl(FeedImpl):
         knownFiles = set()
         for item in views.toplevelItems:
             if item.feed_id is not self.ufeed.id:
-                knownFiles.add(item.getFilename())
+                knownFiles.add(item.get_filename())
             if item.isContainerItem:
                 item.find_new_children()
 
@@ -2245,14 +2245,14 @@ class DirectoryFeedImpl(FeedImpl):
 
         # Remove items that are in feeds, but we have in our list
         for item in self.items:
-            if item.getFilename() in knownFiles:
+            if item.get_filename() in knownFiles:
                 item.remove()
 
         # Now that we've checked for items that need to be removed, we
         # add our items to knownFiles so that they don't get added
         # multiple times to this feed.
         for x in self.items:
-            knownFiles.add(x.getFilename())
+            knownFiles.add(x.get_filename())
 
         #Adds any files we don't know about
         #Files on the filesystem
@@ -2263,7 +2263,7 @@ class DirectoryFeedImpl(FeedImpl):
                     itemmod.FileItem(file_, feed_id=self.ufeed.id)
 
         for item in self.items:
-            if not fileutil.exists(item.getFilename()):
+            if not fileutil.exists(item.get_filename()):
                 item.remove()
 
         self.scheduleUpdateEvents(-1)
@@ -2332,7 +2332,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
     def preserveDownloads(self, downloadsFeed):
         self.ufeed.confirmDBThread()
         for item in self.items:
-            if item.getState() not in ('new', 'not-downloaded'):
+            if item.get_state() not in ('new', 'not-downloaded'):
                 item.setFeed(downloadsFeed.id)
 
     def lookup(self, engine, query):
@@ -2358,7 +2358,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
                             try:
                                 if entry["id"] == item.getRSSID():
                                     item.setFeed(self.ufeed.id)
-                                    if not _entry_equal(entry, item.getRSSEntry()):
+                                    if not _entry_equal(entry, item.get_rss_entry()):
                                         self._handleNewEntryForItem(item, entry, channelTitle)
                                     return
                             except KeyError:
@@ -2367,7 +2367,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
                             oldtitle = item.entry.get("title")
                             if title == oldtitle:
                                 item.setFeed(self.ufeed.id)
-                                if not _entry_equal(entry, item.getRSSEntry()):
+                                if not _entry_equal(entry, item.get_rss_entry()):
                                     self._handleNewEntryForItem(item, entry, channelTitle)
                                 return
         RSSMultiFeedImpl._handleNewEntry(self, entry, channelTitle)

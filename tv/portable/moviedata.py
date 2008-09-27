@@ -76,7 +76,7 @@ class MovieDataInfo:
 
     def __init__(self, item):
         self.item = item
-        self.videoPath = item.getVideoFilename()
+        self.videoPath = item.get_video_filename()
         # add a random string to the filename to ensure it's unique.  Two
         # videos can have the same basename if they're in different
         # directories.
@@ -192,7 +192,7 @@ class MovieDataUpdater:
     def requestUpdate(self, item):
         if self.inShutdown:
             return
-        filename = item.getVideoFilename()
+        filename = item.get_video_filename()
         if not filename or not fileutil.isfile(filename):
             return
         if item.downloader and not item.downloader.isFinished():

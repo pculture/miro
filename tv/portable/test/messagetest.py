@@ -3,7 +3,7 @@ from miro import prefs
 
 from miro.feed import Feed
 from miro.guide import ChannelGuide
-from miro.item import Item, getEntryForURL
+from miro.item import Item, get_entry_for_url
 from miro.playlist import SavedPlaylist
 from miro.folder import PlaylistFolder, ChannelFolder
 from miro.tabs import TabOrder
@@ -179,7 +179,7 @@ class PlaylistTrackTest(TrackerTest):
 #        message = self.test_handler.messages[0]
 #        self.assert_(isinstance(message, messages.TabList))
 #        self.assertEquals(message.type, 'playlist')
-#        self.checkInfoList(message.toplevels, 
+#        self.checkInfoList(message.toplevels,
 #                [self.playlist1, self.folder])
 #        self.checkInfoList(message.folder_children[self.folder.id],
 #                [self.playlist2])
@@ -209,7 +209,7 @@ class PlaylistTrackTest(TrackerTest):
         p5 = SavedPlaylist('Playlist 6')
         self.runUrgentCalls()
         # We want the PlaylistAdded messages to come in the same order the
-        # feeds were added. 
+        # feeds were added.
         self.checkMessageCount(2)
         self.checkChangedMessage(1, added=[p1, p2, p3, p4, p5])
 
@@ -261,7 +261,7 @@ class FeedTrackTest(TrackerTest):
 #        message = self.test_handler.messages[0]
 #        self.assert_(isinstance(message, messages.TabList))
 #        self.assertEquals(message.type, 'feed')
-#        self.checkInfoList(message.toplevels, 
+#        self.checkInfoList(message.toplevels,
 #                [self.feed1, self.feed_folder])
 #        self.checkInfoList(message.folder_children[self.feed_folder.id],
 #                [self.feed2])
@@ -335,13 +335,13 @@ class FakeDownloader(object):
         self.rate = 0
         self.state = 'downloading'
 
-    def getCurrentSize(self):
+    def get_current_size(self):
         return self.current_size
 
     def getRate(self):
         return self.rate
 
-    def getState(self):
+    def get_state(self):
         return self.state
 
 class FeedItemTrackTest(TrackerTest):
@@ -356,20 +356,20 @@ class FeedItemTrackTest(TrackerTest):
         self.runUrgentCalls()
 
     def make_item(self, url):
-        self.items.append(Item(entry=getEntryForURL(url), 
+        self.items.append(Item(entry=get_entry_for_url(url),
             feed_id=self.feed.id))
 
     def checkDownloadInfo(self, info, item):
         downloader = item.downloader
-        self.assertEquals(info.current_size, downloader.getCurrentSize())
+        self.assertEquals(info.current_size, downloader.get_current_size())
         self.assertEquals(info.rate, downloader.getRate())
-        self.assertEquals(info.state, downlader.getState())
+        self.assertEquals(info.state, downlader.get_state())
 
     def checkInfo(self, itemInfo, item):
         self.assertEquals(itemInfo.name, item.get_title())
-        self.assertEquals(itemInfo.description, item.getDescription())
-        self.assertEquals(itemInfo.release_date, item.getReleaseDateObj())
-        self.assertEquals(itemInfo.size, item.getSize())
+        self.assertEquals(itemInfo.description, item.get_description())
+        self.assertEquals(itemInfo.release_date, item.get_release_date_obj())
+        self.assertEquals(itemInfo.size, item.get_size())
         self.assertEquals(itemInfo.permalink, item.get_link())
         self.assertEquals(itemInfo.id, item.id)
         self.assertEquals(itemInfo.expiration_date, item.getExpirationTime())
@@ -438,21 +438,21 @@ class PlaylistItemTrackTest(TrackerTest):
         self.runUrgentCalls()
 
     def make_item(self, url):
-        item = Item(entry=getEntryForURL(url), feed_id=self.feed.id)
+        item = Item(entry=get_entry_for_url(url), feed_id=self.feed.id)
         self.items.append(item)
         self.playlist.addItem(item)
 
     def checkDownloadInfo(self, info, item):
         downloader = item.downloader
-        self.assertEquals(info.current_size, downloader.getCurrentSize())
+        self.assertEquals(info.current_size, downloader.get_current_size())
         self.assertEquals(info.rate, downloader.getRate())
-        self.assertEquals(info.state, downlader.getState())
+        self.assertEquals(info.state, downlader.get_state())
 
     def checkInfo(self, itemInfo, item):
         self.assertEquals(itemInfo.name, item.get_title())
-        self.assertEquals(itemInfo.description, item.getDescription())
-        self.assertEquals(itemInfo.release_date, item.getReleaseDateObj())
-        self.assertEquals(itemInfo.size, item.getSize())
+        self.assertEquals(itemInfo.description, item.get_description())
+        self.assertEquals(itemInfo.release_date, item.get_release_date_obj())
+        self.assertEquals(itemInfo.size, item.get_size())
         self.assertEquals(itemInfo.permalink, item.get_link())
         self.assertEquals(itemInfo.id, item.id)
         self.assertEquals(itemInfo.expiration_date, item.getExpirationTime())

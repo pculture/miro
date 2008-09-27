@@ -118,7 +118,7 @@ class Controller:
             views.remoteDownloads.confirmDBThread()
             for download in views.remoteDownloads:
                 if download.isFinished():
-                    logging.info("migrating %s", download.getFilename())
+                    logging.info("migrating %s", download.get_filename())
                     download.migrate(newDir)
             # Pass in case they don't exist or are not empty:
             try:

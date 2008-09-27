@@ -684,7 +684,7 @@ class BackendMessageHandler(messages.MessageHandler):
             except database.ObjectNotFoundError:
                 logging.warn("AddVideosToPlaylist: Item not found -- %s", id)
                 continue
-            if not item.isDownloaded():
+            if not item.is_downloaded():
                 logging.warn("AddVideosToPlaylist: Item not downloaded (%s)",
                         item)
             else:
@@ -768,7 +768,7 @@ class BackendMessageHandler(messages.MessageHandler):
             item.pause()
 
         for item in views.allDownloadingItems:
-            if item.isUploading():
+            if item.is_uploading():
                 item.pauseUpload()
 
     def handle_pause_download(self, message):
@@ -785,7 +785,7 @@ class BackendMessageHandler(messages.MessageHandler):
             item.resume()
 
         for item in views.allDownloadingItems:
-            if item.isUploadingPaused():
+            if item.is_uploading_paused():
                 item.startUpload()
 
     def handle_resume_download(self, message):
@@ -798,7 +798,7 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_cancel_all_downloads(self, message):
         for item in views.pausedItems:
-            if item.isUploading() or item.isUploadingPaused():
+            if item.is_uploading() or item.is_uploading_paused():
                 item.stopUpload()
             else:
                 item.expire()
@@ -807,7 +807,7 @@ class BackendMessageHandler(messages.MessageHandler):
             item.expire()
 
         for item in views.allDownloadingItems:
-            if item.isUploading() or item.isUploadingPaused():
+            if item.is_uploading() or item.is_uploading_paused():
                 item.stopUpload()
 
     def handle_start_upload(self, message):
@@ -818,7 +818,7 @@ class BackendMessageHandler(messages.MessageHandler):
         else:
             if item.downloader.getType() != 'bittorrent':
                 logging.warn("%s is not a torrent", item)
-            elif item.isUploading():
+            elif item.is_uploading():
                 logging.warn("%s is already uploading", item)
             else:
                 item.startUpload()
@@ -831,7 +831,7 @@ class BackendMessageHandler(messages.MessageHandler):
         else:
             if item.downloader.getType() != 'bittorrent':
                 logging.warn("%s is not a torrent", item)
-            elif not item.isUploading():
+            elif not item.is_uploading():
                 logging.warn("%s is already stopped", item)
             else:
                 item.stopUpload()
@@ -849,14 +849,15 @@ class BackendMessageHandler(messages.MessageHandler):
             item = views.items.getObjectByID(message.id)
         except database.ObjectNotFoundError:
             logging.warn("SaveVideoAs: Item not found -- %s", message.id)
-        else:
-            logging.info("saving video %s to %s" % (item.getVideoFilename(),
-                                                    message.filename))
-            try:
-                shutil.copyfile(item.getVideoFilename(), message.filename)
-            except IOError:
-                # FIXME - we should pass the error back to the frontend
-                pass
+            return
+
+        logging.info("saving video %s to %s" % (item.get_video_filename(),
+                                                message.filename))
+        try:
+            shutil.copyfile(item.get_video_filename(), message.filename)
+        except IOError:
+            # FIXME - we should pass the error back to the frontend
+            pass
 
     def handle_remove_video_entry(self, message):
         try:
@@ -872,7 +873,7 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warn("DeleteVideo: Item not found -- %s", message.id)
         else:
-            item.deleteFiles()
+            item.delete_files()
             item.expire()
 
     def handle_rename_video(self, message):

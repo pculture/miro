@@ -548,7 +548,7 @@ class HTTPDownloader(BGDownloader):
         else:
             headerCallback = self.onHeadersRestart
         self.client = httpclient.grabURL(self.url,
-                self.onDownloadFinished, self.onDownloadError,
+                self.on_download_finished, self.onDownloadError,
                 headerCallback, self.onBodyData, start=self.currentSize)
         self.resetBlockTimes()
         self.updateClient()
@@ -695,7 +695,7 @@ class HTTPDownloader(BGDownloader):
         except IOError, e:
             self.handleWriteError(e)
 
-    def onDownloadFinished(self, response):
+    def on_download_finished(self, response):
         self.client = None
         try:
             self.filehandle.close()

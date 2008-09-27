@@ -73,7 +73,7 @@ def addVideo(path, single=False):
     path = os.path.abspath(path)
     views.items.confirmDBThread()
     for i in views.items:
-        itemFilename = i.getFilename()
+        itemFilename = i.get_filename()
         if (itemFilename != '' and 
                 os.path.exists(itemFilename) and
                 samefile(itemFilename, path)):
@@ -99,7 +99,7 @@ def checkURLExists(url):
             text1 = _("That URL is already an external download.")
             downloadState = None
             if i.downloader is not None:
-                downloadState = i.downloader.getState()
+                downloadState = i.downloader.get_state()
             if downloadState in ('paused', 'stopped'):
                 i.download()
                 text2 = _("Miro will begin downloading it now.")
@@ -116,7 +116,7 @@ def checkURLExists(url):
     return False
 
 def __buildEntry(url, contentType, additional):
-    entry = item.getEntryForURL(url, contentType)
+    entry = item.get_entry_for_url(url, contentType)
     if additional is not None:
         for key in 'title', 'link', 'feed':
             if key in additional:
@@ -199,7 +199,7 @@ def downloadUnknownMimeType(url):
             return
         if dialog.choice == dialogs.BUTTON_DOWNLOAD_ANYWAY:
             # Fake a viedo mime type, so we will download the item.
-            downloadVideo(item.getEntryForURL(url, 'video/x-unknown'))
+            downloadVideo(item.get_entry_for_url(url, 'video/x-unknown'))
     dialog.run(callback)
 
 def downloadVideo(entry):
@@ -213,10 +213,10 @@ def addTorrent(path, torrentInfohash):
         if (i.downloader is not None and
                 i.downloader.status.get('infohash') == torrentInfohash):
             logging.info("not downloading %s, it's already a download for %s", path, i)
-            if i.downloader.getState() in ('paused', 'stopped'):
+            if i.downloader.get_state() in ('paused', 'stopped'):
                 i.download()
             return
-    newItem = item.Item(item.getEntryForFile(path), feed_id=manualFeed.getID())
+    newItem = item.Item(item.get_entry_for_file(path), feed_id=manualFeed.getID())
     newItem.download()
 
 def resetCommandLineView():

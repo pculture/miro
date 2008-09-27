@@ -29,7 +29,7 @@
 """Sanity checks for the databases.
 
 This module is deprecated: database sanity checking is done by the
-checkConstraints method on DDBObjects.  This is a better way to do things
+check_constraints method on DDBObjects.  This is a better way to do things
 because it will catch errors right when we save objects, instead of some
 unknown point in the future.  We still have this code around, because it's
 used to do sanity checks on old databases.

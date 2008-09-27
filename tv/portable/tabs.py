@@ -73,7 +73,7 @@ class Tab:
         self.obj.confirmDBThread()
         return self.selected
 
-    def getState(self):
+    def get_state(self):
         """Returns "normal" "selected" or "selected-inactive"
         """
         if not self.selected:

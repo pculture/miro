@@ -111,13 +111,13 @@ class ItemSort:
             x, y = y, x
         
         if self.sortBy == 'date':
-            return x[1].getReleaseDateObj() < y[1].getReleaseDateObj()
+            return x[1].get_release_date_obj() < y[1].get_release_date_obj()
         elif self.sortBy == 'size':
-            return x[1].getSize() < y[1].getSize()
+            return x[1].get_size() < y[1].get_size()
         elif self.sortBy == 'name':
             return x[1].get_title().lower() < y[1].get_title().lower()
         elif self.sortBy == 'duration':
-            return x[1].getDurationValue() < y[1].getDurationValue()
+            return x[1].get_duration_value() < y[1].get_duration_value()
 
         return False
 
@@ -149,7 +149,7 @@ def _getUnwatchedWithMemory(item):
     try:
         return unwatchedMemory[item.getID()]
     except KeyError:
-        rv = item.getState() == 'newly-downloaded'
+        rv = item.get_state() == 'newly-downloaded'
         unwatchedMemory[item.getID()] = rv
         return rv
 

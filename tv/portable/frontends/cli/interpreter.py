@@ -227,10 +227,10 @@ class MiroInterpreter(cmd.Cmd):
             print "-" * 70
             for view in views:
                 for item in view:
-                    state = item.getState()
+                    state = item.get_state()
                     if state == 'downloading':
                         state += ' (%0.0f%%)' % item.download_progress()
-                    print "%-20s %-10s %s" % (state, item.getSizeForDisplay(),
+                    print "%-20s %-10s %s" % (state, item.get_size_for_display(),
                             item.get_title())
             print
         else:
@@ -268,7 +268,7 @@ class MiroInterpreter(cmd.Cmd):
         if item is None:
             print "No item named %r" % line
             return
-        if item.getState() in ('downloading', 'paused'):
+        if item.get_state() in ('downloading', 'paused'):
             item.expire()
         else:
             print '%s is not being downloaded' % item.get_title()
@@ -276,7 +276,7 @@ class MiroInterpreter(cmd.Cmd):
     @runInEventLoop
     def complete_stop(self, text, line, begidx, endidx):
         return self.handle_item_complete(text, self._get_item_view(),
-                lambda i: i.getState() in ('downloading', 'paused'))
+                lambda i: i.get_state() in ('downloading', 'paused'))
 
     @runInEventLoop
     def do_download(self, line):
@@ -287,9 +287,9 @@ class MiroInterpreter(cmd.Cmd):
         if item is None:
             print "No item named %r" % line
             return
-        if item.getState() == 'downloading':
+        if item.get_state() == 'downloading':
             print '%s is currently being downloaded' % item.get_title()
-        elif item.isDownloaded():
+        elif item.is_downloaded():
             print '%s is already downloaded' % item.get_title()
         else:
             item.download()
@@ -297,7 +297,7 @@ class MiroInterpreter(cmd.Cmd):
     @runInEventLoop
     def complete_download(self, text, line, begidx, endidx):
         return self.handle_item_complete(text, self._get_item_view(),
-                lambda i: i.isDownloadable())
+                lambda i: i.is_downloadable())
 
     @runInEventLoop
     def do_pause(self, line):
@@ -308,7 +308,7 @@ class MiroInterpreter(cmd.Cmd):
         if item is None:
             print "No item named %r" % line
             return
-        if item.getState() == 'downloading':
+        if item.get_state() == 'downloading':
             item.pause()
         else:
             print '%s is not being downloaded' % item.get_title()
@@ -316,7 +316,7 @@ class MiroInterpreter(cmd.Cmd):
     @runInEventLoop
     def complete_pause(self, text, line, begidx, endidx):
         return self.handle_item_complete(text, self._get_item_view(),
-                lambda i: i.getState() == 'downloading')
+                lambda i: i.get_state() == 'downloading')
 
     @runInEventLoop
     def do_resume(self, line):
@@ -327,7 +327,7 @@ class MiroInterpreter(cmd.Cmd):
         if item is None:
             print "No item named %r" % line
             return
-        if item.getState() == 'paused':
+        if item.get_state() == 'paused':
             item.resume()
         else:
             print '%s is not a paused download' % item.get_title()
@@ -335,7 +335,7 @@ class MiroInterpreter(cmd.Cmd):
     @runInEventLoop
     def complete_resume(self, text, line, begidx, endidx):
         return self.handle_item_complete(text, self._get_item_view(),
-                lambda i: i.getState() == 'paused')
+                lambda i: i.get_state() == 'paused')
 
     @runInEventLoop
     def do_rm(self, line):
@@ -346,7 +346,7 @@ class MiroInterpreter(cmd.Cmd):
         if item is None:
             print "No item named %r" % line
             return
-        if item.isDownloaded():
+        if item.is_downloaded():
             item.expire()
         else:
             print '%s is not downloaded' % item.get_title()
@@ -354,7 +354,7 @@ class MiroInterpreter(cmd.Cmd):
     @runInEventLoop
     def complete_rm(self, text, line, begidx, endidx):
         return self.handle_item_complete(text, self._get_item_view(),
-                lambda i: i.isDownloaded())
+                lambda i: i.is_downloaded())
 
     @runInEventLoop
     def do_testdialog(self, line):

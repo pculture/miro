@@ -36,8 +36,8 @@ def matchingItems(obj, searchString):
         return True
     searchString = searchString.lower()
     title = obj.get_title() or u''
-    desc = obj.getRawDescription() or u''
-    filename = filenameToUnicode(obj.getFilename()) or u''
+    desc = obj.get_raw_description() or u''
+    filename = filenameToUnicode(obj.get_filename()) or u''
     if search.match(searchString, [title.lower(), desc.lower(), filename.lower()]):
         return True
     if not obj.isContainerItem:
@@ -47,19 +47,19 @@ def matchingItems(obj, searchString):
     return False
 
 def downloadingItems(obj):
-    return obj.getState() == 'downloading'
+    return obj.get_state() == 'downloading'
 
 def downloadingOrPausedItems(obj):
-    return obj.getState() in ('downloading', 'paused') or obj.isUploading() or obj.isUploadingPaused()
+    return obj.get_state() in ('downloading', 'paused') or obj.is_uploading() or obj.is_uploading_paused()
 
 def unwatchedItems(obj):
-    return obj.getState() == 'newly-downloaded' and not obj.isNonVideoFile()
+    return obj.get_state() == 'newly-downloaded' and not obj.is_nonvideo_file()
 
 def expiringItems(obj):
-    return obj.getState() == 'expiring' and not obj.isNonVideoFile()
+    return obj.get_state() == 'expiring' and not obj.is_nonvideo_file()
 
 def watchableItems(obj):
-    return (obj.isDownloaded() and not obj.isNonVideoFile() and 
+    return (obj.is_downloaded() and not obj.is_nonvideo_file() and
             not obj.isContainerItem)
 
 def manualItems(obj):
@@ -72,7 +72,7 @@ def allDownloadingItems(obj):
     return downloadingOrPausedItems(obj)
 
 def autoUploadingDownloaders(obj):
-    return obj.getState() == 'uploading' and not obj.manualUpload
+    return obj.get_state() == 'uploading' and not obj.manualUpload
 
 def notDeleted(obj):
     from miro import item
@@ -81,11 +81,11 @@ def notDeleted(obj):
 def newItems(obj):
     """This is "new" for the channel template
     """
-    return not obj.getViewed()
+    return not obj.get_viewed()
 
 def newWatchableItems(obj):
-    return (obj.isDownloaded() and not obj.isNonVideoFile()
-            and (obj.getState() == u"newly-downloaded"))
+    return (obj.is_downloaded() and not obj.is_nonvideo_file()
+            and (obj.get_state() == u"newly-downloaded"))
 
 def mappableToTab(obj):
     """Return True if a tab should be shown for obj in the frontend. The filter
@@ -107,7 +107,7 @@ def autoDownloads(item):
     return item.getAutoDownloaded() and downloadingOrPausedItems(item)
 
 def manualDownloads(item):
-    return not item.getAutoDownloaded() and not item.isPendingManualDownload() and item.getState() == 'downloading'
+    return not item.getAutoDownloaded() and not item.isPendingManualDownload() and item.get_state() == 'downloading'
 
 def uniqueItems(item):
     try:

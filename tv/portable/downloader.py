@@ -186,7 +186,7 @@ class RemoteDownloader(DDBObject):
         RemoteDownloader.dldaemon = daemon.ControllerDaemon()
 
     def _getRates(self):
-        state = self.getState()
+        state = self.get_state()
         if state == u'downloading':
             return (self.status.get('rate', 0), self.status.get('upRate', 0))
         if state == u'uploading':
@@ -237,13 +237,13 @@ class RemoteDownloader(DDBObject):
             finished = self.isFinished() and not wasFinished
             self.afterChangingStatus()
 
-            if self.getState() == u'uploading' and not self.manualUpload and self.getUploadRatio() > 1.5:
+            if self.get_state() == u'uploading' and not self.manualUpload and self.getUploadRatio() > 1.5:
                 self.stopUpload()
 
             self.signalChange(needsSignalItem = not finished)
             if finished:
                 for item in self.itemList:
-                    item.onDownloadFinished()
+                    item.on_download_finished()
 
     def runDownloader(self):
         """This is the actual download thread.
@@ -282,7 +282,7 @@ class RemoteDownloader(DDBObject):
         """Stops the download and removes the partially downloaded
         file.
         """
-        if self.getState() in [u'downloading', u'uploading', u'paused']:
+        if self.get_state() in [u'downloading', u'uploading', u'paused']:
             if _downloads.has_key(self.dlid):
                 c = command.StopDownloadCommand(RemoteDownloader.dldaemon,
                                                 self.dlid, delete)
@@ -322,7 +322,7 @@ class RemoteDownloader(DDBObject):
     def start(self):
         """Continues a paused, stopped, or failed download thread
         """
-        if self.getState() == u'failed':
+        if self.get_state() == u'failed':
             if _downloads.has_key (self.dlid):
                 del _downloads[self.dlid]
             self.dlid = generateDownloadID()
@@ -335,7 +335,7 @@ class RemoteDownloader(DDBObject):
             else:
                 self.runDownloader()
             self.signalChange()
-        elif self.getState() in (u'stopped', u'paused', u'offline'):
+        elif self.get_state() in (u'stopped', u'paused', u'offline'):
             if _downloads.has_key(self.dlid):
                 c = command.StartDownloadCommand(RemoteDownloader.dldaemon,
                                                  self.dlid)
@@ -387,7 +387,7 @@ URL was %s""" % self.url
         for i in self.itemList:
             i.migrate_children(directory)
 
-    def setDeleteFiles(self, deleteFiles):
+    def set_delete_files(self, deleteFiles):
         self.deleteFiles = deleteFiles
 
     def setChannelName(self, channelName):
@@ -438,7 +438,7 @@ URL was %s""" % self.url
         return self.status.get('eta', 0)
 
     @returnsUnicode
-    def getStartupActivity(self):
+    def get_startup_activity(self):
         self.confirmDBThread()
         activity = self.status.get('activity')
         if activity is None:
@@ -451,7 +451,7 @@ URL was %s""" % self.url
         """Returns the reason for the failure of this download
         This should only be called when the download is in the failed state
         """
-        if not self.getState() == u'failed':
+        if not self.get_state() == u'failed':
             msg = u"getReasonFailed() called on a non-failed downloader"
             raise ValueError(msg)
         self.confirmDBThread()
@@ -459,7 +459,7 @@ URL was %s""" % self.url
 
     @returnsUnicode
     def getShortReasonFailed(self):
-        if not self.getState() == u'failed':
+        if not self.get_state() == u'failed':
             msg = u"getShortReasonFailed() called on a non-failed downloader"
             raise ValueError(msg)
         self.confirmDBThread()
@@ -473,7 +473,7 @@ URL was %s""" % self.url
         return self.url
 
     @returnsUnicode    
-    def getState(self):
+    def get_state(self):
         """Returns the state of the download: downloading, paused, stopped,
         failed, or finished
         """
@@ -481,7 +481,7 @@ URL was %s""" % self.url
         return self.status.get('state', u'downloading')
 
     def isFinished(self):
-        return self.getState() in (u'finished', u'uploading', u'uploading-paused')
+        return self.get_state() in (u'finished', u'uploading', u'uploading-paused')
 
     def getTotalSize(self):
         """Returns the total size of the download in bytes
@@ -489,14 +489,14 @@ URL was %s""" % self.url
         self.confirmDBThread()
         return self.status.get(u'totalSize', -1)
 
-    def getCurrentSize(self):
+    def get_current_size(self):
         """Returns the current amount downloaded in bytes
         """
         self.confirmDBThread()
         return self.status.get(u'currentSize', 0)
 
     @returnsFilename
-    def getFilename(self):
+    def get_filename(self):
         """Returns the filename that we're downloading to. Should not be
         called until state is "finished."
         """
@@ -515,15 +515,15 @@ URL was %s""" % self.url
         self.status['eta'] = 0
 
     def getUploadRatio(self):
-        size = self.getCurrentSize()
+        size = self.get_current_size()
         if size == 0:
             return 0
         return self.status.get('uploaded', 0) / size
     
     def restartIfNeeded(self):
-        if self.getState() in (u'downloading', u'offline'):
+        if self.get_state() in (u'downloading', u'offline'):
             self.restart()
-        if self.getState() in (u'uploading'):
+        if self.get_state() in (u'uploading'):
             if self.manualUpload or self.getUploadRatio() < 1.5:
                 self.restart()
             else:
@@ -542,7 +542,7 @@ URL was %s""" % self.url
             c.send()
 
     def startUpload(self):
-        if (self.getState() not in (u'finished', u'uploading-paused')
+        if (self.get_state() not in (u'finished', u'uploading-paused')
                 or self.getType() != u'bittorrent'):
             return
         self.manualUpload = True
@@ -595,10 +595,10 @@ def cleanupIncompleteDownloads():
     filesInUse = set()
     views.remoteDownloads.confirmDBThread()
     for downloader in views.remoteDownloads:
-        if downloader.getState() in ('downloading', 'paused',
+        if downloader.get_state() in ('downloading', 'paused',
                                      'offline', 'uploading', 'finished',
                                      'uploading-paused'):
-            filename = downloader.getFilename()
+            filename = downloader.get_filename()
             if len(filename) > 0:
                 if not fileutil.isabs(filename):
                     filename = os.path.join(downloadDir, filename)
@@ -676,7 +676,7 @@ def getDownloader(item):
     if existing:
         return existing
     url = item.getURL()
-    channelName = unicodeToFilename(item.getChannelTitle(True))
+    channelName = unicodeToFilename(item.get_channel_title(True))
     if not channelName:
         channelName = None
     if url.startswith(u'file://'):

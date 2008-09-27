@@ -328,7 +328,7 @@ class IconCache:
         self.dbItem.confirmDBThread()
         return self.filename and fileutil.exists(self.filename)
 
-    def getFilename(self):
+    def get_filename(self):
         self.dbItem.confirmDBThread()
         if self.url and self.url.startswith(u"file://"):
             return getFileURLPath(self.url)

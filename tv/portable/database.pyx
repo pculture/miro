@@ -1347,7 +1347,7 @@ class DDBObject(signals.SignalEmitter):
         DDBObject.lastID = DDBObject.lastID + 1
         self.id =  DDBObject.lastID
         if add:
-            self.checkConstraints()
+            self.check_constraints()
             self.dd.addAfterCursor(self)
 
     def onRestore(self):
@@ -1379,7 +1379,7 @@ class DDBObject(signals.SignalEmitter):
         """
         confirmDBThread()
 
-    def checkConstraints(self):
+    def check_constraints(self):
         """Subclasses can override this method to do constraint checking
         before they get saved to disk.  They should raise a
         DatabaseConstraintError on problems.
@@ -1394,7 +1394,7 @@ class DDBObject(signals.SignalEmitter):
             msg = "signalChange() called on non-existant object (id is %s)" \
                     % self.id
             raise DatabaseConstraintError, msg
-        self.checkConstraints()
+        self.check_constraints()
         self.dd.saveCursor()
         try:
             self.dd.resetCursor()

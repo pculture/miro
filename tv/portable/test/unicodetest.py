@@ -78,8 +78,8 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.assertEqual(u"Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d",myFeed.get_title())
 
         # The description is the same, but surrounded by a <span>
-        self.assertEqual(type(myFeed.getDescription()), types.UnicodeType)
-        self.assertEqual(u"<span>Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d</span>",myFeed.getDescription())
+        self.assertEqual(type(myFeed.get_description()), types.UnicodeType)
+        self.assertEqual(u"<span>Chinese Numbers \u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d</span>",myFeed.get_description())
 
         items = database.defaultDatabase.filter(lambda x:x.__class__ == item.Item)
         self.assertEqual(items.len(),1)
@@ -87,8 +87,8 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.assertEqual(type(i.get_title()), types.UnicodeType)
         self.assertEqual(u"\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d",i.get_title())
 
-        self.assertEqual(type(i.getDescription()), types.UnicodeType)
-        self.assertEqual(u"<span>\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d</span>",i.getDescription())
+        self.assertEqual(type(i.get_description()), types.UnicodeType)
+        self.assertEqual(u"<span>\u25cb\u4e00\u4e8c\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d</span>",i.get_description())
 
     def forceFeedParserCallback(self, myFeed):
         # a hack to get the feed to update without eventloop

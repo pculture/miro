@@ -204,7 +204,7 @@ class Renderer:
         logging.debug("haven't implemented exit_fullscreen method yet!")
 
     def select_item(self, an_item):
-        self.select_file(an_item.getFilename())
+        self.select_file(an_item.get_filename())
 
     def select_file(self, filename):
         """starts playing the specified file"""

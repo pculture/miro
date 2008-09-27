@@ -199,7 +199,7 @@ class AppController(NSObject):
                 views.remoteDownloads.confirmDBThread()
                 self.pausedDownloaders = list()
                 for dl in views.remoteDownloads:
-                    if dl.getState() == 'downloading':
+                    if dl.get_state() == 'downloading':
                         self.pausedDownloaders.append(dl)
                 dlCount = len(self.pausedDownloaders)
                 if dlCount > 0:

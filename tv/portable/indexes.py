@@ -58,10 +58,10 @@ def objectsByClass(x):
         return x.__class__
 
 def itemsByState(x):
-    return x.getState()
+    return x.get_state()
 
 def itemsByChannelCategory(x):
-    return x.getChannelCategory()
+    return x.get_channel_category()
 
 def downloadsByCategory(x):
     """Splits downloading items into 3 categories:

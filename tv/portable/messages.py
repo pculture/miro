@@ -674,27 +674,27 @@ class ItemInfo(object):
         self.name = item.get_title()
         self.id = item.id
         self.feed_id = item.feed_id
-        self.description = item.getDescription()
-        self.release_date = item.getReleaseDateObj()
-        self.size = item.getSize()
-        self.duration = item.getDurationValue()
+        self.description = item.get_description()
+        self.release_date = item.get_release_date_obj()
+        self.size = item.get_size()
+        self.duration = item.get_duration_value()
         self.resume_time = item.resumeTime
         self.permalink = item.get_link()
         self.commentslink = item.get_comments_link()
         self.has_sharable_url = item.hasSharableURL()
-        self.can_be_saved = item.showSaveButton()
+        self.can_be_saved = item.show_save_button()
         if not item.keep:
             self.expiration_date = item.getExpirationTime()
         else:
             self.expiration_date = None
-        self.item_viewed = item.getViewed()
-        self.downloaded = item.isDownloaded()
+        self.item_viewed = item.get_viewed()
+        self.downloaded = item.is_downloaded()
         self.is_external = item.is_external()
         self.video_watched = item.getSeen()
-        self.video_path = item.getVideoFilename()
+        self.video_path = item.get_video_filename()
         self.thumbnail = item.getThumbnail()
-        self.file_format = item.getFormat()
-        self.license = item.getLicence()
+        self.file_format = item.get_format()
+        self.license = item.get_license()
         self.file_url = item.getURL()
         self.is_container_item = item.isContainerItem
         if urlparse.urlparse(self.license)[0]:
@@ -718,9 +718,9 @@ class ItemInfo(object):
         ## Torrent-specific stuff
         self.leechers = self.seeders = self.up_rate = None
         self.down_rate = self.up_total = self.down_total = None
-        if item.looksLikeTorrent() and hasattr(item.downloader, 'status'):
+        if item.looks_like_torrent() and hasattr(item.downloader, 'status'):
             status = item.downloader.status
-            if item.isTransferring():
+            if item.is_transferring():
                 # gettorrentdetails only
                 self.leechers = status.get('seeders', 0)
                 self.seeders = status.get('leechers', 0)
@@ -751,10 +751,10 @@ class DownloadInfo(object):
     torrent -- Is this a Torrent download?
     """
     def __init__(self, downloader):
-        self.downloaded_size = downloader.getCurrentSize()
+        self.downloaded_size = downloader.get_current_size()
         self.rate = downloader.getRate()
-        self.state = downloader.getState()
-        self.startup_activity = downloader.getStartupActivity()
+        self.state = downloader.get_state()
+        self.startup_activity = downloader.get_startup_activity()
         self.finished = downloader.isFinished()
         self.torrent = (downloader.getType() == 'bittorrent')
 
