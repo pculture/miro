@@ -463,93 +463,32 @@ add_panel("folders", _("Folders"), _build_folders_panel, 'wimages/pref-tab-folde
 add_panel("disk_space", _("Disk space"), _build_disk_space_panel, 'wimages/pref-tab-disk-space.png')
 add_panel("playback", _("Playback"), _build_playback_panel, 'wimages/pref-tab-playback.png')
 
-def _create_panel(title_text, panel_contents):
-    title = widgetset.Label(title_text)
-    title.set_bold(True)
-    title.set_size(1.2)
-
-    v = widgetset.VBox()
-    v.pack_start(widgetutil.align_left(title))
-    v.pack_start(panel_contents)
-
-    return v
-
-class TabRenderer(widgetset.CustomCellRenderer):
-    def get_size(self, style, layout):
-        return self.pack_tab(layout).get_size()
-
-    def pack_tab(self, layout):
-        #layout.set_font(0.77)
-        titlebox = layout.textbox(self.tab_title)
-
-        hbox = cellpack.HBox(spacing=4)
-        hbox.pack(cellpack.align_middle(self.icon))
-        hbox.pack(cellpack.align_middle(titlebox))
-        return hbox
-
-    def render(self, context, layout, selected, hotspot):
-        layout.set_text_color(context.style.text_color)
-        self.pack_tab(layout).render_layout(context)
-
-class PreferenceTabList(widgetset.TableView):
-    def __init__(self, widget_holder):
-        # The model stores the title, image, and right-side widget for each
-        # tab
-        self.widget_holder = widget_holder
-        model = widgetset.TableModel('text', 'object', 'object')
-        widgetset.TableView.__init__(self, model)
-        self.set_show_headers(False)
-        self.add_column('tab', TabRenderer(), 150, tab_title=0, icon=1)
-
-    def do_selection_changed(self):
-        widget = self.model[self.get_selected()][2]
-        self.widget_holder.set(widget)
-
 def run_dialog(tab=None):
     """Displays the preferences dialog."""
     pref_window = widgetset.Dialog(_("Preferences"))
     try:
         try:
-            v = widgetset.VBox()
-            main_area_holder = window.WidgetHolder()
-            
-            splitter = widgetset.Splitter()
+            tab_container = widgetset.TabContainer()
 
-            tab_list = PreferenceTabList(main_area_holder)
-
-            max_height = max_width = 0
             for name, title, image_name, panel_builder in __PANEL:
-                #panel = _create_panel(title, panel_builder())
                 panel = panel_builder()
                 alignment = widgetset.Alignment(xalign=0.5, yalign=0.0)
+                alignment.set_padding(10, 20, 20, 20)
                 alignment.add(panel)
-                image = imagepool.get_surface(resources.path(image_name))
-                tab_list.model.append(title, image, alignment)
-
-                w, h = panel.get_size_request()
-                max_width = max(max_width, w)
-                max_height = max(max_height, h)
-
-            main_area_holder.set_size_request(max_width, max_height)
-
-            splitter.set_left(tab_list)
-            splitter.set_left_width(200)
+                image = imagepool.get(resources.path(image_name))
+                tab_container.append_tab(alignment, title, image)
 
             if tab == None:
-                tab_list.select(tab_list.model.first_iter())
+                tab_container.select_tab(0)
             else:
                 for i, bits in enumerate(__PANEL):
                     if bits[0] == tab:
-                        tab_list.select(tab_list.model.nth_iter(i))
+                        tab_container.select_tab(i)
                         break
                 else:
-                    tab_list.select(tab_list.model.first_iter())
+                    tab_container.select_tab(0)
 
-            splitter.set_right(main_area_holder)
-
-            v.pack_start(splitter)
-
-            pref_window.set_extra_widget(v)
+            pref_window.set_extra_widget(tab_container)
             pref_window.add_button(BUTTON_CLOSE.text)
             pref_window.run()
         except (SystemExit, KeyboardInterrupt):

@@ -38,7 +38,7 @@ from miro.frontends.widgets.gtk.customcontrols import CustomButton, \
 from miro.frontends.widgets.gtk.drawing import ImageSurface, DrawingContext, \
         DrawingArea, Background, Gradient
 from miro.frontends.widgets.gtk.layout import HBox, VBox, Alignment, \
-        Splitter, Table
+        Splitter, Table, TabContainer
 from miro.frontends.widgets.gtk.window import Window, MainWindow, Dialog, \
         FileOpenDialog, FileSaveDialog, AboutDialog, AlertDialog
 from miro.frontends.widgets.gtk.tableview import TableView, TableModel, \

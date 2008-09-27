@@ -181,3 +181,28 @@ class Table(Widget):
         else:
             for mem in self.children:
                 if mem: mem.disable_widget()
+
+class TabContainer(Widget):
+    def __init__(self, xalign=0, yalign=0, xscale=0, yscale=0,
+            top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
+        Widget.__init__(self)
+        self.set_widget(gtk.Notebook())
+        self._widget.set_tab_pos(gtk.POS_TOP)
+        self.children = []
+
+    def append_tab(self, child_widget, text, image=None):
+        if image is not None:
+            label_widget = gtk.VBox(spacing=2)
+            image_widget = gtk.Image()
+            image_widget.set_from_pixbuf(image.pixbuf)
+            label_widget.pack_start(image_widget)
+            label_widget.pack_start(gtk.Label(text))
+            label_widget.show_all()
+        else:
+            label_widget = gtk.Label(text)
+
+        self._widget.append_page(child_widget._widget, label_widget)
+        self.children.append(child_widget)
+
+    def select_tab(self, index):
+        self._widget.set_current_page(index)

@@ -757,3 +757,66 @@ class Expander(Bin):
             self.content_view.setFrameSize_(child_rect.size)
             self.content_view.setFrame_(NSMakeRect(0, top_height, size.width,
                     size.height - top_height))
+
+
+class TabViewDelegate(NSObject):
+    def tabView_willSelectTabViewItem_(self, tab_view, tab_view_item):
+        try:
+            wrapper = wrappermap.wrapper(tab_view)
+        except KeyError:
+            pass # The NSTabView hasn't been placed yet, don't worry about it.
+        else:
+            wrapper.place_child_with_item(tab_view_item)
+
+class TabContainer(Container):
+    _TOP_PAD = 10
+    _BOTTOM_PAD = _RIGHT_PAD = _LEFT_PAD = 20
+    _HORIZONTAL_PAD = _LEFT_PAD + _RIGHT_PAD
+    _VERTICAL_PAD = _TOP_PAD + _BOTTOM_PAD
+
+    def __init__(self):
+        Container.__init__(self)
+        self.children = []
+        self.item_to_child = {}
+        self.view = NSTabView.alloc().init()
+        self.view.setAllowsTruncatedLabels_(NO)
+        self.delegate = TabViewDelegate.alloc().init()
+        self.view.setDelegate_(self.delegate)
+
+    def append_tab(self, child_widget, label, image):
+        item = NSTabViewItem.alloc().init()
+        item.setLabel_(label)
+        item.setView_(FlippedView.alloc().init())
+        self.view.addTabViewItem_(item)
+        self.children.append(child_widget)
+        self.child_added(child_widget)
+        self.item_to_child[item] = child_widget
+
+    def select_tab(self, index):
+        self.view.selectTabViewItemAtIndex_(index)
+
+    def place_children(self):
+        self.place_child_with_item(self.view.selectedTabViewItem())
+
+    def place_child_with_item(self, tab_view_item):
+        child = self.item_to_child[tab_view_item]
+        child_view = tab_view_item.view()
+        content_rect =self.view.contentRect()
+        child_view.setFrame_(content_rect)
+        child_rect = NSMakeRect(self._LEFT_PAD, self._TOP_PAD, 
+                content_rect.size.width - self._HORIZONTAL_PAD,
+                content_rect.size.height - self._VERTICAL_PAD)
+        child.place(child_rect, child_view)
+
+    def calc_size_request(self):
+        tab_size = self.view.minimumSize()
+        max_width = tab_size.width
+        max_height = 0
+        for child in self.children:
+            width, height = child.get_size_request()
+            max_width = max(width, max_width)
+            max_height = max(height, max_height)
+        max_height += tab_size.height
+
+        # The Apple HIG reccomends 20px space on all sides
+        return max_width + self._HORIZONTAL_PAD, max_height + self._VERTICAL_PAD
