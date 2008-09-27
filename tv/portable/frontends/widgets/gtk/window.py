@@ -70,6 +70,35 @@ STOCK_IDS = {
     "Translate": gtk.STOCK_EDIT
 }
 
+menubar_mod_map = {
+    menubar.CTRL: '<Ctrl>',
+    menubar.ALT: '<Alt>',
+    menubar.SHIFT: '<Shift>',
+}
+
+menubar_key_map = {
+    menubar.RIGHT_ARROW: 'Right',
+    menubar.LEFT_ARROW: 'Left',
+    menubar.UP_ARROW: 'Up',
+    menubar.DOWN_ARROW: 'Down',
+    menubar.SPACE: 'Spacebar',
+    menubar.ENTER: 'Enter',
+    menubar.DELETE: 'Delete',
+    menubar.BKSPACE: 'BackSpace',
+}
+
+for i in range(1, 13):
+    name = 'F%d' % i
+    menubar_key_map[getattr(menubar, name)] = name
+
+def get_accel_string(shortcut):
+    mod_str = ''.join(menubar_mod_map[mod] for mod in shortcut.modifiers)
+    try:
+        key_str = menubar_key_map[shortcut.key]
+    except KeyError:
+        key_str = shortcut.key
+    return mod_str + key_str
+
 def get_stock_id(n):
     return STOCK_IDS.get(n, None)
 
@@ -217,15 +246,20 @@ class MainWindow(Window):
         self.menubar = self.ui_manager.get_widget("/MiroMenu")
         self.vbox.pack_start(self.menubar, expand=False)
         self.menubar.show_all()
+        self._window.add_accel_group(self.ui_manager.get_accel_group())
 
-    def make_action(self, action, label):
+    def make_action(self, action, label, shortcuts=None):
         gtk_action = gtk.Action(action, label, None, get_stock_id(action))
         callback = menus.lookup_handler(action)
         if callback is not None:
             gtk_action.connect("activate", self.on_activate, callback)
         action_group_name = menus.get_action_group_name(action)
         action_group = self.action_groups[action_group_name]
-        action_group.add_action(gtk_action)
+        if shortcuts is None or len(shortcuts) == 0:
+            action_group.add_action(gtk_action)
+        else:
+            action_group.add_action_with_accel(gtk_action,
+                    get_accel_string(shortcuts[0]))
 
     def make_actions(self):
         self.action_groups = {}
@@ -237,7 +271,8 @@ class MainWindow(Window):
             for menuitem in menu.menuitems:
                 if isinstance(menuitem, menubar.Separator):
                     continue
-                self.make_action(menuitem.action, menuitem.label)
+                self.make_action(menuitem.action, menuitem.label,
+                        menuitem.shortcuts)
         for action_group in self.action_groups.values():
             self.ui_manager.insert_action_group(action_group, -1)
 
