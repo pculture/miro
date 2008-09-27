@@ -321,7 +321,7 @@ def _build_downloads_panel():
     vbox.pack_start(grid.make_table())
 
     grid = dialogwidgets.ControlGrid()
-    grid.pack(dialogwidgets.heading(_("Bittorrent:")), span=3)
+    grid.pack(dialogwidgets.heading(_("Bittorrent:")), grid.ALIGN_LEFT, span=3)
     grid.end_line(spacing=12)
 
     cbx = widgetset.Checkbox( _('Limit upstream bandwidth to:'))
