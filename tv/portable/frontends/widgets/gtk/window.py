@@ -81,7 +81,7 @@ menubar_key_map = {
     menubar.LEFT_ARROW: 'Left',
     menubar.UP_ARROW: 'Up',
     menubar.DOWN_ARROW: 'Down',
-    menubar.SPACE: 'Spacebar',
+    menubar.SPACE: 'space',
     menubar.ENTER: 'Enter',
     menubar.DELETE: 'Delete',
     menubar.BKSPACE: 'BackSpace',
