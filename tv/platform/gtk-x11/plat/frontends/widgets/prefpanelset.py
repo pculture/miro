@@ -32,8 +32,6 @@ panel with platform-specific options.
 See portable/frontends/widgets/prefpanel.py for more information.
 """
 
-OSX_LAYOUT = False
-
 from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import dialogwidgets

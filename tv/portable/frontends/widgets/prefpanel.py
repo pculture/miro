@@ -280,21 +280,20 @@ def _build_channels_panel():
             grid.ALIGN_LEFT, span=2)
     grid.end_line(spacing=12)
 
-    if prefpanelset.OSX_LAYOUT:
-        align = grid.ALIGN_RIGHT
-    else:
-        align = grid.ALIGN_LEFT
-    grid.pack_label(_("Check for new content:"), align)
+    grid.pack_label(_("Check for new content:"),
+            dialogwidgets.ControlGrid.ALIGN_RIGHT)
     grid.pack(cc_option_menu)
     grid.end_line()
 
-    grid.pack_label(_("Auto download setting:"), align)
+    grid.pack_label(_("Auto download setting:"),
+            dialogwidgets.ControlGrid.ALIGN_RIGHT)
     grid.pack(ad_option_menu)
     grid.end_line()
 
     grid.pack(dialogwidgets.label_with_note(
         _("Remember this many old items:"),
-        _("(in addition to the current contents)")), align)
+        _("(in addition to the current contents)")),
+        dialogwidgets.ControlGrid.ALIGN_RIGHT)
     grid.pack(max_option_menu)
     grid.end_line(spacing=0)
 
@@ -365,18 +364,11 @@ def _build_downloads_panel():
     attach_integer(min_port, prefs.BT_MIN_PORT, create_integer_checker(min=0, max=65535))
     attach_integer(max_port, prefs.BT_MAX_PORT, create_integer_checker(min=0, max=65535))
 
-    if not prefpanelset.OSX_LAYOUT:
-        vbox.pack_start(widgetutil.align_left(grid.make_table()))
-        grid = dialogwidgets.ControlGrid()
-        align = grid.ALIGN_LEFT
-    else:
-        align = grid.ALIGN_RIGHT
-
-    grid.pack_label(_("Starting port:"), align)
+    grid.pack_label(_("Starting port:"), dialogwidgets.ControlGrid.ALIGN_RIGHT)
     grid.pack(min_port)
     grid.end_line()
 
-    grid.pack_label(_("Ending port:"), align)
+    grid.pack_label(_("Ending port:"), dialogwidgets.ControlGrid.ALIGN_RIGHT)
     grid.pack(max_port)
     grid.end_line(spacing=6)
     vbox.pack_start(widgetutil.align_left(grid.make_table()))
@@ -529,10 +521,7 @@ def run_dialog(tab=None):
             for name, title, image_name, panel_builder in __PANEL:
                 #panel = _create_panel(title, panel_builder())
                 panel = panel_builder()
-                if prefpanelset.OSX_LAYOUT:
-                    alignment = widgetset.Alignment(xalign=0.5, yalign=0.0)
-                else:
-                    alignment = widgetset.Alignment(xalign=0.0, yalign=0.0)
+                alignment = widgetset.Alignment(xalign=0.5, yalign=0.0)
                 alignment.add(panel)
                 image = imagepool.get_surface(resources.path(image_name))
                 tab_list.model.append(title, image, alignment)
