@@ -769,11 +769,6 @@ class TabViewDelegate(NSObject):
             wrapper.place_child_with_item(tab_view_item)
 
 class TabContainer(Container):
-    _TOP_PAD = 10
-    _BOTTOM_PAD = _RIGHT_PAD = _LEFT_PAD = 20
-    _HORIZONTAL_PAD = _LEFT_PAD + _RIGHT_PAD
-    _VERTICAL_PAD = _TOP_PAD + _BOTTOM_PAD
-
     def __init__(self):
         Container.__init__(self)
         self.children = []
@@ -803,10 +798,7 @@ class TabContainer(Container):
         child_view = tab_view_item.view()
         content_rect =self.view.contentRect()
         child_view.setFrame_(content_rect)
-        child_rect = NSMakeRect(self._LEFT_PAD, self._TOP_PAD, 
-                content_rect.size.width - self._HORIZONTAL_PAD,
-                content_rect.size.height - self._VERTICAL_PAD)
-        child.place(child_rect, child_view)
+        child.place(child_view.bounds(), child_view)
 
     def calc_size_request(self):
         tab_size = self.view.minimumSize()
@@ -818,5 +810,4 @@ class TabContainer(Container):
             max_height = max(height, max_height)
         max_height += tab_size.height
 
-        # The Apple HIG reccomends 20px space on all sides
-        return max_width + self._HORIZONTAL_PAD, max_height + self._VERTICAL_PAD
+        return max_width, max_height
