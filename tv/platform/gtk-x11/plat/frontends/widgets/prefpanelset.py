@@ -69,27 +69,24 @@ def _playback_panel():
     grid.pack_label(_("Video renderer:"), grid.ALIGN_RIGHT)
     grid.pack(dialogwidgets.radio_button_list(gstreamer_radio, xine_radio))
 
-    rbg = widgetset.RadioButtonGroup()
-    none_radio = widgetset.RadioButton("None", rbg)
-    goom_radio = widgetset.RadioButton("goom", rbg)
-    oscope_radio = widgetset.RadioButton("oscope", rbg)
-    attach_radio([(none_radio, "none"), (goom_radio, "goom"), 
-        (oscope_radio, "oscope")], options.XINE_VIZ)
+    viz_options = [("None", _("None")),
+                   ("goom", "goom"),
+                   ("oscope", "oscope")]
+    viz_option_menu = widgetset.OptionMenu([op[1] for op in viz_options])
+    attach_combo(viz_option_menu, options.XINE_VIZ, [op[0] for op in viz_options])
     grid.end_line(spacing=12)
 
     grid.pack_label(_("Use this for video when playing audio:"),
             grid.ALIGN_RIGHT)
-    xine_radiolist = dialogwidgets.radio_button_list(none_radio, goom_radio,
-            oscope_radio)
-    grid.pack(xine_radiolist)
+    grid.pack(viz_option_menu)
 
     extras.append(align_left(grid.make_table()))
 
     def handle_clicked(widget):
         if widget is gstreamer_radio:
-            xine_radiolist.disable_widget()
+            viz_option_menu.disable_widget()
         elif widget is xine_radio:
-            xine_radiolist.enable_widget()
+            viz_option_menu.enable_widget()
 
     gstreamer_radio.connect('clicked', handle_clicked)
     xine_radio.connect('clicked', handle_clicked)
