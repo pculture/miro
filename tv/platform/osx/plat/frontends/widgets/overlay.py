@@ -194,7 +194,8 @@ class OverlayPalette (NSWindowController):
             self.update_(nil)
             self.volumeSlider.setFloatValue_(self.renderer.movie.volume())
 
-            self.videoWindow = videoWindow
+            if self.videoWindow != videoWindow:
+                self.videoWindow = videoWindow
             self.adjustPosition(videoWindow)
             self.adjustContent(videoWindow, False)
 
