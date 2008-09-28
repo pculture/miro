@@ -277,7 +277,7 @@ class VideoWindow (NSWindow):
 
     def close(self):
         super(VideoWindow, self).close()
-        self.palette.orderOut_(nil)
+        self.palette.window().orderOut_(nil)
         self.palette = None
 
     def canBecomeMainWindow(self):
