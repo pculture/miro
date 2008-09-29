@@ -319,3 +319,17 @@ def ensureDownloadDaemonIsTerminated():
 
 def exit(returnCode):
     NSApplication.sharedApplication().stop_(nil)
+
+###############################################################################
+
+def movie_data_program_info(moviePath, thumbnailPath):
+    py_exe_path = os.path.join(os.path.dirname(NSBundle.mainBundle().executablePath()), 'python')
+    rsrc_path = NSBundle.mainBundle().resourcePath()
+    script_path = os.path.join(rsrc_path, 'qt_extractor.py')
+    options = NSBundle.mainBundle().infoDictionary().get('PyOptions')
+    env = None
+    if options['alias'] == 1:
+        env = {'PYTHONPATH': ':'.join(sys.path)}
+    else:
+        env = {'PYTHONHOME': rsrc_path}
+    return ((py_exe_path, script_path, moviePath, thumbnailPath), env)

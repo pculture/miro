@@ -120,7 +120,14 @@ AppKit.NSApplicationLoad()
 
 registerQuicktimeComponents()
 
-(qtmovie, error) = QTKit.QTMovie.movieWithFile_error_(moviePath)
+pyobjc_version = objc.__version__
+pyobjc_version = pyobjc_version.split('.')
+pyobjc_version = int(pyobjc_version[0])
+
+if pyobjc_version == 2:
+    qtmovie, error = QTKit.QTMovie.movieWithFile_error_(moviePath, None)
+else:
+    qtmovie, error = QTKit.QTMovie.movieWithFile_error_(moviePath)
 if qtmovie is None or error is not objc.nil:
     sys.exit(0)
 

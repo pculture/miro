@@ -82,7 +82,7 @@ def addVideo(path, single=False):
             return
     if single:
         correctFeed = util.getSingletonDDBObject(views.singleFeed)
-        items = [i for i in correctFeed.items]
+        items = list(correctFeed.items)
         for i in items:
             i.expire()
     else:

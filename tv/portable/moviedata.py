@@ -42,7 +42,7 @@ from miro import prefs
 from miro import signals
 from miro import util
 from miro import fileutil
-from miro.plat.utils import FilenameType, killProcess
+from miro.plat.utils import FilenameType, killProcess, movie_data_program_info
 
 MOVIE_DATA_UTIL_TIMEOUT = 60
 # Time in seconds that we wait for the utility to execute.  If it goes longer
@@ -84,15 +84,14 @@ class MovieDataInfo:
                 util.random_string(5))
         self.thumbnailPath = os.path.join(thumbnailDirectory(),
                 thumbnailFilename)
-        self.programInfo = []
-        for renderer in app.renderers:
-            try:
-                commandLine, env = renderer.movieDataProgramInfo(
-                        fileutil.expand_filename(self.videoPath), fileutil.expand_filename(self.thumbnailPath))
-            except NotImplementedError:
-                pass
-            else:
-                self.programInfo.append((commandLine, env))
+        self.programInfo = None
+        try:
+            commandLine, env = movie_data_program_info(
+                    fileutil.expand_filename(self.videoPath), fileutil.expand_filename(self.thumbnailPath))
+        except NotImplementedError:
+            pass
+        else:
+            self.programInfo = (commandLine, env)
 
 class MovieDataUpdater:
     def __init__ (self):
@@ -116,14 +115,12 @@ class MovieDataUpdater:
                 duration = -1
                 screenshotWorked = False
                 screenshot = None
-                for commandLine, env in movieDataInfo.programInfo:
-                    stdout = self.runMovieDataProgram(commandLine, env)
-                    if duration == -1:
-                        duration = self.parseDuration(stdout)
-                    if thumbnailSuccessRE.search(stdout):
-                        screenshotWorked = True
-                    if duration != -1 and screenshotWorked:
-                        break
+                commandLine, env = movieDataInfo.programInfo
+                stdout = self.runMovieDataProgram(commandLine, env)
+                if duration == -1:
+                    duration = self.parseDuration(stdout)
+                if thumbnailSuccessRE.search(stdout):
+                    screenshotWorked = True
                 if (screenshotWorked and 
                         fileutil.exists(movieDataInfo.thumbnailPath)):
                     screenshot = movieDataInfo.thumbnailPath

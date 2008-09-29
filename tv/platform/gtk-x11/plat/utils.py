@@ -269,3 +269,6 @@ def setProperties(props):
     for p, val in props:
         logging.info("Setting preference: %s -> %s", p.alias, val)
         config.set(p, val)
+
+def movie_data_program_info(moviePath, thumbnailPath):
+    return ()
