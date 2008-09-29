@@ -1,3 +1,9 @@
+miro (1.2.7-0pcf3) hardy; urgency=low
+
+  * Redoing the package to fix packaging problems
+
+ -- Will Kahn-Greene <will.guaraldi@pculture.org> Mon, 29 Sep 2008 14:12:13 -0400
+
 miro (1.2.7-0pcf2) hardy; urgency=low
 
   * Fixed not installing xine_extrator
