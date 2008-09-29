@@ -50,6 +50,7 @@ class LayoutManager(object):
         self.update_direction(widget.get_direction())
         widget.connect('style-set', self.on_style_set)
         widget.connect('direction-changed', self.on_direction_changed)
+        self.widget = widget
         self.reset()
 
     def reset(self):
@@ -94,7 +95,7 @@ class LayoutManager(object):
     def button(self, text, pressed=False):
         if use_native_buttons:
             return NativeButton(text, self.pango_context, self.current_font, 
-                    pressed, self.style)
+                    pressed, self.style, self.widget)
         else:
             return StyledButton(text, self.pango_context, self.current_font, 
                     pressed)
@@ -276,7 +277,7 @@ class UnderlineDrawer(object):
                 self.next_underline()
 
 class NativeButton(object):
-    def __init__(self, text, context, font, pressed, style):
+    def __init__(self, text, context, font, pressed, style, widget):
         self.layout = pango.Layout(context)
         self.font = font
         self.pressed = pressed
@@ -285,6 +286,7 @@ class NativeButton(object):
         self.pad_x = style.xthickness + 1
         self.pad_y = style.ythickness + 1
         self.style = style
+        self.widget = widget
         # The above code assumes an "inner-border" style property of 1. PyGTK
         # doesn't seem to support Border objects very well, so can't get it
         # from the widget style.
@@ -328,7 +330,7 @@ class NativeButton(object):
             # for details
             widget = window.get_user_data()
         else:
-            widget = None
+            widget = self.widget
 
         self.style.paint_box(window, state, shadow, None, widget, "button", 
                 int(x), int(y), int(width), int(height))
