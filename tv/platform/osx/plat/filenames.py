@@ -28,6 +28,8 @@
 
 from miro.util import returnsBinary
 
+FilenameType = str
+
 # Takes filename given by Python or the PyObjC bridge and turn it into a FilenameType
 @returnsBinary
 def osFilenameToFilenameType(filename):

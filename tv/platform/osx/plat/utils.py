@@ -43,10 +43,8 @@ from AppKit import *
 from miro import prefs
 from miro import config
 from miro.util import returnsUnicode, returnsBinary, checkU, checkB
-from miro.plat.filenames import osFilenameToFilenameType, osFilenamesToFilenameTypes, filenameTypeToOSFilename
+from miro.plat.filenames import osFilenameToFilenameType, osFilenamesToFilenameTypes, filenameTypeToOSFilename, FilenameType
 from miro.plat.frontends.widgets.threads import on_ui_thread
-
-FilenameType = str
 
 # We need to define samefile for the portable code.  Lucky for us, this is
 # very easy.
