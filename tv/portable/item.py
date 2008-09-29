@@ -79,6 +79,7 @@ class Item(DDBObject):
         self.seen = False
         self.autoDownloaded = False
         self.pendingManualDL = False
+        self.downloader = None
         self.downloadedTime = None
         self.watchedTime = None
         self.pendingReason = u""
@@ -1135,12 +1136,10 @@ class Item(DDBObject):
         NOTE: this will always return the absolute path to the file.
         """
         self.confirmDBThread()
-        try:
+        if self.downloader and hasattr(self.downloader, "get_filename"):
             return self.downloader.get_filename()
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            return FilenameType("")
+
+        return FilenameType("")
 
     @returnsFilename
     def get_video_filename(self):
@@ -1150,7 +1149,7 @@ class Item(DDBObject):
         """
         self.confirmDBThread()
         if self.videoFilename:
-            return os.path.join (self.get_filename(), self.videoFilename)
+            return os.path.join(self.get_filename(), self.videoFilename)
         else:
             return self.get_filename()
 
@@ -1216,9 +1215,9 @@ class Item(DDBObject):
         to:   /path/to/movies/foobar.mp4
         """
         filenamePath = self.get_filename()
-        if (fileutil.isdir(filenamePath)):
+        if fileutil.isdir(filenamePath):
             enclosedFile = os.path.join(filenamePath, os.path.basename(filenamePath))
-            if (fileutil.exists(enclosedFile)):
+            if fileutil.exists(enclosedFile):
                 logging.info("Migrating incorrect torrent download: %s" % enclosedFile)
                 try:
                     temp = filenamePath + ".tmp"
@@ -1230,7 +1229,7 @@ class Item(DDBObject):
                 except (SystemExit, KeyboardInterrupt):
                     raise
                 except:
-                    pass
+                    logging.warn("fix_incorrect_torrent_subdir error:\n%s", traceback.format_exc())
                 self.videoFilename = FilenameType("")
 
     def __str__(self):
@@ -1283,11 +1282,11 @@ class FileItem(Item):
             return u'expired'
         elif not self.getSeen():
             return u'newly-downloaded'
+
+        if self.parent_id and self.getParent().get_expiring():
+            return u'expiring'
         else:
-            if self.parent_id and self.getParent().get_expiring():
-                return u'expiring'
-            else:
-                return u'saved'
+            return u'saved'
 
     def get_expiring(self):
         return False
@@ -1312,7 +1311,6 @@ class FileItem(Item):
             self.remove()
         elif self.feed_id is None:
             self.deleted = True
-            self.signalChange()
         else:
             # external item that the user deleted in Miro
             url = self.getFeedURL()
@@ -1320,14 +1318,14 @@ class FileItem(Item):
                 self.remove()
             else:
                 self.deleted = True
-                self.signalChange()
+        self.signalChange()
 
     def delete_files(self):
+        if self.getParent():
+            dler = self.getParent().downloader
+            if dler:
+                dler.stop(False)
         try:
-            if self.getParent():
-                dler = self.getParent().downloader
-                if dler:
-                    dler.stop(False)
             if fileutil.isfile(self.filename):
                 fileutil.remove(self.filename)
             elif fileutil.isdir(self.filename):
@@ -1335,17 +1333,14 @@ class FileItem(Item):
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
-            logging.warn("WARNING: error deleting files:\n%s",
-                    traceback.format_exc())
+            logging.warn("delete_files error:\n%s", traceback.format_exc())
 
     @returnsFilename
     def get_filename(self):
-        try:
+        if hasattr(self, "filename"):
             return self.filename
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            return FilenameType("")
+
+        return FilenameType("")
 
     def download(self, autodl=False):
         self.deleted = False
@@ -1437,5 +1432,3 @@ def get_entry_for_url(url, contentType=None):
 
     return FeedParserDict({'title' : title,
             'enclosures':[{'url' : url, 'type' : contentType}]})
-
-
