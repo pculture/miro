@@ -322,7 +322,15 @@ class NativeButton(object):
         else:
             shadow = gtk.SHADOW_OUT
             state = gtk.STATE_NORMAL
-        self.style.paint_box(window, state, shadow, None, None, "button", 
+        if 'QtCurveStyle' in str(self.style):
+            # This is a horrible hack for the libqtcurve library.  See
+            # http://bugzilla.pculture.org/show_bug.cgi?id=10380
+            # for details
+            widget = window.get_user_data()
+        else:
+            widget = None
+
+        self.style.paint_box(window, state, shadow, None, widget, "button", 
                 int(x), int(y), int(width), int(height))
 
     def draw_text(self, window, x, y):
