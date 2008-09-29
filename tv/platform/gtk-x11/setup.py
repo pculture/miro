@@ -372,7 +372,7 @@ def get_libtorrent_extension(portable_dir):
 
     for mem in all_libs:
         if mem.startswith("libboost_python-mt"):
-            print "using boost_ptyhon-mt"
+            print "using boost_python-mt"
             libraries += ["boost_python-mt"]
             break
     else:
