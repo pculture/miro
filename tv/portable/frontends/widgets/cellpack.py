@@ -182,7 +182,7 @@ class Box(Packer):
             child_length, child_breadth = packing.calc_size(self._translate)
             length += child_length
             breadth = max(breadth, child_breadth)
-        length += self.spacing * len(self.children)
+        length += self.spacing * (len(self.children) - 1)
         return self._translate(length, breadth)
 
     def _extra_space_iter(self, total_extra_space):
