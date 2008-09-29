@@ -551,7 +551,9 @@ class TableView(Widget):
             else:
                 label, callback = menu_item_info
                 item = gtk.MenuItem(label)
-                if callback is not None:
+                if callback is None:
+                    item.set_sensitive(False)
+                else:
                     item.connect('activate', self.on_context_menu_activate, 
                             callback)
             menu.append(item)
