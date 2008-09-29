@@ -96,9 +96,9 @@ def run_dialog(channel_infos, downloaded_items, downloading_items):
             if ret == 0:
                 # this is silly, but it sets us up for adding additional
                 # bits later.
-                ret = {KEEP_VIDEOS: False}
+                ret = {KEEP_ITEMS: False}
                 if downloaded_items:
-                    ret[KEEP_VIDEOS] = cbx_downloaded.get_checked()
+                    ret[KEEP_ITEMS] = cbx_downloaded.get_checked()
                 return ret
         except (SystemExit, KeyboardInterrupt):
             raise
