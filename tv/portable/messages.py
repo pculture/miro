@@ -547,6 +547,7 @@ class ChannelInfo(object):
     id -- object id
     tab_icon -- path to this channel's tab icon
     thumbnail -- path to this channel's thumbnail
+    num_downloaded -- number of downloaded items in the feed
     unwatched -- number of unwatched videos
     available -- number of newly downloaded videos
     is_folder -- is this a channel folder?
@@ -583,6 +584,7 @@ class ChannelInfo(object):
             self.expire_time = channel_obj.get_expiration_time()
             self.max_new = channel_obj.get_max_new()
             self.max_old_items = channel_obj.get_max_old_items()
+            self.num_downloaded = channel_obj.num_downloaded()
         else:
             self.url = None
             self.thumbnail = resources.path('wimages/folder-icon.png')
@@ -595,6 +597,7 @@ class ChannelInfo(object):
             self.expire_time = None
             self.max_new = None
             self.max_old_items = None
+            self.num_downloaded = None
 
 class PlaylistInfo(object):
     """Tracks the state of a playlist

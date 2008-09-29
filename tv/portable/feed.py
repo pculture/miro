@@ -221,8 +221,11 @@ class FeedImpl:
 
     def calc_item_list(self):
         self.items = views.toplevelItems.filterWithIndex(indexes.itemsByFeed, self.ufeed.id)
+        self.downloadedItems = self.items.filter(lambda x: x.is_downloaded())
         self.availableItems = self.items.filter(lambda x: x.get_state() == 'new')
         self.unwatchedItems = self.items.filter(lambda x: x.get_state() == 'newly-downloaded')
+        self.downloadedItems.addAddCallback(lambda x, y: self.ufeed.signalChange(needsSignalFolder=True))
+        self.downloadedItems.addRemoveCallback(lambda x, y: self.ufeed.signalChange(needsSignalFolder=True))
         self.availableItems.addAddCallback(lambda x, y: self.ufeed.signalChange(needsSignalFolder=True))
         self.availableItems.addRemoveCallback(lambda x, y: self.ufeed.signalChange(needsSignalFolder=True))
         self.unwatchedItems.addAddCallback(lambda x, y: self.ufeed.signalChange(needsSignalFolder=True))
@@ -289,6 +292,11 @@ class FeedImpl:
             raise
         except:
             logging.info ("%s has no ufeed", self)
+
+    def num_downloaded(self):
+        """Returns the number of downloaded items in the feed.
+        """
+        return len(self.downloadedItems)
 
     def numUnwatched(self):
         """Returns string with number of unwatched videos in feed

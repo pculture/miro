@@ -443,7 +443,7 @@ class Application:
 
         for ci in channel_infos:
             if not ci.is_directory_feed:
-                if ci.unwatched > 0:
+                if ci.num_downloaded > 0:
                     downloaded_items = True
 
                 if ci.has_downloading:
