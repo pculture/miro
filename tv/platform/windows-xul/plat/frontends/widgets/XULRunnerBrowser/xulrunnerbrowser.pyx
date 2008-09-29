@@ -34,6 +34,7 @@ cdef extern from "Python.h":
     ctypedef struct PyObject
     PyObject* PyObject_CallMethod(PyObject *o, char* name, char* format, ...)
     PyObject* PyObject_CallFunction(PyObject *o, char* format, ...)
+    int PyObject_IsTrue(PyObject *o)
     void Py_DECREF(PyObject*)
     void Py_INCREF(PyObject*)
 
@@ -45,6 +46,7 @@ cdef extern from "nscore.h":
 
 cdef extern from "MiroBrowserEmbed.h":
     ctypedef void(*focusCallback)(PRBool forward, void* data)
+    ctypedef int(*uriCallback)(char* data, void* data)
     ctypedef struct MiroBrowserEmbed:
         nsresult (*init)(unsigned long parentWindow, int x, int y, int width, 
                 int height)
@@ -55,6 +57,7 @@ cdef extern from "MiroBrowserEmbed.h":
         nsresult (*resize)(int x, int y, int width, int height)
         nsresult (*focus)()
         void (*SetFocusCallback)(focusCallback callback, void* data)
+        void (*SetURICallback)(uriCallback callback, void* data)
     # Trick Cython into creating constructor and destructor code
     MiroBrowserEmbed *new_MiroBrowserEmbed "new MiroBrowserEmbed" ()
     void del_MiroBrowserEmbed "delete" (MiroBrowserEmbed *rect)
@@ -69,6 +72,12 @@ cdef extern from "pythread.h":
     ctypedef struct PyThreadState
     PyThreadState *PyEval_SaveThread()
     void PyEval_RestoreThread(PyThreadState *_save)
+
+cdef public log_warning(str) with gil:
+    logging.warn(str)
+
+cdef public log_info(str) with gil:
+    logging.info(str)
 
 def initialize(xul_dir, app_dir):
     cdef nsresult rv
@@ -88,6 +97,18 @@ cdef void focusCallbackGlue(PRBool forward, void* data) with gil:
             "on_browser_focus", "b", forward)
     if retval:
         Py_DECREF(retval)
+
+cdef int uriCallbackGlue(char *uri, void* data) with gil:
+    cdef int retval
+    cdef PyObject* should_load
+
+    retval = 0
+    should_load = PyObject_CallMethod(<PyObject*>data,
+            "on_uri_load", "s", uri)
+    if should_load:
+        retval = PyObject_IsTrue(should_load)
+        Py_DECREF(should_load)
+    return retval
 
 cdef class XULRunnerBrowser:
     cdef MiroBrowserEmbed* browser
@@ -118,6 +139,7 @@ cdef class XULRunnerBrowser:
 
     def set_callback_object(self, handler):
         self.browser.SetFocusCallback(focusCallbackGlue, <void *>(handler))
+        self.browser.SetURICallback(uriCallbackGlue, <void *>handler)
 
     def _check_result(self, function, result):
         if result != NS_OK:

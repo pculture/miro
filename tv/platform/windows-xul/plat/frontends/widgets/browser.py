@@ -28,6 +28,7 @@
 
 """browser.py -- WebBrowser widget."""
 
+from miro.frontends.widgets.gtk import wrappermap
 from miro.frontends.widgets.gtk.widgetset import Widget
 
 import gtk
@@ -137,6 +138,9 @@ class BrowserWidget(gtk.DrawingArea):
         # for some reason we can't change the focus quite yet.  Using
         # idle_add() fixes the problem though
         gobject.idle_add(change_focus)
+
+    def on_uri_load(self, uri):
+        return wrappermap.wrapper(self).should_load_url(uri)
 
 gobject.type_register(BrowserWidget)
 

@@ -34,7 +34,8 @@
  * Implementation of our embedded xulrunner browser.
  */
 
-#include "windows.h"
+#include <windows.h>
+#include <Python.h>
 #include "nsCOMPtr.h"
 #include "nsComponentManagerUtils.h"
 #include "nsEmbedCID.h"
@@ -46,8 +47,10 @@
 #include "nsIWebBrowserFocus.h"
 #include "docshell/nsIDocShellTreeItem.h"
 #include "docshell/nsIWebNavigation.h"
+#include "necko/nsIURI.h"
 
 #include "MiroBrowserEmbed.h"
+#include "xulrunnerbrowser.h"
 #include "FixFocus.h"
 
 #include <stdio.h>
@@ -60,7 +63,7 @@ MiroBrowserEmbed::MiroBrowserEmbed()
 
 MiroBrowserEmbed::~MiroBrowserEmbed()
 {
-    fprintf(stderr, "destroying MiroBrowserEmbed\n");
+    log_info("destroying MiroBrowserEmbed");
 }
 
 nsresult MiroBrowserEmbed::init(unsigned long parentWindow, int x, 
@@ -84,6 +87,12 @@ nsresult MiroBrowserEmbed::init(unsigned long parentWindow, int x,
     browserBaseWindow->SetEnabled(PR_TRUE);
 
     install_focus_fixes((HWND)mWindow);
+    rv = mWebBrowser->GetParentURIContentListener(
+            getter_AddRefs(mParentContentListener));
+    NS_ENSURE_SUCCESS(rv, rv);
+    rv = mWebBrowser->SetParentURIContentListener(
+            static_cast<nsIURIContentListener *>(this));
+    NS_ENSURE_SUCCESS(rv, rv);
 
     return NS_OK;
 }
@@ -158,6 +167,12 @@ void MiroBrowserEmbed::SetFocusCallback(focusCallback callback, void* data)
     mFocusCallbackData = data;
 }
 
+void MiroBrowserEmbed::SetURICallback(uriCallback callback, void* data)
+{
+    mURICallback = callback;
+    mURICallbackData = data;
+}
+
 //*****************************************************************************
 // MiroBrowserEmbed::nsISupports
 //*****************************************************************************   
@@ -171,6 +186,7 @@ NS_INTERFACE_MAP_BEGIN(MiroBrowserEmbed)
    NS_INTERFACE_MAP_ENTRY(nsIEmbeddingSiteWindow)
    NS_INTERFACE_MAP_ENTRY(nsIInterfaceRequestor)
    NS_INTERFACE_MAP_ENTRY(nsIWebBrowserChromeFocus)
+   NS_INTERFACE_MAP_ENTRY(nsIURIContentListener)
 NS_INTERFACE_MAP_END
 
 
@@ -212,7 +228,7 @@ NS_IMETHODIMP MiroBrowserEmbed::SetChromeFlags(PRUint32 aChromeMask)
 
 NS_IMETHODIMP MiroBrowserEmbed::DestroyBrowserWindow(void)
 {
-    fprintf(stderr, "DestroyBrowserWindow() not implemented\n");
+    log_warning("DestroyBrowserWindow() not implemented");
     return NS_OK;
 }
 
@@ -325,6 +341,78 @@ NS_IMETHODIMP MiroBrowserEmbed::GetSiteWindow(void * *aSiteWindow)
 
    *aSiteWindow = mWindow;
    return NS_OK;
+}
+
+//*****************************************************************************
+// MiroBrowserEmbed::nsIURIContentListener
+//*****************************************************************************   
+
+
+/* boolean onStartURIOpen (in nsIURI aURI); */
+NS_IMETHODIMP MiroBrowserEmbed::OnStartURIOpen(nsIURI *aURI, PRBool *_retval)
+{
+    nsresult rv;
+    nsCAutoString specString;
+    rv = aURI->GetSpec(specString);
+
+    if (NS_FAILED(rv))
+     return rv;
+
+
+    // Hmm, the docs seem to suggest that retval should be TRUE if we want to
+    // continue the load.  However, it seems like the opposite is actually the
+    // case.
+    *_retval = PR_FALSE;
+    if(mURICallback) {
+        if(mURICallback((char*)specString.get(), mURICallbackData) == 0) {
+            *_retval = PR_TRUE;
+        }
+    }
+    return NS_OK;
+}
+
+/* boolean doContent (in string aContentType, in boolean aIsContentPreferred, in nsIRequest aRequest, out nsIStreamListener aContentHandler); */
+NS_IMETHODIMP MiroBrowserEmbed::DoContent(const char *aContentType, PRBool aIsContentPreferred, nsIRequest *aRequest, nsIStreamListener **aContentHandler, PRBool *_retval)
+{
+    *_retval = PR_FALSE;
+    return NS_OK;
+}
+
+/* boolean isPreferred (in string aContentType, out string aDesiredContentType); */
+NS_IMETHODIMP MiroBrowserEmbed::IsPreferred(const char *aContentType, char **aDesiredContentType, PRBool *_retval)
+{
+    *_retval = PR_FALSE;
+    return NS_OK;
+}
+
+/* boolean canHandleContent (in string aContentType, in boolean aIsContentPreferred, out string aDesiredContentType); */
+NS_IMETHODIMP MiroBrowserEmbed::CanHandleContent(const char *aContentType, PRBool aIsContentPreferred, char **aDesiredContentType, PRBool *_retval)
+{
+    *_retval = PR_FALSE;
+    return NS_OK;
+}
+
+/* attribute nsISupports loadCookie; */
+NS_IMETHODIMP MiroBrowserEmbed::GetLoadCookie(nsISupports * *aLoadCookie)
+{
+    return NS_ERROR_NOT_IMPLEMENTED;
+}
+NS_IMETHODIMP MiroBrowserEmbed::SetLoadCookie(nsISupports * aLoadCookie)
+{
+    return NS_ERROR_NOT_IMPLEMENTED;
+}
+
+/* attribute nsIURIContentListener parentContentListener; */
+NS_IMETHODIMP MiroBrowserEmbed::GetParentContentListener(nsIURIContentListener * *aParentContentListener)
+{
+    *aParentContentListener = mParentContentListener;
+    (*aParentContentListener)->AddRef();
+    return NS_OK;
+}
+NS_IMETHODIMP MiroBrowserEmbed::SetParentContentListener(nsIURIContentListener * aParentContentListener)
+{
+    mParentContentListener = aParentContentListener;
+    return NS_OK;
 }
 
 

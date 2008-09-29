@@ -47,13 +47,16 @@
 #include "nsIInterfaceRequestor.h"
 #include "nsIWebBrowserChromeFocus.h"
 #include "widget/nsIBaseWindow.h"
+#include "uriloader/nsIURIContentListener.h"
 
 typedef void(*focusCallback)(PRBool forward, void* data);
+typedef int(*uriCallback)(char* uri, void* data);
 
 class MiroBrowserEmbed   : public nsIWebBrowserChrome,
                            public nsIWebBrowserChromeFocus,
                            public nsIEmbeddingSiteWindow,
-                           public nsIInterfaceRequestor
+                           public nsIInterfaceRequestor,
+                           public nsIURIContentListener
 
 {
 public:
@@ -70,6 +73,7 @@ public:
     NS_DECL_NSIEMBEDDINGSITEWINDOW
     NS_DECL_NSIINTERFACEREQUESTOR
     NS_DECL_NSIWEBBROWSERCHROMEFOCUS
+    NS_DECL_NSIURICONTENTLISTENER
 
     /*
      * Methods to interact with the MiroBrowserEmbed from Cython.  These are
@@ -94,6 +98,9 @@ public:
     // all the elements in the browser and the next Widget should be given
     // focus.
     void SetFocusCallback(focusCallback callback, void* data);
+    // Set the URI callback.  This well be called when we are about to load a
+    // new URI.  It should return 0 if the URI shouldn't be loaded.
+    void SetURICallback(uriCallback callback, void* data);
     // Destroy the broswer
     void destroy();
 
@@ -102,9 +109,13 @@ protected:
     PRUint32     mChromeFlags;
     PRBool       mContinueModalLoop;
     focusCallback mFocusCallback;
+    uriCallback mURICallback;
     void* mFocusCallbackData;
+    void* mURICallbackData;
 
     nsCOMPtr<nsIWebBrowser> mWebBrowser;
+    nsCOMPtr<nsIURIContentListener> mParentContentListener;
+    void log(int level, char* string);
 };
 
 /* Couple of utility functions, since the XPCOM Macros don't seem to work from
