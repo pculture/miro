@@ -438,22 +438,22 @@ class Application:
             self.remove_feeds(channel_infos)
 
     def remove_feeds(self, channel_infos):
-        downloaded_videos = False
-        downloading_videos = False
+        downloaded_items = False
+        downloading_items = False
 
         for ci in channel_infos:
             if not ci.is_directory_feed:
                 if ci.unwatched > 0:
-                    downloaded_videos = True
+                    downloaded_items = True
 
                 if ci.has_downloading:
-                    downloading_videos = True
+                    downloading_items = True
 
-        ret = removechannelsdialog.run_dialog(channel_infos, downloaded_videos, downloading_videos)
+        ret = removechannelsdialog.run_dialog(channel_infos, downloaded_items, downloading_items)
         if ret:
             for ci in channel_infos:
                 messages.DeleteChannel(ci.id, ci.is_folder,
-                    ret[removechannelsdialog.KEEP_VIDEOS]
+                    ret[removechannelsdialog.KEEP_ITEMS]
                 ).send_to_backend()
 
     def update_selected_channels(self):

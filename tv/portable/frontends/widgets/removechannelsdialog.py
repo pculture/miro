@@ -42,9 +42,9 @@ from miro.frontends.widgets.widgetutil import build_hbox
 from miro.util import clampText, returnsUnicode
 
 STOP_WATCHING = "stop_watching"
-KEEP_VIDEOS = "keep_videos"
+KEEP_ITEMS = "keep_items"
 
-def run_dialog(channel_infos, downloaded_videos, downloading_videos):
+def run_dialog(channel_infos, downloaded_items, downloading_items):
     """Displays the remove channels dialog."""
     title = ngettext('Remove channel',
                      'Remove %(count)d channels',
@@ -73,12 +73,12 @@ def run_dialog(channel_infos, downloaded_videos, downloading_videos):
             v.pack_start(v2, padding=10)
 
             cbx_downloaded = None
-            if downloaded_videos:
-                cbx_downloaded = widgetset.Checkbox(_("Keep videos that have been downloaded in my library."))
+            if downloaded_items:
+                cbx_downloaded = widgetset.Checkbox(_("Keep items that have been downloaded in my library."))
                 cbx_downloaded.set_checked(True)
-                v.pack_start(widgetutil.align_left(cbx_downloaded))
+                v.pack_start(widgetutil.align_left(cbx_downloaded, bottom_pad=5))
 
-            if downloading_videos:
+            if downloading_items:
                 lab_downloading = widgetset.Label(ngettext(
                     "Are you sure you want to remove this channel?  "
                     "The downloads currently in progress will be canceled.",
@@ -97,7 +97,7 @@ def run_dialog(channel_infos, downloaded_videos, downloading_videos):
                 # this is silly, but it sets us up for adding additional
                 # bits later.
                 ret = {KEEP_VIDEOS: False}
-                if downloaded_videos:
+                if downloaded_items:
                     ret[KEEP_VIDEOS] = cbx_downloaded.get_checked()
                 return ret
         except (SystemExit, KeyboardInterrupt):
