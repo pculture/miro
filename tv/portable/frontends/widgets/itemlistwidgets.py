@@ -363,11 +363,20 @@ class DownloadToolbar(widgetset.VBox):
         if config.get(prefs.PRESERVE_DISK_SPACE):
             available = config.get(prefs.PRESERVE_X_GB_FREE) * (1024 * 1024 * 1024)
             available = amount - available
-            text = _(
-                "%(amount)s free on disk (%(available)s available for downloads)",
-                {"amount": displaytext.size(amount),
-                 "available": displaytext.size(available)}
-            )
+
+            if available < 0:
+                available = available * -1.0
+                text = _(
+                    "%(amount)s free on disk (%(available)s below available limit)",
+                    {"amount": displaytext.size(amount),
+                     "available": displaytext.size(available)}
+                )
+            else:
+                text = _(
+                    "%(amount)s free on disk (%(available)s available for downloads)",
+                    {"amount": displaytext.size(amount),
+                     "available": displaytext.size(available)}
+                )
         else:
             text = _("%(amount)s free on disk",
                      {"amount": displaytext.size(amount)})
