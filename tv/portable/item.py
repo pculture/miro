@@ -1031,15 +1031,17 @@ class Item(DDBObject):
         if extension.lower() == u'mp3':
             return u'.mp3'
         if enclosure.has_key('type') and len(enclosure['type']) > 0:
-            mtype, subtype = enclosure['type'].decode('ascii', 'replace').split('/')
-            mtype = mtype.lower()
-            if mtype in self.KNOWN_MIME_TYPES:
-                format = subtype.split(';')[0].upper()
-                if mtype == u'audio':
-                    format += u' AUDIO'
-                if format.startswith(u'X-'):
-                    format = format[2:]
-                return u'.%s' % self.MIME_SUBSITUTIONS.get(format, format).lower()
+            enc = enclosure['type'].decode('ascii', 'replace')
+            if "/" in enc:
+                mtype, subtype = enclosure['type'].decode('ascii', 'replace').split('/')
+                mtype = mtype.lower()
+                if mtype in self.KNOWN_MIME_TYPES:
+                    format = subtype.split(';')[0].upper()
+                    if mtype == u'audio':
+                        format += u' AUDIO'
+                    if format.startswith(u'X-'):
+                        format = format[2:]
+                    return u'.%s' % self.MIME_SUBSITUTIONS.get(format, format).lower()
 
         if extension in self.KNOWN_MIME_SUBTYPES:
             return u'.%s' % extension
