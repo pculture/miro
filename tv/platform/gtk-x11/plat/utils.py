@@ -271,4 +271,4 @@ def setProperties(props):
         config.set(p, val)
 
 def movie_data_program_info(moviePath, thumbnailPath):
-    return ()
+    raise NotImplementedError()

@@ -108,8 +108,8 @@ class MovieDataUpdater:
     def threadLoop(self):
         while not self.inShutdown:
             movieDataInfo = self.queue.get(block=True)
-            if movieDataInfo is None:
-                # shutdown() was called()
+            if movieDataInfo is None or movieDataInfo.programInfo is None:
+                # shutdown() was called or there's no moviedata implemented.
                 break
             try:
                 duration = -1
