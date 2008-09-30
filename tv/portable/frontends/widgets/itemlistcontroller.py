@@ -180,6 +180,7 @@ class ItemListController(object):
         elif name == 'details_toggle':
             itemview.model.update_value(iter, 1, not show_details)
             itemview.model_changed()
+            itemview.invalidate_size_request()
         elif name == 'visit_webpage':
             app.widgetapp.open_url(item_info.permalink)
         elif name == 'visit_comments':
