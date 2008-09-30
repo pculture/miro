@@ -1625,12 +1625,11 @@ class RSSFeedImpl(RSSFeedImplBase):
         """Returns the URL of the license associated with the feed
         """
         try:
-            ret = self.parsed["feed"]["license"]
+            return self.parsed["feed"]["license"]
         except (SystemExit, KeyboardInterrupt):
             raise
-        except:
-            ret = u""
-        return ret
+        except KeyError:
+            return u""
 
     def onRemove(self):
         if self.download is not None:

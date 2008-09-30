@@ -278,18 +278,10 @@ class Item(DDBObject):
 
     def signalChange(self, needsSave=True):
         self.expiring = None
-        try:
+        if hasattr(self, "_state"):
             del self._state
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            pass
-        try:
+        if hasattr(self, "_size"):
             del self._size
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            pass
         DDBObject.signalChange(self, needsSave=needsSave)
 
     def get_viewed(self):
@@ -302,19 +294,17 @@ class Item(DDBObject):
             return self._feed.lastViewed >= self.creationTime
         except (SystemExit, KeyboardInterrupt):
             raise
-        except:
-            return self.creationTime <= self.getFeed().lastViewed
+        except AttributeError:
+            return self.getFeed().lastViewed >= self.creationTime
 
     def getFirstVideoEnclosure(self):
         """Returns the first video enclosure in the item.
         """
-        try:
+        if hasattr(self, "_firstVidEnc") and self._firstVidEnc:
             return self._firstVidEnc
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            self._calc_first_enc()
-            return self._firstVidEnc
+
+        self._calc_first_enc()
+        return self._firstVidEnc
 
     def _calc_first_enc(self):
         self._firstVidEnc = getFirstVideoEnclosure(self.entry)
@@ -350,31 +340,26 @@ class Item(DDBObject):
     def getFeed(self):
         """Returns the feed this item came from.
         """
-        try:
-            # optimizing by caching the feed
-            return self._feed
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            if self.feed_id is not None:
-                self._feed = self.dd.getObjectByID(self.feed_id)
-            elif self.parent_id is not None:
-                self._feed = self.getParent().getFeed()
-            else:
-                self._feed = None
+        if hasattr(self, "_feed"):
             return self._feed
 
+        if self.feed_id is not None:
+            self._feed = self.dd.getObjectByID(self.feed_id)
+        elif self.parent_id is not None:
+            self._feed = self.getParent().getFeed()
+        else:
+            self._feed = None
+        return self._feed
+
     def getParent(self):
-        try:
+        if hasattr(self, "_parent"):
             return self._parent
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            if self.parent_id is not None:
-                self._parent = self.dd.getObjectByID(self.parent_id)
-            else:
-                self._parent = self
-            return self._parent
+
+        if self.parent_id is not None:
+            self._parent = self.dd.getObjectByID(self.parent_id)
+        else:
+            self._parent = self
+        return self._parent
 
     @returnsUnicode
     def getFeedURL(self):
@@ -427,7 +412,7 @@ class Item(DDBObject):
         self.screenshot = None
         if self.is_external():
             if self.is_downloaded():
-                new_item = FileItem (self.get_video_filename(), feed_id=self.feed_id, parent_id=self.parent_id, deleted=True)
+                new_item = FileItem(self.get_video_filename(), feed_id=self.feed_id, parent_id=self.parent_id, deleted=True)
                 if self.downloader is not None:
                     self.downloader.set_delete_files(False)
             self.remove()
@@ -681,23 +666,24 @@ class Item(DDBObject):
         videoEnclosure = self.getFirstVideoEnclosure()
         if videoEnclosure is not None:
             try:
-                return videoEnclosure["thumbnail"]["url"].decode("ascii","replace")
+                return videoEnclosure["thumbnail"]["url"].decode("ascii", "replace")
             except (SystemExit, KeyboardInterrupt):
                 raise
-            except:
+            except KeyError:
                 pass
         # Try to get any enclosure thumbnail
         for enclosure in self.entry.enclosures:
             try:
-                return enclosure["thumbnail"]["url"].decode('ascii','replace')
+                return enclosure["thumbnail"]["url"].decode('ascii', 'replace')
             except KeyError:
                 pass
+
         # Try to get the thumbnail for our entry
         try:
-            return self.entry["thumbnail"]["url"].decode('ascii','replace')
+            return self.entry["thumbnail"]["url"].decode('ascii', 'replace')
         except (SystemExit, KeyboardInterrupt):
             raise
-        except:
+        except KeyError:
             return None
 
     @returnsFilename
@@ -962,7 +948,7 @@ class Item(DDBObject):
                 return int(self.getFirstVideoEnclosure()['length'])
             except (SystemExit, KeyboardInterrupt):
                 raise
-            except:
+            except KeyError, ValueError:
                 return 0
 
     def download_progress(self):
@@ -1021,11 +1007,13 @@ class Item(DDBObject):
             return u'.torrent'
 
         enclosure = self.getFirstVideoEnclosure()
+
         try:
-            extension = enclosure['url'].split('.')[-1].lower().decode('ascii', 'replace')
+            extension = enclosure['url'].split('.')[-1]
+            extension = extension.lower().decode('ascii', 'replace')
         except (SystemExit, KeyboardInterrupt):
             raise
-        except:
+        except KeyError:
             extension = u''
         # Hack for mp3s, "mpeg audio" isn't clear enough
         if extension.lower() == u'mp3':
@@ -1055,30 +1043,18 @@ class Item(DDBObject):
         """Return the license associated with the video.
         """
         self.confirmDBThread()
-        try:
+        if hasattr(self.entry, "license"):
             return self.entry.license
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            try:
-                return self.getFeed().get_license()
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
-                pass
-        return u""
+
+        return self.getFeed().get_license()
 
     @returnsUnicode
     def get_comments_link(self):
         """Returns the comments link if it exists in the feed item.
         """
         self.confirmDBThread()
-        try:
+        if hasattr(self.entry, "comments"):
             return self.entry.comments
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            pass
 
         return u""
 
@@ -1086,12 +1062,10 @@ class Item(DDBObject):
         """Returns the URL of the webpage associated with the item.
         """
         self.confirmDBThread()
-        try:
+        if hasattr(self.entry, "link"):
             return self.entry.link.decode('ascii', 'replace')
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            return u""
+
+        return u""
 
     def update(self, entry):
         """Updates an item with new data
@@ -1115,7 +1089,7 @@ class Item(DDBObject):
         self.downloadedTime = datetime.now()
         if not self.split_item():
             self.signalChange()
-        moviedata.movieDataUpdater.requestUpdate (self)
+        moviedata.movieDataUpdater.requestUpdate(self)
 
         for other in views.items:
             if other.downloader is None and other.getURL() == self.getURL():
