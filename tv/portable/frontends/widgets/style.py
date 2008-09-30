@@ -233,7 +233,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         self.hotspot = None
         self.selected = False
         sizer = self.add_background(self.pack_right(layout))
-        return self.MIN_WIDTH, max(140, sizer.get_size()[1])
+        return self.MIN_WIDTH, max(137, sizer.get_size()[1])
 
     def calc_show_progress_bar(self):
         self.show_progress_bar = (not self.data.downloaded and
@@ -264,7 +264,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             return hotspot
 
     def add_background(self, content):
-        inner = cellpack.Background(content, margin=(10, 0, 15, 10))
+        inner = cellpack.Background(content, margin=(10, 0, 10, 10))
         if self.use_custom_style:
             if self.selected:
                 inner.set_callback(self.draw_background_selected)
@@ -506,7 +506,6 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         return vbox
 
     def pack_right(self, layout):
-
         if self.show_progress_bar:
             extra = self.pack_download_status(layout)
         elif self.data.downloaded:
