@@ -47,10 +47,13 @@ class ImageSurface:
         """Create a new ImageSurface."""
         self.image = image.nsimage.copy()
         self.image.setFlipped_(YES)
+        self.image.setCacheMode_(NSImageCacheNever)
         self.width = image.width
         self.height = image.height
 
     def draw(self, context, x, y, width, height, fraction=1.0):
+        NSGraphicsContext.currentContext().setShouldAntialias_(YES)
+        NSGraphicsContext.currentContext().setImageInterpolation_(NSImageInterpolationHigh)
         endy = y + height
         while y < endy:
             current_height = min(self.height, endy - y)
@@ -68,7 +71,7 @@ class ImageSurface:
             current_width = min(self.width, endx - x)
             dest_rect = NSRect(at, NSSize(current_width, height))
             source_rect = NSMakeRect(0, 0, current_width, height)
-            self.image.drawInRect_fromRect_operation_fraction_(dest_rect, source_rect, NSCompositeSourceOver, fraction)
+            self.image.drawInRect_fromRect_operation_fraction_(dest_rect, NSZeroRect, NSCompositeSourceOver, fraction)
             x += current_width
 
 class DrawingStyle(object):

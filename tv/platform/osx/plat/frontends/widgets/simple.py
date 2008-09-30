@@ -48,18 +48,29 @@ class Image(object):
 class ResizedImage(Image):
     def __init__(self, image, width, height):
         self.nsimage = image.nsimage.copy()
+        self.nsimage.setCacheMode_(NSImageCacheNever)
         self.nsimage.setScalesWhenResized_(YES)
         self.nsimage.setSize_(NSSize(width, height))
         self.width = width
         self.height = height
+
+class NSImageDisplay (NSView):
+    def initWithImage_(self, image):
+        self = NSView.init(self)
+        self.image = image
+        return self
+    def drawRect_(self, rect):
+        NSGraphicsContext.currentContext().setShouldAntialias_(YES)
+        NSGraphicsContext.currentContext().setImageInterpolation_(NSImageInterpolationHigh)
+        self.image.nsimage.drawInRect_fromRect_operation_fraction_(rect, NSZeroRect, NSCompositeSourceOver, 1.0)
 
 class ImageDisplay(Widget):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, image):
         Widget.__init__(self)
         self.image = image
-        self.view = NSImageView.alloc().init()
-        self.view.setImage_(self.image.nsimage)
+        self.image.nsimage.setCacheMode_(NSImageCacheNever)
+        self.view = NSImageDisplay.alloc().initWithImage_(self.image)
 
     def calc_size_request(self):
         return self.image.width, self.image.height
