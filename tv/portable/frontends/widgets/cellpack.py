@@ -190,13 +190,18 @@ class Box(Packer):
         if total_extra_space <= 0:
             while True:
                 yield 0
-        extra_space, leftover = divmod(total_extra_space, self.expand_count)
+        average_extra_space, leftover = \
+                divmod(total_extra_space, self.expand_count)
         while leftover > 1:
-            yield extra_space + 1
+            # expand_count doesn't divide equally into total_extra_space,
+            # yield average_extra_space+1 for each extra pixel
+            yield average_extra_space + 1
             leftover -= 1
-        yield extra_space + leftover
+        # if there's a fraction of a pixel leftover, add that in
+        yield average_extra_space + leftover 
         while True:
-            yield extra_space
+            # no more leftover space
+            yield average_extra_space
 
     def _position_children(self, total_length):
         my_length, my_breadth = self._translate(*self.get_size())
