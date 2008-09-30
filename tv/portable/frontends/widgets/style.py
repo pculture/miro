@@ -526,8 +526,9 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             return vbox
         outer_vbox = cellpack.VBox()
         outer_vbox.pack(cellpack.align_right(self.pack_info(layout)))
-        outer_vbox.pack_space(10, expand=True)
+        outer_vbox.pack_space(5, expand=True)
         outer_vbox.pack(extra)
+        outer_vbox.pack_space(5)
         return outer_vbox
 
     def pack_all(self, layout):
