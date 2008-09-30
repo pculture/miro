@@ -760,6 +760,12 @@ class DownloadInfo(object):
         self.startup_activity = downloader.get_startup_activity()
         self.finished = downloader.isFinished()
         self.torrent = (downloader.getType() == 'bittorrent')
+        if self.state == 'failed':
+            self.reason_failed = downloader.getReasonFailed()
+            self.short_reason_failed = downloader.getShortReasonFailed()
+        else:
+            self.reason_failed = u""
+            self.short_reason_failed = u""
 
 class GuideList(FrontendMessage):
     """Sends the frontend the initial list of channel guides

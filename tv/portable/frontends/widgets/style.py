@@ -55,6 +55,8 @@ TAB_LIST_SEPARATOR_COLOR = (209/255.0, 216/255.0, 220/255.0)
 
 TOOLBAR_GRAY = (0.43, 0.43, 0.43)
 
+ERROR_COLOR = (0.90, 0.0, 0.0)
+
 class LowerBox(widgetset.Background):
 
     def __init__(self):
@@ -153,7 +155,6 @@ class TabRenderer(widgetset.CustomCellRenderer):
 
 class StaticTabRenderer(TabRenderer):
     BOLD_TITLE = True
-    DOWNLOADING_BUBBLE_COLOR = (0.90, 0.45, 0.08)
 
     def pack_bubbles(self, hbox, layout):
         if self.data.unwatched > 0:
@@ -237,8 +238,9 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         return self.MIN_WIDTH, max(137, sizer.get_size()[1])
 
     def calc_show_progress_bar(self):
-        self.show_progress_bar = (not self.data.downloaded and
-                self.download_info is not None)
+        self.show_progress_bar = (not self.data.downloaded
+                and self.download_info is not None
+                and self.download_info.state != 'failed')
 
     def hotspot_test(self, style, layout, x, y, width, height):
         self.download_info = self.data.download_info
@@ -311,7 +313,9 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         vbox = cellpack.VBox()
         layout.set_font(1.1, family="Helvetica", bold=True)
         # this should match calc_status_bump
-        if not self.data.downloaded and self.download_info is not None:
+        if (not self.data.downloaded 
+                and self.download_info is not None
+                and self.download_info.state != 'failed'):
             layout.set_text_color(DOWNLOADING_COLOR)
         elif self.data.downloaded and not self.data.video_watched:
             layout.set_text_color(UNWATCHED_COLOR)
@@ -526,7 +530,14 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             return vbox
         outer_vbox = cellpack.VBox()
         outer_vbox.pack(cellpack.align_right(self.pack_info(layout)))
-        outer_vbox.pack_space(5, expand=True)
+        if self.data.download_info and self.data.download_info.state == 'failed':
+            outer_vbox.pack_space(2, expand=True)
+            layout.set_font(0.85, bold=True)
+            layout.set_text_color(ERROR_COLOR)
+            outer_vbox.pack(cellpack.pad(layout.textbox(self.data.download_info.short_reason_failed)))
+            outer_vbox.pack_space(2, expand=True)
+        else:
+            outer_vbox.pack_space(5, expand=True)
         outer_vbox.pack(extra)
         outer_vbox.pack_space(5)
         return outer_vbox
@@ -565,7 +576,9 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
     def calc_status_bump(self, layout):
         bump = None
-        if not self.data.downloaded and self.download_info is not None:
+        if (not self.data.downloaded 
+                and self.download_info is not None
+                and self.download_info.state != 'failed'):
             bump = imagepool.get_surface(resources.path(
                 'wimages/status-icon-downloading.png'))
 
