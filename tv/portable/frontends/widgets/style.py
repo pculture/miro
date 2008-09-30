@@ -79,13 +79,14 @@ class LowerBox(widgetset.Background):
             highlight_color = self.highlight_color_inactive
         image.draw(context, 0, 0, context.width, context.height)
 
-        context.move_to(0, 0)
-        context.line_to(context.width, 0)
+        context.set_line_width(1)
+        context.move_to(0, 0.5)
+        context.line_to(context.width, 0.5)
         context.set_color(self.separator_color)
         context.stroke()
 
-        context.move_to(0, 1)
-        context.line_to(context.width, 1)
+        context.move_to(0, 1.5)
+        context.line_to(context.width, 1.5)
         context.set_color(highlight_color)
         context.stroke()
 
