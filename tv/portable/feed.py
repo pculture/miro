@@ -347,7 +347,7 @@ class FeedImpl:
     def startManualDownload(self):
         next = None
         for item in self.items:
-            if item.isPendingManualDownload():
+            if item.is_pending_manual_download():
                 if next is None:
                     next = item
                 elif item.get_pub_date_parsed() > next.get_pub_date_parsed():
@@ -752,7 +752,7 @@ class Feed(DDBObject):
     def getCurrentAutoDownloadableItems(self):
         auto = set()
         for item in self.items:
-            if item.isPendingAutoDownload():
+            if item.is_pending_auto_download():
                 auto.add(item)
         return auto
 

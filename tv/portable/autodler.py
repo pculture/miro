@@ -37,7 +37,7 @@ from miro.fasttypes import SortedList
 
 def manual_pending_filter(x):
     """Returns true iff x is a manual download item that's pending"""
-    return x.isPendingManualDownload()
+    return x.is_pending_manual_download()
 
 def auto_pending_filter(x):
     """Returns true iff x is an automatic download item that's pending"""

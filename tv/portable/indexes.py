@@ -71,7 +71,7 @@ def downloadsByCategory(x):
     """
     if x.getFeed().url == 'dtv:manualFeed':
         return 'external'
-    elif x.isPendingManualDownload():
+    elif x.is_pending_manual_download():
         return 'pending'
     else:
         return 'normal'

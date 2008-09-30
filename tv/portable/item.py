@@ -635,7 +635,7 @@ class Item(DDBObject):
     def resume(self):
         self.download(self.getAutoDownloaded())
 
-    def isPendingManualDownload(self):
+    def is_pending_manual_download(self):
         self.confirmDBThread()
         return self.pendingManualDL
 
@@ -651,7 +651,7 @@ class Item(DDBObject):
             return True
         return self.eligibleForAutoDownload
 
-    def isPendingAutoDownload(self):
+    def is_pending_auto_download(self):
         return (self.getFeed().isAutoDownloadable() and
                 self.isEligibleForAutoDownload())
 

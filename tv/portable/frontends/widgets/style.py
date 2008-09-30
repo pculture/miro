@@ -238,9 +238,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         return self.MIN_WIDTH, max(137, sizer.get_size()[1])
 
     def calc_show_progress_bar(self):
-        self.show_progress_bar = (not self.data.downloaded
-                and self.download_info is not None
-                and self.download_info.state != 'failed')
+        self.show_progress_bar = self.data.state == 'downloading'
 
     def hotspot_test(self, style, layout, x, y, width, height):
         self.download_info = self.data.download_info
@@ -313,9 +311,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         vbox = cellpack.VBox()
         layout.set_font(1.1, family="Helvetica", bold=True)
         # this should match calc_status_bump
-        if (not self.data.downloaded 
-                and self.download_info is not None
-                and self.download_info.state != 'failed'):
+        if self.data.state == 'downloading':
             layout.set_text_color(DOWNLOADING_COLOR)
         elif self.data.downloaded and not self.data.video_watched:
             layout.set_text_color(UNWATCHED_COLOR)
@@ -470,7 +466,11 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
     def download_textbox(self, layout):
         dl_info = self.download_info
-        if dl_info.state == 'paused' or dl_info.rate == 0:
+        if self.data.pending_manual_dl:
+            layout.set_font(0.77, bold=True)
+            self.set_info_right_color(layout)
+            return layout.textbox(_('queued for download'))
+        elif dl_info.state == 'paused' or dl_info.rate == 0:
             layout.set_font(0.77, bold=True)
             self.set_info_right_color(layout)
             if dl_info.state == 'paused':
@@ -502,10 +502,11 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             progress_draw_func = self.draw_progress_throbber
         progress_bar = cellpack.DrawingArea(131, 9, progress_draw_func)
         hbox.pack(cellpack.align_middle(progress_bar))
-        if self.download_info.state != 'paused':
-            hbox.pack(cellpack.Hotspot('pause', self.pause_button))
-        else:
-            hbox.pack(cellpack.Hotspot('resume', self.resume_button))
+        if self.download_info:
+            if self.download_info.state != 'paused':
+                hbox.pack(cellpack.Hotspot('pause', self.pause_button))
+            else:
+                hbox.pack(cellpack.Hotspot('resume', self.resume_button))
         hbox.pack(cellpack.Hotspot('cancel', self.cancel_button))
         vbox.pack(hbox)
         return vbox
@@ -535,6 +536,12 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             layout.set_font(0.85, bold=True)
             layout.set_text_color(ERROR_COLOR)
             outer_vbox.pack(cellpack.pad(layout.textbox(self.data.download_info.short_reason_failed)))
+            outer_vbox.pack_space(2, expand=True)
+        elif self.data.pending_auto_dl:
+            outer_vbox.pack_space(2, expand=True)
+            layout.set_font(0.77, bold=True)
+            self.set_info_right_color(layout)
+            outer_vbox.pack(cellpack.pad(layout.textbox(_('queued for autodownload'))))
             outer_vbox.pack_space(2, expand=True)
         else:
             outer_vbox.pack_space(5, expand=True)
@@ -576,9 +583,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
     def calc_status_bump(self, layout):
         bump = None
-        if (not self.data.downloaded 
-                and self.download_info is not None
-                and self.download_info.state != 'failed'):
+        if self.data.state == 'downloading':
             bump = imagepool.get_surface(resources.path(
                 'wimages/status-icon-downloading.png'))
 
@@ -684,7 +689,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
     def draw_progress_bar(self, context, x, y, width, height):
         dl_info = self.download_info
-        if self.data.size > 0:
+        if self.data.size > 0 and self.download_info:
             split = float(width) * dl_info.downloaded_size / self.data.size
         else:
             split = 0.0

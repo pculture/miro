@@ -641,6 +641,7 @@ class ItemInfo(object):
     id -- object id
     feed_id -- id for the items feed
     description -- longer description for the item (HTML)
+    state -- see Item.get_state()
     release_date -- datetime object when the item was published
     size -- size of the item in bytes
     duration -- length of the video in seconds
@@ -678,6 +679,7 @@ class ItemInfo(object):
         self.id = item.id
         self.feed_id = item.feed_id
         self.description = item.get_description()
+        self.state = item.get_state()
         self.release_date = item.get_release_date_obj()
         self.size = item.get_size()
         self.duration = item.get_duration_value()
@@ -686,6 +688,8 @@ class ItemInfo(object):
         self.commentslink = item.get_comments_link()
         self.has_sharable_url = item.hasSharableURL()
         self.can_be_saved = item.show_save_button()
+        self.pending_manual_dl = item.is_pending_manual_download()
+        self.pending_auto_dl = item.is_pending_auto_download()
         if not item.keep:
             self.expiration_date = item.getExpirationTime()
         else:
