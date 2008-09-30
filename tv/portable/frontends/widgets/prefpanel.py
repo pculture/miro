@@ -385,7 +385,10 @@ def _build_downloads_panel():
     limit = widgetset.TextEntry()
     attach_boolean(cbx, prefs.LIMIT_UPLOAD_RATIO, (limit,))
     attach_float(limit, prefs.UPLOAD_RATIO, create_float_checker(0.0, 1.0))
-    vbox.pack_start(cbx)
+    grid.pack(cbx)
+    grid.pack(limit)
+    grid.end_line(spacing=6)
+    vbox.pack_start(widgetutil.align_left(grid.make_table()))
 
     return vbox
 
