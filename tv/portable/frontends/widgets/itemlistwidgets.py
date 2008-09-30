@@ -367,13 +367,13 @@ class DownloadToolbar(widgetset.VBox):
             if available < 0:
                 available = available * -1.0
                 text = _(
-                    "%(amount)s free on disk (%(available)s below available limit)",
+                    "%(available)s below downloads space limit (%(amount)s free on disk)",
                     {"amount": displaytext.size(amount),
                      "available": displaytext.size(available)}
                 )
             else:
                 text = _(
-                    "%(amount)s free on disk (%(available)s available for downloads)",
+                    "%(available)s free for downloads (%(amount)s free on disk)",
                     {"amount": displaytext.size(amount),
                      "available": displaytext.size(available)}
                 )
