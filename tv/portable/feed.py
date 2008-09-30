@@ -1624,12 +1624,12 @@ class RSSFeedImpl(RSSFeedImplBase):
     def get_license(self):
         """Returns the URL of the license associated with the feed
         """
-        try:
-            return self.parsed["feed"]["license"]
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except KeyError:
-            return u""
+        if hasattr(self, "parsed"):
+            try:
+                return self.parsed["feed"]["license"]
+            except KeyError:
+                pass
+        return u""
 
     def onRemove(self):
         if self.download is not None:

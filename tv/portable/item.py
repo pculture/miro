@@ -292,8 +292,6 @@ class Item(DDBObject):
         try:
             # optimizing by trying the cached feed
             return self._feed.lastViewed >= self.creationTime
-        except (SystemExit, KeyboardInterrupt):
-            raise
         except AttributeError:
             return self.getFeed().lastViewed >= self.creationTime
 
@@ -667,8 +665,6 @@ class Item(DDBObject):
         if videoEnclosure is not None:
             try:
                 return videoEnclosure["thumbnail"]["url"].decode("ascii", "replace")
-            except (SystemExit, KeyboardInterrupt):
-                raise
             except KeyError:
                 pass
         # Try to get any enclosure thumbnail
@@ -681,8 +677,6 @@ class Item(DDBObject):
         # Try to get the thumbnail for our entry
         try:
             return self.entry["thumbnail"]["url"].decode('ascii', 'replace')
-        except (SystemExit, KeyboardInterrupt):
-            raise
         except KeyError:
             return None
 
@@ -946,9 +940,7 @@ class Item(DDBObject):
         else:
             try:
                 return int(self.getFirstVideoEnclosure()['length'])
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except KeyError, ValueError:
+            except (KeyError, ValueError):
                 return 0
 
     def download_progress(self):
