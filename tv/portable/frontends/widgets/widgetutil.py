@@ -153,7 +153,7 @@ class ThreeImageSurface(object):
         center_width = width - right_width
 
         self.center.draw(context, x, y, center_width, self.height, fraction)
-        self.right.draw(context, x + center_width, y, right_width, self.height, fraction)
+        self.right.draw(context, x + center_width + 1, y, right_width, self.height, fraction)
 
 class HideableWidget(widgetset.VBox):
     """Widget that can be hidden and shown."""
