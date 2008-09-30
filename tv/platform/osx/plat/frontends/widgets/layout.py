@@ -802,7 +802,9 @@ class TabContainer(Container):
 
     def calc_size_request(self):
         tab_size = self.view.minimumSize()
-        max_width = tab_size.width
+        # make sure there's enough room for the tabs, plus a little extra
+        # space to make things look good
+        max_width = tab_size.width + 60
         max_height = 0
         for child in self.children:
             width, height = child.get_size_request()
