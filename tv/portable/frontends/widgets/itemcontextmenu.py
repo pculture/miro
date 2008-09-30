@@ -86,7 +86,7 @@ class ItemContextMenuHandler(object):
                     menu.append((_('Start seeding'), messages.StartUpload(item.id).send_to_backend))
             menu.append((_('Reveal File'),
                 lambda : app.widgetapp.open_file(item.video_path)))
-        elif item.download_info is not None:
+        elif item.download_info is not None and item.download_info.state != 'failed':
             menu = [
                     (_('Cancel Download'),
                         messages.CancelDownload(item.id).send_to_backend)
