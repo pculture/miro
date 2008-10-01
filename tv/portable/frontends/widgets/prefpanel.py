@@ -373,6 +373,7 @@ def _build_downloads_panel():
     grid.end_line(spacing=6)
     vbox.pack_start(widgetutil.align_left(grid.make_table()))
 
+    grid = dialogwidgets.ControlGrid()
     cbx = widgetset.Checkbox(_('Automatically forward ports.  (UPNP)'))
     attach_boolean(cbx, prefs.USE_UPNP)
     vbox.pack_start(cbx)

@@ -204,6 +204,8 @@ class Bin(Widget):
     def add(self, child):
         if self.child is not None:
             raise ValueError("Already have a child: %s" % self.child)
+        if child._widget.parent is not None:
+            raise ValueError("%s already has a parent" % child)
         self.child = child
         self.add_child_to_widget()
         child._widget.show()

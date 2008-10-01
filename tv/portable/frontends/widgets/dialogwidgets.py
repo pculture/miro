@@ -70,6 +70,27 @@ class ControlLine(object):
             column += span
 
 class ControlGrid(object):
+    """Helper class to create Table objects that pack controls.  The controls
+    will be aligned vertically based on their baseline() methods.  For
+    example, if an OptionMenu and a Label are packed together in a row, then
+    the text for both will be aligned vertically.
+
+    Control grids are packed top to bottom and left to right using the pack(),
+    pack_label() and end_line() methods.  Once everything is packed, use the
+    make_table() method to create a Table widget.
+
+    For example:
+
+    grid = dialogwidgets.ControlGrid()
+    grid.pack(dialogwidgets.heading("My Heading", grid.ALIGN_LEFT, span=2)
+    grid.end_line(spacing=0)
+    grid.pack_label("Option 1")
+    grid.pack(my_option_menu_widget)
+    grid.end_line()
+
+    vbox.pack(grid.make_table())
+    """
+
     ALIGN_LEFT = 0
     ALIGN_RIGHT = 1
     FILL = 2
@@ -79,6 +100,7 @@ class ControlGrid(object):
         self._current_columns = 0
         self.columns = 0
         self._current_line = ControlLine()
+        self._made_table = False
 
     def pack_label(self, text, *args, **kwargs):
         if 'extra_space' not in kwargs and len(args) == 0:
@@ -97,12 +119,15 @@ class ControlGrid(object):
         self._current_columns = 0
 
     def make_table(self):
+        if self._made_table:
+            raise AssertionError("make_table() called twice")
         lines = self._lines[:]
         if self._current_columns > 0:
             lines.append((self._current_line, 0))
         table = widgetset.Table(self.columns, len(lines))
         for i, (line, spacing) in enumerate(lines):
             line.add_to_table(table, i, spacing)
+        self._made_table = True
         return table
 
 class ControlList(widgetset.VBox):
