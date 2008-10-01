@@ -306,3 +306,6 @@ def exit(returnCode):
     clear why.
     """
     ctypes.windll.kernel32.ExitProcess(returnCode)
+
+def movie_data_program_info(moviePath, thumbnailPath):
+    raise NotImplementedError()
