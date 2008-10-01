@@ -224,12 +224,11 @@ class OptionMenu(Widget):
     def baseline(self):
         my_size = self._widget.size_request()
         child_size = self._widget.child.size_request()
-        ypad = (my_size[1] - child_size[1]) / 2
+        ypad = self.cell.props.ypad + (my_size[1] - child_size[1]) / 2
 
-        cell = self._widget.get_cells()[0]
         pango_context = self._widget.get_pango_context()
         metrics = pango_context.get_metrics(self._widget.style.font_desc)
-        return pango.PIXELS(metrics.get_descent()) + ypad + cell.props.ypad
+        return pango.PIXELS(metrics.get_descent()) + ypad 
 
     def set_bold(self, bold):
         if bold:
