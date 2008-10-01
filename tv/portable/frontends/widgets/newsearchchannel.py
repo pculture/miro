@@ -40,6 +40,8 @@ from miro.dialogs import BUTTON_CANCEL, BUTTON_CREATE_CHANNEL
 
 from miro import app
 
+import logging
+
 def run_dialog():
     """Creates and launches the New Search Channel dialog.  This dialog waits
     for the user to press "Create Channel" or "Cancel".
