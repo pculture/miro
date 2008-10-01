@@ -270,15 +270,16 @@ class VideoWindow (NSWindow):
     def initWithContentRect_styleMask_backing_defer_(self, rect, style, backing, defer):
         self = super(VideoWindow, self).initWithContentRect_styleMask_backing_defer_(rect,  style, backing, defer)
         self.setBackgroundColor_(NSColor.blackColor())
+        self.setReleasedWhenClosed_(NO)
         self.palette = overlay.OverlayPalette.get_instance()
         self.setAcceptsMouseMovedEvents_(YES)
         self.is_fullscreen = False
         return self
 
     def close(self):
-        super(VideoWindow, self).close()
         self.palette.window().orderOut_(nil)
         self.palette = None
+        super(VideoWindow, self).close()
 
     def canBecomeMainWindow(self):
         return NO

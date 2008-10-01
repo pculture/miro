@@ -101,7 +101,7 @@ class OverlayPalette (NSWindowController):
         self.revealing = False
         self.hiding = False
         self.anim = None
-        self.videoWindow = None
+        self.in_fullscreen = False
 
         app.playback_manager.connect('will-play', self.video_will_play)
         app.playback_manager.connect('will-pause', self.video_will_pause)
@@ -159,12 +159,14 @@ class OverlayPalette (NSWindowController):
             self.fsButton.setAlternateImage_(NSImage.imageNamed_('fs-button-exitfullscreen-alt'))
         else:
             NSCursor.setHiddenUntilMouseMoves_(YES)
+        self.in_fullscreen = True
 
     def exit_fullscreen(self, videoWindow):
         if self.window().isVisible():
             self.adjustContent(videoWindow, True)
             self.fsButton.setImage_(NSImage.imageNamed_('fs-button-enterfullscreen'))
             self.fsButton.setAlternateImage_(NSImage.imageNamed_('fs-button-enterfullscreen-alt'))
+        self.in_fullscreen = False
 
     def getHorizontalPosition(self, videoWindow, width):
         parentFrame = videoWindow.frame()
@@ -178,7 +180,7 @@ class OverlayPalette (NSWindowController):
 
     def adjustContent(self, videoWindow, animate):
         newFrame = self.window().frame()
-        if self.videoWindow.is_fullscreen:
+        if videoWindow.is_fullscreen:
             self.playbackControls.setHidden_(NO)
             newFrame.size.width = 824
         else:
@@ -194,8 +196,6 @@ class OverlayPalette (NSWindowController):
             self.update_(nil)
             self.volumeSlider.setFloatValue_(self.renderer.movie.volume())
 
-            if self.videoWindow != videoWindow:
-                self.videoWindow = videoWindow
             self.adjustPosition(videoWindow)
             self.adjustContent(videoWindow, False)
 
@@ -257,10 +257,10 @@ class OverlayPalette (NSWindowController):
                 0.5, self, 'update:', nil, YES)
             NSRunLoop.currentRunLoop().addTimer_forMode_(self.updateTimer, NSEventTrackingRunLoopMode)
             self.update_(nil)
-            if parent is not None and self.videoWindow.is_fullscreen:
+            if parent is not None and self.in_fullscreen:
                 NSCursor.setHiddenUntilMouseMoves_(NO)
         elif self.hiding:
-            if parent is not None and self.videoWindow.is_fullscreen:
+            if parent is not None and self.in_fullscreen:
                 NSCursor.setHiddenUntilMouseMoves_(YES)
             self.remove()
 
