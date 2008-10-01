@@ -305,6 +305,7 @@ class Dialog(WindowBase):
         WindowBase.__init__(self)
         self.set_window(gtk.Dialog(title))
         self._window.set_default_size(425, -1)
+        self._window.set_transient_for(app.widgetapp.window._window)
         self.packing_vbox = gtk.VBox(spacing=20)
         self.packing_vbox.set_border_width(6)
         self._window.vbox.pack_start(self.packing_vbox, True, True)
