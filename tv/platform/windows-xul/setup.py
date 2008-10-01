@@ -299,9 +299,8 @@ for dir in ('searchengines', 'wimages'):
     source_dir = os.path.join(resources_dir, dir)
     data_files.extend(find_data_files(dest_dir, source_dir))
 
-def get_template_variables():
-    app_config = os.path.join(resources_dir, 'app.config.template')
-    return util.read_simple_config_file(app_config)
+app_config = os.path.join(resources_dir, 'app.config.template')
+template_vars = util.read_simple_config_file(app_config)
 
 ###############################################################################
 
@@ -313,11 +312,10 @@ class build_py (distutils.command.build_py.build_py):
     """
 
     def expand_templates(self):
-        conf = get_template_variables()
         for path in [os.path.join(portable_dir,'dl_daemon','daemon.py')]:
             template = string.Template(open(path+".template", 'rt').read())
             fout = open(path, 'wt')
-            fout.write(template.substitute(**conf))
+            fout.write(template.substitute(**template_vars))
         
     def run (self):
         """Extend build_py's module list to include the miro modules."""
@@ -399,6 +397,7 @@ class build_movie_data_util(Command):
 
     def initialize_options(self):
         self.build_dir = None
+        self.output = '%s_MovieData' % template_vars['shortAppName']
 
     def finalize_options(self):
         if self.build_dir == None:
@@ -419,7 +418,7 @@ class build_movie_data_util(Command):
         objects = compiler.compile(sources, output_dir=self.build_dir,
                 include_dirs=include_dirs)
 
-        compiler.link_executable(objects, 'Miro_MovieData',
+        compiler.link_executable(objects, self.output,
                 library_dirs=library_dirs, output_dir=self.build_dir)
 
 
@@ -444,8 +443,8 @@ class bdist_miro(Command):
         build_cmd = self.distribution.get_command_obj('build_movie_data_util')
         build_cmd.build_dir
 
-        self.copy_file(os.path.join(build_cmd.build_dir, 'Miro_MovieData.exe'),
-            dist_dir)
+        exe_file = "%s.exe" % build_cmd.output
+        self.copy_file(os.path.join(build_cmd.build_dir, exe_file), dist_dir)
         self.copy_file(os.path.join(platform_dir, "moviedata_util.py"),
                 dist_dir)
 
@@ -465,7 +464,7 @@ class runmiro (Command):
         self.run_command('bdist_miro')
         olddir = os.getcwd()
         os.chdir(self.get_finalized_command('py2exe').dist_dir)
-        os.system("Miro.exe")
+        os.system("%s" % template_vars['shortAppName'])
         os.chdir(olddir)
 
 class bdist_nsis (Command):
@@ -486,8 +485,6 @@ class bdist_nsis (Command):
 
 
         log.info("building installer")
-
-        template_vars = get_template_variables()
 
         self.copy_file(os.path.join(platform_dir, 'Miro.nsi'), self.dist_dir)
         self.copy_file("Miro.ico", os.path.join(self.dist_dir, "%s.ico" %
@@ -659,10 +656,12 @@ if __name__ == "__main__":
         windows=[
             {
                 'script': 'Miro.py',
+                'dest_base': template_vars['shortAppName'],
                 'icon_resources': [(0, "Miro.ico")],
             },
             {
                 'script': 'Miro_Downloader.py',
+                'dest_base': '%s_Downloader' % template_vars['shortAppName'],
                 'icon_resources': [(0, "Miro.ico")],
             }
             ],
