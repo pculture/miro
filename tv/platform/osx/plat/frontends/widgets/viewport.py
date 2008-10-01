@@ -54,9 +54,6 @@ class Viewport(object):
         """Area of our view that is occupied by the viewport."""
         return self.view.bounds()
 
-    def queue_redraw(self):
-        """Make the viewport redraw itself."""
-
     def get_width(self):
         return self.view.frame().size.width
 
