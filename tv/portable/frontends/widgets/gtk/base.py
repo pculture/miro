@@ -134,6 +134,10 @@ class Widget(signals.SignalEmitter):
     def get_size_request(self):
         return self._widget.size_request()
 
+    def invalidate_size_request(self):
+        # FIXME - do we need to do anything here?
+        pass
+
     def set_size_request(self, width, height):
         self._widget.set_size_request(width, height)
 
