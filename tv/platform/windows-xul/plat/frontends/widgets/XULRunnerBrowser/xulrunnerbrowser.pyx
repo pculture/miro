@@ -73,10 +73,10 @@ cdef extern from "pythread.h":
     PyThreadState *PyEval_SaveThread()
     void PyEval_RestoreThread(PyThreadState *_save)
 
-cdef public log_warning(str) with gil:
+cdef public log_warning(char* str) with gil:
     logging.warn(str)
 
-cdef public log_info(str) with gil:
+cdef public log_info(char* str) with gil:
     logging.info(str)
 
 def initialize(xul_dir, app_dir):
