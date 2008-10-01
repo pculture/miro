@@ -29,6 +29,7 @@
 """Displays the list of tabs on the left-hand side of the app."""
 
 from miro import app
+from miro import signals
 from miro import messages
 from miro.gtcache import gettext as _
 from miro.plat import resources
@@ -283,8 +284,18 @@ class PlaylistListDragHandler(TabListDragHandler):
     item_type = 'playlist'
     folder_type = 'playlist-with-folder'
 
-class TabList(object):
+class TabList(signals.SignalEmitter):
+    """Handles a list of tabs on the left-side of Miro.
+
+    signals:
+
+    tab-name-changed (tablist, old_name, new_new) -- The name of a tab
+        changed.
+    """
+
     def __init__(self):
+        signals.SignalEmitter.__init__(self)
+        self.create_signal('tab-name-changed')
         self.view = TabListView(style.TabRenderer())
         self.view.allow_multiple_select(True)
         self.view.connect('row-expanded', self.on_row_expanded_change, True)
@@ -312,7 +323,10 @@ class TabList(object):
 
     def update(self, info):
         self.init_info(info)
+        old_name = self.view.model[self.iter_map[info.id]][0].name
         self.view.model.update(self.iter_map[info.id], info)
+        if old_name != info.name:
+            self.emit('tab-name-changed', old_name, info.name)
 
     def remove(self, id_list):
         self.doing_change = True

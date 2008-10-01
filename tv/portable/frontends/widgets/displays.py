@@ -222,9 +222,17 @@ class FeedDisplay(ItemListDisplay):
     def should_display(type, selected_tabs):
         return type == 'feed' and len(selected_tabs) == 1
 
+    def on_selected(self):
+        ItemListDisplay.on_selected(self)
+        self._name_signal_handler = app.tab_list_manager.feed_list.connect(
+                'tab-name-changed', self._on_name_changed)
+
+    def _on_name_changed(self, tab_list, old_name, new_name):
+        self.controller.titlebar.update_title(new_name)
 
     def cleanup(self):
         ItemListDisplay.cleanup(self)
+        app.tab_list_manager.feed_list.disconnect(self._name_signal_handler)
         if widgetutil.feed_exists(self.feed_id):
             messages.MarkChannelSeen(self.feed_id).send_to_backend()
 
@@ -236,6 +244,18 @@ class PlaylistDisplay(ItemListDisplay):
     @staticmethod
     def should_display(type, selected_tabs):
         return type == 'playlist' and len(selected_tabs) == 1
+
+    def on_selected(self):
+        ItemListDisplay.on_selected(self)
+        self._name_signal_handler = app.tab_list_manager.playlist_list.connect(
+                'tab-name-changed', self._on_name_changed)
+
+    def _on_name_changed(self, tab_list, old_name, new_name):
+        self.controller.titlebar.update_title(new_name)
+
+    def cleanup(self):
+        ItemListDisplay.cleanup(self)
+        app.tab_list_manager.playlist_list.disconnect(self._name_signal_handler)
 
     def make_controller(self, playlist_info):
         return playlist.PlaylistView(playlist_info)

@@ -67,6 +67,10 @@ class TitleDrawer(widgetset.DrawingArea):
         y = (context.height - height) / 2
         textbox.draw(context, 0, y, context.width, height)
 
+    def update_title(self, new_title):
+        self.title = new_title
+        self.queue_redraw()
+
 class ItemListTitlebar(widgetset.Background):
     """Titlebar for feeds, playlists and static tabs that display items.
 
@@ -101,6 +105,9 @@ class ItemListTitlebar(widgetset.Background):
         gradient.set_end_color((0.90, 0.90, 0.90))
         context.rectangle(0, 0, context.width, context.height)
         context.gradient_fill(gradient)
+
+    def update_title(self, new_title):
+        self.title_drawer.update_title(new_title)
 
     def _build_titlebar_extra(self):
         """Builds the widget(s) to place to the right of the title.
