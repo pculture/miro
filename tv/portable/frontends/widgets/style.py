@@ -315,6 +315,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             layout.set_text_color(DOWNLOADING_COLOR)
         elif self.data.downloaded and not self.data.video_watched:
             layout.set_text_color(UNWATCHED_COLOR)
+        elif self.data.expiration_date:
+            layout.set_text_color(WATCHED_COLOR)
         elif not self.data.item_viewed:
             layout.set_text_color(AVAILABLE_COLOR)
         else:
@@ -590,6 +592,9 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         elif self.data.downloaded and not self.data.video_watched:
             bump = imagepool.get_surface(resources.path(
                 'wimages/status-icon-newly-downloaded.png'))
+
+        elif self.data.expiration_date:
+            bump = None
 
         elif not self.data.item_viewed:
             bump = imagepool.get_surface(resources.path(
