@@ -32,6 +32,7 @@ import time
 
 import gobject
 import gtk
+import logging
 
 from miro import app
 from miro.plat import screensaver
@@ -58,9 +59,10 @@ def _videobox_widget():
 def _window():
     return app.widgetapp.window._window
 
-def can_play_movie_file(path):
+def can_play_file(path):
     if app.renderer is not None:
         return app.renderer.can_play_file(path)
+    logging.warn("can_play_file: app.renderer is None")
     return False
 
 class VideoRenderer(Widget):

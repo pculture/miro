@@ -43,4 +43,4 @@ from miro.plat.frontends.widgets.browser import Browser
 from miro.plat.frontends.widgets.simple import Image, ImageDisplay, Label, SolidBackground
 from miro.plat.frontends.widgets.tableview import TableView, CellRenderer, CustomCellRenderer, ImageCellRenderer
 from miro.plat.frontends.widgets.tablemodel import TableModel, TreeTableModel
-from miro.plat.frontends.widgets.video import VideoRenderer
+from miro.plat.frontends.widgets.video import VideoRenderer, can_play_file

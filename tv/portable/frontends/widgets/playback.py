@@ -34,7 +34,7 @@ from miro import messages
 from miro import prefs
 from miro import signals
 from miro.plat.frontends.widgets import timer
-from miro.plat.frontends.widgets import video
+from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets.displays import VideoDisplay
 #from miro.frontends.widgets.displays import AudioDisplay
 #from miro.frontends.widgets.displays import ExternalVideoDisplay
@@ -223,7 +223,7 @@ class PlaybackManager (signals.SignalEmitter):
 
     def _item_is_playable(self, item_info):
         path = item_info.video_path
-        return os.path.exists(path) and video.can_play_movie_file(path)
+        return os.path.exists(path) and widgetset.can_play_file(path)
 
     def _select_current(self):
         volume = config.get(prefs.VOLUME_LEVEL)

@@ -181,7 +181,9 @@ class Renderer:
 
     def can_play_file(self, filename):
         """whether or not this renderer can play this data"""
-        return Tester(filename).result()
+        # FIXME
+        # return Tester(filename).result()
+        return True
 
     def fill_movie_data(self, filename, movie_data, callback):
         confirmMainThread()

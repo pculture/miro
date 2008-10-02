@@ -109,7 +109,9 @@ class Renderer:
 
     def can_play_file(self, filename):
         confirmMainThread()
-        return self.xine.can_play_file(filename)
+        # FIXME
+        # return self.xine.can_play_file(filename)
+        return True
 
     def go_fullscreen(self):
         """Handle when the video window goes fullscreen."""
