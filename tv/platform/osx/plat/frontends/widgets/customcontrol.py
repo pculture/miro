@@ -60,7 +60,11 @@ class DrawableButton(NSButton):
         return self
 
     def viewDidMoveToWindow(self):
-        self.reset_tracking_rect()
+        if self.window() is None and self.tracking_rect is not None:
+            self.removeTrackingRect_(self.tracking_rect)
+            self.tracking_rect = None
+        else:
+            self.reset_tracking_rect()
 
     def setFrame_(self, rect):
         NSButton.setFrame_(self, rect)
