@@ -58,6 +58,11 @@ def _videobox_widget():
 def _window():
     return app.widgetapp.window._window
 
+def can_play_movie_file(path):
+    if app.renderer is not None:
+        return app.renderer.can_play_file(path)
+    return False
+
 class VideoRenderer(Widget):
     """Video renderer widget.
 
@@ -84,9 +89,6 @@ class VideoRenderer(Widget):
 
     def teardown(self):
         self.renderer.reset()
-    
-    def can_play_movie_file(self, path):
-        return self.renderer.can_play_file(path)
     
     def set_movie_item(self, item_info):
         self.renderer.select_file(item_info.video_path)

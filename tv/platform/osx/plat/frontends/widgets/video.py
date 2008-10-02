@@ -85,6 +85,68 @@ ALL_SUPPORTED_MEDIA_TYPES   = SUPPORTED_VIDEO_MEDIA_TYPES + SUPPORTED_AUDIO_MEDI
 
 ###############################################################################
 
+class VideoOpener (object):
+
+    def __init__(self):
+        self.cached_movie = None
+
+    def can_open_file(self, path):
+        threads.warn_if_not_on_main_thread('VideoOpener.can_open_file')
+        can_open = False
+        qtmovie = self.get_movie_from_file(path)
+
+        # Purely referential movies have a no duration, no track and need to be 
+        # streamed first. Since we don't support this yet, we delegate the 
+        # streaming to the standalone QT player to avoid any problem (like the 
+        # crash in #944) by simply declaring that we can't play the corresponding item.
+        # Note that once the movie is fully streamed and cached by QT, DTV will
+        # be able to play it internally just fine -- luc
+    
+        # [UPDATE - 26 Feb, 2006]
+        # Actually, streaming movies *can* have tracks as shown in #1124. We
+        # therefore need to drill down and find out if we have a zero length
+        # video track/media.
+    
+        if qtmovie is not nil and qtmovie.duration().timeValue > 0:
+            allTracks = qtmovie.tracks()
+            if len(qtmovie.tracks()) > 0:
+                # First make sure we have at least one video track with a non zero length
+                allMedia = [track.media() for track in allTracks]
+                for media in allMedia:
+                    mediaType = media.attributeForKey_(QTMediaTypeAttribute)
+                    mediaDuration = media.attributeForKey_(QTMediaDurationAttribute).QTTimeValue().timeValue
+                    if mediaType in ALL_SUPPORTED_MEDIA_TYPES and mediaDuration > 0:
+                        can_open = True
+                        break
+
+        return can_open
+
+    def get_movie_from_file(self, path):
+        osfilename = filenameTypeToOSFilename(path)
+        url = NSURL.fileURLWithPath_(osfilename)
+        if self.cached_movie is not None and self.cached_movie.attributeForKey_(QTMovieURLAttribute) == url:
+            qtmovie = self.cached_movie
+        else:
+            if utils.get_pyobjc_major_version() == 2:
+                qtmovie, error = QTMovie.alloc().initWithURL_error_(url, None)
+            else:
+                qtmovie, error = QTMovie.alloc().initWithURL_error_(url)
+            self.cached_movie = qtmovie
+        return qtmovie
+        
+    def reset(self):
+        self.cached_movie = None
+
+video_opener = VideoOpener()
+
+###############################################################################
+
+def can_play_movie_file(path):
+    threads.warn_if_not_on_main_thread('video.can_play_movie_file')
+    return video_opener.can_open_file(path)
+
+###############################################################################
+
 class VideoRenderer (Widget):
 
     def __init__(self):
@@ -103,7 +165,6 @@ class VideoRenderer (Widget):
         self.video_window.setContentView_(self.video_view)
         
         self.movie = None
-        self.cached_movie = None
         self.system_activity_updater_timer = None
 
     def calc_size_request(self):
@@ -125,10 +186,10 @@ class VideoRenderer (Widget):
 
     def reset(self):
         threads.warn_if_not_on_main_thread('VideoRenderer.reset')
+        video_opener.reset()
         self.video_view.setMovie_(nil)
         self.movie_notifications = None
         self.movie = None
-        self.cached_movie = None
 
     def get_video_frame(self):
         frame = self.view.frame()
@@ -142,42 +203,9 @@ class VideoRenderer (Widget):
         frame = self.get_video_frame()
         self.video_window.setFrame_display_(frame, YES)
     
-    def can_play_movie_file(self, path):
-        threads.warn_if_not_on_main_thread('VideoRenderer.can_play_movie_file')
-        canPlay = False
-        qtmovie = self.get_movie_from_file(filename)
-
-        # Purely referential movies have a no duration, no track and need to be 
-        # streamed first. Since we don't support this yet, we delegate the 
-        # streaming to the standalone QT player to avoid any problem (like the 
-        # crash in #944) by simply declaring that we can't play the corresponding item.
-        # Note that once the movie is fully streamed and cached by QT, DTV will
-        # be able to play it internally just fine -- luc
-        
-        # [UPDATE - 26 Feb, 2006]
-        # Actually, streaming movies *can* have tracks as shown in #1124. We
-        # therefore need to drill down and find out if we have a zero length
-        # video track/media.
-        
-        if qtmovie is not nil and qtmovie.duration().timeValue > 0:
-            allTracks = qtmovie.tracks()
-            if len(qtmovie.tracks()) > 0:
-                # First make sure we have at least one video track with a non zero length
-                allMedia = [track.media() for track in allTracks]
-                for media in allMedia:
-                    mediaType = media.attributeForKey_(QTMediaTypeAttribute)
-                    mediaDuration = media.attributeForKey_(QTMediaDurationAttribute).QTTimeValue().timeValue
-                    if mediaType in ALL_SUPPORTED_MEDIA_TYPES and mediaDuration > 0:
-                        canPlay = True
-                        break
-        else:
-            self.cachedMovie = nil
-
-        return canPlay
-
     def set_movie_item(self, item_info):
         threads.warn_if_not_on_main_thread('VideoRenderer.set_movie_item')
-        qtmovie = self.get_movie_from_file(item_info.video_path)
+        qtmovie = video_opener.get_movie_from_file(item_info.video_path)
         self.reset()
         if qtmovie is not nil:
             self.movie = qtmovie
@@ -186,19 +214,6 @@ class VideoRenderer (Widget):
             self.video_window.palette.setup(item_info, self)
             self.movie_notifications = NotificationForwarder.create(self.movie)
             self.movie_notifications.connect(self.handle_movie_notification, QTMovieDidEndNotification)
-
-    def get_movie_from_file(self, path):
-        osfilename = filenameTypeToOSFilename(path)
-        url = NSURL.fileURLWithPath_(osfilename)
-        if self.cached_movie is not None and self.cached_movie.attributeForKey_(QTMovieURLAttribute) == url:
-            qtmovie = self.cached_movie
-        else:
-            if utils.get_pyobjc_major_version() == 2:
-                qtmovie, error = QTMovie.alloc().initWithURL_error_(url, None)
-            else:
-                qtmovie, error = QTMovie.alloc().initWithURL_error_(url)
-            self.cached_movie = qtmovie
-        return qtmovie
 
     def get_elapsed_playback_time(self):
         qttime = self.movie.currentTime()
