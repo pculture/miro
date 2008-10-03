@@ -54,7 +54,7 @@ class Renderer:
     def __init__(self):
         logging.info("Xine version:      %s", xine.getXineVersion())
         self.xine = xine.Xine()
-        self.xine.setEosCallback(self.on_eos)
+        self.xine.set_eos_callback(self.on_eos)
         self.attach_queue = []
         self.attached = False
         self.driver = config.get(options.XINE_DRIVER)
@@ -100,11 +100,11 @@ class Renderer:
 
     def on_configure_event(self, widget, event):
         confirmMainThread()
-        self.xine.setArea(event.x, event.y, event.width, event.height)
+        self.xine.set_area(event.x, event.y, event.width, event.height)
 
     def on_expose_event(self, widget, event):
         confirmMainThread()
-        self.xine.gotExposeEvent(event.area.x, event.area.y, event.area.width,
+        self.xine.got_expose_event(event.area.x, event.area.y, event.area.width,
                 event.area.height)
 
     def can_play_file(self, filename):
@@ -124,7 +124,7 @@ class Renderer:
         def fullscreen_expose_workaround():
             try:
                 _, _, width, height, _ = self.widget.window.get_geometry()
-                self.xine.gotExposeEvent(0, 0, width, height)
+                self.xine.got_expose_event(0, 0, width, height)
             except (SystemExit, KeyboardInterrupt):
                 raise
             except:
@@ -146,12 +146,12 @@ class Renderer:
     def select_file(self, filename):
         confirmMainThread()
         viz = config.get(options.XINE_VIZ)
-        self.xine.setViz(viz)
-        self.xine.selectFile(filename)
+        self.xine.set_viz(viz)
+        self.xine.select_file(filename)
         def expose_workaround():
             try:
                 _, _, width, height, _ = self.widget.window.get_geometry()
-                self.xine.gotExposeEvent(0, 0, width, height)
+                self.xine.got_expose_event(0, 0, width, height)
             except (SystemExit, KeyboardInterrupt):
                 raise
             except:
@@ -164,7 +164,7 @@ class Renderer:
     def get_progress(self):
         confirmMainThread()
         try:
-            pos, length = self.xine.getPositionAndLength()
+            pos, length = self.xine.get_position_and_length()
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
@@ -173,7 +173,7 @@ class Renderer:
     def get_current_time(self):
         confirmMainThread()
         try:
-            pos, length = self.xine.getPositionAndLength()
+            pos, length = self.xine.get_position_and_length()
             return pos / 1000.0
         except Exception, e:
             logging.warn("get_current_time: caught exception: %s" % e)
@@ -206,7 +206,7 @@ class Renderer:
     def get_duration(self):
         confirmMainThread()
         try:
-            pos, length = self.xine.getPositionAndLength()
+            pos, length = self.xine.get_position_and_length()
             return length / 1000.0
         except (SystemExit, KeyboardInterrupt):
             raise
@@ -236,11 +236,13 @@ class Renderer:
 
     def getRate(self):
         confirmMainThread()
-        return self.xine.getRate()
+        # FIXME - there's no get_rate
+        return self.xine.get_rate()
 
     @wait_for_attach
     def set_rate(self, rate):
         confirmMainThread()
+        # FIXME - there's no set_rate
         self.xine.set_rate(rate)
 
     def movie_data_program_info(self, movie_path, thumbnail_path):

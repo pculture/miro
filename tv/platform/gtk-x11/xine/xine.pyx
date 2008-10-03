@@ -89,7 +89,7 @@ cdef class Xine:
     cdef object eosCallback
 
     def __new__(self):
-        self.xine = xineCreate(onXineEvent, <void*>self)
+        self.xine = xineCreate(on_xine_event, <void*>self)
         self.eosCallback = None
     def __dealloc__(self):
         xineDestroy(self.xine)
@@ -97,29 +97,29 @@ cdef class Xine:
         xineAttach(self.xine, displayName, drawable, driver, sync, use_xv_hack)
     def detach(self):
         xineDetach(self.xine)
-    def setArea(self, int xpos, int ypos, int width, int height):
+    def set_area(self, int xpos, int ypos, int width, int height):
         xineSetArea(self.xine, xpos, ypos, width, height)
-    def canPlayFile(self, char* filename):
+    def can_play_file(self, char* filename):
         # we convert xineCanPlayFile's return value to a python boolean
         return xineCanPlayFile(self.xine, filename) and True or False
-    def selectFile(self, char* filename):
+    def select_file(self, char* filename):
         xineSelectFile(self.xine, filename)
     def play(self):
         xineSetPlaying(self.xine, 1)
     def pause(self):
         xineSetPlaying(self.xine, 0)
-    def setViz(self, viz):
+    def set_viz(self, viz):
         xineSetViz(self.xine, viz)
     def set_volume(self, volume):
         volume = min(max(volume, 0), 100)
         xineSetVolume(self.xine, volume)
-    def getVolume(self):
+    def get_volume(self):
         return xineGetVolume(self.xine)
-    def gotExposeEvent(self, int x, int y, int width, int height):
+    def got_expose_event(self, int x, int y, int width, int height):
         xineGotExposeEvent(self.xine, x, y, width, height)
     def seek(self, int position):
         xineSeek(self.xine, position)
-    def setEosCallback(self, callback):
+    def set_eos_callback(self, callback):
         """Set the callback invoke when xine reaches the end of its stream.
         Pass in None to clear the callback
 
@@ -127,10 +127,10 @@ cdef class Xine:
         use gobject.idle_add if you need to use any gtk methods.
         """
         self.eosCallback = callback
-    def onEosEvent(self):
+    def on_eos_event(self):
         if self.eosCallback:
             self.eosCallback()
-    def getPositionAndLength(self):
+    def get_position_and_length(self):
         """Try to query the current stream position and stream length.  If
         Xine doesn't know the values yet we throw a CantQueryPositionLength
         Exception.
@@ -141,7 +141,7 @@ cdef class Xine:
         else:
             return position, length
 
-cdef void onXineEvent(void* data, xine_event_t* event):
+cdef void on_xine_event(void* data, xine_event_t* event):
     cdef PyObject* self
     cdef PyGILState_STATE gil
     cdef PyObject* result
