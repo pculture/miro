@@ -32,7 +32,7 @@ import weakref
 
 from AppKit import *
 from Foundation import *
-from objc import NO, nil
+from objc import YES, NO, nil
 
 from miro import signals
 from miro.plat.frontends.widgets import wrappermap
@@ -265,6 +265,30 @@ class FileOpenDialog:
 
     def close(self):
         self.nswindow.close()
+
+    def destroy(self):
+        self._panel = None
+
+class DirectorySelectDialog:
+    def __init__(self, title):
+        self._title = title
+        self._panel = NSOpenPanel.openPanel()
+        self._panel.setCanChooseFiles_(NO)
+        self._panel.setCanChooseDirectories_(YES)
+        self._directory = None
+
+    def set_directory(self, d):
+        self._directory = d
+
+    def get_directory(self):
+        return self._directory
+
+    def run(self):
+        response = self._panel.runModalForDirectory_file_types_(self._directory, None, None)
+        if response == NSFileHandlingPanelOKButton:
+            self._directory = self._panel.filenames()[0]
+            return 0
+        self._directory = ""
 
     def destroy(self):
         self._panel = None

@@ -133,3 +133,17 @@ def ask_for_save_pathname(title, initial_filename=None):
             return window.get_filename()
     finally:
         window.destroy()
+
+def ask_for_directory(title, initial_directory=None):
+    """Returns the directory pathname or None.
+    """
+    window = widgetset.DirectorySelectDialog(title)
+    try:
+        if initial_directory:
+            window.set_directory(initial_directory)
+
+        response = window.run()
+        if response == 0:
+            return window.get_directory()
+    finally:
+        window.destroy()

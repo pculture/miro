@@ -50,6 +50,7 @@ import logging
 from miro import config, prefs
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import cellpack, imagepool, widgetutil, window
+from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import dialogwidgets
 from miro.frontends.widgets.widgetutil import build_control_line
@@ -394,21 +395,30 @@ def _build_downloads_panel():
     return vbox
 
 def _build_folders_panel():
-    v = widgetset.VBox()
+    grid = dialogwidgets.ControlGrid()
 
     # FIXME - finish implementing this pane
 
-    note = widgetset.Label(_('Store downloads in this folder:'))
-    v.pack_start(widgetutil.align_left(note))
-    v.pack_start(widgetset.Label("FIXME - implement this."))
-
-    note = widgetset.Label(_(
-        'Watch for new videos in these folders and include them in library:'
-        ))
-    v.pack_start(widgetutil.align_left(note))
-    v.pack_start(widgetset.Label("FIXME - implement this."))
-
-    return v
+    grid.pack_label(_('Store downloads in this folder:'), span=2)
+    grid.end_line(spacing=0)
+    movies_directory_label = widgetset.Label(
+            config.get(prefs.MOVIES_DIRECTORY))
+    grid.pack(movies_directory_label, grid.ALIGN_LEFT, pad_left=12)
+    change_directory_button = widgetset.Button(_("Change"))
+    def on_change_movies_directory(button):
+        dir = dialogs.ask_for_directory(_("Choose Movies Directory"),
+                initial_directory=config.get(prefs.MOVIES_DIRECTORY))
+        if dir is not None:
+            movies_directory_label.set_text(dir)
+            config.set(prefs.MOVIES_DIRECTORY, dir)
+    change_directory_button.connect('clicked', on_change_movies_directory)
+    grid.pack(change_directory_button)
+    grid.end_line(spacing=18)
+    grid.pack_label(_('Watch for new videos in these folders and include '
+        'them in library:'), span=2)
+    grid.end_line()
+    grid.pack_label("FIXME - implement this.", span=2)
+    return grid.make_table()
 
 def _build_disk_space_panel():
     grid = dialogwidgets.ControlGrid()

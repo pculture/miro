@@ -238,7 +238,7 @@ class Button(SizedControl):
         return width, height
 
     def baseline(self):
-        -self.view.font().descender() + 2
+        return -self.view.font().descender() + 10 + self.pad_height
 
     def enable_widget(self):
         self.view.setEnabled_(True)

@@ -425,6 +425,33 @@ class FileSaveDialog:
             self._text = self._widget.get_filename()
             return 0
 
+class DirectorySelectDialog:
+    def __init__(self, title):
+        self._text = None
+        choose_str =_('Choose').encode('utf-8')
+        self._widget = gtk.FileChooserDialog(title,
+                               action=gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
+                               buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                                        choose_str, gtk.RESPONSE_OK))
+
+    def close(self):
+        self._widget.hide()
+
+    def destroy(self):
+        self._widget.destroy()
+
+    def set_directory(self, text):
+        self._widget.set_filename(text)
+
+    def get_directory(self):
+        return self._text
+
+    def run(self):
+        ret = self._widget.run()
+        if ret == gtk.RESPONSE_OK:
+            self._text = self._widget.get_filename()
+            return 0
+
 class AboutDialog:
     def __init__(self):
         self._text = None
