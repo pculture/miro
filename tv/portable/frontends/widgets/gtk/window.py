@@ -367,6 +367,7 @@ class FileOpenDialog:
                                action=gtk.FILE_CHOOSER_ACTION_OPEN,
                                buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
                                         gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+        self._widget.set_transient_for(app.widgetapp.window._window)
 
     def close(self):
         self._widget.hide()
@@ -406,6 +407,7 @@ class FileSaveDialog:
                                action=gtk.FILE_CHOOSER_ACTION_SAVE,
                                buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
                                         gtk.STOCK_SAVE, gtk.RESPONSE_OK))
+        self._widget.set_transient_for(app.widgetapp.window._window)
 
     def close(self):
         self._widget.hide()
@@ -433,6 +435,7 @@ class DirectorySelectDialog:
                                action=gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
                                buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
                                         choose_str, gtk.RESPONSE_OK))
+        self._widget.set_transient_for(app.widgetapp.window._window)
 
     def close(self):
         self._widget.hide()
@@ -458,6 +461,7 @@ class AboutDialog:
 
         ab = gtk.AboutDialog()
         ab.set_name(config.get(prefs.SHORT_APP_NAME))
+        ab.set_transient_for(app.widgetapp.window._window)
         if config.get(prefs.APP_REVISION_NUM):
             ab.set_version("%s (r%s)" %
                            (config.get(prefs.APP_VERSION),
