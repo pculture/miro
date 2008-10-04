@@ -34,6 +34,7 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro import messages
 from miro.frontends.widgets import channelsettingspanel
+from miro.frontends.widgets import removechannelsdialog
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistcontroller
@@ -119,6 +120,7 @@ class FeedController(itemlistcontroller.ItemListController):
         toolbar = itemlistwidgets.FeedToolbar()
         toolbar.set_autodownload_mode(feed_info.autodownload_mode)
         toolbar.connect('show-settings', self._on_show_settings)
+        toolbar.connect('remove-channel', self._on_remove_channel)
         toolbar.connect('send-to-a-friend', self._on_send_to_a_friend)
         toolbar.connect('auto-download-changed',
                 self._on_auto_download_changed)
@@ -129,6 +131,24 @@ class FeedController(itemlistcontroller.ItemListController):
 
     def default_item_view(self):
         return self.downloaded_view
+
+    def _on_remove_channel(self, widget):
+        info = widgetutil.get_feed_info(self.id)
+        downloaded_items = False
+        downloading_items = False
+
+        if not info.is_directory_feed:
+            if info.num_downloaded > 0:
+                downloaded_items = True
+
+            if info.has_downloading:
+                downloading_items = True
+
+        ret = removechannelsdialog.run_dialog([info], downloaded_items, downloading_items)
+        if ret:
+            messages.DeleteChannel(info.id, info.is_folder,
+                ret[removechannelsdialog.KEEP_ITEMS]
+            ).send_to_backend()
 
     def _on_show_settings(self, widget):
         info = widgetutil.get_feed_info(self.id)

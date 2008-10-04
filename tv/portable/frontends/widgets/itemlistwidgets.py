@@ -433,6 +433,7 @@ class FeedToolbar(widgetset.Background):
 
     def __init__(self):
         widgetset.Background.__init__(self)
+        self.create_signal('remove-channel')
         self.create_signal('show-settings')
         self.create_signal('send-to-a-friend')
         self.create_signal('auto-download-changed')
@@ -457,8 +458,14 @@ class FeedToolbar(widgetset.Background):
         settings_button.set_color(style.TOOLBAR_GRAY)
         settings_button.connect('clicked', self._on_settings_clicked)
 
+        remove_button = widgetset.Button(_("Remove channel"), style='smooth')
+        remove_button.set_size(widgetconst.SIZE_SMALL)
+        remove_button.set_color(style.TOOLBAR_GRAY)
+        remove_button.connect('clicked', self._on_remove_clicked)
+
         hbox.pack_start(widgetutil.align_middle(label, right_pad=2))
         hbox.pack_start(widgetutil.align_middle(self.autdownload_menu))
+        hbox.pack_end(widgetutil.align_middle(remove_button))
         hbox.pack_end(widgetutil.align_middle(settings_button))
         hbox.pack_end(widgetutil.align_middle(send_button))
         self.add(widgetutil.pad(hbox, top=4, bottom=4, left=10, right=10))
@@ -485,6 +492,9 @@ class FeedToolbar(widgetset.Background):
 
     def _on_send_clicked(self, button):
         self.emit('send-to-a-friend')
+
+    def _on_remove_clicked(self, button):
+        self.emit('remove-channel')
 
     def _on_autodownload_changed(self, widget, option):
         self.emit('auto-download-changed', widget.options[option])
