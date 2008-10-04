@@ -238,7 +238,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         return self.MIN_WIDTH, max(137, sizer.get_size()[1])
 
     def calc_show_progress_bar(self):
-        self.show_progress_bar = self.data.state == 'downloading'
+        self.show_progress_bar = (self.data.state in ('downloading', 'paused'))
 
     def hotspot_test(self, style, layout, x, y, width, height):
         self.download_info = self.data.download_info
