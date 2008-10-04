@@ -35,9 +35,55 @@ import gtk
 import logging
 
 from miro import app
+from miro import util
+from miro import messages
 from miro.plat import screensaver
-from miro.frontends.widgets.gtk.widgetset import Widget
-from miro.frontends.widgets.gtk import wrappermap
+from miro.frontends.widgets.gtk.widgetset import Widget, VBox, Label, HBox, Alignment, Background
+
+BLACK = (0.0, 0.0, 0.0)
+WHITE = (1.0, 1.0, 1.0)
+
+class ClickableLabel(Widget):
+    """This is like a label and reimplements many of the Label things, but
+    it's an EventBox with a Label child widget.
+    """
+    def __init__(self, text, size=0.85, color=WHITE):
+        Widget.__init__(self)
+        self.set_widget(gtk.EventBox())
+
+        self.label = Label(text)
+
+        self._widget.add(self.label._widget)
+        self.label._widget.show()
+        self._widget.set_above_child(False)
+        self._widget.set_visible_window(False)
+
+        self.set_size(size)
+        self.set_color(color)
+
+        self.wrapped_widget_connect('button-release-event', self.on_click)
+        self.wrapped_widget_connect('enter-notify-event', self.on_enter_notify)
+        self.wrapped_widget_connect('leave-notify-event', self.on_leave_notify)
+        self.create_signal('clicked')
+
+    def on_click(self, widget, event):
+        self.emit('clicked')
+        return True
+
+    def on_enter_notify(self, widget, event):
+        self._widget.window.set_cursor(gtk.gdk.Cursor(gtk.gdk.HAND1))
+
+    def on_leave_notify(self, widget, event):
+        self._widget.window.set_cursor(None)
+
+    def set_size(self, size):
+        self.label.set_size(size)
+
+    def set_color(self, color):
+        self.label.set_color(color)
+
+    def set_text(self, text):
+        self.label.set_text(text)
 
 class NullRenderer(object):
     def can_play_file(self, path):
@@ -50,6 +96,21 @@ def make_hidden_cursor():
     pixmap = gtk.gdk.Pixmap(None, 1, 1, 1)
     color = gtk.gdk.Color()
     return gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
+
+def _align_left(widget, top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
+    """Align left."""
+    alignment = Alignment(0, 0, 0, 1)
+    alignment.set_padding(top_pad, bottom_pad, left_pad, right_pad)
+    alignment.add(widget)
+    return alignment
+
+def _align_right(widget, top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
+    """Align right."""
+    alignment = Alignment(1, 0, 0, 1)
+    alignment.set_padding(top_pad, bottom_pad, left_pad, right_pad)
+    alignment.add(widget)
+    return alignment
+
 
 # Couple of utility functions to grab GTK widgets out of the widget tree for
 # fullscreen code
@@ -65,7 +126,96 @@ def can_play_file(path):
     logging.warn("can_play_file: app.renderer is None")
     return False
 
-class VideoRenderer(Widget):
+class VideoWidget(Widget):
+    def __init__(self):
+        Widget.__init__(self)
+        self.set_widget(gtk.DrawingArea())
+        self._widget.set_double_buffered(False)
+        self._widget.add_events(gtk.gdk.POINTER_MOTION_MASK)
+
+class VideoDetailsWidget(Background):
+    def __init__(self):
+        Background.__init__(self)
+        self.add(self.build_video_details())
+
+    def build_video_details(self):
+        v = VBox()
+
+        h = HBox()
+        self.__item_name = Label("")
+        self.__item_name.set_bold(True)
+        self.__item_name.set_size(1.0)
+        self.__item_name.set_color(WHITE)
+        self.__email_link = ClickableLabel("Email a friend")
+        h.pack_start(_align_left(self.__item_name, left_pad=5))
+        h.pack_start(_align_right(self.__email_link, right_pad=5), expand=True)
+        v.pack_start(h)
+
+        h = HBox()
+        self.__channel_name = Label("")
+        self.__channel_name.set_color(WHITE)
+        h.pack_start(_align_left(self.__channel_name, left_pad=5))
+        self.__permalink_link = ClickableLabel("Permalink")
+        h.pack_start(_align_right(self.__permalink_link, right_pad=5), expand=True)
+        v.pack_start(h)
+
+        h = HBox()
+        self.__keep_link = ClickableLabel("Keep")
+        self.__delete_link = ClickableLabel("Delete")
+        h.pack_start(_align_right(self.__keep_link, right_pad=10), expand=True)
+        h.pack_start(_align_right(self.__delete_link, right_pad=5))
+        v.pack_start(h)
+
+        return v
+
+    def set_video_details(self, item_info):
+        self.__item_name.set_text(util.clampText(item_info.name, 100))
+
+        channels = app.tab_list_manager.feed_list.get_feeds()
+        channels = [ci for ci in channels if ci.id == item_info.feed_id]
+        if len(channels) == 0:
+            logging.warn("item with a feed id that doesn't have a corresponding channel?")
+            self.__channel_name.set_text("")
+        else:
+            self.__channel_name.set_text(util.clampText(channels[0].name, 100))
+
+        if item_info.commentslink:
+            self.__permalink_link.set_text("Comments")
+        else:
+            self.__permalink_link.set_text("Permalink")
+
+        for mem in [self.__email_link, self.__permalink_link, self.__keep_link, self.__delete_link]:
+            mem.disconnect_all()
+
+        def handle_email(widget):
+            app.widgetapp.mail_to_friend(item_info.permalink, item_info.name)
+        self.__email_link.connect('clicked', handle_email)
+
+        def handle_permalink(widget):
+            if item_info.commentslink:
+                app.widgetapp.open_url(item_info.comments)
+            else:
+                app.widgetapp.open_url(item_info.permalink)
+        self.__permalink_link.connect('clicked', handle_permalink)
+
+        def handle_keep(widget):
+            messages.KeepVideo(item_info.id).send_to_backend()
+        self.__keep_link.connect('clicked', handle_keep)
+
+        def handle_delete(widget):
+            app.widgetapp.on_stop_clicked(None)
+            messages.DeleteVideo(item_info.id).send_to_backend()
+        self.__delete_link.connect('clicked', handle_delete)
+
+    def draw(self, context, layout):
+        context.set_color(BLACK)
+        context.rectangle(0, 0, context.width, context.height)
+        context.fill()
+
+    def is_opaque(self):
+        return True
+
+class VideoRenderer(VBox):
     """Video renderer widget.
 
     Note: app.renderer must be initialized before instantiating this class.
@@ -75,15 +225,19 @@ class VideoRenderer(Widget):
     HIDE_CONTROLS_TIMEOUT = 2000
 
     def __init__(self):
-        Widget.__init__(self)
+        VBox.__init__(self)
         if app.renderer is not None:
             self.renderer = app.renderer
         else:
             self.renderer = NullRenderer()
-        self.set_widget(gtk.DrawingArea())
-        self._widget.set_double_buffered(False)
-        self._widget.add_events(gtk.gdk.POINTER_MOTION_MASK)
-        self.renderer.set_widget(self._widget)
+
+        self.__video_widget = VideoWidget()
+        self.pack_start(self.__video_widget, expand=True)
+
+        self.__video_details = VideoDetailsWidget()
+        self.pack_start(self.__video_details)
+
+        self.renderer.set_widget(self.__video_widget._widget)
         self.hide_controls_timeout = None
         self.motion_handler = None
         self.videobox_motion_handler = None
@@ -91,8 +245,9 @@ class VideoRenderer(Widget):
 
     def teardown(self):
         self.renderer.reset()
-    
+
     def set_movie_item(self, item_info):
+        self.__video_details.set_video_details(item_info)
         self.renderer.select_file(item_info.video_path)
 
     def get_elapsed_playback_time(self):
