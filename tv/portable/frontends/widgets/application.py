@@ -220,10 +220,18 @@ class Application:
         psss
 
     def up_volume(self):
-        pass
+        v = self.window.videobox.volume_slider.get_value()
+        v = v + 0.05
+        v = min(v, 1.0)
+        app.playback_manager.set_volume(v)
+        self.window.videobox.volume_slider.set_value(v)
 
     def down_volume(self):
-        pass
+        v = self.window.videobox.volume_slider.get_value()
+        v = v - 0.05
+        v = max(v, 0.0)
+        app.playback_manager.set_volume(v)
+        self.window.videobox.volume_slider.set_value(v)
 
     def toggle_fullscreen(self):
         app.playback_manager.toggle_fullscreen()
