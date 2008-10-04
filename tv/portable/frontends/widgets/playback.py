@@ -151,10 +151,11 @@ class PlaybackManager (signals.SignalEmitter):
         self.is_playing = False
         self.is_paused = False
         self.emit('will-stop')
-        self.video_display.stop()
-        app.display_manager.pop_display()
-        app.widgetapp.window.splitter.set_left_width(self.previous_left_width)
-        app.widgetapp.window.splitter.set_left(self.previous_left_widget)
+        if self.video_display:
+            self.video_display.stop()
+            app.display_manager.pop_display()
+            app.widgetapp.window.splitter.set_left_width(self.previous_left_width)
+            app.widgetapp.window.splitter.set_left(self.previous_left_widget)
         self.is_fullscreen = False
         self.previous_left_widget = None
         self.video_display = None
