@@ -40,7 +40,6 @@ from miro import app
 from miro import config
 from miro import prefs
 from miro.download_utils import nextFreeFilename
-from miro.plat.utils import confirmMainThread
 from miro.plat import options
 
 def to_seconds(t):
@@ -56,7 +55,6 @@ class Tester:
         self.actual_init(filename)
 
     def actual_init(self, filename):
-        confirmMainThread()
         self.playbin = gst.element_factory_make('playbin')
         self.videosink = gst.element_factory_make("fakesink", "videosink")
         self.playbin.set_property("video-sink", self.videosink)
@@ -66,9 +64,15 @@ class Tester:
         self.bus = self.playbin.get_bus()
         self.bus.add_signal_watch()
         self.watch_id = self.bus.connect("message", self.on_bus_message)
-
+        # FIXME - why is on_bus_message never getting called?
         self.playbin.set_property("uri", "file://%s" % filename)
         self.playbin.set_state(gst.STATE_PAUSED)
+
+        # FIXME - do a quick check here since on_bus_message doesn't get called.
+        # but we probably shouldn't rely on this since gstreamer is asynchronous.
+        if self.playbin.get_state()[1] == gst.STATE_PAUSED:
+            self.success = True
+            self.done.set()
 
     def result(self):
         self.done.wait(5)
@@ -76,21 +80,22 @@ class Tester:
         return self.success
 
     def on_bus_message(self, bus, message):
-        confirmMainThread()
+        # FIXME - this should get called when the playbin switches states, but
+        # it doesn't--no idea why.
         if message.src == self.playbin:
             if message.type == gst.MESSAGE_STATE_CHANGED:
                 prev, new, pending = message.parse_state_changed()
                 if new == gst.STATE_PAUSED:
+                    # Success
                     self.success = True
                     self.done.set()
-                    # Success
-            if message.type == gst.MESSAGE_ERROR:
+
+            elif message.type == gst.MESSAGE_ERROR:
                 self.success = False
                 self.done.set()
 
     def disconnect(self):
-        confirmMainThread()
-        self.bus.disconnect (self.watch_id)
+        self.bus.disconnect(self.watch_id)
         self.playbin.set_state(gst.STATE_NULL)
         del self.bus
         del self.playbin
@@ -99,7 +104,6 @@ class Tester:
 
 class Renderer:
     def __init__(self):
-        confirmMainThread()
         logging.info("GStreamer version: %s", gst.version_string())
         self.playbin = gst.element_factory_make("playbin", "player")
         self.bus = self.playbin.get_bus()
@@ -139,7 +143,6 @@ class Renderer:
 
     def on_bus_message(self, bus, message):
         """recieves message posted on the GstBus"""
-        confirmMainThread()
         if message.type == gst.MESSAGE_ERROR:
             err, debug = message.parse_error()
             logging.error("on_bus_message: gstreamer error: %s", err)
@@ -148,24 +151,20 @@ class Renderer:
             app.playback_manager.on_movie_finished()
 
     def set_widget(self, widget):
-        confirmMainThread()
         widget.connect_after("realize", self.on_realize)
         widget.connect("unrealize", self.on_unrealize)
         widget.connect("expose-event", self.on_expose)
         self.widget = widget
 
     def on_realize(self, widget):
-        confirmMainThread()
         self.gc = widget.window.new_gc()
         self.gc.foreground = gtk.gdk.color_parse("black")
 
     def on_unrealize(self, widget):
-        confirmMainThread()
         self.playbin.set_state(gst.STATE_NULL)
         self.sink = None
 
     def on_expose(self, widget, event):
-        confirmMainThread()
         if self.sink:
             if hasattr(self.sink, "expose"):
                 self.sink.expose()
@@ -181,12 +180,9 @@ class Renderer:
 
     def can_play_file(self, filename):
         """whether or not this renderer can play this data"""
-        # FIXME
-        # return Tester(filename).result()
-        return True
+        return Tester(filename).result()
 
     def fill_movie_data(self, filename, movie_data, callback):
-        confirmMainThread()
         d = os.path.join(config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
         try:
             os.makedirs(d)
@@ -197,12 +193,10 @@ class Renderer:
 
     def go_fullscreen(self):
         """Handle when the video window goes fullscreen."""
-        confirmMainThread()
         logging.debug("haven't implemented go_fullscreen method yet!")
 
     def exit_fullscreen(self):
         """Handle when the video window exits fullscreen mode."""
-        confirmMainThread()
         logging.debug("haven't implemented exit_fullscreen method yet!")
 
     def select_item(self, an_item):
@@ -210,17 +204,14 @@ class Renderer:
 
     def select_file(self, filename):
         """starts playing the specified file"""
-        confirmMainThread()
         self.stop()
         self.playbin.set_property("uri", "file://%s" % filename)
         self.playbin.set_state(gst.STATE_PAUSED)
 
     def get_progress(self):
-        confirmMainThread()
         logging.info("get_progress: what does this do?")
 
     def get_current_time(self):
-        confirmMainThread()
         try:
             position, format = self.playbin.query_position(gst.FORMAT_TIME)
             return to_seconds(position)
@@ -252,7 +243,6 @@ class Renderer:
         self.__seek(seconds)
 
     def get_duration(self):
-        confirmMainThread()
         try:
             duration, format = self.playbin.query_duration(gst.FORMAT_TIME)
             return to_seconds(duration)
@@ -261,31 +251,24 @@ class Renderer:
             return None
 
     def reset(self):
-        confirmMainThread()
         self.playbin.set_state(gst.STATE_NULL)
 
     def set_volume(self, level):
-        confirmMainThread()
         self.playbin.set_property("volume", level * 4.0)
 
     def play(self):
-        confirmMainThread()
         self.playbin.set_state(gst.STATE_PLAYING)
 
     def pause(self):
-        confirmMainThread()
         self.playbin.set_state(gst.STATE_PAUSED)
 
     def stop(self):
-        confirmMainThread()
         self.playbin.set_state(gst.STATE_NULL)
 
     def get_rate(self):
-        confirmMainThread()
         return 256
 
     def set_rate(self, rate):
-        confirmMainThread()
         logging.info("gstreamer set_rate: set rate to %s" % rate)
 
     def movie_data_program_info(self, movie_path, thumbnail_path):
