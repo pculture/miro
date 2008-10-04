@@ -156,15 +156,17 @@ class VideoDetailsWidget(Background):
         self.__channel_name = Label("")
         self.__channel_name.set_color(WHITE)
         h.pack_start(_align_left(self.__channel_name, left_pad=5))
+        self.__comments_link = ClickableLabel(_("Comments"))
+        h.pack_start(_align_right(self.__comments_link, right_pad=10), expand=True)
         self.__permalink_link = ClickableLabel(_("Permalink"))
-        h.pack_start(_align_right(self.__permalink_link, right_pad=5), expand=True)
+        h.pack_start(_align_right(self.__permalink_link, right_pad=5))
         v.pack_start(h)
 
         h = HBox()
         self.__keep_link = ClickableLabel(_("Keep"))
         self.__delete_link = ClickableLabel(_("Delete"))
-        h.pack_start(_align_right(self.__keep_link, right_pad=10), expand=True)
-        h.pack_start(_align_right(self.__delete_link, right_pad=5))
+        h.pack_start(_align_right(self.__keep_link, right_pad=10, bottom_pad=5), expand=True)
+        h.pack_start(_align_right(self.__delete_link, right_pad=5, bottom_pad=5))
         v.pack_start(h)
 
         return v
@@ -180,23 +182,24 @@ class VideoDetailsWidget(Background):
         else:
             self.__channel_name.set_text(util.clampText(channels[0].name, 100))
 
-        if item_info.commentslink:
-            self.__permalink_link.set_text(_("Comments"))
-        else:
-            self.__permalink_link.set_text(_("Permalink"))
-
-        for mem in [self.__email_link, self.__permalink_link, self.__keep_link, self.__delete_link]:
+        for mem in [self.__email_link, self.__comments_link, self.__permalink_link,
+                self.__keep_link, self.__delete_link]:
             mem.disconnect_all()
 
         def handle_email(widget):
             app.widgetapp.mail_to_friend(item_info.permalink, item_info.name)
         self.__email_link.connect('clicked', handle_email)
 
-        def handle_permalink(widget):
-            if item_info.commentslink:
+        if item_info.commentslink:
+            def handle_commentslink(widget):
                 app.widgetapp.open_url(item_info.commentslink)
-            else:
-                app.widgetapp.open_url(item_info.permalink)
+            self.__comments_link.set_text(_("Comments"))
+            self.__comments_link.connect('clicked', handle_commentslink)
+        else:
+            self.__comments_link.set_text("")
+
+        def handle_permalink(widget):
+            app.widgetapp.open_url(item_info.permalink)
         self.__permalink_link.connect('clicked', handle_permalink)
 
         def handle_keep(widget):
@@ -204,6 +207,7 @@ class VideoDetailsWidget(Background):
         self.__keep_link.connect('clicked', handle_keep)
 
         def handle_delete(widget):
+            self.__delete_link.on_leave_notify(None, None)
             app.widgetapp.on_stop_clicked(None)
             messages.DeleteVideo(item_info.id).send_to_backend()
         self.__delete_link.connect('clicked', handle_delete)
