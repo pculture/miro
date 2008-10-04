@@ -49,6 +49,7 @@ class FeedController(itemlistcontroller.ItemListController):
 
     def __init__(self, id, is_folder):
         self.is_folder = is_folder
+        self._show_more_count = 0
         itemlistcontroller.ItemListController.__init__(self, 'feed', id)
 
     def make_context_menu_handler(self):
