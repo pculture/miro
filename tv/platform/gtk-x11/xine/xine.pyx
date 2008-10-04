@@ -150,7 +150,7 @@ cdef void on_xine_event(void* data, xine_event_t* event):
         self = <PyObject*>data
         gil = PyGILState_Ensure()
         Py_INCREF(self)
-        result = PyObject_CallMethod(self, "onEosEvent", "", NULL)
+        result = PyObject_CallMethod(self, "on_eos_event", "", NULL)
         if(result == NULL):
             PyErr_Print()
         else:
