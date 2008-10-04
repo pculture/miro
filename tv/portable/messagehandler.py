@@ -34,6 +34,7 @@ from miro import app
 from miro import database
 from miro import eventloop
 from miro import feed
+from miro import filters
 from miro import guide
 from miro import httpclient
 from miro import indexes
@@ -215,8 +216,9 @@ class FeedItemTracker(ItemTrackerBase):
 class FeedFolderItemTracker(ItemTrackerBase):
     type = 'feed'
     def __init__(self, folder):
-        self.view = views.items.filterWithIndex(indexes.itemsByChannelFolder,
-                folder)
+        self.view = views.items.filterWithIndex(
+            indexes.itemsByChannelFolder,
+            folder).filter(filters.uniqueItems)
         self.id = folder.id
         ItemTrackerBase.__init__(self)
 
@@ -235,7 +237,7 @@ class DownloadingItemsTracker(ItemTrackerBase):
     type = 'downloads'
     id = None
     def __init__(self):
-        self.view = views.allDownloadingItems
+        self.view = views.allDownloadingItems.filter(filters.uniqueItems)
         ItemTrackerBase.__init__(self)
 
 class IndividualDownloadsTracker(ItemTrackerBase):
