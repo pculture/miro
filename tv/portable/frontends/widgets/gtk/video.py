@@ -193,7 +193,7 @@ class VideoDetailsWidget(Background):
 
         def handle_permalink(widget):
             if item_info.commentslink:
-                app.widgetapp.open_url(item_info.comments)
+                app.widgetapp.open_url(item_info.commentslink)
             else:
                 app.widgetapp.open_url(item_info.permalink)
         self.__permalink_link.connect('clicked', handle_permalink)
