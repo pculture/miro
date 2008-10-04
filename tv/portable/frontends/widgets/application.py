@@ -494,11 +494,14 @@ class Application:
         t, channel_infos = app.tab_list_manager.get_selection()
         if t == 'feed' and len(channel_infos) == 1:
             ci = channel_infos[0]
-            query = urllib.urlencode({"url": ci.base_href, "title": ci.name})
-            emailfriend_url = config.get(prefs.EMAILFRIEND_URL)
-            if not emailfriend_url.endswith("?"):
-                emailfriend_url += "?"
-            app.widgetapp.open_url(emailfriend_url + query)
+            self.mail_to_friend(ci.base_href, ci_name)
+
+    def mail_to_friend(self, url, title):
+        emailfriend_url = config.get(prefs.EMAILFRIEND_URL)
+        if not emailfriend_url.endswith("?"):
+            emailfriend_url += "?"
+        query = urllib.urlencode({"url": url, "title": title})
+        app.widgetapp.open_url(emailfriend_url + query)
 
     def copy_channel_url(self):
         t, channel_infos = app.tab_list_manager.get_selection()
