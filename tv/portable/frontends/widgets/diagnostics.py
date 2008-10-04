@@ -101,13 +101,13 @@ def run_dialog():
         t.set_column_spacing(10)
         for row_num, item in enumerate(ITEMS):
             if item is SEPARATOR:
-                t.set_cell(widgetset.Label(""), 0, row_num)
+                t.pack(widgetset.Label(""), 0, row_num)
                 continue
 
             label = item.get("label")
             lab = widgetset.Label(label)
             lab.set_bold(True)
-            t.set_cell(widgetutil.align_left(lab), 0, row_num)
+            t.pack(widgetutil.align_left(lab), 0, row_num)
 
             data = item.get("data")
             if callable(data):
@@ -115,13 +115,13 @@ def run_dialog():
             if not isinstance(data, basestring):
                 data = repr(data)
             datalab = widgetset.Label(data)
-            t.set_cell(widgetutil.align_left(datalab), 1, row_num)
+            t.pack(widgetutil.align_left(datalab), 1, row_num)
 
             if item.get("button_face"):
                 b = widgetset.Button(item["button_face"])
                 b.set_size(widgetconst.SIZE_SMALL)
                 b.connect('clicked', item["button_fun"])
-                t.set_cell(widgetutil.align_left(b), 2, row_num)
+                t.pack(widgetutil.align_left(b), 2, row_num)
 
         window.set_extra_widget(t)
         window.add_button(BUTTON_OK.text)

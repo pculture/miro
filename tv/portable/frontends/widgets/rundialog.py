@@ -78,14 +78,14 @@ class HTTPAuthDialogRunner(DialogRunner):
     def build_extra_widget(self, window):
         table = widgetset.Table(2, 2)
         table.set_column_spacing(12)
-        table.set_cell(widgetset.Label(_("Username:")), 0, 0)
+        table.pack(widgetset.Label(_("Username:")), 0, 0)
         self.username_entry = widgetset.TextEntry(self.dialog.prefillUser)
         self.username_entry.set_width(20)
-        table.set_cell(self.username_entry, 1, 0)
-        table.set_cell(widgetset.Label(_("Password:")), 0, 1)
+        table.pack(self.username_entry, 1, 0)
+        table.pack(widgetset.Label(_("Password:")), 0, 1)
         self.password_entry = widgetset.SecureTextEntry(self.dialog.prefillPassword)
         self.password_entry.set_activates_default(True)
-        table.set_cell(self.password_entry, 1, 1)
+        table.pack(self.password_entry, 1, 1)
         window.set_extra_widget(widgetutil.align_center(table))
 
     def handle_response(self, response):
