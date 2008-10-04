@@ -35,6 +35,7 @@ import gtk
 import logging
 
 from miro import app
+from miro.gtcache import gettext as _
 from miro import util
 from miro import messages
 from miro.plat import screensaver
@@ -146,7 +147,7 @@ class VideoDetailsWidget(Background):
         self.__item_name.set_bold(True)
         self.__item_name.set_size(1.0)
         self.__item_name.set_color(WHITE)
-        self.__email_link = ClickableLabel("Email a friend")
+        self.__email_link = ClickableLabel(_("Email a friend"))
         h.pack_start(_align_left(self.__item_name, left_pad=5))
         h.pack_start(_align_right(self.__email_link, right_pad=5), expand=True)
         v.pack_start(h)
@@ -155,13 +156,13 @@ class VideoDetailsWidget(Background):
         self.__channel_name = Label("")
         self.__channel_name.set_color(WHITE)
         h.pack_start(_align_left(self.__channel_name, left_pad=5))
-        self.__permalink_link = ClickableLabel("Permalink")
+        self.__permalink_link = ClickableLabel(_("Permalink"))
         h.pack_start(_align_right(self.__permalink_link, right_pad=5), expand=True)
         v.pack_start(h)
 
         h = HBox()
-        self.__keep_link = ClickableLabel("Keep")
-        self.__delete_link = ClickableLabel("Delete")
+        self.__keep_link = ClickableLabel(_("Keep"))
+        self.__delete_link = ClickableLabel(_("Delete"))
         h.pack_start(_align_right(self.__keep_link, right_pad=10), expand=True)
         h.pack_start(_align_right(self.__delete_link, right_pad=5))
         v.pack_start(h)
@@ -180,9 +181,9 @@ class VideoDetailsWidget(Background):
             self.__channel_name.set_text(util.clampText(channels[0].name, 100))
 
         if item_info.commentslink:
-            self.__permalink_link.set_text("Comments")
+            self.__permalink_link.set_text(_("Comments"))
         else:
-            self.__permalink_link.set_text("Permalink")
+            self.__permalink_link.set_text(_("Permalink"))
 
         for mem in [self.__email_link, self.__permalink_link, self.__keep_link, self.__delete_link]:
             mem.disconnect_all()
