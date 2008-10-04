@@ -217,7 +217,8 @@ class PlaybackManager (signals.SignalEmitter):
                 self.position += 1
                 return self._try_select_current()
         else:
-            self.stop()
+            if self.is_playing:
+                self.stop()
             return False
         return True
 
