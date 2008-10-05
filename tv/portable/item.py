@@ -1280,6 +1280,7 @@ class FileItem(Item):
             self.remove()
         elif self.feed_id is None:
             self.deleted = True
+            self.signalChange()
         else:
             # external item that the user deleted in Miro
             url = self.getFeedURL()
@@ -1287,7 +1288,7 @@ class FileItem(Item):
                 self.remove()
             else:
                 self.deleted = True
-        self.signalChange()
+                self.signalChange()
 
     def delete_files(self):
         if self.getParent():
