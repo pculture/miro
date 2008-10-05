@@ -116,7 +116,9 @@ class PlaybackManager (signals.SignalEmitter):
         duration = self.video_display.get_total_playback_time()
         self.emit('will-play', duration)
         resume_time = self.playlist[self.position].resume_time
-        if config.get(prefs.RESUME_VIDEOS_MODE) and resume_time > 10:
+        if (config.get(prefs.RESUME_VIDEOS_MODE)
+               and resume_time > 10
+               and not self.is_paused):
             self.video_display.play_from_time(resume_time)
         else:
             self.video_display.play()
