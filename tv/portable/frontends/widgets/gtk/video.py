@@ -48,7 +48,7 @@ class ClickableLabel(Widget):
     """This is like a label and reimplements many of the Label things, but
     it's an EventBox with a Label child widget.
     """
-    def __init__(self, text, size=0.85, color=WHITE):
+    def __init__(self, text, size=0.77, color=WHITE):
         Widget.__init__(self)
         self.set_widget(gtk.EventBox())
 
@@ -140,36 +140,45 @@ class VideoDetailsWidget(Background):
         self.add(self.build_video_details())
 
     def build_video_details(self):
-        v = VBox()
-
         h = HBox()
+
+        v = VBox()
         self.__item_name = Label("")
         self.__item_name.set_bold(True)
         self.__item_name.set_size(1.0)
         self.__item_name.set_color(WHITE)
-        self.__email_link = ClickableLabel(_("Email a friend"))
-        h.pack_start(_align_left(self.__item_name, left_pad=5))
-        h.pack_start(_align_right(self.__email_link, right_pad=5), expand=True)
-        v.pack_start(h)
+        v.pack_start(_align_left(self.__item_name, left_pad=5))
 
-        h = HBox()
         self.__channel_name = Label("")
         self.__channel_name.set_color(WHITE)
-        h.pack_start(_align_left(self.__channel_name, left_pad=5))
+        v.pack_start(_align_left(self.__channel_name, left_pad=5))
+        h.pack_start(v)
+
+
+        v = VBox()
+        self.__email_link = ClickableLabel(_("Email a friend"))
+        v.pack_start(_align_right(self.__email_link, right_pad=5))
+
+        h2 = HBox()
         self.__comments_link = ClickableLabel(_("Comments"))
-        h.pack_start(_align_right(self.__comments_link, right_pad=10), expand=True)
+        h2.pack_start(_align_right(self.__comments_link, right_pad=10), expand=True)
         self.__permalink_link = ClickableLabel(_("Permalink"))
-        h.pack_start(_align_right(self.__permalink_link, right_pad=5))
-        v.pack_start(h)
+        h2.pack_start(_align_right(self.__permalink_link, right_pad=5))
+        v.pack_start(h2)
 
-        h = HBox()
+        h2 = HBox()
         self.__keep_link = ClickableLabel(_("Keep"))
+        h2.pack_start(_align_right(self.__keep_link, right_pad=5), expand=True)
+        lab = Label("-")
+        lab.set_size(0.77)
+        lab.set_color(WHITE)
+        h2.pack_start(_align_right(lab, right_pad=5))
         self.__delete_link = ClickableLabel(_("Delete"))
-        h.pack_start(_align_right(self.__keep_link, right_pad=10, bottom_pad=5), expand=True)
-        h.pack_start(_align_right(self.__delete_link, right_pad=5, bottom_pad=5))
-        v.pack_start(h)
+        h2.pack_start(_align_right(self.__delete_link, right_pad=5))
+        v.pack_start(h2)
 
-        return v
+        h.pack_start(_align_right(v), expand=True)
+        return h
 
     def set_video_details(self, item_info):
         self.__item_name.set_text(util.clampText(item_info.name, 100))
