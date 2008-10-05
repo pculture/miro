@@ -168,7 +168,7 @@ class Importer (object):
             message += ngettext("Skipped %(count)d feed already present.",
                                 "Skipped %(count)d feeds already present.",
                                 self.ignoredFeeds,
-                                {"count": self.importedFeeds})
+                                {"count": self.ignoredFeeds})
         dialog = dialogs.MessageBoxDialog(title, message)
         dialog.run()
         
