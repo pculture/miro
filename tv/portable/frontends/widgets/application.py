@@ -177,7 +177,7 @@ class Application:
         config.set(prefs.VOLUME_LEVEL, slider.get_value())
         config.save()
 
-    def on_play_clicked(self, button):
+    def on_play_clicked(self, button=None):
         if app.playback_manager.is_playing:
             app.playback_manager.play_pause()
         else:
@@ -186,38 +186,26 @@ class Application:
     def play_selection(self):
         app.item_list_controller_manager.play_selection()
 
-    def on_stop_clicked(self, button):
+    def on_stop_clicked(self, button=None):
         app.playback_manager.stop()
 
-    def on_forward_clicked(self, button):
+    def on_forward_clicked(self, button=None):
         app.playback_manager.play_next_movie()
 
-    def on_previous_clicked(self, button):
+    def on_previous_clicked(self, button=None):
         app.playback_manager.play_prev_movie()
 
-    def on_fast_forward(self, button):
+    def on_fast_forward(self, button=None):
         app.playback_manager.set_playback_rate(3.0)
 
-    def on_fast_backward(self, button):
+    def on_fast_backward(self, button=None):
         app.playback_manager.set_playback_rate(-3.0)
 
     def on_stop_fast_playback(self, button):
         app.playback_manager.set_playback_rate(1.0)
 
-    def on_fullscreen_clicked(self, button):
+    def on_fullscreen_clicked(self, button=None):
         app.playback_manager.fullscreen()
-
-    def next_video(self):
-        pass
-
-    def previous_video(self):
-        pass
-
-    def fast_forward(self):
-        pass
-
-    def rewind(self):
-        psss
 
     def up_volume(self):
         slider = self.window.videobox.volume_slider
@@ -232,9 +220,6 @@ class Application:
         slider.set_value(v)
         self.on_volume_change(slider, v)
         self.on_volume_set(slider)
-
-    def toggle_fullscreen(self):
-        app.playback_manager.toggle_fullscreen()
 
     def open_video(self):
         title = _('Open Files...')
@@ -666,13 +651,13 @@ class Application:
         eventloop.addTimeout(3, autoupdate.check_for_updates, "Check for updates")
 
     def handle_download_complete(self, obj, item):
-        print "DOWLOAD COMPLETE"
+        print "FIXME - DOWLOAD COMPLETE"
 
     def handle_update_available(self, obj, item):
-        print "update available!"
+        print "FIXME - update available!"
 
     def handle_up_to_date(self):
-        print "up to date!"
+        print "FIXME - up to date!"
 
     def handle_error(self, obj, report):
         call_on_ui_thread(self.__handle_error, obj, report)

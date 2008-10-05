@@ -158,27 +158,27 @@ def on_remove_playlists():
 
 @action_handler("PlayPauseVideo")
 def on_play_pause_video():
-    app.widgetapp.on_play_clicked(None)
+    app.widgetapp.on_play_clicked()
 
 @action_handler("StopVideo")
 def on_play_pause_video():
-    app.widgetapp.on_stop_clicked(None)
+    app.widgetapp.on_stop_clicked()
 
 @action_handler("NextVideo")
 def on_next_video():
-    app.widgetapp.next_video()
+    app.widgetapp.on_forward_clicked()
 
 @action_handler("PreviousVideo")
 def on_previous_video():
-    app.widgetapp.previous_video()
+    app.widgetapp.on_previous_clicked()
 
 @action_handler("FastForward")
 def on_fast_forward():
-    app.widgetapp.fast_forward()
+    app.widgetapp.on_fast_forward()
 
 @action_handler("Rewind")
 def on_rewind():
-    app.widgetapp.rewind()
+    app.widgetapp.on_fast_backward()
 
 @action_handler("UpVolume")
 def on_up_volume():
@@ -190,7 +190,7 @@ def on_down_volume():
 
 @action_handler("Fullscreen")
 def on_fullscreen():
-    app.widgetapp.toggle_fullscreen()
+    app.widgetapp.on_fullscreen_clicked()
 
 # Help menu
 
