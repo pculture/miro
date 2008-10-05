@@ -363,3 +363,10 @@ class MiroInterpreter(cmd.Cmd):
         def callback(dialog):
             print "TEST CHOICE: %s" % dialog.choice
         d.run(callback)
+
+    @runInEventLoop
+    def do_dumpdatabase(self, line):
+        from miro import database
+        print "Dumping database...."
+        database.defaultDatabase.liveStorage.dumpDatabase(database.defaultDatabase)
+        print "Done."
