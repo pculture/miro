@@ -264,6 +264,7 @@ def parse_pkg_config(command, components, options_dict = None):
         options_dict = {
             'include_dirs' : [],
             'library_dirs' : [],
+            'runtime_dirs' : [],
             'libraries' : [],
             'extra_compile_args' : []
         }
@@ -279,6 +280,11 @@ def parse_pkg_config(command, components, options_dict = None):
             options_dict['libraries'].append(rest)
         else:
             options_dict['extra_compile_args'].append(comp)
+
+    commandLine = "%s --variable=libdir %s" % (command, components)
+    output = get_command_output(commandLine).strip()
+    options_dict['runtime_dirs'].append(output)
+
     return options_dict
 
 def compile_xine_extractor():
@@ -489,6 +495,8 @@ def get_mozilla_stuff():
         mozilla_lib_path = mozilla_lib_path[0]
     print "using mozilla_lib_path: ", repr(mozilla_lib_path)
 
+    mozilla_runtime_path = parse_pkg_config('pkg-config', gtkmozembed_lib)['runtime_dirs']
+
     # Find the base mozilla directory, and add the subdirs we need.
     def allInDir(directory, subdirs):
         for subdir in subdirs:
@@ -532,9 +540,9 @@ def get_mozilla_stuff():
     if xulrunner19:
         mozilla_browser_options['extra_compile_args'].append('-DPCF_USING_XULRUNNER19=1')
 
-    return mozilla_browser_options, mozilla_lib_path, xpcom_runtime_path
+    return mozilla_browser_options, mozilla_lib_path, xpcom_runtime_path, mozilla_runtime_path
 
-mozilla_browser_options, mozilla_lib_path, xpcom_runtime_path = get_mozilla_stuff()
+mozilla_browser_options, mozilla_lib_path, xpcom_runtime_path, mozilla_runtime_path = get_mozilla_stuff()
 
 
 #### Xlib Extension ####
@@ -671,7 +679,7 @@ class install_data(distutils.command.install_data.install_data):
                              BUILD_MACHINE="%s@%s" % (getlogin(),
                                                       os.uname()[1]),
                              BUILD_TIME=str(time.time()),
-                             MOZILLA_LIB_PATH=mozilla_lib_path)
+                             MOZILLA_LIB_PATH=mozilla_runtime_path[0])
         self.outfiles.append(dest)
 
         locale_dir = os.path.join (resource_dir, "locale")
