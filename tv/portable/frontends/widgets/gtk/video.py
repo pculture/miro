@@ -38,6 +38,7 @@ from miro import app
 from miro.gtcache import gettext as _
 from miro import util
 from miro import messages
+from miro import displaytext
 from miro.plat import screensaver
 from miro.frontends.widgets.gtk.widgetset import Widget, VBox, Label, HBox, Alignment, Background
 
@@ -85,6 +86,9 @@ class ClickableLabel(Widget):
 
     def set_text(self, text):
         self.label.set_text(text)
+
+    def hide(self):
+        self.label._widget.hide()
 
 class NullRenderer(object):
     def can_play_file(self, path):
@@ -167,12 +171,16 @@ class VideoDetailsWidget(Background):
         v.pack_start(h2)
 
         h2 = HBox()
+        self.__expiration_label = Label("")
+        self.__expiration_label.set_size(0.77)
+        self.__expiration_label.set_color(WHITE)
+        h2.pack_start(_align_right(self.__expiration_label, right_pad=15), expand=True)
         self.__keep_link = ClickableLabel(_("Keep"))
-        h2.pack_start(_align_right(self.__keep_link, right_pad=5), expand=True)
-        lab = Label("-")
-        lab.set_size(0.77)
-        lab.set_color(WHITE)
-        h2.pack_start(_align_right(lab, right_pad=5))
+        h2.pack_start(_align_right(self.__keep_link, right_pad=5))
+        self.__dash = Label("-")
+        self.__dash.set_size(0.77)
+        self.__dash.set_color(WHITE)
+        h2.pack_start(_align_right(self.__dash, right_pad=5))
         self.__delete_link = ClickableLabel(_("Delete"))
         h2.pack_start(_align_right(self.__delete_link, right_pad=5))
         v.pack_start(h2)
@@ -213,7 +221,23 @@ class VideoDetailsWidget(Background):
 
         def handle_keep(widget):
             messages.KeepVideo(item_info.id).send_to_backend()
-        self.__keep_link.connect('clicked', handle_keep)
+            self.__expiration_label.hide()
+            self.__keep_link.hide()
+            self.__dash.hide()
+
+        if not item_info.is_external:
+            if item_info.video_watched:
+                if item_info.expiration_date is not None:
+                    text = displaytext.expiration_date(item_info.expiration_date)
+                    self.__expiration_label.set_text(text)
+                    self.__keep_link.connect('clicked', handle_keep)
+                else:
+                    self.__expiration_label.hide()
+                    self.__keep_link.hide()
+                    self.__dash.hide()
+            else:
+                self.__expiration_label.hide()
+                self.__keep_link.connect('clicked', handle_keep)
 
         def handle_delete(widget):
             self.__delete_link.on_leave_notify(None, None)

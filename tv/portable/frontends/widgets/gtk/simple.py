@@ -118,6 +118,9 @@ class Label(Widget):
         metrics = pango_context.get_metrics(self.font_description)
         return pango.PIXELS(metrics.get_descent())
 
+    def hide(self):
+        self._widget.hide()
+
 class Scroller(Bin):
     def __init__(self, horizontal, vertical):
         Bin.__init__(self)
