@@ -64,12 +64,15 @@ def run_dialog(channel_infos, downloaded_items, downloading_items):
             lab.set_wrap(True)
             v.pack_start(widgetutil.align_left(lab))
 
-            # FIXME - handle long lists better
             v2 = widgetset.VBox()
             for mem in channel_infos:
                 lab_mem = widgetset.Label(util.clampText(mem.name, 40))
                 v2.pack_start(widgetutil.align_left(lab_mem, left_pad=15))
 
+            if len(channel_infos) > 5:
+                scroller = widgetset.Scroller(False, True)
+                scroller.add(v2)
+                v2 = scroller
             v.pack_start(v2, padding=10)
 
             cbx_downloaded = None
