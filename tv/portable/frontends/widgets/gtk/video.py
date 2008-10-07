@@ -149,6 +149,7 @@ class VideoDetailsWidget(Background):
     def build_video_details(self):
         h = HBox()
 
+        # left side
         v = VBox()
         self.__item_name = Label("")
         self.__item_name.set_bold(True)
@@ -161,7 +162,7 @@ class VideoDetailsWidget(Background):
         v.pack_start(_align_left(self.__channel_name, left_pad=5))
         h.pack_start(v)
 
-
+        # right side
         v = VBox()
         self.__email_link = ClickableLabel(_("Email a friend"))
         v.pack_start(_align_right(self.__email_link, right_pad=5))
@@ -191,7 +192,38 @@ class VideoDetailsWidget(Background):
         h.pack_start(_align_right(v), expand=True)
         return h
 
+    def set_expiration_bits(self, item_info):
+        self.__keep_link.disconnect_all()
+
+        def handle_keep(widget):
+            messages.KeepVideo(item_info.id).send_to_backend()
+            self.__expiration_label.hide()
+            self.__keep_link.hide()
+            self.__dash.hide()
+
+        if not item_info.is_external:
+            if item_info.video_watched:
+                if item_info.expiration_date is not None:
+                    text = displaytext.expiration_date(item_info.expiration_date)
+                    self.__expiration_label.set_text(text)
+                    self.__keep_link.connect('clicked', handle_keep)
+                    self.__keep_link.show()
+                    self.__dash.show()
+                else:
+                    self.__expiration_label.hide()
+                    self.__keep_link.hide()
+                    self.__dash.hide()
+            else:
+                self.__expiration_label.hide()
+                self.__keep_link.connect('clicked', handle_keep)
+                self.__keep_link.show()
+                self.__dash.show()
+
     def set_video_details(self, item_info):
+        """This gets called when the item is set to play.  It should make
+        no assumptions about the state of the video details prior to being
+        called.
+        """
         self.__item_name.set_text(util.clampText(item_info.name, 100))
 
         channels = app.tab_list_manager.feed_list.get_feeds()
@@ -203,7 +235,7 @@ class VideoDetailsWidget(Background):
             self.__channel_name.set_text(util.clampText(channels[0].name, 100))
 
         for mem in [self.__email_link, self.__comments_link, self.__permalink_link,
-                self.__keep_link, self.__delete_link]:
+                self.__delete_link]:
             mem.disconnect_all()
 
         def handle_email(widget):
@@ -227,33 +259,13 @@ class VideoDetailsWidget(Background):
         else:
             self.__permalink_link.set_text("")
 
-        def handle_keep(widget):
-            messages.KeepVideo(item_info.id).send_to_backend()
-            self.__expiration_label.hide()
-            self.__keep_link.hide()
-            self.__dash.hide()
-
-        if not item_info.is_external:
-            if item_info.video_watched:
-                if item_info.expiration_date is not None:
-                    text = displaytext.expiration_date(item_info.expiration_date)
-                    self.__expiration_label.set_text(text)
-                    self.__keep_link.connect('clicked', handle_keep)
-                    self.__keep_link.show()
-                    self.__dash.show()
-                else:
-                    self.__expiration_label.hide()
-                    self.__keep_link.hide()
-                    self.__dash.hide()
-            else:
-                self.__expiration_label.hide()
-                self.__keep_link.connect('clicked', handle_keep)
-
         def handle_delete(widget):
             self.__delete_link.on_leave_notify(None, None)
             app.widgetapp.on_stop_clicked(None)
             messages.DeleteVideo(item_info.id).send_to_backend()
         self.__delete_link.connect('clicked', handle_delete)
+
+        self.set_expiration_bits(item_info)
 
     def draw(self, context, layout):
         context.set_color(BLACK)
