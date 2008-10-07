@@ -487,7 +487,7 @@ class Application:
         t, channel_infos = app.tab_list_manager.get_selection()
         if t == 'feed' and len(channel_infos) == 1:
             ci = channel_infos[0]
-            self.mail_to_friend(ci.base_href, ci_name)
+            self.mail_to_friend(ci.base_href, ci.name)
 
     def mail_to_friend(self, url, title):
         emailfriend_url = config.get(prefs.EMAILFRIEND_URL)
