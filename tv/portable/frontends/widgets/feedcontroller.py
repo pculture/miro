@@ -30,6 +30,7 @@
 
 import logging
 
+from miro import app
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro import messages
@@ -155,7 +156,7 @@ class FeedController(itemlistcontroller.ItemListController):
         channelsettingspanel.run_dialog(info)
 
     def _on_send_to_a_friend(self, widget):
-        logging.warn('should send to friend')
+        app.widgetapp.mail_channel()
 
     def _on_auto_download_changed(self, widget, setting):
         messages.AutodownloadChange(self.id, setting).send_to_backend()
