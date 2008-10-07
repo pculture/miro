@@ -121,6 +121,10 @@ class Label(Widget):
     def hide(self):
         self._widget.hide()
 
+    def show(self):
+        self._widget.show()
+
+
 class Scroller(Bin):
     def __init__(self, horizontal, vertical):
         Bin.__init__(self)

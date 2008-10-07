@@ -90,6 +90,9 @@ class ClickableLabel(Widget):
     def hide(self):
         self.label._widget.hide()
 
+    def show(self):
+        self.label._widget.show()
+
 class NullRenderer(object):
     def can_play_file(self, path):
         return False
@@ -231,6 +234,8 @@ class VideoDetailsWidget(Background):
                     text = displaytext.expiration_date(item_info.expiration_date)
                     self.__expiration_label.set_text(text)
                     self.__keep_link.connect('clicked', handle_keep)
+                    self.__keep_link.show()
+                    self.__dash.show()
                 else:
                     self.__expiration_label.hide()
                     self.__keep_link.hide()
