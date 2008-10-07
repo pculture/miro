@@ -229,10 +229,9 @@ class Bin(Container):
 
     def __init__(self, child=None):
         Container.__init__(self)
+        self.child = None
         if child is not None:
             self.add(child)
-        else:
-            self.child = None
 
     def get_children(self):
         if self.child:
