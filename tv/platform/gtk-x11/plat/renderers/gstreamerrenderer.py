@@ -63,14 +63,8 @@ class Tester:
         self.playbin.set_property("uri", "file://%s" % filename)
         self.playbin.set_state(gst.STATE_PAUSED)
 
-        # this is icky, but we do it because on_bus_message gets called in
-        # the main thread.  so...  it's hard to rely on that with the
-        # current architecture.
-        for i in range(5):
-            if self.playbin.get_state()[1] == gst.STATE_PAUSED:
-                self.success = True
-                return
-            time.sleep(1)
+        if self.playbin.get_state()[1] == gst.STATE_PAUSED:
+            self.success = True
 
     def result(self):
         self.disconnect()
