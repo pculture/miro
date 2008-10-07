@@ -207,7 +207,8 @@ class VideoDetailsWidget(Background):
             mem.disconnect_all()
 
         def handle_email(widget):
-            app.widgetapp.mail_to_friend(item_info.permalink, item_info.name)
+            link = item_info.commentslink or item_info.permalink or item_info.file_url
+            app.widgetapp.mail_to_friend(link, item_info.name)
         self.__email_link.connect('clicked', handle_email)
 
         if item_info.commentslink:
@@ -218,9 +219,13 @@ class VideoDetailsWidget(Background):
         else:
             self.__comments_link.set_text("")
 
-        def handle_permalink(widget):
-            app.widgetapp.open_url(item_info.permalink)
-        self.__permalink_link.connect('clicked', handle_permalink)
+        if item_info.permalink:
+            def handle_permalink(widget):
+                app.widgetapp.open_url(item_info.permalink)
+            self.__permalink_link.set_text(_("Permalink"))
+            self.__permalink_link.connect('clicked', handle_permalink)
+        else:
+            self.__permalink_link.set_text("")
 
         def handle_keep(widget):
             messages.KeepVideo(item_info.id).send_to_backend()
