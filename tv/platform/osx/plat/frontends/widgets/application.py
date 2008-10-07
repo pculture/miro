@@ -26,6 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import os
 import re
 import sys
 import struct
@@ -36,7 +37,7 @@ from objc import YES, NO, nil, signature
 from AppKit import *
 from Foundation import *
 from PyObjCTools import AppHelper
-from ExceptionHandling import NSExceptionHandler, NSLogAndHandleEveryExceptionMask
+from ExceptionHandling import NSExceptionHandler, NSLogAndHandleEveryExceptionMask, NSStackTraceKey
 
 from miro import app
 from miro import prefs
@@ -175,8 +176,24 @@ class AppController(NSObject):
 
     def exceptionHandler_shouldLogException_mask_(self, handler, exception, mask):
         logging.warn("Unhandled exception: %s", exception.name())
-        import traceback
-        traceback.print_stack()
+        if os.path.exists("/usr/bin/atos"):
+            stack = exception.userInfo().objectForKey_(NSStackTraceKey)
+            if stack is None:
+                print "No stack available"
+            else:
+                pid = NSNumber.numberWithInt_(NSProcessInfo.processInfo().processIdentifier()).stringValue()
+                args = NSMutableArray.arrayWithCapacity_(20)
+                args.addObject_("-p")
+                args.addObject_(pid);
+                args.addObjectsFromArray_(stack.componentsSeparatedByString_("  "))
+            
+                task = NSTask.alloc().init()
+                task.setLaunchPath_("/usr/bin/atos");
+                task.setArguments_(args);
+                task.launch();
+        else:
+            import traceback
+            traceback.print_stack()
         return NO
 
     def applicationShouldHandleReopen_hasVisibleWindows_(self, appl, flag):
