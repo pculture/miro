@@ -26,9 +26,9 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from threading import Event
 import logging
 import os
+import time
 
 import pygst
 pygst.require('0.10')
@@ -50,7 +50,6 @@ def from_seconds(s):
 
 class Tester:
     def __init__(self, filename):
-        self.done = Event()
         self.success = False
         self.actual_init(filename)
 
@@ -61,43 +60,24 @@ class Tester:
         self.audiosink = gst.element_factory_make("fakesink", "audiosink")
         self.playbin.set_property("audio-sink", self.audiosink)
 
-        self.bus = self.playbin.get_bus()
-        self.bus.add_signal_watch()
-        self.watch_id = self.bus.connect("message", self.on_bus_message)
-        # FIXME - why is on_bus_message never getting called?
         self.playbin.set_property("uri", "file://%s" % filename)
         self.playbin.set_state(gst.STATE_PAUSED)
 
-        # FIXME - do a quick check here since on_bus_message doesn't get called.
-        # but we probably shouldn't rely on this since gstreamer is asynchronous.
-        if self.playbin.get_state()[1] == gst.STATE_PAUSED:
-            self.success = True
-            self.done.set()
+        # this is icky, but we do it because on_bus_message gets called in
+        # the main thread.  so...  it's hard to rely on that with the
+        # current architecture.
+        for i in range(5):
+            if self.playbin.get_state()[1] == gst.STATE_PAUSED:
+                self.success = True
+                return
+            time.sleep(1)
 
     def result(self):
-        self.done.wait(5)
         self.disconnect()
         return self.success
 
-    def on_bus_message(self, bus, message):
-        # FIXME - this should get called when the playbin switches states, but
-        # it doesn't--no idea why.
-        if message.src == self.playbin:
-            if message.type == gst.MESSAGE_STATE_CHANGED:
-                prev, new, pending = message.parse_state_changed()
-                if new == gst.STATE_PAUSED:
-                    # Success
-                    self.success = True
-                    self.done.set()
-
-            elif message.type == gst.MESSAGE_ERROR:
-                self.success = False
-                self.done.set()
-
     def disconnect(self):
-        self.bus.disconnect(self.watch_id)
         self.playbin.set_state(gst.STATE_NULL)
-        del self.bus
         del self.playbin
         del self.audiosink
         del self.videosink
