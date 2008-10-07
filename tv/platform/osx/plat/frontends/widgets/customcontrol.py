@@ -155,7 +155,7 @@ class CustomSliderCell(NSSliderCell):
 
     def startTrackingAt_inView_(self, at, view):
         wrappermap.wrapper(view).emit('pressed')
-        return YES
+        return self.continueTracking_at_inView_(at, at, view)
 
     def continueTracking_at_inView_(self, lastPoint, at, view):
         if view.isVertical():
