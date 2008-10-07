@@ -206,6 +206,7 @@ class VideoDetailsWidget(Background):
                 if item_info.expiration_date is not None:
                     text = displaytext.expiration_date(item_info.expiration_date)
                     self.__expiration_label.set_text(text)
+                    self.__expiration_label.show()
                     self.__keep_link.connect('clicked', handle_keep)
                     self.__keep_link.show()
                     self.__dash.show()
