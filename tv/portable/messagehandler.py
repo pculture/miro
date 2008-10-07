@@ -240,6 +240,10 @@ class DownloadingItemsTracker(ItemTrackerBase):
         self.view = views.allDownloadingItems.filter(filters.uniqueItems)
         ItemTrackerBase.__init__(self)
 
+    def unlink(self):
+        ItemTrackerBase.unlink(self)
+        self.view.unlink()
+
 class IndividualDownloadsTracker(ItemTrackerBase):
     type = 'individual_downloads'
     id = None
