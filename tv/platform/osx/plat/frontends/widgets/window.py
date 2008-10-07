@@ -53,7 +53,7 @@ class Window(signals.SignalEmitter):
         self.nswindow = NSWindow.alloc()
         self.nswindow.initWithContentRect_styleMask_backing_defer_(
                 rect.nsrect,
-                NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask,
+                self.get_style_mask(),
                 NSBackingStoreBuffered,
                 NO)
         self.nswindow.setTitle_(title)
@@ -69,6 +69,9 @@ class Window(signals.SignalEmitter):
         self.window_notifications.connect(self.on_deactivate, 'NSWindowDidResignMainNotification')
         wrappermap.add(self.nswindow, self)
         alive_windows.add(self)
+
+    def get_style_mask(self):
+        return NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask
 
     def on_frame_change(self, notification):
         self.place_child()
@@ -101,18 +104,19 @@ class Window(signals.SignalEmitter):
                 self.content_view)
 
     def hookup_content_widget_signals(self):
-        self.content_widget.connect('size-request-changed',
+        self.size_req_handler = self.content_widget.connect('size-request-changed',
                 self.on_content_widget_size_request_change)
 
     def unhook_content_widget_signals(self):
-        self.content_widget.disconnect('size-request-changed',
-                self.on_content_widget_size_request_change)
+        self.content_widget.disconnect(self.size_req_handler)
+        self.size_req_handler = None
 
     def on_content_widget_size_request_change(self, widget, old_size):
         self.update_size_constraints()
 
     def set_content_widget(self, widget):
         if self.content_widget:
+            self.content_widget.remove_viewport()
             self.unhook_content_widget_signals()
         self.content_widget = widget
         self.hookup_content_widget_signals()
