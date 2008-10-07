@@ -42,6 +42,7 @@ from miro import dialogs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets.gtk import wrappermap
 from miro.frontends.widgets import menus
+from miro.frontends.widgets import imagepool
 
 alive_windows = set() # Keeps the objects alive until destroy() is called
 
@@ -496,7 +497,8 @@ class PreferencesWindow(Dialog):
         from miro.frontends.widgets.gtk import layout
         self.tab_container = layout.TabContainer()
 
-    def append_panel(self, name, panel, title, image):
+    def append_panel(self, name, panel, title, image_name):
+        image = imagepool.get(resources.path(image_name))
         self.tab_container.append_tab(panel, title, image)
     
     def finish_panels(self):

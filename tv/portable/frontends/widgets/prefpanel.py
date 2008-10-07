@@ -49,7 +49,7 @@ import logging
 
 from miro import config, prefs
 from miro.plat.frontends.widgets import widgetset
-from miro.frontends.widgets import cellpack, imagepool, widgetutil, window
+from miro.frontends.widgets import cellpack, widgetutil, window
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import dialogwidgets
@@ -485,8 +485,7 @@ def show_window(selection=None):
         alignment = widgetset.Alignment(xalign=0.5, yalign=0.5)
         alignment.set_padding(20, 20, 20, 20)
         alignment.add(panel)
-        image = imagepool.get(resources.path(image_name))
-        pref_window.append_panel(name, alignment, title, image)
+        pref_window.append_panel(name, alignment, title, image_name)
 
     pref_window.finish_panels()
     pref_window.select_panel(selection, __PANEL)
