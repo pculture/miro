@@ -42,6 +42,7 @@ from urlparse import urljoin
 
 from miro import app
 from miro import messages
+from miro import signals
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import itemcontextmenu
@@ -382,7 +383,7 @@ class IndividualDownloadsController(SimpleItemListController):
     image_filename = 'icon-individual_large.png'
     title = _("Single Items")
 
-class ItemListControllerManager(object):
+class ItemListControllerManager(signals.SignalEmitter):
     """Manages ItemListController objects.
 
     Attributes:
@@ -395,6 +396,8 @@ class ItemListControllerManager(object):
     """
 
     def __init__(self):
+        signals.SignalEmitter.__init__(self)
+        self.create_signal('items-changed')
         self.displayed = None
         self.all_controllers = set()
 
@@ -432,3 +435,4 @@ class ItemListControllerManager(object):
         for controller in self.all_controllers:
             if controller.should_handle_message(message):
                 controller.handle_items_changed(message)
+        self.emit('items-changed', message.changed)

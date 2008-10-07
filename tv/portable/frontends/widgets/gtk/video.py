@@ -302,13 +302,25 @@ class VideoRenderer(VBox):
         self.motion_handler = None
         self.videobox_motion_handler = None
         self.hidden_cursor = make_hidden_cursor()
+        self._items_changed_callback = app.item_list_controller_manager.connect(
+                'items-changed', self._on_items_changed)
+        self._item_id = None
 
     def teardown(self):
         self.renderer.reset()
+        app.item_list_controller_manager.disconnect(self._items_changed_callback)
+        self._items_changed_callback = None
+
+    def _on_items_changed(self, controller, changed_items):
+        for item_info in changed_items:
+            if item_info.id == self._item_id:
+                self.__video_details.set_expiration_bits(item_info)
+                break
 
     def set_movie_item(self, item_info):
         self.__video_details.set_video_details(item_info)
         self.renderer.select_file(item_info.video_path)
+        self._item_id = item_info.id
 
     def get_elapsed_playback_time(self):
         return self.renderer.get_current_time()
