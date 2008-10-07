@@ -208,6 +208,10 @@ class TabContainer(Widget):
         else:
             label_widget = gtk.Label(text)
 
+        # switch from a center align to a top align
+        child_widget.set(0, 0, 1, 0)
+        child_widget.set_padding(10, 10, 10, 10)
+
         self._widget.append_page(child_widget._widget, label_widget)
         self.children.append(child_widget)
 
