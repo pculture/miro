@@ -55,7 +55,6 @@ from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import dialogwidgets
 from miro.frontends.widgets.widgetutil import build_control_line
 from miro.plat import resources
-from miro.dialogs import BUTTON_CLOSE
 from miro.gtcache import gettext as _
 
 # Note: we do an additional import from prefpanelset half way down the file.
@@ -230,7 +229,7 @@ def pack_extras(vbox, panel):
 
 def _build_general_panel():
     """Build's the General tab and returns it."""
-    v = widgetset.VBox()
+    v = widgetset.VBox(8)
 
     run_dtv_at_startup_cbx = widgetset.Checkbox(_("Automatically run Miro when I log in."))
     attach_boolean(run_dtv_at_startup_cbx, prefs.RUN_DTV_AT_STARTUP)
@@ -275,7 +274,7 @@ def _build_channels_panel():
     grid = dialogwidgets.ControlGrid()
     grid.pack(dialogwidgets.heading(_("Default settings for new channels:")), 
             grid.ALIGN_LEFT, span=2)
-    grid.end_line(spacing=0)
+    grid.end_line(spacing=2)
     grid.pack(dialogwidgets.note(
             _("(These can be changed using the channel's settings button)")),
             grid.ALIGN_LEFT, span=2)
@@ -284,19 +283,19 @@ def _build_channels_panel():
     grid.pack_label(_("Check for new content:"),
             dialogwidgets.ControlGrid.ALIGN_RIGHT)
     grid.pack(cc_option_menu)
-    grid.end_line()
+    grid.end_line(spacing=4)
 
     grid.pack_label(_("Auto download setting:"),
             dialogwidgets.ControlGrid.ALIGN_RIGHT)
     grid.pack(ad_option_menu)
-    grid.end_line()
+    grid.end_line(spacing=4)
 
     grid.pack(dialogwidgets.label_with_note(
         _("Remember this many old items:"),
         _("(in addition to the current contents)")),
         dialogwidgets.ControlGrid.ALIGN_RIGHT)
     grid.pack(max_option_menu)
-    grid.end_line(spacing=0)
+    grid.end_line()
 
     return grid.make_table()
 
@@ -310,7 +309,7 @@ def _build_downloads_panel():
     max_manual.set_width(5)
     attach_integer(max_manual, prefs.MAX_MANUAL_DOWNLOADS, create_integer_checker(min=0))
     grid.pack(max_manual)
-    grid.end_line()
+    grid.end_line(spacing=6)
 
     grid.pack_label(_('Maximum number of auto-downloads at a time:'))
     max_auto = widgetset.TextEntry()
@@ -335,7 +334,7 @@ def _build_downloads_panel():
     grid.pack(cbx)
     grid.pack(limit)
     grid.pack_label(_("KB/s"))
-    grid.end_line()
+    grid.end_line(spacing=6)
 
     cbx = widgetset.Checkbox(_('Limit downstream bandwidth to:'))
     limit = widgetset.TextEntry()
@@ -346,7 +345,7 @@ def _build_downloads_panel():
     grid.pack(cbx)
     grid.pack(limit)
     grid.pack_label(_("KB/s"))
-    grid.end_line()
+    grid.end_line(spacing=6)
 
     cbx = widgetset.Checkbox(_('Limit torrent connections to:'))
     limit = widgetset.TextEntry()
@@ -367,17 +366,17 @@ def _build_downloads_panel():
 
     grid.pack_label(_("Starting port:"), dialogwidgets.ControlGrid.ALIGN_RIGHT)
     grid.pack(min_port)
-    grid.end_line()
+    grid.end_line(spacing=6)
 
     grid.pack_label(_("Ending port:"), dialogwidgets.ControlGrid.ALIGN_RIGHT)
     grid.pack(max_port)
-    grid.end_line(spacing=6)
+    grid.end_line(spacing=12)
     vbox.pack_start(widgetutil.align_left(grid.make_table()))
 
     grid = dialogwidgets.ControlGrid()
     cbx = widgetset.Checkbox(_('Automatically forward ports.  (UPNP)'))
     attach_boolean(cbx, prefs.USE_UPNP)
-    vbox.pack_start(cbx)
+    vbox.pack_start(cbx, padding=4)
 
     cbx = widgetset.Checkbox(_('Ignore unencrypted connections.'))
     attach_boolean(cbx, prefs.BT_ENC_REQ)
@@ -433,7 +432,7 @@ def _build_disk_space_panel():
     grid.pack(cbx)
     grid.pack(limit)
     grid.pack_label(_('GB'))
-    grid.end_line()
+    grid.end_line(spacing=4)
 
     expire_ops = [(1, _('1 day')),
             (3, _('3 days')),
@@ -445,8 +444,8 @@ def _build_disk_space_panel():
     attach_combo(expire_menu, prefs.EXPIRE_AFTER_X_DAYS,
             [op[0] for op in expire_ops])
 
-    grid.pack_label(_('By default, videos expire after:'))
-    grid.pack(expire_menu)
+    grid.pack_label(_('By default, videos expire after:'), extra_space=dialogwidgets.ControlGrid.ALIGN_RIGHT)
+    grid.pack(expire_menu, extra_space=dialogwidgets.ControlGrid.ALIGN_LEFT)
 
     return grid.make_table()
 
@@ -461,7 +460,7 @@ def _build_playback_panel():
     play_rb = widgetset.RadioButton("Play videos one after another", rbg)
     stop_rb = widgetset.RadioButton("Stop after each video", rbg)
     attach_radio( [(stop_rb, True), (play_rb, False)], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
-    v.pack_start(widgetutil.align_left(play_rb))
+    v.pack_start(widgetutil.align_left(play_rb), padding=2)
     v.pack_start(widgetutil.align_left(stop_rb))
 
     pack_extras(v, "playback")
@@ -477,37 +476,17 @@ add_panel("folders", _("Folders"), _build_folders_panel, 'wimages/pref-tab-folde
 add_panel("disk_space", _("Disk space"), _build_disk_space_panel, 'wimages/pref-tab-disk-space.png')
 add_panel("playback", _("Playback"), _build_playback_panel, 'wimages/pref-tab-playback.png')
 
-def run_dialog(tab=None):
-    """Displays the preferences dialog."""
-    pref_window = widgetset.Dialog(_("Preferences"))
-    try:
-        try:
-            tab_container = widgetset.TabContainer()
+def show_window(selection=None):
+    """Displays the preferences window."""
+    pref_window = prefpanelset.PreferencesWindow(_("Preferences"))
 
-            for name, title, image_name, panel_builder in __PANEL:
-                panel = panel_builder()
-                alignment = widgetset.Alignment(xalign=0.5, yalign=0.0)
-                alignment.set_padding(10, 20, 20, 20)
-                alignment.add(panel)
-                image = imagepool.get(resources.path(image_name))
-                tab_container.append_tab(alignment, title, image)
+    for name, title, image_name, panel_builder in __PANEL:
+        panel = panel_builder()
+        alignment = widgetset.Alignment(xalign=0.5, yalign=0.5)
+        alignment.set_padding(20, 20, 20, 20)
+        alignment.add(panel)
+        pref_window.append_panel(name, alignment, title, image_name)
 
-            if tab == None:
-                tab_container.select_tab(0)
-            else:
-                for i, bits in enumerate(__PANEL):
-                    if bits[0] == tab:
-                        tab_container.select_tab(i)
-                        break
-                else:
-                    tab_container.select_tab(0)
-
-            pref_window.set_extra_widget(tab_container)
-            pref_window.add_button(BUTTON_CLOSE.text)
-            pref_window.run()
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            logging.exception("preferencespanel threw exception.")
-    finally:
-        pref_window.destroy()
+    pref_window.finish_panels()
+    pref_window.select_panel(selection, __PANEL)
+    pref_window.show()

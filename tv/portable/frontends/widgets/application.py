@@ -283,7 +283,7 @@ class Application:
         messages.CheckVersion(up_to_date_callback).send_to_backend()
 
     def preferences(self):
-        prefpanel.run_dialog()
+        prefpanel.show_window()
 
     def remove_videos(self):
         selection = app.item_list_controller_manager.get_selection()

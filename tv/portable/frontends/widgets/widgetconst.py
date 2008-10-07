@@ -31,3 +31,5 @@
 # Control sizes
 SIZE_NORMAL = -1
 SIZE_SMALL = -2
+
+DIALOG_NOTE_COLOR = (0.5, 0.5, 0.5)

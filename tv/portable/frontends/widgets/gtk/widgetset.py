@@ -41,7 +41,7 @@ from miro.frontends.widgets.gtk.layout import HBox, VBox, Alignment, \
         Splitter, Table, TabContainer
 from miro.frontends.widgets.gtk.window import Window, MainWindow, Dialog, \
         FileOpenDialog, FileSaveDialog, DirectorySelectDialog, AboutDialog, \
-        AlertDialog
+        AlertDialog, PreferencesWindow
 from miro.frontends.widgets.gtk.tableview import TableView, TableModel, \
         TreeTableModel, CellRenderer, ImageCellRenderer, CustomCellRenderer
 from miro.frontends.widgets.gtk.simple import Image, ImageDisplay, Label, \

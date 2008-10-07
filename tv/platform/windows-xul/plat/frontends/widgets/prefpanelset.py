@@ -26,5 +26,34 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+from miro.dialogs import BUTTON_CLOSE
+from miro.frontends.widgets import imagepool
+from miro.plat.frontends.widgets import widgetset
+
 def get_platform_specific(name):
     pass
+
+class PreferencesWindow(widgetset.Dialog):
+    def __init__(self, title):
+        widgetset.Dialog.__init__(self, title)
+        self.tab_container = widgetset.TabContainer()
+
+    def append_panel(self, name, panel, title, image_name):
+        image = imagepool.get(resources.path(image_name))
+        self.tab_container.append_tab(panel, title, image)
+    
+    def finish_panels(self):
+        self.set_extra_widget(self.tab_container)
+        self.add_button(BUTTON_CLOSE.text)
+        
+    def select_panel(self, panel, all_panels):
+        index = 0
+        if panel is not None:
+            for i, bits in enumerate(all_panels):
+                if bits[0] == panel:
+                    index = i
+                    break
+        self.tab_container.select_tab(index)
+
+    def show(self):
+        self.run()

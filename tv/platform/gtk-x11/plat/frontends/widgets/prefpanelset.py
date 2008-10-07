@@ -33,7 +33,9 @@ See portable/frontends/widgets/prefpanel.py for more information.
 """
 
 from miro.gtcache import gettext as _
+from miro.dialogs import BUTTON_CLOSE
 from miro.plat.frontends.widgets import widgetset
+from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import dialogwidgets
 from miro.frontends.widgets.widgetutil import build_hbox, align_left
 from miro.frontends.widgets.prefpanel import attach_boolean, attach_radio, attach_combo
@@ -103,3 +105,28 @@ def get_platform_specific(panel_name):
         return _general_panel()
     elif panel_name == "playback":
         return _playback_panel()
+
+class PreferencesWindow(widgetset.Dialog):
+    def __init__(self, title):
+        widgetset.Dialog.__init__(self, title)
+        self.tab_container = widgetset.TabContainer()
+
+    def append_panel(self, name, panel, title, image_name):
+        image = imagepool.get(resources.path(image_name))
+        self.tab_container.append_tab(panel, title, image)
+    
+    def finish_panels(self):
+        self.set_extra_widget(self.tab_container)
+        self.add_button(BUTTON_CLOSE.text)
+        
+    def select_panel(self, panel, all_panels):
+        index = 0
+        if panel is not None:
+            for i, bits in enumerate(all_panels):
+                if bits[0] == panel:
+                    index = i
+                    break
+        self.tab_container.select_tab(index)
+
+    def show(self):
+        self.run()

@@ -147,10 +147,9 @@ class ControlList(widgetset.VBox):
 def label_with_note(label_text, note_text):
     """Return a ControlList that displays a label with a note under it.  """
     label = widgetset.Label(label_text)
-    note = widgetset.Label(note_text)
-    note.set_size(widgetconst.SIZE_SMALL)
+    note_label = note(note_text)
     list = ControlList(label)
-    list.pack_start(note)
+    list.pack_start(note_label)
     return list
 
 def radio_button_list(*radio_buttons):
@@ -168,4 +167,5 @@ def heading(text):
 def note(text):
     label = widgetset.Label(text)
     label.set_size(widgetconst.SIZE_SMALL)
+    label.set_color(widgetconst.DIALOG_NOTE_COLOR)
     return label

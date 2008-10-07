@@ -111,7 +111,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
         messages.CancelAllDownloads().send_to_backend()
 
     def _on_settings(self, widget):
-        prefpanel.run_dialog("downloads")
+        prefpanel.show_window("downloads")
 
     def _expand_lists_initially(self):
         self.indydownloads_section.show()

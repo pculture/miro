@@ -358,7 +358,7 @@ class Dialog(WindowBase):
         self.packing_vbox.pack_start(widget._widget)
 
     def get_extra_widget(self):
-        return self.extra_widget
+        return self.extra_widget        
 
 class FileOpenDialog:
     def __init__(self, title):
