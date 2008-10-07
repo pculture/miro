@@ -478,14 +478,15 @@ add_panel("playback", _("Playback"), _build_playback_panel, 'wimages/pref-tab-pl
 
 def show_window(selection=None):
     """Displays the preferences window."""
-    pref_window = prefpanelset.PreferencesWindow(_("Preferences"))
+    pref_window = widgetset.PreferencesWindow(_("Preferences"))
 
     for name, title, image_name, panel_builder in __PANEL:
         panel = panel_builder()
         alignment = widgetset.Alignment(xalign=0.5, yalign=0.5)
         alignment.set_padding(20, 20, 20, 20)
         alignment.add(panel)
-        pref_window.append_panel(name, alignment, title, image_name)
+        image = imagepool.get(resources.path(image_name))
+        pref_window.append_panel(name, alignment, title, image)
 
     pref_window.finish_panels()
     pref_window.select_panel(selection, __PANEL)

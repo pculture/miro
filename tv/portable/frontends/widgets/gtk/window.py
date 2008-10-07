@@ -489,3 +489,28 @@ class AboutDialog:
 class AlertDialog(Dialog):
     def __init__(self, title, description, alert_type):
         Dialog.__init__(self, title, description)
+
+class PreferencesWindow(Dialog):
+    def __init__(self, title):
+        Dialog.__init__(self, title)
+        from miro.frontends.widgets.gtk import layout
+        self.tab_container = layout.TabContainer()
+
+    def append_panel(self, name, panel, title, image):
+        self.tab_container.append_tab(panel, title, image)
+    
+    def finish_panels(self):
+        self.set_extra_widget(self.tab_container)
+        self.add_button(_("Close"))
+        
+    def select_panel(self, panel, all_panels):
+        index = 0
+        if panel is not None:
+            for i, bits in enumerate(all_panels):
+                if bits[0] == panel:
+                    index = i
+                    break
+        self.tab_container.select_tab(index)
+
+    def show(self):
+        self.run()

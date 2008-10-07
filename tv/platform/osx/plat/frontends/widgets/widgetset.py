@@ -39,7 +39,7 @@ from miro.plat.frontends.widgets.drawing import DrawingContext, ImageSurface, Dr
 from miro.plat.frontends.widgets.rect import Rect
 from miro.plat.frontends.widgets.layout import VBox, HBox, Alignment, Splitter, Table, Scroller, Expander, TabContainer
 from miro.plat.frontends.widgets.window import Window, MainWindow, Dialog, FileSaveDialog, FileOpenDialog
-from miro.plat.frontends.widgets.window import DirectorySelectDialog, AboutDialog, AlertDialog
+from miro.plat.frontends.widgets.window import DirectorySelectDialog, AboutDialog, AlertDialog, PreferencesWindow
 from miro.plat.frontends.widgets.browser import Browser
 from miro.plat.frontends.widgets.simple import Image, ImageDisplay, Label, SolidBackground
 from miro.plat.frontends.widgets.tableview import TableView, CellRenderer, CustomCellRenderer, ImageCellRenderer
