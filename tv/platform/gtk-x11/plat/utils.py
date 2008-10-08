@@ -62,7 +62,7 @@ def get_available_bytes_for_movies():
     if not os.path.exists(d):
         return 0
 
-    statinfo = os.statvfs(dir_)
+    statinfo = os.statvfs(d)
     return statinfo.f_frsize * statinfo.f_bavail
 
 
