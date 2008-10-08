@@ -91,7 +91,7 @@ class VLCRenderer:
 
         vlc_args = [
             "vlc", '--quiet', '--nostats', '--intf', 'dummy', 
-            '--plugin-path', plugin_dir
+            '--no-video-title-show', '--plugin-path', plugin_dir
         ]
         self.vlc = libvlc.libvlc_new(len(vlc_args),
                 make_string_list(vlc_args), self.exc.ref())
