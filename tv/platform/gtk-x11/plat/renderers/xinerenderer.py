@@ -37,7 +37,6 @@ from miro import config
 from miro import xine
 from miro.plat import options
 from miro.plat import resources
-from miro.plat.utils import confirmMainThread
 
 def wait_for_attach(func):
     """Many xine calls can't be made until we attach the object to a X window.
@@ -63,7 +62,6 @@ class Renderer:
         self.__volume = 0
 
     def set_widget(self, widget):
-        confirmMainThread()
         widget.connect_after("realize", self.on_realize)
         widget.connect("unrealize", self.on_unrealize)
         widget.connect("configure-event", self.on_configure_event)
@@ -74,7 +72,6 @@ class Renderer:
         app.playback_manager.on_movie_finished()
 
     def on_realize(self, widget):
-        confirmMainThread()
         # flush gdk output to ensure that our window is created
         gtk.gdk.flush()
         displayName = gtk.gdk.display_get_default().get_name()
@@ -94,26 +91,21 @@ class Renderer:
         self.attach_queue = []
 
     def on_unrealize(self, widget):
-        confirmMainThread()
         self.xine.detach()
         self.attached = False
 
     def on_configure_event(self, widget, event):
-        confirmMainThread()
         self.xine.set_area(event.x, event.y, event.width, event.height)
 
     def on_expose_event(self, widget, event):
-        confirmMainThread()
         self.xine.got_expose_event(event.area.x, event.area.y, event.area.width,
                 event.area.height)
 
     def can_play_file(self, filename):
-        confirmMainThread()
         return self.xine.can_play_file(filename)
 
     def go_fullscreen(self):
         """Handle when the video window goes fullscreen."""
-        confirmMainThread()
         # Sometimes xine doesn't seem to handle the expose events properly and
         # only thinks part of the window is exposed.  To work around this we
         # send it a couple of fake expose events for the entire window, after
@@ -135,14 +127,13 @@ class Renderer:
     def exit_fullscreen(self):
         """Handle when the video window exits fullscreen mode."""
         # nothing to do here
-        confirmMainThread()
+        pass
 
     def select_item(self, an_item):
         self.select_file(an_item.get_filename())
 
     @wait_for_attach
     def select_file(self, filename):
-        confirmMainThread()
         viz = config.get(options.XINE_VIZ)
         self.xine.set_viz(viz)
         self.xine.select_file(filename)
@@ -160,7 +151,6 @@ class Renderer:
         self.seek(0)
 
     def get_progress(self):
-        confirmMainThread()
         try:
             pos, length = self.xine.get_position_and_length()
         except (SystemExit, KeyboardInterrupt):
@@ -169,7 +159,6 @@ class Renderer:
             pass
 
     def get_current_time(self):
-        confirmMainThread()
         try:
             pos, length = self.xine.get_position_and_length()
             return pos / 1000.0
@@ -178,12 +167,10 @@ class Renderer:
             return None
 
     def set_current_time(self, seconds):
-        confirmMainThread()
         self.seek(seconds)
 
     @wait_for_attach
     def seek(self, seconds):
-        confirmMainThread()
 
         # this is really funky.  what's going on here is that xine-lib doesn't
         # provide a way to seek while paused.  if you seek, then it induces
@@ -202,7 +189,6 @@ class Renderer:
             self.set_volume(self.__volume)
 
     def get_duration(self):
-        confirmMainThread()
         try:
             pos, length = self.xine.get_position_and_length()
             return length / 1000.0
@@ -213,19 +199,16 @@ class Renderer:
 
     @wait_for_attach
     def set_volume(self, level):
-        confirmMainThread()
         self.__volume = level
         self.xine.set_volume(int(level * 100))
 
     @wait_for_attach
     def play(self):
-        confirmMainThread()
         self.xine.play()
         self.__playing = True
 
     @wait_for_attach
     def pause(self):
-        confirmMainThread()
         self.xine.pause()
         self.__playing = False
 
@@ -233,13 +216,11 @@ class Renderer:
     reset = pause
 
     def getRate(self):
-        confirmMainThread()
         # FIXME - there's no get_rate
         return self.xine.get_rate()
 
     @wait_for_attach
     def set_rate(self, rate):
-        confirmMainThread()
         # FIXME - there's no set_rate
         self.xine.set_rate(rate)
 

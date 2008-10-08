@@ -48,32 +48,48 @@ FilenameType = str
 # very easy.
 from os.path import samefile
 
-###############################################################################
-#### Helper method used to get the free space on the disk where downloaded ####
-#### movies are stored                                                     ####
-###############################################################################
+
+# this is used in portable/gtcache.py
+localeInitialized = True
+
 
 def get_available_bytes_for_movies():
-    dir_ = config.get(prefs.MOVIES_DIRECTORY)
+    """Helper method used to get the free space on the disk where downloaded
+    movies are stored
+    """
+    d = config.get(prefs.MOVIES_DIRECTORY)
 
-    if not os.path.exists(dir_):
+    if not os.path.exists(d):
         return 0
 
     statinfo = os.statvfs(dir_)
     return statinfo.f_frsize * statinfo.f_bavail
 
-main_thread = None
-localeInitialized = True
 
-def setMainThread():
-    global main_thread
-    main_thread = threading.currentThread()
+backend_thread = None
 
-def confirmMainThread():
-    if main_thread is not None and main_thread != threading.currentThread():
+def set_backend_thread():
+    global backend_thread
+    backend_thread = threading.currentThread()
+
+def confirm_backend_thread():
+    if backend_thread is not None and backend_thread != threading.currentThread():
         import traceback
-        print "UI function called from thread %s" % threading.currentThread()
+        print "backend function called from thread %s" % threading.currentThread()
         traceback.print_stack()
+
+ui_thread = None
+
+def set_ui_thread():
+    global ui_thread
+    ui_thread = threading.currentThread()
+
+def confirm_ui_thread():
+    if ui_thread is not None and ui_thread != threading.currentThread():
+        import traceback
+        print "ui function called from thread %s" % threading.currentThread()
+        traceback.print_stack()
+
 
 # gettext understands *NIX locales, so we don't have to do anything
 def initializeLocale():
@@ -184,10 +200,11 @@ def osFilenamesToFilenameTypes(filenames):
 def filenameTypeToOSFilename(filename):
     return filename
 
-# Takes in a byte string or a unicode string and does the right thing
-# to make a URL
 @returnsUnicode
 def makeURLSafe(s, safe='/'):
+    """Takes in a byte string or a unicode string and does the right thing
+    to make a URL
+    """
     if isinstance(s, str):
         # quote the byte string
         return urllib.quote(s, safe=safe).decode('ascii')
@@ -199,9 +216,10 @@ def makeURLSafe(s, safe='/'):
         except:
             return s.decode('ascii', 'replace')
 
-# Undoes makeURLSafe (assuming it was passed a filenameType)
 @returnsBinary
 def unmakeURLSafe(s):
+    """Undoes makeURLSafe (assuming it was passed a filenameType)
+    """
     # unquote the byte string
     checkU(s)
     return urllib.unquote(s.encode('ascii'))
@@ -265,7 +283,7 @@ def launchDownloadDaemon(oldpid, env):
 def exit(return_code):
     sys.exit(return_code)
 
-def setProperties(props):
+def set_properties(props):
     for p, val in props:
         logging.info("Setting preference: %s -> %s", p.alias, val)
         config.set(p, val)

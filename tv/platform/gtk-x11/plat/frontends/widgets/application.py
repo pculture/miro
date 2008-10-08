@@ -37,7 +37,7 @@ from miro import prefs
 from miro.frontends.widgets.application import Application
 from miro.plat.frontends.widgets import threads
 from miro.plat import mozsetup, renderers, options
-from miro.plat.utils import setProperties
+from miro.plat.utils import set_properties
 from miro.plat.config import gconf_lock
 from miro.plat.frontends.widgets import trayicon
 from miro.plat import resources
@@ -89,7 +89,7 @@ class GtkX11Application(Application):
         threads.call_on_ui_thread(mozsetup.setup_mozilla_environment)
         gtk.gdk.threads_init()
         self.startup()
-        setProperties(props_to_set)
+        set_properties(props_to_set)
 
         logging.info("Python version:    %s", sys.version)
         logging.info("Gtk+ version:      %s", gtk.gtk_version)
