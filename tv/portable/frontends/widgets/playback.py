@@ -251,7 +251,7 @@ class PlaybackManager (signals.SignalEmitter):
             self.position += 1
             self._play_current()
 
-    def play_prev_movie(self):
+    def play_prev_movie(self, save_current_resume_time=True):
         self.cancel_update_timer()
         self.cancel_mark_as_watched()
         if config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
