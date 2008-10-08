@@ -57,6 +57,14 @@ class Browser(Widget):
         else:
             return True
 
+    def forward(self):
+        if self._widget.can_go_forward():
+            self._widget.go_forward()
+
+    def back(self):
+        if self._widget.can_go_back():
+            self._widget.go_back()
+
     def should_load_url(self, url):
         return True
 
@@ -67,8 +75,12 @@ class Browser(Widget):
         if not xpcom_setup:
             do_xpcom_setup()
 
-    def refresh(self):
+    def reload(self):
         self._widget.load_url(self.url)
+
+    def stop(self):
+        self._widget.stop_load()
+
 
 def do_xpcom_setup():
     global xpcom_setup

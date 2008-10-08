@@ -61,7 +61,7 @@ class BrowserToolbar(widgetset.HBox):
     def __init__(self):
         widgetset.HBox.__init__(self)
 
-        self.create_signal('browser-refresh')
+        self.create_signal('browser-reload')
         self.create_signal('browser-back')
         self.create_signal('browser-forward')
         self.create_signal('browser-stop')
@@ -83,12 +83,12 @@ class BrowserToolbar(widgetset.HBox):
             widgetutil.align_left(forward_button, top_pad=5, bottom_pad=5),
             expand=False)
 
-        refresh_button = widgetset.Button(_('Refresh'), style='smooth')
-        refresh_button.set_size(widgetconst.SIZE_SMALL)
-        refresh_button.set_color(style.TOOLBAR_GRAY)
-        refresh_button.connect('clicked', self._on_refresh_button_clicked)
+        reload_button = widgetset.Button(_('Reload'), style='smooth')
+        reload_button.set_size(widgetconst.SIZE_SMALL)
+        reload_button.set_color(style.TOOLBAR_GRAY)
+        reload_button.connect('clicked', self._on_reload_button_clicked)
         self.pack_start(
-            widgetutil.align_left(refresh_button, top_pad=5, bottom_pad=5),
+            widgetutil.align_left(reload_button, top_pad=5, bottom_pad=5),
             expand=False)
 
         stop_button = widgetset.Button(_('Stop'), style='smooth')
@@ -108,16 +108,16 @@ class BrowserToolbar(widgetset.HBox):
             expand=False)
 
     def _on_back_button_clicked(self, button):
-        pass
+        self.emit('browser-back')
 
     def _on_forward_button_clicked(self, button):
-        pass
+        self.emit('browser-forward')
 
     def _on_stop_button_clicked(self, button):
-        pass
+        self.emit('browser-stop')
 
-    def _on_refresh_button_clicked(self, button):
-        self.emit('browser-refresh')
+    def _on_reload_button_clicked(self, button):
+        self.emit('browser-reload')
 
     def _on_home_button_clicked(self, button):
         self.emit('browser-home')
@@ -165,11 +165,23 @@ class BrowserNav(widgetset.VBox):
         self.pack_start(self.toolbar, expand=False)
         self.pack_start(self.browser, expand=True)
 
-        self.toolbar.connect('browser-refresh', self._on_browser_refresh)
+        self.toolbar.connect('browser-back', self._on_browser_back)
+        self.toolbar.connect('browser-forward', self._on_browser_forward)
+        self.toolbar.connect('browser-reload', self._on_browser_reload)
+        self.toolbar.connect('browser-stop', self._on_browser_stop)
         self.toolbar.connect('browser-home', self._on_browser_home)
 
-    def _on_browser_refresh(self, widget):
-        self.browser.refresh()
+    def _on_browser_back(self, widget):
+        self.browser.back()
+
+    def _on_browser_forward(self, widget):
+        self.browser.forward()
+
+    def _on_browser_reload(self, widget):
+        self.browser.reload()
+
+    def _on_browser_stop(self, widget):
+        self.browser.reload()
 
     def _on_browser_home(self, widget):
         self.browser.navigate(self.home_url)
