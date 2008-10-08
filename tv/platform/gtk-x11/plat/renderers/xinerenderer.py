@@ -37,6 +37,7 @@ from miro import config
 from miro import xine
 from miro.plat import options
 from miro.plat import resources
+from miro.plat.frontends.widgets import threads
 
 def wait_for_attach(func):
     """Many xine calls can't be made until we attach the object to a X window.
@@ -69,7 +70,9 @@ class Renderer:
         self.widget = widget
 
     def on_eos(self):
-        app.playback_manager.on_movie_finished()
+        # on_eos gets called by one of the xine threads, so we want to switch
+        # to the ui thread to do things.
+        threads.call_on_ui_thread(app.playback_manager.on_movie_finished)
 
     def on_realize(self, widget):
         # flush gdk output to ensure that our window is created
@@ -156,7 +159,8 @@ class Renderer:
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
-            pass
+            logging.warn("get_current_time: caught exception: %s" % e)
+            return None
 
     def get_current_time(self):
         try:
@@ -209,13 +213,14 @@ class Renderer:
 
     @wait_for_attach
     def pause(self):
-        self.xine.pause()
-        self.__playing = False
+        if self.__playing:
+            self.xine.pause()
+            self.__playing = False
 
     stop = pause
     reset = pause
 
-    def getRate(self):
+    def get_rate(self):
         # FIXME - there's no get_rate
         return self.xine.get_rate()
 
