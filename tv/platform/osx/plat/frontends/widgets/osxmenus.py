@@ -59,7 +59,7 @@ class MenuHandler(NSObject):
             NSApp().unhideAllApplications_(None)
 
         elif self.action == "CloseWindow":
-            app.widgetapp.window.nswindow.orderOut_(sender)
+            NSApplication.sharedApplication().keyWindow().orderOut_(sender)
 
         elif self.action == "Cut":
             NSApp().sendAction_to_from_("cut:", None, sender)
