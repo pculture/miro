@@ -190,7 +190,7 @@ class SiteDisplay(TabDisplay):
 
     def __init__(self, type, selected_tabs):
         Display.__init__(self)
-        self.widget = browser.Browser(selected_tabs[0])
+        self.widget = browser.BrowserNav(selected_tabs[0])
 
 class ItemListDisplay(TabDisplay):
     def __init__(self, type, selected_tabs):

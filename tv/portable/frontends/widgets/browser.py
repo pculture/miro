@@ -123,26 +123,11 @@ class BrowserToolbar(widgetset.HBox):
         self.emit('browser-home')
 
 
-class Browser(widgetset.VBox):
+class Browser(widgetset.Browser):
     def __init__(self, guide_info):
-        widgetset.VBox.__init__(self)
-        self.browser = widgetset.Browser()
-        self.toolbar = BrowserToolbar()
+        widgetset.Browser.__init__(self)
         self.guide_info = guide_info
-        self.home_url = guide_info.url
-        self.browser.navigate(guide_info.url)
-        self.pack_start(self.toolbar, expand=False)
-        self.pack_start(self.browser, expand=True)
-
-        self.toolbar.connect('browser-refresh', self._on_browser_refresh)
-        self.toolbar.connect('browser-home', self._on_browser_home)
-
-    def _on_browser_refresh(self, widget):
-        self.browser.refresh()
-
-    def _on_browser_home(self, widget):
-        self.browser.navigate(self.home_url)
-
+    
     def should_load_url(self, url):
         logging.info ("got %s", url)
         # FIXME, this seems really weird.  How are we supposed to pick an
@@ -167,3 +152,24 @@ class Browser(widgetset.VBox):
         # Let's return from the callback before we call it.
         call_on_ui_thread(linkhandler.handle_external_url, url)
         return False
+
+
+class BrowserNav(widgetset.VBox):
+    def __init__(self, guide_info):
+        widgetset.VBox.__init__(self)
+        self.browser = Browser(guide_info)
+        self.toolbar = BrowserToolbar()
+        self.guide_info = guide_info
+        self.home_url = guide_info.url
+        self.browser.navigate(guide_info.url)
+        self.pack_start(self.toolbar, expand=False)
+        self.pack_start(self.browser, expand=True)
+
+        self.toolbar.connect('browser-refresh', self._on_browser_refresh)
+        self.toolbar.connect('browser-home', self._on_browser_home)
+
+    def _on_browser_refresh(self, widget):
+        self.browser.refresh()
+
+    def _on_browser_home(self, widget):
+        self.browser.navigate(self.home_url)
