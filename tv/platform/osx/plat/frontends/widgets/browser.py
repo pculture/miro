@@ -34,6 +34,7 @@ import logging
 from AppKit import *
 from Foundation import *
 from WebKit import *
+from objc import YES, NO, nil
 from PyObjCTools import AppHelper
 
 from miro import prefs
@@ -47,6 +48,7 @@ class Browser(Widget):
         self.url = None
         self.view = WebView.alloc().init()
         self.delegate = BrowserDelegate.alloc().initWithBrowser_(self)
+        self.view.setMaintainsBackForwardList_(YES)
         self.view.setPolicyDelegate_(self.delegate)
         self.view.setResourceLoadDelegate_(self.delegate)
         self.view.setFrameLoadDelegate_(self.delegate)
@@ -69,6 +71,18 @@ class Browser(Widget):
             return self.url.absoluteURL()
         else:
             return None
+
+    def forward(self):
+        self.view.goForward()
+
+    def back(self):
+        self.view.goBack()
+
+    def reload(self):
+        self.view.reload_(nil)
+
+    def stop(self):
+        self.view.stopLoading_(nil)
 
 ###############################################################################
 
