@@ -40,6 +40,10 @@ from miro import util
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.frontends.widgets import linkhandler
+from miro.frontends.widgets import style
+from miro.frontends.widgets import widgetconst
+from miro.frontends.widgets import widgetutil
+from miro.gtcache import gettext as _
 
 PROTOCOLS_MIRO_HANDLES = ("http:", "https:", "ftp:", "feed:", "feeds:", "mailto:")
 
@@ -49,11 +53,95 @@ def _should_miro_handle(url):
             return True
     return False
 
-class Browser(widgetset.Browser):
+
+class BrowserToolbar(widgetset.HBox):
+    """
+    Forward/back/home & "display in browser" buttons
+    """
+    def __init__(self):
+        widgetset.HBox.__init__(self)
+
+        self.create_signal('browser-refresh')
+        self.create_signal('browser-back')
+        self.create_signal('browser-forward')
+        self.create_signal('browser-stop')
+        self.create_signal('browser-home')
+
+        back_button = widgetset.Button(_('Back'), style='smooth')
+        back_button.set_size(widgetconst.SIZE_SMALL)
+        back_button.set_color(style.TOOLBAR_GRAY)
+        back_button.connect('clicked', self._on_back_button_clicked)
+        self.pack_start(
+            widgetutil.align_left(back_button, top_pad=5, bottom_pad=5),
+            expand=False)
+        
+        forward_button = widgetset.Button(_('Forward'), style='smooth')
+        forward_button.set_size(widgetconst.SIZE_SMALL)
+        forward_button.set_color(style.TOOLBAR_GRAY)
+        forward_button.connect('clicked', self._on_forward_button_clicked)
+        self.pack_start(
+            widgetutil.align_left(forward_button, top_pad=5, bottom_pad=5),
+            expand=False)
+
+        refresh_button = widgetset.Button(_('Refresh'), style='smooth')
+        refresh_button.set_size(widgetconst.SIZE_SMALL)
+        refresh_button.set_color(style.TOOLBAR_GRAY)
+        refresh_button.connect('clicked', self._on_refresh_button_clicked)
+        self.pack_start(
+            widgetutil.align_left(refresh_button, top_pad=5, bottom_pad=5),
+            expand=False)
+
+        stop_button = widgetset.Button(_('Stop'), style='smooth')
+        stop_button.set_size(widgetconst.SIZE_SMALL)
+        stop_button.set_color(style.TOOLBAR_GRAY)
+        stop_button.connect('clicked', self._on_stop_button_clicked)
+        self.pack_start(
+            widgetutil.align_left(stop_button, top_pad=5, bottom_pad=5),
+            expand=False)
+
+        home_button = widgetset.Button(_('Home'), style='smooth')
+        home_button.set_size(widgetconst.SIZE_SMALL)
+        home_button.set_color(style.TOOLBAR_GRAY)
+        home_button.connect('clicked', self._on_home_button_clicked)
+        self.pack_start(
+            widgetutil.align_left(home_button, top_pad=5, bottom_pad=5),
+            expand=False)
+
+    def _on_back_button_clicked(self, button):
+        pass
+
+    def _on_forward_button_clicked(self, button):
+        pass
+
+    def _on_stop_button_clicked(self, button):
+        pass
+
+    def _on_refresh_button_clicked(self, button):
+        self.emit('browser-refresh')
+
+    def _on_home_button_clicked(self, button):
+        self.emit('browser-home')
+
+
+class Browser(widgetset.VBox):
     def __init__(self, guide_info):
-        widgetset.Browser.__init__(self)
+        widgetset.VBox.__init__(self)
+        self.browser = widgetset.Browser()
+        self.toolbar = BrowserToolbar()
         self.guide_info = guide_info
-        self.navigate(guide_info.url)
+        self.home_url = guide_info.url
+        self.browser.navigate(guide_info.url)
+        self.pack_start(self.toolbar, expand=False)
+        self.pack_start(self.browser, expand=True)
+
+        self.toolbar.connect('browser-refresh', self._on_browser_refresh)
+        self.toolbar.connect('browser-home', self._on_browser_home)
+
+    def _on_browser_refresh(self, widget):
+        self.browser.refresh()
+
+    def _on_browser_home(self, widget):
+        self.browser.navigate(self.home_url)
 
     def should_load_url(self, url):
         logging.info ("got %s", url)

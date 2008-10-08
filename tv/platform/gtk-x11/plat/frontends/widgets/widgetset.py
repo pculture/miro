@@ -67,6 +67,9 @@ class Browser(Widget):
         if not xpcom_setup:
             do_xpcom_setup()
 
+    def refresh(self):
+        self._widget.load_url(self.url)
+
 def do_xpcom_setup():
     global xpcom_setup
 
