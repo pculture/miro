@@ -212,9 +212,9 @@ class PlaybackManager (signals.SignalEmitter):
     def _try_select_current(self):
         self.cancel_update_timer()
         self.cancel_mark_as_watched()
-        if self.is_playing:
-            self.video_display.stop()
         if 0 <= self.position < len(self.playlist):
+            if self.is_playing:
+                self.video_display.stop()
             item_info = self.playlist[self.position]
             if not self._item_is_playable(item_info):
                 self.position += 1
