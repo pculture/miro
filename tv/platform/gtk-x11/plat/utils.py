@@ -289,4 +289,5 @@ def set_properties(props):
         config.set(p, val)
 
 def movie_data_program_info(moviePath, thumbnailPath):
-    raise NotImplementedError()
+    from miro import app
+    return app.renderer.movie_data_program_info(moviePath, thumbnailPath)
