@@ -181,7 +181,7 @@ class BrowserNav(widgetset.VBox):
         self.browser.reload()
 
     def _on_browser_stop(self, widget):
-        self.browser.reload()
+        self.browser.stop()
 
     def _on_browser_home(self, widget):
         self.browser.navigate(self.home_url)
