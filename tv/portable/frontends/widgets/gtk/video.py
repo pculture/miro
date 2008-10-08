@@ -164,13 +164,13 @@ class VideoDetailsWidget(Background):
 
         # right side
         v = VBox()
-        self.__email_link = ClickableLabel(_("Email a friend"))
+        self.__email_link = ClickableLabel(_("EMAIL A FRIEND"))
         v.pack_start(_align_right(self.__email_link, right_pad=5))
 
         h2 = HBox()
-        self.__comments_link = ClickableLabel(_("Comments"))
+        self.__comments_link = ClickableLabel(_("COMMENTS"))
         h2.pack_start(_align_right(self.__comments_link, right_pad=10), expand=True)
-        self.__permalink_link = ClickableLabel(_("Permalink"))
+        self.__permalink_link = ClickableLabel(_("PERMALINK"))
         h2.pack_start(_align_right(self.__permalink_link, right_pad=5))
         v.pack_start(h2)
 
@@ -179,13 +179,13 @@ class VideoDetailsWidget(Background):
         self.__expiration_label.set_size(0.77)
         self.__expiration_label.set_color(WHITE)
         h2.pack_start(_align_right(self.__expiration_label, right_pad=15), expand=True)
-        self.__keep_link = ClickableLabel(_("Keep"))
+        self.__keep_link = ClickableLabel(_("KEEP"))
         h2.pack_start(_align_right(self.__keep_link, right_pad=5))
         self.__dash = Label("-")
         self.__dash.set_size(0.77)
         self.__dash.set_color(WHITE)
         h2.pack_start(_align_right(self.__dash, right_pad=5))
-        self.__delete_link = ClickableLabel(_("Delete"))
+        self.__delete_link = ClickableLabel(_("DELETE"))
         h2.pack_start(_align_right(self.__delete_link, right_pad=5))
         v.pack_start(h2)
 
@@ -247,7 +247,7 @@ class VideoDetailsWidget(Background):
         if item_info.commentslink:
             def handle_commentslink(widget):
                 app.widgetapp.open_url(item_info.commentslink)
-            self.__comments_link.set_text(_("Comments"))
+            self.__comments_link.set_text(_("COMMENTS"))
             self.__comments_link.connect('clicked', handle_commentslink)
         else:
             self.__comments_link.set_text("")
@@ -255,7 +255,7 @@ class VideoDetailsWidget(Background):
         if item_info.permalink:
             def handle_permalink(widget):
                 app.widgetapp.open_url(item_info.permalink)
-            self.__permalink_link.set_text(_("Permalink"))
+            self.__permalink_link.set_text(_("PERMALINK"))
             self.__permalink_link.connect('clicked', handle_permalink)
         else:
             self.__permalink_link.set_text("")
