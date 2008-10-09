@@ -223,7 +223,6 @@ class Application:
 
     def open_video(self):
         title = _('Open Files...')
-        # FIXME - should we list video types we know we can open?
         filename = dialogs.ask_for_open_pathname(title)
 
         if not filename:
