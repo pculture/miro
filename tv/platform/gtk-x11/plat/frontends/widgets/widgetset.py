@@ -47,18 +47,13 @@ class Browser(Widget):
         self.url = None
         self.wrapped_widget_connect('open-uri', self.on_open_uri)
         self.wrapped_widget_connect('realize', self.on_realize)
-        self.wrapped_widget_connect('net-state', self.on_net_state)
         self.wrapped_widget_connect('net-start', self.on_net_start)
         self.wrapped_widget_connect('net-stop', self.on_net_stop)
         self._widget.set_size_request(200, 100)
         # Seems like a reasonable min-size
 
-        self.create_signal('net-state')
         self.create_signal('net-start')
         self.create_signal('net-stop')
-
-    def on_net_state(self, browser, flags, status):
-        self.emit('net-state')
 
     def on_net_start(self, browser):
         self.emit('net-start')

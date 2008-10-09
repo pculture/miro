@@ -66,6 +66,7 @@ class BrowserToolbar(widgetset.HBox):
         self.create_signal('browser-forward')
         self.create_signal('browser-stop')
         self.create_signal('browser-home')
+        self.create_signal('address-entered')
 
         self.back_button = widgetset.Button(_('Back'), style='smooth')
         self.back_button.set_size(widgetconst.SIZE_SMALL)
@@ -104,6 +105,13 @@ class BrowserToolbar(widgetset.HBox):
             widgetutil.align_left(self.home_button, top_pad=5, bottom_pad=5),
             expand=False)
 
+        self.address_entry = widgetset.TextEntry()
+        self.address_entry.set_width(80)
+        self.address_entry.connect('activate', self._on_address_bar_activate)
+        self.pack_start(
+            widgetutil.align_right(self.address_entry, top_pad=5, bottom_pad=5),
+            expand=True)
+
     def _on_back_button_clicked(self, button):
         self.emit('browser-back')
 
@@ -118,6 +126,9 @@ class BrowserToolbar(widgetset.HBox):
 
     def _on_home_button_clicked(self, button):
         self.emit('browser-home')
+
+    def _on_address_bar_activate(self, button):
+        self.emit('address-entered')
 
 
 class Browser(widgetset.Browser):
@@ -159,6 +170,7 @@ class BrowserNav(widgetset.VBox):
         self.guide_info = guide_info
         self.home_url = guide_info.url
         self.browser.navigate(guide_info.url)
+        self.toolbar.address_entry.set_text(guide_info.url)
         self.pack_start(self.toolbar, expand=False)
         self.pack_start(self.browser, expand=True)
 
@@ -167,12 +179,12 @@ class BrowserNav(widgetset.VBox):
         self.toolbar.connect('browser-reload', self._on_browser_reload)
         self.toolbar.connect('browser-stop', self._on_browser_stop)
         self.toolbar.connect('browser-home', self._on_browser_home)
+        self.toolbar.connect('address-entered', self._on_address_entered)
 
-        self.browser.connect('net-state', self._on_net_state)
         self.browser.connect('net-start', self._on_net_start)
         self.browser.connect('net-stop', self._on_net_stop)
 
-    def _on_net_state(self, widget):
+    def enable_disable_navigation(self):
         if self.browser.can_go_back():
             self.toolbar.back_button.enable_widget()
         else:
@@ -185,9 +197,12 @@ class BrowserNav(widgetset.VBox):
 
     def _on_net_start(self, widget):
         self.toolbar.stop_button.enable_widget()
+        self.toolbar.address_entry.set_text(self.browser.url)
+        self.enable_disable_navigation()
 
     def _on_net_stop(self, widget):
         self.toolbar.stop_button.disable_widget()
+        self.enable_disable_navigation()
 
     def _on_browser_back(self, widget):
         self.browser.back()
@@ -203,3 +218,6 @@ class BrowserNav(widgetset.VBox):
 
     def _on_browser_home(self, widget):
         self.browser.navigate(self.home_url)
+
+    def _on_address_entered(self, widget):
+        self.browser.navigate(self.toolbar.address_entry.get_text())
