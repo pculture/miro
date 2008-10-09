@@ -28,7 +28,7 @@ _downloads = {}
 
 _lock = RLock()
 
-def configReceived ():
+def configReceived():
     torrentSession.startup()
 
 def createDownloader(url, contentType, dlid):
@@ -129,7 +129,7 @@ def migrateDownload(dlid, directory):
 def getDownloadStatus(dlids = None):
     statuses = {}
     for key in _downloads.keys():
-        if ((dlids is None)  or (dlids == key) or (key in dlids)):
+        if (dlids is None) or (dlids == key) or (key in dlids):
             try:
                 statuses[key] = _downloads[key].getStatus()
             except (SystemExit, KeyboardInterrupt):
@@ -139,7 +139,7 @@ def getDownloadStatus(dlids = None):
     return statuses
 
 def shutDown():
-    logging.info ("Shutting down downloaders...")
+    logging.info("Shutting down downloaders...")
     for dlid in _downloads:
         _downloads[dlid].shutdown()
     torrentSession.shutdown()
@@ -245,7 +245,7 @@ class TorrentSession:
         elif key in (prefs.LIMIT_CONNECTIONS_BT.key, prefs.CONNECTION_LIMIT_BT_NUM.key):
             self.setConnectionLimit()
 
-    def addTorrent(self, torrent):
+    def add_torrent(self, torrent):
         self.torrents.add(torrent)
 
     def removeTorrent(self, torrent):
@@ -389,14 +389,14 @@ class BGDownloader:
         the movies directory.
         """
         if chatter:
-            logging.info ("moveToMoviesDirectory: moving to movies directory.  filename is %s", self.filename)
+            logging.info("moveToMoviesDirectory: moving to movies directory.  filename is %s", self.filename)
         self.moveToDirectory(config.get(prefs.MOVIES_DIRECTORY))
 
-    def moveToDirectory (self, directory):
+    def moveToDirectory(self, directory):
         checkF(directory)
         if self.channelName:
             channelName = filterDirectoryName(self.channelName)
-            directory = os.path.join (directory, channelName)
+            directory = os.path.join(directory, channelName)
             try:
                 fileutil.makedirs(directory)
             except (SystemExit, KeyboardInterrupt):
@@ -419,7 +419,7 @@ class BGDownloader:
             return -1
         rate = self.getRate()
         if rate > 0:
-            return (self.totalSize - self.currentSize)/rate
+            return (self.totalSize - self.currentSize) / rate
         else:
             return 0
 
@@ -460,9 +460,9 @@ class BGDownloader:
         self.reasonFailed = reason
         self.shortReasonFailed = shortReason
         self.retryCount = self.retryCount + 1
-        if self.retryCount >= len (RETRY_TIMES):
-            self.retryCount = len (RETRY_TIMES) - 1
-        self.retryDC = eventloop.addTimeout (RETRY_TIMES[self.retryCount], self.retryDownload, "Logarithmic retry")
+        if self.retryCount >= len(RETRY_TIMES):
+            self.retryCount = len(RETRY_TIMES) - 1
+        self.retryDC = eventloop.addTimeout(RETRY_TIMES[self.retryCount], self.retryDownload, "Logarithmic retry")
         self.retryTime = datetime.datetime.now() + datetime.timedelta(seconds = RETRY_TIMES[self.retryCount])
         self.updateClient()
 
@@ -482,7 +482,7 @@ class BGDownloader:
                 self.handleTemporaryError(error.getFriendlyDescription(),
                                           error.getLongDescription())
         else:
-            logging.info ("WARNING: grabURL errback not called with NetworkError")
+            logging.info("WARNING: grabURL errback not called with NetworkError")
             self.handleError(str(error), str(error))
 
     def handleGenericError(self, longDescription):
@@ -726,7 +726,7 @@ class HTTPDownloader(BGDownloader):
         self.blockTimes.append((now,  self.currentSize))
         window_start = now - self.UPDATE_CLIENT_WINDOW
         i = 0
-        for i in xrange (len(self.blockTimes)):
+        for i in xrange(len(self.blockTimes)):
             if self.blockTimes[0][0] >= window_start:
                 break
         self.blockTimes = self.blockTimes[i:]
@@ -826,11 +826,11 @@ class BTDownloader(BGDownloader):
             self.handleError(_('BitTorrent failure'), 
                              _('BitTorrent failed to startup'))
         else:
-            torrentSession.addTorrent (self)
+            torrentSession.add_torrent(self)
 
     def _shutdownTorrent(self):
         try:
-            torrentSession.removeTorrent (self)
+            torrentSession.removeTorrent(self)
             if self.torrent is not None:
                 self.torrent.pause()
                 self.fastResumeData = lt.bencode(self.torrent.write_resume_data())
@@ -839,27 +839,27 @@ class BTDownloader(BGDownloader):
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
-            logging.exception ("DTV: Warning: Error shutting down torrent")
+            logging.exception("DTV: Warning: Error shutting down torrent")
 
     def _pauseTorrent(self):
         try:
-            torrentSession.removeTorrent (self)
+            torrentSession.removeTorrent(self)
             if self.torrent is not None:
                 self.torrent.pause()
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
-            logging.exception ("DTV: Warning: Error pausing torrent")
+            logging.exception("DTV: Warning: Error pausing torrent")
 
     def _resumeTorrent(self):
         if self.torrent is not None:
             try:
                 self.torrent.resume()
-                torrentSession.addTorrent (self)
+                torrentSession.add_torrent(self)
             except (SystemExit, KeyboardInterrupt):
                 raise
             except:
-                logging.exception ("DTV: Warning: Error resuming torrent")
+                logging.exception("DTV: Warning: Error resuming torrent")
         else:
             self._startTorrent()
 
@@ -884,7 +884,7 @@ class BTDownloader(BGDownloader):
         self.seeders = status.num_complete
         self.leechers = status.num_incomplete
         try:
-            self.eta = (status.total_wanted - status.total_wanted_done) / float (status.download_payload_rate)
+            self.eta = (status.total_wanted - status.total_wanted_done) / float(status.download_payload_rate)
         except ZeroDivisionError:
             self.eta = 0
         if status.state == lt.torrent_status.states.queued_for_checking:
@@ -1009,7 +1009,7 @@ class BTDownloader(BGDownloader):
             try:
                 metainfo = lt.bdecode(self.metainfo)
                 name = metainfo['info']['name']
-            except (RuntimeError):
+            except RuntimeError:
                 self.handleError(_("Corrupt Torrent"),
                                  _("The torrent file at %(url)s was not valid") % {"url": stringify(self.url)})
                 return
@@ -1024,7 +1024,7 @@ class BTDownloader(BGDownloader):
         self.gotMetainfo()
 
     def onDescriptionDownload(self, info):
-        self.handleMetainfo (info['body'])
+        self.handleMetainfo(info['body'])
 
     def onDescriptionDownloadFailed(self, exception):
         self.handleNetworkError(exception)

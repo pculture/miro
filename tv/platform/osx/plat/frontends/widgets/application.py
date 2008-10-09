@@ -263,8 +263,8 @@ class AppController(NSObject):
             else:
                 command = [lambda:app.htmlapp.addAndSelectFeed(url), "Open HTTP URL"]
         elif url.startswith('miro:'):
-            command = [lambda:singleclick.addSubscriptionURL('miro:', 'application/x-miro', url), "Open Miro URL"]
+            command = [lambda:singleclick.add_subscription_url('miro:', 'application/x-miro', url), "Open Miro URL"]
         elif url.startswith('democracy:'):
-            command = [lambda:singleclick.addSubscriptionURL('democracy:', 'application/x-democracy', url), "Open Democracy URL"]
+            command = [lambda:singleclick.add_subscription_url('democracy:', 'application/x-democracy', url), "Open Democracy URL"]
 
         eventloop.addIdle(*command)
