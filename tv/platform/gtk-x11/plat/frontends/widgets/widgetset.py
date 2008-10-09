@@ -47,8 +47,24 @@ class Browser(Widget):
         self.url = None
         self.wrapped_widget_connect('open-uri', self.on_open_uri)
         self.wrapped_widget_connect('realize', self.on_realize)
+        self.wrapped_widget_connect('net-state', self.on_net_state)
+        self.wrapped_widget_connect('net-start', self.on_net_start)
+        self.wrapped_widget_connect('net-stop', self.on_net_stop)
         self._widget.set_size_request(200, 100)
         # Seems like a reasonable min-size
+
+        self.create_signal('net-state')
+        self.create_signal('net-start')
+        self.create_signal('net-stop')
+
+    def on_net_state(self, browser, flags, status):
+        self.emit('net-state')
+
+    def on_net_start(self, browser):
+        self.emit('net-start')
+
+    def on_net_stop(self, browser):
+        self.emit('net-stop')
 
     def on_open_uri(self, browser, uri):
         if self.should_load_url(uri):
@@ -64,6 +80,12 @@ class Browser(Widget):
     def back(self):
         if self._widget.can_go_back():
             self._widget.go_back()
+
+    def can_go_forward(self):
+        return self._widget.can_go_forward()
+
+    def can_go_back(self):
+        return self._widget.can_go_back()
 
     def should_load_url(self, url):
         return True

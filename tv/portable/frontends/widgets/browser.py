@@ -67,44 +67,41 @@ class BrowserToolbar(widgetset.HBox):
         self.create_signal('browser-stop')
         self.create_signal('browser-home')
 
-        back_button = widgetset.Button(_('Back'), style='smooth')
-        back_button.set_size(widgetconst.SIZE_SMALL)
-        back_button.set_color(style.TOOLBAR_GRAY)
-        back_button.connect('clicked', self._on_back_button_clicked)
+        self.back_button = widgetset.Button(_('Back'), style='smooth')
+        self.back_button.set_size(widgetconst.SIZE_SMALL)
+        self.back_button.connect('clicked', self._on_back_button_clicked)
+        self.back_button.disable_widget()
         self.pack_start(
-            widgetutil.align_left(back_button, top_pad=5, bottom_pad=5),
+            widgetutil.align_left(self.back_button, top_pad=5, bottom_pad=5),
             expand=False)
         
-        forward_button = widgetset.Button(_('Forward'), style='smooth')
-        forward_button.set_size(widgetconst.SIZE_SMALL)
-        forward_button.set_color(style.TOOLBAR_GRAY)
-        forward_button.connect('clicked', self._on_forward_button_clicked)
+        self.forward_button = widgetset.Button(_('Forward'), style='smooth')
+        self.forward_button.set_size(widgetconst.SIZE_SMALL)
+        self.forward_button.connect('clicked', self._on_forward_button_clicked)
+        self.forward_button.disable_widget()
         self.pack_start(
-            widgetutil.align_left(forward_button, top_pad=5, bottom_pad=5),
+            widgetutil.align_left(self.forward_button, top_pad=5, bottom_pad=5),
             expand=False)
 
-        reload_button = widgetset.Button(_('Reload'), style='smooth')
-        reload_button.set_size(widgetconst.SIZE_SMALL)
-        reload_button.set_color(style.TOOLBAR_GRAY)
-        reload_button.connect('clicked', self._on_reload_button_clicked)
+        self.reload_button = widgetset.Button(_('Reload'), style='smooth')
+        self.reload_button.set_size(widgetconst.SIZE_SMALL)
+        self.reload_button.connect('clicked', self._on_reload_button_clicked)
         self.pack_start(
-            widgetutil.align_left(reload_button, top_pad=5, bottom_pad=5),
+            widgetutil.align_left(self.reload_button, top_pad=5, bottom_pad=5),
             expand=False)
 
-        stop_button = widgetset.Button(_('Stop'), style='smooth')
-        stop_button.set_size(widgetconst.SIZE_SMALL)
-        stop_button.set_color(style.TOOLBAR_GRAY)
-        stop_button.connect('clicked', self._on_stop_button_clicked)
+        self.stop_button = widgetset.Button(_('Stop'), style='smooth')
+        self.stop_button.set_size(widgetconst.SIZE_SMALL)
+        self.stop_button.connect('clicked', self._on_stop_button_clicked)
         self.pack_start(
-            widgetutil.align_left(stop_button, top_pad=5, bottom_pad=5),
+            widgetutil.align_left(self.stop_button, top_pad=5, bottom_pad=5),
             expand=False)
 
-        home_button = widgetset.Button(_('Home'), style='smooth')
-        home_button.set_size(widgetconst.SIZE_SMALL)
-        home_button.set_color(style.TOOLBAR_GRAY)
-        home_button.connect('clicked', self._on_home_button_clicked)
+        self.home_button = widgetset.Button(_('Home'), style='smooth')
+        self.home_button.set_size(widgetconst.SIZE_SMALL)
+        self.home_button.connect('clicked', self._on_home_button_clicked)
         self.pack_start(
-            widgetutil.align_left(home_button, top_pad=5, bottom_pad=5),
+            widgetutil.align_left(self.home_button, top_pad=5, bottom_pad=5),
             expand=False)
 
     def _on_back_button_clicked(self, button):
@@ -170,6 +167,27 @@ class BrowserNav(widgetset.VBox):
         self.toolbar.connect('browser-reload', self._on_browser_reload)
         self.toolbar.connect('browser-stop', self._on_browser_stop)
         self.toolbar.connect('browser-home', self._on_browser_home)
+
+        self.browser.connect('net-state', self._on_net_state)
+        self.browser.connect('net-start', self._on_net_start)
+        self.browser.connect('net-stop', self._on_net_stop)
+
+    def _on_net_state(self, widget):
+        if self.browser.can_go_back():
+            self.toolbar.back_button.enable_widget()
+        else:
+            self.toolbar.back_button.disable_widget()
+
+        if self.browser.can_go_forward():
+            self.toolbar.forward_button.enable_widget()
+        else:
+            self.toolbar.forward_button.disable_widget()
+
+    def _on_net_start(self, widget):
+        self.toolbar.stop_button.enable_widget()
+
+    def _on_net_stop(self, widget):
+        self.toolbar.stop_button.disable_widget()
 
     def _on_browser_back(self, widget):
         self.browser.back()
