@@ -487,9 +487,38 @@ class AboutDialog:
     def run(self):
         self._window.run()
 
-class AlertDialog(Dialog):
+type_map = {
+    0: gtk.MESSAGE_WARNING,
+    1: gtk.MESSAGE_INFO,
+    2: gtk.MESSAGE_ERROR
+}
+
+class AlertDialog(WindowBase):
     def __init__(self, title, description, alert_type):
-        Dialog.__init__(self, title, description)
+        WindowBase.__init__(self)
+        message_type = type_map.get(alert_type, gtk.MESSAGE_INFO)
+        self.set_window(gtk.MessageDialog(type=message_type, message_format=description))
+        self._window.set_title(title)
+
+    def add_button(self, text):
+        self._window.add_button(_stock.get(text, text), 1)
+        self._window.set_default_response(1)
+
+    def run(self):
+        self._window.set_modal(False)
+        self._window.set_transient_for(None)
+        self._window.show_all()
+        response = self._window.run()
+        self._window.hide()
+        if response == gtk.RESPONSE_DELETE_EVENT:
+            return -1
+        else:
+            return response - 1 # response IDs started at 1
+
+    def destroy(self):
+        self._window.destroy()
+        if hasattr(self, 'packing_vbox'):
+            del self.packing_vbox
 
 class PreferencesWindow(Dialog):
     def __init__(self, title):
