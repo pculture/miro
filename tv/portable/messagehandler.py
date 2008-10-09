@@ -661,8 +661,7 @@ class BackendMessageHandler(messages.MessageHandler):
         singleclick.add_download(message.url)
 
     def handle_open_individual_file(self, message):
-        fn = message.filename
-        fn = osFilenameToFilenameType(fn)
+        fn = osFilenameToFilenameType(message.filename)
         singleclick.parse_command_line_args([fn])
 
     def handle_open_individual_files(self, message):
