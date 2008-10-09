@@ -261,8 +261,8 @@ class VideoDetailsWidget(Background):
             self._permalink_link.set_text("")
 
         def handle_delete(widget):
-            self._delete_link.on_leave_notify(None, None)
-            app.widgetapp.on_stop_clicked(None)
+            self.reset()
+            app.playback_manager.on_movie_finished()
             messages.DeleteVideo(item_info.id).send_to_backend()
         self._delete_link.connect('clicked', handle_delete)
 
@@ -276,7 +276,7 @@ class VideoDetailsWidget(Background):
     def is_opaque(self):
         return True
 
-    def stop(self):
+    def reset(self):
         self._delete_link.on_leave_notify(None, None)
 
 class VideoRenderer(VBox):
@@ -346,7 +346,7 @@ class VideoRenderer(VBox):
         self.renderer.pause()
 
     def stop(self):
-        self._video_details.stop()
+        self._video_details.reset()
         self.renderer.stop()
 
     def set_playback_rate(self, rate):
