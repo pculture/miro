@@ -46,6 +46,8 @@ class Browser(Widget):
     def __init__(self):
         Widget.__init__(self)
         self.url = None
+        self.create_signal('net-start')
+        self.create_signal('net-stop')
         self.view = WebView.alloc().init()
         self.delegate = BrowserDelegate.alloc().initWithBrowser_(self)
         self.view.setMaintainsBackForwardList_(YES)
@@ -83,6 +85,12 @@ class Browser(Widget):
 
     def stop(self):
         self.view.stopLoading_(nil)
+        
+    def can_go_back(self):
+        return self.view.canGoBack()
+    
+    def can_go_forward(self):
+        return self.view.canGoForward()
 
 ###############################################################################
 
@@ -94,6 +102,12 @@ class BrowserDelegate (NSObject):
         self.openPanelContextID = 1
         self.openPanelContext = dict()
         return self
+
+    def webView_didStartProvisionalLoadForFrame_(self, webview, frame):
+        self.browser.emit('net-start')
+
+    def webView_didFinishLoadForFrame_(self, webview, frame):
+        self.browser.emit('net-stop')
 
     # Intercept navigation actions and give program a chance to respond
     def webView_decidePolicyForNavigationAction_request_frame_decisionListener_(self, webview, action, request, frame, listener):
