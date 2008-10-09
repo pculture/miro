@@ -55,9 +55,9 @@ def __get_fullscreen_stock_id():
         pass
 
 STOCK_IDS = {
-    "SaveVideo": gtk.STOCK_SAVE,
-    "CopyVideoURL": gtk.STOCK_COPY,
-    "RemoveVideos": gtk.STOCK_REMOVE,
+    "SaveItem": gtk.STOCK_SAVE,
+    "CopyItemURL": gtk.STOCK_COPY,
+    "RemoveItems": gtk.STOCK_REMOVE,
     "Fullscreen": __get_fullscreen_stock_id(),
     "StopVideo": gtk.STOCK_MEDIA_STOP,
     "NextVideo": gtk.STOCK_MEDIA_NEXT,
