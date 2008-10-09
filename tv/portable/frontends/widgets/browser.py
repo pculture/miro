@@ -32,6 +32,7 @@ what to do with them.
 
 import logging
 
+from miro import app
 from miro import filetypes
 from miro import guide
 from miro import messages
@@ -67,6 +68,7 @@ class BrowserToolbar(widgetset.HBox):
         self.create_signal('browser-stop')
         self.create_signal('browser-home')
         self.create_signal('address-entered')
+        self.create_signal('browser-open')
 
         self.back_button = widgetset.Button(_('Back'), style='smooth')
         self.back_button.set_size(widgetconst.SIZE_SMALL)
@@ -106,17 +108,24 @@ class BrowserToolbar(widgetset.HBox):
             expand=False)
 
         self.address_entry = widgetset.TextEntry()
-        self.address_entry.set_width(80)
         self.address_entry.connect('activate', self._on_address_bar_activate)
-        self.pack_start(
-            widgetutil.align_right(self.address_entry, top_pad=5, bottom_pad=5),
-            expand=True)
+        self.pack_start(self.address_entry, expand=True)
 
         self.go_button = widgetset.Button(_('Go'), style='smooth')
         self.go_button.set_size(widgetconst.SIZE_SMALL)
         self.go_button.connect('clicked', self._on_address_bar_activate)
         self.pack_start(
             widgetutil.align_right(self.go_button, top_pad=5, bottom_pad=5),
+            expand=False)
+
+        self.browser_open_button = widgetset.Button(
+            _('Open in browser'), style='smooth')
+        self.browser_open_button.set_size(widgetconst.SIZE_SMALL)
+        self.browser_open_button.connect(
+            'clicked', self._on_browser_open_activate)
+        self.pack_start(
+            widgetutil.align_right(
+                    self.browser_open_button, top_pad=5, bottom_pad=5),
             expand=False)
 
     def _on_back_button_clicked(self, button):
@@ -136,6 +145,9 @@ class BrowserToolbar(widgetset.HBox):
 
     def _on_address_bar_activate(self, widget):
         self.emit('address-entered')
+
+    def _on_browser_open_activate(self, button):
+        self.emit('browser-open')
 
 
 class Browser(widgetset.Browser):
@@ -187,6 +199,7 @@ class BrowserNav(widgetset.VBox):
         self.toolbar.connect('browser-stop', self._on_browser_stop)
         self.toolbar.connect('browser-home', self._on_browser_home)
         self.toolbar.connect('address-entered', self._on_address_entered)
+        self.toolbar.connect('browser-open', self._on_browser_open)
 
         self.browser.connect('net-start', self._on_net_start)
         self.browser.connect('net-stop', self._on_net_stop)
@@ -228,3 +241,6 @@ class BrowserNav(widgetset.VBox):
 
     def _on_address_entered(self, widget):
         self.browser.navigate(self.toolbar.address_entry.get_text())
+
+    def _on_browser_open(self, widget):
+        app.widgetapp.open_url(self.browser.url)
