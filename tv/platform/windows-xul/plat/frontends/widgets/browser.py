@@ -150,6 +150,10 @@ class Browser(Widget):
         self.set_widget(BrowserWidget())
         self._widget.set_property('can-focus', True)
 
+        # TODO: implement net-start and net-stop signaling on windows.
+        self.create_signal('net-start')
+        self.create_signal('net-stop')
+
     def navigate(self, url):
         self._widget.navigate(url)
 
