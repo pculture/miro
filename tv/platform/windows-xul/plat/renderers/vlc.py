@@ -31,8 +31,10 @@ import logging
 import os
 
 import gtk
+import gobject
 
 from miro.plat import resources
+from miro import app
 
 # load the DLL
 libvlc = ctypes.cdll.libvlc
@@ -83,6 +85,8 @@ def make_string_list(args):
     ArgsArray = ctypes.c_char_p * len(args)
     return ArgsArray(*args)
 
+STOPPED, PAUSED, PLAYING = range(3)
+
 class VLCRenderer:
     def __init__(self):
         logging.info("Initializing VLC")
@@ -90,7 +94,7 @@ class VLCRenderer:
         self.exc = VLCException()
 
         vlc_args = [
-            "vlc", '--quiet', '--nostats', '--intf', 'dummy', 
+            "vlc", '--quiet', '--nostats', '--intf', 'dummy',
             '--no-video-title-show', '--plugin-path', plugin_dir
         ]
         self.vlc = libvlc.libvlc_new(len(vlc_args),
@@ -100,7 +104,20 @@ class VLCRenderer:
                 self.exc.ref())
         self.exc.check()
         self.play_from_time = None
-        self.started_playing = False
+        self.started_playing = STOPPED
+        self._duration = None
+
+    def do_schedule_update(self):
+        if self.started_playing == PLAYING:
+            ct = self.get_current_time()
+            dur = self.get_duration()
+
+            # the 0.05 is for fudge-factor
+            if ct and dur and (dur <= ct + 0.05):
+                app.playback_manager.on_movie_finished()
+                return
+
+            gobject.timeout_add(500, self.do_schedule_update)
 
     def set_widget(self, widget):
         widget.connect("realize", self.on_realize)
@@ -112,7 +129,7 @@ class VLCRenderer:
 
     def on_realize(self, widget):
         hwnd = widget.window.handle
-        libvlc.libvlc_media_player_set_drawable(self.media_player, hwnd, 
+        libvlc.libvlc_media_player_set_drawable(self.media_player, hwnd,
                 self.exc.ref())
         self.exc.check()
 
@@ -130,7 +147,7 @@ class VLCRenderer:
         """starts playing the specified file"""
 
         self.play_from_time = None
-        self.started_playing = False
+        self.started_playing = STOPPED
 
         mrl = 'file://%s' % filename
         media = libvlc.libvlc_media_new(self.vlc, ctypes.c_char_p(mrl),
@@ -149,36 +166,41 @@ class VLCRenderer:
     def play(self):
         libvlc.libvlc_media_player_play(self.media_player, self.exc.ref())
         self.exc.check()
-        self.started_playing = True
+        self.started_playing = PLAYING
         if self.play_from_time is not None:
             self.set_current_time(self.play_from_time)
             self.play_from_time = None
 
+        self.do_schedule_update()
+
     def pause(self):
         libvlc.libvlc_media_player_pause(self.media_player, self.exc.ref())
         self.exc.check()
+        self.started_playing = PAUSED
 
     def stop(self):
         libvlc.libvlc_media_player_stop(self.media_player, self.exc.ref())
         self.exc.check()
+        self.started_playing = STOPPED
 
     def reset(self):
         self.stop()
         self.play_from_time = None
-        self.started_playing = False
+        self.started_playing = STOPPED
+        self._duration = None
 
     def get_current_time(self):
-        time = libvlc.libvlc_media_player_get_time(self.media_player, self.exc.ref())
+        t = libvlc.libvlc_media_player_get_time(self.media_player, self.exc.ref())
         try:
             self.exc.check()
         except VLCError, e:
             logging.warn("exception getting time: %s" % e)
             return None
-        else:
-            return time / 1000.0
+
+        return t / 1000.0
 
     def set_current_time(self, seconds):
-        if not self.started_playing:
+        if self.started_playing == PLAYING:
             self.play_from_time = seconds
             return
         time = int(seconds * 1000)
@@ -188,15 +210,18 @@ class VLCRenderer:
         self.exc.check()
 
     def get_duration(self):
-        length = libvlc.libvlc_media_player_get_length(self.media_player,
-                self.exc.ref())
+        if self._duration:
+            return self._duration
+
+        length = libvlc.libvlc_media_player_get_length(self.media_player, self.exc.ref())
         try:
             self.exc.check()
         except VLCError, e:
-            logging.warn("exception getting time: %s" % e)
+            logging.warn("exception getting duration: %s" % e)
             return None
-        else:
-            return length / 1000.0
+
+        self._duration = length / 1000.0
+        return self._duration
 
     def set_volume(self, volume):
         volume = int(volume * 100)
