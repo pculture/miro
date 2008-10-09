@@ -112,6 +112,13 @@ class BrowserToolbar(widgetset.HBox):
             widgetutil.align_right(self.address_entry, top_pad=5, bottom_pad=5),
             expand=True)
 
+        self.go_button = widgetset.Button(_('Go'), style='smooth')
+        self.go_button.set_size(widgetconst.SIZE_SMALL)
+        self.go_button.connect('clicked', self._on_address_bar_activate)
+        self.pack_start(
+            widgetutil.align_right(self.go_button, top_pad=5, bottom_pad=5),
+            expand=False)
+
     def _on_back_button_clicked(self, button):
         self.emit('browser-back')
 
@@ -127,7 +134,7 @@ class BrowserToolbar(widgetset.HBox):
     def _on_home_button_clicked(self, button):
         self.emit('browser-home')
 
-    def _on_address_bar_activate(self, button):
+    def _on_address_bar_activate(self, widget):
         self.emit('address-entered')
 
 
