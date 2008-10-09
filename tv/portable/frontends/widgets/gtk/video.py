@@ -151,120 +151,120 @@ class VideoDetailsWidget(Background):
 
         # left side
         v = VBox()
-        self.__item_name = Label("")
-        self.__item_name.set_bold(True)
-        self.__item_name.set_size(1.0)
-        self.__item_name.set_color(WHITE)
-        v.pack_start(_align_left(self.__item_name, left_pad=5))
+        self._item_name = Label("")
+        self._item_name.set_bold(True)
+        self._item_name.set_size(1.0)
+        self._item_name.set_color(WHITE)
+        v.pack_start(_align_left(self._item_name, left_pad=5))
 
-        self.__channel_name = Label("")
-        self.__channel_name.set_color(WHITE)
-        v.pack_start(_align_left(self.__channel_name, left_pad=5))
+        self._channel_name = Label("")
+        self._channel_name.set_color(WHITE)
+        v.pack_start(_align_left(self._channel_name, left_pad=5))
         h.pack_start(v)
 
         # right side
         v = VBox()
-        self.__email_link = ClickableLabel(_("EMAIL A FRIEND"))
-        v.pack_start(_align_right(self.__email_link, right_pad=5))
+        self._email_link = ClickableLabel(_("EMAIL A FRIEND"))
+        v.pack_start(_align_right(self._email_link, right_pad=5))
 
         h2 = HBox()
-        self.__comments_link = ClickableLabel(_("COMMENTS"))
-        h2.pack_start(_align_right(self.__comments_link, right_pad=10), expand=True)
-        self.__permalink_link = ClickableLabel(_("PERMALINK"))
-        h2.pack_start(_align_right(self.__permalink_link, right_pad=5))
+        self._comments_link = ClickableLabel(_("COMMENTS"))
+        h2.pack_start(_align_right(self._comments_link, right_pad=10), expand=True)
+        self._permalink_link = ClickableLabel(_("PERMALINK"))
+        h2.pack_start(_align_right(self._permalink_link, right_pad=5))
         v.pack_start(h2)
 
         h2 = HBox()
-        self.__expiration_label = Label("")
-        self.__expiration_label.set_size(0.77)
-        self.__expiration_label.set_color(WHITE)
-        h2.pack_start(_align_right(self.__expiration_label, right_pad=15), expand=True)
-        self.__keep_link = ClickableLabel(_("KEEP"))
-        h2.pack_start(_align_right(self.__keep_link, right_pad=5))
-        self.__dash = Label("-")
-        self.__dash.set_size(0.77)
-        self.__dash.set_color(WHITE)
-        h2.pack_start(_align_right(self.__dash, right_pad=5))
-        self.__delete_link = ClickableLabel(_("DELETE"))
-        h2.pack_start(_align_right(self.__delete_link, right_pad=5))
+        self._expiration_label = Label("")
+        self._expiration_label.set_size(0.77)
+        self._expiration_label.set_color(WHITE)
+        h2.pack_start(_align_right(self._expiration_label, right_pad=15), expand=True)
+        self._keep_link = ClickableLabel(_("KEEP"))
+        h2.pack_start(_align_right(self._keep_link, right_pad=5))
+        self._dash = Label("-")
+        self._dash.set_size(0.77)
+        self._dash.set_color(WHITE)
+        h2.pack_start(_align_right(self._dash, right_pad=5))
+        self._delete_link = ClickableLabel(_("DELETE"))
+        h2.pack_start(_align_right(self._delete_link, right_pad=5))
         v.pack_start(h2)
 
         h.pack_start(_align_right(v), expand=True)
         return h
 
     def set_expiration_bits(self, item_info):
-        self.__keep_link.disconnect_all()
+        self._keep_link.disconnect_all()
 
         def handle_keep(widget):
             messages.KeepVideo(item_info.id).send_to_backend()
-            self.__expiration_label.hide()
-            self.__keep_link.hide()
-            self.__dash.hide()
+            self._expiration_label.hide()
+            self._keep_link.hide()
+            self._dash.hide()
 
         if not item_info.is_external:
             if item_info.video_watched:
                 if item_info.expiration_date is not None:
                     text = displaytext.expiration_date(item_info.expiration_date)
-                    self.__expiration_label.set_text(text)
-                    self.__expiration_label.show()
-                    self.__keep_link.connect('clicked', handle_keep)
-                    self.__keep_link.show()
-                    self.__dash.show()
+                    self._expiration_label.set_text(text)
+                    self._expiration_label.show()
+                    self._keep_link.connect('clicked', handle_keep)
+                    self._keep_link.show()
+                    self._dash.show()
                 else:
-                    self.__expiration_label.hide()
-                    self.__keep_link.hide()
-                    self.__dash.hide()
+                    self._expiration_label.hide()
+                    self._keep_link.hide()
+                    self._dash.hide()
             else:
-                self.__expiration_label.hide()
-                self.__keep_link.connect('clicked', handle_keep)
-                self.__keep_link.show()
-                self.__dash.show()
+                self._expiration_label.hide()
+                self._keep_link.connect('clicked', handle_keep)
+                self._keep_link.show()
+                self._dash.show()
 
     def set_video_details(self, item_info):
         """This gets called when the item is set to play.  It should make
         no assumptions about the state of the video details prior to being
         called.
         """
-        self.__item_name.set_text(util.clampText(item_info.name, 100))
+        self._item_name.set_text(util.clampText(item_info.name, 100))
 
         channels = app.tab_list_manager.feed_list.get_feeds()
         channels = [ci for ci in channels if ci.id == item_info.feed_id]
         if len(channels) == 0:
             logging.warn("item with a feed id that doesn't have a corresponding channel?")
-            self.__channel_name.set_text("")
+            self._channel_name.set_text("")
         else:
-            self.__channel_name.set_text(util.clampText(channels[0].name, 100))
+            self._channel_name.set_text(util.clampText(channels[0].name, 100))
 
-        for mem in [self.__email_link, self.__comments_link, self.__permalink_link,
-                self.__delete_link]:
+        for mem in [self._email_link, self._comments_link, self._permalink_link,
+                self._delete_link]:
             mem.disconnect_all()
 
         def handle_email(widget):
             link = item_info.commentslink or item_info.permalink or item_info.file_url
             app.widgetapp.mail_to_friend(link, item_info.name)
-        self.__email_link.connect('clicked', handle_email)
+        self._email_link.connect('clicked', handle_email)
 
         if item_info.commentslink:
             def handle_commentslink(widget):
                 app.widgetapp.open_url(item_info.commentslink)
-            self.__comments_link.set_text(_("COMMENTS"))
-            self.__comments_link.connect('clicked', handle_commentslink)
+            self._comments_link.set_text(_("COMMENTS"))
+            self._comments_link.connect('clicked', handle_commentslink)
         else:
-            self.__comments_link.set_text("")
+            self._comments_link.set_text("")
 
         if item_info.permalink:
             def handle_permalink(widget):
                 app.widgetapp.open_url(item_info.permalink)
-            self.__permalink_link.set_text(_("PERMALINK"))
-            self.__permalink_link.connect('clicked', handle_permalink)
+            self._permalink_link.set_text(_("PERMALINK"))
+            self._permalink_link.connect('clicked', handle_permalink)
         else:
-            self.__permalink_link.set_text("")
+            self._permalink_link.set_text("")
 
         def handle_delete(widget):
-            self.__delete_link.on_leave_notify(None, None)
+            self._delete_link.on_leave_notify(None, None)
             app.widgetapp.on_stop_clicked(None)
             messages.DeleteVideo(item_info.id).send_to_backend()
-        self.__delete_link.connect('clicked', handle_delete)
+        self._delete_link.connect('clicked', handle_delete)
 
         self.set_expiration_bits(item_info)
 
@@ -275,6 +275,9 @@ class VideoDetailsWidget(Background):
 
     def is_opaque(self):
         return True
+
+    def stop(self):
+        self._delete_link.on_leave_notify(None, None)
 
 class VideoRenderer(VBox):
     """Video renderer widget.
@@ -292,13 +295,13 @@ class VideoRenderer(VBox):
         else:
             self.renderer = NullRenderer()
 
-        self.__video_widget = VideoWidget()
-        self.pack_start(self.__video_widget, expand=True)
+        self._video_widget = VideoWidget()
+        self.pack_start(self._video_widget, expand=True)
 
-        self.__video_details = VideoDetailsWidget()
-        self.pack_start(self.__video_details)
+        self._video_details = VideoDetailsWidget()
+        self.pack_start(self._video_details)
 
-        self.renderer.set_widget(self.__video_widget._widget)
+        self.renderer.set_widget(self._video_widget._widget)
         self.hide_controls_timeout = None
         self.motion_handler = None
         self.videobox_motion_handler = None
@@ -315,11 +318,11 @@ class VideoRenderer(VBox):
     def _on_items_changed(self, controller, changed_items):
         for item_info in changed_items:
             if item_info.id == self._item_id:
-                self.__video_details.set_expiration_bits(item_info)
+                self._video_details.set_expiration_bits(item_info)
                 break
 
     def set_movie_item(self, item_info):
-        self.__video_details.set_video_details(item_info)
+        self._video_details.set_video_details(item_info)
         self.renderer.select_file(item_info.video_path)
         self._item_id = item_info.id
 
@@ -343,6 +346,7 @@ class VideoRenderer(VBox):
         self.renderer.pause()
 
     def stop(self):
+        self._video_details.stop()
         self.renderer.stop()
 
     def set_playback_rate(self, rate):
