@@ -61,20 +61,20 @@ def on_new_download():
 def on_check_version():
     app.widgetapp.check_version()
 
-@action_handler("RemoveVideos")
-def on_remove_videos():
-    app.widgetapp.remove_videos()
+@action_handler("RemoveItems")
+def on_remove_items():
+    app.widgetapp.remove_items()
 
-@action_handler("RenameVideo")
-def on_rename_video():
-    app.widgetapp.rename_video()
+@action_handler("RenameItem")
+def on_rename_item():
+    app.widgetapp.rename_item()
 
-@action_handler("SaveVideo")
-def on_save_video():
-    app.widgetapp.save_video()
+@action_handler("SaveItem")
+def on_save_item():
+    app.widgetapp.save_item()
 
-@action_handler("CopyVideoURL")
-def on_copy_video_url():
+@action_handler("CopyItemURL")
+def on_copy_item_url():
     app.widgetapp.copy_item_url()
 
 @action_handler("EditPreferences")
@@ -242,10 +242,10 @@ action_groups = {
             'RemovePlaylists',
         ],
         'PlayableSelected': [
-            'RenameVideo',
-            'RemoveVideos',
-            'CopyVideoURL',
-            'SaveVideo',
+            'RenameItem',
+            'RemoveItems',
+            'CopyItemURL',
+            'SaveItem',
             'PlayPauseVideo',
         ],
         'Playing': [

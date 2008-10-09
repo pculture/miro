@@ -266,9 +266,9 @@ class Application:
 
     def new_download(self):
         url = self.ask_for_url( _('New Download'),
-                _('Enter the URL of the video to download'),
+                _('Enter the URL of the item to download'),
                 _('New Download - Invalid URL'),
-                _('The address you entered is not a valid url.\nPlease check the URL and try again.\n\nEnter the URL of the video to download'))
+                _('The address you entered is not a valid url.\nPlease check the URL and try again.\n\nEnter the URL of the item to download'))
         if url is not None:
             messages.DownloadURL(url).send_to_backend()
 
@@ -284,7 +284,7 @@ class Application:
     def preferences(self):
         prefpanel.show_window()
 
-    def remove_videos(self):
+    def remove_items(self):
         selection = app.item_list_controller_manager.get_selection()
         selection = [s for s in selection if s.downloaded]
 
@@ -341,31 +341,31 @@ class Application:
                 else:
                     messages.DeleteVideo(mem.id).send_to_backend()
 
-    def rename_video(self):
+    def rename_item(self):
         selection = app.item_list_controller_manager.get_selection()
         selection = [s for s in selection if s.downloaded]
 
         if not selection:
             return
 
-        video_item = selection[0]
+        item_info = selection[0]
 
-        title = _('Rename Video')
-        description = _('Enter the new name for the video')
-        text = video_item.name
+        title = _('Rename Item')
+        description = _('Enter the new name for the item')
+        text = item_info.name
 
         name = dialogs.ask_for_string(title, description, initial_text=text)
         if name:
-            messages.RenameVideo(video_item.id, name).send_to_backend()
+            messages.RenameVideo(item_info.id, name).send_to_backend()
 
-    def save_video(self):
+    def save_item(self):
         selection = app.item_list_controller_manager.get_selection()
         selection = [s for s in selection if s.downloaded]
 
         if not selection:
             return
 
-        title = _('Save Video As...')
+        title = _('Save Item As...')
         filename = selection[0].video_path
         filename = os.path.basename(filename)
         filename = dialogs.ask_for_save_pathname(title, filename)

@@ -51,7 +51,7 @@ class ItemContextMenuHandler(object):
 
     def _remove_context_menu_item(self, selection):
         """The menu item to remove the item (or None to exclude it)."""
-        return (_('Remove From the Library'), app.widgetapp.remove_videos)
+        return (_('Remove From the Library'), app.widgetapp.remove_items)
 
     def _add_remove_context_menu_item(self, menu, selection):
         remove = self._remove_context_menu_item(selection)
