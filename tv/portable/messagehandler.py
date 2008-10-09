@@ -658,7 +658,7 @@ class BackendMessageHandler(messages.MessageHandler):
         SavedPlaylist(name, ids)
 
     def handle_download_url(self, message):
-        singleclick.addDownload(message.url)
+        singleclick.add_download(message.url)
 
     def handle_open_individual_file(self, message):
         fn = message.filename
@@ -936,7 +936,7 @@ class BackendMessageHandler(messages.MessageHandler):
                                            lambda x: None)
             elif type == 'download':
                 for url, additional in normalizedURLs:
-                    singleclick.addDownload(url, additional)
+                    singleclick.add_download(url, additional)
             elif type == 'guide':
                 for url, additional in normalizedURLs:
                     if guide.getGuideByURL (url) is None:

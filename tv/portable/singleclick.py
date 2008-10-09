@@ -133,7 +133,7 @@ def __buildEntry(url, contentType, additional):
 
     return entry
 
-def addDownload(url, additional=None):
+def add_download(url, additional=None):
     if checkURLExists(url):
         return
 
@@ -247,7 +247,7 @@ def addSubscriptions(type_, urls):
             else:
                 addFeeds(urls)
         elif type_ == 'download':
-            [addDownload(url, additional) for url, additional in urls]
+            [add_download(url, additional) for url, additional in urls]
         elif type_ == 'guide':
             for url in urls:
                 if guide.getGuideByURL(url) is None:
@@ -348,15 +348,15 @@ def set_command_line_args(args):
 
 def downloadURL(url):
     if url.startswith('http:') or url.startswith('https:'):
-        addDownload(url)
+        add_download(url)
     elif url.startswith('feed:'):
         # hack so feed: acts as http:
         url = "http:" + url[len("feed:"):]
-        addDownload(url)
+        add_download(url)
     elif url.startswith('feeds:'):
         # hack so feeds: acts as https:
         url = "https:" + url[len("feeds:"):]
-        addDownload(url)
+        add_download(url)
     else:
         parse_command_line_args([unicodeToFilename(url)])
 
