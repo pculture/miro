@@ -75,32 +75,32 @@ class BrowserToolbar(widgetset.HBox):
         self.back_button.connect('clicked', self._on_back_button_clicked)
         self.back_button.disable_widget()
         self.pack_start(
-            widgetutil.align_left(self.back_button, top_pad=5, bottom_pad=5),
+            widgetutil.align_middle(widgetutil.align_left(self.back_button)),
             expand=False)
         
         self.forward_button = imagebutton.ImageButton('navforward')
         self.forward_button.connect('clicked', self._on_forward_button_clicked)
         self.forward_button.disable_widget()
         self.pack_start(
-            widgetutil.align_left(self.forward_button, top_pad=5, bottom_pad=5),
+            widgetutil.align_middle(widgetutil.align_left(self.forward_button)),
             expand=False)
 
         self.reload_button = imagebutton.ImageButton('navreload')
         self.reload_button.connect('clicked', self._on_reload_button_clicked)
         self.pack_start(
-            widgetutil.align_left(self.reload_button, top_pad=5, bottom_pad=5),
+            widgetutil.align_middle(widgetutil.align_left(self.reload_button)),
             expand=False)
 
         self.stop_button = imagebutton.ImageButton('navstop')
         self.stop_button.connect('clicked', self._on_stop_button_clicked)
         self.pack_start(
-            widgetutil.align_left(self.stop_button, top_pad=5, bottom_pad=5),
+            widgetutil.align_middle(widgetutil.align_left(self.stop_button)),
             expand=False)
 
         self.home_button = imagebutton.ImageButton('navhome')
         self.home_button.connect('clicked', self._on_home_button_clicked)
         self.pack_start(
-            widgetutil.align_left(self.home_button, top_pad=5, bottom_pad=5),
+            widgetutil.align_middle(widgetutil.align_left(self.home_button)),
             expand=False)
 
         self.address_entry = widgetset.TextEntry()
@@ -111,7 +111,7 @@ class BrowserToolbar(widgetset.HBox):
         self.go_button.set_size(widgetconst.SIZE_SMALL)
         self.go_button.connect('clicked', self._on_address_bar_activate)
         self.pack_start(
-            widgetutil.align_right(self.go_button, top_pad=5, bottom_pad=5),
+            widgetutil.align_right(self.go_button),
             expand=False)
 
         self.browser_open_button = widgetset.Button(
@@ -120,8 +120,7 @@ class BrowserToolbar(widgetset.HBox):
         self.browser_open_button.connect(
             'clicked', self._on_browser_open_activate)
         self.pack_start(
-            widgetutil.align_right(
-                    self.browser_open_button, top_pad=5, bottom_pad=5),
+            widgetutil.align_right(self.browser_open_button),
             expand=False)
 
     def _on_back_button_clicked(self, button):
