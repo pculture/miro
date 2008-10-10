@@ -275,6 +275,10 @@ class MenuManager(signals.SignalEmitter):
         self.create_signal('enabled-changed')
         self.enabled_groups = set(['AlwaysOn'])
 
+    def handle_no_selection(self):
+        self.enabled_groups = set(['AlwaysOn'])
+        self.emit('enabled-changed')
+
     def handle_feed_selection(self, selected_feeds):
         """Handle the user selecting things in the feed list.  selected_feeds
         is a list of ChannelInfo objects
