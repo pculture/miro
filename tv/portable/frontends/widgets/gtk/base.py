@@ -44,6 +44,7 @@ class Widget(signals.SignalEmitter):
         signals.SignalEmitter.__init__(self, *signal_names)
         self.style_mods = {}
         self.use_custom_style = False
+        self._disabled = False
 
     def wrapped_widget_connect(self, signal, method, *user_args):
         """Connect to a signal of the widget we're wrapping.
@@ -191,10 +192,16 @@ class Widget(signals.SignalEmitter):
         return color
 
     def enable_widget(self):
+        self._disabled = False
         self._widget.set_sensitive(True)
 
     def disable_widget(self):
+        self._disabled = True
         self._widget.set_sensitive(False)
+
+    def get_disabled(self):
+        return self._disabled
+
 
 class Bin(Widget):
     def __init__(self):
