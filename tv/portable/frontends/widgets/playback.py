@@ -158,7 +158,6 @@ class PlaybackManager (signals.SignalEmitter):
             app.display_manager.pop_display()
             app.widgetapp.window.splitter.set_left_width(self.previous_left_width)
             app.widgetapp.window.splitter.set_left(self.previous_left_widget)
-            app.menu_manager.handle_no_selection()
         self.is_fullscreen = False
         self.previous_left_widget = None
         self.video_display = None
