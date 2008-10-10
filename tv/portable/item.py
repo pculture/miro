@@ -588,7 +588,11 @@ class Item(DDBObject):
     def setResumeTime(self, position):
         if not self.idExists():
             return
-        position = int(position)
+        try:
+            position = int(position)
+        except TypeError:
+            logging.error("setResumeTime: not-saving!  given non-int %s", position)
+            return
         if self.resumeTime != position:
             self.resumeTime = position
             self.signalChange()
