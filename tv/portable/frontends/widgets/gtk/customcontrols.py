@@ -67,6 +67,7 @@ class CustomButtonWidget(CustomControlMixin, gtk.Button):
         else:
             wrapper.state = 'normal'
         wrapper.draw(context, wrapper.layout_manager)
+        self.set_focus_on_click(False)
 
     def is_active(self):
         return self.state == gtk.STATE_ACTIVE
