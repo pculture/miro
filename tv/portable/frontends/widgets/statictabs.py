@@ -45,7 +45,7 @@ class ChannelGuideTab(StaticTab):
 
     def __init__(self):
         StaticTab.__init__(self)
-        self.browser = browser.BrowserNav(app.widgetapp.default_guide_info)
+        self.browser = browser.Browser(app.widgetapp.default_guide_info)
 
     def update(self, guide_info):
         self.browser.guide_info = guide_info

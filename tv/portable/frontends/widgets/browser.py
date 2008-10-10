@@ -41,6 +41,7 @@ from miro import util
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.frontends.widgets import linkhandler
+from miro.frontends.widgets import imagebutton
 from miro.frontends.widgets import style
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
@@ -70,38 +71,33 @@ class BrowserToolbar(widgetset.HBox):
         self.create_signal('address-entered')
         self.create_signal('browser-open')
 
-        self.back_button = widgetset.Button(_('Back'), style='smooth')
-        self.back_button.set_size(widgetconst.SIZE_SMALL)
+        self.back_button = imagebutton.ImageButton('navback')
         self.back_button.connect('clicked', self._on_back_button_clicked)
         self.back_button.disable_widget()
         self.pack_start(
             widgetutil.align_left(self.back_button, top_pad=5, bottom_pad=5),
             expand=False)
         
-        self.forward_button = widgetset.Button(_('Forward'), style='smooth')
-        self.forward_button.set_size(widgetconst.SIZE_SMALL)
+        self.forward_button = imagebutton.ImageButton('navforward')
         self.forward_button.connect('clicked', self._on_forward_button_clicked)
         self.forward_button.disable_widget()
         self.pack_start(
             widgetutil.align_left(self.forward_button, top_pad=5, bottom_pad=5),
             expand=False)
 
-        self.reload_button = widgetset.Button(_('Reload'), style='smooth')
-        self.reload_button.set_size(widgetconst.SIZE_SMALL)
+        self.reload_button = imagebutton.ImageButton('navreload')
         self.reload_button.connect('clicked', self._on_reload_button_clicked)
         self.pack_start(
             widgetutil.align_left(self.reload_button, top_pad=5, bottom_pad=5),
             expand=False)
 
-        self.stop_button = widgetset.Button(_('Stop'), style='smooth')
-        self.stop_button.set_size(widgetconst.SIZE_SMALL)
+        self.stop_button = imagebutton.ImageButton('navstop')
         self.stop_button.connect('clicked', self._on_stop_button_clicked)
         self.pack_start(
             widgetutil.align_left(self.stop_button, top_pad=5, bottom_pad=5),
             expand=False)
 
-        self.home_button = widgetset.Button(_('Home'), style='smooth')
-        self.home_button.set_size(widgetconst.SIZE_SMALL)
+        self.home_button = imagebutton.ImageButton('navhome')
         self.home_button.connect('clicked', self._on_home_button_clicked)
         self.pack_start(
             widgetutil.align_left(self.home_button, top_pad=5, bottom_pad=5),

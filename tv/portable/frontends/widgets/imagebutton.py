@@ -28,6 +28,8 @@
 
 """Custom controls that we use."""
 
+import os
+
 from miro.frontends.widgets import imagepool
 from miro.plat.frontends.widgets import widgetset
 from miro.plat import resources
@@ -44,6 +46,12 @@ class ImageButtonMixin(object):
         self.image = imagepool.get_surface(path)
         pressed_path = resources.path('wimages/%s_active.png' % image_name)
         self.pressed_image = imagepool.get_surface(pressed_path)
+
+        disabled_path = resources.path('wimages/%s_disabled.png' % image_name)
+        if os.path.exists(disabled_path):
+            self.disabled_image = imagepool.get_surface(disabled_path)
+        else:
+            self.disabled_image = None
     
     def size_request(self, layout):
         return self.image.width, self.image.height
