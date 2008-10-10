@@ -155,10 +155,12 @@ class Label(Widget):
         self.invalidate_size_request()
 
     def enable_widget(self):
+        Widget.enable_widget(self)
         self.view.setTextColor_(self.__color)
         self.view.setEnabled_(True)
 
     def disable_widget(self):
+        Widget.disable_widget(self)
         self.view.setTextColor_(self.__color.colorWithAlphaComponent_(0.5))
         self.view.setEnabled_(False)
 

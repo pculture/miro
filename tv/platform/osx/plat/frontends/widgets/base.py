@@ -55,6 +55,7 @@ class Widget(signals.SignalEmitter):
         self.viewport = None
         self.manual_size_request = None
         self.cached_size_request = None
+        self._disabled = False
 
     def set_size_request(self, width, height):
         self.manual_size_request = (width, height)
@@ -156,10 +157,13 @@ class Widget(signals.SignalEmitter):
                 1.0)
 
     def enable_widget(self):
-        pass
+        self._disabled = False
 
     def disable_widget(self):
-        pass
+        self._disabled = True
+
+    def get_disabled(self):
+        return self._disabled
 
 class Container(Widget):
     """Widget that holds other widgets.  """
@@ -258,9 +262,11 @@ class Bin(Container):
         self.child_changed(old_child, new_child)
 
     def enable_widget(self):
+        Container.enable_widget(self)
         self.child.enable_widget()
 
     def disable_widget(self):
+        Container.disable_widget(self)
         self.child.disable_widget()
 
 class SimpleBin(Bin):

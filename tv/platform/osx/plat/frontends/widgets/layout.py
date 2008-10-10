@@ -178,10 +178,12 @@ class Box(Container):
         return position
 
     def enable_widget(self):
+        Container.enable_widget(self)
         for mem in self.children:
             mem.enable_widget()
 
     def disable_widget(self):
+        Container.disable_widget(self)
         for mem in self.children:
             mem.disable_widget()
 
@@ -590,6 +592,7 @@ class Table(Container):
         self.invalidate_size_request()
 
     def enable_widget(self, row=None, column=None):
+        Container.enable_widget(self)
         if row != None and column != None:
             if self.cells[column, row]:
                 self.cells[column, row].enable_widget()
@@ -604,6 +607,7 @@ class Table(Container):
                 if mem: mem.enable_widget()
 
     def disable_widget(self, row=None, column=None):
+        Container.disable_widget(self)
         if row != None and column != None:
             if self.cells[column, row]: 
                 self.cells[column, row].disable_widget()

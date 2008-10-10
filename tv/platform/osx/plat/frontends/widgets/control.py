@@ -104,9 +104,11 @@ class BaseTextEntry(SizedControl):
         pass
 
     def enable_widget(self):
+        SizedControl.enable_widget(self)
         self.view.setEnabled_(True)
 
     def disable_widget(self):
+        SizedControl.disable_widget(self)
         self.view.setEnabled_(False)
 
 class MiroTextField(NSTextField):
@@ -177,9 +179,11 @@ class Checkbox(SizedControl):
             self.view.setState_(NSOffState)
 
     def enable_widget(self):
+        SizedControl.enable_widget(self)
         self.view.setEnabled_(True)
 
     def disable_widget(self):
+        SizedControl.disable_widget(self)
         self.view.setEnabled_(False)
 
 class Button(SizedControl):
@@ -241,9 +245,11 @@ class Button(SizedControl):
         return -self.view.font().descender() + 10 + self.pad_height
 
     def enable_widget(self):
+        SizedControl.enable_widget(self)
         self.view.setEnabled_(True)
 
     def disable_widget(self):
+        SizedControl.disable_widget(self)
         self.view.setEnabled_(False)
 
 class MiroPopupButton(NSPopUpButton):
@@ -282,9 +288,11 @@ class OptionMenu(SizedControl):
         return self.view.indexOfSelectedItem()
 
     def enable_widget(self):
+        SizedControl.enable_widget(self)
         self.view.setEnabled_(True)
 
     def disable_widget(self):
+        SizedControl.disable_widget(self)
         self.view.setEnabled_(False)
 
 class RadioButtonGroup:
@@ -353,9 +361,11 @@ class RadioButton(SizedControl):
         radio_button_to_group_mapping[id(self)].set_selected(self)
 
     def enable_widget(self):
+        SizedControl.enable_widget(self)
         self.view.setEnabled_(True)
 
     def disable_widget(self):
+        SizedControl.disable_widget(self)
         self.view.setEnabled_(False)
 
 
