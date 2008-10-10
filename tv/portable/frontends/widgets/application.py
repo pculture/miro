@@ -69,6 +69,7 @@ class Application:
         self.default_guide_info = None
         self.window = None
         messages.FrontendMessage.install_handler(self.message_handler)
+        app.info_updater = InfoUpdater()
 
     def startup(self):
         self.connect_to_signals()
@@ -673,6 +674,45 @@ class Application:
     def on_backend_shutdown(self, obj):
         logging.info('Shutting down...')
 
+class InfoUpdater(signals.SignalEmitter):
+    """Emits signals when we get channel/item updates from the backend.
+
+    Signals:
+
+        items-added (self, info_list) -- New items were added
+        items-changed (self, info_list) -- Items were changed
+        items-removed (self, info_list) -- Items were removed
+        feeds-added (self, info_list) -- New feeds were added
+        feeds-changed (self, info_list) -- Feeds were changed
+        feeds-removed (self, info_list) -- Feeds were removed
+    """
+    def __init__(self):
+        signals.SignalEmitter.__init__(self)
+        self.create_signal('items-added')
+        self.create_signal('items-changed')
+        self.create_signal('items-removed')
+        self.create_signal('feeds-added')
+        self.create_signal('feeds-changed')
+        self.create_signal('feeds-removed')
+
+    def handle_items_changed(self, message):
+        if message.added:
+            self.emit('items-added', message.added)
+        if message.changed:
+            self.emit('items-changed', message.changed)
+        if message.removed:
+            self.emit('items-removed', message.removed)
+
+    def handle_tabs_changed(self, message):
+        if message.type != 'feed':
+            return
+        if message.added:
+            self.emit('feeds-added', message.added)
+        if message.changed:
+            self.emit('feeds-changed', message.changed)
+        if message.removed:
+            self.emit('feeds-removed', message.removed)
+
 class WidgetsMessageHandler(messages.MessageHandler):
     def __init__(self):
         messages.MessageHandler.__init__(self)
@@ -744,12 +784,14 @@ class WidgetsMessageHandler(messages.MessageHandler):
         for info in message.added:
             tablist.add(info)
         tablist.model_changed()
+        app.info_updater.handle_tabs_changed(message)
 
     def handle_item_list(self, message):
         app.item_list_controller_manager.handle_item_list(message)
 
     def handle_items_changed(self, message):
         app.item_list_controller_manager.handle_items_changed(message)
+        app.info_updater.handle_items_changed(message)
 
     def handle_download_count_changed(self, message):
         static_tab_list = app.tab_list_manager.static_tab_list

@@ -306,13 +306,13 @@ class VideoRenderer(VBox):
         self.motion_handler = None
         self.videobox_motion_handler = None
         self.hidden_cursor = make_hidden_cursor()
-        self._items_changed_callback = app.item_list_controller_manager.connect(
+        self._items_changed_callback = app.info_updater.connect(
                 'items-changed', self._on_items_changed)
         self._item_id = None
 
     def teardown(self):
         self.renderer.reset()
-        app.item_list_controller_manager.disconnect(self._items_changed_callback)
+        app.info_updater.disconnect(self._items_changed_callback)
         self._items_changed_callback = None
 
     def _on_items_changed(self, controller, changed_items):
