@@ -591,7 +591,7 @@ class Item(DDBObject):
         try:
             position = int(position)
         except TypeError:
-            logging.error("setResumeTime: not-saving!  given non-int %s", position)
+            logging.exception("setResumeTime: not-saving!  given non-int %s", position)
             return
         if self.resumeTime != position:
             self.resumeTime = position
