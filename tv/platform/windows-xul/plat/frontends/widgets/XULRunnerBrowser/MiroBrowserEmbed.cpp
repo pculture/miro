@@ -45,9 +45,12 @@
 #include "nsISupportsImpl.h"
 #include "nsIWebBrowser.h"
 #include "nsIWebBrowserFocus.h"
+#include "docshell/nsDocShellCID.h"
 #include "docshell/nsIDocShellTreeItem.h"
 #include "docshell/nsIWebNavigation.h"
+#include "docshell/nsIWebNavigationInfo.h"
 #include "necko/nsIURI.h"
+#include "xpcom/nsServiceManagerUtils.h"
 
 #include "MiroBrowserEmbed.h"
 #include "xulrunnerbrowser.h"
@@ -93,7 +96,6 @@ nsresult MiroBrowserEmbed::init(unsigned long parentWindow, int x,
     rv = mWebBrowser->SetParentURIContentListener(
             static_cast<nsIURIContentListener *>(this));
     NS_ENSURE_SUCCESS(rv, rv);
-
     return NS_OK;
 }
 
@@ -346,23 +348,19 @@ NS_IMETHODIMP MiroBrowserEmbed::GetSiteWindow(void * *aSiteWindow)
 //*****************************************************************************
 // MiroBrowserEmbed::nsIURIContentListener
 //*****************************************************************************   
-
-
 /* boolean onStartURIOpen (in nsIURI aURI); */
 NS_IMETHODIMP MiroBrowserEmbed::OnStartURIOpen(nsIURI *aURI, PRBool *_retval)
 {
     nsresult rv;
     nsCAutoString specString;
+    *_retval = PR_FALSE;
+
     rv = aURI->GetSpec(specString);
-
-    if (NS_FAILED(rv))
-     return rv;
-
+    NS_ENSURE_SUCCESS(rv, rv);
 
     // Hmm, the docs seem to suggest that retval should be TRUE if we want to
     // continue the load.  However, it seems like the opposite is actually the
     // case.
-    *_retval = PR_FALSE;
     if(mURICallback) {
         if(mURICallback((char*)specString.get(), mURICallbackData) == 0) {
             *_retval = PR_TRUE;
@@ -374,14 +372,30 @@ NS_IMETHODIMP MiroBrowserEmbed::OnStartURIOpen(nsIURI *aURI, PRBool *_retval)
 /* boolean doContent (in string aContentType, in boolean aIsContentPreferred, in nsIRequest aRequest, out nsIStreamListener aContentHandler); */
 NS_IMETHODIMP MiroBrowserEmbed::DoContent(const char *aContentType, PRBool aIsContentPreferred, nsIRequest *aRequest, nsIStreamListener **aContentHandler, PRBool *_retval)
 {
-    *_retval = PR_FALSE;
-    return NS_OK;
+    return NS_ERROR_NOT_IMPLEMENTED;
 }
 
 /* boolean isPreferred (in string aContentType, out string aDesiredContentType); */
 NS_IMETHODIMP MiroBrowserEmbed::IsPreferred(const char *aContentType, char **aDesiredContentType, PRBool *_retval)
 {
+    // This method was pretty much copied from GtkMozEmbed
     *_retval = PR_FALSE;
+    *aDesiredContentType = nsnull;
+
+    if (aContentType) {
+        nsCOMPtr<nsIWebNavigationInfo> webNavInfo(
+                do_GetService(NS_WEBNAVIGATION_INFO_CONTRACTID));
+        nsCOMPtr<nsIWebNavigation> webNavigation(
+                do_QueryInterface(mWebBrowser));
+        if (webNavInfo) {
+            PRUint32 canHandle;
+            nsresult rv =
+                webNavInfo->IsTypeSupported(nsDependentCString(aContentType),
+                        webNavigation, &canHandle);
+            NS_ENSURE_SUCCESS(rv, rv);
+            *_retval = (canHandle != nsIWebNavigationInfo::UNSUPPORTED);
+        }
+    }
     return NS_OK;
 }
 

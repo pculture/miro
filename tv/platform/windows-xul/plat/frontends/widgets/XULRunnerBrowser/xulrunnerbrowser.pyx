@@ -30,6 +30,8 @@
 broswer.
 """
 
+import logging
+
 cdef extern from "Python.h":
     ctypedef struct PyObject
     PyObject* PyObject_CallMethod(PyObject *o, char* name, char* format, ...)
