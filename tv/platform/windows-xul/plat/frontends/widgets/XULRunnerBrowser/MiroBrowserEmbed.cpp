@@ -47,7 +47,6 @@
 #include "nsIWebBrowserFocus.h"
 #include "docshell/nsDocShellCID.h"
 #include "docshell/nsIDocShellTreeItem.h"
-#include "docshell/nsIWebNavigation.h"
 #include "docshell/nsIWebNavigationInfo.h"
 #include "necko/nsIURI.h"
 #include "xpcom/nsServiceManagerUtils.h"
@@ -96,6 +95,15 @@ nsresult MiroBrowserEmbed::init(unsigned long parentWindow, int x,
     rv = mWebBrowser->SetParentURIContentListener(
             static_cast<nsIURIContentListener *>(this));
     NS_ENSURE_SUCCESS(rv, rv);
+
+    nsCOMPtr<nsIWeakReference> weakRef;
+    rv = GetWeakReference(getter_AddRefs(weakRef));
+    NS_ENSURE_SUCCESS(rv, rv);
+
+    rv = mWebBrowser->AddWebBrowserListener(weakRef,
+            NS_GET_IID(nsIWebProgressListener));
+    NS_ENSURE_SUCCESS(rv, rv);
+    mWebNavigation = do_QueryInterface(mWebBrowser);
     return NS_OK;
 }
 
@@ -134,10 +142,7 @@ void MiroBrowserEmbed::destroy()
 // Load a URI into the browser
 nsresult MiroBrowserEmbed::loadURI(const char* uri)
 {
-    nsCOMPtr<nsIWebNavigation> webNavigation(
-            do_QueryInterface(mWebBrowser));
-    if(!webNavigation) return NS_ERROR_FAILURE;
-    webNavigation->LoadURI(NS_ConvertASCIItoUTF16(uri).get(),
+    mWebNavigation->LoadURI(NS_ConvertASCIItoUTF16(uri).get(),
             nsIWebNavigation::LOAD_FLAGS_NONE, 0, 0, 0);
     return NS_OK;
 }
@@ -175,6 +180,46 @@ void MiroBrowserEmbed::SetURICallback(uriCallback callback, void* data)
     mURICallbackData = data;
 }
 
+void MiroBrowserEmbed::SetNetworkCallback(networkCallback callback, void* data)
+{
+    mNetworkCallback = callback;
+    mNetworkCallbackData = data;
+}
+
+int MiroBrowserEmbed::canGoBack()
+{
+    PRBool retval;
+    mWebNavigation->GetCanGoBack(&retval);
+    return retval;
+}
+
+int MiroBrowserEmbed::canGoForward()
+{
+    PRBool retval;
+    mWebNavigation->GetCanGoForward(&retval);
+    return retval;
+}
+
+void MiroBrowserEmbed::goBack()
+{
+    mWebNavigation->GoBack();
+}
+
+void MiroBrowserEmbed::goForward()
+{
+    mWebNavigation->GoForward();
+}
+
+void MiroBrowserEmbed::stop()
+{
+    mWebNavigation->Stop(nsIWebNavigation::STOP_ALL);
+}
+
+void MiroBrowserEmbed::reload()
+{
+    mWebNavigation->Reload(nsIWebNavigation::LOAD_FLAGS_NONE);
+}
+
 //*****************************************************************************
 // MiroBrowserEmbed::nsISupports
 //*****************************************************************************   
@@ -189,6 +234,8 @@ NS_INTERFACE_MAP_BEGIN(MiroBrowserEmbed)
    NS_INTERFACE_MAP_ENTRY(nsIInterfaceRequestor)
    NS_INTERFACE_MAP_ENTRY(nsIWebBrowserChromeFocus)
    NS_INTERFACE_MAP_ENTRY(nsIURIContentListener)
+   NS_INTERFACE_MAP_ENTRY(nsIWebProgressListener)
+   NS_INTERFACE_MAP_ENTRY(nsISupportsWeakReference)
 NS_INTERFACE_MAP_END
 
 
@@ -385,13 +432,11 @@ NS_IMETHODIMP MiroBrowserEmbed::IsPreferred(const char *aContentType, char **aDe
     if (aContentType) {
         nsCOMPtr<nsIWebNavigationInfo> webNavInfo(
                 do_GetService(NS_WEBNAVIGATION_INFO_CONTRACTID));
-        nsCOMPtr<nsIWebNavigation> webNavigation(
-                do_QueryInterface(mWebBrowser));
         if (webNavInfo) {
             PRUint32 canHandle;
             nsresult rv =
                 webNavInfo->IsTypeSupported(nsDependentCString(aContentType),
-                        webNavigation, &canHandle);
+                        mWebNavigation, &canHandle);
             NS_ENSURE_SUCCESS(rv, rv);
             *_retval = (canHandle != nsIWebNavigationInfo::UNSUPPORTED);
         }
@@ -426,6 +471,48 @@ NS_IMETHODIMP MiroBrowserEmbed::GetParentContentListener(nsIURIContentListener *
 NS_IMETHODIMP MiroBrowserEmbed::SetParentContentListener(nsIURIContentListener * aParentContentListener)
 {
     mParentContentListener = aParentContentListener;
+    return NS_OK;
+}
+
+//*****************************************************************************
+// MiroBrowserEmbed::nsIWebProgressListener
+//*****************************************************************************   
+
+/* void onStateChange (in nsIWebProgress aWebProgress, in nsIRequest aRequest, in unsigned long aStateFlags, in nsresult aStatus); */
+NS_IMETHODIMP MiroBrowserEmbed::OnStateChange(nsIWebProgress *aWebProgress, nsIRequest *aRequest, PRUint32 aStateFlags, nsresult aStatus)
+{
+    if((aStateFlags & nsIWebProgressListener::STATE_IS_NETWORK) &&
+            mNetworkCallback) {
+        if(aStateFlags & nsIWebProgressListener::STATE_START) {
+            mNetworkCallback(PR_TRUE, mNetworkCallbackData);
+        } else if(aStateFlags & nsIWebProgressListener::STATE_STOP) {
+            mNetworkCallback(PR_FALSE, mNetworkCallbackData);
+        }
+    }
+    return NS_OK;
+}
+
+/* void onProgressChange (in nsIWebProgress aWebProgress, in nsIRequest aRequest, in long aCurSelfProgress, in long aMaxSelfProgress, in long aCurTotalProgress, in long aMaxTotalProgress); */
+NS_IMETHODIMP MiroBrowserEmbed::OnProgressChange(nsIWebProgress *aWebProgress, nsIRequest *aRequest, PRInt32 aCurSelfProgress, PRInt32 aMaxSelfProgress, PRInt32 aCurTotalProgress, PRInt32 aMaxTotalProgress)
+{
+    return NS_OK;
+}
+
+/* void onLocationChange (in nsIWebProgress aWebProgress, in nsIRequest aRequest, in nsIURI aLocation); */
+NS_IMETHODIMP MiroBrowserEmbed::OnLocationChange(nsIWebProgress *aWebProgress, nsIRequest *aRequest, nsIURI *aLocation)
+{
+    return NS_OK;
+}
+
+/* void onStatusChange (in nsIWebProgress aWebProgress, in nsIRequest aRequest, in nsresult aStatus, in wstring aMessage); */
+NS_IMETHODIMP MiroBrowserEmbed::OnStatusChange(nsIWebProgress *aWebProgress, nsIRequest *aRequest, nsresult aStatus, const PRUnichar *aMessage)
+{
+    return NS_OK;
+}
+
+/* void onSecurityChange (in nsIWebProgress aWebProgress, in nsIRequest aRequest, in unsigned long aState); */
+NS_IMETHODIMP MiroBrowserEmbed::OnSecurityChange(nsIWebProgress *aWebProgress, nsIRequest *aRequest, PRUint32 aState)
+{
     return NS_OK;
 }
 

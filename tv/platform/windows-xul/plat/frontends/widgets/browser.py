@@ -140,7 +140,16 @@ class BrowserWidget(gtk.DrawingArea):
         gobject.idle_add(change_focus)
 
     def on_uri_load(self, uri):
-        return wrappermap.wrapper(self).should_load_url(uri)
+        rv = wrappermap.wrapper(self).should_load_url(uri)
+        if rv:
+            wrappermap.wrapper(self).url = uri
+        return rv
+
+    def on_net_start(self):
+        wrappermap.wrapper(self).emit('net-start')
+
+    def on_net_stop(self):
+        wrappermap.wrapper(self).emit('net-stop')
 
 gobject.type_register(BrowserWidget)
 
@@ -149,6 +158,7 @@ class Browser(Widget):
         Widget.__init__(self)
         self.set_widget(BrowserWidget())
         self._widget.set_property('can-focus', True)
+        self.url = None
 
         # TODO: implement net-start and net-stop signaling on windows.
         self.create_signal('net-start')
@@ -159,3 +169,21 @@ class Browser(Widget):
 
     def get_current_url(self):
         return self._widget.get_current_url()
+
+    def can_go_back(self):
+        return self._widget.browser.can_go_back()
+
+    def can_go_forward(self):
+        return self._widget.browser.can_go_forward()
+
+    def back(self):
+        self._widget.browser.go_back()
+
+    def forward(self):
+        self._widget.browser.go_forward()
+
+    def stop(self):
+        self._widget.browser.stop()
+
+    def reload(self):
+        self._widget.browser.reload()

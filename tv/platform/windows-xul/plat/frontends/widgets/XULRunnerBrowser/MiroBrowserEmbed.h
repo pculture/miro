@@ -46,17 +46,23 @@
 #include "nsIWebBrowser.h"
 #include "nsIInterfaceRequestor.h"
 #include "nsIWebBrowserChromeFocus.h"
+#include "docshell/nsIWebNavigation.h"
 #include "widget/nsIBaseWindow.h"
 #include "uriloader/nsIURIContentListener.h"
+#include "uriloader/nsIWebProgressListener.h"
+#include "xpcom/nsWeakReference.h"
 
 typedef void(*focusCallback)(PRBool forward, void* data);
 typedef int(*uriCallback)(char* uri, void* data);
+typedef void(*networkCallback)(PRBool is_start, void* data);
 
 class MiroBrowserEmbed   : public nsIWebBrowserChrome,
                            public nsIWebBrowserChromeFocus,
                            public nsIEmbeddingSiteWindow,
                            public nsIInterfaceRequestor,
-                           public nsIURIContentListener
+                           public nsIURIContentListener,
+                           public nsIWebProgressListener,
+                           public nsSupportsWeakReference
 
 {
 public:
@@ -74,6 +80,7 @@ public:
     NS_DECL_NSIINTERFACEREQUESTOR
     NS_DECL_NSIWEBBROWSERCHROMEFOCUS
     NS_DECL_NSIURICONTENTLISTENER
+    NS_DECL_NSIWEBPROGRESSLISTENER
 
     /*
      * Methods to interact with the MiroBrowserEmbed from Cython.  These are
@@ -94,6 +101,14 @@ public:
     nsresult resize(int x, int y, int width, int height);
     // Give the browser keyboard focus
     nsresult focus();
+    // Browser Navigation buttons.  Their functionality corresponds to the
+    // nsIWebNavigation interface
+    int canGoBack();
+    int canGoForward();
+    void goBack();
+    void goForward();
+    void stop();
+    void reload();
     // Set the focus callback.  This will be called when the user tabs through
     // all the elements in the browser and the next Widget should be given
     // focus.
@@ -101,6 +116,10 @@ public:
     // Set the URI callback.  This well be called when we are about to load a
     // new URI.  It should return 0 if the URI shouldn't be loaded.
     void SetURICallback(uriCallback callback, void* data);
+    // Set the Network callback.  This is called when we start loading a
+    // document and when all network activity for a document is finished
+    // new URI.  It should return 0 if the URI shouldn't be loaded.
+    void SetNetworkCallback(networkCallback callback, void* data);
     // Destroy the broswer
     void destroy();
 
@@ -110,10 +129,13 @@ protected:
     PRBool       mContinueModalLoop;
     focusCallback mFocusCallback;
     uriCallback mURICallback;
+    networkCallback mNetworkCallback;
     void* mFocusCallbackData;
     void* mURICallbackData;
+    void* mNetworkCallbackData;
 
     nsCOMPtr<nsIWebBrowser> mWebBrowser;
+    nsCOMPtr<nsIWebNavigation> mWebNavigation;
     nsCOMPtr<nsIURIContentListener> mParentContentListener;
     void log(int level, char* string);
 };
