@@ -29,6 +29,8 @@
 import logging
 import os
 import time
+import thread
+from threading import Event
 
 import pygst
 pygst.require('0.10')
@@ -42,6 +44,8 @@ from miro import prefs
 from miro.download_utils import nextFreeFilename
 from miro.plat import options
 
+from miro.frontends.widgets.gtk.threads import call_on_ui_thread
+
 def to_seconds(t):
     return t / 1000000000.0
 
@@ -50,6 +54,7 @@ def from_seconds(s):
 
 class Tester:
     def __init__(self, filename):
+        self.done = Event()
         self.success = False
         self.actual_init(filename)
 
@@ -60,21 +65,44 @@ class Tester:
         self.audiosink = gst.element_factory_make("fakesink", "audiosink")
         self.playbin.set_property("audio-sink", self.audiosink)
 
+        self.bus = self.playbin.get_bus()
+        self.bus.add_signal_watch()
+        self.watch_id = self.bus.connect("message", self.on_bus_message)
+
         self.playbin.set_property("uri", "file://%s" % filename)
         self.playbin.set_state(gst.STATE_PAUSED)
 
-        if self.playbin.get_state()[1] == gst.STATE_PAUSED:
-            self.success = True
+    def result(self, yes_callback, no_callback):
+        def _result():
+            self.done.wait(1)
+            self.disconnect()
+            if self.success:
+                call_on_ui_thread(yes_callback)
+            else:
+                call_on_ui_thread(no_callback)
+        thread.start_new_thread(_result, ())
 
-    def result(self):
-        self.disconnect()
-        return self.success
+    def on_bus_message(self, bus, message):
+        if message.src == self.playbin:
+            if message.type == gst.MESSAGE_STATE_CHANGED:
+                prev, new, pending = message.parse_state_changed()
+                if new == gst.STATE_PAUSED:
+                    # Success
+                    self.success = True
+                    self.done.set()
+
+            elif message.type == gst.MESSAGE_ERROR:
+                self.success = False
+                self.done.set()
 
     def disconnect(self):
+        self.bus.disconnect(self.watch_id)
         self.playbin.set_state(gst.STATE_NULL)
+        del self.bus
         del self.playbin
         del self.audiosink
         del self.videosink
+
 
 class Renderer:
     def __init__(self):
@@ -152,9 +180,9 @@ class Renderer:
             return True
         return False
 
-    def can_play_file(self, filename):
+    def can_play_file(self, filename, yes_callback, no_callback):
         """whether or not this renderer can play this data"""
-        return Tester(filename).result()
+        return Tester(filename).result(yes_callback, no_callback)
 
     def fill_movie_data(self, filename, movie_data, callback):
         d = os.path.join(config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")

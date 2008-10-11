@@ -94,8 +94,8 @@ class ClickableLabel(Widget):
         self.label._widget.show()
 
 class NullRenderer(object):
-    def can_play_file(self, path):
-        return False
+    def can_play_file(self, path, yes_callback, no_callback):
+        no_callback()
 
     def reset(self):
         pass
@@ -128,11 +128,12 @@ def _videobox_widget():
 def _window():
     return app.widgetapp.window._window
 
-def can_play_file(path):
+def can_play_file(path, yes_callback, no_callback):
     if app.renderer is not None:
-        return app.renderer.can_play_file(path)
+        app.renderer.can_play_file(path, yes_callback, no_callback)
+        return
     logging.warn("can_play_file: app.renderer is None")
-    return False
+    no_callback()
 
 class VideoWidget(Widget):
     def __init__(self):

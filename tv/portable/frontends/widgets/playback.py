@@ -74,7 +74,7 @@ class PlaybackManager (signals.SignalEmitter):
     def start_with_items(self, item_infos):
         self.playlist = item_infos
         self.position = 0
-        if self._try_select_current():
+        def if_yes():
             self.video_display = VideoDisplay()
             self.video_display.connect('removed', self.on_display_removed)
             splitter = app.widgetapp.window.splitter
@@ -86,8 +86,11 @@ class PlaybackManager (signals.SignalEmitter):
             app.menu_manager.handle_playing_selection()
             self._select_current()
             self.play()
-        else:
+
+        def if_no():
             self.exit_playback()
+
+        self._try_select_current(if_yes, if_no)
     
     def schedule_update(self):
         def notify_and_reschedule():
@@ -209,25 +212,32 @@ class PlaybackManager (signals.SignalEmitter):
         messages.MarkItemWatched(id).send_to_backend()
         self.mark_as_watched_timeout = None
 
-    def _try_select_current(self):
+    def _try_select_current(self, if_yes_callback, if_no_callback):
         self.cancel_update_timer()
         self.cancel_mark_as_watched()
         if 0 <= self.position < len(self.playlist):
             if self.is_playing:
                 self.video_display.stop()
             item_info = self.playlist[self.position]
-            if not self._item_is_playable(item_info):
+
+            def _if_no():
                 self.position += 1
-                return self._try_select_current()
+                self._try_select_current(if_yes_callback, if_no_callback)
+
+            self._item_check_playable(item_info, if_yes_callback, _if_no)
+
         else:
             if self.is_playing:
                 self.stop()
-            return False
-        return True
+            if_no_callback()
 
-    def _item_is_playable(self, item_info):
+    def _item_check_playable(self, item_info, yes_callback, no_callback):
         path = item_info.video_path
-        return os.path.exists(path) and widgetset.can_play_file(path)
+        if not os.path.exists(path):
+            no_callback()
+            return
+
+        widgetset.can_play_file(path, yes_callback, no_callback)
 
     def _select_current(self):
         volume = config.get(prefs.VOLUME_LEVEL)
@@ -236,9 +246,11 @@ class PlaybackManager (signals.SignalEmitter):
         self.schedule_mark_as_watched()
 
     def _play_current(self):
-        if self.is_playing and self._try_select_current():
-            self._select_current()
-            self.play()
+        if self.is_playing:
+            def if_yes():
+                self._select_current()
+                self.play()
+            self._try_select_current(if_yes, lambda:1)
 
     def play_next_movie(self, save_current_resume_time=True):
         self.cancel_update_timer()

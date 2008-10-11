@@ -104,8 +104,11 @@ class Renderer:
         self.xine.got_expose_event(event.area.x, event.area.y, event.area.width,
                 event.area.height)
 
-    def can_play_file(self, filename):
-        return self.xine.can_play_file(filename)
+    def can_play_file(self, filename, yes_callback, no_callback):
+        if self.xine.can_play_file(filename):
+            yes_callback()
+        else:
+            no_callback()
 
     def go_fullscreen(self):
         """Handle when the video window goes fullscreen."""
@@ -175,7 +178,6 @@ class Renderer:
 
     @wait_for_attach
     def seek(self, seconds):
-
         # this is really funky.  what's going on here is that xine-lib doesn't
         # provide a way to seek while paused.  if you seek, then it induces
         # playing, but that's not what we want.

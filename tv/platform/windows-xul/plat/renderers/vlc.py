@@ -139,9 +139,10 @@ class VLCRenderer:
                 self.exc.ref())
         self.exc.check()
 
-    def can_play_file(self, filename):
+    def can_play_file(self, filename, yes_callback, no_callback):
         """whether or not this renderer can play this data"""
-        return True
+        # FIXME - this isn't implemented
+        yes_callback()
 
     def select_file(self, filename):
         """starts playing the specified file"""

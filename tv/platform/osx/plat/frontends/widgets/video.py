@@ -141,9 +141,12 @@ video_opener = VideoOpener()
 
 ###############################################################################
 
-def can_play_file(path):
+def can_play_file(path, yes_callback, no_callback):
     threads.warn_if_not_on_main_thread('video.can_play_file')
-    return video_opener.can_open_file(path)
+    if video_opener.can_open_file(path):
+        yes_callback()
+    else:
+        no_callback()
 
 ###############################################################################
 
