@@ -242,9 +242,17 @@ class MainWindow(Window):
                 app.widgetapp.on_fast_backward()
                 return True
 
+            if gtk.gdk.keyval_name(event.keyval) == 'Up':
+                app.widgetapp.up_volume()
+                return True
+
+            if gtk.gdk.keyval_name(event.keyval) == 'Down':
+                app.widgetapp.down_volume()
+                return True
+
     def on_key_release(self, widget, event):
         if app.playback_manager.is_playing:
-            if gtk.gdk.keyval_name(event.keyval) in ('Right', 'Left'):
+            if gtk.gdk.keyval_name(event.keyval) in ('Right', 'Left', 'Up', 'Down'):
                 return True
 
     def add_menus(self):
