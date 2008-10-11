@@ -229,6 +229,24 @@ class MainWindow(Window):
         self.add_menus()
         app.menu_manager.connect('enabled-changed', self.on_menu_change)
 
+        self._window.connect('key-press-event', self.on_key_press)
+        self._window.connect('key-release-event', self.on_key_release)
+
+    def on_key_press(self, widget, event):
+        if app.playback_manager.is_playing:
+            if gtk.gdk.keyval_name(event.keyval) == 'Right':
+                app.widgetapp.on_fast_forward()
+                return True
+
+            if gtk.gdk.keyval_name(event.keyval) == 'Left':
+                app.widgetapp.on_fast_backward()
+                return True
+
+    def on_key_release(self, widget, event):
+        if app.playback_manager.is_playing:
+            if gtk.gdk.keyval_name(event.keyval) in ('Right', 'Left'):
+                return True
+
     def add_menus(self):
         self.ui_manager = gtk.UIManager()
         self.make_actions()
