@@ -28,6 +28,7 @@
 
 from os import access, F_OK
 from urlparse import urlparse
+from urllib import unquote
 import os.path
 import re
 import logging
@@ -176,6 +177,7 @@ def filenameFromURL(url, clean=False):
         else:
             root, ext = os.path.splitext(filename)
             ret = u"%s-%s%s" % (root, query, ext)
+        ret = unquote(ret)
         if ret is None:
             ret = u'unknown'
         if clean:
@@ -192,7 +194,7 @@ def cleanFilename(filename):
     """Given either a filename or a unicode "filename" return a valid clean
     version of it
     """
-    for char in ( ':', '?', '<', '>', '|', '*', '\\', '/', '"', '\'', ' ', '%'):
+    for char in ( ':', '?', '<', '>', '|', '*', '\\', '/', '"', '\'', '%'):
         filename = filename.replace(char, '')
     if len(filename) == 0:
         return unicodeToFilename(u'_')
