@@ -801,6 +801,9 @@ class WidgetsMessageHandler(messages.MessageHandler):
         static_tab_list = app.tab_list_manager.static_tab_list
         static_tab_list.update_new_count(message.count)
 
+    def handle_play_movie(self, message):
+        app.playback_manager.start_with_items(message.item_infos)
+
     def handle_message_to_user(self, message):
         title = message.title or _("Message")
         desc = message.desc

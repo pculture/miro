@@ -60,7 +60,7 @@ def expiringItems(obj):
 
 def watchableItems(obj):
     return (obj.is_downloaded() and not obj.is_nonvideo_file() and
-            not obj.isContainerItem)
+            not obj.isContainerItem and not obj.getFeedURL() == 'dtv:singleFeed')
 
 def manualItems(obj):
     return obj.getFeedURL() == 'dtv:manualFeed' and not downloadingOrPausedItems(obj)

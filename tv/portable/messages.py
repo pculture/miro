@@ -892,3 +892,8 @@ class MessageToUser(FrontendMessage):
     def __init__(self, title, desc):
         self.title = title
         self.desc = desc
+
+class PlayMovie(FrontendMessage):
+    """Starts playing a specific movie."""
+    def __init__(self, item_infos):
+        self.item_infos = item_infos

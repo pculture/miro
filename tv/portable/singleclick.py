@@ -408,6 +408,4 @@ def parse_command_line_args(args=None):
         else:
             logging.warning("parse_command_line_args: %s doesn't exist", arg)
 
-# FIXME - this is never used
-def openFile(path):
-    parse_command_line_args([path])
+    return addedVideos, addedDownloads
