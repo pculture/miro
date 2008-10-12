@@ -165,7 +165,16 @@ def attach_float(widget, descriptor, check_function=None):
         except ValueError, ve:
             pass
 
-    widget.set_text("%.3f" % config.get(descriptor))
+    # strip off trailing 0s and if there's a . at the end, strip that
+    # off, too.
+    text = "%.3f" % config.get(descriptor)
+    while text.endswith("0"):
+        text = text[:-1]
+    if text.endswith("."):
+        text = text[:-1]
+    if not text:
+        text = "0"
+    widget.set_text(text)
     widget.connect('changed', float_changed)
 
 def attach_combo(widget, descriptor, values):
