@@ -193,6 +193,12 @@ class VideoDetailsWidget(Background):
         h.pack_start(_align_right(v), expand=True)
         return h
 
+    def hide(self):
+        self._widget.hide()
+
+    def show(self):
+        self._widget.show()
+
     def set_expiration_bits(self, item_info):
         self._keep_link.disconnect_all()
 
@@ -380,6 +386,7 @@ class VideoRenderer(VBox):
             self.last_motion_time = time.time()
 
     def show_controls(self):
+        self._video_details.show()
         _videobox_widget().show()
         _window().window.set_cursor(None)
 
@@ -388,6 +395,7 @@ class VideoRenderer(VBox):
         time_since_motion = int((time.time() - self.last_motion_time) * 1000)
         timeout_left = self.HIDE_CONTROLS_TIMEOUT - time_since_motion
         if timeout_left <= 0:
+            self._video_details.hide()
             _window().window.set_cursor(self.hidden_cursor)
             _videobox_widget().hide()
             self.hide_controls_timeout = None
@@ -408,6 +416,7 @@ class VideoRenderer(VBox):
             self.screensaver_manager.enable()
             self.screensaver_manager = None
         app.widgetapp.window.menubar.show()
+        self._video_details.show()
         _videobox_widget().show()
         _window().unfullscreen()
         self._widget.disconnect(self.motion_handler)
