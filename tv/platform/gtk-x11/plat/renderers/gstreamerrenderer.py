@@ -133,6 +133,7 @@ class Renderer:
 
         logging.info("GStreamer sink:    %s", videosink)
         self.playbin.set_property("video-sink", self.sink)
+        self.rate = 1.0
 
     def on_sync_message(self, bus, message):
         if message.structure is None:
@@ -222,6 +223,8 @@ class Renderer:
             return None
 
     def __seek(self, seconds):
+        # FIXME - switch to self.playbin.seek_simple ?
+        #              self.player.seek_simple(self.time_format, gst.SEEK_FLAG_FLUSH, seek_ns)
         event = gst.event_new_seek(1.0,
                                    gst.FORMAT_TIME,
                                    gst.SEEK_FLAG_FLUSH | gst.SEEK_FLAG_ACCURATE,
@@ -271,7 +274,26 @@ class Renderer:
         return 256
 
     def set_rate(self, rate):
-        logging.info("gstreamer set_rate: set rate to %s" % rate)
-
+        if self.rate == rate:
+            return
+        self.rate = rate
+        position = self.playbin.query_position(gst.FORMAT_TIME, None)[0]
+        if rate >= 0:
+            self.playbin.seek(rate, 
+                gst.FORMAT_TIME, 
+                gst.SEEK_FLAG_FLUSH | gst.SEEK_FLAG_KEY_UNIT,
+                gst.SEEK_TYPE_SET,
+                position + (rate * 1000000000),
+                gst.SEEK_TYPE_SET, 
+                -1)
+        else:
+            self.playbin.seek(rate,
+                gst.FORMAT_TIME, 
+                gst.SEEK_FLAG_FLUSH | gst.SEEK_FLAG_KEY_UNIT,
+                gst.SEEK_TYPE_SET, 
+                0,
+                gst.SEEK_TYPE_SET,
+                position + (rate * 1000000000))
+ 
     def movie_data_program_info(self, movie_path, thumbnail_path):
         return (("python", 'plat/renderers/gst_extractor.py', movie_path, thumbnail_path), None)

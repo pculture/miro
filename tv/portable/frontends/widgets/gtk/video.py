@@ -384,7 +384,7 @@ class VideoRenderer(VBox):
         self.renderer.stop()
 
     def set_playback_rate(self, rate):
-        print "set_playback_rate: implement me!"
+        self.renderer.set_rate(rate)
 
     def seek_to(self, position):
         time = self.get_total_playback_time() * position
