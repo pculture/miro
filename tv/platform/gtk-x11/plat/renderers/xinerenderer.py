@@ -223,13 +223,9 @@ class Renderer:
     reset = pause
 
     def get_rate(self):
-        # FIXME - there's no get_rate
-        return self.xine.get_rate()
+        logging.warn("get_rate not implemented for xine")
 
-    @wait_for_attach
     def set_rate(self, rate):
-        # FIXME - there's no set_rate
-        #self.xine.set_rate(rate)
         logging.warn("set_rate not implemented for xine")
 
     def movie_data_program_info(self, movie_path, thumbnail_path):
