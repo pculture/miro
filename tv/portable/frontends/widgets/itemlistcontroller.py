@@ -42,6 +42,7 @@ from urlparse import urljoin
 
 from miro import app
 from miro import messages
+from miro import subscription
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import itemcontextmenu
@@ -202,7 +203,10 @@ class ItemListController(object):
         elif name.startswith('description-link:'):
             url = name.split(':', 1)[1]
             base_href = widgetutil.get_feed_info(item_info.feed_id).base_href
-            app.widgetapp.open_url(urljoin(base_href, url))
+            if subscription.is_subscribe_link(url):
+                messages.SubscriptionLinkClicked(url).send_to_backend()
+            else:
+                app.widgetapp.open_url(urljoin(base_href, url))
         elif name == 'play':
             id = item_info.id
             items = itemview.item_list.get_items(start_id=id)
