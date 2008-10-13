@@ -139,9 +139,10 @@ class Controller:
         def callback(result):
             self.sendingCrashReport -= 1
             if result['status'] != 200 or result['body'] != 'OK':
-                logging.warning(u"Failed to submit crash report. Server returned %r" % result)
+                logging.warning(u"Failed to submit crash report.  Server returned %r" % result)
             else:
                 logging.info(u"Crash report submitted successfully")
+
         def errback(error):
             self.sendingCrashReport -= 1
             logging.warning(u"Failed to submit crash report %r" % error)
@@ -157,7 +158,8 @@ class Controller:
             except:
                 logging.exception("Failed to backup database")
 
-        description = description.encode("utf-8")
+        report = report.encode("utf-8", "ignore")
+        description = description.encode("utf-8", "ignore")
         postVars = {"description": description,
                     "app_name": config.get(prefs.LONG_APP_NAME),
                     "log": report}
@@ -170,5 +172,6 @@ class Controller:
         else:
             postFiles = None
         self.sendingCrashReport += 1
+        logging.info("Sending crash report....")
         httpclient.grabURL("http://participatoryculture.org/bogondeflector/index.php", 
                 callback, errback, method="POST", postVariables=postVars, postFiles=postFiles)
