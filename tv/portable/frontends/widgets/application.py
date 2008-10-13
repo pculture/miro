@@ -34,7 +34,6 @@ import logging
 import urllib
 
 from miro import app
-from miro import autoupdate
 from miro import config
 from miro import prefs
 from miro import feed
@@ -68,6 +67,7 @@ class Application:
         self.message_handler = WidgetsMessageHandler()
         self.default_guide_info = None
         self.window = None
+        self.ui_initialized = False
         messages.FrontendMessage.install_handler(self.message_handler)
         app.info_updater = InfoUpdater()
 
@@ -91,6 +91,7 @@ class Application:
         app.search_manager = search.SearchManager()
         app.inline_search_memory = search.InlineSearchMemory()
         app.tab_list_manager = tablistmanager.TabListManager()
+        self.ui_initialized = True
 
         self.window = MiroWindow(config.get(prefs.LONG_APP_NAME),
                                  self.get_main_window_dimensions())
@@ -627,13 +628,13 @@ class Application:
         self.do_quit()
 
     def do_quit(self):
-        if app.playback_manager.is_playing:
-            app.playback_manager.stop()
-        if hasattr(self, 'window'):
+        if self.window is not None:
             self.window.close()
-        app.display_manager.deselect_all_displays()
-        if hasattr(self, 'window'):
             self.window.destroy()
+        if self.ui_initialized:
+            if app.playback_manager.is_playing:
+                app.playback_manager.stop()
+            app.display_manager.deselect_all_displays()
         app.controller.shutdown()
         self.quit_ui()
 
@@ -641,21 +642,11 @@ class Application:
         signals.system.connect('error', self.handle_error)
         signals.system.connect('download-complete', self.handle_download_complete)
         signals.system.connect('update-available', self.handle_update_available)
-        signals.system.connect('startup-success', self.handle_startup_success)
-        signals.system.connect('startup-failure', self.handle_startup_failure)
         signals.system.connect('new-dialog', self.handle_dialog)
         signals.system.connect('shutdown', self.on_backend_shutdown)
 
     def handle_dialog(self, obj, dialog):
         call_on_ui_thread(rundialog.run, dialog)
-
-    def handle_startup_failure(self, obj, summary, description):
-        dialogs.show_message(summary, description, dialogs.CRITICAL_MESSAGE)
-        app.controller.shutdown()
-
-    def handle_startup_success(self, obj):
-        call_on_ui_thread(self.startup_ui)
-        eventloop.addTimeout(3, autoupdate.check_for_updates, "Check for updates")
 
     def handle_download_complete(self, obj, item):
         print "FIXME - DOWLOAD COMPLETE"
@@ -728,6 +719,14 @@ class WidgetsMessageHandler(messages.MessageHandler):
             'guide-list',
             'search-info'
         ])
+
+    def handle_startup_failure(self, message):
+        dialogs.show_message(message.summary, message.description, 
+                dialogs.CRITICAL_MESSAGE)
+        app.widgetapp.do_quit()
+
+    def handle_startup_success(self, message):
+        app.widgetapp.startup_ui()
 
     def _saw_pre_startup_message(self, name):
         self._pre_startup_messages.remove(name)

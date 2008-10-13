@@ -542,6 +542,25 @@ class ReportCrash(BackendMessage):
         self.send_report = send_report
 
 # Frontend Messages
+
+class StartupSuccess(FrontendMessage):
+    """The startup process is complete.  The frontend should wait for this
+    signal to show the UI to the user.
+    """
+
+class StartupFailure(FrontendMessage):
+    """The startup process failed.  The frontend should inform the user that
+    this happened and quit.
+
+    Attributes:
+        summary -- Short, user-friendly, summary of the problem
+        description -- Longer explanation of the problem
+    """
+
+    def __init__(self, summary, description):
+        self.summary = summary
+        self.description = description
+
 class ChannelInfo(object):
     """Tracks the state of a channel
 

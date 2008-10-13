@@ -37,12 +37,13 @@ from miro.gtcache import gettext as _
 
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
+from miro.frontends.widgets.dialogs import MainDialog
 from miro.dialogs import BUTTON_IGNORE, BUTTON_SUBMIT_REPORT
 
 IGNORE_ERRORS = -1
 
 def run_dialog(obj, report):
-    window = widgetset.Dialog(_("Internal Error"))
+    window = MainDialog(_("Internal Error"))
     try:
         try:
             vbox = widgetset.VBox(spacing=5)

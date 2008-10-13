@@ -38,6 +38,7 @@ from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import widgetconst
+from miro.frontends.widgets.dialogs import MainDialog
 from miro.dialogs import BUTTON_OK
 
 from miro import app
@@ -95,7 +96,7 @@ def run_dialog():
     """Displays a diagnostics windows that tells a user how Miro is set
     up on their machine.
     """
-    window = widgetset.Dialog(_("Diagnostics"))
+    window = MainDialog(_("Diagnostics"))
     try:
         t = widgetset.Table(3, len(ITEMS))
         t.set_column_spacing(10)

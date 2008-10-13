@@ -44,6 +44,7 @@ import platform
 from miro.clock import clock
 from miro import app
 from miro import autodler
+from miro import autoupdate
 from miro import config
 from miro import controller
 from miro import database
@@ -60,7 +61,6 @@ from miro import messagehandler
 from miro import moviedata
 from miro import prefs
 from miro.plat.utils import setup_logging
-from miro import signals
 from miro import tabs
 from miro import theme
 from miro import util
@@ -76,23 +76,25 @@ class StartupError(Exception):
 
 def startup_function(func):
     """Decorator for startup functions.  This decorator catches exceptions and
-    turns them into startup-failure signals.
+    turns them into StartupFailure messages.
     """
     def wrapped(*args, **kwargs):
         try:
             func(*args, **kwargs)
         except StartupError, e:
-            signals.system.startup_failure(e.summary, e.description)
+            m = messages.StartupFailure(e.summary, e.description)
+            m.send_to_frontend()
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
             logging.warn("Unknown startup error: %s", traceback.format_exc())
-            signals.system.startup_failure(_("Unknown Error"),
+            m = messages.StartupFailure(_("Unknown Error"),
                     _(
                         "An unknown error prevented Miro from startup.  Please "
                         "file a bug report at %(url)s.",
                         {"url": config.get(prefs.BUG_REPORT_URL)}
                     ))
+            m.send_to_frontend()
     return wrapped
 
 __movies_directory_gone_handler = None
@@ -117,7 +119,8 @@ def setup_global_feed(url, *args, **kwargs):
             allFeeds = [f for f in feedView]
             for extra in allFeeds[1:]:
                 extra.remove()
-            signals.system.failed("Too many db objects for %s" % url)
+            raise StartupError("Database inconsistant",
+                    "Too many db objects for %s" % url)
     finally:
         feedView.unlink()
 
@@ -139,12 +142,12 @@ def startup():
     This method starts up the eventloop and schedules the rest of the startup
     to run in the event loop.
 
-    Frontends should call this method, then wait for 1 of 2 system signals:
+    Frontends should call this method, then wait for 1 of 2 messages
 
-    "startup-success" is fired once the startup is done and the backend is
-    ready to go.
+    StartupSuccess is sent once the startup is done and the backend is ready
+    to go.
 
-    "startup-failure" is fired if something bad happened.
+    StartupFailure is sent if something bad happened.
 
     initialize() must be called before startup().
     """
@@ -185,8 +188,6 @@ def finish_startup():
     setup_theme()
     install_message_handler()
 
-    signals.system.startup_success()
-
     eventloop.addUrgentCall(check_firsttime, "check first time")
 
 @startup_function
@@ -210,21 +211,17 @@ def check_movies_gone():
     if is_movies_directory_gone():
         if __movies_directory_gone_handler:
             logging.info("Movies directory is gone -- calling handler.")
-            __movies_directory_gone_handler(lambda: eventloop.addUrgentCall(finalize_startup, "finalize startup"))
+            __movies_directory_gone_handler(lambda: eventloop.addUrgentCall(startup_network_stuff, "startup network stuf"))
             return
         else:
             logging.warn("Movies directory is gone -- no handler installed!")
 
-    eventloop.addUrgentCall(finalize_startup, "finalize startup")
-
-@startup_function
-def finalize_startup():
-    eventloop.addIdle(startup_network_stuff, "startup network stuff")
-    eventloop.addTimeout(5, startup_compute_stuff, "startup compute stuff")
-    eventloop.addIdle(parse_command_line_args, "parsing command line args")
+    eventloop.addUrgentCall(startup_network_stuff, "startup network stuff")
 
 @startup_function
 def startup_network_stuff():
+    # Uncomment the next line to test startup error handling
+    # raise StartupError("Test Error", "Startup Failed"
     downloader.startupDownloader()
 
     util.print_mem_usage("Post-downloader memory check")
@@ -235,6 +232,7 @@ def startup_network_stuff():
 
     item.reconnect_downloaders()
     feed.expire_items()
+    eventloop.addUrgentCall(startup_compute_stuff, "startup compute stuff")
 
 @startup_function
 def startup_compute_stuff():
@@ -243,6 +241,13 @@ def startup_compute_stuff():
     logging.timing("Icon clear: %.3f", clock() - starttime)
     logging.info("Starting movie data updates")
     moviedata.movieDataUpdater.startThread()
+    eventloop.addUrgentCall(finalize_startup, "finalize startup")
+
+@startup_function
+def finalize_startup():
+    eventloop.addIdle(parse_command_line_args, "parsing command line args")
+    eventloop.addTimeout(3, autoupdate.check_for_updates, "Check for updates")
+    messages.StartupSuccess().send_to_frontend()
 
 def setup_global_feeds():
     setup_global_feed(u'dtv:manualFeed', initiallyAutoDownloadable=False)

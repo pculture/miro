@@ -36,6 +36,7 @@ from miro import searchengines
 from miro.util import clampText
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
+from miro.frontends.widgets.dialogs import MainDialog
 from miro.dialogs import BUTTON_CANCEL, BUTTON_CREATE_CHANNEL
 
 from miro import app
@@ -60,7 +61,7 @@ def run_dialog():
     channels = app.tab_list_manager.feed_list.get_feeds()
     channels = [ci for ci in channels if not ci.is_folder]
 
-    window = widgetset.Dialog(title, description)
+    window = MainDialog(title, description)
     try:
         try:
             window.add_button(BUTTON_CREATE_CHANNEL.text)

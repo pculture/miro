@@ -37,6 +37,7 @@ they can present a somewhat nicer API.  One important difference is that all
 of the dialogs run modally.
 """
 
+from miro import app
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
 from miro.dialogs import BUTTON_OK, BUTTON_CANCEL, BUTTON_IGNORE, \
@@ -49,8 +50,23 @@ WARNING_MESSAGE = 0
 INFO_MESSAGE = 1
 CRITICAL_MESSAGE = 2
 
+def set_transient_for_main(dialog):
+    """Sets a Dialog object to be transient for the main window if possible.
+
+    If the main window has not been created yet, this is a no-op.
+    """
+    if app.widgetapp.window is not None:
+        dialog.set_transient_for(app.widgetapp.window)
+
+class MainDialog(widgetset.Dialog):
+    """Dialog that is transient for the main window."""
+    def __init__(self, title, description=None):
+        widgetset.Dialog.__init__(self, title, description)
+        set_transient_for_main(self)
+
 def show_about():
     window = widgetset.AboutDialog()
+    set_transient_for_main(window)
     try:
         window.run()
     finally:
@@ -59,6 +75,7 @@ def show_about():
 def show_message(title, description, alert_type=INFO_MESSAGE):
     """Display a message to the user and wait for them to click OK"""
     window = widgetset.AlertDialog(title, description, alert_type)
+    set_transient_for_main(window)
     try:
         window.add_button(BUTTON_OK.text)
         window.run()
@@ -68,7 +85,7 @@ def show_message(title, description, alert_type=INFO_MESSAGE):
 def show_choice_dialog(title, description, choices):
     """Display a message to the user and wait for them to choose an option.
     Returns the button object chosen."""
-    window = widgetset.Dialog(title, description)
+    window = MainDialog(title, description)
     try:
         for mem in choices:
             window.add_button(mem.text)
@@ -85,7 +102,7 @@ def ask_for_string(title, description, initial_text=None):
 
     Returns the value entered, or None if the user clicked cancel
     """
-    window = widgetset.Dialog(title, description)
+    window = MainDialog(title, description)
     try:
         window.add_button(BUTTON_OK.text)
         window.add_button(BUTTON_CANCEL.text)
@@ -108,6 +125,7 @@ def ask_for_open_pathname(title, initial_filename=None, filters=[]):
     """Returns the file pathname or None.
     """
     window = widgetset.FileOpenDialog(title)
+    set_transient_for_main(window)
     try:
         if initial_filename:
             window.set_filename(initial_filename)
@@ -125,6 +143,7 @@ def ask_for_save_pathname(title, initial_filename=None):
     """Returns the file pathname or None.
     """
     window = widgetset.FileSaveDialog(title)
+    set_transient_for_main(window)
     try:
         if initial_filename:
             window.set_filename(initial_filename)
@@ -138,6 +157,7 @@ def ask_for_directory(title, initial_directory=None):
     """Returns the directory pathname or None.
     """
     window = widgetset.DirectorySelectDialog(title)
+    set_transient_for_main(window)
     try:
         if initial_directory:
             window.set_directory(initial_directory)

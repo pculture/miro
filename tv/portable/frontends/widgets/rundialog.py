@@ -31,6 +31,7 @@
 from miro import dialogs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import widgetutil
+from miro.frontends.widgets.dialogs import MainDialog
 from miro.plat.frontends.widgets import widgetset
 
 def run(dialog):
@@ -55,7 +56,7 @@ class DialogRunner(object):
         self.dialog = dialog
 
     def run(self):
-        window = widgetset.Dialog(self.dialog.title, self.dialog.description)
+        window = MainDialog(self.dialog.title, self.dialog.description)
         try:
             self.build_extra_widget(window)
             for button in self.dialog.buttons:

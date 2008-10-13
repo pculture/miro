@@ -136,7 +136,12 @@ class MainWindow(Window):
         Window.__init__(self, title, rect)
         self.nswindow.setReleasedWhenClosed_(NO)
 
-class Dialog:
+class DialogBase:
+    def set_transient_for(self, window):
+        # This is a GTK thing, we don't need to do anything on OS X
+        pass
+
+class Dialog(DialogBase):
     def __init__(self, title, description=None):
         self.title = title
         self.description = description
@@ -214,7 +219,7 @@ class Dialog:
     def get_extra_widget(self):
         return self.extra_widget
 
-class FileSaveDialog:
+class FileSaveDialog(DialogBase):
     def __init__(self, title):
         self._title = title
         self._panel = NSSavePanel.savePanel()
@@ -233,13 +238,10 @@ class FileSaveDialog:
             return 0
         self._filename = ""
 
-    def close(self):
-        self.nswindow.close()
-
     def destroy(self):
         self._panel = None
 
-class FileOpenDialog:
+class FileOpenDialog(DialogBase):
     def __init__(self, title):
         self._title = title
         self._panel = NSOpenPanel.openPanel()
@@ -268,13 +270,10 @@ class FileOpenDialog:
             return 0
         self._filename = ""
 
-    def close(self):
-        self.nswindow.close()
-
     def destroy(self):
         self._panel = None
 
-class DirectorySelectDialog:
+class DirectorySelectDialog(DialogBase):
     def __init__(self, title):
         self._title = title
         self._panel = NSOpenPanel.openPanel()
@@ -298,13 +297,13 @@ class DirectorySelectDialog:
     def destroy(self):
         self._panel = None
 
-class AboutDialog:
+class AboutDialog(DialogBase):
     def run(self):
         NSApplication.sharedApplication().orderFrontStandardAboutPanel_(nil)
     def destroy(self):
         pass
 
-class AlertDialog:
+class AlertDialog(DialogBase):
     def __init__(self, title, message, alert_type):
         print alert_type
         self._nsalert = NSAlert.alloc().init();

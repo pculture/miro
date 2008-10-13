@@ -218,12 +218,6 @@ class SystemSignals(SignalEmitter):
                 'update-available', 'download-complete', 'new-dialog',
                 'theme-first-run', 'videos-added')
 
-    def startup_success(self):
-        self.emit('startup-success')
-
-    def startup_failure(self, summary, description):
-        self.emit('startup-failure', summary, description)
-
     def shutdown(self):
         self.emit('shutdown')
 

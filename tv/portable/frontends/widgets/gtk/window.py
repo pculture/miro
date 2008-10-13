@@ -326,13 +326,19 @@ _stock = { dialogs.BUTTON_OK.text : gtk.STOCK_OK,
            dialogs.BUTTON_DELETE.text : gtk.STOCK_DELETE,
     }
 
-class Dialog(WindowBase):
+class DialogBase(WindowBase):
+    def set_transient_for(self, window):
+        self._window.set_transient_for(window._window)
+
+    def destroy(self):
+        self._window.destroy()
+
+class Dialog(DialogBase):
     def __init__(self, title, description=None):
         """Create a dialog."""
-        WindowBase.__init__(self)
+        DialogBase.__init__(self)
         self.set_window(gtk.Dialog(title))
         self._window.set_default_size(425, -1)
-        self._window.set_transient_for(app.widgetapp.window._window)
         self.packing_vbox = gtk.VBox(spacing=20)
         self.packing_vbox.set_border_width(6)
         self._window.vbox.pack_start(self.packing_vbox, True, True)
@@ -374,7 +380,7 @@ class Dialog(WindowBase):
             return response - 1 # response IDs started at 1
 
     def destroy(self):
-        self._window.destroy()
+        DialogBase.destroy(self)
         if hasattr(self, 'packing_vbox'):
             del self.packing_vbox
 
@@ -385,25 +391,27 @@ class Dialog(WindowBase):
         self.packing_vbox.pack_start(widget._widget)
 
     def get_extra_widget(self):
-        return self.extra_widget        
+        return self.extra_widget
 
-class FileOpenDialog:
+class FileDialogBase(DialogBase):
+    def run(self):
+        ret = self._window.run()
+        if ret == gtk.RESPONSE_OK:
+            self._text = self._window.get_filename()
+            return 0
+
+
+class FileOpenDialog(FileDialogBase):
     def __init__(self, title):
+        FileDialogBase.__init__(self)
         self._text = None
-        self._widget = gtk.FileChooserDialog(title,
+        self.set_window(gtk.FileChooserDialog(title,
                                action=gtk.FILE_CHOOSER_ACTION_OPEN,
                                buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
-                                        gtk.STOCK_OPEN, gtk.RESPONSE_OK))
-        self._widget.set_transient_for(app.widgetapp.window._window)
-
-    def close(self):
-        self._widget.hide()
-
-    def destroy(self):
-        self._widget.destroy()
+                                        gtk.STOCK_OPEN, gtk.RESPONSE_OK)))
 
     def set_filename(self, text):
-        self._widget.set_filename(text)
+        self._window.set_filename(text)
 
     def add_filters(self, filters):
         for name, ext_list in filters:
@@ -411,84 +419,54 @@ class FileOpenDialog:
             filter.set_name(name)
             for mem in ext_list:
                 filter.add_pattern('*.%s' % mem)
-            self._widget.add_filter(filter)
+            self._window.add_filter(filter)
 
         filter = gtk.FileFilter()
         filter.set_name(_('All files'))
         filter.add_pattern('*')
-        self._widget.add_filter(filter)
+        self._window.add_filter(filter)
 
     def get_filename(self):
         return self._text
 
-    def run(self):
-        ret = self._widget.run()
-        if ret == gtk.RESPONSE_OK:
-            self._text = self._widget.get_filename()
-            return 0
-
-class FileSaveDialog:
+class FileSaveDialog(FileDialogBase):
     def __init__(self, title):
+        FileDialogBase.__init__(self)
         self._text = None
-        self._widget = gtk.FileChooserDialog(title,
+        self.set_window(gtk.FileChooserDialog(title,
                                action=gtk.FILE_CHOOSER_ACTION_SAVE,
                                buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
-                                        gtk.STOCK_SAVE, gtk.RESPONSE_OK))
-        self._widget.set_transient_for(app.widgetapp.window._window)
-
-    def close(self):
-        self._widget.hide()
-
-    def destroy(self):
-        self._widget.destroy()
+                                        gtk.STOCK_SAVE, gtk.RESPONSE_OK)))
 
     def set_filename(self, text):
-        self._widget.set_current_name(text)
+        self._window.set_current_name(text)
 
     def get_filename(self):
         return self._text
 
-    def run(self):
-        ret = self._widget.run()
-        if ret == gtk.RESPONSE_OK:
-            self._text = self._widget.get_filename()
-            return 0
-
-class DirectorySelectDialog:
+class DirectorySelectDialog(FileDialogBase):
     def __init__(self, title):
+        FileDialogBase.__init__(self)
         self._text = None
         choose_str =_('Choose').encode('utf-8')
-        self._widget = gtk.FileChooserDialog(title,
+        self.set_window(gtk.FileChooserDialog(title,
                                action=gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
                                buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
-                                        choose_str, gtk.RESPONSE_OK))
-        self._widget.set_transient_for(app.widgetapp.window._window)
-
-    def close(self):
-        self._widget.hide()
-
-    def destroy(self):
-        self._widget.destroy()
+                                        choose_str, gtk.RESPONSE_OK)))
 
     def set_directory(self, text):
-        self._widget.set_filename(text)
+        self._window.set_filename(text)
 
     def get_directory(self):
         return self._text
 
-    def run(self):
-        ret = self._widget.run()
-        if ret == gtk.RESPONSE_OK:
-            self._text = self._widget.get_filename()
-            return 0
-
-class AboutDialog:
+class AboutDialog(DialogBase):
     def __init__(self):
+        DialogBase.__init__(self)
         self._text = None
 
         ab = gtk.AboutDialog()
         ab.set_name(config.get(prefs.SHORT_APP_NAME))
-        ab.set_transient_for(app.widgetapp.window._window)
         if config.get(prefs.APP_REVISION_NUM):
             ab.set_version("%s (r%s)" %
                            (config.get(prefs.APP_VERSION),
@@ -504,12 +482,6 @@ class AboutDialog:
         ))
         self._window = ab
 
-    def close(self):
-        self._window.hide()
-
-    def destroy(self):
-        self._window.destroy()
-
     def run(self):
         self._window.run()
 
@@ -519,9 +491,9 @@ type_map = {
     2: gtk.MESSAGE_ERROR
 }
 
-class AlertDialog(WindowBase):
+class AlertDialog(DialogBase):
     def __init__(self, title, description, alert_type):
-        WindowBase.__init__(self)
+        DialogBase.__init__(self)
         message_type = type_map.get(alert_type, gtk.MESSAGE_INFO)
         self.set_window(gtk.MessageDialog(type=message_type, message_format=description))
         self._window.set_title(title)
@@ -532,7 +504,6 @@ class AlertDialog(WindowBase):
 
     def run(self):
         self._window.set_modal(False)
-        self._window.set_transient_for(None)
         self._window.show_all()
         response = self._window.run()
         self._window.hide()
@@ -540,11 +511,6 @@ class AlertDialog(WindowBase):
             return -1
         else:
             return response - 1 # response IDs started at 1
-
-    def destroy(self):
-        self._window.destroy()
-        if hasattr(self, 'packing_vbox'):
-            del self.packing_vbox
 
 class PreferencesWindow(Dialog):
     def __init__(self, title):

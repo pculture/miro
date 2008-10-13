@@ -33,6 +33,7 @@ import logging
 from miro import config, prefs, messages, util
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
+from miro.frontends.widgets.dialogs import MainDialog
 from miro.dialogs import BUTTON_CANCEL, BUTTON_REMOVE
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
@@ -51,7 +52,7 @@ def run_dialog(channel_infos, downloaded_items, downloading_items):
                      len(channel_infos),
                      {"count": len(channel_infos)})
 
-    rc_window = widgetset.Dialog(title)
+    rc_window = MainDialog(title)
     try:
         try:
             v = widgetset.VBox(spacing=5)

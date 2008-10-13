@@ -38,6 +38,7 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import style
+from miro.frontends.widgets.dialogs import MainDialog
 from miro.frontends.widgets.widgetutil import build_hbox
 from miro.util import clampText, returnsUnicode
 
@@ -218,7 +219,7 @@ def _build_clear_older_items_now(channel):
 
 def run_dialog(channel):
     """Displays the channel settings panel dialog."""
-    pref_window = widgetset.Dialog(_("Channel Settings"))
+    pref_window = MainDialog(_("Channel Settings"))
     try:
         try:
             v = widgetset.VBox(spacing=10)
