@@ -32,7 +32,7 @@ from miro.gtcache import ngettext
 from math import ceil
 from miro.xhtmltools import unescape, xhtmlify
 from xml.sax.saxutils import unescape
-from miro.util import checkU, returnsUnicode, checkF, returnsFilename, quoteUnicodeURL, stringify, getFirstVideoEnclosure
+from miro.util import checkU, returnsUnicode, checkF, returnsFilename, quoteUnicodeURL, stringify, getFirstVideoEnclosure, getSingletonDDBObject
 from miro.plat.utils import FilenameType, filenameToUnicode, unicodeToFilename
 import locale
 import os
@@ -824,6 +824,9 @@ class Item(DDBObject):
             self._calc_state()
             return self._state
 
+    def add_to_library(self):
+        pass
+
     @returnsUnicode
     def _calc_state(self):
         """Recalculate the state of an item after a change
@@ -1136,6 +1139,12 @@ class Item(DDBObject):
         """
         return self.feed_id is not None and self.getFeedURL() == 'dtv:manualFeed'
 
+    def is_single(self):
+        """Returns True iff the item is in the singleFeed and thus was created
+        by the "open" menu.
+        """
+        return self.getFeedURL() == 'dtv:singleFeed'
+
     def get_rss_entry(self):
         self.confirmDBThread()
         return self.entry
@@ -1230,6 +1239,12 @@ class FileItem(Item):
             return u"saved"
         else:
             return u"newly-downloaded"
+
+    def add_to_library(self):
+        """Adds a file to the library."""
+        manualFeed = getSingletonDDBObject(views.manualFeed)
+        self.setFeed(manualFeed.getID())
+        self.signalChange(needsSave=True)
 
     def get_channel_category(self):
         """Get the category to use for the channel template.

@@ -285,12 +285,13 @@ class Application:
     def preferences(self):
         prefpanel.show_window()
 
-    def remove_items(self):
-        selection = app.item_list_controller_manager.get_selection()
-        selection = [s for s in selection if s.downloaded]
-
+    def remove_items(self, selection=None):
         if not selection:
-            return
+            selection = app.item_list_controller_manager.get_selection()
+            selection = [s for s in selection if s.downloaded]
+
+            if not selection:
+                return
 
         external_count = len([s for s in selection if s.is_external])
         total_count = len(selection)

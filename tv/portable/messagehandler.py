@@ -44,6 +44,7 @@ from miro import subscription
 from miro import views
 from miro import opml
 from miro import searchengines
+from miro import util
 from miro.feed import Feed, get_feed_by_url
 from miro.playlist import SavedPlaylist
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
@@ -665,7 +666,7 @@ class BackendMessageHandler(messages.MessageHandler):
         addedvideos, addeddownloads = singleclick.parse_command_line_args([fn])
 
         if addedvideos:
-            f = views.singleFeed.getNext()
+            f = util.getSingletonDDBObject(views.singleFeed)
             item_infos = [messages.ItemInfo(i) for i in f.items]
             messages.PlayMovie(item_infos).send_to_frontend()
 
@@ -872,6 +873,20 @@ class BackendMessageHandler(messages.MessageHandler):
         except IOError:
             # FIXME - we should pass the error back to the frontend
             pass
+
+    def handle_add_item_to_library(self, message):
+        try:
+            item = views.items.getObjectByID(message.id)
+        except database.ObjectNotFoundError:
+            logging.warn("AddItemToLibrary: Item not found -- %s", message.id)
+            return
+
+        item.add_to_library()
+        manualFeed = getSingletonDDBObject(views.manualFeed)
+        changed = set()
+        changed.add(messages.ItemInfo(item))
+        # I think we have to do this manually because it's in the manualFeed.
+        messages.ItemsChanged('feed', manualFeed.getID(), [], changed, set()).send_to_frontend()
 
     def handle_remove_video_entry(self, message):
         try:

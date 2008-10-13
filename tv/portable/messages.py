@@ -453,6 +453,11 @@ class SaveItemAs(BackendMessage):
         self.id = id
         self.filename = filename
 
+class AddItemToLibrary(BackendMessage):
+    """Adds an item to the library."""
+    def __init__(self, id):
+        self.id = id
+
 class RemoveVideoEntry(BackendMessage):
     """Remove the entry for an external video"""
     def __init__(self, id):
@@ -697,6 +702,7 @@ class ItemInfo(object):
         self.item_viewed = item.get_viewed()
         self.downloaded = item.is_downloaded()
         self.is_external = item.is_external()
+        self.is_single = item.is_single()
         self.video_watched = item.getSeen()
         self.video_path = item.get_video_filename()
         self.thumbnail = item.getThumbnail()
