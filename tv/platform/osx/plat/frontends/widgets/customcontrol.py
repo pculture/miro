@@ -210,6 +210,14 @@ class CustomButton(drawing.DrawingMixin, Widget):
         self.create_signal('clicked')
         self.view = DrawableButton.alloc().init()
         self.view.setRefusesFirstResponder_(NO)
+    
+    def enable_widget(self):
+        Widget.enable_widget(self)
+        self.view.setEnabled_(True)
+
+    def disable_widget(self):
+        Widget.disable_widget(self)
+        self.view.setEnabled_(False)
 
 class ContinuousCustomButton(CustomButton):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
@@ -256,3 +264,11 @@ class CustomSlider(drawing.DrawingMixin, Widget):
 
     def set_increments(self, increment, big_increment):
         pass
+
+    def enable_widget(self):
+        Widget.enable_widget(self)
+        self.view.setEnabled_(True)
+
+    def disable_widget(self):
+        Widget.disable_widget(self)
+        self.view.setEnabled_(False)

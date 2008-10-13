@@ -64,15 +64,12 @@ class Browser(Widget):
         return (200, 100) # Seems like a reasonable minimum size
 
     def navigate(self, url):
-        self.url = NSURL.URLWithString_(url)
-        request = NSURLRequest.requestWithURL_(self.url)
+        self.url = url
+        request = NSURLRequest.requestWithURL_(NSURL.URLWithString_(url))
         self.view.mainFrame().loadRequest_(request)
 
     def get_current_url(self):
-        if self.url:
-            return self.url.absoluteURL()
-        else:
-            return None
+        return self.view.mainFrameURL()
 
     def forward(self):
         self.view.goForward()

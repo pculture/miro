@@ -45,6 +45,7 @@ from miro.frontends.widgets import imagebutton
 from miro.frontends.widgets import style
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
+from miro.frontends.widgets import separator
 from miro.gtcache import gettext as _
 
 PROTOCOLS_MIRO_HANDLES = ("http:", "https:", "ftp:", "feed:", "feeds:", "mailto:")
@@ -74,54 +75,31 @@ class BrowserToolbar(widgetset.HBox):
         self.back_button = imagebutton.ImageButton('navback')
         self.back_button.connect('clicked', self._on_back_button_clicked)
         self.back_button.disable_widget()
-        self.pack_start(
-            widgetutil.align_middle(widgetutil.align_left(self.back_button)),
-            expand=False)
+        self.pack_start(widgetutil.align_middle(self.back_button, left_pad=4))
         
         self.forward_button = imagebutton.ImageButton('navforward')
         self.forward_button.connect('clicked', self._on_forward_button_clicked)
         self.forward_button.disable_widget()
-        self.pack_start(
-            widgetutil.align_middle(widgetutil.align_left(self.forward_button)),
-            expand=False)
+        self.pack_start(widgetutil.align_middle(self.forward_button))
 
         self.reload_button = imagebutton.ImageButton('navreload')
         self.reload_button.connect('clicked', self._on_reload_button_clicked)
-        self.pack_start(
-            widgetutil.align_middle(widgetutil.align_left(self.reload_button)),
-            expand=False)
+        self.pack_start(widgetutil.align_middle(self.reload_button, left_pad=4))
 
         self.stop_button = imagebutton.ImageButton('navstop')
         self.stop_button.connect('clicked', self._on_stop_button_clicked)
-        self.pack_start(
-            widgetutil.align_middle(widgetutil.align_left(self.stop_button)),
-            expand=False)
+        self.pack_start(widgetutil.align_middle(self.stop_button, left_pad=4))
 
         self.home_button = imagebutton.ImageButton('navhome')
         self.home_button.connect('clicked', self._on_home_button_clicked)
-        self.pack_start(
-            widgetutil.align_middle(widgetutil.align_left(self.home_button)),
-            expand=False)
-
-        self.address_entry = widgetset.TextEntry()
-        self.address_entry.connect('activate', self._on_address_bar_activate)
-        self.pack_start(self.address_entry, expand=True)
-
-        self.go_button = widgetset.Button(_('Go'), style='smooth')
-        self.go_button.set_size(widgetconst.SIZE_SMALL)
-        self.go_button.connect('clicked', self._on_address_bar_activate)
-        self.pack_start(
-            widgetutil.align_right(self.go_button),
-            expand=False)
+        self.pack_start(widgetutil.align_middle(self.home_button, left_pad=4))
 
         self.browser_open_button = widgetset.Button(
             _('Open in browser'), style='smooth')
         self.browser_open_button.set_size(widgetconst.SIZE_SMALL)
         self.browser_open_button.connect(
             'clicked', self._on_browser_open_activate)
-        self.pack_start(
-            widgetutil.align_right(self.browser_open_button),
-            expand=False)
+        self.pack_end(widgetutil.align_middle(self.browser_open_button, right_pad=4))
 
     def _on_back_button_clicked(self, button):
         self.emit('browser-back')
@@ -137,9 +115,6 @@ class BrowserToolbar(widgetset.HBox):
 
     def _on_home_button_clicked(self, button):
         self.emit('browser-home')
-
-    def _on_address_bar_activate(self, widget):
-        self.emit('address-entered')
 
     def _on_browser_open_activate(self, button):
         self.emit('browser-open')
@@ -184,8 +159,8 @@ class BrowserNav(widgetset.VBox):
         self.guide_info = guide_info
         self.home_url = guide_info.url
         self.browser.navigate(guide_info.url)
-        self.toolbar.address_entry.set_text(guide_info.url)
         self.pack_start(self.toolbar, expand=False)
+        self.pack_start(separator.HThinSeparator((0.6, 0.6, 0.6)))
         self.pack_start(self.browser, expand=True)
 
         self.toolbar.connect('browser-back', self._on_browser_back)
@@ -193,7 +168,6 @@ class BrowserNav(widgetset.VBox):
         self.toolbar.connect('browser-reload', self._on_browser_reload)
         self.toolbar.connect('browser-stop', self._on_browser_stop)
         self.toolbar.connect('browser-home', self._on_browser_home)
-        self.toolbar.connect('address-entered', self._on_address_entered)
         self.toolbar.connect('browser-open', self._on_browser_open)
 
         self.browser.connect('net-start', self._on_net_start)
@@ -212,7 +186,6 @@ class BrowserNav(widgetset.VBox):
 
     def _on_net_start(self, widget):
         self.toolbar.stop_button.enable_widget()
-        self.toolbar.address_entry.set_text(self.browser.url)
         self.enable_disable_navigation()
 
     def _on_net_stop(self, widget):
@@ -234,8 +207,5 @@ class BrowserNav(widgetset.VBox):
     def _on_browser_home(self, widget):
         self.browser.navigate(self.home_url)
 
-    def _on_address_entered(self, widget):
-        self.browser.navigate(self.toolbar.address_entry.get_text())
-
     def _on_browser_open(self, widget):
-        app.widgetapp.open_url(self.browser.url)
+        app.widgetapp.open_url(self.browser.get_current_url())
