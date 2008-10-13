@@ -243,7 +243,7 @@ class VLCRenderer:
         if self._rate == rate:
             return
         self._rate = rate
-        libvlc.libvlc_media_player_get_length(self.media_player, 
+        libvlc.libvlc_media_player_set_rate(self.media_player, 
                 ctypes.c_float(rate), self.exc.ref())
         try:
             self.exc.check()
