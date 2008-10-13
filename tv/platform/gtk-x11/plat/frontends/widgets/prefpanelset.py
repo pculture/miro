@@ -33,11 +33,9 @@ See portable/frontends/widgets/prefpanel.py for more information.
 """
 
 from miro.gtcache import gettext as _
-from miro.dialogs import BUTTON_CLOSE
 from miro.plat.frontends.widgets import widgetset
-from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import dialogwidgets
-from miro.frontends.widgets.widgetutil import build_hbox, align_left
+from miro.frontends.widgets.widgetutil import align_left
 from miro.frontends.widgets.prefpanel import attach_boolean, attach_radio, attach_combo
 
 from miro.plat import options 
