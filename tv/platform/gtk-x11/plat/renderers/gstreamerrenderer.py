@@ -47,10 +47,10 @@ from miro.plat import options
 from miro.frontends.widgets.gtk.threads import call_on_ui_thread
 
 def to_seconds(t):
-    return t / 1000000000.0
+    return t / gst.SECOND
 
 def from_seconds(s):
-    return s * 1000000000
+    return s * gst.SECOND
 
 class Tester:
     def __init__(self, filename):
@@ -283,7 +283,7 @@ class Renderer:
                 gst.FORMAT_TIME, 
                 gst.SEEK_FLAG_FLUSH | gst.SEEK_FLAG_KEY_UNIT,
                 gst.SEEK_TYPE_SET,
-                position + (rate * 1000000000),
+                position + (rate * gst.SECOND),
                 gst.SEEK_TYPE_SET, 
                 -1)
         else:
@@ -293,7 +293,7 @@ class Renderer:
                 gst.SEEK_TYPE_SET, 
                 0,
                 gst.SEEK_TYPE_SET,
-                position + (rate * 1000000000))
+                position + (rate * gst.SECOND))
  
     def movie_data_program_info(self, movie_path, thumbnail_path):
         return (("python", 'plat/renderers/gst_extractor.py', movie_path, thumbnail_path), None)
