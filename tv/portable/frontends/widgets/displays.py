@@ -336,6 +336,12 @@ class VideoDisplay(Display):
     def set_playback_rate(self, rate):
         self.widget.set_playback_rate(rate)
 
+    def skip_forward(self):
+        self.widget.skip_forward()
+
+    def skip_backward(self):
+        self.widget.skip_backward()
+
     def seek_to(self, position):
         self.widget.seek_to(position)
 

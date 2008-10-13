@@ -174,11 +174,11 @@ def on_previous_video():
 
 @action_handler("FastForward")
 def on_fast_forward():
-    app.widgetapp.on_fast_forward()
+    app.widgetapp.on_skip_forward()
 
 @action_handler("Rewind")
 def on_rewind():
-    app.widgetapp.on_fast_backward()
+    app.widgetapp.on_skip_backward()
 
 @action_handler("UpVolume")
 def on_up_volume():

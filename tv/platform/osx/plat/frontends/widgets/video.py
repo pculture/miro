@@ -95,18 +95,18 @@ class VideoOpener (object):
         can_open = False
         qtmovie = self.get_movie_from_file(path)
 
-        # Purely referential movies have a no duration, no track and need to be 
-        # streamed first. Since we don't support this yet, we delegate the 
-        # streaming to the standalone QT player to avoid any problem (like the 
+        # Purely referential movies have a no duration, no track and need to be
+        # streamed first. Since we don't support this yet, we delegate the
+        # streaming to the standalone QT player to avoid any problem (like the
         # crash in #944) by simply declaring that we can't play the corresponding item.
         # Note that once the movie is fully streamed and cached by QT, DTV will
         # be able to play it internally just fine -- luc
-    
+
         # [UPDATE - 26 Feb, 2006]
         # Actually, streaming movies *can* have tracks as shown in #1124. We
         # therefore need to drill down and find out if we have a zero length
         # video track/media.
-    
+
         if qtmovie is not nil and qtmovie.duration().timeValue > 0:
             allTracks = qtmovie.tracks()
             if len(qtmovie.tracks()) > 0:
@@ -133,7 +133,7 @@ class VideoOpener (object):
                 qtmovie, error = QTMovie.alloc().initWithURL_error_(url)
             self.cached_movie = qtmovie
         return qtmovie
-        
+
     def reset(self):
         self.cached_movie = None
 
@@ -155,7 +155,7 @@ class VideoRenderer (Widget):
     def __init__(self):
         Widget.__init__(self)
         frame = ((0,0),(200,200))
-        
+
         self.view = NSView.alloc().initWithFrame_(frame)
 
         self.video_view = QTMovieView.alloc().initWithFrame_(frame)
@@ -166,7 +166,7 @@ class VideoRenderer (Widget):
 
         self.video_window = VideoWindow.alloc().initWithContentRect_styleMask_backing_defer_(frame, NSBorderlessWindowMask, NSBackingStoreBuffered, NO)
         self.video_window.setContentView_(self.video_view)
-        
+
         self.movie = None
         self.system_activity_updater_timer = None
 
@@ -179,7 +179,7 @@ class VideoRenderer (Widget):
         self.video_window.orderFront_(nil)
         self.adjust_video_frame()
         self.prevent_system_sleep(True)
-    
+
     def teardown(self):
         self.reset()
         self.prevent_system_sleep(False)
@@ -201,11 +201,11 @@ class VideoRenderer (Widget):
         frame.origin = self.view.window().convertBaseToScreen_(frame.origin)
         frame.size = (self.view.window().frame().size.width, frame.size.height)
         return frame
-        
+
     def adjust_video_frame(self):
         frame = self.get_video_frame()
         self.video_window.setFrame_display_(frame, YES)
-    
+
     def set_movie_item(self, item_info):
         threads.warn_if_not_on_main_thread('VideoRenderer.set_movie_item')
         qtmovie = video_opener.get_movie_from_file(item_info.video_path)
@@ -224,6 +224,18 @@ class VideoRenderer (Widget):
 
     def get_total_playback_time(self):
         return movieDuration(self.movie)
+
+    def skip_forward(self):
+        current = self.get_elapsed_playback_time()
+        duration = self.get_total_playback_time()
+        pos = min(duration, current + 30.0)
+        self.seek_to(pos / duration)
+
+    def skip_backward(self):
+        current = self.get_elapsed_playback_time()
+        duration = self.get_total_playback_time()
+        pos = max(0, current - 15.0)
+        self.seek_to(pos / duration)
 
     def set_volume(self, volume):
         self.movie.setVolume_(volume)
@@ -250,7 +262,7 @@ class VideoRenderer (Widget):
 
     def set_playback_rate(self, rate):
         self.movie.setRate_(rate)
-    
+
     def seek_to(self, position):
         qttime = self.movie.duration()
         qttime.timeValue = qttime.timeValue * position
@@ -258,7 +270,7 @@ class VideoRenderer (Widget):
 
     def enter_fullscreen(self):
         self.video_window.enter_fullscreen()
-    
+
     def exit_fullscreen(self):
         frame = self.get_video_frame()
         self.video_window.exit_fullscreen(frame)
@@ -271,10 +283,10 @@ class VideoRenderer (Widget):
         if prevent and self.system_activity_updater_timer is None:
             logging.debug("Launching system activity updater timer")
             self.system_activity_updater_timer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
-                30, 
-                self.video_window, 
-                'updateSystemActivity:', 
-                nil, 
+                30,
+                self.video_window,
+                'updateSystemActivity:',
+                nil,
                 YES)
         elif self.system_activity_updater_timer is not None:
             logging.debug("Stopping system activity updater timer")
@@ -301,7 +313,7 @@ class VideoWindow (NSWindow):
 
     def canBecomeMainWindow(self):
         return NO
-    
+
     def canBecomeKeyWindow(self):
         return NO
 

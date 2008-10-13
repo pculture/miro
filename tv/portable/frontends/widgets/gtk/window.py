@@ -235,11 +235,11 @@ class MainWindow(Window):
     def on_key_press(self, widget, event):
         if app.playback_manager.is_playing:
             if gtk.gdk.keyval_name(event.keyval) == 'Right':
-                app.widgetapp.on_fast_forward()
+                app.widgetapp.on_skip_forward()
                 return True
 
             if gtk.gdk.keyval_name(event.keyval) == 'Left':
-                app.widgetapp.on_fast_backward()
+                app.widgetapp.on_skip_backward()
                 return True
 
             if gtk.gdk.keyval_name(event.keyval) == 'Up':

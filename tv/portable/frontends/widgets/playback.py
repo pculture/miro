@@ -274,6 +274,12 @@ class PlaybackManager (signals.SignalEmitter):
             self.position -= 1
             self._play_current()
 
+    def skip_forward(self):
+        self.video_display.skip_forward()
+
+    def skip_backward(self):
+        self.video_display.skip_backward()
+
     def toggle_fullscreen(self):
         if self.is_fullscreen:
             self.exit_fullscreen()

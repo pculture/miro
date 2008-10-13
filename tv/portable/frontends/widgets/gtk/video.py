@@ -393,6 +393,17 @@ class VideoRenderer(VBox):
     def seek_to_time(self, time_pos):
         self.renderer.set_current_time(time_pos)
 
+    def skip_forward(self):
+        current = self.get_elapsed_playback_time()
+        duration = self.get_total_playback_time()
+        pos = min(duration, current + 30.0)
+        self.seek_to_time(pos)
+
+    def skip_backward(self):
+        current = self.get_elapsed_playback_time()
+        pos = max(0, current - 15.0)
+        self.seek_to_time(pos)
+
     def enter_fullscreen(self):
         self.screensaver_manager = screensaver.create_manager()
         if self.screensaver_manager is not None:

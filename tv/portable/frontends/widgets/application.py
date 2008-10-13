@@ -196,6 +196,12 @@ class Application:
     def on_previous_clicked(self, button=None):
         app.playback_manager.play_prev_movie()
 
+    def on_skip_forward(self):
+        app.playback_manager.skip_forward()
+
+    def on_skip_backward(self):
+        app.playback_manager.skip_backward()
+
     def on_fast_forward(self, button=None):
         app.playback_manager.set_playback_rate(3.0)
 
