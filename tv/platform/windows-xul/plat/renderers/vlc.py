@@ -79,7 +79,7 @@ class VLCException(ctypes.Structure):
         if self.code:
             msg = self.message
             libvlc.libvlc_exception_clear(self.ref())
-            raise VLCError(msg)
+            raise VLCError(repr(self.code) + " " + repr(msg))
 
 def make_string_list(args):
     ArgsArray = ctypes.c_char_p * len(args)
@@ -106,6 +106,7 @@ class VLCRenderer:
         self.play_from_time = None
         self.started_playing = STOPPED
         self._duration = None
+        self._rate = 1.0
 
     def do_schedule_update(self):
         if self.started_playing == PLAYING:
@@ -201,14 +202,17 @@ class VLCRenderer:
         return t / 1000.0
 
     def set_current_time(self, seconds):
-        if self.started_playing == PLAYING:
+        if not self.started_playing == PLAYING:
             self.play_from_time = seconds
             return
-        time = int(seconds * 1000)
-        logging.warn('set time: %s %s' % (seconds, time))
+        t = int(seconds * 1000)
+        logging.warn('set time: %s %s' % (seconds, t))
         libvlc.libvlc_media_player_set_time(self.media_player,
-                ctypes.c_longlong(time), self.exc.ref())
-        self.exc.check()
+                ctypes.c_longlong(t), self.exc.ref())
+        try:
+            self.exc.check()
+        except VLCError, e:
+            logging.warn("exception setting current time %s" % e)
 
     def get_duration(self):
         if self._duration:
@@ -233,3 +237,19 @@ class VLCRenderer:
         rv = libvlc.libvlc_audio_get_volume(self.vlc, self.exc.ref())
         self.exc.check()
         return rv / 100.0
+
+    def set_rate(self, rate):
+        logging.info("set_rate: rate %s", rate)
+        if self._rate == rate:
+            return
+        self._rate = rate
+        libvlc.libvlc_media_player_get_length(self.media_player, 
+                ctypes.c_float(rate), self.exc.ref())
+        try:
+            self.exc.check()
+        except VLCError, e:
+            logging.warn("exception setting rate: %s" % e)
+            return None
+
+    def get_rate(self):
+        pass
