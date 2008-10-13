@@ -27,12 +27,8 @@
 # statement from all source files in the program, then also delete it here.
 
 from miro.gtcache import gettext as _
-from miro.dialogs import BUTTON_CLOSE
-from miro.frontends.widgets import imagepool
 from miro.plat.frontends.widgets import widgetset
-
 from miro.frontends.widgets.prefpanel import attach_boolean
-
 from miro import prefs
 
 def _general_panel():
