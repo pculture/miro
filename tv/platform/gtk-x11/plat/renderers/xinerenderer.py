@@ -229,7 +229,8 @@ class Renderer:
     @wait_for_attach
     def set_rate(self, rate):
         # FIXME - there's no set_rate
-        self.xine.set_rate(rate)
+        #self.xine.set_rate(rate)
+        logging.warn("set_rate not implemented for xine")
 
     def movie_data_program_info(self, movie_path, thumbnail_path):
         if os.path.exists(resources.path('../../../lib/miro/xine_extractor')):
