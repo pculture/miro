@@ -26,9 +26,22 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+from miro.gtcache import gettext as _
 from miro.dialogs import BUTTON_CLOSE
 from miro.frontends.widgets import imagepool
 from miro.plat.frontends.widgets import widgetset
 
-def get_platform_specific(name):
-    pass
+from miro.frontends.widgets.prefpanel import attach_boolean
+
+from miro import prefs
+
+def _general_panel():
+    extras = []
+    cbx = widgetset.Checkbox(_("Close to system tray when I click the red X"))
+    attach_boolean(cbx, prefs.MINIMIZE_TO_TRAY)
+    extras.append(cbx)
+    return extras
+
+def get_platform_specific(panel_name):
+    if panel_name == "general":
+        return _general_panel()
