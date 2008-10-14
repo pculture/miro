@@ -623,6 +623,10 @@ class Application:
     def diagnostics(self):
         diagnostics.run_dialog()
 
+    def on_close(self):
+        """This is called when the close button is pressed."""
+        self.quit()
+
     def quit(self):
         # here we should should check if there are active downloads, etc.
         self.do_quit()

@@ -437,6 +437,12 @@ class bdist_miro(Command):
         self.run_command('py2exe')
         self.run_command('build_movie_data_util')
         self.copy_movie_data_util()
+        self.copy_ico()
+
+    def copy_ico(self):
+        dist_dir = self.get_finalized_command('py2exe').dist_dir
+        self.copy_file("Miro.ico", os.path.join(dist_dir, "%s.ico" %
+            template_vars['shortAppName']))
 
     def copy_movie_data_util(self):
         dist_dir = self.get_finalized_command('py2exe').dist_dir
@@ -487,8 +493,6 @@ class bdist_nsis (Command):
         log.info("building installer")
 
         self.copy_file(os.path.join(platform_dir, 'Miro.nsi'), self.dist_dir)
-        self.copy_file("Miro.ico", os.path.join(self.dist_dir, "%s.ico" %
-            template_vars['shortAppName']))
         self.copy_file("iHeartMiro-installer-page.ini", self.dist_dir)
         self.copy_file("miro-installer.ico", self.dist_dir)
         self.copy_file("miro-install-image.bmp", self.dist_dir)

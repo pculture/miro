@@ -28,14 +28,19 @@
 
 from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import widgetset
+from miro.plat import options
 from miro.frontends.widgets.prefpanel import attach_boolean
 from miro import prefs
 
 def _general_panel():
     extras = []
-    cbx = widgetset.Checkbox(_("Close to system tray when I click the red X"))
-    attach_boolean(cbx, prefs.MINIMIZE_TO_TRAY)
-    extras.append(cbx)
+    show_cbx = widgetset.Checkbox(_("Enable tray icon"))
+    attach_boolean(show_cbx, options.SHOW_TRAYICON)
+    extras.append(show_cbx)
+
+    close_cbx = widgetset.Checkbox(_("Close to system tray when I click the red X"))
+    attach_boolean(close_cbx, prefs.MINIMIZE_TO_TRAY)
+    extras.append(close_cbx)
     return extras
 
 def get_platform_specific(panel_name):

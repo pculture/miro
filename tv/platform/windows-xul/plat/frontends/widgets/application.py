@@ -43,8 +43,11 @@ from miro.frontends.widgets import dialogs
 from miro.frontends.widgets.application import Application
 from miro.plat import migrateappname
 from miro.plat import clipboard
+from miro.plat import options
+from miro.plat import resources
 from miro.plat.renderers.vlc import VLCRenderer
 from miro.plat.frontends.widgets import xulrunnerbrowser
+from miro.frontends.widgets.gtk import trayicon
 
 class WindowsApplication(Application):
     def run(self):
@@ -60,7 +63,41 @@ class WindowsApplication(Application):
         xulrunnerbrowser.shutdown()
         app.controller.onShutdown()
 
+    def on_pref_changed(self, key, value):
+        """Any time a preference changes, this gets notified so that we
+        can adjust things.
+        """
+        if key == options.SHOW_TRAYICON.key:
+            self.trayicon.set_visible(value)
+
+    def build_window(self):
+        Application.build_window(self)
+        config.add_change_callback(self.on_pref_changed)
+
+        if trayicon.trayicon_is_supported:
+            icopath = os.path.join(resources.appRoot(), "Miro.ico")
+            self.trayicon = trayicon.Trayicon(icopath, self)
+            if config.get(options.SHOW_TRAYICON):
+                logging.info("showing trayicon")
+                self.trayicon.set_visible(True)
+            else:
+                logging.info("not showing trayicon")
+                self.trayicon.set_visible(False)
+        else:
+            logging.info("trayicon is not supported.")
+
+    def on_close(self):
+        if config.get(prefs.MINIMIZE_TO_TRAY_ASK_ON_CLOSE):
+            # FIXME - ask user for close behavior
+            logging.info("FIXME - ask user for close behavior")
+        elif config.get(prefs.MINIMIZE_TO_TRAY):
+            # FIXME - minimize
+            logging.info("FIXME - minimize to tray")
+        else:
+            self.quit()
+
     def quit_ui(self):
+        self.trayicon.set_visible(False)
         gtk.main_quit()
 
     def get_clipboard_text(self):

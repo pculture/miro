@@ -164,7 +164,7 @@ class Window(WindowBase):
         alive_windows.add(self)
 
     def on_delete(self):
-        app.widgetapp.quit()
+        app.widgetapp.on_close()
         return True
 
     def on_configure_event(self, event):
