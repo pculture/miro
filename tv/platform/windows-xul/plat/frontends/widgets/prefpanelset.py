@@ -29,7 +29,8 @@
 from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import widgetset
 from miro.plat import options
-from miro.frontends.widgets.prefpanel import attach_boolean
+from miro.frontends.widgets.prefpanel import attach_boolean, attach_radio
+from miro.frontends.widgets.widgetutil import align_left
 from miro import prefs
 
 def _general_panel():
@@ -38,9 +39,15 @@ def _general_panel():
     attach_boolean(show_cbx, options.SHOW_TRAYICON)
     extras.append(show_cbx)
 
-    close_cbx = widgetset.Checkbox(_("Close to system tray when I click the red X"))
-    attach_boolean(close_cbx, prefs.MINIMIZE_TO_TRAY)
-    extras.append(close_cbx)
+    lab = widgetset.Label(_("When I click the red close button:"))
+    extras.append(align_left(lab))
+    rbg = widgetset.RadioButtonGroup()
+    rad_close = widgetset.RadioButton(_("Close to tray so that downloads can continue."), rbg)
+    rad_quit = widgetset.RadioButton(_("Quit Miro completely."), rbg)
+
+    attach_radio([(rad_close, True), (rad_quit, False)], prefs.MINIMIZE_TO_TRAY)
+    extras.append(align_left(rad_close, left_pad=20))
+    extras.append(align_left(rad_quit, left_pad=20))
     return extras
 
 def get_platform_specific(panel_name):
