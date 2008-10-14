@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2008-05-13 19:11-0400\n"
+"POT-Creation-Date: 2008-09-12 13:54-0400\n"
 "PO-Revision-Date: 2008-04-01 21:05+0000\n"
 "Last-Translator: janet <Unknown>\n"
 "Language-Team: Croatian <hr@li.org>\n"
@@ -16,1713 +16,966 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2008-05-27 16:36+0000\n"
+"X-Launchpad-Export-Date: 2008-10-14 20:52+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
+#: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:4
+msgid "OK"
+msgstr "U redu"
+
+#: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:6
 #: ../../portable/dialogs.py:85
 msgid "Cancel"
 msgstr "Odustani"
 
-msgid "OK"
-msgstr "U redu"
-
-#: ../../portable/dialogs.py:84
-msgid "Ok"
-msgstr "U redu"
-
-msgid "$log"
-msgstr "$log"
-
-msgid ""
-"<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
-"href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were "
-"doing, paste in the log message from the box above, and answer a few "
-"questions, and we'll get right to work.</font>"
-msgstr ""
-
-msgid ""
-"Actually, if you have a minute, would you be willing to submit a crash "
-"report to our bug-tracking system? At a minimum, what we'd need is "
-"description of what you were doing at the time -- as precise as possible -- "
-"plus the artfully-phrased nonsense in the box below:"
-msgstr ""
-
-msgid ""
-"Misfortune! $longAppName fell prey to some sort of internal confusion or "
-"wrong-headedness $when. We apologize and suggest that you exit and restart "
-"$shortAppName. That'll teach it, and it'll also reduce your chance of losing "
-"your preferences or channel subscriptions."
-msgstr ""
-
-msgid "The fall of $shortAppName??"
-msgstr "Srušio se $shortAppName??"
-
-#, fuzzy
-msgid "About Miro"
-msgstr "U vezi Miroa"
-
-msgid "Add Channel..."
-msgstr "Dodaj kanal..."
-
-msgid "Add Guide..."
-msgstr "Dodajte Guide"
-
-msgid "Bring All to Front"
-msgstr "sve vracajte iz pocetka"
-
-#: ../../platform/osx/plat/frontends/html/Preferences.py:80
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:11
+#: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:8
+#: ../../portable/frontends/widgets/prefpanel.py:422
 msgid "Channels"
 msgstr "Kanali"
 
-msgid "Check for New Version"
-msgstr "Provjeri da li postoji nova verzija"
-
-msgid "Clear Menu"
-msgstr "Isprazni izbornik"
-
-msgid "Close Window"
-msgstr "Zatvori prozor"
-
-msgid "Copy"
-msgstr "Kopiraj"
-
-#, fuzzy
-msgid "Copy Channel URL"
-msgstr "Kopiraj URL kanala"
-
-#, fuzzy
-msgid "Copy Video URL"
-msgstr "Kopiraj URL videa"
-
-msgid "Cut"
-msgstr "Izreži"
-
-#: ../../portable/frontends/html/compiled_templates/multi_channel.py:78
-#: ../../portable/dialogs.py:104
-msgid "Delete"
-msgstr "Obriši"
-
-msgid "Donate"
-msgstr "Donirajte"
-
-msgid "Download Video..."
-msgstr ""
-
-msgid "Edit"
-msgstr "Uređivanje"
-
-#, fuzzy
-msgid "Export Channels (OPML)..."
-msgstr "otvoriti kanale OPML"
-
-msgid "File"
-msgstr "Datoteka"
-
-msgid "Full Screen"
-msgstr "Puni zaslon"
-
-msgid "Help"
-msgstr "Pomoć"
-
-#, fuzzy
-msgid "Hide Miro"
-msgstr "sakriti miro"
-
-#, fuzzy
-msgid "Hide Others"
-msgstr "maskirajte ostale"
-
-msgid "Import Channels (OPML)..."
-msgstr ""
-
-msgid "Main Window"
-msgstr "Glavni prozor"
-
-msgid "MainMenu"
-msgstr "GlavniIzbornik"
-
-msgid "Minimize"
-msgstr "Minimiziraj"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:54
-msgid "Miro"
-msgstr "Miro"
-
-msgid "Miro Help"
-msgstr "Pomoc od Miro"
-
-#, fuzzy
-msgid "New Channel Folder..."
-msgstr "novi dossier kanala"
-
-#, fuzzy
-msgid "New Playlist Folder..."
-msgstr "Novi dossier liste za citanje"
-
-#, fuzzy
-msgid "New Playlist..."
-msgstr "Nova playlista mapa"
-
-#, fuzzy
-msgid "New Search Channel..."
-msgstr "Novi pretraživač kanala"
-
-msgid "Next Video"
-msgstr "Sljedeći video"
-
-msgid "Open Recent"
-msgstr "Otvori nedavne"
-
-msgid "Open..."
-msgstr "Otvori..."
-
-msgid "Paste"
-msgstr "Zalijepi"
-
-msgid "Planet Miro"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/html/Application.py:244
-#, fuzzy
-msgid "Play Video"
-msgstr "gledati video"
-
-#: ../../platform/osx/plat/frontends/html/Preferences.py:84
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:24
-msgid "Playback"
-msgstr "Reprodukcija"
-
-#, fuzzy
-msgid "Playlists"
-msgstr "Playliste"
-
-msgid "Preferences..."
-msgstr "Postavke..."
-
-msgid "Previous Video"
-msgstr "Prethodni video"
-
-msgid "Quit Miro"
-msgstr "Odjavi Miro"
-
-msgid "Remove..."
-msgstr "Ukloni"
-
-msgid "Rename..."
-msgstr "Preimenuj..."
-
-msgid "Report a bug"
-msgstr "Prijavi bug"
-
-msgid "Save Video As..."
-msgstr "Spremi video kao..."
-
-msgid "Select All"
-msgstr "Odaberi sve"
-
-msgid "Send This Channel to a Friend"
-msgstr "Pošalji ovaj kanal prijatelju"
-
-msgid "Services"
-msgstr "Servisi"
-
-msgid "Show All"
-msgstr "Pokaži sve"
-
-msgid "Stop Video"
-msgstr "Zaustavi video"
-
-msgid "Translate"
-msgstr ""
-
-msgid "Update All Channels"
-msgstr "Osvježi sve kanale"
-
-msgid "Update Channel"
-msgstr "Osvježi kanal"
-
-msgid "Window"
-msgstr "Prozor"
-
-#, fuzzy
-msgid "Zoom"
-msgstr "Povećalo"
-
-msgid "%channel feed%"
-msgstr ""
-
-msgid "%channel title%"
-msgstr ""
-
-msgid "-00:00:00"
-msgstr ""
-
-msgid "00:00:00"
-msgstr ""
-
-msgid "0:00:00"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/download_item_description.py:88
-#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:364
-msgid "Email to a friend"
-msgstr ""
-
-msgid "FullScreen Controls"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/download_item_description.py:48
-#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:324
-#: ../../portable/dialogs.py:103
-msgid "Keep"
-msgstr "Zadrži"
-
-#: ../../portable/frontends/html/compiled_templates/download_item_description.py:116
-#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:392
-msgid "Post to Reddit"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/download_item_description.py:94
-#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:370
-msgid "Post to Video Bomb"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/download_item_description.py:102
-#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:378
-msgid "Post to del.icio.us"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/download_item_description.py:108
-#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:384
-msgid "Post to digg"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/download_item_description.py:73
-#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:349
-msgid "Share"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/search.py:170
-#: ../../portable/tabs.py:56
-#, fuzzy
-msgid "Video Search"
-msgstr "Pronadji video"
-
-#, fuzzy
-msgid "VideoWindow"
-msgstr "video window"
-
-msgid ""
-"Location http://foo.bar.com/baz requires a username and password for \"text "
-"supplied by server\". (Do not localize -- test data)\n"
-msgstr ""
-
-#, fuzzy
-msgid "Password:\n"
-msgstr "Lozinka:\n"
-
-msgid "Username and password required"
-msgstr "Potrebni su korisničko ime i lozinka"
-
-#, fuzzy
-msgid ""
-"Username:\n"
-"\n"
-msgstr ""
-"Korisničko ime:\n"
-"\n"
-
-#, fuzzy
-msgid "(You must restart Miro for some of these changes to take effect)"
-msgstr "Ponovo pokreni Miro da bi promjene bile pokrenute"
-
-#, fuzzy
-msgid "(You must restart Miro for this change to take effect)\n"
-msgstr "Ponovo pokreni Miro da bi ove promjene bile ukljucene\n"
-
-#, fuzzy
-msgid "(movies directory path goes here)"
-msgstr "putokaz prema video stranici"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:1
-#, fuzzy
-msgid "-"
-msgstr "Neradni dan za neku regiju"
-
-#: ../../portable/item.py:551
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:49
-msgid "1 day"
-msgstr "1 dan"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:53
-msgid "1 month"
-msgstr "1 mjesec"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:52
-msgid "10 days"
-msgstr "10 dana"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:50
-msgid "3 days"
-msgstr "3 dana"
-
-msgid "3 hours"
-msgstr "3 sata"
-
-msgid "4"
-msgstr "4"
-
-msgid "5"
-msgstr "5"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:51
-msgid "6 days"
-msgstr "6 dana"
-
-msgid "99999"
-msgstr "99999"
-
-msgid "Add..."
-msgstr "Dodaj..."
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:20
-msgid "All"
-msgstr "Sve"
-
-msgid "Auto download default setting for new channels:"
-msgstr "ukljuciti automatsko skidanje za nove kanale"
-
-#, fuzzy
-msgid "Automatically forward ports"
-msgstr "automatski preusmjeriti ports"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:56
-#, fuzzy
-msgid "BitTorrent"
-msgstr "Parametar BitTorrent"
-
-#, fuzzy
-msgid "Box"
-msgstr "Box"
-
-#, fuzzy
-msgid "By default, videos expire after:"
-msgstr "video istjece poslije:"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:31
-msgid "Change..."
-msgstr "Promijeni..."
-
-#, fuzzy
-msgid "Check channels for new content:"
-msgstr "pokrenuti kanale"
-
-#, fuzzy
-msgid "Don't auto-download more than this many videos per channel at once:"
-msgstr "Ne skidati automatski više od jedan video po kanalu"
-
-#, fuzzy
-msgid "Don't download more than this many videos at once:"
-msgstr "ne skidati odjednom vise od jednog videa"
-
-msgid "Folder location"
-msgstr "Mjesto za mapu"
-
-msgid "GB\n"
-msgstr "GB\n"
-
-msgid "Ignore unencrypted connections"
-msgstr "Ignorirati nekodirane veze"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:48
-msgid "KB/s."
-msgstr "Kb/s"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:44
-#, fuzzy
-msgid "Keep at least this much free space on my drive:"
-msgstr "Sacuvati barem ovo slobodno mjesto na moj disk"
-
-#, fuzzy
-msgid "Limit downstream to"
-msgstr "Ograniciti broj prihvacanja"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:54
-msgid "Never"
-msgstr "Nikad"
-
-#: ../../portable/tabs.py:55
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:21
-msgid "New"
-msgstr "nova"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:22
-msgid "Off"
-msgstr "Isključeno"
-
-#, fuzzy
-msgid "OtherViews"
-msgstr "Drugi pogled"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:26
-#, fuzzy
-msgid "Play videos one after another."
-msgstr "Čitati video jedan po jedan"
-
-#, fuzzy
-msgid "Remember video position."
-msgstr "Podsjetiti se stanja videa"
-
-#: ../../portable/frontends/html/contextmenu.py:100
-#: ../../portable/frontends/html/contextmenu.py:105
-#: ../../portable/frontends/html/contextmenu.py:178
-#: ../../portable/frontends/html/contextmenu.py:184
-#: ../../portable/frontends/html/contextmenu.py:190
-#: ../../portable/frontends/html/contextmenu.py:199
-#: ../../portable/frontends/html/contextmenu.py:232
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:37
-msgid "Remove"
-msgstr "Ukloni"
-
-msgid "Run Miro at startup"
-msgstr "Ubaciti Miro na pocetak"
-
-#: ../../platform/gtk-x11/plat/frontends/html/callbackhandler.py:595
-#, fuzzy
-msgid "Show as Channel"
-msgstr "Pokazati kao kanal"
-
-#, fuzzy
-msgid "Stop after each video."
-msgstr "Zaustaviti citanje poslije svakog videa"
-
-msgid "Stop uploads when this ratio is reached:"
-msgstr ""
-
-#, fuzzy
-msgid "Store downloads in this folder:"
-msgstr "Sačuvati skidanja u mapu"
-
-#, fuzzy
-msgid "To avoid internet slowdowns, limit upstream to"
-msgstr ""
-"Da bi se izbjeglo gubljenje brzine na internet, limitiraj gomilanje podataka"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:61
-msgid "Use these ports:"
-msgstr "Koristiti sljedeci ports"
-
-#: ../../portable/frontends/html/main.py:326
-#, fuzzy
-msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr "Upozoriti me ako zelim napustiti kad su u tijeku skidanja"
-
-#, fuzzy
-msgid ""
-"Watch for new videos in these folders and include them in the Library:"
-msgstr "Pronađi novi video u mapu i ubaci u knjižnicu"
-
-msgid "every 30 minutes"
-msgstr "Svakih 30 minuta"
-
-msgid "every hour"
-msgstr "svaki sat"
-
-#, fuzzy
-msgid "manually"
-msgstr "rucno"
-
-msgid "$label$"
-msgstr "$label$"
-
-#, fuzzy
-msgid "$title$"
-msgstr "$title$"
-
-msgid "Channel"
-msgstr "Kanal"
-
-#: ../../portable/dialogs.py:99
-msgid "Create"
-msgstr "Izradi"
-
-msgid "In this:"
-msgstr "U ovom"
-
-#, fuzzy
-msgid "Item1"
-msgstr "Stvar1"
-
-#, fuzzy
-msgid "Search Engine"
-msgstr "Izvor potraznje"
-
-msgid "Search for:"
-msgstr "Traži:"
-
-#, fuzzy
-msgid "URL"
-msgstr "Internet adresa"
-
-#: ../../platform/gtk-x11/plat/frontends/html/startup.py:56
-#: ../../platform/windows-xul/plat/frontends/html/startup.py:59
-#, fuzzy, python-format
-msgid "(parsed %d files - found %d videos)"
-msgstr "(%d analizirani dokumenti- %d pronadjena videa)"
-
-msgid "Back"
-msgstr "Natrag"
-
-msgid "Browse"
-msgstr "Pretraži"
-
-#: ../../platform/osx/plat/frontends/html/StartupPanel.py:121
-msgid "Next"
-msgstr "Sljedeće"
-
-#: ../../portable/dialogs.py:87
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:53
-#, fuzzy
-msgid "No"
-msgstr "Ne"
-
-#, fuzzy
-msgid "Only search my Movies folder."
-msgstr "Potražiti samo u mapi mojih videa"
-
-#, fuzzy
-msgid "Search my entire Home folder."
-msgstr "Potražiti u kućnu datoteku"
-
-msgid "Search this folder:"
-msgstr "Tražiti u ovu datoteku"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:37
-#, fuzzy
-msgid "Searching for Videos"
-msgstr "U potrazi za video"
-
-#, fuzzy
-msgid ""
-"The Miro Player can find all the videos on your computer to help you "
-"organize your collection.\n"
-"\n"
-"\n"
-"Would you like Miro to look for video files on your computer?"
-msgstr ""
-"Miro player može pronaći svaki video u vašem kompjuteru tako vam može pomoći "
-"u organizaciji vaše kolekcije.                                               "
-"                                                    \n"
-"\n"
-"Želite li da Miro pretraži video kolekciju u vašem kompjutoru"
-
-#, fuzzy
-msgid ""
-"The next few screens will help you set up the Miro Player so that it works "
-"best for you. Here's the first question."
-msgstr ""
-"Sljedeće korake će vam pomoći u sto boljem predstavljanju Miroa. Evo prvog "
-"pitanja."
-
-#, fuzzy
-msgid ""
-"We recommend that you allow the Miro Player to launch when your computer "
-"starts up. This way, videos that haven't finished downloading can finish and "
-"new videos on your channels will be ready when you want to watch.\n"
-"\n"
-"\n"
-"Would you like to run Miro when your computer starts up?"
-msgstr ""
-"Preporučujemo da ostavite Miro kad ukljućite vaš kompjutor. Tako da skidanja "
-"koja su u toku mogu završiti i novi video vaših programa će biti spremne kad "
-"ih želite pogledati."
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:77
-msgid "Welcome to Internet TV!"
-msgstr "Dobrodošli na televiziji preko interneta!"
-
-#, fuzzy
-msgid ""
-"Welcome to Internet TV. There's a lot you can do with the Miro Player: "
-"automatically download videos from your favorite channels, watch new videos "
-"one after the other, download torrents, recommend videos to friends, and "
-"lots more.\n"
-"\n"
-msgstr ""
-"Dobrodošli na televiziji preko interneta. Možete raditi mnogo stvari sa "
-"Mirom: skidanje sa vaših omiljenih programa, gledati novi video jedan za "
-"drugim, brzinski skidati, preporučiti videa za vaše prijatelje, i još dosta "
-"toga.\n"
-"\n"
-
-#: ../../portable/dialogs.py:86
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:52
-msgid "Yes"
-msgstr "Da"
-
-#, fuzzy
-msgid ""
-"%message%\n"
-"%message%"
-msgstr ""
-"%poruka%\n"
-"%poruka%"
-
-#: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:211
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:3
-msgid "Username:"
-msgstr "Korisničko ime:"
-
-#: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:222
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:4
-msgid "Password:"
-msgstr "Lozinka"
-
-#: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:416
-msgid "Unknown Runtime Error"
-msgstr "Nepoznata greška u izvršenju"
-
-#: ../../platform/gtk-x11/plat/frontends/html/UIBackendDelegate.py:417
+#: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:10
 #, python-format
-msgid "An unknown error has occurred %s."
-msgstr "Nepoznata greška je u %s."
+msgid "parsed %(countfiles)d files - found %(countvideos)d videos"
+msgstr ""
 
-#: ../../platform/gtk-x11/plat/frontends/html/callbackhandler.py:333
-msgid "New Channel _Guide..."
-msgstr "Novi _vodič kanala..."
+#: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:12
+#, python-format
+msgid "bad parsed %(countfiles)d files - found %(countvideos)d videos"
+msgstr ""
 
-#: ../../platform/gtk-x11/plat/frontends/html/callbackhandler.py:586
-msgid "Folder Location"
-msgstr "Mjesto mape"
+#: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:14
+#, python-format
+msgid "%(count)d video found"
+msgid_plural "%(count)d videos found"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../../platform/gtk-x11/plat/frontends/html/startup.py:75
-#: ../../platform/gtk-x11/plat/frontends/html/startup.py:173
-#: ../../platform/windows-xul/plat/frontends/html/startup.py:67
-#, fuzzy, python-format
-msgid "%d video found"
-msgid_plural "%d videos found"
-msgstr[0] "%d pronadjeni video"
-msgstr[1] "%d pronadjeni video"
-msgstr[2] "%d pronadjeni video"
+#: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:16
+#, python-format
+msgid "bad %(count)d video found"
+msgid_plural "bad %(count)d videos found"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:53
-#: ../../portable/frontends/html/compiled_templates/unittest/simpleunicode.py:36
-#: ../../portable/frontends/html/compiled_templates/channel.py:327
-msgid "Settings"
-msgstr "Postavke"
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:46
+msgid "Tray icon:"
+msgstr ""
 
-#: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:56
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:50
+#: ../../portable/frontends/widgets/style.py:372
+#: ../../portable/frontends/widgets/style.py:375
+msgid "show"
+msgstr ""
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:51
+msgid "hide"
+msgstr ""
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:62
+msgid "Renderer options:"
+msgstr ""
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:66
+msgid "You must restart Miro for renderer changes to take effect."
+msgstr ""
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:70
+msgid "Use this renderer to play videos:"
+msgstr ""
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:80
+msgid "Use this for video when playing audio:"
+msgstr ""
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/trayicon.py:58
 msgid "Hide"
 msgstr "Sakrij"
 
-#: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:58
+#: ../../platform/gtk-x11/plat/frontends/widgets/trayicon.py:60
+#: ../../portable/frontends/widgets/diagnostics.py:57
 msgid "Show"
 msgstr "Prikaži"
 
-#: ../../platform/gtk-x11/plat/frontends/html/trayicon.py:59
-#: ../../portable/dialogs.py:88 ../../portable/menubar.py:274
-msgid "Quit"
-msgstr "Izađi"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:80
-#, python-format
-msgid ""
-"Error importing modules:\n"
-"%s"
-msgstr ""
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:255
-#, fuzzy
-msgid "Loading window"
-msgstr "Skidanje windowa"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:256
-#, fuzzy
-msgid "onStartup called twice"
-msgstr "onStartup je nazvan dva puta"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:748
-msgid "Spacebar"
-msgstr "Razmaknica"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:896
-#, fuzzy
-msgid "Close to tray?"
-msgstr "Minimizirati stranicu ?"
-
-#: ../../platform/windows-xul/xul/components/pybridge.py:897
-#, fuzzy
-msgid ""
-"When you click the red close button, would you like Miro to close to the "
-"system tray or quit?  You can change this setting later in the Options."
-msgstr ""
-"Kad kliknete na crvenu tipku za zatvaranje, želite li minimizirati Miro na "
-"stranu ili želite napustiti stranicu ? Možete promjeniti kasnije ovu stavku "
-"u opcijama"
-
-#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:83
-#, fuzzy
-msgid "Update Available"
-msgstr "Spremno za upotrebu"
-
-#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:84
-#, python-format
-msgid "A new version of %s is available for download."
-msgstr "Nova verzija %s je dostupna za skidanje"
-
-#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:248
-#, fuzzy
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:94
 msgid "Error Bombing Item"
-msgstr "Greška prilikom glasovanja na ovom članku"
+msgstr ""
 
-#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:250
-#, fuzzy
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:96
 msgid "Error Recommending Item"
-msgstr "Greška prilikom preporuke na ovom članku"
+msgstr ""
 
-#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:252
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:98
 msgid "Error Opening Website"
 msgstr "Greška prilikom otvaranja web stanice"
 
-#: ../../platform/windows-xul/plat/frontends/html/UIBackendDelegate.py:256
-#, python-format
-msgid "There was an error opening %s.  Please try again in a few seconds"
-msgstr "Greška prilikom otvaranja %s. Molimo ponovite za nekoliko sekundi"
-
-#: ../../platform/windows-xul/plat/flash.py:82
-#, python-format
-msgid "Restart %s?"
-msgstr ""
-
-#: ../../platform/windows-xul/plat/flash.py:83
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:103
 #, python-format
 msgid ""
-"To enable the Flash plugin, %s needs to be restarted.  Click Yes to shut %s "
-"down, or No to do it later."
+"There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr ""
 
-#: ../../platform/windows-xul/plat/flash.py:109
+#: ../../platform/windows-xul/plat/flash.py:97
+#, python-format
+msgid "Restart %(appname)s?"
+msgstr ""
+
+#: ../../platform/windows-xul/plat/flash.py:99
+#, python-format
+msgid ""
+"To enable the Flash plugin, %(appname)s needs to be restarted.  Click Yes to "
+"shut %(appname)s down, or No to do it later."
+msgstr ""
+
+#: ../../platform/windows-xul/plat/flash.py:125
 msgid "Install Flash?"
 msgstr ""
 
-#: ../../platform/windows-xul/plat/flash.py:110
+#: ../../platform/windows-xul/plat/flash.py:127
 #, python-format
 msgid ""
-"For the best %s experience, you should install Adobe Flash.  Do this now?"
+"For the best %(appname)s experience, you should install Adobe Flash.  Do "
+"this now?"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:55
-msgid "Download Completed"
-msgstr "Skidanje završeno"
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
+msgid "Services"
+msgstr "Servisi"
 
-#: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:56
-#, python-format
-msgid "Download of video '%s' is finished."
-msgstr "Skidanje sa videa '%s' je završeno"
-
-#: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:65
-msgid "Download Failed"
-msgstr "Prekinuto skidanje"
-
-#: ../../platform/osx/plat/frontends/html/GrowlNotifier.py:66
-#, python-format
-msgid "Download of video '%s' has failed."
-msgstr "Skidanje sa videa '%s' je prekinuto."
-
-#: ../../platform/osx/plat/frontends/html/Preferences.py:79
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:8
-msgid "General"
-msgstr "Općenito"
-
-#: ../../platform/osx/plat/frontends/html/Preferences.py:81
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:39
-msgid "Downloads"
-msgstr "Skidanja"
-
-#: ../../platform/osx/plat/frontends/html/Preferences.py:82
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:29
-msgid "Folders"
-msgstr "Mape"
-
-#: ../../platform/osx/plat/frontends/html/Preferences.py:83
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:43
-#, fuzzy
-msgid "Disk Space"
-msgstr "Prostor za disk"
-
-#: ../../platform/osx/plat/frontends/html/Preferences.py:251
-msgid "Movies Directory"
-msgstr "Mapa za filmove"
-
-#: ../../platform/osx/plat/frontends/html/Preferences.py:252
-#, fuzzy, python-format
-msgid "Select a Directory to store %s downloads in."
-msgstr "Izabrati mapu za skladištenje skidanja sa %s"
-
-#: ../../platform/osx/plat/frontends/html/Preferences.py:253
-#: ../../platform/osx/plat/frontends/html/Preferences.py:362
-msgid "Select"
-msgstr "Odaberi"
-
-#: ../../platform/osx/plat/frontends/html/Preferences.py:262
-#: ../../platform/gtk-x11/glade/miro.glade.h:53
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:1
-#, fuzzy
-msgid "Migrate existing movies?"
-msgstr "Premjestiti postojeca videa ?"
-
-#: ../../platform/osx/plat/frontends/html/Preferences.py:263
-#, python-format
-msgid ""
-"You've selected a new folder to download movies to.  Should %s migrate your "
-"existing downloads there?  (Currently dowloading movies will not be moved "
-"until they finish)."
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:149
+msgid "Hide Miro"
 msgstr ""
-"Izabrali ste novu mapu za skidanje filmova. %s da li mora premjestiti  vasa "
-"dosadašnja skidanja na ovo mjestu ? (Dosad postojeća skidanja neće biti "
-"premještena prije nego budu završena)."
 
-#: ../../platform/osx/plat/frontends/html/Preferences.py:360
-#, fuzzy
-msgid "View this Directory in the Library"
-msgstr "Vidi ovu mapu u knjižnici"
-
-#: ../../platform/osx/plat/frontends/html/Preferences.py:361
-msgid "Select a Directory to view in the Library."
-msgstr "Izabrati mapu koja je u knjižnici."
-
-#: ../../platform/osx/plat/frontends/html/MainFrame.py:271
-msgid "Subscribe to Channel"
-msgstr "Pretplatiti se na kanal"
-
-#: ../../platform/osx/plat/frontends/html/MainFrame.py:272
-#, fuzzy
-msgid "Enter the URL of the channel you would like to subscribe to."
-msgstr "Uđite na internet adresu programa na kojem se želite pretplatiti"
-
-#: ../../platform/osx/plat/frontends/html/UIStrings.py:33
-msgid "_Remove..."
-msgstr "_Ukloni..."
-
-#: ../../platform/osx/plat/frontends/html/UIStrings.py:34
-#, fuzzy
-msgid "_Remove Playlist..."
-msgstr "_Izbacite Playlistu..."
-
-#: ../../platform/osx/plat/frontends/html/UIStrings.py:35
-#, fuzzy
-msgid "_Remove Playlists..."
-msgstr "_Izbacite Playliste..."
-
-#: ../../platform/osx/plat/frontends/html/UIStrings.py:36
-#, fuzzy
-msgid "_Remove Playlist Folder..."
-msgstr "_Izbacite mapu za playlistu..."
-
-#: ../../platform/osx/plat/frontends/html/UIStrings.py:37
-#, fuzzy
-msgid "_Remove Playlist Folders..."
-msgstr "_Izbacite mape za playlistu..."
-
-#: ../../platform/osx/plat/frontends/html/UIStrings.py:38
-#: ../../portable/menubar.py:192
-msgid "_Remove Channel..."
-msgstr "_Izbrišite kanal..."
-
-#: ../../platform/osx/plat/frontends/html/UIStrings.py:39
-#: ../../portable/menubar.py:193
-msgid "_Remove Channels..."
-msgstr "_Izbrišite kanale..."
-
-#: ../../platform/osx/plat/frontends/html/UIStrings.py:40
-#: ../../portable/menubar.py:195
-msgid "_Remove Channel Folder..."
-msgstr "_Izbrišite mapu za kanale..."
-
-#: ../../platform/osx/plat/frontends/html/UIStrings.py:41
-#: ../../portable/menubar.py:194
-msgid "_Remove Channel Folders..."
-msgstr "_Izbrišite mape za kanale..."
-
-#: ../../platform/osx/plat/frontends/html/UIStrings.py:42
-msgid "_Remove Miro Guide..."
-msgstr "_Izbrišite Miro Guide..."
-
-#: ../../platform/osx/plat/frontends/html/UIStrings.py:43
-msgid "_Remove Miro Guides..."
-msgstr "_Izbrišite ove Miro Guide..."
-
-#: ../../platform/osx/plat/frontends/html/UIStrings.py:44
-msgid "_Remove Video..."
-msgstr "_Izbrišite video..."
-
-#: ../../platform/osx/plat/frontends/html/UIStrings.py:45
-msgid "_Remove Videos..."
-msgstr "_Izbrišite videa..."
-
-#: ../../platform/osx/plat/frontends/html/UIStrings.py:46
-msgid "Re_name..."
-msgstr "Pre_imenovati..."
-
-#: ../../platform/osx/plat/frontends/html/UIStrings.py:47
-#, fuzzy
-msgid "Re_name Playlist..."
-msgstr "Pre_imenovati igranu listu..."
-
-#: ../../platform/osx/plat/frontends/html/UIStrings.py:48
-msgid "Re_name Playlist Folder..."
-msgstr "Pre_imenovati mapu igranih lista..."
-
-#: ../../platform/osx/plat/frontends/html/UIStrings.py:49
-#: ../../portable/menubar.py:191
-msgid "Re_name Channel..."
-msgstr "Pre_imenovati kanal..."
-
-#: ../../platform/osx/plat/frontends/html/UIStrings.py:50
-msgid "Re_name Channel Folder..."
-msgstr "Pre_imenovati mapu za kanale..."
-
-#: ../../platform/osx/plat/frontends/html/UIStrings.py:51
-msgid "Re_name Miro Guide..."
-msgstr "Pre_imenovati Miro Guide..."
-
-#: ../../platform/osx/plat/frontends/html/UIStrings.py:52
-#: ../../portable/menubar.py:197
-msgid "_Update Channel..."
-msgstr "_Vratiti kanal..."
-
-#: ../../platform/osx/plat/frontends/html/UIStrings.py:53
-#: ../../portable/menubar.py:198
-msgid "_Update Channels..."
-msgstr "_Vratiti kanale..."
-
-#: ../../platform/osx/plat/frontends/html/StartupPanel.py:93
-msgid "Finish"
-msgstr "Završetak"
-
-#: ../../platform/osx/plat/frontends/html/StartupPanel.py:163
-msgid "Search!"
-msgstr "Pronađite!"
-
-#: ../../platform/osx/plat/frontends/html/Application.py:241
-msgid "Pause Video"
-msgstr "Pauza"
-
-#: ../../platform/osx/plat/frontends/html/Application.py:250
-#, fuzzy
-msgid "Unsupported version of Quicktime"
-msgstr "Verzija Quicktime neprihvačena"
-
-#: ../../platform/osx/plat/frontends/html/Application.py:251
-#, fuzzy, python-format
-msgid ""
-"To run %s you need the most recent version of Quicktime, which is a free "
-"update."
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:150
+msgid "Hide Others"
 msgstr ""
-"Za stavljanje u upotrebu %s, potrebna vam je najnovija verzija Quicktime, "
-"njezina uporaba je besplatna."
 
-#: ../../platform/osx/plat/renderers/QuicktimeRenderer.py:319
-msgid "Audio"
-msgstr "Zvuk"
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:151
+msgid "Show All"
+msgstr "Pokaži sve"
 
-#: ../../portable/singleclick.py:99
-#, fuzzy
-msgid "Download already exists"
-msgstr "Skinuto već postoji"
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:156
+msgid "Preferences..."
+msgstr "Postavke..."
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
+msgid "Quit Miro"
+msgstr "Odjavi Miro"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:161
+msgid "Close Window"
+msgstr "Zatvori prozor"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:166
+msgid "Cut"
+msgstr "Izreži"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
+msgid "Copy"
+msgstr "Kopiraj"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:168
+msgid "Paste"
+msgstr "Zalijepi"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:169
+#: ../../portable/frontends/widgets/style.py:260 ../../portable/dialogs.py:105
+msgid "Delete"
+msgstr "Obriši"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:171
+msgid "Select All"
+msgstr "Odaberi sve"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:173
+msgid "Edit"
+msgstr "Uređivanje"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
+msgid "Zoom"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:179
+msgid "Minimize"
+msgstr "Minimiziraj"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
+msgid "Main Window"
+msgstr "Glavni prozor"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
+msgid "Bring All to Front"
+msgstr "sve vracajte iz pocetka"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
+msgid "Window"
+msgstr "Prozor"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:189
+msgid "Miro Help"
+msgstr "Pomoc od Miro"
 
 #: ../../portable/singleclick.py:100
-#, fuzzy
-msgid "That URL is already an external download."
-msgstr "Ovaj URL je već skinuto izvana"
+msgid "Download already exists"
+msgstr ""
 
-#: ../../portable/singleclick.py:106
+#: ../../portable/singleclick.py:101
+msgid "That URL is already an external download."
+msgstr ""
+
+#: ../../portable/singleclick.py:107
 msgid "Miro will begin downloading it now."
 msgstr "Miro će početi skidanje"
 
-#: ../../portable/singleclick.py:108
+#: ../../portable/singleclick.py:109
 msgid "It is downloading now."
 msgstr "Skidanje u tijeku"
 
-#: ../../portable/singleclick.py:110
+#: ../../portable/singleclick.py:111
 msgid "It has already been downloaded."
 msgstr "Skidanje je završeno"
 
-#: ../../portable/singleclick.py:142
+#: ../../portable/singleclick.py:143
 msgid "Download Error"
 msgstr "Pogreška tijekom preuzimanja"
 
-#: ../../portable/singleclick.py:143
+#: ../../portable/singleclick.py:145
 #, python-format
 msgid ""
 "Miro is not able to download a file at this URL:\n"
 "\n"
-"URL: %s"
+"URL: %(url)s"
 msgstr ""
-"Miro nije spreman preuzeti skidanje s datoteke na URL:\n"
-"URL:%s"
 
-#: ../../portable/singleclick.py:191
+#: ../../portable/singleclick.py:194
 msgid "File Download"
 msgstr "Skidanje datoteke"
 
-#: ../../portable/singleclick.py:192
-#, fuzzy, python-format
-msgid "This file at %s does not appear to be audio, video, or an RSS feed."
-msgstr "Lokalizirana datoteka u %s nije audio, video niti je napajan RSS."
+#: ../../portable/singleclick.py:195
+#, python-format
+msgid ""
+"This file at %(url)s does not appear to be audio, video, or an RSS feed."
+msgstr ""
 
-#: ../../portable/singleclick.py:280
+#: ../../portable/singleclick.py:274
 msgid "Subscribing to multiple channels"
 msgstr "Pocrtati za više kanala"
 
-#: ../../portable/singleclick.py:281
+#: ../../portable/singleclick.py:275
 #, python-format
-msgid "Create %d channels?"
-msgstr "Kreirati %d kanale ?"
+msgid "Create channel?"
+msgid_plural "Create %(count)d channels?"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../../portable/singleclick.py:294
-#, python-format
-msgid "Adding %d channels to a new folder"
-msgstr "Pridodati %d kanali na novu mapu"
-
-#: ../../portable/singleclick.py:295 ../../portable/folder.py:224
+#: ../../portable/singleclick.py:295
+#: ../../portable/frontends/widgets/application.py:368
 msgid "Enter a name for the new channel folder"
 msgstr "Upisati novo ime za grupu kanala"
 
-#: ../../portable/singleclick.py:298
+#: ../../portable/singleclick.py:299
 #, python-format
 msgid ""
-"NOTE: You are already subscribed to %d of these channels.  These channels "
+"NOTE: You are already subscribed to one of these channels.  These channels "
 "will stay where they currently are."
-msgstr ""
-"NOTA:Već ste upisani na %d ovih kanala. Ovi kanali će ostati ovdje gdje su "
-"sada skladišteni."
+msgid_plural ""
+"NOTE: You are already subscribed to %(count)d of these channels.  These "
+"channels will stay where they currently are."
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../../portable/singleclick.py:309
+#: ../../portable/singleclick.py:314
 msgid "Subscription error"
 msgstr "Pogreška pri preplati"
 
-#: ../../portable/singleclick.py:319
+#: ../../portable/singleclick.py:324
+#, python-format
 msgid ""
-"This $shortAppName channel file has an invalid format: $url. Please notify "
+"This %(appname)s channel file has an invalid format: %(url)s.  Please notify "
 "the publisher of this file."
 msgstr ""
-"Ovaj kanal $shortAppName je u pogrešnom formatu: $url. Molim da upozorite "
-"odgovornu osobu na ovaj site."
 
-#: ../../portable/singleclick.py:327
+#: ../../portable/singleclick.py:333
+#, python-format
 msgid ""
-"This $shortAppName channel file has the wrong content type: $url. Please "
+"This %(appname)s channel file has the wrong content type: %(url)s. Please "
 "notify the publisher of this file."
 msgstr ""
-"Ovaj kanal $shortAppName ima loš 'content-type': $url. Molim upozorite "
-"odgovornu osobu na ovaj site."
 
-#: ../../portable/singleclick.py:331
-msgid "Could not download the $shortAppName channel file: $url."
-msgstr "Nemoguće je vratiti kanal $shortAppName: $url."
+#: ../../portable/singleclick.py:341
+#, python-format
+msgid "Could not download the %(appname)s channel file: %(url)s"
+msgstr ""
 
-#: ../../portable/singleclick.py:385
+#: ../../portable/singleclick.py:391
 msgid "Invalid Torrent"
 msgstr "Nevažeči Torrent"
 
-#: ../../portable/singleclick.py:386
+#: ../../portable/singleclick.py:393
 #, python-format
-msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-msgstr "Datoteka Torrent %s izgleda prekinuta i ne može se otvoriti. (OK)"
-
-#: ../../portable/frontends/html/templatedisplay.py:325
-msgid "Invalid Value"
-msgstr "Neispravna vrijednost."
-
-#: ../../portable/frontends/html/templatedisplay.py:326
-#, fuzzy, python-format
-msgid "%s is invalid.  You must enter a non-negative number."
-msgstr "%s je neispravna. Morate uvoditi ne-negativan broj"
-
-#: ../../portable/frontends/html/templatedisplay.py:452
-#, fuzzy
-msgid "Error Revealing File"
-msgstr "Pogreška prilikom štampanja dokumenta"
-
-#: ../../portable/frontends/html/templatedisplay.py:453
-#, fuzzy, python-format
-msgid "The file \"%s\" was deleted from outside Miro."
-msgstr "Dokument \"%s je izbrisan preko druge aplikacije od Miro-a."
-
-#: ../../portable/frontends/html/templatedisplay.py:560
-msgid "Error Changing Movies Directory"
-msgstr "Greška prilikom mjenjanja mape videa."
-
-#: ../../portable/frontends/html/templatedisplay.py:561
-#, fuzzy
 msgid ""
-"You don't have permission to write to the directory you selected.  Miro will "
-"continue to use the old videos directory."
-msgstr ""
-"Nemate pravo pisati u mapi koju ste izabrali. Miro će nastaviti koristiti "
-"staru mapu videa."
-
-#: ../../portable/frontends/html/templatedisplay.py:664
-msgid " - Invalid URL"
-msgstr " Internet adresa nevažeća"
-
-#: ../../portable/frontends/html/templatedisplay.py:665
-#, fuzzy
-msgid ""
-"The address you entered is not a valid URL.\n"
-"Please double check and try again.\n"
-"\n"
-msgstr ""
-"Adresu koju ste unijeli nije važeča internet adresa;\n"
-"Molimo provjerite i pokušajte ponovo.\n"
-"\n"
-
-#: ../../portable/frontends/html/templatedisplay.py:691
-msgid "$shortAppName - Add Channel"
-msgstr "$shortAppName- Dodajte jedan kanal"
-
-#: ../../portable/frontends/html/templatedisplay.py:691
-#, fuzzy
-msgid "Enter the URL of the channel to add"
-msgstr "Uči u internet adresu kanala koja se dodaje"
-
-#: ../../portable/frontends/html/templatedisplay.py:712
-msgid "$shortAppName - Add Miro Guide"
-msgstr "$shortAppName- dodajte Miro Guide"
-
-#: ../../portable/frontends/html/templatedisplay.py:712
-#, fuzzy
-msgid "Enter the URL of the Miro Guide to add"
-msgstr "Uđite u internet adresu Miro Guide koji se pridodaje"
-
-#: ../../portable/frontends/html/templatedisplay.py:718
-#, fuzzy
-msgid "$shortAppName - Download Video"
-msgstr "$shortAppName- skidanje videa"
-
-#: ../../portable/frontends/html/templatedisplay.py:718
-#, fuzzy
-msgid "Enter the URL of the video to download"
-msgstr "Uđite na internet adresu videa koji se skida"
-
-#: ../../portable/frontends/html/contextmenu.py:104
-#, fuzzy
-msgid "Update Channels Now"
-msgstr "Vrati sad kanale"
-
-#: ../../portable/frontends/html/contextmenu.py:128
-#, fuzzy, python-format
-msgid "%d Downloaded Items"
-msgstr "%d skidanog programa."
-
-#: ../../portable/frontends/html/contextmenu.py:130
-#: ../../portable/frontends/html/contextmenu.py:210
-msgid "Play"
-msgstr "Pokreni"
-
-#: ../../portable/frontends/html/contextmenu.py:131
-#: ../../portable/frontends/html/contextmenu.py:213
-#, fuzzy
-msgid "Add to new playlist"
-msgstr "Dodati za novu playlistu"
-
-#: ../../portable/frontends/html/contextmenu.py:133
-#: ../../portable/frontends/html/contextmenu.py:206
-#, fuzzy
-msgid "Remove From Playlist"
-msgstr "Izbaciti iz playliste"
-
-#: ../../portable/frontends/html/contextmenu.py:135
-#: ../../portable/frontends/html/contextmenu.py:208
-msgid "Remove From the Library"
-msgstr "Izbaciti iz knjižnice"
-
-#: ../../portable/frontends/html/contextmenu.py:141
-#: ../../portable/frontends/html/contextmenu.py:217
-#, fuzzy
-msgid "Mark as Unwatched"
-msgstr "Obilježiti kao nepromatran"
-
-#: ../../portable/frontends/html/contextmenu.py:146
-#: ../../portable/frontends/html/contextmenu.py:219
-#, fuzzy
-msgid "Mark as Watched"
-msgstr "Obilježen kao viđen"
-
-#: ../../portable/frontends/html/contextmenu.py:151
-#, fuzzy, python-format
-msgid "%d Available Items"
-msgstr "%d dostupnog materijala"
-
-#: ../../portable/frontends/html/contextmenu.py:152
-#: ../../portable/frontends/html/contextmenu.py:226
-#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:128
-#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:140
-#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:292
-#: ../../portable/frontends/html/compiled_templates/download_item_thumbnail.py:79
-#: ../../portable/frontends/html/compiled_templates/download_item_details.py:91
-#: ../../portable/frontends/html/compiled_templates/download_item_details.py:103
-#: ../../portable/dialogs.py:93
-msgid "Download"
-msgstr "Preuzmi"
-
-#: ../../portable/frontends/html/contextmenu.py:157
-#, fuzzy, python-format
-msgid "%d Downloading Items"
-msgstr "%d element za skidanje"
-
-#: ../../portable/frontends/html/contextmenu.py:159
-#: ../../portable/frontends/html/contextmenu.py:224
-msgid "Cancel Download"
-msgstr "Prekini skidanje"
-
-#: ../../portable/frontends/html/contextmenu.py:161
-#: ../../portable/frontends/html/contextmenu.py:224
-#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:275
-#: ../../portable/frontends/html/compiled_templates/download_item_thumbnail.py:62
-msgid "Pause Download"
-msgstr "Prekinuti skidanje"
-
-#: ../../portable/frontends/html/contextmenu.py:164
-#: ../../portable/frontends/html/contextmenu.py:222
-#, fuzzy
-msgid "Restart Upload"
-msgstr "Pokrenuti dokumenti"
-
-#: ../../portable/frontends/html/contextmenu.py:170
-#, fuzzy
-msgid "Update Channel Now"
-msgstr "Vratiti kanal"
-
-#: ../../portable/frontends/html/contextmenu.py:172
-#: ../../portable/frontends/html/contextmenu.py:196
-#, fuzzy
-msgid "Copy URL to clipboard"
-msgstr "Kopirati internet adresu na papiru"
-
-#: ../../portable/frontends/html/contextmenu.py:173 ../../portable/feed.py:830
-msgid "Rename Channel"
-msgstr "Podigni Kanal"
-
-#: ../../portable/frontends/html/contextmenu.py:177
-msgid "Revert Title to Default"
+"The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+"[OK]"
 msgstr ""
 
-#: ../../portable/frontends/html/contextmenu.py:183
-#: ../../portable/folder.py:142
-msgid "Rename Channel Folder"
-msgstr "Preimenovati mape kanala"
+#: ../../portable/frontends/widgets/rundialog.py:81
+msgid "Username:"
+msgstr "Korisničko ime:"
 
-#: ../../portable/frontends/html/contextmenu.py:189
-#: ../../portable/folder.py:213
-#, fuzzy
-msgid "Rename Playlist Folder"
-msgstr "Preimenovati mapu playliste"
+#: ../../portable/frontends/widgets/rundialog.py:85
+msgid "Password:"
+msgstr "Lozinka"
 
-#: ../../portable/frontends/html/contextmenu.py:212
-#, fuzzy
-msgid "Play Just This Video"
-msgstr "Čitati samo ovaj video"
-
-#: ../../portable/frontends/html/contextmenu.py:231
-#: ../../portable/playlist.py:218
-msgid "Rename Playlist"
-msgstr "Preimenovati playlistu"
-
-#: ../../portable/frontends/html/compiled_templates/channel_content.py:36
-#: ../../portable/frontends/html/compiled_templates/channel_folder.py:200
-#: ../../portable/frontends/html/compiled_templates/channel.py:382
-msgid "Save Search"
+#: ../../portable/frontends/widgets/statictabs.py:48
+msgid "Miro Guide"
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/channel_content.py:102
-#: ../../portable/frontends/html/compiled_templates/channel_folder.py:266
-#: ../../portable/frontends/html/compiled_templates/channel.py:448
-msgid "Full Channel"
+#: ../../portable/frontends/widgets/statictabs.py:60
+#: ../../portable/frontends/widgets/itemlistcontroller.py:340
+msgid "Video Search"
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/channel_content.py:111
-#: ../../portable/frontends/html/compiled_templates/channel_content.py:194
-#: ../../portable/frontends/html/compiled_templates/channel_folder.py:275
-#: ../../portable/frontends/html/compiled_templates/channel_folder.py:358
-#: ../../portable/frontends/html/compiled_templates/channel.py:457
-#: ../../portable/frontends/html/compiled_templates/channel.py:540
-msgid "${len} Videos"
+#: ../../portable/frontends/widgets/statictabs.py:65
+#: ../../portable/frontends/widgets/itemlistcontroller.py:379
+msgid "Library"
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/channel_content.py:185
-#: ../../portable/frontends/html/compiled_templates/channel_folder.py:349
-#: ../../portable/frontends/html/compiled_templates/channel.py:531
-msgid "Downloaded"
+#: ../../portable/frontends/widgets/statictabs.py:70
+#: ../../portable/frontends/widgets/itemlistcontroller.py:385
+msgid "Single Items"
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/feed_settings.py:48
-#: ../../portable/frontends/html/compiled_templates/channel.py:188
-msgid "remove channel"
-msgstr ""
+#: ../../portable/frontends/widgets/statictabs.py:77
+#: ../../portable/frontends/widgets/prefpanel.py:265
+msgid "New"
+msgstr "nova"
 
-#: ../../portable/frontends/html/compiled_templates/feed_settings.py:57
-#: ../../portable/frontends/html/compiled_templates/channel.py:197
-msgid "Settings: ${title}"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/feed_settings.py:59
-#: ../../portable/frontends/html/compiled_templates/channel.py:199
-msgid "Videos expire after"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/feed_settings.py:63
-#: ../../portable/frontends/html/compiled_templates/channel.py:203
-msgid "Default"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/feed_settings.py:70
-#: ../../portable/frontends/html/compiled_templates/channel.py:210
-msgid "default"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/feed_settings.py:136
-#: ../../portable/frontends/html/compiled_templates/channel.py:276
-msgid ""
-"Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
-"unwatched."
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/download_item_description.py:53
-#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:329
-msgid "Saved"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/playlist_folder.py:61
-msgid "Empty Playlist Folder"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/playlist_folder.py:73
-msgid ""
-"This folder contains ${count} playlists, but the playlists do not contain "
-"any items."
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/playlist_folder.py:78
-msgid "Drag playlists to this folder to add them."
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:55
-#: ../../portable/frontends/html/compiled_templates/video_info.py:46
-#: ../../portable/frontends/html/compiled_templates/external_playback.py:59
-msgid "EMAIL A FRIEND"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:62
-#: ../../portable/frontends/html/compiled_templates/video_info.py:53
-#: ../../portable/frontends/html/compiled_templates/external_playback.py:66
-msgid "PERMALINK"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:69
-#: ../../portable/frontends/html/compiled_templates/video_info.py:60
-#: ../../portable/frontends/html/compiled_templates/external_playback.py:73
-msgid "COMMENTS"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:81
-#: ../../portable/frontends/html/compiled_templates/video_info.py:72
-#: ../../portable/frontends/html/compiled_templates/external_playback.py:85
-msgid "KEEP"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:88
-#: ../../portable/frontends/html/compiled_templates/video_info.py:79
-#: ../../portable/frontends/html/compiled_templates/external_playback.py:92
-msgid "ADD TO LIBRARY"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:98
-#: ../../portable/frontends/html/compiled_templates/video_info.py:89
-#: ../../portable/frontends/html/compiled_templates/external_playback.py:102
-msgid "DELETE"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:114
-msgid "Miro - External Playback Template"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/external_playback_continue.py:124
-msgid "Continue To Next Video"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/download.py:39
-#, python-format
-msgid "%0.1f KB/s uploading"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/download.py:42
-#, python-format
-msgid "%0.1f KB/s downloading"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/download.py:140
-msgid "External Downloads"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/download.py:142
-msgid "Clear Completed and Failed Downloads"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/download.py:155
-msgid "Seeding Torrents"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/download.py:177
-msgid "${size} free for downloads"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/download.py:186
-msgid "${size} free on disk"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/download.py:464
-#: ../../portable/frontends/html/compiled_templates/new.py:138
-#: ../../portable/frontends/html/compiled_templates/library.py:137
-msgid "Find"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/download.py:466
-#: ../../portable/tabs.py:57
+#: ../../portable/frontends/widgets/statictabs.py:84
 msgid "Downloading"
 msgstr "Preuzimanje"
 
-#: ../../portable/frontends/html/compiled_templates/download.py:485
-msgid "Pause All"
+#: ../../portable/frontends/widgets/channelsettingspanel.py:53
+#: ../../portable/frontends/widgets/channelsettingspanel.py:98
+#: ../../portable/frontends/widgets/prefpanel.py:391
+msgid "never"
+msgstr "nikada"
+
+#: ../../portable/frontends/widgets/channelsettingspanel.py:56
+#, python-format
+msgid "%(count)d hour"
+msgid_plural "%(count)d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/channelsettingspanel.py:62
+#, python-format
+msgid "%(count)d day"
+msgid_plural "%(count)d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/channelsettingspanel.py:68
+#, python-format
+msgid "%(count)d month"
+msgid_plural "%(count)d months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/channelsettingspanel.py:88
+msgid "Videos expire after"
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/download.py:503
-msgid "Resume All"
+#: ../../portable/frontends/widgets/channelsettingspanel.py:90
+#, python-format
+msgid "Default (%(expiration)s)"
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/download.py:516
-msgid "Channel Downloads"
+#: ../../portable/frontends/widgets/channelsettingspanel.py:92
+msgid "3 hours"
+msgstr "3 sata"
+
+#: ../../portable/frontends/widgets/channelsettingspanel.py:93
+#: ../../portable/frontends/widgets/prefpanel.py:386
+#: ../../portable/item.py:448
+#, python-format
+msgid "1 day"
+msgid_plural "%(count)d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/channelsettingspanel.py:94
+#: ../../portable/frontends/widgets/prefpanel.py:387
+msgid "3 days"
+msgstr "3 dana"
+
+#: ../../portable/frontends/widgets/channelsettingspanel.py:95
+#: ../../portable/frontends/widgets/prefpanel.py:388
+msgid "6 days"
+msgstr "6 dana"
+
+#: ../../portable/frontends/widgets/channelsettingspanel.py:96
+#: ../../portable/frontends/widgets/prefpanel.py:389
+msgid "10 days"
+msgstr "10 dana"
+
+#: ../../portable/frontends/widgets/channelsettingspanel.py:97
+#: ../../portable/frontends/widgets/prefpanel.py:390
+msgid "1 month"
+msgstr "1 mjesec"
+
+#: ../../portable/frontends/widgets/channelsettingspanel.py:133
+msgid "Don't Auto Download when more than"
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/channel_folder.py:172
-msgid "Empty Channel Folder"
+#: ../../portable/frontends/widgets/channelsettingspanel.py:136
+msgid "videos are waiting unwatched."
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/channel_folder.py:174
-msgid "Drag channels to this folder to add them."
+#: ../../portable/frontends/widgets/channelsettingspanel.py:172
+msgid "Remember"
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/unittest/translationtest.py:45
-msgid "Simple translation"
+#: ../../portable/frontends/widgets/channelsettingspanel.py:174
+#, python-format
+msgid "Default (%(number)s)"
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/unittest/translationtest.py:59
-msgid "truck stop in a ${can}"
+#: ../../portable/frontends/widgets/channelsettingspanel.py:184
+msgid "older items in this feed in addition to the current contents."
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/unittest/translationtest.py:63
-msgid ""
-"This is a ${car} and this is a ${truck} <span>This text is <b "
-"style=\"color:red\">raw</b> text</span>"
+#: ../../portable/frontends/widgets/channelsettingspanel.py:209
+msgid "Channel Settings"
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:75
-#: ../../portable/frontends/html/compiled_templates/download_item_details.py:38
+#: ../../portable/frontends/widgets/style.py:257
+#: ../../portable/frontends/widgets/itemcontextmenu.py:80
+#: ../../portable/frontends/widgets/itemcontextmenu.py:153
+#: ../../portable/dialogs.py:104
+msgid "Keep"
+msgstr "Zadrži"
+
+#: ../../portable/frontends/widgets/style.py:328
 msgid "Date:"
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:82
-#: ../../portable/frontends/html/compiled_templates/download_item_details.py:45
+#: ../../portable/frontends/widgets/style.py:329
 msgid "Length:"
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:89
-#: ../../portable/frontends/html/compiled_templates/download_item_details.py:52
+#: ../../portable/frontends/widgets/style.py:330
 msgid "Size:"
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:98
-#: ../../portable/frontends/html/compiled_templates/download_item_details.py:61
+#: ../../portable/frontends/widgets/style.py:340
 msgid "Show Details"
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:105
-#: ../../portable/frontends/html/compiled_templates/download_item_details.py:68
+#: ../../portable/frontends/widgets/style.py:344
 msgid "Hide Details"
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:153
-#: ../../portable/frontends/html/compiled_templates/download_item_details.py:116
+#: ../../portable/frontends/widgets/style.py:358
+msgid "Web page"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:358
+msgid "permalink"
+msgstr "Neprestana veza"
+
+#: ../../portable/frontends/widgets/style.py:361
+msgid "File link"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:361
+msgid "direct link to file"
+msgstr "Direktna veza prema datoteci"
+
+#: ../../portable/frontends/widgets/style.py:362
+msgid "File type"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:365
+#: ../../portable/frontends/widgets/style.py:367
+msgid "License"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:367
+msgid "see permalink"
+msgstr "Viditi neprestana veza"
+
+#: ../../portable/frontends/widgets/style.py:369
+msgid "Filename"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:372
+msgid "Local directory"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:375
+msgid "Local file"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:383
+msgid "Leechers"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:385
+msgid "Seeders"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:387
+msgid "Up Rate"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:389
+msgid "Down Rate"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:391
+msgid "Up Total"
+msgstr "Poslani iznos"
+
+#: ../../portable/frontends/widgets/style.py:392
+msgid "Down Total"
+msgstr "Primljeni iznos"
+
+#: ../../portable/frontends/widgets/style.py:404
+msgid "Unwatched"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:422
+msgid "paused"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:467
 msgid "Download Torrent"
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:230
-#: ../../portable/frontends/html/compiled_templates/download_item_details.py:193
-msgid "Pending Auto Download"
+#: ../../portable/frontends/widgets/style.py:469
+#: ../../portable/frontends/widgets/itemcontextmenu.py:101
+#: ../../portable/frontends/widgets/itemcontextmenu.py:166
+#: ../../portable/dialogs.py:94
+msgid "Download"
+msgstr "Preuzmi"
+
+#: ../../portable/frontends/widgets/prefpanel.py:191
+msgid "Note:"
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:244
-#: ../../portable/frontends/html/compiled_templates/download_item_details.py:207
-msgid "STOP SEEDING"
+#: ../../portable/frontends/widgets/prefpanel.py:228
+msgid "Automatically run Miro when I log in."
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/download_item_inner.py:282
-#: ../../portable/frontends/html/compiled_templates/download_item_thumbnail.py:69
-msgid "Resume Download"
+#: ../../portable/frontends/widgets/prefpanel.py:232
+msgid "Warn me if I attempt to quit with downloads in progress."
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/new.py:146
-msgid "Recent Videos"
+#: ../../portable/frontends/widgets/prefpanel.py:246
+msgid "Check channels for new content"
+msgstr "Postaviti kanale na početak zbog novog sadržaja"
+
+#: ../../portable/frontends/widgets/prefpanel.py:247
+msgid "Every day"
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/playlist.py:58
-msgid "Empty Playlist"
-msgstr ""
+#: ../../portable/frontends/widgets/prefpanel.py:248
+msgid "Every hour"
+msgstr "Svaki sat"
 
-#: ../../portable/frontends/html/compiled_templates/playlist.py:60
-msgid "Drag downloaded videos to this playlist to add them."
-msgstr ""
+#: ../../portable/frontends/widgets/prefpanel.py:249
+msgid "Every 30 minutes"
+msgstr "Svakih 30 minuta"
 
-#: ../../portable/frontends/html/compiled_templates/external_playback.py:139
+#: ../../portable/frontends/widgets/prefpanel.py:250
+msgid "Manually"
+msgstr "Ručno"
+
+#: ../../portable/frontends/widgets/prefpanel.py:259
 msgid ""
-"Miro can't play this file. You may be able to open it with a different "
-"program.<br></br><br></br><strong>Filename:</strong> "
-"${filename}<br></br><strong>File type:</strong> ${format}"
+"You can set the frequency channels are checked for each channel in the "
+"channel's settings pane."
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/external_playback.py:143
-msgid "REVEAL FILE"
+#: ../../portable/frontends/widgets/prefpanel.py:264
+msgid "Auto download default settings for new channels:"
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/external_playback.py:147
-msgid "Play Externally"
+#: ../../portable/frontends/widgets/prefpanel.py:266
+msgid "All"
+msgstr "Sve"
+
+#: ../../portable/frontends/widgets/prefpanel.py:267
+msgid "Off"
+msgstr "Isključeno"
+
+#: ../../portable/frontends/widgets/prefpanel.py:274
+msgid "By default, remember "
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/external_playback.py:156
-msgid "Skip >> ${countdown}"
+#: ../../portable/frontends/widgets/prefpanel.py:281
+msgid "old items in addition to the current contents."
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/search.py:49
-#: ../../portable/frontends/html/compiled_templates/channel.py:293
-#: ../../portable/extrastrings.py:33 ../../portable/feed.py:2393
-#: ../../portable/feed.py:2483
-msgid "Search"
-msgstr "Pretraživanje"
-
-#: ../../portable/frontends/html/compiled_templates/search.py:74
-msgid "No videos found.<br></br>Enter a query in the search field above."
+#: ../../portable/frontends/widgets/prefpanel.py:292
+msgid "Maximum number of manual downloads at a time:"
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/search.py:79
-msgid "Searching..."
+#: ../../portable/frontends/widgets/prefpanel.py:298
+msgid "Maximum number of auto-downloads at a time:"
 msgstr ""
 
-#: ../../portable/frontends/html/compiled_templates/search.py:84
+#: ../../portable/frontends/widgets/prefpanel.py:304
+msgid "Bittorrent:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:308
+msgid "To avoid internet slowdowns, limit upstream to:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:311
+#: ../../portable/frontends/widgets/prefpanel.py:319
+msgid "KB/s"
+msgstr "KB/s"
+
+#: ../../portable/frontends/widgets/prefpanel.py:316
+msgid "Limit torrent downstream to:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:324
+msgid "Limit torrent connections to:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:331
+msgid "Use ports:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:340
+msgid "Automatically forward ports.  (UPNP)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:344
+msgid "Ignore unencrypted connections."
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:348
+msgid "Stop torrent uploads when this ratio is reached:"
+msgstr "Zaustaviti slanje torrentsa kad je kvota ispunjena (nbsp):"
+
+#: ../../portable/frontends/widgets/prefpanel.py:361
+msgid "Store downloads in this folder:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:366
+msgid "Watch for new videos in these folders and include them in library:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:376
+msgid "Keep at least this much free space on my drive:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:379
+msgid "GB"
+msgstr "GB"
+
+#: ../../portable/frontends/widgets/prefpanel.py:385
+msgid "By default, videos expire after"
+msgstr "Greškom, videa istječu poslije"
+
+#: ../../portable/frontends/widgets/prefpanel.py:402
+msgid "Resume playing a video from the point it was last stopped."
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:421
+msgid "General"
+msgstr "Općenito"
+
+#: ../../portable/frontends/widgets/prefpanel.py:423
+#: ../../portable/frontends/widgets/itemlistcontroller.py:307
+msgid "Downloads"
+msgstr "Skidanja"
+
+#: ../../portable/frontends/widgets/prefpanel.py:424
+msgid "Folders"
+msgstr "Mape"
+
+#: ../../portable/frontends/widgets/prefpanel.py:425
+msgid "Disk space"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:426
+msgid "Playback"
+msgstr "Reprodukcija"
+
+#: ../../portable/frontends/widgets/prefpanel.py:472
+msgid "Preferences"
+msgstr "Postavke"
+
+#: ../../portable/frontends/widgets/application.py:87
+msgid "Miro"
+msgstr "Miro"
+
+#: ../../portable/frontends/widgets/application.py:183
+msgid "Open Files..."
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:194
+msgid "Open Files - Error"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:195
+#: ../../portable/frontends/widgets/application.py:521
+#, python-format
+msgid "File %(filename)s does not exist."
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:227
+msgid "New Download"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:228
+msgid "Enter the URL of the video to download"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:229
+msgid "New Download - Invalid URL"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:230
 msgid ""
-"No matching videos found.<br></br>Enter a different query in the search "
-"field above."
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/search.py:93
-msgid "Save as a Channel"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/search.py:95
-msgid ""
-"<h3>Results for \"<span i18n:name=\"query\" "
-"t:replace=\"feed.lastQuery\"></span>\"</h3>"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/multi_channel.py:59
-msgid ""
-"${count} Channel Folders Selected<br></br>(contains ${containedcount} "
-"channels)"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/multi_channel.py:71
-msgid "${count} Channels Selected"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/multi_channel.py:76
-msgid "Put Into a New Folder"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/multi_channel.py:83
-msgid "Delete All"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/multi_playlist.py:59
-msgid ""
-"${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
-"playlists)"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/multi_playlist.py:71
-msgid "${count} Playlists Selected"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/channel.py:318
-msgid "Visit Website"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/channel.py:325
-msgid "Send to a Friend"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/channel.py:332
-msgid "Auto Download"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/channel.py:746
-msgid "Looking for videos at this URL"
-msgstr ""
-
-#: ../../portable/frontends/html/compiled_templates/library.py:145
-#: ../../portable/tabs.py:54
-#, fuzzy
-msgid "Library"
-msgstr "Knjižnica"
-
-#: ../../portable/frontends/html/main.py:138 ../../portable/startup.py:236
-#, fuzzy
-msgid "Video Directory Missing"
-msgstr "Mapa za videa koja nedostaju"
-
-#: ../../portable/frontends/html/main.py:139
-#, fuzzy
-msgid ""
+"The address you entered is not a valid url.\n"
+"Please check the URL and try again.\n"
 "\n"
-"    Miro can't find your primary video directory.  This may be because it's  "
-"   located on an external drive that is currently disconnected.\n"
-"\n"
-"    If you continue, the video directory will be reset to a location on this "
-"    drive (this will cause you to lose some details about the videos on the  "
-"   external drive).  You can also quit, connect the drive, and relaunch Miro."
+"Enter the URL of the video to download"
 msgstr ""
-"\n"
-"    Miro ne pronalazi vašu mapu za video. Ova mapa se možda nalazi na "
-"vanjskom drivu koji je trenutno isključen.\n"
-"Ako nastavljate, izgubit ćete pojedini detalji na video koji su na vanskom "
-"drivu. Možete napustiti Miro, spojiti driver ponovo uključiti Miro."
 
-#: ../../portable/frontends/html/main.py:197 ../../portable/theme.py:127
-#, fuzzy
-msgid "Custom Channels"
-msgstr "Osobni kanali"
+#: ../../portable/frontends/widgets/application.py:257
+#: ../../portable/frontends/widgets/application.py:416
+#: ../../portable/frontends/widgets/application.py:462
+#: ../../portable/frontends/widgets/application.py:644
+#, python-format
+msgid "Remove %(name)s"
+msgid_plural "Remove %(count)d items"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../../portable/frontends/html/main.py:197 ../../portable/theme.py:127
-#, fuzzy
+#: ../../portable/frontends/widgets/application.py:264
 msgid ""
-"You are running a version of $longAppName with a custom set of channels."
-msgstr "Vi imate verziju $longAppname sa listom osobnih kanala"
+"One of these items was not downloaded from a channel. Would you like to "
+"delete it or just remove it from the Library?"
+msgid_plural ""
+"Some of these items were not downloaded from a channel. Would you like to "
+"delete them or just remove them from the Library?"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../../portable/frontends/html/main.py:276 ../../portable/httpclient.py:151
+#: ../../portable/frontends/widgets/application.py:279
+#, python-format
+msgid "Are you sure you want to delete the item?"
+msgid_plural "Are you sure you want to delete all %(count)d items?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/application.py:309
+msgid "Rename Video"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:310
+msgid "Enter the new name for the video"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:324
+msgid "Save Video As..."
+msgstr "Spremi video kao..."
+
+#: ../../portable/frontends/widgets/application.py:346
+msgid "Add Channel"
+msgstr "Dodaj kanal"
+
+#: ../../portable/frontends/widgets/application.py:347
+msgid "Enter the URL of the channel to add"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:348
+msgid "Add Channel - Invalid URL"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:349
+msgid ""
+"The address you entered is not a valid url.\n"
+"Please check the URL and try again.\n"
+"\n"
+"Enter the URL of the channel to add"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:367
+msgid "Create Channel Folder"
+msgstr "Kreirati grupu kanala"
+
+#: ../../portable/frontends/widgets/application.py:375
+msgid "Add Guide"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:376
+msgid "Enter the URL of the Miro guide to add"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:377
+msgid "Add Guide - Invalid URL"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:378
+msgid ""
+"The address you entered is not a valid url.\n"
+"Please check the URL and try again.\n"
+"\n"
+"Enter the URL of the Miro guide to add"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:422
+msgid ""
+"What would you like to do with the videos in this channel that you've "
+"downloaded?"
+msgstr "Što želite napraviti sa videama na kanalu s kojeg ste skidali ?"
+
+#: ../../portable/frontends/widgets/application.py:440
+#, python-format
+msgid "Remove %(name)s channel"
+msgid_plural "Remove %(count)d channels"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/application.py:445
+#, python-format
+msgid ""
+"Are you sure you want to remove %(name)s?  Any downloads in progress will be "
+"canceled."
+msgid_plural ""
+"Are you sure you want to remove these %(count)s channels?  Any downloads in "
+"progress will be canceled."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/application.py:467
+#: ../../portable/frontends/widgets/application.py:626
+#: ../../portable/frontends/widgets/application.py:645
+#, python-format
+msgid "Are you sure you want to remove %(name)s?"
+msgid_plural "Are you sure you want to remove these %(count)d channels?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/application.py:483
+#, python-format
+msgid "Stop watching directory"
+msgid_plural "Stop watching %(count)d directories"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/application.py:488
+#, python-format
+msgid "Are you sure you want to stop watching %(name)s?"
+msgid_plural ""
+"Are you sure you want to stop watching these %(count)s directories?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/application.py:511
+msgid "Import OPML File"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:513
+msgid "OPML Files"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:520
+msgid "Import OPML File - Error"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:526
+msgid "Export OPML File"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:559
+msgid "Create Playlist"
+msgstr "Kreiraj playlistu"
+
+#: ../../portable/frontends/widgets/application.py:560
+msgid "Enter a name for the new playlist"
+msgstr "Unesi ime za novu playlistu"
+
+#: ../../portable/frontends/widgets/application.py:567
+msgid "Create Playlist Folder"
+msgstr "Kreirati mapu za playlistu"
+
+#: ../../portable/frontends/widgets/application.py:568
+msgid "Enter a name for the new playlist folder"
+msgstr "Stavite ime za novu mapu playliste"
+
+#: ../../portable/frontends/widgets/application.py:584
+#: ../../portable/frontends/widgets/tablist.py:408
+msgid "Rename Channel Folder"
+msgstr "Preimenovati mape kanala"
+
+#: ../../portable/frontends/widgets/application.py:585
+#, python-format
+msgid "Enter a new name for the channel folder %(name)s"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:589
+#: ../../portable/frontends/widgets/tablist.py:415 ../../portable/feed.py:837
+msgid "Rename Channel"
+msgstr "Podigni Kanal"
+
+#: ../../portable/frontends/widgets/application.py:590
+#: ../../portable/feed.py:838
+#, python-format
+msgid "Enter a new name for the channel %(name)s"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:594
+#: ../../portable/frontends/widgets/tablist.py:450
+#: ../../portable/playlist.py:227
+msgid "Rename Playlist"
+msgstr "Preimenovati playlistu"
+
+#: ../../portable/frontends/widgets/application.py:595
+#, python-format
+msgid "Enter a new name for the playlist %(name)s"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:599
+#: ../../portable/frontends/widgets/tablist.py:444
+msgid "Rename Playlist Folder"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:600
+#, python-format
+msgid "Enter a new name for the playlist folder %(name)s"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:603
+#: ../../portable/frontends/widgets/tablist.py:365
+msgid "Rename Site"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:604
+#, python-format
+msgid "Enter a new name for the site %(name)s"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:621
+#, python-format
+msgid "Remove playlist"
+msgid_plural "Remove %(count)d playlists"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/application.py:724
+#: ../../portable/httpclient.py:158
 msgid "Internal Error"
 msgstr "Interna greška"
 
-#: ../../portable/frontends/html/main.py:276
+#: ../../portable/frontends/widgets/application.py:724
 msgid ""
 "Miro has encountered an internal error. You can help us track down this "
 "problem and fix it by submitting an error report."
@@ -1730,115 +983,348 @@ msgstr ""
 "Miro je pronašao jednu unutarnju grešku. Vi nam možete pomoći u pronalasku "
 "problema i ispraviti ga tako da pošaljete izvještaj greške."
 
-#: ../../portable/frontends/html/main.py:276
-#, fuzzy
+#: ../../portable/frontends/widgets/application.py:724
 msgid ""
 "Include entire program database including all video and channel metadata "
 "with crash report"
 msgstr ""
-"Uključiti cijelu bazu podataka programa kao i meta podaci kanala i videa u "
-"izvještaju greške."
 
-#: ../../portable/frontends/html/main.py:276
+#: ../../portable/frontends/widgets/application.py:724
 msgid "Describe what you were doing that caused this error"
 msgstr "Opišite što ste radili i tko je napravio pogrešku."
 
-#: ../../portable/frontends/html/main.py:291
-#, python-format
-msgid "%s Version Alert"
-msgstr "Nova verzija %s"
+#: ../../portable/frontends/widgets/itemcontextmenu.py:54
+msgid "Remove From the Library"
+msgstr "Izbaciti iz knjižnice"
 
-#: ../../portable/frontends/html/main.py:292
-#, python-format
-msgid "A new version of %s is available. Would you like to download it now?"
-msgstr "Nova verzija od %s je dostupna. Da li želite skidati odmah?"
+#: ../../portable/frontends/widgets/itemcontextmenu.py:68
+#: ../../portable/frontends/widgets/itemcontextmenu.py:134
+msgid "Play"
+msgstr "Pokreni"
 
-#: ../../portable/frontends/html/main.py:297
-#, python-format
-msgid "%s Version Check"
-msgstr "Provjera verzije %s"
-
-#: ../../portable/frontends/html/main.py:298
-#, python-format
-msgid "%s is up to date."
-msgstr "%s je spreman za uporabu"
-
-#: ../../portable/frontends/html/main.py:316
-msgid "Are you sure you want to quit?"
-msgstr "Jesi li siguran da želiš odustati?"
-
-#: ../../portable/frontends/html/main.py:318
-msgid ""
-"Miro is still uploading your crash report. If you quit now the upload will "
-"be canceled.  Quit Anyway?"
+#: ../../portable/frontends/widgets/itemcontextmenu.py:69
+msgid "Play Just this Video"
 msgstr ""
-"Miro sprema slanje vašeg izvještaja pogrešaka. Ako sad odustanete, izvještaj "
-"će biti otkazan. Da li ipak želite napustiti ?"
 
-#: ../../portable/frontends/html/main.py:323
+#: ../../portable/frontends/widgets/itemcontextmenu.py:70
+#: ../../portable/frontends/widgets/itemcontextmenu.py:135
+msgid "Add to New Playlist"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:74
+#: ../../portable/frontends/widgets/itemcontextmenu.py:142
+msgid "Mark as Unwatched"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:77
+#: ../../portable/frontends/widgets/itemcontextmenu.py:147
+msgid "Mark as Watched"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:84
+#: ../../portable/frontends/widgets/itemcontextmenu.py:189
+msgid "Restart Upload"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:86
+msgid "Reveal File"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:90
+#: ../../portable/frontends/widgets/itemcontextmenu.py:182
+msgid "Cancel Download"
+msgstr "Prekini skidanje"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:94
+#: ../../portable/frontends/widgets/itemcontextmenu.py:183
+msgid "Pause Download"
+msgstr "Prekinuti skidanje"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:97
+msgid "Resume Download"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:129
 #, python-format
-msgid "You have %d download still in progress.  Quit Anyway?"
-msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
-msgstr[0] "Vaše skidanje je u tijeku. Da li  želite napustiti ?"
-msgstr[1] "Vaše skidanje je u tijeku. Da li želite napustiti ?"
-msgstr[2] "Vaše skidanje je u tijeku. Da li želite napustiti ?"
+msgid "1 Downloaded Item"
+msgid_plural "%(count)d Downloaded Items"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../../portable/frontends/html/main.py:347
-#, fuzzy
-msgid "Import OPML File"
-msgstr "Uvesti dokumenti OPML"
-
-#: ../../portable/frontends/html/main.py:349
-#, fuzzy
-msgid "OPML Files"
-msgstr "Dokument OPML"
-
-#: ../../portable/frontends/html/main.py:354
-#, fuzzy
-msgid "Export OPML File"
-msgstr "Izvoziti OPML dokument"
-
-#: ../../portable/util.py:267
+#: ../../portable/frontends/widgets/itemcontextmenu.py:158
 #, python-format
-msgid "%1.1fGB"
-msgstr "%1.1fGB"
+msgid "1 Available Item"
+msgid_plural "%(count)d Available Items"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../../portable/util.py:269
+#: ../../portable/frontends/widgets/itemcontextmenu.py:171
 #, python-format
-msgid "%dGB"
-msgstr "%dGB"
+msgid "1 Downloading Item"
+msgid_plural "%(count)d Downloading Items"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../../portable/util.py:273
+#: ../../portable/frontends/widgets/itemcontextmenu.py:203
+msgid "Remove From Playlist"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:137
+msgid "Save Search"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:182
+msgid "Search terms"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:187
+#: ../../portable/extrastrings.py:33 ../../portable/feed.py:2266
+#: ../../portable/feed.py:2358
+msgid "Search"
+msgstr "Pretraživanje"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:261
+msgid "Save as a Channel"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:302
+msgid "Pause All"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:308
+msgid "Resume All"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:322
 #, python-format
-msgid "%1.1fMB"
-msgstr "%1.1fMB"
+msgid "%(amount)s free on disk"
+msgstr ""
 
-#: ../../portable/util.py:275
+#: ../../portable/frontends/widgets/itemlistwidgets.py:327
 #, python-format
-msgid "%dMB"
-msgstr "%dMB"
+msgid "%(rate)s uploading"
+msgstr ""
 
-#: ../../portable/util.py:279
+#: ../../portable/frontends/widgets/itemlistwidgets.py:334
 #, python-format
-msgid "%1.1fKB"
-msgstr "%1.1fKB"
+msgid "%(rate)s downloading"
+msgstr ""
 
-#: ../../portable/util.py:281
+#: ../../portable/frontends/widgets/itemlistwidgets.py:356
+msgid "Auto Download"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:361
+msgid "all"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:361
+msgid "new"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:361
+msgid "off"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:365
+msgid "Send to a friend"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:370
+msgid "Settings"
+msgstr "Postavke"
+
+#: ../../portable/frontends/widgets/feedcontroller.py:95
+msgid "Downloaded"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedcontroller.py:105
+msgid "Full Channel"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedcontroller.py:142
 #, python-format
-msgid "%dKB"
-msgstr "%dKB"
+msgid "Show 1 more item"
+msgid_plural "Show %(count)d more items"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../../portable/util.py:285
+#: ../../portable/frontends/widgets/feedcontroller.py:169
+#: ../../portable/frontends/widgets/feedcontroller.py:195
 #, python-format
-msgid "%1.1fB"
-msgstr "%1.1fB"
+msgid "%(count)d Downloading"
+msgid_plural "%(count)d Downloading"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../../portable/util.py:287
+#: ../../portable/frontends/widgets/feedcontroller.py:180
+#: ../../portable/frontends/widgets/feedcontroller.py:191
 #, python-format
-msgid "%dB"
-msgstr "%dB"
+msgid "%(count)d Video"
+msgid_plural "%(count)d Videos"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../../portable/iheartmiro.py:134
+#: ../../portable/frontends/widgets/diagnostics.py:64
+msgid "Movies location:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/diagnostics.py:69
+msgid "Icon cache location:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/diagnostics.py:74
+msgid "Log file location:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/diagnostics.py:79
+msgid "Downloader log file location:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/diagnostics.py:84
+msgid "Database file location:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/diagnostics.py:91
+msgid "Space free on disk:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/diagnostics.py:99
+#: ../../portable/menubar.py:275
+msgid "Diagnostics"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newsearchchannel.py:55
+msgid "New Search Channel"
+msgstr "Novi kanal za potražiti"
+
+#: ../../portable/frontends/widgets/newsearchchannel.py:56
+msgid "A search channel contains items that match a search term."
+msgstr ""
+
+#: ../../portable/frontends/widgets/newsearchchannel.py:69
+msgid "Search for:"
+msgstr "Traži:"
+
+#: ../../portable/frontends/widgets/newsearchchannel.py:75
+msgid "In this:"
+msgstr "U ovom"
+
+#: ../../portable/frontends/widgets/gtk/window.py:351
+msgid "All files"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/window.py:404
+#, python-format
+msgid ""
+"%(copyright)s.  See LICENSE file for details.\n"
+"Miro and Miro logo are trademarks of the Participatory Culture Foundation."
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:364
+#: ../../portable/frontends/widgets/tablist.py:416
+msgid "Copy URL to clipboard"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:366
+msgid "Remove Site"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:407
+#: ../../portable/frontends/widgets/tablist.py:414
+msgid "Update Channel Now"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:409
+#: ../../portable/frontends/widgets/tablist.py:417
+#: ../../portable/frontends/widgets/tablist.py:423
+#: ../../portable/frontends/widgets/tablist.py:445
+#: ../../portable/frontends/widgets/tablist.py:451
+#: ../../portable/frontends/widgets/tablist.py:456
+#: ../../portable/dialogs.py:106
+msgid "Remove"
+msgstr "Ukloni"
+
+#: ../../portable/frontends/widgets/tablist.py:422
+msgid "Update Channels Now"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:472
+msgid "SITES"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:474
+msgid "FEEDS"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:476
+msgid "PLAYLISTS"
+msgstr ""
+
+#: ../../portable/frontends/widgets/linkhandler.py:56
+msgid "Subscribe to Feed"
+msgstr ""
+
+#: ../../portable/frontends/widgets/linkhandler.py:58
+#, python-format
+msgid ""
+"This link appears to be a feed.  Do you want to add it to your "
+"subscriptions?\n"
+"\n"
+"%(url)s"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistcontroller.py:175
+msgid "Error Revealing File"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistcontroller.py:176
+#, python-format
+msgid "The file \"%(filename)s\" was deleted from outside Miro."
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistcontroller.py:334
+msgid "New Videos"
+msgstr ""
+
+#: ../../portable/util.py:283 ../../portable/util.py:285
+#: ../../portable/displaytext.py:64
+#, python-format
+msgid "%(size)sGB"
+msgstr ""
+
+#: ../../portable/util.py:289 ../../portable/util.py:291
+#: ../../portable/displaytext.py:67
+#, python-format
+msgid "%(size)sMB"
+msgstr ""
+
+#: ../../portable/util.py:295 ../../portable/util.py:297
+#: ../../portable/displaytext.py:70
+#, python-format
+msgid "%(size)sKB"
+msgstr ""
+
+#: ../../portable/util.py:301 ../../portable/util.py:303
+#: ../../portable/displaytext.py:72
+#, python-format
+msgid "%(size)sB"
+msgstr ""
+
+#: ../../portable/iheartmiro.py:142
+msgid ""
+"If you click 'Install iHeartMiro' below, Firefox will launch and ask if it's "
+"ok.   Just say yes and you're done!   It takes about 7 seconds.  Thanks for "
+"your help."
+msgstr ""
+
+#: ../../portable/iheartmiro.py:149
+msgid ""
+"If you click 'Install iHeartMiro' below, we'll install the extension.  "
+"Thanks for your help."
+msgstr ""
+
+#: ../../portable/iheartmiro.py:172
 #, python-format
 msgid ""
 "An Effortless Way to Help Miro\n"
@@ -1846,470 +1332,405 @@ msgid ""
 "Miro is open-source and built by a non-profit.  We need your help to "
 "continue our work.\n"
 "\n"
-"I Heart Miro is a simple %s extension that gives a referral fee to the Miro "
-"organization when you shop at Amazon.  You'll never notice it, it doesn't "
-"cost you a thing, and it's easy to uninstall at any time.\n"
+"I Heart Miro is a simple %(installer)s extension that gives a referral fee "
+"to the Miro organization when you shop at Amazon.  You'll never notice it, "
+"it doesn't cost you a thing, and it's easy to uninstall at any time.\n"
 "\n"
-"%s"
+"%(instructions)s"
 msgstr ""
 
-#: ../../portable/iheartmiro.py:142
+#: ../../portable/iheartmiro.py:185
 msgid "Install iHeartMiro?"
 msgstr ""
 
-#: ../../portable/dl_daemon/download.py:457
+#: ../../portable/dl_daemon/download.py:479
 msgid "Error"
 msgstr "Greška"
 
-#: ../../portable/dl_daemon/download.py:544
+#: ../../portable/dl_daemon/download.py:567
 #, python-format
-msgid "Could not write to %s"
-msgstr "Nemoguće pisati u %s"
+msgid "Could not write to %(filename)s"
+msgstr ""
 
-#: ../../portable/dl_daemon/download.py:564
-#: ../../portable/dl_daemon/download.py:772
+#: ../../portable/dl_daemon/download.py:589
+#: ../../portable/dl_daemon/download.py:797
 msgid "Not enough disk space"
 msgstr "Nedovoljno prostora na disku"
 
-#: ../../portable/dl_daemon/download.py:565
-#: ../../portable/dl_daemon/download.py:773
+#: ../../portable/dl_daemon/download.py:590
+#: ../../portable/dl_daemon/download.py:798
 #, python-format
-msgid "%s MB required to store this video"
-msgstr "%s MB su vraćeni za sačuvati ovaj video"
+msgid "%(amount)s MB required to store this video"
+msgstr ""
 
-#: ../../portable/dl_daemon/download.py:783
-#, fuzzy
+#: ../../portable/dl_daemon/download.py:605
+#, python-format
+msgid "Couldn't open %(filename)s for writing"
+msgstr ""
+
+#: ../../portable/dl_daemon/download.py:808
 msgid "BitTorrent failure"
-msgstr "Greška BitTorrent"
+msgstr ""
 
-#: ../../portable/dl_daemon/download.py:784
+#: ../../portable/dl_daemon/download.py:809
 msgid "BitTorrent failed to startup"
 msgstr "Pogreška na pokretanju BitTorrent"
 
-#: ../../portable/dl_daemon/download.py:957
+#: ../../portable/dl_daemon/download.py:987
 msgid "Corrupt Torrent"
 msgstr "Prekinut Torrent"
 
-#: ../../portable/dl_daemon/download.py:958
-#, fuzzy, python-format
-msgid "The torrent file at %s was not valid"
-msgstr "Datoteka torrent u %s ne vrijedi"
+#: ../../portable/dl_daemon/download.py:988
+#, python-format
+msgid "The torrent file at %(url)s was not valid"
+msgstr ""
 
-#: ../../portable/dl_daemon/download.py:983
-#, fuzzy
+#: ../../portable/dl_daemon/download.py:1014
 msgid "Torrent file deleted"
-msgstr "Izbrisana datoteka torrent"
+msgstr ""
 
-#: ../../portable/dl_daemon/download.py:984
-#, fuzzy
+#: ../../portable/dl_daemon/download.py:1015
 msgid "The torrent file for this item was deleted outside of Miro."
-msgstr "Datoteka torrent za ovaj dokument je izbrisan izvan Miro-a."
-
-#: ../../portable/controller.py:197 ../../portable/controller.py:211
-#: ../../portable/controller.py:255 ../../portable/controller.py:281
-#: ../../portable/controller.py:301
-#, python-format
-msgid "Remove %s"
-msgstr "Izbrisati %s"
-
-#: ../../portable/controller.py:198
-#, python-format
-msgid "Are you sure you want to remove the guide %s?"
-msgstr "Da li ste sigurni da želite izbrisati vodič %s ?"
-
-#: ../../portable/controller.py:212
-#, python-format
-msgid "Are you sure you want to remove %s"
-msgstr "Da li ste sigurni da želite izbrisati %s"
-
-#: ../../portable/controller.py:215 ../../portable/controller.py:260
-#: ../../portable/controller.py:286 ../../portable/controller.py:305
-#, python-format
-msgid "Remove %s channels"
-msgstr "Izbrisati %s kanali"
-
-#: ../../portable/controller.py:217
-#, python-format
-msgid "Are you sure you want to remove these %s playlists"
-msgstr "Da li ste sigurni da želite izbrisati ove %s playliste"
-
-#: ../../portable/controller.py:256
-msgid ""
-"What would you like to do with the videos in this channel that you've "
-"downloaded?"
-msgstr "Što želite napraviti sa videama na kanalu s kojeg ste skidali ?"
-
-#: ../../portable/controller.py:261
-msgid ""
-"What would you like to do with the videos in these channels that you've "
-"downloaded?"
-msgstr "Što želite napraviti sa videama na kanalima s kojih ste skidali ?"
-
-#: ../../portable/controller.py:282
-#, python-format
-msgid ""
-"Are you sure you want to remove %s?  Any downloads in progress will be "
-"canceled."
 msgstr ""
-"Da li ste sigurni da želite izbrisati %s ? Sva skidanja koja su u tijeku će "
-"biti prekinuta."
 
-#: ../../portable/controller.py:287
-#, python-format
-msgid ""
-"Are you sure you want to remove these %s channels?  Any downloads in "
-"progress will be canceled."
-msgstr ""
-"Da li ste sigurni da želite izbrisati ove %s kanali ? Sva skidanja u tijeku "
-"će biti prekinute."
-
-#: ../../portable/controller.py:302
-#, python-format
-msgid "Are you sure you want to remove %s?"
-msgstr "Da li ste sigurni da želite izbrisati %s ?"
-
-#: ../../portable/controller.py:306
-#, python-format
-msgid "Are you sure you want to remove these %s channels?"
-msgstr "Da li ste sigurni da želite izbrisati ove %s kanali ?"
-
-#: ../../portable/controller.py:319
-#, python-format
-msgid "Stop watching %s"
-msgstr "Prekinuti gledanje %s"
-
-#: ../../portable/controller.py:320
-#, python-format
-msgid "Are you sure you want to stop watching %s?"
-msgstr "Da li ste sigurni da želite prekinuti gledati %s ?"
-
-#: ../../portable/controller.py:323
-#, python-format
-msgid "Stop watching %s directories"
-msgstr "Prekinuti gledanje mape %s"
-
-#: ../../portable/controller.py:324
-#, python-format
-msgid "Are you sure you want to stop watching these %s directories?"
-msgstr "Da li ste sigurni da želite prekinuti nadgledati mape %s ?"
-
-#: ../../portable/controller.py:498
-#, fuzzy
-msgid "Error Saving Video"
-msgstr "Pogreška prilikom sačuvanja videa"
-
-#: ../../portable/controller.py:500
-#, python-format
-msgid ""
-"An error occured while trying to save %s.  Please check that the file has "
-"not been deleted and try again."
-msgstr ""
-"Jedna greška je nastala prilikom sačuvanja %s. Molimo provjerite da datoteka "
-"nije izbrisana i ponovite sačuvanje."
-
-#: ../../portable/downloader.py:234
+#: ../../portable/downloader.py:231
 msgid "activity"
 msgstr "Aktivnost"
 
-#: ../../portable/downloader.py:268 ../../portable/httpclient.py:138
-#: ../../portable/httpclient.py:167
+#: ../../portable/downloader.py:265 ../../portable/httpclient.py:145
+#: ../../portable/httpclient.py:174
 msgid "File not found"
 msgstr "Datoteka nije pronađena"
 
-#: ../../portable/downloader.py:269
-#, fuzzy
+#: ../../portable/downloader.py:266
 msgid "Flash URL Scraping Error"
-msgstr "Greška na preuzimanju URL flash"
+msgstr ""
 
-#: ../../portable/downloader.py:445
-#, fuzzy
+#: ../../portable/downloader.py:440
 msgid "starting up"
-msgstr "Početak"
+msgstr ""
 
-#: ../../portable/httpclient.py:89
+#: ../../portable/httpclient.py:90
 #, python-format
-msgid "Error: %s"
-msgstr "Greška: %s"
+msgid "Error: %(msg)s"
+msgstr ""
 
-#: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
+#: ../../portable/httpclient.py:105 ../../portable/httpclient.py:111
 msgid "Can't connect"
 msgstr "Ne može se povezati"
 
-#: ../../portable/httpclient.py:105
+#: ../../portable/httpclient.py:106
 #, python-format
-msgid "Connection Error: %s"
-msgstr "Greška u vezi: %s"
+msgid "Connection Error: %(msg)s"
+msgstr ""
 
-#: ../../portable/httpclient.py:111
+#: ../../portable/httpclient.py:112
 msgid "SSL connection error"
 msgstr "Pogreška veze SSL"
 
-#: ../../portable/httpclient.py:115
+#: ../../portable/httpclient.py:116
 msgid "HTTP error"
 msgstr "Pogreška HTTP"
 
-#: ../../portable/httpclient.py:118
+#: ../../portable/httpclient.py:120
 #, python-format
-msgid "Bad Status Line: %s"
-msgstr "Loše stanje veze: %s"
+msgid "Bad Status Line: %(msg)s"
+msgstr ""
 
-#: ../../portable/httpclient.py:122
+#: ../../portable/httpclient.py:125
 #, python-format
-msgid "Bad Header Line: %s"
-msgstr "Loš predvodnik: %s"
-
-#: ../../portable/httpclient.py:126
-#, python-format
-msgid "Bad Chunk size: %s"
-msgstr "Loš komad: %s"
+msgid "Bad Header Line: %(msg)s"
+msgstr ""
 
 #: ../../portable/httpclient.py:130
 #, python-format
-msgid "Expected CRLF got: %r"
-msgstr "Očekivani CRLF: %r"
+msgid "Bad Chunk size: %(msg)s"
+msgstr ""
 
-#: ../../portable/httpclient.py:133
+#: ../../portable/httpclient.py:135
 #, python-format
-msgid "%s closed connection"
-msgstr "%s je prekinuo vezu"
+msgid "Expected CRLF got: %(character)r"
+msgstr ""
 
-#: ../../portable/httpclient.py:139
+#: ../../portable/httpclient.py:140
+#, python-format
+msgid "%(host)s closed connection"
+msgstr ""
+
+#: ../../portable/httpclient.py:146
 msgid "Got 404 status code"
 msgstr "Izvještaj greške 404 je primljen"
 
-#: ../../portable/httpclient.py:141
-#, fuzzy, python-format
-msgid "Bad Status Code: %s"
-msgstr "Loš izvještaj: %s"
+#: ../../portable/httpclient.py:148
+#, python-format
+msgid "Bad Status Code: %(code)s"
+msgstr ""
 
-#: ../../portable/httpclient.py:146
+#: ../../portable/httpclient.py:153
 msgid "Authorization failed"
 msgstr "Odbijena dozvola"
 
-#: ../../portable/httpclient.py:152
-#, fuzzy
+#: ../../portable/httpclient.py:159
 msgid "Pipeline request never started"
-msgstr "Povjerljiva veza nikad nije započela"
+msgstr ""
 
-#: ../../portable/httpclient.py:156
+#: ../../portable/httpclient.py:163
 msgid "Timeout"
 msgstr "Prekoračenje vremena"
 
-#: ../../portable/httpclient.py:157
+#: ../../portable/httpclient.py:164
 #, python-format
-msgid "Connection to %s timed out"
-msgstr "Ograničeno vrijeme povezivanja u %s je prošlo"
+msgid "Connection to %(host)s timed out"
+msgstr ""
 
-#: ../../portable/httpclient.py:161
+#: ../../portable/httpclient.py:168
 msgid "Invalid URL"
 msgstr "Neispravan URL"
 
-#: ../../portable/httpclient.py:162
+#: ../../portable/httpclient.py:169
 #, python-format
-msgid "\"%s\" is not a valid URL"
-msgstr "''%s je neispravan URL"
+msgid "\"%(url)s\" is not a valid URL"
+msgstr ""
 
-#: ../../portable/httpclient.py:168
+#: ../../portable/httpclient.py:175
 #, python-format
-msgid "The file: \"%s\" doesn't exist"
-msgstr "Datoteka: \"%s\" ne postoji"
+msgid "The file \"%(path)s\" doesn't exist"
+msgstr ""
 
-#: ../../portable/httpclient.py:172
-#, fuzzy
+#: ../../portable/httpclient.py:179
 msgid "Read error"
-msgstr "Greška pri čitanju"
+msgstr ""
 
-#: ../../portable/httpclient.py:173
+#: ../../portable/httpclient.py:180
 #, python-format
-msgid "Error while reading from \"%s\""
-msgstr "Greška prilikom čitanja od \"%s\""
+msgid "Error while reading from \"%(path)s\""
+msgstr ""
 
-#: ../../portable/httpclient.py:369
+#: ../../portable/httpclient.py:376
 msgid "Unknown Error code"
 msgstr "Nepoznati kod greške"
 
-#: ../../portable/httpclient.py:401
-#, fuzzy
+#: ../../portable/httpclient.py:408
 msgid "Connection closed"
-msgstr "Veza je zatvorena"
+msgstr ""
 
-#: ../../portable/httpclient.py:823
-#, fuzzy
+#: ../../portable/httpclient.py:829
 msgid "Unknown"
-msgstr "Nepoznato"
+msgstr ""
 
-#: ../../portable/httpclient.py:824
+#: ../../portable/httpclient.py:830
 msgid "Internal Error: Not ready to send"
 msgstr "Unutarnja greška: Nije spremno za poslati"
 
-#: ../../portable/license.py:68
+#: ../../portable/license.py:76
 msgid "license page"
 msgstr "Stranicu licence"
 
-#: ../../portable/theme.py:138
-msgid "Starter Channels"
-msgstr "Pokrenuti kanale"
+#: ../../portable/theme.py:124
+msgid "Custom Channels"
+msgstr ""
 
-#: ../../portable/theme.py:154
-#, fuzzy
+#: ../../portable/theme.py:126
+#, python-format
+msgid ""
+"You are running a version of %(appname)s with a custom set of channels."
+msgstr ""
+
+#: ../../portable/theme.py:148
+msgid "Sample Channels"
+msgstr ""
+
+#: ../../portable/theme.py:168
 msgid "Example Playlist"
-msgstr "Primjer playliste"
+msgstr ""
 
-#: ../../portable/folder.py:144
-#, python-format
-msgid "Enter a new name for the channel folder %s"
-msgstr "Stavi novo ime za grupu kanala %s"
+#: ../../portable/dialogs.py:83
+msgid "Ok"
+msgstr "U redu"
 
-#: ../../portable/folder.py:215
-#, python-format
-msgid "Enter a new name for the playlist folder %s"
-msgstr "Stavi novo ime za playlistu %s"
+#: ../../portable/dialogs.py:84
+msgid "Close"
+msgstr ""
 
-#: ../../portable/folder.py:223
-msgid "Create Channel Folder"
-msgstr "Kreirati grupu kanala"
+#: ../../portable/dialogs.py:86
+msgid "Done"
+msgstr ""
 
-#: ../../portable/folder.py:237
-msgid "Create Playlist Folder"
-msgstr "Kreirati mapu za playlistu"
+#: ../../portable/dialogs.py:87
+msgid "Yes"
+msgstr "Da"
 
-#: ../../portable/folder.py:238
-msgid "Enter a name for the new playlist folder"
-msgstr "Stavite ime za novu mapu playliste"
+#: ../../portable/dialogs.py:88
+msgid "No"
+msgstr ""
 
-#: ../../portable/dialogs.py:89
+#: ../../portable/dialogs.py:89 ../../portable/menubar.py:306
+msgid "Quit"
+msgstr "Izađi"
+
+#: ../../portable/dialogs.py:90
 msgid "Ignore"
 msgstr "Ignoriraj"
 
-#: ../../portable/dialogs.py:90
+#: ../../portable/dialogs.py:91
 msgid "Submit Crash Report"
 msgstr "Poslati izvještaj greške"
 
-#: ../../portable/dialogs.py:91 ../../platform/gtk-x11/glade/miro.glade.h:52
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:2
+#: ../../portable/dialogs.py:92
 msgid "Migrate"
 msgstr "Premjestiti"
 
-#: ../../portable/dialogs.py:92 ../../platform/gtk-x11/glade/miro.glade.h:39
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:3
+#: ../../portable/dialogs.py:93
 msgid "Don't Migrate"
 msgstr "Ne premjestiti"
 
-#: ../../portable/dialogs.py:94
-#, fuzzy
-msgid "Remove Entry"
-msgstr "Obriši unos"
-
 #: ../../portable/dialogs.py:95
+msgid "Remove Entry"
+msgstr ""
+
+#: ../../portable/dialogs.py:96
 msgid "Delete File"
 msgstr "Izbriši datoteku"
 
-#: ../../portable/dialogs.py:96
+#: ../../portable/dialogs.py:97
 msgid "Delete Files"
 msgstr "Brisanje datoteka"
 
-#: ../../portable/dialogs.py:97
+#: ../../portable/dialogs.py:98
 msgid "Keep Videos"
 msgstr "Sačuvati videa"
 
-#: ../../portable/dialogs.py:98
+#: ../../portable/dialogs.py:99
 msgid "Delete Videos"
 msgstr "Izbrisati videa"
 
 #: ../../portable/dialogs.py:100
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:8
+msgid "Create"
+msgstr "Izradi"
+
+#: ../../portable/dialogs.py:101
 msgid "Create Channel"
 msgstr "Kreirati kanal"
 
-#: ../../portable/dialogs.py:101
+#: ../../portable/dialogs.py:102
 msgid "Add"
 msgstr "Dodati"
 
-#: ../../portable/dialogs.py:102
+#: ../../portable/dialogs.py:103
 msgid "Add Into New Folder"
 msgstr "Dodati u novu mapu"
 
-#: ../../portable/dialogs.py:105
+#: ../../portable/dialogs.py:107
 msgid "Not Now"
 msgstr "Ne sada"
 
-#: ../../portable/dialogs.py:106
+#: ../../portable/dialogs.py:108
 msgid "Close to Tray"
 msgstr "Minimiziraj na stranu"
 
-#: ../../portable/dialogs.py:107
+#: ../../portable/dialogs.py:109
 msgid "Launch Miro"
 msgstr "Ubaci Miro"
 
-#: ../../portable/dialogs.py:108
+#: ../../portable/dialogs.py:110
 msgid "Download Anyway"
 msgstr "Ipak puniti"
 
-#: ../../portable/dialogs.py:109
+#: ../../portable/dialogs.py:111
 msgid "Install iHeartMiro"
 msgstr "Instaliraj iHeartMiro"
 
-#: ../../portable/dialogs.py:110
+#: ../../portable/dialogs.py:112
 msgid "Don't Install"
 msgstr "Ne instalirati"
 
-#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:59
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:3
-msgid "New Search Channel"
-msgstr "Novi kanal za potražiti"
-
-#: ../../portable/dialogs.py:231 ../../platform/gtk-x11/glade/miro.glade.h:30
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:1
-#, fuzzy
-msgid "A search channel contains items that match a search term."
+#: ../../portable/dialogs.py:113
+msgid "Subscribe"
 msgstr ""
-"Jedan kanal za potražiti sadržava elemente koje odgovaraju članu za potražiti"
 
-#: ../../portable/startup.py:92
+#: ../../portable/dialogs.py:114
+msgid "Stop Watching"
+msgstr ""
+
+#: ../../portable/startup.py:88
 msgid "Unknown Error"
 msgstr "Nepoznata greška"
 
-#: ../../portable/startup.py:93
+#: ../../portable/startup.py:90
 #, python-format
 msgid ""
-"An unkown error prevented Miro from startup.  Please file a bug report at %s"
+"An unknown error prevented Miro from startup.  Please file a bug report at "
+"%(url)s."
 msgstr ""
-"Nepoznata greška je zaustavila Miro-a da počne. Molimo da ispunite izvještaj "
-"greške na %s"
 
-#: ../../portable/startup.py:155
-#, fuzzy
+#: ../../portable/startup.py:152
 msgid "Database too new"
-msgstr "Baza podataka previše nova"
-
-#: ../../portable/startup.py:156
-msgid ""
-"You have a database that was saved with a newer version of $shortAppName. "
-"You must download the latest version of $shortAppName and run that."
-msgstr ""
-"Imate bazu podataka snimljenu $shortAppName novije verzije. Morate imati "
-"noviju verziju od $shortAppName da bi mogli učitati !"
-
-#: ../../portable/startup.py:237
-msgid ""
-"\n"
-"Miro can't find your primary video directory $moviesDirectory.  This may be "
-"because it's located on an external drive that is currently disconnected.  "
-"Please, connect the drive or create the directory, then start Miro again."
 msgstr ""
 
-#: ../../portable/playlist.py:219
-#, fuzzy, python-format
+#: ../../portable/startup.py:154
+#, python-format
+msgid ""
+"You have a database that was saved with a newer version of %(appname)s. You "
+"must download the latest version of %(appname)s and run that."
+msgstr ""
+
+#: ../../portable/startup.py:249
+msgid "Video Directory Missing"
+msgstr ""
+
+#: ../../portable/startup.py:251
+#, python-format
+msgid ""
+"Miro can't find your primary video directory %(moviesDirectory)s. This may "
+"be because it's located on an external drive that is currently disconnected. "
+" Please, connect the drive or create the directory, then start Miro again."
+msgstr ""
+
+#: ../../portable/playlist.py:228
+#, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr "Unesi novo ime na playlisti %s"
+msgstr ""
 
-#: ../../portable/playlist.py:241
-msgid "Create Playlist"
-msgstr "Kreiraj playlistu"
+#: ../../portable/displaytext.py:40
+#, python-format
+msgid "%(size)sGB/s"
+msgstr ""
 
-#: ../../portable/playlist.py:242
-msgid "Enter a name for the new playlist"
-msgstr "Unesi ime za novu playlistu"
+#: ../../portable/displaytext.py:43
+#, python-format
+msgid "%(size)sMB/s"
+msgstr ""
+
+#: ../../portable/displaytext.py:46
+#, python-format
+msgid "%(size)sKB/s"
+msgstr ""
+
+#: ../../portable/displaytext.py:49
+#, python-format
+msgid "%(size)sB/s"
+msgstr ""
+
+#: ../../portable/displaytext.py:77
+#, python-format
+msgid "Expires in %(count)d day"
+msgid_plural "Expires in %(count)d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/displaytext.py:82
+#, python-format
+msgid "Expires in %(count)d hour"
+msgid_plural "Expires in %(count)d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/displaytext.py:87
+#, python-format
+msgid "Expires in %(count)d minute"
+msgid_plural "Expires in %(count)d minutes"
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../../portable/opml.py:155
 msgid "OPML Import failed"
@@ -2325,24 +1746,24 @@ msgstr "Izvještaj unosa OPML datoteke"
 
 #: ../../portable/opml.py:162
 #, python-format
-msgid "Successfully imported %d feed."
-msgid_plural "Successfully imported %d feeds."
-msgstr[0] "Unos dobro obavljen"
-msgstr[1] "Unos %d dobro obavljen"
+msgid "Successfully imported %(count)d feed."
+msgid_plural "Successfully imported %(count)d feeds."
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../../portable/opml.py:165
+#: ../../portable/opml.py:168
 #, python-format
-msgid "Skipped %d feed already present."
-msgid_plural "Skipped %d feeds already present."
-msgstr[0] "Podatak koji je već prisutan je zaboravljen"
-msgstr[1] "Podaci %d već prisutni su zaboravljeni"
+msgid "Skipped %(count)d feed already present."
+msgid_plural "Skipped %(count)d feeds already present."
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1262
+#: ../../portable/storedatabase.py:860 ../../portable/storedatabase.py:1271
 #, python-format
-msgid "%s database save succeeded"
-msgstr "Sačuvati bazu podataka od %s uspješno"
+msgid "%(appname)s database save succeeded"
+msgstr ""
 
-#: ../../portable/storedatabase.py:861 ../../portable/storedatabase.py:1263
+#: ../../portable/storedatabase.py:863 ../../portable/storedatabase.py:1274
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
@@ -2350,1285 +1771,355 @@ msgstr ""
 "Baza podataka je uspješno sačuvana. Sad je moguće napustiti bez gubljenja "
 "podataka."
 
-#: ../../portable/storedatabase.py:868 ../../portable/storedatabase.py:1271
+#: ../../portable/storedatabase.py:870 ../../portable/storedatabase.py:1282
 #, python-format
-msgid "%s database save failed"
-msgstr "Neuspješno sačuvanje baza podataka od %s"
+msgid "%(appname)s database save failed"
+msgstr ""
 
-#: ../../portable/storedatabase.py:869 ../../portable/storedatabase.py:1272
+#: ../../portable/storedatabase.py:873 ../../portable/storedatabase.py:1285
 #, python-format
 msgid ""
-"%s was unable to save its database: Disk Full.\n"
+"%(appname)s was unable to save its database: Disk Full.\n"
 "We suggest deleting files from the full disk or simply deleting some movies "
 "from your collection.\n"
 "Recent changes may be lost."
 msgstr ""
-"%s je nemoguće sa spasi bazu podataka: disk je pun.\n"
-"Preporučujemo da izbrišete neke datoteke sa punog diska da jednostavno "
-"izbrišete neke filmove iz vaše kolekcije.\n"
-"Nedavne promjene mogu biti izgubljena"
 
-#: ../../portable/menubar.py:157
-msgid "_Open"
-msgstr "_Otvori"
+#: ../../portable/menubar.py:183
+msgid "_Open..."
+msgstr ""
 
-#: ../../portable/menubar.py:158
-msgid "_Download Video"
-msgstr "_Skidaj video"
+#: ../../portable/menubar.py:184
+msgid "_Download Video..."
+msgstr ""
 
-#: ../../portable/menubar.py:160
+#: ../../portable/menubar.py:185
 msgid "Check _Version"
 msgstr "Provjeriti _Verziju"
 
-#: ../../portable/menubar.py:162
-msgid "_Remove Video"
-msgstr "_Izbrisati video"
+#: ../../portable/menubar.py:187
+msgid "_Remove Video..."
+msgstr "_Izbrišite video..."
 
-#: ../../portable/menubar.py:163
+#: ../../portable/menubar.py:188
 msgid "_Remove Videos"
 msgstr "-Izbrisati videa"
 
-#: ../../portable/menubar.py:164
+#: ../../portable/menubar.py:189
 msgid "Re_name Video"
 msgstr "Preimenuj video"
 
-#: ../../portable/menubar.py:165
+#: ../../portable/menubar.py:190
 msgid "Save Video _As..."
 msgstr "Snimiti video _pod..."
 
-#: ../../portable/menubar.py:166
+#: ../../portable/menubar.py:191
 msgid "Save Videos _As..."
 msgstr "Snimiti video pod..."
 
-#: ../../portable/menubar.py:167
-#, fuzzy
+#: ../../portable/menubar.py:192
 msgid "Copy Video _URL"
-msgstr "Kopirati URL videa"
+msgstr ""
 
-#: ../../portable/menubar.py:169
+#: ../../portable/menubar.py:194
 msgid "_Options..."
 msgstr "_Postavke..."
 
-#: ../../portable/menubar.py:170
+#: ../../portable/menubar.py:195
 msgid "_Quit"
 msgstr "_Izađi"
 
-#: ../../portable/menubar.py:178
+#: ../../portable/menubar.py:204
 msgid "Cu_t"
 msgstr "Izreži"
 
-#: ../../portable/menubar.py:179
+#: ../../portable/menubar.py:205
 msgid "_Copy"
 msgstr "_Kopiraj"
 
-#: ../../portable/menubar.py:180
+#: ../../portable/menubar.py:206
 msgid "_Paste"
 msgstr "-Umetni"
 
-#: ../../portable/menubar.py:181
+#: ../../portable/menubar.py:207
 msgid "Select _All"
 msgstr "Označi _Sve"
 
-#: ../../portable/menubar.py:182
+#: ../../portable/menubar.py:208
 msgid "_Delete"
 msgstr "_Obriši"
 
-#: ../../portable/menubar.py:186
+#: ../../portable/menubar.py:212
 msgid "Add _Channel"
 msgstr "Dodati _kanal"
 
-#: ../../portable/menubar.py:187
-#, fuzzy
-msgid "New Searc_h Channel..."
-msgstr "Novi kanal za pronači"
+#: ../../portable/menubar.py:213
+msgid "Add Site..."
+msgstr ""
 
-#: ../../portable/menubar.py:188
+#: ../../portable/menubar.py:214
+msgid "New Searc_h Channel..."
+msgstr ""
+
+#: ../../portable/menubar.py:215
 msgid "New _Folder..."
 msgstr "Nova mapa"
 
-#: ../../portable/menubar.py:189
-msgid "Add Channel _Guide..."
-msgstr "Dodajte _Vodič za kanale..."
+#: ../../portable/menubar.py:217
+msgid "Re_name Channel..."
+msgstr "Pre_imenovati kanal..."
 
-#: ../../portable/menubar.py:199
+#: ../../portable/menubar.py:218
+msgid "_Remove Channel..."
+msgstr "_Izbrišite kanal..."
+
+#: ../../portable/menubar.py:219
+msgid "_Remove Channels..."
+msgstr "_Izbrišite kanale..."
+
+#: ../../portable/menubar.py:220
+msgid "_Remove Channel Folders..."
+msgstr "_Izbrišite mape za kanale..."
+
+#: ../../portable/menubar.py:221
+msgid "_Remove Channel Folder..."
+msgstr "_Izbrišite mapu za kanale..."
+
+#: ../../portable/menubar.py:223
+msgid "_Update Channel"
+msgstr ""
+
+#: ../../portable/menubar.py:224
+msgid "_Update Channels"
+msgstr ""
+
+#: ../../portable/menubar.py:225
 msgid "Update _All Channels"
 msgstr "Staviti na početak svi _kanali"
 
-#: ../../portable/menubar.py:201
+#: ../../portable/menubar.py:227
 msgid "_Import Channels (OPML)..."
 msgstr "_Uvoditi kanale (OPML)"
 
-#: ../../portable/menubar.py:202
+#: ../../portable/menubar.py:228
 msgid "E_xport Channels (OPML)..."
 msgstr "I_zvoziti kanali (OPML)"
 
-#: ../../portable/menubar.py:204
+#: ../../portable/menubar.py:230
 msgid "_Send this channel to a friend"
 msgstr "_Poslati ovaj kanal jednom prijatelju"
 
-#: ../../portable/menubar.py:205
+#: ../../portable/menubar.py:231
 msgid "Copy Channel _Link"
 msgstr "Kopirati kanal link"
 
-#: ../../portable/menubar.py:208
-#, fuzzy
-msgid "New _Playlist"
-msgstr "Nova playlista"
+#: ../../portable/menubar.py:235
+msgid "New _Playlist..."
+msgstr ""
 
-#: ../../portable/menubar.py:209
-msgid "New Playlist Fol_der"
-msgstr "Nova mapa playliste"
+#: ../../portable/menubar.py:236
+msgid "New Playlist Fol_der..."
+msgstr ""
 
-#: ../../portable/menubar.py:211
+#: ../../portable/menubar.py:238
 msgid "Re_name Playlist"
 msgstr "Pre_imenovati playlistu"
 
-#: ../../portable/menubar.py:212
+#: ../../portable/menubar.py:239
 msgid "_Remove Playlist"
 msgstr "_Izbrisati playlistu"
 
-#: ../../portable/menubar.py:213
+#: ../../portable/menubar.py:240
 msgid "_Remove Playlists"
 msgstr "_Izbrisati playliste"
 
-#: ../../portable/menubar.py:214
+#: ../../portable/menubar.py:241
 msgid "_Remove Playlist Folders"
 msgstr "Izbrisati mape za playliste"
 
-#: ../../portable/menubar.py:215
+#: ../../portable/menubar.py:242
 msgid "_Remove Playlist Folder"
 msgstr "_Izbrisati mapu playliste"
 
-#: ../../portable/menubar.py:225 ../../portable/menubar.py:226
+#: ../../portable/menubar.py:253 ../../portable/menubar.py:254
 msgid "_Play"
 msgstr "Učitaj"
 
-#: ../../portable/menubar.py:227
+#: ../../portable/menubar.py:255
 msgid "_Pause"
 msgstr "_Pauza"
 
-#: ../../portable/menubar.py:228
+#: ../../portable/menubar.py:256
 msgid "_Stop"
 msgstr "_Zaustavi"
 
-#: ../../portable/menubar.py:230
+#: ../../portable/menubar.py:258
 msgid "_Next Video"
 msgstr "_Sljedeći video"
 
-#: ../../portable/menubar.py:231
+#: ../../portable/menubar.py:259
 msgid "_Previous Video"
 msgstr "Prethodni video"
 
-#: ../../portable/menubar.py:233
-#, fuzzy
+#: ../../portable/menubar.py:261
 msgid "Skip _Forward"
-msgstr "Brzo _preskakanje"
+msgstr ""
 
-#: ../../portable/menubar.py:234
+#: ../../portable/menubar.py:262
 msgid "Skip _Back"
 msgstr "Brzi _povratak"
 
-#: ../../portable/menubar.py:236
+#: ../../portable/menubar.py:264
 msgid "Volume _Up"
 msgstr "Pojačati zvuk"
 
-#: ../../portable/menubar.py:237
+#: ../../portable/menubar.py:265
 msgid "Volume _Down"
 msgstr "Smanjiti zvuk"
 
-#: ../../portable/menubar.py:239
+#: ../../portable/menubar.py:267
 msgid "_Fullscreen"
 msgstr "_Cijeli zaslon"
 
-#: ../../portable/menubar.py:243
-#, fuzzy
-msgid "_About"
-msgstr "_U vezi sa..."
+#: ../../portable/menubar.py:271
+msgid "_About Miro"
+msgstr ""
 
-#: ../../portable/menubar.py:244
+#: ../../portable/menubar.py:272
 msgid "_Donate"
 msgstr "_Donirati"
 
-#: ../../portable/menubar.py:245 ../../portable/menubar.py:262
+#: ../../portable/menubar.py:273 ../../portable/menubar.py:294
 msgid "_Help"
 msgstr "_Pomoć"
 
-#: ../../portable/menubar.py:247
+#: ../../portable/menubar.py:276
 msgid "Report a _Bug"
 msgstr "Prijaviti grešku"
 
-#: ../../portable/menubar.py:248
+#: ../../portable/menubar.py:277
 msgid "_Translate"
 msgstr ""
 
-#: ../../portable/menubar.py:249
-msgid "_Planet"
+#: ../../portable/menubar.py:278
+msgid "_Planet Miro"
 msgstr ""
 
-#: ../../portable/menubar.py:253
+#: ../../portable/menubar.py:283
 msgid "_Video"
 msgstr "_Video"
 
-#: ../../portable/menubar.py:255
+#: ../../portable/menubar.py:285
 msgid "_File"
 msgstr "_Datoteka"
 
-#: ../../portable/menubar.py:259
+#: ../../portable/menubar.py:291
 msgid "_Channels"
 msgstr "_Kanali"
 
-#: ../../portable/menubar.py:260
+#: ../../portable/menubar.py:292
 msgid "_Playlists"
 msgstr "_Playliste"
 
-#: ../../portable/menubar.py:261
-#, fuzzy
+#: ../../portable/menubar.py:293
 msgid "P_layback"
-msgstr "Č_itanje"
+msgstr ""
 
-#: ../../portable/menubar.py:266
-msgid "Play Unwatched ($numUnwatched)"
-msgstr "Čitanje"
+#: ../../portable/menubar.py:299
+#, python-format
+msgid "Play Unwatched (%(unwatched)d)"
+msgstr ""
 
-#: ../../portable/menubar.py:267
-msgid "Pause All Downloads ($numDownloading)"
-msgstr "Zaustaviti sva skidanja"
+#: ../../portable/menubar.py:300
+#, python-format
+msgid "Pause All Downloads (%(downloading)d)"
+msgstr ""
 
-#: ../../portable/menubar.py:268
-#, fuzzy
-msgid "Resume All Downloads ($numPaused)"
-msgstr "Preuzeti sva skidanja"
+#: ../../portable/menubar.py:301
+#, python-format
+msgid "Resume All Downloads (%(paused)d)"
+msgstr ""
 
-#: ../../portable/menubar.py:270
+#: ../../portable/menubar.py:303
 msgid "Options..."
 msgstr "Postavke..."
 
-#: ../../portable/menubar.py:272
-#, fuzzy
+#: ../../portable/menubar.py:305
 msgid "Hide Window"
-msgstr "Sakriti prozor"
+msgstr ""
 
-#: ../../portable/menubar.py:273
+#: ../../portable/menubar.py:305
 msgid "Show Window"
 msgstr "Otkriti prozor"
 
-#: ../../portable/feed.py:388
-msgid "never"
-msgstr "nikada"
-
-#: ../../portable/feed.py:390 ../../portable/item.py:555
-#, python-format
-msgid "%d hours"
-msgstr "%d sati"
-
-#: ../../portable/feed.py:392
-#, python-format
-msgid "%d day"
-msgstr "%d dan"
-
-#: ../../portable/feed.py:394 ../../portable/item.py:553
-#, python-format
-msgid "%d days"
-msgstr "%d dani"
-
-#: ../../portable/feed.py:396
-#, python-format
-msgid "%d months"
-msgstr "%d mjeseci"
-
-#: ../../portable/feed.py:831
-#, python-format
-msgid "Enter a new name for the channel %s"
-msgstr "Stavite novo ime za kanal %s"
-
-#: ../../portable/feed.py:928
-#, fuzzy
+#: ../../portable/feed.py:935
 msgid "Error loading feed"
-msgstr "Greška prilikom mjenjanja kabela"
+msgstr ""
 
-#: ../../portable/feed.py:929
+#: ../../portable/feed.py:937
 #, python-format
-msgid "Couldn't load the feed at %s (%s)."
-msgstr "Punjenje napajanje %s (%s) je nemoguće"
+msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
+msgstr ""
 
-#: ../../portable/feed.py:932
+#: ../../portable/feed.py:940
 msgid "Would you like to keep the feed?"
 msgstr "Želite li zadržati napajanje ?"
 
-#: ../../portable/feed.py:1053
+#: ../../portable/feed.py:1061
 msgid "Bad content-type"
 msgstr "Loša vrsta sadržaja"
 
-#: ../../portable/feed.py:1066
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:9
-msgid "Channel is not compatible with $shortAppName!"
-msgstr "Ovaj kanal nije kompatibilan sa $shortAppName!"
+#: ../../portable/feed.py:1074
+#, python-format
+msgid "Channel is not compatible with %(appname)s"
+msgstr ""
 
-#: ../../portable/feed.py:1067
-#, fuzzy
+#: ../../portable/feed.py:1077
+#, python-format
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
 "videos, and descriptions may look funny.  Please contact the publishers of "
-"$url and ask if they can supply a feed in a format that will work with "
-"$shortAppName.\n"
+"%(url)s and ask if they can supply a feed in a format that will work with "
+"%(appname)s.\n"
 "\n"
 "Do you want to try to load this channel anyway?"
 msgstr ""
-"Napravit ćemo sve da dobijemo datoteku. To može potrajati za prolistati sva "
-"videa, i njihov opis može biti ćudan. Molim vas, kontaktirajte izdavače "
-"'$url' i pitajte ih da li oni mogu uključiti kompatibilni format sa "
-"$shortAppName.\n"
-"Da li ipak želite napuniti ovaj kanal ?"
 
-#: ../../portable/feed.py:2497
+#: ../../portable/feed.py:2377
 msgid "Local Files"
 msgstr "Lokalne datoteke"
 
-#: ../../portable/feed.py:2511
+#: ../../portable/feed.py:2391
 msgid "Playing File"
 msgstr "Čitanje u tijeku"
 
-#: ../../portable/item.py:496
+#: ../../portable/item.py:453
 #, python-format
-msgid "Removing %s"
-msgstr "Brisanje %s"
+msgid "1 hour"
+msgid_plural "%(count)d hours"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../../portable/item.py:499
-#, fuzzy
-msgid ""
-"Would you like to delete this folder and all of its videos or just remove "
-"its entry from the Library?"
-msgstr ""
-"Želite li izbrisati ovu mapu kao i sva videa koja sadržava ili samo izbaciti "
-"iz knjižnice ?"
-
-#: ../../portable/item.py:505
-msgid ""
-"Would you like to delete this file or just remove its entry from the Library?"
-msgstr "Želite li izbrisati ovu datoteku ili samo izbaciti iz knjižnice ?"
-
-#: ../../portable/item.py:525
-#, fuzzy
-msgid ""
-"This item is a folder.  When you remove a folder, any items inside that "
-"folder will be deleted."
-msgstr ""
-"Ovaj element je mapa. Kad budete brisali ovu datoteku, svi sadržani elementi "
-"će biti izbrisani."
-
-#: ../../portable/item.py:557
+#: ../../portable/item.py:458
 #, python-format
-msgid "%d minutes"
-msgstr "%d minute"
+msgid "1 minute"
+msgid_plural "%(count)d minutes"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../../portable/item.py:567
-#, python-format
-msgid "Expires in %s"
-msgstr "Istječe u %s"
-
-#: ../../portable/item.py:579
-#, python-format
-msgid "Will retry in %s"
-msgstr "Ponovit će u %s"
-
-#: ../../portable/item.py:581
-msgid "Paused"
-msgstr "Zaustavljeno"
-
-#: ../../portable/item.py:989
-msgid "TORRENT"
-msgstr "TORRENT"
-
-#: ../../portable/item.py:991
-msgid "WEB PAGE"
-msgstr "WEB stranica"
-
-#: ../../portable/item.py:1001
-msgid "Total Down:"
-msgstr "Ukupni ulaz"
-
-#: ../../portable/item.py:1004
-msgid "Error:"
-msgstr "Greška"
-
-#: ../../portable/item.py:1013
-msgid "Seeders:"
-msgstr "Klijenti"
-
-#: ../../portable/item.py:1015
-#, fuzzy
-msgid "Leechers:"
-msgstr "Leechers"
-
-#: ../../portable/item.py:1017
-msgid "Down Rate:"
-msgstr "Brzina primanja"
-
-#: ../../portable/item.py:1018
-msgid "Down Total:"
-msgstr "Primljeni iznos"
-
-#: ../../portable/item.py:1020
-msgid "Up Rate:"
-msgstr "Brzina primanja"
-
-#: ../../portable/item.py:1021
-msgid "Up Total:"
-msgstr "Poslani iznos"
-
-#: ../../portable/item.py:1032 ../../portable/item.py:1037
-msgid "Web page:"
-msgstr "Web-stranica:"
-
-#: ../../portable/item.py:1032
-msgid "comments"
+#: ../../portable/item.py:736 ../../portable/item.py:752
+msgid "no title"
 msgstr ""
 
-#: ../../portable/item.py:1037
-msgid "permalink"
-msgstr "Neprestana veza"
-
-#: ../../portable/item.py:1041
-msgid "File link:"
-msgstr "Povezana datoteka"
-
-#: ../../portable/item.py:1041
-msgid "direct link to file"
-msgstr "Direktna veza prema datoteci"
-
-#: ../../portable/item.py:1043
-msgid "File type:"
-msgstr "Vrsta datoteke:"
-
-#: ../../portable/item.py:1050 ../../portable/item.py:1053
-#: ../../portable/item.py:1055
-msgid "License:"
-msgstr "Licenca:"
-
-#: ../../portable/item.py:1053 ../../portable/item.py:1055
-msgid "see permalink"
-msgstr "Viditi neprestana veza"
-
-#: ../../portable/item.py:1062
-msgid "SHOW LOCAL FOLDER"
-msgstr ""
-
-#: ../../portable/item.py:1064
-msgid "SHOW LOCAL FILE"
-msgstr ""
-
-#: ../../portable/item.py:1066
-msgid "Filename:"
-msgstr "Ime datoteke:"
-
-#: ../../portable/item.py:1073
-msgid "Down Total"
-msgstr "Primljeni iznos"
-
-#: ../../portable/item.py:1075
-msgid "Up Total"
-msgstr "Poslani iznos"
-
-#: ../../portable/item.py:1093
-#, fuzzy
-msgid "Item Details"
-msgstr "Detalj pojedine točke"
-
-#: ../../portable/item.py:1100
-msgid "Torrent Details"
-msgstr "Detalj Torrenta"
-
-#: ../../portable/item.py:1102
-msgid "Torrent Details <i>stopped</i>"
-msgstr "Detalj Torrenta <i>prekinuti<i>"
-
-#: ../../portable/item.py:1106
-msgid "Download Details"
-msgstr "Detalji skidanja"
-
-#: ../../portable/item.py:1329
+#: ../../portable/item.py:1057
 msgid "downloading..."
 msgstr "U tijeku skidanje..."
 
-#: ../../portable/item.py:1336 ../../portable/item.py:1339
+#: ../../portable/item.py:1064 ../../portable/item.py:1067
 #, python-format
-msgid "%s left"
+msgid "%(time)s left"
 msgstr ""
 
-#: ../../portable/item.py:1348
+#: ../../portable/item.py:1076
 msgid "starting up..."
 msgstr "Započeti..."
-
-#: ../../portable/item.py:1939
-#, python-format
-msgid "Removing %s items"
-msgstr "Izbrisati %s elementi"
-
-#: ../../portable/item.py:1941
-msgid ""
-"One or more of these videos was not downloaded from a channel.  Would you "
-"like to delete these items or just remove their entries from the Library?"
-msgstr ""
-"Jedna ili više od ovih videa nisu bili skinuti sa kanala. Da li ih želite "
-"izbrisati ili samo staviti u knjižnicu ?"
-
-#: ../../portable/item.py:1949
-msgid ""
-"One or more of these items is a folder.  When you remove or delete a folder, "
-"any items inside that folder will also be removed or deleted."
-msgstr ""
-"Jedan ili više od ovih elemenata je mapa. Kad ih vadite ili izbrišete mapu, "
-"svi elementi sadržani u ovu mapu će biti izbačeni ili izbrisani."
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:2
-msgid ""
-"1 day\n"
-"3 days\n"
-"6 days\n"
-"10 days\n"
-"1 month\n"
-"Never"
-msgstr ""
-"1 dan\n"
-"3 dana\n"
-"6 dana\n"
-"10 dana\n"
-"1 mjesec\n"
-"Nikad"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:8
-msgid "<b>BitTorrent</b>"
-msgstr "<b>BitTorrent<b>"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:9
-msgid ""
-"<b>Note:</b> If you change the renderer used to play videos, you MUST \n"
-"restart Miro for the changes to take effect."
-msgstr ""
-"<b>Nota(nbsp):<b> If mjenjate motor povrata upotrijebljen za čitanje videa, "
-"vi MORATE\n"
-"pokrenuti Miro da bi promjene bile uključene."
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:11
-msgid ""
-"<b>Note:</b> You can set the frequency channels are checked for each\n"
-"channel in the channel's settings pane."
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:13
-msgid "<b>Searching for Videos</b>"
-msgstr "<b>Potražnja videa u tijeku <b>"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:14
-msgid "<b>Would you like Miro to look for video files on your computer?</b>"
-msgstr ""
-"<b>Želite li da Miro potraži video isječke koji su na vašem kompjutoru ?<b>"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:15
-msgid "<b>Would you like to run Miro when your computer starts up?</b>"
-msgstr "<b>Želite li da Miro automatski uključi kompjutor ?<b>"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:16
-msgid ""
-"<b>You're done!</b>\n"
-"\n"
-"Setup is complete -- now you can find some channels and start watching.\n"
-"\n"
-"<b>Don't Wait:</b> Miro is different than watching webpage videos -- "
-"publishers can offer big, high quality videos.  So don't sit around waiting "
-"for videos: start some downloads and check back later.\n"
-"\n"
-"<b>Leave it On:</b> Miro regularly checks channels for new videos and "
-"downloads in the background.  Leaving it running means you'll have new "
-"videos when you're ready to watch.\n"
-"\n"
-"<b>Don't Worry About Disk Space:</b> Like a TiVo, Miro features an "
-"'expiration' system that helps clean out older videos to make room for new "
-"videos.  You can always keep a video permanently by clicking 'save' and you "
-"can set a channel's settings to save videos automatically.\n"
-"\n"
-"<b>Go Big:</b> The button to the right of the play button shows videos "
-"fullscreen.\n"
-"\n"
-"<b>Find Videos:</b> The Miro Guide has hundreds of internet TV channels, all "
-"of them are free.  Just click 'ADD' to watch a channel."
-msgstr ""
-"<b>Vi ste završili !<b>\n"
-"Instalacija je gotova- Sad možete pronaći nekoliko kanala i gledati ih.\n"
-"<b>Ne čekajte:<Ne koristite Miro kad gledate video na web sajtovima-Široka "
-"videa visoke definicije su uključeni od dobavljača. Ne čekajte sjedeći "
-"očekujuči video : započnite skidanja i vratite se kasnije.\n"
-"<b>Ne napuštajte Miro:<b>Aplikacija neprestano provjerava dolazak novih "
-"videa na svakom kanalu i skida ih u pozadini. Sačuvajte aplikaciju da bude "
-"aktivna tako da možete pogledati nova videa čim budete spremni za to.\n"
-"<b>Veličina vašeg hard diska nije problem:<b>Kao inteligentni magnetoskop, "
-"Miro nudi jedan sistem koji ostavlja prostora za nova videa istodobno briše "
-"stara. Vi možete i dalje sačuvati video ako kliknete na ''snimiti'' tako da "
-"možete automatski sačuvati isječke.\n"
-"<b>Prelazite na veliki ekran:<b>Miro Guide sadržava stotine web kanala na "
-"internetu, sve besplatne. Samo kliknete na ''dodaj'' da biste mogli gledati."
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:29
-msgid "<b>xine</b>"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:31
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:19
-#, fuzzy
-msgid "Auto download default setting for new channels"
-msgstr "Automatsko skidanje parametara preko novih kanala"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:32
-msgid "Automatically for_ward ports."
-msgstr "Automatski pre_usmjeriti ports"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:33
-#, fuzzy
-msgid "By default, videos _expire after"
-msgstr "Greškom videa _istječe poslije"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:34
-msgid "C_hannel:"
-msgstr "K_anal"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:35
-msgid "C_hannels"
-msgstr "K_anali"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:36
-msgid "C_reate Channel"
-msgstr "K_reirati jedan kanal"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:37
-msgid "Check Channels for _new content"
-msgstr "Pripremiti kanale spremne za punjenje"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:38
-msgid "Disk _Space"
-msgstr "M_jesto za disk"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:40
-msgid ""
-"Every 30 minutes\n"
-"Every hour\n"
-"Every day\n"
-"Manually"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:44
-msgid "G_B"
-msgstr "G_B"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:45
-msgid "Go"
-msgstr "Kreni"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:46
-msgid "Ignore Un_encrypted Connections."
-msgstr "Ignorirati nekodirane veze _es"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:47
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:4
-msgid "In This:"
-msgstr "U ovome:"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:49
-msgid "Limit torrent _downstream to:"
-msgstr "Ograničiti priljev skidanja iz torrentsa u (nbsp):"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:50
-msgid "Maximum number of channel auto-downloads at a time: "
-msgstr "Maksimalni broj automatskog simultanog skidanja kanala (nbsp): "
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:51
-msgid "Maximum number of manual downloads at a time: "
-msgstr "Maksimalni broj ručnog simultanog skidanja (nbsp): "
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:55
-msgid ""
-"Miro can find all the videos on your computer to help you organize your "
-"collection."
-msgstr ""
-"Miro može pronači sva prisutna videa u vašem kompjutoru da možete "
-"organizirati vašu zbirku"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:56
-msgid ""
-"New\n"
-"All\n"
-"Off"
-msgstr ""
-"Novo\n"
-"Sve\n"
-"Isključeno"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:60
-msgid "Play _videos one after another"
-msgstr "Čitanje u tijeku"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:61
-msgid "Preferences"
-msgstr "Postavke"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:62
-#, fuzzy
-msgid "Restrict to my full _home folder"
-msgstr "Ograničiti na moju mapu _osobnu"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:63
-msgid "S_top after each video"
-msgstr "Zaustaviti poslije svakog videa"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:64
-msgid "S_tore downloaded videos in this folder:"
-msgstr "Presnimiti skinuta videa u mapu:"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:65
-#, fuzzy
-msgid "Search _Engine:"
-msgstr "_Motor potražnje"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:66
-#, fuzzy
-msgid "Search _custom folder:"
-msgstr "Potražiti _običajnu mapu"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:67
-msgid "Select Movies Directory"
-msgstr "Izabrati mape filmova"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:68
-msgid "Select custom search directory"
-msgstr "Izabrati mape za osobna pretraživanja"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:69
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:64
-msgid "Stop torrent uploads when this ratio is reached:"
-msgstr "Zaustaviti slanje torrentsa kad je kvota ispunjena (nbsp):"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:70
-msgid ""
-"The next few screens will help you set up Miro so that it works best for "
-"you.  Here's the first question."
-msgstr ""
-"Sljedeće stranice će vam omogućiti da predstavimo Miro za što bolju "
-"upotrebu. Evo prvog pitanja."
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:71
-#, fuzzy
-msgid "To avoid internet slowdowns, limit _upstream to:"
-msgstr "Za izbjegavanje sporog rada na internetu, limitirajte priljev na:"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:72
-msgid "Use _ports:"
-msgstr "Koristi _ports (nbsp):"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:73
-msgid "Use this for video when listening to audio:"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:74
-#, fuzzy
-msgid "Use this renderer to play videos:"
-msgstr "Koristi izvještaj za čitanje videa (nbsp):"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:75
-msgid "Volume:"
-msgstr "Glasnoća:"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:76
-msgid ""
-"We recommend that you allow Miro to launch when your computer starts up.  "
-"This way, videos that haven't finished downloading can finish and new videos "
-"on your channels will be ready when you want to watch."
-msgstr ""
-"Preporučeno je da dozvolite Miro-u da se automatski uključi prilikom "
-"uključivanja kompjutora. Tom prilikom , skidanja videa koja su nepotpuna "
-"mogu se završiti i bit će dostupni novi programi s vaših kanala kad god to "
-"želite pogledati."
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:78
-msgid ""
-"Welcome to Internet TV.  There's a lot you can do with Miro: automatically "
-"download videos from your favorite channels, watch new videos one after the "
-"other, download torrents, recommend videos to friends, and lots more."
-msgstr ""
-"Dobrodošli na televiziji preko interneta. Vi možete napraviti mnogo stvari "
-"preko Miro-a: automatski skidati programe s vaših omiljenih kanala, gledati "
-"filmove jedan za drugim, skidati torrentse, preporučiti razna videa svojim "
-"prijateljima i još mnogo toga."
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:79
-msgid ""
-"You've selected a new folder to download movies to.  Should Miro migrate "
-"your existing downloads there?  (Currently dowloading movies will not be "
-"moved until they finish.)"
-msgstr ""
-"Izabrali ste novu mapu za vaša skidanja. Da li Miro treba prebaciti vaša "
-"prethodna skidanja ovdje ? (filmovi koji su u tijeku skidanja neće biti "
-"premještena prije kraja skidanja.)"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:80
-msgid "_Add Folder"
-msgstr "_Napravi mapu"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:81
-msgid "_Automatically run Miro when I log in"
-msgstr "Automatski ubaciti Miro pri uključivanju"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:82
-msgid "_Downloads"
-msgstr "_Skidanja"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:83
-msgid "_Folders"
-msgstr "_Mape"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:84
-msgid "_General"
-msgstr "_Općenito"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:85
-msgid "_KB/s."
-msgstr "_Kb/s."
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:86
-msgid "_Keep at least this much free space on my drive:"
-msgstr "_Sačuvati najmanje ovo slobodno mjesto na moj disk (nbsp):"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:87
-msgid "_Playback"
-msgstr "_Playback"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:88
-msgid "_Resume playback of videos from the point where they were stopped"
-msgstr "_Ponovite čitanje videa s one točke gdje je bila zaustavljena"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:89
-msgid "_Search"
-msgstr "_Pretraži"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:90
-msgid "_Search For:"
-msgstr "_Pretražiti:"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:91
-msgid "_URL"
-msgstr "_URL"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:92
-msgid "_Warn me when I attempt to quit with downloads in progress"
-msgstr "Upozoriti me kad želim napustiti kad su skidanja u tijeku"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:93
-msgid ""
-"_Watch for new videos in these folders and include them in the Library"
-msgstr "_Pogledati nova videa u ovu mapu, i ubaciti ih u knjižnicu"
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:94
-msgid ""
-"goom\n"
-"oscope\n"
-"fftscope\n"
-"fftgraph\n"
-"none"
-msgstr ""
-
-#: ../../platform/gtk-x11/glade/miro.glade.h:99
-msgid ""
-"xine\n"
-"gstreamer"
-msgstr ""
-"xine\n"
-"gstreamer"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:2
-msgid ""
-"$longAppName version $appVersion ($appRevision); copyright (c) 2005-2008 "
-"$publisher.  $longAppName and the $longAppName logo are trademarks of "
-"$publisher."
-msgstr ""
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/about.dtd.template:1
-msgid "About $longAppName"
-msgstr "U vezi sa $longAppName"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:1
-msgid "Add Channel"
-msgstr "Dodaj kanal"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/addchannel.dtd.template:2
-msgid "Please enter the URL of the channel you'd like to add."
-msgstr "Molim upišite URL adresu kanala koji želite dodati"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:6
-#, fuzzy
-msgid "Copy log to clipboard"
-msgstr "Kopiraj poruke na presse papiru"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:5
-#, fuzzy
-msgid "Open up the bug tracker"
-msgstr "Otvori izvještaj grešaka"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:2
-#, fuzzy
-msgid ""
-"Please help us fix it. Copy and paste all the\n"
-"information into our bug tracker and tell us what you were doing when the\n"
-"problem occurred."
-msgstr ""
-"Hvala na pomoći u vezi rješenja problema. Kopiraj/zaljipi sve\n"
-"informacije u našem izvještaju grešaka i recite nam\n"
-"što ste radili kad je problem nastao."
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:7
-msgid ""
-"Then, please restart $longAppName (or you may keep getting related errors). "
-"Sorry for the inconvenience. $longAppName is still in beta, but with your "
-"help we're fixing problems fast!"
-msgstr ""
-"Nakon toga, pokreni $longAppName (da bi se ubuduće izbjeglo takve pogreške). "
-"Oprostite na smetnjama, $longAppName je i dalje u beta verziji, ali mi ćemo "
-"ubrzo rješiti sve nastale probleme !"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/bugreport.dtd.template:1
-msgid "You found a bug in $longAppName!"
-msgstr "Našli ste pogrešku u $longAppName !"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:1
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:1
-msgid " "
-msgstr "Tino Tresin "
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:2
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:2
-msgid "'"
-msgstr "'"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:10
-msgid ""
-"But we'll try our best to grab the files. It may take extra time to list the "
-"videos, and descriptions may look funny."
-msgstr ""
-"Napravit ćemo sve da bi došli do datoteka. To može uzeti dosta vremena da bi "
-"prikazalo videa, i njihove informacije vam mogu biti smješna."
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:12
-msgid "Please contact the publishers of"
-msgstr "Molim kontaktirajte izdavače od"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/canscrape.dtd.template:13
-#, fuzzy
-msgid ""
-"and ask if they can supply a feed in a format that will work with "
-"$shortAppName."
-msgstr ""
-"i pitajte ih mogu li oni isporučiti priljevi u formatu koji podržava "
-"$shortAppName."
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/main.dtd.template:1
-msgid "$longAppName"
-msgstr "$longAppName"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/migrate.dtd.template:4
-msgid ""
-"You've selected a new folder to download movies to.  Should $shortAppName "
-"migrate your existing downloads there?(Currently dowloading movies will not "
-"be moved until they finish)"
-msgstr ""
-"Izabrali ste novu mapu da bi skinuli filmove. Da li $shortAppName mora "
-"premjestiti skidanja koja su u tijeku ? (filmovi koji su u fazi skidanja "
-"neće biti premješteni prije nego budu završeni)"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:1
-#, fuzzy
-msgid "Channel requires authentication"
-msgstr "Kanal traži autentičnost"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/password.dtd.template:2
-msgid ""
-"Please enter the username and password given to you by this channel's "
-"publisher."
-msgstr ""
-"Molim ukucajte korisničko ime i lozinku koji su vam ustupljeni preko ovog "
-"kanala."
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:57
-msgid ""
-"(WARNING: Changes won't go into effect until you restart $longAppName.)"
-msgstr ""
-"(POZOR:Nastale promjene će biti u toku tek kad se ponovo uključi "
-"$longAppName.)"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:36
-msgid "Add Folder..."
-msgstr "Dodaj mapu..."
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:62
-msgid "Automatically Forward Ports"
-msgstr "Automatski usmjeriti Ports"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:3
-msgid "Automatically run $longAppName when I login."
-msgstr "Automatski ubaciti $longAppName na početak."
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:48
-msgid "By default, videos expire after"
-msgstr "Greškom, videa istječu poslije"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:12
-msgid "Check channels for new content"
-msgstr "Postaviti kanale na početak zbog novog sadržaja"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:5
-msgid "Close to tray so that downloads can continue."
-msgstr "Minimiziraj na stranu tako da se skidanja mogu nesmetano nastaviti."
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:13
-msgid "Every 30 minutes"
-msgstr "Svakih 30 minuta"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:15
-msgid "Every day"
-msgstr ""
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:14
-msgid "Every hour"
-msgstr "Svaki sat"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:34
-msgid "Folder"
-msgstr "Mapa"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:45
-msgid "GB"
-msgstr "GB"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:63
-msgid "Ignore Unencrypted Connections"
-msgstr "Ignoriraj nekodirane veze"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:60
-msgid "KB/s"
-msgstr "KB/s"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:59
-#, fuzzy
-msgid "Limit downstream bandwith to:"
-msgstr "Limitiraj priljev na:"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:16
-msgid "Manually"
-msgstr "Ručno"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:41
-msgid "Maximum number of channel auto-downloads at a time:"
-msgstr "Maksimalni broj kanala simultano automatsko skidanje:"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:40
-#, fuzzy
-msgid "Maximum number of manual downloads at a time:"
-msgstr "Maksimalni broj kanala simultano ručnih skidanja:"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:17
-msgid ""
-"Note: You can set the frequency channels are checked from the channel's "
-"settings pane."
-msgstr ""
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:1
-msgid "Options"
-msgstr "Postavke"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:27
-msgid "Play one video, then stop."
-msgstr "Čitati video pa zaustavi"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:6
-msgid "Quit Miro completely."
-msgstr "Napusti Miro definitivno"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:25
-msgid ""
-"Remember where I stopped watching a video and continue playing from that "
-"point."
-msgstr ""
-"Sjetiti se  mjesta gdje se zaustavilo video i započeti iz tog mjesta."
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:35
-msgid "Show as a Channel"
-msgstr "Pokazati kao kanal"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:30
-msgid "Store downloaded videos in this folder:"
-msgstr "Presnimiti skinuta videa u ovu mapu:"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:58
-msgid "To avoid internet slowdowns, limit upstream bandwith to:"
-msgstr "Da bi izbjegli spori rad interneta, limitiraj priljev na:"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:46
-msgid ""
-"WARNING: This setting will not go into effect until you restart $longAppName."
-msgstr ""
-"POZOR:Ova postavka neće biti u funkciji ako ponovo ne pokrenete $longAppName."
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:9
-msgid "Warn me when I attempt to quit with downloads in progress."
-msgstr "Upozoriti me kad su skidanja u tijeku prilikom zatvaranja."
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:33
-msgid "Watch for new videos in these folders and include them in my Library."
-msgstr "Provjeriti nova videa u ovu mapu i pridodati ih u knjižnicu."
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/prefs.dtd.template:4
-msgid "When I click the red close button:"
-msgstr "Kad kliknem na crvenu tipku za zatvaranje:"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:5
-msgid "Channel:"
-msgstr "Kanal:"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:6
-msgid "Search Engine:"
-msgstr "Tražilica:"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:2
-msgid "Search For:"
-msgstr "Potraži:"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/searchchannel.dtd.template:7
-msgid "URL:"
-msgstr "URL:"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:33
-msgid ""
-"$longAppName can find all the videos on your computer to help you organize "
-"your collection."
-msgstr ""
-"$longAppName može potražiti sva postojeća videa u vašem kompjutoru tako da "
-"vam pomogne u organiziranju vaše kolekcije."
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:45
-msgid ""
-"$longAppName regularly checks channels for new videos and downloads in the "
-"background.  Leaving it running means you'll have new videos when you're "
-"ready to watch."
-msgstr ""
-"$longAppName neprestano prati kanale u potrazi novih videa u pozadini. U "
-"međuvremenu, kad budete imali vremena imati ćete nova videa za gledanje."
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:29
-msgid "$shortAppName First Time Setup"
-msgstr "Konfiguracija za prvo izbacivanje $shortAppName"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:39
-msgid "Cancel Search"
-msgstr "Prekinuti potražnju"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:38
-msgid "Change"
-msgstr "Izmijeni"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:46
-msgid "Don't Worry About Disk Space:"
-msgstr "Ne brinuti se slobodnog mjesta za disk:"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:50
-msgid "Find Videos:"
-msgstr "Potražiti videa:"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:48
-msgid "Go Big:"
-msgstr "Otići u Big:"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:44
-msgid "Leave it On:"
-msgstr "Ostavi vezu:"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:47
-msgid ""
-"Like a TiVo, $longAppName features an 'expiration' system that helps clean "
-"out older videos to make room for new videos.  You can always keep a video "
-"permanently by clicking 'save' and you can set a channel's settings to save "
-"videos automatically."
-msgstr ""
-"Kao TIVo, $longAppName ima jedan sistem koji automatski briše stara videa da "
-"bi ostavilo više mjesta za nova. Vi i dalje možete sačuvati video po želji "
-"klikom na ''Spasi'' i možete izabrati omiljene kanale da biste automatski "
-"sačuvali videa."
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:42
-msgid ""
-"Now you can explore the Channel Guide\n"
-"and start watching.  A few tips to get started:"
-msgstr ""
-"Možete tražiti vodičem kanala\n"
-"i započeti gledanje. Evo nekoliko savjeta za dobar početak:"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:40
-msgid "Reset Search"
-msgstr "Ponovitii potražnju"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:35
-msgid "Restrict to all my personal files."
-msgstr "Ograničiti povjerljive osobne datoteke"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:36
-msgid "Search custom folder:"
-msgstr "Potraži personaliziranu mapu:"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:51
-msgid ""
-"The $shortAppName Channel Guide has hundreds of internet TV channels; all of "
-"them are free.  Just click 'ADD' to watch a channel."
-msgstr ""
-"Vodič $shortAppName nudi stotine besplatnih kanala. Klikni na ''ADD'' za "
-"gledanje kanala."
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:49
-msgid "The button to the right of the play button shows videos fullscreen."
-msgstr ""
-"Tipka koja se nalazi na desno od tipke <čitanje> povečava video na velikom "
-"ekranu"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:30
-msgid ""
-"The next few screens will help you set up $longAppName so that it works best "
-"for you."
-msgstr ""
-"Ovih nekoliko prozora koje dolaze će vam pomoći kao mjerilo $longAppName "
-"tako da što bolje funkcionira za vas."
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:31
-msgid ""
-"We recommend that you have $longAppName launch when your computer starts up. "
-" This way, videos in progress can finish downloading and new videos can be "
-"downloaded in the background, ready when you want to watch."
-msgstr ""
-"Preporučujemo  da vam bude uključen $longAppName pri otvaranju vašeg "
-"kompjutora. Nepotpuna videa će moći nastaviti skidanja i nova videa će biti "
-"skinuta u pozadini, spremna za gledanje kad to želite."
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:34
-msgid "Would you like $longAppName to look for video files on your computer?"
-msgstr ""
-"Želite li da $longAppName pretraži vaše video datoteke na vašem kompjutoru ?"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:32
-msgid "Would you like to run $shortAppName on startup?"
-msgstr "Želite li ubaciti $shortAppName pri uključivanju kompjutora ?"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/startup.dtd.template:41
-msgid "You're done!"
-msgstr "Gotovo je!"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/update_available.dtd.template:1
-#, fuzzy
-msgid "Release Notes:"
-msgstr "Pribilješka:"
-
-#: ../../platform/windows-xul/xul/chrome/locale/en-US/yesno.dtd.template:1
-msgid "Question"
-msgstr "Upitnik"
