@@ -663,16 +663,7 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_open_individual_file(self, message):
         fn = osFilenameToFilenameType(message.filename)
-        addedvideos, addeddownloads = singleclick.parse_command_line_args([fn])
-
-        if addedvideos:
-            f = util.getSingletonDDBObject(views.singleFeed)
-            item_infos = [messages.ItemInfo(i) for i in f.items]
-            messages.PlayMovie(item_infos).send_to_frontend()
-
-        elif addeddownloads:
-            # FIXME - switch to the download tab?
-            pass
+        singleclick.parse_command_line_args([fn])
 
     def handle_open_individual_files(self, message):
         fns = [osFilenameToFilenameType(fn) for fn in message.filenames]

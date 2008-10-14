@@ -59,6 +59,7 @@ from miro import util
 from miro import config
 from miro import prefs
 from miro.plat.utils import samefile, filenameToUnicode, unicodeToFilename
+from miro import messages
 
 _commandLineArgs = []
 commandLineVideoIds = None
@@ -408,4 +409,11 @@ def parse_command_line_args(args=None):
         else:
             logging.warning("parse_command_line_args: %s doesn't exist", arg)
 
-    return addedVideos, addedDownloads
+    if addedVideos:
+        f = util.getSingletonDDBObject(views.singleFeed)
+        item_infos = [messages.ItemInfo(i) for i in f.items]
+        messages.PlayMovie(item_infos).send_to_frontend()
+        
+    if addedDownloads:
+        # FIXME - switch to downloads tab?
+        pass
