@@ -35,6 +35,7 @@ from urlparse import urlparse
 
 import gtk
 
+from miro.gtcache import gettext as _
 from miro import app
 from miro import config
 from miro import eventloop
@@ -88,11 +89,20 @@ class WindowsApplication(Application):
 
     def on_close(self):
         if config.get(prefs.MINIMIZE_TO_TRAY_ASK_ON_CLOSE):
-            # FIXME - ask user for close behavior
-            logging.info("FIXME - ask user for close behavior")
-        elif config.get(prefs.MINIMIZE_TO_TRAY):
-            # FIXME - minimize
-            logging.info("FIXME - minimize to tray")
+            ret = dialogs.show_choice_dialog(
+                _("Close to tray?"),
+                _("When you click the red close button, would you like Miro to "
+                  "close to the system tray or quit?  You can change this "
+                  "setting later in the Options."),
+                (dialogs.BUTTON_QUIT, dialogs.BUTTON_CLOSE_TO_TRAY))
+            config.set(prefs.MINIMIZE_TO_TRAY_ASK_ON_CLOSE, False)
+            if ret == dialogs.BUTTON_CLOSE_TO_TRAY:
+                config.set(prefs.MINIMIZE_TO_TRAY, True)
+            else:
+                config.set(prefs.MINIMIZE_TO_TRAY, False)
+
+        if config.get(prefs.MINIMIZE_TO_TRAY):
+            self.trayicon.on_click(None)
         else:
             self.quit()
 
