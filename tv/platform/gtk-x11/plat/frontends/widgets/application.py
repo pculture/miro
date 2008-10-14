@@ -39,7 +39,7 @@ from miro.plat.frontends.widgets import threads
 from miro.plat import mozsetup, renderers, options
 from miro.plat.utils import set_properties
 from miro.plat.config import gconf_lock
-from miro.plat.frontends.widgets import trayicon
+from miro.frontends.widgets.gtk import trayicon
 from miro.plat import resources
 
 from miro.frontends.widgets.gtk.widgetset import Rect
