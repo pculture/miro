@@ -180,8 +180,9 @@ class VideoRenderer (Widget):
         self.video_window.orderFront_(nil)
         self.adjust_video_frame()
         self.window_moved_handler = wrappermap.wrapper(self.view.window()).connect('did-move', self.on_window_moved)
-    
-    def viewport_repositioned(self):
+
+    def place(self, rect, containing_view):
+        Widget.place(self, rect, containing_view)
         self.adjust_video_frame()
 
     def on_window_moved(self, window):
