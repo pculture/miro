@@ -170,6 +170,7 @@ class VideoRenderer (Widget):
 
         self.movie = None
         self.system_activity_updater_timer = None
+        self.window_moved_handler = None
 
     def calc_size_request(self):
         return (200,200)
@@ -178,7 +179,7 @@ class VideoRenderer (Widget):
         self.view.window().addChildWindow_ordered_(self.video_window, NSWindowAbove)
         self.video_window.orderFront_(nil)
         self.adjust_video_frame()
-        wrappermap.wrapper(self.view.window()).connect('did-move', self.on_window_moved)
+        self.window_moved_handler = wrappermap.wrapper(self.view.window()).connect('did-move', self.on_window_moved)
     
     def viewport_repositioned(self):
         self.adjust_video_frame()
@@ -189,9 +190,14 @@ class VideoRenderer (Widget):
     def teardown(self):
         self.reset()
         self.prevent_system_sleep(False)
-        self.view.window().removeChildWindow_(self.video_window)
+        self.detach_from_parent_window()
         self.video_window.close()
         self.video_window = None
+
+    def detach_from_parent_window(self):
+        self.view.window().removeChildWindow_(self.video_window)
+        wrappermap.wrapper(self.view.window()).disconnect(self.window_moved_handler)
+        self.window_moved_handler = None
 
     def reset(self):
         threads.warn_if_not_on_main_thread('VideoRenderer.reset')
@@ -283,6 +289,13 @@ class VideoRenderer (Widget):
     def exit_fullscreen(self):
         frame = self.get_video_frame()
         self.video_window.exit_fullscreen(frame)
+
+    def prepare_switch_to_attached_playback(self):
+        self.detach_from_parent_window()
+        app.widgetapp.window.nswindow.makeKeyAndOrderFront_(nil)
+
+    def prepare_switch_to_detached_playback(self):
+        self.detach_from_parent_window()
 
     def handle_movie_notification(self, notification):
         if notification.name() == QTMovieDidEndNotification and not app.playback_manager.is_suspended:

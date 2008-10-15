@@ -161,11 +161,13 @@ class DisplayManager(object):
         display.on_activate()
         app.widgetapp.window.set_main_area(display.widget)
 
-    def pop_display(self):
+    def pop_display(self, unselect=True):
         """Remove the current display, then select the next one in the display
         stack.
         """
-        self._unselect_display(self.display_stack.pop())
+        display = self.display_stack.pop()
+        if unselect:
+            self._unselect_display(display)
         self.current_display.on_activate()
         app.widgetapp.window.set_main_area(self.current_display.widget)
 
@@ -352,6 +354,12 @@ class VideoDisplay(Display):
     def exit_fullscreen(self):
         self.widget.exit_fullscreen()
         self.in_fullscreen = False
+
+    def prepare_switch_to_attached_playback(self):
+        self.widget.prepare_switch_to_attached_playback()
+
+    def prepare_switch_to_detached_playback(self):
+        self.widget.prepare_switch_to_detached_playback()
 
     def cleanup(self):
         if self.in_fullscreen:

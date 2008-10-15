@@ -47,6 +47,7 @@ class PlaybackManager (signals.SignalEmitter):
         signals.SignalEmitter.__init__(self)
         self.video_display = None
         self.detached_window = None
+        self.detached_window_close_handler = None
         self.previous_left_width = 0
         self.previous_left_widget = None
         self.is_fullscreen = False
@@ -102,8 +103,8 @@ class PlaybackManager (signals.SignalEmitter):
         splitter.set_left_width(0)
         app.display_manager.push_display(self.video_display)            
     
-    def finish_attached_playback(self):
-        app.display_manager.pop_display()
+    def finish_attached_playback(self, unselect=True):
+        app.display_manager.pop_display(unselect)
         app.widgetapp.window.splitter.set_left_width(self.previous_left_width)
         app.widgetapp.window.splitter.set_left(self.previous_left_widget)
     
@@ -117,22 +118,25 @@ class PlaybackManager (signals.SignalEmitter):
         align = widgetset.Alignment(bottom_pad=16, yscale=1.0)
         align.add(self.video_display.widget)
         self.detached_window.set_content_widget(align)
-        self.detached_window.connect('will-close', self.on_detached_window_close)
+        self.detached_window_close_handler = self.detached_window.connect('will-close', self.on_detached_window_close)
         self.detached_window.show()
     
     def finish_detached_playback(self):
         config.set(prefs.DETACHED_WINDOW_FRAME, str(self.detached_window.get_frame()))
         config.save()
+        self.detached_window.disconnect(self.detached_window_close_handler)
+        self.detached_window_close_handler = None
         self.detached_window.close()
         self.detached_window = None
     
     def schedule_update(self):
         def notify_and_reschedule():
-            self.update_timeout = None
-            if self.is_playing and not self.is_paused:
-                if not self.is_suspended:
-                    self.notify_update()
-                self.schedule_update()
+            if self.update_timeout is not None:
+                self.update_timeout = None
+                if self.is_playing and not self.is_paused:
+                    if not self.is_suspended:
+                        self.notify_update()
+                    self.schedule_update()
         self.update_timeout = timer.add(0.5, notify_and_reschedule)
 
     def cancel_update_timer(self):
@@ -339,9 +343,20 @@ class PlaybackManager (signals.SignalEmitter):
             self.switch_to_detached_playback()
         else:
             self.switch_to_attached_playback()
+        app.menu_manager.handle_playing_selection()
             
     def switch_to_attached_playback(self):
-        pass
+        self.cancel_update_timer()
+        self.video_display.prepare_switch_to_attached_playback()
+        self.video_display.widget.remove_viewport()
+        self.finish_detached_playback()
+        self.prepare_attached_playback()
+        self.schedule_update()
     
     def switch_to_detached_playback(self):
-        pass
+        self.cancel_update_timer()
+        self.video_display.prepare_switch_to_detached_playback()
+#        self.video_display.widget.remove_viewport()
+        self.finish_attached_playback(False)
+        self.prepare_detached_playback()
+        self.schedule_update()
