@@ -79,3 +79,7 @@ class MiroWindow(widgetset.MainWindow):
 
     def set_main_area(self, widget):
         self.main_area_holder.set(widget)
+
+class DetachedPlaybackWindow(widgetset.Window):
+    def __init__(self):
+        pass

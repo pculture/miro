@@ -50,7 +50,10 @@ alive_windows = set()
 class Window(signals.SignalEmitter):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPIfor a description of the API for this class."""
     def __init__(self, title, rect):
-        signals.SignalEmitter.__init__(self, 'active-change')
+        signals.SignalEmitter.__init__(self)
+        self.create_signal('active-change')
+        self.create_signal('will-close')
+        self.create_signal('did-move')
         self.nswindow = NSWindow.alloc()
         self.nswindow.initWithContentRect_styleMask_backing_defer_(
                 rect.nsrect,
@@ -68,6 +71,8 @@ class Window(signals.SignalEmitter):
         self.window_notifications = NotificationForwarder.create(self.nswindow)
         self.window_notifications.connect(self.on_activate, 'NSWindowDidBecomeMainNotification')
         self.window_notifications.connect(self.on_deactivate, 'NSWindowDidResignMainNotification')
+        self.window_notifications.connect(self.on_did_move, 'NSWindowDidMoveNotification')
+        self.window_notifications.connect(self.on_will_close, 'NSWindowWillCloseNotification')
         wrappermap.add(self.nswindow, self)
         alive_windows.add(self)
 
@@ -82,6 +87,12 @@ class Window(signals.SignalEmitter):
 
     def on_deactivate(self, notification):
         self.emit('active-change')
+
+    def on_did_move(self, notification):
+        self.emit('did-move')
+
+    def on_will_close(self, notification):
+        self.emit('will-close')
 
     def is_active(self):
         return self.nswindow.isMainWindow()

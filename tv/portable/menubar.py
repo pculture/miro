@@ -266,6 +266,9 @@ PlaybackItems = [
     MenuItem(_("Volume _Down"), "DownVolume", (Key(DOWN_ARROW,MOD),), enabled=False),
     Separator(),
     MenuItem(_("_Fullscreen"), "Fullscreen", fullscreen_shortcuts, enabled=False),
+    MenuItem(_("_Detach"), "Detach", (), enabled=False, 
+             attached=_("_Detach"), 
+             detached=_("_Attach")),
 ]
 
 HelpItems = [

@@ -42,6 +42,7 @@ from miro.plat import qtcomp
 from miro.plat.utils import filenameTypeToOSFilename
 from miro.plat.frontends.widgets import threads
 from miro.plat.frontends.widgets import overlay
+from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets.base import Widget
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
 
@@ -173,13 +174,18 @@ class VideoRenderer (Widget):
     def calc_size_request(self):
         return (200,200)
 
-    def place(self, rect, containing_view):
-        Widget.place(self, rect, containing_view)
+    def viewport_created(self):
         self.view.window().addChildWindow_ordered_(self.video_window, NSWindowAbove)
         self.video_window.orderFront_(nil)
         self.adjust_video_frame()
-        self.prevent_system_sleep(True)
+        wrappermap.wrapper(self.view.window()).connect('did-move', self.on_window_moved)
+    
+    def viewport_repositioned(self):
+        self.adjust_video_frame()
 
+    def on_window_moved(self, window):
+        self.adjust_video_frame()
+    
     def teardown(self):
         self.reset()
         self.prevent_system_sleep(False)
@@ -245,6 +251,7 @@ class VideoRenderer (Widget):
         threads.warn_if_not_on_main_thread('VideoRenderer.play')
         self.video_view.play_(nil)
         self.video_view.setNeedsDisplay_(YES)
+        self.prevent_system_sleep(True)
 
     def play_from_time(self, resume_time=0):
         self.seek_to(resume_time / movieDuration(self.movie))
@@ -253,9 +260,11 @@ class VideoRenderer (Widget):
     def pause(self):
         threads.warn_if_not_on_main_thread('VideoRenderer.pause')
         self.video_view.pause_(nil)
+        self.prevent_system_sleep(True)
 
     def stop(self):
         threads.warn_if_not_on_main_thread('VideoRenderer.stop')
+        self.prevent_system_sleep(True)
         self.video_view.pause_(nil)
         self.video_window.palette.remove()
         self.reset()
@@ -301,8 +310,8 @@ class VideoWindow (NSWindow):
         self = super(VideoWindow, self).initWithContentRect_styleMask_backing_defer_(rect,  style, backing, defer)
         self.setBackgroundColor_(NSColor.blackColor())
         self.setReleasedWhenClosed_(NO)
-        self.palette = overlay.OverlayPalette.get_instance()
         self.setAcceptsMouseMovedEvents_(YES)
+        self.palette = overlay.OverlayPalette.get_instance()
         self.is_fullscreen = False
         return self
 
@@ -345,9 +354,9 @@ class VideoWindow (NSWindow):
 
     def sendEvent_(self, event):
         if event.type() == NSMouseMoved:
-            if NSPointInRect(NSEvent.mouseLocation(), self.frame()):
+            if NSPointInRect(event.locationInWindow(), self.contentView().bounds()):
                 self.palette.reveal(self)
-        elif event.type() == NSLeftMouseDown:
+        if event.type() == NSLeftMouseDown:
             if NSApplication.sharedApplication().isActive():
                 if event.clickCount() > 1:
                     app.playback_manager.toggle_fullscreen()

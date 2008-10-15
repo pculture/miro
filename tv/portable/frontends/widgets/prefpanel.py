@@ -586,9 +586,13 @@ class PlaybackPanel(PanelBuilder):
     def build_widget(self):
         v = widgetset.VBox()
 
+        cbx = widgetset.Checkbox(_('Always play videos in a separate window.'))
+        attach_boolean(cbx, prefs.PLAY_DETACHED)
+        v.pack_start(widgetutil.align_left(cbx, bottom_pad=6))
+
         cbx = widgetset.Checkbox(_('Resume playing a video from the point it was last stopped.'))
         attach_boolean(cbx, prefs.RESUME_VIDEOS_MODE)
-        v.pack_start(widgetutil.align_left(cbx, bottom_pad=6))
+        v.pack_start(widgetutil.align_left(cbx, bottom_pad=12))
 
         rbg = widgetset.RadioButtonGroup()
         play_rb = widgetset.RadioButton("Play videos one after another", rbg)

@@ -29,12 +29,14 @@
 import os
 
 from miro import app
-from miro import config
-from miro import messages
 from miro import prefs
+from miro import config
 from miro import signals
+from miro import messages
+
 from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
+from miro.plat.frontends.widgets.rect import Rect
 from miro.frontends.widgets.displays import VideoDisplay
 #from miro.frontends.widgets.displays import AudioDisplay
 #from miro.frontends.widgets.displays import ExternalVideoDisplay
@@ -43,8 +45,10 @@ class PlaybackManager (signals.SignalEmitter):
     
     def __init__(self):
         signals.SignalEmitter.__init__(self)
-        self.previous_left_width = 0
         self.video_display = None
+        self.detached_window = None
+        self.previous_left_width = 0
+        self.previous_left_widget = None
         self.is_fullscreen = False
         self.is_playing = False
         self.is_paused = False
@@ -77,12 +81,10 @@ class PlaybackManager (signals.SignalEmitter):
         def if_yes():
             self.video_display = VideoDisplay()
             self.video_display.connect('removed', self.on_display_removed)
-            splitter = app.widgetapp.window.splitter
-            self.previous_left_width = splitter.get_left_width()
-            self.previous_left_widget = splitter.left
-            splitter.remove_left()
-            splitter.set_left_width(0)
-            app.display_manager.push_display(self.video_display)
+            if config.get(prefs.PLAY_DETACHED):
+                self.prepare_detached_playback()
+            else:
+                self.prepare_attached_playback()
             app.menu_manager.handle_playing_selection()
             self._select_current()
             self.play()
@@ -91,6 +93,29 @@ class PlaybackManager (signals.SignalEmitter):
             self.exit_playback()
 
         self._try_select_current(if_yes, if_no)
+    
+    def prepare_attached_playback(self):
+        splitter = app.widgetapp.window.splitter
+        self.previous_left_width = splitter.get_left_width()
+        self.previous_left_widget = splitter.left
+        splitter.remove_left()
+        splitter.set_left_width(0)
+        app.display_manager.push_display(self.video_display)            
+    
+    def finish_attached_playback(self):
+        app.display_manager.pop_display()
+        app.widgetapp.window.splitter.set_left_width(self.previous_left_width)
+        app.widgetapp.window.splitter.set_left(self.previous_left_widget)
+    
+    def prepare_detached_playback(self):
+        self.detached_window = widgetset.Window("TITLE HERE", Rect(0, 0, 800, 600))
+        self.detached_window.set_content_widget(self.video_display.widget)
+        self.detached_window.connect('will-close', self.on_detached_window_close)
+        self.detached_window.show()
+    
+    def finish_detached_playback(self):
+        self.detached_window.close()
+        self.detached_window = None
     
     def schedule_update(self):
         def notify_and_reschedule():
@@ -111,6 +136,9 @@ class PlaybackManager (signals.SignalEmitter):
             elapsed = self.video_display.get_elapsed_playback_time()
             total = self.video_display.get_total_playback_time()
             self.emit('playback-did-progress', elapsed, total)
+
+    def on_detached_window_close(self, window):
+        self.stop()
 
     def on_display_removed(self, display):
         self.stop()
@@ -156,11 +184,12 @@ class PlaybackManager (signals.SignalEmitter):
         self.is_playing = False
         self.is_paused = False
         self.emit('will-stop')
-        if self.video_display:
+        if self.video_display is not None:
             self.video_display.stop()
-            app.display_manager.pop_display()
-            app.widgetapp.window.splitter.set_left_width(self.previous_left_width)
-            app.widgetapp.window.splitter.set_left(self.previous_left_widget)
+            if self.detached_window is not None:
+                self.finish_detached_playback()
+            else:
+                self.finish_attached_playback()
         self.is_fullscreen = False
         self.previous_left_widget = None
         self.video_display = None
