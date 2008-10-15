@@ -354,6 +354,20 @@ def fetch_sources(portable_dir):
     return sources
 
 def get_libtorrent_extension(portable_dir):
+    libtorrent_installed = False
+    try:
+        ret = parse_pkg_config("pkg-config", "libtorrent-rasterbar")
+        import libtorrent
+        libtorrent_installed = True
+    except RuntimeError:
+        print "libtorrent-rasterbar not installed on this system."
+    except ImportError:
+        print "python bindings for libtorrent-rasterbar not installed on this system"
+
+    if libtorrent_installed:
+        print "libtorrent-rasterbar and python bindings are installed--using system version."
+        return None
+
     include_dirs = [os.path.join(portable_dir, x) for x in
                             ['libtorrent/include', 'libtorrent/include/libtorrent']]
 
@@ -806,6 +820,17 @@ class clean(Command):
             print "removing dist directory"
             shutil.rmtree('./dist/')
 
+ext_modules = []
+ext_modules.append(fasttypes_ext)
+ext_modules.append(xine_ext)
+ext_modules.append(xlib_ext)
+if libtorrent_ext:
+    ext_modules.append(libtorrent_ext)
+ext_modules.append(pygtkhacks_ext)
+ext_modules.append(mozprompt_ext)
+ext_modules.append(Extension("miro.database", [os.path.join(portable_dir, 'database.pyx')]))
+ext_modules.append(Extension("miro.sorts", [os.path.join(portable_dir, 'sorts.pyx')]))
+
 #### Run setup ####
 setup(name='miro',
     version=appVersion,
@@ -818,14 +843,7 @@ setup(name='miro',
         os.path.join(platform_dir, 'miro.real')
     ],
     data_files=data_files,
-    ext_modules = [
-        fasttypes_ext, xine_ext, xlib_ext, libtorrent_ext, pygtkhacks_ext,
-        mozprompt_ext,
-        Extension("miro.database",
-                [os.path.join(portable_dir, 'database.pyx')]),
-        Extension("miro.sorts",
-                [os.path.join(portable_dir, 'sorts.pyx')]),
-    ],
+    ext_modules=ext_modules,
     packages = [
         'miro',
         'miro.dl_daemon',

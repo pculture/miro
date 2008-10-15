@@ -193,7 +193,10 @@ def make_dummy_socket_pair():
     return first, second
 
 def get_torrent_info_hash(path):
-    import miro.libtorrent as lt
+    try:
+        import miro.libtorrent as lt
+    except ImportError:
+        import libtorrent as lt
     f = open(path, 'rb')
     try:
         data = f.read()
