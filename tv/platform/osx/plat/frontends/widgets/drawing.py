@@ -105,20 +105,20 @@ class DrawingContext:
             xform.concat()
 
     def move_to(self, x, y):
-        self.path.moveToPoint_(NSPoint(x+0.5, y+0.5))
+        self.path.moveToPoint_(NSPoint(x, y))
 
     def rel_move_to(self, dx, dy):
         self.path.relativeMoveToPoint_(NSPoint(dx, dy))
 
     def line_to(self, x, y):
-        self.path.lineToPoint_(NSPoint(x+0.5, y+0.5))
+        self.path.lineToPoint_(NSPoint(x, y))
 
     def rel_line_to(self, dx, dy):
         self.path.relativeLineToPoint_(NSPoint(dx, dy))
 
     def curve_to(self, x1, y1, x2, y2, x3, y3):
         self.path.curveToPoint_controlPoint1_controlPoint2_(
-                NSPoint(x3+0.5, y3+0.5), NSPoint(x1+0.5, y1+0.5), NSPoint(x2+0.5, y2+0.5))
+                NSPoint(x3, y3), NSPoint(x1, y1), NSPoint(x2, y2))
 
     def rel_curve_to(self, dx1, dy1, dx2, dy2, dx3, dy3):
         self.path.relativeCurveToPoint_controlPoint1_controlPoint2_(
@@ -127,17 +127,17 @@ class DrawingContext:
     def arc(self, x, y, radius, angle1, angle2):
         angle1 = (angle1 * 360) / (2 * math.pi)
         angle2 = (angle2 * 360) / (2 * math.pi)
-        center = NSPoint(x+0.5, y+0.5)
+        center = NSPoint(x, y)
         self.path.appendBezierPathWithArcWithCenter_radius_startAngle_endAngle_(center, radius, angle1, angle2)
 
     def arc_negative(self, x, y, radius, angle1, angle2):
         angle1 = (angle1 * 360) / (2 * math.pi)
         angle2 = (angle2 * 360) / (2 * math.pi)
-        center = NSPoint(x+0.5, y+0.5)
+        center = NSPoint(x, y)
         self.path.appendBezierPathWithArcWithCenter_radius_startAngle_endAngle_clockwise_(center, radius, angle1, angle2, YES)
 
     def rectangle(self, x, y, width, height):
-        rect = NSMakeRect(x+0.5, y+0.5, width, height)
+        rect = NSMakeRect(x, y, width, height)
         self.path.appendBezierPathWithRect_(rect)
 
     def set_color(self, (red, green, blue), alpha=1.0):
