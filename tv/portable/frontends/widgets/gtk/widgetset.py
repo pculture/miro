@@ -48,6 +48,4 @@ from miro.frontends.widgets.gtk.tableview import TableView, TableModel, \
 from miro.frontends.widgets.gtk.simple import Image, ImageDisplay, Label, \
         Scroller, Expander, SolidBackground
 from miro.frontends.widgets.gtk.video import VideoRenderer, can_play_file
-
-# Just use the GDK Rectangle class
-Rect = gtk.gdk.Rectangle
+from miro.frontends.widgets.gtk.widgets import Rect

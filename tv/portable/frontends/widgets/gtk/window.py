@@ -161,6 +161,7 @@ class Window(WindowBase):
 
         self.create_signal('active-change')
         self.create_signal('will-close')
+        self.create_signal('did-move')
         self.create_signal('save-dimensions')
         self.create_signal('save-maximized')
         alive_windows.add(self)
@@ -228,7 +229,7 @@ class Window(WindowBase):
     def get_frame(self):
         pos = self._window.get_position()
         size = self._window.get_size()
-        return Rect(pos[0], pos[1], size[0], size[1])
+        return rect.Rect(pos[0], pos[1], size[0], size[1])
 
 class MainWindow(Window):
     def __init__(self, title, rect):

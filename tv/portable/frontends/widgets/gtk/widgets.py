@@ -35,7 +35,14 @@ import gtk
 from miro import app
 
 # Just use the GDK Rectangle class
-Rect = gtk.gdk.Rectangle
+class Rect(gtk.gdk.Rectangle):
+    @classmethod
+    def from_string(cls, rect_string):
+        x, y, width, height = [int(i) for i in rect_string.split(',')]
+        return Rect(x, y, width, height)
+
+    def __str__(self):
+        return "%d,%d,%d,%d" % (self.x, self.y, self.width, self.height)
 
 class Window:
     """The main Miro window.  """
