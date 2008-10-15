@@ -160,6 +160,7 @@ class Window(WindowBase):
         self._window.set_default_size(rect.width, rect.height)
 
         self.create_signal('active-change')
+        self.create_signal('will-close')
         self.create_signal('save-dimensions')
         self.create_signal('save-maximized')
         alive_windows.add(self)
