@@ -280,11 +280,17 @@ class MenuManager(signals.SignalEmitter):
         self.create_signal('enabled-changed')
         self.enabled_groups = set(['AlwaysOn'])
 
+    def reset_initial_set(self):
+        self.enabled_groups = set(['AlwaysOn'])
+        if app.playback_manager.is_playing and app.playback_manager.detached_window is not None:
+            self.enabled_groups.add('PlayableSelected')
+            self.enabled_groups.add('Playing')
+
     def handle_feed_selection(self, selected_feeds):
         """Handle the user selecting things in the feed list.  selected_feeds
         is a list of ChannelInfo objects
         """
-        self.enabled_groups = set(['AlwaysOn'])
+        self.reset_initial_set()
         self.enabled_groups.add('FeedsSelected')
         if len(selected_feeds) == 1:
             self.enabled_groups.add('FeedSelected')
@@ -294,25 +300,25 @@ class MenuManager(signals.SignalEmitter):
         """Handle the user selecting things in the site list.  selected_sites
         is a list of GuideInfo objects
         """
-        self.enabled_groups = set(['AlwaysOn'])
+        self.reset_initial_set()
         self.emit('enabled-changed')
 
     def handle_playlist_selection(self, selected_playlists):
-        self.enabled_groups = set(['AlwaysOn'])
+        self.reset_initial_set()
         self.enabled_groups.add('PlaylistsSelected')
         if len(selected_playlists) == 1:
             self.enabled_groups.add('PlaylistSelected')
         self.emit('enabled-changed')
 
     def handle_static_tab_selection(self, selected_static_tabs):
-        self.enabled_groups = set(['AlwaysOn'])
+        self.reset_initial_set()
         self.emit('enabled-changed')
 
     def handle_item_list_selection(self, selected_items):
         """Handle the user selecting things in the item list.  selected_items
         is a list of ItemInfo objects containing the current selection.
         """
-        self.enabled_groups = set(['AlwaysOn'])
+        self.reset_initial_set()
         for item in selected_items:
             if item.downloaded:
                 self.enabled_groups.add('PlayableSelected')
