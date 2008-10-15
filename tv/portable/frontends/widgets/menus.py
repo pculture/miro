@@ -259,7 +259,7 @@ action_groups = {
             'Fullscreen',
             'Rewind',
             'FastForward',
-            'Detach',
+            'ToggleDetach',
         ],
 }
 
