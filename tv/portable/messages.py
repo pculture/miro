@@ -401,6 +401,12 @@ class NewPlaylistFolder(BackendMessage):
     def __init__(self, name):
         self.name = util.toUni(name)
 
+class ChangeMoviesDirectory(BackendMessage):
+    """Change the current movies directory."""
+    def __init__(self, path, migrate):
+        self.path = path
+        self.migrate = migrate
+
 class AddVideosToPlaylist(BackendMessage):
     def __init__(self, playlist_id, video_ids):
         self.playlist_id = playlist_id

@@ -429,7 +429,7 @@ class _MovieDirectoryHelper(object):
     prefs.
     """
     def __init__(self):
-        self.label = widgetset.Label(config.get(prefs.MOVIES_DIRECTORY))
+        self.label = widgetset.Label()
         self.button = widgetset.Button(_("Change"))
         self.button.connect('clicked', self._on_button_clicked)
 
@@ -438,8 +438,26 @@ class _MovieDirectoryHelper(object):
                 initial_directory=config.get(prefs.MOVIES_DIRECTORY),
                 transient_for=_pref_window)
         if dir is not None:
+            self.path = dir
             self.label.set_text(dir)
-            config.set(prefs.MOVIES_DIRECTORY, dir)
+
+    def set_initial_path(self):
+        self.path = self.initial_path = config.get(prefs.MOVIES_DIRECTORY)
+        self.label.set_text(self.path)
+
+    def on_window_closed(self):
+        if self.path != self.initial_path:
+            title = _("Migrate existing movies?")
+            description = _("You've selected a new folder to download movies "
+                    "to.  Should Miro migrate your existing downloads there? "
+                    "(Currently dowloading movies will not be moved until "
+                    "they finish.)")
+            response = dialogs.show_choice_dialog(title, description, 
+                    (dialogs.BUTTON_MIGRATE, dialogs.BUTTON_DONT_MIGRATE),
+                    transient_for=_pref_window)
+            migrate = (response is dialogs.BUTTON_MIGRATE)
+            m = messages.ChangeMoviesDirectory(self.path, migrate)
+            m.send_to_backend()
 
 class _WatchedFolderHelper(object):
     def __init__(self):
@@ -508,15 +526,15 @@ class _WatchedFolderHelper(object):
 class FoldersPanel(PanelBuilder):
     def build_widget(self):
         grid = dialogwidgets.ControlGrid()
-        movie_dir_helper = _MovieDirectoryHelper()
+        self.movie_dir_helper = _MovieDirectoryHelper()
         self.watched_folder_helper = _WatchedFolderHelper()
 
         grid.pack_label(_('Store downloads in this folder:'), span=2)
         grid.end_line(spacing=0)
         movies_directory_label = widgetset.Label(
                 config.get(prefs.MOVIES_DIRECTORY))
-        grid.pack(movie_dir_helper.label, grid.ALIGN_LEFT, pad_left=12)
-        grid.pack(movie_dir_helper.button)
+        grid.pack(self.movie_dir_helper.label, grid.ALIGN_LEFT, pad_left=12)
+        grid.pack(self.movie_dir_helper.button)
         grid.end_line(spacing=18)
         grid.pack_label(_('Watch for new videos in these folders and include '
             'them in library:'), span=2)
@@ -527,9 +545,11 @@ class FoldersPanel(PanelBuilder):
 
     def on_window_open(self):
         self.watched_folder_helper.connect_signals()
+        self.movie_dir_helper.set_initial_path()
 
     def on_window_closed(self):
         self.watched_folder_helper.disconnect_signals()
+        self.movie_dir_helper.on_window_closed()
 
 class DiskSpacePanel(PanelBuilder):
     def build_widget(self):

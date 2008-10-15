@@ -31,6 +31,7 @@
 import logging
 
 from miro import app
+from miro import config
 from miro import database
 from miro import eventloop
 from miro import feed
@@ -39,6 +40,7 @@ from miro import guide
 from miro import httpclient
 from miro import indexes
 from miro import messages
+from miro import prefs
 from miro import singleclick
 from miro import subscription
 from miro import views
@@ -1004,6 +1006,30 @@ class BackendMessageHandler(messages.MessageHandler):
                         guide.ChannelGuide(url, [u'*'])
             else:
                 raise AssertionError("Unknown subscribe type")
+
+    def handle_change_movies_directory(self, message):
+        old_dir = config.get(prefs.MOVIES_DIRECTORY)
+        config.set(prefs.MOVIES_DIRECTORY, message.path)
+        if message.migrate:
+            views.remoteDownloads.confirmDBThread()
+            for download in views.remoteDownloads:
+                if download.isFinished():
+                    logging.info("migrating %s", download.get_filename())
+                    download.migrate(message.path)
+            # Pass in case they don't exist or are not empty:
+            try:
+                fileutil.rmdir(os.path.join(old_dir, 'Incomplete Downloads'))
+            except (SystemExit, KeyboardInterrupt):
+                raise
+            except:
+                pass
+            try:
+                fileutil.rmdir(old_dir)
+            except (SystemExit, KeyboardInterrupt):
+                raise
+            except:
+                pass
+        util.getSingletonDDBObject(views.directoryFeed).update()
 
     def handle_report_crash(self, message):
         app.controller.sendBugReport(message.report, message.text, message.send_report)
