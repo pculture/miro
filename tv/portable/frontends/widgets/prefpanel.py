@@ -631,11 +631,11 @@ class PreferencesWindow(widgetset.PreferencesWindow):
 
     def select_panel(self, selection):
         if selection is None:
-            self.select_panel(0)
+            widgetset.PreferencesWindow.select_panel(self, 0)
         else:
             for i, bits in enumerate(_PANEL):
                 if bits[0] == selection:
-                    self.select_panel(i)
+                    widgetset.PreferencesWindow.select_panel(self, i)
                     break
 
     def do_show(self):

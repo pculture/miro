@@ -380,9 +380,9 @@ class PreferencesWindow (Window):
         Window.__init__(self, title, Rect(0, 0, 640, 440))
         self.create_signal('show')
         self.create_signal('hide')
-        self.window_notifications.connect(self._on_close, 'NSWindowWillCloseNotification')
         self.panels = dict()
         self.identifiers = list()
+        self.first_show = True
         self.nswindow.setShowsToolbarButton_(NO)
 
     def get_style_mask(self):
@@ -400,9 +400,8 @@ class PreferencesWindow (Window):
 
         self.nswindow.setToolbar_(toolbar)
        
-    def select_panel(self, panel, all_panels):
-        if panel is None:
-            panel = self.identifiers[0]
+    def select_panel(self, index):
+        panel = self.identifiers[index]
         self.nswindow.toolbar().setSelectedItemIdentifier_(panel)
         self.do_select_panel(self.panels[panel][0], NO)
 
@@ -422,9 +421,11 @@ class PreferencesWindow (Window):
         self.nswindow.setFrame_display_animate_(wframe, YES, animate)
 
     def show(self):
-        self.nswindow.center()
+        if self.first_show:
+            self.nswindow.center()
+            self.first_show = False
         Window.show(self)
         self.emit('show')
 
-    def _on_close(self, notification):
+    def on_will_close(self, notification):
         self.emit('hide')
