@@ -339,6 +339,8 @@ class PlaybackManager (signals.SignalEmitter):
         self.is_fullscreen = False
 
     def toggle_detached_mode(self):
+        if self.is_fullscreen:
+            return
         if self.detached_window is None:
             self.switch_to_detached_playback()
         else:
