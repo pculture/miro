@@ -344,6 +344,8 @@ class VideoWindow (NSWindow):
         super(VideoWindow, self).setFrame_display_(frame, display)
         if self.palette.window().isVisible():
             self.palette.adjustPosition(self)
+            if not self.palette.fit_in_video_window(self):
+                self.palette.remove()
 
     def enter_fullscreen(self):
         NSCursor.setHiddenUntilMouseMoves_(YES)
@@ -368,7 +370,7 @@ class VideoWindow (NSWindow):
 
     def sendEvent_(self, event):
         if event.type() == NSMouseMoved:
-            if NSPointInRect(event.locationInWindow(), self.contentView().bounds()):
+            if NSPointInRect(event.locationInWindow(), self.contentView().bounds()) and self.palette.fit_in_video_window(self):
                 self.palette.reveal(self)
         if event.type() == NSLeftMouseDown:
             if NSApplication.sharedApplication().isActive():

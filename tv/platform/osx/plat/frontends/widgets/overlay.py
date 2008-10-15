@@ -189,6 +189,9 @@ class OverlayPalette (NSWindowController):
         newFrame.origin.x = self.getHorizontalPosition(videoWindow, newFrame.size.width)
         self.window().setFrame_display_animate_(newFrame, YES, animate)
 
+    def fit_in_video_window(self, video_window):
+        return self.window().frame().size.width <= video_window.frame().size.width
+
     def reveal(self, videoWindow):
         threads.warn_if_not_on_main_thread('OverlayPalette.reveal')
         self.resetAutoHiding()
