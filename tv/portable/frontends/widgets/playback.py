@@ -108,8 +108,10 @@ class PlaybackManager (signals.SignalEmitter):
         app.widgetapp.window.splitter.set_left(self.previous_left_widget)
     
     def prepare_detached_playback(self):
-        self.detached_window = widgetset.Window("TITLE HERE", Rect(0, 0, 800, 600))
-        self.detached_window.set_content_widget(self.video_display.widget)
+        self.detached_window = widgetset.Window("", Rect(0, 0, 800, 600))
+        align = widgetset.Alignment(bottom_pad=16, yscale=1.0)
+        align.add(self.video_display.widget)
+        self.detached_window.set_content_widget(align)
         self.detached_window.connect('will-close', self.on_detached_window_close)
         self.detached_window.show()
     
@@ -272,6 +274,8 @@ class PlaybackManager (signals.SignalEmitter):
         volume = config.get(prefs.VOLUME_LEVEL)
         item_info = self.playlist[self.position]
         self.video_display.setup(item_info, volume)
+        if self.detached_window is not None:
+            self.detached_window.set_title(item_info.name)
         self.schedule_mark_as_watched()
 
     def _play_current(self):

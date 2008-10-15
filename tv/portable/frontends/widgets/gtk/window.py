@@ -163,6 +163,9 @@ class Window(WindowBase):
         self.create_signal('save-maximized')
         alive_windows.add(self)
 
+    def set_title(self, title):
+        self._window.set_title(title)
+
     def on_delete(self):
         app.widgetapp.on_close()
         return True
