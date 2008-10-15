@@ -42,6 +42,7 @@ from miro import dialogs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets.gtk import wrappermap
 from miro.frontends.widgets import menus
+from miro.frontends.widgets import rect
 from miro.plat import resources
 
 alive_windows = set() # Keeps the objects alive until destroy() is called
@@ -222,6 +223,11 @@ class Window(WindowBase):
     def get_content_widget(self, widget):
         """Get the current content widget."""
         return self.content_widget
+        
+    def get_frame(self):
+        pos = self._window.get_position()
+        size = self._window.get_size()
+        return Rect(pos[0], pos[1], size[0], size[1])
 
 class MainWindow(Window):
     def __init__(self, title, rect):

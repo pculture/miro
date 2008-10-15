@@ -28,9 +28,13 @@
 
 """miro.plat.frontends.widgets.rect -- Simple Rectangle class."""
 
-from Foundation import NSMakeRect
+from Foundation import NSMakeRect, NSRectFromString, NSStringFromRect
 
 class Rect(object):
+    @classmethod
+    def from_string(cls, rect_string):
+        return NSRectWrapper(NSRectFromString(rect_string))
+
     def __init__(self, x, y, width, height):
         self.nsrect = NSMakeRect(x, y, width, height)
 
@@ -57,6 +61,9 @@ class Rect(object):
     def set_height(self, height):
         self.nsrect.size.height = height
     height = property(get_height, set_height)
+    
+    def __str__(self):
+        return NSStringFromRect(self.nsrect)
 
 class NSRectWrapper(Rect):
     def __init__(self, nsrect):

@@ -27,8 +27,16 @@
 # statement from all source files in the program, then also delete it here.
 
 class Rect:
+    @classmethod
+    def from_string(cls, rect_string):
+        self.x, self.y, self.width, self.height = [int(i) for i in rect_string.split(',')]
+        
     def __init__(self, x, y, width, height):
         self.x = x
         self.y = y
         self.width = height
         self.height = height
+    
+    def __str__(self):
+        return "%d,%d,%d,%d" % (self.x, self.y, self.width, self.height)
+        

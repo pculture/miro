@@ -41,7 +41,7 @@ from miro.plat.frontends.widgets.base import Container, FlippedView
 from miro.plat.frontends.widgets.layout import VBox, HBox, Alignment
 from miro.plat.frontends.widgets.control import Button
 from miro.plat.frontends.widgets.simple import Label
-from miro.plat.frontends.widgets.rect import Rect
+from miro.plat.frontends.widgets.rect import Rect, NSRectWrapper
 
 # Tracks all windows that haven't been destroyed.  This makes sure there
 # object stay alive as long as the window is alive.
@@ -144,6 +144,9 @@ class Window(signals.SignalEmitter):
 
     def get_content_widget(self):
         return self.content_widget
+        
+    def get_frame(self):
+        return NSRectWrapper(self.nswindow.frame())
 
 class MainWindow(Window):
     def __init__(self, title, rect):

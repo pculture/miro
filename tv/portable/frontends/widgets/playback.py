@@ -108,7 +108,12 @@ class PlaybackManager (signals.SignalEmitter):
         app.widgetapp.window.splitter.set_left(self.previous_left_widget)
     
     def prepare_detached_playback(self):
-        self.detached_window = widgetset.Window("", Rect(0, 0, 800, 600))
+        detached_window_frame = config.get(prefs.DETACHED_WINDOW_FRAME)
+        if detached_window_frame is None:
+            detached_window_frame = Rect(0, 0, 800, 600)
+        else:
+            detached_window_frame = Rect.from_string(detached_window_frame)
+        self.detached_window = widgetset.Window("", detached_window_frame)
         align = widgetset.Alignment(bottom_pad=16, yscale=1.0)
         align.add(self.video_display.widget)
         self.detached_window.set_content_widget(align)
@@ -116,6 +121,8 @@ class PlaybackManager (signals.SignalEmitter):
         self.detached_window.show()
     
     def finish_detached_playback(self):
+        config.set(prefs.DETACHED_WINDOW_FRAME, str(self.detached_window.get_frame()))
+        config.save()
         self.detached_window.close()
         self.detached_window = None
     
