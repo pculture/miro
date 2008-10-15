@@ -326,3 +326,15 @@ class PlaybackManager (signals.SignalEmitter):
     def exit_fullscreen(self):
         self.video_display.exit_fullscreen()
         self.is_fullscreen = False
+
+    def toggle_detached_mode(self):
+        if self.detached_window is None:
+            self.switch_to_detached_playback()
+        else:
+            self.switch_to_attached_playback()
+            
+    def switch_to_attached_playback(self):
+        pass
+    
+    def switch_to_detached_playback(self):
+        pass

@@ -218,6 +218,9 @@ class Application:
     def on_fullscreen_clicked(self, button=None):
         app.playback_manager.fullscreen()
 
+    def on_toggle_detach_clicked(self, button=None):
+        app.playback_manager.toggle_detached_mode()
+
     def up_volume(self):
         slider = self.window.videobox.volume_slider
         v = min(slider.get_value() + 0.05, 1.0)

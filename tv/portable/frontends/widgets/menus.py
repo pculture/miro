@@ -192,6 +192,10 @@ def on_down_volume():
 def on_fullscreen():
     app.widgetapp.on_fullscreen_clicked()
 
+@action_handler("ToggleDetach")
+def on_toggle_detach():
+    app.widgetapp.on_toggle_detach_clicked()
+
 # Help menu
 
 @action_handler("About")
