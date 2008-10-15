@@ -41,7 +41,7 @@ def initialize():
     global manualFeed, singleFeed, directoryFeed, newlyDownloadedItems
     global downloadingItems, pausedItems, manualDownloads, autoDownloads, allDownloadingItems
     global playlists, playlistFolders, channelFolders
-    global themeHistories, visibleFeeds
+    global themeHistories, visibleFeeds, watchedFolders
 
     from miro import app
     from miro import feed
@@ -144,3 +144,5 @@ def initialize():
     channelFolders.createIndex(indexes.foldersByTitle)
 
     themeHistories = app.db.filterWithIndex(indexes.objectsByClass, theme.ThemeHistory)
+
+    watchedFolders = feeds.filter(filters.watchedFolders)

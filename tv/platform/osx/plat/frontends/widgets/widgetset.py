@@ -42,6 +42,6 @@ from miro.plat.frontends.widgets.window import Window, MainWindow, Dialog, FileS
 from miro.plat.frontends.widgets.window import DirectorySelectDialog, AboutDialog, AlertDialog, PreferencesWindow
 from miro.plat.frontends.widgets.browser import Browser
 from miro.plat.frontends.widgets.simple import Image, ImageDisplay, Label, SolidBackground
-from miro.plat.frontends.widgets.tableview import TableView, CellRenderer, CustomCellRenderer, ImageCellRenderer
+from miro.plat.frontends.widgets.tableview import TableView, CellRenderer, CustomCellRenderer, ImageCellRenderer, CheckboxCellRenderer
 from miro.plat.frontends.widgets.tablemodel import TableModel, TreeTableModel
 from miro.plat.frontends.widgets.video import VideoRenderer, can_play_file

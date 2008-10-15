@@ -35,6 +35,7 @@ import gobject
 import gtk
 import pango
 
+from miro import signals
 from miro.frontends.widgets.gtk import pygtkhacks
 from miro.frontends.widgets.gtk import drawing
 from miro.frontends.widgets.gtk import wrappermap
@@ -70,6 +71,27 @@ class ImageCellRenderer(object):
 
     def setup_attributes(self, column, attr_map):
         column.add_attribute(self._renderer, 'pixbuf', attr_map['image'])
+
+class GTKCheckboxCellRenderer(gtk.CellRendererToggle):
+    def do_activate(self, event, treeview, path, background_area, cell_area,
+            flags):
+        iter = treeview.get_model().get_iter(path)
+        self.set_active(not self.get_active())
+        wrappermap.wrapper(self).emit('clicked', iter)
+
+gobject.type_register(GTKCheckboxCellRenderer)
+
+class CheckboxCellRenderer(signals.SignalEmitter):
+    """Cell Renderer for booleans
+    https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView"""
+    def __init__(self):
+        signals.SignalEmitter.__init__(self)
+        self.create_signal("clicked")
+        self._renderer = GTKCheckboxCellRenderer()
+        wrappermap.add(self._renderer, self)
+
+    def setup_attributes(self, column, attr_map):
+        column.add_attribute(self._renderer, 'active', attr_map['value'])
 
 class GTKCustomCellRenderer(gtk.GenericCellRenderer):
     """Handles the GTK hide of CustomCellRenderer
@@ -272,6 +294,8 @@ class HotspotTracker(object):
         self.path, self.column, background_x, background_y = path_info
         # We always pack 1 renderer for each column
         gtk_renderer = self.column.get_cell_renderers()[0]
+        if not isinstance(gtk_renderer, GTKCustomCellRenderer):
+            return
         self.renderer = wrappermap.wrapper(gtk_renderer)
         self.attr_map = self.treeview_wrapper.attr_map_for_column[self.column]
         cell_area = treeview.get_cell_area(self.path, self.column)

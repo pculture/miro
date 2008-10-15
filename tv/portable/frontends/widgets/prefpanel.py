@@ -47,7 +47,10 @@ Refer to documentation for those functions for help.
 
 import logging
 
-from miro import config, prefs
+from miro import app
+from miro import config
+from miro import messages
+from miro import prefs
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import cellpack, widgetutil, window
 from miro.frontends.widgets import dialogs
@@ -210,21 +213,40 @@ def note_label(text):
 from miro.plat.frontends.widgets import prefpanelset
 
 
-# the panel list holding tuples of (name, image_name, panel_builder_function)
-__PANEL = []
+class PanelBuilder(object):
+    def build_widget(self):
+        """Return a widget that should be used to display the panel."""
+        raise NotImplementedError()
 
-def add_panel(name, title, panel_builder_function, image_name='wimages/pref-tab-general.png'):
+    def on_window_open(self):
+        """Called when the preference window is opened.
+
+        Can be overridden by subclasses.
+        """
+        pass
+
+    def on_window_closed(self):
+        """Called when the preference window is opened.
+
+        Can be overridden by subclasses.
+        """
+        pass
+
+# the panel list holding tuples of (name, image_name, panel_builder)
+_PANEL = []
+
+def add_panel(name, title, panel_builder_class, image_name='wimages/pref-tab-general.png'):
     """Adds a panel to the preferences panel list.
 
     name -- a name for the panel--this is used internally
     title -- the name of the panel; appears in tabs on the side and the top of
              the panel
-    panel_builder_function -- function ``None -> widget`` that builds the panel
+    panel_builder -- function ``None -> widget`` that builds the panel
             and returns it
     image_name -- the image to use in the tabs; defaults to the general tab image
     """
-    global __PANEL
-    __PANEL.append( (name, title, image_name, panel_builder_function) )
+    global _PANEL
+    _PANEL.append( (name, title, image_name, panel_builder_class) )
 
 
 # -----------------------
@@ -236,266 +258,376 @@ def pack_extras(vbox, panel):
         vbox.pack_start(widgetutil.pad(extras[0], top=12))
         [vbox.pack_start(mem) for mem in extras[1:]]
 
-def _build_general_panel():
-    """Build's the General tab and returns it."""
-    v = widgetset.VBox(8)
+class GeneralPanel(PanelBuilder):
+    def build_widget(self):
+        v = widgetset.VBox(8)
 
-    run_dtv_at_startup_cbx = widgetset.Checkbox(_("Automatically run Miro when I log in."))
-    attach_boolean(run_dtv_at_startup_cbx, prefs.RUN_DTV_AT_STARTUP)
-    v.pack_start(run_dtv_at_startup_cbx)
+        run_dtv_at_startup_cbx = widgetset.Checkbox(_("Automatically run Miro when I log in."))
+        attach_boolean(run_dtv_at_startup_cbx, prefs.RUN_DTV_AT_STARTUP)
+        v.pack_start(run_dtv_at_startup_cbx)
 
-    warn_if_downloading_cbx = widgetset.Checkbox(_("Warn me if I attempt to quit with downloads in progress."))
-    attach_boolean(warn_if_downloading_cbx, prefs.WARN_IF_DOWNLOADING_ON_QUIT)
-    v.pack_start(warn_if_downloading_cbx)
+        warn_if_downloading_cbx = widgetset.Checkbox(_("Warn me if I attempt to quit with downloads in progress."))
+        attach_boolean(warn_if_downloading_cbx, prefs.WARN_IF_DOWNLOADING_ON_QUIT)
+        v.pack_start(warn_if_downloading_cbx)
 
-    pack_extras(v, "general")
+        pack_extras(v, "general")
 
-    return v
+        return v
 
-def _build_channels_panel():
-    """Build's the Channels tab and returns it."""
+class ChannelsPanel(PanelBuilder):
+    def build_widget(self):
+        cc_options = [(1440, _("Every day")),
+                      (60, _("Every hour")),
+                      (30, _("Every 30 minutes")),
+                      (-1 , _("Manually"))]
+        cc_option_menu = widgetset.OptionMenu([op[1] for op in cc_options])
+        attach_combo(cc_option_menu, prefs.CHECK_CHANNELS_EVERY_X_MN, 
+            [op[0] for op in cc_options])
 
-    cc_options = [(1440, _("Every day")),
-                  (60, _("Every hour")),
-                  (30, _("Every 30 minutes")),
-                  (-1 , _("Manually"))]
-    cc_option_menu = widgetset.OptionMenu([op[1] for op in cc_options])
-    attach_combo(cc_option_menu, prefs.CHECK_CHANNELS_EVERY_X_MN, 
-        [op[0] for op in cc_options])
+        ad_options = [("new", _("New")),
+                      ("all", _("All")),
+                      ("off", _("Off"))]
+        ad_option_menu = widgetset.OptionMenu([op[1] for op in ad_options])
 
-    ad_options = [("new", _("New")),
-                  ("all", _("All")),
-                  ("off", _("Off"))]
-    ad_option_menu = widgetset.OptionMenu([op[1] for op in ad_options])
+        attach_combo(ad_option_menu, prefs.CHANNEL_AUTO_DEFAULT, 
+            [op[0] for op in ad_options])
 
-    attach_combo(ad_option_menu, prefs.CHANNEL_AUTO_DEFAULT, 
-        [op[0] for op in ad_options])
+        max_options = [(0, "0"),
+                       (20, "20"),
+                       (50, "50"),
+                       (100, "100"),
+                       (1000, "1000")]
+        max_option_menu = widgetset.OptionMenu([op[1] for op in max_options])
+        attach_combo(max_option_menu, prefs.MAX_OLD_ITEMS_DEFAULT, 
+            [op[0] for op in max_options])
 
-    max_options = [(0, "0"),
-                   (20, "20"),
-                   (50, "50"),
-                   (100, "100"),
-                   (1000, "1000")]
-    max_option_menu = widgetset.OptionMenu([op[1] for op in max_options])
-    attach_combo(max_option_menu, prefs.MAX_OLD_ITEMS_DEFAULT, 
-        [op[0] for op in max_options])
+        grid = dialogwidgets.ControlGrid()
+        grid.pack(dialogwidgets.heading(_("Default settings for new channels:")), 
+                grid.ALIGN_LEFT, span=2)
+        grid.end_line(spacing=2)
+        grid.pack(dialogwidgets.note(
+                _("(These can be changed using the channel's settings button)")),
+                grid.ALIGN_LEFT, span=2)
+        grid.end_line(spacing=12)
 
-    grid = dialogwidgets.ControlGrid()
-    grid.pack(dialogwidgets.heading(_("Default settings for new channels:")), 
-            grid.ALIGN_LEFT, span=2)
-    grid.end_line(spacing=2)
-    grid.pack(dialogwidgets.note(
-            _("(These can be changed using the channel's settings button)")),
-            grid.ALIGN_LEFT, span=2)
-    grid.end_line(spacing=12)
+        grid.pack_label(_("Check for new content:"),
+                dialogwidgets.ControlGrid.ALIGN_RIGHT)
+        grid.pack(cc_option_menu)
+        grid.end_line(spacing=4)
 
-    grid.pack_label(_("Check for new content:"),
+        grid.pack_label(_("Auto download setting:"),
+                dialogwidgets.ControlGrid.ALIGN_RIGHT)
+        grid.pack(ad_option_menu)
+        grid.end_line(spacing=4)
+
+        grid.pack(dialogwidgets.label_with_note(
+            _("Remember this many old items:"),
+            _("(in addition to the current contents)")),
             dialogwidgets.ControlGrid.ALIGN_RIGHT)
-    grid.pack(cc_option_menu)
-    grid.end_line(spacing=4)
+        grid.pack(max_option_menu)
+        grid.end_line()
 
-    grid.pack_label(_("Auto download setting:"),
-            dialogwidgets.ControlGrid.ALIGN_RIGHT)
-    grid.pack(ad_option_menu)
-    grid.end_line(spacing=4)
+        return grid.make_table()
 
-    grid.pack(dialogwidgets.label_with_note(
-        _("Remember this many old items:"),
-        _("(in addition to the current contents)")),
-        dialogwidgets.ControlGrid.ALIGN_RIGHT)
-    grid.pack(max_option_menu)
-    grid.end_line()
+class DownloadsPanel(PanelBuilder):
+    def build_widget(self):
+        vbox = widgetset.VBox()
 
-    return grid.make_table()
+        grid = dialogwidgets.ControlGrid()
 
-def _build_downloads_panel():
-    vbox = widgetset.VBox()
+        grid.pack_label(_('Maximum number of manual downloads at a time:'))
+        max_manual = widgetset.TextEntry()
+        max_manual.set_width(5)
+        attach_integer(max_manual, prefs.MAX_MANUAL_DOWNLOADS, create_integer_checker(min=0))
+        grid.pack(max_manual)
+        grid.end_line(spacing=6)
 
-    grid = dialogwidgets.ControlGrid()
+        grid.pack_label(_('Maximum number of auto-downloads at a time:'))
+        max_auto = widgetset.TextEntry()
+        max_auto.set_width(5)
+        attach_integer(max_auto, prefs.DOWNLOADS_TARGET, create_integer_checker(min=0))
+        grid.pack(max_auto)
+        grid.end_line(spacing=12)
+        
+        vbox.pack_start(grid.make_table())
 
-    grid.pack_label(_('Maximum number of manual downloads at a time:'))
-    max_manual = widgetset.TextEntry()
-    max_manual.set_width(5)
-    attach_integer(max_manual, prefs.MAX_MANUAL_DOWNLOADS, create_integer_checker(min=0))
-    grid.pack(max_manual)
-    grid.end_line(spacing=6)
+        grid = dialogwidgets.ControlGrid()
+        grid.pack(dialogwidgets.heading(_("Bittorrent:")), grid.ALIGN_LEFT, span=3)
+        grid.end_line(spacing=12)
 
-    grid.pack_label(_('Maximum number of auto-downloads at a time:'))
-    max_auto = widgetset.TextEntry()
-    max_auto.set_width(5)
-    attach_integer(max_auto, prefs.DOWNLOADS_TARGET, create_integer_checker(min=0))
-    grid.pack(max_auto)
-    grid.end_line(spacing=12)
-    
-    vbox.pack_start(grid.make_table())
+        cbx = widgetset.Checkbox( _('Limit upstream bandwidth to:'))
+                    #avoid internet slowdowns'))
+        limit = widgetset.TextEntry()
+        limit.set_width(5)
+        attach_boolean(cbx, prefs.LIMIT_UPSTREAM, (limit,))
+        attach_integer(limit, prefs.UPSTREAM_LIMIT_IN_KBS, create_integer_checker(min=0))
 
-    grid = dialogwidgets.ControlGrid()
-    grid.pack(dialogwidgets.heading(_("Bittorrent:")), grid.ALIGN_LEFT, span=3)
-    grid.end_line(spacing=12)
+        grid.pack(cbx)
+        grid.pack(limit)
+        grid.pack_label(_("KB/s"))
+        grid.end_line(spacing=6)
 
-    cbx = widgetset.Checkbox( _('Limit upstream bandwidth to:'))
-                #avoid internet slowdowns'))
-    limit = widgetset.TextEntry()
-    limit.set_width(5)
-    attach_boolean(cbx, prefs.LIMIT_UPSTREAM, (limit,))
-    attach_integer(limit, prefs.UPSTREAM_LIMIT_IN_KBS, create_integer_checker(min=0))
+        cbx = widgetset.Checkbox(_('Limit downstream bandwidth to:'))
+        limit = widgetset.TextEntry()
+        limit.set_width(5)
+        attach_boolean(cbx, prefs.LIMIT_DOWNSTREAM_BT, (limit,))
+        attach_integer(limit, prefs.DOWNSTREAM_BT_LIMIT_IN_KBS, create_integer_checker(min=0))
 
-    grid.pack(cbx)
-    grid.pack(limit)
-    grid.pack_label(_("KB/s"))
-    grid.end_line(spacing=6)
+        grid.pack(cbx)
+        grid.pack(limit)
+        grid.pack_label(_("KB/s"))
+        grid.end_line(spacing=6)
 
-    cbx = widgetset.Checkbox(_('Limit downstream bandwidth to:'))
-    limit = widgetset.TextEntry()
-    limit.set_width(5)
-    attach_boolean(cbx, prefs.LIMIT_DOWNSTREAM_BT, (limit,))
-    attach_integer(limit, prefs.DOWNSTREAM_BT_LIMIT_IN_KBS, create_integer_checker(min=0))
+        cbx = widgetset.Checkbox(_('Limit torrent connections to:'))
+        limit = widgetset.TextEntry()
+        limit.set_width(5)
+        attach_boolean(cbx, prefs.LIMIT_CONNECTIONS_BT, (limit,))
+        attach_integer(limit, prefs.CONNECTION_LIMIT_BT_NUM, create_integer_checker(min=0))
 
-    grid.pack(cbx)
-    grid.pack(limit)
-    grid.pack_label(_("KB/s"))
-    grid.end_line(spacing=6)
+        grid.pack(cbx)
+        grid.pack(limit)
+        grid.end_line(spacing=6)
 
-    cbx = widgetset.Checkbox(_('Limit torrent connections to:'))
-    limit = widgetset.TextEntry()
-    limit.set_width(5)
-    attach_boolean(cbx, prefs.LIMIT_CONNECTIONS_BT, (limit,))
-    attach_integer(limit, prefs.CONNECTION_LIMIT_BT_NUM, create_integer_checker(min=0))
+        min_port = widgetset.TextEntry()
+        min_port.set_width(5)
+        max_port = widgetset.TextEntry()
+        max_port.set_width(5)
+        attach_integer(min_port, prefs.BT_MIN_PORT, create_integer_checker(min=0, max=65535))
+        attach_integer(max_port, prefs.BT_MAX_PORT, create_integer_checker(min=0, max=65535))
 
-    grid.pack(cbx)
-    grid.pack(limit)
-    grid.end_line(spacing=6)
+        grid.pack_label(_("Starting port:"), dialogwidgets.ControlGrid.ALIGN_RIGHT)
+        grid.pack(min_port)
+        grid.end_line(spacing=6)
 
-    min_port = widgetset.TextEntry()
-    min_port.set_width(5)
-    max_port = widgetset.TextEntry()
-    max_port.set_width(5)
-    attach_integer(min_port, prefs.BT_MIN_PORT, create_integer_checker(min=0, max=65535))
-    attach_integer(max_port, prefs.BT_MAX_PORT, create_integer_checker(min=0, max=65535))
+        grid.pack_label(_("Ending port:"), dialogwidgets.ControlGrid.ALIGN_RIGHT)
+        grid.pack(max_port)
+        grid.end_line(spacing=12)
+        vbox.pack_start(widgetutil.align_left(grid.make_table()))
 
-    grid.pack_label(_("Starting port:"), dialogwidgets.ControlGrid.ALIGN_RIGHT)
-    grid.pack(min_port)
-    grid.end_line(spacing=6)
+        grid = dialogwidgets.ControlGrid()
+        cbx = widgetset.Checkbox(_('Automatically forward ports.  (UPNP)'))
+        attach_boolean(cbx, prefs.USE_UPNP)
+        vbox.pack_start(cbx, padding=4)
 
-    grid.pack_label(_("Ending port:"), dialogwidgets.ControlGrid.ALIGN_RIGHT)
-    grid.pack(max_port)
-    grid.end_line(spacing=12)
-    vbox.pack_start(widgetutil.align_left(grid.make_table()))
+        cbx = widgetset.Checkbox(_('Ignore unencrypted connections.'))
+        attach_boolean(cbx, prefs.BT_ENC_REQ)
+        vbox.pack_start(cbx)
 
-    grid = dialogwidgets.ControlGrid()
-    cbx = widgetset.Checkbox(_('Automatically forward ports.  (UPNP)'))
-    attach_boolean(cbx, prefs.USE_UPNP)
-    vbox.pack_start(cbx, padding=4)
+        cbx = widgetset.Checkbox(_('Stop torrent uploads when this ratio is reached:'))
+        limit = widgetset.TextEntry()
+        attach_boolean(cbx, prefs.LIMIT_UPLOAD_RATIO, (limit,))
+        attach_float(limit, prefs.UPLOAD_RATIO, create_float_checker(0.0, 1.0))
+        grid.pack(cbx)
+        grid.pack(limit)
+        grid.end_line(spacing=6)
+        vbox.pack_start(widgetutil.align_left(grid.make_table()))
 
-    cbx = widgetset.Checkbox(_('Ignore unencrypted connections.'))
-    attach_boolean(cbx, prefs.BT_ENC_REQ)
-    vbox.pack_start(cbx)
+        return vbox
 
-    cbx = widgetset.Checkbox(_('Stop torrent uploads when this ratio is reached:'))
-    limit = widgetset.TextEntry()
-    attach_boolean(cbx, prefs.LIMIT_UPLOAD_RATIO, (limit,))
-    attach_float(limit, prefs.UPLOAD_RATIO, create_float_checker(0.0, 1.0))
-    grid.pack(cbx)
-    grid.pack(limit)
-    grid.end_line(spacing=6)
-    vbox.pack_start(widgetutil.align_left(grid.make_table()))
+class _MovieDirectoryHelper(object):
+    """Helper class that contains widgets used to handle the Movie directory
+    prefs.
+    """
+    def __init__(self):
+        self.label = widgetset.Label(config.get(prefs.MOVIES_DIRECTORY))
+        self.button = widgetset.Button(_("Change"))
+        self.button.connect('clicked', self._on_button_clicked)
 
-    return vbox
-
-def _build_folders_panel():
-    grid = dialogwidgets.ControlGrid()
-
-    # FIXME - finish implementing this pane
-
-    grid.pack_label(_('Store downloads in this folder:'), span=2)
-    grid.end_line(spacing=0)
-    movies_directory_label = widgetset.Label(
-            config.get(prefs.MOVIES_DIRECTORY))
-    grid.pack(movies_directory_label, grid.ALIGN_LEFT, pad_left=12)
-    change_directory_button = widgetset.Button(_("Change"))
-    def on_change_movies_directory(button):
+    def _on_button_clicked(self, button):
         dir = dialogs.ask_for_directory(_("Choose Movies Directory"),
-                initial_directory=config.get(prefs.MOVIES_DIRECTORY))
+                initial_directory=config.get(prefs.MOVIES_DIRECTORY),
+                transient_for=_pref_window)
         if dir is not None:
-            movies_directory_label.set_text(dir)
+            self.label.set_text(dir)
             config.set(prefs.MOVIES_DIRECTORY, dir)
-    change_directory_button.connect('clicked', on_change_movies_directory)
-    grid.pack(change_directory_button)
-    grid.end_line(spacing=18)
-    grid.pack_label(_('Watch for new videos in these folders and include '
-        'them in library:'), span=2)
-    grid.end_line()
-    grid.pack_label("FIXME - implement this.", span=2)
-    return grid.make_table()
 
-def _build_disk_space_panel():
-    grid = dialogwidgets.ControlGrid()
+class _WatchedFolderHelper(object):
+    def __init__(self):
+        self._table = widgetset.TableView(app.watched_folder_manager.model)
+        self._table.add_column('folder', widgetset.CellRenderer(), 400, value=1)
+        checkbox = widgetset.CheckboxCellRenderer()
+        checkbox.connect('clicked', self._on_visible_clicked)
+        self._table.add_column('visible', checkbox, 50, value=2)
+        self._table.allow_multiple_select(False)
+        self.add_button = widgetset.Button(_("Add"))
+        self.add_button.connect('clicked', self._add_clicked)
+        self.remove_button = widgetset.Button(_("Remove"))
+        self.remove_button.connect('clicked', self._remove_clicked)
+        self.remove_button_holder = \
+                widgetutil.HideableWidget(self.remove_button)
+        self.button_box = widgetset.VBox()
+        self.button_box.pack_start(self.add_button)
+        self.button_box.pack_start(self.remove_button_holder)
+        scroller = widgetset.Scroller(False, True)
+        scroller.add(self._table)
+        scroller.set_size_request(-1, 120)
+        self.folder_list = widgetset.VBox()
+        self.folder_list.pack_start(scroller)
+        self.empty_label = widgetutil.HideableWidget(
+                widgetutil.align_center(
+                    widgetset.Label(_("No watched folders"))))
+        self.folder_list.pack_start(self.empty_label)
+        self._check_no_folders()
 
-    cbx = widgetset.Checkbox(_('Keep at least this much free space on my drive:'))
-    limit = widgetset.TextEntry()
-    limit.set_width(6)
-    note = widgetset.Label(_('GB'))
-    attach_boolean(cbx, prefs.PRESERVE_DISK_SPACE, (limit,))
-    attach_float(limit, prefs.PRESERVE_X_GB_FREE, create_float_checker(min=0.0))
+    def _on_visible_clicked(self, renderer, iter):
+        row = app.watched_folder_manager.model[iter]
+        app.watched_folder_manager.change_visible(row[0], not row[2])
 
-    grid.pack(cbx)
-    grid.pack(limit)
-    grid.pack_label(_('GB'))
-    grid.end_line(spacing=4)
+    def connect_signals(self):
+        self._changed_signal = app.watched_folder_manager.connect('changed',
+                self._on_folders_changed)
 
-    expire_ops = [(1, _('1 day')),
-            (3, _('3 days')),
-            (6, _('6 days')),
-            (10, _('10 days')),
-            (30, _('1 month')),
-            (-1, _('never'))]
-    expire_menu = widgetset.OptionMenu([op[1] for op in expire_ops])
-    attach_combo(expire_menu, prefs.EXPIRE_AFTER_X_DAYS,
-            [op[0] for op in expire_ops])
+    def disconnect_signals(self):
+        app.watched_folder_manager.disconnect(self._changed_signal)
 
-    grid.pack_label(_('By default, videos expire after:'), extra_space=dialogwidgets.ControlGrid.ALIGN_RIGHT)
-    grid.pack(expire_menu, extra_space=dialogwidgets.ControlGrid.ALIGN_LEFT)
+    def _on_folders_changed(self, watched_folder_manager):
+        self._table.model_changed()
+        self._check_no_folders()
 
-    return grid.make_table()
+    def _check_no_folders(self):
+        if len(app.watched_folder_manager.model) == 0:
+            self.empty_label.show()
+            self.remove_button_holder.hide()
+        else:
+            self.empty_label.hide()
+            self.remove_button_holder.show()
 
-def _build_playback_panel():
-    v = widgetset.VBox()
+    def _add_clicked(self, button):
+        dir = dialogs.ask_for_directory(_("Add Watched Folder"),
+                initial_directory=config.get(prefs.MOVIES_DIRECTORY),
+                transient_for=_pref_window)
+        if dir is not None:
+            app.watched_folder_manager.add(dir)
 
-    cbx = widgetset.Checkbox(_('Resume playing a video from the point it was last stopped.'))
-    attach_boolean(cbx, prefs.RESUME_VIDEOS_MODE)
-    v.pack_start(widgetutil.align_left(cbx, bottom_pad=6))
+    def _remove_clicked(self, button):
+        iter = self._table.get_selected()
+        if iter is not None:
+            id = app.watched_folder_manager.model[iter][0]
+            app.watched_folder_manager.remove(id)
 
-    rbg = widgetset.RadioButtonGroup()
-    play_rb = widgetset.RadioButton("Play videos one after another", rbg)
-    stop_rb = widgetset.RadioButton("Stop after each video", rbg)
-    attach_radio( [(stop_rb, True), (play_rb, False)], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
-    v.pack_start(widgetutil.align_left(play_rb), padding=2)
-    v.pack_start(widgetutil.align_left(stop_rb))
+class FoldersPanel(PanelBuilder):
+    def build_widget(self):
+        grid = dialogwidgets.ControlGrid()
+        movie_dir_helper = _MovieDirectoryHelper()
+        self.watched_folder_helper = _WatchedFolderHelper()
 
-    pack_extras(v, "playback")
+        grid.pack_label(_('Store downloads in this folder:'), span=2)
+        grid.end_line(spacing=0)
+        movies_directory_label = widgetset.Label(
+                config.get(prefs.MOVIES_DIRECTORY))
+        grid.pack(movie_dir_helper.label, grid.ALIGN_LEFT, pad_left=12)
+        grid.pack(movie_dir_helper.button)
+        grid.end_line(spacing=18)
+        grid.pack_label(_('Watch for new videos in these folders and include '
+            'them in library:'), span=2)
+        grid.end_line()
+        grid.pack(self.watched_folder_helper.folder_list, pad_right=12)
+        grid.pack(self.watched_folder_helper.button_box)
+        return grid.make_table()
 
-    return v
+    def on_window_open(self):
+        self.watched_folder_helper.connect_signals()
+
+    def on_window_closed(self):
+        self.watched_folder_helper.disconnect_signals()
+
+class DiskSpacePanel(PanelBuilder):
+    def build_widget(self):
+        grid = dialogwidgets.ControlGrid()
+
+        cbx = widgetset.Checkbox(_('Keep at least this much free space on my drive:'))
+        limit = widgetset.TextEntry()
+        limit.set_width(6)
+        note = widgetset.Label(_('GB'))
+        attach_boolean(cbx, prefs.PRESERVE_DISK_SPACE, (limit,))
+        attach_float(limit, prefs.PRESERVE_X_GB_FREE, create_float_checker(min=0.0))
+
+        grid.pack(cbx)
+        grid.pack(limit)
+        grid.pack_label(_('GB'))
+        grid.end_line(spacing=4)
+
+        expire_ops = [(1, _('1 day')),
+                (3, _('3 days')),
+                (6, _('6 days')),
+                (10, _('10 days')),
+                (30, _('1 month')),
+                (-1, _('never'))]
+        expire_menu = widgetset.OptionMenu([op[1] for op in expire_ops])
+        attach_combo(expire_menu, prefs.EXPIRE_AFTER_X_DAYS,
+                [op[0] for op in expire_ops])
+
+        grid.pack_label(_('By default, videos expire after:'), extra_space=dialogwidgets.ControlGrid.ALIGN_RIGHT)
+        grid.pack(expire_menu, extra_space=dialogwidgets.ControlGrid.ALIGN_LEFT)
+
+        return grid.make_table()
+
+class PlaybackPanel(PanelBuilder):
+    def build_widget(self):
+        v = widgetset.VBox()
+
+        cbx = widgetset.Checkbox(_('Resume playing a video from the point it was last stopped.'))
+        attach_boolean(cbx, prefs.RESUME_VIDEOS_MODE)
+        v.pack_start(widgetutil.align_left(cbx, bottom_pad=6))
+
+        rbg = widgetset.RadioButtonGroup()
+        play_rb = widgetset.RadioButton("Play videos one after another", rbg)
+        stop_rb = widgetset.RadioButton("Stop after each video", rbg)
+        attach_radio( [(stop_rb, True), (play_rb, False)], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
+        v.pack_start(widgetutil.align_left(play_rb), padding=2)
+        v.pack_start(widgetutil.align_left(stop_rb))
+
+        pack_extras(v, "playback")
+
+        return v
 
 
 # Add the initial panels
-add_panel("general", _("General"), _build_general_panel, 'wimages/pref-tab-general.png')
-add_panel("channels", _("Channels"), _build_channels_panel, 'wimages/pref-tab-channels.png')
-add_panel("downloads", _("Downloads"), _build_downloads_panel, 'wimages/pref-tab-downloads.png')
-add_panel("folders", _("Folders"), _build_folders_panel, 'wimages/pref-tab-folders.png')
-add_panel("disk_space", _("Disk space"), _build_disk_space_panel, 'wimages/pref-tab-disk-space.png')
-add_panel("playback", _("Playback"), _build_playback_panel, 'wimages/pref-tab-playback.png')
+add_panel("general", _("General"), GeneralPanel, 'wimages/pref-tab-general.png')
+add_panel("channels", _("Channels"), ChannelsPanel, 'wimages/pref-tab-channels.png')
+add_panel("downloads", _("Downloads"), DownloadsPanel, 'wimages/pref-tab-downloads.png')
+add_panel("folders", _("Folders"), FoldersPanel, 'wimages/pref-tab-folders.png')
+add_panel("disk_space", _("Disk space"), DiskSpacePanel, 'wimages/pref-tab-disk-space.png')
+add_panel("playback", _("Playback"), PlaybackPanel, 'wimages/pref-tab-playback.png')
+
+class PreferencesWindow(widgetset.PreferencesWindow):
+    def __init__(self):
+        widgetset.PreferencesWindow.__init__(self, _("Preferences"))
+        self.panel_builders = []
+        for name, title, image_name, panel_builder_class in _PANEL:
+            panel_builder = panel_builder_class()
+            self.panel_builders.append(panel_builder)
+            panel = panel_builder.build_widget()
+            alignment = widgetset.Alignment(xalign=0.5, yalign=0.5)
+            alignment.set_padding(20, 20, 20, 20)
+            alignment.add(panel)
+            self.append_panel(name, alignment, title, image_name)
+
+        self.finish_panels()
+
+    def select_panel(self, selection):
+        if selection is None:
+            self.select_panel(0)
+        else:
+            for i, bits in enumerate(_PANEL):
+                if bits[0] == selection:
+                    self.select_panel(i)
+                    break
+
+    def do_show(self):
+        for panel_builder in self.panel_builders:
+            panel_builder.on_window_open()
+
+    def do_hide(self):
+        for panel_builder in self.panel_builders:
+            panel_builder.on_window_closed()
+
+_pref_window = None
 
 def show_window(selection=None):
     """Displays the preferences window."""
-    pref_window = widgetset.PreferencesWindow(_("Preferences"))
-
-    for name, title, image_name, panel_builder in __PANEL:
-        panel = panel_builder()
-        alignment = widgetset.Alignment(xalign=0.5, yalign=0.5)
-        alignment.set_padding(20, 20, 20, 20)
-        alignment.add(panel)
-        pref_window.append_panel(name, alignment, title, image_name)
-
-    pref_window.finish_panels()
-    pref_window.select_panel(selection, __PANEL)
-    pref_window.show()
+    global _pref_window
+    if _pref_window is None:
+        _pref_window = PreferencesWindow()
+    _pref_window.select_panel(selection)
+    _pref_window.show()

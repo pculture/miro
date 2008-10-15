@@ -51,7 +51,7 @@ from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
 from miro.util import getSingletonDDBObject
 from miro.xhtmltools import urlencode
 
-from miro.plat.utils import osFilenameToFilenameType
+from miro.plat.utils import osFilenameToFilenameType, makeURLSafe
 
 import shutil
 
@@ -193,6 +193,20 @@ class GuideTracker(ViewTracker):
     def send_initial_list(self):
         info_list = [messages.GuideInfo(g) for g in views.guides]
         messages.GuideList(info_list).send_to_frontend()
+
+class WatchedFolderTracker(ViewTracker):
+    InfoClass = messages.WatchedFolderInfo
+
+    def get_object_views(self):
+        return [views.watchedFolders]
+
+    def make_changed_message(self, added, changed, removed):
+        return messages.WatchedFoldersChanged(added, changed, removed)
+
+    def send_initial_list(self):
+        info_list = [messages.WatchedFolderInfo(feed) \
+                for feed in views.watchedFolders]
+        messages.WatchedFolderList(info_list).send_to_frontend()
 
 class ItemTrackerBase(ViewTracker):
     InfoClass = messages.ItemInfo
@@ -338,6 +352,7 @@ class BackendMessageHandler(messages.MessageHandler):
         self.channel_tracker = None
         self.playlist_tracker = None
         self.guide_tracker = None
+        self.watched_folder_tracker = None
         self.download_count_tracker = None
         self.new_count_tracker = None
         self.item_trackers = {}
@@ -393,6 +408,16 @@ class BackendMessageHandler(messages.MessageHandler):
         if self.guide_tracker:
             self.guide_tracker.unlink()
             self.guide_tracker = None
+
+    def handle_track_watched_folders(self, message):
+        if not self.watched_folder_tracker:
+            self.watched_folder_tracker = WatchedFolderTracker()
+        self.watched_folder_tracker.send_initial_list()
+
+    def handle_stop_tracking_watched_folders(self, message):
+        if self.watched_folder_tracker:
+            self.watched_folder_tracker.unlink()
+            self.watched_folder_tracker = None
 
     def handle_track_playlists(self, message):
         if not self.playlist_tracker:
@@ -517,13 +542,21 @@ class BackendMessageHandler(messages.MessageHandler):
         try:
             channel = view.getObjectByID(message.id)
         except database.ObjectNotFoundError:
-            logging.warn("channel not found: %s" % id)
+            logging.warn("channel not found: %s" % message.id)
         else:
             if message.keep_items:
                 move_to = getSingletonDDBObject(views.manualFeed)
             else:
                 move_to = None
             channel.remove(move_to)
+
+    def handle_delete_watched_folder(self, message):
+        try:
+            channel = views.watchedFolders.getObjectByID(message.id)
+        except database.ObjectNotFoundError:
+            logging.warn("watched folder not found: %s" % message.id)
+        else:
+            channel.remove()
 
     def handle_delete_playlist(self, message):
         if message.is_folder:
@@ -650,6 +683,20 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_new_channel_folder(self, message):
         ChannelFolder(message.name)
+
+    def handle_new_watched_folder(self, message):
+        url = u"dtv:directoryfeed:%s" % (makeURLSafe(message.path))
+        if not get_feed_by_url(url):
+            feed.Feed(url)
+        else:
+            logging.info("Not adding dupplicated watched folder: %s",
+                    message.path)
+
+    def handle_set_watched_folder_visible(self, message):
+        feed = views.feeds.getObjectByID(message.id)
+        if not feed.url.startswith("dtv:directoryfeed:"):
+            raise ValueError("%s is not a watched folder" % feed)
+        feed.setVisible(message.visible)
 
     def handle_new_playlist(self, message):
         name = message.name

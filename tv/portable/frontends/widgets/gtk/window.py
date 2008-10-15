@@ -337,6 +337,8 @@ class Dialog(DialogBase):
     def __init__(self, title, description=None):
         """Create a dialog."""
         DialogBase.__init__(self)
+        self.create_signal('open')
+        self.create_signal('close')
         self.set_window(gtk.Dialog(title))
         self._window.set_default_size(425, -1)
         self.packing_vbox = gtk.VBox(spacing=20)
@@ -512,29 +514,44 @@ class AlertDialog(DialogBase):
         else:
             return response - 1 # response IDs started at 1
 
-class PreferencesWindow(Dialog):
+class PreferencesGtkWindow(gtk.Window):
+    def do_map(self):
+        gtk.Window.do_map(self)
+        wrappermap.wrapper(self).emit('show')
+
+    def do_unmap(self):
+        gtk.Window.do_unmap(self)
+        wrappermap.wrapper(self).emit('hide')
+gobject.type_register(PreferencesGtkWindow)
+
+class PreferencesWindow(WindowBase):
     def __init__(self, title):
-        Dialog.__init__(self, title)
+        WindowBase.__init__(self)
+        self.create_signal('show')
+        self.create_signal('hide')
+        self.set_window(PreferencesGtkWindow())
+        self._window.set_title(title)
         from miro.frontends.widgets.gtk import layout
         self.tab_container = layout.TabContainer()
+        self.vbox = gtk.VBox(spacing=12)
+        self.vbox.pack_start(self.tab_container._widget)
+        close_button = gtk.Button(stock=gtk.STOCK_CLOSE)
+        close_button.connect_object('clicked', gtk.Window.hide, self._window)
+        alignment = gtk.Alignment(xalign=1.0)
+        alignment.add(close_button)
+        self.vbox.pack_start(alignment)
+        self._window.add(self.vbox)
 
     def append_panel(self, name, panel, title, image_name):
         from miro.frontends.widgets.gtk import simple
         image = simple.Image(resources.path(image_name))
         self.tab_container.append_tab(panel, title, image)
-    
+
     def finish_panels(self):
-        self.set_extra_widget(self.tab_container)
-        self.add_button(_("Close"))
-        
-    def select_panel(self, panel, all_panels):
-        index = 0
-        if panel is not None:
-            for i, bits in enumerate(all_panels):
-                if bits[0] == panel:
-                    index = i
-                    break
+        self.vbox.show_all()
+
+    def select_panel(self, index):
         self.tab_container.select_tab(index)
 
     def show(self):
-        self.run()
+        self._window.show()

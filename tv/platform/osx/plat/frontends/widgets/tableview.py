@@ -34,10 +34,11 @@ from AppKit import *
 from Foundation import *
 from objc import YES, NO, nil
 
+from miro import signals
 from miro.plat.frontends.widgets import osxmenus
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets import tablemodel
-from miro.plat.frontends.widgets.base import Widget
+from miro.plat.frontends.widgets.base import Widget, FlippedView
 from miro.plat.frontends.widgets.drawing import DrawingContext, DrawingStyle
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
 from miro.plat.frontends.widgets.layoutmanager import LayoutManager
@@ -58,6 +59,7 @@ _disclosure_button.sizeToFit()
 _disclosure_button_width = _disclosure_button.frame().size.width 
 
 EXPANDER_PADDING = 6
+HEADER_HEIGHT = 17
 
 class HotspotTracker(object):
     """Contains the info on the currently tracked hotspot.  See:
@@ -75,7 +77,10 @@ class HotspotTracker(object):
         self.table_column = tableview.tableColumns()[self.column]
         self.cell = self.table_column.dataCell()
         self.update_position(point)
-        self.name = self.calc_hotspot()
+        if isinstance(self.cell, CustomTableCell):
+            self.name = self.calc_hotspot()
+        else:
+            self.name = None
         self.hit = (self.name is not None)
 
     def calc_cell_hotspot(self, column, row):
@@ -121,9 +126,12 @@ class HotspotTracker(object):
             self.tableview.setNeedsDisplayInRect_(cell_frame)
 
 class MiroTableCell(NSCell):
+    def init(self):
+        return self.initTextCell_('')
+
     def calcHeight_(self, view):
         font = self.font()
-        return font.ascender() + abs(font.descender) + font.leading
+        return font.ascender() + abs(font.descender()) + font.leading()
 
     def highlightColorWithFrame_inView_(self, frame, view):
         if wrappermap.wrapper(view).draws_selection:
@@ -132,7 +140,11 @@ class MiroTableCell(NSCell):
             return nil
 
     def setObjectValue_(self, value_dict):
-        NSCell.setObjectValue_(self, value_dict['value'])
+        if isinstance(value_dict, dict):
+            NSCell.setObjectValue_(self, value_dict['value'])
+        else:
+            # OS X calls setObjectValue_('') on intialization
+            NSCell.setObjectValue_(self, value_dict)
 
 class MiroTableImageCell(NSImageCell):
     def calcHeight_(self, view):
@@ -147,6 +159,47 @@ class MiroTableImageCell(NSImageCell):
     def setObjectValue_(self, value_dict):
         NSImageCell.setObjectValue_(self, value_dict['image'])
 
+class MiroCheckboxCell(NSButtonCell):
+    def init(self):
+        self = NSButtonCell.init(self)
+        self.setButtonType_(NSSwitchButton)
+        self.setTitle_('')
+        return self
+
+    def calcHeight_(self, view):
+        return self.cellSize().height
+
+    def highlightColorWithFrame_inView_(self, frame, view):
+        if wrappermap.wrapper(view).draws_selection:
+            return NSCell.highlightColorWithFrame_inView_(self, frame, view)
+        else:
+            return nil
+
+    def setObjectValue_(self, value_dict):
+        if isinstance(value_dict, dict):
+            NSButtonCell.setObjectValue_(self, value_dict['value'])
+        else:
+            # OS X calls setObjectValue_('') on intialization
+            NSCell.setObjectValue_(self, value_dict)
+
+    def startTrackingAt_inView_(self, point, view):
+        return YES
+
+    def continueTracking_at_inView_(self, lastPoint, at, view):
+        return YES
+
+    def stopTracking_at_inView_mouseIsUp_(self, lastPoint, at, tableview, mouseIsUp):
+        if mouseIsUp:
+            column = tableview.columnAtPoint_(at)
+            row = tableview.rowAtPoint_(at)
+            if column != -1 and row != -1:
+                wrapper = wrappermap.wrapper(tableview)
+                renderer = wrapper.renderers[column]
+                iter = wrapper.model.iter_for_row(tableview, row)
+                renderer.emit('clicked', iter)
+        return NSButtonCell.stopTracking_at_inView_mouseIsUp_(self, lastPoint,
+                at, tableview, mouseIsUp)
+
 class CellRenderer(object):
     def setDataCell_(self, column):
         column.setDataCell_(MiroTableCell.alloc().init())
@@ -154,6 +207,13 @@ class CellRenderer(object):
 class ImageCellRenderer(object):
     def setDataCell_(self, column):
         column.setDataCell_(MiroTableImageCell.alloc().init())
+
+class CheckboxCellRenderer(signals.SignalEmitter):
+    def __init__(self):
+        signals.SignalEmitter.__init__(self, 'clicked')
+
+    def setDataCell_(self, column):
+        column.setDataCell_(MiroCheckboxCell.alloc().init())
 
 class CustomTableCell(NSCell):
     def init(self):
@@ -357,23 +417,28 @@ class TableView(Widget):
         self.create_signal('selection-changed')
         self.create_signal('hotspot-clicked')
         self.model = model
+        self.renderers = []
         self.context_menu_callback = None
         if self.is_tree():
             self.create_signal('row-expanded')
             self.create_signal('row-collapsed')
-            self.view = MiroOutlineView.alloc().init()
+            self.tableview = MiroOutlineView.alloc().init()
             self.data_source = tablemodel.MiroOutlineViewDataSource.alloc()
         else:
-            self.view = MiroTableView.alloc().init()
+            self.tableview = MiroTableView.alloc().init()
             self.data_source = tablemodel.MiroTableViewDataSource.alloc()
         self.data_source.initWithModel_(self.model)
-        self.view.setDataSource_(self.data_source)
-        self.view.setVerticalMotionCanBeginDrag_(YES)
+        self.tableview.setDataSource_(self.data_source)
+        self.tableview.setVerticalMotionCanBeginDrag_(YES)
         self.draws_selection = True
         self.row_height_set = False
         self.set_fixed_height(False)
-        self.header_view = self.view.headerView()
-        self.notifications = NotificationForwarder.create(self.view)
+        self.header_view = self.tableview.headerView()
+        self.view_with_header = FlippedView.alloc().init()
+        self.view_with_header.addSubview_(self.header_view)
+        self.header_view.setFrame_(NSMakeRect(0, 0, 0, HEADER_HEIGHT))
+        self.set_show_headers(True)
+        self.notifications = NotificationForwarder.create(self.tableview)
         if self.is_tree():
             self.notifications.connect(self.on_expanded,
                 'NSOutlineViewItemDidExpandNotification')
@@ -389,16 +454,17 @@ class TableView(Widget):
         self.model.connect_weak('row-will-be-removed', self.on_row_removed)
         self.iters_to_update = []
         self.height_changed = self.selection_removed = self.reload_needed = False
+        wrappermap.add(self.tableview, self)
 
     def send_hotspot_clicked(self):
-        tracker = self.view.hotspot_tracker
+        tracker = self.tableview.hotspot_tracker
         self.emit('hotspot-clicked', tracker.name, tracker.iter)
 
     def set_draws_selection(self, draws_selection):
         self.draws_selection = draws_selection
 
     def get_left_offset(self):
-        offset = self.view.intercellSpacing().width / 2
+        offset = self.tableview.intercellSpacing().width / 2
         # Yup this can be a non-integer, it seems like that's what OS X does,
         # because either way I round it looks worse than this.
         if self.is_tree():
@@ -408,12 +474,12 @@ class TableView(Widget):
     def on_row_change(self, model, iter, old_row):
         self.iters_to_update.append(iter)
         if not self.fixed_height:
-            old_height = calc_row_height(self.view, old_row)
-            new_height = calc_row_height(self.view, self.model[iter])
+            old_height = calc_row_height(self.tableview, old_row)
+            new_height = calc_row_height(self.tableview, self.model[iter])
             if new_height != old_height:
                 self.height_changed = True
-        if self.view.hotspot_tracker is not None:
-            self.view.hotspot_tracker.update_hit()
+        if self.tableview.hotspot_tracker is not None:
+            self.tableview.hotspot_tracker.update_hit()
 
     def on_row_added(self, model, iter):
         self.reload_needed = True
@@ -421,14 +487,14 @@ class TableView(Widget):
 
     def on_row_removed(self, model, iter):
         self.reload_needed = True
-        if self.view.isRowSelected_(self.row_for_iter(iter)):
+        if self.tableview.isRowSelected_(self.row_for_iter(iter)):
             self.selection_removed = True
         self.cancel_hotspot_track()
 
     def cancel_hotspot_track(self):
-        if self.view.hotspot_tracker is not None:
-            self.view.hotspot_tracker.redraw_cell()
-            self.view.hotspot_tracker = None
+        if self.tableview.hotspot_tracker is not None:
+            self.tableview.hotspot_tracker.redraw_cell()
+            self.tableview.hotspot_tracker = None
 
     def on_expanded(self, notification):
         self.invalidate_size_request()
@@ -449,35 +515,76 @@ class TableView(Widget):
     def set_row_expanded(self, iter, expanded):
         item = iter.value()
         if expanded:
-            self.view.expandItem_(item)
+            self.tableview.expandItem_(item)
         else:
-            self.view.collapseItem_(item)
+            self.tableview.collapseItem_(item)
         self.invalidate_size_request()
 
     def is_row_expanded(self, iter):
-        return self.view.isItemExpanded_(iter.value())
+        return self.tableview.isItemExpanded_(iter.value())
 
     def calc_size_request(self):
-        self.view.tile()
-        return self.calc_width(), self.view.frame().size.height
+        self.tableview.tile()
+        height = self.tableview.frame().size.height
+        if self._show_headers:
+            height += HEADER_HEIGHT
+        return self.calc_width(), height
 
     def viewport_repositioned(self):
-        self.view.sizeToFit()
+        self._resize_columns()
+        if self._show_headers:
+            y = HEADER_HEIGHT
+            height = self.view_with_header.frame().size.height - y
+            width = self.view_with_header.frame().size.width
+            self.tableview.setFrame_(NSMakeRect(0, y, width, height))
+        self.queue_redraw()
+
+    def _resize_columns(self):
+        # Resize the column so that they take up the width we are allocated,
+        # but keep in mind the min/max width constraints.
+        # The algorithm we use is to add/subtract width evenly between the
+        # columns, but not more than their max/min width.  Repeat the process
+        # until there is no extra space.
+        columns = self.tableview.tableColumns()
+        column_width = sum(column.width() for column in columns)
+        width_difference = self.tableview.frame().size.width - column_width
+        width_difference -= self.tableview.intercellSpacing().width * len(columns)
+        if width_difference == 0:
+            return
+        while width_difference != 0:
+            did_something = False
+            columns_left = len(columns)
+            for column in columns:
+                old_width = column.width()
+                ideal_change = round(width_difference / columns_left)
+                ideal_new_width = old_width + ideal_change
+                if width_difference < 0:
+                    column.setWidth_(max(ideal_new_width, column.minWidth()))
+                else:
+                    column.setWidth_(min(ideal_new_width, column.maxWidth()))
+                if column.width() != old_width:
+                    width_difference -= (column.width() - old_width)
+                    did_something = True
+                columns_left -= 1
+            if not did_something:
+                # We couldn't change any widths because they were all at their
+                # max/min sizes.  Bailout
+                break
 
     def calc_width(self):
         if self.column_count() == 0:
             return 0
         width = 0
-        for column in self.view.tableColumns():
+        for column in self.tableview.tableColumns():
             width += column.minWidth()
-        width += self.view.intercellSpacing().width * (self.column_count()-1)
+        width += self.tableview.intercellSpacing().width * self.column_count()
         return width
 
     def model_changed(self):
         if not self.row_height_set and self.fixed_height:
             self.try_to_set_row_height()
         if self.reload_needed:
-            self.view.reloadData()
+            self.tableview.reloadData()
             self.invalidate_size_request()
             if self.selection_removed:
                 self.emit('selection-changed')
@@ -486,12 +593,12 @@ class TableView(Widget):
                 # our rows don't change height, just update cell areas
                 if self.is_tree():
                     for iter in self.iters_to_update:
-                        self.view.reloadItem_(iter.value())
+                        self.tableview.reloadItem_(iter.value())
                 else:
                     for iter in self.iters_to_update:
                         row = self.row_for_iter(iter)
-                        rect = self.view.rectOfRow_(row)
-                        self.view.setNeedsDisplayInRect_(rect)
+                        rect = self.tableview.rectOfRow_(row)
+                        self.tableview.setNeedsDisplayInRect_(rect)
             else:
                 # our rows can change height inform Cocoa that their heights
                 # might have changed (this will redraw them)
@@ -500,7 +607,7 @@ class TableView(Widget):
                 index_set = NSMutableIndexSet.alloc().init()
                 for iter in self.iters_to_update:
                     index_set.addIndex_(self.row_for_iter(iter))
-                self.view.noteHeightOfRowsWithIndexesChanged_(index_set)
+                self.tableview.noteHeightOfRowsWithIndexesChanged_(index_set)
         else:
             return
         self.height_changed = self.selection_removed = self.reload_needed = False
@@ -512,30 +619,40 @@ class TableView(Widget):
         column.setEditable_(NO)
         column.setMinWidth_(min_width)
         renderer.setDataCell_(column)
-        self.view.addTableColumn_(column)
+        self.renderers.append(renderer)
+        self.tableview.addTableColumn_(column)
         if self.column_count() == 1 and self.is_tree():
-            self.view.setOutlineTableColumn_(column)
+            self.tableview.setOutlineTableColumn_(column)
             renderer.outline_column = True
+        if self.column_count() == 1:
+            self.tableview.noteNumberOfRowsChanged()
         self.invalidate_size_request()
 
     def column_count(self):
-        return len(self.view.tableColumns())
+        return len(self.tableview.tableColumns())
 
     def remove_column(self, index):
-        column = self.view.tableColumns()[index]
-        self.view.removeTableColumn_(column)
+        column = self.tableview.tableColumns()[index]
+        del self.renderers[index]
+        self.tableview.removeTableColumn_(column)
         self.invalidate_size_request()
 
     def set_background_color(self, (red, green, blue)):
         color = NSColor.colorWithDeviceRed_green_blue_alpha_(red, green, blue,
                 1.0)
-        self.view.setBackgroundColor_(color)
+        self.tableview.setBackgroundColor_(color)
 
     def set_show_headers(self, show):
+        self._show_headers = show
         if show:
-            self.view.setHeaderView_(self.header_view)
+            self.view = self.view_with_header
+            if self.tableview.superview() is not self.view_with_header:
+                self.view_with_header.addSubview_(self.tableview)
         else:
-            self.view.setHeaderView_(nil)
+            self.view = self.tableview
+            if self.tableview.superview() is self.view_with_header:
+                self.tableview.removeFromSuperview()
+        self.invalidate_size_request()
 
     def set_search_column(self, model_index):
         pass
@@ -543,8 +660,8 @@ class TableView(Widget):
     def try_to_set_row_height(self):
         if len(self.model) > 0:
             first_iter = self.model.first_iter()
-            height = calc_row_height(self.view, self.model[first_iter])
-            self.view.setRowHeight_(height)
+            height = calc_row_height(self.tableview, self.model[first_iter])
+            self.tableview.setRowHeight_(height)
             self.row_height_set = True
 
     def set_fixed_height(self, fixed):
@@ -563,43 +680,43 @@ class TableView(Widget):
             else:
                 delegate_class = VariableHeightTableViewDelegate
         self.delegate = delegate_class.alloc().init()
-        self.view.setDelegate_(self.delegate)
-        self.view.reloadData()
+        self.tableview.setDelegate_(self.delegate)
+        self.tableview.reloadData()
 
     def allow_multiple_select(self, allow):
-        self.view.setAllowsMultipleSelection_(allow)
+        self.tableview.setAllowsMultipleSelection_(allow)
 
     def get_selection(self):
-        selection = self.view.selectedRowIndexes()
-        return [self.model.iter_for_row(self.view, row)  \
-                for row in get_all_indexes(self.view, selection)]
+        selection = self.tableview.selectedRowIndexes()
+        return [self.model.iter_for_row(self.tableview, row)  \
+                for row in get_all_indexes(self.tableview, selection)]
 
     def get_selected(self):
-        if self.view.allowsMultipleSelection():
+        if self.tableview.allowsMultipleSelection():
             raise ValueError("Table allows multiple selection")
-        row = self.view.selectedRow()
+        row = self.tableview.selectedRow()
         if row == -1:
             return None
-        return self.model.iter_for_row(self.view, row)
+        return self.model.iter_for_row(self.tableview, row)
 
     def num_rows_selected(self):
-        return self.view.selectedRowIndexes().count()
+        return self.tableview.selectedRowIndexes().count()
 
     def row_for_iter(self, iter):
         if self.is_tree():
-            return self.view.rowForItem_(iter.value())
+            return self.tableview.rowForItem_(iter.value())
         else:
             return self.model.get_index_of_row(iter.value())
 
     def select(self, iter):
         index_set = NSIndexSet.alloc().initWithIndex_(self.row_for_iter(iter))
-        self.view.selectRowIndexes_byExtendingSelection_(index_set, YES)
+        self.tableview.selectRowIndexes_byExtendingSelection_(index_set, YES)
 
     def unselect(self, iter):
-        self.view.deselectRow_(self.row_for_iter(iter))
+        self.tableview.deselectRow_(self.row_for_iter(iter))
 
     def unselect_all(self):
-        self.view.deselectAll_(nil)
+        self.tableview.deselectAll_(nil)
 
     def set_context_menu_callback(self, callback):
         self.context_menu_callback = callback
@@ -614,9 +731,9 @@ class TableView(Widget):
     def set_drag_dest(self, drag_dest):
         self.drag_dest = drag_dest
         if drag_dest is None:
-            self.view.unregisterDraggedTypes()
+            self.tableview.unregisterDraggedTypes()
             self.data_source.setDragDest_(None)
         else:
             types = drag_dest.allowed_types()
-            self.view.registerForDraggedTypes_(types)
+            self.tableview.registerForDraggedTypes_(types)
             self.data_source.setDragDest_(drag_dest)

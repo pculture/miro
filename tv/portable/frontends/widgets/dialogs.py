@@ -59,6 +59,12 @@ def set_transient_for_main(dialog):
     if app.widgetapp.window is not None:
         dialog.set_transient_for(app.widgetapp.window)
 
+def _set_transient_for(dialog, transient_for):
+    if transient_for is None:
+        set_transient_for_main(dialog)
+    else:
+        dialog.set_transient_for(transient_for)
+
 class MainDialog(widgetset.Dialog):
     """Dialog that is transient for the main window."""
     def __init__(self, title, description=None):
@@ -73,17 +79,18 @@ def show_about():
     finally:
         window.destroy()
 
-def show_message(title, description, alert_type=INFO_MESSAGE):
+def show_message(title, description, alert_type=INFO_MESSAGE,
+        transient_for=None):
     """Display a message to the user and wait for them to click OK"""
     window = widgetset.AlertDialog(title, description, alert_type)
-    set_transient_for_main(window)
+    _set_transient_for(window, transient_for)
     try:
         window.add_button(BUTTON_OK.text)
         window.run()
     finally:
         window.destroy()
 
-def show_choice_dialog(title, description, choices):
+def show_choice_dialog(title, description, choices, transient_for=None):
     """Display a message to the user and wait for them to choose an option.
     Returns the button object chosen."""
     window = MainDialog(title, description)
@@ -95,7 +102,7 @@ def show_choice_dialog(title, description, choices):
     finally:
         window.destroy()
 
-def ask_for_string(title, description, initial_text=None):
+def ask_for_string(title, description, initial_text=None, transient_for=None):
     """Ask the user to enter a string in a TextEntry box.
 
     description - textual description with newlines
@@ -122,11 +129,12 @@ def ask_for_string(title, description, initial_text=None):
     finally:
         window.destroy()
 
-def ask_for_open_pathname(title, initial_filename=None, filters=[]):
+def ask_for_open_pathname(title, initial_filename=None, filters=[],
+        transient_for=None):
     """Returns the file pathname or None.
     """
     window = widgetset.FileOpenDialog(title)
-    set_transient_for_main(window)
+    _set_transient_for(window, transient_for)
     try:
         if initial_filename:
             window.set_filename(initial_filename)
@@ -140,11 +148,11 @@ def ask_for_open_pathname(title, initial_filename=None, filters=[]):
     finally:
         window.destroy()
 
-def ask_for_save_pathname(title, initial_filename=None):
+def ask_for_save_pathname(title, initial_filename=None, transient_for=None):
     """Returns the file pathname or None.
     """
     window = widgetset.FileSaveDialog(title)
-    set_transient_for_main(window)
+    _set_transient_for(window, transient_for)
     try:
         if initial_filename:
             window.set_filename(initial_filename)
@@ -154,11 +162,11 @@ def ask_for_save_pathname(title, initial_filename=None):
     finally:
         window.destroy()
 
-def ask_for_directory(title, initial_directory=None):
+def ask_for_directory(title, initial_directory=None, transient_for=None):
     """Returns the directory pathname or None.
     """
     window = widgetset.DirectorySelectDialog(title)
-    set_transient_for_main(window)
+    _set_transient_for(window, transient_for)
     try:
         if initial_directory:
             window.set_directory(initial_directory)

@@ -218,6 +218,19 @@ class StopTrackingNewCount(BackendMessage):
     """Stop tracking the new videos count."""
     pass
 
+class TrackWatchedFolders(BackendMessage):
+    """Begin tracking watched folders
+
+    After this message is sent, the backend will send back a WatchedFolderList
+    message, then it will send WatchedFoldersChanged messages whenever the
+    list changes.
+    """
+    pass
+
+class StopTrackingWatchedFolders(BackendMessage):
+    """Stop tracking watched folders."""
+    pass
+
 class SetChannelExpire(BackendMessage):
     """Sets the expiration for a channel."""
     def __init__(self, channel_info, expire_type, expire_time):
@@ -311,6 +324,15 @@ class DeleteChannel(BackendMessage):
         self.is_folder = is_folder
         self.keep_items = keep_items
 
+class DeleteWatchedFolder(BackendMessage):
+    """Delete a watched folder.
+
+    NOTE: this separate from  DeleteChannel since not all watched folders are
+    visible.
+    """
+    def __init__(self, id):
+        self.id = id
+
 class DeletePlaylist(BackendMessage):
     """Delete a playlist."""
     def __init__(self, id, is_folder):
@@ -351,6 +373,17 @@ class NewChannelSearchURL(BackendMessage):
     def __init__(self, url, search_term):
         self.url = url
         self.search_term = search_term
+
+class NewWatchedFolder(BackendMessage):
+    """Creates a new watched folder."""
+    def __init__(self, path):
+        self.path = path
+
+class SetWatchedFolderVisible(BackendMessage):
+    """Changes if a watched folder is visible in the tab list or not."""
+    def __init__(self, id, visible):
+        self.id = id
+        self.visible = visible
 
 class NewPlaylist(BackendMessage):
     """Create a new playlist."""
@@ -575,7 +608,7 @@ class ChannelInfo(object):
     unwatched -- number of unwatched videos
     available -- number of newly downloaded videos
     is_folder -- is this a channel folder?
-    is_directory_feed -- is this channel a watched directory?
+    is_directory_feed -- is this channel is a watched directory?
     has_downloading -- are videos currently being downloaded for this channel?
     base_href -- url to use for relative links for items in this channel.
       This will be None for ChannelFolders.
@@ -602,8 +635,9 @@ class ChannelInfo(object):
             self.base_href = channel_obj.getBaseHref()
             self.autodownload_mode = channel_obj.getAutoDownloadMode()
             self.is_folder = False
+            self.is_directory_feed = (self.url is not None and
+                    self.url.startswith('dtv:directoryfeed'))
             self.tab_icon = channel_obj.getThumbnailPath()
-            self.is_directory_feed = False
             self.expire = channel_obj.get_expiration_type()
             self.expire_time = channel_obj.get_expiration_time()
             self.max_new = channel_obj.get_max_new()
@@ -615,8 +649,7 @@ class ChannelInfo(object):
             self.autodownload_mode = self.base_href = None
             self.is_folder = True
             self.tab_icon = resources.path('wimages/icon-folder.png')
-            self.is_directory_feed = (self.url is not None and 
-                    self.url.startswith('dtv:directoryfeed'))
+            self.is_directory_feed = False
             self.expire = None
             self.expire_time = None
             self.max_new = None
@@ -796,6 +829,20 @@ class DownloadInfo(object):
             self.reason_failed = u""
             self.short_reason_failed = u""
 
+class WatchedFolderInfo(object):
+    """Tracks the state of a watched folder.
+    
+    Attributes:
+
+    id -- ID of the channel
+    path -- Path to the folder being watched
+    visible -- Is the watched folder shown on the tab list?
+    """
+    def __init__(self, channel):
+        self.id = channel.id
+        self.path = channel.dir
+        self.visible = channel.visible
+
 class GuideList(FrontendMessage):
     """Sends the frontend the initial list of channel guides
 
@@ -890,6 +937,31 @@ class ItemsChanged(FrontendMessage):
     def __init__(self, type, id, added, changed, removed):
         self.type = type
         self.id = id
+        self.added = added
+        self.changed = changed
+        self.removed = removed
+
+class WatchedFolderList(FrontendMessage):
+    """Sends the frontend the initial list of watched folders
+
+    Attributes:
+        watched_folders -- List of watched folders
+    """
+
+    def __init__(self, watched_folders):
+        self.watched_folders = watched_folders
+
+class WatchedFoldersChanged(FrontendMessage):
+    """Informs the frontend that the watched folder list has changed.
+
+    Attributes:
+    added -- WatchedFolderInfo object for each added watched folder.  The list
+        will be in the same order that they were added
+    changed -- list of WatchedFolderInfo for each changed watched folder.
+    removed -- list of ids for each watched folder that was removed.
+    """
+
+    def __init__(self, added, changed, removed):
         self.added = added
         self.changed = changed
         self.removed = removed

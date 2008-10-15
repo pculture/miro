@@ -55,15 +55,28 @@ class ControlLine(object):
         self._packing.append((widget, span, xalign, xscale, 
             pad_left, pad_right))
 
+    def _get_baseline(self, widget):
+        try:
+            return widget.baseline()
+        except AttributeError:
+            # Hmm, widget doesn't have a baseline() method.  Don't try to
+            # align it vertically.
+            return -1
+
     def add_to_table(self, table, row, pad_bottom=0):
-        baselines = [widget.baseline() for widget, _, _, _, _, _ \
+        baselines = [self._get_baseline(widget) for widget, _, _, _, _, _ \
                 in self._packing]
         max_baseline = max(baselines)
         column = 0
         for (widget, span, xalign, xscale, pad_left, pad_right), baseline in \
                 zip(self._packing, baselines):
-            bottom_pad = pad_bottom + max_baseline - baseline
-            alignment = widgetset.Alignment(xalign, 1.0, xscale, 0.0)
+            if baseline > -1:
+                bottom_pad = pad_bottom + max_baseline - baseline
+                yalign = 1.0
+            else:
+                bottom_pad = 0
+                yalign = 0.0
+            alignment = widgetset.Alignment(xalign, yalign, xscale, 0.0)
             alignment.set_padding(0, bottom_pad, pad_left, pad_right)
             alignment.add(widget)
             table.pack(alignment, column, row, column_span=span)

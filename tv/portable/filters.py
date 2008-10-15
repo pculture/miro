@@ -116,3 +116,6 @@ def uniqueItems(item):
         raise
     except:
         return True
+
+def watchedFolders(feed):
+    return feed.url.startswith("dtv:directoryfeed:")

@@ -56,6 +56,7 @@ from miro.frontends.widgets import tablistmanager
 from miro.frontends.widgets import playback
 from miro.frontends.widgets import search
 from miro.frontends.widgets import rundialog
+from miro.frontends.widgets import watchedfolders
 from miro.frontends.widgets.window import MiroWindow
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.frontends.widgets.widgetset import Rect
@@ -70,6 +71,7 @@ class Application:
         self.ui_initialized = False
         messages.FrontendMessage.install_handler(self.message_handler)
         app.info_updater = InfoUpdater()
+        app.watched_folder_manager = watchedfolders.WatchedFolderManager()
 
     def startup(self):
         self.connect_to_signals()
@@ -82,6 +84,7 @@ class Application:
         # WidgetsMessageHandler() will call build_window()
         messages.TrackGuides().send_to_backend()
         messages.QuerySearchInfo().send_to_backend()
+        messages.TrackWatchedFolders().send_to_backend()
 
         app.item_list_controller_manager = \
                 itemlistcontroller.ItemListControllerManager()
@@ -778,6 +781,14 @@ class WidgetsMessageHandler(messages.MessageHandler):
         app.widgetapp.default_guide_info = guide_info
         guide_tab = app.tab_list_manager.static_tab_list.get_tab('guide')
         guide_tab.update(guide_info)
+
+    def handle_watched_folder_list(self, message):
+        app.watched_folder_manager.handle_watched_folder_list(
+                message.watched_folders)
+
+    def handle_watched_folders_changed(self, message):
+        app.watched_folder_manager.handle_watched_folders_changed(
+                message.added, message.changed, message.removed)
 
     def handle_tabs_changed(self, message):
         if message.type == 'guide':

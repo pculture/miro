@@ -43,7 +43,8 @@ from miro.frontends.widgets.gtk.window import Window, MainWindow, Dialog, \
         FileOpenDialog, FileSaveDialog, DirectorySelectDialog, AboutDialog, \
         AlertDialog, PreferencesWindow
 from miro.frontends.widgets.gtk.tableview import TableView, TableModel, \
-        TreeTableModel, CellRenderer, ImageCellRenderer, CustomCellRenderer
+        TreeTableModel, CellRenderer, ImageCellRenderer, \
+        CheckboxCellRenderer, CustomCellRenderer
 from miro.frontends.widgets.gtk.simple import Image, ImageDisplay, Label, \
         Scroller, Expander, SolidBackground
 from miro.frontends.widgets.gtk.video import VideoRenderer, can_play_file

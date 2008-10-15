@@ -357,9 +357,11 @@ class ToolbarDelegate (NSObject):
         self.window.do_select_panel(sender.panel, YES)
 
 class PreferencesWindow (Window):
-
     def __init__(self, title):
         Window.__init__(self, title, Rect(0, 0, 640, 440))
+        self.create_signal('show')
+        self.create_signal('hide')
+        self.window_notifications.connect(self._on_close, 'NSWindowWillCloseNotification')
         self.panels = dict()
         self.identifiers = list()
         self.nswindow.setShowsToolbarButton_(NO)
@@ -403,3 +405,7 @@ class PreferencesWindow (Window):
     def show(self):
         self.nswindow.center()
         Window.show(self)
+        self.emit('show')
+
+    def _on_close(self, notification):
+        self.emit('hide')
