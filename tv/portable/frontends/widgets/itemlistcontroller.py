@@ -175,7 +175,7 @@ class ItemListController(object):
         elif name == 'start_seeding':
             messages.StartUpload(item_info.id).send_to_backend()
         elif name == 'delete':
-            app.widgetapp.remove_items()
+            app.widgetapp.remove_items(selection=[item_info])
         elif name == 'remove':
             messages.RemoveVideosFromPlaylist(itemview.playlist_id, [item_info.id]).send_to_backend()
         elif name == 'details_toggle':
