@@ -36,7 +36,6 @@ from miro import messages
 
 from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
-from miro.plat.frontends.widgets.rect import Rect
 from miro.frontends.widgets.displays import VideoDisplay
 #from miro.frontends.widgets.displays import AudioDisplay
 #from miro.frontends.widgets.displays import ExternalVideoDisplay
@@ -111,9 +110,9 @@ class PlaybackManager (signals.SignalEmitter):
     def prepare_detached_playback(self):
         detached_window_frame = config.get(prefs.DETACHED_WINDOW_FRAME)
         if detached_window_frame is None:
-            detached_window_frame = Rect(0, 0, 800, 600)
+            detached_window_frame = widgetset.Rect(0, 0, 800, 600)
         else:
-            detached_window_frame = Rect.from_string(detached_window_frame)
+            detached_window_frame = widgetset.Rect.from_string(detached_window_frame)
         self.detached_window = widgetset.Window("", detached_window_frame)
         align = widgetset.Alignment(bottom_pad=16, yscale=1.0)
         align.add(self.video_display.widget)
