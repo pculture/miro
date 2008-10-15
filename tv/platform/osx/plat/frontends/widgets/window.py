@@ -146,7 +146,9 @@ class Window(signals.SignalEmitter):
         return self.content_widget
         
     def get_frame(self):
-        return NSRectWrapper(self.nswindow.frame())
+        frame = self.nswindow.frame()
+        frame.size.height -= 22
+        return NSRectWrapper(frame)
 
 class MainWindow(Window):
     def __init__(self, title, rect):
