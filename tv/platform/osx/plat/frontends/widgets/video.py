@@ -227,7 +227,7 @@ class VideoRenderer (Widget):
             self.movie = qtmovie
             self.video_view.setMovie_(self.movie)
             self.video_view.setNeedsDisplay_(YES)
-            self.video_window.palette.setup(item_info, self)
+            self.video_window.setup(item_info, self)
             self.movie_notifications = NotificationForwarder.create(self.movie)
             self.movie_notifications.connect(self.handle_movie_notification, QTMovieDidEndNotification)
 
@@ -346,6 +346,9 @@ class VideoWindow (NSWindow):
             self.palette.adjustPosition(self)
             if not self.palette.fit_in_video_window(self):
                 self.palette.remove()
+
+    def setup(self, item_info, renderer):
+        self.palette.setup(item_info, renderer, self)
 
     def enter_fullscreen(self):
         NSCursor.setHiddenUntilMouseMoves_(YES)

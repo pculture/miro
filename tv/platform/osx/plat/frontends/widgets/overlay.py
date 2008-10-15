@@ -135,7 +135,7 @@ class OverlayPalette (NSWindowController):
         self.volumeSlider.sliderWasDragged = self.volumeSliderWasDragged
         self.volumeSlider.setShowCursor_(True)
 
-    def setup(self, item_info, renderer):
+    def setup(self, item_info, renderer, video_window):
         from miro.frontends.widgets import widgetutil
         self.item_info = item_info
         self.renderer = renderer
@@ -146,6 +146,7 @@ class OverlayPalette (NSWindowController):
             self.feedLabel.setStringValue_("")
         self.keepButton.setEnabled_(item_info.can_be_saved)
         self.shareButton.setEnabled_(item_info.has_sharable_url)
+        self.adjustContent(video_window, False)
         self.update_(nil)
 
     def enter_fullscreen(self, videoWindow):
