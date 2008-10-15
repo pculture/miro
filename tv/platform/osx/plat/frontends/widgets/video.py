@@ -372,7 +372,7 @@ class VideoWindow (NSWindow):
         if event.type() == NSMouseMoved:
             if NSPointInRect(event.locationInWindow(), self.contentView().bounds()) and self.palette.fit_in_video_window(self):
                 self.palette.reveal(self)
-        if event.type() == NSLeftMouseDown:
+        elif event.type() == NSLeftMouseDown:
             if NSApplication.sharedApplication().isActive():
                 if event.clickCount() > 1:
                     app.playback_manager.toggle_fullscreen()
