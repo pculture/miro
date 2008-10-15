@@ -416,6 +416,12 @@ class VideoRenderer(VBox):
         self.schedule_hide_controls(self.HIDE_CONTROLS_TIMEOUT)
         _window().fullscreen()
 
+    def prepare_switch_to_attached_playback(self):
+        pass
+
+    def prepare_switch_to_detached_playback(self):
+        pass
+
     def on_mouse_motion(self, widget, event):
         if not _videobox_widget().props.visible:
             self.show_controls()
