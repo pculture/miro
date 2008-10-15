@@ -295,7 +295,10 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             button = layout.button(_('Keep'), self.hotspot=='keep')
             button.set_min_width(65)
             hbox.pack(cellpack.Hotspot('keep', button))
-        button = layout.button(_('Delete'), self.hotspot=='delete')
+        if self.data.is_external:
+            button = layout.button(_('Remove'), self.hotspot=='delete')
+        else:
+            button = layout.button(_('Delete'), self.hotspot=='delete')
         button.set_min_width(65)
         hbox.pack(cellpack.Hotspot('delete', button))
         if (self.data.download_info is not None
