@@ -499,10 +499,10 @@ class BackendMessageHandler(messages.MessageHandler):
             obj.clean_old_items()
 
     def handle_import_channels(self, message):
-        opml.Importer().importSubscriptionsFrom(message.filename)
+        opml.Importer().import_subscriptions(message.filename)
 
     def handle_export_channels(self, message):
-        opml.Exporter().exportSubscriptionsTo(message.filename)
+        opml.Exporter().export_subscriptions(message.filename)
 
     def handle_rename_object(self, message):
         view = self.view_for_type(message.type)

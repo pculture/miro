@@ -46,16 +46,13 @@ from miro import eventloop
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 
-# =============================================================================
-
-class Exporter (object):
-
+class Exporter(object):
     def __init__(self):
         self.io = StringIO()
         self.currentFolder = None
 
     @eventloop.asIdle
-    def exportSubscriptionsTo(self, pathname):
+    def export_subscriptions(self, pathname):
         now = datetime.now()
         
         self.io.write(u'<?xml version="1.0" encoding="utf-8" ?>\n')
@@ -71,12 +68,12 @@ class Exporter (object):
         tabOrder = util.getSingletonDDBObject(views.channelTabOrder)
         for tab in tabOrder.getAllTabs():
             if tab.isChannelFolder():
-                self._openFolderEntry(tab.obj)
+                self._open_folder_entry(tab.obj)
             elif tab.isFeed():
-                self._writeFeedEntry(tab.obj)
+                self._write_feed_entry(tab.obj)
     
         if self.currentFolder is not None:
-            self._closeFolderEntry()
+            self._close_folder_entry()
     
         self.io.write(u'\t</body>\n')
         self.io.write(u'</opml>\n')
@@ -85,18 +82,18 @@ class Exporter (object):
         f.write(self.io.getvalue().encode('utf-8'))
         f.close()
 
-    def _openFolderEntry(self, folder):
+    def _open_folder_entry(self, folder):
         if self.currentFolder is not None:
-            self._closeFolderEntry()
+            self._close_folder_entry()
         self.currentFolder = folder
         self.io.write(u'\t\t<outline text=%s>\n' % saxutils.quoteattr(folder.get_title()))
 
-    def _closeFolderEntry(self):
+    def _close_folder_entry(self):
         self.io.write(u'\t\t</outline>\n')
 
-    def _writeFeedEntry(self, thefeed):
-        if (self.currentFolder is not None) and (thefeed.getFolder() is None):
-            self._closeFolderEntry()
+    def _write_feed_entry(self, thefeed):
+        if self.currentFolder is not None and thefeed.getFolder() is None:
+            self._close_folder_entry()
             self.currentFolder = None
         if self.currentFolder is None:
             spacer = u'\t\t'
@@ -127,15 +124,14 @@ class Exporter (object):
 
 # =============================================================================
 
-class Importer (object):
-
+class Importer(object):
     def __init__(self):
         self.currentFolder = None
         self.ignoredFeeds = 0
         self.importedFeeds = 0
 
     @eventloop.asIdle
-    def importSubscriptionsFrom(self, pathname, showSummary = True):
+    def import_subscriptions(self, pathname, showSummary=True):
         f = open(pathname, "r")
         content = f.read()
         f.close()
@@ -144,21 +140,21 @@ class Importer (object):
             dom = minidom.parseString(content)
             root = dom.documentElement
             body = root.getElementsByTagName("body").pop()
-            self._walkOutline(body)
+            self._walk_outline(body)
             dom.unlink()
             if showSummary:
-                self.showImportSummary()
+                self.show_import_summary()
         except expat.ExpatError:
-            self.showXMLError()
+            self.show_xml_error()
 
-    def showXMLError(self):
-        title = _(u"OPML Import failed")
-        message = _(u"The selected OPML file appears to be invalid. Import was interrupted.")
+    def show_xml_error(self):
+        title = _("OPML Import failed")
+        message = _("The selected OPML file appears to be invalid.  Import was interrupted.")
         dialog = dialogs.MessageBoxDialog(title, message)
         dialog.run()
 
-    def showImportSummary(self):
-        title = _(u"OPML Import summary")
+    def show_import_summary(self):
+        title = _("OPML Import summary")
         message = ngettext("Successfully imported %(count)d feed.",
                            "Successfully imported %(count)d feeds.",
                            self.importedFeeds,
@@ -172,21 +168,21 @@ class Importer (object):
         dialog = dialogs.MessageBoxDialog(title, message)
         dialog.run()
         
-    def _walkOutline(self, node):
+    def _walk_outline(self, node):
         try:
             children = node.childNodes
             for child in children:
                 if hasattr(child, 'getAttribute'):
                     if child.hasAttribute("xmlUrl"):
-                        self._handleFeedEntry(child)
+                        self._handle_feed_entry(child)
                     else:
-                        self._handlerFolderEntry(child)
+                        self._handle_folder_entry(child)
             self.currentFolder = None
         except Exception, e:
             print e
             pass
 
-    def _handleFeedEntry(self, entry):
+    def _handle_feed_entry(self, entry):
         url = entry.getAttribute("xmlUrl")
         f = feed.get_feed_by_url(url)
         if f is None:
@@ -218,9 +214,7 @@ class Importer (object):
         else:
             self.ignoredFeeds += 1
     
-    def _handlerFolderEntry(self, entry):
+    def _handle_folder_entry(self, entry):
         title = entry.getAttribute("text")
         self.currentFolder = folder.ChannelFolder(title)
-        self._walkOutline(entry)
-
-# =============================================================================
+        self._walk_outline(entry)
