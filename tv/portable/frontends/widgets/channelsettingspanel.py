@@ -30,16 +30,19 @@
 
 import logging
 
+from miro import app
 from miro import config, prefs, messages
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
+from miro.frontends.widgets import widgetconst
+from miro.frontends.widgets import dialogwidgets
 from miro.dialogs import BUTTON_DONE
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.frontends.widgets import separator
 from miro.frontends.widgets import style
 from miro.frontends.widgets.dialogs import MainDialog
-from miro.frontends.widgets.widgetutil import build_hbox
+from miro.frontends.widgets.widgetutil import build_control_line
 from miro.util import clampText, returnsUnicode
 
 @returnsUnicode
@@ -71,20 +74,24 @@ def get_formatted_default_expiration():
     return formatted_expiration
 
 def _build_header(channel):
-    v = widgetset.VBox()
+    v = widgetset.VBox(6)
+    
     lab = widgetset.Label(clampText(channel.name, 60))
     lab.set_bold(True)
+    lab.set_size(1.2)
     v.pack_start(widgetutil.align_left(lab))
 
     lab = widgetset.Label(clampText(channel.url, 80))
+    lab.set_size(widgetconst.SIZE_SMALL)
+    lab.set_color(widgetconst.DIALOG_NOTE_COLOR)
     v.pack_start(widgetutil.align_left(lab))
 
-    v.pack_start(separator.HThinSeparator(style.TAB_LIST_SEPARATOR_COLOR), padding=5)
+    v.pack_start(separator.HThinSeparator((0.6, 0.6, 0.6)), padding=18)
 
     return v
 
-def _build_video_expires(channel):
-    lab = widgetset.Label(_("Videos expire after"))
+def _build_video_expires(channel, grid):
+    grid.pack_label(_("Videos expire after"), grid.ALIGN_RIGHT)
     expire_options = [
         ("system", _("Default (%(expiration)s)",
                      {"expiration": get_formatted_default_expiration()})),
@@ -125,13 +132,50 @@ def _build_video_expires(channel):
         messages.SetChannelExpire(channel, expire_type, expire_time).send_to_backend()
     expire_combo.connect('changed', expire_changed)
 
-    return build_hbox((lab, expire_combo), padding=2)
+    grid.pack(expire_combo)
 
-def _build_auto_download(channel):
-    auto_download_cbx = widgetset.Checkbox(_("Don't Auto Download when more than"))
+def _build_remember_items(channel, grid):
+    grid.pack_label(_("Remember this many older items in addition to the current contents"), grid.ALIGN_RIGHT)
+    older_options = [
+        ("-1", _("Default (%(number)s)",
+                 {"number": config.get(prefs.MAX_OLD_ITEMS_DEFAULT)})),
+        ("0", "0"),
+        ("20", "20"),
+        ("50", "50"),
+        ("100", "100"),
+        ("1000", "1000")
+    ]
+    older_values = [o[0] for o in older_options]
+    older_combo = widgetset.OptionMenu([o[1] for o in older_options])
+
+    if channel.max_old_items == u"system":
+        selected = older_values.index("-1")
+    else:
+        try:
+            selected = older_values.index(str(channel.max_old_items))
+        except ValueError:
+            selected = 0
+    older_combo.set_selected(selected)
+
+    def older_changed(widget, index):
+        value = older_options[index][0]
+
+        if value == u"system":
+            messages.SetChannelMaxOldItems(channel, -1).send_to_backend()
+        else:
+            messages.SetChannelMaxOldItems(channel, int(value)).send_to_backend()
+
+    older_combo.connect('changed', older_changed)
+
+    grid.pack(older_combo)
+
+def _build_auto_download(channel, grid):
+    auto_download_cbx = widgetset.Checkbox(_("Don't Auto Download when more than this many videos are waiting unwatched"))
+    grid.pack(auto_download_cbx, grid.ALIGN_RIGHT)
+    
     auto_download_entry = widgetset.TextEntry()
     auto_download_entry.set_width(5)
-    lab = widgetset.Label(_("videos are waiting unwatched."))
+    grid.pack(auto_download_entry, grid.ALIGN_LEFT)
 
     if channel.max_new == u"unlimited":
         auto_download_cbx.set_checked(False)
@@ -164,47 +208,13 @@ def _build_auto_download(channel):
     auto_download_entry.connect('changed', textentry_changed)
     auto_download_cbx.connect('toggled', checkbox_changed)
 
-    return build_hbox((auto_download_cbx, auto_download_entry, lab), padding=2)
-
-def _build_remember_items(channel):
-    lab = widgetset.Label(_("Remember"))
-    older_options = [
-        ("-1", _("Default (%(number)s)",
-                 {"number": config.get(prefs.MAX_OLD_ITEMS_DEFAULT)})),
-        ("0", "0"),
-        ("20", "20"),
-        ("50", "50"),
-        ("100", "100"),
-        ("1000", "1000")
-    ]
-    older_values = [o[0] for o in older_options]
-    older_combo = widgetset.OptionMenu([o[1] for o in older_options])
-    lab2 = widgetset.Label(_("older items in this feed in addition to the current contents."))
-
-    if channel.max_old_items == u"system":
-        selected = older_values.index("-1")
-    else:
-        try:
-            selected = older_values.index(str(channel.max_old_items))
-        except ValueError:
-            selected = 0
-    older_combo.set_selected(selected)
-
-    def older_changed(widget, index):
-        value = older_options[index][0]
-
-        if value == u"system":
-            messages.SetChannelMaxOldItems(channel, -1).send_to_backend()
-        else:
-            messages.SetChannelMaxOldItems(channel, int(value)).send_to_backend()
-
-    older_combo.connect('changed', older_changed)
-
-    return build_hbox((lab, older_combo, lab2), padding=2)
-
 def _build_clear_older_items_now(channel):
     button = widgetset.Button(_("Clear older items now"))
+    button.set_size(widgetconst.SIZE_SMALL)
+
     lab = widgetset.Label("")
+    lab.set_size(widgetconst.SIZE_SMALL)
+    lab.set_color(widgetconst.DIALOG_NOTE_COLOR)
 
     def _handle_clicked(widget):
         messages.CleanChannel(channel.id).send_to_backend()
@@ -215,7 +225,7 @@ def _build_clear_older_items_now(channel):
         lab.set_text(_("Old items have been removed."))
     button.connect('clicked', _handle_clicked)
 
-    return build_hbox((button, lab), padding=2)
+    return build_control_line((button, lab), padding=2)
 
 def run_dialog(channel):
     """Displays the channel settings panel dialog."""
@@ -223,15 +233,22 @@ def run_dialog(channel):
     try:
         try:
             v = widgetset.VBox(spacing=10)
-
             v.pack_start(_build_header(channel))
-            v.pack_start(_build_video_expires(channel))
-            v.pack_start(_build_remember_items(channel))
-            v.pack_start(_build_auto_download(channel))
+            
+            grid = grid = dialogwidgets.ControlGrid()
+            _build_video_expires(channel, grid)
+            grid.end_line(spacing=6)
+            _build_remember_items(channel, grid)
+            grid.end_line(spacing=6)
+            _build_auto_download(channel, grid)
+            v.pack_start(grid.make_table())
+
             v.pack_start(_build_clear_older_items_now(channel))
+            v.pack_end(separator.HThinSeparator((0.6, 0.6, 0.6)), padding=6)
 
             pref_window.set_extra_widget(v)
             pref_window.add_button(BUTTON_DONE.text)
+
             pref_window.run()
         except (SystemExit, KeyboardInterrupt):
             raise

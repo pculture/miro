@@ -35,6 +35,7 @@ from Foundation import *
 from objc import YES, NO, nil
 
 from miro import signals
+from miro.frontends.widgets import widgetconst
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
 from miro.plat.frontends.widgets.base import Container, FlippedView
@@ -169,6 +170,7 @@ class Dialog(DialogBase):
 
     def add_button(self, text):
         button = Button(text)
+        button.set_size(widgetconst.SIZE_NORMAL)
         button.connect('clicked', self.on_button_clicked, len(self.buttons))
         self.buttons.append(button)
 
@@ -226,7 +228,7 @@ class Dialog(DialogBase):
         if response < 0:
             return -1
         return response
-
+        
     def destroy(self):
         for attr in ('window', 'buttons'):
             if hasattr(self, attr):
