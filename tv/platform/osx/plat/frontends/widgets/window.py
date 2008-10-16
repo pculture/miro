@@ -33,6 +33,7 @@ import weakref
 from AppKit import *
 from Foundation import *
 from objc import YES, NO, nil
+from PyObjCTools import AppHelper
 
 from miro import signals
 from miro.frontends.widgets import widgetconst
@@ -156,17 +157,20 @@ class MainWindow(Window):
         Window.__init__(self, title, rect)
         self.nswindow.setReleasedWhenClosed_(NO)
 
-class DialogBase:
+class DialogBase(object):
+    def __init__(self):
+        self.sheet_parent = None
     def set_transient_for(self, window):
-        # This is a GTK thing, we don't need to do anything on OS X
-        pass
+        self.sheet_parent = window
 
 class Dialog(DialogBase):
     def __init__(self, title, description=None):
+        DialogBase.__init__(self)
         self.title = title
         self.description = description
         self.buttons = []
         self.extra_widget = None
+        self.window = None
 
     def add_button(self, text):
         button = Button(text)
@@ -175,7 +179,10 @@ class Dialog(DialogBase):
         self.buttons.append(button)
 
     def on_button_clicked(self, button, code):
-        NSApp().stopModalWithCode_(code)
+        if self.sheet_parent is not None:
+            NSApp().endSheet_returnCode_(self.window, code)
+        else:
+            NSApp().stopModalWithCode_(code)
 
     def build_text(self):
         vbox = VBox(spacing=6)
@@ -224,7 +231,16 @@ class Dialog(DialogBase):
 
     def run(self):
         self.window = self.build_window()
-        response = NSApp().runModalForWindow_(self.window)
+        if self.sheet_parent is None:
+            response = NSApp().runModalForWindow_(self.window)
+        else:
+            delegate = SheetDelegate.alloc().init()
+            NSApp().beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
+                self.window, self.sheet_parent.nswindow, 
+                delegate, 'sheetDidEnd:returnCode:contextInfo:', nil)
+            response = NSApp.runModalForWindow_(self.window)
+            self.window.orderOut_(nil)
+
         if response < 0:
             return -1
         return response
@@ -240,8 +256,34 @@ class Dialog(DialogBase):
     def get_extra_widget(self):
         return self.extra_widget
 
-class FileSaveDialog(DialogBase):
+class SheetDelegate(NSObject):
+    @AppHelper.endSheetMethod
+    def sheetDidEnd_returnCode_contextInfo_(self, sheet, return_code, info):
+        NSApp().stopModalWithCode_(return_code)
+
+class FileDialogBase(DialogBase):
+    def __init__(self):
+        DialogBase.__init__(self)
+        self._types = None
+        self._filename = None
+        self._directory = None
+
+    def run(self):
+        self._panel.setAllowedFileTypes_(self._types)
+        if self.sheet_parent is None:
+            response = self._panel.runModalForDirectory_file_(self._directory, self._filename, self._types)
+        else:
+            delegate = SheetDelegate.alloc().init()
+            self._panel.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
+                self._directory, self._filename,
+                self.sheet_parent.nswindow, delegate, 'sheetDidEnd:returnCode:contextInfo:', nil)
+            response = NSApp.runModalForWindow_(self._panel)
+            self._panel.orderOut_(nil)
+        return response
+
+class FileSaveDialog(FileDialogBase):
     def __init__(self, title):
+        FileDialogBase.__init__(self)
         self._title = title
         self._panel = NSSavePanel.savePanel()
         self._filename = None
@@ -253,7 +295,7 @@ class FileSaveDialog(DialogBase):
         return self._filename
 
     def run(self):
-        response = self._panel.runModalForDirectory_file_(NSHomeDirectory(), self._filename)
+        response = FileDialogBase.run(self)            
         if response == NSFileHandlingPanelOKButton:            
             self._filename = self._panel.filename()
             return 0
@@ -262,13 +304,11 @@ class FileSaveDialog(DialogBase):
     def destroy(self):
         self._panel = None
 
-class FileOpenDialog(DialogBase):
+class FileOpenDialog(FileDialogBase):
     def __init__(self, title):
+        FileDialogBase.__init__(self)
         self._title = title
         self._panel = NSOpenPanel.openPanel()
-        self._filename = None
-        self._directory = None
-        self._types = None
 
     def set_directory(self, d):
         self._directory = d
@@ -285,7 +325,7 @@ class FileOpenDialog(DialogBase):
         return self._filename
 
     def run(self):
-        response = self._panel.runModalForDirectory_file_types_(self._directory, self._filename, self._types)
+        response = FileDialogBase.run(self)            
         if response == NSFileHandlingPanelOKButton:            
             self._filename = self._panel.filenames()[0]
             return 0
@@ -294,8 +334,9 @@ class FileOpenDialog(DialogBase):
     def destroy(self):
         self._panel = None
 
-class DirectorySelectDialog(DialogBase):
+class DirectorySelectDialog(FileDialogBase):
     def __init__(self, title):
+        FileDialogBase.__init__(self)
         self._title = title
         self._panel = NSOpenPanel.openPanel()
         self._panel.setCanChooseFiles_(NO)
@@ -309,7 +350,7 @@ class DirectorySelectDialog(DialogBase):
         return self._directory
 
     def run(self):
-        response = self._panel.runModalForDirectory_file_types_(self._directory, None, None)
+        response = FileDialogBase.run(self)            
         if response == NSFileHandlingPanelOKButton:
             self._directory = self._panel.filenames()[0]
             return 0
@@ -326,7 +367,7 @@ class AboutDialog(DialogBase):
 
 class AlertDialog(DialogBase):
     def __init__(self, title, message, alert_type):
-        print alert_type
+        DialogBase.__init__(self)
         self._nsalert = NSAlert.alloc().init();
         self._nsalert.setMessageText_(title)
         self._nsalert.setInformativeText_(message)
