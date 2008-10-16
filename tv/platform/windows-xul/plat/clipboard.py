@@ -41,19 +41,19 @@ GlobalLock = windll.kernel32.GlobalLock
 GlobalUnlock = windll.kernel32.GlobalUnlock
 
 def get_text():
-     text = None
-     if OpenClipboard(None):
-         try:
-             hClipMem = GetClipboardData(CF_TEXT)
-             if hClipMem:
-                 GlobalLock.restype = c_char_p
-                 text = GlobalLock(hClipMem)
-                 GlobalUnlock(hClipMem)
-         finally:
-             CloseClipboard()
-     if text is not None:
-         text = toUni(text)
-     return text
+    text = None
+    if OpenClipboard(None):
+        try:
+            hClipMem = GetClipboardData(CF_TEXT)
+            if hClipMem:
+                GlobalLock.restype = c_char_p
+                text = GlobalLock(hClipMem)
+                GlobalUnlock(hClipMem)
+        finally:
+            CloseClipboard()
+    if text is not None:
+        text = toUni(text)
+    return text
 
 def set_text(text):
     text_buffer = create_string_buffer(text)
