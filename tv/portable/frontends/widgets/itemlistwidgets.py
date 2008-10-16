@@ -206,8 +206,9 @@ class SearchListTitlebar(ItemListTitlebar):
 class ItemView(widgetset.TableView):
     """TableView that displays a list of items.  """
 
-    def __init__(self, item_list):
+    def __init__(self, item_list, display_channel=True):
         widgetset.TableView.__init__(self, item_list.model)
+        self.display_channel = display_channel
         self.item_list = item_list
         self.set_draws_selection(False)
         renderer = self.build_renderer()
@@ -218,7 +219,7 @@ class ItemView(widgetset.TableView):
         self.set_background_color(widgetutil.WHITE)
 
     def build_renderer(self):
-        return style.ItemRenderer()
+        return style.ItemRenderer(self.display_channel)
 
 class HideableSection(widgetutil.HideableWidget):
     """Widget that contains an ItemView, along with an expander to show/hide

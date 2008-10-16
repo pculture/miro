@@ -706,6 +706,7 @@ class ItemInfo(object):
     name -- name of the item
     id -- object id
     feed_id -- id for the items feed
+    feed_name -- name of the feed item is attached to
     description -- longer description for the item (HTML)
     state -- see Item.get_state()
     release_date -- datetime object when the item was published
@@ -744,6 +745,11 @@ class ItemInfo(object):
         self.name = item.get_title()
         self.id = item.id
         self.feed_id = item.feed_id
+        if item.feed_id:
+            feed = item.dd.getObjectByID(self.feed_id)
+            self.feed_name = feed.get_title()
+        else:
+            self.feed_name = None
         self.description = item.get_description()
         self.state = item.get_state()
         self.release_date = item.get_release_date_obj()

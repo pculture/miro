@@ -180,7 +180,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     EMBLEM_FONT_SIZE = 0.77
     GRADIENT_HEIGHT = 25
 
-    def __init__(self):
+    def __init__(self, display_channel=True):
         widgetset.CustomCellRenderer.__init__(self)
         self.progress_bar = imagepool.get_surface(resources.path(
             'wimages/progress-bar.png'))
@@ -211,7 +211,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         # time.  cached_size_parameters stores things like the base font size
         # that the cached value depends on.
         self.cached_size = None
-        self.cached_size_parameters = None 
+        self.cached_size_parameters = None
+        self.display_channel = display_channel
 
     def get_size(self, style, layout):
         if self.show_details:
@@ -378,10 +379,16 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             duration = displaytext.time(self.data.duration)
         else:
             duration = ''
-        info_box = self.create_pseudo_table(layout,
-            ((_("Date:"), release_date, None),
-             (_("Length:"), duration, None),
-             (_('Size:'), displaytext.size(self.data.size), None)))
+        info_rows = [(_("Date:"), release_date, None),
+                     (_("Length:"), duration, None),
+                     (_('Size:'), displaytext.size(self.data.size), None)]
+        if self.display_channel and self.data.feed_name and self.data.feed_id:
+            info_rows.append(
+                (_('Channel:'),
+                 util.clampText(self.data.feed_name, 20),
+                 'switch_to_channel'))
+
+        info_box = self.create_pseudo_table(layout, info_rows)
 
         vbox.pack(info_box)
 

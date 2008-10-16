@@ -102,7 +102,7 @@ class PlaylistItemView(itemlistwidgets.ItemView):
         self.playlist_id = playlist_id
 
     def build_renderer(self):
-        return style.PlaylistItemRenderer()
+        return style.PlaylistItemRenderer(display_channel=True)
 
 class PlaylistView(itemlistcontroller.SimpleItemListController):
     image_filename = 'playlist-icon.png'

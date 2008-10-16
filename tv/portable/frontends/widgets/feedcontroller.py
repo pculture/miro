@@ -98,10 +98,10 @@ class FeedController(itemlistcontroller.ItemListController):
 
     def _make_item_views(self):
         self.downloading_view = itemlistwidgets.ItemView(
-                itemlist.DownloadingItemList())
+                itemlist.DownloadingItemList(), False)
         self.downloaded_view = itemlistwidgets.ItemView(
-                itemlist.DownloadedItemList())
-        self.full_view = itemlistwidgets.ItemView(itemlist.ItemList())
+                itemlist.DownloadedItemList(), False)
+        self.full_view = itemlistwidgets.ItemView(itemlist.ItemList(), False)
         self.downloading_section = itemlistwidgets.HideableSection(
                 "", self.downloading_view)
         self.downloaded_section = itemlistwidgets.HideableSection(
