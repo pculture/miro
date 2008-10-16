@@ -40,9 +40,8 @@ from miro import menubar
 from miro import signals
 from miro import dialogs
 from miro.gtcache import gettext as _
-from miro.frontends.widgets.gtk import wrappermap
+from miro.frontends.widgets.gtk import wrappermap, widgets
 from miro.frontends.widgets import menus
-from miro.frontends.widgets import rect
 from miro.plat import resources
 
 alive_windows = set() # Keeps the objects alive until destroy() is called
@@ -229,7 +228,7 @@ class Window(WindowBase):
     def get_frame(self):
         pos = self._window.get_position()
         size = self._window.get_size()
-        return rect.Rect(pos[0], pos[1], size[0], size[1])
+        return widgets.Rect(pos[0], pos[1], size[0], size[1])
 
 class MainWindow(Window):
     def __init__(self, title, rect):
