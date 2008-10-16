@@ -386,7 +386,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             info_rows.append(
                 (_('Channel:'),
                  util.clampText(self.data.feed_name, 20),
-                 'switch_to_channel'))
+                 None))
 
         info_box = self.create_pseudo_table(layout, info_rows)
 
