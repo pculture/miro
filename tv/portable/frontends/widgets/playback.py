@@ -114,7 +114,7 @@ class PlaybackManager (signals.SignalEmitter):
         else:
             detached_window_frame = widgetset.Rect.from_string(detached_window_frame)
         self.detached_window = widgetset.Window("", detached_window_frame)
-        align = widgetset.Alignment(bottom_pad=16, yscale=1.0)
+        align = widgetset.Alignment(bottom_pad=16, xscale=1.0, yscale=1.0)
         align.add(self.video_display.widget)
         self.detached_window.set_content_widget(align)
         self.detached_window_close_handler = self.detached_window.connect('will-close', self.on_detached_window_close)
