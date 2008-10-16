@@ -655,23 +655,13 @@ class Feed(DDBObject):
         self.create_signal('update-finished')
         self.download = None
         self.wasUpdating = False
-        self.blinking = False
         self.itemSort = sorts.ItemSort()
         self.itemSortDownloading = sorts.ItemSort()
         self.itemSortWatchable = sorts.ItemSortUnwatchedFirst()
         self.inlineSearchTerm = None
 
-    isBlinking, setBlinking = makeSimpleGetSet('blinking', changeNeedsSave=False)
-
     def setInlineSearchTerm(self, term):
         self.inlineSearchTerm = term
-
-    def blink(self):
-        self.setBlinking(True)
-        def timeout():
-            if self.idExists():
-                self.setBlinking(False)
-        eventloop.addTimeout(0.5, timeout, 'unblink feed')
 
     def getID(self):
         return DDBObject.getID(self)

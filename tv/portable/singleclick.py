@@ -112,7 +112,6 @@ def check_url_exists(url):
             return True
     existingFeed = feed.get_feed_by_url(url)
     if existingFeed is not None:
-        existingFeed.blink()
         return True
     return False
 

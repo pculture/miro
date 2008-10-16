@@ -209,7 +209,6 @@ class Importer(object):
                         f.setExpiration('feed', expiryTime)
             if self.currentFolder is not None:
                 f.setFolder(self.currentFolder)
-                f.blink()
             self.importedFeeds += 1
         else:
             self.ignoredFeeds += 1
