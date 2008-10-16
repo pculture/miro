@@ -806,7 +806,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
         for info in message.changed:
             tablist.update(info)
         for info in message.added:
-            tablist.add(info)
+            tablist.add(info, info.parent_id)
         tablist.model_changed()
         app.info_updater.handle_tabs_changed(message)
 
