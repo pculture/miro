@@ -630,8 +630,9 @@ class TableView(Widget):
         if self.column_count() == 1 and self.is_tree():
             self.tableview.setOutlineTableColumn_(column)
             renderer.outline_column = True
-        if self.column_count() == 1:
-            self.tableview.noteNumberOfRowsChanged()
+        # Adding a column means that each row could have a different height.
+        # call noteNumberOfRowsChanged() to have OS X recalculate the heights
+        self.tableview.noteNumberOfRowsChanged()
         self.invalidate_size_request()
 
     def column_count(self):
