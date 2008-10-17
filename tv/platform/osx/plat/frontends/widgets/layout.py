@@ -631,6 +631,21 @@ class Scroller(Bin):
         self.view.setHasVerticalScroller_(vertical)
         self.document_view = FlippedView.alloc().init()
         self.view.setDocumentView_(self.document_view)
+        self.notifications = NotificationForwarder.create(self.view.contentView())
+        self.notifications.connect(self._on_clip_view_frame_change,
+                'NSViewFrameDidChangeNotification')
+
+    def _on_clip_view_frame_change(self, note):
+        # If the clip view is larger than the document view (probably because
+        # we auto-hid a scrollbar), resize the document view to be at least as
+        # big as the clip view.
+        clip_size = self.view.contentView().frame().size
+        document_size = self.document_view.frame().size
+        max_width = max(clip_size.width, document_size.width)
+        max_height = max(clip_size.height, document_size.height)
+        if (max_width != document_size.width or
+                max_height != document_size.height):
+            self.document_view.setFrameSize_(NSSize(max_width, max_height))
 
     def calc_size_request(self):
         if self.child:
