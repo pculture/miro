@@ -405,7 +405,8 @@ class DownloadingItemList(ItemList):
     """ItemList that only displays downloading items."""
     def filter(self, item_info):
         return (item_info.download_info
-                and not item_info.download_info.finished)
+                and not item_info.download_info.finished
+                and not item_info.download_info.state == 'failed')
 
 class DownloadedItemList(ItemList):
     """ItemList that only displays downloaded items."""
