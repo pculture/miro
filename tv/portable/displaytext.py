@@ -61,7 +61,7 @@ def size(bytes):
     # reported size, it takes a while to get the new size and the downloader
     # returns -1.  the user sees the size go to -1B which is weird....
     # better to return an empty string.
-    if bytes == -1:
+    if bytes == -1 or bytes == 0:
         return ""
 
     # FIXME this is a repeat of util.formatSizeForUser ...  should
