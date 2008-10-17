@@ -427,6 +427,7 @@ class PreferencesWindow (Window):
         self.identifiers = list()
         self.first_show = True
         self.nswindow.setShowsToolbarButton_(NO)
+        self.nswindow.setReleasedWhenClosed_(NO)
 
     def get_style_mask(self):
         return NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask
