@@ -279,8 +279,10 @@ class MenuManager(signals.SignalEmitter):
         signals.SignalEmitter.__init__(self)
         self.create_signal('enabled-changed')
         self.enabled_groups = set(['AlwaysOn'])
+        self.states = {}
 
-    def reset_initial_set(self):
+    def reset(self):
+        self.states = {"plural": [], "folder": [], "folders": []}
         self.enabled_groups = set(['AlwaysOn'])
         if app.playback_manager.is_playing and app.playback_manager.detached_window is not None:
             self.enabled_groups.add('PlayableSelected')
@@ -290,35 +292,50 @@ class MenuManager(signals.SignalEmitter):
         """Handle the user selecting things in the feed list.  selected_feeds
         is a list of ChannelInfo objects
         """
-        self.reset_initial_set()
+        self.reset()
         self.enabled_groups.add('FeedsSelected')
         if len(selected_feeds) == 1:
+            if selected_feeds[0].is_folder:
+                self.states["folder"].append("RemoveChannels")
             self.enabled_groups.add('FeedSelected')
+        else:
+            if len([s for s in selected_feeds if s.is_folder]) == len(selected_feeds):
+                self.states["folders"].append("RemoveChannels")
+            else:
+                self.states["plural"].append("RemoveChannels")
+            self.states["plural"].append("UpdateChannels")
         self.emit('enabled-changed')
 
     def handle_site_selection(self, selected_sites):
         """Handle the user selecting things in the site list.  selected_sites
         is a list of GuideInfo objects
         """
-        self.reset_initial_set()
+        self.reset()
         self.emit('enabled-changed')
 
     def handle_playlist_selection(self, selected_playlists):
-        self.reset_initial_set()
+        self.reset()
         self.enabled_groups.add('PlaylistsSelected')
         if len(selected_playlists) == 1:
+            if selected_playlists[0].is_folder:
+                self.states["folder"].append("RemovePlaylists")
             self.enabled_groups.add('PlaylistSelected')
+        else:
+            if len([s for s in selected_playlists if s.is_folder]) == len(selected_playlists):
+                self.states["folders"].append("RemovePlaylists")
+            else:
+                self.states["plural"].append("RemovePlaylists")
         self.emit('enabled-changed')
 
     def handle_static_tab_selection(self, selected_static_tabs):
-        self.reset_initial_set()
+        self.reset()
         self.emit('enabled-changed')
 
     def handle_item_list_selection(self, selected_items):
         """Handle the user selecting things in the item list.  selected_items
         is a list of ItemInfo objects containing the current selection.
         """
-        self.reset_initial_set()
+        self.reset()
         for item in selected_items:
             if item.downloaded:
                 self.enabled_groups.add('PlayableSelected')
@@ -328,6 +345,7 @@ class MenuManager(signals.SignalEmitter):
     def handle_playing_selection(self):
         """Handle the user playing an item.
         """
+        self.reset_states()
         self.enabled_groups = set(['AlwaysOn'])
         self.enabled_groups.add('PlayableSelected')
         self.enabled_groups.add('Playing')

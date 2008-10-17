@@ -320,6 +320,26 @@ class MainWindow(Window):
             else:
                 action_group.set_sensitive(False)
 
+        removeChannels = menubar.menubar.getLabel("RemoveChannels")
+        updateChannels = menubar.menubar.getLabel("UpdateChannels")
+        removePlaylists = menubar.menubar.getLabel("RemovePlaylists")
+        removeItems = menubar.menubar.getLabel("RemoveItems")
+
+        for state, actions in menu_manager.states.items():
+            if "RemoveChannels" in actions:
+                removeChannels = menubar.menubar.getLabel("RemoveChannels", state)
+            if "UpdateChannels" in actions:
+                updateChannels = menubar.menubar.getLabel("UpdateChannels", state)
+            if "RemovePlaylists" in actions:
+                removePlaylists = menubar.menubar.getLabel("RemovePlaylists", state)
+            if "RemoveItems" in actions:
+                removeItems = menubar.menubar.getLabel("RemoveItems", state)
+
+        self.action_groups["FeedsSelected"].get_action("RemoveChannels").set_property("label", removeChannels)
+        self.action_groups["FeedsSelected"].get_action("UpdateChannels").set_property("label", updateChannels)
+        self.action_groups["PlaylistsSelected"].get_action("RemovePlaylists").set_property("label", removePlaylists)
+        self.action_groups["PlayableSelected"].get_action("RemoveItems").set_property("label", removeItems)
+
     def on_activate(self, action, callback):
         callback()
 
