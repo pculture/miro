@@ -280,13 +280,20 @@ class MenuManager(signals.SignalEmitter):
         self.create_signal('enabled-changed')
         self.enabled_groups = set(['AlwaysOn'])
         self.states = {}
+        self.play_pause_state = "play"
 
     def reset(self):
         self.states = {"plural": [], "folder": [], "folders": []}
+        self.play_pause_state = "play"
         self.enabled_groups = set(['AlwaysOn'])
         if app.playback_manager.is_playing and app.playback_manager.detached_window is not None:
             self.enabled_groups.add('PlayableSelected')
             self.enabled_groups.add('Playing')
+
+    def set_play_pause(self, state):
+        # don't call reset here!
+        self.play_pause_state = state
+        self.emit('enabled-changed')
 
     def handle_feed_selection(self, selected_feeds):
         """Handle the user selecting things in the feed list.  selected_feeds
@@ -345,7 +352,7 @@ class MenuManager(signals.SignalEmitter):
     def handle_playing_selection(self):
         """Handle the user playing an item.
         """
-        self.reset_states()
+        self.reset()
         self.enabled_groups = set(['AlwaysOn'])
         self.enabled_groups.add('PlayableSelected')
         self.enabled_groups.add('Playing')

@@ -340,6 +340,9 @@ class MainWindow(Window):
         self.action_groups["PlaylistsSelected"].get_action("RemovePlaylists").set_property("label", removePlaylists)
         self.action_groups["PlayableSelected"].get_action("RemoveItems").set_property("label", removeItems)
 
+        play_pause = menubar.menubar.getLabel("PlayPauseVideo", menu_manager.play_pause_state)
+        self.action_groups["PlayableSelected"].get_action("PlayPauseVideo").set_property("label", play_pause)
+
     def on_activate(self, action, callback):
         callback()
 
