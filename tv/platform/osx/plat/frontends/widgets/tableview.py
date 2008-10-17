@@ -531,6 +531,12 @@ class TableView(Widget):
         return self.calc_width(), height
 
     def viewport_repositioned(self):
+        self._do_layout()
+
+    def viewport_created(self):
+        self._do_layout()
+
+    def _do_layout(self):
         self._resize_columns()
         if self._show_headers:
             y = HEADER_HEIGHT
