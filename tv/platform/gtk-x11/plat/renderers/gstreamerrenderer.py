@@ -133,7 +133,13 @@ class Renderer:
 
         logging.info("GStreamer sink:    %s", videosink)
         self.playbin.set_property("video-sink", self.sink)
+        self.set_visualization()
+
         self.rate = 1.0
+
+    def set_visualization(self):
+        goom = gst.element_factory_make("goom", "goom")
+        self.playbin.set_property("vis-plugin", goom)
 
     def on_sync_message(self, bus, message):
         if message.structure is None:
