@@ -237,8 +237,8 @@ class Dialog(DialogBase):
             delegate = SheetDelegate.alloc().init()
             NSApp().beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
                 self.window, self.sheet_parent.nswindow, 
-                delegate, 'sheetDidEnd:returnCode:contextInfo:', nil)
-            response = NSApp.runModalForWindow_(self.window)
+                delegate, 'sheetDidEnd:returnCode:contextInfo:', 0)
+            response = NSApp().runModalForWindow_(self.window)
             self.window.orderOut_(nil)
 
         if response < 0:
@@ -276,8 +276,8 @@ class FileDialogBase(DialogBase):
             delegate = SheetDelegate.alloc().init()
             self._panel.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
                 self._directory, self._filename,
-                self.sheet_parent.nswindow, delegate, 'sheetDidEnd:returnCode:contextInfo:', nil)
-            response = NSApp.runModalForWindow_(self._panel)
+                self.sheet_parent.nswindow, delegate, 'sheetDidEnd:returnCode:contextInfo:', 0)
+            response = NSApp().runModalForWindow_(self._panel)
             self._panel.orderOut_(nil)
         return response
 
