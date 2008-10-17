@@ -58,6 +58,7 @@ from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import dialogwidgets
 from miro.frontends.widgets.widgetutil import build_control_line
 from miro.plat import resources
+from miro.plat.utils import osFilenameToFilenameType
 from miro.gtcache import gettext as _
 
 # Note: we do an additional import from prefpanelset half way down the file.
@@ -438,7 +439,7 @@ class _MovieDirectoryHelper(object):
                 initial_directory=config.get(prefs.MOVIES_DIRECTORY),
                 transient_for=_pref_window)
         if dir is not None:
-            self.path = dir
+            self.path = osFilenameToFilenameType(dir)
             self.label.set_text(dir)
 
     def set_initial_path(self):
