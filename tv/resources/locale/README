@@ -5,3 +5,19 @@ README
 Instructions for dealing with Translations are in the wiki:
 
 https://develop.participatoryculture.org/trac/democracy/wiki/TranslationGuide
+
+Summary
+=======
+
+Upload to Launchpad
+-------------------
+
+Run ``build-messages.sh`` to build the ``messages.pot`` file to upload to 
+Launchpad.
+
+
+Download from Launchpad
+-----------------------
+
+Run ``build-catalgos.py`` to fix ``.po`` files and other issues and then
+generate the ``.mo`` files.
