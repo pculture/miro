@@ -333,6 +333,6 @@ class IconCache:
         if self.url and self.url.startswith(u"file://"):
             return getFileURLPath(self.url)
         elif self.url and self.url.startswith(u"/"):
-            return self.url
+            return unicodeToFilename(self.url)
         else:
             return self.filename
