@@ -679,6 +679,7 @@ class PlaylistInfo(object):
         self.name = playlist_obj.get_title()
         self.id = playlist_obj.id
         self.is_folder = isinstance(playlist_obj, PlaylistFolder)
+        self.parent_id = playlist_obj.folder_id
 
 class GuideInfo(object):
     """Tracks the state of a channel guide
