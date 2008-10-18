@@ -76,7 +76,8 @@ class ClickableLabel(Widget):
         self._widget.window.set_cursor(gtk.gdk.Cursor(gtk.gdk.HAND1))
 
     def on_leave_notify(self, widget, event):
-        self._widget.window.set_cursor(None)
+        if self._widget.window:
+            self._widget.window.set_cursor(None)
 
     def set_size(self, size):
         self.label.set_size(size)
