@@ -991,12 +991,15 @@ class BackendMessageHandler(messages.MessageHandler):
                 normalizedURLs.append((normalized, additional))
         if normalizedURLs:
             if type == 'feed':
+                feed_names = []
                 for url, additional in normalizedURLs:
-                    feed.Feed(url)
+                    new_feed = feed.Feed(url)
+                    feed_names.append(new_feed.get_title())
                     if 'trackback' in additional:
                         httpclient.grabURL(additional['trackback'],
                                            lambda x: None,
                                            lambda x: None)
+                messages.NotifyNewFeed(feed_names).send_to_frontend()
             elif type == 'download':
                 for url, additional in normalizedURLs:
                     singleclick.add_download(url, additional)

@@ -157,3 +157,8 @@ class WindowsApplication(Application):
         if not os.path.isdir(fn):
             fn = os.path.dirname(fn)
         os.startfile(fn)
+
+    def send_notification(self, title, body,
+                          timeout=5000, attach_trayicon=True):
+        print '--- %s ---' % title
+        print body

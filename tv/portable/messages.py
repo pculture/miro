@@ -1013,3 +1013,8 @@ class PlayMovie(FrontendMessage):
     """Starts playing a specific movie."""
     def __init__(self, item_infos):
         self.item_infos = item_infos
+
+class NotifyNewFeed(FrontendMessage):
+    """Informs the user of new subscription(s)"""
+    def __init__(self, feed_names):
+        self.feed_names = feed_names

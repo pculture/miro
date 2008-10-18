@@ -31,6 +31,15 @@ import os
 import gconf
 import shutil
 
+try:
+    import pynotify
+except ImportError:
+    print "PyNotify support disabled on your platform."
+    PYNOTIFY_SUPPORT = False
+else:
+    pynotify.init('miro')
+    PYNOTIFY_SUPPORT = True
+
 from miro import app
 from miro import config
 from miro import prefs
@@ -224,3 +233,17 @@ class GtkX11Application(Application):
 
     def set_main_window_maximized(self, window, maximized):
         set_bool("maximized", maximized)
+
+    def send_notification(self, title, body,
+                          timeout=5000, attach_trayicon=True):
+        if not PYNOTIFY_SUPPORT:
+            return
+
+        notification = pynotify.Notification(title, body)
+        if (attach_trayicon
+                and trayicon.trayicon_is_supported
+                and config.get(options.SHOW_TRAYICON)):
+            notification.attach_to_status_icon(self.trayicon)
+        if timeout:
+            notification.set_timeout(timeout)
+        notification.show()

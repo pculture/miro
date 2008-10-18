@@ -120,6 +120,12 @@ class OSXApplication(Application):
             windowFrame = (rect.origin.x, rect.origin.y, rect.size.width, rect.size.height)
         return Rect(*windowFrame)
 
+    def send_notification(self, title, body,
+                          timeout=5000, attach_trayicon=True):
+        print '--- %s ---' % title
+        print body
+
+
 class AppController(NSObject):
 
     def initWithApp_(self, application):

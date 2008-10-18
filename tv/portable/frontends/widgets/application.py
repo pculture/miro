@@ -837,3 +837,13 @@ class WidgetsMessageHandler(messages.MessageHandler):
         desc = message.desc
         print "handle_message_to_user"
         dialogs.show_message(title, desc)
+
+    def handle_notify_new_feed(self, message):
+        if len(message.feed_names) == 1:
+            title = _("Subscribed to new channel:")
+            body = [message.feed_names[0]]
+        else:
+            title = _('Subscribed to new channels:')
+            body = [' - %s' % feed_name for feed_name in message.feed_names]
+
+        app.widgetapp.send_notification(title, u'\n'.join(body))
