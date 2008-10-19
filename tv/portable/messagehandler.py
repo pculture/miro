@@ -48,6 +48,7 @@ from miro import opml
 from miro import searchengines
 from miro import util
 from miro.feed import Feed, get_feed_by_url
+from miro.gtcache import gettext as _
 from miro.playlist import SavedPlaylist
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
 from miro.util import getSingletonDDBObject
@@ -999,7 +1000,18 @@ class BackendMessageHandler(messages.MessageHandler):
                         httpclient.grabURL(additional['trackback'],
                                            lambda x: None,
                                            lambda x: None)
-                messages.NotifyNewFeed(feed_names).send_to_frontend()
+
+                # send a notification to the user
+                if len(feed_names) == 1:
+                    title = _("Subscribed to new channel:")
+                    body = feed_names[0]
+                else:
+                    title = _('Subscribed to new channels:')
+                    body = '\n'.join(
+                        [' - %s' % feed_name for feed_name in feed_names])
+
+                messages.NotifyUser(
+                    title, body, 'feed-subscribe').send_to_frontend()
             elif type == 'download':
                 for url, additional in normalizedURLs:
                     singleclick.add_download(url, additional)

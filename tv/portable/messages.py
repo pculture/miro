@@ -1014,7 +1014,15 @@ class PlayMovie(FrontendMessage):
     def __init__(self, item_infos):
         self.item_infos = item_infos
 
-class NotifyNewFeed(FrontendMessage):
-    """Informs the user of new subscription(s)"""
-    def __init__(self, feed_names):
-        self.feed_names = feed_names
+class NotifyUser(FrontendMessage):
+    """
+    Sends a notification to the user.
+
+    Can optionally give a notification type, so we can filter based on
+    whether the user has selected that they are interested in
+    recieving notifications of this type.
+    """
+    def __init__(self, title, body, notify_type=None):
+        self.title = title
+        self.body = body
+        self.notify_type = notify_type
