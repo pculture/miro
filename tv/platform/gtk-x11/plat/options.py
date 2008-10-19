@@ -42,31 +42,31 @@ defaultXineDriver = "xv"
 from miro.prefs import Pref
 
 
-USE_RENDERER = Pref( key="useRenderer", 
-                     default=u"gstreamer", 
-                     platformSpecific=False, 
-                     alias="renderer",
-                     help="Which renderer to use.  (gstreamer, xine)" )
+USE_RENDERER = Pref(key="useRenderer",
+                    default=u"gstreamer",
+                    platformSpecific=False,
+                    alias="renderer",
+                    help="Which renderer to use.  (gstreamer, xine)" )
 
-XINE_VIZ = Pref( key="xineViz", 
-                 default=u"goom", 
-                 platformSpecific=False,
-                 alias="xine-viz",
-                 help="Which visualization plugin to use.  (goom, oscope, none)" )
+VIZ_PLUGIN = Pref(key="vizPlugin",
+                  default=u"goom",
+                  platformSpecific=False,
+                  alias="viz-plugin",
+                  help="Which visualization plugin to use for audio files.  (goom or none)" )
 
-USE_XINE_XV_HACK = Pref(key="UseXineXVHack", 
-                        default=True, 
+USE_XINE_XV_HACK = Pref(key="UseXineXVHack",
+                        default=True,
                         platformSpecific=False,
                         alias="xine-xvhack",
                         help="Whether or not to use the Xine xv hack.  (true, false)" )
 
-XINE_DRIVER = Pref(key="DefaultXineDriver", 
+XINE_DRIVER = Pref(key="DefaultXineDriver",
                    default="xv",
                    platformSpecific=False,
                    alias="xine-driver",
                    help="Which Xine driver to use for video.  (auto, xv, xshm)" )
 
-GSTREAMER_IMAGESINK = Pref(key="DefaultGstreamerImagesink", 
+GSTREAMER_IMAGESINK = Pref(key="DefaultGstreamerImagesink",
                            default="gconfvideosink",
                            platformSpecific=False,
                            alias="gstreamer-imagesink",

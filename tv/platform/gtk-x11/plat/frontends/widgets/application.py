@@ -121,6 +121,10 @@ class GtkX11Application(Application):
         elif key == prefs.RUN_DTV_AT_STARTUP.key:
             self.update_autostart()
 
+        elif key == options.VIZ_PLUGIN.key:
+            if hasattr(app, "renderer") and app.renderer:
+                app.renderer.change_visualization(value)
+
     def build_window(self):
         Application.build_window(self)
         self.window.connect('save-dimensions', self.set_main_window_dimensions)

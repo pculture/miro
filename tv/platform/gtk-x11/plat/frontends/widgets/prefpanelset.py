@@ -56,8 +56,12 @@ def _playback_panel():
     lab.set_bold(True)
     extras.append(align_left(lab))
 
+    grid = dialogwidgets.ControlGrid()
+
     note = dialogwidgets.note(_("You must restart Miro for renderer changes to take effect."))
-    extras.append(align_left(note, bottom_pad=12))
+    grid.pack(align_left(note, bottom_pad=12), grid.ALIGN_LEFT, span=2)
+
+    grid.end_line(spacing=12)
 
     rbg = widgetset.RadioButtonGroup()
     gstreamer_radio = widgetset.RadioButton("gstreamer", rbg)
@@ -65,15 +69,18 @@ def _playback_panel():
     attach_radio([(gstreamer_radio, "gstreamer"), (xine_radio, "xine")],
                  options.USE_RENDERER)
 
-    grid = dialogwidgets.ControlGrid()
     grid.pack_label(_("Video renderer:"), grid.ALIGN_RIGHT)
     grid.pack(dialogwidgets.radio_button_list(gstreamer_radio, xine_radio))
 
-    viz_options = [("None", _("None")),
-                   ("goom", "goom"),
-                   ("oscope", "oscope")]
+    grid.end_line(spacing=12)
+
+    note = dialogwidgets.note(_("You must restart playback for visualization changes to take effect."))
+    grid.pack(align_left(note, bottom_pad=12), grid.ALIGN_LEFT, span=2)
+
+    viz_options = [("none", _("None")),
+                   ("goom", "goom")]
     viz_option_menu = widgetset.OptionMenu([op[1] for op in viz_options])
-    attach_combo(viz_option_menu, options.XINE_VIZ, [op[0] for op in viz_options])
+    attach_combo(viz_option_menu, options.VIZ_PLUGIN, [op[0] for op in viz_options])
     grid.end_line(spacing=12)
 
     grid.pack_label(_("Use this for video when playing audio:"),
@@ -81,20 +88,6 @@ def _playback_panel():
     grid.pack(viz_option_menu)
 
     extras.append(align_left(grid.make_table()))
-
-    def handle_clicked(widget):
-        if widget is gstreamer_radio:
-            viz_option_menu.disable_widget()
-        elif widget is xine_radio:
-            viz_option_menu.enable_widget()
-
-    gstreamer_radio.connect('clicked', handle_clicked)
-    xine_radio.connect('clicked', handle_clicked)
-
-    if config.get(options.USE_RENDERER) == "gstreamer":
-        handle_clicked(gstreamer_radio)
-    else:
-        handle_clicked(xine_radio)
 
     return extras
 

@@ -138,8 +138,18 @@ class Renderer:
         self.rate = 1.0
 
     def set_visualization(self):
-        goom = gst.element_factory_make("goom", "goom")
-        self.playbin.set_property("vis-plugin", goom)
+        value = config.get(options.VIZ_PLUGIN)
+
+        if value == "goom":
+            vis = gst.element_factory_make("goom", "goom")
+        else:
+            vis = None
+
+        self.playbin.set_property("vis-plugin", vis)
+
+    def change_visualization(self, value):
+        # FIXME - this should switch between none and goom, but it doesn't work.
+        pass
 
     def on_sync_message(self, bus, message):
         if message.structure is None:
@@ -174,18 +184,17 @@ class Renderer:
         self.sink = None
 
     def on_expose(self, widget, event):
-        if self.sink:
-            if hasattr(self.sink, "expose"):
-                self.sink.expose()
-                return True
+        if self.sink and hasattr(self.sink, "expose"):
+            self.sink.expose()
         else:
+            # if we had an image to show, we could do so here...  that image
+            # would show for audio-only items.
             widget.window.draw_rectangle(self.gc,
                                          True,
                                          0, 0,
                                          widget.allocation.width,
                                          widget.allocation.height)
-            return True
-        return False
+        return True
 
     def can_play_file(self, filename, yes_callback, no_callback):
         """whether or not this renderer can play this data"""
@@ -209,11 +218,13 @@ class Renderer:
         logging.debug("haven't implemented exit_fullscreen method yet!")
 
     def select_item(self, an_item):
+        self.set_visualization()
         self.select_file(an_item.get_filename())
 
     def select_file(self, filename):
         """starts playing the specified file"""
         self.stop()
+        self.set_visualization()
         self.playbin.set_property("uri", "file://%s" % filename)
         self.playbin.set_state(gst.STATE_PAUSED)
 

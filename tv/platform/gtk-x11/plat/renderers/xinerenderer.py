@@ -92,6 +92,8 @@ class Renderer:
             except:
                 logging.exception("Exception in attach_queue function")
         self.attach_queue = []
+        self.gc = widget.window.new_gc()
+        self.gc.foreground = gtk.gdk.color_parse("black")
 
     def on_unrealize(self, widget):
         self.xine.detach()
@@ -101,6 +103,13 @@ class Renderer:
         self.xine.set_area(event.x, event.y, event.width, event.height)
 
     def on_expose_event(self, widget, event):
+        # if we wanted to draw an image for audio-only items, this is where
+        # we'd do it.
+        widget.window.draw_rectangle(self.gc,
+                                     True,
+                                     0, 0,
+                                     widget.allocation.width,
+                                     widget.allocation.height)
         self.xine.got_expose_event(event.area.x, event.area.y, event.area.width,
                 event.area.height)
 
@@ -138,9 +147,12 @@ class Renderer:
     def select_item(self, an_item):
         self.select_file(an_item.get_filename())
 
+    def change_visualization(self, value):
+        pass
+
     @wait_for_attach
     def select_file(self, filename):
-        viz = config.get(options.XINE_VIZ)
+        viz = config.get(options.VIZ_PLUGIN)
         self.xine.set_viz(viz)
         self.xine.select_file(filename)
         def expose_workaround():
