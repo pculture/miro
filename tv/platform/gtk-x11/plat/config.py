@@ -147,24 +147,24 @@ def get(descriptor):
         return os.path.join(value, 'miro-downloader-log')
 
     elif descriptor == prefs.HTTP_PROXY_ACTIVE:
-        return _get_gconf ("/system/http_proxy/use_http_proxy")
+        return _get_gconf("/system/http_proxy/use_http_proxy")
 
     elif descriptor == prefs.HTTP_PROXY_HOST:
-        return _get_gconf ("/system/http_proxy/host")
+        return _get_gconf("/system/http_proxy/host")
 
     elif descriptor == prefs.HTTP_PROXY_PORT:
-        return _get_gconf ("/system/http_proxy/port")
+        return _get_gconf("/system/http_proxy/port")
 
     elif descriptor == prefs.HTTP_PROXY_AUTHORIZATION_ACTIVE:
-        return _get_gconf ("/system/http_proxy/use_authentication")
+        return _get_gconf("/system/http_proxy/use_authentication")
 
     elif descriptor == prefs.HTTP_PROXY_AUTHORIZATION_USERNAME:
-        return _get_gconf ("/system/http_proxy/authentication_user")
+        return _get_gconf("/system/http_proxy/authentication_user")
 
     elif descriptor == prefs.HTTP_PROXY_AUTHORIZATION_PASSWORD:
-        return _get_gconf ("/system/http_proxy/authentication_password")
+        return _get_gconf("/system/http_proxy/authentication_password")
 
     elif descriptor == prefs.HTTP_PROXY_IGNORE_HOSTS:
-        return _get_gconf ("/system/http_proxy/ignore_hosts", [])
+        return _get_gconf("/system/http_proxy/ignore_hosts", [])
 
     return value
