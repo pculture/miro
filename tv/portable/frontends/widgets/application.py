@@ -57,6 +57,7 @@ from miro.frontends.widgets import playback
 from miro.frontends.widgets import search
 from miro.frontends.widgets import rundialog
 from miro.frontends.widgets import watchedfolders
+from miro.frontends.widgets import quitwhiledownloading
 from miro.frontends.widgets.window import MiroWindow
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.frontends.widgets.widgetset import Rect
@@ -72,6 +73,7 @@ class Application:
         messages.FrontendMessage.install_handler(self.message_handler)
         app.info_updater = InfoUpdater()
         app.watched_folder_manager = watchedfolders.WatchedFolderManager()
+        self.download_count = 0
 
     def startup(self):
         self.connect_to_signals()
@@ -634,8 +636,21 @@ class Application:
         self.quit()
 
     def quit(self):
-        # here we should should check if there are active downloads, etc.
-        self.do_quit()
+        if config.get(prefs.WARN_IF_DOWNLOADING_ON_QUIT) and self.download_count > 0:
+            ret = quitwhiledownloading.rundialog(
+                _("Are you sure you want to quit?"),
+                ngettext(
+                    "You have 1 download in progress.  Quit anyway?",
+                    "You have %(count)d downloads in progress.  Quit anyway?",
+                    self.download_count,
+                    {"count": self.download_count}
+                ),
+                _("Warn me when I attempt to quit with downloads in progress")
+            )
+            if ret:
+                self.do_quit()
+        else:
+            self.do_quit()
 
     def do_quit(self):
         if self.window is not None:
@@ -822,6 +837,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
         app.info_updater.handle_items_changed(message)
 
     def handle_download_count_changed(self, message):
+        app.widgetapp.download_count = message.count
         static_tab_list = app.tab_list_manager.static_tab_list
         static_tab_list.update_download_count(message.count)
 
