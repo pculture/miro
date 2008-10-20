@@ -126,6 +126,8 @@ class TabRenderer(widgetset.CustomCellRenderer):
         alignment.render_layout(context)
 
     def pack_bubbles(self, hbox, layout):
+        if getattr(self.data, 'is_updating', None):
+            self.pack_bubble(hbox, layout, 'updating', DOWNLOADING_COLOR)
         if self.data.unwatched > 0:
             self.pack_bubble(hbox, layout, self.data.unwatched,
                     UNWATCHED_COLOR)

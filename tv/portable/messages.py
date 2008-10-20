@@ -616,6 +616,7 @@ class ChannelInfo(object):
     is_folder -- is this a channel folder?
     is_directory_feed -- is this channel is a watched directory?
     parent_id -- id of parent folder or None
+    is_updating -- whether or not the feed is currently updating
     has_downloading -- are videos currently being downloaded for this channel?
     base_href -- url to use for relative links for items in this channel.
       This will be None for ChannelFolders.
@@ -637,6 +638,7 @@ class ChannelInfo(object):
         else:
             self.search_term = None
         if not isinstance(channel_obj, ChannelFolder):
+            self.is_updating = channel_obj.isUpdating()
             self.parent_id = channel_obj.folder_id
             self.url = channel_obj.getURL()
             self.thumbnail = channel_obj.getThumbnailPath()
@@ -652,6 +654,7 @@ class ChannelInfo(object):
             self.max_old_items = channel_obj.get_max_old_items()
             self.num_downloaded = channel_obj.num_downloaded()
         else:
+            self.is_updating = False
             self.parent_id = None
             self.url = None
             self.thumbnail = resources.path('wimages/folder-icon.png')
