@@ -127,6 +127,11 @@ class Widget(signals.SignalEmitter):
         this method if they want to handle this event.
         """
 
+    def viewport_scrolled(self):
+        """Called by the Scroller widget on it's child widget when it is
+        scrolled.
+        """
+
     def get_width(self):
         return int(self.viewport.get_width())
     width = property(get_width)
@@ -223,6 +228,10 @@ class Container(Widget):
 
     def viewport_repositioned(self):
         self.place_children()
+
+    def viewport_scrolled(self):
+        for child in self.children:
+            child.viewport_scrolled()
 
     def place_children(self):
         """Layout our child widgets.  Must be implemented by subclasses."""

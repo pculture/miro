@@ -148,11 +148,12 @@ class GTKCustomCellRenderer(gtk.GenericCellRenderer):
         else:
             hotspot = None
         widget_wrapper.layout_manager.reset()
+        hover = (self.path, self.column) == widget_wrapper.hover_info
         # NOTE: CustomCellRenderer.cell_data_func() sets up its attributes
         # from the model itself, so we don't have to worry about setting them
         # here.
         owner.render(context, widget_wrapper.layout_manager, selected,
-                hotspot)
+                hotspot, hover)
 
     def on_activate(self, event, widget, path, background_area, cell_area, 
             flags):
@@ -364,6 +365,7 @@ class TableView(Widget):
         self.drag_button_down = False
         self.context_menu_callback = self.drag_source = self.drag_dest = None
         self.hotspot_tracker = None
+        self.hover_info = None
         self.ignore_selection_changed = False
         self.create_signal('row-expanded')
         self.create_signal('row-collapsed')
@@ -601,7 +603,27 @@ class TableView(Widget):
         if event.button == 1:
             self.drag_button_down = False
 
+    def _redraw_cell(self, path, column):
+        cell_area = self._widget.get_cell_area(path, column)
+        self._widget.queue_draw_area(cell_area.x, cell_area.y,
+                cell_area.width, cell_area.height)
+
+    def _update_hover(self, treeview, event):
+        old_hover_info = self.hover_info
+        path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
+        if path_info is None:
+            self.hover_info = None
+        else:
+            self.hover_info = path_info[:2]
+        if old_hover_info != self.hover_info:
+            if old_hover_info is not None:
+                self._redraw_cell(*old_hover_info)
+            if self.hover_info is not None:
+                self._redraw_cell(*self.hover_info)
+
     def on_motion_notify(self, treeview, event):
+        self._update_hover(treeview, event)
+
         if self.hotspot_tracker:
             self.hotspot_tracker.update_position(event)
             self.hotspot_tracker.update_hit()

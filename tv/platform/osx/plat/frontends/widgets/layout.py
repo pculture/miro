@@ -631,14 +631,21 @@ class Scroller(Bin):
         self.view.setHasVerticalScroller_(vertical)
         self.document_view = FlippedView.alloc().init()
         self.view.setDocumentView_(self.document_view)
-        self.notifications = NotificationForwarder.create(self.view.contentView())
-        self.notifications.connect(self._on_clip_view_frame_change,
+        clip_view = self.view.contentView()
+        self.clip_notifications = NotificationForwarder.create(clip_view)
+        clip_view.setPostsFrameChangedNotifications_(YES)
+        clip_view.setPostsBoundsChangedNotifications_(YES)
+        self.clip_notifications.connect(self._on_clip_view_frame_change,
                 'NSViewFrameDidChangeNotification')
+        self.clip_notifications.connect(self._on_clip_view_bounds_change,
+                'NSViewBoundsDidChangeNotification')
 
-    def _on_clip_view_frame_change(self, note):
+    def _on_clip_view_frame_change(self, notification):
         # If the clip view is larger than the document view (probably because
         # we auto-hid a scrollbar), resize the document view to be at least as
         # big as the clip view.
+        if not self.child:
+            return
         clip_size = self.view.contentView().frame().size
         document_size = self.document_view.frame().size
         max_width = max(clip_size.width, document_size.width)
@@ -646,6 +653,10 @@ class Scroller(Bin):
         if (max_width != document_size.width or
                 max_height != document_size.height):
             self.document_view.setFrameSize_(NSSize(max_width, max_height))
+
+    def _on_clip_view_bounds_change(self, notification):
+        if self.child:
+            self.child.viewport_scrolled()
 
     def calc_size_request(self):
         if self.child:
@@ -772,10 +783,9 @@ class Expander(Bin):
             size = self.viewport.area().size
             child_rect = NSMakeRect(0, 0, size.width, size.height -
                     top_height)
-            self.child.place(child_rect, self.content_view)
-            self.content_view.setFrameSize_(child_rect.size)
             self.content_view.setFrame_(NSMakeRect(0, top_height, size.width,
-                    size.height - top_height))
+                size.height - top_height))
+            self.child.place(child_rect, self.content_view)
 
 
 class TabViewDelegate(NSObject):

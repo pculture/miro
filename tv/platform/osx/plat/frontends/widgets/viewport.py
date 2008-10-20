@@ -32,27 +32,30 @@ A Viewport represents the area where a Widget is located.
 """
 
 from objc import YES, NO, nil
+from Foundation import *
 
 class Viewport(object):
     """Used when a widget creates it's own NSView."""
     def __init__(self, view, initial_frame):
         self.view = view
         self.view.setFrame_(initial_frame)
+        self.placement = initial_frame
 
     def at_position(self, rect):
         """Check if a viewport is currently positioned at rect."""
-        return self.view.frame() == rect
+        return self.placement == rect
 
     def reposition(self, rect):
         """Move the viewport to a differennt position."""
         self.view.setFrame_(rect)
+        self.placement = rect
 
     def remove(self):
         self.view.removeFromSuperview()
 
     def area(self):
         """Area of our view that is occupied by the viewport."""
-        return self.view.bounds()
+        return NSRect(self.view.bounds().origin, self.placement.size)
 
     def get_width(self):
         return self.view.frame().size.width

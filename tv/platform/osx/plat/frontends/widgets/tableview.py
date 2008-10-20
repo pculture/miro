@@ -61,6 +61,20 @@ _disclosure_button_width = _disclosure_button.frame().size.width
 EXPANDER_PADDING = 6
 HEADER_HEIGHT = 17
 
+def _pack_row_column(row, column):
+    """Convert a row, column pair into a integer suitable for passing to
+    NSView.addTrackingRect_owner_userData_assumeInside_.
+    """
+    if column > 1 << 16:
+        raise ValueError("column value too big: ", column)
+    return row << 16 + column
+
+def _unpack_row_column(value):
+    """Reverse the work of _pack_row_column()."""
+    row = value >> 16
+    column = value & ((1 << 16) - 1)
+    return row, column
+
 class HotspotTracker(object):
     """Contains the info on the currently tracked hotspot.  See:
     https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView
@@ -259,7 +273,7 @@ class CustomTableCell(NSCell):
         self.layout_manager.reset()
         self.set_wrapper_data()
         self.wrapper.render(context, self.layout_manager, self.isHighlighted(),
-                self.hotspot)
+                self.hotspot, view.cell_is_hovered(self.row, self.column))
         NSGraphicsContext.currentContext().restoreGraphicsState()
 
     def setObjectValue_(self, value_dict):
@@ -304,6 +318,8 @@ def calc_row_height(view, model_row):
 class TableViewDelegate(NSObject):
     def tableView_willDisplayCell_forTableColumn_row_(self, view, cell,
             column, row):
+        cell.column = view.column_index_map[column]
+        cell.row = row
         if view.hotspot_tracker:
             cell.hotspot = view.hotspot_tracker.calc_cell_hotspot(column, row)
         else:
@@ -317,8 +333,10 @@ class VariableHeightTableViewDelegate(TableViewDelegate):
 class OutlineViewDelegate(NSObject):
     def outlineView_willDisplayCell_forTableColumn_item_(self, view, cell,
             column, item):
+        row = view.rowForItem_(item)
+        cell.column = view.column_index_map[column]
+        cell.row = row
         if view.hotspot_tracker:
-            row = view.rowForItem_(item)
             cell.hotspot = view.hotspot_tracker.calc_cell_hotspot(column, row)
         else:
             cell.hotspot = None
@@ -336,7 +354,20 @@ class TableViewCommon(object):
     def init(self):
         self = self.SuperClass.init(self)
         self.hotspot_tracker = None
+        self._tracking_rects = []
+        self.hover_info = None
+        self.column_index_map = {}
         return self
+
+    def addTableColumn_(self, column):
+        self.column_index_map[column] = len(self.tableColumns())
+        self.SuperClass.addTableColumn_(self, column)
+
+    def removeTableColumn(self, column):
+        del self.column_index_map[column]
+        for after_index in xrange(index+1, len(self.tableColumns())):
+            self.column_index_map[column_list[after_index]] -= 1
+        self.SuperClass.removeTableColumn(self, column)
 
     def highlightSelectionInClipRect_(self, rect):
         if wrappermap.wrapper(self).draws_selection:
@@ -347,6 +378,43 @@ class TableViewCommon(object):
         if drag_source and local:
             return drag_source.allowed_actions()
         return NSDragOperationNone
+
+    def recalcTrackingRects(self):
+        if self.hover_info is not None:
+            rect = self.frameOfCellAtColumn_row_(self.hover_info[1],
+                    self.hover_info[0])
+            self.hover_info = None
+            self.setNeedsDisplayInRect_(rect)
+        for tr in self._tracking_rects:
+            self.removeTrackingRect_(tr)
+        visible = self.visibleRect()
+        row_range = self.rowsInRect_(visible)
+        column_range = self.columnsInRect_(visible)
+        self._tracking_rects = []
+        for row in xrange(row_range.location, row_range.location +
+                row_range.length):
+            for column in xrange(column_range.location, column_range.location
+                    + column_range.length):
+                rect = self.frameOfCellAtColumn_row_(column, row)
+                tr = self.addTrackingRect_owner_userData_assumeInside_( rect,
+                        self, _pack_row_column(row, column), False)
+                self._tracking_rects.append(tr)
+
+    def mouseEntered_(self, event):
+        row, column = _unpack_row_column(event.userData())
+        self.hover_info = (row, column)
+        rect = self.frameOfCellAtColumn_row_(column, row)
+        self.setNeedsDisplayInRect_(rect)
+
+    def mouseExited_(self, event):
+        row, column = _unpack_row_column(event.userData())
+        if self.hover_info == (row, column):
+            self.hover_info = None
+        rect = self.frameOfCellAtColumn_row_(column, row)
+        self.setNeedsDisplayInRect_(rect)
+
+    def cell_is_hovered(self, row, column):
+        return self.hover_info == (row, column)
 
     def mouseDown_(self, event):
         if event.modifierFlags() & NSControlKeyMask:
@@ -532,9 +600,14 @@ class TableView(Widget):
 
     def viewport_repositioned(self):
         self._do_layout()
+        self.tableview.recalcTrackingRects()
 
     def viewport_created(self):
         self._do_layout()
+        self.tableview.recalcTrackingRects()
+
+    def viewport_scrolled(self):
+        self.tableview.recalcTrackingRects()
 
     def _do_layout(self):
         self._resize_columns()
@@ -594,6 +667,7 @@ class TableView(Widget):
             self.invalidate_size_request()
             if self.selection_removed:
                 self.emit('selection-changed')
+            self.tableview.recalcTrackingRects()
         elif self.iters_to_update:
             if self.fixed_height or not self.height_changed:
                 # our rows don't change height, just update cell areas
@@ -614,6 +688,7 @@ class TableView(Widget):
                 for iter in self.iters_to_update:
                     index_set.addIndex_(self.row_for_iter(iter))
                 self.tableview.noteHeightOfRowsWithIndexesChanged_(index_set)
+                self.tableview.recalcTrackingRects()
         else:
             return
         self.height_changed = self.selection_removed = self.reload_needed = False
@@ -639,7 +714,8 @@ class TableView(Widget):
         return len(self.tableview.tableColumns())
 
     def remove_column(self, index):
-        column = self.tableview.tableColumns()[index]
+        column_list = self.tableview.tableColumns()
+        column = column_list[index]
         del self.renderers[index]
         self.tableview.removeTableColumn_(column)
         self.invalidate_size_request()

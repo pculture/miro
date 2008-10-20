@@ -106,7 +106,7 @@ class TabRenderer(widgetset.CustomCellRenderer):
         return (self.MIN_WIDTH, max(self.MIN_HEIGHT,
             layout.font(self.TITLE_FONT_SIZE).line_height()))
 
-    def render(self, context, layout, selected, hotspot):
+    def render(self, context, layout, selected, hotspot, hover):
         layout.set_text_color(context.style.text_color)
         if not hasattr(self.data, "bolded") or self.data.bolded:
             layout.set_font(self.TITLE_FONT_SIZE, bold=self.BOLD_TITLE)
@@ -235,6 +235,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         self.setup_style(style)
         self.hotspot = None
         self.selected = False
+        self.hover = False
         sizer = self.add_background(self.pack_right(layout))
         return self.MIN_WIDTH, max(137, sizer.get_size()[1])
 
@@ -247,6 +248,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         self.setup_style(style)
         self.hotspot = None
         self.selected = False
+        # Assume the mouse is over the cell, since we got a mouse click
+        self.hover = True
         packing = self.pack_all(layout)
         hotspot_info = packing.find_hotspot(x, y, width, height)
         if hotspot_info is None:
@@ -561,26 +564,47 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         outer_vbox.pack_space(5)
         return outer_vbox
 
-    def pack_all(self, layout):
-        outer_hbox = cellpack.HBox()
+    def _make_thumbnail_button(self, hotspot_name, button, xalign, yalign):
+        alignment = cellpack.Alignment(button, xscale=0, xalign=xalign,
+                yscale=0, yalign=yalign)
+        background = cellpack.Background(alignment, 154, 105)
+        background.set_callback(self.draw_thumbnail)
+        return cellpack.align_top(cellpack.Hotspot(hotspot_name, background))
+
+    def _make_thumbnail_text_button(self, layout, hotspot_name, text):
+        layout.set_font(0.75, bold=True)
+        layout.set_text_color((1, 1, 1))
+        text = layout.textbox(text)
+        radius = max(int((text.get_size()[1] + 1) / 2), 9)
+        background = cellpack.Background(cellpack.align_middle(text),
+                min_height=radius*2,
+                margin=(4, radius+4, 4, radius+4))
+        background.set_callback(self.draw_thumbnail_bubble)
+        return self._make_thumbnail_button(hotspot_name, background, 0.5, 0.5)
+
+    def _make_thumbnail(self, layout):
+        if not self.hover:
+            return cellpack.DrawingArea(154, 105, self.draw_thumbnail)
         if self.data.downloaded:
             if self.hotspot == 'play':
                 button = self.play_button_pressed
             else:
                 button = self.play_button
-            alignment = cellpack.Alignment(button, xscale=0, xalign=0.0, 
-                    yscale=0, yalign=1.0)
-            background = cellpack.Background(alignment, 154, 105)
-            background.set_callback(self.draw_thumbnail)
-
-            # we throw the cellback Hotspot in an inner_vbox so that the play 
-            # button doesn't drop when the show-details link is pressed
-            inner_vbox = cellpack.VBox()
-            inner_vbox.pack(cellpack.Hotspot('play', background))
-
-            outer_hbox.pack(inner_vbox)
+            return self._make_thumbnail_button('play', button, 0.0, 1.0)
+        elif self.data.state == 'downloading':
+            return self._make_thumbnail_text_button(layout, 'pause',
+                    _('Pause Download'))
+        elif self.data.state == 'paused':
+            return self._make_thumbnail_text_button(layout, 'resume',
+                    _('Resume Download'))
         else:
-            outer_hbox.pack(cellpack.DrawingArea(154, 105, self.draw_thumbnail))
+            return self._make_thumbnail_text_button(layout, 'download',
+                    _('Download'))
+
+    def pack_all(self, layout):
+        outer_hbox = cellpack.HBox()
+        outer_hbox.pack(self._make_thumbnail(layout))
+
         inner_hbox = cellpack.HBox()
         status_bump = self.calc_status_bump(layout)
         if status_bump:
@@ -631,12 +655,13 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         else:
             self.text_color = style.text_color
 
-    def render(self, context, layout, selected, hotspot):
+    def render(self, context, layout, selected, hotspot, hover):
         self.download_info = self.data.download_info
         self.calc_show_progress_bar()
         self.setup_style(context.style)
         self.hotspot = hotspot
         self.selected = selected
+        self.hover = hover
         packing = self.pack_all(layout)
         packing.render_layout(context)
 
@@ -681,13 +706,37 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             context.rectangle(x, y, width, height)
             context.set_color((0, 0, 0))
             context.fill()
-            thumb_x = x + (width - self.data.icon.width) / 2
-            thumb_y = y + (height - self.data.icon.height) / 2
+            thumb_x = round(x + int((width - self.data.icon.width) / 2))
+            thumb_y = round(y + int((height - self.data.icon.height) / 2))
         else:
             thumb_x = thumb_y = 0
         self.data.icon.draw(context, thumb_x, thumb_y, 
                 self.data.icon.width, self.data.icon.height)
         self.thumb_overlay.draw(context, x, y, width, height)
+
+    def _thumbnail_bubble_path(self, context, x, y, radius, inner_width):
+        context.move_to(x + radius, y + 1.5)
+        context.rel_line_to(inner_width, 0)
+        context.arc(x+radius+inner_width, y+radius, radius-1.5, -PI/2, PI/2)
+        context.rel_line_to(-inner_width, 0)
+        context.arc(x+radius, y+radius, radius-1.5, PI/2, -PI/2)
+
+    def draw_thumbnail_bubble(self, context, x, y, width, height):
+        radius = max(int((height + 1) / 2), 9)
+        inner_width = width - radius * 2
+        self._thumbnail_bubble_path(context, x, y, radius, inner_width)
+        context.save()
+        context.clip()
+        gradient = widgetset.Gradient(x, y, x, y + height)
+        gradient.set_start_color((0.25, 0.25, 0.25))
+        gradient.set_end_color((0, 0, 0))
+        context.rectangle(x, y, width, height)
+        context.gradient_fill(gradient)
+        context.restore()
+        self._thumbnail_bubble_path(context, x, y, radius, inner_width)
+        context.set_line_width(3)
+        context.set_color((1, 1, 1))
+        context.stroke()
 
     def draw_emblem(self, context, x, y, width, height, color):
         radius = height / 2.0
