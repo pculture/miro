@@ -54,9 +54,6 @@ class BrowserWidget(gtk.DrawingArea):
             self.browser.load_uri(self.pending_url)
             self.pending_url = None
 
-    def get_current_url(self):
-        return None
-
     def do_realize(self):
         gtk.DrawingArea.do_realize(self)
         if self.browser is None:
@@ -168,7 +165,7 @@ class Browser(Widget):
         self._widget.navigate(url)
 
     def get_current_url(self):
-        return self._widget.get_current_url()
+        return self.url
 
     def can_go_back(self):
         return self._widget.browser.can_go_back()
