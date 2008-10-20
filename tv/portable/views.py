@@ -146,3 +146,5 @@ def initialize():
     themeHistories = app.db.filterWithIndex(indexes.objectsByClass, theme.ThemeHistory)
 
     watchedFolders = feeds.filter(filters.watchedFolders)
+    items.createIndex(indexes.byLicense)
+    feeds.createIndex(indexes.byLicense)

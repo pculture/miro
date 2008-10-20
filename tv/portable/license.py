@@ -28,10 +28,15 @@
 
 """Support for licensing in Miro-consumed feeds."""
 
-from miro.gtcache import gettext as _
-from miro import rdfa
+import logging
+import urlparse 
 from xml.sax import SAXParseException
 
+from miro.gtcache import gettext as _
+from miro import eventloop
+from miro import indexes
+from miro import rdfa
+from miro import views
 
 DC_TITLE = "http://purl.org/dc/elements/1.1/title"
 # Use caching to reduce number of get requests we need.
@@ -54,26 +59,53 @@ class DictSink(object):
 def license_name(license_uri):
     """Attempt to determine the license name from the URI; if the name cannot
     be determined, the URI is returned unchanged."""
-    cached_name = URI_CACHE.get(license_uri)
-    if cached_name is not None:
-        return cached_name
+    if license_uri in URI_CACHE:
+        return URI_CACHE[license_uri]
+    LicenseUpdater(license_uri).schedule_call()
+    URI_CACHE[license_uri] = None
+    return None
 
-    # retrieve the license document and parse it for RDFa
-    try:
-        # this throws an AttributeError way down in urllib in some cases
-        sink = rdfa.parseURI(license_uri, sink=DictSink())
+class LicenseUpdater(object):
+    def __init__(self, license_uri):
+        self.license_uri = license_uri
 
-        # look for explicit assertions about the license URI first, 
-        # then fall back to looking for assertions about the document
-        license_name = sink.data.get(license_uri,
-                             sink.data[u''])[DC_TITLE][0].strip()
+    def schedule_call(self):
+        eventloop.callInThread(self.callback, self.errback,
+                self.fetch_license, 'Fetch License Name')
 
-        # note this is parser-specific; swapping out rdfa.py
-        # may invalidate this extraction 
-        return_name = license_name[1:license_name.find('"', 1)]
+    def fetch_license(self):
+        # retrieve the license document and parse it for RDFa
+        try:
+            # this throws an AttributeError way down in urllib in some cases
+            sink = rdfa.parseURI(self.license_uri, sink=DictSink())
 
-    except (IOError, KeyError, SAXParseException):
-        return_name = _('license page')
+            # look for explicit assertions about the license URI first, 
+            # then fall back to looking for assertions about the document
+            license_name = sink.data.get(self.license_uri,
+                                 sink.data[u''])[DC_TITLE][0].strip()
 
-    URI_CACHE[license_uri] = return_name
-    return return_name
+            # note this is parser-specific; swapping out rdfa.py
+            # may invalidate this extraction 
+            return_name = license_name[1:license_name.find('"', 1)]
+
+        except (IOError, KeyError, SAXParseException):
+            return_name = _('license page')
+        return return_name
+
+    def callback(self, license_name):
+        URI_CACHE[self.license_uri] = license_name
+        for item in self.items_with_license():
+            item.signalChange(needsSave=False)
+        for feed in self.feeds_with_license():
+            feed.signalChange(needsSave=False)
+
+    def feeds_with_license(self):
+        return [f for f in views.feeds.filterWithIndex(indexes.byLicense,
+                    self.license_uri)]
+
+    def items_with_license(self):
+        return [i for i in views.items.filterWithIndex(indexes.byLicense,
+                    self.license_uri)]
+
+    def errback(self, error):
+        logging.warn("Error updating license: %s", self.license_uri)

@@ -42,7 +42,6 @@ import logging
 import re
 import urlparse
 
-from miro import license
 from miro.folder import ChannelFolder, PlaylistFolder
 from miro.plat import resources
 from miro import util
@@ -782,12 +781,9 @@ class ItemInfo(object):
         self.thumbnail = item.getThumbnail()
         self.file_format = item.get_format()
         self.license = item.get_license()
+        self.license_name = item.get_license_name()
         self.file_url = item.getURL()
         self.is_container_item = item.isContainerItem
-        if urlparse.urlparse(self.license)[0]:
-            self.license_name = license.license_name(self.license)
-        else:
-            self.license_name = None
 
         enclosure = item.getFirstVideoEnclosure()
         if enclosure:

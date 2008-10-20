@@ -93,3 +93,6 @@ def byFolder(obj):
 
 def foldersByTitle(obj):
     return obj.title
+
+def byLicense(obj):
+    return obj.get_license()
