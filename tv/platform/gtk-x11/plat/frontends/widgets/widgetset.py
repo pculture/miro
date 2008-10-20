@@ -68,6 +68,9 @@ class Browser(Widget):
         else:
             return True
 
+    def get_current_url(self):
+        return self.url
+
     def forward(self):
         if self._widget.can_go_forward():
             self._widget.go_forward()
