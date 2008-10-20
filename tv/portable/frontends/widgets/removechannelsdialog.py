@@ -45,7 +45,7 @@ from miro.util import clampText, returnsUnicode
 STOP_WATCHING = "stop_watching"
 KEEP_ITEMS = "keep_items"
 
-def run_dialog(channel_infos, downloaded_items, downloading_items):
+def run_dialog(channel_infos, downloaded_items, downloading_items, watched_feeds):
     """Displays the remove channels dialog."""
     title = ngettext('Remove channel',
                      'Remove %(count)d channels',
@@ -82,6 +82,12 @@ def run_dialog(channel_infos, downloaded_items, downloading_items):
                 cbx_downloaded.set_checked(True)
                 v.pack_start(widgetutil.align_left(cbx_downloaded, bottom_pad=5))
 
+            cbx_watched = None
+            if watched_feeds:
+                cbx_watched = widgetset.Checkbox(_("Stop watching watched directories."))
+                cbx_watched.set_checked(True)
+                v.pack_start(widgetutil.align_left(cbx_watched, bottom_pad=5))
+
             if downloading_items:
                 lab_downloading = widgetset.Label(ngettext(
                     "Are you sure you want to remove this channel?  "
@@ -100,9 +106,11 @@ def run_dialog(channel_infos, downloaded_items, downloading_items):
             if ret == 0:
                 # this is silly, but it sets us up for adding additional
                 # bits later.
-                ret = {KEEP_ITEMS: False}
+                ret = {KEEP_ITEMS: False, STOP_WATCHING: False}
                 if downloaded_items:
                     ret[KEEP_ITEMS] = cbx_downloaded.get_checked()
+                if watched_feeds:
+                    ret[STOP_WATCHING] = cbx_watched.get_checked()
                 return ret
         except (SystemExit, KeyboardInterrupt):
             raise

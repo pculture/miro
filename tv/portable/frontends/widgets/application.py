@@ -447,6 +447,7 @@ class Application:
             self.remove_feeds(channel_infos)
 
     def remove_feeds(self, channel_infos):
+        watched_feeds = False
         downloaded_items = False
         downloading_items = False
 
@@ -457,13 +458,20 @@ class Application:
 
                 if ci.has_downloading:
                     downloading_items = True
+            else:
+                watched_feeds = True
 
-        ret = removechannelsdialog.run_dialog(channel_infos, downloaded_items, downloading_items)
+        ret = removechannelsdialog.run_dialog(channel_infos, downloaded_items,
+                downloading_items, watched_feeds)
         if ret:
             for ci in channel_infos:
-                messages.DeleteChannel(ci.id, ci.is_folder,
-                    ret[removechannelsdialog.KEEP_ITEMS]
-                ).send_to_backend()
+                if ci.is_directory_feed:
+                    if ret[removechannelsdialog.STOP_WATCHING]:
+                        messages.SetWatchedFolderVisible(ci.id, False).send_to_backend()
+                else:
+                    messages.DeleteChannel(ci.id, ci.is_folder,
+                        ret[removechannelsdialog.KEEP_ITEMS]
+                    ).send_to_backend()
 
     def update_selected_channels(self):
         t, channel_infos = app.tab_list_manager.get_selection()
@@ -746,7 +754,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
         ])
 
     def handle_startup_failure(self, message):
-        dialogs.show_message(message.summary, message.description, 
+        dialogs.show_message(message.summary, message.description,
                 dialogs.CRITICAL_MESSAGE)
         app.widgetapp.do_quit()
 
