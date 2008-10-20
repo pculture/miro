@@ -657,10 +657,10 @@ class ChannelInfo(object):
             self.is_updating = False
             self.parent_id = None
             self.url = None
-            self.thumbnail = resources.path('wimages/folder-icon.png')
+            self.thumbnail = resources.path('images/folder-icon.png')
             self.autodownload_mode = self.base_href = None
             self.is_folder = True
-            self.tab_icon = resources.path('wimages/icon-folder.png')
+            self.tab_icon = resources.path('images/icon-folder.png')
             self.is_directory_feed = False
             self.expire = None
             self.expire_time = None

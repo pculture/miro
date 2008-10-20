@@ -697,13 +697,13 @@ class Item(DDBObject):
             path = self.screenshot
             return resources.path(fileutil.expand_filename(path))
         elif self.isContainerItem:
-            return resources.path("wimages/container-icon.png")
+            return resources.path("images/container-icon.png")
         else:
             feed = self.getFeed()
             if feed.thumbnailValid():
                 return feed.getThumbnailPath()
             else:
-                return resources.path("wimages/thumb-default_large.png")
+                return resources.path("images/thumb-default_large.png")
 
     @returnsUnicode
     def get_title(self):

@@ -124,7 +124,7 @@ def build_control_line(items, padding=5):
     return build_hbox(padded_items, padding)
 
 def make_surface(image_name):
-    path = resources.path("wimages/%s.png" % image_name)
+    path = resources.path("images/%s.png" % image_name)
     return imagepool.get_surface(path)
 
 class ThreeImageSurface(object):

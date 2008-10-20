@@ -236,7 +236,7 @@ class PanelBuilder(object):
 # the panel list holding tuples of (name, image_name, panel_builder)
 _PANEL = []
 
-def add_panel(name, title, panel_builder_class, image_name='wimages/pref-tab-general.png'):
+def add_panel(name, title, panel_builder_class, image_name='images/pref-tab-general.png'):
     """Adds a panel to the preferences panel list.
 
     name -- a name for the panel--this is used internally
@@ -608,12 +608,12 @@ class PlaybackPanel(PanelBuilder):
 
 
 # Add the initial panels
-add_panel("general", _("General"), GeneralPanel, 'wimages/pref-tab-general.png')
-add_panel("channels", _("Channels"), ChannelsPanel, 'wimages/pref-tab-channels.png')
-add_panel("downloads", _("Downloads"), DownloadsPanel, 'wimages/pref-tab-downloads.png')
-add_panel("folders", _("Folders"), FoldersPanel, 'wimages/pref-tab-folders.png')
-add_panel("disk_space", _("Disk space"), DiskSpacePanel, 'wimages/pref-tab-disk-space.png')
-add_panel("playback", _("Playback"), PlaybackPanel, 'wimages/pref-tab-playback.png')
+add_panel("general", _("General"), GeneralPanel, 'images/pref-tab-general.png')
+add_panel("channels", _("Channels"), ChannelsPanel, 'images/pref-tab-channels.png')
+add_panel("downloads", _("Downloads"), DownloadsPanel, 'images/pref-tab-downloads.png')
+add_panel("folders", _("Folders"), FoldersPanel, 'images/pref-tab-folders.png')
+add_panel("disk_space", _("Disk space"), DiskSpacePanel, 'images/pref-tab-disk-space.png')
+add_panel("playback", _("Playback"), PlaybackPanel, 'images/pref-tab-playback.png')
 
 class PreferencesWindow(widgetset.PreferencesWindow):
     def __init__(self):

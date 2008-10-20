@@ -326,7 +326,7 @@ class SimpleItemListController(ItemListController):
         return self.item_view
 
     def _make_icon(self):
-        image_path = resources.path("wimages/%s" % self.image_filename)
+        image_path = resources.path("images/%s" % self.image_filename)
         return imagepool.get(image_path)
 
 class NewController(SimpleItemListController):

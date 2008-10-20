@@ -471,7 +471,7 @@ class MiroBuild (py2app):
             print "    (all skipped, already bundled)"
         else:
             os.mkdir(self.prsrcRoot)
-            for resource in ('searchengines', 'wimages'):
+            for resource in ('searchengines', 'images'):
                 src = os.path.join(ROOT_DIR, 'resources', resource)
                 rsrcName = os.path.basename(src)
                 if os.path.isdir(src):

@@ -42,12 +42,12 @@ class ImageButtonMixin(object):
             raise ValueError("Image sizes don't match")
     
     def set_image(self, image_name):
-        path = resources.path('wimages/%s.png' % image_name)
+        path = resources.path('images/%s.png' % image_name)
         self.image = imagepool.get_surface(path)
-        pressed_path = resources.path('wimages/%s_active.png' % image_name)
+        pressed_path = resources.path('images/%s_active.png' % image_name)
         self.pressed_image = imagepool.get_surface(pressed_path)
 
-        disabled_path = resources.path('wimages/%s_disabled.png' % image_name)
+        disabled_path = resources.path('images/%s_disabled.png' % image_name)
         if os.path.exists(disabled_path):
             self.disabled_image = imagepool.get_surface(disabled_path)
         else:

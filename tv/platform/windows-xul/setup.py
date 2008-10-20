@@ -294,7 +294,7 @@ data_files.append(('', [os.path.join(VLC_PATH, 'libvlc.dll')]))
 data_files.append(('', [os.path.join(VLC_PATH, 'libvlccore.dll')]))
 
 # handle the resources subdirectories.
-for dir in ('searchengines', 'wimages'):
+for dir in ('searchengines', 'images'):
     dest_dir = os.path.join('resources', dir)
     source_dir = os.path.join(resources_dir, dir)
     data_files.extend(find_data_files(dest_dir, source_dir))

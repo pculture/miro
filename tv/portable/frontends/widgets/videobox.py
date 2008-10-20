@@ -310,7 +310,7 @@ class VideoBox(style.LowerBox):
         hbox = widgetset.HBox(spacing=35)
         hbox.pack_start(self.controls, expand=False)
         hbox.pack_start(widgetutil.align_middle(self.timeline), expand=True)
-        volume_image = imagepool.get(resources.path('wimages/volume_high.png'))
+        volume_image = imagepool.get(resources.path('images/volume_high.png'))
         volume_display = widgetset.ImageDisplay(volume_image)
         volume_hbox = widgetset.HBox(spacing=5)
         volume_hbox.pack_start(widgetutil.align_middle(volume_display))

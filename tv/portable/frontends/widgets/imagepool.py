@@ -47,7 +47,7 @@ from miro.plat.frontends.widgets import widgetset
 path_to_image = weakref.WeakValueDictionary()
 path_to_surface = weakref.WeakValueDictionary()
 
-broken_image = widgetset.Image(resources.path('wimages/broken-image.gif'))
+broken_image = widgetset.Image(resources.path('images/broken-image.gif'))
 
 def scaled_size(image, size):
     image_ratio = float(image.width) / image.height

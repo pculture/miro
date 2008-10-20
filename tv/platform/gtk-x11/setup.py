@@ -618,7 +618,7 @@ files = [f for f in listfiles(resource_dir) \
         if os.path.basename(f) != 'app.config.template']
 data_files.append(('/usr/share/miro/resources/', files))
 # handle the sub directories.
-for dir in ('searchengines', 'wimages', 'testdata',
+for dir in ('searchengines', 'images', 'testdata',
         os.path.join('testdata', 'stripperdata'),
         os.path.join('testdata', 'locale', 'fr', 'LC_MESSAGES')):
     source_dir = os.path.join(resource_dir, dir)

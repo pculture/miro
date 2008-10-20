@@ -444,7 +444,7 @@ class VideoSearchFieldCell (NSSearchFieldCell):
 NSVideoSearchField.setCellClass_(VideoSearchFieldCell)
 
 def _getEngineIcon(engine):
-    engineIconPath = resources.path('wimages/search_icon_%s.png' % engine.name)
+    engineIconPath = resources.path('images/search_icon_%s.png' % engine.name)
     if not os.path.exists(engineIconPath):
         return nil
     return NSImage.alloc().initByReferencingFile_(engineIconPath)
@@ -459,7 +459,7 @@ def _makeSearchIcon(engine):
     popupRectangle = NSImage.imageNamed_(u'search_popup_triangle')
     popupRectangleSize = popupRectangle.size()
 
-    engineIconPath = resources.path('wimages/search_icon_%s.png' % engine.name)
+    engineIconPath = resources.path('images/search_icon_%s.png' % engine.name)
     if not os.path.exists(engineIconPath):
         return nil
     engineIcon = NSImage.alloc().initByReferencingFile_(engineIconPath)

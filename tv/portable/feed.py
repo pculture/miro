@@ -64,8 +64,8 @@ from miro.clock import clock
 
 whitespacePattern = re.compile(r"^[ \t\r\n]*$")
 
-DEFAULT_FEED_ICON = "wimages/feedicon.png"
-DEFAULT_FEED_ICON_TABLIST = "wimages/feedicon-tablist.png"
+DEFAULT_FEED_ICON = "images/feedicon.png"
+DEFAULT_FEED_ICON_TABLIST = "images/feedicon-tablist.png"
 
 @returnsUnicode
 def default_feed_icon_url():

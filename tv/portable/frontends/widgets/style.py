@@ -185,29 +185,29 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     def __init__(self, display_channel=True):
         widgetset.CustomCellRenderer.__init__(self)
         self.progress_bar = imagepool.get_surface(resources.path(
-            'wimages/progress-bar.png'))
+            'images/progress-bar.png'))
         self.progress_bar_bg = imagepool.get_surface(resources.path(
-            'wimages/progress-bar-bg.png'))
+            'images/progress-bar-bg.png'))
         self.progress_throbbers = [
                 imagepool.get_surface(resources.path(
-                    'wimages/progress-throbber-1.png')),
+                    'images/progress-throbber-1.png')),
                 imagepool.get_surface(resources.path(
-                    'wimages/progress-throbber-2.png')),
+                    'images/progress-throbber-2.png')),
         ]
         self.cancel_button = imagepool.get_surface(resources.path(
-            'wimages/video-download-cancel.png'))
+            'images/video-download-cancel.png'))
         self.pause_button = imagepool.get_surface(resources.path(
-            'wimages/video-download-pause.png'))
+            'images/video-download-pause.png'))
         self.resume_button = imagepool.get_surface(resources.path(
-            'wimages/video-download-resume.png'))
+            'images/video-download-resume.png'))
         self.play_button = imagepool.get_surface(resources.path(
-            'wimages/play-button.png'))
+            'images/play-button.png'))
         self.play_button_pressed = imagepool.get_surface(resources.path(
-            'wimages/play-button-pressed.png'))
+            'images/play-button-pressed.png'))
         self.thumb_overlay = imagepool.get_surface(resources.path(
-            'wimages/thumb-overlay-small.png'))
+            'images/thumb-overlay-small.png'))
         self.thumb_overlay_large = imagepool.get_surface(resources.path(
-            'wimages/thumb-overlay-large.png'))
+            'images/thumb-overlay-large.png'))
         self.html_stripper = util.HTMLStripper()
         # We cache the size of our rows to save us from re-caclulating all the
         # time.  cached_size_parameters stores things like the base font size
@@ -623,18 +623,18 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         bump = None
         if self.data.state == 'downloading':
             bump = imagepool.get_surface(resources.path(
-                'wimages/status-icon-downloading.png'))
+                'images/status-icon-downloading.png'))
 
         elif self.data.downloaded and not self.data.video_watched:
             bump = imagepool.get_surface(resources.path(
-                'wimages/status-icon-newly-downloaded.png'))
+                'images/status-icon-newly-downloaded.png'))
 
         elif self.data.expiration_date:
             bump = None
 
         elif not self.data.item_viewed:
             bump = imagepool.get_surface(resources.path(
-                'wimages/status-icon-new.png'))
+                'images/status-icon-new.png'))
 
         if bump is None:
             return None

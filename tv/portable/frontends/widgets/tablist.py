@@ -369,7 +369,7 @@ class SiteList(TabList):
     type = 'site'
 
     def init_info(self, info):
-        thumb_path = resources.path('wimages/icon-site.png')
+        thumb_path = resources.path('images/icon-site.png')
         info.icon = imagepool.get_surface(thumb_path)
         info.unwatched = info.available = 0
 
@@ -447,9 +447,9 @@ class PlaylistList(NestedTabList):
 
     def init_info(self, info):
         if info.is_folder:
-            thumb_path = resources.path('wimages/icon-folder.png')
+            thumb_path = resources.path('images/icon-folder.png')
         else:
-            thumb_path = resources.path('wimages/icon-playlist.png')
+            thumb_path = resources.path('images/icon-playlist.png')
         info.icon = imagepool.get_surface(thumb_path)
         info.unwatched = info.available = 0
 
