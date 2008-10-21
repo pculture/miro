@@ -135,21 +135,7 @@ class FeedController(itemlistcontroller.ItemListController):
 
     def _on_remove_channel(self, widget):
         info = widgetutil.get_feed_info(self.id)
-        downloaded_items = False
-        downloading_items = False
-
-        if not info.is_directory_feed:
-            if info.num_downloaded > 0:
-                downloaded_items = True
-
-            if info.has_downloading:
-                downloading_items = True
-
-        ret = removechannelsdialog.run_dialog([info], downloaded_items, downloading_items)
-        if ret:
-            messages.DeleteChannel(info.id, info.is_folder,
-                ret[removechannelsdialog.KEEP_ITEMS]
-            ).send_to_backend()
+        app.widgetapp.remove_feeds([info])
 
     def _on_show_settings(self, widget):
         info = widgetutil.get_feed_info(self.id)
