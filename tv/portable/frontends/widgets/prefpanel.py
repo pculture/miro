@@ -293,11 +293,11 @@ class ChannelsPanel(PanelBuilder):
         attach_combo(ad_option_menu, prefs.CHANNEL_AUTO_DEFAULT, 
             [op[0] for op in ad_options])
 
-        max_options = [(0, "0"),
-                       (20, "20"),
-                       (50, "50"),
-                       (100, "100"),
-                       (1000, "1000")]
+        max_options = [(0, _("0")),
+                       (20, _("20")),
+                       (50, _("50")),
+                       (100, _("100")),
+                       (1000, _("1000"))]
         max_option_menu = widgetset.OptionMenu([op[1] for op in max_options])
         attach_combo(max_option_menu, prefs.MAX_OLD_ITEMS_DEFAULT, 
             [op[0] for op in max_options])
@@ -596,8 +596,8 @@ class PlaybackPanel(PanelBuilder):
         v.pack_start(widgetutil.align_left(cbx, bottom_pad=12))
 
         rbg = widgetset.RadioButtonGroup()
-        play_rb = widgetset.RadioButton("Play videos one after another", rbg)
-        stop_rb = widgetset.RadioButton("Stop after each video", rbg)
+        play_rb = widgetset.RadioButton(_("Play videos one after another"), rbg)
+        stop_rb = widgetset.RadioButton(_("Stop after each video"), rbg)
         attach_radio( [(stop_rb, True), (play_rb, False)], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
         v.pack_start(widgetutil.align_left(play_rb), padding=2)
         v.pack_start(widgetutil.align_left(stop_rb))
