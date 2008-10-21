@@ -58,6 +58,7 @@ from miro.frontends.widgets import search
 from miro.frontends.widgets import rundialog
 from miro.frontends.widgets import watchedfolders
 from miro.frontends.widgets import quitwhiledownloading
+from miro.frontends.widgets import firsttimedialog
 from miro.frontends.widgets.window import MiroWindow
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.frontends.widgets.widgetset import Rect
@@ -138,11 +139,8 @@ class Application:
         call_on_ui_thread(lambda: self.__handle_first_time(continue_callback))
 
     def __handle_first_time(self, continue_callback):
-        # FIXME - implement me!
-        logging.info("whee!  first time!")
-
+        firsttimedialog.run_dialog()
         startup.mark_first_time()
-
         continue_callback()
 
     def build_window(self):
