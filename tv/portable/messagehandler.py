@@ -688,7 +688,8 @@ class BackendMessageHandler(messages.MessageHandler):
         ChannelFolder(message.name)
 
     def handle_new_watched_folder(self, message):
-        url = u"dtv:directoryfeed:%s" % (makeURLSafe(message.path))
+        path = osFilenameToFilenameType(message.path)
+        url = u"dtv:directoryfeed:%s" % makeURLSafe(path)
         if not get_feed_by_url(url):
             feed.Feed(url)
         else:
