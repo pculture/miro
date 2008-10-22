@@ -84,6 +84,7 @@ class FirstTimeDialog(widgetset.Dialog):
             "can be downloaded in the background, ready when you want to watch."
             ))
         lab.set_wrap(True)
+        lab.set_size_request(400, -1)
         v.pack_start(widgetutil.align_left(lab))
 
         lab = widgetset.Label(_("Would you like to run Miro on startup?"))
@@ -121,6 +122,7 @@ class FirstTimeDialog(widgetset.Dialog):
             "\n"
             "Would you like Miro to look for video files on your computer?"
             ))
+        lab.set_size_request(400, -1)
         lab.set_wrap(True)
         v.pack_start(widgetutil.align_left(lab))
 
