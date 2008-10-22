@@ -174,6 +174,12 @@ class SearchListTitlebar(ItemListTitlebar):
         app.search_manager.set_search_info(obj.selected_engine().name, obj.get_text())
         app.search_manager.perform_search()
 
+    def get_engine(self):
+        return self.searchbox.selected_engine().name
+
+    def get_text(self):
+        return self.searchbox.get_text()
+
     def _build_titlebar_extra(self):
         self.create_signal('search')
         hbox = widgetset.HBox()

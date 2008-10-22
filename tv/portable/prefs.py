@@ -78,6 +78,9 @@ FLASH_REQUEST_COUNT         = Pref( key='flashRequestCount',     default=0,     
 # This doesn't need to be defined on the platform, but it can be overridden there if the platform wants to.
 SHOW_ERROR_DIALOG           = Pref( key='showErrorDialog',       default=True,  platformSpecific=True )
 
+# this is the name of the last search engine used
+LAST_SEARCH_ENGINE = \
+    Pref(key='LastSearchEngine', default=u"all", platformSpecific=False)
 
 # These have a hardcoded default which can be overridden by setting an
 # environment variable.

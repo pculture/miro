@@ -162,17 +162,22 @@ def get_request_url(engine_name, query, filter_adult_contents=True, limit=50):
 def get_search_engines():
     return list(_engines)
 
-def get_last_engine_title():
-    try:
-        return get_last_engine().title
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
-        return ''
+def get_engine_for_name(name):
+    for mem in get_search_engines():
+        if mem.name == name:
+            return mem
+    return None
 
 def get_last_engine():
-    # FIXME - this needs to be re-written
-    return _engines[0]
+    """Checks the preferences and returns the SearchEngine object of that
+    name or None.
+    """
+    e = config.get(prefs.LAST_SEARCH_ENGINE)
+    return get_engine_for_name(e)
 
-def get_last_engine_name():
-    return get_last_engine().name
+def set_last_engine(engine):
+    """Takes a SearchEngine and persists it to preferences."""
+    if not isinstance(engine, basestring):
+        engine = engine.name
+    engine = str(engine)
+    config.set(prefs.LAST_SEARCH_ENGINE, engine)

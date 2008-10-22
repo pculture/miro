@@ -745,7 +745,11 @@ class Item(DDBObject):
         if implClass in (feed.RSSFeedImpl, feed.ScraperFeedImpl):
             return self.getFeed().get_title()
         elif implClass == feed.SearchFeedImpl and allowSearchFeedTitle:
-            return searchengines.get_last_engine_title()
+            e = searchengines.get_last_engine()
+            if e:
+                return e.title
+            else:
+                return u''
         elif self.channelTitle:
             return self.channelTitle
         else:

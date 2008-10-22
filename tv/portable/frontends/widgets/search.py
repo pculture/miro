@@ -42,7 +42,7 @@ class SearchManager(object):
     """
 
     def __init__(self):
-        self.engine = 'all'
+        self.engine = searchengines.get_last_engine().name
         self.text = ''
 
     def set_search_info(self, engine, text):
@@ -53,16 +53,11 @@ class SearchManager(object):
         if engine is not None and text is not None:
             self.set_search_info(engine, text)
         messages.Search(self.engine, self.text).send_to_backend()
+        searchengines.set_last_engine(self.engine)
 
     def save_search(self):
-        m = messages.NewChannelSearchEngine(self._lookup_engine(), self.text)
+        m = messages.NewChannelSearchEngine(searchengines.get_engine_for_name(self.engine), self.text)
         m.send_to_backend()
-
-    def _lookup_engine(self):
-        for engine in searchengines.get_search_engines():
-            if engine.name == self.engine:
-                return engine
-        raise LookupError("Couldn't find search engine %r" % name)
 
 class InlineSearchMemory(object):
     """Remembers inline searches the user has performed """

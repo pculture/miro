@@ -43,6 +43,51 @@ class GtkSearchTextEntry(gtk.Entry):
         # By default the border is 2 pixels.  Give an extra 16 pixels for the
         # icon and 4 pixels for padding on the left side.
         pygtkhacks.set_entry_border(self, 2, 2, 2, 22)
+
+        icon_path = resources.path('images/search_icon_all.png')
+        self.pixbuf = gtk.gdk.pixbuf_new_from_file(icon_path)
+
+    def _calc_image_position(self):
+        layout_offsets = self.get_layout_offsets()
+        # x and y are a bit artificial.  They are just what looked good to me
+        # at the time (BDK)
+        x = layout_offsets[0] - 22
+        y = layout_offsets[1] - 1
+        if self.flags() & gtk.NO_WINDOW:
+            x += self.allocation.x
+            y += self.allocation.y
+        return x, y
+
+    def do_expose_event(self, event):
+        gtk.Entry.do_expose_event(self, event)
+        x, y = self._calc_image_position()
+        exposed = event.area.intersect(gtk.gdk.Rectangle(x, y, 16, 16))
+        event.window.draw_pixbuf(None, self.pixbuf, exposed.x-x, exposed.y-y,
+                exposed.x, exposed.y, exposed.width, exposed.height)
+
+    def do_realize(self):
+        gtk.Entry.do_realize(self)
+        # Create an INPUT_ONLY window to change the icon to a pointer when
+        # it's over the icon.
+        x, y = self._calc_image_position()
+        self.icon_window = gtk.gdk.Window(self.window, 16, 16,
+                gtk.gdk.WINDOW_CHILD, 0, gtk.gdk.INPUT_ONLY, x=x, y=y)
+        self.icon_window.set_cursor(gtk.gdk.Cursor(gtk.gdk.ARROW))
+        self.icon_window.show()
+
+    def do_unrealize(self):
+        self.icon_window.hide()
+        del self.icon_window
+        gtk.Entry.do_unrealize(self)
+
+gobject.type_register(GtkSearchTextEntry)
+
+class SearchTextEntry(controls.TextEntry):
+    entry_class = GtkSearchTextEntry
+
+class GtkVideoSearchTextEntry(GtkSearchTextEntry):
+    def __init__(self):
+        GtkSearchTextEntry.__init__(self)
         self.menu = gtk.Menu()
         self._engine_to_pixbuf = {}
         for engine in searchengines.get_search_engines():
@@ -72,27 +117,9 @@ class GtkSearchTextEntry(gtk.Entry):
     def selected_engine(self):
         return self._engine
 
-    def _calc_image_position(self):
-        layout_offsets = self.get_layout_offsets()
-        # x and y are a bit artificial.  They are just what looked good to me
-        # at the time (BDK)
-        x = layout_offsets[0] - 22
-        y = layout_offsets[1] - 1
-        if self.flags() & gtk.NO_WINDOW:
-            x += self.allocation.x
-            y += self.allocation.y
-        return x, y
-
     def _event_inside_icon(self, event):
         x, y = self._calc_image_position()
         return (x <= event.x < x + 16) and (y <= event.y < y + 16)
-
-    def do_expose_event(self, event):
-        gtk.Entry.do_expose_event(self, event)
-        x, y = self._calc_image_position()
-        exposed = event.area.intersect(gtk.gdk.Rectangle(x, y, 16, 16))
-        event.window.draw_pixbuf(None, self.pixbuf, exposed.x-x, exposed.y-y,
-                exposed.x, exposed.y, exposed.width, exposed.height)
 
     def do_button_press_event(self, event):
         if self._event_inside_icon(event):
@@ -100,29 +127,12 @@ class GtkSearchTextEntry(gtk.Entry):
         else:
             gtk.Entry.do_button_press_event(self, event)
 
-    def do_realize(self):
-        gtk.Entry.do_realize(self)
-        # Create an INPUT_ONLY window to change the icon to a pointer when
-        # it's over the icon.
-        x, y = self._calc_image_position()
-        self.icon_window = gtk.gdk.Window(self.window, 16, 16,
-                gtk.gdk.WINDOW_CHILD, 0, gtk.gdk.INPUT_ONLY, x=x, y=y)
-        self.icon_window.set_cursor(gtk.gdk.Cursor(gtk.gdk.ARROW))
-        self.icon_window.show()
+gobject.type_register(GtkVideoSearchTextEntry)
 
-    def do_unrealize(self):
-        self.icon_window.hide()
-        del self.icon_window
-        gtk.Entry.do_unrealize(self)
-
-gobject.type_register(GtkSearchTextEntry)
-
-class SearchTextEntry(controls.TextEntry):
-    entry_class = GtkSearchTextEntry
-
-class VideoSearchTextEntry(SearchTextEntry):
+class VideoSearchTextEntry(controls.TextEntry):
+    entry_class = GtkVideoSearchTextEntry
     def __init__(self):
-        SearchTextEntry.__init__(self)
+        controls.TextEntry.__init__(self)
         self.wrapped_widget_connect('key-release-event', self.on_key_release)
 
     def on_key_release(self, widget, event):
