@@ -31,6 +31,7 @@
 import weakref
 
 import gtk
+import gobject
 import pango
 
 from miro import searchengines
@@ -53,12 +54,13 @@ class BinBaselineCalculator(object):
         return pango.PIXELS(metrics.get_descent()) + ypad
 
 class TextEntry(Widget):
+    entry_class = gtk.Entry
     def __init__(self, initial_text=None):
         Widget.__init__(self)
         self.create_signal('activate')
         self.create_signal('changed')
         self.create_signal('validate')
-        self.set_widget(gtk.Entry())
+        self.set_widget(self.entry_class())
         self.forward_signal('activate')
         self.forward_signal('changed')
         if initial_text is not None:
@@ -90,23 +92,6 @@ class SecureTextEntry(TextEntry):
     def __init__(self, initial_text=None):
         TextEntry.__init__(self, initial_text)
         self.set_invisible(True)
-
-class SearchTextEntry(TextEntry):
-    pass
-
-class VideoSearchTextEntry(SearchTextEntry):
-    def __init__(self):
-        SearchTextEntry.__init__(self)
-        self.wrapped_widget_connect('key-release-event', self.on_key_release)
-
-    def on_key_release(self, widget, event):
-        # FIXME - not sure if there's a better way to test for Return or not.
-        if gtk.gdk.keyval_name(event.keyval) == 'Return':
-            self.emit('validate')
-
-    # TODO: implement the inline engines popup menu
-    def selected_engine(self):
-        return searchengines.get_last_engine()
 
 class Checkbox(Widget, BinBaselineCalculator):
     """Widget that the user can toggle on or off."""

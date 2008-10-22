@@ -31,8 +31,9 @@ import gtk
 from miro.frontends.widgets.gtk.base import Widget, Bin
 from miro.frontends.widgets.gtk.const import *
 from miro.frontends.widgets.gtk.controls import TextEntry, SecureTextEntry, \
-        SearchTextEntry, VideoSearchTextEntry, Checkbox, RadioButton, \
-        RadioButtonGroup, OptionMenu, Button
+        Checkbox, RadioButton, RadioButtonGroup, OptionMenu, Button
+from miro.frontends.widgets.gtk.searchentry import SearchTextEntry, \
+        VideoSearchTextEntry
 from miro.frontends.widgets.gtk.customcontrols import CustomButton, \
         ContinuousCustomButton, CustomSlider
 from miro.frontends.widgets.gtk.drawing import ImageSurface, DrawingContext, \
