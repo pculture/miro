@@ -162,6 +162,12 @@ class Window(WindowBase):
         self.create_signal('did-move')
         alive_windows.add(self)
 
+        self._window.connect('delete-event', self.on_delete)
+
+    def on_delete(self, widget, event):
+        self.emit('will-close')
+        return True
+
     def set_title(self, title):
         self._window.set_title(title)
 
@@ -227,14 +233,9 @@ class MainWindow(Window):
 
         self._window.connect('key-press-event', self.on_key_press)
         self._window.connect('key-release-event', self.on_key_release)
-        self._window.connect('delete-event', self.on_delete)
         self._window.connect('window-state-event', self.on_window_state_event)
         self._window.connect('configure-event', self.on_configure_event)
         self.connect('will-close', self.on_close)
-
-    def on_delete(self, widget, event):
-        self.emit('will-close')
-        return True
 
     def on_close(self, window):
         app.widgetapp.on_close()

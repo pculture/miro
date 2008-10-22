@@ -59,11 +59,14 @@ class PreferencesWindow(window.Window):
         self.content_widget.pack_start(self.tab_container._widget)
         close_button = gtk.Button(stock=gtk.STOCK_CLOSE)
         close_button.connect_object('clicked', gtk.Window.hide, self._window)
-        self._window.connect_object('delete-event', gtk.Window.hide_on_delete, self._window)
         alignment = gtk.Alignment(xalign=1.0)
         alignment.add(close_button)
         self.content_widget.pack_start(alignment)
         self._window.add(self.content_widget)
+        self.connect('will-close', self.on_close)
+
+    def on_close(self, window):
+        gtk.Window.hide_on_delete(self._window)
 
     def append_panel(self, name, panel, title, image_name):
         image = simple.Image(resources.path(image_name))
