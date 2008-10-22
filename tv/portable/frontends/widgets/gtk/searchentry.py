@@ -55,7 +55,7 @@ class GtkSearchTextEntry(gtk.Entry):
         self._engine_to_pixbuf[engine] = pixbuf
         image = gtk.Image()
         image.set_from_pixbuf(pixbuf)
-        menu_item = gtk.ImageMenuItem()
+        menu_item = gtk.ImageMenuItem(engine.title)
         menu_item.set_image(image)
         menu_item.connect('activate', self._on_menu_item_activate, engine)
         menu_item.show()
@@ -90,7 +90,9 @@ class GtkSearchTextEntry(gtk.Entry):
     def do_expose_event(self, event):
         gtk.Entry.do_expose_event(self, event)
         x, y = self._calc_image_position()
-        event.window.draw_pixbuf(None, self.pixbuf, 0, 0, x, y, 16, 16)
+        exposed = event.area.intersect(gtk.gdk.Rectangle(x, y, 16, 16))
+        event.window.draw_pixbuf(None, self.pixbuf, exposed.x-x, exposed.y-y,
+                exposed.x, exposed.y, exposed.width, exposed.height)
 
     def do_button_press_event(self, event):
         if self._event_inside_icon(event):
