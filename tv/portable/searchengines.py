@@ -52,7 +52,7 @@ class SearchEngineInfo:
         return requestURL
 
     def __repr__(self):
-        return "<SearchEngineInfo %s %s" % (self.name, self.title)
+        return "<SearchEngineInfo %s %s>" % (self.name, self.title)
 
 _engines = []
 

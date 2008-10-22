@@ -352,7 +352,6 @@ class SearchController(SimpleItemListController):
     def initialize_search(self):
         if app.search_manager.text != '':
             self.titlebar.set_search_text(app.search_manager.text)
-        self.titlebar.set_search_engine(app.search_manager.engine)
 
     def make_titlebar(self):
         icon = self._make_icon()

@@ -39,6 +39,7 @@ on.  It's the job of ItemListController subclasses to handle the logic
 involved.
 """
 
+from miro import app
 from miro import config
 from miro import prefs
 from miro import displaytext
@@ -169,39 +170,19 @@ class SearchListTitlebar(ItemListTitlebar):
       search(self, engine_name search_text) -- The user is requesting a new
           search.
     """
-
-    def get_engine(self):
-        return self.engines[self.search_dropdown.get_selected()].name
-
-    def get_text(self):
-        return self.searchbox.get_text()
-
-    def _on_search_activate(self, widget):
-        self.emit('search', self.get_engine(), self.get_text())
+    def _on_search_activate(self, obj):
+        app.search_manager.set_search_info(obj.selected_engine().name, obj.get_text())
+        app.search_manager.perform_search()
 
     def _build_titlebar_extra(self):
         self.create_signal('search')
         hbox = widgetset.HBox()
 
-        self.engines = searchengines.get_search_engines()
-        engine_names = [se.title for se in self.engines]
-        self.search_dropdown = widgetset.OptionMenu(engine_names)
-        hbox.pack_start(self.search_dropdown, padding=5)
+        self.searchbox = widgetset.VideoSearchTextEntry()
+        self.searchbox.connect('validate', self._on_search_activate)
+        hbox.pack_start(widgetutil.align_middle(self.searchbox, 0, 0, 16, 16))
 
-        self.searchbox = widgetset.SearchTextEntry(initial_text=_('Search terms'))
-        self.searchbox.set_width(15)
-        self.searchbox.connect('activate', self._on_search_activate)
-        hbox.pack_start(widgetutil.align_middle(self.searchbox))
-
-        self.search_button = widgetset.Button(_('Search'))
-        self.search_button.set_size(widgetconst.SIZE_SMALL)
-        self.search_button.connect('clicked', self._on_search_activate)
-        hbox.pack_start(self.search_button, padding=5)
         return widgetutil.align_middle(hbox, right_pad=20)
-
-    def set_search_engine(self, engine):
-        index = [e.name for e in self.engines].index(engine)
-        self.search_dropdown.set_selected(index)
 
 class ItemView(widgetset.TableView):
     """TableView that displays a list of items.  """
