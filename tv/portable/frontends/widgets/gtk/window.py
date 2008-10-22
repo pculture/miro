@@ -111,11 +111,6 @@ class WrappedWindow(gtk.Window):
     def do_focus_out_event(self, event):
         gtk.Window.do_focus_out_event(self, event)
         wrappermap.wrapper(self).emit('active-change')
-    def do_window_state_event(self, event):
-        wrappermap.wrapper(self).on_window_state_event(event)
-    def do_configure_event(self, event):
-        wrappermap.wrapper(self).on_configure_event(event)
-        gtk.Window.do_configure_event(self, event)
 
 gobject.type_register(WrappedWindow)
 
@@ -158,6 +153,9 @@ class Window(WindowBase):
         self._window.set_title(title)
         if rect:
             self._window.set_default_size(rect.width, rect.height)
+            self._window.set_default_size(rect.width, rect.height)
+            self._window.set_gravity(gtk.gdk.GRAVITY_CENTER)
+            self._window.move(rect.x, rect.y)
 
         self.create_signal('active-change')
         self.create_signal('will-close')
@@ -230,20 +228,25 @@ class MainWindow(Window):
         self._window.connect('key-press-event', self.on_key_press)
         self._window.connect('key-release-event', self.on_key_release)
         self._window.connect('delete-event', self.on_delete)
+        self._window.connect('window-state-event', self.on_window_state_event)
+        self._window.connect('configure-event', self.on_configure_event)
+        self.connect('will-close', self.on_close)
 
     def on_delete(self, widget, event):
-        app.widgetapp.on_close()
+        self.emit('will-close')
         return True
 
-    def on_configure_event(self, event):
+    def on_close(self, window):
+        app.widgetapp.on_close()
+
+    def on_configure_event(self, widget, event):
         (x, y) = self._window.get_position()
         (width, height) = self._window.get_size()
         self.emit('save-dimensions', x, y, width, height)
 
-    def on_window_state_event(self, event):
+    def on_window_state_event(self, widget, event):
         maximized = (event.new_window_state & gtk.gdk.WINDOW_STATE_MAXIMIZED) != 0
         self.emit('save-maximized', maximized)
-
 
     def on_key_press(self, widget, event):
         if app.playback_manager.is_playing:
