@@ -33,6 +33,7 @@ from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil, prefpanel
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
+from miro.plat.frontends.widgets.threads import call_on_ui_thread
 
 class FirstTimeDialog(widgetset.Window):
     def __init__(self, done_firsttime_callback):
@@ -49,16 +50,16 @@ class FirstTimeDialog(widgetset.Window):
         self.set_content_widget(widgetutil.align_center(self._page_box,
                 top_pad=20, bottom_pad=20, left_pad=20, right_pad=20))
 
-        self.connect('will-close', self.destroy)
+        self.on_close_handler = self.connect('will-close', self.on_close)
 
     def run(self):
         self._switch_page(0)
         self.show()
 
-    def destroy(self, widget=None):
-        print "destroy"
-        widgetset.Window.close(self)
-        widgetset.Window.destroy(self)
+    def on_close(self, widget=None):
+        self.disconnect(self.on_close_handler)
+        self.on_close_handler = None
+        self.close()
         self._done_firsttime_callback()
 
     def _switch_page(self, i):
@@ -167,7 +168,7 @@ class FirstTimeDialog(widgetset.Window):
             if widget.mode == "search":
                 self.next_page()
             else:
-                self.destroy()
+                self.on_close()
 
         search_button = widgetset.Button(_("Search"))
         search_button.connect('clicked', handle_search_finish)
@@ -242,7 +243,7 @@ class FirstTimeDialog(widgetset.Window):
         prev_button.connect('clicked', lambda x: self.prev_page())
 
         finish_button = widgetset.Button(_("Finish"))
-        finish_button.connect('clicked', lambda x: self.destroy())
+        finish_button.connect('clicked', lambda x: self.on_close())
 
         h = widgetutil.build_hbox((prev_button, finish_button))
         v.pack_start(widgetutil.align_right(h))
