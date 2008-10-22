@@ -32,6 +32,8 @@ import gtk
 from gettext import gettext as _
 
 from miro import app
+from miro.frontends.widgets import prefpanel
+from miro.frontends.widgets.gtk import window as window_mod
 
 trayicon_is_supported = False
 
@@ -42,18 +44,17 @@ trayicon_is_supported = False
 if gtk.check_version(2, 10, 0) == None:
     trayicon_is_supported = True
     class Trayicon(gtk.StatusIcon):
-        def __init__(self, icon, main_frame):
+        def __init__(self, icon):
             gtk.StatusIcon.__init__(self)
-            self.main_frame = main_frame
             self.set_from_file(icon)
             self.set_visible(False)
+            self._hid_pref_panel = False
             self.connect("activate", self.on_click)
             self.connect("popup-menu", self.on_popup_menu)
 
         def make_popup_menu_items(self):
-            #cb_handler = self.main_frame.callbackHandler
             menu_items = []
-            window = self.main_frame.window
+            window = app.widgetapp.window
             if window.is_visible():
                 menu_items.append((_("Hide"), self.on_click))
             else:
@@ -80,11 +81,20 @@ if gtk.check_version(2, 10, 0) == None:
             app.widgetapp.quit()
 
         def on_click(self, widget):
-            window = self.main_frame.window
+            window = app.widgetapp.window
             if window.is_visible():
                 window.close()
+                for dialog in window_mod.running_dialogs:
+                    dialog._window.hide()
+                if prefpanel.is_window_shown():
+                    self._hid_pref_panel = True
+                    prefpanel.hide_window()
+                else:
+                    self._hid_pref_panel = False
             else:
                 window.show()
+                if self._hid_pref_panel:
+                    prefpanel.show_window()
 
         def displayNotification(self, text):
             try:

@@ -77,7 +77,7 @@ class WindowsApplication(Application):
 
         if trayicon.trayicon_is_supported:
             icopath = os.path.join(resources.appRoot(), "Miro.ico")
-            self.trayicon = trayicon.Trayicon(icopath, self)
+            self.trayicon = trayicon.Trayicon(icopath)
             if config.get(options.SHOW_TRAYICON):
                 logging.info("showing trayicon")
                 self.trayicon.set_visible(True)

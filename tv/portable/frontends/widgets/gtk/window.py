@@ -45,6 +45,7 @@ from miro.frontends.widgets import menus
 from miro.plat import resources
 
 alive_windows = set() # Keeps the objects alive until destroy() is called
+running_dialogs = set()
 
 def __get_fullscreen_stock_id():
     try:
@@ -104,9 +105,6 @@ def get_stock_id(n):
     return STOCK_IDS.get(n, None)
 
 class WrappedWindow(gtk.Window):
-    def do_delete_event(self, event):
-        wrappermap.wrapper(self).on_delete()
-        return True
     def do_focus_in_event(self, event):
         gtk.Window.do_focus_in_event(self, event)
         wrappermap.wrapper(self).emit('active-change')
@@ -149,37 +147,25 @@ class WindowBase(signals.SignalEmitter):
 class Window(WindowBase):
     """The main Miro window.  """
 
-    def __init__(self, title, rect):
+    window_class = WrappedWindow
+
+    def __init__(self, title, rect=None):
         """Create the Miro Main Window.  Title is the name to give the window,
         rect specifies the position it should have on screen.
         """
         WindowBase.__init__(self)
-        self.set_window(WrappedWindow())
+        self.set_window(self.window_class())
         self._window.set_title(title)
-        self._window.set_default_size(rect.width, rect.height)
+        if rect:
+            self._window.set_default_size(rect.width, rect.height)
 
         self.create_signal('active-change')
         self.create_signal('will-close')
         self.create_signal('did-move')
-        self.create_signal('save-dimensions')
-        self.create_signal('save-maximized')
         alive_windows.add(self)
 
     def set_title(self, title):
         self._window.set_title(title)
-
-    def on_delete(self):
-        app.widgetapp.on_close()
-        return True
-
-    def on_configure_event(self, event):
-        (x, y) = self._window.get_position()
-        (width, height) = self._window.get_size()
-        self.emit('save-dimensions', x, y, width, height)
-
-    def on_window_state_event(self, event):
-        maximized = (event.new_window_state & gtk.gdk.WINDOW_STATE_MAXIMIZED) != 0
-        self.emit('save-maximized', maximized)
 
     def show(self):
         if self not in alive_windows:
@@ -237,10 +223,27 @@ class MainWindow(Window):
         self._window.add(self.vbox)
         self.vbox.show()
         self.add_menus()
+        self.create_signal('save-dimensions')
+        self.create_signal('save-maximized')
         app.menu_manager.connect('enabled-changed', self.on_menu_change)
 
         self._window.connect('key-press-event', self.on_key_press)
         self._window.connect('key-release-event', self.on_key_release)
+        self._window.connect('delete-event', self.on_delete)
+
+    def on_delete(self, widget, event):
+        app.widgetapp.on_close()
+        return True
+
+    def on_configure_event(self, event):
+        (x, y) = self._window.get_position()
+        (width, height) = self._window.get_size()
+        self.emit('save-dimensions', x, y, width, height)
+
+    def on_window_state_event(self, event):
+        maximized = (event.new_window_state & gtk.gdk.WINDOW_STATE_MAXIMIZED) != 0
+        self.emit('save-maximized', maximized)
+
 
     def on_key_press(self, widget, event):
         if app.playback_manager.is_playing:
@@ -363,6 +366,17 @@ class DialogBase(WindowBase):
     def set_transient_for(self, window):
         self._window.set_transient_for(window._window)
 
+    def run(self):
+        running_dialogs.add(self)
+        try:
+            return self._run()
+        finally:
+            running_dialogs.remove(self)
+
+    def _run(self):
+        """Run the dialog.  Must be implemented by subclasses."""
+        raise NotImplementedError()
+
     def destroy(self):
         self._window.destroy()
 
@@ -404,7 +418,7 @@ class Dialog(DialogBase):
         self.buttons_to_add = []
         self._window.set_default_response(1)
 
-    def run(self):
+    def _run(self):
         self.pack_buttons()
         self._window.show_all()
         response = self._window.run()
@@ -429,7 +443,7 @@ class Dialog(DialogBase):
         return self.extra_widget
 
 class FileDialogBase(DialogBase):
-    def run(self):
+    def _run(self):
         ret = self._window.run()
         if ret == gtk.RESPONSE_OK:
             self._text = self._window.get_filename()
@@ -517,7 +531,7 @@ class AboutDialog(DialogBase):
         ))
         self._window = ab
 
-    def run(self):
+    def _run(self):
         self._window.run()
 
 type_map = {
@@ -537,7 +551,7 @@ class AlertDialog(DialogBase):
         self._window.add_button(_stock.get(text, text), 1)
         self._window.set_default_response(1)
 
-    def run(self):
+    def _run(self):
         self._window.set_modal(False)
         self._window.show_all()
         response = self._window.run()
@@ -557,23 +571,24 @@ class PreferencesGtkWindow(gtk.Window):
         wrappermap.wrapper(self).emit('hide')
 gobject.type_register(PreferencesGtkWindow)
 
-class PreferencesWindow(WindowBase):
+class PreferencesWindow(Window):
+    window_class = PreferencesGtkWindow
+
     def __init__(self, title):
-        WindowBase.__init__(self)
+        Window.__init__(self, title)
         self.create_signal('show')
         self.create_signal('hide')
-        self.set_window(PreferencesGtkWindow())
-        self._window.set_title(title)
         from miro.frontends.widgets.gtk import layout
         self.tab_container = layout.TabContainer()
-        self.vbox = gtk.VBox(spacing=12)
-        self.vbox.pack_start(self.tab_container._widget)
+        self.content_widget = gtk.VBox(spacing=12)
+        self.content_widget.pack_start(self.tab_container._widget)
         close_button = gtk.Button(stock=gtk.STOCK_CLOSE)
         close_button.connect_object('clicked', gtk.Window.hide, self._window)
+        self._window.connect_object('delete-event', gtk.Window.hide_on_delete, self._window)
         alignment = gtk.Alignment(xalign=1.0)
         alignment.add(close_button)
-        self.vbox.pack_start(alignment)
-        self._window.add(self.vbox)
+        self.content_widget.pack_start(alignment)
+        self._window.add(self.content_widget)
 
     def append_panel(self, name, panel, title, image_name):
         from miro.frontends.widgets.gtk import simple
@@ -581,7 +596,7 @@ class PreferencesWindow(WindowBase):
         self.tab_container.append_tab(panel, title, image)
 
     def finish_panels(self):
-        self.vbox.show_all()
+        self.content_widget.show_all()
 
     def select_panel(self, index):
         self.tab_container.select_tab(index)

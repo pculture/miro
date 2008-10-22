@@ -656,3 +656,9 @@ def show_window(selection=None):
         _pref_window = PreferencesWindow()
     _pref_window.select_panel(selection)
     _pref_window.show()
+
+def is_window_shown():
+    return _pref_window and _pref_window.is_visible()
+
+def hide_window():
+    _pref_window.close()
