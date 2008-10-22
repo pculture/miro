@@ -946,10 +946,13 @@ class Item(DDBObject):
         elif self.downloader is not None:
             return self.downloader.getTotalSize()
         else:
-            try:
-                return int(self.getFirstVideoEnclosure()['length'])
-            except (KeyError, ValueError):
-                return 0
+            enc = self.getFirstVideoEnclosure()
+            if enc is not None:
+                try:
+                    return int(enc['length'])
+                except (KeyError, ValueError):
+                    pass
+        return 0
 
     def download_progress(self):
         """Returns the download progress in absolute percentage [0.0 - 100.0].
