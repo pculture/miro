@@ -34,21 +34,32 @@ from miro.frontends.widgets import widgetutil, prefpanel
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 
-class FirstTimeDialog(widgetset.Dialog):
-    def __init__(self):
-        widgetset.Dialog.__init__(self, _("Miro First Time Setup"))
+class FirstTimeDialog(widgetset.Window):
+    def __init__(self, done_firsttime_callback):
+        widgetset.Window.__init__(self, _("Miro First Time Setup"), widgetset.Rect(100, 100, 475, 500))
+
+        self._done_firsttime_callback = done_firsttime_callback
 
         self._page_box = widgetset.VBox()
-        self._pages = [self.build_first_page(), 
-                self.build_second_page(), 
+        self._pages = [self.build_first_page(),
+                self.build_second_page(),
                 self.build_search_page()]
         self._page_index = -1
 
-        self.set_extra_widget(self._page_box)
+        self.set_content_widget(widgetutil.align_center(self._page_box,
+                top_pad=20, bottom_pad=20, left_pad=20, right_pad=20))
+
+        self.connect('will-close', self.destroy)
 
     def run(self):
         self._switch_page(0)
-        widgetset.Dialog.run(self)
+        self.show()
+
+    def destroy(self, widget=None):
+        print "destroy"
+        widgetset.Window.close(self)
+        widgetset.Window.destroy(self)
+        self._done_firsttime_callback()
 
     def _switch_page(self, i):
         if i == self._page_index:
@@ -67,13 +78,16 @@ class FirstTimeDialog(widgetset.Dialog):
     def prev_page(self):
         self._switch_page(self._page_index - 1)
 
+    def _build_title(self, text):
+        lab = widgetset.Label(text)
+        lab.set_bold(True)
+        lab.set_wrap(True)
+        return widgetutil.align_left(lab, bottom_pad=10)
+
     def build_first_page(self):
         v = widgetset.VBox(spacing=5)
 
-        lab = widgetset.Label(_("Welcome to the Miro First Time Setup"))
-        lab.set_bold(True)
-        lab.set_wrap(True)
-        v.pack_start(widgetutil.align_left(lab))
+        v.pack_start(self._build_title(_("Welcome to the Miro First Time Setup")))
 
         lab = widgetset.Label(_(
             "The next few screens will help you set up Miro so that it works best "
@@ -111,10 +125,7 @@ class FirstTimeDialog(widgetset.Dialog):
     def build_second_page(self):
         v = widgetset.VBox()
 
-        lab = widgetset.Label(_("Completing the Miro First Time Setup"))
-        lab.set_bold(True)
-        lab.set_wrap(True)
-        v.pack_start(widgetutil.align_left(lab))
+        v.pack_start(self._build_title(_("Completing the Miro First Time Setup")))
 
         lab = widgetset.Label(_(
             "Miro can find all the videos on your computer to help you organize "
@@ -186,7 +197,7 @@ class FirstTimeDialog(widgetset.Dialog):
                 else:
                     search_box.enable_widget()
                     change_button.enable_widget()
-                    
+
             elif widget is restrict_rb:
                 search_box.disable_widget()
                 change_button.disable_widget()
@@ -237,11 +248,3 @@ class FirstTimeDialog(widgetset.Dialog):
         v.pack_start(widgetutil.align_right(h))
 
         return v
-
-def run_dialog():
-    ft_window = FirstTimeDialog()
-
-    try:
-        ft_window.run()
-    finally:
-        ft_window.destroy()

@@ -139,9 +139,8 @@ class Application:
         call_on_ui_thread(lambda: self.__handle_first_time(continue_callback))
 
     def __handle_first_time(self, continue_callback):
-        firsttimedialog.run_dialog()
         startup.mark_first_time()
-        continue_callback()
+        firsttimedialog.FirstTimeDialog(continue_callback).run()
 
     def build_window(self):
         app.tab_list_manager.populate_tab_list()
