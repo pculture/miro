@@ -29,35 +29,63 @@
 """GTK Hacks.  GTK Code that can't be done in PyGTK for whatever reason."""
 
 cdef extern from "gtk/gtk.h":
-    ctypedef struct GtkWidget
-    ctypedef struct GtkTreeView
-    ctypedef struct GtkTreePath
-    ctypedef struct GObject
     ctypedef int gint
     ctypedef unsigned long gulong
     ctypedef unsigned int guint
     ctypedef char gchar
     ctypedef void * gpointer
     ctypedef void * GCallback
+    ctypedef struct GtkWidget
+    ctypedef struct GtkTreeView
+    ctypedef struct GtkTreePath
+    ctypedef struct GtkEntry
+    ctypedef struct GObject
+    ctypedef struct GtkBorder:
+        gint left
+        gint right
+        gint top
+        gint bottom
     ctypedef enum GtkTreeViewDropPosition:
             GTK_TREE_VIEW_DROP_BEFORE,
             GTK_TREE_VIEW_DROP_AFTER,
             GTK_TREE_VIEW_DROP_INTO_OR_BEFORE,
             GTK_TREE_VIEW_DROP_INTO_OR_AFTER
-    void gtk_tree_view_set_drag_dest_row(GtkTreeView *tree_view,
+    cdef void gtk_tree_view_set_drag_dest_row(GtkTreeView *tree_view,
                                          GtkTreePath *path,
                                          GtkTreeViewDropPosition pos)
+    cdef void gtk_entry_set_inner_border (GtkEntry        *entry,
+                                     GtkBorder *border)
+    cdef void gtk_entry_set_text (GtkEntry        *entry,
+                                     char* text)
+cdef extern from "Python.h":
+    ctypedef struct PyObject
 
 cdef extern from "pygobject.h":
-    ctypedef struct PyGObject:
-        GObject * obj
+    ctypedef struct PyGObject
+    cdef PyObject* pygobject_init(int req_major, int req_minor, int req_micro)
+    cdef GObject* pygobject_get(PyGObject*)
 
 cdef GtkWidget* get_gtk_widget(object pygtk_widget):
     cdef PyGObject *pygobject
     pygobject = <PyGObject *>pygtk_widget
-    return <GtkWidget*>(pygobject.obj)
+    return <GtkWidget*>(pygobject_get(pygobject))
+
+def initialize():
+    if pygobject_init(-1, -1, -1) == NULL:
+        raise ImportError("Can't initialize pygobject")
 
 def unset_tree_view_drag_dest_row(object py_tree_view):
     cdef GtkTreeView* tree_view 
     tree_view = <GtkTreeView*>get_gtk_widget(py_tree_view)
     gtk_tree_view_set_drag_dest_row(tree_view, NULL, GTK_TREE_VIEW_DROP_BEFORE)
+
+def set_entry_border(object py_entry, int top, int right, int bottom, int left):
+    cdef GtkEntry* entry
+    cdef GtkBorder border
+
+    entry = <GtkEntry*>get_gtk_widget(py_entry)
+    border.left = left
+    border.right = right
+    border.top = top
+    border.bottom = bottom
+    gtk_entry_set_inner_border(entry, &border)

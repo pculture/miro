@@ -29,3 +29,5 @@
 """miro.frontends.widgets.gtk -- Contains code that is shared by the platforms
 that use GTK for the widgets.  Currently this is Windows and X11.
 """
+from miro.frontends.widgets.gtk import pygtkhacks
+pygtkhacks.initialize()
