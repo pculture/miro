@@ -1,18 +1,22 @@
+import logging
+import os
 import unittest
 from miro import feedparser
 from miro.plat import resources
 
 from miro.test.framework import MiroTestCase
 
+FEEDPARSERTESTS = resources.path("testdata/feedparsertests")
+
 class FeedParserDictTest(MiroTestCase):
     def test(self):
-        a = feedparser.FeedParserDict ()
+        a = feedparser.FeedParserDict()
         a["href"] = "hello"
-        b = feedparser.FeedParserDict ()
+        b = feedparser.FeedParserDict()
         b["url"] = "hello"
-        c = feedparser.FeedParserDict ()
+        c = feedparser.FeedParserDict()
         c["href"] = "hi"
-        d = feedparser.FeedParserDict ()
+        d = feedparser.FeedParserDict()
         d["href"] = "hi"
         d["what"] = "hello"
         self.assertEqual(a.equal(a), True)
@@ -28,9 +32,20 @@ class FeedParserDictTest(MiroTestCase):
         self.assertEqual(a.equal(d), False)
         self.assertEqual(d.equal(a), False)
 
-class FeedParserTest (MiroTestCase):
+class FeedParserTest(MiroTestCase):
     def test_ooze(self):
-        feedparser.parse(resources.path("testdata/ooze.rss"))
+        logging.warning("test_ooze")
+        feedparser.parse(os.path.join(FEEDPARSERTESTS, "ooze.rss"))
+
+    def test_usvideo(self):
+        # test for bug 10653
+        logging.warning("test_usvideo")
+        d = feedparser.parse(os.path.join(FEEDPARSERTESTS, "usvideo.xml"))
+        try:
+            foo = d['url']
+        except KeyError:
+            # the above should kick up a KeyError and NOT a TypeError
+            pass
 
 if __name__ == "__main__":
     unittest.main()

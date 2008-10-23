@@ -208,8 +208,8 @@ class FeedParserDict(UserDict):
               'image': 'thumbnail',
               'date': 'updated',
               'date_parsed': 'updated_parsed',
-              'description': ['subtitle', 'summary'],
-              'url': ['href'],
+              'description': ('subtitle', 'summary'),
+              'url': ('href',),
               'modified': 'updated',
               'modified_parsed': 'updated_parsed',
               'issued': 'published',
@@ -221,7 +221,7 @@ class FeedParserDict(UserDict):
 
     reverse_keymap = {}
     for key in keymap:
-        if type (keymap[key]) == types.ListType:
+        if isinstance(keymap[key], tuple):
             for k in keymap[key]:
                 reverse_keymap[k] = key
         else:
@@ -282,7 +282,7 @@ class FeedParserDict(UserDict):
         if key == 'categories':
             return [(tag['scheme'], tag['term']) for tag in UserDict.__getitem__(self, 'tags')]
         realkey = self.keymap.get(key, key)
-        if type(realkey) == types.ListType:
+        if isinstance(realkey, tuple):
             for k in realkey:
                 if UserDict.has_key(self, k):
                     return UserDict.__getitem__(self, k)
@@ -294,7 +294,7 @@ class FeedParserDict(UserDict):
         for k in self.keymap.keys():
             if key == k:
                 key = self.keymap[k]
-                if type(key) == types.ListType:
+                if isinstance(key, tuple):
                     key = key[0]
         return UserDict.__setitem__(self, key, value)
 
