@@ -201,6 +201,7 @@ class Renderer:
             self.xine.seek(int(seconds * 1000))
 
         else:
+            self.__playing = True
             self.xine.set_volume(0)
             self.xine.seek(int(seconds * 1000))
             self.pause()
