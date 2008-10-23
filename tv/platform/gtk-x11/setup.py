@@ -665,6 +665,7 @@ class install_data(distutils.command.install_data.install_data):
         dest = '/usr/share/miro/resources/app.config'
 
         config_file = util.read_simple_config_file(source)
+        print "Trying to figure out the svn revision...."
         if config_file["appVersion"].endswith("svn"):
             revision = util.query_revision(root_dir)
             if revision is None:
@@ -679,6 +680,7 @@ class install_data(distutils.command.install_data.install_data):
             revisionurl = ""
             revisionnum = ""
             revision = ""
+        print "Using %s" % revisionnum
 
         if self.root:
             dest = change_root(self.root, dest)
