@@ -418,10 +418,12 @@ class VideoRenderer(VBox):
         _window().fullscreen()
 
     def prepare_switch_to_attached_playback(self):
-        pass
+        if hasattr(app.renderer, "prepare_switch"):
+            app.renderer.prepare_switch()
 
     def prepare_switch_to_detached_playback(self):
-        pass
+        if hasattr(app.renderer, "prepare_switch"):
+            app.renderer.prepare_switch()
 
     def on_mouse_motion(self, widget, event):
         if not _videobox_widget().props.visible:

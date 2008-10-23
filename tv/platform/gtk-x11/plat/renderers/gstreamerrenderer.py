@@ -107,6 +107,10 @@ class Tester:
 class Renderer:
     def __init__(self):
         logging.info("GStreamer version: %s", gst.version_string())
+
+        self.rate = 1.0
+        self._old_state = None
+
         self.playbin = gst.element_factory_make("playbin", "player")
         self.bus = self.playbin.get_bus()
         self.bus.add_signal_watch()
@@ -134,8 +138,6 @@ class Renderer:
         logging.info("GStreamer sink:    %s", videosink)
         self.playbin.set_property("video-sink", self.sink)
         self.set_visualization()
-
-        self.rate = 1.0
 
     def set_visualization(self):
         value = config.get(options.VIZ_PLUGIN)
@@ -175,13 +177,26 @@ class Renderer:
         widget.connect("expose-event", self.on_expose)
         self.widget = widget
 
+    def prepare_switch(self):
+        """This is called before attaching and detaching the playback window.
+        When the widget gets moved, it triggers an unrealize and then a realize
+        which causes the renderer to put us in the NULL state and the 0 time.
+        We save the state here, so that when we reconstitute ourselves in
+        on_realize, we return to the right place.
+        """
+        self._old_state = self.playbin.get_state(0)[1], self.get_current_time()
+
     def on_realize(self, widget):
         self.gc = widget.window.new_gc()
         self.gc.foreground = gtk.gdk.color_parse("black")
 
+        if self._old_state is not None:
+            self.playbin.set_state(self._old_state[0])
+            self.set_current_time(self._old_state[1])
+            self._old_state = None
+
     def on_unrealize(self, widget):
         self.playbin.set_state(gst.STATE_NULL)
-        self.sink = None
 
     def on_expose(self, widget, event):
         if self.sink and hasattr(self.sink, "expose"):
