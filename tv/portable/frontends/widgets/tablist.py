@@ -418,7 +418,7 @@ class FeedList(NestedTabList):
 
     def make_folder_context_menu(self):
         return [
-            (_('Update Channel Now'), app.widgetapp.update_selected_channels),
+            (_('Update Channels In Folder'), app.widgetapp.update_selected_channels),
             (_('Rename Channel Folder'), app.widgetapp.rename_something),
             (_('Remove'), app.widgetapp.remove_current_feed)
         ]

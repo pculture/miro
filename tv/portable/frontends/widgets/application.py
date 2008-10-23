@@ -473,9 +473,11 @@ class Application:
     def update_selected_channels(self):
         t, channel_infos = app.tab_list_manager.get_selection()
         if t == 'feed':
-            channel_infos = [ci for ci in channel_infos if not ci.is_folder]
             for ci in channel_infos:
-                messages.UpdateChannel(ci.id).send_to_backend()
+                if ci.is_folder:
+                    messages.UpdateChannelFolder(ci.id).send_to_backend()
+                else:
+                    messages.UpdateChannel(ci.id).send_to_backend()
 
     def update_all_channels(self):
         messages.UpdateAllChannels().send_to_backend()
