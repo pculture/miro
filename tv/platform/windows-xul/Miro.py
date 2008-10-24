@@ -29,21 +29,37 @@
 """Startup the Main Miro process."""
 
 
-theme = None
-# Should have code to figure out the theme.
+def startup():
+    theme = None
+    # Should have code to figure out the theme.
 
-from miro.plat.utils import initializeLocale
-initializeLocale()
+    from miro.plat import pipeipc
+    try:
+        pipe_server = pipeipc.Server()
+    except pipeipc.PipeExists:
+        pipeipc.send_command_line_args()
+        return
+    pipe_server.start_process()
 
-from miro import gtcache
-gtcache.init()
+    from miro.plat.utils import initializeLocale
+    initializeLocale()
 
-from miro import startup
-startup.initialize(theme)
+    from miro import gtcache
+    gtcache.init()
 
-from miro.plat import migrateappname
-migrateappname.migrateSupport('Democracy', 'Miro')
+    from miro import startup
+    startup.initialize(theme)
 
-# Kick off the application
-from miro.plat.frontends.widgets.application import WindowsApplication
-WindowsApplication().run()
+    from miro.plat import migrateappname
+    migrateappname.migrateSupport('Democracy', 'Miro')
+
+    from miro import singleclick
+    from miro.plat import commandline
+    singleclick.set_command_line_args(commandline.get_command_line())
+
+    # Kick off the application
+    from miro.plat.frontends.widgets.application import WindowsApplication
+    WindowsApplication().run()
+    pipe_server.quit()
+
+startup()
