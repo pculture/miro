@@ -28,13 +28,15 @@
 
 """menus.py -- Menu handling code."""
 
+import struct
 import logging
 
 from AppKit import *
 from Foundation import *
 
 from miro import app
-from miro.menubar import menubar, Menu, MenuItem, Separator, Key, MOD, SHIFT, CTRL, ALT
+from miro.menubar import menubar, Menu, MenuItem, Separator, Key
+from miro.menubar import MOD, CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import menus
 
@@ -105,6 +107,15 @@ MODIFIERS_MAP = {
     ALT:   NSAlternateKeyMask
 }
 
+KEYS_MAP = {
+    SPACE: " ",
+    BKSPACE: struct.pack("H", NSBackspaceCharacter),
+    RIGHT_ARROW: NSRightArrowFunctionKey,
+    LEFT_ARROW: NSLeftArrowFunctionKey,
+    UP_ARROW: NSUpArrowFunctionKey,
+    DOWN_ARROW: NSDownArrowFunctionKey
+}
+
 def make_modifier_mask(shortcut):
     mask = 0
     for modifier in shortcut.modifiers:
@@ -115,11 +126,16 @@ def make_menu_item(menu_item):
     nsmenuitem = NSMenuItem.alloc().init()
     nsmenuitem.setTitleWithMnemonic_(menu_item.label.replace("_", "&"))
     if isinstance(menu_item, MenuItem):
-        if len(menu_item.shortcuts) > 0:
-            shortcut = menu_item.shortcuts[0]
+        for shortcut in menu_item.shortcuts:
             if isinstance(shortcut.key, str):
                 nsmenuitem.setKeyEquivalent_(shortcut.key)
                 nsmenuitem.setKeyEquivalentModifierMask_(make_modifier_mask(shortcut))
+                break
+            else:
+                if shortcut.key in KEYS_MAP:
+                    nsmenuitem.setKeyEquivalent_(KEYS_MAP[shortcut.key])
+                    nsmenuitem.setKeyEquivalentModifierMask_(make_modifier_mask(shortcut))
+                    break
         handler = MenuHandler.alloc().initWithAction_(menu_item.action)
         nsmenuitem.setTarget_(handler)
         nsmenuitem.setAction_('handleMenuItem:')
@@ -186,7 +202,9 @@ def populate_menu():
     menubar.menus.insert(5, windowMenu)
 
     # Help Menu
-    menubar.findMenu("Help").findItem("Help").label = _("Miro Help")
+    helpItem = menubar.findMenu("Help").findItem("Help")
+    helpItem.label = _("Miro Help")
+    helpItem.shortcuts = (Key("?", MOD),)
 
     # Now populate the main menu bar
     main_menu = NSApp().mainMenu()
