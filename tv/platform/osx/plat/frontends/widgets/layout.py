@@ -491,7 +491,7 @@ class Table(Container):
 
     def __init__(self, columns, rows):
         Container.__init__(self)
-        self._cell_taken = Matrix(columns, rows, initial_value=False)
+        self._cells = Matrix(columns, rows)
         self._children = [] # List of _TablePacking objects
         self._children_sorted = True
         self.rows = rows
@@ -562,11 +562,9 @@ class Table(Container):
         tp = _TablePacking(widget, column, row, column_span, row_span)
         for c in tp.column_indexes():
             for r in tp.row_indexes():
-                if self._cell_taken[c, r]:
+                if self._cells[c, r]:
                     raise ValueError("Cell %d x %d is already taken" % (c, r))
-        for c in tp.column_indexes():
-            for r in tp.row_indexes():
-                self._cell_taken[c, r] = True
+        self._cells[column, row] = widget
         self._children.append(tp)
         self._children_sorted = False
         self.child_added(widget)
@@ -574,13 +572,11 @@ class Table(Container):
     def remove(self, child):
         for i in xrange(len(self._children)):
             if self._children[i].widget is child:
-                for c, r in self._children[i].cells():
-                    self._cell_taken[c][r] = False
                 self._children.remove(i)
                 break
         else:
             raise ValueError("%s is not a child of this Table" % child)
-        self.cells.remove(child)
+        self._cells.remove(child)
         self.child_removed(widget)
 
     def set_column_spacing(self, spacing):
@@ -594,31 +590,31 @@ class Table(Container):
     def enable_widget(self, row=None, column=None):
         Container.enable_widget(self)
         if row != None and column != None:
-            if self.cells[column, row]:
-                self.cells[column, row].enable_widget()
+            if self._cells[column, row]:
+                self._cells[column, row].enable_widget()
         elif row != None:
-            for mem in self.cells.row(row):
+            for mem in self._cells.row(row):
                 if mem: mem.enable_widget()
         elif column != None:
-            for mem in self.cells.column(column):
+            for mem in self._cells.column(column):
                 if mem: mem.enable_widget()
         else:
-            for mem in self.cells:
+            for mem in self._cells:
                 if mem: mem.enable_widget()
 
     def disable_widget(self, row=None, column=None):
         Container.disable_widget(self)
         if row != None and column != None:
-            if self.cells[column, row]: 
-                self.cells[column, row].disable_widget()
+            if self._cells[column, row]: 
+                self._cells[column, row].disable_widget()
         elif row != None:
-            for mem in self.cells.row(row):
+            for mem in self._cells.row(row):
                 if mem: mem.disable_widget()
         elif column != None:
-            for mem in self.cells.column(column):
+            for mem in self._cells.column(column):
                 if mem: mem.disable_widget()
         else:
-            for mem in self.cells:
+            for mem in self._cells:
                 if mem: mem.disable_widget()
 
 class Scroller(Bin):
