@@ -33,6 +33,7 @@ import cgi
 from xml.dom import minidom
 from urllib import unquote_plus
 from miro.util import checkU, returnsUnicode
+import logging
 
 # =============================================================================
 
@@ -61,41 +62,33 @@ def _getScrapeFunctionFor(url):
 
 def _scrapeYouTubeURL(url, callback):
     checkU(url)
-    httpclient.grabHeaders(url, lambda x:_youTubeCallback(x,callback),
-                           lambda x:_youTubeErrback(x,callback))
+    httpclient.grabHeaders(url, lambda x:_youTubeCallback(x,callback), lambda x:_youTubeErrback(x,callback))
 
 def _youTubeCallback(info, callback):
-    redirected_url = info['redirected-url']
+    redirected_url = info["redirected-url"]
     try:
         components = urlparse.urlsplit(redirected_url)
         params = cgi.parse_qs(components[3])
         videoID = params['video_id'][0]
-        t = params['t'][0]
-        url = u"http://youtube.com/get_video.php?video_id=%s&t=%s&fmt=18" % (videoID, t)
-        httpclient.grabHeaders(url, lambda x: _youTubeCallback2(redirected_url, url, x, callback),
-                               lambda x: _youTubeErrback(x, callback))
+        url = u"http://www.youtube.com/get_video_info?video_id=%s&el=embedded&ps=default&eurl=" % videoID
+        httpclient.grabURL(url, lambda x: _youTubeCallbackStep2(x, videoID, callback),
+                           lambda x: _youTubeErrback(x, callback))
     except:
-        print "DTV: WARNING, unable to scrape You Tube Video URL: %s" % redirected_url
+        logging.exception("youTubeCallback: unable to scrape YouTube Video URL")
         callback(None)
 
-def _youTubeCallback2(redirected_url, hidef_url, info, callback):
-    status = info['status']
+def _youTubeCallbackStep2(info, videoID, callback):
+    try:
+        body = info['body']
+        params = cgi.parse_qs(body)
+        token = params['token'][0]
 
-    # if the status is a 4xx, then we go for the lodef version
-    if status == 0 or status / 100 == 4:
-        try:
-            components = urlparse.urlsplit(redirected_url)
-            params = cgi.parse_qs(components[3])
-            videoID = params['video_id'][0]
-            t = params['t'][0]
-            url = u"http://youtube.com/get_video.php?video_id=%s&t=%s" % (videoID, t)
-            callback(url)
-        except:
-            print "DTV: WARNING, unable to scrape You Tube Video URL: %s" % redirected_url
-            callback(None)
-        return
-
-    callback(hidef_url, u"video/mpeg4")
+        url = u"http://www.youtube.com/get_video?video_id=%s&t=%s&eurl=&el=embedded&ps=default" % (videoID, token)
+        httpclient.grabURL(url, lambda x: callback(url, u"video/flv"),
+                           lambda x: _youTubeErrback(x, callback))
+    except:
+        logging.exception("youTubeCallbackStep2: unable to scrape YouTube Video URL")
+        callback(None)
 
 def _youTubeErrback(err, callback):
     print "DTV: WARNING, network error scraping You Tube Video URL"
@@ -239,7 +232,7 @@ def _scrapeGreenPeaceVideoURL(url, callback):
 # =============================================================================
 
 scraperInfoMap = [
-    {'pattern': 'http://([^/]+\.)?youtube.com/(?!get_video\.php)',         'func': _scrapeYouTubeURL},
+    {'pattern': 'http://([^/]+\.)?youtube.com/(?!get_video\.php)', 'func': _scrapeYouTubeURL},
     {'pattern': 'http://video.google.com/googleplayer.swf', 'func': _scrapeGoogleVideoURL},
     {'pattern': 'http://([^/]+\.)?lulu.tv/wp-content/flash_play/flvplayer', 'func': _scrapeLuLuVideoURL},
     {'pattern': 'http://([^/]+\.)?vmix.com/flash/super_player.swf', 'func': _scrapeVMixVideoURL},
