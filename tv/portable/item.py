@@ -1079,6 +1079,18 @@ class Item(DDBObject):
 
         return u""
 
+    def get_payment_link(self):
+        """Returns the URL of the payment page associated with the item.
+        """
+        self.confirmDBThread()
+        try:
+            return self.getFirstVideoEnclosure().payment_url.decode('ascii','replace')
+        except:
+            try:
+                return self.entry.payment_url.decode('ascii','replace')
+            except:
+                return u""
+
     def update(self, entry):
         """Updates an item with new data
 

@@ -31,6 +31,7 @@
 
 from miro import app
 from miro import messages
+from miro.frontends.widgets import share
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 
@@ -110,6 +111,20 @@ class ItemContextMenuHandler(object):
                 (_('Download'),
                     messages.StartDownload(item.id).send_to_backend)
             ]
+
+        menu.append(
+            (_('Share'),
+             [(_('Email to friend'),
+               lambda: share.share_email(item)),
+              (_('Post to Video Bomb'),
+               lambda: share.share_video_bomb(item)),
+              (_('Post to Del.icio.us'),
+               lambda: share.share_delicious(item)),
+              (_('Post to Digg'),
+               lambda: share.share_digg(item)),
+              (_('Post to Reddit'),
+               lambda: share.share_reddit(item))]))
+               
         return menu
 
     def _make_context_menu_multiple(self, selection):

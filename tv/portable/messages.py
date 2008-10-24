@@ -718,6 +718,7 @@ class ItemInfo(object):
     id -- object id
     feed_id -- id for the items feed
     feed_name -- name of the feed item is attached to
+    feed_url -- URL of the feed item is attached to 
     description -- longer description for the item (HTML)
     state -- see Item.get_state()
     release_date -- datetime object when the item was published
@@ -726,6 +727,8 @@ class ItemInfo(object):
     resume_time -- time at which playback should restart
     permalink -- URL to a permalink to the item (or None)
     commentslink -- URL to a comments page for the item (or None)
+    payment_link -- URL of the payment page associated with the item
+      (or empty string)
     has_sharable_url -- does this item have a sharable URL?
     can_be_saved -- is this an expiring downloaded item?
     downloaded -- has the item been downloaded?
@@ -735,6 +738,7 @@ class ItemInfo(object):
     video_watched -- has the user watched the video for the item?
     video_path -- the file path to the video for this item (or None)
     thumbnail -- path to the thumbnail for this file
+    thumbnail_url -- URL for the item's thumbnail (or None)
     file_format -- User-facing format description.  Possibly the file type,
       pulled from the mime_type, or more generic, like "audio"
     license -- this file's license, if known.
@@ -759,8 +763,10 @@ class ItemInfo(object):
         if item.feed_id:
             feed = item.dd.getObjectByID(self.feed_id)
             self.feed_name = feed.get_title()
+            self.feed_url = feed.getURL()
         else:
             self.feed_name = None
+            self.feed_url = None
         self.description = item.get_description()
         self.state = item.get_state()
         self.release_date = item.get_release_date_obj()
@@ -769,6 +775,7 @@ class ItemInfo(object):
         self.resume_time = item.resumeTime
         self.permalink = item.get_link()
         self.commentslink = item.get_comments_link()
+        self.payment_link = item.get_payment_link()
         self.has_sharable_url = item.hasSharableURL()
         self.can_be_saved = item.show_save_button()
         self.pending_manual_dl = item.is_pending_manual_download()
@@ -784,6 +791,7 @@ class ItemInfo(object):
         self.video_watched = item.getSeen()
         self.video_path = item.get_video_filename()
         self.thumbnail = item.getThumbnail()
+        self.thumbnail_url = item.getThumbnailURL()
         self.file_format = item.get_format()
         self.license = item.get_license()
         self.license_name = item.get_license_name()

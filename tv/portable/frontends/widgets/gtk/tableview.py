@@ -570,21 +570,27 @@ class TableView(Widget):
             return True
 
     def make_context_menu(self):
-        menu = gtk.Menu()
-        for menu_item_info in self.context_menu_callback(self):
-            if menu_item_info is None:
-                item = gtk.SeparatorMenuItem()
-            else:
-                label, callback = menu_item_info
-                item = gtk.MenuItem(label)
-                if callback is None:
-                    item.set_sensitive(False)
+        def gen_menu(menu_items):
+            menu = gtk.Menu()
+            for menu_item_info in menu_items:
+                if menu_item_info is None:
+                    item = gtk.SeparatorMenuItem()
                 else:
-                    item.connect('activate', self.on_context_menu_activate, 
-                            callback)
-            menu.append(item)
-            item.show()
-        return menu
+                    label, callback = menu_item_info
+                    item = gtk.MenuItem(label)
+                    if callback is None:
+                        item.set_sensitive(False)
+                    elif isinstance(callback, list):
+                        submenu = gen_menu(callback)
+                        item.set_submenu(gen_menu(callback))
+                    else:
+                        item.connect('activate', self.on_context_menu_activate,
+                                     callback)
+                menu.append(item)
+                item.show()
+            return menu
+
+        return gen_menu(self.context_menu_callback(self))
 
     def on_context_menu_activate(self, item, callback):
         callback()
