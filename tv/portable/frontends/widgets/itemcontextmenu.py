@@ -34,6 +34,8 @@ from miro import messages
 from miro.frontends.widgets import share
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
+from miro.plat import resources
+
 
 class ItemContextMenuHandler(object):
     """Handles the context menus for rows in an item list."""
@@ -114,15 +116,20 @@ class ItemContextMenuHandler(object):
 
         menu.append(
             (_('Share'),
-             [(_('Email to friend'),
+             [((_('Email to friend'),
+                resources.path('images/share-email.png')),
                lambda: share.share_email(item)),
-              (_('Post to Video Bomb'),
+              ((_('Post to Video Bomb'),
+                resources.path('images/share-videobomb.png')),
                lambda: share.share_video_bomb(item)),
-              (_('Post to Del.icio.us'),
+              ((_('Post to Del.icio.us'),
+                resources.path('images/share-delicious.png')),
                lambda: share.share_delicious(item)),
-              (_('Post to Digg'),
+              ((_('Post to Digg'),
+                resources.path('images/share-digg.png')),
                lambda: share.share_digg(item)),
-              (_('Post to Reddit'),
+              ((_('Post to Reddit'),
+                resources.path('images/share-reddit.png')),
                lambda: share.share_reddit(item))]))
                
         return menu

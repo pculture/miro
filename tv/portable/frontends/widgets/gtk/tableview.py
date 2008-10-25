@@ -577,7 +577,18 @@ class TableView(Widget):
                     item = gtk.SeparatorMenuItem()
                 else:
                     label, callback = menu_item_info
-                    item = gtk.MenuItem(label)
+
+                    if isinstance(label, tuple) and len(label) == 2:
+                        text_label, icon_path = label
+                        pixbuf = gtk.gdk.pixbuf_new_from_file(icon_path)
+                        image = gtk.Image()
+                        image.set_from_pixbuf(pixbuf)
+                        item = gtk.ImageMenuItem(text_label)
+                        item.set_image(image)
+                    else:
+                        item = gtk.MenuItem(label)
+
+                    # The second item, the callback, should have
                     if callback is None:
                         item.set_sensitive(False)
                     elif isinstance(callback, list):
