@@ -55,7 +55,7 @@ def startup():
 
     from miro import singleclick
     from miro.plat import commandline
-    singleclick.set_command_line_args(commandline.get_command_line())
+    singleclick.set_command_line_args(commandline.get_command_line()[1:])
 
     # Kick off the application
     from miro.plat.frontends.widgets.application import WindowsApplication

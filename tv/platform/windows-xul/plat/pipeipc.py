@@ -187,8 +187,10 @@ class MessageHandler(object):
     def handle_message(self, data):
         # import this stuff inside the function, so that import errors don't
         # mess with other code, which is part of the startup process
+        from miro import app
         from miro import eventloop
         from miro import singleclick
+        import gobject
         try:
             cmd_line = pickle.loads(data)
         except:
@@ -197,6 +199,7 @@ class MessageHandler(object):
         args = commandline.parse_command_line_string(cmd_line)
         eventloop.addIdle(singleclick.parse_command_line_args, 
                 'parse command line', args=(args[1:],))
+        gobject.idle_add(app.widgetapp.window._window.present)
 
 def send_command_line_args():
     message = pickle.dumps(commandline.get_command_line_string())
