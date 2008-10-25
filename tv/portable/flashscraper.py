@@ -68,36 +68,28 @@ def _youtube_callback(info, callback):
         components = urlparse.urlsplit(redirected_url)
         params = cgi.parse_qs(components[3])
         videoID = params['video_id'][0]
-        t = params['t'][0]
-        url = u"http://youtube.com/get_video.php?video_id=%s&t=%s&fmt=18" % (videoID, t)
-        httpclient.grabHeaders(url, lambda x: _youtube_callback2(redirected_url, url, x, callback),
-                               lambda x: _youtube_errback(x, callback))
+        url = u"http://www.youtube.com/get_video_info?video_id=%s&el=embedded&ps=default&eurl=" % videoID
+        httpclient.grabURL(url, lambda x: _youtube_callback_step2(x, videoID, callback),
+                           lambda x: _youtube_errback(x, callback))
+
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        print "DTV: WARNING, unable to scrape You Tube Video URL: %s" % redirected_url
+        logging.exception("youtube_callback: unable to scrape YouTube Video URL")
         callback(None)
 
-def _youtube_callback2(redirected_url, hidef_url, info, callback):
-    status = info['status']
+def _youtube_callback_step2(info, videoID, callback):
+    try:
+        body = info['body']
+        params = cgi.parse_qs(body)
+        token = params['token'][0]
 
-    # if the status is a 4xx, then we go for the lodef version
-    if status == 0 or status / 100 == 4:
-        try:
-            components = urlparse.urlsplit(redirected_url)
-            params = cgi.parse_qs(components[3])
-            videoID = params['video_id'][0]
-            t = params['t'][0]
-            url = u"http://youtube.com/get_video.php?video_id=%s&t=%s" % (videoID, t)
-            callback(url)
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            print "DTV: WARNING, unable to scrape You Tube Video URL: %s" % redirected_url
-            callback(None)
-        return
-
-    callback(hidef_url, u"video/mpeg4")
+        url = u"http://www.youtube.com/get_video?video_id=%s&t=%s&eurl=&el=embedded&ps=default" % (videoID, token)
+        httpclient.grabURL(url, lambda x: callback(url, u"video/flv"),
+                           lambda x: _youtube_errback(x, callback))
+    except:
+        logging.exception("youtube_callback_step2: unable to scrape YouTube Video URL")
+        callback(None)
 
 def _youtube_errback(err, callback):
     print "DTV: WARNING, network error scraping You Tube Video URL"
