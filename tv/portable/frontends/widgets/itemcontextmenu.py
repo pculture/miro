@@ -71,6 +71,21 @@ class ItemContextMenuHandler(object):
 
     def _make_context_menu_single(self, item):
         """Make the context menu for a single item."""
+        # Format for the menu list:
+        #
+        # Each item is either None or separated into (label, callback),
+        # more or less, kinda.  If it's None, it's actually a
+        # seperator. Otherwise..
+        #
+        # The label is one of two things:
+        #  - A string, which is used as the label for the menu item
+        #  - A tuple of (label_text, icon_path), in case you need icons
+        #
+        # The callback is one of three things:
+        #  - None, in which case the menu item is made insensitive
+        #  - A list, which means a submenu... should be in the same format
+        #    as this normal menu
+        #  - A method of some form.  In other words, a *real* callback :)
         if item.downloaded:
             def play_and_stop():
                 app.playback_manager.start_with_items([item])
