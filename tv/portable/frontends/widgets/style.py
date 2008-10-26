@@ -442,7 +442,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
                 details_rows.append(
                     (_('Local file'), _('show'), 'show_local_file'))
 
-        if self.data.file_type == 'application/x-bittorrent':
+        if (self.data.download_info is not None 
+                and self.data.download_info.torrent):
             # if self.data.leechers is None (rather than say, 0 or
             # some positive integer) then it wasn't transferring, and
             # thus these next four don't apply
