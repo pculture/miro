@@ -357,6 +357,7 @@ class VideoDisplay(Display):
 
     def prepare_switch_to_attached_playback(self):
         self.widget.prepare_switch_to_attached_playback()
+        self.widget.remove_viewport()
 
     def prepare_switch_to_detached_playback(self):
         self.widget.prepare_switch_to_detached_playback()

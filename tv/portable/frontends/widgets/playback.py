@@ -351,7 +351,6 @@ class PlaybackManager (signals.SignalEmitter):
     def switch_to_attached_playback(self):
         self.cancel_update_timer()
         self.video_display.prepare_switch_to_attached_playback()
-        self.video_display.widget.remove_viewport()
         self.finish_detached_playback()
         self.prepare_attached_playback()
         self.schedule_update()
@@ -359,7 +358,6 @@ class PlaybackManager (signals.SignalEmitter):
     def switch_to_detached_playback(self):
         self.cancel_update_timer()
         self.video_display.prepare_switch_to_detached_playback()
-#        self.video_display.widget.remove_viewport()
         self.finish_attached_playback(False)
         self.prepare_detached_playback()
         self.schedule_update()
