@@ -130,7 +130,7 @@ def ask_for_string(title, description, initial_text=None, transient_for=None):
         window.destroy()
 
 def ask_for_open_pathname(title, initial_filename=None, filters=[],
-        transient_for=None):
+        transient_for=None, select_multiple=False):
     """Returns the file pathname or None.
     """
     window = widgetset.FileOpenDialog(title)
@@ -142,9 +142,15 @@ def ask_for_open_pathname(title, initial_filename=None, filters=[],
         if filters:
             window.add_filters(filters)
 
+        if select_multiple:
+            window.set_select_multiple(select_multiple)
+
         response = window.run()
         if response == 0:
-            return window.get_filename()
+            if select_multiple:
+                return window.get_filenames()
+            else:
+                return window.get_filename()
     finally:
         window.destroy()
 

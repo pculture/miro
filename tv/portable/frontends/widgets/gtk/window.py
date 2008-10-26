@@ -450,14 +450,13 @@ class FileDialogBase(DialogBase):
     def _run(self):
         ret = self._window.run()
         if ret == gtk.RESPONSE_OK:
-            self._text = self._window.get_filename()
+            self._files = self._window.get_filenames()
             return 0
-
 
 class FileOpenDialog(FileDialogBase):
     def __init__(self, title):
         FileDialogBase.__init__(self)
-        self._text = None
+        self._files = None
         self.set_window(gtk.FileChooserDialog(title,
                                action=gtk.FILE_CHOOSER_ACTION_OPEN,
                                buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
@@ -465,6 +464,9 @@ class FileOpenDialog(FileDialogBase):
 
     def set_filename(self, text):
         self._window.set_filename(text)
+
+    def set_select_multiple(self, value):
+        self._window.set_select_multiple(value)
 
     def add_filters(self, filters):
         for name, ext_list in filters:
@@ -479,13 +481,17 @@ class FileOpenDialog(FileDialogBase):
         filter.add_pattern('*')
         self._window.add_filter(filter)
 
+    def get_filenames(self):
+        return self._files
+
     def get_filename(self):
-        return self._text
+        print "get_filename"
+        return self._files[0]
 
 class FileSaveDialog(FileDialogBase):
     def __init__(self, title):
         FileDialogBase.__init__(self)
-        self._text = None
+        self._files = None
         self.set_window(gtk.FileChooserDialog(title,
                                action=gtk.FILE_CHOOSER_ACTION_SAVE,
                                buttons=(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
@@ -495,12 +501,12 @@ class FileSaveDialog(FileDialogBase):
         self._window.set_current_name(text)
 
     def get_filename(self):
-        return self._text
+        return self._files[0]
 
 class DirectorySelectDialog(FileDialogBase):
     def __init__(self, title):
         FileDialogBase.__init__(self)
-        self._text = None
+        self._files = None
         choose_str =_('Choose').encode('utf-8')
         self.set_window(gtk.FileChooserDialog(title,
                                action=gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
@@ -511,7 +517,7 @@ class DirectorySelectDialog(FileDialogBase):
         self._window.set_filename(text)
 
     def get_directory(self):
-        return self._text
+        return self._files[0]
 
 class AboutDialog(DialogBase):
     def __init__(self):

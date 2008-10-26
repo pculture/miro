@@ -236,19 +236,22 @@ class Application:
 
     def open_video(self):
         title = _('Open Files...')
-        filename = dialogs.ask_for_open_pathname(title)
+        filenames = dialogs.ask_for_open_pathname(title, select_multiple=True)
 
-        if not filename:
+        if not filenames:
             return
 
-        if os.path.isfile(filename):
-            # FIXME - play this file
-            messages.OpenIndividualFile(filename).send_to_backend()
-        else:
+        filenames_good = [mem for mem in filenames if os.path.isfile(mem)]
+        if len(filenames_good) != len(filenames):
             dialogs.show_message(_('Open Files - Error'),
                                  _('File %(filename)s does not exist.',
                                    {"filename": filename}),
                                  dialogs.WARNING_MESSAGE)
+        else:
+            if len(filenames_good) == 1:
+                messages.OpenIndividualFile(filenames_good[0]).send_to_backend()
+            else:
+                messages.OpenIndividualFiles(filenames_good).send_to_backend()
 
     def ask_for_url(self, title, description, error_title, error_description):
         """Ask the user to enter a url in a TextEntry box.

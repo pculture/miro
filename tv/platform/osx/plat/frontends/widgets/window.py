@@ -309,6 +309,11 @@ class FileOpenDialog(FileDialogBase):
         FileDialogBase.__init__(self)
         self._title = title
         self._panel = NSOpenPanel.openPanel()
+        self._filenames = None
+
+    def set_select_multiple(self, value):
+        # FIXME - do we need to do anything here?
+        pass
 
     def set_directory(self, d):
         self._directory = d
@@ -322,14 +327,18 @@ class FileOpenDialog(FileDialogBase):
             self._types += t
 
     def get_filename(self):
-        return self._filename
+        return self._filenames[0]
+
+    def get_filenames(self):
+        return self._filenames
 
     def run(self):
         response = FileDialogBase.run(self)            
         if response == NSFileHandlingPanelOKButton:            
-            self._filename = self._panel.filenames()[0]
+            self._filenames = self._panel.filenames()
             return 0
-        self._filename = ""
+        self._filename = ''
+        self._filenames = None
 
     def destroy(self):
         self._panel = None
