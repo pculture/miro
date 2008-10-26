@@ -588,7 +588,6 @@ class TableView(Widget):
                     else:
                         item = gtk.MenuItem(label)
 
-                    # The second item, the callback, should have
                     if callback is None:
                         item.set_sensitive(False)
                     elif isinstance(callback, list):
