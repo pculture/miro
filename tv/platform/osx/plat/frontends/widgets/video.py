@@ -293,6 +293,7 @@ class VideoRenderer (Widget):
 
     def prepare_switch_to_attached_playback(self):
         self.detach_from_parent_window()
+        self.remove_viewport()
         app.widgetapp.window.nswindow.makeKeyAndOrderFront_(nil)
 
     def prepare_switch_to_detached_playback(self):
