@@ -24,8 +24,7 @@
 !define OLD_RUN_SHORTCUT2 "Democracy.lnk"
 !define OLD_UNINSTALL_SHORTCUT1 "Uninstall Democracy Player.lnk"
 !define OLD_UNINSTALL_SHORTCUT2 "Uninstall Democracy.lnk"
-!define MIROBAR_EXE "askBarSetup-4.1.0.2.exe"
-!define MIROBARCHECKER_EXE "AskInstallChecker.exe"
+;!define MIROBAR_EXE "askBarSetup-4.1.0.2.exe"
 
 Name "$APP_NAME"
 OutFile "${CONFIG_OUTPUT_FILE}"
@@ -75,9 +74,8 @@ Var SIMPLE_INSTALL
 
 
 ReserveFile "MiroBar-installer-page.ini"
-ReserveFile "ask_toolbar.bmp"
-ReserveFile "${MIROBAR_EXE}"
-ReserveFile "${MIROBARCHECKER_EXE}"
+;ReserveFile "ask_toolbar.bmp"
+;ReserveFile "${MIROBAR_EXE}"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Pages                                                                     ;;
@@ -222,7 +220,18 @@ FunctionEnd
 ; Installation page
 !insertmacro MUI_PAGE_INSTFILES
 
-Page custom MiroBarInstall MiroBarInstallLeave
+; ****** OpenCandy START ******
+
+!include "OCSetupHlp.nsh"
+
+; Declare the OpenCandy Offer page
+
+PageEx custom
+ PageCallbacks OpenCandyPageStartFn OpenCandyPageLeaveFn
+PageExEnd
+
+; ****** OpenCandy END ******
+
 
 ; Finish page
 !define MUI_FINISHPAGE_RUN
@@ -534,6 +543,10 @@ FunctionEnd
 
 Section "-${CONFIG_LONG_APP_NAME}"
 
+; ****** OC START *****
+  !insertmacro OpenCandyInstallDownloadManager
+; ****** OC END ******
+
 ; Warn users of Windows 9x/ME that they're not supported
   Push $R0
   ClearErrors
@@ -770,6 +783,10 @@ FunctionEnd
 
 Function .onInit
 
+; ****** OpenCandy START ******
+  !insertmacro OpenCandyInit "Miro" "06388ce26efe432aa917f6f9ace6c2a0" "551aae7e8f606382a7a04b15b87f297f"
+; ****** OpenCandy END ******
+
   ; Process the tacked on file
   StrCpy $THEME_NAME ""
   StrCpy $INITIAL_FEEDS ""
@@ -993,55 +1010,30 @@ DoneTorrentRegistration:
   !insertmacro checkExtensionHandled ".3ivx" ${SecRegisterXvid}
 FunctionEnd
 
-Function MiroBarInstall 
-  ; run AskInstallChecker to see if we should ask about ask.com
-  ; or not.  An error means it's already installed and we should
-  ; move along.
-  !insertmacro MUI_INSTALLOPTIONS_EXTRACT "${MIROBARCHECKER_EXE}" 
-  ExecWait '"$PLUGINSDIR\${MIROBARCHECKER_EXE}"' $0
-  StrCmp $0 "0" CheckForIE NoShowMiroBarDialog
-CheckForIE:
-  ; check the registry to see if the default browser is internet
-  ; explorer.  if not, skip ask.com.
-  ReadRegStr $0 HKCU "Software\Clients\StartMenuInternet" "" 
-  StrCmp $0 "IEXPLORE.EXE" ShowMiroBarDialog 
-  StrCmp $0 "" 0 NoShowMiroBarDialog 
-  ReadRegStr $0 HKLM "Software\Clients\StartMenuInternet" "" 
-  StrCmp $0 "IEXPLORE.EXE" ShowMiroBarDialog NoShowMiroBarDialog 
-ShowMiroBarDialog: 
-  !insertmacro MUI_INSTALLOPTIONS_EXTRACT "ask_toolbar.bmp" 
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "MiroBar-installer-page.ini" "Field 9" "Text" "$PLUGINSDIR\ask_toolbar.bmp" 
-  !insertmacro MUI_HEADER_TEXT "Install the Ask Toolbar?" "" 
-  !insertmacro MUI_INSTALLOPTIONS_DISPLAY "MiroBar-installer-page.ini" 
-NoShowMiroBarDialog: 
-FunctionEnd 
+; ****** OpenCandy START ******
 
-Function MiroBarInstallLeave 
-  !insertmacro MUI_INSTALLOPTIONS_READ $R0 "MiroBar-installer-page.ini" "Settings" "State" 
-  ; Address Bar Search 
-  !insertmacro MUI_INSTALLOPTIONS_READ $R1 "MiroBar-installer-page.ini" "Field 2" "State" 
-  !insertmacro MUI_INSTALLOPTIONS_READ $R2 "MiroBar-installer-page.ini" "Field 3" "State" 
-  ; Homepage 
-  !insertmacro MUI_INSTALLOPTIONS_READ $R3 "MiroBar-installer-page.ini" "Field 4" "State" 
-  StrCmp $R0 "6" end 
-  StrCmp $R2 "1" install 
-  MessageBox MB_OK "If you want to install the Miro / Ask Toolbar, you must accept the terms of service." 
-  Abort 
-install: 
-  !insertmacro MUI_INSTALLOPTIONS_EXTRACT "${MIROBAR_EXE}" 
-  StrCmp $R1 "1" +3 
-  StrCpy $R6 "" 
-  Goto +2 
-  StrCpy $R6 "/sa" 
-  StrCmp $R3 "1" +3 
-  StrCpy $R7 "" 
-  Goto +2 
-  StrCpy $R7 "/hpr" 
-  Exec '"$PLUGINSDIR\${MIROBAR_EXE}" /tbr $R6 $R7 /verysilent toolbar=MRO' 
-end: 
-FunctionEnd 
+;--------------------------------
+; OnInstSuccess
+
+Function .onInstSuccess
+
+  !insertmacro OpenCandyOnInstSuccess
+
+FunctionEnd
+
+;--------------------------------
+; OnGUIEnd
+
+Function .onGUIEnd
+
+  !insertmacro OpenCandyOnGuiEnd
+
+FunctionEnd
+
+; ****** OpenCandy END ******
 
 Section -Post
+
   WriteUninstaller "$INSTDIR\uninstall.exe"
   WriteRegStr HKLM "${INST_KEY}" "InstallDir" $INSTDIR
   WriteRegStr HKLM "${INST_KEY}" "Version" "${CONFIG_VERSION}"
@@ -1059,6 +1051,12 @@ Section -Post
 SectionEnd
 
 Section "Uninstall" SEC91
+
+; ******* OC START *****
+  !insertmacro OpenCandyUninstallDownloadManager
+  !insertmacro OpenCandyProductUninstallComplete
+; ******* OC END *******
+
   SetShellVarContext all
 
   ${un.GetParameters} $R0

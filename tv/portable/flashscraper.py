@@ -84,7 +84,8 @@ def _youTubeCallbackStep2(info, videoID, callback):
         token = params['token'][0]
 
         url = u"http://www.youtube.com/get_video?video_id=%s&t=%s&eurl=&el=embedded&ps=default" % (videoID, token)
-        callback(url)
+        httpclient.grabURL(url, lambda x: callback(url, u"video/flv"),
+                           lambda x: _youTubeErrback(x, callback))
     except:
         logging.exception("youTubeCallbackStep2: unable to scrape YouTube Video URL")
         callback(None)
