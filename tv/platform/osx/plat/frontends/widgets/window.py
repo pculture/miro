@@ -312,8 +312,10 @@ class FileOpenDialog(FileDialogBase):
         self._filenames = None
 
     def set_select_multiple(self, value):
-        # FIXME - do we need to do anything here?
-        pass
+        if value:
+            self._panel.setAllowsMultipleSelection_(YES)
+        else:
+            self._panel.setAllowsMultipleSelection_(NO)
 
     def set_directory(self, d):
         self._directory = d
