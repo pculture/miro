@@ -58,11 +58,13 @@ def _get_scrape_function_for(url):
     return None
 
 def _scrape_youtube_url(url, callback):
+    print "scrape_youtube_url"
     checkU(url)
     httpclient.grabHeaders(url, lambda x: _youtube_callback(x, callback),
-                           lambda x:_youtube_errback(x,callback))
+                           lambda x:_youtube_errback(x, callback))
 
 def _youtube_callback(info, callback):
+    print "_youtube_callback"
     redirected_url = info['redirected-url']
     try:
         components = urlparse.urlsplit(redirected_url)
@@ -79,20 +81,20 @@ def _youtube_callback(info, callback):
         callback(None)
 
 def _youtube_callback_step2(info, videoID, callback):
+    print "_youtube_callback_step2"
     try:
         body = info['body']
         params = cgi.parse_qs(body)
         token = params['token'][0]
 
         url = u"http://www.youtube.com/get_video?video_id=%s&t=%s&eurl=&el=embedded&ps=default" % (videoID, token)
-        httpclient.grabURL(url, lambda x: callback(url, u"video/flv"),
-                           lambda x: _youtube_errback(x, callback))
+        callback(url)
     except:
         logging.exception("youtube_callback_step2: unable to scrape YouTube Video URL")
         callback(None)
 
 def _youtube_errback(err, callback):
-    print "DTV: WARNING, network error scraping You Tube Video URL"
+    logging.warning("youtube_errback: network error scraping YouTube video url %s", err)
     callback(None)
 
 def _scrape_google_video_url(url, callback):
