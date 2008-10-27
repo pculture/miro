@@ -703,6 +703,9 @@ class Item(DDBObject):
             feed = self.getFeed()
             if feed.thumbnailValid():
                 return feed.getThumbnailPath()
+            elif (self.get_video_filename()
+                     and filetypes.isAudioFilename(self.get_video_filename())):
+                return resources.path("images/thumb-default-audio_large.png")
             else:
                 return resources.path("images/thumb-default_large.png")
 
