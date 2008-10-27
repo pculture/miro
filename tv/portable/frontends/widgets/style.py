@@ -390,7 +390,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         if self.display_channel and self.data.feed_name and self.data.feed_id:
             info_rows.append(
                 (_('Channel:'),
-                 util.clampText(self.data.feed_name, 20),
+                 util.clampText(self.data.feed_name, 15),
                  None))
 
         info_box = self.create_pseudo_table(layout, info_rows)
