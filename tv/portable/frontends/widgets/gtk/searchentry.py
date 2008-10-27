@@ -35,55 +35,81 @@ import gtk
 from miro import searchengines
 from miro.frontends.widgets.gtk import controls
 from miro.frontends.widgets.gtk import pygtkhacks
+from miro.frontends.widgets.gtk.weakconnect import weak_connect
 from miro.plat import resources
 
-class GtkSearchTextEntry(gtk.Entry):
+class GtkSearchTextEntry(gtk.EventBox):
     def __init__(self):
-        gtk.Entry.__init__(self)
-        # By default the border is 2 pixels.  Give an extra 16 pixels for the
-        # icon and 4 pixels for padding on the left side.
-        pygtkhacks.set_entry_border(self, 2, 2, 2, 22)
+        gtk.EventBox.__init__(self)
+        self.add_events(gtk.gdk.EXPOSURE_MASK)
+        self.alignment = gtk.Alignment(yalign=0.5)
+        self.entry = gtk.Entry()
+        self.entry.set_has_frame(False)
+        self.alignment.add(self.entry)
+        self._align_entry()
+        self.add(self.alignment)
+        self.alignment.show_all()
+
+        self.entry.connect('focus-in-event', self._entry_focus_change)
+        self.entry.connect('focus-out-event', self._entry_focus_change)
 
         icon_path = resources.path('images/search_icon_all.png')
         self.pixbuf = gtk.gdk.pixbuf_new_from_file(icon_path)
 
-    def _calc_image_position(self):
-        layout_offsets = self.get_layout_offsets()
-        # x and y are a bit artificial.  They are just what looked good to me
-        # at the time (BDK)
-        x = layout_offsets[0] - 22
-        y = layout_offsets[1] - 1
-        if self.flags() & gtk.NO_WINDOW:
-            x += self.allocation.x
-            y += self.allocation.y
+    def _align_entry(self):
+        # Make it so we handle the inner border of the entry ourselves.
+        #
+        # By default entries have 2px padding on all sides.  Change that to 0,
+        # and make our Alignment widget handle it.
+        # NOTE we use has 3px padding on the right side to compensate for the
+        # fact that GTKEntry draws itself 1 extra pixel on the right
+        #
+        # We also want 6 px padding on the top, bottom and left sides of the
+        # icon and 4 px padding on the right (because there is no border).
+        # Since icons are 16x16, this gives us 26px padding on the left
+        # and a minimum height of 28px
+        pygtkhacks.set_entry_border(self.entry, 0, 0, 0, 0)
+        self.alignment.set_padding(2, 2, 26, 3)
+        self.min_height = 28
+
+    def do_size_request(self, requesition):
+        gtk.EventBox.do_size_request(self, requesition)
+        if requesition.height < self.min_height:
+            requesition.height = self.min_height
+
+    def _entry_focus_change(self, entry, event):
+        # Redraw our border to reflect the focus change.
+        self.queue_draw()
+
+    def _icon_position(self):
+        x = 6
+        y = (self.allocation.height - 16) / 2
         return x, y
 
     def do_expose_event(self, event):
-        gtk.Entry.do_expose_event(self, event)
-        x, y = self._calc_image_position()
+        gtk.EventBox.do_expose_event(self, event)
+        self.entry.style.paint_shadow(event.window, gtk.STATE_NORMAL,
+                gtk.SHADOW_IN, event.area, self.entry, "entry",
+                0, 0, self.allocation.width, self.allocation.height)
+        x, y = self._icon_position()
         exposed = event.area.intersect(gtk.gdk.Rectangle(x, y, 16, 16))
         event.window.draw_pixbuf(None, self.pixbuf, exposed.x-x, exposed.y-y,
                 exposed.x, exposed.y, exposed.width, exposed.height)
 
-    def do_realize(self):
-        gtk.Entry.do_realize(self)
-        # Create an INPUT_ONLY window to change the icon to a pointer when
-        # it's over the icon.
-        x, y = self._calc_image_position()
-        self.icon_window = gtk.gdk.Window(self.window, 16, 16,
-                gtk.gdk.WINDOW_CHILD, 0, gtk.gdk.INPUT_ONLY, x=x, y=y)
-        self.icon_window.set_cursor(gtk.gdk.Cursor(gtk.gdk.ARROW))
-        self.icon_window.show()
-
-    def do_unrealize(self):
-        self.icon_window.hide()
-        del self.icon_window
-        gtk.Entry.do_unrealize(self)
+    # Forward a bunch of method calls to our gtk.Entry widget
+    def get_text(self): return self.entry.get_text()
+    def set_text(self, text): return self.entry.set_text(text)
 
 gobject.type_register(GtkSearchTextEntry)
 
 class SearchTextEntry(controls.TextEntry):
     entry_class = GtkSearchTextEntry
+
+    def forward_signal(self, signal_name, forwarded_signal_name=None):
+        if forwarded_signal_name is None:
+            forwarded_signal_name = signal_name
+        return weak_connect(self._widget.entry, signal_name,
+                self.do_forward_signal, forwarded_signal_name)
 
 class GtkVideoSearchTextEntry(GtkSearchTextEntry):
     def __init__(self):
@@ -118,18 +144,16 @@ class GtkVideoSearchTextEntry(GtkSearchTextEntry):
         return self._engine
 
     def _event_inside_icon(self, event):
-        x, y = self._calc_image_position()
+        x, y = self._icon_position()
         return (x <= event.x < x + 16) and (y <= event.y < y + 16)
 
     def do_button_press_event(self, event):
         if self._event_inside_icon(event):
             self.menu.popup(None, None, None, event.button, event.time)
-        else:
-            gtk.Entry.do_button_press_event(self, event)
 
 gobject.type_register(GtkVideoSearchTextEntry)
 
-class VideoSearchTextEntry(controls.TextEntry):
+class VideoSearchTextEntry(SearchTextEntry):
     entry_class = GtkVideoSearchTextEntry
     def __init__(self):
         controls.TextEntry.__init__(self)
