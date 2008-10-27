@@ -420,6 +420,7 @@ class VideoRenderer(VBox):
     def prepare_switch_to_attached_playback(self):
         if hasattr(app.renderer, "prepare_switch"):
             app.renderer.prepare_switch()
+        self._widget.get_parent().remove(self._widget)
 
     def prepare_switch_to_detached_playback(self):
         if hasattr(app.renderer, "prepare_switch"):
