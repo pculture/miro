@@ -92,6 +92,7 @@ class BaseTextEntry(SizedControl):
 
     def set_text(self, text):
         self.view.setStringValue_(text)
+        self.emit('changed')
 
     def get_text(self):
         return self.view.stringValue()
