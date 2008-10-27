@@ -485,7 +485,6 @@ class FileOpenDialog(FileDialogBase):
         return self._files
 
     def get_filename(self):
-        print "get_filename"
         return self._files[0]
 
 class FileSaveDialog(FileDialogBase):
