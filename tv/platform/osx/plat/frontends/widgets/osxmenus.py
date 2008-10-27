@@ -250,10 +250,18 @@ def make_context_menu(menu_items):
         else:
             label, callback = item
             nsitem = NSMenuItem.alloc().init()
+            if isinstance(label, tuple) and len(label) == 2:
+                label, icon_path = label
+                image = NSImage.alloc().initWithContentsOfFile_(icon_path)
+                nsitem.setImage_(image)
             nsitem.setTitle_(label)
-            if callback:
-                handler = ContextMenuHandler.alloc().initWithCallback_(callback)
-                nsitem.setTarget_(handler)
-                nsitem.setAction_('handleMenuItem:')
+            if callback is not None:
+                if isinstance(callback, list):
+                    submenu = make_context_menu(callback)
+                    nsmenu.setSubmenu_forItem_(submenu, nsitem)
+                else:
+                    handler = ContextMenuHandler.alloc().initWithCallback_(callback)
+                    nsitem.setTarget_(handler)
+                    nsitem.setAction_('handleMenuItem:')
         nsmenu.addItem_(nsitem)
     return nsmenu
