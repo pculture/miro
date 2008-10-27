@@ -2177,14 +2177,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
         #Adds any files we don't know about
         #Files on the filesystem
         if fileutil.isdir(self.dir):
-            all_files = []
-            files, dirs = fileutil.miro_listdir(self.dir)
-            for file_ in files:
-                all_files.append(file_)
-            for dir_ in dirs:
-                subfiles, subdirs = fileutil.miro_listdir(dir_)
-                for subfile in subfiles:
-                    all_files.append(subfile)
+            all_files = fileutil.miro_allfiles(self.dir)
             for file_ in all_files:
                 if file_ not in knownFiles and filetypes.isVideoFilename(filenameToUnicode(file_)):
                     itemmod.FileItem(file_, feed_id=self.ufeed.id)
