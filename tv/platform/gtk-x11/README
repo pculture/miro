@@ -45,6 +45,8 @@ and other files::
    mkdir /tmp/foo
    HOME=/tmp/foo ./run.sh
 
+.. Note:: Setting ``HOME`` doesn't work in KDE--it causes other problems.
+
 
 Unittest instructions
 =====================
