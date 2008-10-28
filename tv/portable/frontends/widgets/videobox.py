@@ -68,7 +68,8 @@ class PlaybackControls(widgetset.HBox):
         return button
     
     def handle_new_selection(self, has_playable):
-        self.play.set_disabled(not has_playable)
+        if not app.playback_manager.is_playing:
+            self.play.set_disabled(not has_playable)
 
     def handle_play(self, obj, duration):
         self.previous.enable_widget()
