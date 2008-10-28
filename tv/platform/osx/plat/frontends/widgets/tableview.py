@@ -401,17 +401,19 @@ class TableViewCommon(object):
                 self._tracking_rects.append(tr)
 
     def mouseEntered_(self, event):
-        row, column = _unpack_row_column(event.userData())
-        self.hover_info = (row, column)
-        rect = self.frameOfCellAtColumn_row_(column, row)
-        self.setNeedsDisplayInRect_(rect)
+        if self.window().isMainWindow():
+            row, column = _unpack_row_column(event.userData())
+            self.hover_info = (row, column)
+            rect = self.frameOfCellAtColumn_row_(column, row)
+            self.setNeedsDisplayInRect_(rect)
 
     def mouseExited_(self, event):
-        row, column = _unpack_row_column(event.userData())
-        if self.hover_info == (row, column):
-            self.hover_info = None
-        rect = self.frameOfCellAtColumn_row_(column, row)
-        self.setNeedsDisplayInRect_(rect)
+        if self.window().isMainWindow():
+            row, column = _unpack_row_column(event.userData())
+            if self.hover_info == (row, column):
+                self.hover_info = None
+            rect = self.frameOfCellAtColumn_row_(column, row)
+            self.setNeedsDisplayInRect_(rect)
 
     def cell_is_hovered(self, row, column):
         return self.hover_info == (row, column)

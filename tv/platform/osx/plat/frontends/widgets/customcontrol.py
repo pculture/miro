@@ -81,12 +81,14 @@ class DrawableButton(NSButton):
                 self.bounds(), self, 0, NO)
 
     def mouseEntered_(self, event):
-        self.mouse_inside = True
-        self.setNeedsDisplay_(YES)
+        if self.window().isMainWindow():
+            self.mouse_inside = True
+            self.setNeedsDisplay_(YES)
 
     def mouseExited_(self, event):
-        self.mouse_inside = False
-        self.setNeedsDisplay_(YES)
+        if self.window().isMainWindow():
+            self.mouse_inside = False
+            self.setNeedsDisplay_(YES)
 
     def isOpaque(self):
         return wrappermap.wrapper(self).is_opaque()
