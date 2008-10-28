@@ -108,15 +108,12 @@ class ItemListController(object):
 
     def get_selection(self):
         """Get the currently selected items.  Returns a list of ItemInfos."""
-
         item_view = self.current_item_view
         if item_view is None:
             return []
         return [item_view.model[i][0] for i in item_view.get_selection()]
 
-    def play_selection(self):
-        """Play the currently selected items."""
-
+    def get_selection_for_playing(self):
         if self.current_item_view is None:
             item_view = self.default_item_view()
         else:
@@ -129,12 +126,21 @@ class ItemListController(object):
             items = item_view.item_list.get_items(start_id=id)
         else:
             items = selection
+        return items
+        
+    def play_selection(self):
+        """Play the currently selected items."""
+        items = self.get_selection_for_playing()
         if len(items) > 0:
             self._play_item_list(items)
+            
+    def filter_playable_items(self, items):
+        return [i for i in items if i.video_path is not None and i.video_path is not '']
 
     def _play_item_list(self, items):
-        playable = [i for i in items if i.video_path is not None and i.video_path is not '']
-        app.playback_manager.start_with_items(playable)
+        playable = self.filter_playable_items(items)
+        if len(playable) > 0:
+            app.playback_manager.start_with_items(playable)
 
     def set_search(self, search_text):
         """Set the search for all ItemViews managed by this controller.  """
@@ -430,8 +436,19 @@ class ItemListControllerManager(object):
         for controller in self.all_controllers:
             if controller.should_handle_message(message):
                 controller.handle_item_list(message)
+        self.handle_playable_items()
 
     def handle_items_changed(self, message):
         for controller in self.all_controllers:
             if controller.should_handle_message(message):
                 controller.handle_items_changed(message)
+        self.handle_playable_items()
+
+    def handle_playable_items(self):
+        if self.displayed is not None:
+            selection = self.displayed.get_selection_for_playing()
+            playable = self.displayed.filter_playable_items(selection)
+            has_playable = len(playable) > 0
+        else:
+            has_playable = False
+        app.widgetapp.window.videobox.handle_new_selection(has_playable)

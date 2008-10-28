@@ -167,6 +167,12 @@ class Widget(signals.SignalEmitter):
     def disable_widget(self):
         self._disabled = True
 
+    def set_disabled(self, disabled):
+        if disabled:
+            self.disable_widget()
+        else:
+            self.enable_widget()
+
     def get_disabled(self):
         return self._disabled
 

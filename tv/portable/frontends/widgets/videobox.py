@@ -56,7 +56,7 @@ class PlaybackControls(widgetset.HBox):
         self.pack_start(widgetutil.align_middle(self.forward))
         app.playback_manager.connect('will-play', self.handle_play)
         app.playback_manager.connect('will-pause', self.handle_pause)
-        app.playback_manager.connect('did-stop', self.handle_pause)
+        app.playback_manager.connect('did-stop', self.handle_stop)
 
     def make_button(self, name, continous):
         if continous:
@@ -64,15 +64,33 @@ class PlaybackControls(widgetset.HBox):
             button.set_delays(0.6, 0.3)
         else:
             button = imagebutton.ImageButton(name)
+        button.disable_widget()
         return button
     
+    def handle_new_selection(self, has_playable):
+        self.play.set_disabled(not has_playable)
+
     def handle_play(self, obj, duration):
+        self.previous.enable_widget()
+        self.stop.enable_widget()
+        self.play.enable_widget()
         self.play.set_image('pause')
-        self.play.queue_redraw()
+        self.forward.enable_widget()
+        self.fullscreen.enable_widget()
+        self.queue_redraw()
     
     def handle_pause(self, obj):
         self.play.set_image('play')
         self.play.queue_redraw()
+
+    def handle_stop(self, obj):
+        self.handle_pause(obj)
+        self.previous.disable_widget()
+        self.stop.disable_widget()
+        self.play.disable_widget()
+        self.forward.disable_widget()
+        self.fullscreen.disable_widget()
+        self.queue_redraw()
 
 class ProgressTime(widgetset.DrawingArea):
     def __init__(self):
@@ -318,3 +336,5 @@ class VideoBox(style.LowerBox):
         hbox.pack_start(volume_hbox)
         self.add(widgetutil.align_middle(hbox, 0, 0, 30, 30))
 
+    def handle_new_selection(self, has_playable):
+        self.controls.handle_new_selection(has_playable)

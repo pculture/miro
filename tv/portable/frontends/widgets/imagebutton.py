@@ -58,11 +58,12 @@ class ImageButtonMixin(object):
 
     def draw(self, context, layout):
         if self.state == 'pressed':
-            self.pressed_image.draw(
-                context, 0, 0, self.image.width, self.image.height)
-        elif self.get_disabled() and self.disabled_image:
-            self.disabled_image.draw(
-                context, 0, 0, self.image.width, self.image.height)
+            self.pressed_image.draw(context, 0, 0, self.image.width, self.image.height)
+        elif self.get_disabled():
+            if self.disabled_image is not None:
+                self.disabled_image.draw(context, 0, 0, self.image.width, self.image.height)
+            else:
+                self.image.draw(context, 0, 0, self.image.width, self.image.height, 0.5)
         else:
             self.image.draw(context, 0, 0, self.image.width, self.image.height)
 
