@@ -125,6 +125,7 @@ class TabRenderer(widgetset.CustomCellRenderer):
         layout.set_font(0.77)
         layout.set_text_color(widgetutil.WHITE)
         self.pack_bubbles(hbox, layout)
+        hbox.pack_space(2)
         alignment = cellpack.Alignment(hbox, yscale=0.0, yalign=0.5)
         alignment.render_layout(context)
 
@@ -144,7 +145,6 @@ class TabRenderer(widgetset.CustomCellRenderer):
                 margin=(1, radius, 1, radius))
         background.set_callback(self.draw_bubble, color)
         hbox.pack(cellpack.align_middle(background))
-        hbox.pack_space(8)
 
     def draw_bubble(self, context, x, y, width, height, color):
         radius = height / 2.0
