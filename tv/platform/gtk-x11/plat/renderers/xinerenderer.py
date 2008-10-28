@@ -61,6 +61,7 @@ class Renderer:
         logging.info("Xine video driver: %s", self.driver)
         self.__playing = False
         self.__volume = 0
+        self._old_state = None
 
     def set_widget(self, widget):
         widget.connect_after("realize", self.on_realize)
@@ -74,9 +75,26 @@ class Renderer:
         # to the ui thread to do things.
         threads.call_on_ui_thread(app.playback_manager.on_movie_finished)
 
+    def prepare_switch(self):
+        """This is called before attaching and detaching the playback window.
+        When the widget gets moved, it triggers an unrealize and then a realize
+        which causes the renderer to put us in the NULL state and the 0 time.
+        We save the state here, so that when we reconstitute ourselves in
+        on_realize, we return to the right place.
+        """
+        self._old_state = (self.__playing, self._filename, self.get_current_time())
+
     def on_realize(self, widget):
+        if self._old_state is not None:
+            playing, filename, progress = self._old_state
+            self.select_file(filename)
+            self.set_current_time(progress)
+            if playing:
+                self.play()
+
         # flush gdk output to ensure that our window is created
         gtk.gdk.flush()
+
         displayName = gtk.gdk.display_get_default().get_name()
         self.xine.attach(displayName,
                          widget.window.xid,
@@ -152,6 +170,7 @@ class Renderer:
 
     @wait_for_attach
     def select_file(self, filename):
+        self._filename = filename
         viz = config.get(options.VIZ_PLUGIN)
         self.xine.set_viz(viz)
         self.xine.select_file(filename)
