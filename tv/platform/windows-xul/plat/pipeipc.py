@@ -48,6 +48,7 @@ kernel32 = ctypes.windll.kernel32
 ERROR_IO_PENDING = 997
 ERROR_MORE_DATA = 234
 ERROR_PIPE_CONNECTED = 535
+ERROR_PIPE_LISTENING = 536
 FILE_FLAG_OVERLAPPED = 0x40000000
 INFINITE = 0xFFFF
 INVALID_HANDLE_VALUE = -1
@@ -147,6 +148,10 @@ class Server(object):
             if not rv:
                 if kernel32.GetLastError() == ERROR_IO_PENDING:
                     self._wait_for_pipe()
+                elif kernel32.GetLastError() == ERROR_PIPE_LISTENING:
+                    # Not sure why this happens, but it means we should just
+                    # start at _connect()
+                    return None
                 elif kernel32.GetLastError() != ERROR_MORE_DATA:
                     raise PipeError("ReadFile")
 
@@ -176,6 +181,8 @@ class Server(object):
             try:
                 self._connect()
                 data = self._read_in()
+                if data is None:
+                    continue
                 self.message_handler.handle_message(data)
                 self._write_out("OK")
                 kernel32.DisconnectNamedPipe(self.pipe)
