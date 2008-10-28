@@ -500,6 +500,7 @@ class TableView(Widget):
         self.data_source.initWithModel_(self.model)
         self.tableview.setDataSource_(self.data_source)
         self.tableview.setVerticalMotionCanBeginDrag_(YES)
+        self.tableview.setColumnAutoresizingStyle_(NSTableViewNoColumnAutoresizing)
         self.draws_selection = True
         self.row_height_set = False
         self.set_fixed_height(False)
@@ -701,6 +702,7 @@ class TableView(Widget):
         column.headerCell().setStringValue_(title)
         column.setEditable_(NO)
         column.setMinWidth_(min_width)
+        column.setResizingMask_(NSTableColumnNoResizing)
         renderer.setDataCell_(column)
         self.renderers.append(renderer)
         self.tableview.addTableColumn_(column)
