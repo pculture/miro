@@ -75,6 +75,10 @@ class Exporter(object):
         if self.currentFolder is not None:
             self._close_folder_entry()
     
+        site_tab_order = util.getSingletonDDBObject(views.siteTabOrder)
+        for tab in site_tab_order.getAllTabs():
+            self._write_site_entry(tab.obj)
+
         self.io.write(u'\t</body>\n')
         self.io.write(u'</opml>\n')
     
@@ -121,6 +125,18 @@ class Exporter(object):
             extraArgs = u''
 
         self.io.write(u'%s<outline %s text=%s xmlUrl=%s %s/>\n' % (spacer, feedtype, saxutils.quoteattr(thefeed.get_title()), saxutils.quoteattr(thefeed.getURL()), extraArgs))
+
+    def _write_site_entry(self, site):
+        quoted_url = saxutils.quoteattr(site.url)
+        if site.title:
+            quoted_text = saxutils.quoteattr(site.title)
+        else:
+            quoted_text = quoted_url
+
+        self.io.write(
+            u'\t\t<outline type="link" text=%s url=%s />\n' % (
+                    quoted_text,
+                    quoted_url))
 
 # =============================================================================
 
