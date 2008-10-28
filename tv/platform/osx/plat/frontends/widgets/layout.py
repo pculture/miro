@@ -318,6 +318,13 @@ class MiroSplitView (NSSplitView):
                     proposedMax)
         return proposedMax
 
+    def splitView_effectiveRect_forDrawnRect_ofDividerAtIndex_(self, sender, effective_rect, drawn_rect, index):
+        # 10.5 only delegate method, allows to widen the clickable zone of
+        # the splitview divider
+        effective_rect.origin.x -= 3
+        effective_rect.size.width += 6
+        return effective_rect
+
     def placeViewsWithLeftWidth_(self, left_width):
         if self.subviews().count() != 2:
             return
