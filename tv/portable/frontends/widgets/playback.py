@@ -113,9 +113,9 @@ class PlaybackManager (signals.SignalEmitter):
         else:
             detached_window_frame = widgetset.Rect.from_string(detached_window_frame)
         self.detached_window = DetachedWindow("", detached_window_frame)
-        align = widgetset.Alignment(bottom_pad=16, xscale=1.0, yscale=1.0)
-        align.add(self.video_display.widget)
-        self.detached_window.set_content_widget(align)
+        self.align = widgetset.Alignment(bottom_pad=16, xscale=1.0, yscale=1.0)
+        self.align.add(self.video_display.widget)
+        self.detached_window.set_content_widget(self.align)
         self.detached_window.show()
     
     def finish_detached_playback(self, stop_playback):
