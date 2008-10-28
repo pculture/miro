@@ -144,6 +144,7 @@ class TabRenderer(widgetset.CustomCellRenderer):
                 margin=(1, radius, 1, radius))
         background.set_callback(self.draw_bubble, color)
         hbox.pack(cellpack.align_middle(background))
+        hbox.pack_space(8)
 
     def draw_bubble(self, context, x, y, width, height, color):
         radius = height / 2.0
