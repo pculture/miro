@@ -59,8 +59,8 @@ class Renderer:
         self.attached = False
         self.driver = config.get(options.XINE_DRIVER)
         logging.info("Xine video driver: %s", self.driver)
-        self.__playing = False
-        self.__volume = 0
+        self._playing = False
+        self._volume = 0
         self._old_state = None
 
     def set_widget(self, widget):
@@ -82,7 +82,7 @@ class Renderer:
         We save the state here, so that when we reconstitute ourselves in
         on_realize, we return to the right place.
         """
-        self._old_state = (self.__playing, self._filename, self.get_current_time())
+        self._old_state = (self._playing, self._filename, self.get_current_time())
 
     def on_realize(self, widget):
         if self._old_state is not None:
@@ -216,15 +216,15 @@ class Renderer:
         # off, seek, pause, and turn the volume back on.  that allows us to
         # seek, remain paused, and doesn't cause a hiccup in sound.
 
-        if self.__playing:
+        if self._playing:
             self.xine.seek(int(seconds * 1000))
 
         else:
-            self.__playing = True
+            self._playing = True
             self.xine.set_volume(0)
             self.xine.seek(int(seconds * 1000))
             self.pause()
-            self.set_volume(self.__volume)
+            self.set_volume(self._volume)
 
     def get_duration(self):
         try:
@@ -237,19 +237,19 @@ class Renderer:
 
     @wait_for_attach
     def set_volume(self, level):
-        self.__volume = level
+        self._volume = level
         self.xine.set_volume(int(level * 100))
 
     @wait_for_attach
     def play(self):
         self.xine.play()
-        self.__playing = True
+        self._playing = True
 
     @wait_for_attach
     def pause(self):
-        if self.__playing:
+        if self._playing:
             self.xine.pause()
-            self.__playing = False
+            self._playing = False
 
     stop = pause
     reset = pause
