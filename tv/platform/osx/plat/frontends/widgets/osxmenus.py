@@ -39,6 +39,7 @@ from miro.menubar import menubar, Menu, MenuItem, Separator, Key
 from miro.menubar import MOD, CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import menus
+from miro.plat.frontends.widgets import wrappermap
 
 class MenuHandler(NSObject):
     def initWithAction_(self, action):
@@ -61,7 +62,10 @@ class MenuHandler(NSObject):
             NSApp().unhideAllApplications_(None)
 
         elif self.action == "CloseWindow":
-            NSApplication.sharedApplication().keyWindow().orderOut_(sender)
+            key_window =  NSApplication.sharedApplication().keyWindow()
+            if key_window is not None:
+                window = wrappermap.wrapper(key_window)
+                window.close()
 
         elif self.action == "Cut":
             NSApp().sendAction_to_from_("cut:", None, sender)

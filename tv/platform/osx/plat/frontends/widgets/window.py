@@ -109,7 +109,7 @@ class Window(signals.SignalEmitter):
         self.nswindow.makeMainWindow()
 
     def close(self):
-        self.nswindow.orderOut_(nil)
+        self.destroy()
 
     def destroy(self):
         self.nswindow.close()
@@ -156,6 +156,8 @@ class MainWindow(Window):
     def __init__(self, title, rect):
         Window.__init__(self, title, rect)
         self.nswindow.setReleasedWhenClosed_(NO)
+    def close(self):
+        self.nswindow.orderOut_(nil)
 
 class DialogBase(object):
     def __init__(self):

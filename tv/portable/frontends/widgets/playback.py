@@ -46,7 +46,6 @@ class PlaybackManager (signals.SignalEmitter):
         signals.SignalEmitter.__init__(self)
         self.video_display = None
         self.detached_window = None
-        self.detached_window_close_handler = None
         self.previous_left_width = 0
         self.previous_left_widget = None
         self.is_fullscreen = False
@@ -113,18 +112,16 @@ class PlaybackManager (signals.SignalEmitter):
             detached_window_frame = widgetset.Rect(0, 0, 800, 600)
         else:
             detached_window_frame = widgetset.Rect.from_string(detached_window_frame)
-        self.detached_window = widgetset.Window("", detached_window_frame)
+        self.detached_window = DetachedWindow("", detached_window_frame)
         align = widgetset.Alignment(bottom_pad=16, xscale=1.0, yscale=1.0)
         align.add(self.video_display.widget)
         self.detached_window.set_content_widget(align)
-        self.detached_window_close_handler = self.detached_window.connect('will-close', self.on_detached_window_close)
         self.detached_window.show()
     
     def finish_detached_playback(self):
         config.set(prefs.DETACHED_WINDOW_FRAME, str(self.detached_window.get_frame()))
         config.save()
-        self.detached_window.disconnect(self.detached_window_close_handler)
-        self.detached_window_close_handler = None
+        self.video_display.cleanup()
         self.detached_window.close()
         self.detached_window = None
     
@@ -361,3 +358,16 @@ class PlaybackManager (signals.SignalEmitter):
         self.finish_attached_playback(False)
         self.prepare_detached_playback()
         self.schedule_update()
+
+
+class DetachedWindow (widgetset.Window):
+
+    def __init__(self, title, rect):
+        widgetset.Window.__init__(self, title, rect)
+        self.closing = False
+
+    def close(self):
+        if not self.closing:
+            self.closing = True
+            app.playback_manager.stop()
+            widgetset.Window.close(self)
