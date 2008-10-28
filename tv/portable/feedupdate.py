@@ -66,7 +66,8 @@ class FeedUpdateQueue(object):
         if self.callback_handles:
             for callback_handle in self.callback_handles.pop(feed.id):
                 feed.disconnect(callback_handle)
-        self.currently_updating.remove(feed)
+        if feed in self.currently_updating:
+            self.currently_updating.remove(feed)
         self.run_update_queue()
 
     def on_feed_removed(self, feed, id):
