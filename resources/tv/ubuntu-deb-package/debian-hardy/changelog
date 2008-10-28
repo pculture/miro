@@ -1,3 +1,15 @@
+miro (1.2.8-0pcf1) hardy; urgency=low
+
+  * #10656 FIXED youtube downloads stopped working
+
+ -- Will Kahn-Greene <will.guaraldi@pculture.org>  Sun, 26 Oct 2008 20:38:54 -0400
+
+miro (1.2.7-0pcf3) hardy; urgency=low
+
+  * Redoing the package to fix packaging problems
+
+ -- Will Kahn-Greene <will.guaraldi@pculture.org>  Mon, 29 Sep 2008 14:12:13 -0400
+
 miro (1.2.7-0pcf2) hardy; urgency=low
 
   * Fixed not installing xine_extrator

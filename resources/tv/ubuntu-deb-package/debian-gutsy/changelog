@@ -1,3 +1,9 @@
+miro (1.2.8-0pcf1) gutsy; urgency=low
+
+  * #10656 FIXED youtube downloads stopped working
+
+ -- Will Kahn-Greene <will.guaraldi@pculture.org>  Sun, 26 Oct 2008 20:38:54 -0400
+
 miro (1.2.7-0pcf1) gutsy; urgency=low
 
   * #10291 FIXED adding channels via the command line crashed miro
