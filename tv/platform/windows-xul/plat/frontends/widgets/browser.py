@@ -29,6 +29,7 @@
 """browser.py -- WebBrowser widget."""
 
 from miro.frontends.widgets.gtk import wrappermap
+from miro.frontends.widgets.gtk.persistentwindow import PersistentWindow
 from miro.frontends.widgets.gtk.widgetset import Widget
 
 import gtk
@@ -36,92 +37,43 @@ import gobject
 
 from miro.plat.frontends.widgets import xulrunnerbrowser
 
-class BrowserWidget(gtk.DrawingArea):
+class BrowserWidget(PersistentWindow):
     def __init__(self):
-        gtk.DrawingArea.__init__(self)
+        PersistentWindow.__init__(self)
         self.browser = None
-        self.pending_url = None
         self.set_size_request(200, 100) # seems like a reasonable default
+        self.set_event_mask(gtk.gdk.EXPOSURE_MASK)
+        self.browser = xulrunnerbrowser.XULRunnerBrowser(
+                self.persistent_window.handle, 0, 0, 1, 1)
+        self.browser.set_callback_object(self)
 
     def navigate(self, url):
-        if self.browser:
-            self.browser.load_uri(url)
-        else:
-            self.pending_url = url
-
-    def load_pending_url(self):
-        if self.pending_url:
-            self.browser.load_uri(self.pending_url)
-            self.pending_url = None
+        self.browser.load_uri(url)
 
     def do_realize(self):
-        gtk.DrawingArea.do_realize(self)
-        if self.browser is None:
-            self._initial_realize()
-        else:
-            self._re_realize()
-
-    def _initial_realize(self):
-        """Handle realizing the first time."""
-
-        # The tricky thing here is that XULRunner doesn't cope well with it's
-        # window being deleted.  To workaround that, we manage our own GDK
-        # window that will not be deleted until we are destroyed.
-
-        self.browser_window = gtk.gdk.Window(self.window,
-                x=0, y=0, width=self.allocation.width,
-                height=self.allocation.height,
-                window_type=gtk.gdk.WINDOW_CHILD,
-                wclass=gtk.gdk.INPUT_OUTPUT,
-                event_mask=gtk.gdk.EXPOSURE_MASK)
-        self.browser_window.show()
-
-        self.browser = xulrunnerbrowser.XULRunnerBrowser(
-                self.browser_window.handle, 0, 0, self.allocation.width,
-                self.allocation.height)
-        self.browser.set_callback_object(self)
-        self.load_pending_url()
-
-    def _re_realize(self):
-        """Handle realizing the second time and afterwards."""
-
-        # At this point, we already have a browser object and a window.
-        # However, the window has reparented and hidden in do_unrealize(), so
-        # we have to reverse that.
-        
-        self.browser_window.reparent(self.window, 0, 0)
-        self.browser_window.resize(self.allocation.width,
-                self.allocation.height)
-        self.browser_window.show()
-        self.browser_window.set_events(gtk.gdk.EXPOSURE_MASK)
+        PersistentWindow.do_realize(self)
         self.browser.resize(0, 0, self.allocation.width, 
                 self.allocation.height)
         self.browser.enable()
 
     def do_unrealize(self):
-        # To prevent our window from being destroyed, reparent it under our
-        # top-level window.
         self.browser.disable()
-        self.browser_window.hide()
-        self.browser_window.reparent(self.window.get_toplevel(), 0, 0)
-        gtk.DrawingArea.do_unrealize(self)
+        PersistentWindow.do_unrealize(self)
 
     def do_destroy(self):
         # This seems to be able to get called after our browser attribute no
         # longer exists.  Double check to make sure that's not the case.
         if hasattr(self, 'browser') and self.browser is not None:
             self.browser.destroy()
-        if hasattr(self, 'browser_window'):
-            self.browser_window.destroy()
+        PersistentWindow.do_destroy(self)
 
     def do_focus_in_event(self, event):
-        gtk.DrawingArea.do_focus_in_event(self, event)
+        PersistentWindow.do_focus_in_event(self, event)
         self.browser.focus()
 
     def do_size_allocate(self, rect):
-        gtk.DrawingArea.do_size_allocate(self, rect)
+        PersistentWindow.do_size_allocate(self, rect)
         if self.flags() & gtk.REALIZED:
-            self.browser_window.resize(rect.width, rect.height)
             self.browser.resize(0, 0, rect.width, rect.height)
 
     def on_browser_focus(self, forward):
