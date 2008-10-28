@@ -26,6 +26,12 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+# Make sure we can load the modules that Py2exe bundles for us
+import sys
+exe = sys.executable
+exe_dir = exe[:exe.rfind('\\')]
+sys.path.append(exe_dir + '\\library.zip')
+
 import ctypes
 from ctypes import byref
 import glob
@@ -33,17 +39,15 @@ import os
 import sys
 from time import sleep, time
 
-path_list = os.environ.get('PATH', '').split(';')
-path_list.insert(0, 'plugins')
-os.environ['PATH'] = ';'.join(path_list)
-
 # load the DLL
 libvlc = ctypes.cdll.libvlc
 # set up the function signatures
 libvlc.libvlc_new.restype = ctypes.c_void_p
-libvlc.libvlc_playlist_get_input.restype = ctypes.c_void_p
-libvlc.libvlc_input_get_position.restype = ctypes.c_float
-libvlc.libvlc_input_get_length.restype = ctypes.c_longlong
+libvlc.libvlc_media_player_new.restype = ctypes.c_void_p
+libvlc.libvlc_media_new.restype = ctypes.c_void_p
+libvlc.libvlc_media_player_get_length.restype = ctypes.c_longlong
+libvlc.libvlc_media_player_get_position.restype = ctypes.c_float
+libvlc.libvlc_exception_init.restype = None
 
 class VLCException(ctypes.Structure):
     _fields_ = [
@@ -75,87 +79,57 @@ def init_vlc(*args):
     check_exception()
     return vlc
 
-vlc = init_vlc( "vlc", "--noaudio", 
-    '--vout', 'image', 
-    '--quiet', '--nostats', '--intf', 'dummy', '--plugin-path', 'vlc-plugins')
-
-def setup_playlist(video_path, thumbnail_path):
-    thumb_split = os.path.splitext(thumbnail_path)
-    options = make_string_list('image-out-prefix=%s-temp' % thumb_split[0],
-            'image-out-format=%s' % thumb_split[1][1:])
-    libvlc.libvlc_playlist_add_extended(vlc, video_path, None, len(options),
-            options, byref(exception))
-    check_exception()
-    libvlc.libvlc_playlist_play(vlc, -1, 0, None, byref(exception))
-    check_exception()
-
-def wait_for_input():
+def wait_for_play(media_player):
     while True:
-        input = libvlc.libvlc_playlist_get_input(vlc, None)
-        if input != None:
-            return input
-
-def wait_for_vout(input):
-    starttime = time()
-    while True:
-        if time() - starttime > 4.0:
-            return False
-        vout_exists = libvlc.libvlc_input_has_vout(input, byref(exception))
+        state = libvlc.libvlc_media_player_get_state(media_player, 
+                byref(exception))
         check_exception()
-        if vout_exists:
-            return True
-        sleep(0.1)
-
-def temp_snapshot_path(thumbnail_path, index):
-    start, ext = os.path.splitext(thumbnail_path)
-    return '%s-temp%.6i%s' % (start, index, ext)
-
-def delete_temp_snapshots(path):
-    start, ext = os.path.splitext(path)
-    temp_snapshots = glob.glob('%s-temp*%s' % (start, ext))
-    for path in temp_snapshots:
-        try:
-            os.remove(path)
-        except:
-            pass
-
-def wait_for_snapshot(thumbnail_path):
-    while True:
-        if os.path.exists(temp_snapshot_path(thumbnail_path, 1)):
-            # check for the second snapshot because that means the 1st
-            # snapshot is definitely done writing
-            os.rename(temp_snapshot_path(thumbnail_path, 0), thumbnail_path)
+        if state in (3, 8, 9):
+            # Break on the PLAYING, ENDED or ERROR states
             break
-        input = libvlc.libvlc_playlist_get_input(vlc, None)
-        if input is None:
-            break
-        sleep(0.1)
-
-def stop_input():
-    libvlc.libvlc_playlist_clear(vlc, byref(exception))
-    check_exception()
-    #libvlc.libvlc_playlist_stop(vlc, byref(exception))
-    #check_exception()
-    while True:
-        input = libvlc.libvlc_playlist_get_input(vlc, None)
-        if input is None:
-            break
-        sleep(0.1)
+        else:
+            sleep(0.1)
 
 def make_snapshot(video_path, thumbnail_path):
     if os.path.exists(thumbnail_path):
         os.remove(thumbnail_path)
-    setup_playlist(video_path, thumbnail_path)
-    input = wait_for_input()
-    libvlc.libvlc_input_set_position(input, ctypes.c_float(0.5), byref(exception))
+    mrl = 'file://%s' % video_path
+
+    vlc = init_vlc( "vlc", "--noaudio", 
+            '--vout', 'dummy', 
+            '--no-video-title-show',
+            '--quiet', '--nostats', '--intf', 'dummy', 
+            '--plugin-path', 'vlc-plugins')
+
+
+    media_player = libvlc.libvlc_media_player_new(vlc, byref(exception))
     check_exception()
-    if wait_for_vout(input):
-        wait_for_snapshot(thumbnail_path)
-    time = libvlc.libvlc_input_get_length(input, byref(exception))
+    media = libvlc.libvlc_media_new(vlc, ctypes.c_char_p(mrl),
+            byref(exception))
     check_exception()
-    stop_input()
-    delete_temp_snapshots(thumbnail_path)
-    print "Miro-Movie-Data-Length: %d" % (time)
+    libvlc.libvlc_media_player_set_media(media_player, media,
+            byref(exception))
+    check_exception()
+    libvlc.libvlc_media_player_play(media_player, byref(exception))
+    check_exception()
+
+    wait_for_play(media_player)
+    length = libvlc.libvlc_media_player_get_length(media_player,
+            byref(exception))
+    check_exception()
+
+    libvlc.libvlc_media_player_set_position(media_player, ctypes.c_float(0.5),
+            byref(exception))
+    check_exception()
+    sleep(0.5) # allow a little time for VLC to seek
+    libvlc.libvlc_video_take_snapshot(media_player, 
+            ctypes.c_char_p(thumbnail_path),
+            ctypes.c_int(0), ctypes.c_int(0),
+            byref(exception))
+    check_exception()
+    sleep(0.5) # allow a little time for VLC to take the snapshot
+
+    print "Miro-Movie-Data-Length: %d" % (length)
     if os.path.exists(thumbnail_path):
         print "Miro-Movie-Data-Thumbnail: Success"
     else:
@@ -165,6 +139,7 @@ if __name__ == '__main__':
     try:
         make_snapshot(sys.argv[1], sys.argv[2])
     except Exception, e:
-        print e
+        import traceback
+        traceback.print_exc()
         print "Miro-Movie-Data-Length: -1"
         print "Miro-Movie-Data-Thumbnail: Failure"
