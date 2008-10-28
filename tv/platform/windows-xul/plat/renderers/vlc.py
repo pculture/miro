@@ -121,22 +121,8 @@ class VLCRenderer:
             gobject.timeout_add(500, self.do_schedule_update)
 
     def set_widget(self, widget):
-        widget.connect("realize", self.on_realize)
-        widget.connect("unrealize", self.on_unrealize)
-        self.widget = widget
-        if widget.flags() & gtk.REALIZED:
-            # Check if the widget is already realized
-            self.on_unrealize(widget)
-
-    def on_realize(self, widget):
-        hwnd = widget.window.handle
+        hwnd = widget.persistent_window.handle
         libvlc.libvlc_media_player_set_drawable(self.media_player, hwnd,
-                self.exc.ref())
-        self.exc.check()
-
-    def on_unrealize(self, widget):
-        self.reset()
-        libvlc.libvlc_media_player_set_drawable(self.media_player, 0,
                 self.exc.ref())
         self.exc.check()
 

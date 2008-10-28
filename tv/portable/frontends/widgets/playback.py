@@ -121,6 +121,7 @@ class PlaybackManager (signals.SignalEmitter):
     def finish_detached_playback(self, stop_playback):
         config.set(prefs.DETACHED_WINDOW_FRAME, str(self.detached_window.get_frame()))
         config.save()
+        self.align.remove()
         self.detached_window.close(stop_playback)
         self.detached_window = None
     

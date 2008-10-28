@@ -39,83 +39,41 @@ from miro.plat import options
 from miro.plat import resources
 from miro.plat.frontends.widgets import threads
 
-def wait_for_attach(func):
-    """Many xine calls can't be made until we attach the object to a X window.
-    This decorator delays method calls until then.
-    """
-    def wait_for_attach_wrapper(self, *args):
-        if self.attached:
-            func(self, *args)
-        else:
-            self.attach_queue.append((func, args))
-    return wait_for_attach_wrapper
-
 class Renderer:
     def __init__(self):
         logging.info("Xine version:      %s", xine.getXineVersion())
         self.xine = xine.Xine()
         self.xine.set_eos_callback(self.on_eos)
-        self.attach_queue = []
-        self.attached = False
         self.driver = config.get(options.XINE_DRIVER)
         logging.info("Xine video driver: %s", self.driver)
         self._playing = False
         self._volume = 0
-        self._old_state = None
 
     def set_widget(self, widget):
-        widget.connect_after("realize", self.on_realize)
-        widget.connect("unrealize", self.on_unrealize)
+        widget.connect("destroy", self.on_destroy)
         widget.connect("configure-event", self.on_configure_event)
         widget.connect("expose-event", self.on_expose_event)
         self.widget = widget
+
+        # flush gdk output to ensure that the window we're passing to xine has
+        # been created
+        gtk.gdk.flush()
+        displayName = gtk.gdk.display_get_default().get_name()
+        self.xine.attach(displayName,
+                         widget.persistent_window.xid,
+                         self.driver,
+                         int(options.shouldSyncX),
+                         int(config.get(options.USE_XINE_XV_HACK)))
+        self.gc = widget.persistent_window.new_gc()
+        self.gc.foreground = gtk.gdk.color_parse("black")
 
     def on_eos(self):
         # on_eos gets called by one of the xine threads, so we want to switch
         # to the ui thread to do things.
         threads.call_on_ui_thread(app.playback_manager.on_movie_finished)
 
-    def prepare_switch(self):
-        """This is called before attaching and detaching the playback window.
-        When the widget gets moved, it triggers an unrealize and then a realize
-        which causes the renderer to put us in the NULL state and the 0 time.
-        We save the state here, so that when we reconstitute ourselves in
-        on_realize, we return to the right place.
-        """
-        self._old_state = (self._playing, self._filename, self.get_current_time())
-
-    def on_realize(self, widget):
-        if self._old_state is not None:
-            playing, filename, progress = self._old_state
-            self.select_file(filename)
-            self.set_current_time(progress)
-            if playing:
-                self.play()
-
-        # flush gdk output to ensure that our window is created
-        gtk.gdk.flush()
-
-        displayName = gtk.gdk.display_get_default().get_name()
-        self.xine.attach(displayName,
-                         widget.window.xid,
-                         self.driver,
-                         int(options.shouldSyncX),
-                         int(config.get(options.USE_XINE_XV_HACK)))
-        self.attached = True
-        for func, args in self.attach_queue:
-            try:
-                func(self, *args)
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
-                logging.exception("Exception in attach_queue function")
-        self.attach_queue = []
-        self.gc = widget.window.new_gc()
-        self.gc.foreground = gtk.gdk.color_parse("black")
-
-    def on_unrealize(self, widget):
+    def on_destroy(self, widget):
         self.xine.detach()
-        self.attached = False
 
     def on_configure_event(self, widget, event):
         self.xine.set_area(event.x, event.y, event.width, event.height)
@@ -168,8 +126,8 @@ class Renderer:
     def change_visualization(self, value):
         pass
 
-    @wait_for_attach
     def select_file(self, filename):
+        print 'selecting'
         self._filename = filename
         viz = config.get(options.VIZ_PLUGIN)
         self.xine.set_viz(viz)
@@ -186,6 +144,7 @@ class Renderer:
 
         gobject.timeout_add(500, expose_workaround)
         self.seek(0)
+        print 'done'
 
     def get_progress(self):
         try:
@@ -207,7 +166,6 @@ class Renderer:
     def set_current_time(self, seconds):
         self.seek(seconds)
 
-    @wait_for_attach
     def seek(self, seconds):
         # this is really funky.  what's going on here is that xine-lib doesn't
         # provide a way to seek while paused.  if you seek, then it induces
@@ -235,17 +193,14 @@ class Renderer:
         except:
             logging.exception("get_duration: caught exception")
 
-    @wait_for_attach
     def set_volume(self, level):
         self._volume = level
         self.xine.set_volume(int(level * 100))
 
-    @wait_for_attach
     def play(self):
         self.xine.play()
         self._playing = True
 
-    @wait_for_attach
     def pause(self):
         if self._playing:
             self.xine.pause()

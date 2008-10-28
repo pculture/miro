@@ -41,6 +41,7 @@ from miro import messages
 from miro import displaytext
 from miro.plat import screensaver
 from miro.frontends.widgets.gtk.widgetset import Widget, VBox, Label, HBox, Alignment, Background
+from miro.frontends.widgets.gtk.persistentwindow import PersistentWindow
 
 BLACK = (0.0, 0.0, 0.0)
 WHITE = (1.0, 1.0, 1.0)
@@ -137,11 +138,12 @@ def can_play_file(path, yes_callback, no_callback):
     no_callback()
 
 class VideoWidget(Widget):
-    def __init__(self):
+    def __init__(self, renderer):
         Widget.__init__(self)
-        self.set_widget(gtk.DrawingArea())
+        self.set_widget(PersistentWindow())
         self._widget.set_double_buffered(False)
         self._widget.add_events(gtk.gdk.POINTER_MOTION_MASK)
+        renderer.set_widget(self._widget)
 
 class VideoDetailsWidget(Background):
     def __init__(self):
@@ -330,13 +332,12 @@ class VideoRenderer(VBox):
         else:
             self.renderer = NullRenderer()
 
-        self._video_widget = VideoWidget()
+        self._video_widget = VideoWidget(self.renderer)
         self.pack_start(self._video_widget, expand=True)
 
         self._video_details = VideoDetailsWidget()
         self.pack_start(self._video_details)
 
-        self.renderer.set_widget(self._video_widget._widget)
         self.hide_controls_timeout = None
         self.motion_handler = None
         self.videobox_motion_handler = None
@@ -418,13 +419,10 @@ class VideoRenderer(VBox):
         _window().fullscreen()
 
     def prepare_switch_to_attached_playback(self):
-        if hasattr(app.renderer, "prepare_switch"):
-            app.renderer.prepare_switch()
-        self._widget.get_parent().remove(self._widget)
+        pass
 
     def prepare_switch_to_detached_playback(self):
-        if hasattr(app.renderer, "prepare_switch"):
-            app.renderer.prepare_switch()
+        pass
 
     def on_mouse_motion(self, widget, event):
         if not _videobox_widget().props.visible:
