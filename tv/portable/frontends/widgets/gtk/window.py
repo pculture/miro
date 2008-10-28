@@ -187,6 +187,7 @@ class Window(WindowBase):
             # window that contains a GTKMozEmbed widget.
             child.hide()
             self._window.remove(child)
+            child.destroy()
         self._window.destroy()
         alive_windows.discard(self)
 

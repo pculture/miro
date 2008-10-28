@@ -63,7 +63,7 @@ class BrowserWidget(PersistentWindow):
     def do_destroy(self):
         # This seems to be able to get called after our browser attribute no
         # longer exists.  Double check to make sure that's not the case.
-        if hasattr(self, 'browser') and self.browser is not None:
+        if hasattr(self, 'browser'):
             self.browser.destroy()
         PersistentWindow.do_destroy(self)
 
