@@ -293,7 +293,8 @@ class MiroSplitView (NSSplitView):
         self = NSSplitView.initWithFrame_(self, rect)
         self.setVertical_(YES)
         self.setDelegate_(self)
-        self.color = NSColor.colorWithDeviceWhite_alpha_(148.0/255.0, 1.0)
+        self.color = NSColor.colorWithDeviceWhite_alpha_(64.0/255.0, 1.0)
+        self.color2 = NSColor.colorWithDeviceWhite_alpha_(135.0/255.0, 1.0)
         self.min_left_width = self.min_right_width = 0
         return self
 
@@ -366,7 +367,10 @@ class MiroSplitView (NSSplitView):
         p1 = rect.origin
         p1.x += 0.5
         p2 = NSPoint(p1.x, rect.size.height)
-        self.color.set()
+        if self.window().isMainWindow():
+            self.color.set()
+        else:
+            self.color2.set()
         NSBezierPath.strokeLineFromPoint_toPoint_(p1, p2)
 
     def setDividerNeedsDisplay(self):

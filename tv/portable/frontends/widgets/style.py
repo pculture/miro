@@ -63,10 +63,11 @@ class LowerBox(widgetset.Background):
         widgetset.Background.__init__(self)
 
         self.image = widgetutil.make_surface('wtexture')
-        self.separator_color = (170.0/255.0, 170.0/255.0, 170.0/255.0)
+        self.separator_color = (64.0/255.0, 64.0/255.0, 64.0/255.0)
         self.highlight_color = (218.0/255.0, 218.0/255.0, 218.0/255.0)
 
         self.image_inactive = widgetutil.make_surface('wtexture_inactive')
+        self.separator_color_inactive = (135.0/255.0, 135.0/255.0, 135.0/255.0)
         self.highlight_color_inactive = (239.0/255.0, 239.0/255.0, 239.0/255.0)
 
     def size_request(self, layout):
@@ -76,15 +77,17 @@ class LowerBox(widgetset.Background):
         if self.get_window().is_active():
             image = self.image
             highlight_color = self.highlight_color
+            separator_color = self.separator_color
         else:
             image = self.image_inactive
             highlight_color = self.highlight_color_inactive
+            separator_color = self.separator_color_inactive
         image.draw(context, 0, 0, context.width, context.height)
 
         context.set_line_width(1)
         context.move_to(0, 0.5)
         context.line_to(context.width, 0.5)
-        context.set_color(self.separator_color)
+        context.set_color(separator_color)
         context.stroke()
 
         context.move_to(0, 1.5)

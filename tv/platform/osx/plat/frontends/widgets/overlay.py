@@ -389,10 +389,10 @@ class OverlayPaletteView (NSView):
         transform.translateXBy_yBy_(0.5, 0.5)
         path.transformUsingAffineTransform_(transform)
         
-        NSColor.colorWithCalibratedWhite_alpha_(0.0, 0.6).set()
+        NSColor.colorWithDeviceWhite_alpha_(0.0, 0.6).set()
         path.fill()
         
-        NSColor.colorWithCalibratedWhite_alpha_(1.0, 0.6).set()
+        NSColor.colorWithDeviceWhite_alpha_(1.0, 0.6).set()
         path.setLineWidth_(lineWidth)
         path.stroke()
 
@@ -556,13 +556,13 @@ class SkipSeekButtonCell (NSButtonCell):
 ###############################################################################
 
 def getOverlayButtonImage(size):
-    fillColor = NSColor.colorWithCalibratedWhite_alpha_(190.0/255.0, 0.8)
-    strokeColor = NSColor.colorWithCalibratedWhite_alpha_(76.0/255.0, 0.8)
+    fillColor = NSColor.colorWithDeviceWhite_alpha_(190.0/255.0, 0.8)
+    strokeColor = NSColor.colorWithDeviceWhite_alpha_(76.0/255.0, 0.8)
     return makeOverlayButtonImage(size, fillColor, strokeColor)
 
 def getOverlayButtonAlternateImage(size):
-    fillColor = NSColor.colorWithCalibratedWhite_alpha_(220.0/255.0, 0.8)
-    strokeColor = NSColor.colorWithCalibratedWhite_alpha_(106.0/255.0, 0.8)
+    fillColor = NSColor.colorWithDeviceWhite_alpha_(220.0/255.0, 0.8)
+    strokeColor = NSColor.colorWithDeviceWhite_alpha_(106.0/255.0, 0.8)
     return makeOverlayButtonImage(size, fillColor, strokeColor)
 
 def makeOverlayButtonImage(size, fillColor, strokeColor):
