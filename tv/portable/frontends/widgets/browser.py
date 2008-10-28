@@ -64,6 +64,7 @@ class BrowserToolbar(widgetset.HBox):
     def __init__(self):
         widgetset.HBox.__init__(self)
 
+        self.set_size_request(-1, 25)
         self.create_signal('browser-reload')
         self.create_signal('browser-back')
         self.create_signal('browser-forward')
