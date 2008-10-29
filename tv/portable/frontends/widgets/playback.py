@@ -119,10 +119,10 @@ class PlaybackManager (signals.SignalEmitter):
         self.detached_window.set_content_widget(align)
         self.detached_window.show()
     
-    def finish_detached_playback(self, stop_playback):
+    def finish_detached_playback(self):
         config.set(prefs.DETACHED_WINDOW_FRAME, str(self.detached_window.get_frame()))
         config.save()
-        self.detached_window.close(stop_playback)
+        self.detached_window.close()
         self.detached_window = None
     
     def schedule_update(self):
@@ -198,7 +198,7 @@ class PlaybackManager (signals.SignalEmitter):
         if self.video_display is not None:
             self.video_display.stop()
             if self.detached_window is not None:
-                self.finish_detached_playback(True)
+                self.finish_detached_playback()
                 self.video_display.cleanup()
             else:
                 self.finish_attached_playback()
@@ -349,7 +349,7 @@ class PlaybackManager (signals.SignalEmitter):
     def switch_to_attached_playback(self):
         self.cancel_update_timer()
         self.video_display.prepare_switch_to_attached_playback()
-        self.finish_detached_playback(False)
+        self.finish_detached_playback()
         self.prepare_attached_playback()
         self.schedule_update()
     
@@ -367,9 +367,9 @@ class DetachedWindow (widgetset.Window):
         widgetset.Window.__init__(self, title, rect)
         self.closing = False
 
-    def close(self, stop_playing=True):
+    def close(self):
         if not self.closing:
             self.closing = True
-            if stop_playing:
+            if app.playback_manager.is_playing:
                 app.playback_manager.stop()
             widgetset.Window.close(self)
