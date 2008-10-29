@@ -39,6 +39,9 @@ import os
 import sys
 from time import sleep, time
 
+SEM_FAILCRITICALERRORS = 0x0001
+SEM_NOGPFAULTERRORBOX = 0x0002
+
 # load the DLL
 libvlc = ctypes.cdll.libvlc
 # set up the function signatures
@@ -52,6 +55,7 @@ libvlc.libvlc_exception_init.restype = None
 class VLCException(ctypes.Structure):
     _fields_ = [
             ('b_raised', ctypes.c_int),
+            ('i_code', ctypes.c_int),
             ('psz_message', ctypes.c_char_p)
     ]
 
@@ -65,9 +69,10 @@ class VLCError(Exception):
 
 def check_exception():
     if exception.b_raised:
+        code = exception.i_code
         msg = exception.psz_message
         libvlc.libvlc_exception_clear(byref(exception))
-        raise VLCError(msg)
+        raise VLCError("%s: %s" % (code, msg))
 
 def make_string_list(*args):
     ArgsArray = ctypes.c_char_p * len(args)
@@ -101,7 +106,6 @@ def make_snapshot(video_path, thumbnail_path):
             '--quiet', '--nostats', '--intf', 'dummy', 
             '--plugin-path', 'vlc-plugins')
 
-
     media_player = libvlc.libvlc_media_player_new(vlc, byref(exception))
     check_exception()
     media = libvlc.libvlc_media_new(vlc, ctypes.c_char_p(mrl),
@@ -128,6 +132,13 @@ def make_snapshot(video_path, thumbnail_path):
             byref(exception))
     check_exception()
     sleep(0.5) # allow a little time for VLC to take the snapshot
+    libvlc.libvlc_media_player_stop(media_player, byref(exception))
+    check_exception()
+    libvlc.libvlc_media_player_set_media(None, byref(exception))
+    check_exception()
+    libvlc.libvlc_media_release(media)
+    libvlc.libvlc_media_player_release(media_player)
+    libvlc.libvlc_release(vlc)
 
     print "Miro-Movie-Data-Length: %d" % (length)
     if os.path.exists(thumbnail_path):
@@ -137,6 +148,9 @@ def make_snapshot(video_path, thumbnail_path):
 
 if __name__ == '__main__':
     try:
+        # disable annoying windows popup
+        ctypes.windll.kernel32.SetErrorMode(SEM_NOGPFAULTERRORBOX | 
+                SEM_FAILCRITICALERRORS)
         make_snapshot(sys.argv[1], sys.argv[2])
     except Exception, e:
         import traceback

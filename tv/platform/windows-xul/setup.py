@@ -387,41 +387,6 @@ def isSystemDLL(pathname):
         return origIsSystemDLL(pathname)
 py2exe.build_exe.isSystemDLL = isSystemDLL
 
-class build_movie_data_util(Command):
-    description = "build the Miro Movie Data Utility"
-
-    user_options = [
-            ('build-dir=', 'd', "directory to build to"),
-    ]
-
-
-    def initialize_options(self):
-        self.build_dir = None
-        self.output = '%s_MovieData' % template_vars['shortAppName']
-
-    def finalize_options(self):
-        if self.build_dir == None:
-            build = self.distribution.get_command_obj('build')
-            self.build_dir = os.path.join(build.build_base, 'moviedata_util')
-
-    def run(self):
-        log.info("building movie data utility")
-
-        sources = [ os.path.join(platform_dir, 'moviedata_util.c') ]
-        python_base = sysconfig.get_config_var('prefix')
-        include_dirs = [ sysconfig.get_python_inc() ]
-        library_dirs = [ os.path.join(python_base, 'libs')]
-
-        compiler = new_compiler( verbose=self.verbose, dry_run=self.dry_run,
-                force=self.force)
-        sysconfig.customize_compiler(compiler)
-        objects = compiler.compile(sources, output_dir=self.build_dir,
-                include_dirs=include_dirs)
-
-        compiler.link_executable(objects, self.output,
-                library_dirs=library_dirs, output_dir=self.build_dir)
-
-
 class bdist_miro(Command):
     description = "Build Miro"
 
@@ -435,24 +400,12 @@ class bdist_miro(Command):
 
     def run(self):
         self.run_command('py2exe')
-        self.run_command('build_movie_data_util')
-        self.copy_movie_data_util()
         self.copy_ico()
 
     def copy_ico(self):
         dist_dir = self.get_finalized_command('py2exe').dist_dir
         self.copy_file("Miro.ico", os.path.join(dist_dir, "%s.ico" %
             template_vars['shortAppName']))
-
-    def copy_movie_data_util(self):
-        dist_dir = self.get_finalized_command('py2exe').dist_dir
-        build_cmd = self.distribution.get_command_obj('build_movie_data_util')
-        build_cmd.build_dir
-
-        exe_file = "%s.exe" % build_cmd.output
-        self.copy_file(os.path.join(build_cmd.build_dir, exe_file), dist_dir)
-        self.copy_file(os.path.join(platform_dir, "moviedata_util.py"),
-                dist_dir)
 
 class runmiro (Command):
     description = "build Miro and start it up"
@@ -667,8 +620,15 @@ if __name__ == "__main__":
                 'script': 'Miro_Downloader.py',
                 'dest_base': '%s_Downloader' % template_vars['shortAppName'],
                 'icon_resources': [(0, "Miro.ico")],
-            }
-            ],
+            },
+        ],
+        console =[
+            {
+                'script': 'moviedata_util.py',
+                'dest_base': '%s_MovieData' % template_vars['shortAppName'],
+                'icon_resources': [(0, "Miro.ico")],
+            },
+        ],
         ext_modules = ext_modules,
         packages = [
             'miro',
@@ -691,7 +651,6 @@ if __name__ == "__main__":
             'build_py': build_py,
             'build_ext': build_ext,
             'install_data': install_data,
-            'build_movie_data_util': build_movie_data_util,
             'bdist_miro': bdist_miro,
             'bdist_nsis': bdist_nsis,
             'runmiro': runmiro,
