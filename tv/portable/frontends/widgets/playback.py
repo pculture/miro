@@ -122,7 +122,7 @@ class PlaybackManager (signals.SignalEmitter):
     def finish_detached_playback(self):
         config.set(prefs.DETACHED_WINDOW_FRAME, str(self.detached_window.get_frame()))
         config.save()
-        self.detached_window.close()
+        self.detached_window.close(False)
         self.detached_window = None
     
     def schedule_update(self):
@@ -367,9 +367,9 @@ class DetachedWindow (widgetset.Window):
         widgetset.Window.__init__(self, title, rect)
         self.closing = False
 
-    def close(self):
+    def close(self, stop_playback=True):
         if not self.closing:
             self.closing = True
-            if app.playback_manager.is_playing:
+            if stop_playback:
                 app.playback_manager.stop()
             widgetset.Window.close(self)
