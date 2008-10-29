@@ -1,0 +1,13 @@
+Miro for Ubuntu Hardy
+---------------------
+
+ * The default movies directory in Ubuntu Hardy is 
+   ~/.miro/Movies instead of ~/Movies/Miro .
+
+ * The the non-video directory in Ubuntu Hardy is 
+   ~/.miro/Nonvideo instead of ~/Desktop .
+
+ * The autoupdate feature, which checks for new versions of Miro, 
+   has been disabled in the Ubuntu Hardy package.
+
+ -- Will Guaraldi <will.guaraldi@pculture.org>, Sun, 30 Mar 2008 15:42:06 -0400
