@@ -78,13 +78,14 @@ class PlaybackManager (signals.SignalEmitter):
         self.playlist = item_infos
         self.position = 0
         def if_yes():
-            self.video_display = VideoDisplay()
-            self.video_display.connect('removed', self.on_display_removed)
-            if config.get(prefs.PLAY_DETACHED):
-                self.prepare_detached_playback()
-            else:
-                self.prepare_attached_playback()
-            app.menu_manager.handle_playing_selection()
+            if not self.is_playing:
+                self.video_display = VideoDisplay()
+                self.video_display.connect('removed', self.on_display_removed)
+                if config.get(prefs.PLAY_DETACHED):
+                    self.prepare_detached_playback()
+                else:
+                    self.prepare_attached_playback()
+                app.menu_manager.handle_playing_selection()
             self._select_current()
             self.play()
 

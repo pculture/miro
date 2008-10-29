@@ -196,8 +196,9 @@ class VideoRenderer (Widget):
         self.video_window = None
 
     def detach_from_parent_window(self):
-        self.view.window().removeChildWindow_(self.video_window)
-        wrappermap.wrapper(self.view.window()).disconnect(self.window_moved_handler)
+        window = self.view.window()
+        window.removeChildWindow_(self.video_window)
+        wrappermap.wrapper(window).disconnect(self.window_moved_handler)
         self.window_moved_handler = None
 
     def reset(self):
@@ -293,6 +294,7 @@ class VideoRenderer (Widget):
 
     def prepare_switch_to_attached_playback(self):
         self.detach_from_parent_window()
+        self.remove_viewport()
         app.widgetapp.window.nswindow.makeKeyAndOrderFront_(nil)
 
     def prepare_switch_to_detached_playback(self):

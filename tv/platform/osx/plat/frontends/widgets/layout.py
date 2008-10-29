@@ -269,6 +269,9 @@ class Alignment(Bin):
         return int(round((total - size) * align))
 
     def place_children(self):
+        if self.child is None:
+            return
+
         total_width = self.viewport.placement.size.width
         total_height = self.viewport.placement.size.height
         total_width -= self.horizontal_pad()
