@@ -36,6 +36,7 @@ from StringIO import StringIO
 
 from miro import util
 from miro import feed
+from miro import guide
 from miro import views
 from miro import prefs
 from miro import config
@@ -145,6 +146,7 @@ class Importer(object):
         self.currentFolder = None
         self.ignoredFeeds = 0
         self.importedFeeds = 0
+        self.addedChannels = 0
 
     @eventloop.asIdle
     def import_subscriptions(self, pathname, showSummary=True):
@@ -189,7 +191,9 @@ class Importer(object):
             children = node.childNodes
             for child in children:
                 if hasattr(child, 'getAttribute'):
-                    if child.hasAttribute("xmlUrl"):
+                    if child.getAttribute('type') == 'link':
+                        self._handle_site_entry(child)
+                    elif child.hasAttribute("xmlUrl"):
                         self._handle_feed_entry(child)
                     else:
                         self._handle_folder_entry(child)
@@ -197,6 +201,14 @@ class Importer(object):
         except Exception, e:
             print e
             pass
+
+    def _handle_site_entry(self, entry):
+        url = entry.getAttribute("url")
+        title = entry.getAttribute("text")
+        if guide.getGuideByURL(url) is None:
+            new_guide = guide.ChannelGuide(url, [u'*'])
+            if title != url:
+                new_guide.setTitle(title)
 
     def _handle_feed_entry(self, entry):
         url = entry.getAttribute("xmlUrl")
