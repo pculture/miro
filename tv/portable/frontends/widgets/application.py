@@ -665,11 +665,12 @@ class Application:
     def do_quit(self):
         if self.window is not None:
             self.window.close()
-            self.window.destroy()
         if self.ui_initialized:
             if app.playback_manager.is_playing:
                 app.playback_manager.stop()
             app.display_manager.deselect_all_displays()
+        if self.window is not None:
+            self.window.destroy()
         app.controller.shutdown()
         self.quit_ui()
 
