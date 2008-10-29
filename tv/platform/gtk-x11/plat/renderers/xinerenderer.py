@@ -127,7 +127,6 @@ class Renderer:
         pass
 
     def select_file(self, filename):
-        print 'selecting'
         self._filename = filename
         viz = config.get(options.VIZ_PLUGIN)
         self.xine.set_viz(viz)
@@ -144,7 +143,6 @@ class Renderer:
 
         gobject.timeout_add(500, expose_workaround)
         self.seek(0)
-        print 'done'
 
     def get_progress(self):
         try:
