@@ -49,6 +49,7 @@ from miro.plat import resources
 from miro.plat.renderers.vlc import VLCRenderer
 from miro.plat.frontends.widgets import xulrunnerbrowser
 from miro.frontends.widgets.gtk import trayicon
+from miro.frontends.widgets.gtk import persistentwindow
 
 class WindowsApplication(Application):
     def run(self):
@@ -107,6 +108,8 @@ class WindowsApplication(Application):
             self.quit()
 
     def quit_ui(self):
+        for widget in persistentwindow.get_widgets():
+            widget.destroy()
         self.trayicon.set_visible(False)
         gtk.main_quit()
 

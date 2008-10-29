@@ -35,11 +35,14 @@ unrealized.
 
 import gtk
 import gobject
+import weakref
 
 _dummy_window = gtk.gdk.Window(None,
         x=0, y=0, width=1, height=1,
         window_type=gtk.gdk.WINDOW_TOPLEVEL,
         wclass=gtk.gdk.INPUT_OUTPUT, event_mask=0)
+
+_persistent_window_to_widget = weakref.WeakValueDictionary()
 
 class PersistentWindow(gtk.DrawingArea):
     """GTK Widget that keeps around a GDK window from the time it's realized
@@ -56,6 +59,7 @@ class PersistentWindow(gtk.DrawingArea):
         self.persistent_window = gtk.gdk.Window(_dummy_window,
                 x=0, y=0, width=1, height=1, window_type=gtk.gdk.WINDOW_CHILD,
                 wclass=gtk.gdk.INPUT_OUTPUT, event_mask=0)
+        _persistent_window_to_widget[self.persistent_window] = self
 
     def set_event_mask(self, event_mask):
         """Set the event mask for our window."""
@@ -91,3 +95,9 @@ class PersistentWindow(gtk.DrawingArea):
             # deleted
             pass
 gobject.type_register(PersistentWindow)
+
+def get_widgets():
+    retval = []
+    for window in _dummy_window.get_children():
+        retval.append(_persistent_window_to_widget[window])
+    return retval
