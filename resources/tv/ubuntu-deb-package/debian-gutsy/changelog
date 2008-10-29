@@ -1,3 +1,9 @@
+miro (1.2.8-0pcf2) gutsy; urgency=low
+
+  * FIXED a bug with the youtube downloads fix reducing startup time
+
+ -- Will Kahn-Greene <will.guaraldi@pculture.org>  Wed, 29 Oct 2008 13:57:49 -0400
+
 miro (1.2.8-0pcf1) gutsy; urgency=low
 
   * #10656 FIXED youtube downloads stopped working

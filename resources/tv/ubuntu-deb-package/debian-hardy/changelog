@@ -1,3 +1,9 @@
+miro (1.2.8-0pcf2) hardy; urgency=low
+
+  * FIXED a bug with the youtube downloads fix reducing startup time
+
+ -- Will Kahn-Greene <will.guaraldi@pculture.org>  Wed, 29 Oct 2008 13:58:51 -0400
+
 miro (1.2.8-0pcf1) hardy; urgency=low
 
   * #10656 FIXED youtube downloads stopped working

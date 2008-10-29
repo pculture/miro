@@ -1,7 +1,7 @@
 Source: miro
 Section: net
 Priority: optional
-Maintainer: Will Guaraldi <will.guaraldi@pculture.org>
+Maintainer: Will Kahn-Greene <will.guaraldi@pculture.org>
 Build-Depends: cdbs, 
                debhelper (>= 5), 
                python2.5, 
