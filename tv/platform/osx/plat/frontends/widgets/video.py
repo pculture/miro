@@ -129,9 +129,9 @@ class VideoOpener (object):
             qtmovie = self.cached_movie
         else:
             if utils.get_pyobjc_major_version() == 2:
-                qtmovie, error = QTMovie.alloc().initWithURL_error_(url, None)
+                qtmovie, error = QTMovie.movieWithURL_error_(url, None)
             else:
-                qtmovie, error = QTMovie.alloc().initWithURL_error_(url)
+                qtmovie, error = QTMovie.movieWithURL_error_(url)
             self.cached_movie = qtmovie
         return qtmovie
 
