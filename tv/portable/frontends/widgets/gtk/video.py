@@ -419,7 +419,7 @@ class VideoRenderer(VBox):
         _window().fullscreen()
 
     def prepare_switch_to_attached_playback(self):
-        pass
+        self._widget.get_parent().remove(self._widget)
 
     def prepare_switch_to_detached_playback(self):
         pass
