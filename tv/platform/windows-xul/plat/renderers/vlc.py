@@ -59,11 +59,14 @@ libvlc.libvlc_media_player_play.restype = None
 libvlc.libvlc_media_release.restype = None
 libvlc.libvlc_media_player_set_media.restype = None
 
+libvlc_MediaPlayerEndReached = 14
+
 class VLCError(Exception):
     pass
 
 class VLCException(ctypes.Structure):
     _fields_ = [
+            ('raised', ctypes.c_int),
             ('code', ctypes.c_int),
             ('message', ctypes.c_char_p)
     ]
@@ -76,10 +79,21 @@ class VLCException(ctypes.Structure):
         return ctypes.byref(self)
 
     def check(self):
-        if self.code:
+        if self.raised:
             msg = self.message
             libvlc.libvlc_exception_clear(self.ref())
             raise VLCError(repr(self.code) + " " + repr(msg))
+
+class VLCEvent(ctypes.Structure):
+    _fields_ = [
+            ('type', ctypes.c_int),
+            ('p_obj', ctypes.c_void_p),
+            ('arg1', ctypes.c_int),
+            ('arg2', ctypes.c_int),
+    ]
+
+VLC_EVENT_CALLBACK = ctypes.CFUNCTYPE(None, ctypes.POINTER(VLCEvent),
+        ctypes.c_void_p)
 
 def make_string_list(args):
     ArgsArray = ctypes.c_char_p * len(args)
@@ -103,22 +117,27 @@ class VLCRenderer:
         self.media_player = libvlc.libvlc_media_player_new(self.vlc,
                 self.exc.ref())
         self.exc.check()
+        event_manager = libvlc.libvlc_media_player_event_manager(
+                self.media_player, self.exc.ref())
+        self.exc.check()
+        self._callback_ref = VLC_EVENT_CALLBACK(self.event_callback)
+        libvlc.libvlc_event_attach(event_manager,
+                libvlc_MediaPlayerEndReached,
+                self._callback_ref, None, self.exc.ref())
+        self.exc.check()
         self.play_from_time = None
         self.started_playing = STOPPED
         self._duration = None
         self._rate = 1.0
 
-    def do_schedule_update(self):
-        if self.started_playing == PLAYING:
-            ct = self.get_current_time()
-            dur = self.get_duration()
+    def event_callback(self, p_event, p_user_data):
+        gobject.idle_add(self.handle_event, p_event[0])
 
-            # the 0.05 is for fudge-factor
-            if ct and dur and (dur <= ct + 0.05):
-                app.playback_manager.on_movie_finished()
-                return
-
-            gobject.timeout_add(500, self.do_schedule_update)
+    def handle_event(self, event):
+        if event.type == libvlc_MediaPlayerEndReached:
+            app.playback_manager.on_movie_finished()
+        else:
+            logging.warn("Unknown VLC event type: %s", event.type)
 
     def set_widget(self, widget):
         hwnd = widget.persistent_window.handle
@@ -158,8 +177,6 @@ class VLCRenderer:
         if self.play_from_time is not None:
             self.set_current_time(self.play_from_time)
             self.play_from_time = None
-
-        self.do_schedule_update()
 
     def pause(self):
         libvlc.libvlc_media_player_pause(self.media_player, self.exc.ref())
