@@ -75,8 +75,6 @@ Var SIMPLE_INSTALL
 !insertmacro un.GetOptions
 
 
-ReserveFile "iHeartMiro-installer-page.ini"
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Pages                                                                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -217,8 +215,6 @@ FunctionEnd
   "Please choose which optional components to install."
 !define MUI_PAGE_CUSTOMFUNCTION_PRE   "skip_if_simple_or_reinstall"
 !insertmacro MUI_PAGE_COMPONENTS
-
-; Page custom iHeartMiroInstall iHeartMiroInstallLeave
 
 ; Installation directory selection page
 !define MUI_PAGE_CUSTOMFUNCTION_PRE   "skip_if_simple_or_reinstall"
@@ -790,8 +786,6 @@ Function .onInit
   StrCpy $REINSTALL "1"
   ClearErrors
 
-  !insertmacro MUI_INSTALLOPTIONS_EXTRACT "iHeartMiro-installer-page.ini"
-
   GetTempFileName $TACKED_ON_FILE
   Delete "$TACKED_ON_FILE"  ; The above macro creates the file
   TackOn::writeToFile "$TACKED_ON_FILE"
@@ -1012,25 +1006,6 @@ DoneTorrentRegistration:
   !insertmacro checkExtensionHandled ".anx" ${SecRegisterAnx}
   !insertmacro checkExtensionHandled ".xvid" ${SecRegisterXvid}
   !insertmacro checkExtensionHandled ".3ivx" ${SecRegisterXvid}
-FunctionEnd
-
-Function iHeartMiroInstall
-  !insertmacro MUI_HEADER_TEXT "Install I Heart Miro?" "Go to ihearmiro.org to install the iHeartMiro firefox extension."
-  !insertmacro MUI_INSTALLOPTIONS_DISPLAY "iHeartMiro-installer-page.ini"
-FunctionEnd
-
-Function iHeartMiroInstallLeave
-;  !insertmacro MUI_INSTALLOPTIONS_READ $R0 "iHeartMiro-installer-page.ini" "Settings" "State"
-;  IntCmp $R0 1 InstallHeart
-;    SectionGetFlags ${SecIHeartMiro} $0
-;    IntOp $0 $0 & ~${SF_SELECTED}
-;    SectionSetFlags ${SecIHeartMiro} $0
-;    Return
-;  InstallHeart:
-;    SectionGetFlags ${SecIHeartMiro} $0
-;    IntOp $0 $0 | ${SF_SELECTED}
-;    SectionSetFlags ${SecIHeartMiro} $0
-;    Return
 FunctionEnd
 
 Section -Post

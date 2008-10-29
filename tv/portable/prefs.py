@@ -72,7 +72,6 @@ MAX_OLD_ITEMS_DEFAULT       = Pref( key='maxOldItemsDefault',    default=20,    
 USE_UPNP                    = Pref( key='useUpnp',               default=True,  platformSpecific=False )
 BT_ENC_REQ                  = Pref( key='BitTorrentEncReq',      default=False, platformSpecific=False )
 CHANNEL_AUTO_DEFAULT        = Pref( key='ChannelAutoDefault',    default=u"new", platformSpecific=False )
-IHEARTMIRO_REQUEST_COUNT    = Pref( key='iHeartMiroRequestCount', default=0,     platformSpecific=False )
 FLASH_REQUEST_COUNT         = Pref( key='flashRequestCount',     default=0,     platformSpecific=False )
 
 # This doesn't need to be defined on the platform, but it can be overridden there if the platform wants to.

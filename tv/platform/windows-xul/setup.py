@@ -446,7 +446,6 @@ class bdist_nsis (Command):
         log.info("building installer")
 
         self.copy_file(os.path.join(platform_dir, 'Miro.nsi'), self.dist_dir)
-        self.copy_file("iHeartMiro-installer-page.ini", self.dist_dir)
         self.copy_file("miro-installer.ico", self.dist_dir)
         self.copy_file("miro-install-image.bmp", self.dist_dir)
 
