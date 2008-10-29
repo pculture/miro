@@ -28,8 +28,6 @@
 
 """miro.plat.frontends.widgets.window -- Top-level Window class.  """
 
-import weakref
-
 from AppKit import *
 from Foundation import *
 from objc import YES, NO, nil
