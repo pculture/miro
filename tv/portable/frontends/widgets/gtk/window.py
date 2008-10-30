@@ -84,7 +84,7 @@ menubar_key_map = {
     menubar.UP_ARROW: 'Up',
     menubar.DOWN_ARROW: 'Down',
     menubar.SPACE: 'space',
-    menubar.ENTER: 'Enter',
+    menubar.ENTER: 'Return',
     menubar.DELETE: 'Delete',
     menubar.BKSPACE: 'BackSpace',
 }
@@ -136,7 +136,7 @@ class WindowBase(signals.SignalEmitter):
         # Decide if we should use a custom style.  Right now the formula is
         # the base color is a very light shade of gray/white (lighter than
         # #f0f0f0).
-        self.use_custom_style = ((base.red == base.green == base.blue) and 
+        self.use_custom_style = ((base.red == base.green == base.blue) and
                 base.red >= 61680)
 
 class Window(WindowBase):
@@ -182,7 +182,7 @@ class Window(WindowBase):
     def destroy(self):
         child = self._window.child
         if child:
-            # Remove our child widget.  This shouldn't be needed, but its a 
+            # Remove our child widget.  This shouldn't be needed, but its a
             # workaround for a hang that happens when we try to destroy a
             # window that contains a GTKMozEmbed widget.
             child.hide()
@@ -215,7 +215,7 @@ class Window(WindowBase):
     def get_content_widget(self, widget):
         """Get the current content widget."""
         return self.content_widget
-        
+
     def get_frame(self):
         pos = self._window.get_position()
         size = self._window.get_size()
@@ -252,6 +252,25 @@ class MainWindow(Window):
 
     def on_key_press(self, widget, event):
         if app.playback_manager.is_playing:
+            if (gtk.gdk.keyval_name(event.keyval) == 'Escape'
+                    and app.playback_manager.is_fullscreen):
+                app.widgetapp.on_fullscreen_clicked()
+                return True
+
+            if event.state & gtk.gdk.CONTROL_MASK:
+                if gtk.gdk.keyval_name(event.keyval) == 'Right':
+                    app.widgetapp.on_forward_clicked()
+                    return True
+
+                if gtk.gdk.keyval_name(event.keyval) == 'Left':
+                    app.widgetapp.on_previous_dclicked()
+                    return True
+
+            if event.state & gtk.gdk.MOD1_MASK:
+                if gtk.gdk.keyval_name(event.keyval) == 'Return':
+                    app.widgetapp.on_fullscreen_clicked()
+                    return True
+
             if gtk.gdk.keyval_name(event.keyval) == 'Right':
                 app.widgetapp.on_skip_forward()
                 return True
