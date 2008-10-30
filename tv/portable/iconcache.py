@@ -196,6 +196,7 @@ class IconCache:
         needsChange = False
 
         if (info == None or (info['status'] != 304 and info['status'] != 200) 
+                or 'content-type' not in info 
                 or info['content-type'].startswith('text')):
             self.error_callback(url)
             return
