@@ -280,6 +280,11 @@ class PlaybackManager (signals.SignalEmitter):
 
         widgetset.can_play_file(path, yes_callback, no_callback)
 
+    def get_playing_item(self):
+        if self.playlist:
+            return self.playlist[self.position]
+        return None
+
     def _select_current(self):
         volume = config.get(prefs.VOLUME_LEVEL)
         item_info = self.playlist[self.position]

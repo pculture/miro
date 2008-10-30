@@ -396,6 +396,9 @@ class Application:
         selection = app.item_list_controller_manager.get_selection()
         selection = [s for s in selection if s.downloaded]
 
+        if not selection and app.playback_manager.is_playing:
+            selection = [app.playback_manager.get_playing_item()]
+
         if not selection:
             return
 
