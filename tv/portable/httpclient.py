@@ -186,7 +186,7 @@ def trap_call(object, function, *args, **kwargs):
     return trapcall.time_trap_call("Calling %s on %s" % (function, object), function, *args, **kwargs)
 
 
-DATEINFUTURE = time.mktime( (2030, 7, 12, 12, 0, 0, 4, 193, -1) )
+DATEINFUTURE = time.mktime((2030, 7, 12, 12, 0, 0, 4, 193, -1))
 
 def get_cookie_expiration_date(val):
     """Tries a bunch of possible cookie expiration date formats
@@ -275,7 +275,7 @@ class NetworkBuffer(object):
 class _Packet(object):
     """A packet of data for the AsyncSocket class
     """
-    def __init__ (self, data, callback = None):
+    def __init__(self, data, callback=None):
         self.data = data
         self.callback = callback
 
@@ -329,7 +329,7 @@ class AsyncSocket(object):
             self.readTimeout.cancel()
             self.readTimeout = None
 
-    def openConnection(self, host, port, callback, errback, disableReadTimeout = None):
+    def openConnection(self, host, port, callback, errback, disableReadTimeout=None):
         """Open a connection.  On success, callback will be called with this
         object.
         """
@@ -393,7 +393,7 @@ class AsyncSocket(object):
         self.name = "Incoming %s:%s" % (host, port)
         self.connectionErrback = errback
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.bind( (host, port) )
+        self.socket.bind((host, port))
         (self.addr, self.port) = self.socket.getsockname()
         self.socket.listen(63)
         eventloop.addReadCallback(self.socket, finishAccept)
@@ -412,7 +412,7 @@ class AsyncSocket(object):
     def isOpen(self):
         return self.socket is not None
 
-    def sendData(self, data, callback = None):
+    def sendData(self, data, callback=None):
         """Send data out to the socket when it becomes ready.
         
         NOTE: currently we have no way of detecting when the data gets sent
@@ -535,7 +535,7 @@ class AsyncSSLStream(AsyncSocket):
         super(AsyncSSLStream, self).__init__(closeCallback)
         self.interruptedOperation = None
 
-    def openConnection(self, host, port, callback, errback, disableReadTimeout = None):
+    def openConnection(self, host, port, callback, errback, disableReadTimeout=None):
         def onSocketOpen(self):
             self.socket.setblocking(1)
             eventloop.callInThread(onSSLOpen, handleSSLError, socket.ssl,
@@ -636,7 +636,7 @@ class ProxiedAsyncSSLStream(AsyncSSLStream):
                 while (data.find("\r\n\r\n") == -1):
                     data += self.socket.recv(1)
                 data = data.split("\r\n")
-                if (-1 == data[0].find(' 200 ')):                   
+                if -1 == data[0].find(' 200 '):
                     eventloop.addIdle(lambda :handleSSLError(NetworkError(data[0])),"Network Error")
                 else:
                     return socket.ssl(self.socket)
@@ -701,7 +701,7 @@ class ConnectionHandler(object):
             self.stream.closeConnection()
         self.changeState('closed')
 
-    def sendData(self, data, callback = None):
+    def sendData(self, data, callback=None):
         self.stream.sendData(data, callback)
 
     def changeState(self, newState):
@@ -792,8 +792,8 @@ class HTTPConnection(ConnectionHandler):
 
     def sendRequest(self, callback, errback, host, port,
                     requestStartCallback=None, headerCallback=None,
-                    bodyDataCallback = None, method="GET", path='/',
-                    headers=None, postVariables = None, postFiles = None):
+                    bodyDataCallback=None, method="GET", path='/',
+                    headers=None, postVariables=None, postFiles=None):
         """Sending an HTTP Request.  callback will be called if the request
         completes normally, errback will be called if there is a network
         error.
@@ -889,7 +889,7 @@ class HTTPConnection(ConnectionHandler):
         self.sentReadyCallback = False
         self.changeState('response-status')
 
-    def sendRequestData(self, method, path, headers, data = None):
+    def sendRequestData(self, method, path, headers, data=None):
         sendOut = []
         path = path.encode("ascii", "replace")
         path = urllib.quote(path, safe="-_.!~*'();/?:@&=+$,%#")
@@ -1455,7 +1455,7 @@ class HTTPClient(object):
 
     def __init__(self, url, callback, errback, headerCallback=None,
             bodyDataCallback=None, method="GET", start=0, etag=None,
-            modified=None, cookies=None, postVariables = None, postFiles = None):
+            modified=None, cookies=None, postVariables=None, postFiles=None):
         if cookies == None:
             cookies = {}
         
@@ -1860,8 +1860,8 @@ class HTTPClient(object):
 # defaultMimeType is used for file:// URLs
 def grabURL(url, callback, errback, headerCallback=None,
         bodyDataCallback=None, method="GET", start=0, etag=None,
-        modified=None, cookies=None, postVariables = None, postFiles = None,
-        defaultMimeType='application/octet-stream', clientClass = HTTPClient):
+        modified=None, cookies=None, postVariables=None, postFiles=None,
+        defaultMimeType='application/octet-stream', clientClass=HTTPClient):
     if cookies == None:
         cookies = {}
     if url.startswith("file://"):
@@ -1925,7 +1925,7 @@ class HTTPHeaderGrabber(HTTPClient):
             self.callback(self.prepareResponse(headers))
             self.cancel()
 
-def grabHeaders (url, callback, errback,  clientClass = HTTPHeaderGrabber):
+def grabHeaders(url, callback, errback,  clientClass=HTTPHeaderGrabber):
     client = clientClass(url, callback, errback)
     client.startRequest()
     return client
