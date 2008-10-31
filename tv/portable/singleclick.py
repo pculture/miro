@@ -49,6 +49,7 @@ from miro import download_utils
 from miro import item
 from miro import feed
 from miro import filetypes
+from miro import flashscraper
 from miro import folder
 from miro import guide
 from miro import httpclient
@@ -115,7 +116,7 @@ def check_url_exists(url):
         return True
     return False
 
-def __build_entry(url, contentType, additional):
+def _build_entry(url, contentType, additional):
     entry = item.get_entry_for_url(url, contentType)
     if additional is not None:
         for key in 'title', 'link', 'feed':
@@ -162,6 +163,17 @@ def add_download(url, additional=None):
         
         download_unknown_mime_type(url)
 
+    def callback_flash(old_url):
+        def _callback(url, contentType="video/flv"):
+            if url:
+                entry = _build_entry(url, contentType, {"title": url})
+                download_video(entry)
+                return
+
+            download_unknown_mime_type(old_url)
+
+        flashscraper.try_scraping_url(url, _callback)
+
     def callback(headers):
         """We need to figure out if the URL is a external video link, or a link to
         a channel.
@@ -174,12 +186,16 @@ def add_download(url, additional=None):
             add_feeds([url])
             return
 
+        if contentType and flashscraper.is_maybe_flashscrapable(url):
+            callback_flash(url)
+            return
+
         if contentType and filetypes.isMaybeFeedContentType(contentType):
             logging.info("%s content type is %s.  going to peek to see if it's a feed...." % (url, contentType))
             httpclient.grabURL(url, callback_peek, errback)
             return
 
-        entry = __build_entry(url, contentType, additional)
+        entry = _build_entry(url, contentType, None)
 
         if filetypes.isVideoEnclosure(entry['enclosures'][0]):
             download_video(entry)

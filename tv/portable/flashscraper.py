@@ -35,6 +35,9 @@ from xml.dom import minidom
 from urllib import unquote_plus
 from miro.util import checkU
 
+def is_maybe_flashscrapable(url):
+    return _get_scrape_function_for(url) is not None
+
 def try_scraping_url(url, callback):
     checkU(url)
     scrape = _get_scrape_function_for(url)
@@ -54,12 +57,19 @@ def _actual_url_callback(url, callback, newURL, contentType):
 def _get_scrape_function_for(url):
     checkU(url)
     for scrapeInfo in scraperInfoMap:
-        if re.compile(scrapeInfo['pattern']).match(url) is not None:
+        if scrapeInfo['pattern'].match(url) is not None:
             return scrapeInfo['func']
     return None
 
 def _scrape_youtube_url(url, callback):
     checkU(url)
+
+    # if it's a watch url, we convert it to a form we already handle
+    watch_re = re.compile(r'http://([^/]+\.)?youtube.com/watch\?v=(.*)')
+    match = watch_re.match(url)
+    if match:
+        url = 'http://www.youtube.com/v/%s&f=gdata_videos' % match.group(2)
+
     httpclient.grabHeaders(url, lambda x: _youtube_callback(x, callback),
                            lambda x:_youtube_errback(x, callback))
 
@@ -251,13 +261,13 @@ def _scrape_green_peace_video_url(url, callback):
 # =============================================================================
 
 scraperInfoMap = [
-    {'pattern': 'http://([^/]+\.)?youtube.com/(?!get_video(\.php)?)', 'func': _scrape_youtube_url},
-    {'pattern': 'http://video.google.com/googleplayer.swf', 'func': _scrape_google_video_url},
-    {'pattern': 'http://([^/]+\.)?lulu.tv/wp-content/flash_play/flvplayer', 'func': _scrape_lulu_video_url},
-    {'pattern': 'http://([^/]+\.)?vmix.com/flash/super_player.swf', 'func': _scrape_vmix_video_url},
-    {'pattern': 'http://([^/]+\.)?dailymotion.com/swf', 'func': _scrape_dailymotion_video_url},
-    {'pattern': 'http://([^/]+\.)?vsocial.com/flash/vp.swf', 'func': _scrape_vsocial_video_url},
-    {'pattern': 'http://([^/]+\.)?veoh.com/multiplayer.swf', 'func': _scrape_veohtv_video_url},
-    {'pattern': 'http://([^/]+\.)?greenpeaceweb.org/GreenpeaceTV1Col.swf', 'func': _scrape_green_peace_video_url},
-    {'pattern': 'http://([^/]+\.)?break.com/', 'func': _scrape_break_video_url},
+    {'pattern': re.compile(r'http://([^/]+\.)?youtube.com/(?!get_video(\.php)?)'), 'func': _scrape_youtube_url},
+    {'pattern': re.compile(r'http://video.google.com/googleplayer.swf'), 'func': _scrape_google_video_url},
+    {'pattern': re.compile(r'http://([^/]+\.)?lulu.tv/wp-content/flash_play/flvplayer'), 'func': _scrape_lulu_video_url},
+    {'pattern': re.compile(r'http://([^/]+\.)?vmix.com/flash/super_player.swf'), 'func': _scrape_vmix_video_url},
+    {'pattern': re.compile(r'http://([^/]+\.)?dailymotion.com/swf'), 'func': _scrape_dailymotion_video_url},
+    {'pattern': re.compile(r'http://([^/]+\.)?vsocial.com/flash/vp.swf'), 'func': _scrape_vsocial_video_url},
+    {'pattern': re.compile(r'http://([^/]+\.)?veoh.com/multiplayer.swf'), 'func': _scrape_veohtv_video_url},
+    {'pattern': re.compile(r'http://([^/]+\.)?greenpeaceweb.org/GreenpeaceTV1Col.swf'), 'func': _scrape_green_peace_video_url},
+    {'pattern': re.compile(r'http://([^/]+\.)?break.com/'), 'func': _scrape_break_video_url},
 ]
