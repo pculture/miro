@@ -28,6 +28,7 @@
 
 import gtkmozembed
 import gtk
+import gobject
 
 # Most of our stuff comes from the portable code, except the video renderer
 # and the browser.
@@ -37,13 +38,22 @@ from miro.frontends.widgets.gtk.widgetset import *
 from miro.plat.frontends.widgets import mozprompt
 xpcom_setup = False
 
+class MiroMozEmbed(gtkmozembed.MozEmbed):
+    def do_destroy(self):
+        # For some reason this hangs everything (#10700), so we just ignore it
+        # instead.  This probably will cause a memory leak if we create and
+        # destroy browser often, but we only destroy a browser on shutdown and
+        # if a site is deleted, which is not too often.
+        pass
+
+gobject.type_register(MiroMozEmbed)
 
 class Browser(Widget):
     """Web browser widget.  """
 
     def __init__(self):
         Widget.__init__(self)
-        self.set_widget(gtkmozembed.MozEmbed())
+        self.set_widget(MiroMozEmbed())
         self.url = None
         self.wrapped_widget_connect('open-uri', self.on_open_uri)
         self.wrapped_widget_connect('realize', self.on_realize)
