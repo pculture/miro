@@ -64,11 +64,12 @@ def _get_scrape_function_for(url):
 def _scrape_youtube_url(url, callback):
     checkU(url)
 
+    components = urlparse.urlsplit(url)
+    params = cgi.parse_qs(components[3])
+
     # if it's a watch url, we convert it to a form we already handle
-    watch_re = re.compile(r'http://([^/]+\.)?youtube.com/watch\?v=(.*)')
-    match = watch_re.match(url)
-    if match:
-        url = 'http://www.youtube.com/v/%s&f=gdata_videos' % match.group(2)
+    if components[2] == u'/watch' and 'v' in params:
+        url = 'http://www.youtube.com/v/%s&f=gdata_videos' % params["v"][0]
 
     httpclient.grabHeaders(url, lambda x: _youtube_callback(x, callback),
                            lambda x:_youtube_errback(x, callback))
