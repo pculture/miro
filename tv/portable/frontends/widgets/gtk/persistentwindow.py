@@ -55,18 +55,18 @@ class PersistentWindow(gtk.DrawingArea):
 
     def __init__(self):
         gtk.DrawingArea.__init__(self)
-        self.event_mask = 0
         self.persistent_window = gtk.gdk.Window(_dummy_window,
                 x=0, y=0, width=1, height=1, window_type=gtk.gdk.WINDOW_CHILD,
-                wclass=gtk.gdk.INPUT_OUTPUT, event_mask=0)
+                wclass=gtk.gdk.INPUT_OUTPUT, event_mask=self.get_events())
         _persistent_window_to_widget[self.persistent_window] = self
 
-    def set_event_mask(self, event_mask):
-        """Set the event mask for our window."""
-        self.event_mask = event_mask
-        if self.persistent_window is not None:
-            self.persistent_window.set_events(event_mask)
+    def set_events(self, event_mask):
+        gtk.DrawingArea.set_events(self, event_mask)
+        self.persistent_window.set_events(self.get_events())
 
+    def add_events(self, event_mask):
+        gtk.DrawingArea.add_events(self, event_mask)
+        self.persistent_window.set_events(self.get_events())
 
     def do_realize(self):
         gtk.DrawingArea.do_realize(self)
@@ -74,13 +74,15 @@ class PersistentWindow(gtk.DrawingArea):
         self.persistent_window.resize(self.allocation.width,
                 self.allocation.height)
         self.persistent_window.show()
-        self.persistent_window.set_events(self.event_mask)
+        self.persistent_window.set_events(self.get_events())
+        self.persistent_window.set_user_data(self)
 
     def do_size_allocate(self, allocation):
         gtk.DrawingArea.do_size_allocate(self, allocation)
         self.persistent_window.resize(allocation.width, allocation.height)
 
     def do_unrealize(self):
+        self.persistent_window.set_user_data(None)
         self.persistent_window.hide()
         self.persistent_window.reparent(_dummy_window, 0, 0)
         gtk.DrawingArea.do_unrealize(self)

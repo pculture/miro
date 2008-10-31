@@ -42,7 +42,7 @@ class BrowserWidget(PersistentWindow):
         PersistentWindow.__init__(self)
         self.browser = None
         self.set_size_request(200, 100) # seems like a reasonable default
-        self.set_event_mask(gtk.gdk.EXPOSURE_MASK)
+        self.add_events(gtk.gdk.EXPOSURE_MASK)
         self.browser = xulrunnerbrowser.XULRunnerBrowser(
                 self.persistent_window.handle, 0, 0, 1, 1)
         self.browser.set_callback_object(self)
