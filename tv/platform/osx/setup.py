@@ -358,11 +358,12 @@ class MiroBuild (py2app):
                 if '.svn' in dirs:
                     dirs.remove('.svn')
                 for file in files:
-                    if file.endswith('.cpp'):
+                    if file.endswith('.cpp') or file.endswith('.c'):
                         yield os.path.join(root,file)
 
         libtorrent_src = list(libtorrent_sources_iterator())
-        libtorrent_src.remove(os.path.join(PORTABLE_DIR, 'libtorrent/src/file_win.cpp'))
+        if os.path.exists(os.path.join(PORTABLE_DIR, 'libtorrent/src/file_win.cpp')):
+            libtorrent_src.remove(os.path.join(PORTABLE_DIR, 'libtorrent/src/file_win.cpp'))
         libtorrent_inc_dirs = [BOOST_INCLUDE_DIR,
                                os.path.join(PORTABLE_DIR, 'libtorrent', 'include'),
                                os.path.join(PORTABLE_DIR, 'libtorrent', 'include', 'libtorrent')]
@@ -380,9 +381,10 @@ class MiroBuild (py2app):
             libtorrent_extras.append(BOOST_SYSTEM_LIB)
 
         libtorrent_compil_args = ["-Wno-missing-braces",
-                                  "-DHAVE_INCLUDE_LIBTORRENT_ASIO____ASIO_HPP=1", 
-                                  "-DHAVE_INCLUDE_LIBTORRENT_ASIO_SSL_STREAM_HPP=1", 
-                                  "-DHAVE_INCLUDE_LIBTORRENT_ASIO_IP_TCP_HPP=1", 
+                                  "-D_FILE_OFFSET_BITS=64",
+                                  "-DHAVE___INCLUDE_LIBTORRENT_ASIO_HPP=1",
+                                  "-DHAVE___INCLUDE_LIBTORRENT_ASIO_SSL_STREAM_HPP=1",
+                                  "-DHAVE___INCLUDE_LIBTORRENT_ASIO_IP_TCP_HPP=1",
                                   "-DHAVE_PTHREAD=1", 
                                   "-DTORRENT_USE_OPENSSL=1", 
                                   "-DHAVE_SSL=1",
