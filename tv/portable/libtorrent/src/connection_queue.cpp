@@ -34,6 +34,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <boost/bind.hpp>
 #include "libtorrent/invariant_check.hpp"
 #include "libtorrent/connection_queue.hpp"
+#include "libtorrent/socket.hpp"
 
 namespace libtorrent
 {
@@ -41,29 +42,54 @@ namespace libtorrent
 	connection_queue::connection_queue(io_service& ios): m_next_ticket(0)
 		, m_num_connecting(0)
 		, m_half_open_limit(0)
+		, m_abort(false)
 		, m_timer(ios)
 #ifndef NDEBUG
 		, m_in_timeout_function(false)
 #endif
-	{}
+	{
+#ifdef TORRENT_CONNECTION_LOGGING
+		m_log.open("connection_queue.log");
+#endif
+	}
 
-	bool connection_queue::free_slots() const
-	{ return m_num_connecting < m_half_open_limit || m_half_open_limit <= 0; }
+	int connection_queue::free_slots() const
+	{
+		mutex_t::scoped_lock l(m_mutex);
+		return m_half_open_limit == 0 ? (std::numeric_limits<int>::max)()
+			: m_half_open_limit - m_queue.size();
+	}
 
 	void connection_queue::enqueue(boost::function<void(int)> const& on_connect
 		, boost::function<void()> const& on_timeout
-		, time_duration timeout)
+		, time_duration timeout, int priority)
 	{
 		mutex_t::scoped_lock l(m_mutex);
 
 		INVARIANT_CHECK;
 
-		m_queue.push_back(entry());
-		entry& e = m_queue.back();
-		e.on_connect = on_connect;
-		e.on_timeout = on_timeout;
-		e.ticket = m_next_ticket;
-		e.timeout = timeout;
+		TORRENT_ASSERT(priority >= 0);
+		TORRENT_ASSERT(priority < 2);
+
+		entry* e = 0;
+
+		switch (priority)
+		{
+			case 0:
+				m_queue.push_back(entry());
+				e = &m_queue.back();
+				break;
+			case 1:
+				m_queue.push_front(entry());
+				e = &m_queue.front();
+				break;
+		}
+
+		e->priority = priority;
+		e->on_connect = on_connect;
+		e->on_timeout = on_timeout;
+		e->ticket = m_next_ticket;
+		e->timeout = timeout;
 		++m_next_ticket;
 		try_connect();
 	}
@@ -88,11 +114,29 @@ namespace libtorrent
 
 	void connection_queue::close()
 	{
-		m_timer.cancel();
+		error_code ec;
+		mutex_t::scoped_lock l(m_mutex);
+		m_timer.cancel(ec);
+		m_abort = true;
+
+		while (!m_queue.empty())
+		{
+			// we don't want to call the timeout callback while we're locked
+			// since that is a recepie for dead-locks
+			entry e = m_queue.front();
+			m_queue.pop_front();
+			if (e.connecting) --m_num_connecting;
+			l.unlock();
+			try { e.on_timeout(); } catch (std::exception&) {}
+			l.lock();
+		}
 	}
 
 	void connection_queue::limit(int limit)
-	{ m_half_open_limit = limit; }
+	{
+		TORRENT_ASSERT(limit >= 0);
+		m_half_open_limit = limit;
+	}
 
 	int connection_queue::limit() const
 	{ return m_half_open_limit; }
@@ -116,12 +160,18 @@ namespace libtorrent
 	{
 		INVARIANT_CHECK;
 
-		if (!free_slots())
-			return;
+#ifdef TORRENT_CONNECTION_LOGGING
+		m_log << log_time() << " " << free_slots() << std::endl;
+#endif
+		if (m_abort) return;
+
+		if (m_num_connecting >= m_half_open_limit
+			&& m_half_open_limit > 0) return;
 	
 		if (m_queue.empty())
 		{
-			m_timer.cancel();
+			error_code ec;
+			m_timer.cancel(ec);
 			return;
 		}
 
@@ -133,7 +183,8 @@ namespace libtorrent
 			ptime expire = time_now() + i->timeout;
 			if (m_num_connecting == 0)
 			{
-				m_timer.expires_at(expire);
+				error_code ec;
+				m_timer.expires_at(expire, ec);
 				m_timer.async_wait(boost::bind(&connection_queue::on_timeout, this, _1));
 			}
 			i->connecting = true;
@@ -144,9 +195,20 @@ namespace libtorrent
 
 			entry& ent = *i;
 			++i;
-			try { ent.on_connect(ent.ticket); } catch (std::exception&) {}
+#ifndef BOOST_NO_EXCEPTIONS
+			try {
+#endif
+				ent.on_connect(ent.ticket);
+#ifndef BOOST_NO_EXCEPTIONS
+			} catch (std::exception&) {}
+#endif
 
-			if (!free_slots()) break;
+#ifdef TORRENT_CONNECTION_LOGGING
+			m_log << log_time() << " " << free_slots() << std::endl;
+#endif
+
+			if (m_num_connecting >= m_half_open_limit
+				&& m_half_open_limit > 0) break;
 			i = std::find_if(i, m_queue.end(), boost::bind(&entry::connecting, _1) == false);
 		}
 	}
@@ -161,7 +223,7 @@ namespace libtorrent
 	};
 #endif
 	
-	void connection_queue::on_timeout(asio::error_code const& e)
+	void connection_queue::on_timeout(error_code const& e)
 	{
 		mutex_t::scoped_lock l(m_mutex);
 
@@ -206,7 +268,8 @@ namespace libtorrent
 		
 		if (next_expire < max_time())
 		{
-			m_timer.expires_at(next_expire);
+			error_code ec;
+			m_timer.expires_at(next_expire, ec);
 			m_timer.async_wait(boost::bind(&connection_queue::on_timeout, this, _1));
 		}
 		try_connect();

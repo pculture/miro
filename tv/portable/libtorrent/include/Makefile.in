@@ -37,6 +37,8 @@ host_triplet = @host@
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/basic_datagram_socket.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/basic_deadline_timer.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/basic_io_object.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/basic_raw_socket.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/basic_serial_port.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/basic_socket.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/basic_socket_acceptor.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/basic_socket_iostream.hpp \
@@ -50,6 +52,7 @@ host_triplet = @host@
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/buffered_stream_fwd.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/buffered_write_stream.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/buffered_write_stream_fwd.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/buffers_iterator.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/completion_condition.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/datagram_socket_service.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/deadline_timer.hpp \
@@ -62,8 +65,13 @@ host_triplet = @host@
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/is_read_buffered.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/is_write_buffered.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/placeholders.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/raw_socket_service.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/read.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/read_at.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/read_until.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/serial_port.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/serial_port_base.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/serial_port_service.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/socket_acceptor_service.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/socket_base.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ssl.hpp \
@@ -75,6 +83,7 @@ host_triplet = @host@
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/time_traits.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/version.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/write.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/write_at.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/bind_handler.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/buffer_resize_guard.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/buffered_stream_storage.hpp \
@@ -82,6 +91,7 @@ host_triplet = @host@
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/const_buffers_iterator.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/consuming_buffers.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/deadline_timer_service.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/descriptor_ops.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/dev_poll_reactor.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/dev_poll_reactor_fwd.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/epoll_reactor.hpp \
@@ -89,9 +99,11 @@ host_triplet = @host@
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/event.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/fd_set_adapter.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/handler_alloc_helpers.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/handler_base_from_member.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/handler_invoke_helpers.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/handler_queue.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/hash_map.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/indirect_handler_queue.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/io_control.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/kqueue_reactor.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/kqueue_reactor_fwd.hpp \
@@ -113,6 +125,8 @@ host_triplet = @host@
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/posix_thread.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/posix_tss_ptr.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/push_options.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/reactive_descriptor_service.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/reactive_serial_port_service.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/reactive_socket_service.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/reactor_op_queue.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/resolver_service.hpp \
@@ -133,6 +147,7 @@ host_triplet = @host@
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/socket_types.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/strand_service.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/task_io_service.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/task_io_service_2lock.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/task_io_service_fwd.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/thread.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/throw_error.hpp \
@@ -141,8 +156,10 @@ host_triplet = @host@
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/tss_ptr.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/win_event.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/win_fd_set_adapter.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/win_iocp_handle_service.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/win_iocp_io_service.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/win_iocp_io_service_fwd.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/win_iocp_serial_port_service.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/win_iocp_socket_service.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/win_mutex.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/detail/win_signal_blocker.hpp \
@@ -154,8 +171,11 @@ host_triplet = @host@
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/impl/error_code.ipp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/impl/io_service.ipp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/impl/read.ipp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/impl/read_at.ipp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/impl/read_until.ipp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/impl/serial_port_base.ipp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/impl/write.ipp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/impl/write_at.ipp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ip/address.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ip/address_v4.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ip/address_v6.hpp \
@@ -165,6 +185,7 @@ host_triplet = @host@
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ip/basic_resolver_iterator.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ip/basic_resolver_query.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ip/host_name.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ip/icmp.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ip/multicast.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ip/resolver_query_base.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ip/resolver_service.hpp \
@@ -173,6 +194,15 @@ host_triplet = @host@
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ip/unicast.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ip/v6_only.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ip/detail/socket_option.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/local/basic_endpoint.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/local/connect_pair.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/local/datagram_protocol.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/local/stream_protocol.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/posix/basic_descriptor.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/posix/basic_stream_descriptor.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/posix/descriptor_base.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/posix/stream_descriptor.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/posix/stream_descriptor_service.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ssl/basic_context.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ssl/context.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ssl/context_base.hpp \
@@ -184,7 +214,14 @@ host_triplet = @host@
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ssl/detail/openssl_init.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ssl/detail/openssl_operation.hpp \
 @ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ssl/detail/openssl_stream_service.hpp \
-@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ssl/detail/openssl_types.hpp
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/ssl/detail/openssl_types.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/windows/basic_handle.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/windows/basic_random_access_handle.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/windows/basic_stream_handle.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/windows/random_access_handle.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/windows/random_access_handle_service.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/windows/stream_handle.hpp \
+@ENABLE_SHIPPED_ASIO_TRUE@libtorrent/asio/windows/stream_handle_service.hpp
 
 subdir = include
 DIST_COMMON = $(am__nobase_include_HEADERS_DIST) $(srcdir)/Makefile.am \
@@ -193,7 +230,6 @@ ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/acx_pthread.m4 \
 	$(top_srcdir)/m4/ax_boost_asio-fixed.m4 \
 	$(top_srcdir)/m4/ax_boost_base-fixed.m4 \
-	$(top_srcdir)/m4/ax_boost_date_time.m4 \
 	$(top_srcdir)/m4/ax_boost_filesystem-fixed.m4 \
 	$(top_srcdir)/m4/ax_boost_program_options.m4 \
 	$(top_srcdir)/m4/ax_boost_regex.m4 \
@@ -211,24 +247,29 @@ am__nobase_include_HEADERS_DIST = libtorrent/alert.hpp \
 	libtorrent/bandwidth_manager.hpp \
 	libtorrent/bandwidth_limit.hpp \
 	libtorrent/bandwidth_queue_entry.hpp libtorrent/bencode.hpp \
-	libtorrent/broadcast_socket.hpp libtorrent/buffer.hpp \
-	libtorrent/connection_queue.hpp libtorrent/config.hpp \
-	libtorrent/debug.hpp libtorrent/disk_io_thread.hpp \
-	libtorrent/entry.hpp libtorrent/enum_net.hpp \
-	libtorrent/escape_string.hpp libtorrent/extensions.hpp \
+	libtorrent/bitfield.hpp libtorrent/broadcast_socket.hpp \
+	libtorrent/buffer.hpp libtorrent/connection_queue.hpp \
+	libtorrent/create_torrent.hpp libtorrent/config.hpp \
+	libtorrent/debug.hpp libtorrent/disk_buffer_holder.hpp \
+	libtorrent/disk_io_thread.hpp libtorrent/entry.hpp \
+	libtorrent/enum_net.hpp libtorrent/escape_string.hpp \
+	libtorrent/error_code.hpp libtorrent/extensions.hpp \
 	libtorrent/file.hpp libtorrent/file_pool.hpp \
-	libtorrent/fingerprint.hpp libtorrent/hasher.hpp \
+	libtorrent/file_storage.hpp libtorrent/fingerprint.hpp \
+	libtorrent/GeoIP.h libtorrent/gzip.hpp libtorrent/hasher.hpp \
 	libtorrent/http_connection.hpp libtorrent/http_stream.hpp \
+	libtorrent/http_parser.hpp \
 	libtorrent/http_tracker_connection.hpp \
 	libtorrent/identify_client.hpp \
 	libtorrent/instantiate_connection.hpp \
 	libtorrent/intrusive_ptr_base.hpp \
 	libtorrent/invariant_check.hpp libtorrent/io.hpp \
 	libtorrent/ip_filter.hpp libtorrent/chained_buffer.hpp \
-	libtorrent/lsd.hpp libtorrent/peer.hpp \
-	libtorrent/peer_connection.hpp \
+	libtorrent/lsd.hpp libtorrent/lazy_entry.hpp \
+	libtorrent/peer.hpp libtorrent/peer_connection.hpp \
 	libtorrent/bt_peer_connection.hpp \
-	libtorrent/web_peer_connection.hpp libtorrent/pe_crypto.hpp \
+	libtorrent/web_peer_connection.hpp libtorrent/parse_url.hpp \
+	libtorrent/pe_crypto.hpp libtorrent/magnet_uri.hpp \
 	libtorrent/natpmp.hpp libtorrent/pch.hpp \
 	libtorrent/peer_id.hpp libtorrent/peer_info.hpp \
 	libtorrent/peer_request.hpp \
@@ -237,18 +278,22 @@ am__nobase_include_HEADERS_DIST = libtorrent/alert.hpp \
 	libtorrent/proxy_base.hpp libtorrent/random_sample.hpp \
 	libtorrent/session.hpp libtorrent/session_settings.hpp \
 	libtorrent/session_status.hpp libtorrent/size_type.hpp \
-	libtorrent/socket.hpp libtorrent/socket_type.hpp \
-	libtorrent/socks4_stream.hpp libtorrent/socks5_stream.hpp \
-	libtorrent/stat.hpp libtorrent/storage.hpp libtorrent/time.hpp \
+	libtorrent/ssl_stream.hpp libtorrent/socket.hpp \
+	libtorrent/socket_type.hpp libtorrent/socks4_stream.hpp \
+	libtorrent/socks5_stream.hpp libtorrent/stat.hpp \
+	libtorrent/storage.hpp libtorrent/time.hpp \
 	libtorrent/torrent.hpp libtorrent/torrent_handle.hpp \
 	libtorrent/torrent_info.hpp libtorrent/tracker_manager.hpp \
-	libtorrent/udp_tracker_connection.hpp libtorrent/utf8.hpp \
+	libtorrent/udp_tracker_connection.hpp \
+	libtorrent/udp_socket.hpp libtorrent/utf8.hpp \
 	libtorrent/upnp.hpp libtorrent/xml_parse.hpp \
 	libtorrent/variant_stream.hpp libtorrent/version.hpp \
 	libtorrent/aux_/session_impl.hpp \
 	libtorrent/extensions/metadata_transfer.hpp \
 	libtorrent/extensions/ut_pex.hpp \
+	libtorrent/extensions/ut_metadata.hpp \
 	libtorrent/extensions/logger.hpp \
+	libtorrent/extensions/smart_ban.hpp \
 	libtorrent/kademlia/closest_nodes.hpp \
 	libtorrent/kademlia/dht_tracker.hpp \
 	libtorrent/kademlia/find_data.hpp \
@@ -257,7 +302,6 @@ am__nobase_include_HEADERS_DIST = libtorrent/alert.hpp \
 	libtorrent/kademlia/node_entry.hpp \
 	libtorrent/kademlia/node_id.hpp \
 	libtorrent/kademlia/observer.hpp \
-	libtorrent/kademlia/packet_iterator.hpp \
 	libtorrent/kademlia/refresh.hpp \
 	libtorrent/kademlia/routing_table.hpp \
 	libtorrent/kademlia/rpc_manager.hpp \
@@ -265,6 +309,8 @@ am__nobase_include_HEADERS_DIST = libtorrent/alert.hpp \
 	libtorrent/asio.hpp libtorrent/asio/basic_datagram_socket.hpp \
 	libtorrent/asio/basic_deadline_timer.hpp \
 	libtorrent/asio/basic_io_object.hpp \
+	libtorrent/asio/basic_raw_socket.hpp \
+	libtorrent/asio/basic_serial_port.hpp \
 	libtorrent/asio/basic_socket.hpp \
 	libtorrent/asio/basic_socket_acceptor.hpp \
 	libtorrent/asio/basic_socket_iostream.hpp \
@@ -277,6 +323,7 @@ am__nobase_include_HEADERS_DIST = libtorrent/alert.hpp \
 	libtorrent/asio/buffered_stream_fwd.hpp \
 	libtorrent/asio/buffered_write_stream.hpp \
 	libtorrent/asio/buffered_write_stream_fwd.hpp \
+	libtorrent/asio/buffers_iterator.hpp \
 	libtorrent/asio/completion_condition.hpp \
 	libtorrent/asio/datagram_socket_service.hpp \
 	libtorrent/asio/deadline_timer.hpp \
@@ -287,8 +334,12 @@ am__nobase_include_HEADERS_DIST = libtorrent/alert.hpp \
 	libtorrent/asio/io_service.hpp \
 	libtorrent/asio/is_read_buffered.hpp \
 	libtorrent/asio/is_write_buffered.hpp \
-	libtorrent/asio/placeholders.hpp libtorrent/asio/read.hpp \
-	libtorrent/asio/read_until.hpp \
+	libtorrent/asio/placeholders.hpp \
+	libtorrent/asio/raw_socket_service.hpp \
+	libtorrent/asio/read.hpp libtorrent/asio/read_at.hpp \
+	libtorrent/asio/read_until.hpp libtorrent/asio/serial_port.hpp \
+	libtorrent/asio/serial_port_base.hpp \
+	libtorrent/asio/serial_port_service.hpp \
 	libtorrent/asio/socket_acceptor_service.hpp \
 	libtorrent/asio/socket_base.hpp libtorrent/asio/ssl.hpp \
 	libtorrent/asio/strand.hpp \
@@ -296,6 +347,7 @@ am__nobase_include_HEADERS_DIST = libtorrent/alert.hpp \
 	libtorrent/asio/streambuf.hpp libtorrent/asio/system_error.hpp \
 	libtorrent/asio/thread.hpp libtorrent/asio/time_traits.hpp \
 	libtorrent/asio/version.hpp libtorrent/asio/write.hpp \
+	libtorrent/asio/write_at.hpp \
 	libtorrent/asio/detail/bind_handler.hpp \
 	libtorrent/asio/detail/buffer_resize_guard.hpp \
 	libtorrent/asio/detail/buffered_stream_storage.hpp \
@@ -303,6 +355,7 @@ am__nobase_include_HEADERS_DIST = libtorrent/alert.hpp \
 	libtorrent/asio/detail/const_buffers_iterator.hpp \
 	libtorrent/asio/detail/consuming_buffers.hpp \
 	libtorrent/asio/detail/deadline_timer_service.hpp \
+	libtorrent/asio/detail/descriptor_ops.hpp \
 	libtorrent/asio/detail/dev_poll_reactor.hpp \
 	libtorrent/asio/detail/dev_poll_reactor_fwd.hpp \
 	libtorrent/asio/detail/epoll_reactor.hpp \
@@ -310,9 +363,11 @@ am__nobase_include_HEADERS_DIST = libtorrent/alert.hpp \
 	libtorrent/asio/detail/event.hpp \
 	libtorrent/asio/detail/fd_set_adapter.hpp \
 	libtorrent/asio/detail/handler_alloc_helpers.hpp \
+	libtorrent/asio/detail/handler_base_from_member.hpp \
 	libtorrent/asio/detail/handler_invoke_helpers.hpp \
 	libtorrent/asio/detail/handler_queue.hpp \
 	libtorrent/asio/detail/hash_map.hpp \
+	libtorrent/asio/detail/indirect_handler_queue.hpp \
 	libtorrent/asio/detail/io_control.hpp \
 	libtorrent/asio/detail/kqueue_reactor.hpp \
 	libtorrent/asio/detail/kqueue_reactor_fwd.hpp \
@@ -334,6 +389,8 @@ am__nobase_include_HEADERS_DIST = libtorrent/alert.hpp \
 	libtorrent/asio/detail/posix_thread.hpp \
 	libtorrent/asio/detail/posix_tss_ptr.hpp \
 	libtorrent/asio/detail/push_options.hpp \
+	libtorrent/asio/detail/reactive_descriptor_service.hpp \
+	libtorrent/asio/detail/reactive_serial_port_service.hpp \
 	libtorrent/asio/detail/reactive_socket_service.hpp \
 	libtorrent/asio/detail/reactor_op_queue.hpp \
 	libtorrent/asio/detail/resolver_service.hpp \
@@ -354,6 +411,7 @@ am__nobase_include_HEADERS_DIST = libtorrent/alert.hpp \
 	libtorrent/asio/detail/socket_types.hpp \
 	libtorrent/asio/detail/strand_service.hpp \
 	libtorrent/asio/detail/task_io_service.hpp \
+	libtorrent/asio/detail/task_io_service_2lock.hpp \
 	libtorrent/asio/detail/task_io_service_fwd.hpp \
 	libtorrent/asio/detail/thread.hpp \
 	libtorrent/asio/detail/throw_error.hpp \
@@ -362,8 +420,10 @@ am__nobase_include_HEADERS_DIST = libtorrent/alert.hpp \
 	libtorrent/asio/detail/tss_ptr.hpp \
 	libtorrent/asio/detail/win_event.hpp \
 	libtorrent/asio/detail/win_fd_set_adapter.hpp \
+	libtorrent/asio/detail/win_iocp_handle_service.hpp \
 	libtorrent/asio/detail/win_iocp_io_service.hpp \
 	libtorrent/asio/detail/win_iocp_io_service_fwd.hpp \
+	libtorrent/asio/detail/win_iocp_serial_port_service.hpp \
 	libtorrent/asio/detail/win_iocp_socket_service.hpp \
 	libtorrent/asio/detail/win_mutex.hpp \
 	libtorrent/asio/detail/win_signal_blocker.hpp \
@@ -374,9 +434,12 @@ am__nobase_include_HEADERS_DIST = libtorrent/alert.hpp \
 	libtorrent/asio/detail/wrapped_handler.hpp \
 	libtorrent/asio/impl/error_code.ipp \
 	libtorrent/asio/impl/io_service.ipp \
-	libtorrent/asio/impl/read.ipp \
+	libtorrent/asio/impl/read.ipp libtorrent/asio/impl/read_at.ipp \
 	libtorrent/asio/impl/read_until.ipp \
-	libtorrent/asio/impl/write.ipp libtorrent/asio/ip/address.hpp \
+	libtorrent/asio/impl/serial_port_base.ipp \
+	libtorrent/asio/impl/write.ipp \
+	libtorrent/asio/impl/write_at.ipp \
+	libtorrent/asio/ip/address.hpp \
 	libtorrent/asio/ip/address_v4.hpp \
 	libtorrent/asio/ip/address_v6.hpp \
 	libtorrent/asio/ip/basic_endpoint.hpp \
@@ -384,13 +447,22 @@ am__nobase_include_HEADERS_DIST = libtorrent/alert.hpp \
 	libtorrent/asio/ip/basic_resolver_entry.hpp \
 	libtorrent/asio/ip/basic_resolver_iterator.hpp \
 	libtorrent/asio/ip/basic_resolver_query.hpp \
-	libtorrent/asio/ip/host_name.hpp \
+	libtorrent/asio/ip/host_name.hpp libtorrent/asio/ip/icmp.hpp \
 	libtorrent/asio/ip/multicast.hpp \
 	libtorrent/asio/ip/resolver_query_base.hpp \
 	libtorrent/asio/ip/resolver_service.hpp \
 	libtorrent/asio/ip/tcp.hpp libtorrent/asio/ip/udp.hpp \
 	libtorrent/asio/ip/unicast.hpp libtorrent/asio/ip/v6_only.hpp \
 	libtorrent/asio/ip/detail/socket_option.hpp \
+	libtorrent/asio/local/basic_endpoint.hpp \
+	libtorrent/asio/local/connect_pair.hpp \
+	libtorrent/asio/local/datagram_protocol.hpp \
+	libtorrent/asio/local/stream_protocol.hpp \
+	libtorrent/asio/posix/basic_descriptor.hpp \
+	libtorrent/asio/posix/basic_stream_descriptor.hpp \
+	libtorrent/asio/posix/descriptor_base.hpp \
+	libtorrent/asio/posix/stream_descriptor.hpp \
+	libtorrent/asio/posix/stream_descriptor_service.hpp \
 	libtorrent/asio/ssl/basic_context.hpp \
 	libtorrent/asio/ssl/context.hpp \
 	libtorrent/asio/ssl/context_base.hpp \
@@ -402,7 +474,14 @@ am__nobase_include_HEADERS_DIST = libtorrent/alert.hpp \
 	libtorrent/asio/ssl/detail/openssl_init.hpp \
 	libtorrent/asio/ssl/detail/openssl_operation.hpp \
 	libtorrent/asio/ssl/detail/openssl_stream_service.hpp \
-	libtorrent/asio/ssl/detail/openssl_types.hpp
+	libtorrent/asio/ssl/detail/openssl_types.hpp \
+	libtorrent/asio/windows/basic_handle.hpp \
+	libtorrent/asio/windows/basic_random_access_handle.hpp \
+	libtorrent/asio/windows/basic_stream_handle.hpp \
+	libtorrent/asio/windows/random_access_handle.hpp \
+	libtorrent/asio/windows/random_access_handle_service.hpp \
+	libtorrent/asio/windows/stream_handle.hpp \
+	libtorrent/asio/windows/stream_handle_service.hpp
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
     $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
@@ -424,7 +503,6 @@ AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 BOOST_ASIO_LIB = @BOOST_ASIO_LIB@
 BOOST_CPPFLAGS = @BOOST_CPPFLAGS@
-BOOST_DATE_TIME_LIB = @BOOST_DATE_TIME_LIB@
 BOOST_FILESYSTEM_LIB = @BOOST_FILESYSTEM_LIB@
 BOOST_LDFLAGS = @BOOST_LDFLAGS@
 BOOST_PROGRAM_OPTIONS_LIB = @BOOST_PROGRAM_OPTIONS_LIB@
@@ -451,7 +529,6 @@ ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGREP = @EGREP@
-EXAMPLESDIR = @EXAMPLESDIR@
 EXEEXT = @EXEEXT@
 F77 = @F77@
 FFLAGS = @FFLAGS@
@@ -483,6 +560,7 @@ PTHREAD_CC = @PTHREAD_CC@
 PTHREAD_CFLAGS = @PTHREAD_CFLAGS@
 PTHREAD_LIBS = @PTHREAD_LIBS@
 RANLIB = @RANLIB@
+SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 SSL_CFLAGS = @SSL_CFLAGS@
@@ -490,10 +568,8 @@ SSL_CXXFLAGS = @SSL_CXXFLAGS@
 SSL_LDFLAGS = @SSL_LDFLAGS@
 SSL_LIBS = @SSL_LIBS@
 STRIP = @STRIP@
-TESTSDIR = @TESTSDIR@
 VERSION = @VERSION@
 ZLIB = @ZLIB@
-ZLIBDIR = @ZLIBDIR@
 ZLIBINCL = @ZLIBINCL@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
@@ -552,24 +628,29 @@ nobase_include_HEADERS = libtorrent/alert.hpp \
 	libtorrent/bandwidth_manager.hpp \
 	libtorrent/bandwidth_limit.hpp \
 	libtorrent/bandwidth_queue_entry.hpp libtorrent/bencode.hpp \
-	libtorrent/broadcast_socket.hpp libtorrent/buffer.hpp \
-	libtorrent/connection_queue.hpp libtorrent/config.hpp \
-	libtorrent/debug.hpp libtorrent/disk_io_thread.hpp \
-	libtorrent/entry.hpp libtorrent/enum_net.hpp \
-	libtorrent/escape_string.hpp libtorrent/extensions.hpp \
+	libtorrent/bitfield.hpp libtorrent/broadcast_socket.hpp \
+	libtorrent/buffer.hpp libtorrent/connection_queue.hpp \
+	libtorrent/create_torrent.hpp libtorrent/config.hpp \
+	libtorrent/debug.hpp libtorrent/disk_buffer_holder.hpp \
+	libtorrent/disk_io_thread.hpp libtorrent/entry.hpp \
+	libtorrent/enum_net.hpp libtorrent/escape_string.hpp \
+	libtorrent/error_code.hpp libtorrent/extensions.hpp \
 	libtorrent/file.hpp libtorrent/file_pool.hpp \
-	libtorrent/fingerprint.hpp libtorrent/hasher.hpp \
+	libtorrent/file_storage.hpp libtorrent/fingerprint.hpp \
+	libtorrent/GeoIP.h libtorrent/gzip.hpp libtorrent/hasher.hpp \
 	libtorrent/http_connection.hpp libtorrent/http_stream.hpp \
+	libtorrent/http_parser.hpp \
 	libtorrent/http_tracker_connection.hpp \
 	libtorrent/identify_client.hpp \
 	libtorrent/instantiate_connection.hpp \
 	libtorrent/intrusive_ptr_base.hpp \
 	libtorrent/invariant_check.hpp libtorrent/io.hpp \
 	libtorrent/ip_filter.hpp libtorrent/chained_buffer.hpp \
-	libtorrent/lsd.hpp libtorrent/peer.hpp \
-	libtorrent/peer_connection.hpp \
+	libtorrent/lsd.hpp libtorrent/lazy_entry.hpp \
+	libtorrent/peer.hpp libtorrent/peer_connection.hpp \
 	libtorrent/bt_peer_connection.hpp \
-	libtorrent/web_peer_connection.hpp libtorrent/pe_crypto.hpp \
+	libtorrent/web_peer_connection.hpp libtorrent/parse_url.hpp \
+	libtorrent/pe_crypto.hpp libtorrent/magnet_uri.hpp \
 	libtorrent/natpmp.hpp libtorrent/pch.hpp \
 	libtorrent/peer_id.hpp libtorrent/peer_info.hpp \
 	libtorrent/peer_request.hpp \
@@ -578,18 +659,22 @@ nobase_include_HEADERS = libtorrent/alert.hpp \
 	libtorrent/proxy_base.hpp libtorrent/random_sample.hpp \
 	libtorrent/session.hpp libtorrent/session_settings.hpp \
 	libtorrent/session_status.hpp libtorrent/size_type.hpp \
-	libtorrent/socket.hpp libtorrent/socket_type.hpp \
-	libtorrent/socks4_stream.hpp libtorrent/socks5_stream.hpp \
-	libtorrent/stat.hpp libtorrent/storage.hpp libtorrent/time.hpp \
+	libtorrent/ssl_stream.hpp libtorrent/socket.hpp \
+	libtorrent/socket_type.hpp libtorrent/socks4_stream.hpp \
+	libtorrent/socks5_stream.hpp libtorrent/stat.hpp \
+	libtorrent/storage.hpp libtorrent/time.hpp \
 	libtorrent/torrent.hpp libtorrent/torrent_handle.hpp \
 	libtorrent/torrent_info.hpp libtorrent/tracker_manager.hpp \
-	libtorrent/udp_tracker_connection.hpp libtorrent/utf8.hpp \
+	libtorrent/udp_tracker_connection.hpp \
+	libtorrent/udp_socket.hpp libtorrent/utf8.hpp \
 	libtorrent/upnp.hpp libtorrent/xml_parse.hpp \
 	libtorrent/variant_stream.hpp libtorrent/version.hpp \
 	libtorrent/time.hpp libtorrent/aux_/session_impl.hpp \
 	libtorrent/extensions/metadata_transfer.hpp \
 	libtorrent/extensions/ut_pex.hpp \
+	libtorrent/extensions/ut_metadata.hpp \
 	libtorrent/extensions/logger.hpp \
+	libtorrent/extensions/smart_ban.hpp \
 	libtorrent/kademlia/closest_nodes.hpp \
 	libtorrent/kademlia/dht_tracker.hpp \
 	libtorrent/kademlia/find_data.hpp \
@@ -598,7 +683,6 @@ nobase_include_HEADERS = libtorrent/alert.hpp \
 	libtorrent/kademlia/node_entry.hpp \
 	libtorrent/kademlia/node_id.hpp \
 	libtorrent/kademlia/observer.hpp \
-	libtorrent/kademlia/packet_iterator.hpp \
 	libtorrent/kademlia/refresh.hpp \
 	libtorrent/kademlia/routing_table.hpp \
 	libtorrent/kademlia/rpc_manager.hpp \

@@ -4,6 +4,7 @@
 
 #include <libtorrent/torrent_handle.hpp>
 #include <boost/python.hpp>
+#include <libtorrent/bitfield.hpp>
 
 using namespace boost::python;
 using namespace libtorrent;
@@ -12,7 +13,7 @@ object pieces(torrent_status const& s)
 {
     list result;
 
-    for (std::vector<bool>::const_iterator i(s.pieces->begin()), e(s.pieces->end()); i != e; ++i)
+    for (bitfield::const_iterator i(s.pieces.begin()), e(s.pieces.end()); i != e; ++i)
         result.append(*i);
 
     return result;
@@ -67,12 +68,18 @@ void bind_torrent_status()
         .def_readonly("storage_mode", &torrent_status::storage_mode)
         .def_readonly("up_bandwidth_queue", &torrent_status::up_bandwidth_queue)
         .def_readonly("down_bandwidth_queue", &torrent_status::down_bandwidth_queue)
+        .def_readonly("all_time_upload", &torrent_status::all_time_upload)
+        .def_readonly("all_time_download", &torrent_status::all_time_download)
+        .def_readonly("active_time", &torrent_status::active_time)
+        .def_readonly("seeding_time", &torrent_status::seeding_time)
+        .def_readonly("seed_rank", &torrent_status::seed_rank)
+        .def_readonly("last_scrape", &torrent_status::last_scrape)
+        .def_readonly("error", &torrent_status::error)
         ;
 
     enum_<torrent_status::state_t>("states")
         .value("queued_for_checking", torrent_status::queued_for_checking)
         .value("checking_files", torrent_status::checking_files)
-        .value("connecting_to_tracker", torrent_status::connecting_to_tracker)
         .value("downloading", torrent_status::downloading)
         .value("finished", torrent_status::finished)
         .value("seeding", torrent_status::seeding)

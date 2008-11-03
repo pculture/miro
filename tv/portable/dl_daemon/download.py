@@ -894,8 +894,6 @@ class BTDownloader(BGDownloader):
             self.activity = "waiting to check existing files"
         elif status.state == lt.torrent_status.states.checking_files:
             self.activity = "checking existing files"
-        elif status.state == lt.torrent_status.states.connecting_to_tracker:
-            self.activity = "connecting to peers"
         elif status.state == lt.torrent_status.states.allocating:
             self.activity = "allocating disk space"
         else:

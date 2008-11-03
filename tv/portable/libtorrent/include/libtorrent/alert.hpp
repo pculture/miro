@@ -67,29 +67,51 @@ namespace libtorrent {
 	class TORRENT_EXPORT alert
 	{
 	public:
+
+		// only here for backwards compatibility
 		enum severity_t { debug, info, warning, critical, fatal, none };
 
-		alert(severity_t severity, const std::string& msg);
+		enum category_t
+		{
+			error_notification = 0x1,
+			peer_notification = 0x2,
+			port_mapping_notification = 0x4,
+			storage_notification = 0x8,
+			tracker_notification = 0x10,
+			debug_notification = 0x20,
+			status_notification = 0x40,
+			progress_notification = 0x80,
+			ip_block_notification = 0x100,
+			performance_warning = 0x200,
+
+			all_categories = 0xffffffff
+		};
+
+		alert();
 		virtual ~alert();
 
 		// a timestamp is automatically created in the constructor
 		ptime timestamp() const;
 
-		std::string const& msg() const;
+		virtual char const* what() const = 0;
+		virtual std::string message() const = 0;
+		virtual int category() const = 0;
 
-		severity_t severity() const;
+#ifndef TORRENT_NO_DEPRECATE
+		severity_t severity() const TORRENT_DEPRECATED { return warning; }
+#endif
 
 		virtual std::auto_ptr<alert> clone() const = 0;
 
 	private:
-		std::string m_msg;
-		severity_t m_severity;
 		ptime m_timestamp;
 	};
 
 	class TORRENT_EXPORT alert_manager
 	{
 	public:
+		enum { queue_size_limit_default = 1000 };
+
 		alert_manager();
 		~alert_manager();
 
@@ -97,16 +119,22 @@ namespace libtorrent {
 		bool pending() const;
 		std::auto_ptr<alert> get();
 
-		void set_severity(alert::severity_t severity);
-		bool should_post(alert::severity_t severity) const;
+		template <class T>
+		bool should_post() const { return (m_alert_mask & T::static_category) != 0; }
 
 		alert const* wait_for_alert(time_duration max_wait);
 
+		void set_alert_mask(int m) { m_alert_mask = m; }
+
+		size_t alert_queue_size_limit() const { return m_queue_size_limit; }
+		size_t set_alert_queue_size_limit(size_t queue_size_limit_);
+
 	private:
 		std::queue<alert*> m_alerts;
-		alert::severity_t m_severity;
 		mutable boost::mutex m_mutex;
 		boost::condition m_condition;
+		int m_alert_mask;
+		size_t m_queue_size_limit;
 	};
 
 	struct TORRENT_EXPORT unhandled_alert : std::exception

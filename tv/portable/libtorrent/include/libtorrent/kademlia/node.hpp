@@ -56,8 +56,6 @@ POSSIBILITY OF SUCH DAMAGE.
 namespace libtorrent { namespace dht
 {
 
-using asio::ip::udp;
-
 #ifdef TORRENT_DHT_VERBOSE_LOGGING
 TORRENT_DECLARE_LOG(node);
 #endif
@@ -163,7 +161,7 @@ class node_impl : boost::noncopyable
 typedef std::map<node_id, torrent_entry> table_t;
 public:
 	node_impl(boost::function<void(msg const&)> const& f
-		, dht_settings const& settings, boost::optional<node_id> node_id);
+		, dht_settings const& settings);
 
 	virtual ~node_impl() {}
 
@@ -174,6 +172,7 @@ public:
 	void(std::vector<node_entry> const&)> f);
 	void add_router_node(udp::endpoint router);
 		
+	void unreachable(udp::endpoint const& ep);
 	void incoming(msg const& m);
 
 	void refresh();
@@ -187,7 +186,9 @@ public:
 
 	typedef table_t::iterator data_iterator;
 
+	void set_node_id(node_id const& nid) { m_id = nid; }
 	node_id const& nid() const { return m_id; }
+
 	boost::tuple<int, int> size() const{ return m_table.size(); }
 	size_type num_global_nodes() const
 	{ return m_table.num_global_nodes(); }

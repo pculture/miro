@@ -87,7 +87,8 @@ namespace libtorrent
 			, tracker_receive_timeout(40)
 			, stop_tracker_timeout(5)
 			, tracker_maximum_response_length(1024*1024)
-			, piece_timeout(10)
+			, piece_timeout(20)
+			, request_timeout(50)
 			, request_queue_time(3.f)
 			, max_allowed_in_request_queue(250)
 			, max_out_request_queue(200)
@@ -114,10 +115,34 @@ namespace libtorrent
 			, max_outstanding_disk_bytes_per_connection(64 * 1024)
 			, handshake_timeout(10)
 #ifndef TORRENT_DISABLE_DHT
-			, use_dht_as_fallback(true)
+			, use_dht_as_fallback(false)
 #endif
 			, free_torrent_hashes(true)
-			, upnp_ignore_nonrouters(true)
+			, upnp_ignore_nonrouters(false)
+ 			, send_buffer_watermark(80 * 1024)
+			, auto_upload_slots(true)
+			, use_parole_mode(true)
+			, cache_size(512)
+			, cache_expiry(60)
+			, outgoing_ports(0,0)
+			, peer_tos(0)
+			, active_downloads(8)
+			, active_seeds(5)
+			, active_limit(15)
+			, dont_count_slow_torrents(true)
+			, auto_manage_interval(30)
+			, share_ratio_limit(2.f)
+			, seed_time_ratio_limit(7.f)
+			, seed_time_limit(24 * 60 * 60) // 24 hours
+			, peer_turnover(1 / 50.f)
+			, peer_turnover_cutoff(1.f)
+			, close_redundant_connections(true)
+			, auto_scrape_interval(1800)
+			, auto_scrape_min_interval(300)
+			, max_peerlist_size(8000)
+			, min_announce_interval(5 * 60)
+			, prioritize_partial_pieces(false)
+			, auto_manage_startup(120)
 		{}
 
 		// this is the user agent that will be sent to the tracker
@@ -147,6 +172,11 @@ namespace libtorrent
 		// the number of seconds from a request is sent until
 		// it times out if no piece response is returned.
 		int piece_timeout;
+
+		// the number of seconds one block (16kB) is expected
+		// to be received within. If it's not, the block is
+		// requested from a different peer
+		int request_timeout;
 
 		// the length of the request queue given in the number
 		// of seconds it should take for the other end to send
@@ -298,8 +328,130 @@ namespace libtorrent
 		// any upnp devices that don't have an address that matches
 		// our currently configured router.
 		bool upnp_ignore_nonrouters;
-	};
+
+ 		// if the send buffer has fewer bytes than this, we'll
+ 		// read another 16kB block onto it. If set too small,
+ 		// upload rate capacity will suffer. If set too high,
+ 		// memory will be wasted.
+ 		// The actual watermark may be lower than this in case
+ 		// the upload rate is low, this is the upper limit.
+ 		int send_buffer_watermark;
+
+		// if auto_upload_slots is true, and a global upload
+		// limit is set and the upload rate is less than 90%
+		// of the upload limit, on new slot is opened up. If
+		// the upload rate is >= upload limit for an extended
+		// period of time, one upload slot is closed. The
+		// upload slots are never automatically decreased below
+		// the manual settings, through max_uploads.
+		bool auto_upload_slots;
+
+		// if set to true, peers that participate in a failing
+		// piece is put in parole mode. i.e. They will only
+		// download whole pieces until they either fail or pass.
+		// they are taken out of parole mode as soon as they
+		// participate in a piece that passes.
+		bool use_parole_mode;
+
+		// the disk write cache, specified in 16 KiB blocks.
+		// default is 512 (= 8 MB)
+		int cache_size;
+
+		// the number of seconds a write cache entry sits
+		// idle in the cache before it's forcefully flushed
+		// to disk. Default is 60 seconds.
+		int cache_expiry;
+
+		// if != (0, 0), this is the range of ports that
+		// outgoing connections will be bound to. This
+		// is useful for users that have routers that
+		// allow QoS settings based on local port.
+		std::pair<int, int> outgoing_ports;
+
+		// the TOS byte of all peer traffic (including
+		// web seeds) is set to this value. The default
+		// is the QBSS scavenger service
+		// http://qbone.internet2.edu/qbss/
+		// For unmarked packets, set to 0
+		char peer_tos;
+
+		// for auto managed torrents, these are the limits
+		// they are subject to. If there are too many torrents
+		// some of the auto managed ones will be paused until
+		// some slots free up.
+		int active_downloads;
+		int active_seeds;
+		int active_limit;
+
+		// if this is true, torrents that don't have any significant
+		// transfers are not counted as active when determining which
+		// auto managed torrents to pause and resume
+		bool dont_count_slow_torrents;
+
+		// the number of seconds in between recalculating which
+		// torrents to activate and which ones to queue
+		int auto_manage_interval;
 	
+		// when a seeding torrent reaches eaither the share ratio
+		// (bytes up / bytes down) or the seed time ratio
+		// (seconds as seed / seconds as downloader) or the seed
+		// time limit (seconds as seed) it is considered
+		// done, and it will leave room for other torrents
+		// the default value for share ratio is 2
+		// the default seed time ratio is 7, because that's a common
+		// asymmetry ratio on connections
+		float share_ratio_limit;
+		float seed_time_ratio_limit;
+		int seed_time_limit;
+
+		// the percentage of peers to disconnect every
+		// 90 seconds (if we're at the peer limit)
+		// defaults to 1/50:th
+		float peer_turnover;
+
+		// when we are connected to more than
+		// limit * peer_turnover_enable peers
+		// disconnect peer_turnover fraction
+		// of the peers
+		float peer_turnover_cutoff;
+
+		// if this is true (default) connections where both
+		// ends have no utility in keeping the connection open
+		// are closed. for instance if both ends have completed
+		// their downloads
+		bool close_redundant_connections;
+
+		// the number of seconds between scrapes of
+		// queued torrents (auto managed and paused)
+		int auto_scrape_interval;
+
+		// the minimum number of seconds between any
+		// automatic scrape (regardless of torrent)
+		int auto_scrape_min_interval;
+
+		// the max number of peers in the peer list
+		// per torrent. This is the peers we know
+		// about, not necessarily connected to.
+		int max_peerlist_size;
+
+		// any announce intervals reported from a tracker
+		// that is lower than this, will be clamped to this
+		// value. It's specified in seconds
+		int min_announce_interval;
+
+		// if true, partial pieces are picked before pieces
+		// that are more rare
+		bool prioritize_partial_pieces;
+
+		// the number of seconds a torrent is considered
+		// active after it was started, regardless of
+		// upload and download speed. This is so that
+		// newly started torrents are not considered
+		// inactive until they have a fair chance to
+		// start downloading.
+		int auto_manage_startup;
+	};
+
 #ifndef TORRENT_DISABLE_DHT
 	struct dht_settings
 	{

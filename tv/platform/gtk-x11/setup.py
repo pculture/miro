@@ -174,7 +174,6 @@ platform_package_dir = os.path.join(platform_dir, 'plat')
 platform_widgets_dir = os.path.join(platform_package_dir, 'frontends',
         'widgets')
 xine_dir = os.path.join(platform_dir, 'xine')
-debian_package_dir = os.path.join(platform_dir, 'debian_package')
 
 # insert the root_dir to the beginning of sys.path so that we can
 # pick up portable and other packages
@@ -349,7 +348,7 @@ def fetch_sources(portable_dir):
         if '.svn' in dirs:
             dirs.remove('.svn')
         for file in files:
-            if file.endswith('.cpp'):
+            if file.endswith('.cpp') or file.endswith('.c'):
                 sources.append(os.path.join(root, file))
     return sources
 
@@ -372,9 +371,10 @@ def get_libtorrent_extension(portable_dir):
                             ['libtorrent/include', 'libtorrent/include/libtorrent']]
 
     extra_compile_args = ["-Wno-missing-braces",
-                          "-DHAVE_INCLUDE_LIBTORRENT_ASIO____ASIO_HPP=1",
-                          "-DHAVE_INCLUDE_LIBTORRENT_ASIO_SSL_STREAM_HPP=1",
-                          "-DHAVE_INCLUDE_LIBTORRENT_ASIO_IP_TCP_HPP=1",
+                          "-D_FILE_OFFSET_BITS=64",
+                          "-DHAVE___INCLUDE_LIBTORRENT_ASIO_HPP=1",
+                          "-DHAVE___INCLUDE_LIBTORRENT_ASIO_SSL_STREAM_HPP=1",
+                          "-DHAVE___INCLUDE_LIBTORRENT_ASIO_IP_TCP_HPP=1",
                           "-DHAVE_PTHREAD=1", "-DTORRENT_USE_OPENSSL=1", "-DHAVE_SSL=1",
                           "-DNDEBUG=1", "-O2"]
 
@@ -390,54 +390,36 @@ def get_libtorrent_extension(portable_dir):
         all_libs.extend(os.listdir(os.path.join(sysconfig.PREFIX, "lib64")))
     all_libs = [mem for mem in all_libs if mem.startswith("libboost")]
 
-    for mem in all_libs:
-        if mem.startswith("libboost_python-mt"):
-            print "using boost_python-mt"
-            libraries += ["boost_python-mt"]
-            break
-    else:
-        print "using boost_python"
-        libraries += ["boost_python"]
+    def mt_or_not(s, all_libs=all_libs, libraries=libraries):
+        for mem in all_libs:
+            if mem.startswith("lib%s-mt" % s):
+                print "using %s-mt" % s
+                libraries += ["%s-mt" % s]
+                break
+        else:
+            print "using %s" % s
+            libraries += [s]
 
-    for mem in all_libs:
-        if mem.startswith("libboost_filesystem-mt"):
-            print "using boost_filesystem-mt"
-            libraries += ["boost_filesystem-mt"]
-            break
-    else:
-        print "using boost_filesystem"
-        libraries += ["boost_filesystem"]
-
-    for mem in all_libs:
-        if mem.startswith("libboost_date_time-mt"):
-            print "using boost_date_time-mt"
-            libraries += ["boost_date_time-mt"]
-            break
-    else:
-        print "using boost_date_time"
-        libraries += ["boost_date_time"]
-
-    for mem in all_libs:
-        if mem.startswith("libboost_thread-mt"):
-            print "using boost_thread-mt"
-            libraries += ["boost_thread-mt"]
-            break
-    else:
-        print "using boost_thread"
-        libraries += ["boost_thread"]
+    mt_or_not("boost_python")
+    mt_or_not("boost_filesystem")
+    mt_or_not("boost_date_time")
+    mt_or_not("boost_thread")
+    # mt_or_not("boost_regex")
+    # mt_or_not("boost_serialization")
 
     config_vars = sysconfig.get_config_vars()
-    if "CFLAGS" in config_vars:
-        if "-Wstrict-prototypes" in config_vars["CFLAGS"]:
-            config_vars["CFLAGS"] = config_vars["CFLAGS"].replace("-Wstrict-prototypes", " ")
+    if "CFLAGS" in config_vars and "-Wstrict-prototypes" in config_vars["CFLAGS"]:
+        config_vars["CFLAGS"] = config_vars["CFLAGS"].replace("-Wstrict-prototypes", " ")
 
-    if "OPT" in config_vars:
-        if "-Wstrict-prototypes" in config_vars["OPT"]:
-            config_vars["OPT"] = config_vars["OPT"].replace("-Wstrict-prototypes", " ")
+    if "OPT" in config_vars and "-Wstrict-prototypes" in config_vars["OPT"]:
+        config_vars["OPT"] = config_vars["OPT"].replace("-Wstrict-prototypes", " ")
 
     sources = fetch_sources(portable_dir)
 
-    sources.remove(os.path.join(portable_dir, 'libtorrent/src/file_win.cpp'))
+    # versions of libtorrent prior to 0.14 have this file which we don't want to
+    # compile or use
+    if os.path.exists(os.path.join(portable_dir, "libtorrent", "src", "file_win.cpp")):
+        sources.remove(os.path.join(portable_dir, "libtorrent", "src", "file_win.cpp"))
 
     return Extension("miro.libtorrent",
                      include_dirs=include_dirs,

@@ -40,7 +40,6 @@ ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/acx_pthread.m4 \
 	$(top_srcdir)/m4/ax_boost_asio-fixed.m4 \
 	$(top_srcdir)/m4/ax_boost_base-fixed.m4 \
-	$(top_srcdir)/m4/ax_boost_date_time.m4 \
 	$(top_srcdir)/m4/ax_boost_filesystem-fixed.m4 \
 	$(top_srcdir)/m4/ax_boost_program_options.m4 \
 	$(top_srcdir)/m4/ax_boost_regex.m4 \
@@ -62,7 +61,7 @@ libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libtorrent_rasterbar_la_DEPENDENCIES =
 am__libtorrent_rasterbar_la_SOURCES_DIST = entry.cpp escape_string.cpp \
-	assert.cpp enum_net.cpp broadcast_socket.cpp \
+	lazy_bdecode.cpp assert.cpp enum_net.cpp broadcast_socket.cpp \
 	peer_connection.cpp bt_peer_connection.cpp \
 	web_peer_connection.cpp natpmp.cpp piece_picker.cpp policy.cpp \
 	session.cpp session_impl.cpp sha1.cpp stat.cpp storage.cpp \
@@ -73,26 +72,33 @@ am__libtorrent_rasterbar_la_SOURCES_DIST = entry.cpp escape_string.cpp \
 	metadata_transfer.cpp logger.cpp file_pool.cpp ut_pex.cpp \
 	lsd.cpp upnp.cpp instantiate_connection.cpp socks5_stream.cpp \
 	socks4_stream.cpp http_stream.cpp connection_queue.cpp \
-	disk_io_thread.cpp kademlia/closest_nodes.cpp \
-	kademlia/dht_tracker.cpp kademlia/find_data.cpp \
-	kademlia/node.cpp kademlia/node_id.cpp kademlia/refresh.cpp \
-	kademlia/routing_table.cpp kademlia/rpc_manager.cpp \
-	kademlia/traversal_algorithm.cpp
+	disk_io_thread.cpp ut_metadata.cpp magnet_uri.cpp \
+	udp_socket.cpp smart_ban.cpp http_parser.cpp gzip.cpp \
+	disk_buffer_holder.cpp create_torrent.cpp GeoIP.c \
+	parse_url.cpp file_storage.cpp error_code.cpp \
+	kademlia/closest_nodes.cpp kademlia/dht_tracker.cpp \
+	kademlia/find_data.cpp kademlia/node.cpp kademlia/node_id.cpp \
+	kademlia/refresh.cpp kademlia/routing_table.cpp \
+	kademlia/rpc_manager.cpp kademlia/traversal_algorithm.cpp
 @USE_DHT_TRUE@am__objects_1 = closest_nodes.lo dht_tracker.lo \
 @USE_DHT_TRUE@	find_data.lo node.lo node_id.lo refresh.lo \
 @USE_DHT_TRUE@	routing_table.lo rpc_manager.lo \
 @USE_DHT_TRUE@	traversal_algorithm.lo
 am_libtorrent_rasterbar_la_OBJECTS = entry.lo escape_string.lo \
-	assert.lo enum_net.lo broadcast_socket.lo peer_connection.lo \
-	bt_peer_connection.lo web_peer_connection.lo natpmp.lo \
-	piece_picker.lo policy.lo session.lo session_impl.lo sha1.lo \
-	stat.lo storage.lo torrent.lo torrent_handle.lo pe_crypto.lo \
-	torrent_info.lo tracker_manager.lo http_connection.lo \
+	lazy_bdecode.lo assert.lo enum_net.lo broadcast_socket.lo \
+	peer_connection.lo bt_peer_connection.lo \
+	web_peer_connection.lo natpmp.lo piece_picker.lo policy.lo \
+	session.lo session_impl.lo sha1.lo stat.lo storage.lo \
+	torrent.lo torrent_handle.lo pe_crypto.lo torrent_info.lo \
+	tracker_manager.lo http_connection.lo \
 	http_tracker_connection.lo udp_tracker_connection.lo alert.lo \
 	identify_client.lo ip_filter.lo file.lo metadata_transfer.lo \
 	logger.lo file_pool.lo ut_pex.lo lsd.lo upnp.lo \
 	instantiate_connection.lo socks5_stream.lo socks4_stream.lo \
 	http_stream.lo connection_queue.lo disk_io_thread.lo \
+	ut_metadata.lo magnet_uri.lo udp_socket.lo smart_ban.lo \
+	http_parser.lo gzip.lo disk_buffer_holder.lo create_torrent.lo \
+	GeoIP.lo parse_url.lo file_storage.lo error_code.lo \
 	$(am__objects_1)
 libtorrent_rasterbar_la_OBJECTS =  \
 	$(am_libtorrent_rasterbar_la_OBJECTS)
@@ -103,6 +109,15 @@ libtorrent_rasterbar_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 LTCXXCOMPILE = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
@@ -127,7 +142,6 @@ AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
 BOOST_ASIO_LIB = @BOOST_ASIO_LIB@
 BOOST_CPPFLAGS = @BOOST_CPPFLAGS@
-BOOST_DATE_TIME_LIB = @BOOST_DATE_TIME_LIB@
 BOOST_FILESYSTEM_LIB = @BOOST_FILESYSTEM_LIB@
 BOOST_LDFLAGS = @BOOST_LDFLAGS@
 BOOST_PROGRAM_OPTIONS_LIB = @BOOST_PROGRAM_OPTIONS_LIB@
@@ -154,7 +168,6 @@ ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGREP = @EGREP@
-EXAMPLESDIR = @EXAMPLESDIR@
 EXEEXT = @EXEEXT@
 F77 = @F77@
 FFLAGS = @FFLAGS@
@@ -186,6 +199,7 @@ PTHREAD_CC = @PTHREAD_CC@
 PTHREAD_CFLAGS = @PTHREAD_CFLAGS@
 PTHREAD_LIBS = @PTHREAD_LIBS@
 RANLIB = @RANLIB@
+SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 SSL_CFLAGS = @SSL_CFLAGS@
@@ -193,10 +207,8 @@ SSL_CXXFLAGS = @SSL_CXXFLAGS@
 SSL_LDFLAGS = @SSL_LDFLAGS@
 SSL_LIBS = @SSL_LIBS@
 STRIP = @STRIP@
-TESTSDIR = @TESTSDIR@
 VERSION = @VERSION@
 ZLIB = @ZLIB@
-ZLIBDIR = @ZLIBDIR@
 ZLIBINCL = @ZLIBINCL@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
@@ -262,7 +274,7 @@ lib_LTLIBRARIES = libtorrent-rasterbar.la
 @USE_DHT_TRUE@kademlia/traversal_algorithm.cpp
 
 libtorrent_rasterbar_la_SOURCES = entry.cpp escape_string.cpp \
-assert.cpp enum_net.cpp broadcast_socket.cpp \
+lazy_bdecode.cpp assert.cpp enum_net.cpp broadcast_socket.cpp \
 peer_connection.cpp bt_peer_connection.cpp web_peer_connection.cpp \
 natpmp.cpp piece_picker.cpp policy.cpp session.cpp session_impl.cpp sha1.cpp \
 stat.cpp storage.cpp torrent.cpp torrent_handle.cpp pe_crypto.cpp \
@@ -271,9 +283,11 @@ http_tracker_connection.cpp udp_tracker_connection.cpp \
 alert.cpp identify_client.cpp ip_filter.cpp file.cpp metadata_transfer.cpp \
 logger.cpp file_pool.cpp ut_pex.cpp lsd.cpp upnp.cpp instantiate_connection.cpp \
 socks5_stream.cpp socks4_stream.cpp http_stream.cpp connection_queue.cpp \
-disk_io_thread.cpp \
-$(kademlia_sources)
+disk_io_thread.cpp ut_metadata.cpp magnet_uri.cpp udp_socket.cpp smart_ban.cpp \
+http_parser.cpp gzip.cpp disk_buffer_holder.cpp create_torrent.cpp GeoIP.c \
+parse_url.cpp file_storage.cpp error_code.cpp $(kademlia_sources)
 
+# mapped_storage.cpp 
 noinst_HEADERS = \
 $(top_srcdir)/include/libtorrent/alert.hpp \
 $(top_srcdir)/include/libtorrent/alert_types.hpp \
@@ -283,24 +297,30 @@ $(top_srcdir)/include/libtorrent/bandwidth_manager.hpp \
 $(top_srcdir)/include/libtorrent/bandwidth_limit.hpp \
 $(top_srcdir)/include/libtorrent/bandwidth_queue_entry.hpp \
 $(top_srcdir)/include/libtorrent/bencode.hpp \
+$(top_srcdir)/include/libtorrent/bitfield.hpp \
 $(top_srcdir)/include/libtorrent/broadcast_socket.hpp \
 $(top_srcdir)/include/libtorrent/buffer.hpp \
 $(top_srcdir)/include/libtorrent/connection_queue.hpp \
+$(top_srcdir)/include/libtorrent/create_torrent.hpp \
 $(top_srcdir)/include/libtorrent/debug.hpp \
 $(top_srcdir)/include/libtorrent/disk_io_thread.hpp \
 $(top_srcdir)/include/libtorrent/entry.hpp \
 $(top_srcdir)/include/libtorrent/enum_net.hpp \
 $(top_srcdir)/include/libtorrent/escape_string.hpp \
+$(top_srcdir)/include/libtorrent/error_code.hpp \
 $(top_srcdir)/include/libtorrent/extensions.hpp \
 $(top_srcdir)/include/libtorrent/extensions/metadata_transfer.hpp \
 $(top_srcdir)/include/libtorrent/extensions/logger.hpp \
 $(top_srcdir)/include/libtorrent/extensions/ut_pex.hpp \
 $(top_srcdir)/include/libtorrent/file.hpp \
 $(top_srcdir)/include/libtorrent/file_pool.hpp \
+$(top_srcdir)/include/libtorrent/file_storage.hpp \
 $(top_srcdir)/include/libtorrent/fingerprint.hpp \
+$(top_srcdir)/include/libtorrent/gzip.hpp \
 $(top_srcdir)/include/libtorrent/hasher.hpp \
 $(top_srcdir)/include/libtorrent/http_connection.hpp \
 $(top_srcdir)/include/libtorrent/http_stream.hpp \
+$(top_srcdir)/include/libtorrent/http_parser.hpp \
 $(top_srcdir)/include/libtorrent/session_settings.hpp \
 $(top_srcdir)/include/libtorrent/http_tracker_connection.hpp \
 $(top_srcdir)/include/libtorrent/identify_client.hpp \
@@ -315,6 +335,7 @@ $(top_srcdir)/include/libtorrent/peer.hpp \
 $(top_srcdir)/include/libtorrent/peer_connection.hpp \
 $(top_srcdir)/include/libtorrent/bt_peer_connection.hpp \
 $(top_srcdir)/include/libtorrent/web_peer_connection.hpp \
+$(top_srcdir)/include/libtorrent/parse_url.hpp \
 $(top_srcdir)/include/libtorrent/pe_crypto.hpp \
 $(top_srcdir)/include/libtorrent/natpmp.hpp \
 $(top_srcdir)/include/libtorrent/pch.hpp \
@@ -344,14 +365,14 @@ $(top_srcdir)/include/libtorrent/variant_stream.hpp \
 $(top_srcdir)/include/libtorrent/version.hpp
 
 libtorrent_rasterbar_la_LDFLAGS = $(LDFLAGS) -version-info $(INTERFACE_VERSION_INFO)
-libtorrent_rasterbar_la_LIBADD = @ZLIB@ @BOOST_SYSTEM_LIB@ @BOOST_DATE_TIME_LIB@ @BOOST_FILESYSTEM_LIB@ @BOOST_THREAD_LIB@ @PTHREAD_LIBS@ @SSL_LIBS@
-AM_CXXFLAGS = -ftemplate-depth-50 -I$(top_srcdir)/include -I$(top_srcdir)/include/libtorrent @ZLIBINCL@ @DEBUGFLAGS@ @PTHREAD_CFLAGS@ -DBOOST_MULTI_INDEX_DISABLE_SERIALIZATION @SSL_CXXFLAGS@
-LDADD = @BOOST_DATE_TIME_LIB@ @BOOST_FILESYSTEM_LIB@ @BOOST_THREAD_LIB@ @SSL_LIBS@
-AM_LDFLAGS = @SSL_LDFLAGS@
+libtorrent_rasterbar_la_LIBADD = @ZLIB@ @BOOST_SYSTEM_LIB@ @BOOST_FILESYSTEM_LIB@ @BOOST_THREAD_LIB@ @PTHREAD_LIBS@ @SSL_LIBS@
+AM_CXXFLAGS = -ftemplate-depth-100 -I$(top_srcdir)/include -I$(top_srcdir)/include/libtorrent @ZLIBINCL@ @DEBUGFLAGS@ @PTHREAD_CFLAGS@ -DBOOST_MULTI_INDEX_DISABLE_SERIALIZATION @SSL_CXXFLAGS@
+AM_CFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/include/libtorrent @ZLIBINCL@ @DEBUGFLAGS@ @PTHREAD_CFLAGS@
+AM_LDFLAGS = $(LDFLAGS) @BOOST_FILESYSTEM_LIB@ @BOOST_THREAD_LIB@ @PTHREAD_LIBS@ @SSL_LDFLAGS@ @SSL_LIBS@
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .cpp .lo .o .obj
+.SUFFIXES: .c .cpp .lo .o .obj
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -417,32 +438,42 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GeoIP.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/alert.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/assert.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/broadcast_socket.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bt_peer_connection.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/closest_nodes.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/connection_queue.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/create_torrent.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dht_tracker.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disk_buffer_holder.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/disk_io_thread.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/entry.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/enum_net.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/error_code.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/escape_string.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/file.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/file_pool.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/file_storage.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/find_data.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gzip.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/http_connection.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/http_parser.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/http_stream.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/http_tracker_connection.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/identify_client.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/instantiate_connection.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ip_filter.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lazy_bdecode.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/logger.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lsd.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/magnet_uri.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/metadata_transfer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/natpmp.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/node.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/node_id.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/parse_url.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pe_crypto.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/peer_connection.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/piece_picker.Plo@am__quote@
@@ -453,6 +484,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/session.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/session_impl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sha1.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/smart_ban.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/socks4_stream.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/socks5_stream.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stat.Plo@am__quote@
@@ -462,10 +494,33 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/torrent_info.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tracker_manager.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/traversal_algorithm.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/udp_socket.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/udp_tracker_connection.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/upnp.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ut_metadata.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ut_pex.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/web_peer_connection.Plo@am__quote@
+
+.c.o:
+@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(COMPILE) -c $<
+
+.c.obj:
+@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
+
+.c.lo:
+@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	mv -f $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
