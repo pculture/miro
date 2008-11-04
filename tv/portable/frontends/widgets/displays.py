@@ -100,6 +100,7 @@ class DisplayManager(object):
     """
     def __init__(self):
         self.display_classes = [
+                AudioFeedDisplay,
                 FeedDisplay,
                 PlaylistDisplay,
                 SiteDisplay,
@@ -243,6 +244,11 @@ class FeedDisplay(ItemListDisplay):
     def make_controller(self, tab):
         self.feed_id = tab.id
         return feedcontroller.FeedController(tab.id, tab.is_folder)
+
+class AudioFeedDisplay(FeedDisplay):
+    @staticmethod
+    def should_display(type, selected_tabs):
+        return type == 'audio-feed' and len(selected_tabs) == 1
 
 class PlaylistDisplay(ItemListDisplay):
     @staticmethod

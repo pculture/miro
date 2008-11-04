@@ -437,6 +437,9 @@ class FeedList(NestedTabList):
             (_('Remove'), app.widgetapp.remove_current_feed)
         ]
 
+class AudioFeedList(FeedList):
+    type = 'audio-feed'
+
 class PlaylistList(NestedTabList):
     type = 'playlist'
 
@@ -487,6 +490,8 @@ class TabListBox(widgetset.Scroller):
         vbox.pack_start(tlm.site_list.view)
         vbox.pack_start(self.build_header(_('FEEDS')))
         vbox.pack_start(tlm.feed_list.view)
+        vbox.pack_start(self.build_header(_('AUDIO FEEDS')))
+        vbox.pack_start(tlm.audio_feed_list.view)
         vbox.pack_start(self.build_header(_('PLAYLISTS')))
         vbox.pack_start(tlm.playlist_list.view)
         return vbox

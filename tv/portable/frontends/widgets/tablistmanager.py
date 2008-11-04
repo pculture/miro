@@ -37,6 +37,7 @@ class TabListManager(object):
         self.static_tab_list = tablist.StaticTabList()
         self.site_list = tablist.SiteList()
         self.feed_list = tablist.FeedList()
+        self.audio_feed_list = tablist.AudioFeedList()
         self.playlist_list = tablist.PlaylistList()
         self.widget_to_tablist = {}
         for tab_list in self.all_tab_lists():
