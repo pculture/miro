@@ -304,6 +304,28 @@ class TabList(signals.SignalEmitter):
         self.doing_change = False
         self.view.set_context_menu_callback(self.on_context_menu)
 
+    def reset_list(self, message):
+        self.doing_change = True
+        selected_ids = set(self.view.model[iter][0].id for iter in
+                self.view.get_selection())
+        iter = self.view.model.first_iter()
+        while iter is not None:
+            iter = self.view.model.remove(iter)
+        self.iter_map = {}
+        for info in message.toplevels:
+            self.add(info)
+            if info.is_folder:
+                for child_info in message.folder_children[info.id]:
+                    self.add(child_info, info.id)
+        self.model_changed()
+        for info in message.toplevels:
+            if info.is_folder:
+                expanded = (info.id in message.expanded_folders)
+                self.set_folder_expanded(info.id, expanded)
+        for id in selected_ids:
+            self.view.select(self.iter_map[id])
+        self.doing_change = False
+
     def on_row_expanded_change(self, view, iter, expanded):
         id = self.view.model[iter][0].id
         message = messages.FolderExpandedChange(self.type, id, expanded)
@@ -355,6 +377,14 @@ class TabList(signals.SignalEmitter):
 
     def get_info(self, id):
         return self.view.model[self.iter_map[id]][0]
+
+    def get_child_count(self, id):
+        count = 0
+        child_iter = self.view.model.child_iter(self.iter_map[id])
+        while child_iter is not None:
+            count += 1
+            child_iter = self.view.model.next_iter(child_iter)
+        return count
 
     def send_new_order(self):
         message = messages.TabsReordered(self.type)

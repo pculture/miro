@@ -129,8 +129,20 @@ class ViewTracker(object):
         self.remove_callbacks()
 
 class TabTracker(ViewTracker):
+    def __init__(self):
+        ViewTracker.__init__(self)
+        self.send_whole_list = False
+
     def make_changed_message(self, added, changed, removed):
         return messages.TabsChanged(self.type, added, changed, removed)
+
+    def send_messages(self):
+        if self.send_whole_list:
+            self.send_initial_list()
+            self.send_whole_list = False
+            self.reset_changes()
+        else:
+            ViewTracker.send_messages(self)
 
     def add_callbacks(self):
         for view in self.get_object_views():
@@ -717,7 +729,15 @@ class BackendMessageHandler(messages.MessageHandler):
             Feed(url)
 
     def handle_new_channel_folder(self, message):
-        ChannelFolder(message.name)
+        folder = ChannelFolder(message.name)
+        if message.child_feed_ids is not None:
+            for id in message.child_feed_ids:
+                feed = views.feeds.getObjectByID(id)
+                feed.setFolder(folder)
+            tab_order = getSingletonDDBObject(views.channelTabOrder)
+            tab_order.move_tab_after(folder.id, message.child_feed_ids)
+            tab_order.signalChange()
+            self.channel_tracker.send_whole_list = True
 
     def handle_new_watched_folder(self, message):
         path = osFilenameToFilenameType(message.path)
@@ -758,7 +778,15 @@ class BackendMessageHandler(messages.MessageHandler):
         autoupdate.check_for_updates(up_to_date_callback)
 
     def handle_new_playlist_folder(self, message):
-        PlaylistFolder(message.name)
+        folder = PlaylistFolder(message.name)
+        if message.child_playlist_ids is not None:
+            for id in message.child_playlist_ids:
+                playlist = views.playlists.getObjectByID(id)
+                playlist.setFolder(folder)
+            tab_order = getSingletonDDBObject(views.playlistTabOrder)
+            tab_order.move_tab_after(folder.id, message.child_playlist_ids)
+            tab_order.signalChange()
+            self.playlist_tracker.send_whole_list = True
 
     def handle_add_videos_to_playlist(self, message):
         try:

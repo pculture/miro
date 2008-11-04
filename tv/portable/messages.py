@@ -397,13 +397,15 @@ class NewPlaylist(BackendMessage):
 
 class NewChannelFolder(BackendMessage):
     """Create a new channel folder."""
-    def __init__(self, name):
+    def __init__(self, name, child_feed_ids):
         self.name = util.toUni(name)
+        self.child_feed_ids = child_feed_ids
 
 class NewPlaylistFolder(BackendMessage):
     """Create a new channel folder."""
-    def __init__(self, name):
+    def __init__(self, name, child_playlist_ids):
         self.name = util.toUni(name)
+        self.child_playlist_ids = child_playlist_ids
 
 class ChangeMoviesDirectory(BackendMessage):
     """Change the current movies directory."""
@@ -905,7 +907,10 @@ class GuideList(FrontendMessage):
                 self.added_guides.append(guide)
 
 class TabList(FrontendMessage):
-    """Sends the frontend the initial list of channels and playlists
+    """Sends the frontend the current list of channels and playlists
+
+    This is sent at startup and when the changes to the list of
+    channels/playlists is too complex to describe with a TabsChanged message.
 
     Attributes:
     type -- 'feed' or 'playlist'

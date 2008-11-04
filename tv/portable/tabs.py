@@ -239,3 +239,11 @@ class TabOrder(database.DDBObject):
 
     def reorder(self, newOrder):
         self.trackedTabs.reorder(newOrder)
+
+    def move_tab_after(self, anchor_id, id_list):
+        view = self.getView()
+        view.moveCursorToID(anchor_id)
+        next = view.getNext()
+        while next is not None and next.getID() in id_list:
+            next = view.getNext()
+        self.moveTabs(next, id_list)

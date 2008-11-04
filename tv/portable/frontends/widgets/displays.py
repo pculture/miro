@@ -33,6 +33,7 @@ app.
 from miro import app
 from miro import messages
 from miro import signals
+from miro.gtcache import gettext as _
 from miro.frontends.widgets import browser
 from miro.frontends.widgets import downloadscontroller
 from miro.frontends.widgets import feedcontroller
@@ -110,6 +111,7 @@ class DisplayManager(object):
                 NewVideosDisplay,
                 DownloadingDisplay,
                 GuideDisplay,
+                MultipleSelectionDisplay,
                 DummyDisplay,
         ]
         self.display_stack = []
@@ -372,6 +374,83 @@ class VideoDisplay(Display):
             self.exit_fullscreen()
         self.widget.stop()
         self.widget.teardown()
+
+class MultipleSelectionDisplay(TabDisplay):
+    @staticmethod
+    def should_display(type, selected_tabs):
+        return len(selected_tabs) > 1
+
+    def __init__(self, type, selected_tabs):
+        Display.__init__(self)
+        self.type = type
+        self.child_count = self.folder_count = self.folder_child_count = 0
+        if type == 'feed':
+            tab_list = app.tab_list_manager.feed_list
+        else:
+            tab_list = app.tab_list_manager.playlist_list
+        for tab in selected_tabs:
+            if tab.is_folder:
+                self.folder_count += 1
+                self.folder_child_count += tab_list.get_child_count(tab.id)
+            else:
+                self.child_count += 1
+        vbox = widgetset.VBox(spacing=20)
+        label = self._make_label(type, selected_tabs)
+        label.set_size(2)
+        label.set_color((0.3, 0.3, 0.3))
+        vbox.pack_start(widgetutil.align_center(label))
+        vbox.pack_start(widgetutil.align_center(
+            self._make_buttons()))
+        self.widget = widgetutil.align_middle(vbox)
+
+    def _make_label(self, type, selected_tabs):
+        label_parts = []
+        if self.folder_count > 0:
+            if type == 'feed':
+                label_parts.append(_('%d Channel Folders Selected') %
+                        self.folder_count)
+                label_parts.append(_('(contains %d channels)') %
+                        self.folder_child_count)
+            else:
+                label_parts.append(_('%d Playlist Folders Selected') %
+                        self.folder_count)
+                label_parts.append(_('(contains %d playlists)') %
+                        self.folder_child_count)
+
+        if self.child_count > 0 and self.folder_count > 0:
+            label_parts.append('')
+        if self.child_count > 0:
+            if type == 'feed':
+                label_parts.append(_('%d Channels Selected') %
+                        self.child_count)
+            else:
+                label_parts.append(_('%d Playlists Selected') %
+                        self.child_count)
+        return widgetset.Label('\n'.join(label_parts))
+
+    def _make_buttons(self):
+        delete_button = widgetset.Button(_('Delete All'))
+        delete_button.connect('clicked', self._on_delete_clicked)
+        if self.folder_count > 0:
+            return delete_button
+        create_folder_button = widgetset.Button(_('Put Into a New Folder'))
+        create_folder_button.connect('clicked', self._on_new_folder_clicked)
+        hbox = widgetset.HBox(spacing=12)
+        hbox.pack_start(delete_button)
+        hbox.pack_start(create_folder_button)
+        return hbox
+
+    def _on_delete_clicked(self, button):
+        if self.type == 'feed':
+            app.widgetapp.remove_current_feed()
+        else:
+            app.widgetapp.remove_current_playlist()
+
+    def _on_new_folder_clicked(self, button):
+        if self.type == 'feed':
+            app.widgetapp.add_new_channel_folder(add_selected=True)
+        else:
+            app.widgetapp.add_new_playlist_folder(add_selected=True)
 
 class DummyDisplay(TabDisplay):
     @staticmethod

@@ -427,13 +427,18 @@ class Application:
         elif data[0] == "url":
             messages.NewChannelSearchURL(data[1], data[2]).send_to_backend()
 
-    def add_new_channel_folder(self):
+    def add_new_channel_folder(self, add_selected=False):
         title = _('Create Channel Folder')
         description = _('Enter a name for the new channel folder')
 
         name = dialogs.ask_for_string(title, description)
         if name:
-            messages.NewChannelFolder(name).send_to_backend()
+            if add_selected:
+                t, infos = app.tab_list_manager.get_selection()
+                child_ids = [info.id for info in infos]
+            else:
+                child_ids = None
+            messages.NewChannelFolder(name, child_ids).send_to_backend()
 
     def add_new_guide(self):
         url = self.ask_for_url(_('Add Guide'),
@@ -557,13 +562,18 @@ class Application:
         if name:
             messages.NewPlaylist(name, ids).send_to_backend()
 
-    def add_new_playlist_folder(self):
+    def add_new_playlist_folder(self, add_selected=False):
         title = _('Create Playlist Folder')
         description = _('Enter a name for the new playlist folder')
 
         name = dialogs.ask_for_string(title, description)
         if name:
-            messages.NewPlaylistFolder(name).send_to_backend()
+            if add_selected:
+                t, infos = app.tab_list_manager.get_selection()
+                child_ids = [info.id for info in infos]
+            else:
+                child_ids = None
+            messages.NewPlaylistFolder(name, child_ids).send_to_backend()
 
     def rename_something(self):
         t, channel_infos = app.tab_list_manager.get_selection()
@@ -805,16 +815,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
     def handle_tab_list(self, message):
         tablist = self.tablist_for_message(message)
-        for info in message.toplevels:
-            tablist.add(info)
-            if info.is_folder:
-                for child_info in message.folder_children[info.id]:
-                    tablist.add(child_info, info.id)
-        tablist.model_changed()
-        for info in message.toplevels:
-            if info.is_folder:
-                expanded = (info.id in message.expanded_folders)
-                tablist.set_folder_expanded(info.id, expanded)
+        tablist.reset_list(message)
 
     def handle_guide_list(self, message):
         app.widgetapp.default_guide_info = message.default_guide
