@@ -119,3 +119,9 @@ def uniqueItems(item):
 
 def watchedFolders(feed):
     return feed.url.startswith("dtv:directoryfeed:")
+
+def videoFeed(feed):
+    return feed.section == u'video'
+
+def audioFeed(feed):
+    return feed.section == u'audio'

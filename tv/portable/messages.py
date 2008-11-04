@@ -584,6 +584,15 @@ class ReportCrash(BackendMessage):
         self.text = text
         self.send_report = send_report
 
+class ToggleChannelSection(BackendMessage):
+    """
+    Toggles the section between normal feeds section and audio feeds
+    section.  Temporary... should be replaced by actual drag and drop
+    support.
+    """
+    def __init__(self, id):
+        self.id = id
+
 # Frontend Messages
 
 class StartupSuccess(FrontendMessage):
@@ -612,6 +621,7 @@ class ChannelInfo(object):
     name -- channel name
     url -- channel url (None for channel folders)
     id -- object id
+    section -- which section this is in (audio or video)
     tab_icon -- path to this channel's tab icon
     thumbnail -- path to this channel's thumbnail
     num_downloaded -- number of downloaded items in the feed
@@ -634,6 +644,7 @@ class ChannelInfo(object):
     def __init__(self, channel_obj):
         self.name = channel_obj.get_title()
         self.id = channel_obj.id
+        self.section = channel_obj.section
         self.unwatched = channel_obj.numUnwatched()
         self.available = channel_obj.numAvailable()
         self.has_downloading = channel_obj.hasDownloadingItems()
@@ -932,13 +943,15 @@ class TabsChanged(FrontendMessage):
         will be in the same order that the tabs were added.
     changed -- list of ChannelInfo/PlaylistInfos for each changed tab.
     removed -- list of ids for each tab that was removed
+    section -- 'audio', 'video', or None (used for channels and
+        channel folders)
     """
-
-    def __init__(self, type, added, changed, removed):
+    def __init__(self, type, added, changed, removed, section=None):
         self.type = type
         self.added = added
         self.changed = changed
         self.removed = removed
+        self.section = section
 
 class ItemList(FrontendMessage):
     """Sends the frontend the initial list of items for a feed

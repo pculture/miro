@@ -41,7 +41,9 @@ def initialize():
     global manualFeed, singleFeed, directoryFeed, newlyDownloadedItems
     global downloadingItems, pausedItems, manualDownloads, autoDownloads, allDownloadingItems
     global playlists, playlistFolders, channelFolders
+    global audioChannelFolders, videoChannelFolders
     global themeHistories, visibleFeeds, watchedFolders
+    global audioVisibleFeeds, videoVisibleFeeds
 
     from miro import app
     from miro import feed
@@ -100,6 +102,8 @@ def initialize():
     # agregates all Item subclasses into one group.
     feeds = app.db.filterWithIndex(indexes.objectsByClass, feed.Feed)
     visibleFeeds = feeds.filter(filters.feedIsVisible)
+    videoVisibleFeeds = visibleFeeds.filter(filters.videoFeed)
+    audioVisibleFeeds = visibleFeeds.filter(filters.audioFeed)
     remoteDownloads = app.db.filterWithIndex(indexes.objectsByClass, downloader.RemoteDownloader)
     httpauths = app.db.filterWithIndex(indexes.objectsByClass, downloader.HTTPAuthPassword)
 
@@ -145,6 +149,8 @@ def initialize():
     channelFolders = app.db.filterWithIndex(indexes.objectsByClass,
                                         folder.ChannelFolder)
     channelFolders.createIndex(indexes.foldersByTitle)
+    videoChannelFolders = channelFolders.filter(filters.videoFeed)
+    audioChannelFolders = channelFolders.filter(filters.audioFeed)
 
     themeHistories = app.db.filterWithIndex(indexes.objectsByClass, theme.ThemeHistory)
 

@@ -169,10 +169,20 @@ class ChannelTracker(TabTracker):
     InfoClass = messages.ChannelInfo
 
     def get_object_views(self):
-        return views.visibleFeeds, views.channelFolders
+        return views.videoVisibleFeeds, views.videoChannelFolders
 
     def get_tab_view(self):
         return getSingletonDDBObject(views.channelTabOrder).getView()
+
+class AudioChannelTracker(TabTracker):
+    type = 'audio-feed'
+    InfoClass = messages.ChannelInfo
+
+    def get_object_views(self):
+        return views.audioVisibleFeeds, views.audioChannelFolders
+
+    def get_tab_view(self):
+        return getSingletonDDBObject(views.audioChannelTabOrder).getView()
 
 class PlaylistTracker(TabTracker):
     type = 'playlist'
@@ -353,6 +363,7 @@ class BackendMessageHandler(messages.MessageHandler):
     def __init__(self):
         messages.MessageHandler.__init__(self)
         self.channel_tracker = None
+        self.audio_channel_tracker = None
         self.playlist_tracker = None
         self.guide_tracker = None
         self.watched_folder_tracker = None
@@ -367,7 +378,9 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def folder_view_for_type(self, type):
         if type == 'feed':
-            return views.channelFolders
+            return views.videoChannelFolders
+        elif type == 'audio-feed':
+            return views.audioChannelFolders
         elif type == 'playlist':
             return views.playlistFolders
         else:
@@ -375,7 +388,9 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def view_for_type(self, type):
         if type == 'feed':
-            return views.visibleFeeds
+            return views.videoVisibleFeeds
+        elif type == 'audio-feed':
+            return views.audioVisibleFeeds
         elif type == 'playlist':
             return views.playlists
         elif type == 'feed-folder':
@@ -395,7 +410,10 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_track_channels(self, message):
         if not self.channel_tracker:
             self.channel_tracker = ChannelTracker()
+        if not self.audio_channel_tracker:
+            self.audio_channel_tracker = AudioChannelTracker()
         self.channel_tracker.send_initial_list()
+        self.audio_channel_tracker.send_initial_list()
 
     def handle_stop_tracking_channels(self, message):
         if self.channel_tracker:
@@ -593,8 +611,11 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_tabs_reordered(self, message):
         folder_view = self.folder_view_for_type(message.type)
         if message.type == 'feed':
-            item_view = views.visibleFeeds
+            item_view = views.videoVisibleFeeds
             tab_order = getSingletonDDBObject(views.channelTabOrder)
+        elif message.type == 'audio-feed':
+            item_view = views.audioVisibleFeeds
+            tab_order = getSingletonDDBObject(views.audioChannelTabOrder)
         elif message.type == 'playlist':
             item_view = views.playlists
             tab_order = getSingletonDDBObject(views.playlistTabOrder)
@@ -1060,3 +1081,21 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_report_crash(self, message):
         app.controller.sendBugReport(message.report, message.text, message.send_report)
+
+    def handle_toggle_channel_section(self, message):
+        view = views.visibleFeeds
+        try:
+            channel = view.getObjectByID(message.id)
+        except database.ObjectNotFoundError:
+            logging.warn("channel not found: %s" % message.id)
+        else:
+            channel.confirmDBThread()
+            if channel.section == u'video':
+                channel.section = u'audio'
+                channel.signalChange()
+            elif channel.section == u'audio':
+                channel.section = u'video'
+                channel.signalChange()
+            else:
+                logging.warn(
+                    "Channel %s has unknown section type, can't toggle" % id)

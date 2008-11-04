@@ -531,6 +531,16 @@ class Application:
             ci = channel_infos[0]
             app.widgetapp.copy_text_to_clipboard(ci.base_href)
 
+    def toggle_section(self):
+        """
+        Temporary function for toggling the audio/video section of an
+        item.  Should be replaced by drag and drop!
+        """
+        t, channel_infos = app.tab_list_manager.get_selection()
+        if t == 'feed' and len(channel_infos) == 1:
+            ci = channel_infos[0]
+            messages.ToggleChannelSection(ci.id).send_to_backend()
+
     def copy_site_url(self):
         t, site_infos = app.tab_list_manager.get_selection()
         if t == 'site':
@@ -784,6 +794,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def tablist_for_message(self, message):
         if message.type == 'feed':
             return app.tab_list_manager.feed_list
+        elif message.type == 'audio-feed':
+            return app.tab_list_manager.audio_feed_list
         elif message.type == 'playlist':
             return app.tab_list_manager.playlist_list
         elif message.type == 'guide':
