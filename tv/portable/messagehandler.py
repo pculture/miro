@@ -845,7 +845,12 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_track_items(self, message):
         key = self.item_tracker_key(message)
         if key not in self.item_trackers:
-            item_tracker = make_item_tracker(message)
+            try:
+                item_tracker = make_item_tracker(message)
+            except database.ObjectNotFoundError:
+                logging.warn("TrackItems called for deleted object (%s %s)",
+                        message.type, message.id)
+                return
             if item_tracker is None:
                 # message type was wrong
                 return
