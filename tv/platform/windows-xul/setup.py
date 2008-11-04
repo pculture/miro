@@ -228,11 +228,10 @@ def fetch_sources():
         if '_svn' in dirs:
             dirs.remove('_svn')
         for file in files:
-            if file.endswith('.cpp'):
+            if file.endswith('.cpp') or file.endswith('.c'):
                 yield os.path.join(root, file)
 
 libtorrent_sources = list(fetch_sources())
-libtorrent_sources.remove(os.path.join(portable_dir, 'libtorrent\\src\\file.cpp'))
 
 libtorrent_ext = Extension(
         "miro.libtorrent", 
@@ -248,14 +247,14 @@ libtorrent_ext = Extension(
             'wsock32', 'gdi32', 'ws2_32', 'zdll'
         ],
         extra_compile_args=['-DBOOST_WINDOWS',
+            '-DWIN32',
             '-DWIN32_LEAN_AND_MEAN',
             '-D_WIN32_WINNT=0x0500',
-            '-D__USE_W32_SOCKETS',
-            '-D_WIN32',
-            '-DWIN32',
             '-DBOOST_ALL_NO_LIB',
             '-D_FILE_OFFSET_BITS=64',
             '-DBOOST_THREAD_USE_LIB',
+            '-D__USE_W32_SOCKETS',
+            '-D_WIN32',
             '-DTORRENT_USE_OPENSSL=1',
             '-DNDEBUG=1',
             '/EHa',
