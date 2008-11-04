@@ -265,7 +265,9 @@ def setup_tabs():
             tabs.TabOrder(key)
     setup_tab_order(views.siteTabOrder, u'site')
     setup_tab_order(views.channelTabOrder, u'channel')
+    setup_tab_order(views.audioChannelTabOrder, u'audio-channel')
     setup_tab_order(views.playlistTabOrder, u'playlist')
+
 
 def is_first_time():
     """Checks to see if this is the first time that Miro has been run.

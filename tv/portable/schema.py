@@ -344,6 +344,7 @@ class FeedSchema(DDBObjectSchema):
         ('fallBehind', SchemaInt()),
         ('expire', SchemaString()),
         ('expireTime', SchemaTimeDelta(noneOk=True)),
+        ('section', SchemaString()),
     ]
 
 class FeedImplSchema(ObjectSchema):
@@ -455,6 +456,7 @@ class ChannelFolderSchema(DDBObjectSchema):
     fields = DDBObjectSchema.fields + [
         ('expanded', SchemaBool()),
         ('title', SchemaString()),
+        ('section', SchemaString()),
     ]
 
 class PlaylistFolderSchema(DDBObjectSchema):
@@ -505,7 +507,7 @@ class ThemeHistorySchema(DDBObjectSchema):
         ('pastThemes', SchemaList(SchemaString(noneOk=True), noneOk=False)),
     ]
 
-VERSION = 67
+VERSION = 68
 objectSchemas = [
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,

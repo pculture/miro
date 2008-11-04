@@ -58,7 +58,12 @@ class Tab:
             else:
                 self.type = 'site'
         elif obj.__class__ in (feed.Feed, folder.ChannelFolder): 
-            self.type = 'feed'
+            if obj.section == 'video':
+                self.type = 'feed'
+            elif obj.section == 'audio':
+                self.type = 'audio-feed'
+            else:
+                raise TypeError('Not a valid feed/folder type: %s' % obj.type)
         elif obj.__class__ in (playlist.SavedPlaylist, folder.PlaylistFolder):
             self.type = 'playlist'
         else:
@@ -183,6 +188,8 @@ class TabOrder(database.DDBObject):
             self.tabView = views.feedTabs
         elif self.type == u'playlist':
             self.tabView = views.playlistTabs
+        elif self.type == u'audio-channel':
+            self.tabView = views.audioFeedTabs
         else:
             raise ValueError("Bad type for TabOrder")
         self.trackedTabs = TrackedIDList(self.tabView, self.tab_ids)

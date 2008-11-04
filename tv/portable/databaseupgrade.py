@@ -982,6 +982,16 @@ def upgrade67(objectList):
             changed.add(o)
     return changed
 
+def upgrade68(objectList):
+    """
+    Add the 'feed section' variable
+    """
+    changed = set()
+    for o in objectList:
+        if o.classString in ('feed', 'channel-folder'):
+            o.savedData['section'] = u'video'
+            changed.add(o)
+    return changed
 
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """

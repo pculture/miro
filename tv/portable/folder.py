@@ -94,8 +94,9 @@ class FolderBase(DDBObject):
         raise NotImplementedError()
 
 class ChannelFolder(FolderBase):
-    def __init__(self, title):
+    def __init__(self, title, section=u'video'):
         FolderBase.__init__(self, title)
+        self.section = section
         self._init_restore()
 
     def onRestore(self):

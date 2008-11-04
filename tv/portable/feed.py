@@ -598,7 +598,8 @@ class Feed(DDBObject):
 
     It works by passing on attributes to the actual feed.
     """
-    def __init__(self, url, initiallyAutoDownloadable=None):
+    def __init__(self, url,
+                 initiallyAutoDownloadable=None, section=u'video'):
         DDBObject.__init__(self, add=False)
         checkU(url)
         if initiallyAutoDownloadable == None:
@@ -620,6 +621,7 @@ class Feed(DDBObject):
             self.autoDownloadable = initiallyAutoDownloadable
             self.getEverything = False
 
+        self.section = section
         self.maxNew = 3
         self.maxOldItems = None
         self.expire = u"system"

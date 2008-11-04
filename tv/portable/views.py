@@ -32,8 +32,8 @@ initialized = False
 def initialize():
     global initialized
     initialized = True
-    global allTabs, guideTabs, siteTabs, staticTabs, feedTabs, playlistTabs
-    global selectedTabs, tabOrders, siteTabOrder, channelTabOrder, playlistTabOrder
+    global allTabs, guideTabs, siteTabs, staticTabs, feedTabs, audioFeedTabs, playlistTabs
+    global selectedTabs, tabOrders, siteTabOrder, channelTabOrder, audioChannelTabOrder, playlistTabOrder
     global items, fileItems, toplevelItems, nonContainerItems, unwatchedItems
     global watchableItems, newWatchableItems, uniqueWatchableItems, uniqueNewWatchableItems, manualItems, searchItems
     global feeds, remoteDownloads
@@ -70,6 +70,7 @@ def initialize():
     # class.
     siteTabs = allTabs.filterWithIndex(indexes.tabType, 'site')
     feedTabs = allTabs.filterWithIndex(indexes.tabType, 'feed')
+    audioFeedTabs = allTabs.filterWithIndex(indexes.tabType, 'audio-feed')
     playlistTabs = allTabs.filterWithIndex(indexes.tabType, 'playlist')
     selectedTabs = allTabs.filter(lambda x: x.selected)
 
@@ -77,6 +78,8 @@ def initialize():
     tabOrders.createIndex(indexes.tabOrderType)
     siteTabOrder = tabOrders.filterWithIndex(indexes.tabOrderType, u'site')
     channelTabOrder = tabOrders.filterWithIndex(indexes.tabOrderType, u'channel')
+    audioChannelTabOrder = tabOrders.filterWithIndex(
+        indexes.tabOrderType, u'audio-channel')
     playlistTabOrder = tabOrders.filterWithIndex(indexes.tabOrderType, u'playlist')
 
     # items includes fileItems.
