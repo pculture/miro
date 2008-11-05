@@ -525,7 +525,6 @@ class TableView(Widget):
         self.model.connect_weak('row-will-be-removed', self.on_row_removed)
         self.iters_to_update = []
         self.height_changed = self.selection_removed = self.reload_needed = False
-        wrappermap.add(self.tableview, self)
 
     def send_hotspot_clicked(self):
         tracker = self.tableview.hotspot_tracker

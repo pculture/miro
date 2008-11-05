@@ -483,6 +483,10 @@ class Splitter(Container):
         old_right = self.right
         self.right = None
         self.child_removed(old_right)
+        
+    def remove_viewport(self):
+        Container.remove_viewport(self)
+        self.notifications.disconnect()
 
 class _TablePacking(object):
     """Utility class to help with packing Table widgets."""
@@ -649,6 +653,10 @@ class Scroller(Bin):
                 'NSViewFrameDidChangeNotification')
         self.clip_notifications.connect(self._on_clip_view_bounds_change,
                 'NSViewBoundsDidChangeNotification')
+
+    def remove_viewport(self):
+        Bin.remove_viewport(self)
+        self.clip_notifications.disconnect()
 
     def _on_clip_view_frame_change(self, notification):
         # If the clip view is larger than the document view (probably because

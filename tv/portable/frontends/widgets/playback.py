@@ -123,6 +123,7 @@ class PlaybackManager (signals.SignalEmitter):
         config.set(prefs.DETACHED_WINDOW_FRAME, str(self.detached_window.get_frame()))
         config.save()
         self.detached_window.close(False)
+        self.detached_window.destroy()
         self.detached_window = None
     
     def schedule_update(self):
@@ -198,8 +199,8 @@ class PlaybackManager (signals.SignalEmitter):
         if self.video_display is not None:
             self.video_display.stop()
             if self.detached_window is not None:
-                self.finish_detached_playback()
                 self.video_display.cleanup()
+                self.finish_detached_playback()
             else:
                 self.finish_attached_playback()
         self.is_fullscreen = False

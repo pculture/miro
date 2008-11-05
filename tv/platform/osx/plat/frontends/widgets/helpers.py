@@ -30,34 +30,9 @@
 
 import logging
 import traceback
-import weakref 
 
 from Foundation import *
 from objc import nil
-
-class WeakMethodReference:
-    """Used to handle weak references to a method.
-
-    We can't simply keep a weak reference to method itself, because there
-    almost certainly aren't any other references to it.  Instead we keep a
-    weak reference to the unbound method and the class that it's attached to.
-    This gives us enough info to recreate the bound method when we need it.
-    """
-
-    def __init__(self, method):
-        self.object = weakref.ref(method.im_self)
-        self.func = weakref.ref(method.im_func)
-        # don't create a weak refrence to the class.  That only works for
-        # new-style classes.  It's highly unlikely the class will ever need to
-        # be garbage collected anyways.
-        self.cls = method.im_class
-
-    def __call__(self):
-        func = self.func()
-        if func is None: return None
-        object = self.object()
-        if object is None: return None
-        return func.__get__(object, self.cls)
 
 class NotificationForwarder(NSObject):
     """Forward notifications from a Cocoa object to a python class.  
@@ -86,32 +61,25 @@ class NotificationForwarder(NSObject):
 
     def connect(self, callback, name):
         """Register to listen for notifications.
-
-        This class keeps a weak reference to callback.  This matches the Cocoa
-        API and prevents circular references in the common use-case where a
-        Widget creates an NotificationForwarder, then connects it's own
-        methods with it.
-
         Only one callback for each notification name can be connected.
         """
 
         if name in self.callback_map:
             raise ValueError("%s already connected" % name)
 
-        if hasattr(callback, 'im_self'):
-            # object method
-            ref = WeakMethodReference(callback)
-        else:
-            # just a plain function
-            ref = weakref.ref(callback)
-
-        self.callback_map[name] = ref
+        self.callback_map[name] = callback
         self.center.addObserver_selector_name_object_(self, 'observe:', name,
                 self.nsobject)
 
+    def disconnect(self, name=None):
+        if name is not None:
+            self.center.removeObserver_name_object_(self, name, self.nsobject)
+        else:
+            self.center.removeObserver_(self)
+
     def observe_(self, notification):
         name = notification.name()
-        callback = self.callback_map[name]()
+        callback = self.callback_map[name]
         if callback is None:
             logging.warn("Callback for %s is dead", name)
             self.center.removeObverser_name_object_(self, name, self.nsobject)
@@ -123,4 +91,4 @@ class NotificationForwarder(NSObject):
                     traceback.format_exc())
 
     def __del__(self):
-        self.center.removeObserver_(self)
+        self.disconnect()

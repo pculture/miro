@@ -30,12 +30,8 @@
 Widget that wraps them.
 """
 
-import weakref 
-
-# Maps NSViews/NSWinows  -> wrapper objects.  We use a weak references to
-# prevent circular references.  (keeping a reference to the NSView is fine,
-# since if the wrapper is alive, the view should be).
-wrapper_mapping = weakref.WeakValueDictionary()
+# Maps NSViews/NSWinows  -> wrapper objects.
+wrapper_mapping = dict()
 
 def wrapper(wrapped):
     """Find the wrapper object for an NSView/NSWindow."""

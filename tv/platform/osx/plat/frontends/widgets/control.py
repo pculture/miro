@@ -33,7 +33,6 @@ from Foundation import *
 from objc import YES, NO, nil
 
 import os
-import weakref
 
 from miro.frontends.widgets import widgetconst
 from miro.plat import resources
@@ -79,6 +78,10 @@ class BaseTextEntry(SizedControl):
         self.create_signal('activate')
         self.create_signal('changed')
         self.create_signal('validate')
+
+    def remove_viewport(self):
+        SizedControl.remove_viewport(self)
+        self.notifications.disconnect()
 
     def baseline(self):
         return -self.view.font().descender() + 2
@@ -326,9 +329,7 @@ class RadioButtonGroup:
             else:
                 mem.view.setState_(NSOffState)
 
-# use a weakref so that we're not creating circular references between
-# RadioButtons and RadioButtonGroups
-radio_button_to_group_mapping = weakref.WeakValueDictionary()
+radio_button_to_group_mapping = dict()
 
 class RadioButton(SizedControl):
     def __init__(self, label, group=None):
@@ -344,6 +345,11 @@ class RadioButton(SizedControl):
         group.add_button(self)
         oid = id(self)
         radio_button_to_group_mapping[oid] = group
+
+    def remove_viewport(self):
+        SizedControl.remove_viewport(self)
+        oid = id(self)
+        del radio_button_to_group_mapping[oid]
 
     def calc_size_request(self):
         size = self.view.cell().cellSize()

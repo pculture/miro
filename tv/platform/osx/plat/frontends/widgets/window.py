@@ -107,10 +107,13 @@ class Window(signals.SignalEmitter):
         self.nswindow.makeMainWindow()
 
     def close(self):
-        self.destroy()
+        self.nswindow.close()
 
     def destroy(self):
-        self.nswindow.close()
+        self.window_notifications.disconnect()
+        self.view_notifications.disconnect()
+        self.nswindow.setContentView_(nil)
+        wrappermap.remove(self.nswindow)
         alive_windows.discard(self)
 
     def place_child(self):
@@ -246,9 +249,11 @@ class Dialog(DialogBase):
         return response
         
     def destroy(self):
-        for attr in ('window', 'buttons'):
-            if hasattr(self, attr):
-                delattr(self, attr)
+        self.window.setContentView_(None)
+        self.window.close()
+        self.window = None
+        self.buttons = None
+        self.extra_widget = None
 
     def set_extra_widget(self, widget):
         self.extra_widget = widget
