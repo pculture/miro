@@ -252,11 +252,6 @@ class AudioFeedDisplay(FeedDisplay):
     def should_display(type, selected_tabs):
         return type == 'audio-feed' and len(selected_tabs) == 1
 
-    def make_controller(self, tab):
-        self.feed_id = tab.id
-        return feedcontroller.FeedController(
-            tab.id, tab.is_folder, is_audio=True)
-
 class PlaylistDisplay(ItemListDisplay):
     @staticmethod
     def should_display(type, selected_tabs):

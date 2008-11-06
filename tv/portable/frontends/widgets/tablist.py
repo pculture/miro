@@ -378,6 +378,9 @@ class TabList(signals.SignalEmitter):
     def get_info(self, id):
         return self.view.model[self.iter_map[id]][0]
 
+    def has_info(self, id):
+        return id in self.iter_map
+
     def get_child_count(self, id):
         count = 0
         child_iter = self.view.model.child_iter(self.iter_map[id])

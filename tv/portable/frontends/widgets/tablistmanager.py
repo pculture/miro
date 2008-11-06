@@ -69,6 +69,14 @@ class TabListManager(object):
             raise ValueError("Unknown tab list type: %s" %
                     self.selected_tab_list.type)
 
+    def which_tablist_has_id(self, id):
+        """
+        Find out whether the video feed list or the audio feed list has this id
+        """
+        for tablist in self.feed_list, self.audio_feed_list:
+            if tablist.has_info(id):
+                return tablist
+
     def all_tab_lists(self):
         return (
             self.static_tab_list, self.site_list,

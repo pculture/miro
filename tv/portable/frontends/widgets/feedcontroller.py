@@ -49,9 +49,8 @@ from miro.plat.frontends.widgets import widgetset
 class FeedController(itemlistcontroller.ItemListController):
     """Controller object for feeds."""
 
-    def __init__(self, id, is_folder, is_audio=False):
+    def __init__(self, id, is_folder):
         self.is_folder = is_folder
-        self.is_audio = is_audio
         self._show_more_count = 0
         itemlistcontroller.ItemListController.__init__(self, 'feed', id)
 
@@ -59,7 +58,7 @@ class FeedController(itemlistcontroller.ItemListController):
         return itemcontextmenu.ItemContextMenuHandler()
 
     def build_widget(self):
-        feed_info = widgetutil.get_feed_info(self.id, self.is_audio)
+        feed_info = widgetutil.get_feed_info(self.id)
         icon = imagepool.get(feed_info.thumbnail, size=(61, 61))
         self._make_item_views()
 

@@ -188,12 +188,9 @@ class Shadow(object):
 #    extra = max(0, height - font.line_height())
 #    return font.ascent() + (extra / 2.0)
 
-def get_feed_info(feed_id, is_audio=False):
-    if is_audio:
-        return app.tab_list_manager.audio_feed_list.get_info(feed_id)
-    else:
-        return app.tab_list_manager.feed_list.get_info(feed_id)
-
+def get_feed_info(feed_id):
+    tablist = app.tab_list_manager.which_tablist_has_id(feed_id)
+    return tablist.get_info(feed_id)
 
 def feed_exists(feed_id):
     try:
