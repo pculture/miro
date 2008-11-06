@@ -43,7 +43,7 @@ import itertools
 
 from AppKit import *
 from Foundation import *
-from objc import YES, NO, nil
+from objc import YES, NO, nil, signature
 import WebKit
 
 from miro.plat.frontends.widgets import wrappermap
@@ -321,6 +321,7 @@ class MiroSplitView (NSSplitView):
                     proposedMax)
         return proposedMax
 
+    @signature("{_NSRect={_NSPoint=ff}{_NSSize=ff}}48@0:4@8{_NSRect={_NSPoint=ff}{_NSSize=ff}}12{_NSRect={_NSPoint=ff}{_NSSize=ff}}28i44")
     def splitView_effectiveRect_forDrawnRect_ofDividerAtIndex_(self, sender, effective_rect, drawn_rect, index):
         # 10.5 only delegate method, allows to widen the clickable zone of
         # the splitview divider
