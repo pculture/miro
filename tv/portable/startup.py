@@ -97,17 +97,17 @@ def startup_function(func):
             m.send_to_frontend()
     return wrapped
 
-__movies_directory_gone_handler = None
+_movies_directory_gone_handler = None
 
 def install_movies_directory_gone_handler(callback):
-    global __movies_directory_gone_handler
-    __movies_directory_gone_handler = callback
+    global _movies_directory_gone_handler
+    _movies_directory_gone_handler = callback
 
-__first_time_handler = None
+_first_time_handler = None
 
 def install_first_time_handler(callback):
-    global __first_time_handler
-    __first_time_handler = callback
+    global _first_time_handler
+    _first_time_handler = callback
 
 def setup_global_feed(url, *args, **kwargs):
     feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)
@@ -195,9 +195,9 @@ def check_firsttime():
     """Run the first time wizard if need be.
     """
     if is_first_time():
-        if __first_time_handler:
+        if _first_time_handler:
             logging.info("First time -- calling handler.")
-            __first_time_handler(lambda: eventloop.addUrgentCall(check_movies_gone, "check movies gone"))
+            _first_time_handler(lambda: eventloop.addUrgentCall(check_movies_gone, "check movies gone"))
             return
         else:
             logging.warn("First time -- no handler installed!")
@@ -209,9 +209,9 @@ def check_movies_gone():
     """Checks to see if the movies directory is gone.
     """
     if is_movies_directory_gone():
-        if __movies_directory_gone_handler:
+        if _movies_directory_gone_handler:
             logging.info("Movies directory is gone -- calling handler.")
-            __movies_directory_gone_handler(lambda: eventloop.addUrgentCall(startup_network_stuff, "startup network stuf"))
+            _movies_directory_gone_handler(lambda: eventloop.addUrgentCall(startup_network_stuff, "startup network stuf"))
             return
         else:
             logging.warn("Movies directory is gone -- no handler installed!")
@@ -268,7 +268,6 @@ def setup_tabs():
     setup_tab_order(views.audioChannelTabOrder, u'audio-channel')
     setup_tab_order(views.playlistTabOrder, u'playlist')
 
-
 def is_first_time():
     """Checks to see if this is the first time that Miro has been run.
     This is to do any first-time setup, show the user the first-time
@@ -276,18 +275,10 @@ def is_first_time():
 
     Returns True if yes, False if no.
     """
-    marker = os.path.join(config.get(prefs.SUPPORT_DIRECTORY), "MIRO_MARKER")
-    if not os.path.exists(marker):
-        return True
-
-    return False
+    return not config.get(prefs.STARTUP_TASKS_DONE)
 
 def mark_first_time():
-    marker = os.path.join(config.get(prefs.SUPPORT_DIRECTORY), "MIRO_MARKER")
-
-    f = open(marker, "w")
-    f.write("This is a Miro directory.  Please don't delete this file.\n")
-    f.close()
+    config.set(prefs.STARTUP_TASKS_DONE, True)
 
 def is_movies_directory_gone():
     """Checks to see if the MOVIES_DIRECTORY exists.

@@ -41,7 +41,15 @@ from miro.gtcache import ngettext
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 import os
 
+def _get_user_media_directory():
+    """Returns the user's media directory.
+    """
+    return os.path.expanduser("~/")
+
 def _build_title(text):
+    """Builds and returns a title widget for the panes in the
+    First Time Startup dialog.
+    """
     lab = widgetset.Label(text)
     lab.set_bold(True)
     lab.set_wrap(True)
@@ -172,14 +180,14 @@ class FirstTimeDialog(widgetset.Window):
         group_box.pack_start(widgetutil.align_left(search_rb, left_pad=30))
 
         search_entry = widgetset.TextEntry()
+        search_entry.set_width(20)
         change_button = widgetset.Button(_("Change"))
         h = widgetutil.build_hbox((search_entry, change_button))
         group_box.pack_start(widgetutil.align_left(h, left_pad=30))
 
         def handle_change_clicked(widget):
-            # FIXME - get home directory?
             dir_ = dialogs.ask_for_directory(_("Choose directory to search for media files"),
-                    initial_directory=os.path.expanduser("~/"),
+                    initial_directory=_get_user_media_directory(),
                     transient_for=self)
             if dir_:
                 search_entry.set_text(dir_)
@@ -195,8 +203,7 @@ class FirstTimeDialog(widgetset.Window):
         def handle_search_finish_clicked(widget):
             if widget.mode == "search":
                 if rbg2.get_selected() == restrict_rb or not search_entry.get_text():
-                    # FIXME - get home directory?
-                    self.search_directory = os.path.expanduser("~/")
+                    self.search_directory = _get_user_media_directory()
                 else:
                     self.search_directory = search_entry.get_text()
                 self.next_page()
