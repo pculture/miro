@@ -62,14 +62,14 @@ for (mimetype, exts) in MIMETYPES_EXT_MAP.iteritems():
             EXT_MIMETYPES_MAP[ext] = list()
         EXT_MIMETYPES_MAP[ext].append(mimetype)
 
-def isAllowedFilename(filename):
+def is_allowed_filename(filename):
     """
     Pass a filename to this method and it will return a boolean
     saying if the filename represents video, audio or torrent.
     """
-    return isVideoFilename(filename) or isAudioFilename(filename) or isTorrentFilename(filename)
+    return is_video_filename(filename) or is_audio_filename(filename) or is_torrent_filename(filename)
 
-def isVideoFilename(filename):
+def is_video_filename(filename):
     """
     Pass a filename to this method and it will return a boolean
     saying if the filename represents a video file.
@@ -80,7 +80,7 @@ def isVideoFilename(filename):
             return True
     return False
 
-def isAudioFilename(filename):
+def is_audio_filename(filename):
     """
     Pass a filename to this method and it will return a boolean
     saying if the filename represents an audio file.
@@ -91,7 +91,7 @@ def isAudioFilename(filename):
             return True
     return False
 
-def isTorrentFilename(filename):
+def is_torrent_filename(filename):
     """
     Pass a filename to this method and it will return a boolean
     saying if the filename represents a torrent file.
@@ -99,7 +99,7 @@ def isTorrentFilename(filename):
     filename = filename.lower()
     return filename.endswith('.torrent')
 
-def isFeedFilename(filename):
+def is_feed_filename(filename):
     """
     Pass a filename to this method and it will return a boolean saying if the
     filename possibly represents an Atom or RSS feed URL.
@@ -110,16 +110,16 @@ def isFeedFilename(filename):
             return True
     return False
 
-def isVideoEnclosure(enclosure):
+def is_video_enclosure(enclosure):
     """
     Pass an enclosure dictionary to this method and it will return a boolean
     saying if the enclosure is a video or not.
     """
-    return (_hasVideoType(enclosure) or
-            _hasVideoExtension(enclosure, 'url') or
-            _hasVideoExtension(enclosure, 'href'))
+    return (_has_video_type(enclosure) or
+            _has_video_extension(enclosure, 'url') or
+            _has_video_extension(enclosure, 'href'))
 
-def _hasVideoType(enclosure):
+def _has_video_type(enclosure):
     return ('type' in enclosure and
             (enclosure['type'].startswith(u'video/') or
              enclosure['type'].startswith(u'audio/') or
@@ -129,14 +129,14 @@ def _hasVideoType(enclosure):
              enclosure['type'] == u"application/x-shockwave-flash") and
             (enclosure['type'] not in UNSUPPORTED_MIMETYPES))
 
-def _hasVideoExtension(enclosure, key):
+def _has_video_extension(enclosure, key):
     from miro import download_utils
     if key in enclosure:
         elems = download_utils.parseURL(enclosure[key], split_path=True)
-        return isAllowedFilename(elems[3])
+        return is_allowed_filename(elems[3])
     return False
 
-def isFeedContentType(contentType):
+def is_feed_content_type(contentType):
     """Is a content-type for a RSS feed?"""
 
     feedTypes = [ u'application/rdf+xml', u'application/atom+xml',
@@ -148,12 +148,12 @@ def isFeedContentType(contentType):
             return True
     return False
 
-def isMaybeFeedContentType(contentType):
+def is_maybe_feed_content_type(contentType):
     """Could the content type contain a feed?
     """
     return contentType.startswith(u"text/")
 
-def isMaybeRSS(body):
+def is_maybe_rss(body):
     """Sniffs the body to determine whether it's a feed or not.
 
     this is very loosely taken from Firefox nsFeedSniffer.cpp and ideas in
@@ -167,7 +167,7 @@ def isMaybeRSS(body):
             return True
     return False
 
-def guessExtension(mimetype):
+def guess_extension(mimetype):
     """
     Pass a mime type to this method and it will return a corresponding file
     extension, or None if it doesn't know about the type.
@@ -177,7 +177,7 @@ def guessExtension(mimetype):
         return None
     return possibleExtensions[0]
 
-def guessMimeType(filename):
+def guess_mime_type(filename):
     """
     Pass a filename to this method and it will return a corresponding mime type,
     or 'video/unknown' if the filename has a known video extension but no 
@@ -186,9 +186,9 @@ def guessMimeType(filename):
     root, ext = os.path.splitext(filename)
     possibleTypes = EXT_MIMETYPES_MAP.get(ext)
     if possibleTypes is None:
-        if isVideoFilename(filename):
+        if is_video_filename(filename):
             return 'video/unknown'
-        elif isAudioFilename(filename):
+        elif is_audio_filename(filename):
             return 'audio/unknown'
         else:
             return None

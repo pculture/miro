@@ -992,7 +992,7 @@ class Feed(DDBObject):
 
         # Some smarty pants serve RSS feeds with a text/html content-type...
         # So let's do some really simple sniffing first.
-        apparentlyRSS = filetypes.isMaybeRSS(info['body'])
+        apparentlyRSS = filetypes.is_maybe_rss(info['body'])
 
         #Definitely an HTML feed
         if (contentType.startswith(u'text/html') or
@@ -1304,7 +1304,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                     raise
                 except:
                     continue
-                mimetype = filetypes.guessMimeType(url)
+                mimetype = filetypes.guess_mime_type(url)
                 if mimetype is not None:
                     entry['enclosures'] = [{'url':toUni(url), 'type':toUni(mimetype)}]
                 else:
@@ -1979,7 +1979,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
                 # file, so for now, we're being bad boys. Uncomment
                 # the elif to make this use mime types for HTTP GET URLs
 
-                mimetype = filetypes.guessMimeType(link)
+                mimetype = filetypes.guess_mime_type(link)
                 if mimetype is None:
                     mimetype = 'text/html'
 
@@ -2181,7 +2181,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
         if fileutil.isdir(self.dir):
             all_files = fileutil.miro_allfiles(self.dir)
             for file_ in all_files:
-                if file_ not in knownFiles and filetypes.isVideoFilename(filenameToUnicode(file_)):
+                if file_ not in knownFiles and filetypes.is_video_filename(filenameToUnicode(file_)):
                     itemmod.FileItem(file_, feed_id=self.ufeed.id)
 
         for item in self.items:
@@ -2251,7 +2251,7 @@ class DirectoryFeedImpl(FeedImpl):
         if fileutil.isdir(moviesDir):
             all_files = fileutil.miro_allfiles(moviesDir)
             for file_ in all_files:
-                if file_ not in knownFiles and filetypes.isVideoFilename(filenameToUnicode(file_)):
+                if file_ not in knownFiles and filetypes.is_video_filename(filenameToUnicode(file_)):
                     itemmod.FileItem(file_, feed_id=self.ufeed.id)
 
         for item in self.items:

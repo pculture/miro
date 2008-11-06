@@ -154,7 +154,7 @@ class Item(DDBObject):
         if fileutil.isdir(filename_root):
             files = fileutil.miro_allfiles(filename_root)
             for filename in files:
-                if filetypes.isVideoFilename(filename) or filetypes.isAudioFilename(filename):
+                if filetypes.is_video_filename(filename) or filetypes.is_audio_filename(filename):
                     videos.add(filename)
         return videos
 
@@ -704,7 +704,7 @@ class Item(DDBObject):
             if feed.thumbnailValid():
                 return feed.getThumbnailPath()
             elif (self.get_video_filename()
-                     and filetypes.isAudioFilename(self.get_video_filename())):
+                     and filetypes.is_audio_filename(self.get_video_filename())):
                 return resources.path("images/thumb-default-audio_large.png")
             else:
                 return resources.path("images/thumb-default_large.png")
@@ -799,7 +799,7 @@ class Item(DDBObject):
         if self.downloader is not None:
             return self.downloader.getType() == u'bittorrent'
         else:
-            return filetypes.isTorrentFilename(self.getURL())
+            return filetypes.is_torrent_filename(self.getURL())
 
     def is_transferring(self):
         return self.downloader and self.downloader.get_state() in (u'uploading', u'downloading')

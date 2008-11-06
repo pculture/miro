@@ -174,7 +174,7 @@ def upgrade12(objectList):
                 try:
                     enclosures = o.savedData['entry'].enclosures
                     for enc in enclosures:
-                        if filetypes.isVideoEnclosure(enc):
+                        if filetypes.is_video_enclosure(enc):
                             enclosure = enc
                             break
                     o.savedData['releaseDateObj'] = datetime(*enclosure.updated_parsed[0:7])
@@ -385,7 +385,7 @@ def upgrade28(objectList):
         except (KeyError, AttributeError):
             return None
         for enclosure in enclosures:
-            if filetypes.isVideoEnclosure(enclosure):
+            if filetypes.is_video_enclosure(enclosure):
                 return enclosure
         return None
     
@@ -771,7 +771,7 @@ def upgrade52(objectList):
             pass
         else:
             for enclosure in enclosures:
-                if filetypes.isVideoEnclosure(enclosure):
+                if filetypes.is_video_enclosure(enclosure):
                     enc = enclosure
         if enc is not None:
             url = enc.get('url')

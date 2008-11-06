@@ -154,7 +154,7 @@ def add_download(url, additional=None):
         feed despite the fact that it has the wrong content-type.
         """
         if data["body"]:
-            if filetypes.isMaybeRSS(data["body"]):
+            if filetypes.is_maybe_rss(data["body"]):
                 # FIXME - this is silly since we just did a GET and we do 
                 # another one in add_feeds
                 logging.info("%s is a feed--adding it." % url)
@@ -182,7 +182,7 @@ def add_download(url, additional=None):
             return
 
         contentType = headers.get("content-type")
-        if contentType and filetypes.isFeedContentType(contentType):
+        if contentType and filetypes.is_feed_content_type(contentType):
             add_feeds([url])
             return
 
@@ -190,14 +190,14 @@ def add_download(url, additional=None):
             callback_flash(url)
             return
 
-        if contentType and filetypes.isMaybeFeedContentType(contentType):
+        if contentType and filetypes.is_maybe_feed_content_type(contentType):
             logging.info("%s content type is %s.  going to peek to see if it's a feed...." % (url, contentType))
             httpclient.grabURL(url, callback_peek, errback)
             return
 
         entry = _build_entry(url, contentType, None)
 
-        if filetypes.isVideoEnclosure(entry['enclosures'][0]):
+        if filetypes.is_video_enclosure(entry['enclosures'][0]):
             download_video(entry)
         else:
             download_unknown_mime_type(url)

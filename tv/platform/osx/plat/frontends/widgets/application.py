@@ -264,8 +264,10 @@ class AppController(NSObject):
         if url.startswith('http'):
             components = urlparse.urlparse(url)
             path = components[2]
-            if filetypes.isVideoFilename(path):
+            if filetypes.is_video_filename(path):
                 command = [lambda:app.htmlapp.newDownload(url), "Open HTTP Movie"]
+            elif filetypes.is_audio_filename(path):
+                command = [lambda:app.htmlapp.newDownload(url), "Open HTTP Audio"]
             else:
                 command = [lambda:app.htmlapp.addAndSelectFeed(url), "Open HTTP URL"]
         elif url.startswith('miro:'):

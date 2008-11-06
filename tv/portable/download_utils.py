@@ -128,8 +128,8 @@ def checkFilenameExtension(filename, contentType):
     one based on the HTTP content-type info and add it if one is available.
     """
     checkF(filename)
-    if contentType is not None and not filetypes.isAllowedFilename(filename):
-        guessedExt = filetypes.guessExtension(contentType)
+    if contentType is not None and not filetypes.is_allowed_filename(filename):
+        guessedExt = filetypes.guess_extension(contentType)
         if guessedExt is not None:
             filename += guessedExt
     return filename

@@ -231,7 +231,7 @@ def gather_media_files(path):
     for root, dirs, files in os.walk(path):
         for f in files:
             parsed = parsed + 1
-            if filetypes.isVideoFilename(f):
+            if filetypes.is_video_filename(f):
                 found.append(os.path.join(root, f))
 
         if short_app_name in dirs:
@@ -545,7 +545,7 @@ def getFirstVideoEnclosure(entry):
     except (KeyError, AttributeError):
         return None
 
-    enclosures = [e for e in enclosures if filetypes.isVideoEnclosure(e)]
+    enclosures = [e for e in enclosures if filetypes.is_video_enclosure(e)]
     if len(enclosures) == 0:
         return None
 

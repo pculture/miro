@@ -42,9 +42,9 @@ def handle_external_url(url):
             print 'SHOULD BLINK: %r' % feed_info.name
         return
 
-    if filetypes.isFeedFilename(url):
+    if filetypes.is_feed_filename(url):
         ask_for_feed_subscribe(url)
-    elif filetypes.isAllowedFilename(url): # media URL, download it
+    elif filetypes.is_allowed_filename(url): # media URL, download it
         messages.DownloadURL(url).send_to_backend()
     else:
         app.widgetapp.open_url(url)

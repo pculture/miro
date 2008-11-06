@@ -137,8 +137,8 @@ class Browser(widgetset.Browser):
 
         if (guide.isPartOfGuide(url, self.guide_info.url,
                 self.guide_info.allowed_urls) and
-                not filetypes.isFeedFilename(url) and
-                not filetypes.isAllowedFilename(url)):
+                not filetypes.is_feed_filename(url) and
+                not filetypes.is_allowed_filename(url)):
             return True
 
         if not _should_miro_handle(url):
