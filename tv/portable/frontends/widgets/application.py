@@ -541,10 +541,10 @@ class Application:
         Temporary function for toggling the audio/video section of an
         item.  Should be replaced by drag and drop!
         """
-        t, channel_infos = app.tab_list_manager.get_selection()
-        if t == 'feed' and len(channel_infos) == 1:
+        type, channel_infos = app.tab_list_manager.get_selection()
+        if type in ('feed', 'audio-feed') and len(channel_infos) == 1:
             ci = channel_infos[0]
-            messages.ToggleChannelSection(ci.id).send_to_backend()
+            messages.ToggleChannelSection(ci.id, type).send_to_backend()
 
     def copy_site_url(self):
         t, site_infos = app.tab_list_manager.get_selection()

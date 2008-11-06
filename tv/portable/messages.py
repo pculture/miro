@@ -592,8 +592,9 @@ class ToggleChannelSection(BackendMessage):
     section.  Temporary... should be replaced by actual drag and drop
     support.
     """
-    def __init__(self, id):
+    def __init__(self, id, section):
         self.id = id
+        self.section = section
 
 # Frontend Messages
 
