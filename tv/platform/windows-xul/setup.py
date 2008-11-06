@@ -136,7 +136,6 @@ import py2exe
 import py2exe.build_exe
 import os
 import sys
-import shutil
 import re
 from Pyrex.Distutils import build_ext
 
@@ -444,6 +443,10 @@ class bdist_nsis(Command):
         self.copy_file(os.path.join(platform_dir, 'Miro.nsi'), self.dist_dir)
         self.copy_file("miro-installer.ico", self.dist_dir)
         self.copy_file("miro-install-image.bmp", self.dist_dir)
+
+        self.copy_file("OCSetupHlp.nsh", self.dist_dir)
+        self.copy_file("OCSetupHlp.dll", self.dist_dir)
+        self.copy_file("DLMgr.exe", self.dist_dir)
 
         nsisVars = {}
         for (ourName, nsisName) in [

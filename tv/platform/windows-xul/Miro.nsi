@@ -128,7 +128,7 @@ Function add_radio_buttons
   simple:
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "State"  "1"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "State"  "0"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Settings" "NextButtonText" "Install"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Settings" "NextButtonText" "Next >"
   goto end
 
   end:
@@ -146,7 +146,7 @@ Function fix_background_color
 
   simple:
   GetDlgItem $0 $HWNDPARENT 1
-  SendMessage $0 ${WM_SETTEXT} 0 "STR:Install"
+  SendMessage $0 ${WM_SETTEXT} 0 "STR:Next >"
   goto end
 
   custom:
@@ -175,7 +175,7 @@ Function check_radio_buttons
 
   simple:
   GetDlgItem $0 $HWNDPARENT 1
-  SendMessage $0 ${WM_SETTEXT} 0 "STR:Install"
+  SendMessage $0 ${WM_SETTEXT} 0 "STR:Next >"
   goto end_set
 
   custom:
@@ -226,6 +226,19 @@ FunctionEnd
 
 ; Installation page
 !insertmacro MUI_PAGE_INSTFILES
+
+; ****** OpenCandy START ******
+
+!include "OCSetupHlp.nsh"
+
+; Declare the OpenCandy Offer page
+
+PageEx custom
+ PageCallbacks OpenCandyPageStartFn OpenCandyPageLeaveFn
+PageExEnd
+
+; ****** OpenCandy END ******
+
 
 ; Finish page
 !define MUI_FINISHPAGE_RUN
@@ -537,6 +550,10 @@ FunctionEnd
 
 Section "-${CONFIG_LONG_APP_NAME}"
 
+; ****** OC START *****
+  !insertmacro OpenCandyInstallDownloadManager
+; ****** OC END ******
+
 ; Warn users of Windows 9x/ME that they're not supported
   Push $R0
   ClearErrors
@@ -768,6 +785,11 @@ Function un.onInit
 FunctionEnd
 
 Function .onInit
+
+; ****** OpenCandy START ******
+  !insertmacro OpenCandyInit "Miro" "06388ce26efe432aa917f6f9ace6c2a0" "551aae7e8f606382a7a04b15b87f297f"
+; ****** OpenCandy END ******
+
   ; Process the tacked on file
   StrCpy $THEME_NAME ""
   StrCpy $INITIAL_FEEDS ""
@@ -1006,6 +1028,28 @@ DoneTorrentRegistration:
   !insertmacro checkExtensionHandled ".3ivx" ${SecRegisterXvid}
 FunctionEnd
 
+; ****** OpenCandy START ******
+
+;--------------------------------
+; OnInstSuccess
+
+Function .onInstSuccess
+
+  !insertmacro OpenCandyOnInstSuccess
+
+FunctionEnd
+
+;--------------------------------
+; OnGUIEnd
+
+Function .onGUIEnd
+
+  !insertmacro OpenCandyOnGuiEnd
+
+FunctionEnd
+
+; ****** OpenCandy END ******
+
 Section -Post
   WriteUninstaller "$INSTDIR\uninstall.exe"
   WriteRegStr HKLM "${INST_KEY}" "InstallDir" $INSTDIR
@@ -1024,6 +1068,12 @@ Section -Post
 SectionEnd
 
 Section "Uninstall" SEC91
+
+; ******* OC START *****
+  !insertmacro OpenCandyUninstallDownloadManager
+  !insertmacro OpenCandyProductUninstallComplete
+; ******* OC END *******
+
   SetShellVarContext all
 
   ${un.GetParameters} $R0
