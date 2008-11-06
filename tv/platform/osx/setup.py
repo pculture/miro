@@ -376,9 +376,8 @@ class MiroBuild (py2app):
                              BOOST_PYTHON_LIB,
                              BOOST_FILESYSTEM_LIB,
                              BOOST_DATETIME_LIB,
-                             BOOST_THREAD_LIB]
-        if OS_VERSION >= 9:
-            libtorrent_extras.append(BOOST_SYSTEM_LIB)
+                             BOOST_THREAD_LIB,
+                             BOOST_SYSTEM_LIB]
 
         libtorrent_compil_args = ["-Wno-missing-braces",
                                   "-D_FILE_OFFSET_BITS=64",

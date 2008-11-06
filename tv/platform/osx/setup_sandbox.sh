@@ -414,49 +414,34 @@ echo ">> Installing..."
 $PYTHON setup.py install 1>>$OUT 2>>$OUT
 
 # =============================================================================
-# Boost 1.33.1
-# (because boost 1.34.x causes the libtorrent python extension to fail)
+# Boost 1.35
 # =============================================================================
 
-echo "=== BOOST 1.33.1 ==============================================================" >>$OUT
-echo "Setting up Boost 1.33.1"
+echo "=== BOOST 1.35 ==============================================================" >>$OUT
+echo "Setting up Boost 1.35"
 cd $WORK_DIR
 
-echo ">> Unpacking archive..."
-tar -xzf $PKG_DIR/boost_1_33_1.tar.gz 1>>$OUT 2>>$OUT
-cd $WORK_DIR/boost_1_33_1
+tar -xzf $PKG_DIR/boost_1_35_0.tar.gz
+cd boost_1_35_0
 
-echo ">> Building the bjam tool..."
-cd tools/build/jam_src
-./build.sh 1>>$OUT 2>>$OUT
+cd tools/jam/src
+./build.sh
 cd `find . -type d -maxdepth 1 | grep bin.`
-mkdir $SANDBOX_DIR/bin
+mkdir -p $SANDBOX_DIR/bin
 cp bjam $SANDBOX_DIR/bin
 
-echo ">> Building & installing..."
-cd $WORK_DIR/boost_1_33_1
-$SANDBOX_DIR/bin/bjam --prefix=$SANDBOX_DIR \
-                      --with-python \
-                      --with-date_time \
-                      --with-filesystem \
-                      --with-thread \
-                      --without-icu \
-                      -sPYTHON_ROOT=$PYTHON_ROOT \
-                      -sPYTHON_VERSION=$PYTHON_VERSION \
-                      -sBUILD="release" \
-                      -sTOOLS="darwin" \
-                      -sGXX="g++ -O3 -isysroot /Developer/SDKs/MacOSX10.4u.sdk -arch ppc -arch i386" \
-                      -sGCC="gcc -O3 -isysroot /Developer/SDKs/MacOSX10.4u.sdk -arch ppc -arch i386" \
-                      install 1>>$OUT 2>>$OUT
-
-#echo ">> Removing static libraries..."
-#rm $SANDBOX_DIR/lib/libboost*.a
-
-echo ">> Updating dynamic libraries identification names.."
-for lib in $SANDBOX_DIR/lib/libboost*.dylib
-    do
-    install_name_tool -id $lib $lib
-done
+cd $WORK_DIR/boost_1_35_0
+$SANDBOX_DIR/bin/bjam  --prefix=$SANDBOX_DIR \
+                       --with-python \
+                       --with-date_time \
+                       --with-filesystem \
+                       --with-thread \
+                       --with-regex \
+                       toolset=darwin \
+                       architecture=combined \
+                       link=static \
+                       release \
+                       install
 
 # =============================================================================
 
