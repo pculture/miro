@@ -29,15 +29,36 @@
 """Defines the "first time dialog" and all behavior."""
 
 from miro import prefs
+from miro import util
+from miro import messages
 from miro.plat.frontends.widgets import widgetset
-from miro.frontends.widgets import widgetutil, prefpanel
+from miro.plat.frontends.widgets import threads
+from miro.frontends.widgets import widgetutil
+from miro.frontends.widgets import prefpanel
+from miro.frontends.widgets import dialogs
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
+import os
+
+def _build_title(text):
+    lab = widgetset.Label(text)
+    lab.set_bold(True)
+    lab.set_wrap(True)
+    return widgetutil.align_left(lab, bottom_pad=10)
 
 class FirstTimeDialog(widgetset.Window):
     def __init__(self, done_firsttime_callback):
         widgetset.Window.__init__(self, _("Miro First Time Setup"), widgetset.Rect(100, 100, 475, 500))
+
+        # the directory panel 3 searches for files in
+        self.search_directory = None
+
+        self.finder = None
+
+        self.cancelled = False
+
+        self.gathered_media_files = None
 
         self._done_firsttime_callback = done_firsttime_callback
 
@@ -57,6 +78,9 @@ class FirstTimeDialog(widgetset.Window):
         self.show()
 
     def on_close(self, widget=None):
+        if self.gathered_media_files:
+            messages.OpenIndividualFiles(self.gathered_media_files).send_to_backend()
+
         self.disconnect(self.on_close_handler)
         self.on_close_handler = None
         self.close()
@@ -79,24 +103,19 @@ class FirstTimeDialog(widgetset.Window):
     def prev_page(self):
         self._switch_page(self._page_index - 1)
 
-    def _build_title(self, text):
-        lab = widgetset.Label(text)
-        lab.set_bold(True)
-        lab.set_wrap(True)
-        return widgetutil.align_left(lab, bottom_pad=10)
-
     def build_first_page(self):
         v = widgetset.VBox(spacing=5)
 
-        v.pack_start(self._build_title(_("Welcome to the Miro First Time Setup")))
+        v.pack_start(_build_title(_("Welcome to the Miro First Time Setup")))
 
         lab = widgetset.Label(_(
             "The next few screens will help you set up Miro so that it works best "
             "for you.\n"
             "\n"
-            "We recommend that you have Miro launch when your computer starts up.  "
-            "This way, videos in progress can finish downloading and new videos "
-            "can be downloaded in the background, ready when you want to watch."
+            "We recommend that you have Miro launch when your computer starts "
+            "up.  This way, downloads in progress can finish downloading and new "
+            "media files can be downloaded in the background, ready when you "
+            "want to watch."
             ))
         lab.set_wrap(True)
         lab.set_size_request(400, -1)
@@ -124,15 +143,15 @@ class FirstTimeDialog(widgetset.Window):
         return v
 
     def build_second_page(self):
-        v = widgetset.VBox()
+        v = widgetset.VBox(spacing=5)
 
-        v.pack_start(self._build_title(_("Completing the Miro First Time Setup")))
+        v.pack_start(_build_title(_("Completing the Miro First Time Setup")))
 
         lab = widgetset.Label(_(
-            "Miro can find all the videos on your computer to help you organize "
-            "your collection.\n"
+            "Miro can find all the media files on your computer to help you "
+            "organize your collection.\n"
             "\n"
-            "Would you like Miro to look for video files on your computer?"
+            "Would you like Miro to look for media files on your computer?"
             ))
         lab.set_size_request(400, -1)
         lab.set_wrap(True)
@@ -144,7 +163,7 @@ class FirstTimeDialog(widgetset.Window):
         v.pack_start(widgetutil.align_left(no_rb))
         v.pack_start(widgetutil.align_left(yes_rb, bottom_pad=5))
 
-        group_box = widgetset.VBox()
+        group_box = widgetset.VBox(spacing=5)
 
         rbg2 = widgetset.RadioButtonGroup()
         restrict_rb = widgetset.RadioButton(_("Restrict to all my personal files."), rbg2)
@@ -152,10 +171,19 @@ class FirstTimeDialog(widgetset.Window):
         group_box.pack_start(widgetutil.align_left(restrict_rb, left_pad=30))
         group_box.pack_start(widgetutil.align_left(search_rb, left_pad=30))
 
-        search_box = widgetset.TextEntry()
+        search_entry = widgetset.TextEntry()
         change_button = widgetset.Button(_("Change"))
-        h = widgetutil.build_hbox((search_box, change_button))
+        h = widgetutil.build_hbox((search_entry, change_button))
         group_box.pack_start(widgetutil.align_left(h, left_pad=30))
+
+        def handle_change_clicked(widget):
+            # FIXME - get home directory?
+            dir_ = dialogs.ask_for_directory(_("Choose directory to search for media files"),
+                    initial_directory=os.path.expanduser("~/"),
+                    transient_for=self)
+            if dir_:
+                search_entry.set_text(dir_)
+        change_button.connect('clicked', handle_change_clicked)
 
         v.pack_start(group_box)
 
@@ -164,14 +192,19 @@ class FirstTimeDialog(widgetset.Window):
         prev_button = widgetset.Button(_("< Previous"))
         prev_button.connect('clicked', lambda x: self.prev_page())
 
-        def handle_search_finish(widget):
+        def handle_search_finish_clicked(widget):
             if widget.mode == "search":
+                if rbg2.get_selected() == restrict_rb or not search_entry.get_text():
+                    # FIXME - get home directory?
+                    self.search_directory = os.path.expanduser("~/")
+                else:
+                    self.search_directory = search_entry.get_text()
                 self.next_page()
             else:
                 self.on_close()
 
         search_button = widgetset.Button(_("Search"))
-        search_button.connect('clicked', handle_search_finish)
+        search_button.connect('clicked', handle_search_finish_clicked)
         search_button.text_faces = {"search": _("Search"), "finish": _("Finish")}
         search_button.mode = "search"
 
@@ -182,10 +215,10 @@ class FirstTimeDialog(widgetset.Window):
         h = widgetutil.build_hbox((prev_button, search_button))
         v.pack_start(widgetutil.align_right(h))
 
-        def handle_clicked(widget):
+        def handle_radio_button_clicked(widget):
             if widget is no_rb:
                 group_box.disable_widget()
-                search_box.disable_widget()
+                search_entry.disable_widget()
                 change_button.disable_widget()
                 switch_mode("finish")
 
@@ -193,49 +226,47 @@ class FirstTimeDialog(widgetset.Window):
                 group_box.enable_widget()
                 switch_mode("search")
                 if rbg2.get_selected() is restrict_rb:
-                    search_box.disable_widget()
+                    search_entry.disable_widget()
                     change_button.disable_widget()
                 else:
-                    search_box.enable_widget()
+                    search_entry.enable_widget()
                     change_button.enable_widget()
 
             elif widget is restrict_rb:
-                search_box.disable_widget()
+                search_entry.disable_widget()
                 change_button.disable_widget()
 
             elif widget is search_rb:
-                search_box.enable_widget()
+                search_entry.enable_widget()
                 change_button.enable_widget()
 
-        no_rb.connect('clicked', handle_clicked)
-        yes_rb.connect('clicked', handle_clicked)
-        restrict_rb.connect('clicked', handle_clicked)
-        search_rb.connect('clicked', handle_clicked)
+        no_rb.connect('clicked', handle_radio_button_clicked)
+        yes_rb.connect('clicked', handle_radio_button_clicked)
+        restrict_rb.connect('clicked', handle_radio_button_clicked)
+        search_rb.connect('clicked', handle_radio_button_clicked)
 
-        handle_clicked(restrict_rb)
-        handle_clicked(no_rb)
+        handle_radio_button_clicked(restrict_rb)
+        handle_radio_button_clicked(no_rb)
 
         return v
 
     def build_search_page(self):
-        v = widgetset.VBox()
+        v = widgetset.VBox(spacing=5)
 
-        lab = widgetset.Label(_("Searching for videos"))
-        v.pack_start(widgetutil.align_left(lab))
+        v.pack_start(_build_title(_("Searching for media files")))
 
-        lab = widgetset.Label("FIXME - progress here")
-        v.pack_start(widgetutil.align_left(lab))
+        # FIXME - progress meter here
 
-        count = 0
-        found_lab = widgetset.Label(ngettext(
-            _("%(count)d video found"),
-            _("%(count)d videos found"),
-            count,
-            {"count": count}
-        ))
-        v.pack_start(widgetutil.align_left(found_lab))
-        reset_button = widgetset.Button(_("Reset Search"))
-        v.pack_start(widgetutil.align_left(reset_button))
+        # FIXME - not sure why progress_label shows up in the middle
+        progress_label = widgetset.Label("")
+        progress_label.set_size_request(400, -1)
+        v.pack_start(widgetutil.align_left(progress_label))
+
+        search_button = widgetset.Button(_("Search"))
+        cancel_button = widgetset.Button(_("Cancel"))
+
+        h = widgetutil.build_hbox((search_button, cancel_button))
+        v.pack_start(widgetutil.align_left(h))
 
         v.pack_start(widgetset.Label(" "), expand=True)
 
@@ -248,4 +279,56 @@ class FirstTimeDialog(widgetset.Window):
         h = widgetutil.build_hbox((prev_button, finish_button))
         v.pack_start(widgetutil.align_right(h))
 
+        def handle_cancel_clicked(widget):
+            search_button.enable_widget()
+            cancel_button.disable_widget()
+
+            prev_button.enable_widget()
+            finish_button.enable_widget()
+            self.cancelled = True
+
+        def make_progress():
+            if self.cancelled:
+                self.gathered_media_files = []
+                self.finder = None
+                progress_label.set_text("")
+                return
+
+            try:
+                num_parsed, found = self.finder.next()
+                self.gathered_media_files = found
+
+                num_found = len(found)
+                num_files = ngettext("parsed %(count)s file",
+                        "parsed %(count)s files",
+                        num_parsed,
+                        {"count": num_parsed})
+
+                num_media_files = ngettext("found %(count)s media files",
+                        "found %(count)s media files",
+                        num_found,
+                        {"count": num_found})
+                progress_label.set_text(u"%s - %s" % (num_files, num_media_files))
+
+                threads.call_on_ui_thread(make_progress)
+
+            except StopIteration:
+                handle_cancel_clicked(None)
+                self.finder = None
+
+        def handle_search_clicked(widget):
+            self.cancelled = False
+            search_button.disable_widget()
+            cancel_button.enable_widget()
+
+            prev_button.disable_widget()
+            finish_button.disable_widget()
+
+            self.finder = util.gather_media_files(self.search_directory)
+            threads.call_on_ui_thread(make_progress)
+
+        search_button.connect('clicked', handle_search_clicked)
+        cancel_button.connect('clicked', handle_cancel_clicked)
+
+        cancel_button.disable_widget()
         return v

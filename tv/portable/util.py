@@ -217,37 +217,34 @@ class ExponentialBackoffTracker:
     def reset(self):
         self.currentDelay = self.baseDelay
 
-def gather_videos(path, progress_callback):
-    """Gather movie files on the disk.  Used by the startup dialog.
+def gather_media_files(path):
+    """Gather media files on the disk in a directory tree.
+    This is used by the first time startup dialog.
+
+    path -- absolute file path to search
     """
     from miro import prefs
     from miro import config
-    keepGoing = True
     parsed = 0
     found = []
-    try:
-        for root, dirs, files in os.walk(path):
-            for f in files:
-                parsed = parsed + 1
-                if filetypes.isVideoFilename(f):
-                    found.append(os.path.join(root, f))
-                if parsed > 1000:
-                    adjustedParsed = int(parsed / 100.0) * 100
-                elif parsed > 100:
-                    adjustedParsed = int(parsed / 10.0) * 10
-                else:
-                    adjustedParsed = parsed
-                keepGoing = progress_callback(adjustedParsed, len(found))
-                if not keepGoing:
-                    found = None
-                    raise
-            if config.get(prefs.SHORT_APP_NAME) in dirs:
-                dirs.remove(config.get(prefs.SHORT_APP_NAME))
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
-        pass
-    return found
+    short_app_name = config.get(prefs.SHORT_APP_NAME)
+    for root, dirs, files in os.walk(path):
+        for f in files:
+            parsed = parsed + 1
+            if filetypes.isVideoFilename(f):
+                found.append(os.path.join(root, f))
+
+        if short_app_name in dirs:
+            dirs.remove(short_app_name)
+
+        if parsed > 1000:
+            adjusted_parsed = int(parsed / 100.0) * 100
+        elif parsed > 100:
+            adjusted_parsed = int(parsed / 10.0) * 10
+        else:
+            adjusted_parsed = parsed
+
+        yield adjusted_parsed, found
 
 def formatSizeForUser(bytes, zeroString="", withDecimals=True, kbOnly=False):
     """Format an int containing the number of bytes into a string suitable for
