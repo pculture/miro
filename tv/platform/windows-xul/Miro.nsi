@@ -310,7 +310,6 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
   Delete   "${directory}\*.dll"
   Delete   "${directory}\*.pyd"
   Delete   "${directory}\w9xpopen.exe"
-  Delete   "${directory}\moviedata_util.py"
   Delete   "${directory}\uninstall.exe"
   Delete   "${directory}\library.zip"
 
@@ -584,7 +583,6 @@ unzipok:
   File  "${CONFIG_ICON}"
   File  "${CONFIG_DOWNLOADER_EXECUTABLE}"
   File  "${CONFIG_MOVIE_DATA_EXECUTABLE}"
-  File  "moviedata_util.py"
   File  "*.dll"
   File  "*.pyd"
   File  "w9xpopen.exe"

@@ -496,7 +496,6 @@ class bdist_nsis(Command):
         self.addFile(nsisVars['CONFIG_EXECUTABLE'])
         self.addFile(nsisVars['CONFIG_ICON'])
         self.addFile(nsisVars['CONFIG_MOVIE_DATA_EXECUTABLE'])
-        self.addFile("moviedata_util.py")
         self.addGlob("*.dll")
 
         self.addDirectory("defaults")
