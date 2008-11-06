@@ -306,21 +306,6 @@ installer -pkg pysqlite-2.2.2-py2.4-macosx10.4/pysqlite-2.2.2-py2.4-macosx10.4.m
 #$PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
 
 # =============================================================================
-# macholib 1.1
-# =============================================================================
-
-#echo "=== MACHOLIB 1.1 ==============================================================" >>$OUT
-#echo "Setting up macholib 1.1"
-#cd $WORK_DIR
-#
-#echo ">> Unpacking archive..."
-#tar -xzf $PKG_DIR/macholib-1.1.tar.gz 1>>$OUT 2>>$OUT
-#cd $WORK_DIR/macholib-1.1
-#
-#echo ">> Building & installing..."
-#$PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
-
-# =============================================================================
 # bdist_mpkg 0.4.3
 # =============================================================================
 
@@ -371,6 +356,12 @@ cd $WORK_DIR/pyobjc-1.4.1
 
 echo ">> Building & installing..."
 $PYTHON setup.py install --prefix=$PYTHON_ROOT 1>>$OUT 2>>$OUT
+
+# =============================================================================
+# macholib 1.2.1
+# =============================================================================
+
+$PYTHON_ROOT/bin/easy_install $PKG_DIR/macholib-1.2.1.dev_r23-py2.4.egg
 
 # =============================================================================
 # Pyrex 0.9.6.4
