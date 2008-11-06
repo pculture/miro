@@ -70,7 +70,9 @@ class TabListManager(object):
                     self.selected_tab_list.type)
 
     def all_tab_lists(self):
-        return (self.static_tab_list, self.site_list, self.feed_list, self.playlist_list)
+        return (
+            self.static_tab_list, self.site_list,
+            self.feed_list, self.audio_feed_list, self.playlist_list)
 
     def select_guide(self):
         self.select_static_tab(0)
