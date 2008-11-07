@@ -270,7 +270,7 @@ class PlaybackManager (signals.SignalEmitter):
 
         else:
             if self.is_playing:
-                self.stop()
+                self.stop(save_resume_time=False)
             if_no_callback()
 
     def _item_check_playable(self, item_info, yes_callback, no_callback):
