@@ -293,11 +293,13 @@ class TabList(signals.SignalEmitter):
         changed.
     """
 
+    ALLOW_MULTIPLE = True
+
     def __init__(self):
         signals.SignalEmitter.__init__(self)
         self.create_signal('tab-name-changed')
         self.view = TabListView(style.TabRenderer())
-        self.view.allow_multiple_select(True)
+        self.view.allow_multiple_select(self.ALLOW_MULTIPLE)
         self.view.connect('row-expanded', self.on_row_expanded_change, True)
         self.view.connect('row-collapsed', self.on_row_expanded_change, False)
         self.iter_map = {}
@@ -400,6 +402,8 @@ class TabList(signals.SignalEmitter):
 
 class SiteList(TabList):
     type = 'site'
+
+    ALLOW_MULTIPLE = False
 
     def init_info(self, info):
         thumb_path = resources.path('images/icon-site.png')
