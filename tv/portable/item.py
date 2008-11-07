@@ -436,17 +436,17 @@ class Item(DDBObject):
         """Get the expiration time a string to display to the user."""
         offset = when - datetime.now()
         if offset.days > 0:
-            result = ngettext("1 day",
+            result = ngettext("%(count)d day",
                               "%(count)d days",
                               offset.days,
                               {"count": offset.days})
         elif offset.seconds > 3600:
-            result = ngettext("1 hour",
+            result = ngettext("%(count)d hour",
                               "%(count)d hours",
                               ceil(offset.seconds/3600.0),
                               {"count": ceil(offset.seconds/3600.0)})
         else:
-            result = ngettext("1 minute",
+            result = ngettext("%(count)d minute",
                               "%(count)d minutes",
                               ceil(offset.seconds/60.0),
                               {"count": ceil(offset.seconds/60.0)})
