@@ -382,6 +382,8 @@ class BackendMessageHandler(messages.MessageHandler):
         self.download_count_tracker = None
         self.new_count_tracker = None
         self.item_trackers = {}
+        search_feed = app.controller.get_global_feed('dtv:search')
+        search_feed.connect('update-finished', self._search_update_finished)
 
     def call_handler(self, method, message):
         name = 'handling backend message: %s' % message
@@ -838,6 +840,10 @@ class BackendMessageHandler(messages.MessageHandler):
             search_feed.lookup(searchengine_id, terms)
         else:
             search_feed.reset()
+
+    def _search_update_finished(self, feed):
+        messages.SearchComplete(feed.lastEngine, feed.lastQuery,
+                len(feed.items)).send_to_frontend()
 
     def item_tracker_key(self, message):
         return (message.type, message.id)

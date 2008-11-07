@@ -887,3 +887,6 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
         # otherwise, we default to sending the notification
         app.widgetapp.send_notification(message.title, message.body)
+
+    def handle_search_complete(self, message):
+        app.search_manager.handle_search_complete(message)

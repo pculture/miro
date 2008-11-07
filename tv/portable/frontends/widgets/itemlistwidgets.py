@@ -165,10 +165,6 @@ class ChannelTitlebar(ItemListTitlebar):
 
 class SearchListTitlebar(ItemListTitlebar):
     """Titlebar for the search page.
-
-    signals:
-      search(self, engine_name search_text) -- The user is requesting a new
-          search.
     """
     def _on_search_activate(self, obj):
         app.search_manager.set_search_info(obj.selected_engine().name, obj.get_text())
@@ -181,7 +177,6 @@ class SearchListTitlebar(ItemListTitlebar):
         return self.searchbox.get_text()
 
     def _build_titlebar_extra(self):
-        self.create_signal('search')
         hbox = widgetset.HBox()
 
         self.searchbox = widgetset.VideoSearchTextEntry()

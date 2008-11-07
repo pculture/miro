@@ -440,7 +440,10 @@ class CheckVersion(BackendMessage):
         self.up_to_date_callback = up_to_date_callback
 
 class Search(BackendMessage):
-    """Search a search engine with a search term."""
+    """Search a search engine with a search term.
+    
+    The backend will send a SearchComplete message.
+    """
     def __init__(self, searchengine_id, terms):
         self.id = searchengine_id
         self.terms = terms
@@ -1057,3 +1060,11 @@ class NotifyUser(FrontendMessage):
         self.title = title
         self.body = body
         self.notify_type = notify_type
+    
+class SearchComplete(FrontendMessage):
+    """Notifies the backend that the search was complete."""
+
+    def __init__(self, engine, query, result_count):
+        self.engine = engine
+        self.query = query
+        self.result_count = result_count

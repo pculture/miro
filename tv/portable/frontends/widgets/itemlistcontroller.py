@@ -355,22 +355,27 @@ class SearchController(SimpleItemListController):
             self.toolbar.show()
         self.widget.titlebar_vbox.pack_start(self.toolbar)
 
+    def build_widget(self):
+        widget = SimpleItemListController.build_widget(self)
+        label = widgetset.Label(_('No Results Found'))
+        label.set_size(2)
+        self.no_results_label = widgetutil.HideableWidget(label)
+        widget.content_vbox.pack_start(self.no_results_label)
+        return widget
+
     def initialize_search(self):
         if app.search_manager.text != '':
             self.titlebar.set_search_text(app.search_manager.text)
 
+    def on_initial_list(self):
+        if (not app.search_manager.searching and app.search_manager.text != ''
+                and self.item_list.get_count() == 0):
+            self.no_results_label.show()
+
     def make_titlebar(self):
         icon = self._make_icon()
         titlebar = itemlistwidgets.SearchListTitlebar(self.title, icon)
-        titlebar.connect('search', self._on_search)
         return titlebar
-
-    def _on_search(self, widget, engine_name, search_text):
-        app.search_manager.perform_search(engine_name, search_text)
-        if search_text != '':
-            self.toolbar.show()
-        else:
-            self.toolbar.hide()
 
     def _on_save_search(self, widget):
         engine = self.titlebar.get_engine()
@@ -378,6 +383,29 @@ class SearchController(SimpleItemListController):
         app.search_manager.perform_search(engine, search_text)
         if search_text != '':
             app.search_manager.save_search()
+
+    def start_tracking(self):
+        SimpleItemListController.start_tracking(self)
+        self._started_handle = app.search_manager.connect('search-started',
+                self._on_search_started)
+        self._complete_handle = app.search_manager.connect('search-complete',
+                self._on_search_complete)
+
+    def stop_tracking(self):
+        SimpleItemListController.stop_tracking(self)
+        app.search_manager.disconnect(self._started_handle)
+        app.search_manager.disconnect(self._complete_handle)
+
+    def _on_search_started(self, search_manager):
+        self.no_results_label.hide()
+        if search_manager.text != '':
+            self.toolbar.show()
+        else:
+            self.toolbar.hide()
+
+    def _on_search_complete(self, search_manager, result_count):
+        if search_manager.text != '' and result_count == 0:
+            self.no_results_label.show()
 
 class LibraryController(SimpleItemListController):
     type = 'library'

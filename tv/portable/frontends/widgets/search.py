@@ -29,21 +29,30 @@
 """search.py -- Manages video searches.
 """
 
+from miro import signals
 from miro import messages
 from miro import searchengines
 
-class SearchManager(object):
+class SearchManager(signals.SignalEmitter):
     """Keeps track of search terms.
 
     Attributes:
 
       engine -- Last used search engine
       text -- Last search text
+
+    Signals:
+      search-started (search_manager)
+      search-complete (search_manager, result_count)
     """
 
     def __init__(self):
+        signals.SignalEmitter.__init__(self)
+        self.create_signal('search-started')
+        self.create_signal('search-complete')
         self.engine = searchengines.get_last_engine().name
         self.text = ''
+        self.searching = False
 
     def set_search_info(self, engine, text):
         self.engine = engine
@@ -55,10 +64,16 @@ class SearchManager(object):
             self.set_search_info(engine, text)
             searchengines.set_last_engine(self.engine)
         messages.Search(self.engine, self.text).send_to_backend()
+        self.searching = True
+        self.emit('search-started')
 
     def save_search(self):
         m = messages.NewChannelSearchEngine(searchengines.get_engine_for_name(self.engine), self.text)
         m.send_to_backend()
+
+    def handle_search_complete(self, message):
+        self.searching = False
+        self.emit('search-complete', message.result_count)
 
 class InlineSearchMemory(object):
     """Remembers inline searches the user has performed """

@@ -2305,6 +2305,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
 
     def reset(self, url=u'', searchState=False):
         self.ufeed.confirmDBThread()
+        was_searching = self.searching
         try:
             self.initialUpdate = True
             for item in self.items:
@@ -2320,6 +2321,8 @@ class SearchFeedImpl(RSSMultiFeedImpl):
             self.ufeed.iconCache.requestUpdate(is_vital=True)
         finally:
             self.ufeed.signalChange()
+        if was_searching:
+            self.ufeed.emit('update-finished')
 
     def preserveDownloads(self, downloadsFeed):
         self.ufeed.confirmDBThread()
