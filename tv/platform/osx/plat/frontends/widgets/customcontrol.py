@@ -81,12 +81,14 @@ class DrawableButton(NSButton):
                 self.bounds(), self, 0, NO)
 
     def mouseEntered_(self, event):
-        if self.window().isMainWindow():
+        window = self.window()
+        if window is not nil and window.isMainWindow():
             self.mouse_inside = True
             self.setNeedsDisplay_(YES)
 
     def mouseExited_(self, event):
-        if self.window().isMainWindow():
+        window = self.window()
+        if window is not nil and window.isMainWindow():
             self.mouse_inside = False
             self.setNeedsDisplay_(YES)
 

@@ -401,14 +401,16 @@ class TableViewCommon(object):
                 self._tracking_rects.append(tr)
 
     def mouseEntered_(self, event):
-        if self.window().isMainWindow():
+        window = self.window()
+        if window is not nil and window.isMainWindow():
             row, column = _unpack_row_column(event.userData())
             self.hover_info = (row, column)
             rect = self.frameOfCellAtColumn_row_(column, row)
             self.setNeedsDisplayInRect_(rect)
 
     def mouseExited_(self, event):
-        if self.window().isMainWindow():
+        window = self.window()
+        if window is not nil and window.isMainWindow():
             row, column = _unpack_row_column(event.userData())
             if self.hover_info == (row, column):
                 self.hover_info = None
