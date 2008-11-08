@@ -48,10 +48,15 @@ from miro import filetypes
 from miro import eventloop
 from miro import singleclick
 from miro.frontends.widgets.application import Application
+from miro.plat import growl
 from miro.plat import migrateappname
 from miro.plat.utils import ensureDownloadDaemonIsTerminated, filenameTypeToOSFilename, osFilenamesToFilenameTypes
 from miro.plat.frontends.widgets import video, osxmenus
 from miro.plat.frontends.widgets.rect import Rect
+from miro.gtcache import gettext as _
+
+GROWL_GENERIC_NOTIFICATION = u'Misc'
+GROWL_DOWNLOAD_COMPLETE_NOTIFICATION = u'Download Complete'
 
 class OSXApplication(Application):
 
@@ -122,8 +127,12 @@ class OSXApplication(Application):
 
     def send_notification(self, title, body,
                           timeout=5000, attach_trayicon=True):
-        print '--- %s ---' % title
-        print body
+        self.app_controller.growl_notifier.notify(GROWL_GENERIC_NOTIFICATION, title, body)
+
+    def handle_download_complete(self, obj, item):
+        title = _('Download Completed')
+        body = _('Download of video \'%s\' is finished.') % item.get_title()
+        self.app_controller.growl_notifier.notify(GROWL_DOWNLOAD_COMPLETE_NOTIFICATION, title, body, sticky=True)
 
 
 class AppController(NSObject):
@@ -131,7 +140,14 @@ class AppController(NSObject):
     def initWithApp_(self, application):
         self.init()
         self.application = application
+        self.growl_notifier = None
         return self
+
+    def setup_growl_notifier(self):
+        app_name = config.get(prefs.LONG_APP_NAME)
+        notifications = [GROWL_GENERIC_NOTIFICATION, GROWL_DOWNLOAD_COMPLETE_NOTIFICATION]
+        self.growl_notifier = growl.GrowlNotifier(app_name, notifications)
+        self.growl_notifier.register()
 
     def applicationDidFinishLaunching_(self, notification):
         try:
@@ -150,6 +166,7 @@ class AppController(NSObject):
             wsnc.addObserver_selector_name_object_(self, 'workspaceWillSleep:', NSWorkspaceWillSleepNotification, nil)
             wsnc.addObserver_selector_name_object_(self, 'workspaceDidWake:',   NSWorkspaceDidWakeNotification,   nil)
 
+            self.setup_growl_notifier()
             self.application.startup()
         except:
             traceback.print_exc()

@@ -282,6 +282,8 @@ class MiroBuild (py2app):
         self.distribution.ext_modules.append(self.get_idletime_ext())
         self.distribution.ext_modules.append(self.get_keychain_ext())
         self.distribution.ext_modules.append(self.get_qtcomp_ext())
+        self.distribution.ext_modules.append(self.get_growl_ext())
+        self.distribution.ext_modules.append(self.get_growl_image_ext())
         self.distribution.ext_modules.append(self.get_database_ext())
         self.distribution.ext_modules.append(self.get_sorts_ext())
         self.distribution.ext_modules.append(self.get_fasttypes_ext())
@@ -335,6 +337,16 @@ class MiroBuild (py2app):
         qtcomp_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'qtcomp.c'))
         qtcomp_link_args = ['-framework', 'CoreFoundation', '-framework', 'Quicktime']
         return Extension("miro.plat.qtcomp", sources=qtcomp_src, extra_link_args=qtcomp_link_args)
+    
+    def get_growl_ext(self):
+        growl_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', '_growl.c'))
+        growl_link_args = ['-framework', 'CoreFoundation']
+        return Extension("miro.plat._growl", sources=growl_src, extra_link_args=growl_link_args)
+    
+    def get_growl_image_ext(self):
+        growl_image_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', '_growlImage.m'))
+        growl_image_link_args = ['-framework', 'Cocoa']
+        return Extension("miro.plat._growlImage", sources=growl_image_src, extra_link_args=growl_image_link_args)
     
     def get_database_ext(self):
         database_src = glob(os.path.join(ROOT_DIR, 'portable', 'database.pyx'))
