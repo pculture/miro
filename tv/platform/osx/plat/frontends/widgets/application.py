@@ -49,6 +49,7 @@ from miro import eventloop
 from miro import singleclick
 from miro.frontends.widgets.application import Application
 from miro.plat import growl
+from miro.plat import _growlImage
 from miro.plat import migrateappname
 from miro.plat.utils import ensureDownloadDaemonIsTerminated, filenameTypeToOSFilename, osFilenamesToFilenameTypes
 from miro.plat.frontends.widgets import video, osxmenus
@@ -132,7 +133,8 @@ class OSXApplication(Application):
     def handle_download_complete(self, obj, item):
         title = _('Download Completed')
         body = _('Download of video \'%s\' is finished.') % item.get_title()
-        self.app_controller.growl_notifier.notify(GROWL_DOWNLOAD_COMPLETE_NOTIFICATION, title, body, sticky=True)
+        icon = _growlImage.Image.imageFromPath(item.getThumbnail())
+        self.app_controller.growl_notifier.notify(GROWL_DOWNLOAD_COMPLETE_NOTIFICATION, title, body, icon=icon, sticky=True)
 
 
 class AppController(NSObject):
