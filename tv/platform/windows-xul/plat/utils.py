@@ -235,33 +235,6 @@ def unmakeURLSafe(string):
     checkU(string)
     return urllib.unquote(string.encode('ascii')).decode('utf_8')
 
-def resizeImage(source_path, dest_path, width, height):
-    """Resize an image to a smaller size.
-    
-    Guidelines:
-
-    Don't try to expand up the image.
-
-    Don't change the aspect ratio
-
-    The final image should be have the exact dimensions <width>X<height>.  If
-    there is extra room, either because the source image was smaller
-    specified, or because it had a different aspect ratio, pad out the image
-    with black pixels.
-    """
-    convert_path = os.path.join(resources.appRoot(), 'imagemagick',
-            'convert.exe')
-    # From the "Pad Out Image" recipe at
-    # http://www.imagemagick.org/Usage/thumbnails/
-    border_width = max(width, height) / 2
-    call_command(convert_path,  source_path, 
-            "-strip",
-            "-resize", "%dx%d>" % (width, height), 
-            "-gravity", "center", "-bordercolor", "black",
-            "-border", "%s" % border_width,
-            "-crop", "%dx%d+0+0" % (width, height),
-            "+repage", dest_path)
-
 def killProcess(pid):
     # Kill the old process, if it exists
     if pid is not None:
