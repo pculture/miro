@@ -215,8 +215,8 @@ xulrunnerbrowser_ext = Extension("miro.plat.frontends.widgets.xulrunnerbrowser",
 
 # Setting the path here allows py2exe to find the DLLS
 os.environ['PATH'] = ';'.join([
-    os.environ['PATH'], BOOST_LIB_PATH, ZLIB_RUNTIME_LIBRARY_PATH,
-    OPENSSL_LIB_PATH, GTK_BIN_PATH])
+    OPENSSL_LIB_PATH, BOOST_LIB_PATH, ZLIB_RUNTIME_LIBRARY_PATH,
+    GTK_BIN_PATH, os.environ['PATH']])
 
 ##### The libtorrent extension ####
 
@@ -310,8 +310,8 @@ class build_py(distutils.command.build_py.build_py):
     """
 
     def expand_templates(self):
-        for path in [os.path.join(portable_dir,'dl_daemon','daemon.py')]:
-            template = string.Template(open(path+".template", 'rt').read())
+        for path in [os.path.join(portable_dir, 'dl_daemon', 'daemon.py')]:
+            template = string.Template(open(path + ".template", 'rt').read())
             fout = open(path, 'wt')
             fout.write(template.substitute(**template_vars))
         
@@ -463,7 +463,7 @@ class bdist_nsis(Command):
         nsisVars['CONFIG_MOVIE_DATA_EXECUTABLE'] = "%s_MovieData.exe" % \
                 template_vars['shortAppName']
         nsisVars['CONFIG_ICON'] = "%s.ico" % template_vars['shortAppName']
-        nsisVars['CONFIG_PROG_ID'] = template_vars['longAppName'].replace(" ",".")+".1"
+        nsisVars['CONFIG_PROG_ID'] = template_vars['longAppName'].replace(" ", ".") + ".1"
 
         # One stage installer
         outputFile = "%s-%s.exe" % \
