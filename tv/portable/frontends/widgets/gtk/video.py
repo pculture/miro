@@ -143,6 +143,7 @@ class VideoWidget(Widget):
         self.set_widget(PersistentWindow())
         self._widget.set_double_buffered(False)
         self._widget.add_events(gtk.gdk.POINTER_MOTION_MASK)
+        self._widget.add_events(gtk.gdk.BUTTON_PRESS_MASK)
         renderer.set_widget(self._widget)
 
 class VideoDetailsWidget(Background):
@@ -346,6 +347,8 @@ class VideoRenderer(VBox):
                 'items-changed', self._on_items_changed)
         self._item_id = None
 
+        self._video_widget.wrapped_widget_connect('button-press-event', self.on_button_press)
+
     def teardown(self):
         self.renderer.reset()
         app.info_updater.disconnect(self._items_changed_callback)
@@ -423,6 +426,12 @@ class VideoRenderer(VBox):
 
     def prepare_switch_to_detached_playback(self):
         pass
+
+    def on_button_press(self, widget, event):
+        if event.type == gtk.gdk._2BUTTON_PRESS:
+            app.playback_manager.toggle_fullscreen()
+            return True
+        return False
 
     def on_mouse_motion(self, widget, event):
         if not _videobox_widget().props.visible:
