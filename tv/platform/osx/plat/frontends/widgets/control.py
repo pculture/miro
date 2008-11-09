@@ -329,8 +329,6 @@ class RadioButtonGroup:
             else:
                 mem.view.setState_(NSOffState)
 
-radio_button_to_group_mapping = dict()
-
 class RadioButton(SizedControl):
     def __init__(self, label, group=None):
         SizedControl.__init__(self)
@@ -339,17 +337,12 @@ class RadioButton(SizedControl):
         self.view.setButtonType_(NSRadioButton)
         self.view.setTitle_(label)
 
-        if not group:
-            group = RadioButtonGroup() 
+        if group is not None:
+            self.group = group
+        else:
+            self.group = RadioButtonGroup() 
 
-        group.add_button(self)
-        oid = id(self)
-        radio_button_to_group_mapping[oid] = group
-
-    def remove_viewport(self):
-        SizedControl.remove_viewport(self)
-        oid = id(self)
-        del radio_button_to_group_mapping[oid]
+        self.group.add_button(self)
 
     def calc_size_request(self):
         size = self.view.cell().cellSize()
@@ -359,13 +352,13 @@ class RadioButton(SizedControl):
         -self.view.font().descender() + 2
 
     def get_group(self):
-        return radio_button_to_group_mapping[id(self)]
+        return self.group
 
     def get_selected(self):
         return self.view.state() == NSOnState
 
     def set_selected(self):
-        radio_button_to_group_mapping[id(self)].set_selected(self)
+        self.group.set_selected(self)
 
     def enable_widget(self):
         SizedControl.enable_widget(self)

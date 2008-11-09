@@ -38,7 +38,7 @@ def wrapper(wrapped):
     try:
         return wrapper_mapping[wrapped]
     except KeyError:
-        raise KeyError("Wrapper no longer exists")
+        return None
 
 def add(wrapped, wrapper):
     wrapper_mapping[wrapped] = wrapper

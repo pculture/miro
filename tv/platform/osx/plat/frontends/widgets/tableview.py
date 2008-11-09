@@ -148,7 +148,8 @@ class MiroTableCell(NSCell):
         return font.ascender() + abs(font.descender()) + font.leading()
 
     def highlightColorWithFrame_inView_(self, frame, view):
-        if wrappermap.wrapper(view).draws_selection:
+        wrapper = wrappermap.wrapper(view)
+        if wrapper is not None and wrapper.draws_selection:
             return NSCell.highlightColorWithFrame_inView_(self, frame, view)
         else:
             return nil
@@ -165,7 +166,8 @@ class MiroTableImageCell(NSImageCell):
         return self.value_dict['image'].size().height
 
     def highlightColorWithFrame_inView_(self, frame, view):
-        if wrappermap.wrapper(view).draws_selection:
+        wrapper = wrappermap.wrapper(view)
+        if wrapper is not None and wrapper.draws_selection:
             return NSCell.highlightColorWithFrame_inView_(self, frame, view)
         else:
             return nil
@@ -184,7 +186,8 @@ class MiroCheckboxCell(NSButtonCell):
         return self.cellSize().height
 
     def highlightColorWithFrame_inView_(self, frame, view):
-        if wrappermap.wrapper(view).draws_selection:
+        wrapper = wrappermap.wrapper(view)
+        if wrapper is not None and wrapper.draws_selection:
             return NSCell.highlightColorWithFrame_inView_(self, frame, view)
         else:
             return nil
@@ -237,7 +240,8 @@ class CustomTableCell(NSCell):
         return self
 
     def highlightColorWithFrame_inView_(self, frame, view):
-        if wrappermap.wrapper(view).draws_selection:
+        wrapper = wrappermap.wrapper(view)
+        if wrapper is not None and wrapper.draws_selection:
             return NSCell.highlightColorWithFrame_inView_(self, frame, view)
         else:
             return nil
@@ -370,7 +374,8 @@ class TableViewCommon(object):
         self.SuperClass.removeTableColumn(self, column)
 
     def highlightSelectionInClipRect_(self, rect):
-        if wrappermap.wrapper(self).draws_selection:
+        wrapper = wrappermap.wrapper(self)
+        if wrapper is not None and wrapper.draws_selection:
             self.SuperClass.highlightSelectionInClipRect_(self, rect)
 
     def draggingSourceOperationMaskForLocal_(self, local):

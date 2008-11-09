@@ -117,9 +117,10 @@ def attach_radio(widget_values, descriptor):
             if widget is w:
                 config.set(descriptor, v)
 
+    pref_value = bool(config.get(descriptor))
     for w, v in widget_values:
         w.connect('clicked', radio_changed)
-        if v == config.get(descriptor):
+        if v == pref_value:
             w.set_selected()
 
 def attach_integer(widget, descriptor, check_function=None):
