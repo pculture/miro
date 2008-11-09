@@ -102,9 +102,6 @@ XULRUNNER_SDK_BIN_PATH = os.path.join(XULRUNNER_SDK_PATH, 'bin')
 
 VLC_PATH = os.path.join(BINARY_KIT_ROOT, 'libvlc')
 
-# Path to a build of the convert utility from imagemagick
-IMAGEMAGICK_DIR = os.path.join(BINARY_KIT_ROOT, 'imagemagick')
-
 def find_data_files(dest_path_base, source_path):
     retval = []
     for path, dirs, files in os.walk(source_path):
@@ -116,9 +113,6 @@ def find_data_files(dest_path_base, source_path):
         if '.svn' in dirs:
             dirs.remove('.svn')
     return retval
-
-# Path to a build of the convert utility from imagemagick
-IMAGEMAGICK_DIR = os.path.join(BINARY_KIT_ROOT, 'imagemagick')
 
 # Name of python binary, so we can build the download daemon in
 # another process. (Can we get this from Python itself?)
@@ -281,7 +275,6 @@ def fill_template(templatepath, outpath, **vars):
 # Data files
 data_files = []
 data_files.extend(find_data_files('xulrunner', XULRUNNER_SDK_BIN_PATH))
-data_files.extend(find_data_files('imagemagick', IMAGEMAGICK_DIR))
 image_loader_path = os.path.join('lib', 'gtk-2.0', '2.10.0', 'loaders')
 data_files.extend(find_data_files(image_loader_path, 
     os.path.join(GTK_ROOT_PATH, image_loader_path)))
@@ -504,7 +497,6 @@ class bdist_nsis(Command):
         self.addDirectory("defaults")
         self.addDirectory("resources")
         self.addDirectory("xulrunner")
-        self.addDirectory("imagemagick")
 
         self.zipfile.close()
 
@@ -560,7 +552,6 @@ if 0:
             self.addDirectory("vlc-plugins")
             self.addDirectory("plugins")
             self.addDirectory("xulrunner")
-            self.addDirectory("imagemagick")
 
             self.zipfile.close()
 
