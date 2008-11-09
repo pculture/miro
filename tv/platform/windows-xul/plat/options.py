@@ -34,3 +34,11 @@ from miro.prefs import Pref
 SHOW_TRAYICON = Pref(key="showTrayicon",
                      default=True,
                      platformSpecific=False)
+
+WINDOW_DIMENSIONS = Pref(key="windowdimensions",
+                         default="100,100,800,600",
+                         platformSpecific=False)
+
+WINDOW_MAXIMIZED = Pref(key="windowmaximized",
+                        default=False,
+                        platformSpecific=False)

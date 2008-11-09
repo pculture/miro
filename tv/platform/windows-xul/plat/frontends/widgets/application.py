@@ -50,6 +50,7 @@ from miro.plat.renderers.vlc import VLCRenderer
 from miro.plat.frontends.widgets import xulrunnerbrowser
 from miro.frontends.widgets.gtk import trayicon
 from miro.frontends.widgets.gtk import persistentwindow
+from miro.frontends.widgets.gtk import widgets
 from miro.plat.frontends.widgets import flash
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 
@@ -76,6 +77,16 @@ class WindowsApplication(Application):
 
     def build_window(self):
         Application.build_window(self)
+        self.window.connect('save-dimensions', self.set_main_window_dimensions)
+        self.window.connect('save-maximized', self.set_main_window_maximized)
+
+        maximized = self.get_main_window_maximized()
+        if maximized != None:
+            if maximized:
+                self.window._window.maximize()
+            else:
+                self.window._window.unmaximize()
+
         config.add_change_callback(self.on_pref_changed)
 
         if trayicon.trayicon_is_supported:
@@ -163,6 +174,18 @@ class WindowsApplication(Application):
         if not os.path.isdir(fn):
             fn = os.path.dirname(fn)
         os.startfile(fn)
+
+    def get_main_window_dimensions(self):
+        return widgets.Rect.from_string(config.get(options.WINDOW_DIMENSIONS))
+
+    def get_main_window_maximized(self):
+        return config.get(options.WINDOW_MAXIMIZED)
+
+    def set_main_window_dimensions(self, window, x, y, width, height):
+        config.set(options.WINDOW_DIMENSIONS, "%s,%s,%s,%s" % (x, y, width, height))
+
+    def set_main_window_maximized(self, window, maximized):
+        config.set(options.WINDOW_MAXIMIZED, maximized)
 
     def send_notification(self, title, body,
                           timeout=5000, attach_trayicon=True):
