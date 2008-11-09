@@ -52,8 +52,8 @@ if sys.version_info < (2, 5, 1):
         except OSError:
             return False
     webbrowser.BackgroundBrowser.open = patchedOpen
-    
-def restartMiro(obj=None):
+
+def _restart_miro(obj=None):
     root = resources.appRoot().encode('mbcs')
     args = [sys.executable, os.path.join(root, 'application.ini')]
     theme = config.get(prefs.THEME_NAME)
@@ -62,15 +62,15 @@ def restartMiro(obj=None):
     os.chdir(root)
     os.execv(sys.executable, args)
 
-    
-def isFlashInstalled():
+
+def _is_flash_installed():
     return os.path.exists(os.path.join(
             specialfolders.getSpecialFolder('System'),
             'Macromed', 'Flash', 'flashplayer.xpt'))
 
 
-def installFlash():
-    def httpSuccess(info):
+def _install_flash():
+    def http_success(info):
         fd, filename = tempfile.mkstemp(suffix='.exe')
         output = os.fdopen(fd, 'wb')
         output.write(info['body'])
@@ -79,9 +79,12 @@ def installFlash():
         try:
             os.unlink(filename)
         except OSError, e:
-            if e.errno != 13: # not Access Denied
+            # not Access Denied
+            if e.errno != 13:
                 raise
-        if code: # fail!
+
+        if code:
+            # FAIL!
             print 'error installing flash'
             config.set(prefs.FLASH_REQUEST_COUNT, 0)
         else:
@@ -94,12 +97,14 @@ def installFlash():
                 # fake it by calling explorer
                 os.system("explorer %s" % FLASH_EULA_URL)
 
+            # FIXME
             title = _("Restart %(appname)s?", {"appname": config.get(prefs.SHORT_APP_NAME)})
             description = _(
                 "To enable the Flash plugin, %(appname)s needs to be restarted.  "
-                "Click Yes to shut %(appname)s down, or No to do it later."
-            ) % {"miro": config.get(prefs.SHORT_APP_NAME)}
-            
+                "Click Yes to shut %(appname)s down, or No to do it later.",
+                {"miro": config.get(prefs.SHORT_APP_NAME)}
+            )
+
             dialog = dialogs.ChoiceDialog(title, description,
                                           dialogs.BUTTON_YES,
                                           dialogs.BUTTON_NO)
@@ -107,19 +112,19 @@ def installFlash():
             def callback(dialog):
                 if dialog.choice == dialogs.BUTTON_YES:
                     app.controller.shutdown()
-                    shutdown._handlers[:1] = [(restartMiro, (), {})]
-                    
+                    shutdown._handlers[:1] = [(_restart_miro, (), {})]
+
             dialog.run(callback)
 
-                
-    def httpFailure(error):
+    def http_failure(error):
         print 'error downloading flash', error
         config.set(prefs.FLASH_REQUEST_COUNT, 0)
-    httpclient.grabURL(FLASH_INSTALL_URL, httpSuccess, httpFailure)
 
-def checkFlashInstall():
+    httpclient.grabURL(FLASH_INSTALL_URL, http_success, http_failure)
+
+def check_flash_install():
     request_count = config.get(prefs.FLASH_REQUEST_COUNT)
-    if isFlashInstalled() or request_count > 0:
+    if _is_flash_installed() or request_count > 0:
         return
 
     title = _("Install Flash?")
@@ -132,12 +137,12 @@ def checkFlashInstall():
                                        dialogs.BUTTON_YES,
                                        dialogs.BUTTON_NOT_NOW,
                                        dialogs.BUTTON_NO)
-    
+
     def callback(dialog):
         if dialog.choice is None or dialog.choice == dialogs.BUTTON_NOT_NOW:
             return
         if dialog.choice == dialogs.BUTTON_YES:
-            installFlash()
+            _install_flash()
         else:
             config.set(prefs.FLASH_REQUEST_COUNT, 1)
 
