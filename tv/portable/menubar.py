@@ -229,7 +229,7 @@ ChannelItems = [
     MenuItem(_("E_xport Channels (OPML)..."), "ExportChannels", ()),
     Separator(),
     MenuItem(_("_Send this channel to a friend"), "MailChannel", (), enabled=False),
-    MenuItem(_("Copy Channel _Link"), "CopyChannelURL", (), enabled=False),
+    MenuItem(_("Copy Channel URL"), "CopyChannelURL", (), enabled=False),
 ]
 
 PlaylistItems = [
