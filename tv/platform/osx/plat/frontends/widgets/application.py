@@ -31,6 +31,7 @@ import re
 import sys
 import struct
 import logging
+import urlparse
 import traceback
 
 from objc import YES, NO, nil, signature
@@ -284,14 +285,12 @@ class AppController(NSObject):
             components = urlparse.urlparse(url)
             path = components[2]
             if filetypes.is_video_filename(path):
-                command = [lambda:app.htmlapp.newDownload(url), "Open HTTP Movie"]
+                messages.DownloadURL(url).send_to_backend()
             elif filetypes.is_audio_filename(path):
-                command = [lambda:app.htmlapp.newDownload(url), "Open HTTP Audio"]
+                messages.DownloadURL(url).send_to_backend()
             else:
-                command = [lambda:app.htmlapp.addAndSelectFeed(url), "Open HTTP URL"]
+                messages.NewChannel(url).send_to_backend()
         elif url.startswith('miro:'):
-            command = [lambda:singleclick.add_subscription_url('miro:', 'application/x-miro', url), "Open Miro URL"]
+            eventloop.addIdle(lambda:singleclick.add_subscription_url('miro:', 'application/x-miro', url), "Open Miro URL")
         elif url.startswith('democracy:'):
-            command = [lambda:singleclick.add_subscription_url('democracy:', 'application/x-democracy', url), "Open Democracy URL"]
-
-        eventloop.addIdle(*command)
+            eventloop.addIdle(lambda:singleclick.add_subscription_url('democracy:', 'application/x-democracy', url), "Open Democracy URL")
