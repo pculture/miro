@@ -204,7 +204,10 @@ class MiroTreeView(gtk.TreeView):
     def set_drag_dest_at_bottom(self, value):
         if value != self.drag_dest_at_bottom:
             self.drag_dest_at_bottom = value
-            x1, x2, y = self.bottom_drag_dest_coords()
+            ret = self.bottom_drag_dest_coords()
+            if not ret:
+                return
+            x1, x2, y = ret
             area = gtk.gdk.Rectangle(x1-1, y-1, x2-x1+2,2)
             self.window.invalidate_rect(area, True)
 
@@ -257,6 +260,8 @@ class MiroTreeView(gtk.TreeView):
 
     def last_path(self):
         model = self.get_model()
+        if model.iter_n_children(None) == 0:
+            return None
         last = model.iter_nth_child(None, model.iter_n_children(None) - 1)
         if last is None:
             return None
