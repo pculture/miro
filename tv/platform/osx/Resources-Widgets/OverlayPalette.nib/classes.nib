@@ -23,6 +23,8 @@
 		<dict>
 			<key>ACTIONS</key>
 			<dict>
+				<key>addToLibrary</key>
+				<string>id</string>
 				<key>expireNow</key>
 				<string>id</string>
 				<key>fastBackward</key>
@@ -52,6 +54,8 @@
 			<string>ObjC</string>
 			<key>OUTLETS</key>
 			<dict>
+				<key>addToLibButton</key>
+				<string>id</string>
 				<key>deleteButton</key>
 				<string>id</string>
 				<key>feedLabel</key>

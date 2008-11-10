@@ -69,6 +69,7 @@ class OverlayPalette (NSWindowController):
     shareMenu           = IBOutlet('shareMenu')
     keepButton          = IBOutlet('keepButton')
     deleteButton        = IBOutlet('deleteButton')
+    addToLibButton      = IBOutlet('addToLibButton')
     fsButton            = IBOutlet('fsButton')
     
     playbackControls    = IBOutlet('playbackControls')
@@ -118,6 +119,9 @@ class OverlayPalette (NSWindowController):
         self.deleteButton.setImage_(getOverlayButtonImage(self.deleteButton.bounds().size))
         self.deleteButton.setAlternateImage_(getOverlayButtonAlternateImage(self.deleteButton.bounds().size))
 
+        self.addToLibButton.setImage_(getOverlayButtonImage(self.addToLibButton.bounds().size))
+        self.addToLibButton.setAlternateImage_(getOverlayButtonAlternateImage(self.addToLibButton.bounds().size))
+
         self.seekForwardButton.setCell_(SkipSeekButtonCell.cellFromButtonCell_direction_delay_(self.seekForwardButton.cell(), 1, 0.0))
         self.seekForwardButton.cell().setAllowsSkipping(False)
         self.seekBackwardButton.setCell_(SkipSeekButtonCell.cellFromButtonCell_direction_delay_(self.seekBackwardButton.cell(), -1, 0.0))
@@ -146,6 +150,7 @@ class OverlayPalette (NSWindowController):
             self.feedLabel.setStringValue_("")
         self.keepButton.setEnabled_(item_info.can_be_saved)
         self.shareButton.setEnabled_(item_info.has_sharable_url)
+        self.addToLibButton.setHidden_(not item_info.is_external)
         self.adjustContent(video_window, False)
         self.update_(nil)
 
@@ -284,6 +289,9 @@ class OverlayPalette (NSWindowController):
     def share_(self, sender):
         event = NSApplication.sharedApplication().currentEvent()
         NSMenu.popUpContextMenu_withEvent_forView_(self.shareMenu, event, sender)
+    
+    def addToLibrary(self, sender):
+        messages.AddItemToLibrary(self.item_info.id).send_to_backend()
     
     def handleShareItem_(self, sender):
         pass
