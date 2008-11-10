@@ -28,7 +28,6 @@
 
 """searchentry.py -- Search entry text box.
 """
-
 import gobject
 import gtk
 
@@ -160,11 +159,9 @@ class VideoSearchTextEntry(SearchTextEntry):
         self.wrapped_widget_connect('key-release-event', self.on_key_release)
 
     def on_key_release(self, widget, event):
-        # FIXME - not sure if there's a better way to test for Return or not.
-        if gtk.gdk.keyval_name(event.keyval) == 'Return':
+        if gtk.gdk.keyval_name(event.keyval) in ('Return', 'KP_Enter'):
             self.emit('validate')
 
-    # TODO: implement the inline engines popup menu
     def selected_engine(self):
         return self._widget.selected_engine()
 
