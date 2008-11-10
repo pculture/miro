@@ -40,6 +40,22 @@ from miro.frontends.widgets import statictabs
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
 
+
+def send_new_order():
+    def append_items(sequence, type):
+        for row in sequence:
+            info = row[0]
+            message.append(info, type)
+            for child in row.iterchildren():
+                message.append_child(info.id, child[0])
+            
+    message = messages.TabsReordered()
+    append_items(app.tab_list_manager.feed_list.view.model, u'feed')
+    append_items(app.tab_list_manager.audio_feed_list.view.model, u'audio-feed')
+    append_items(app.tab_list_manager.playlist_list.view.model, u'playlist')
+    message.send_to_backend()
+
+
 class TabListView(widgetset.TableView):
     def __init__(self, renderer):
         widgetset.TableView.__init__(self, 
@@ -252,10 +268,9 @@ class TabListDropHandler(object):
             parent = model.parent_iter(iter)
             if parent is None or dest_tablist.view.is_row_expanded(parent):
                 dest_tablist.view.select(iter)
-        if source_tablist != dest_tablist:
-            source_tablist.send_new_order()
-            source_tablist.doing_change = False
-        dest_tablist.send_new_order()
+
+        send_new_order()
+        source_tablist.doing_change = False
         dest_tablist.doing_change = False
         return True
 
@@ -263,9 +278,33 @@ class FeedListDropHandler(TabListDropHandler):
     item_type = 'feed'
     folder_type = 'feed-with-folder'
 
+    def allowed_types(self):
+        return (self.item_type, self.folder_type,
+                'audio-feed', 'audio-feed-with-folder')
+
 class FeedListDragHandler(TabListDragHandler):
     item_type = 'feed'
     folder_type = 'feed-with-folder'
+
+    def allowed_types(self):
+        return (self.item_type, self.folder_type,
+                'audio-feed', 'audio-feed-with-folder')
+
+class AudioFeedListDropHandler(TabListDropHandler):
+    item_type = 'audio-feed'
+    folder_type = 'feed-with-folder'
+
+    def allowed_types(self):
+        return (self.item_type, self.folder_type,
+                'feed', 'feed-with-folder')
+
+class AudioFeedListDragHandler(TabListDragHandler):
+    item_type = 'audio-feed'
+    folder_type = 'feed-with-folder'
+
+    def allowed_types(self):
+        return (self.item_type, self.folder_type,
+                'feed', 'feed-with-folder')
 
 class PlaylistListDropHandler(TabListDropHandler):
     item_type = 'playlist'
@@ -415,15 +454,6 @@ class TabList(signals.SignalEmitter):
             child_iter = self.view.model.next_iter(child_iter)
         return count
 
-    def send_new_order(self):
-        message = messages.TabsReordered(self.type)
-        for row in self.view.model:
-            info = row[0]
-            message.append(info)
-            for child in row.iterchildren():
-                message.append_child(info.id, child[0])
-        message.send_to_backend()
-
 class SiteList(TabList):
     type = 'site'
 
@@ -500,6 +530,11 @@ class FeedList(NestedTabList):
         ]
 
 class AudioFeedList(FeedList):
+    def __init__(self):
+        TabList.__init__(self)
+        self.view.set_drag_source(AudioFeedListDragHandler())
+        self.view.set_drag_dest(AudioFeedListDropHandler(self))
+
     type = 'audio-feed'
 
 class PlaylistList(NestedTabList):

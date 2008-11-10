@@ -544,18 +544,22 @@ class TabsReordered(BackendMessage):
     in.
 
     Attributes:
-    type -- 'playlist' or feed'
-    toplevels -- the list of ChannelInfo objects without parents
+
+    toplevels -- a dictionary of {'type': [channelinfo1, channelinfo2]},
+        where 'channelinfo' is a ChannelInfo object without parents
+
     folder_children -- dict mapping channel folder ids to a list of
         ChannelInfo objects for their children
     """
-    def __init__(self, type):
-        self.type = type
-        self.toplevels = []
+    def __init__(self):
+        self.toplevels = {
+            u'feed': [],
+            u'audio-feed': [],
+            u'playlist': []}
         self.folder_children = {}
 
-    def append(self, info):
-        self.toplevels.append(info)
+    def append(self, info, type):
+        self.toplevels[type].append(info)
         if info.is_folder:
             self.folder_children[info.id] = []
 

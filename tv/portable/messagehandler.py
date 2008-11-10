@@ -623,34 +623,60 @@ class BackendMessageHandler(messages.MessageHandler):
         site.remove()
 
     def handle_tabs_reordered(self, message):
-        folder_view = self.folder_view_for_type(message.type)
-        if message.type == 'feed':
-            item_view = views.videoVisibleFeeds
-            tab_order = getSingletonDDBObject(views.channelTabOrder)
-        elif message.type == 'audio-feed':
-            item_view = views.audioVisibleFeeds
-            tab_order = getSingletonDDBObject(views.audioChannelTabOrder)
-        elif message.type == 'playlist':
-            item_view = views.playlists
-            tab_order = getSingletonDDBObject(views.playlistTabOrder)
-        else:
-            raise ValueError("Unknown Type: %s" % message.type)
+        video_order = getSingletonDDBObject(views.channelTabOrder)
+        audio_order = getSingletonDDBObject(views.audioChannelTabOrder)
+        playlist_order = getSingletonDDBObject(views.playlistTabOrder)
 
-        order = []
-        for info in message.toplevels:
-            order.append(info.id)
-            if info.is_folder:
-                folder = folder_view.getObjectByID(info.id)
-                for child_info in message.folder_children[info.id]:
-                    child_id = child_info.id
-                    order.append(child_id)
-                    feed = item_view.getObjectByID(child_id)
-                    feed.setFolder(folder)
+        # make sure all the items are in the right places
+        for info in message.toplevels['feed']:
+            item = views.allTabs.getObjectByID(info.id)
+            if item.type != u'feed' or item.obj.section != u'video':
+                item.type = u'feed'
+                item.obj.section = u'video'
+                item.signalChange()
+                item.obj.signalChange()
+                audio_order.remove_tab(info.id)
+                video_order.append_tab(info.id)
+
+        for info in message.toplevels['audio-feed']:
+            item = views.allTabs.getObjectByID(info.id)
+            if item.type != u'audio-feed' or item.obj.section != u'audio':
+                item.type = u'audio-feed'
+                item.obj.section = u'audio'
+                item.signalChange()
+                item.obj.signalChange()
+                video_order.remove_tab(info.id)
+
+        for info_type, info_list in message.toplevels.iteritems():
+            folder_view = self.folder_view_for_type(info_type)
+
+            if info_type == 'feed':
+                item_view = views.visibleFeeds
+                tab_order = video_order
+            elif info_type == 'audio-feed':
+                item_view = views.visibleFeeds
+                tab_order = audio_order
+            elif info_type == 'playlist':
+                item_view = views.playlists
+                tab_order = playlist_order
             else:
-                feed = item_view.getObjectByID(info.id)
-                feed.setFolder(None)
-        tab_order.reorder(order)
-        tab_order.signalChange()
+                raise ValueError("Unknown Type: %s" % message.type)
+
+            order = []
+            for info in info_list:
+                order.append(info.id)
+                if info.is_folder:
+                    folder = folder_view.getObjectByID(info.id)
+                    for child_info in message.folder_children[info.id]:
+                        child_id = child_info.id
+                        order.append(child_id)
+                        feed = item_view.getObjectByID(child_id)
+                        feed.setFolder(folder)
+                else:
+                    feed = item_view.getObjectByID(info.id)
+                    feed.setFolder(None)
+            tab_order.reorder(order)
+            tab_order.signalChange()
 
     def handle_playlist_reordered(self, message):
         try:

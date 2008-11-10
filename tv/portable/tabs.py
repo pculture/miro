@@ -247,3 +247,13 @@ class TabOrder(database.DDBObject):
         while next is not None and next.getID() in id_list:
             next = view.getNext()
         self.moveTabs(next, id_list)
+
+    def remove_tab(self, id):
+        if id in self.trackedTabs:
+            self.trackedTabs.removeID(id)
+        self.signalChange()
+
+    def append_tab(self, id):
+        if id not in self.trackedTabs:
+            self.trackedTabs.appendID(id)
+        self.signalChange()
