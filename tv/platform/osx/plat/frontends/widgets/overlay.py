@@ -34,6 +34,7 @@ from Foundation import *
 
 from miro import app
 from miro import messages
+from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import threads
 
 ###############################################################################
@@ -112,15 +113,19 @@ class OverlayPalette (NSWindowController):
     def awakeFromNib(self):
         self.shareButton.setImage_(getOverlayButtonImage(self.shareButton.bounds().size))
         self.shareButton.setAlternateImage_(getOverlayButtonAlternateImage(self.shareButton.bounds().size))
+        self.shareButton.setTitle_(_("Share"))
 
         self.keepButton.setImage_(getOverlayButtonImage(self.keepButton.bounds().size))
         self.keepButton.setAlternateImage_(getOverlayButtonAlternateImage(self.keepButton.bounds().size))
+        self.keepButton.setTitle_(_("Keep"))
 
         self.deleteButton.setImage_(getOverlayButtonImage(self.deleteButton.bounds().size))
         self.deleteButton.setAlternateImage_(getOverlayButtonAlternateImage(self.deleteButton.bounds().size))
+        self.deleteButton.setTitle_(_("Delete"))
 
         self.addToLibButton.setImage_(getOverlayButtonImage(self.addToLibButton.bounds().size))
         self.addToLibButton.setAlternateImage_(getOverlayButtonAlternateImage(self.addToLibButton.bounds().size))
+        self.addToLibButton.setTitle_(_("Add to Library"))
 
         self.seekForwardButton.setCell_(SkipSeekButtonCell.cellFromButtonCell_direction_delay_(self.seekForwardButton.cell(), 1, 0.0))
         self.seekForwardButton.cell().setAllowsSkipping(False)
