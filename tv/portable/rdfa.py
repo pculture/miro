@@ -15,6 +15,7 @@ Licensed to the public under the GNU GPL v2.
 
 """
 
+import logging
 import sys, re, urllib, urlparse, cStringIO
 from xml.dom import pulldom
 
@@ -230,7 +231,7 @@ class Sink(object):
     self.result += "%s <%s> %s .\n" % (s, p, o)
 
 def parseRDFa(s, base=None, sink=None): 
-  print 'sink is ', sink
+  logging.debug('sink is %s' % sink)
 
   sink = sink or Sink()
   parser = RDFaParser(sink, base)

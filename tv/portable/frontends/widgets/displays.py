@@ -29,6 +29,7 @@
 """displays.py -- Handle switching the content on the right hand side of the
 app.
 """
+import logging
 
 from miro import app
 from miro import messages
@@ -130,7 +131,7 @@ class DisplayManager(object):
                 selected_tabs == self.selected_tabs and 
                 len(self.display_stack) > 0 and
                 isinstance(self.display_stack[-1], TabDisplay)):
-            print 'not reselecting'
+            logging.debug('not reselecting')
             return
 
         self.selected_tab_list = selected_tab_list
