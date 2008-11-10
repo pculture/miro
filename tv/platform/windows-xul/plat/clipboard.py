@@ -28,37 +28,54 @@
 
 """clipboard.py.  Used to access the clipboard from python."""
 
+import logging
+
 from miro.util import toUni
-from ctypes import windll, c_char_p, create_string_buffer
+import win32con
+import ctypes
 CF_TEXT = 1
 
-OpenClipboard = windll.user32.OpenClipboard
-EmptyClipboard = windll.user32.EmptyClipboard
-GetClipboardData = windll.user32.GetClipboardData
-SetClipboardData = windll.user32.SetClipboardData
-CloseClipboard = windll.user32.CloseClipboard
-GlobalLock = windll.kernel32.GlobalLock
-GlobalUnlock = windll.kernel32.GlobalUnlock
+OpenClipboard = ctypes.windll.user32.OpenClipboard
+EmptyClipboard = ctypes.windll.user32.EmptyClipboard
+GetClipboardData = ctypes.windll.user32.GetClipboardData
+SetClipboardData = ctypes.windll.user32.SetClipboardData
+CloseClipboard = ctypes.windll.user32.CloseClipboard
+GlobalLock = ctypes.windll.kernel32.GlobalLock
+GlobalAlloc = ctypes.windll.kernel32.GlobalAlloc
+GlobalUnlock = ctypes.windll.kernel32.GlobalUnlock
+memcpy = ctypes.cdll.msvcrt.memcpy
 
 def get_text():
     text = None
-    if OpenClipboard(None):
+    if OpenClipboard(ctypes.c_int(0)):
         try:
             hClipMem = GetClipboardData(CF_TEXT)
             if hClipMem:
-                GlobalLock.restype = c_char_p
+                GlobalLock.restype = ctypes.c_char_p
                 text = GlobalLock(hClipMem)
                 GlobalUnlock(hClipMem)
         finally:
             CloseClipboard()
+    else:
+        logging.warning("OpenClipboard(0) call failed.")
+
     if text is not None:
         text = toUni(text)
     return text
 
 def set_text(text):
-    text_buffer = create_string_buffer(text)
+    buffer = ctypes.c_buffer(text)
+    bufferSize = ctypes.sizeof(buffer)
+    hGlobalMem = GlobalAlloc(win32con.GHND, bufferSize)
+    GlobalLock.restype = ctypes.c_void_p
+    lpGlobalMem = GlobalLock(hGlobalMem)
+    memcpy(lpGlobalMem, ctypes.addressof(buffer), bufferSize)
+    GlobalUnlock(hGlobalMem)
 
-    if OpenClipboard(None):
+    if OpenClipboard(ctypes.c_int(0)):
         EmptyClipboard()
-        SetClipboardData(CF_TEXT, text_buffer)
+        SetClipboardData(win32con.CF_TEXT, hGlobalMem)
         CloseClipboard()
+
+    else:
+        logging.warning("OpenClipboard(0) call failed.")
