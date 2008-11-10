@@ -668,20 +668,31 @@ class Item(DDBObject):
         # Try to get the thumbnail specific to the video enclosure
         videoEnclosure = self.getFirstVideoEnclosure()
         if videoEnclosure is not None:
-            try:
-                return videoEnclosure["thumbnail"]["url"].decode("ascii", "replace")
-            except KeyError:
-                pass
+            url = self.getElementThumbnail(videoEnclosure)
+            if url is not None:
+                return url
+
         # Try to get any enclosure thumbnail
         for enclosure in self.entry.enclosures:
-            try:
-                return enclosure["thumbnail"]["url"].decode('ascii', 'replace')
-            except KeyError:
-                pass
+            url = self.getElementThumbnail(enclosure)
+            if url is not None:
+                return url
 
         # Try to get the thumbnail for our entry
+        return self.getElementThumbnail(self.entry)
+
+    @returnsUnicode
+    def getElementThumbnail(self, element):
         try:
-            return self.entry["thumbnail"]["url"].decode('ascii', 'replace')
+            thumb = element["thumbnail"]
+        except KeyError:
+            return None
+        if isinstance(thumb, str):
+            return thumb
+        elif isinstance(thumb, unicode):
+            return thumb.decode('ascii', 'replace')
+        try:
+            return thumb["url"].decode('ascii', 'replace')
         except KeyError:
             return None
 
