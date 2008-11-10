@@ -378,6 +378,9 @@ class TableViewCommon(object):
         if wrapper is not None and wrapper.draws_selection:
             self.SuperClass.highlightSelectionInClipRect_(self, rect)
 
+    def canDragRowsWithIndexes_atPoint_(self, indexes, point):
+        return YES
+
     def draggingSourceOperationMaskForLocal_(self, local):
         drag_source = wrappermap.wrapper(self).drag_source
         if drag_source and local:
