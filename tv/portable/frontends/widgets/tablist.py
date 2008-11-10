@@ -120,14 +120,14 @@ class TabDnDReorder(object):
         else:
             self.drop_id = None
 
-    def reorder(self, model, parent, position, dragged_ids):
+    def reorder(self, source_model, dest_model, parent, position, dragged_ids):
         if position >= 0:
-            self.drop_row_iter = model.nth_child_iter(parent, position)
+            self.drop_row_iter = dest_model.nth_child_iter(parent, position)
         else:
             self.drop_row_iter = None
-        self.calc_drop_id(model)
-        self.remove_dragged_rows(model, dragged_ids)
-        return self.put_rows_back(model, parent)
+        self.calc_drop_id(dest_model)
+        self.remove_dragged_rows(source_model, dragged_ids)
+        return self.put_rows_back(dest_model, parent)
 
     def remove_row(self, model, iter, row):
         self.removed_rows.append(row)
@@ -210,29 +210,53 @@ class TabListDropHandler(object):
 
     def accept_drop(self, table_view, model, type, source_actions, parent,
             position, data):
-        self.tablist.doing_change = True
+        if (type == 'feed'
+                and self.tablist == app.tab_list_manager.audio_feed_list):
+            source_tablist = app.tab_list_manager.feed_list
+            dest_tablist = self.tablist
+        elif (type == 'audio-feed'
+                and self.tablist == app.tab_list_manager.feed_list):
+            source_tablist = app.tab_list_manager.audio_feed_list
+            dest_tablist = self.tablist
+        else:
+            source_tablist = dest_tablist = self.tablist
+
+        source_tablist.doing_change = dest_tablist.doing_change = True
         selected_rows = [model[iter][0].id for iter in \
                 table_view.get_selection()]
-        table_view.unselect_all()
+        source_tablist.view.unselect_all()
+        dest_tablist.view.unselect_all()
         dragged_ids = set([int(id) for id in data.split('-')])
         expanded_rows = [id for id in dragged_ids if \
-                table_view.is_row_expanded(self.tablist.iter_map[id])]
+                source_tablist.view.is_row_expanded(source_tablist.iter_map[id])]
         reorderer = TabDnDReorder()
         try:
-            new_iters = reorderer.reorder(model, parent, position,
-                    dragged_ids)
-            self.tablist.iter_map.update(new_iters)
+            new_iters = reorderer.reorder(
+                source_tablist.view.model, dest_tablist.view.model,
+                parent, position, dragged_ids)
+
+            # handle deletions for the source... delete the keys on
+            # what's returned from the source_tablist's iter_map
+            if source_tablist != dest_tablist:
+                for key in new_iters.keys():
+                    source_tablist.iter_map.pop(key)
+            dest_tablist.iter_map.update(new_iters)
         finally:
-            self.tablist.model_changed()
+            if source_tablist != dest_tablist:
+                source_tablist.model_changed()
+            dest_tablist.model_changed()
         for id in expanded_rows:
-            table_view.set_row_expanded(self.tablist.iter_map[id], True)
+            dest_tablist.view.set_row_expanded(dest_tablist.iter_map[id], True)
         for id in selected_rows:
-            iter = self.tablist.iter_map[id]
+            iter = dest_tablist.iter_map[id]
             parent = model.parent_iter(iter)
-            if parent is None or table_view.is_row_expanded(parent):
-                table_view.select(iter)
-        self.tablist.send_new_order()
-        self.tablist.doing_change = False
+            if parent is None or dest_tablist.view.is_row_expanded(parent):
+                dest_tablist.view.select(iter)
+        if source_tablist != dest_tablist:
+            source_tablist.send_new_order()
+            source_tablist.doing_change = False
+        dest_tablist.send_new_order()
+        dest_tablist.doing_change = False
         return True
 
 class FeedListDropHandler(TabListDropHandler):
