@@ -75,6 +75,16 @@ def _unpack_row_column(value):
     column = value & ((1 << 16) - 1)
     return row, column
 
+def _get_tableview_wrapper(tableview):
+    """Get a tableview wrapper, if we don't find one for the table view itself
+    it's most certainly because the table view is enclosed in a header view so
+    get the superview wrapper as a second try.
+    """
+    wrapper = wrappermap.wrapper(tableview)
+    if wrapper is None:
+        wrapper = wrappermap.wrapper(tableview.superview())
+    return wrapper
+
 class HotspotTracker(object):
     """Contains the info on the currently tracked hotspot.  See:
     https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView
@@ -148,8 +158,7 @@ class MiroTableCell(NSCell):
         return font.ascender() + abs(font.descender()) + font.leading()
 
     def highlightColorWithFrame_inView_(self, frame, view):
-        wrapper = wrappermap.wrapper(view)
-        if wrapper is not None and wrapper.draws_selection:
+        if _get_tableview_wrapper(view).draws_selection:
             return NSCell.highlightColorWithFrame_inView_(self, frame, view)
         else:
             return nil
@@ -166,9 +175,8 @@ class MiroTableImageCell(NSImageCell):
         return self.value_dict['image'].size().height
 
     def highlightColorWithFrame_inView_(self, frame, view):
-        wrapper = wrappermap.wrapper(view)
-        if wrapper is not None and wrapper.draws_selection:
-            return NSCell.highlightColorWithFrame_inView_(self, frame, view)
+        if _get_tableview_wrapper(view).draws_selection:
+            return NSImageCell.highlightColorWithFrame_inView_(self, frame, view)
         else:
             return nil
 
@@ -186,9 +194,8 @@ class MiroCheckboxCell(NSButtonCell):
         return self.cellSize().height
 
     def highlightColorWithFrame_inView_(self, frame, view):
-        wrapper = wrappermap.wrapper(view)
-        if wrapper is not None and wrapper.draws_selection:
-            return NSCell.highlightColorWithFrame_inView_(self, frame, view)
+        if _get_tableview_wrapper(view).draws_selection:
+            return NSButtonCell.highlightColorWithFrame_inView_(self, frame, view)
         else:
             return nil
 
@@ -210,7 +217,7 @@ class MiroCheckboxCell(NSButtonCell):
             column = tableview.columnAtPoint_(at)
             row = tableview.rowAtPoint_(at)
             if column != -1 and row != -1:
-                wrapper = wrappermap.wrapper(tableview)
+                wrapper = _get_tableview_wrapper(tableview)
                 renderer = wrapper.renderers[column]
                 iter = wrapper.model.iter_for_row(tableview, row)
                 renderer.emit('clicked', iter)
@@ -240,8 +247,7 @@ class CustomTableCell(NSCell):
         return self
 
     def highlightColorWithFrame_inView_(self, frame, view):
-        wrapper = wrappermap.wrapper(view)
-        if wrapper is not None and wrapper.draws_selection:
+        if _get_tableview_wrapper(view).draws_selection:
             return NSCell.highlightColorWithFrame_inView_(self, frame, view)
         else:
             return nil
@@ -374,15 +380,14 @@ class TableViewCommon(object):
         self.SuperClass.removeTableColumn(self, column)
 
     def highlightSelectionInClipRect_(self, rect):
-        wrapper = wrappermap.wrapper(self)
-        if wrapper is not None and wrapper.draws_selection:
+        if _get_tableview_wrapper(self).draws_selection:
             self.SuperClass.highlightSelectionInClipRect_(self, rect)
 
     def canDragRowsWithIndexes_atPoint_(self, indexes, point):
         return YES
 
     def draggingSourceOperationMaskForLocal_(self, local):
-        drag_source = wrappermap.wrapper(self).drag_source
+        drag_source = _get_tableview_wrapper(self).drag_source
         if drag_source and local:
             return drag_source.allowed_actions()
         return NSDragOperationNone
@@ -451,7 +456,7 @@ class TableViewCommon(object):
         if not selection.containsIndex_(row):
             index_set = NSIndexSet.alloc().initWithIndex_(row)
             self.selectRowIndexes_byExtendingSelection_(index_set, NO)
-        wrapper = wrappermap.wrapper(self)
+        wrapper = _get_tableview_wrapper(self)
         if wrapper.context_menu_callback is not None:
             menu_items = wrapper.context_menu_callback(wrapper)
             menu = osxmenus.make_context_menu(menu_items)
@@ -471,7 +476,7 @@ class TableViewCommon(object):
             self.hotspot_tracker.update_position(point)
             self.hotspot_tracker.update_hit()
             if self.hotspot_tracker.hit:
-                wrappermap.wrapper(self).send_hotspot_clicked()
+                _get_tableview_wrapper(self).send_hotspot_clicked()
             self.hotspot_tracker.redraw_cell()
             self.hotspot_tracker = None
         else:
