@@ -518,7 +518,6 @@ class FeedList(NestedTabList):
         return [
             (_('Update Channel Now'), app.widgetapp.update_selected_channels),
             (_('Rename Channel'), app.widgetapp.rename_something),
-            (_('Toggle Audio/Video Section'), app.widgetapp.toggle_section),
             (_('Copy URL to clipboard'), app.widgetapp.copy_channel_url),
             (_('Remove'), app.widgetapp.remove_current_feed)
         ]

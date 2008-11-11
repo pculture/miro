@@ -1146,21 +1146,3 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_report_crash(self, message):
         app.controller.sendBugReport(message.report, message.text, message.send_report)
-
-    def handle_toggle_channel_section(self, message):
-        view = views.visibleFeeds
-        try:
-            channel = view.getObjectByID(message.id)
-        except database.ObjectNotFoundError:
-            logging.warn("channel not found: %s" % message.id)
-        else:
-            channel.confirmDBThread()
-            if channel.section == u'video':
-                channel.section = u'audio'
-                channel.signalChange()
-            elif channel.section == u'audio':
-                channel.section = u'video'
-                channel.signalChange()
-            else:
-                logging.warn(
-                    "Channel %s has unknown section type, can't toggle" % id)

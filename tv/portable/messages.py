@@ -593,16 +593,6 @@ class ReportCrash(BackendMessage):
         self.text = text
         self.send_report = send_report
 
-class ToggleChannelSection(BackendMessage):
-    """
-    Toggles the section between normal feeds section and audio feeds
-    section.  Temporary... should be replaced by actual drag and drop
-    support.
-    """
-    def __init__(self, id, section):
-        self.id = id
-        self.section = section
-
 # Frontend Messages
 
 class StartupSuccess(FrontendMessage):
