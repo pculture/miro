@@ -635,8 +635,6 @@ class BackendMessageHandler(messages.MessageHandler):
                 item.obj.section = u'video'
                 item.signalChange()
                 item.obj.signalChange()
-                audio_order.remove_tab(info.id)
-                video_order.append_tab(info.id)
 
         for info in message.toplevels['audio-feed']:
             item = views.allTabs.getObjectByID(info.id)
@@ -645,7 +643,6 @@ class BackendMessageHandler(messages.MessageHandler):
                 item.obj.section = u'audio'
                 item.signalChange()
                 item.obj.signalChange()
-                video_order.remove_tab(info.id)
 
         for info_type, info_list in message.toplevels.iteritems():
             folder_view = self.folder_view_for_type(info_type)
