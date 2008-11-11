@@ -67,7 +67,8 @@ class Exporter(object):
         self.io.write(u'\t<body>\n')
     
         tabOrder = util.getSingletonDDBObject(views.channelTabOrder)
-        for tab in tabOrder.getAllTabs():
+        audioTabOrder = util.getSingletonDDBObject(views.audioChannelTabOrder)
+        for tab in tabOrder.getAllTabs() + audioTabOrder.getAllTabs():
             if tab.isChannelFolder():
                 self._open_folder_entry(tab.obj)
             elif tab.isFeed():
@@ -91,7 +92,9 @@ class Exporter(object):
         if self.currentFolder is not None:
             self._close_folder_entry()
         self.currentFolder = folder
-        self.io.write(u'\t\t<outline text=%s>\n' % saxutils.quoteattr(folder.get_title()))
+        self.io.write(u'\t\t<outline text=%s section=%s>\n' % (
+                saxutils.quoteattr(folder.get_title()),
+                saxutils.quoteattr(folder.section)))
 
     def _close_folder_entry(self):
         self.io.write(u'\t\t</outline>\n')
@@ -125,7 +128,12 @@ class Exporter(object):
             feedtype = u'type="mirofeed"'
             extraArgs = u''
 
-        self.io.write(u'%s<outline %s text=%s xmlUrl=%s %s/>\n' % (spacer, feedtype, saxutils.quoteattr(thefeed.get_title()), saxutils.quoteattr(thefeed.getURL()), extraArgs))
+        self.io.write(
+            u'%s<outline %s text=%s xmlUrl=%s miro_section=%s %s/>\n' % (
+                    spacer, feedtype, saxutils.quoteattr(thefeed.get_title()),
+                    saxutils.quoteattr(thefeed.getURL()),
+                    saxutils.quoteattr(thefeed.section),
+                    extraArgs))
 
     def _write_site_entry(self, site):
         quoted_url = saxutils.quoteattr(site.url)
@@ -214,7 +222,14 @@ class Importer(object):
         url = entry.getAttribute("xmlUrl")
         f = feed.get_feed_by_url(url)
         if f is None:
-            f = feed.Feed(url, False)
+            if self.currentFolder:
+                section = self.currentFolder.section
+            else:
+                section = unicode(entry.getAttribute('miro_section'))
+                if section not in (u'audio', u'video'):
+                    section = u'video'
+
+            f = feed.Feed(url, False, section)
             title = entry.getAttribute("text")
             if title is not None and title != '':
                 f.setTitle(title)
@@ -243,5 +258,8 @@ class Importer(object):
     
     def _handle_folder_entry(self, entry):
         title = entry.getAttribute("text")
-        self.currentFolder = folder.ChannelFolder(title)
+        section = unicode(entry.getAttribute("miro_section"))
+        if section not in (u'audio', u'video'):
+            section = u'video'
+        self.currentFolder = folder.ChannelFolder(title, section)
         self._walk_outline(entry)
