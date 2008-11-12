@@ -64,6 +64,7 @@ class ViewTracker(object):
     def __init__(self):
         self.add_callbacks()
         self.reset_changes()
+        self.ignore_changes = False
 
     def reset_changes(self):
         self.changed = set()
@@ -110,6 +111,8 @@ class ViewTracker(object):
             view.remove_change_callback(self.on_object_changed)
 
     def on_object_added(self, obj, id):
+        if self.ignore_changes:
+            return
         if obj in self.removed:
             # object was already removed, we need to send that message out
             # before we send the add message.
@@ -118,10 +121,14 @@ class ViewTracker(object):
         self.schedule_send_messages()
 
     def on_object_removed(self, obj, id):
+        if self.ignore_changes:
+            return
         self.removed.add(obj)
         self.schedule_send_messages()
 
     def on_object_changed(self, obj, id):
+        if self.ignore_changes:
+            return
         self.changed.add(obj)
         self.schedule_send_messages()
 
@@ -623,6 +630,22 @@ class BackendMessageHandler(messages.MessageHandler):
         site.remove()
 
     def handle_tabs_reordered(self, message):
+        # The frontend already has the channels in the correct order and with
+        # the correct parents.  Don't send it updates based on the backend
+        # re-aranging things
+        if self.channel_tracker:
+            self.channel_tracker.ignore_changes = True
+        if self.audio_channel_tracker:
+            self.audio_channel_tracker.ignore_changes = True
+        try:
+            self._do_handle_tabs_reordered(message)
+        finally:
+            if self.channel_tracker:
+                self.channel_tracker.ignore_changes = False
+            if self.audio_channel_tracker:
+                self.audio_channel_tracker.ignore_changes = False
+
+    def _do_handle_tabs_reordered(self, message):
         video_order = getSingletonDDBObject(views.channelTabOrder)
         audio_order = getSingletonDDBObject(views.audioChannelTabOrder)
         playlist_order = getSingletonDDBObject(views.playlistTabOrder)
