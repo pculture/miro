@@ -40,7 +40,18 @@ from miro import app
 libvlc = ctypes.cdll.libvlc
 # set up the function signatures
 
-libvlc_MediaPlayerEndReached = 14
+libvlc_MediaStateChanged = 5
+
+( libvlc_NothingSpecial,
+        libvlc_Opening,
+        libvlc_Buffering,
+        libvlc_Playing,
+        libvlc_Paused,
+        libvlc_Stopped,
+        libvlc_Forward,
+        libvlc_Backward,
+        libvlc_Ended,
+        libvlc_Error ) = range(10)
 
 class VLCError(Exception):
     pass
@@ -98,27 +109,30 @@ class VLCRenderer:
         self.media_player = libvlc.libvlc_media_player_new(self.vlc,
                 self.exc.ref())
         self.exc.check()
-        event_manager = libvlc.libvlc_media_player_event_manager(
-                self.media_player, self.exc.ref())
-        self.exc.check()
         self._callback_ref = VLC_EVENT_CALLBACK(self.event_callback)
-        libvlc.libvlc_event_attach(event_manager,
-                libvlc_MediaPlayerEndReached,
-                self._callback_ref, None, self.exc.ref())
-        self.exc.check()
         self.play_from_time = None
         self.started_playing = STOPPED
         self._duration = None
         self._rate = 1.0
+        self.media_playing = None
 
     def event_callback(self, p_event, p_user_data):
-        gobject.idle_add(self.handle_event, p_event[0])
+        event = p_event[0]
+        # Copy the values from event, the memory might be freed by the time
+        # handle_event gets called.
+        obj = event.p_obj
+        type = event.type
+        arg1 = event.arg1
+        arg2 = event.arg2
+        gobject.idle_add(self.handle_event, obj, type, arg1, arg2)
 
-    def handle_event(self, event):
-        if event.type == libvlc_MediaPlayerEndReached:
-            app.playback_manager.on_movie_finished()
+    def handle_event(self, obj, type, arg1, arg2):
+        if type == libvlc_MediaStateChanged:
+            if arg1 == libvlc_Ended:
+                if obj == self.media_playing:
+                    app.playback_manager.on_movie_finished()
         else:
-            logging.warn("Unknown VLC event type: %s", event.type)
+            logging.warn("Unknown VLC event type: %s", type)
 
     def set_widget(self, widget):
         hwnd = widget.persistent_window.handle
@@ -144,12 +158,19 @@ class VLCRenderer:
         if media is None:
             raise AssertionError("libvlc_media_new returned NULL for %s"
                     % filename)
+        event_manager = libvlc.libvlc_media_event_manager(media, 
+                self.exc.ref())
+        self.exc.check()
+        libvlc.libvlc_event_attach(event_manager, libvlc_MediaStateChanged,
+                self._callback_ref, None, self.exc.ref())
+        self.exc.check()
         try:
             libvlc.libvlc_media_player_set_media(self.media_player, media,
                     self.exc.ref())
             self.exc.check()
         finally:
             libvlc.libvlc_media_release(media)
+        self.media_playing = media
 
     def play(self):
         libvlc.libvlc_media_player_play(self.media_player, self.exc.ref())
@@ -165,6 +186,7 @@ class VLCRenderer:
         self.started_playing = PAUSED
 
     def stop(self):
+        self.media_playing = None
         libvlc.libvlc_media_player_stop(self.media_player, self.exc.ref())
         self.exc.check()
         self.started_playing = STOPPED
