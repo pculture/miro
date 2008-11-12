@@ -6,6 +6,7 @@ from miro import eventloop
 from miro import app
 from miro import downloader
 from miro import views
+from miro import indexes
 from miro import util
 from miro import databaseupgrade
 from miro import signals
@@ -55,10 +56,17 @@ class DummyVideoDisplay:
     def fillMovieData (self, filename, movie_data, callback):
         pass
 
+class DummyGlobalFeed:
+    def connect(self, foo1, foo2):
+        pass
+
 class DummyController:
     def __init__(self):
         self.frame = DummyMainFrame()
         self.videoDisplay = DummyVideoDisplay()
+
+    def get_global_feed(self, url):
+        return DummyGlobalFeed()
 
 class MiroTestCase(unittest.TestCase):
     def setUp(self):
