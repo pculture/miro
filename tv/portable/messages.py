@@ -791,7 +791,7 @@ class ItemInfo(object):
         self.can_be_saved = item.show_save_button()
         self.pending_manual_dl = item.is_pending_manual_download()
         self.pending_auto_dl = item.is_pending_auto_download()
-        if not item.keep:
+        if not item.keep and not item.is_external():
             self.expiration_date = item.getExpirationTime()
         else:
             self.expiration_date = None

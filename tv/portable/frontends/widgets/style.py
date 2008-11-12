@@ -476,7 +476,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         if not self.data.video_watched:
             emblem_text = layout.textbox(_('Unwatched'))
             emblem_color = UNWATCHED_COLOR
-        elif self.data.expiration_date and not self.data.is_external:
+        elif self.data.expiration_date:
             text = displaytext.expiration_date(self.data.expiration_date)
             emblem_text = layout.textbox(text)
             emblem_color = EXPIRING_COLOR
