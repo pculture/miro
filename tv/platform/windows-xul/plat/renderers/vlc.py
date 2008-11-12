@@ -40,25 +40,6 @@ from miro import app
 libvlc = ctypes.cdll.libvlc
 # set up the function signatures
 
-# These next three return libvlc_instance_t, libvlc_media_player_t and
-# libvlc_media_t pointers, but we can fake it with void pointers
-libvlc.libvlc_new.restype = ctypes.c_void_p
-libvlc.libvlc_media_player_new.restype = ctypes.c_void_p
-libvlc.libvlc_media_new.restype = ctypes.c_void_p
-libvlc.libvlc_media_player_get_time.restype = ctypes.c_longlong
-libvlc.libvlc_media_player_get_length.restype = ctypes.c_longlong
-
-libvlc.libvlc_audio_set_volume.restype = None
-libvlc.libvlc_exception_init.restype = None
-libvlc.libvlc_exception_clear.restype = None
-libvlc.libvlc_media_player_set_drawable.restype = None
-libvlc.libvlc_media_player_stop.restype = None
-libvlc.libvlc_media_player_set_time.restype = None
-libvlc.libvlc_media_player_pause.restype = None
-libvlc.libvlc_media_player_play.restype = None
-libvlc.libvlc_media_release.restype = None
-libvlc.libvlc_media_player_set_media.restype = None
-
 libvlc_MediaPlayerEndReached = 14
 
 class VLCError(Exception):
