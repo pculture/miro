@@ -31,9 +31,11 @@
 import logging
 
 from miro.util import toUni
-import win32con
 import ctypes
 CF_TEXT = 1
+GMEM_MOVEABLE = 0x2
+GMEM_ZEROINIT = 0x40
+GHND = (GMEM_MOVEABLE | GMEM_ZEROINIT)
 
 OpenClipboard = ctypes.windll.user32.OpenClipboard
 EmptyClipboard = ctypes.windll.user32.EmptyClipboard
@@ -66,7 +68,7 @@ def get_text():
 def set_text(text):
     buffer = ctypes.c_buffer(text)
     bufferSize = ctypes.sizeof(buffer)
-    hGlobalMem = GlobalAlloc(win32con.GHND, bufferSize)
+    hGlobalMem = GlobalAlloc(GHND, bufferSize)
     GlobalLock.restype = ctypes.c_void_p
     lpGlobalMem = GlobalLock(hGlobalMem)
     memcpy(lpGlobalMem, ctypes.addressof(buffer), bufferSize)
@@ -74,7 +76,7 @@ def set_text(text):
 
     if OpenClipboard(ctypes.c_int(0)):
         EmptyClipboard()
-        SetClipboardData(win32con.CF_TEXT, hGlobalMem)
+        SetClipboardData(CF_TEXT, hGlobalMem)
         CloseClipboard()
 
     else:
