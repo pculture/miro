@@ -140,34 +140,11 @@ _Xine* xineCreate(xine_event_listener_cb_t event_callback,
     }
     xine->viz = NULL;
 
-    /* Create a second xine instance.  This one will be only used for testing
-     * if we can play a file
-     */
-    xine->tester.xine = xine_new();
-    xine_init(xine->tester.xine);
-    xine->tester.videoPort = xine_open_video_driver(xine->tester.xine, "auto", 
-            XINE_VISUAL_TYPE_NONE, NULL);
-    xine->tester.audioPort = xine_open_audio_driver(xine->tester.xine, "none", NULL);
-    xine->tester.stream = xine_stream_new(xine->tester.xine,
-            xine->tester.audioPort, xine->tester.videoPort);
-
-    /*
-    video_plugins = xine_list_audio_output_plugins (xine->tester.xine) ;
-    for (i = 0; video_plugins[i]; i++) {
-      printf ("%s\n", video_plugins[i]);
-    }
-    */
-
     return xine;
 }
 
 void xineDestroy(_Xine* xine)
 {
-    xine_dispose(xine->tester.stream);
-    xine_close_audio_driver(xine->tester.xine, xine->tester.audioPort);  
-    xine_close_video_driver(xine->tester.xine, xine->tester.videoPort);  
-    xine_exit(xine->tester.xine);
-
     if(xine->attached) {
         xineDetach(xine);
     }
@@ -361,33 +338,19 @@ void xineSetArea(_Xine* xine, int xpos, int ypos, int width, int height)
     g_mutex_unlock(xine->frameInfo.lock);
 }
 
-int xineCanPlayFile(_Xine* xine, const char* filename)
-{
-    /* Implementation note: The tester stream is not quite the same as the
-     * xine stream that we use to play the files.  In particular, it has a NULL
-     * visual, instead of visual that points to the window we will draw in.
-     * This doesn't seem to produce bad results, however.
-     */
-
-    int rv;
-    rv = xine_open(xine->tester.stream, filename);
-    if(rv) {
-        xine_close(xine->tester.stream);
-    }
-    return rv;
-}
-
-void xineSelectFile(_Xine* xine, const char* filename)
+int xineSelectFile(_Xine* xine, const char* filename)
 {
     if(!xine->attached) return;
     xine_close(xine->stream);
-    if (!xine_open(xine->stream, filename))
-        printf("Unable to open file '%s'\n", filename);
+    if (!xine_open(xine->stream, filename)) {
+        return 0;
+    }
     if (xine_get_stream_info (xine->stream, XINE_STREAM_INFO_HAS_VIDEO)) {
       _xineSwitchToNormal(xine);
     } else {
       _xineSwitchToViz(xine);
     }
+    return 1;
 }
 
 void xineSeek(_Xine* xine, int position)

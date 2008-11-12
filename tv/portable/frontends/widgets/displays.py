@@ -31,6 +31,8 @@ app.
 """
 import logging
 
+import os
+
 from miro import app
 from miro import messages
 from miro import signals
@@ -313,68 +315,161 @@ class IndividualDownloadsDisplay(ItemListDisplay):
     def make_controller(self, tab):
         return itemlistcontroller.IndividualDownloadsController()
 
+class CantPlayWidget(widgetset.SolidBackground):
+    def __init__(self):
+        widgetset.SolidBackground.__init__(self, (0, 0, 0))
+        vbox = widgetset.VBox()
+        label = widgetset.Label(_("Miro can't play this file.  You may "
+            "be able to open it with a different program"))
+        label.set_color((1, 1, 1))
+        vbox.pack_start(label)
+        table = widgetset.Table(2, 2)
+        table.set_column_spacing(6)
+        self.filename_label = self._make_label('')
+        self.filetype_label  = self._make_label('')
+        table.pack(widgetutil.align_left(self._make_heading(_('Filename:'))),
+                0, 0)
+        table.pack(widgetutil.align_left(self.filename_label), 1, 0)
+        table.pack(widgetutil.align_left(self._make_heading(_('File type:'))),
+                0, 1)
+        table.pack(widgetutil.align_left(self.filetype_label), 1, 1)
+        vbox.pack_start(widgetutil.align_left(table, top_pad=12))
+        hbox = widgetset.HBox(spacing=12)
+        reveal_button = widgetset.Button(_('Reveal File'))
+        play_externally_button = widgetset.Button(_('Play Externally'))
+        skip_button = widgetset.Button(_('Skip'))
+        reveal_button.connect('clicked', self._on_reveal)
+        play_externally_button.connect('clicked', self._on_play_externally)
+        skip_button.connect('clicked', self._on_skip)
+        hbox.pack_start(reveal_button)
+        hbox.pack_start(play_externally_button)
+        hbox.pack_start(skip_button)
+        vbox.pack_start(widgetutil.align_center(hbox, top_pad=24))
+        alignment = widgetset.Alignment(xalign=0.5, yalign=0.5)
+        alignment.add(vbox)
+        self.add(alignment)
+
+    def _make_label(self, text):
+        label = widgetset.Label(text)
+        label.set_color((1, 1, 1))
+        return label
+
+    def _make_heading(self, text):
+        label = self._make_label(text)
+        label.set_bold(True)
+        return label
+
+    def _on_reveal(self, button):
+        app.widgetapp.open_file(os.path.dirname(self.video_path))
+
+    def _on_play_externally(self, button):
+        print 'SHOULD PLAY EXTERNALLY: ', self.video_path
+
+    def _on_skip(self, button):
+        app.playback_manager.play_next_movie(False)
+
+    def set_video_path(self, video_path):
+        self.video_path = video_path
+        self.filename_label.set_text(os.path.split(video_path)[-1])
+        self.filetype_label.set_text(os.path.splitext(video_path)[1])
+
 class VideoDisplay(Display):
     def __init__(self):
         Display.__init__(self)
-        self.widget = widgetset.VideoRenderer()
+        self.create_signal('cant-play')
+        self.create_signal('ready-to-play')
+        self.renderer = widgetset.VideoRenderer()
+        self.widget = widgetset.VBox()
+        self.widget.pack_start(self.renderer, expand=True)
+        self.cant_play_widget = CantPlayWidget()
+        self._showing_renderer = True
         self.in_fullscreen = False
 
+
+    def show_renderer(self):
+        if not self._showing_renderer:
+            self.widget.remove(self.cant_play_widget)
+            self.widget.pack_start(self.renderer, expand=True)
+            self._showing_renderer = True
+
+    def show_play_external(self):
+        if self._showing_renderer:
+            self._prepare_remove_renderer()
+            self.widget.remove(self.renderer)
+            self.widget.pack_start(self.cant_play_widget, expand=True)
+            self._showing_renderer = False
+
+    def _open_success(self):
+        self.emit('ready-to-play')
+
+    def _open_error(self):
+        self.show_play_external()
+        self.emit('cant-play')
+
     def setup(self, item_info, volume):
-        self.widget.set_movie_item(item_info)
+        self.show_renderer()
+        self.cant_play_widget.set_video_path(item_info.video_path)
+        self.renderer.set_movie_item(item_info, self._open_success,
+                self._open_error)
         self.set_volume(volume)
 
     def set_volume(self, volume):
-        self.widget.set_volume(volume)
+        self.renderer.set_volume(volume)
 
     def get_elapsed_playback_time(self):
-        return self.widget.get_elapsed_playback_time()
+        return self.renderer.get_elapsed_playback_time()
 
     def get_total_playback_time(self):
-        return self.widget.get_total_playback_time()
+        return self.renderer.get_total_playback_time()
 
     def play(self):
-        self.widget.play()
+        self.renderer.play()
 
     def play_from_time(self, resume_time=0):
-        self.widget.play_from_time(resume_time)
+        self.renderer.play_from_time(resume_time)
 
     def pause(self):
-        self.widget.pause()
+        self.renderer.pause()
 
     def stop(self):
-        self.widget.stop()
+        self.renderer.stop()
 
     def set_playback_rate(self, rate):
-        self.widget.set_playback_rate(rate)
+        self.renderer.set_playback_rate(rate)
 
     def skip_forward(self):
-        self.widget.skip_forward()
+        self.renderer.skip_forward()
 
     def skip_backward(self):
-        self.widget.skip_backward()
+        self.renderer.skip_backward()
 
     def seek_to(self, position):
-        self.widget.seek_to(position)
+        self.renderer.seek_to(position)
 
     def enter_fullscreen(self):
-        self.widget.enter_fullscreen()
+        self.renderer.enter_fullscreen()
         self.in_fullscreen = True
     
     def exit_fullscreen(self):
-        self.widget.exit_fullscreen()
+        self.renderer.exit_fullscreen()
         self.in_fullscreen = False
 
     def prepare_switch_to_attached_playback(self):
-        self.widget.prepare_switch_to_attached_playback()
+        self.renderer.prepare_switch_to_attached_playback()
 
     def prepare_switch_to_detached_playback(self):
-        self.widget.prepare_switch_to_detached_playback()
+        self.renderer.prepare_switch_to_detached_playback()
 
-    def cleanup(self):
+    def _prepare_remove_renderer(self):
         if self.in_fullscreen:
             self.exit_fullscreen()
-        self.widget.stop()
-        self.widget.teardown()
+        self.renderer.stop()
+
+    def cleanup(self):
+        if self._showing_renderer:
+            self._prepare_remove_renderer()
+        self.renderer.teardown()
+        self.renderer = None
 
 class MultipleSelectionDisplay(TabDisplay):
     @staticmethod

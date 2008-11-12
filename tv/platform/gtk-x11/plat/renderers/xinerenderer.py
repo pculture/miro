@@ -120,29 +120,29 @@ class Renderer:
         # nothing to do here
         pass
 
-    def select_item(self, an_item):
-        self.select_file(an_item.get_filename())
-
     def change_visualization(self, value):
         pass
 
-    def select_file(self, filename):
+    def select_file(self, filename, callback, errback):
         self._filename = filename
         viz = config.get(options.VIZ_PLUGIN)
         self.xine.set_viz(viz)
-        self.xine.select_file(filename)
-        def expose_workaround():
-            try:
-                _, _, width, height, _ = self.widget.window.get_geometry()
-                self.xine.got_expose_event(0, 0, width, height)
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
-                return True
-            return False
+        if self.xine.select_file(filename):
+            gobject.idle_add(callback)
+            def expose_workaround():
+                try:
+                    _, _, width, height, _ = self.widget.window.get_geometry()
+                    self.xine.got_expose_event(0, 0, width, height)
+                except (SystemExit, KeyboardInterrupt):
+                    raise
+                except:
+                    return True
+                return False
 
-        gobject.timeout_add(500, expose_workaround)
-        self.seek(0)
+            gobject.timeout_add(500, expose_workaround)
+            self.seek(0)
+        else:
+            gobject.idle_add(errback)
 
     def get_progress(self):
         try:

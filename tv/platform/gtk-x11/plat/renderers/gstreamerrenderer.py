@@ -52,63 +52,12 @@ def to_seconds(t):
 def from_seconds(s):
     return s * gst.SECOND
 
-class Tester:
-    def __init__(self, filename):
-        self.done = Event()
-        self.success = False
-        self.actual_init(filename)
-
-    def actual_init(self, filename):
-        self.playbin = gst.element_factory_make('playbin')
-        self.videosink = gst.element_factory_make("fakesink", "videosink")
-        self.playbin.set_property("video-sink", self.videosink)
-        self.audiosink = gst.element_factory_make("fakesink", "audiosink")
-        self.playbin.set_property("audio-sink", self.audiosink)
-
-        self.bus = self.playbin.get_bus()
-        self.bus.add_signal_watch()
-        self.watch_id = self.bus.connect("message", self.on_bus_message)
-
-        self.playbin.set_property("uri", "file://%s" % filename)
-        self.playbin.set_state(gst.STATE_PAUSED)
-
-    def result(self, yes_callback, no_callback):
-        def _result():
-            self.done.wait(1)
-            self.disconnect()
-            if self.success:
-                call_on_ui_thread(yes_callback)
-            else:
-                call_on_ui_thread(no_callback)
-        thread.start_new_thread(_result, ())
-
-    def on_bus_message(self, bus, message):
-        if message.src == self.playbin:
-            if message.type == gst.MESSAGE_STATE_CHANGED:
-                prev, new, pending = message.parse_state_changed()
-                if new == gst.STATE_PAUSED:
-                    # Success
-                    self.success = True
-                    self.done.set()
-
-            elif message.type == gst.MESSAGE_ERROR:
-                self.success = False
-                self.done.set()
-
-    def disconnect(self):
-        self.bus.disconnect(self.watch_id)
-        self.playbin.set_state(gst.STATE_NULL)
-        del self.bus
-        del self.playbin
-        del self.audiosink
-        del self.videosink
-
-
 class Renderer:
     def __init__(self):
         logging.info("GStreamer version: %s", gst.version_string())
 
         self.rate = 1.0
+        self.select_callbacks = None
 
         self.playbin = gst.element_factory_make("playbin", "player")
         self.bus = self.playbin.get_bus()
@@ -116,6 +65,7 @@ class Renderer:
         self.bus.enable_sync_message_emission()
 
         self.bus.connect("message::eos", self.on_bus_message)
+        self.bus.connect("message::state-changed", self.on_bus_message)
         self.bus.connect("message::error", self.on_bus_message)
         self.bus.connect('sync-message::element', self.on_sync_message)
 
@@ -164,9 +114,18 @@ class Renderer:
     def on_bus_message(self, bus, message):
         """recieves message posted on the GstBus"""
         if message.type == gst.MESSAGE_ERROR:
-            err, debug = message.parse_error()
-            logging.error("on_bus_message: gstreamer error: %s", err)
-
+            if self.select_callbacks is not None:
+                self.select_callbacks[1]()
+                self.select_callbacks = None
+            else:
+                err, debug = message.parse_error()
+                logging.error("on_bus_message: gstreamer error: %s", err)
+        elif message.type == gst.MESSAGE_STATE_CHANGED:
+            prev, new, pending = message.parse_state_changed()
+            if (message.src is self.playbin and new == gst.STATE_PAUSED and 
+                    self.select_callbacks is not None):
+                self.select_callbacks[0]()
+                self.select_callbacks = None
         elif message.type == gst.MESSAGE_EOS:
             app.playback_manager.on_movie_finished()
 
@@ -193,10 +152,6 @@ class Renderer:
                                          widget.allocation.height)
         return True
 
-    def can_play_file(self, filename, yes_callback, no_callback):
-        """whether or not this renderer can play this data"""
-        return Tester(filename).result(yes_callback, no_callback)
-
     def fill_movie_data(self, filename, movie_data, callback):
         d = os.path.join(config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
         try:
@@ -214,14 +169,11 @@ class Renderer:
         """Handle when the video window exits fullscreen mode."""
         logging.debug("haven't implemented exit_fullscreen method yet!")
 
-    def select_item(self, an_item):
-        self.set_visualization()
-        self.select_file(an_item.get_filename())
-
-    def select_file(self, filename):
+    def select_file(self, filename, callback, errback):
         """starts playing the specified file"""
         self.stop()
         self.set_visualization()
+        self.select_callbacks = (callback, errback)
         self.playbin.set_property("uri", "file://%s" % filename)
         self.playbin.set_state(gst.STATE_PAUSED)
 

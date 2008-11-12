@@ -86,15 +86,81 @@ ALL_SUPPORTED_MEDIA_TYPES   = SUPPORTED_VIDEO_MEDIA_TYPES + SUPPORTED_AUDIO_MEDI
 
 ###############################################################################
 
-class VideoOpener (object):
+class VideoRenderer (Widget):
 
     def __init__(self):
-        self.cached_movie = None
+        Widget.__init__(self)
+        frame = ((0,0),(200,200))
 
-    def can_open_file(self, path):
-        threads.warn_if_not_on_main_thread('VideoOpener.can_open_file')
+        self.view = NSView.alloc().initWithFrame_(frame)
+
+        self.video_view = QTMovieView.alloc().initWithFrame_(frame)
+        self.video_view.setFillColor_(NSColor.blackColor())
+        self.video_view.setControllerVisible_(NO)
+        self.video_view.setEditable_(NO)
+        self.video_view.setPreservesAspectRatio_(YES)
+
+        self.movie = None
+        self.system_activity_updater_timer = None
+        self.window_moved_handler = None
+
+    def calc_size_request(self):
+        return (200,200)
+
+    def viewport_created(self):
+        self.video_window = VideoWindow.alloc().initWithContentRect_styleMask_backing_defer_(self.view.frame(), NSBorderlessWindowMask, NSBackingStoreBuffered, NO)
+        self.video_window.setContentView_(self.video_view)
+
+        self.view.window().addChildWindow_ordered_(self.video_window, NSWindowAbove)
+        self.video_window.orderFront_(nil)
+        self.adjust_video_frame()
+        self.window_moved_handler = wrappermap.wrapper(self.view.window()).connect('did-move', self.on_window_moved)
+
+    def place(self, rect, containing_view):
+        Widget.place(self, rect, containing_view)
+        self.adjust_video_frame()
+
+    def on_window_moved(self, window):
+        self.adjust_video_frame()
+    
+    def remove_viewport(self):
+        self.reset()
+        self.prevent_system_sleep(False)
+        self.detach_from_parent_window()
+        self.video_window.close()
+        self.video_window = None
+        Widget.remove_viewport(self)
+
+    def teardown(self):
+        pass
+
+    def detach_from_parent_window(self):
+        window = self.view.window()
+        window.removeChildWindow_(self.video_window)
+        wrappermap.wrapper(window).disconnect(self.window_moved_handler)
+        self.window_moved_handler = None
+
+    def reset(self):
+        threads.warn_if_not_on_main_thread('VideoRenderer.reset')
+        self.video_view.setMovie_(nil)
+        self.movie_notifications = None
+        self.movie = None
+
+    def get_video_frame(self):
+        frame = self.view.frame()
+        frame.origin = self.view.convertPoint_toView_(NSZeroPoint, nil)
+        frame.origin.x = 0
+        frame.origin = self.view.window().convertBaseToScreen_(frame.origin)
+        frame.size = (self.view.window().frame().size.width, frame.size.height)
+        return frame
+
+    def adjust_video_frame(self):
+        frame = self.get_video_frame()
+        self.video_window.setFrame_display_(frame, YES)
+
+    def can_open_file(self, qtmovie):
+        threads.warn_if_not_on_main_thread('VideoRenderer.can_open_file')
         can_open = False
-        qtmovie = self.get_movie_from_file(path)
 
         # Purely referential movies have a no duration, no track and need to be
         # streamed first. Since we don't support this yet, we delegate the
@@ -125,112 +191,28 @@ class VideoOpener (object):
     def get_movie_from_file(self, path):
         osfilename = filenameTypeToOSFilename(path)
         url = NSURL.fileURLWithPath_(osfilename)
-        if self.cached_movie is not None and self.cached_movie.attributeForKey_(QTMovieURLAttribute) == url:
-            qtmovie = self.cached_movie
+        if utils.get_pyobjc_major_version() == 2:
+            qtmovie, error = QTMovie.movieWithURL_error_(url, None)
         else:
-            if utils.get_pyobjc_major_version() == 2:
-                qtmovie, error = QTMovie.movieWithURL_error_(url, None)
-            else:
-                qtmovie, error = QTMovie.movieWithURL_error_(url)
-            self.cached_movie = qtmovie
+            qtmovie, error = QTMovie.movieWithURL_error_(url)
+        if not self.can_open_file(qtmovie):
+            return nil
         return qtmovie
 
-    def reset(self):
-        self.cached_movie = None
-
-video_opener = VideoOpener()
-
-###############################################################################
-
-def can_play_file(path, yes_callback, no_callback):
-    threads.warn_if_not_on_main_thread('video.can_play_file')
-    if video_opener.can_open_file(path):
-        yes_callback()
-    else:
-        no_callback()
-
-###############################################################################
-
-class VideoRenderer (Widget):
-
-    def __init__(self):
-        Widget.__init__(self)
-        frame = ((0,0),(200,200))
-
-        self.view = NSView.alloc().initWithFrame_(frame)
-
-        self.video_view = QTMovieView.alloc().initWithFrame_(frame)
-        self.video_view.setFillColor_(NSColor.blackColor())
-        self.video_view.setControllerVisible_(NO)
-        self.video_view.setEditable_(NO)
-        self.video_view.setPreservesAspectRatio_(YES)
-
-        self.video_window = VideoWindow.alloc().initWithContentRect_styleMask_backing_defer_(frame, NSBorderlessWindowMask, NSBackingStoreBuffered, NO)
-        self.video_window.setContentView_(self.video_view)
-
-        self.movie = None
-        self.system_activity_updater_timer = None
-        self.window_moved_handler = None
-
-    def calc_size_request(self):
-        return (200,200)
-
-    def viewport_created(self):
-        self.view.window().addChildWindow_ordered_(self.video_window, NSWindowAbove)
-        self.video_window.orderFront_(nil)
-        self.adjust_video_frame()
-        self.window_moved_handler = wrappermap.wrapper(self.view.window()).connect('did-move', self.on_window_moved)
-
-    def place(self, rect, containing_view):
-        Widget.place(self, rect, containing_view)
-        self.adjust_video_frame()
-
-    def on_window_moved(self, window):
-        self.adjust_video_frame()
-    
-    def teardown(self):
-        self.reset()
-        self.prevent_system_sleep(False)
-        self.detach_from_parent_window()
-        self.video_window.close()
-        self.video_window = None
-
-    def detach_from_parent_window(self):
-        window = self.view.window()
-        window.removeChildWindow_(self.video_window)
-        wrappermap.wrapper(window).disconnect(self.window_moved_handler)
-        self.window_moved_handler = None
-
-    def reset(self):
-        threads.warn_if_not_on_main_thread('VideoRenderer.reset')
-        video_opener.reset()
-        self.video_view.setMovie_(nil)
-        self.movie_notifications = None
-        self.movie = None
-
-    def get_video_frame(self):
-        frame = self.view.frame()
-        frame.origin = self.view.convertPoint_toView_(NSZeroPoint, nil)
-        frame.origin.x = 0
-        frame.origin = self.view.window().convertBaseToScreen_(frame.origin)
-        frame.size = (self.view.window().frame().size.width, frame.size.height)
-        return frame
-
-    def adjust_video_frame(self):
-        frame = self.get_video_frame()
-        self.video_window.setFrame_display_(frame, YES)
-
-    def set_movie_item(self, item_info):
+    def set_movie_item(self, item_info, callback, errback):
         threads.warn_if_not_on_main_thread('VideoRenderer.set_movie_item')
-        qtmovie = video_opener.get_movie_from_file(item_info.video_path)
+        self.video_window.setup(item_info, self)
+        qtmovie = self.get_movie_from_file(item_info.video_path)
         self.reset()
         if qtmovie is not nil:
             self.movie = qtmovie
             self.video_view.setMovie_(self.movie)
             self.video_view.setNeedsDisplay_(YES)
-            self.video_window.setup(item_info, self)
             self.movie_notifications = NotificationForwarder.create(self.movie)
             self.movie_notifications.connect(self.handle_movie_notification, QTMovieDidEndNotification)
+            callback()
+        else:
+            errback()
 
     def get_elapsed_playback_time(self):
         qttime = self.movie.currentTime()
@@ -252,8 +234,10 @@ class VideoRenderer (Widget):
         self.seek_to(pos / duration)
 
     def set_volume(self, volume):
-        self.movie.setVolume_(volume)
-        self.video_window.palette.set_volume(volume)
+        if self.movie:
+            self.movie.setVolume_(volume)
+        if self.video_window:
+            self.video_window.palette.set_volume(volume)
 
     def play(self):
         threads.warn_if_not_on_main_thread('VideoRenderer.play')
@@ -274,7 +258,8 @@ class VideoRenderer (Widget):
         threads.warn_if_not_on_main_thread('VideoRenderer.stop')
         self.prevent_system_sleep(True)
         self.video_view.pause_(nil)
-        self.video_window.palette.remove()
+        if self.video_window:
+            self.video_window.palette.remove()
         self.reset()
 
     def set_playback_rate(self, rate):
@@ -374,6 +359,10 @@ class VideoWindow (NSWindow):
         UpdateSystemActivity(OverallActivity)
 
     def sendEvent_(self, event):
+        if self.parentWindow() is None:
+            # We've been detached since the event was fired.  Just ignore it.
+            return
+
         if event.type() == NSMouseMoved:
             if NSPointInRect(event.locationInWindow(), self.contentView().bounds()) and self.palette.fit_in_video_window(self):
                 self.palette.reveal(self)

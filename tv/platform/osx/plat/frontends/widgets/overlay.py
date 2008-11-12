@@ -208,7 +208,8 @@ class OverlayPalette (NSWindowController):
         self.resetAutoHiding()
         if (not self.window().isVisible() and not self.revealing) or (self.window().isVisible() and self.hiding):
             self.update_(nil)
-            self.volumeSlider.setFloatValue_(self.renderer.movie.volume())
+            if self.renderer.movie is not None:
+                self.volumeSlider.setFloatValue_(self.renderer.movie.volume())
 
             self.adjustPosition(videoWindow)
             self.adjustContent(videoWindow, False)
@@ -336,6 +337,8 @@ class OverlayPalette (NSWindowController):
         app.playback_manager.play_pause()
 
     def update_(self, timer):
+        if self.renderer.movie is None:
+            return
         elapsed = self.renderer.get_elapsed_playback_time()
         total = self.renderer.get_total_playback_time()
         progress = u"%d:%02d" % divmod(int(round(elapsed)), 60)

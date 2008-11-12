@@ -54,6 +54,7 @@ class PlaybackControls(widgetset.HBox):
         self.pack_start(widgetutil.align_middle(self.play))
         self.pack_start(widgetutil.align_middle(self.fullscreen))
         self.pack_start(widgetutil.align_middle(self.forward))
+        app.playback_manager.connect('selecting-file', self.handle_selecting)
         app.playback_manager.connect('will-play', self.handle_play)
         app.playback_manager.connect('will-pause', self.handle_pause)
         app.playback_manager.connect('did-stop', self.handle_stop)
@@ -79,6 +80,15 @@ class PlaybackControls(widgetset.HBox):
         self.forward.enable_widget()
         self.fullscreen.enable_widget()
         self.queue_redraw()
+
+    def handle_selecting(self, obj):
+        self.previous.enable_widget()
+        self.stop.enable_widget()
+        self.play.disable_widget()
+        self.play.set_image('pause')
+        self.forward.enable_widget()
+        self.fullscreen.enable_widget()
+        self.queue_redraw()
     
     def handle_pause(self, obj):
         self.play.set_image('play')
@@ -98,6 +108,7 @@ class ProgressTime(widgetset.DrawingArea):
         widgetset.DrawingArea.__init__(self)
         self.current_time = None
         app.playback_manager.connect('playback-did-progress', self.handle_progress)
+        app.playback_manager.connect('selecting-file', self.handle_selecting)
         app.playback_manager.connect('did-stop', self.handle_stop)
 
     def size_request(self, layout):
@@ -109,6 +120,9 @@ class ProgressTime(widgetset.DrawingArea):
         self.set_current_time(elapsed)
         
     def handle_stop(self, obj):
+        self.set_current_time(None)
+
+    def handle_selecting(self, obj):
         self.set_current_time(None)
     
     def set_current_time(self, current_time):
@@ -132,6 +146,7 @@ class ProgressTimeRemaining(widgetset.CustomButton):
         widgetset.CustomButton.__init__(self)
         self.duration = self.current_time = None
         self.display_remaining = True
+        app.playback_manager.connect('selecting-file', self.handle_selecting)
         app.playback_manager.connect('will-play', self.handle_play)
         app.playback_manager.connect('playback-did-progress', self.handle_progress)
         app.playback_manager.connect('did-stop', self.handle_stop)
@@ -143,6 +158,9 @@ class ProgressTimeRemaining(widgetset.CustomButton):
 
     def handle_play(self, obj, duration):
         self.set_duration(duration)
+
+    def handle_selecting(self, obj):
+        self.set_current_time(None)
 
     def handle_progress(self, obj, elapsed, total):
         self.set_current_time(elapsed)
@@ -187,6 +205,7 @@ class ProgressSlider(widgetset.CustomSlider):
         self.progress_surface = widgetutil.ThreeImageSurface('playback_track_progress')
         self.progress_cursor = widgetutil.make_surface('playback_cursor')
         app.playback_manager.connect('playback-did-progress', self.handle_progress)
+        app.playback_manager.connect('selecting-file', self.handle_selecting)
         app.playback_manager.connect('will-play', self.handle_play)
         app.playback_manager.connect('did-stop', self.handle_stop)
         self.disable_widget()
@@ -201,6 +220,9 @@ class ProgressSlider(widgetset.CustomSlider):
 
     def handle_play(self, obj, duration):
         self.enable_widget()
+
+    def handle_selecting(self, obj):
+        self.disable_widget()
 
     def handle_stop(self, obj):
         self.set_value(0)

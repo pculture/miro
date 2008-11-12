@@ -52,10 +52,13 @@ class PlaybackManager (signals.SignalEmitter):
         self.is_playing = False
         self.is_paused = False
         self.is_suspended = False
+        self.open_successful = False
         self.playlist = None
         self.position = None
         self.mark_as_watched_timeout = None
         self.update_timeout = None
+        self.create_signal('selecting-file')
+        self.create_signal('cant-play-file')
         self.create_signal('will-play')
         self.create_signal('will-pause')
         self.create_signal('will-stop')
@@ -77,22 +80,18 @@ class PlaybackManager (signals.SignalEmitter):
     def start_with_items(self, item_infos):
         self.playlist = item_infos
         self.position = 0
-        def if_yes():
-            if not self.is_playing:
-                self.video_display = VideoDisplay()
-                self.video_display.connect('removed', self.on_display_removed)
-                if config.get(prefs.PLAY_DETACHED):
-                    self.prepare_detached_playback()
-                else:
-                    self.prepare_attached_playback()
-                app.menu_manager.handle_playing_selection()
-            self._select_current()
-            self.play()
-
-        def if_no():
-            self.exit_playback()
-
-        self._try_select_current(if_yes, if_no)
+        if not self.is_playing:
+            self.video_display = VideoDisplay()
+            self.video_display.connect('removed', self.on_display_removed)
+            self.video_display.connect('cant-play', self._on_cant_play)
+            self.video_display.connect('ready-to-play', self._on_ready_to_play)
+            if config.get(prefs.PLAY_DETACHED):
+                self.prepare_detached_playback()
+            else:
+                self.prepare_attached_playback()
+            app.menu_manager.handle_playing_selection()
+            self.is_playing = True
+        self._play_current()
     
     def prepare_attached_playback(self):
         splitter = app.widgetapp.window.splitter
@@ -165,7 +164,6 @@ class PlaybackManager (signals.SignalEmitter):
             self.video_display.play()
         self.notify_update()
         self.schedule_update()
-        self.is_playing = True
         self.is_paused = False
         self.is_suspended = False
         app.menu_manager.set_play_pause("pause")
@@ -210,6 +208,8 @@ class PlaybackManager (signals.SignalEmitter):
         self.emit('did-stop')
 
     def update_current_resume_time(self, resume_time=-1):
+        if not self.open_successful:
+            return
         if config.get(prefs.RESUME_VIDEOS_MODE):
             if resume_time == -1:
                 resume_time = self.video_display.get_elapsed_playback_time()
@@ -254,52 +254,39 @@ class PlaybackManager (signals.SignalEmitter):
         messages.MarkItemWatched(id).send_to_backend()
         self.mark_as_watched_timeout = None
 
-    def _try_select_current(self, if_yes_callback, if_no_callback):
-        self.cancel_update_timer()
-        self.cancel_mark_as_watched()
-        if 0 <= self.position < len(self.playlist):
-            if self.is_playing:
-                self.video_display.stop()
-            item_info = self.playlist[self.position]
-
-            def _if_no():
-                self.position += 1
-                self._try_select_current(if_yes_callback, if_no_callback)
-
-            self._item_check_playable(item_info, if_yes_callback, _if_no)
-
-        else:
-            if self.is_playing:
-                self.stop(save_resume_time=False)
-            if_no_callback()
-
-    def _item_check_playable(self, item_info, yes_callback, no_callback):
-        path = item_info.video_path
-        if not os.path.exists(path):
-            no_callback()
-            return
-
-        widgetset.can_play_file(path, yes_callback, no_callback)
-
     def get_playing_item(self):
         if self.playlist:
             return self.playlist[self.position]
         return None
 
     def _select_current(self):
+        self.emit('selecting-file')
         volume = config.get(prefs.VOLUME_LEVEL)
         item_info = self.playlist[self.position]
+        self.open_successful = False
         self.video_display.setup(item_info, volume)
         if self.detached_window is not None:
             self.detached_window.set_title(item_info.name)
-        self.schedule_mark_as_watched()
 
     def _play_current(self):
-        if self.is_playing:
-            def if_yes():
-                self._select_current()
-                self.play()
-            self._try_select_current(if_yes, lambda:1)
+        self.cancel_update_timer()
+        self.cancel_mark_as_watched()
+
+        if (0 <= self.position < len(self.playlist)):
+            if self.is_playing:
+                self.video_display.stop()
+            self._select_current()
+        else:
+            self.stop()
+
+    def _on_ready_to_play(self, video_display):
+        self.open_successful = True
+        self.schedule_mark_as_watched()
+        self.play()
+
+    def _on_cant_play(self, video_display):
+        self.emit('cant-play-file')
+        print "CANT PLAY"
 
     def play_next_movie(self, save_current_resume_time=True):
         self.cancel_update_timer()

@@ -36,6 +36,7 @@ import logging
 
 from miro import app
 from miro.gtcache import gettext as _
+from miro import signals
 from miro import util
 from miro import messages
 from miro import displaytext
@@ -95,9 +96,9 @@ class ClickableLabel(Widget):
     def show(self):
         self.label._widget.show()
 
-class NullRenderer(object):
-    def can_play_file(self, path, yes_callback, no_callback):
-        no_callback()
+class NullRenderer(signals.SignalEmitter):
+    def __init__(self):
+        signals.SignalEmitter.__init__(self, 'cant-play', 'ready-to-play')
 
     def reset(self):
         pass
@@ -360,9 +361,9 @@ class VideoRenderer(VBox):
                 self._video_details.update_info(item_info)
                 break
 
-    def set_movie_item(self, item_info):
+    def set_movie_item(self, item_info, callback, errback):
         self._video_details.set_video_details(item_info)
-        self.renderer.select_file(item_info.video_path)
+        self.renderer.select_file(item_info.video_path, callback, errback)
         self._item_id = item_info.id
 
     def get_elapsed_playback_time(self):

@@ -206,12 +206,6 @@ typedef struct {
         xine_stream_t* stream;
         xine_video_port_t* videoPort;
         xine_audio_port_t* audioPort;
-    } tester;
-    struct {
-        xine_t* xine;
-        xine_stream_t* stream;
-        xine_video_port_t* videoPort;
-        xine_audio_port_t* audioPort;
         char *current_filename;
     } data_mine;
 } _Xine;
@@ -238,11 +232,8 @@ void xineSetArea(_Xine* xine, int xpos, int ypos, int width, int height);
 /* Make Xine stop drawing to its X drawable.  */
 void xineDetach(_Xine* xine);
 
-/* Returns 1 if we can play a url, 0 if not (-1 on error) */
-int xineCanPlayUrl(_Xine* xine ,const char* url);
-
-/* Set the URL to play */
-void xinePlayUrl(_Xine* xine, const char* url);
+/* Set the file to play.  Returns 1 if successfull, 0 if not. */
+int xineSelectFile(_Xine* xine, const char* filename);
 
 /* Close the data mine stream */
 void xineDataMineClose(_Xine *xine);
