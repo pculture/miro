@@ -243,10 +243,18 @@ class Application:
 
         filenames_good = [mem for mem in filenames if os.path.isfile(mem)]
         if len(filenames_good) != len(filenames):
-            dialogs.show_message(_('Open Files - Error'),
-                                 _('File %(filename)s does not exist.',
-                                   {"filename": filename}),
-                                 dialogs.WARNING_MESSAGE)
+            filenames_bad = set(filenames) - set(filenames_good)
+            if len(filenames_bad) == 1:
+                filename = list(filenames_bad)[0]
+                dialogs.show_message(_('Open Files - Error'),
+                                     _('File %(filename)s does not exist.',
+                                       {"filename": filename}),
+                                     dialogs.WARNING_MESSAGE)
+            else:
+                dialogs.show_message(_('Open Files - Error'),
+                                    _('The following files do not exist:') +
+                                    '\n' + '\n'.join(filenames_bad),
+                                     dialogs.WARNING_MESSAGE)
         else:
             if len(filenames_good) == 1:
                 messages.OpenIndividualFile(filenames_good[0]).send_to_backend()
