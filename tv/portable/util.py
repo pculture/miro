@@ -510,6 +510,12 @@ def _get_enclosure_size(enclosure):
     else:
         return None
 
+def _get_enclosure_bitrate(enclosure):
+    if 'bitrate' in enclosure and enclosure['bitrate'].isdigit():
+        return int(enclosure['bitrate'])
+    else:
+        return None
+
 def cmp_enclosures(enclosure1, enclosure2):
     """
     Returns:
@@ -522,6 +528,14 @@ def cmp_enclosures(enclosure1, enclosure2):
     if enclosure1_index < enclosure2_index:
         return -1
     elif enclosure2_index < enclosure1_index:
+        return 1
+
+    # next, let's try sorting by bitrate..
+    enclosure1_bitrate = _get_enclosure_bitrate(enclosure1)
+    enclosure2_bitrate = _get_enclosure_bitrate(enclosure2)
+    if enclosure1_bitrate > enclosure2_bitrate:
+        return -1
+    elif enclosure2_bitrate > enclosure1_bitrate:
         return 1
 
     # next, let's try sorting by filesize..
