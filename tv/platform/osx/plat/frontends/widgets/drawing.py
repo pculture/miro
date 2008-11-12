@@ -52,6 +52,8 @@ class ImageSurface:
         self.height = image.height
 
     def draw(self, context, x, y, width, height, fraction=1.0):
+        if self.width == 0 or self.height == 0:
+            return
         NSGraphicsContext.currentContext().setShouldAntialias_(YES)
         NSGraphicsContext.currentContext().setImageInterpolation_(NSImageInterpolationHigh)
         endy = y + height
