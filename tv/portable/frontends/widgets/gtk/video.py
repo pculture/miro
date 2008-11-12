@@ -189,6 +189,11 @@ class VideoDetailsWidget(Background):
         self._expiration_label.set_color(WHITE)
         h2.pack_start(_align_right(self._expiration_label, right_pad=15), expand=True)
 
+        self._add_to_library_link = ClickableLabel(_("ADD TO LIBRARY"))
+        self._add_to_library_link.connect('clicked', self.handle_add_to_library)
+        h2.pack_start(_align_right(self._add_to_library_link, right_pad=5))
+        v.pack_start(h2)
+
         self._keep_link = ClickableLabel(_("KEEP"))
         self._keep_link.connect('clicked', self.handle_keep)
         h2.pack_start(_align_right(self._keep_link, right_pad=5))
@@ -201,11 +206,6 @@ class VideoDetailsWidget(Background):
         self._delete_link = ClickableLabel(_("DELETE"))
         self._delete_link.connect('clicked', self.handle_delete)
         h2.pack_start(_align_right(self._delete_link, right_pad=5))
-
-        self._add_to_library_link = ClickableLabel(_("ADD TO LIBRARY"))
-        self._add_to_library_link.connect('clicked', self.handle_add_to_library)
-        h2.pack_start(_align_right(self._add_to_library_link, right_pad=5))
-        v.pack_start(h2)
 
         h.pack_start(_align_right(v), expand=True)
         return h
