@@ -70,7 +70,14 @@ GSTREAMER_IMAGESINK = Pref(key="DefaultGstreamerImagesink",
                            default="gconfvideosink",
                            platformSpecific=False,
                            alias="gstreamer-imagesink",
-                           help="Which GStreamer image sink to use for video.  (ximagesink, xvimagesink, gconfvideosink, ...)")
+                           help="Which GStreamer image sink to use for video.  (autovideosink, ximagesink, xvimagesink, gconfvideosink, ...)")
+
+GSTREAMER_AUDIOSINK = Pref(key="DefaultGstreamerAudiosink",
+                           default="gconfaudiosink",
+                           platformSpecific=False,
+                           alias="gstreamer-audiosink",
+                           help="Which GStreamer sink to use for audio.  (autoaudiosink, osssink, alsasink, gconfaudiosink, ...)")
+
 
 SHOW_TRAYICON = Pref(key="showTrayicon",
                      default=True,

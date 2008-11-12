@@ -84,8 +84,26 @@ class Renderer:
             videosink = "ximagesink"
             self.sink = gst.element_factory_make(videosink, "sink")
 
-        logging.info("GStreamer sink:    %s", videosink)
+        logging.info("GStreamer videosink: %s", videosink)
         self.playbin.set_property("video-sink", self.sink)
+
+        audiosink = config.get(options.GSTREAMER_AUDIOSINK)
+        try:
+            self.audiosink = gst.element_factory_make(audiosink, "sink")
+
+        except gst.ElementNotFoundError:
+            logging.info("gstreamerrenderer: ElementNotFoundError '%s'" % audiosink)
+            audiosink = "autoaudiosink"
+            self.audiosink = gst.element_factory_make(audiosink, "sink")
+
+        except Exception, e:
+            logging.info("gstreamerrenderer: Exception thrown '%s'" % e)
+            logging.exception("sink exception")
+            audiosink = "alsasink"
+            self.audiosink = gst.element_factory_make(alsasink, "sink")
+
+        logging.info("GStreamer audiosink: %s", audiosink)
+        self.playbin.set_property("audio-sink", self.audiosink)
         self.set_visualization()
 
     def set_visualization(self):
