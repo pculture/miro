@@ -333,6 +333,8 @@ class install_data(distutils.command.install_data.install_data):
             revisionnum = revision[1]
             revision = "%s - %s" % revision
 
+        print "Using %s" % revisionnum
+
         self.mkpath(os.path.dirname(dest))
         # We don't use the dist utils copy_file() because it only copies
         # the file if the timestamp is newer
