@@ -163,10 +163,12 @@ def add_download(url, additional=None):
         
         download_unknown_mime_type(url)
 
-    def callback_flash(old_url):
-        def _callback(url, contentType="video/flv"):
+    def callback_flash(old_url, additional=additional):
+        def _callback(url, contentType="video/flv", additional=additional):
             if url:
-                entry = _build_entry(url, contentType, {"title": url})
+                if additional == None:
+                    additional = {"title": url}
+                entry = _build_entry(url, contentType, additional)
                 download_video(entry)
                 return
 
@@ -174,7 +176,7 @@ def add_download(url, additional=None):
 
         flashscraper.try_scraping_url(url, _callback)
 
-    def callback(headers):
+    def callback(headers, additional=additional):
         """We need to figure out if the URL is a external video link, or a link to
         a channel.
         """
@@ -195,7 +197,7 @@ def add_download(url, additional=None):
             httpclient.grabURL(url, callback_peek, errback)
             return
 
-        entry = _build_entry(url, contentType, None)
+        entry = _build_entry(url, contentType, additional)
 
         if filetypes.is_video_enclosure(entry['enclosures'][0]):
             download_video(entry)
