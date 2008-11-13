@@ -295,7 +295,7 @@ class IndividualDownloadsTracker(ItemTrackerBase):
     type = 'individual_downloads'
     id = None
     def __init__(self):
-        self.view = views.manualItems
+        self.view = views.individualItems
         ItemTrackerBase.__init__(self)
 
 class NewItemsTracker(ItemTrackerBase):
