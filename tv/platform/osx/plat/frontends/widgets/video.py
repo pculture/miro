@@ -124,7 +124,6 @@ class VideoRenderer (Widget):
         self.adjust_video_frame()
     
     def remove_viewport(self):
-        self.reset()
         self.prevent_system_sleep(False)
         self.detach_from_parent_window()
         self.video_window.close()
@@ -278,12 +277,10 @@ class VideoRenderer (Widget):
         self.video_window.exit_fullscreen(frame)
 
     def prepare_switch_to_attached_playback(self):
-        self.detach_from_parent_window()
-        self.remove_viewport()
         app.widgetapp.window.nswindow.makeKeyAndOrderFront_(nil)
 
     def prepare_switch_to_detached_playback(self):
-        self.detach_from_parent_window()
+        pass
 
     def handle_movie_notification(self, notification):
         if notification.name() == QTMovieDidEndNotification and not app.playback_manager.is_suspended:

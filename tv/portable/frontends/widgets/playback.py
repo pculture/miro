@@ -113,14 +113,16 @@ class PlaybackManager (signals.SignalEmitter):
         else:
             detached_window_frame = widgetset.Rect.from_string(detached_window_frame)
         self.detached_window = DetachedWindow("", detached_window_frame)
-        align = widgetset.Alignment(bottom_pad=16, xscale=1.0, yscale=1.0)
-        align.add(self.video_display.widget)
-        self.detached_window.set_content_widget(align)
+        self.align = widgetset.Alignment(bottom_pad=16, xscale=1.0, yscale=1.0)
+        self.align.add(self.video_display.widget)
+        self.detached_window.set_content_widget(self.align)
         self.detached_window.show()
     
     def finish_detached_playback(self):
         config.set(prefs.DETACHED_WINDOW_FRAME, str(self.detached_window.get_frame()))
         config.save()
+        self.align.remove()
+        self.align = None
         self.detached_window.close(False)
         self.detached_window.destroy()
         self.detached_window = None
@@ -286,7 +288,6 @@ class PlaybackManager (signals.SignalEmitter):
 
     def _on_cant_play(self, video_display):
         self.emit('cant-play-file')
-        print "CANT PLAY"
 
     def play_next_movie(self, save_current_resume_time=True):
         self.cancel_update_timer()
