@@ -673,10 +673,11 @@ class Item(DDBObject):
                 return url
 
         # Try to get any enclosure thumbnail
-        for enclosure in self.entry.enclosures:
-            url = self.getElementThumbnail(enclosure)
-            if url is not None:
-                return url
+        if hasattr(self.entry, "enclosures"):
+            for enclosure in self.entry.enclosures:
+                url = self.getElementThumbnail(enclosure)
+                if url is not None:
+                    return url
 
         # Try to get the thumbnail for our entry
         return self.getElementThumbnail(self.entry)
