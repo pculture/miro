@@ -86,8 +86,6 @@ def _build_header(channel):
     lab.set_color(widgetconst.DIALOG_NOTE_COLOR)
     v.pack_start(widgetutil.align_left(lab))
 
-    v.pack_start(separator.HThinSeparator((0.6, 0.6, 0.6)), padding=18)
-
     return v
 
 def _build_video_expires(channel, grid):
@@ -189,14 +187,11 @@ def _build_remember_items(channel, grid):
     grid.end_line(spacing=2)
 
     grid.pack_label("")
-    grid.pack(lab, grid.ALIGN_LEFT)
-
-    grid.pack
+    grid.pack(widgetutil.build_hbox((lab, )), grid.ALIGN_LEFT)
 
 def _build_auto_download(channel, grid):
-    auto_download_cbx = widgetset.Checkbox(_("Pause Auto-Downloading:"))
+    auto_download_cbx = widgetset.Checkbox(_("Pause Auto-Downloading when this many items are unwatched:"))
     grid.pack(auto_download_cbx, grid.ALIGN_RIGHT)
-    
 
     max_new_options = [
         ("1", _("1 unwateched item")),
@@ -247,15 +242,17 @@ def run_dialog(channel):
     try:
         try:
             v = widgetset.VBox(spacing=10)
-            v.pack_start(_build_header(channel))
+            v.pack_start(widgetutil.align_left(_build_header(channel), left_pad=20, right_pad=20))
+
+            v.pack_start(separator.HThinSeparator((0.6, 0.6, 0.6)), padding=18)
             
             grid = dialogwidgets.ControlGrid()
             _build_auto_download(channel, grid)
-            grid.end_line(spacing=6)
+            grid.end_line(spacing=20)
             _build_video_expires(channel, grid)
-            grid.end_line(spacing=6)
+            grid.end_line(spacing=20)
             _build_remember_items(channel, grid)
-            v.pack_start(grid.make_table())
+            v.pack_start(widgetutil.align_left(grid.make_table(), left_pad=20, right_pad=20))
 
             v.pack_end(separator.HThinSeparator((0.6, 0.6, 0.6)), padding=6)
 
