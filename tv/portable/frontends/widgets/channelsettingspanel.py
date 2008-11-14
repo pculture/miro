@@ -55,20 +55,20 @@ def get_formatted_default_expiration():
         formatted_expiration = _('never')
     elif expiration < 1.0:
         hours = int(expiration * 24.0)
-        formatted_expiration = ngettext("%(count)d hour",
-                                        "%(count)d hours",
+        formatted_expiration = ngettext("%(count)d hour ago",
+                                        "%(count)d hours ago",
                                         hours,
                                         {"count": hours})
     elif expiration >= 1 and expiration < 30:
         days = int(expiration)
-        formatted_expiration = ngettext("%(count)d day",
-                                        "%(count)d days",
+        formatted_expiration = ngettext("%(count)d day ago",
+                                        "%(count)d days ago",
                                         days,
                                         {"count": days})
     elif expiration >= 30:
         months = int(expiration / 30)
-        formatted_expiration = ngettext("%(count)d month",
-                                        "%(count)d months",
+        formatted_expiration = ngettext("%(count)d month ago",
+                                        "%(count)d months ago",
                                         months,
                                         {"count": months})
     return formatted_expiration
@@ -91,15 +91,16 @@ def _build_header(channel):
     return v
 
 def _build_video_expires(channel, grid):
-    grid.pack_label(_("Videos expire after"), grid.ALIGN_RIGHT)
+    grid.pack_label(_("Auto-Expire Videos:"), grid.ALIGN_RIGHT)
+
     expire_options = [
-        ("system", _("Default (%(expiration)s)",
+        ("system", _("Watched %(expiration)s (Default)",
                      {"expiration": get_formatted_default_expiration()})),
-        ("24", _("1 day")),
-        ("72", _("3 days")),
-        ("144", _("6 days")),
-        ("240", _("10 days")),
-        ("720", _("1 month")),
+        ("24", _("Watched 1 day ago")),
+        ("72", _("Watched 3 days ago")),
+        ("144", _("Watched 6 days ago")),
+        ("240", _("Watched 10 days ago")),
+        ("720", _("Watched 1 month ago")),
         ("never", _("never"))
     ]
     expire_values = [e[0] for e in expire_options]
@@ -132,18 +133,18 @@ def _build_video_expires(channel, grid):
         messages.SetChannelExpire(channel, expire_type, expire_time).send_to_backend()
     expire_combo.connect('changed', expire_changed)
 
-    grid.pack(expire_combo)
+    grid.pack(expire_combo, grid.ALIGN_LEFT)
 
 def _build_remember_items(channel, grid):
-    grid.pack_label(_("Remember this many older items in addition to the current contents"), grid.ALIGN_RIGHT)
+    grid.pack_label(_("Outdated Feed Items:"), grid.ALIGN_RIGHT)
     older_options = [
-        ("-1", _("Default (%(number)s)",
+        ("-1", _("Keep %(number)s (Default)",
                  {"number": config.get(prefs.MAX_OLD_ITEMS_DEFAULT)})),
-        ("0", "0"),
-        ("20", "20"),
-        ("50", "50"),
-        ("100", "100"),
-        ("1000", "1000")
+        ("0", "Keep 0"),
+        ("20", "Keep 20"),
+        ("50", "Keep 50"),
+        ("100", "Keep 100"),
+        ("1000", "Keep 1000")
     ]
     older_values = [o[0] for o in older_options]
     older_combo = widgetset.OptionMenu([o[1] for o in older_options])
@@ -167,49 +168,7 @@ def _build_remember_items(channel, grid):
 
     older_combo.connect('changed', older_changed)
 
-    grid.pack(older_combo)
-
-def _build_auto_download(channel, grid):
-    auto_download_cbx = widgetset.Checkbox(_("Don't Auto Download when more than this many videos are waiting unwatched"))
-    grid.pack(auto_download_cbx, grid.ALIGN_RIGHT)
-    
-    auto_download_entry = widgetset.TextEntry()
-    auto_download_entry.set_width(5)
-    grid.pack(auto_download_entry, grid.ALIGN_LEFT)
-
-    if channel.max_new == u"unlimited":
-        auto_download_cbx.set_checked(False)
-        auto_download_entry.set_text("3")
-        auto_download_entry.disable_widget()
-    else:
-        auto_download_cbx.set_checked(True)
-        auto_download_entry.set_text(str(channel.max_new))
-        auto_download_entry.enable_widget()
-
-    def textentry_changed(widget):
-        try:
-            v = int(widget.get_text().strip())
-            if v <= 0:
-                widget.set_text("0")
-                v = 0
-
-            messages.SetChannelMaxNew(channel, int(v)).send_to_backend()
-        except ValueError, ve:
-            pass
-
-    def checkbox_changed(widget):
-        if widget.get_checked():
-            auto_download_entry.enable_widget()
-            textentry_changed(auto_download_entry)
-        else:
-            auto_download_entry.disable_widget()
-            messages.SetChannelMaxNew(channel, u"unlimited").send_to_backend()
-
-    auto_download_entry.connect('changed', textentry_changed)
-    auto_download_cbx.connect('toggled', checkbox_changed)
-
-def _build_clear_older_items_now(channel):
-    button = widgetset.Button(_("Clear older items now"))
+    button = widgetset.Button(_("Remove All"))
     button.set_size(widgetconst.SIZE_SMALL)
 
     lab = widgetset.Label("")
@@ -225,7 +184,62 @@ def _build_clear_older_items_now(channel):
         lab.set_text(_("Old items have been removed."))
     button.connect('clicked', _handle_clicked)
 
-    return build_control_line((button, lab), padding=2)
+    grid.pack(older_combo, grid.ALIGN_LEFT)
+    grid.pack(button, grid.ALIGN_LEFT)
+    grid.end_line(spacing=2)
+
+    grid.pack_label("")
+    grid.pack(lab, grid.ALIGN_LEFT)
+
+    grid.pack
+
+def _build_auto_download(channel, grid):
+    auto_download_cbx = widgetset.Checkbox(_("Pause Auto-Downloading:"))
+    grid.pack(auto_download_cbx, grid.ALIGN_RIGHT)
+    
+
+    max_new_options = [
+        ("1", _("1 unwateched item")),
+        ("3", _("3 unwatched items")),
+        ("5", _("5 unwatched items")),
+        ("10", _("10 unwatched items")),
+        ("15", _("15 unwatched items"))
+    ]
+
+    max_new_values = [e[0] for e in max_new_options]
+    max_new_combo = widgetset.OptionMenu([e[1] for e in max_new_options])
+
+    if channel.max_new == u"unlimited":
+        auto_download_cbx.set_checked(False)
+        max_new_combo.set_selected(2)
+        max_new_combo.disable_widget()
+    else:
+        auto_download_cbx.set_checked(True)
+        value = channel.max_new
+        if value < 1:
+            value = 1
+        else:
+            while value not in max_new_values and value > 1:
+                value = value - 1
+        max_new_combo.set_selected(value)
+
+    def max_new_changed(widget, index):
+        value = max_new_options[index][0]
+        messages.SetChannelMaxNew(channel, int(value)).send_to_backend()
+
+    def checkbox_changed(widget):
+        if widget.get_checked():
+            max_new_combo.enable_widget()
+            max_new_changed(max_new_combo, 2)
+        else:
+            max_new_combo.disable_widget()
+            max_new_changed(max_new_combo, 2)
+            messages.SetChannelMaxNew(channel, u"unlimited").send_to_backend()
+
+    grid.pack(max_new_combo, grid.ALIGN_LEFT)
+
+    max_new_combo.connect('changed', max_new_changed)
+    auto_download_cbx.connect('toggled', checkbox_changed)
 
 def run_dialog(channel):
     """Displays the channel settings panel dialog."""
@@ -235,15 +249,14 @@ def run_dialog(channel):
             v = widgetset.VBox(spacing=10)
             v.pack_start(_build_header(channel))
             
-            grid = grid = dialogwidgets.ControlGrid()
+            grid = dialogwidgets.ControlGrid()
+            _build_auto_download(channel, grid)
+            grid.end_line(spacing=6)
             _build_video_expires(channel, grid)
             grid.end_line(spacing=6)
             _build_remember_items(channel, grid)
-            grid.end_line(spacing=6)
-            _build_auto_download(channel, grid)
             v.pack_start(grid.make_table())
 
-            v.pack_start(_build_clear_older_items_now(channel))
             v.pack_end(separator.HThinSeparator((0.6, 0.6, 0.6)), padding=6)
 
             pref_window.set_extra_widget(v)
