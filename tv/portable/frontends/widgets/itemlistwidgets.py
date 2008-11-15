@@ -68,9 +68,45 @@ class TitleDrawer(widgetset.DrawingArea):
         y = (context.height - height) / 2
         textbox.draw(context, 0, y, context.width, height)
 
+    def size_request(self, layout):
+        return (20, layout.font(2.2, family="Helvetica").line_height())
+
     def update_title(self, new_title):
         self.title = new_title
         self.queue_redraw()
+
+class BoxedIconDrawer(widgetset.DrawingArea):
+    """Draws the icon for an item list."""
+    def __init__(self, image):
+        widgetset.DrawingArea.__init__(self)
+        self.icon = widgetset.ImageSurface(image)
+
+    def size_request(self, layout):
+        return (41, 41)
+
+    def draw(self, context, layout):
+        context.save()
+        widgetutil.round_rect(context, 0.5, 0.5, 40, 40, 3)
+        context.clip()
+        if not (self.icon.width == self.icon.height == 41):
+            context.set_color((0, 0, 0))
+            widgetutil.round_rect(context, 1, 1, 39, 39, 3)
+            context.fill()
+            x = int((41 - self.icon.width) / 2)
+            y = int((41 - self.icon.height) / 2)
+        else:
+            x = y = 0
+        self.icon.draw(context, x, y, self.icon.width, self.icon.height)
+        context.restore()
+        context.set_line_width(1)
+        # Draw the black inner border
+        context.set_color((0, 0, 0), 0.16)
+        widgetutil.round_rect(context, 1.5, 1.5, 38, 38, 3)
+        context.stroke()
+        # Draw the white outer border
+        context.set_color((1, 1, 1), 0.76)
+        widgetutil.round_rect(context, 0.5, 0.5, 40, 40, 3)
+        context.stroke()
 
 class ItemListTitlebar(widgetset.Background):
     """Titlebar for feeds, playlists and static tabs that display items.
@@ -79,16 +115,20 @@ class ItemListTitlebar(widgetset.Background):
       search-changed (self, search_text) -- The value in the search box
           changed and the items listed should be filtered
     """
-    def __init__(self, title, icon):
+    def __init__(self, title, icon, add_icon_box=False):
         widgetset.Background.__init__(self)
         hbox = widgetset.HBox()
         self.add(hbox)
         # Pack the icon and title
-        image = widgetset.ImageDisplay(icon)
-        imagebox = widgetutil.align(image, xscale=1, yscale=1)
-        imagebox.set_size_request(61, 61)
         self.title_drawer = TitleDrawer(title)
-        hbox.pack_start(imagebox)
+        if add_icon_box:
+            icon_widget = BoxedIconDrawer(icon)
+        else:
+            icon_widget = widgetset.ImageDisplay(icon)
+        alignment = widgetset.Alignment(yalign=0.5, xalign=0.5)
+        alignment.add(icon_widget)
+        alignment.set_size_request(-1, 61)
+        hbox.pack_start(alignment)
         hbox.pack_start(self.title_drawer, padding=15, expand=True)
         # Pack stuff to the right
         extra = self._build_titlebar_extra()

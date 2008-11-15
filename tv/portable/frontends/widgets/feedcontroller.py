@@ -64,7 +64,8 @@ class FeedController(itemlistcontroller.ItemListController):
 
         widget = itemlistwidgets.ItemContainerWidget()
         widget.sort_bar.connect('sort-changed', self.on_sort_changed)
-        self.titlebar = itemlistwidgets.ChannelTitlebar(feed_info.name, icon)
+        self.titlebar = itemlistwidgets.ChannelTitlebar(feed_info.name, icon,
+                add_icon_box=not self.is_folder)
         self.titlebar.connect('search-changed', self._on_search_changed)
         self.titlebar.connect('save-search', self._on_save_search)
         widget.titlebar_vbox.pack_start(self.titlebar)

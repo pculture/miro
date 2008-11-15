@@ -299,7 +299,6 @@ class ItemListController(object):
         raise NotImplementedError()
 
 class SimpleItemListController(ItemListController):
-
     def __init__(self):
         ItemListController.__init__(self, self.type, self.id)
 
