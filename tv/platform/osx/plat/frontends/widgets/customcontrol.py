@@ -215,12 +215,12 @@ class CustomButton(drawing.DrawingMixin, Widget):
         self.view = DrawableButton.alloc().init()
         self.view.setRefusesFirstResponder_(NO)
     
-    def enable_widget(self):
-        Widget.enable_widget(self)
+    def enable(self):
+        Widget.enable(self)
         self.view.setEnabled_(True)
 
-    def disable_widget(self):
-        Widget.disable_widget(self)
+    def disable(self):
+        Widget.disable(self)
         self.view.setEnabled_(False)
 
 class ContinuousCustomButton(CustomButton):
@@ -269,10 +269,10 @@ class CustomSlider(drawing.DrawingMixin, Widget):
     def set_increments(self, increment, big_increment):
         pass
 
-    def enable_widget(self):
-        Widget.enable_widget(self)
+    def enable(self):
+        Widget.enable(self)
         self.view.setEnabled_(True)
 
-    def disable_widget(self):
-        Widget.disable_widget(self)
+    def disable(self):
+        Widget.disable(self)
         self.view.setEnabled_(False)

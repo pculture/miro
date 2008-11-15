@@ -65,7 +65,7 @@ class PlaybackControls(widgetset.HBox):
             button.set_delays(0.6, 0.3)
         else:
             button = imagebutton.ImageButton(name)
-        button.disable_widget()
+        button.disable()
         return button
     
     def handle_new_selection(self, has_playable):
@@ -73,21 +73,21 @@ class PlaybackControls(widgetset.HBox):
             self.play.set_disabled(not has_playable)
 
     def handle_play(self, obj, duration):
-        self.previous.enable_widget()
-        self.stop.enable_widget()
-        self.play.enable_widget()
+        self.previous.enable()
+        self.stop.enable()
+        self.play.enable()
         self.play.set_image('pause')
-        self.forward.enable_widget()
-        self.fullscreen.enable_widget()
+        self.forward.enable()
+        self.fullscreen.enable()
         self.queue_redraw()
 
     def handle_selecting(self, obj):
-        self.previous.enable_widget()
-        self.stop.enable_widget()
-        self.play.disable_widget()
+        self.previous.enable()
+        self.stop.enable()
+        self.play.disable()
         self.play.set_image('pause')
-        self.forward.enable_widget()
-        self.fullscreen.enable_widget()
+        self.forward.enable()
+        self.fullscreen.enable()
         self.queue_redraw()
     
     def handle_pause(self, obj):
@@ -96,11 +96,11 @@ class PlaybackControls(widgetset.HBox):
 
     def handle_stop(self, obj):
         self.handle_pause(obj)
-        self.previous.disable_widget()
-        self.stop.disable_widget()
-        self.play.disable_widget()
-        self.forward.disable_widget()
-        self.fullscreen.disable_widget()
+        self.previous.disable()
+        self.stop.disable()
+        self.play.disable()
+        self.forward.disable()
+        self.fullscreen.disable()
         self.queue_redraw()
 
 class ProgressTime(widgetset.DrawingArea):
@@ -208,7 +208,7 @@ class ProgressSlider(widgetset.CustomSlider):
         app.playback_manager.connect('selecting-file', self.handle_selecting)
         app.playback_manager.connect('will-play', self.handle_play)
         app.playback_manager.connect('did-stop', self.handle_stop)
-        self.disable_widget()
+        self.disable()
 
     def handle_progress(self, obj, elapsed, total):
         if elapsed is None or total is None:
@@ -219,14 +219,14 @@ class ProgressSlider(widgetset.CustomSlider):
             self.set_value(0)
 
     def handle_play(self, obj, duration):
-        self.enable_widget()
+        self.enable()
 
     def handle_selecting(self, obj):
-        self.disable_widget()
+        self.disable()
 
     def handle_stop(self, obj):
         self.set_value(0)
-        self.disable_widget()
+        self.disable()
 
     def is_horizontal(self):
         return True

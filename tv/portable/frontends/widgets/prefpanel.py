@@ -98,16 +98,16 @@ def attach_boolean(widget, descriptor, sensitive_widget=None):
         config.set(descriptor, widget.get_checked())
         if sensitive_widget != None:
             if widget.get_checked():
-                [sw.enable_widget() for sw in sensitive_widget]
+                [sw.enable() for sw in sensitive_widget]
             else:
-                [sw.disable_widget() for sw in sensitive_widget]
+                [sw.disable() for sw in sensitive_widget]
 
     widget.set_checked(config.get(descriptor))
     if sensitive_widget != None:
         if widget.get_checked():
-            [sw.enable_widget() for sw in sensitive_widget]
+            [sw.enable() for sw in sensitive_widget]
         else:
-            [sw.disable_widget() for sw in sensitive_widget]
+            [sw.disable() for sw in sensitive_widget]
 
     widget.connect('toggled', boolean_changed)
 

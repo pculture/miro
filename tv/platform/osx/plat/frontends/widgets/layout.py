@@ -177,15 +177,15 @@ class Box(Container):
             position += child_length + self.spacing
         return position
 
-    def enable_widget(self):
-        Container.enable_widget(self)
+    def enable(self):
+        Container.enable(self)
         for mem in self.children:
-            mem.enable_widget()
+            mem.enable()
 
-    def disable_widget(self):
-        Container.disable_widget(self)
+    def disable(self):
+        Container.disable(self)
         for mem in self.children:
-            mem.disable_widget()
+            mem.disable()
 
 class VBox(Box):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
@@ -606,35 +606,35 @@ class Table(Container):
         self.row_spacing = spacing
         self.invalidate_size_request()
 
-    def enable_widget(self, row=None, column=None):
-        Container.enable_widget(self)
+    def enable(self, row=None, column=None):
+        Container.enable(self)
         if row != None and column != None:
             if self._cells[column, row]:
-                self._cells[column, row].enable_widget()
+                self._cells[column, row].enable()
         elif row != None:
             for mem in self._cells.row(row):
-                if mem: mem.enable_widget()
+                if mem: mem.enable()
         elif column != None:
             for mem in self._cells.column(column):
-                if mem: mem.enable_widget()
+                if mem: mem.enable()
         else:
             for mem in self._cells:
-                if mem: mem.enable_widget()
+                if mem: mem.enable()
 
-    def disable_widget(self, row=None, column=None):
-        Container.disable_widget(self)
+    def disable(self, row=None, column=None):
+        Container.disable(self)
         if row != None and column != None:
             if self._cells[column, row]: 
-                self._cells[column, row].disable_widget()
+                self._cells[column, row].disable()
         elif row != None:
             for mem in self._cells.row(row):
-                if mem: mem.disable_widget()
+                if mem: mem.disable()
         elif column != None:
             for mem in self._cells.column(column):
-                if mem: mem.disable_widget()
+                if mem: mem.disable()
         else:
             for mem in self._cells:
-                if mem: mem.disable_widget()
+                if mem: mem.disable()
 
 class Scroller(Bin):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""

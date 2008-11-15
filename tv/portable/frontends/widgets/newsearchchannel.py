@@ -102,24 +102,24 @@ def run_dialog():
             hb2.pack_start(choice_table, expand=True)
 
             # only the channel row is enabled
-            choice_table.disable_widget(row=1, column=1)
-            choice_table.disable_widget(row=2, column=1)
+            choice_table.disable(row=1, column=1)
+            choice_table.disable(row=2, column=1)
 
             def handle_clicked(widget):
                 # this enables and disables the fields in the table
                 # based on which radio button is selected
                 if widget is channel_rb:
-                    choice_table.enable_widget(row=0, column=1)
-                    choice_table.disable_widget(row=1, column=1)
-                    choice_table.disable_widget(row=2, column=1)
+                    choice_table.enable(row=0, column=1)
+                    choice_table.disable(row=1, column=1)
+                    choice_table.disable(row=2, column=1)
                 elif widget is search_engine_rb:
-                    choice_table.disable_widget(row=0, column=1)
-                    choice_table.enable_widget(row=1, column=1)
-                    choice_table.disable_widget(row=2, column=1)
+                    choice_table.disable(row=0, column=1)
+                    choice_table.enable(row=1, column=1)
+                    choice_table.disable(row=2, column=1)
                 else:
-                    choice_table.disable_widget(row=0, column=1)
-                    choice_table.disable_widget(row=1, column=1)
-                    choice_table.enable_widget(row=2, column=1)
+                    choice_table.disable(row=0, column=1)
+                    choice_table.disable(row=1, column=1)
+                    choice_table.enable(row=2, column=1)
 
             channel_rb.connect('clicked', handle_clicked)
             search_engine_rb.connect('clicked', handle_clicked)

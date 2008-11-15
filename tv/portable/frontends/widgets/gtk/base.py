@@ -191,19 +191,19 @@ class Widget(signals.SignalEmitter):
         self._widget.get_colormap().alloc_color(color)
         return color
 
-    def enable_widget(self):
+    def enable(self):
         self._disabled = False
         self._widget.set_sensitive(True)
 
-    def disable_widget(self):
+    def disable(self):
         self._disabled = True
         self._widget.set_sensitive(False)
 
     def set_disabled(self, disabled):
         if disabled:
-            self.disable_widget()
+            self.disable()
         else:
-            self.enable_widget()
+            self.enable()
 
     def get_disabled(self):
         return self._disabled
@@ -239,8 +239,8 @@ class Bin(Widget):
         self.remove()
         self.add(new_child)
 
-    def enable_widget(self):
-        self.child.enable_widget()
+    def enable(self):
+        self.child.enable()
 
-    def disable_widget(self):
-        self.child.disable_widget()
+    def disable(self):
+        self.child.disable()

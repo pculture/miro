@@ -75,12 +75,12 @@ class BrowserToolbar(widgetset.HBox):
 
         self.back_button = imagebutton.ImageButton('navback')
         self.back_button.connect('clicked', self._on_back_button_clicked)
-        self.back_button.disable_widget()
+        self.back_button.disable()
         self.pack_start(widgetutil.align_middle(self.back_button, left_pad=4))
         
         self.forward_button = imagebutton.ImageButton('navforward')
         self.forward_button.connect('clicked', self._on_forward_button_clicked)
-        self.forward_button.disable_widget()
+        self.forward_button.disable()
         self.pack_start(widgetutil.align_middle(self.forward_button))
 
         self.reload_button = imagebutton.ImageButton('navreload')
@@ -176,21 +176,21 @@ class BrowserNav(widgetset.VBox):
 
     def enable_disable_navigation(self):
         if self.browser.can_go_back():
-            self.toolbar.back_button.enable_widget()
+            self.toolbar.back_button.enable()
         else:
-            self.toolbar.back_button.disable_widget()
+            self.toolbar.back_button.disable()
 
         if self.browser.can_go_forward():
-            self.toolbar.forward_button.enable_widget()
+            self.toolbar.forward_button.enable()
         else:
-            self.toolbar.forward_button.disable_widget()
+            self.toolbar.forward_button.disable()
 
     def _on_net_start(self, widget):
-        self.toolbar.stop_button.enable_widget()
+        self.toolbar.stop_button.enable()
         self.enable_disable_navigation()
 
     def _on_net_stop(self, widget):
-        self.toolbar.stop_button.disable_widget()
+        self.toolbar.stop_button.disable()
         self.enable_disable_navigation()
 
     def _on_browser_back(self, widget):

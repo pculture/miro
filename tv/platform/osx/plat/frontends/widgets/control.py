@@ -107,12 +107,12 @@ class BaseTextEntry(SizedControl):
     def set_activates_default(self, setting):
         pass
 
-    def enable_widget(self):
-        SizedControl.enable_widget(self)
+    def enable(self):
+        SizedControl.enable(self)
         self.view.setEnabled_(True)
 
-    def disable_widget(self):
-        SizedControl.disable_widget(self)
+    def disable(self):
+        SizedControl.disable(self)
         self.view.setEnabled_(False)
 
 class MiroTextField(NSTextField):
@@ -182,12 +182,12 @@ class Checkbox(SizedControl):
         else:
             self.view.setState_(NSOffState)
 
-    def enable_widget(self):
-        SizedControl.enable_widget(self)
+    def enable(self):
+        SizedControl.enable(self)
         self.view.setEnabled_(True)
 
-    def disable_widget(self):
-        SizedControl.disable_widget(self)
+    def disable(self):
+        SizedControl.disable(self)
         self.view.setEnabled_(False)
 
 class Button(SizedControl):
@@ -248,12 +248,12 @@ class Button(SizedControl):
     def baseline(self):
         return -self.view.font().descender() + 10 + self.pad_height
 
-    def enable_widget(self):
-        SizedControl.enable_widget(self)
+    def enable(self):
+        SizedControl.enable(self)
         self.view.setEnabled_(True)
 
-    def disable_widget(self):
-        SizedControl.disable_widget(self)
+    def disable(self):
+        SizedControl.disable(self)
         self.view.setEnabled_(False)
 
 class MiroPopupButton(NSPopUpButton):
@@ -291,12 +291,12 @@ class OptionMenu(SizedControl):
     def get_selected(self):
         return self.view.indexOfSelectedItem()
 
-    def enable_widget(self):
-        SizedControl.enable_widget(self)
+    def enable(self):
+        SizedControl.enable(self)
         self.view.setEnabled_(True)
 
-    def disable_widget(self):
-        SizedControl.disable_widget(self)
+    def disable(self):
+        SizedControl.disable(self)
         self.view.setEnabled_(False)
 
 class RadioButtonGroup:
@@ -360,12 +360,12 @@ class RadioButton(SizedControl):
     def set_selected(self):
         self.group.set_selected(self)
 
-    def enable_widget(self):
-        SizedControl.enable_widget(self)
+    def enable(self):
+        SizedControl.enable(self)
         self.view.setEnabled_(True)
 
-    def disable_widget(self):
-        SizedControl.disable_widget(self)
+    def disable(self):
+        SizedControl.disable(self)
         self.view.setEnabled_(False)
 
 

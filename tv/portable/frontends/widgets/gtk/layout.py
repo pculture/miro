@@ -56,13 +56,13 @@ class Box(Widget):
         self._widget.remove(widget._widget)
         self.children.remove(widget)
 
-    def enable_widget(self):
+    def enable(self):
         for mem in self.children:
-            mem.enable_widget()
+            mem.enable()
 
-    def disable_widget(self):
+    def disable(self):
         for mem in self.children:
-            mem.disable_widget()
+            mem.disable()
 
 class HBox(Box):
     WIDGET_CLASS = gtk.HBox
@@ -154,33 +154,33 @@ class Table(Widget):
     def set_row_spacing(self, spacing):
         self._widget.set_row_spacings(spacing)
 
-    def enable_widget(self, row=None, column=None):
+    def enable(self, row=None, column=None):
         if row != None and column != None:
             if self.children[column, row]:
-                self.children[column, row].enable_widget()
+                self.children[column, row].enable()
         elif row != None:
             for mem in self.children.row(row):
-                if mem: mem.enable_widget()
+                if mem: mem.enable()
         elif column != None:
             for mem in self.children.column(column):
-                if mem: mem.enable_widget()
+                if mem: mem.enable()
         else:
             for mem in self.children:
-                if mem: mem.enable_widget()
+                if mem: mem.enable()
 
-    def disable_widget(self, row=None, column=None):
+    def disable(self, row=None, column=None):
         if row != None and column != None:
             if self.children[column, row]: 
-                self.children[column, row].disable_widget()
+                self.children[column, row].disable()
         elif row != None:
             for mem in self.children.row(row):
-                if mem: mem.disable_widget()
+                if mem: mem.disable()
         elif column != None:
             for mem in self.children.column(column):
-                if mem: mem.disable_widget()
+                if mem: mem.disable()
         else:
             for mem in self.children:
-                if mem: mem.disable_widget()
+                if mem: mem.disable()
 
 class TabContainer(Widget):
     def __init__(self, xalign=0, yalign=0, xscale=0, yscale=0,

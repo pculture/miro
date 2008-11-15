@@ -207,7 +207,7 @@ def _build_auto_download(channel, grid):
     if channel.max_new == u"unlimited":
         auto_download_cbx.set_checked(False)
         max_new_combo.set_selected(2)
-        max_new_combo.disable_widget()
+        max_new_combo.disable()
     else:
         auto_download_cbx.set_checked(True)
         value = channel.max_new
@@ -224,10 +224,10 @@ def _build_auto_download(channel, grid):
 
     def checkbox_changed(widget):
         if widget.get_checked():
-            max_new_combo.enable_widget()
+            max_new_combo.enable()
             max_new_changed(max_new_combo, 2)
         else:
-            max_new_combo.disable_widget()
+            max_new_combo.disable()
             max_new_changed(max_new_combo, 2)
             messages.SetChannelMaxNew(channel, u"unlimited").send_to_backend()
 

@@ -224,28 +224,28 @@ class FirstTimeDialog(widgetset.Window):
 
         def handle_radio_button_clicked(widget):
             if widget is no_rb:
-                group_box.disable_widget()
-                search_entry.disable_widget()
-                change_button.disable_widget()
+                group_box.disable()
+                search_entry.disable()
+                change_button.disable()
                 switch_mode("finish")
 
             elif widget is yes_rb:
-                group_box.enable_widget()
+                group_box.enable()
                 switch_mode("search")
                 if rbg2.get_selected() is restrict_rb:
-                    search_entry.disable_widget()
-                    change_button.disable_widget()
+                    search_entry.disable()
+                    change_button.disable()
                 else:
-                    search_entry.enable_widget()
-                    change_button.enable_widget()
+                    search_entry.enable()
+                    change_button.enable()
 
             elif widget is restrict_rb:
-                search_entry.disable_widget()
-                change_button.disable_widget()
+                search_entry.disable()
+                change_button.disable()
 
             elif widget is search_rb:
-                search_entry.enable_widget()
-                change_button.enable_widget()
+                search_entry.enable()
+                change_button.enable()
 
         no_rb.connect('clicked', handle_radio_button_clicked)
         yes_rb.connect('clicked', handle_radio_button_clicked)
@@ -287,11 +287,11 @@ class FirstTimeDialog(widgetset.Window):
         v.pack_start(widgetutil.align_right(h))
 
         def handle_cancel_clicked(widget):
-            search_button.enable_widget()
-            cancel_button.disable_widget()
+            search_button.enable()
+            cancel_button.disable()
 
-            prev_button.enable_widget()
-            finish_button.enable_widget()
+            prev_button.enable()
+            finish_button.enable()
             self.cancelled = True
 
         def make_progress():
@@ -325,11 +325,11 @@ class FirstTimeDialog(widgetset.Window):
 
         def handle_search_clicked(widget):
             self.cancelled = False
-            search_button.disable_widget()
-            cancel_button.enable_widget()
+            search_button.disable()
+            cancel_button.enable()
 
-            prev_button.disable_widget()
-            finish_button.disable_widget()
+            prev_button.disable()
+            finish_button.disable()
 
             self.finder = util.gather_media_files(self.search_directory)
             threads.call_on_ui_thread(make_progress)
@@ -337,5 +337,5 @@ class FirstTimeDialog(widgetset.Window):
         search_button.connect('clicked', handle_search_clicked)
         cancel_button.connect('clicked', handle_cancel_clicked)
 
-        cancel_button.disable_widget()
+        cancel_button.disable()
         return v
