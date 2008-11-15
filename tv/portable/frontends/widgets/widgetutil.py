@@ -81,7 +81,6 @@ def draw_rounded_icon(context, icon, x, y, width, height, inset=0):
         icon_y = int((height - icon.height) / 2)
     else:
         icon_x = icon_y = 0
-    print x + icon_x, y + icon_y
     icon.draw(context, x + icon_x, y + icon_y, icon.width, icon.height)
     context.restore()
 
