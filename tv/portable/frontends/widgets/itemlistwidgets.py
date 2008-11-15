@@ -85,19 +85,7 @@ class BoxedIconDrawer(widgetset.DrawingArea):
         return (41, 41)
 
     def draw(self, context, layout):
-        context.save()
-        widgetutil.round_rect(context, 0.5, 0.5, 40, 40, 3)
-        context.clip()
-        if not (self.icon.width == self.icon.height == 41):
-            context.set_color((0, 0, 0))
-            widgetutil.round_rect(context, 1, 1, 39, 39, 3)
-            context.fill()
-            x = int((41 - self.icon.width) / 2)
-            y = int((41 - self.icon.height) / 2)
-        else:
-            x = y = 0
-        self.icon.draw(context, x, y, self.icon.width, self.icon.height)
-        context.restore()
+        widgetutil.draw_rounded_icon(context, self.icon, 0, 0, 41, 41, inset=1)
         context.set_line_width(1)
         # Draw the black inner border
         context.set_color((0, 0, 0), 0.16)

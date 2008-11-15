@@ -708,18 +708,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         context.stroke()
 
     def draw_thumbnail(self, context, x, y, width, height):
-        height = min(height, 105)
-        if width != self.data.icon.width or height != self.data.icon.height:
-            context.rectangle(x, y, width, height)
-            context.set_color((0, 0, 0))
-            context.fill()
-            thumb_x = round(x + int((width - self.data.icon.width) / 2))
-            thumb_y = round(y + int((height - self.data.icon.height) / 2))
-        else:
-            thumb_x = thumb_y = 0
-        self.data.icon.draw(context, thumb_x, thumb_y, 
-                self.data.icon.width, self.data.icon.height)
-        self.thumb_overlay.draw(context, x, y, width, height)
+        widgetutil.draw_rounded_icon(context, self.data.icon, x, y, 154, 105)
+        self.thumb_overlay.draw(context, x, y, 154, 105)
 
     def _thumbnail_bubble_path(self, context, x, y, radius, inner_width):
         context.move_to(x + radius, y + 1.5)

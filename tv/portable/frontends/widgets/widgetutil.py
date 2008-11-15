@@ -61,6 +61,30 @@ def round_rect(context, x, y, width, height, edge_radius):
     context.rel_line_to(0, -inner_height)
     context.arc(x_inner1, y_inner1, edge_radius, pi, pi*3/2)
 
+def draw_rounded_icon(context, icon, x, y, width, height, inset=0):
+    """Draw an icon with the corners rounded.
+    
+    x, y, width, height define where the box is.
+
+    inset creates a margin between where the images is drawn and (x, y, width,
+    height)
+    """
+    context.save()
+    round_rect(context, x + inset, y + inset, width - inset*2, 
+            height - inset*2, 3)
+    context.clip()
+    if icon.width != width or icon.height != height:
+        context.set_color((0, 0, 0))
+        round_rect(context, x, y, width, height, 3)
+        context.fill()
+        icon_x = int((width - icon.width) / 2)
+        icon_y = int((height - icon.height) / 2)
+    else:
+        icon_x = icon_y = 0
+    print x + icon_x, y + icon_y
+    icon.draw(context, x + icon_x, y + icon_y, icon.width, icon.height)
+    context.restore()
+
 def align(widget, xalign=0, yalign=0, xscale=0, yscale=0, 
         top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
     """Create an alignment, then add widget to it and return the alignment."""
