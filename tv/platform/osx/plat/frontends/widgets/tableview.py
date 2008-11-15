@@ -643,7 +643,7 @@ class TableView(Widget):
         # until there is no extra space.
         columns = self.tableview.tableColumns()
         column_width = sum(column.width() for column in columns)
-        width_difference = self.tableview.frame().size.width - column_width
+        width_difference = self.viewport.area().size.width - column_width
         width_difference -= self.tableview.intercellSpacing().width * len(columns)
         if width_difference == 0:
             return
