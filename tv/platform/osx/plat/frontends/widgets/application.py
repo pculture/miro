@@ -37,7 +37,7 @@ import traceback
 from objc import YES, NO, nil, signature
 from AppKit import *
 from Foundation import *
-from PyObjCTools import AppHelper
+from PyObjCTools import AppHelper, Conversion
 from ExceptionHandling import NSExceptionHandler, NSLogAndHandleEveryExceptionMask, NSStackTraceKey
 
 from miro import app
@@ -70,12 +70,17 @@ class OSXApplication(Application):
         Application.connect_to_signals(self)
         eventloop.connect('begin-loop', self.beginLoop)
         eventloop.connect('end-loop', self.endLoop)
+        config.add_change_callback(self.on_pref_changed)
 
     def startup_ui(self):
         migrateappname.migrateVideos('Democracy', 'Miro')
         osxmenus.populate_menu()
         Application.startup_ui(self)
         video.register_quicktime_components()
+
+    def on_pref_changed(self, key, value):
+        if key == prefs.RUN_DTV_AT_STARTUP.key:
+            self.set_launch_at_startup(bool(value))
 
     ### eventloop (our own one, not the Cocoa one) delegate methods
     def beginLoop(self, loop):
@@ -136,6 +141,32 @@ class OSXApplication(Application):
         body = _('Download of video \'%s\' is finished.') % item.get_title()
         icon = _growlImage.Image.imageFromPath(item.getThumbnail())
         self.app_controller.growl_notifier.notify(GROWL_DOWNLOAD_COMPLETE_NOTIFICATION, title, body, icon=icon, sticky=True)
+        
+    def set_launch_at_startup(self, launch):
+        defaults = NSUserDefaults.standardUserDefaults()
+        lwdomain = defaults.persistentDomainForName_('loginwindow')
+        lwdomain = Conversion.pythonCollectionFromPropertyList(lwdomain)
+        if lwdomain is None:
+            lwdomain = dict()
+        if 'AutoLaunchedApplicationDictionary' not in lwdomain:
+            lwdomain['AutoLaunchedApplicationDictionary'] = list()
+        launchedApps = lwdomain['AutoLaunchedApplicationDictionary']
+        ourPath = NSBundle.mainBundle().bundlePath()
+        ourEntry = None
+        for entry in launchedApps:
+            if entry.get('Path') == ourPath:
+                ourEntry = entry
+                break
+
+        if launch and ourEntry is None:
+            launchInfo = dict(Path=ourPath, Hide=NO)
+            launchedApps.append(launchInfo)
+        elif ourEntry is not None:
+            launchedApps.remove(ourEntry)
+
+        lwdomain = Conversion.propertyListFromPythonCollection(lwdomain)
+        defaults.setPersistentDomain_forName_(lwdomain, 'loginwindow')
+        defaults.synchronize()
 
 
 class AppController(NSObject):
