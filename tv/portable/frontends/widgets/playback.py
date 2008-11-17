@@ -54,7 +54,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.is_suspended = False
         self.open_successful = False
         self.playlist = None
-        self.position = None
+        self.position = 0
         self.mark_as_watched_timeout = None
         self.update_timeout = None
         self.create_signal('selecting-file')
@@ -206,7 +206,8 @@ class PlaybackManager (signals.SignalEmitter):
         self.is_fullscreen = False
         self.previous_left_widget = None
         self.video_display = None
-        self.position = self.playlist = None
+        self.position = 0
+        self.playlist = None
         self.emit('did-stop')
 
     def update_current_resume_time(self, resume_time=-1):
