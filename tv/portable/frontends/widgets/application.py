@@ -75,6 +75,8 @@ class Application:
         app.info_updater = InfoUpdater()
         app.watched_folder_manager = watchedfolders.WatchedFolderManager()
         self.download_count = 0
+        self.paused_count = 0
+        self.unwatched_count = 0
 
     def startup(self):
         self.connect_to_signals()
@@ -165,7 +167,9 @@ class Application:
         messages.TrackChannels().send_to_backend()
         messages.TrackPlaylists().send_to_backend()
         messages.TrackDownloadCount().send_to_backend()
+        messages.TrackPausedCount().send_to_backend()
         messages.TrackNewCount().send_to_backend()
+        messages.TrackUnwatchedCount().send_to_backend()
 
     def get_main_window_dimensions(self):
         """Override this to provide platform-specific Main Window dimensions.
@@ -875,9 +879,15 @@ class WidgetsMessageHandler(messages.MessageHandler):
         static_tab_list = app.tab_list_manager.static_tab_list
         static_tab_list.update_download_count(message.count)
 
+    def handle_paused_count_changed(self, message):
+        app.widgetapp.paused_count = message.count
+
     def handle_new_count_changed(self, message):
         static_tab_list = app.tab_list_manager.static_tab_list
         static_tab_list.update_new_count(message.count)
+
+    def handle_unwatched_count_changed(self, message):
+        app.widgetapp.unwatched_count = message.count
 
     def handle_play_movie(self, message):
         app.playback_manager.start_with_items(message.item_infos)

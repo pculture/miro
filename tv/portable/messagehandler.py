@@ -371,12 +371,26 @@ class DownloadCountTracker(CountTracker):
     def make_message(self, count):
         return messages.DownloadCountChanged(count)
 
+class PausedCountTracker(CountTracker):
+    def get_view(self):
+        return views.pausedItems
+
+    def make_message(self, count):
+        return messages.PausedCountChanged(count)
+
 class NewCountTracker(CountTracker):
     def get_view(self):
         return views.uniqueNewWatchableItems
 
     def make_message(self, count):
         return messages.NewCountChanged(count)
+
+class UnwatchedCountTracker(CountTracker):
+    def get_view(self):
+        return views.unwatchedItems
+
+    def make_message(self, count):
+        return messages.UnwatchedCountChanged(count)
 
 class BackendMessageHandler(messages.MessageHandler):
     def __init__(self):
@@ -387,7 +401,9 @@ class BackendMessageHandler(messages.MessageHandler):
         self.guide_tracker = None
         self.watched_folder_tracker = None
         self.download_count_tracker = None
+        self.paused_count_tracker = None
         self.new_count_tracker = None
+        self.unwatched_count_tracker = None
         self.item_trackers = {}
         search_feed = app.controller.get_global_feed('dtv:search')
         search_feed.connect('update-finished', self._search_update_finished)
@@ -553,6 +569,10 @@ class BackendMessageHandler(messages.MessageHandler):
                     (message.type, message.id))
         else:
             obj.setTitle(message.new_name)
+
+    def handle_play_all_unwatched(self, message):
+        item_infos = [messages.ItemInfo(i) for i in views.unwatchedItems]
+        messages.PlayMovie(item_infos).send_to_frontend()
 
     def handle_folder_expanded_change(self, message):
         folder_view = self.folder_view_for_type(message.type)
@@ -1090,6 +1110,16 @@ class BackendMessageHandler(messages.MessageHandler):
             self.download_count_tracker.stop_tracking()
             self.download_count_tracker = None
 
+    def handle_track_paused_count(self, message):
+        if self.paused_count_tracker is None:
+            self.paused_count_tracker = PausedCountTracker()
+        self.paused_count_tracker.send_message()
+
+    def handle_stop_tracking_paused_count(self, message):
+        if self.paused_count_tracker:
+            self.paused_count_tracker.stop_tracking()
+            self.paused_count_tracker = None
+
     def handle_track_new_count(self, message):
         if self.new_count_tracker is None:
             self.new_count_tracker = NewCountTracker()
@@ -1099,6 +1129,16 @@ class BackendMessageHandler(messages.MessageHandler):
         if self.new_count_tracker:
             self.new_count_tracker.stop_tracking()
             self.new_count_tracker = None
+
+    def handle_track_unwatched_count(self, message):
+        if self.unwatched_count_tracker is None:
+            self.unwatched_count_tracker = UnwatchedCountTracker()
+        self.unwatched_count_tracker.send_message()
+
+    def handle_stop_tracking_unwatched_count(self, message):
+        if self.unwatched_count_tracker:
+            self.unwatched_count_tracker.stop_tracking()
+            self.unwatched_count_tracker = None
 
     def handle_subscription_link_clicked(self, message):
         url = message.url

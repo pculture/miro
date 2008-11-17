@@ -295,15 +295,3 @@ menubar = MenuBar(Menu(main_title, "Video", *VideoItems),
                   Menu(_("P_layback"), "Playback", *PlaybackItems),
                   Menu(_("_Help"), "Help", *HelpItems),
                  )
-
-# FIXME - this doesn't get used ever
-traymenu = Menu("Miro", "Miro",
-                MenuItem(_("Play Unwatched (%(unwatched)d)"), "PlayUnwatched", ()),
-                MenuItem(_("Pause All Downloads (%(downloading)d)"), "PauseDownloads", ()),
-                MenuItem(_("Resume All Downloads (%(paused)d)"), "ResumeDownloads", ()),
-                Separator(),
-                MenuItem(_("Options..."), "EditPreferences", ()),
-                Separator(),
-                MenuItem(_("Hide Window"), "RestoreWindow", (), restore=_("Show Window")),
-                MenuItem(_("Quit"), "Quit", ()),
-                )                

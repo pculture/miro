@@ -206,15 +206,38 @@ class StopTrackingDownloadCount(BackendMessage):
     """Stop tracking the download count."""
     pass
 
+class TrackPausedCount(BackendMessage):
+    """Start tracking the number of paused downloading items.  After this
+    message is received, the backend will send a corresponding PausedCountChanged
+    message.  It will also send PausedCountChanged whenever the count
+    changes.
+    """
+    pass
+
+class StopTrackingPausedCount(BackendMessage):
+    """Stop tracking the paused count."""
+    pass
+
 class TrackNewCount(BackendMessage):
     """Start tracking the number of new videos.  When this message is recieved
     the backend will send a corresponding NewCountChanged message.  It will
-    also send NewCountChanged.
+    also send NewCountChanged whenever the count changes.
     """
     pass
 
 class StopTrackingNewCount(BackendMessage):
     """Stop tracking the new videos count."""
+    pass
+
+class TrackUnwatchedCount(BackendMessage):
+    """Start tracking the number of unwatched items.  When this message is
+    received, the backend will send a corresponding UnwatchedCountChanged
+    message.  It will also send UnwatchedCountChanged whenever the count changes.
+    """
+    pass
+
+class StopTrackingUnwatchedCount(BackendMessage):
+    """Stop tracking the unwatched items count."""
     pass
 
 class TrackWatchedFolders(BackendMessage):
@@ -521,6 +544,11 @@ class RenameVideo(BackendMessage):
     def __init__(self, id, new_name):
         self.id = id
         self.new_name = new_name
+
+class PlayAllUnwatched(BackendMessage):
+    """Figures out all the unwatched items and plays them."""
+    def __init__(self):
+        pass
 
 class FolderExpandedChange(BackendMessage):
     """Inform the backend when a folder gets expanded/collapsed
@@ -1025,9 +1053,19 @@ class DownloadCountChanged(FrontendMessage):
     def __init__(self, count):
         self.count = count
 
+class PausedCountChanged(FrontendMessage):
+    """Informs the frontend that number of paused downloading items has changed """
+    def __init__(self, count):
+        self.count = count
+
 class NewCountChanged(FrontendMessage):
     """Informs the frontend that number of new videos has changed """
 
+    def __init__(self, count):
+        self.count = count
+
+class UnwatchedCountChanged(FrontendMessage):
+    """Informs the frontend that number of unwatched items has changed """
     def __init__(self, count):
         self.count = count
 
