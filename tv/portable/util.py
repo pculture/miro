@@ -522,7 +522,14 @@ def cmp_enclosures(enclosure1, enclosure2):
       -1 if enclosure1 is preferred, 1 if enclosure2 is preferred, and
       zero if there is no preference between the two of them
     """
-    # first let's try sorting by preference
+    # meda:content enclosures have an isDefault which we should pick
+    # since it's the preference of the feed
+    if enclosure1.get("isDefault"):
+        return -1
+    if enclosure2.get("isDefault"):
+        return 1
+
+    # let's try sorting by preference
     enclosure1_index = _get_enclosure_index(enclosure1)
     enclosure2_index = _get_enclosure_index(enclosure2)
     if enclosure1_index < enclosure2_index:
