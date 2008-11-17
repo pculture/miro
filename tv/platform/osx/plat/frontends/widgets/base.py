@@ -106,8 +106,9 @@ class Widget(signals.SignalEmitter):
                 self.viewport_repositioned()
 
     def remove_viewport(self):
-        self.viewport.remove()
-        self.viewport = None
+        if self.viewport is not None:
+            self.viewport.remove()
+            self.viewport = None
         if self.CREATES_VIEW:
             wrappermap.remove(self.view)
 
