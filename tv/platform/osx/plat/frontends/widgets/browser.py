@@ -48,7 +48,7 @@ class Browser(Widget):
         self.url = None
         self.create_signal('net-start')
         self.create_signal('net-stop')
-        self.view = WebView.alloc().init()
+        self.view = MiroWebView.alloc().init()
         self.delegate = BrowserDelegate.alloc().initWithBrowser_(self)
         self.view.setMaintainsBackForwardList_(YES)
         self.view.setPolicyDelegate_(self.delegate)
@@ -89,6 +89,12 @@ class Browser(Widget):
     def can_go_forward(self):
         return self.view.canGoForward()
 
+###############################################################################
+
+class MiroWebView (WebView):
+    def performDragOperation_(self, sender):
+        return NO
+        
 ###############################################################################
 
 class BrowserDelegate (NSObject):
