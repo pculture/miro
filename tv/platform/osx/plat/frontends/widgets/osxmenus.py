@@ -258,8 +258,14 @@ def make_context_menu(menu_items):
                 label, icon_path = label
                 image = NSImage.alloc().initWithContentsOfFile_(icon_path)
                 nsitem.setImage_(image)
-            nsitem.setTitle_(label)
-            if callback is not None:
+            if callback is None:
+                font_size = NSFont.systemFontSize()
+                font = NSFont.fontWithName_size_("Lucida Sans Italic", font_size)
+                attributes = {NSFontAttributeName: font}
+                attributed_label = NSAttributedString.alloc().initWithString_attributes_(label, attributes)
+                nsitem.setAttributedTitle_(attributed_label)
+            else:
+                nsitem.setTitle_(label)
                 if isinstance(callback, list):
                     submenu = make_context_menu(callback)
                     nsmenu.setSubmenu_forItem_(submenu, nsitem)
