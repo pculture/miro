@@ -739,6 +739,9 @@ class InfoUpdater(signals.SignalEmitter):
         feeds-added (self, info_list) -- New feeds were added
         feeds-changed (self, info_list) -- Feeds were changed
         feeds-removed (self, info_list) -- Feeds were removed
+        sites-added (self, info_list) -- New sites were added
+        sites-changed (self, info_list) -- Sites were changed
+        sites-removed (self, info_list) -- Sites were removed
     """
     def __init__(self):
         signals.SignalEmitter.__init__(self)
@@ -748,6 +751,9 @@ class InfoUpdater(signals.SignalEmitter):
         self.create_signal('feeds-added')
         self.create_signal('feeds-changed')
         self.create_signal('feeds-removed')
+        self.create_signal('sites-added')
+        self.create_signal('sites-changed')
+        self.create_signal('sites-removed')
 
     def handle_items_changed(self, message):
         if message.added:
@@ -758,14 +764,18 @@ class InfoUpdater(signals.SignalEmitter):
             self.emit('items-removed', message.removed)
 
     def handle_tabs_changed(self, message):
-        if message.type != 'feed':
+        if message.type == 'feed':
+            signal_start = 'feeds'
+        elif message.type == 'guide':
+            signal_start = 'sites'
+        else:
             return
         if message.added:
-            self.emit('feeds-added', message.added)
+            self.emit('%s-added' % signal_start, message.added)
         if message.changed:
-            self.emit('feeds-changed', message.changed)
+            self.emit('%s-changed' % signal_start, message.changed)
         if message.removed:
-            self.emit('feeds-removed', message.removed)
+            self.emit('%s-removed' % signal_start, message.removed)
 
 class WidgetsMessageHandler(messages.MessageHandler):
     def __init__(self):

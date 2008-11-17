@@ -119,6 +119,7 @@ class DisplayManager(object):
         ]
         self.display_stack = []
         self.selected_tab_list = self.selected_tabs = None
+        app.info_updater.connect('sites-removed', SiteDisplay.on_sites_removed)
 
     def get_current_display(self):
         try:
@@ -192,13 +193,26 @@ class GuideDisplay(TabDisplay):
         self.widget = selected_tabs[0].browser
 
 class SiteDisplay(TabDisplay):
+    _open_sites = {} # maps site ids -> BrowserNav objects for them
+
+    @classmethod
+    def on_sites_removed(cls, info_updater, id_list):
+        for id in id_list:
+            try:
+                del cls._open_sites[id]
+            except KeyError:
+                pass
+
     @staticmethod
     def should_display(type, selected_tabs):
         return type == 'site' and len(selected_tabs) == 1
 
     def __init__(self, type, selected_tabs):
         Display.__init__(self)
-        self.widget = browser.BrowserNav(selected_tabs[0])
+        guide_info = selected_tabs[0]
+        if guide_info.id not in self._open_sites:
+            self._open_sites[guide_info.id] = browser.BrowserNav(guide_info)
+        self.widget = self._open_sites[guide_info.id]
 
 class ItemListDisplay(TabDisplay):
     def __init__(self, type, selected_tabs):
