@@ -43,33 +43,11 @@ from miro import iconcache
 
 HTMLPattern = re.compile("^.*(<head.*?>.*</body\s*>)", re.S)
 
-def isPartOfGuide(url, guideURL, allowedURLs=None):
-    """Return if url is part of a channel guide where guideURL is the base URL
-    for that guide.
-    """
-    if guideURL == "*":
-        return True
-    elif guideURL.startswith('file://'):
-        return False
-    elif allowedURLs is None:
-        guideHost = urlparse(guideURL)[1]
-        urlHost = urlparse(url)[1]
-        return urlHost.endswith(guideHost)
-    else:
-        if isPartOfGuide(url, guideURL):
-            return True
-        for altURL in allowedURLs:
-            if isPartOfGuide(url, altURL):
-                return True
-        return False
-
 class ChannelGuide(DDBObject):
     def __init__(self, url, allowedURLs=None):
         checkU(url)
-        if allowedURLs is None:
-            self.allowedURLs = []
-        else:
-            self.allowedURLs = allowedURLs
+        # FIXME - clean up the allowedURLs thing here
+        self.allowedURLs = []
         self.url = url
         self.updated_url = url
         self.title = None
@@ -109,9 +87,6 @@ class ChannelGuide(DDBObject):
             self.iconCache.remove()
             self.iconCache = None
         DDBObject.remove(self)
-
-    def isPartOfGuide(self, url):
-        return isPartOfGuide(url, self.getURL(), self.allowedURLs)
 
     def getURL(self):
         return self.url

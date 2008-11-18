@@ -48,15 +48,6 @@ from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets import separator
 from miro.gtcache import gettext as _
 
-PROTOCOLS_MIRO_HANDLES = ("http:", "https:", "ftp:", "feed:", "feeds:", "mailto:")
-
-def _should_miro_handle(url):
-    for mem in PROTOCOLS_MIRO_HANDLES:
-        if url.startswith(mem):
-            return True
-    return False
-
-
 class BrowserToolbar(widgetset.HBox):
     """
     Forward/back/home & "display in browser" buttons
@@ -120,37 +111,30 @@ class BrowserToolbar(widgetset.HBox):
     def _on_browser_open_activate(self, button):
         self.emit('browser-open')
 
-
 class Browser(widgetset.Browser):
     def __init__(self, guide_info):
         widgetset.Browser.__init__(self)
         self.guide_info = guide_info
     
     def should_load_url(self, url):
-        logging.info ("got %s", url)
-        # FIXME, this seems really weird.  How are we supposed to pick an
-        # encoding?
+        """Returns True if the Miro browser should handle the url and False
+        otherwise.
+
+        Situations which should return false:
+
+        * if the url is something that Miro should download instead
+        * other things?
+        """
+        logging.info("got %s", url)
+
         url = util.toUni(url)
         if subscription.is_subscribe_link(url):
             messages.SubscriptionLinkClicked(url).send_to_backend()
             return False
 
-        if (guide.isPartOfGuide(url, self.guide_info.url,
-                self.guide_info.allowed_urls) and
-                not filetypes.is_feed_filename(url) and
-                not filetypes.is_allowed_filename(url)):
-            return True
+        # FIXME - handle downloadable items here
 
-        if not _should_miro_handle(url):
-            # javascript: link, or some other weird URL scheme.  Let the
-            # browser handle it.
-            return True
-
-        # handle_external_url could pop up dialogs and other complex things.
-        # Let's return from the callback before we call it.
-        call_on_ui_thread(linkhandler.handle_external_url, url)
-        return False
-
+        return True
 
 class BrowserNav(widgetset.VBox):
     def __init__(self, guide_info):
