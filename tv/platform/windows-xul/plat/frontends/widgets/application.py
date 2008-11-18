@@ -32,6 +32,7 @@ import sys
 import traceback
 import webbrowser
 from urlparse import urlparse
+import _winreg
 
 import gtk
 
@@ -75,6 +76,9 @@ class WindowsApplication(Application):
         if key == options.SHOW_TRAYICON.key:
             self.trayicon.set_visible(value)
 
+        elif key == prefs.RUN_AT_STARTUP.key:
+            self.set_run_at_startup(value)
+
     def build_window(self):
         Application.build_window(self)
         self.window.connect('save-dimensions', self.set_main_window_dimensions)
@@ -93,10 +97,8 @@ class WindowsApplication(Application):
             icopath = os.path.join(resources.appRoot(), "Miro.ico")
             self.trayicon = trayicon.Trayicon(icopath)
             if config.get(options.SHOW_TRAYICON):
-                logging.info("showing trayicon")
                 self.trayicon.set_visible(True)
             else:
-                logging.info("not showing trayicon")
                 self.trayicon.set_visible(False)
         else:
             logging.info("trayicon is not supported.")
@@ -191,3 +193,40 @@ class WindowsApplication(Application):
                           timeout=5000, attach_trayicon=True):
         print '--- %s ---' % title
         print body
+
+    def set_run_at_startup(self, value):
+        runSubkey = "Software\\Microsoft\\Windows\\CurrentVersion\\Run"
+        try: 
+            folder = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, runSubkey, 0,
+                                     _winreg.KEY_SET_VALUE)
+        except WindowsError, e:
+            if e.errno == 2:
+                # registry key doesn't exist
+                folder = _winreg.CreateKey(_winreg.HKEY_CURRENT_USER,
+                                           runSubkey)
+            else:
+                raise
+
+        if value:
+            # We don't use the app name for the .exe, so branded
+            # versions work
+            filename = os.path.join(resources.resourceRoot(), "..", "Miro.exe")
+            filename = os.path.normpath(filename)
+            themeName = config.get(prefs.THEME_NAME)
+            if themeName is not None:
+                themeName = themeName.replace("\\", "\\\\").replace('"', '\\"')
+                filename = "%s --theme \"%s\"" % (filename, themeName)
+                
+            _winreg.SetValueEx(folder, config.get(prefs.LONG_APP_NAME), 0,
+                               _winreg.REG_SZ, filename)
+
+        else:
+            try:
+                _winreg.DeleteValue(folder, config.get(prefs.LONG_APP_NAME))
+            except WindowsError, e:
+                if e.errno == 2: 
+                    # registry key doesn't exist, user must have deleted it
+                    # manual
+                    pass
+                else:
+                    raise

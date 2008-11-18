@@ -53,6 +53,7 @@ def _getSupportDirectory():
                             u'Participatory Culture Foundation',
                             u'Miro',
                             u'Support')
+
     try:
         fileutil.makedirs(path)
     except:
@@ -71,7 +72,7 @@ def load():
 
 def save(data):
     file = _getConfigFile()
-    cPickle.dump(data,open(file,'w'))
+    cPickle.dump(data, open(file, 'w'))
 
 def get(descriptor):
     if descriptor == prefs.MOVIES_DIRECTORY:
@@ -118,20 +119,28 @@ def get(descriptor):
             ('%s-downloader.log' % app.configfile['shortAppName']))
 
     elif descriptor == prefs.RUN_AT_STARTUP:
+        import logging
         # We use the legacy startup registry key, so legacy versions
         # of Windows have a chance
         # http://support.microsoft.com/?kbid=270035
 
-        folder = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER,"Software\Microsoft\Windows\CurrentVersion\Run")
+        folder = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER,
+                                 "Software\Microsoft\Windows\CurrentVersion\Run")
+        long_app_name = app.configfile['longAppName']
         count = 0
         while True:
             try:
-                (name, val, type) = _winreg.EnumValue(folder,count)
+                name, val, type_ = _winreg.EnumValue(folder, count)
                 count += 1
-                if (name == app.configfile['longAppName']):
+                if name == long_app_name:
                     return True                    
-            except:
-                return False
+            except WindowsError, e:
+                # 22 indicates there are no more items in this folder to
+                # iterate through.
+                if e.errno == 22:
+                    return False
+                else:
+                    raise
         return False
 
     elif descriptor == prefs.HTTP_PROXY_ACTIVE:

@@ -264,9 +264,9 @@ class GeneralPanel(PanelBuilder):
     def build_widget(self):
         v = widgetset.VBox(8)
 
-        run_dtv_at_startup_cbx = widgetset.Checkbox(_("Automatically run Miro when I log in."))
-        attach_boolean(run_dtv_at_startup_cbx, prefs.RUN_DTV_AT_STARTUP)
-        v.pack_start(run_dtv_at_startup_cbx)
+        run_at_startup_cbx = widgetset.Checkbox(_("Automatically run Miro when I log in."))
+        attach_boolean(run_at_startup_cbx, prefs.RUN_AT_STARTUP)
+        v.pack_start(run_at_startup_cbx)
 
         warn_if_downloading_cbx = widgetset.Checkbox(_("Warn me if I attempt to quit with downloads in progress."))
         attach_boolean(warn_if_downloading_cbx, prefs.WARN_IF_DOWNLOADING_ON_QUIT)
