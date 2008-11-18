@@ -41,18 +41,17 @@ from miro.plat import utils
 INFINITE = 1000000 # size of an "infinite" dimension
 
 def get_font(scale_factor, bold=False, italic=False, family=None):
-    size = scale_factor * NSFont.systemFontSize()
-    if bold:
-        weight = 9
-    else:
-        weight = 5
-    if italic:
-        traits = NSItalicFontMask
-    else:
-        traits = 0
+    size = round(scale_factor * NSFont.systemFontSize())
     if family is None:
-        family = "Lucida Grande"
-    return NSFontManager.sharedFontManager().fontWithFamily_traits_weight_size_(family, traits, weight, size)
+        if bold:
+            return NSFont.boldSystemFontOfSize_(size)
+        else:
+            return NSFont.systemFontOfSize_(size)
+    else:
+        if bold:
+            return NSFont.fontWithName_size_(family + " Bold", size)
+        else:
+            return NSFont.fontWithName_size_(family, size)
 
 class MiroLayoutManager(NSLayoutManager):
     """Overide NSLayoutManager to draw better underlines."""
