@@ -50,6 +50,8 @@ path_to_surface = weakref.WeakValueDictionary()
 broken_image = widgetset.Image(resources.path('images/broken-image.gif'))
 
 def scaled_size(image, size):
+    if image.width == 0 or image.height == 0:
+        image = broken_image
     image_ratio = float(image.width) / image.height
     new_ratio = float(size[0]) / size[1]
     if image_ratio == new_ratio:
