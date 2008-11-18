@@ -140,7 +140,7 @@ class OSXApplication(Application):
         title = _('Download Completed')
         body = _('Download of video \'%s\' is finished.') % item.get_title()
         icon = _growlImage.Image.imageFromPath(item.getThumbnail())
-        self.app_controller.growl_notifier.notify(GROWL_DOWNLOAD_COMPLETE_NOTIFICATION, title, body, icon=icon, sticky=True)
+        self.app_controller.growl_notifier.notify(GROWL_DOWNLOAD_COMPLETE_NOTIFICATION, title, body, icon=icon)
         
     def set_launch_at_startup(self, launch):
         defaults = NSUserDefaults.standardUserDefaults()
