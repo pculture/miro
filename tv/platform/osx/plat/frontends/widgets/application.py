@@ -79,7 +79,7 @@ class OSXApplication(Application):
         video.register_quicktime_components()
 
     def on_pref_changed(self, key, value):
-        if key == prefs.RUN_DTV_AT_STARTUP.key:
+        if key == prefs.RUN_AT_STARTUP.key:
             self.set_launch_at_startup(bool(value))
 
     ### eventloop (our own one, not the Cocoa one) delegate methods

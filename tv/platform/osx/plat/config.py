@@ -94,6 +94,23 @@ def get(descriptor):
     elif descriptor == prefs.GETTEXT_PATHNAME:
         return os.path.abspath(resources.path("../locale"))
 
+    elif descriptor == prefs.RUN_AT_STARTUP:
+        defaults = NSUserDefaults.standardUserDefaults()
+        lwdomain = defaults.persistentDomainForName_('loginwindow')
+        lwdomain = Conversion.pythonCollectionFromPropertyList(lwdomain)
+        if lwdomain is None:
+            lwdomain = dict()
+        if 'AutoLaunchedApplicationDictionary' not in lwdomain:
+            lwdomain['AutoLaunchedApplicationDictionary'] = list()
+        launchedApps = lwdomain['AutoLaunchedApplicationDictionary']
+        ourPath = NSBundle.mainBundle().bundlePath()
+        ourEntry = None
+        for entry in launchedApps:
+            if entry.get('Path') == ourPath:
+                ourEntry = entry
+                break
+        return ourEntry is None
+
     elif descriptor == prefs.SUPPORT_DIRECTORY:
         path = os.path.join(SUPPORT_DIRECTORY_PARENT, "Miro")
         os.environ['APPDATA'] = path # This is for the Bittorent module
