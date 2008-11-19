@@ -61,3 +61,19 @@ def absoluteUrl(absolute_path):
 
 def theme_path(theme, relative_path):
     return os.path.join('/usr/share/miro/themes', theme, relative_path)
+
+def check_kde():
+    return os.environ.get("KDE_FULL_SESSION", None) != None
+
+def get_autostart_dir():
+    if check_kde():
+        if os.environ.get("KDE_SESSION_VERSION") == "4":
+            autostart_dir = "~/.kde/share/autostart"
+        else:
+            autostart_dir = "~/.kde/Autostart"
+    else:
+        config_home = os.environ.get('XDG_CONFIG_HOME', '~/.config')
+        autostart_dir = os.path.join(config_home, "autostart")
+
+    autostart_dir = os.path.expanduser(autostart_dir)
+    return autostart_dir

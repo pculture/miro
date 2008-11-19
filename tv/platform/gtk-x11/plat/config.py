@@ -120,6 +120,11 @@ def get(descriptor):
     elif descriptor == prefs.GETTEXT_PATHNAME:
         value = resources.path("../../locale")
 
+    elif descriptor == prefs.RUN_AT_STARTUP:
+        autostart_dir = resources.get_autostart_dir()
+        destination = os.path.join(autostart_dir, "miro.desktop")
+        value = os.path.exists(destination)
+
     elif descriptor == prefs.SUPPORT_DIRECTORY:
         value = os.path.expanduser('~/.miro')
 

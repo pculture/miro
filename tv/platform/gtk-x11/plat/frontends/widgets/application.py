@@ -90,9 +90,6 @@ def set_bool(key, value): return _set_pref('window/' + key, 'set_bool', value)
 def set_player_int(key, value): return _set_pref(key, 'set_int', value)
 def set_player_bool(key, value): return _set_pref(key, 'set_bool', value)
 
-def check_kde():
-    return os.environ.get("KDE_FULL_SESSION", None) != None
-
 class GtkX11Application(Application):
     def run(self, props_to_set):
         threads.call_on_ui_thread(mozsetup.setup_mozilla_environment)
@@ -118,8 +115,8 @@ class GtkX11Application(Application):
         if key == options.SHOW_TRAYICON.key:
             self.trayicon.set_visible(value)
 
-        elif key == prefs.RUN_DTV_AT_STARTUP.key:
-            self.update_autostart()
+        elif key == prefs.RUN_AT_STARTUP.key:
+            self.update_autostart(value)
 
         elif key == options.VIZ_PLUGIN.key:
             if hasattr(app, "renderer") and app.renderer:
@@ -150,20 +147,11 @@ class GtkX11Application(Application):
     def quit_ui(self):
         gtk.main_quit()
 
-    def update_autostart(self):
-        if check_kde():
-            if os.environ.get("KDE_SESSION_VERSION") == "4":
-                autostart_dir = "~/.kde/share/autostart"
-            else:
-                autostart_dir = "~/.kde/Autostart"
-        else:
-            config_home = os.environ.get('XDG_CONFIG_HOME', '~/.config')
-            autostart_dir = os.path.join(config_home, "autostart")
-
-        autostart_dir = os.path.expanduser(autostart_dir)
-        logging.debug("autostart_dir: %s", autostart_dir)
+    def update_autostart(self, value):
+        autostart_dir = resources.get_autostart_dir()
         destination = os.path.join(autostart_dir, "miro.desktop")
-        if config.get(prefs.RUN_DTV_AT_STARTUP):
+
+        if value:
             if os.path.exists(destination):
                 return
             try:
@@ -186,16 +174,16 @@ class GtkX11Application(Application):
         # We could use Python's webbrowser.open() here, but
         # unfortunately, it doesn't have the same semantics under UNIX
         # as under other OSes. Sometimes it blocks, sometimes it doesn't.
-        if check_kde():
-            os.spawnlp (os.P_NOWAIT, "kfmclient", "kfmclient", "exec", url)
+        if resources.check_kde():
+            os.spawnlp(os.P_NOWAIT, "kfmclient", "kfmclient", "exec", url)
         else:
-            os.spawnlp (os.P_NOWAIT, "gnome-open", "gnome-open", url)
+            os.spawnlp(os.P_NOWAIT, "gnome-open", "gnome-open", url)
 
     def open_file(self, filename):
         if not os.path.isdir(filename):
             filename = os.path.dirname(filename)
 
-        if check_kde():
+        if resources.check_kde():
             os.spawnlp(os.P_NOWAIT, "kfmclient", "kfmclient", "exec", "file://" + filename)
         else:
             os.spawnlp(os.P_NOWAIT, "nautilus", "nautilus", "file://" + filename)
