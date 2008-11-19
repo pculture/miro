@@ -137,7 +137,7 @@ class FirstTimeDialog(widgetset.Window):
         yes_rb = widgetset.RadioButton(_("Yes"), rbg)
         no_rb = widgetset.RadioButton(_("No"), rbg)
 
-        prefpanel.attach_radio([(yes_rb, True), (no_rb, False)], prefs.RUN_DTV_AT_STARTUP)
+        prefpanel.attach_radio([(yes_rb, True), (no_rb, False)], prefs.RUN_AT_STARTUP)
         v.pack_start(widgetutil.align_left(yes_rb))
         v.pack_start(widgetutil.align_left(no_rb))
 
