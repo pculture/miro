@@ -1041,10 +1041,10 @@ class Item(DDBObject):
             # Hack for mp3s, "mpeg audio" isn't clear enough
             if extension.lower() == u'mp3':
                 return u'.mp3'
-            if enclosure.has_key('type') and len(enclosure['type']) > 0:
+            if enclosure.get('type'):
                 enc = enclosure['type'].decode('ascii', 'replace')
                 if "/" in enc:
-                    mtype, subtype = enclosure['type'].decode('ascii', 'replace').split('/')
+                    mtype, subtype = enc.split('/', 1)
                     mtype = mtype.lower()
                     if mtype in self.KNOWN_MIME_TYPES:
                         format = subtype.split(';')[0].upper()
