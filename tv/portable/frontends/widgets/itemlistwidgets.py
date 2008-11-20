@@ -237,8 +237,9 @@ class ItemView(widgetset.TableView):
 class ListItemView(widgetset.TableView):
     """TableView that displays a list of items using the list view."""
 
-    def __init__(self, item_list):
+    def __init__(self, item_list, display_channel=True):
         widgetset.TableView.__init__(self, item_list.model)
+        self.display_channel = display_channel
         self.create_signal('sort-changed')
         self.item_list = item_list
         self._sort_name_to_column = {}
@@ -246,7 +247,8 @@ class ListItemView(widgetset.TableView):
         self._set_initial_widths = False
         self.add_column(self._make_column('Title', 3, 'name'))
         self.add_column(self._make_column('Description', 4, 'description'))
-        self.add_column(self._make_column('Feed', 5, 'feed-name'))
+        if display_channel:
+            self.add_column(self._make_column('Feed', 5, 'feed-name'))
         self.add_column(self._make_column('Date', 6, 'date'))
         self.add_column(self._make_column('Duration', 7, 'length'))
         self.add_column(self._make_column('Size', 8, 'size'))
@@ -279,6 +281,8 @@ class ListItemView(widgetset.TableView):
                 (100, 0),
                 (70, 0),
             ]
+            if not self.display_channel:
+                del width_specs[2]
             available_width = self.width_for_columns(width)
             min_width = sum(spec[0] for spec in width_specs)
             extra_width = max(available_width - min_width, 0)

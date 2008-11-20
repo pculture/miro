@@ -96,11 +96,14 @@ class ItemListController(object):
     def _init_widget(self):
         self.widget = itemlistwidgets.ItemContainerWidget()
         self.item_list = itemlist.ItemList()
-        self.list_item_view = itemlistwidgets.ListItemView(self.item_list)
+        self.list_item_view = self._make_list_item_view()
         self.widget.list_view_vbox.pack_start(self.list_item_view)
         self.widget.toolbar.connect('sort-changed', self.on_sort_changed)
         self.list_item_view.connect('sort-changed', self.on_sort_changed)
         self.build_widget()
+
+    def _make_list_item_view(self):
+        return itemlistwidgets.ListItemView(self.item_list)
 
     def _init_item_views(self):
         self.context_menu_handler = self.make_context_menu_handler()
