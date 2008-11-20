@@ -399,6 +399,10 @@ class BGDownloader:
         checkF(directory)
         if self.channelName:
             channelName = filterDirectoryName(self.channelName)
+            # bug 10769: shutil and windows has problems with long filenames, so we clip
+            # the directory name.
+            if len(channelName) > 80:
+                channelName = channelName[:80]
             directory = os.path.join(directory, channelName)
             try:
                 fileutil.makedirs(directory)
