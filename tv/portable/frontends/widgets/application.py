@@ -45,6 +45,7 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import newsearchchannel
+from miro.frontends.widgets import addtoplaylistdialog
 from miro.frontends.widgets import removechannelsdialog
 from miro.frontends.widgets import diagnostics
 from miro.frontends.widgets import crashdialog
@@ -562,6 +563,20 @@ class Application:
         name = dialogs.ask_for_string(title, description)
         if name:
             messages.NewPlaylist(name, ids).send_to_backend()
+
+    def add_to_playlist(self):
+        selection = app.item_list_controller_manager.get_selection()
+        ids = [s.id for s in selection if s.downloaded]
+
+        data = addtoplaylistdialog.run_dialog()
+
+        if not data:
+            return
+
+        if data[0] == "existing":
+            messages.AddVideosToPlaylist(data[1].id, ids).send_to_backend()
+        elif data[0] == "new":
+            messages.NewPlaylist(data[1], ids).send_to_backend()
 
     def add_new_playlist_folder(self, add_selected=False):
         title = _('Create Playlist Folder')

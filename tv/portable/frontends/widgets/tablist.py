@@ -555,6 +555,10 @@ class PlaylistList(NestedTabList):
         info.icon = imagepool.get_surface(thumb_path)
         info.unwatched = info.available = 0
 
+    def get_playlists(self):
+        infos = [self.view.model[i][0] for i in self.iter_map.values()]
+        return infos
+
     def make_folder_context_menu(self):
         return [
             (_('Rename Playlist Folder'), app.widgetapp.rename_something),

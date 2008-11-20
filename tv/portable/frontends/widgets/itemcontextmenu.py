@@ -93,7 +93,7 @@ class ItemContextMenuHandler(object):
             menu = [
                 (_('Play'), app.widgetapp.play_selection),
                 (_('Play Just this Video'), play_and_stop),
-                (_('Add to New Playlist'), app.widgetapp.add_new_playlist),
+                (_('Add to Playlist'), app.widgetapp.add_to_playlist),
             ]
             self._add_remove_context_menu_item(menu, [item])
             if item.video_watched:
@@ -178,8 +178,8 @@ class ItemContextMenuHandler(object):
                                   {"count": downloaded}),
                          None))
             menu.append((_('Play'), app.widgetapp.play_selection)),
-            menu.append((_('Add to New Playlist'),
-                app.widgetapp.add_new_playlist))
+            menu.append((_('Add to Playlist'),
+                app.widgetapp.add_to_playlist))
             self._add_remove_context_menu_item(menu, selection)
             if watched:
                 def mark_unwatched():
