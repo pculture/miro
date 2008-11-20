@@ -155,6 +155,7 @@ class Application:
         videobox.volume_slider.set_value(config.get(prefs.VOLUME_LEVEL))
         videobox.volume_slider.connect('changed', self.on_volume_change)
         videobox.volume_slider.connect('released', self.on_volume_set)
+        videobox.volume_muter.connect('clicked', self.on_volume_mute)
         videobox.controls.play.connect('clicked', self.on_play_clicked)
         videobox.controls.stop.connect('clicked', self.on_stop_clicked)
         videobox.controls.forward.connect('clicked', self.on_forward_clicked)
@@ -181,6 +182,18 @@ class Application:
 
     def on_volume_change(self, slider, volume):
         app.playback_manager.set_volume(volume)
+
+    def on_volume_mute(self, button=None):
+        slider = self.window.videobox.volume_slider
+        if slider.get_value() == 0:
+            value = getattr(self, "previous_volume_value", 0.75)
+        else:
+            self.previous_volume_value = slider.get_value()
+            value = 0.0
+
+        slider.set_value(value)
+        self.on_volume_change(slider, value)
+        self.on_volume_set(slider)
 
     def on_volume_set(self, slider):
         config.set(prefs.VOLUME_LEVEL, slider.get_value())
