@@ -401,6 +401,15 @@ class Application:
         if name:
             messages.RenameVideo(item_info.id, name).send_to_backend()
 
+    def revert_item_name(self):
+        selection = app.item_list_controller_manager.get_selection()
+        selection = [s for s in selection if s.downloaded]
+
+        if not selection:
+            return
+        item_info = selection[0]
+        messages.RevertItemTitle(item_info.id).send_to_backend()
+
     def save_item(self):
         selection = app.item_list_controller_manager.get_selection()
         selection = [s for s in selection if s.downloaded]

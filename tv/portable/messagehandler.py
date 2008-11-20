@@ -1092,6 +1092,14 @@ class BackendMessageHandler(messages.MessageHandler):
         else:
             item.setTitle(message.new_name)
 
+    def handle_revert_item_title(self, message):
+        try:
+            item = views.items.getObjectByID(message.id)
+        except database.ObjectNotFoundError:
+            logging.warn("RevertItemTitle: Item not found -- %s", message.id)
+        else:
+            item.revert_title()
+
     def handle_autodownload_change(self, message):
         try:
             feed = views.feeds.getObjectByID(message.id)

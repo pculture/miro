@@ -545,6 +545,11 @@ class RenameVideo(BackendMessage):
         self.id = id
         self.new_name = new_name
 
+class RevertItemTitle(BackendMessage):
+    """Reverts the item's title back to the original"""
+    def __init__(self, id):
+        self.id = id
+
 class PlayAllUnwatched(BackendMessage):
     """Figures out all the unwatched items and plays them."""
     def __init__(self):
@@ -797,6 +802,7 @@ class ItemInfo(object):
     """
     def __init__(self, item):
         self.name = item.get_title()
+        self.has_original_name = item.has_original_title()
         self.id = item.id
         self.feed_id = item.feed_id
         if item.feed_id:

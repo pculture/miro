@@ -738,6 +738,18 @@ class Item(DDBObject):
         self.title = s
         self.signalChange()
 
+    def has_original_title(self):
+        """Returns True if this is the original title and False if the user
+        has retitled the item.
+        """
+        if hasattr(self.entry, "title"):
+            t = self.entry.title
+        else:
+            enc = self.getFirstVideoEnclosure()
+            t = enc.get("url", _("no title")).decode("ascii", "replace")
+
+        return self.title == t
+
     def revert_title(self):
         """Reverts the item title back to the data we got from RSS or the url.
         """
