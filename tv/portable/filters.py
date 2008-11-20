@@ -107,7 +107,9 @@ def feedIsVisible(obj):
     return obj.isVisible()
 
 def autoDownloads(item):
-    return item.getAutoDownloaded() and downloadingOrPausedItems(item)
+    # filter for items that are set for autodownloading and are either downloading or paused
+    # but NOT seeding.
+    return item.getAutoDownloaded() and downloadingOrPausedItems(item) and not item.is_uploading()
 
 def manualDownloads(item):
     return not item.getAutoDownloaded() and not item.is_pending_manual_download() and item.get_state() == 'downloading'
