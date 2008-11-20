@@ -630,7 +630,7 @@ class TableView(Widget):
                 self.hotspot_tracker = hotspot_tracker
                 hotspot_tracker.redraw_cell()
                 return True
-        if treeview.get_dest_row_at_pos(int(event.x), int(event.y)) is None:
+        if event.window != treeview.get_bin_window():
             # click is outsite the content area, don't try to handle this.  
             # In particular, our DnD code messes up resizing table columns.
             return
