@@ -335,6 +335,12 @@ class TableViewDelegate(NSObject):
         else:
             cell.hotspot = None
 
+    def tableView_didClickTableColumn_(self, tableview, column):
+        wrapper = _get_tableview_wrapper(tableview)
+        for column_wrapper in wrapper.columns:
+            if column_wrapper._column is column:
+                column_wrapper.emit('clicked')
+
 class VariableHeightTableViewDelegate(TableViewDelegate):
     def tableView_heightOfRow_(self, table_view, row):
         iter = table_view.dataSource().model.iter_for_row(table_view, row)
@@ -350,6 +356,12 @@ class OutlineViewDelegate(NSObject):
             cell.hotspot = view.hotspot_tracker.calc_cell_hotspot(column, row)
         else:
             cell.hotspot = None
+
+    def outlineView_didClickTableColumn_(self, tableview, column):
+        wrapper = _get_tableview_wrapper(tableview)
+        for column_wrapper in wrapper.columns:
+            if column_wrapper._column is column:
+                column_wrapper.emit('clicked')
 
 class VariableHeightOutlineViewDelegate(OutlineViewDelegate):
     def outlineView_heightOfRowByItem_(self, outline_view, item):
@@ -378,6 +390,12 @@ class TableViewCommon(object):
         for after_index in xrange(index+1, len(self.tableColumns())):
             self.column_index_map[column_list[after_index]] -= 1
         self.SuperClass.removeTableColumn(self, column)
+
+    def moveColumn_toColumn_(self, src, dest):
+        # Need to switch the TableColumn objects too
+        columns = _get_tableview_wrapper(self).columns
+        columns[src], columns[dest] = columns[dest], columns[src]
+        self.SuperClass.moveColumn_toColumn_(self, src, dest)
 
     def highlightSelectionInClipRect_(self, rect):
         if _get_tableview_wrapper(self).draws_selection:
@@ -482,6 +500,48 @@ class TableViewCommon(object):
         else:
             self.SuperClass.mouseUp_(self, event)
 
+class TableColumn(signals.SignalEmitter):
+    def __init__(self, title, renderer, **attrs):
+        signals.SignalEmitter.__init__(self)
+        self.create_signal('clicked')
+        self._column = NSTableColumn.alloc().initWithIdentifier_(attrs)
+        self._column.headerCell().setStringValue_(title)
+        self._column.setEditable_(NO)
+        self._column.setResizingMask_(NSTableColumnNoResizing)
+        self.renderer = renderer
+        self.sort_order_ascending = True
+        self.sort_indicator_visible = False
+        renderer.setDataCell_(self._column)
+
+    def set_min_width(self, width):
+        self._column.setMinWidth_(width)
+
+    def set_max_width(self, width):
+        self._column.setMaxWidth_(width)
+
+    def set_width(self, width):
+        self._column.setWidth_(width)
+
+    def set_resizable(self, resizable):
+        mask = 0
+        if resizable:
+            mask |= NSTableColumnUserResizingMask
+        self._column.setResizingMask_(mask)
+
+    def set_sort_indicator_visible(self, visible):
+        self.sort_indicator_visible = visible
+        self._column.tableView().headerView().setNeedsDisplay_(True)
+
+    def get_sort_indicator_visible(self):
+        return self.sort_indicator_visible
+
+    def set_sort_order(self, ascending):
+        self.sort_order_ascending = ascending
+        self._column.tableView().headerView().setNeedsDisplay_(True)
+
+    def get_sort_order_ascending(self):
+        return self.sort_order_ascending
+
 class MiroTableView(NSTableView):
     SuperClass = NSTableView
     for name, value in TableViewCommon.__dict__.items():
@@ -491,6 +551,19 @@ class MiroOutlineView(NSOutlineView):
     SuperClass = NSOutlineView
     for name, value in TableViewCommon.__dict__.items():
         locals()[name] = value
+
+class MiroTableHeaderView(NSTableHeaderView):
+    def drawRect_(self, rect):
+        NSTableHeaderView.drawRect_(self, rect)
+        wrapper = _get_tableview_wrapper(self.tableView())
+        # Manually handle sort column drawing
+        for i, column in enumerate(wrapper.columns):
+            if column.sort_indicator_visible:
+                cell = column._column.headerCell()
+                frame = self.headerRectOfColumn_(i)
+                cell.highlight_withFrame_inView_(True, frame, self)
+                cell.drawSortIndicatorWithFrame_inView_ascending_priority_(
+                        frame, self, column.sort_order_ascending, 0)
 
 class TableView(Widget):
     """Displays data as a tabular list.  TableView follows the GTK TreeView
@@ -502,7 +575,7 @@ class TableView(Widget):
         self.create_signal('selection-changed')
         self.create_signal('hotspot-clicked')
         self.model = model
-        self.renderers = []
+        self.columns = []
         self.context_menu_callback = None
         if self.is_tree():
             self.create_signal('row-expanded')
@@ -515,14 +588,16 @@ class TableView(Widget):
         self.data_source.initWithModel_(self.model)
         self.tableview.setDataSource_(self.data_source)
         self.tableview.setVerticalMotionCanBeginDrag_(YES)
-        self.tableview.setColumnAutoresizingStyle_(NSTableViewNoColumnAutoresizing)
+        self.set_columns_draggable(False)
+        self.set_auto_resizes(False)
         self.draws_selection = True
         self.row_height_set = False
         self.set_fixed_height(False)
-        self.header_view = self.tableview.headerView()
+        self.header_view = MiroTableHeaderView.alloc().initWithFrame_(
+            NSMakeRect(0, 0, 0, HEADER_HEIGHT))
+        self.tableview.setHeaderView_(self.header_view)
         self.view_with_header = FlippedView.alloc().init()
         self.view_with_header.addSubview_(self.header_view)
-        self.header_view.setFrame_(NSMakeRect(0, 0, 0, HEADER_HEIGHT))
         self.set_show_headers(True)
         self.notifications = NotificationForwarder.create(self.tableview)
         if self.is_tree():
@@ -532,9 +607,13 @@ class TableView(Widget):
                 'NSOutlineViewItemDidCollapseNotification')
             self.notifications.connect(self.on_selection_change,
                     'NSOutlineViewSelectionDidChangeNotification')
+            self.notifications.connect(self.on_column_resize,
+                    'NSOutlineViewColumnDidResizeNotification')
         else:
             self.notifications.connect(self.on_selection_change,
                     'NSTableViewSelectionDidChangeNotification')
+            self.notifications.connect(self.on_column_resize,
+                    'NSTableViewColumnDidResizeNotification')
         self.model.connect_weak('row-changed', self.on_row_change)
         self.model.connect_weak('row-added', self.on_row_added)
         self.model.connect_weak('row-will-be-removed', self.on_row_removed)
@@ -594,6 +673,9 @@ class TableView(Widget):
     def on_selection_change(self, notification):
         self.emit('selection-changed')
 
+    def on_column_resize(self, notification):
+        self.invalidate_size_request()
+
     def is_tree(self):
         return isinstance(self.model, tablemodel.TreeTableModel)
 
@@ -627,7 +709,8 @@ class TableView(Widget):
         self.tableview.recalcTrackingRects()
 
     def _do_layout(self):
-        self._resize_columns()
+        if self.auto_resize:
+            self._autoresize_columns()
         if self._show_headers:
             y = HEADER_HEIGHT
             height = self.view_with_header.frame().size.height - y
@@ -635,7 +718,7 @@ class TableView(Widget):
             self.tableview.setFrame_(NSMakeRect(0, y, width, height))
         self.queue_redraw()
 
-    def _resize_columns(self):
+    def _autoresize_columns(self):
         # Resize the column so that they take up the width we are allocated,
         # but keep in mind the min/max width constraints.
         # The algorithm we use is to add/subtract width evenly between the
@@ -671,8 +754,14 @@ class TableView(Widget):
         if self.column_count() == 0:
             return 0
         width = 0
-        for column in self.tableview.tableColumns():
-            width += column.minWidth()
+        columns = self.tableview.tableColumns()
+        if self.auto_resize:
+            # Table auto-resizes, we can shrink to min-width for each column
+            width = sum(column.minWidth() for column in columns)
+        else:
+            # Table doesn't auto-resize, the columns can't get smaller than
+            # their current width
+            width = sum(column.width() for column in columns)
         width += self.tableview.intercellSpacing().width * self.column_count()
         return width
 
@@ -711,18 +800,19 @@ class TableView(Widget):
         self.height_changed = self.selection_removed = self.reload_needed = False
         self.iters_to_update = []
 
-    def add_column(self, title, renderer, min_width, **attrs):
-        column = NSTableColumn.alloc().initWithIdentifier_(attrs)
-        column.headerCell().setStringValue_(title)
-        column.setEditable_(NO)
-        column.setMinWidth_(min_width)
-        column.setResizingMask_(NSTableColumnNoResizing)
-        renderer.setDataCell_(column)
-        self.renderers.append(renderer)
-        self.tableview.addTableColumn_(column)
+    def width_for_columns(self, width):
+        """If the table is width pixels big, how much width is available for
+        the table's columns.
+        """
+        spacing = self.tableview.intercellSpacing().width * self.column_count()
+        return width - spacing
+
+    def add_column(self, column):
+        self.columns.append(column)
+        self.tableview.addTableColumn_(column._column)
         if self.column_count() == 1 and self.is_tree():
-            self.tableview.setOutlineTableColumn_(column)
-            renderer.outline_column = True
+            self.tableview.setOutlineTableColumn_(column._column)
+            column.renderer.outline_column = True
         # Adding a column means that each row could have a different height.
         # call noteNumberOfRowsChanged() to have OS X recalculate the heights
         self.tableview.noteNumberOfRowsChanged()
@@ -732,10 +822,8 @@ class TableView(Widget):
         return len(self.tableview.tableColumns())
 
     def remove_column(self, index):
-        column_list = self.tableview.tableColumns()
-        column = column_list[index]
-        del self.renderers[index]
-        self.tableview.removeTableColumn_(column)
+        columns = self.columns.pop(index)
+        self.tableview.removeTableColumn_(column._column)
         self.invalidate_size_request()
 
     def set_background_color(self, (red, green, blue)):
@@ -764,6 +852,12 @@ class TableView(Widget):
             height = calc_row_height(self.tableview, self.model[first_iter])
             self.tableview.setRowHeight_(height)
             self.row_height_set = True
+
+    def set_auto_resizes(self, setting):
+        self.auto_resize = setting
+
+    def set_columns_draggable(self, dragable):
+        self.tableview.setAllowsColumnReordering_(dragable)
 
     def set_fixed_height(self, fixed):
         if fixed:

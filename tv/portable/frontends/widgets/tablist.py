@@ -60,10 +60,13 @@ class TabListView(widgetset.TableView):
     def __init__(self, renderer):
         widgetset.TableView.__init__(self, 
                 widgetset.TreeTableModel('object'))
-        self.add_column('tab', renderer, renderer.MIN_WIDTH, data=0)
+        self.column = widgetset.TableColumn('tab', renderer, data=0)
+        self.column.set_min_width(renderer.MIN_WIDTH)
+        self.add_column(self.column)
         self.set_show_headers(False)
         self.set_background_color(style.TAB_LIST_BACKGROUND_COLOR)
         self.set_fixed_height(True)
+        self.set_auto_resizes(True)
 
 class StaticTabList(object):
     """Handles the static tabs (the tabs on top that are always the same)."""

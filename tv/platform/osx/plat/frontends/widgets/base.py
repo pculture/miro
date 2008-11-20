@@ -51,7 +51,8 @@ class Widget(signals.SignalEmitter):
     CREATES_VIEW = True 
 
     def __init__(self):
-        signals.SignalEmitter.__init__(self, 'size-request-changed')
+        signals.SignalEmitter.__init__(self, 'size-request-changed',
+                'size-allocated')
         self.viewport = None
         self.manual_size_request = None
         self.cached_size_request = None
@@ -104,6 +105,7 @@ class Widget(signals.SignalEmitter):
             if not self.viewport.at_position(rect):
                 self.viewport.reposition(rect)
                 self.viewport_repositioned()
+        self.emit('size-allocated', rect.size.width, rect.size.height)
 
     def remove_viewport(self):
         if self.viewport is not None:

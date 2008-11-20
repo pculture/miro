@@ -214,7 +214,7 @@ class SearchListTitlebar(ItemListTitlebar):
         return widgetutil.align_middle(hbox, right_pad=20)
 
 class ItemView(widgetset.TableView):
-    """TableView that displays a list of items.  """
+    """TableView that displays a list of items using the standard view.  """
 
     def __init__(self, item_list, display_channel=True):
         widgetset.TableView.__init__(self, item_list.model)
@@ -222,14 +222,85 @@ class ItemView(widgetset.TableView):
         self.item_list = item_list
         self.set_draws_selection(False)
         renderer = self.build_renderer()
-        self.add_column('item', renderer, renderer.MIN_WIDTH, data=0,
+        self.column = widgetset.TableColumn('item', renderer, data=0,
                 show_details=1, throbber_counter=2)
+        self.column.set_min_width(renderer.MIN_WIDTH)
+        self.add_column(self.column)
         self.set_show_headers(False)
         self.allow_multiple_select(True)
+        self.set_auto_resizes(True)
         self.set_background_color(widgetutil.WHITE)
 
     def build_renderer(self):
         return style.ItemRenderer(self.display_channel)
+
+class ListItemView(widgetset.TableView):
+    """TableView that displays a list of items using the list view."""
+
+    def __init__(self, item_list):
+        widgetset.TableView.__init__(self, item_list.model)
+        self.create_signal('sort-changed')
+        self.item_list = item_list
+        self._sort_name_to_column = {}
+        self._current_sort_column = None
+        self._set_initial_widths = False
+        self.add_column(self._make_column('Title', 3, 'name'))
+        self.add_column(self._make_column('Description', 4, 'description'))
+        self.add_column(self._make_column('Feed', 5, 'feed-name'))
+        self.add_column(self._make_column('Date', 6, 'date'))
+        self.add_column(self._make_column('Duration', 7, 'length'))
+        self.add_column(self._make_column('Size', 8, 'size'))
+        self.set_show_headers(True)
+        self.set_columns_draggable(True)
+        self.allow_multiple_select(True)
+
+    def _make_column(self, header, source_index, sort_name):
+        column = widgetset.TableColumn(header, widgetset.CellRenderer(),
+                value=source_index)
+        column.set_min_width(50)
+        column.set_resizable(True)
+        column.connect_weak('clicked', self._on_column_clicked, sort_name)
+        self._sort_name_to_column[sort_name] = column
+        return column
+
+    def do_size_allocated(self, width, height):
+        if not self._set_initial_widths:
+            # Set this immediately, because changing the widths of widgets
+            # below can invoke anothor size-allocate signal
+            self._set_initial_widths = True
+            # width_specs contains the info we need to give columns their
+            # initial size.  In the form of:
+            # (min_width, extra_width_weighting)
+            width_specs = [
+                (100, 1),
+                (100, 1),
+                (80, 0.5),
+                (120, 0),
+                (100, 0),
+                (70, 0),
+            ]
+            available_width = self.width_for_columns(width)
+            min_width = sum(spec[0] for spec in width_specs)
+            extra_width = max(available_width - min_width, 0)
+            total_weight = sum(spec[1] for spec in width_specs)
+            for column, spec in zip(self.columns, width_specs):
+                extra = int(extra_width * spec[1] / total_weight)
+                column.set_width(spec[0] + extra)
+
+    def _on_column_clicked(self, column, sort_name):
+        ascending = not (column.get_sort_indicator_visible() and
+                column.get_sort_order_ascending())
+        self.emit('sort-changed', sort_name, ascending)
+
+    def change_sort_indicator(self, sort_name, ascending):
+        new_sort_column = self._sort_name_to_column[sort_name]
+        if self._current_sort_column is None:
+            new_sort_column.set_sort_indicator_visible(True)
+        elif self._current_sort_column is not new_sort_column:
+            self._current_sort_column.set_sort_indicator_visible(False)
+            new_sort_column.set_sort_indicator_visible(True)
+        new_sort_column.set_sort_order(ascending)
+        self._current_sort_column = new_sort_column
 
 class HideableSection(widgetutil.HideableWidget):
     """Widget that contains an ItemView, along with an expander to show/hide
@@ -510,22 +581,35 @@ class FeedToolbar(widgetset.Background):
     def _on_autodownload_changed(self, widget, option):
         self.emit('auto-download-changed', widget.options[option])
 
-class SortBar(widgetset.Background):
-    """Bar used to sort items.
+class HeaderToolbar(widgetset.Background):
+    """Toolbar used to sort items and switch views.
 
     Signals:
 
     sort-changed (widget, sort_key, ascending) -- User changed the sort.
        sort_key will be one of 'name', 'date', 'size' or 'length'
+    list-view-clicked (widget) -- User requested to switch to list view
+    normal-view-clicked (widget) -- User requested to switch to normal view
     """
 
     def __init__(self):
         widgetset.Background.__init__(self)
         self.create_signal('sort-changed')
+        self.create_signal('list-view-clicked')
+        self.create_signal('normal-view-clicked')
         self._hbox = widgetset.HBox()
-        alignment = widgetset.Alignment(xalign=1.0, yalign=0.5)
-        alignment.add(self._hbox)
-        self.add(alignment)
+        self._button_hbox = widgetset.HBox()
+        self._button_hbox_container = widgetutil.HideableWidget(
+                self._button_hbox)
+        self._button_hbox_container.show()
+        normal_button = widgetset.Button('Normal')
+        normal_button.connect('clicked', self._on_normal_clicked)
+        list_button = widgetset.Button('list')
+        list_button.connect('clicked', self._on_list_clicked)
+        self._hbox.pack_start(normal_button)
+        self._hbox.pack_start(list_button)
+        self._hbox.pack_end(widgetutil.align_middle(self._button_hbox_container))
+        self.add(self._hbox)
         self._current_sort_key = 'date'
         self._ascending = False
         self._button_map = {}
@@ -535,11 +619,19 @@ class SortBar(widgetset.Background):
         self._make_button(_('Length'), 'length')
         self._button_map['date'].set_sort_state(SortBarButton.SORT_DOWN)
 
+    def _on_normal_clicked(self, button):
+        self.emit('normal-view-clicked')
+        self._button_hbox_container.show()
+
+    def _on_list_clicked(self, button):
+        self.emit('list-view-clicked')
+        self._button_hbox_container.hide()
+
     def _make_button(self, text, sort_key):
         button = SortBarButton(text)
         button.connect('clicked', self._on_button_clicked, sort_key)
         self._button_map[sort_key] = button
-        self._hbox.pack_start(button)
+        self._button_hbox.pack_start(button)
 
     def _on_button_clicked(self, button, sort_key):
         if self._current_sort_key == sort_key:
@@ -556,8 +648,8 @@ class SortBar(widgetset.Background):
         self.emit('sort-changed', self._current_sort_key, self._ascending)
 
     def size_request(self, layout):
-        width = self._hbox.get_size_request()[0]
-        return width, 30
+        width, height = self._hbox.get_size_request()
+        return width, max(height, 30)
 
     def draw(self, context, layout):
         gradient = widgetset.Gradient(0, 0, 0, context.height)
@@ -631,19 +723,34 @@ class ItemContainerWidget(widgetset.VBox):
     Attributes:
 
        titlebar_vbox - VBox for the title bar
-       content_vbox - VBox for content of the widget
-       sort_bar -- SortBar for the widget
+       normal_view_vbox - VBox for normal view of the items
+       list_view_vbox - VBox for list view of the items
+       toolbar -- HeaderToolbar for the widget
     """
 
     def __init__(self):
         widgetset.VBox.__init__(self)
-        self.content_vbox = widgetset.VBox()
+        self._list_view_displayed = False
+        self.normal_view_vbox = widgetset.VBox()
+        self.list_view_vbox = widgetset.VBox()
         self.titlebar_vbox = widgetset.VBox()
-        self.sort_bar = SortBar()
+        self.toolbar = HeaderToolbar()
+        self.toolbar.connect('list-view-clicked', self.on_list_view)
+        self.toolbar.connect('normal-view-clicked', self.on_normal_view)
         self.pack_start(self.titlebar_vbox)
-        self.pack_start(self.sort_bar)
-        background = ItemListBackground()
-        background.add(self.content_vbox)
-        scroller = widgetset.Scroller(False, True)
-        scroller.add(background)
+        self.pack_start(self.toolbar)
+        self.background = ItemListBackground()
+        self.background.add(self.normal_view_vbox)
+        scroller = widgetset.Scroller(True, True)
+        scroller.add(self.background)
         self.pack_start(scroller, expand=True)
+
+    def on_list_view(self, toolbar):
+        if self.background.child is not self.list_view_vbox:
+            self.background.remove()
+            self.background.add(self.list_view_vbox)
+
+    def on_normal_view(self, toolbar):
+        if self.background.child is not self.normal_view_vbox:
+            self.background.remove()
+            self.background.add(self.normal_view_vbox)

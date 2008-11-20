@@ -38,7 +38,12 @@ They also handle temporarily filtering out items based the user's search
 terms.
 """
 
+from datetime import datetime
+import itertools
+
+from miro import displaytext
 from miro import search
+from miro import util
 from miro.frontends.widgets import imagepool
 from miro.plat.utils import filenameToUnicode
 from miro.plat.frontends.widgets import timer
@@ -101,6 +106,14 @@ class SizeSort(ItemSort):
     def sort_key(self, item):
         return item.size
 
+class DescriptionSort(ItemSort):
+    def sort_key(self, item):
+        return item.description
+
+class FeedNameSort(ItemSort):
+    def sort_key(self, item):
+        return item.feed_name
+
 class ItemListGroup(object):
     """Manages a set of ItemLists.
 
@@ -121,6 +134,7 @@ class ItemListGroup(object):
         self.item_lists = item_lists
         self.set_sort(DateSort(False))
         self._throbber_timeouts = {}
+        self.html_stripper = util.HTMLStripper()
 
     def _throbber_timeout(self, id):
         for item_list in self.item_lists:
@@ -134,6 +148,8 @@ class ItemListGroup(object):
     def _setup_info(self, info):
         """Initialize a newly recieved ItemInfo."""
         info.icon = imagepool.LazySurface(info.thumbnail, (154, 105))
+        info.description_text, info.description_links = \
+                self.html_stripper.strip(info.description)
         download_info = info.download_info
         if (download_info is not None and
                 not download_info.finished and
@@ -191,15 +207,23 @@ class ItemList(object):
     """
     Attributes:
 
-    model -- TableModel for this item list.  It contains 3 columns, an
-    ItemInfo object, a show_details flag and a counter used to change the
-    progress throbber
+    model -- TableModel for this item list.  It contains these columns:
+        * ItemInfo (object)
+        * show_details flag (boolean)
+        * counter used to change the progress throbber (integer)
+        * name of the item (text)
+        * description of the item (text)
+        * feed name of the item (text)
+        * human readable date for the item (text)
+        * human readable duration of the item (text)
+        * human readable size of the item (text)
 
     new_only -- Are we only displaying the new items?
     """
 
     def __init__(self):
-        self.model = widgetset.TableModel('object', 'boolean', 'integer')
+        self.model = widgetset.TableModel('object', 'boolean', 'integer',
+                'text', 'text', 'text', 'text', 'text', 'text')
         self._iter_map = {}
         self._sorter = None
         self._search_text = ''
@@ -267,13 +291,27 @@ class ItemList(object):
             counter = self.model[iter][2]
             self.model.update_value(iter, 2, counter + 1)
 
+    def _get_extra_columns(self, info):
+        """Returns the columns that use values derived from an ItemInfo 
+        (in other words the columns staring with "name").
+        """
+        return (info.name,
+                info.description_text.replace('\n', ' '),
+                info.feed_name,
+                displaytext.release_date(info.release_date),
+                displaytext.duration(info.duration),
+                displaytext.size(info.size)
+                )
+
+
     def _insert_sorted_items(self, item_list):
         pos = self.model.first_iter()
         for item_info in item_list:
             while (pos is not None and
                     self._sorter.compare(self.model[pos][0], item_info) < 0):
                 pos = self.model.next_iter(pos)
-            iter = self.model.insert_before(pos, item_info, False, 0)
+            iter = self.model.insert_before(pos, item_info, False, 0,
+                    *self._get_extra_columns(item_info))
             self._iter_map[item_info.id] = iter
 
     def add_items(self, item_list, already_sorted=False):
@@ -320,6 +358,9 @@ class ItemList(object):
     def update_item(self, info):
         iter = self._iter_map[info.id]
         self.model.update_value(iter, 0, info)
+        column_iter = itertools.count(3)
+        for value in self._get_extra_columns(info):
+            self.model.update_value(iter, column_iter.next(), value)
 
     def remove_items(self, id_list):
         for id in id_list:

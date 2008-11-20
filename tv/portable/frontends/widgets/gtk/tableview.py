@@ -357,6 +357,62 @@ class HotspotTracker(object):
             self.treeview.queue_draw_area(cell_area.x, cell_area.y,
                     cell_area.width, cell_area.height)
 
+class TableColumn(signals.SignalEmitter):
+    """A single column of a TableView.
+    
+    Signals:
+
+        clicked (table_column) -- The header for this column was clicked.
+    """
+    def __init__(self, title, renderer, **attrs):
+        signals.SignalEmitter.__init__(self)
+        self.create_signal('clicked')
+        self._column = gtk.TreeViewColumn(title, renderer._renderer)
+        self._column.set_sizing(gtk.TREE_VIEW_COLUMN_FIXED)
+        self._column.set_clickable(True)
+        self.attrs = attrs
+        renderer.setup_attributes(self._column, attrs)
+        self.renderer = renderer
+        weak_connect(self._column, 'clicked', self._header_clicked)
+
+    def set_min_width(self, width):
+        self._column.props.min_width = width
+
+    def set_max_width(self, width):
+        self._column.props.max_width = width
+
+    def set_width(self, width):
+        self._column.props.fixed_width = width
+
+    def _header_clicked(self, tablecolumn):
+        self.emit('clicked')
+
+    def set_resizable(self, resizable):
+        """Set if the user can resize the column."""
+        self._column.set_resizable(resizable)
+
+    def set_sort_indicator_visible(self, visible):
+        """Show/Hide the sort indicator for this column."""
+        self._column.set_sort_indicator(visible)
+
+    def get_sort_indicator_visible(self):
+        return self._column.get_sort_indicator()
+
+    def set_sort_order(self, ascending):
+        """Display a sort indicator on the column header.  Ascending can be
+        either True or False which affects the diraction of the indicator.
+        """
+        if ascending:
+            self._column.set_sort_order(gtk.SORT_ASCENDING)
+        else:
+            self._column.set_sort_order(gtk.SORT_DESCENDING)
+
+    def get_sort_order_ascending(self):
+        """Returns if the sort indicator is displaying that the sort is
+        ascending.
+        """
+        return self._column.get_sort_order() == gtk.SORT_ASCENDING
+
 class TableView(Widget):
     """https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView"""
     def __init__(self, model):
@@ -364,7 +420,7 @@ class TableView(Widget):
         self.model = model
         self.set_widget(MiroTreeView(model._model))
         self.selection = self._widget.get_selection()
-        self.renderers = []
+        self.columns = []
         self.attr_map_for_column = {}
         self.background_color = None
         self.drag_button_down = False
@@ -372,6 +428,7 @@ class TableView(Widget):
         self.hotspot_tracker = None
         self.hover_info = None
         self.ignore_selection_changed = False
+        self.set_columns_draggable(False)
         self.create_signal('row-expanded')
         self.create_signal('row-collapsed')
         self.create_signal('selection-changed')
@@ -399,20 +456,20 @@ class TableView(Widget):
         self.background_color = self.make_color(color)
         self.modify_style('base', gtk.STATE_NORMAL, self.background_color)
         if self.use_custom_style:
-            for renderer in self.renderers:
-                renderer._renderer.set_property('cell-background-gdk',
+            for column in self.columns:
+                column.renderer._renderer.set_property('cell-background-gdk',
                         self.background_color)
 
     def handle_custom_style_change(self):
         if self.background_color is not None:
             if self.use_custom_style:
-                for renderer in self.renderers:
-                    renderer._renderer.set_property('cell-background-gdk',
-                            self.background_color)
+                for column in self.columns:
+                    column.renderer._renderer.set_property(
+                            'cell-background-gdk', self.background_color)
             else:
-                for renderer in self.renderers:
-                    renderer._renderer.set_property('cell-background-set', 
-                            False)
+                for column in self.columns:
+                    column.renderer._renderer.set_property(
+                            'cell-background-set', False)
 
     def _check_attr_map(self, attrs):
         for value in attrs.values():
@@ -422,16 +479,38 @@ class TableView(Widget):
             if value < 0 or value >= len(self.model._column_types):
                 raise ValueError("Attribute index out of range: %s" % value)
 
-    def add_column(self, title, renderer, min_width, **attrs):
-        self._check_attr_map(attrs)
-        column = gtk.TreeViewColumn(title, renderer._renderer)
-        column.set_sizing(gtk.TREE_VIEW_COLUMN_FIXED)
-        renderer.setup_attributes(column, attrs)
-        self._widget.append_column(column)
-        column.props.min_width = min_width
-        self.renderers.append(renderer)
-        self.attr_map_for_column[column] = attrs
-        self.set_renderer_properties(renderer)
+    def add_column(self, column):
+        self._check_attr_map(column.attrs)
+        self._widget.append_column(column._column)
+        self.columns.append(column)
+        self.attr_map_for_column[column._column] = column.attrs
+        self.set_renderer_properties(column.renderer)
+        column._column.set_reorderable(self._columns_draggable)
+
+    def remove_column(self, index):
+        column = self.columns.pop(index)
+        del self.attr_map_for_column[column._column]
+        self._widget.remove_column(index)
+
+    def width_for_columns(self, total_width):
+        # as far as I can tell, GTK includes the column spacing in the column
+        # widths
+        return total_width
+
+    def set_auto_resizes(self, setting):
+        # FIXME: to be implemented.
+        # At this point, GTK somehow does the right thing anyway in terms of
+        # auto-resizing.  I'm not sure exactly what's happening, but I believe
+        # that if the column widths don't add up to the total width,
+        # gtk.TreeView allocates extra width for the last column.  This works
+        # well enough for the tab list and item list, since there's only one
+        # column.
+        pass
+
+    def set_columns_draggable(self, setting):
+        self._columns_draggable = setting
+        for column in self.columns:
+            column._column.set_reorderable(setting)
 
     def set_renderer_properties(self, renderer):
         if self.background_color:
@@ -441,14 +520,9 @@ class TableView(Widget):
     def column_count(self):
         return len(self._widget.get_columns())
 
-    def remove_column(self, index):
-        column = self._widget.get_columns()[index]
-        del self.attr_map_for_column[column]
-        self._widget.remove_column(index)
-        self.renderers.pop(index)
-
     def set_show_headers(self, show):
         self._widget.set_headers_visible(show)
+        self._widget.set_headers_clickable(show)
 
     def set_draws_selection(self, draws_selection):
         style = self._widget.style
@@ -556,6 +630,10 @@ class TableView(Widget):
                 self.hotspot_tracker = hotspot_tracker
                 hotspot_tracker.redraw_cell()
                 return True
+        if treeview.get_dest_row_at_pos(int(event.x), int(event.y)) is None:
+            # click is outsite the content area, don't try to handle this.  
+            # In particular, our DnD code messes up resizing table columns.
+            return
         if event.button == 1:
             self.drag_button_down = True
             self.drag_start_x = int(event.x)

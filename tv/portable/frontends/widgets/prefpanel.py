@@ -464,10 +464,15 @@ class _MovieDirectoryHelper(object):
 class _WatchedFolderHelper(object):
     def __init__(self):
         self._table = widgetset.TableView(app.watched_folder_manager.model)
-        self._table.add_column('folder', widgetset.CellRenderer(), 400, value=1)
         checkbox = widgetset.CheckboxCellRenderer()
         checkbox.connect('clicked', self._on_visible_clicked)
-        self._table.add_column('visible', checkbox, 50, value=2)
+        folder_column = widgetset.TableColumn('folder',
+                widgetset.CellRenderer(), value=1)
+        folder_column.set_min_width(400)
+        visible_column = widgetset.TableColumn('visible', checkbox, value=2)
+        visible_column.set_min_width(50)
+        self._table.add_column(folder_column)
+        self._table.add_column(visible_column)
         self._table.allow_multiple_select(False)
         self.add_button = widgetset.Button(_("Add"))
         self.add_button.connect('clicked', self._add_clicked)

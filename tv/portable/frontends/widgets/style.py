@@ -212,7 +212,6 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             'images/thumb-overlay-small.png'))
         self.thumb_overlay_large = imagepool.get_surface(resources.path(
             'images/thumb-overlay-large.png'))
-        self.html_stripper = util.HTMLStripper()
         # We cache the size of our rows to save us from re-caclulating all the
         # time.  cached_size_parameters stores things like the base font size
         # that the cached value depends on.
@@ -286,7 +285,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     def make_description(self, layout):
         layout.set_font(0.85, family="Helvetica")
         layout.set_text_color(self.ITEM_DESC_COLOR)
-        text, links = self.html_stripper.strip(self.data.description)
+        text = self.data.description_text
+        links = self.data.description_links
         textbox = layout.textbox("")
         pos = 0
         for start, end, url in links:
@@ -380,14 +380,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             xalign=0.0, min_width=180)
 
         # Create the "normal info" box
-        if self.data.release_date > datetime.datetime.min:
-            release_date = self.data.release_date.strftime("%b %d %Y")
-        else:
-            release_date = ''
-        if self.data.duration > 0:
-            duration = displaytext.time(self.data.duration)
-        else:
-            duration = ''
+        release_date = displaytext.release_date(self.data.release_date)
+        duration = displaytext.duration(self.data.duration)
         info_rows = [(_("Date:"), release_date, None),
                      (_("Length:"), duration, None),
                      (_('Size:'), displaytext.size(self.data.size), None)]

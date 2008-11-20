@@ -45,7 +45,7 @@ from miro.frontends.widgets.gtk.window import Window, MainWindow, Dialog, \
         AlertDialog
 from miro.frontends.widgets.gtk.preferenceswindow import PreferencesWindow
 from miro.frontends.widgets.gtk.tableview import TableView, TableModel, \
-        TreeTableModel, CellRenderer, ImageCellRenderer, \
+        TableColumn, TreeTableModel, CellRenderer, ImageCellRenderer, \
         CheckboxCellRenderer, CustomCellRenderer
 from miro.frontends.widgets.gtk.simple import Image, ImageDisplay, Label, \
         Scroller, Expander, SolidBackground

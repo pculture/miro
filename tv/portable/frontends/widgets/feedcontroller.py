@@ -62,21 +62,18 @@ class FeedController(itemlistcontroller.ItemListController):
         icon = imagepool.get(feed_info.thumbnail, size=(61, 61))
         self._make_item_views()
 
-        widget = itemlistwidgets.ItemContainerWidget()
-        widget.sort_bar.connect('sort-changed', self.on_sort_changed)
         self.titlebar = itemlistwidgets.ChannelTitlebar(feed_info.name, icon,
                 add_icon_box=not self.is_folder)
         self.titlebar.connect('search-changed', self._on_search_changed)
         self.titlebar.connect('save-search', self._on_save_search)
-        widget.titlebar_vbox.pack_start(self.titlebar)
+        self.widget.titlebar_vbox.pack_start(self.titlebar)
         if not self.is_folder:
             sep = separator.HSeparator((0.85, 0.85, 0.85), (0.95, 0.95, 0.95))
-            widget.titlebar_vbox.pack_start(sep)
-            widget.titlebar_vbox.pack_start(self._make_toolbar(feed_info))
-        widget.content_vbox.pack_start(self.downloading_section)
-        widget.content_vbox.pack_start(self.full_section)
-        widget.content_vbox.pack_start(self.downloaded_section)
-        return widget
+            self.widget.titlebar_vbox.pack_start(sep)
+            self.widget.titlebar_vbox.pack_start(self._make_toolbar(feed_info))
+        self.widget.normal_view_vbox.pack_start(self.downloading_section)
+        self.widget.normal_view_vbox.pack_start(self.full_section)
+        self.widget.normal_view_vbox.pack_start(self.downloaded_section)
 
     def _show_all(self):
         self._show_more_count = 0
@@ -102,7 +99,7 @@ class FeedController(itemlistcontroller.ItemListController):
                 itemlist.DownloadingItemList(), False)
         self.downloaded_view = itemlistwidgets.ItemView(
                 itemlist.DownloadedItemList(), False)
-        self.full_view = itemlistwidgets.ItemView(itemlist.ItemList(), False)
+        self.full_view = itemlistwidgets.ItemView(self.item_list, False)
         self.downloading_section = itemlistwidgets.HideableSection(
                 "", self.downloading_view)
         self.downloaded_section = itemlistwidgets.HideableSection(
@@ -128,7 +125,7 @@ class FeedController(itemlistcontroller.ItemListController):
                 self._on_auto_download_changed)
         return toolbar
 
-    def all_item_views(self):
+    def normal_item_views(self):
         return [self.downloading_view, self.full_view, self.downloaded_view]
 
     def default_item_view(self):

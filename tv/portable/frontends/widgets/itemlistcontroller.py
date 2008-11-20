@@ -87,18 +87,31 @@ class ItemListController(object):
         self.id = id
         self.current_item_view = None
         self._search_text = ''
-        self.widget = self.build_widget()
-        item_lists = [iv.item_list for iv in self.all_item_views()]
+        self._init_widget()
+        item_lists = set(iv.item_list for iv in self.all_item_views())
         self.item_list_group = itemlist.ItemListGroup(item_lists)
+        self._init_item_views()
+        self.initialize_search()
+
+    def _init_widget(self):
+        self.widget = itemlistwidgets.ItemContainerWidget()
+        self.item_list = itemlist.ItemList()
+        self.list_item_view = itemlistwidgets.ListItemView(self.item_list)
+        self.widget.list_view_vbox.pack_start(self.list_item_view)
+        self.widget.toolbar.connect('sort-changed', self.on_sort_changed)
+        self.list_item_view.connect('sort-changed', self.on_sort_changed)
+        self.build_widget()
+
+    def _init_item_views(self):
         self.context_menu_handler = self.make_context_menu_handler()
         context_callback = self.context_menu_handler.callback
+        for item_view in self.normal_item_views():
+            item_view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
+            item_view.connect_weak('selection-changed', self.on_selection_changed)
         for item_view in self.all_item_views():
-            item_view.connect('hotspot-clicked', self.on_hotspot_clicked)
-            item_view.connect('selection-changed', self.on_selection_changed)
             item_view.set_context_menu_callback(context_callback)
             item_view.set_drag_source(self.make_drag_handler())
             item_view.set_drag_dest(self.make_drop_handler())
-        self.initialize_search()
 
     def initialize_search(self):
         search = app.inline_search_memory.get_search(self.type, self.id)
@@ -150,22 +163,27 @@ class ItemListController(object):
             item_view.model_changed()
         app.inline_search_memory.set_search(self.type, self.id, search_text)
 
-    def on_sort_changed(self, sort_bar, sort_key, ascending):
+    def on_sort_changed(self, object, sort_key, ascending):
         sort_key_map = {
                 'date': itemlist.DateSort,
                 'name': itemlist.NameSort,
                 'length': itemlist.LengthSort,
-                'size': itemlist.SizeSort
+                'size': itemlist.SizeSort,
+                'description': itemlist.DescriptionSort,
+                'feed-name': itemlist.FeedNameSort,
         }
         sorter = sort_key_map[sort_key](ascending)
         for item_view in self.all_item_views():
-            item_view.item_list.set_sort(sorter)
             item_view.model_changed()
+        for item_list in self.item_list_group.item_lists:
+            item_list.set_sort(sorter)
+        self.list_item_view.change_sort_indicator(sort_key, ascending)
 
     def on_hotspot_clicked(self, itemview, name, iter):
         """Hotspot handler for ItemViews."""
 
-        item_info, show_details, counter = itemview.model[iter]
+        item_info = itemview.model[iter][0]
+        show_details = itemview.model[iter][1]
         if name == 'download':
             messages.StartDownload(item_info.id).send_to_backend()
         elif name == 'pause':
@@ -226,7 +244,7 @@ class ItemListController(object):
 
         if item_view is not self.current_item_view:
             self.current_item_view = item_view
-            for other_view in self.all_item_views():
+            for other_view in self.normal_item_views():
                 if other_view is not item_view:
                     other_view.unselect_all()
 
@@ -290,9 +308,14 @@ class ItemListController(object):
         """Build the widget for this controller."""
         raise NotImplementedError()
 
-    def all_item_views(self):
+    def normal_item_views(self):
         """Return a list of ItemViews used by this controller."""
         raise NotImplementedError()
+
+    def all_item_views(self):
+        for item_view in self.normal_item_views():
+            yield item_view
+        yield self.list_item_view
 
     def default_item_view(self):
         """ItemView play from if no videos are selected."""
@@ -303,14 +326,10 @@ class SimpleItemListController(ItemListController):
         ItemListController.__init__(self, self.type, self.id)
 
     def build_widget(self):
-        widget = itemlistwidgets.ItemContainerWidget()
-        widget.sort_bar.connect('sort-changed', self.on_sort_changed)
         self.titlebar = self.make_titlebar()
-        self.item_list = itemlist.ItemList()
         self.item_view = self.build_item_view()
-        widget.titlebar_vbox.pack_start(self.titlebar)
-        widget.content_vbox.pack_start(self.item_view)
-        return widget
+        self.widget.titlebar_vbox.pack_start(self.titlebar)
+        self.widget.normal_view_vbox.pack_start(self.item_view)
 
     def build_item_view(self):
         return itemlistwidgets.ItemView(self.item_list)
@@ -324,7 +343,7 @@ class SimpleItemListController(ItemListController):
     def _on_search_changed(self, widget, search_text):
         self.set_search(search_text)
 
-    def all_item_views(self):
+    def normal_item_views(self):
         return [self.item_view]
 
     def default_item_view(self):
@@ -355,12 +374,11 @@ class SearchController(SimpleItemListController):
         self.widget.titlebar_vbox.pack_start(self.toolbar)
 
     def build_widget(self):
-        widget = SimpleItemListController.build_widget(self)
+        SimpleItemListController.build_widget(self)
         label = widgetset.Label(_('No Results Found'))
         label.set_size(2)
         self.no_results_label = widgetutil.HideableWidget(label)
-        widget.content_vbox.pack_start(self.no_results_label)
-        return widget
+        self.widget.normal_view_vbox.pack_start(self.no_results_label)
 
     def initialize_search(self):
         if app.search_manager.text != '':

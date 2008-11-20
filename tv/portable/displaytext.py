@@ -95,3 +95,15 @@ def expiration_date(exp_date):
                         "Expires in %(count)d minutes",
                         math.ceil(offset.seconds/60.0),
                         {"count": math.ceil(offset.seconds/60.0)})
+
+def release_date(release_date):
+    if release_date > datetime.datetime.min:
+        return release_date.strftime("%b %d %Y")
+    else:
+        return ''
+
+def duration(seconds):
+    if seconds > 0:
+        return time(seconds)
+    else:
+        return ''

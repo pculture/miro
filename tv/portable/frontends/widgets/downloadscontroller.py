@@ -48,10 +48,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
     def build_widget(self):
         self._make_item_views()
 
-        widget = ItemContainerWidget()
-        widget.sort_bar.connect('sort-changed', self.on_sort_changed)
-
-        widget.titlebar_vbox.pack_start(self.make_titlebar())
+        self.widget.titlebar_vbox.pack_start(self.make_titlebar())
 
         self.toolbar = DownloadToolbar()
         self.toolbar.connect("pause-all", self._on_pause_all)
@@ -61,13 +58,11 @@ class DownloadsController(itemlistcontroller.ItemListController):
 
         self._update_free_space()
 
-        widget.titlebar_vbox.pack_start(self.toolbar)
+        self.widget.titlebar_vbox.pack_start(self.toolbar)
 
-        widget.content_vbox.pack_start(self.indydownloads_section)
-        widget.content_vbox.pack_start(self.downloads_section)
-        widget.content_vbox.pack_start(self.seeding_section)
-
-        return widget
+        self.widget.normal_view_vbox.pack_start(self.indydownloads_section)
+        self.widget.normal_view_vbox.pack_start(self.downloads_section)
+        self.widget.normal_view_vbox.pack_start(self.seeding_section)
 
     def make_titlebar(self):
         image_path = resources.path("images/icon-downloading_large.png")
@@ -89,7 +84,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
         self.seeding_view = ItemView(itemlist.SeedingItemList())
         self.seeding_section = HideableSection(_("Seeding"), self.seeding_view)
 
-    def all_item_views(self):
+    def normal_item_views(self):
         return [self.indydownloads_view, self.downloads_view, self.seeding_view]
 
     def default_item_view(self):

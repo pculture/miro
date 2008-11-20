@@ -39,9 +39,15 @@ class Widget(signals.SignalEmitter):
     """Base class for GTK widgets.  
 
     The actual GTK Widget is stored in '_widget'.
+
+    signals:
+
+        'size-allocated' (widget, width, height): The widget had it's size
+            allocated.
     """
     def __init__(self, *signal_names):
         signals.SignalEmitter.__init__(self, *signal_names)
+        self.create_signal('size-allocated')
         self.style_mods = {}
         self.use_custom_style = False
         self._disabled = False
@@ -59,6 +65,7 @@ class Widget(signals.SignalEmitter):
         wrappermap.add(self._widget, self)
         self.wrapped_widget_connect('hierarchy_changed',
                 self.on_hierarchy_changed)
+        self.wrapped_widget_connect('size-allocate', self.on_size_allocate)
         self.use_custom_style_callback = None
 
     def on_hierarchy_changed(self, widget, previous_toplevel):
@@ -79,6 +86,9 @@ class Widget(signals.SignalEmitter):
             if previous_toplevel is None:
                 # Setup our initial state
                 self.on_use_custom_style_changed(window)
+
+    def on_size_allocate(self, widget, allocation):
+        self.emit('size-allocated', allocation.width, allocation.height)
 
     def on_use_custom_style_changed(self, window):
         self.use_custom_style = window.use_custom_style
