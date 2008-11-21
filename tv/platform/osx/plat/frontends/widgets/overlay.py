@@ -159,6 +159,14 @@ class OverlayPalette (NSWindowController):
         self.adjustContent(video_window, False)
         self.update_(nil)
 
+    def on_items_changed(self, changed_items):
+        for item_info in changed_items:
+            if item_info.id == self.item_info.id:
+                self.keepButton.setEnabled_(item_info.can_be_saved)
+                self.shareButton.setEnabled_(item_info.has_sharable_url)
+                self.addToLibButton.setHidden_(not item_info.is_external)
+                self.update_(nil)
+                
     def enter_fullscreen(self, videoWindow):
         if self.window().isVisible():
             newFrame = self.window().frame()
@@ -290,7 +298,9 @@ class OverlayPalette (NSWindowController):
         messages.KeepVideo(self.item_info.id).send_to_backend()
     
     def expireNow_(self, sender):
-        messages.DeleteVideo(self.item_info.id).send_to_backend()
+        item_info = self.item_info
+        app.playback_manager.on_movie_finished()
+        app.widgetapp.remove_items([item_info])
         
     def share_(self, sender):
         event = NSApplication.sharedApplication().currentEvent()

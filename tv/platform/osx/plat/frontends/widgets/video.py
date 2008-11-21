@@ -128,6 +128,7 @@ class VideoRenderer (Widget):
         self.movie = None
         self.system_activity_updater_timer = None
         self.window_moved_handler = None
+        self.item_changed_handler = None
 
     def calc_size_request(self):
         return (200,200)
@@ -140,6 +141,7 @@ class VideoRenderer (Widget):
         self.video_window.orderFront_(nil)
         self.adjust_video_frame()
         self.window_moved_handler = wrappermap.wrapper(self.view.window()).connect('did-move', self.on_window_moved)
+        self.item_changed_handler = app.info_updater.connect('items-changed', self.on_items_changed)
 
     def place(self, rect, containing_view):
         Widget.place(self, rect, containing_view)
@@ -147,8 +149,13 @@ class VideoRenderer (Widget):
 
     def on_window_moved(self, window):
         self.adjust_video_frame()
+
+    def on_items_changed(self, controller, changed_items):
+        self.video_window.on_items_changed(changed_items)
         
     def remove_viewport(self):
+        app.info_updater.disconnect(self.item_changed_handler)
+        self.item_changed_handler = None
         self.prevent_system_sleep(False)
         self.detach_from_parent_window()
         self.video_window.close()
@@ -347,6 +354,9 @@ class VideoWindow (NSWindow):
         self.palette.window().orderOut_(nil)
         self.palette = None
         super(VideoWindow, self).close()
+
+    def on_items_changed(self, changed_items):
+        self.palette.on_items_changed(changed_items)
 
     def canBecomeMainWindow(self):
         return NO
