@@ -486,7 +486,7 @@ class Application:
 
     def remove_current_feed(self):
         t, channel_infos = app.tab_list_manager.get_selection()
-        if t == 'feed':
+        if t in ('feed', 'audio-feed'):
             self.remove_feeds(channel_infos)
 
     def remove_feeds(self, channel_infos):
@@ -518,7 +518,7 @@ class Application:
 
     def update_selected_channels(self):
         t, channel_infos = app.tab_list_manager.get_selection()
-        if t == 'feed':
+        if t in ('feed', 'audio-feed'):
             for ci in channel_infos:
                 if ci.is_folder:
                     messages.UpdateChannelFolder(ci.id).send_to_backend()
@@ -554,7 +554,7 @@ class Application:
 
     def mail_channel(self):
         t, channel_infos = app.tab_list_manager.get_selection()
-        if t == 'feed' and len(channel_infos) == 1:
+        if t in ('feed', 'audio-feed') and len(channel_infos) == 1:
             ci = channel_infos[0]
             self.mail_to_friend(ci.base_href, ci.name)
 
@@ -567,7 +567,7 @@ class Application:
 
     def copy_channel_url(self):
         t, channel_infos = app.tab_list_manager.get_selection()
-        if t == 'feed' and len(channel_infos) == 1:
+        if t in ('feed', 'audio-feed') and len(channel_infos) == 1:
             app.widgetapp.copy_text_to_clipboard(channel_infos[0].base_href)
 
     def copy_site_url(self):
@@ -617,7 +617,7 @@ class Application:
         t, channel_infos = app.tab_list_manager.get_selection()
         info = channel_infos[0]
 
-        if t == 'feed' and info.is_folder:
+        if t in ('feed', 'audio-feed') and info.is_folder:
             t = 'feed-folder'
         elif t == 'playlist' and info.is_folder:
             t = 'playlist-folder'
@@ -627,7 +627,7 @@ class Application:
             description = _('Enter a new name for the channel folder %(name)s',
                             {"name": info.name})
 
-        elif t == 'feed' and not info.is_folder:
+        elif t in ('feed', 'audio-feed'):
             title = _('Rename Channel')
             description = _('Enter a new name for the channel %(name)s',
                             {"name": info.name})
