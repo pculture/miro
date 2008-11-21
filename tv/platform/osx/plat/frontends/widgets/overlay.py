@@ -306,7 +306,7 @@ class OverlayPalette (NSWindowController):
         event = NSApplication.sharedApplication().currentEvent()
         NSMenu.popUpContextMenu_withEvent_forView_(self.shareMenu, event, sender)
     
-    def addToLibrary(self, sender):
+    def addToLibrary_(self, sender):
         messages.AddItemToLibrary(self.item_info.id).send_to_backend()
     
     def handleShareItem_(self, sender):
