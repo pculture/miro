@@ -1158,7 +1158,7 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_subscription_link_clicked(self, message):
         url = message.url
-        type, subscribeURLs = subscription.findSubscribeLinks(url)
+        type, subscribeURLs = subscription.find_subscribe_links(url)
         normalizedURLs = []
         for url, additional in subscribeURLs:
             normalized = feed.normalize_feed_url(url)
@@ -1189,7 +1189,7 @@ class BackendMessageHandler(messages.MessageHandler):
             elif type == 'download':
                 for url, additional in normalizedURLs:
                     singleclick.add_download(url, additional)
-            elif type == 'guide':
+            elif type == 'site':
                 for url, additional in normalizedURLs:
                     if guide.getGuideByURL (url) is None:
                         guide.ChannelGuide(url, [u'*'])

@@ -116,9 +116,9 @@ def is_subscribe_link(url):
 
     It's pretty hearty and shouldn't throw exceptions.
     """
+    if not isinstance(url, basestring):
+        return False
     try:
-        if not isinstance(url, basestring):
-            return False
         scheme, host, path, params, query, frag = urlparse.urlparse(url)
     except (KeyboardInterrupt, SystemExit):
         raise
@@ -128,7 +128,7 @@ def is_subscribe_link(url):
         return False
     return host in SUBSCRIBE_HOSTS
 
-def findSubscribeLinks(url):
+def find_subscribe_links(url):
     """Given a URL, test if it's trying to subscribe the user using
     subscribe.getdemocracy.com.  Returns the list of parsed URLs.
     """
@@ -140,14 +140,15 @@ def findSubscribeLinks(url):
         logging.warn("find_subscribe_links: Error parsing '%s'\n%s", url,
                 traceback.format_exc())
         return 'none', []
+
     if host not in SUBSCRIBE_HOSTS:
         return 'none', []
     if path in ('/', '/opml.php'):
         return 'feed', get_urls_from_query(query)
     elif path in ('/download.php','/download','/download/'):
         return 'download', get_urls_from_query(query)
-    elif path in ('/channelguide.php', '/channelguide', '/channelguide/'):
-        return 'guide', get_urls_from_query(query)
+    elif path in ('/site.php', '/site', '/site/'):
+        return 'site', get_urls_from_query(query)
     else:
         return 'feed', [(urllib2.unquote(path[1:]), {})]
 

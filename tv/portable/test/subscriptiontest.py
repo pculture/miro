@@ -38,11 +38,11 @@ ATOM_LINK_CONSTRUCT_IN_RSS = u"""\
         <title>Dummy RSS Feed</title>
         <link>http://www.getdemocracy.com</link>
         <description>A dummy RSS feed to test USM subscription</description>
-        <atom:link 
+        <atom:link
             xmlns:atom="http://www.w3.org/2005/Atom"
-            rel="self" 
-            type="application/rss+xml" 
-            title="Sample Dummy RSS Feed" 
+            rel="self"
+            type="application/rss+xml"
+            title="Sample Dummy RSS Feed"
             href="%s" />
     </channel>
 </rss>
@@ -57,11 +57,11 @@ ATOM_LINK_CONSTRUCT_IN_ATOM = u"""\
     <updated>2006-05-28T11:00:00Z</updated>
     <author><name>Luc Heinrich</name></author>
     <id>urn:uuid:D7732206-B0BF-4FAF-B2CE-FC25C6C5548F</id>
-    <link 
+    <link
         xmlns:atom="http://www.w3.org/2005/Atom"
-        rel="self" 
-        type="application/rss+xml" 
-        title="Sample Dummy Atom Feed" 
+        rel="self"
+        type="application/rss+xml"
+        title="Sample Dummy Atom Feed"
         href="%s" />
 </feed>
 """ % SAMPLE_ATOM_SUBSCRIPTION_URL_1
@@ -84,7 +84,7 @@ REFLEXIVE_AUTO_DISCOVERY_IN_RSS = u"""\
 REFLEXIVE_AUTO_DISCOVERY_PAGE_RSS_FILENAME = "reflexive-auto-discovery-page-rss.html"
 REFLEXIVE_AUTO_DISCOVERY_PAGE_RSS = u"""\
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
                           "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
         <head>
@@ -107,18 +107,18 @@ REFLEXIVE_AUTO_DISCOVERY_IN_ATOM = u"""\
     <updated>2006-05-28T11:00:00Z</updated>
     <author><name>Luc Heinrich</name></author>
     <id>urn:uuid:D7732206-B0BF-4FAF-B2CE-FC25C6C5548F</id>
-    <link 
+    <link
         xmlns:atom="http://www.w3.org/2005/Atom"
-        rel="alternate" 
-        type="application/atom+xml" 
-        title="Sample Dummy AutoDiscovery Feed" 
+        rel="alternate"
+        type="application/atom+xml"
+        title="Sample Dummy AutoDiscovery Feed"
         href="reflexive-auto-discovery-page-atom.html" />
 </feed>
 """
 REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM_FILENAME = "reflexive-auto-discovery-page-atom.html"
 REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM = u"""\
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
                           "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
@@ -177,7 +177,7 @@ OPML_NESTED = u"""\
 # =============================================================================
 
 class TestSubscription (MiroTestCase):
-        
+
     subscription.reflexiveAutoDiscoveryOpener = open
 
     def testInvalidSubscriptions(self):
@@ -187,7 +187,7 @@ class TestSubscription (MiroTestCase):
         self.assertEquals(retval, None)
         retval = subscription.parse_content(INVALID_CONTENT_2)
         self.assertEquals(retval, None)
-    
+
     def testAtomLinkConstructInRSS(self):
         type, urls = subscription.parse_content(ATOM_LINK_CONSTRUCT_IN_RSS)
         self.assertEquals(type, 'rss')
@@ -199,7 +199,7 @@ class TestSubscription (MiroTestCase):
         self.assertEquals(type, 'rss')
         self.assert_(len(urls) == 1)
         self.assert_(urls[0] == SAMPLE_ATOM_SUBSCRIPTION_URL_1)
-        
+
     def testReflexiveAutoDiscoveryInRSS(self):
         pageFile = file(REFLEXIVE_AUTO_DISCOVERY_PAGE_RSS_FILENAME, "w")
         pageFile.write(REFLEXIVE_AUTO_DISCOVERY_PAGE_RSS)
@@ -219,7 +219,7 @@ class TestSubscription (MiroTestCase):
         self.assert_(len(urls) == 1)
         self.assert_(urls[0] == SAMPLE_ATOM_SUBSCRIPTION_URL_1)
         os.remove(REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM_FILENAME)
-    
+
     def testFlatOPMLSubscriptions(self):
         type, urls = subscription.parse_content(OPML_FLAT)
         self.assertEquals(type, 'rss')
@@ -238,26 +238,26 @@ class TestSubscription (MiroTestCase):
         self.assert_(urls[2] == SAMPLE_RSS_SUBSCRIPTION_URL_2)
         self.assert_(urls[3] == SAMPLE_ATOM_SUBSCRIPTION_URL_2)
 
-class TestFindSubscribeLinks (MiroTestCase):
+class Testfind_subscribe_links (MiroTestCase):
     def testDifferstHost(self):
         url = 'http://youtoob.com'
-        self.assertEquals(subscription.findSubscribeLinks(url), 
+        self.assertEquals(subscription.find_subscribe_links(url),
                 ('none', []))
 
     def testNoLinks(self):
         url = 'http://subscribe.getdemocracy.com/'
-        self.assertEquals(subscription.findSubscribeLinks(url), 
+        self.assertEquals(subscription.find_subscribe_links(url),
                 ('feed', []))
 
     def testLinkInPath(self):
         url = 'http://subscribe.getdemocracy.com/http%3A//www.myblog.com/rss'
-        self.assertEquals(subscription.findSubscribeLinks(url), 
+        self.assertEquals(subscription.find_subscribe_links(url),
                 ('feed', [ ('http://www.myblog.com/rss', {}) ]))
 
     def testLinkInQuery(self):
         url = ('http://subscribe.getdemocracy.com/' + \
                '?url1=http%3A//www.myblog.com/rss')
-        self.assertEquals(subscription.findSubscribeLinks(url), 
+        self.assertEquals(subscription.find_subscribe_links(url),
                 ('feed', [ ('http://www.myblog.com/rss', {}) ]))
 
     def testMultipleLinksInQuery(self):
@@ -266,7 +266,7 @@ class TestFindSubscribeLinks (MiroTestCase):
                '&url2=http%3A//www.yourblog.com/atom' + \
                '&url3=http%3A//www.herblog.com/scoobydoo')
 
-        contenttype, links = subscription.findSubscribeLinks(url)
+        contenttype, links = subscription.find_subscribe_links(url)
         self.assertEquals(contenttype, 'feed')
         # have to sort them because they could be in any order
         links.sort()
@@ -282,7 +282,7 @@ class TestFindSubscribeLinks (MiroTestCase):
                '&foo=bar' + \
                '&extra=garbage')
 
-        contenttype, links = subscription.findSubscribeLinks(url)
+        contenttype, links = subscription.find_subscribe_links(url)
         self.assertEquals(contenttype, 'feed')
         # have to sort them because they could be in any order
         links.sort()
@@ -290,16 +290,16 @@ class TestFindSubscribeLinks (MiroTestCase):
                                    ('http://www.myblog.com/rss', {}),
                                    ('http://www.yourblog.com/atom', {}) ])
 
-    def testChannelGuideLinks(self):
-        url = ('http://subscribe.getdemocracy.com/channelguide.php' +
+    def testSiteLinks(self):
+        url = ('http://subscribe.getdemocracy.com/site.php' +
                '?url1=http%3A//www.mychannelguide.com/')
-        self.assertEquals(subscription.findSubscribeLinks(url), 
-                ('guide', [ ('http://www.mychannelguide.com/', {}) ]))
+        self.assertEquals(subscription.find_subscribe_links(url),
+                ('site', [ ('http://www.mychannelguide.com/', {}) ]))
 
     def testDownloadLinks(self):
         url = ('http://subscribe.getdemocracy.com/download.php' +
                '?url1=http%3A//www.myblog.com/videos/cats.ogm')
-        self.assertEquals(subscription.findSubscribeLinks(url), 
+        self.assertEquals(subscription.find_subscribe_links(url),
                 ('download', [ ('http://www.myblog.com/videos/cats.ogm', {}) ]))
 
     def testSubscribeLinks(self):
