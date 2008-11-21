@@ -35,6 +35,13 @@ from miro.frontends.widgets.gtk import window
 from miro.frontends.widgets.gtk import wrappermap
 from miro.frontends.widgets.gtk.weakconnect import weak_connect
 
+def make_gdk_color(miro_color):
+    def convert_value(value):
+        return int(round(value * 65535))
+
+    values = tuple(convert_value(c) for c in miro_color)
+    return gtk.gdk.Color(*values)
+
 class Widget(signals.SignalEmitter):
     """Base class for GTK widgets.  
 
@@ -191,13 +198,8 @@ class Widget(signals.SignalEmitter):
         args = args[:-1]
         self.emit(forwarded_signal_name, *args)
 
-    def convert_floats_to_65535(self, *values):
-        def convert_value(value):
-            return int(round(value * 65535))
-        return tuple(convert_value(v) for v in values)
-
-    def make_color(self, (red, green, blue)):
-        color = gtk.gdk.Color(*self.convert_floats_to_65535(red, green, blue))
+    def make_color(self, miro_color):
+        color = make_gdk_color(miro_color)
         self._widget.get_colormap().alloc_color(color)
         return color
 

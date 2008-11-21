@@ -39,7 +39,7 @@ from miro import signals
 from miro.frontends.widgets.gtk import pygtkhacks
 from miro.frontends.widgets.gtk import drawing
 from miro.frontends.widgets.gtk import wrappermap
-from miro.frontends.widgets.gtk.base import Widget
+from miro.frontends.widgets.gtk.base import Widget, make_gdk_color
 from miro.frontends.widgets.gtk.simple import Image
 from miro.frontends.widgets.gtk.layoutmanager import LayoutManager
 from miro.frontends.widgets.gtk.weakconnect import weak_connect
@@ -62,6 +62,17 @@ class CellRenderer(object):
 
     def setup_attributes(self, column, attr_map): 
         column.add_attribute(self._renderer, 'text', attr_map['value'])
+
+    def set_color(self, color):
+        self._renderer.props.foreground_gdk = make_gdk_color(color)
+
+    def set_bold(self, bold):
+        font_desc = self._renderer.props.font_desc
+        if bold:
+            font_desc.set_weight(pango.WEIGHT_BOLD)
+        else:
+            font_desc.set_weight(pango.WEIGHT_NORMAL)
+        self._renderer.props.font_desc = font_desc
 
 class ImageCellRenderer(object):
     """Cell Renderer for images
@@ -424,6 +435,7 @@ class TableView(Widget):
         self.attr_map_for_column = {}
         self.background_color = None
         self.drag_button_down = False
+        self._renderer_xpad = 0
         self.context_menu_callback = self.drag_source = self.drag_dest = None
         self.hotspot_tracker = None
         self.hover_info = None
@@ -479,13 +491,32 @@ class TableView(Widget):
             if value < 0 or value >= len(self.model._column_types):
                 raise ValueError("Attribute index out of range: %s" % value)
 
+    def set_column_spacing(self, space):
+        """Set the amount of space between columns."""
+        self._renderer_xpad = space / 2
+        for column in self.columns:
+            column.renderer._renderer.set_property('xpad', self._renderer_xpad)
+
+    def set_alternate_row_backgrounds(self, setting):
+        self._widget.set_rules_hint(setting)
+
+    def set_grid_lines(self, horizontal, vertical):
+        if horizontal and vertical:
+            setting = gtk.TREE_VIEW_GRID_LINES_BOTH
+        elif horizontal:
+            setting = gtk.TREE_VIEW_GRID_LINES_HORIZONTAL
+        elif vertical:
+            setting = gtk.TREE_VIEW_GRID_LINES_VERTICAL
+        else:
+            value = gtk.TREE_VIEW_GRID_LINES_NONE
+        self._widget.set_grid_lines(setting)
+
     def add_column(self, column):
         self._check_attr_map(column.attrs)
         self._widget.append_column(column._column)
         self.columns.append(column)
         self.attr_map_for_column[column._column] = column.attrs
-        self.set_renderer_properties(column.renderer)
-        column._column.set_reorderable(self._columns_draggable)
+        self.setup_new_column(column)
 
     def remove_column(self, index):
         column = self.columns.pop(index)
@@ -512,10 +543,12 @@ class TableView(Widget):
         for column in self.columns:
             column._column.set_reorderable(setting)
 
-    def set_renderer_properties(self, renderer):
+    def setup_new_column(self, column):
         if self.background_color:
-            renderer._renderer.set_property('cell-background-gdk',
+            column.renderer._renderer.set_property('cell-background-gdk',
                     self.background_color)
+        column._column.set_reorderable(self._columns_draggable)
+        column.renderer._renderer.set_property('xpad', self._renderer_xpad)
 
     def column_count(self):
         return len(self._widget.get_columns())

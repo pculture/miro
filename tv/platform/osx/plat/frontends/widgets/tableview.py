@@ -30,6 +30,8 @@
 associated classes.
 """
 
+import math
+
 from AppKit import *
 from Foundation import *
 from objc import YES, NO, nil
@@ -149,13 +151,14 @@ class HotspotTracker(object):
                     self.row)
             self.tableview.setNeedsDisplayInRect_(cell_frame)
 
-class MiroTableCell(NSCell):
+class MiroTableCell(NSTextFieldCell):
     def init(self):
         return self.initTextCell_('')
 
     def calcHeight_(self, view):
         font = self.font()
-        return font.ascender() + abs(font.descender()) + font.leading()
+        return math.ceil(font.ascender() + abs(font.descender()) +
+                font.leading())
 
     def highlightColorWithFrame_inView_(self, frame, view):
         if _get_tableview_wrapper(view).draws_selection:
@@ -225,8 +228,23 @@ class MiroCheckboxCell(NSButtonCell):
                 at, tableview, mouseIsUp)
 
 class CellRenderer(object):
+    def __init__(self):
+        self.cell = MiroTableCell.alloc().init()
+
     def setDataCell_(self, column):
-        column.setDataCell_(MiroTableCell.alloc().init())
+        column.setDataCell_(self.cell)
+
+    def set_bold(self, bold):
+        if bold:
+            font = NSFont.boldSystemFontOfSize_(NSFont.systemFontSize())
+        else:
+            font = NSFont.systemFontOfSize_(NSFont.systemFontSize())
+        self.cell.setFont_(font)
+
+    def set_color(self, color):
+        color = NSColor.colorWithDeviceRed_green_blue_alpha_(color[0],
+                color[1], color[2], 1.0)
+        self.cell.setTextColor_(color)
 
 class ImageCellRenderer(object):
     def setDataCell_(self, column):
@@ -806,6 +824,23 @@ class TableView(Widget):
         """
         spacing = self.tableview.intercellSpacing().width * self.column_count()
         return width - spacing
+
+    def set_column_spacing(self, column_spacing):
+        spacing = self.tableview.intercellSpacing()
+        spacing.width = column_spacing
+        self.tableview.setIntercellSpacing_(spacing)
+
+    def set_alternate_row_backgrounds(self, setting):
+        self.tableview.setUsesAlternatingRowBackgroundColors_(setting)
+
+    def set_grid_lines(self, horizontal, vertical):
+        mask = 0
+        if horizontal:
+            mask |= NSTableViewSolidHorizontalGridLineMask
+        if vertical:
+            mask |= NSTableViewSolidVerticalGridLineMask
+        self.tableview.setGridStyleMask_(mask)
+
 
     def add_column(self, column):
         self.columns.append(column)

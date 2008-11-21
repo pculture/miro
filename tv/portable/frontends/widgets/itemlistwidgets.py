@@ -245,8 +245,9 @@ class ListItemView(widgetset.TableView):
         self._sort_name_to_column = {}
         self._current_sort_column = None
         self._set_initial_widths = False
-        self.add_column(self._make_column('Title', 3, 'name'))
-        self.add_column(self._make_column('Description', 4, 'description'))
+        self.add_column(self._make_column('Title', 3, 'name', bold=True))
+        self.add_column(self._make_column('Description', 4, 'description',
+            color=(0.6, 0.6, 0.6)))
         if display_channel:
             self.add_column(self._make_column('Feed', 5, 'feed-name'))
         self.add_column(self._make_column('Date', 6, 'date'))
@@ -254,11 +255,21 @@ class ListItemView(widgetset.TableView):
         self.add_column(self._make_column('Size', 8, 'size'))
         self.set_show_headers(True)
         self.set_columns_draggable(True)
+        self.set_column_spacing(12)
+        self.set_grid_lines(False, True)
+        self.set_alternate_row_backgrounds(True)
         self.allow_multiple_select(True)
 
-    def _make_column(self, header, source_index, sort_name):
-        column = widgetset.TableColumn(header, widgetset.CellRenderer(),
-                value=source_index)
+    def _make_column(self, header, source_index, sort_name, color=None,
+            bold=False):
+        renderer = widgetset.CellRenderer()
+        if color is not None:
+            renderer.set_color(color)
+        else:
+            renderer.set_color((0.20, 0.20, 0.20))
+        if bold:
+            renderer.set_bold(True)
+        column = widgetset.TableColumn(header, renderer, value=source_index)
         column.set_min_width(50)
         column.set_resizable(True)
         column.connect_weak('clicked', self._on_column_clicked, sort_name)
