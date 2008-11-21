@@ -90,6 +90,9 @@ class MenuHandler(NSObject):
 
         elif self.action == "PresentDoubleSize":
             self.present_movie('double-size')
+        
+        elif self.action == "PresentHalfSize":
+            self.present_movie('half-size')
 
         elif self.action == "Zoom":
             NSApp().sendAction_to_from_("performZoom:", None, sender)
@@ -216,13 +219,14 @@ def populate_menu():
 
     # Playback menu
     presentMenuItems = [
+        MenuItem(_("Present Half Size"), "PresentHalfSize", ()),
         MenuItem(_("Present Actual Size"), "PresentActualSize", ()),
         MenuItem(_("Present Double Size"), "PresentDoubleSize", ()),
     ]
     presentMenu = Menu(_("Present Video"), "Present", *presentMenuItems)
     menubar.findMenu("Playback").menuitems.append(presentMenu)
-    menus.action_groups['PlayableSelected'].extend(['PresentActualSize', 'PresentDoubleSize'])
-    menus.action_groups['Playing'].extend(['PresentActualSize', 'PresentDoubleSize'])
+    menus.action_groups['PlayableSelected'].extend(['PresentActualSize', 'PresentHalfSize', 'PresentDoubleSize'])
+    menus.action_groups['Playing'].extend(['PresentActualSize', 'PresentHalfSize', 'PresentDoubleSize'])
 
     # Window menu
     windowMenuItems = [

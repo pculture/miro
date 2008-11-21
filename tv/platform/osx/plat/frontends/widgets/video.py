@@ -96,6 +96,8 @@ class MiroMovieView (QTMovieView):
 
             if app.playback_manager.presentation_mode == 'natural-size':
                 movie_size = natural_size
+            elif app.playback_manager.presentation_mode == 'half-size':
+                movie_size = NSSize(natural_size.width/2, natural_size.height/2)
             elif app.playback_manager.presentation_mode == 'double-size':
                 movie_size = NSSize(natural_size.width*2, natural_size.height*2)
             if movie_size.width > my_bounds.size.width or movie_size.height > my_bounds.size.height:
