@@ -1168,7 +1168,7 @@ class BackendMessageHandler(messages.MessageHandler):
             if type == 'feed':
                 feed_names = []
                 for url, additional in normalizedURLs:
-                    new_feed = feed.Feed(url)
+                    new_feed = feed.Feed(url, section=additional.get("section", u"video"))
                     feed_names.append(new_feed.get_title())
                     if 'trackback' in additional:
                         httpclient.grabURL(additional['trackback'],

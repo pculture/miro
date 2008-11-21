@@ -53,7 +53,7 @@ SUBSCRIBE_HOSTS = ('subscribe.getdemocracy.com', 'subscribe.getmiro.com')
 # if you update this list, also update the list on
 # subscribe.getmiro.com/geturls.php
 ADDITIONAL_KEYS =  ('title', 'description', 'length', 'type', 'thumbnail',
-                    'feed', 'link', 'trackback')
+                    'feed', 'link', 'trackback', 'section')
 # =========================================================================
 
 reflexiveAutoDiscoveryOpener = urllib2.urlopen
