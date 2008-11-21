@@ -45,7 +45,7 @@ def try_scraping_url(url, callback):
         scrape(url, lambda x, y=u"video/x-flv": _actual_url_callback(url, callback, x, y))
     else:
         callback(url)
-    
+
 # =============================================================================
 
 # The callback is wrapped in this for flv videos
@@ -90,14 +90,39 @@ def _youtube_callback(info, callback):
         logging.exception("youtube_callback: unable to scrape YouTube Video URL")
         callback(None)
 
+def _youtube_get_first_successful(info, current_url, urls, callback):
+    status = info["status"]
+
+    if not (status == 0 or status / 100 == 4):
+        callback(current_url)
+        return
+
+    if len(urls) == 0:
+        callback(None)
+        return
+
+    current_url, urls = urls[0], urls[1:]
+
+    logging.debug("youtube download: trying %s", current_url)
+    httpclient.grabHeaders(current_url, lambda x: _youtube_get_first_successful(x, current_url, urls, callback),
+            lambda x: _youtube_errback(x, callback))
+
 def _youtube_callback_step2(info, videoID, callback):
     try:
         body = info['body']
         params = cgi.parse_qs(body)
         token = params['token'][0]
 
-        url = u"http://www.youtube.com/get_video?video_id=%s&t=%s&eurl=&el=embedded&ps=default" % (videoID, token)
-        callback(url)
+        lodef_url = u"http://www.youtube.com/get_video?video_id=%s&t=%s&eurl=&el=embedded&ps=default" % (videoID, token)
+        hidef_url = lodef_url + u"&fmt=6"
+        hihidef_url = lodef_url + u"&fmt=22"
+        logging.debug("youtube download: trying %s", hihidef_url)
+        # go through the urls we have until we find one that's successful or
+        # 404 on all of them.
+        httpclient.grabHeaders(hihidef_url,
+                lambda x: _youtube_get_first_successful(x, hihidef_url, [hidef_url, lodef_url], callback),
+                lambda x: _youtube_errback(x, callback))
+
     except:
         logging.exception("youtube_callback_step2: unable to scrape YouTube Video URL")
         callback(None)
