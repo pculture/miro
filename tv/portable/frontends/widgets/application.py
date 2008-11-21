@@ -654,6 +654,13 @@ class Application:
         if name:
             messages.RenameObject(t, info.id, name).send_to_backend()
 
+    def revert_channel_name(self):
+        t, channel_infos = app.tab_list_manager.get_selection()
+        if not channel_infos:
+            return
+        info = channel_infos[0]
+        messages.RevertChannelTitle(info.id).send_to_backend()
+
     def remove_current_playlist(self):
         t, infos = app.tab_list_manager.get_selection()
         if t == 'playlist':

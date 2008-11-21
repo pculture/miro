@@ -545,6 +545,11 @@ class RenameVideo(BackendMessage):
         self.id = id
         self.new_name = new_name
 
+class RevertChannelTitle(BackendMessage):
+    """Reverts the channel's title back to the original"""
+    def __init__(self, id):
+        self.id = id
+
 class RevertItemTitle(BackendMessage):
     """Reverts the item's title back to the original"""
     def __init__(self, id):
@@ -686,6 +691,7 @@ class ChannelInfo(object):
         else:
             self.search_term = None
         if not isinstance(channel_obj, ChannelFolder):
+            self.has_original_title = channel_obj.has_original_title()
             self.is_updating = channel_obj.isUpdating()
             self.parent_id = channel_obj.folder_id
             self.url = channel_obj.getURL()

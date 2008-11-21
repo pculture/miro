@@ -1092,6 +1092,14 @@ class BackendMessageHandler(messages.MessageHandler):
         else:
             item.setTitle(message.new_name)
 
+    def handle_revert_channel_title(self, message):
+        try:
+            feed = views.feeds.getObjectByID(message.id)
+        except database.ObjectNotFoundError:
+            logging.warn("RevertChannelTitle: Feed not found -- %s", message.id)
+        else:
+            feed.revert_title()
+
     def handle_revert_item_title(self, message):
         try:
             item = views.items.getObjectByID(message.id)

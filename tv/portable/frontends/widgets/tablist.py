@@ -482,9 +482,9 @@ class NestedTabList(TabList):
                 table_view.get_selection()]
         if len(selected_rows) == 1:
             if selected_rows[0].is_folder:
-                return self.make_folder_context_menu()
+                return self.make_folder_context_menu(selected_rows[0])
             else:
-                return self.make_single_context_menu()
+                return self.make_single_context_menu(selected_rows[0])
         else:
             return self.make_multiple_context_menu()
 
@@ -510,20 +510,25 @@ class FeedList(NestedTabList):
                 return info
         return None
 
-    def make_folder_context_menu(self):
+    def make_folder_context_menu(self, obj):
         return [
             (_('Update Channels In Folder'), app.widgetapp.update_selected_channels),
             (_('Rename Channel Folder'), app.widgetapp.rename_something),
             (_('Remove'), app.widgetapp.remove_current_feed)
         ]
 
-    def make_single_context_menu(self):
-        return [
-            (_('Update Channel Now'), app.widgetapp.update_selected_channels),
-            (_('Rename Channel'), app.widgetapp.rename_something),
-            (_('Copy URL to clipboard'), app.widgetapp.copy_channel_url),
-            (_('Remove'), app.widgetapp.remove_current_feed)
+    def make_single_context_menu(self, obj):
+        menu = [
+            (_('Update Channel Now'), app.widgetapp.update_selected_channels)
         ]
+
+        if obj.has_original_title:
+            menu.append((_('Rename Channel'), app.widgetapp.rename_something))
+        else:
+            menu.append((_('Revert Name'), app.widgetapp.revert_channel_name))
+        menu.append((_('Copy URL to clipboard'), app.widgetapp.copy_channel_url))
+        menu.append((_('Remove'), app.widgetapp.remove_current_feed))
+        return menu
 
     def make_multiple_context_menu(self):
         return [
@@ -559,13 +564,13 @@ class PlaylistList(NestedTabList):
         infos = [self.view.model[i][0] for i in self.iter_map.values()]
         return infos
 
-    def make_folder_context_menu(self):
+    def make_folder_context_menu(self, obj):
         return [
             (_('Rename Playlist Folder'), app.widgetapp.rename_something),
             (_('Remove'), app.widgetapp.remove_current_playlist)
         ]
 
-    def make_single_context_menu(self):
+    def make_single_context_menu(self, obj):
         return [
             (_('Rename Playlist'), app.widgetapp.rename_something),
             (_('Remove'), app.widgetapp.remove_current_playlist)

@@ -702,12 +702,15 @@ class Feed(DDBObject):
                 title = u"'%s' on %s" % (self.searchTerm, title)
             return title
 
+    def has_original_title(self):
+        return self.userTitle == None
+
     def setTitle(self, title):
         self.confirmDBThread()
         self.userTitle = title
         self.signalChange()
 
-    def unsetTitle(self):
+    def revert_title(self):
         self.setTitle(None)
 
     @returnsUnicode
@@ -843,15 +846,6 @@ class Feed(DDBObject):
             # the actual feed updating code takes care of expiring the old
             # items
             self.actualFeed.clean_old_items()
-
-    def rename(self):
-        title = _("Rename Channel")
-        text = _("Enter a new name for the channel %(name)s", {"name": self.get_title()})
-        def callback(dialog):
-            if self.idExists() and dialog.choice == dialogs.BUTTON_OK:
-                self.setTitle(dialog.value)
-        dialogs.TextEntryDialog(title, text, dialogs.BUTTON_OK,
-            dialogs.BUTTON_CANCEL, prefillCallback=lambda:self.get_title()).run(callback)
 
     def update(self):
         self.confirmDBThread()
