@@ -264,15 +264,22 @@ action_groups = {
 }
 
 action_group_map = {}
-for group, actions in action_groups.items():
-    for action in actions:
-        action_group_map[action] = group
+def recompute_action_group_map():
+    for group, actions in action_groups.items():
+        for action in actions:
+            if action not in action_group_map:
+                action_group_map[action] = list()
+            action_group_map[action].append(group)
+recompute_action_group_map()
 
 def action_group_names():
     return action_groups.keys() + ['AlwaysOn']
 
 def get_action_group_name(action):
-    return action_group_map.get(action, 'AlwaysOn')
+    return action_group_map.get(action, ['AlwaysOn'])[0]
+
+def get_all_action_group_name(action):
+    return action_group_map.get(action, ['AlwaysOn'])
 
 class MenuManager(signals.SignalEmitter):
     def __init__(self):

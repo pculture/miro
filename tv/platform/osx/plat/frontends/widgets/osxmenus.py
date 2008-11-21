@@ -48,8 +48,11 @@ class MenuHandler(NSObject):
         return self
 
     def validateUserInterfaceItem_(self, menuitem):
-        group_name = menus.get_action_group_name(self.action)
-        return group_name in app.menu_manager.enabled_groups
+        group_names = menus.get_all_action_group_name(self.action)
+        for group_name in group_names:
+            if group_name in app.menu_manager.enabled_groups:
+                return True
+        return False
 
     def handleMenuItem_(self, sender):        
         if self.action == "HideMiro":
@@ -150,8 +153,14 @@ def populate_single_menu(nsmenu, miro_menu):
     for miro_item in miro_menu.menuitems:
         if isinstance(miro_item, Separator):
             item = NSMenuItem.separatorItem()
-        else:
+        elif isinstance(miro_item, MenuItem):
             item = make_menu_item(miro_item)
+        elif isinstance(miro_item, Menu):
+            submenu = NSMenu.alloc().init()
+            populate_single_menu(submenu, miro_item)
+            item = NSMenuItem.alloc().init()
+            item.setTitle_(miro_item.label)
+            item.setSubmenu_(submenu)
         nsmenu.addItem_(item)
 
 def populate_menu():
@@ -222,6 +231,8 @@ def populate_menu():
         nsmenuitem = make_menu_item(menu)
         nsmenuitem.setSubmenu_(nsmenu)
         main_menu.addItem_(nsmenuitem)
+    
+    menus.recompute_action_group_map()
 
 
 class ContextMenuHandler(NSObject):
