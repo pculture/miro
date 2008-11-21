@@ -144,19 +144,19 @@ class ItemListController(object):
             items = selection
         return items
         
-    def play_selection(self):
+    def play_selection(self, presentation_mode='fit-to-bounds'):
         """Play the currently selected items."""
         items = self.get_selection_for_playing()
         if len(items) > 0:
-            self._play_item_list(items)
+            self._play_item_list(items, presentation_mode)
             
     def filter_playable_items(self, items):
         return [i for i in items if i.video_path is not None and i.video_path is not '']
 
-    def _play_item_list(self, items):
+    def _play_item_list(self, items, presentation_mode='fit-to-bounds'):
         playable = self.filter_playable_items(items)
         if len(playable) > 0:
-            app.playback_manager.start_with_items(playable)
+            app.playback_manager.start_with_items(playable, presentation_mode)
 
     def set_search(self, search_text):
         """Set the search for all ItemViews managed by this controller.  """
@@ -470,9 +470,9 @@ class ItemListControllerManager(object):
     def controller_destroyed(self, item_list_controller):
         self.all_controllers.remove(item_list_controller)
 
-    def play_selection(self):
+    def play_selection(self, presentation_mode='fit-to-bounds'):
         if self.displayed is not None:
-            self.displayed.play_selection()
+            self.displayed.play_selection(presentation_mode)
 
     def get_selection(self):
         if self.displayed is None:

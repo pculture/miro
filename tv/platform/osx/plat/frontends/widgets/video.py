@@ -86,6 +86,29 @@ ALL_SUPPORTED_MEDIA_TYPES   = SUPPORTED_VIDEO_MEDIA_TYPES + SUPPORTED_AUDIO_MEDI
 
 ###############################################################################
 
+class MiroMovieView (QTMovieView):
+    
+    def movieBounds(self):
+        movie = self.movie()
+        if movie is not None and app.playback_manager.presentation_mode != 'fit-to-bounds':
+            my_bounds = self.bounds()
+            natural_size = movie.attributeForKey_(QTMovieNaturalSizeAttribute).sizeValue()
+
+            if app.playback_manager.presentation_mode == 'natural-size':
+                movie_size = natural_size
+            elif app.playback_manager.presentation_mode == 'double-size':
+                movie_size = NSSize(natural_size.width*2, natural_size.height*2)
+            if movie_size.width > my_bounds.size.width or movie_size.height > my_bounds.size.height:
+                return QTMovieView.movieBounds(self)
+
+            movie_origin = NSPoint(int((my_bounds.size.width - movie_size.width) / 2), 
+                                   int((my_bounds.size.height - movie_size.height) / 2))
+            return NSRect(movie_origin, movie_size)
+
+        return QTMovieView.movieBounds(self)
+
+###############################################################################
+
 class VideoRenderer (Widget):
 
     def __init__(self):
@@ -94,7 +117,7 @@ class VideoRenderer (Widget):
 
         self.view = NSView.alloc().initWithFrame_(frame)
 
-        self.video_view = QTMovieView.alloc().initWithFrame_(frame)
+        self.video_view = MiroMovieView.alloc().initWithFrame_(frame)
         self.video_view.setFillColor_(NSColor.blackColor())
         self.video_view.setControllerVisible_(NO)
         self.video_view.setEditable_(NO)
@@ -122,7 +145,7 @@ class VideoRenderer (Widget):
 
     def on_window_moved(self, window):
         self.adjust_video_frame()
-    
+        
     def remove_viewport(self):
         self.prevent_system_sleep(False)
         self.detach_from_parent_window()
@@ -150,12 +173,17 @@ class VideoRenderer (Widget):
         frame.origin = self.view.convertPoint_toView_(NSZeroPoint, nil)
         frame.origin.x = 0
         frame.origin = self.view.window().convertBaseToScreen_(frame.origin)
-        frame.size = (self.view.window().frame().size.width, frame.size.height)
+        frame.size = NSSize(self.view.window().frame().size.width, frame.size.height)
         return frame
 
     def adjust_video_frame(self):
         frame = self.get_video_frame()
         self.video_window.setFrame_display_(frame, YES)
+
+    def update_for_presentation_mode(self, mode):
+        frame = self.video_view.frame()
+        self.video_view.setFrame_(NSOffsetRect(frame, 1, 1))
+        self.video_view.setFrame_(frame)
 
     def can_open_file(self, qtmovie):
         threads.warn_if_not_on_main_thread('VideoRenderer.can_open_file')

@@ -57,6 +57,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.position = 0
         self.mark_as_watched_timeout = None
         self.update_timeout = None
+        self.presentation_mode = 'fit-to-bounds'
         self.create_signal('selecting-file')
         self.create_signal('cant-play-file')
         self.create_signal('will-play')
@@ -71,15 +72,23 @@ class PlaybackManager (signals.SignalEmitter):
         if self.video_display is not None:
             self.video_display.set_volume(volume)
     
+    def set_presentation_mode(self, mode):
+        self.presentation_mode = mode
+        if self.is_playing:
+            if not self.is_fullscreen:
+                self.fullscreen()
+            self.video_display.renderer.update_for_presentation_mode(mode)
+    
     def play_pause(self):
         if not self.is_playing or self.is_paused:
             self.play()
         else:
             self.pause()
     
-    def start_with_items(self, item_infos):
+    def start_with_items(self, item_infos, presentation_mode='fit-to-bounds'):
         self.playlist = item_infos
         self.position = 0
+        self.presentation_mode = presentation_mode
         if not self.is_playing:
             self.video_display = VideoDisplay()
             self.video_display.connect('removed', self.on_display_removed)
@@ -92,6 +101,8 @@ class PlaybackManager (signals.SignalEmitter):
             app.menu_manager.handle_playing_selection()
             self.is_playing = True
         self._play_current()
+        if self.presentation_mode != 'fit-to-bounds':
+            self.fullscreen()
     
     def prepare_attached_playback(self):
         splitter = app.widgetapp.window.splitter

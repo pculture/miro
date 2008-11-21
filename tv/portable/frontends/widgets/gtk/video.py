@@ -361,6 +361,9 @@ class VideoRenderer(VBox):
                 self._video_details.update_info(item_info)
                 break
 
+    def update_for_presentation_mode(self, mode):
+        pass
+
     def set_movie_item(self, item_info, callback, errback):
         self._video_details.set_video_details(item_info)
         self.renderer.select_file(item_info.video_path, callback, errback)

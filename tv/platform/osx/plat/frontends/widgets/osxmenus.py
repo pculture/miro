@@ -85,6 +85,12 @@ class MenuHandler(NSObject):
         elif self.action == "SelectAll":
             NSApp().sendAction_to_from_("selectAll:", None, sender)
 
+        elif self.action == "PresentActualSize":
+            self.present_movie('natural-size')
+
+        elif self.action == "PresentDoubleSize":
+            self.present_movie('double-size')
+
         elif self.action == "Zoom":
             NSApp().sendAction_to_from_("performZoom:", None, sender)
 
@@ -103,6 +109,12 @@ class MenuHandler(NSObject):
                 handler()
             else:
                 logging.warn("No handler for %s" % self.action)
+    
+    def present_movie(self, mode):
+        if app.playback_manager.is_playing:
+            app.playback_manager.set_presentation_mode(mode)
+        else:
+            app.item_list_controller_manager.play_selection(mode)
 
 # Keep a reference to each MenuHandler we create
 all_handlers = set()
@@ -201,6 +213,16 @@ def populate_menu():
     ]
     editMenu = Menu(_("Edit"), "Edit", *editMenuItems)
     menubar.menus.insert(1, editMenu)
+
+    # Playback menu
+    presentMenuItems = [
+        MenuItem(_("Present Actual Size"), "PresentActualSize", ()),
+        MenuItem(_("Present Double Size"), "PresentDoubleSize", ()),
+    ]
+    presentMenu = Menu(_("Present Video"), "Present", *presentMenuItems)
+    menubar.findMenu("Playback").menuitems.append(presentMenu)
+    menus.action_groups['PlayableSelected'].extend(['PresentActualSize', 'PresentDoubleSize'])
+    menus.action_groups['Playing'].extend(['PresentActualSize', 'PresentDoubleSize'])
 
     # Window menu
     windowMenuItems = [
