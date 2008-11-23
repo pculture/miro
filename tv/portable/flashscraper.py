@@ -114,7 +114,7 @@ def _youtube_callback_step2(info, videoID, callback):
         token = params['token'][0]
 
         lodef_url = u"http://www.youtube.com/get_video?video_id=%s&t=%s&eurl=&el=embedded&ps=default" % (videoID, token)
-        hidef_url = lodef_url + u"&fmt=6"
+        hidef_url = lodef_url + u"&fmt=18"
         hihidef_url = lodef_url + u"&fmt=22"
         logging.debug("youtube download: trying %s", hihidef_url)
         # go through the urls we have until we find one that's successful or
