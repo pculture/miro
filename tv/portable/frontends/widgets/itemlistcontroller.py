@@ -177,10 +177,10 @@ class ItemListController(object):
                 'state': itemlist.ItemStateSort,
         }
         sorter = sort_key_map[sort_key](ascending)
-        for item_view in self.all_item_views():
-            item_view.model_changed()
         for item_list in self.item_list_group.item_lists:
             item_list.set_sort(sorter)
+        for item_view in self.all_item_views():
+            item_view.model_changed()
         self.list_item_view.change_sort_indicator(sort_key, ascending)
 
     def on_hotspot_clicked(self, itemview, name, iter):
