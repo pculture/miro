@@ -407,7 +407,7 @@ class IndividualDownloadItemList(ItemList):
     def filter(self, item_info):
         return (item_info.is_external
                 and not (item_info.download_info
-                         and item_info.download_info.state == 'uploading'))
+                         and item_info.download_info.state in ('uploading', 'uploading-paused')))
 
 class ChannelDownloadItemList(ItemList):
     """ItemList that only displays channel downloads items.
@@ -416,7 +416,7 @@ class ChannelDownloadItemList(ItemList):
     def filter(self, item_info):
         return (not item_info.is_external
                 and not (item_info.download_info
-                         and item_info.download_info.state == 'uploading'))
+                         and item_info.download_info.state in ('uploading', 'uploading-paused')))
 
 class SeedingItemList(ItemList):
     """ItemList that only displays seeding items.
@@ -424,7 +424,7 @@ class SeedingItemList(ItemList):
     Used in the downloads tab."""
     def filter(self, item_info):
         return (item_info.download_info
-                and item_info.download_info.state == 'uploading')
+                and item_info.download_info.state in ('uploading', 'uploading-paused'))
 
 class DownloadingItemList(ItemList):
     """ItemList that only displays downloading items."""

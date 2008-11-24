@@ -315,7 +315,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         hbox.pack(cellpack.Hotspot('delete', button))
         if (self.data.download_info is not None
                 and self.data.download_info.torrent):
-            if self.data.download_info.state == "uploading":
+            if self.data.download_info.state in ("uploading", "uploading-paused"):
                 button = layout.button(_('Stop seeding'), self.hotspot=='stop_seeding')
                 button.set_min_width(80)
                 hbox.pack(cellpack.Hotspot('stop_seeding', button))
