@@ -234,6 +234,47 @@ class ItemView(widgetset.TableView):
     def build_renderer(self):
         return style.ItemRenderer(self.display_channel)
 
+class ListViewRenderer(widgetset.CustomCellRenderer):
+    bold = False
+    color = (0.20, 0.20, 0.20)
+
+    def get_size(self, style, layout):
+        height = layout.font(1.0, bold=self.bold).line_height()
+        return 5, height
+
+    def render(self, context, layout, selected, hotspot, hover):
+        layout.set_font(1.0, bold=self.bold)
+        layout.set_text_color(self.color)
+        textbox = layout.textbox(self._get_text())
+        textbox.draw(context, 0, 0, context.width, context.height)
+
+class NameRenderer(ListViewRenderer):
+    bold = True
+    def _get_text(self):
+        return self.info.name
+
+class DescriptionRenderer(ListViewRenderer):
+    color = (0.6, 0.6, 0.6)
+
+    def _get_text(self):
+        return self.info.description_text.replace('\n', ' ')
+
+class FeedNameRenderer(ListViewRenderer):
+    def _get_text(self):
+        return self.info.feed_name
+
+class DateRenderer(ListViewRenderer):
+    def _get_text(self):
+        return displaytext.release_date(self.info.release_date)
+
+class LengthRenderer(ListViewRenderer):
+    def _get_text(self):
+        return displaytext.duration(self.info.duration)
+
+class SizeRenderer(ListViewRenderer):
+    def _get_text(self):
+        return displaytext.size(self.info.size)
+
 class ListItemView(widgetset.TableView):
     """TableView that displays a list of items using the list view."""
 
@@ -245,31 +286,24 @@ class ListItemView(widgetset.TableView):
         self._sort_name_to_column = {}
         self._current_sort_column = None
         self._set_initial_widths = False
-        self.add_column(self._make_column('Title', 3, 'name', bold=True))
-        self.add_column(self._make_column('Description', 4, 'description',
-            color=(0.6, 0.6, 0.6)))
+        self.add_column(self._make_column('Title', NameRenderer(), 'name'))
+        self.add_column(self._make_column('Description',
+            DescriptionRenderer(), 'description'))
         if display_channel:
-            self.add_column(self._make_column('Feed', 5, 'feed-name'))
-        self.add_column(self._make_column('Date', 6, 'date'))
-        self.add_column(self._make_column('Duration', 7, 'length'))
-        self.add_column(self._make_column('Size', 8, 'size'))
+            self.add_column(self._make_column('Feed', FeedNameRenderer(), 'feed-name'))
+        self.add_column(self._make_column('Date', DateRenderer(), 'date'))
+        self.add_column(self._make_column('Duration', LengthRenderer(), 'length'))
+        self.add_column(self._make_column('Size', SizeRenderer(), 'size'))
         self.set_show_headers(True)
         self.set_columns_draggable(True)
         self.set_column_spacing(12)
         self.set_grid_lines(False, True)
         self.set_alternate_row_backgrounds(True)
+        self.set_fixed_height(True)
         self.allow_multiple_select(True)
 
-    def _make_column(self, header, source_index, sort_name, color=None,
-            bold=False):
-        renderer = widgetset.CellRenderer()
-        if color is not None:
-            renderer.set_color(color)
-        else:
-            renderer.set_color((0.20, 0.20, 0.20))
-        if bold:
-            renderer.set_bold(True)
-        column = widgetset.TableColumn(header, renderer, value=source_index)
+    def _make_column(self, header, renderer, sort_name):
+        column = widgetset.TableColumn(header, renderer, info=0)
         column.set_min_width(50)
         column.set_resizable(True)
         column.connect_weak('clicked', self._on_column_clicked, sort_name)
@@ -278,6 +312,7 @@ class ListItemView(widgetset.TableView):
 
     def do_size_allocated(self, width, height):
         if not self._set_initial_widths:
+            width -= 20 # allow some room for a scrollbar
             # Set this immediately, because changing the widths of widgets
             # below can invoke anothor size-allocate signal
             self._set_initial_widths = True
