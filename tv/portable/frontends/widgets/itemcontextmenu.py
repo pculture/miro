@@ -96,10 +96,9 @@ class ItemContextMenuHandler(object):
                 (_('Add to Playlist'), app.widgetapp.add_to_playlist),
             ]
             self._add_remove_context_menu_item(menu, [item])
-            if item.has_original_name:
-                menu.append((_('Rename Item'), app.widgetapp.rename_item))
-            else:
-                menu.append((_('Revert Name'), app.widgetapp.revert_item_name))
+            menu.append((_('Rename Item'), app.widgetapp.rename_item))
+            if not item.has_original_name:
+                menu.append((_('Revert Item Name'), app.widgetapp.revert_item_name))
             if item.video_watched:
                 menu.append((_('Mark as Unwatched'),
                     messages.MarkItemUnwatched(item.id).send_to_backend))

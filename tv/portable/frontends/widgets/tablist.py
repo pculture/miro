@@ -522,10 +522,9 @@ class FeedList(NestedTabList):
             (_('Update Channel Now'), app.widgetapp.update_selected_channels)
         ]
 
-        if obj.has_original_title:
-            menu.append((_('Rename Channel'), app.widgetapp.rename_something))
-        else:
-            menu.append((_('Revert Name'), app.widgetapp.revert_channel_name))
+        menu.append((_('Rename Channel'), app.widgetapp.rename_something))
+        if not obj.has_original_title:
+            menu.append((_('Revert Channel Name'), app.widgetapp.revert_channel_name))
         menu.append((_('Copy URL to clipboard'), app.widgetapp.copy_channel_url))
         menu.append((_('Remove'), app.widgetapp.remove_current_feed))
         return menu
