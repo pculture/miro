@@ -151,7 +151,7 @@ class ItemListController(object):
             self._play_item_list(items, presentation_mode)
             
     def filter_playable_items(self, items):
-        return [i for i in items if i.video_path is not None and i.video_path is not '']
+        return [i for i in items if i.video_path is not None and i.video_path is not '' and i.downloaded]
 
     def _play_item_list(self, items, presentation_mode='fit-to-bounds'):
         playable = self.filter_playable_items(items)
