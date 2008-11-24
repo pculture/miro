@@ -44,10 +44,11 @@ from miro.plat.frontends.widgets import timer
 class CustomControlMixin(CustomDrawingMixin):
     def do_size_request(self, requesition):
         CustomDrawingMixin.do_size_request(self, requesition)
-        focus_space = 2 * (self.style_get_property('focus-padding') +
-                self.style_get_property('focus-line-width'))
-        requesition.width += focus_space
-        requesition.height += focus_space
+        if self.flags() & gtk.CAN_FOCUS:
+            focus_space = 2 * (self.style_get_property('focus-padding') +
+                    self.style_get_property('focus-line-width'))
+            requesition.width += focus_space
+            requesition.height += focus_space
 
     def do_expose_event(self, event):
         CustomDrawingMixin.do_expose_event(self, event)

@@ -45,6 +45,7 @@ from miro import prefs
 from miro import displaytext
 from miro import searchengines
 from miro.gtcache import gettext as _
+from miro.frontends.widgets import imagebutton
 from miro.frontends.widgets import style
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
@@ -595,6 +596,13 @@ class FeedToolbar(widgetset.Background):
     def _on_autodownload_changed(self, widget, option):
         self.emit('auto-download-changed', widget.options[option])
 
+class ViewSwitchButton(imagebutton.ImageButton):
+    def __init__(self, image_name):
+        imagebutton.ImageButton.__init__(self, image_name)
+        # Slight hack here, when the view is active, we disable the button and
+        # make it look like it's pressed.
+        self.disabled_image = self.pressed_image
+
 class HeaderToolbar(widgetset.Background):
     """Toolbar used to sort items and switch views.
 
@@ -616,12 +624,14 @@ class HeaderToolbar(widgetset.Background):
         self._button_hbox_container = widgetutil.HideableWidget(
                 self._button_hbox)
         self._button_hbox_container.show()
-        normal_button = widgetset.Button('Normal')
-        normal_button.connect('clicked', self._on_normal_clicked)
-        list_button = widgetset.Button('list')
-        list_button.connect('clicked', self._on_list_clicked)
-        self._hbox.pack_start(normal_button)
-        self._hbox.pack_start(list_button)
+        self.normal_button = ViewSwitchButton('normal-view-button')
+        self.normal_button.connect('clicked', self._on_normal_clicked)
+        self.normal_button.disable()
+        self.list_button = ViewSwitchButton('list-view-button')
+        self.list_button.connect('clicked', self._on_list_clicked)
+        self._hbox.pack_start(widgetutil.align_middle(self.normal_button,
+            left_pad=4))
+        self._hbox.pack_start(widgetutil.align_middle(self.list_button))
         self._hbox.pack_end(widgetutil.align_middle(self._button_hbox_container))
         self.add(self._hbox)
         self._current_sort_key = 'date'
@@ -636,10 +646,14 @@ class HeaderToolbar(widgetset.Background):
     def _on_normal_clicked(self, button):
         self.emit('normal-view-clicked')
         self._button_hbox_container.show()
+        self.normal_button.disable()
+        self.list_button.enable()
 
     def _on_list_clicked(self, button):
         self.emit('list-view-clicked')
         self._button_hbox_container.hide()
+        self.list_button.disable()
+        self.normal_button.enable()
 
     def _make_button(self, text, sort_key):
         button = SortBarButton(text)
