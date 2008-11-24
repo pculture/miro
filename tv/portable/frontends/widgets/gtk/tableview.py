@@ -139,7 +139,11 @@ class GTKCustomCellRenderer(gtk.GenericCellRenderer):
                 state = gtk.STATE_ACTIVE
         else: 
             state = gtk.STATE_NORMAL
-        context = drawing.DrawingContext(window, cell_area, expose_area)
+        xpad = self.props.xpad
+        ypad = self.props.ypad
+        area = gtk.gdk.Rectangle(cell_area.x + xpad, cell_area.y + ypad,
+                cell_area.width - xpad * 2, cell_area.height - ypad * 2)
+        context = drawing.DrawingContext(window, area, expose_area)
         widget_wrapper = wrappermap.wrapper(widget)
         if selected and widget_wrapper.use_custom_style:
             # Draw the base color as our background.  This erases the gradient
@@ -435,7 +439,7 @@ class TableView(Widget):
         self.attr_map_for_column = {}
         self.background_color = None
         self.drag_button_down = False
-        self._renderer_xpad = 0
+        self._renderer_xpad = self._renderer_ypad = 0
         self.context_menu_callback = self.drag_source = self.drag_dest = None
         self.hotspot_tracker = None
         self.hover_info = None
@@ -497,6 +501,12 @@ class TableView(Widget):
         for column in self.columns:
             column.renderer._renderer.set_property('xpad', self._renderer_xpad)
 
+    def set_row_spacing(self, space):
+        """Set the amount of space between columns."""
+        self._renderer_ypad = space / 2
+        for column in self.columns:
+            column.renderer._renderer.set_property('ypad', self._renderer_ypad)
+
     def set_alternate_row_backgrounds(self, setting):
         self._widget.set_rules_hint(setting)
 
@@ -549,6 +559,7 @@ class TableView(Widget):
                     self.background_color)
         column._column.set_reorderable(self._columns_draggable)
         column.renderer._renderer.set_property('xpad', self._renderer_xpad)
+        column.renderer._renderer.set_property('ypad', self._renderer_ypad)
 
     def column_count(self):
         return len(self._widget.get_columns())

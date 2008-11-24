@@ -830,6 +830,11 @@ class TableView(Widget):
         spacing.width = column_spacing
         self.tableview.setIntercellSpacing_(spacing)
 
+    def set_row_spacing(self, row_spacing):
+        spacing = self.tableview.intercellSpacing()
+        spacing.height = row_spacing
+        self.tableview.setIntercellSpacing_(spacing)
+
     def set_alternate_row_backgrounds(self, setting):
         self.tableview.setUsesAlternatingRowBackgroundColors_(setting)
 

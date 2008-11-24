@@ -260,6 +260,7 @@ class ListItemView(widgetset.TableView):
         self.set_show_headers(True)
         self.set_columns_draggable(True)
         self.set_column_spacing(12)
+        self.set_row_spacing(8)
         self.set_grid_lines(False, True)
         self.set_alternate_row_backgrounds(True)
         self.set_fixed_height(True)
