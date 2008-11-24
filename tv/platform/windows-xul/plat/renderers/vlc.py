@@ -149,22 +149,33 @@ class VLCRenderer:
                 libvlc.libvlc_media_player_pause(self.media_player,
                         self.exc.ref())
                 self.exc.check()
-                # sometimes garbage data will appear to open, but it VLC
-                # won't actually play anything.  Use the length to double
-                # check that we actually will play
-                length = libvlc.libvlc_media_player_get_length(
-                        self.media_player, self.exc.ref())
-                self.exc.check()
-                if length > 0:
-                    self._open_success()
-                else:
-                    self._open_failure()
+                self._length_check()
+
+    def _length_check(self, attempt=0):
+        # sometimes garbage data will appear to open, but it VLC
+        # won't actually play anything.  Use the length to double
+        # check that we actually will play.  We try three attempts
+        # because sometimes it takes a bit to figure out the length.
+        if attempt > 3:
+            self._open_failure()
+            return
+
+        length = libvlc.libvlc_media_player_get_length(
+                self.media_player, self.exc.ref())
+        self.exc.check()
+
+        if length > 0:
+            self._open_success()
+        else:
+            gobject.timeout_add(500, self._length_check, attempt+1)
 
     def _open_success(self):
         self.callback_info[0]()
         self.callback_info = None
 
     def _open_failure(self):
+        import traceback
+        logging.info("_open_failure\n%s", "".join(traceback.format_stack()))
         self.callback_info[1]()
         self.callback_info = None
         self.media_playing = None
