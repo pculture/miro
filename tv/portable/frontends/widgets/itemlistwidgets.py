@@ -252,7 +252,7 @@ class ListItemView(widgetset.TableView):
         self.add_column(self._make_column(_('Description'),
             style.DescriptionRenderer(), 'description'))
         if display_channel:
-            self.add_column(self._make_column(_('Feed'), style.FeedNameRenderer(), 
+            self.add_column(self._make_column(_('Feed'), style.FeedNameRenderer(),
                 'feed-name'))
         self.add_column(self._make_column(_('Date'), style.DateRenderer(), 'date'))
         self.add_column(self._make_column(_('Duration'), style.LengthRenderer(), 'length'))
@@ -540,8 +540,9 @@ class FeedToolbar(widgetset.Background):
         label.set_size(widgetconst.SIZE_SMALL)
         label.set_color(style.TOOLBAR_GRAY)
 
-        self.autdownload_menu = widgetset.OptionMenu(
-                (_("all"), _("new"), _("off")))
+        self.autodownload_options = (("all", _("All")), ("new", _("New")), ("off", _("Off")))
+
+        self.autdownload_menu = widgetset.OptionMenu([o[1] for o in self.autodownload_options])
         self.autdownload_menu.set_size(widgetconst.SIZE_SMALL)
         self.autdownload_menu.connect('changed', self._on_autodownload_changed)
 
@@ -594,7 +595,7 @@ class FeedToolbar(widgetset.Background):
         self.emit('remove-channel')
 
     def _on_autodownload_changed(self, widget, option):
-        self.emit('auto-download-changed', widget.options[option])
+        self.emit('auto-download-changed', self.autodownload_options[option][0])
 
 class ViewSwitchButton(imagebutton.ImageButton):
     def __init__(self, image_name):
