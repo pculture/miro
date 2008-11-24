@@ -103,7 +103,7 @@ class FeedController(itemlistcontroller.ItemListController):
                 itemlist.DownloadingItemList(), False)
         self.downloaded_view = itemlistwidgets.ItemView(
                 itemlist.DownloadedItemList(), False)
-        self.full_view = itemlistwidgets.ItemView(self.item_list, False)
+        self.full_view = itemlistwidgets.ItemView(itemlist.ItemList(), False)
         self.downloading_section = itemlistwidgets.HideableSection(
                 "", self.downloading_view)
         self.downloaded_section = itemlistwidgets.HideableSection(
