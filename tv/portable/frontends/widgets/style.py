@@ -772,14 +772,18 @@ class PlaylistItemRenderer(ItemRenderer):
 class ListViewRenderer(widgetset.CustomCellRenderer):
     bold = False
     color = (0.20, 0.20, 0.20)
+    font_size = 0.77
 
     def get_size(self, style, layout):
-        height = layout.font(1.0, bold=self.bold).line_height()
+        height = layout.font(self.font_size, bold=self.bold).line_height()
         return 5, height
 
     def render(self, context, layout, selected, hotspot, hover):
-        layout.set_font(1.0, bold=self.bold)
-        layout.set_text_color(self.color)
+        layout.set_font(self.font_size, bold=self.bold)
+        if not selected and context.style.use_custom_style:
+            layout.set_text_color(self.color)
+        else:
+            layout.set_text_color(context.style.text_color)
         textbox = layout.textbox(self._get_text())
         textbox.draw(context, 0, 0, context.width, context.height)
 
@@ -813,7 +817,7 @@ class FeedNameRenderer(ListViewRenderer):
 
 class DateRenderer(ListViewRenderer):
     def _get_text(self):
-        return displaytext.release_date(self.info.release_date)
+        return displaytext.release_date_slashes(self.info.release_date)
 
 class LengthRenderer(ListViewRenderer):
     def _get_text(self):

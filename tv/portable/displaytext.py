@@ -28,6 +28,7 @@
 
 """Format strings to send to the user."""
 
+import locale
 import math
 import datetime
 
@@ -52,9 +53,9 @@ def time(secs):
     if secs > 3600:
         hours, secs = divmod(secs, 3600)
         minutes, seconds = divmod(secs, 60)
-        return '%02d:%02d:%02d' % (hours, minutes, seconds)
+        return '%2d:%02d:%02d' % (hours, minutes, seconds)
     else:
-        return '%02d:%02d' % divmod(secs, 60)
+        return '%2d:%02d' % divmod(secs, 60)
 
 def size(bytes):
     # when switching from the enclosure reported size to the downloader
@@ -99,6 +100,12 @@ def expiration_date(exp_date):
 def release_date(release_date):
     if release_date > datetime.datetime.min:
         return release_date.strftime("%b %d %Y")
+    else:
+        return ''
+
+def release_date_slashes(release_date):
+    if release_date > datetime.datetime.min:
+        return release_date.strftime(locale.nl_langinfo(locale.D_FMT))
     else:
         return ''
 

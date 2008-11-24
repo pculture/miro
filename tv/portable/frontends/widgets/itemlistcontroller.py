@@ -97,7 +97,7 @@ class ItemListController(object):
         self.widget = itemlistwidgets.ItemContainerWidget()
         self.item_list = itemlist.ItemList()
         self.list_item_view = self._make_list_item_view()
-        self.widget.list_view_vbox.pack_start(self.list_item_view)
+        self.widget.list_view_vbox.pack_start(self.list_item_view, expand=True)
         self.widget.toolbar.connect('sort-changed', self.on_sort_changed)
         self.list_item_view.connect('sort-changed', self.on_sort_changed)
         self.build_widget()

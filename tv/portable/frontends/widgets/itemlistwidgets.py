@@ -285,16 +285,16 @@ class ListItemView(widgetset.TableView):
             # initial size.  In the form of:
             # (min_width, extra_width_weighting)
             width_specs = [
-                (25, 0),
-                (100, 1),
-                (100, 1),
-                (80, 0.5),
-                (120, 0),
-                (100, 0),
-                (70, 0),
+                (25, 0),    # bump
+                (100, 1),   # title
+                (100, 1),   # description
+                (70, 0.5),  # channel name
+                (80, 0),   # date
+                (80, 0),   # duration
+                (60, 0),    # size
             ]
             if not self.display_channel:
-                del width_specs[2]
+                del width_specs[3]
             available_width = self.width_for_columns(width)
             min_width = sum(spec[0] for spec in width_specs)
             extra_width = max(available_width - min_width, 0)
