@@ -120,7 +120,9 @@ class TabRenderer(widgetset.CustomCellRenderer):
         hbox = cellpack.HBox(spacing=4)
         if hasattr(self.data, "indent") and self.data.indent:
             hbox.pack_space(15)
-        hbox.pack(cellpack.align_middle(self.data.icon))
+        alignment = cellpack.Alignment(self.data.icon, yalign=0.5, yscale=0.0, 
+                xalign=0.0, xscale=0.0, min_width=20)
+        hbox.pack(alignment)
         hbox.pack(cellpack.align_middle(cellpack.TruncatedTextLine(titlebox)), expand=True)
         layout.set_font(0.77)
         layout.set_text_color(widgetutil.WHITE)
