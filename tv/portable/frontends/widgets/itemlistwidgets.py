@@ -255,7 +255,7 @@ class ListItemView(widgetset.TableView):
             self.add_column(self._make_column(_('Feed'), style.FeedNameRenderer(),
                 'feed-name'))
         self.add_column(self._make_column(_('Date'), style.DateRenderer(), 'date'))
-        self.add_column(self._make_column(_('Duration'), style.LengthRenderer(), 'length'))
+        self.add_column(self._make_column(_('Length'), style.LengthRenderer(), 'length'))
         self.add_column(self._make_column(_('Size'), style.SizeRenderer(), 'size'))
         self.set_show_headers(True)
         self.set_columns_draggable(True)
