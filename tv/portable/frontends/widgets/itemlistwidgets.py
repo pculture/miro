@@ -270,7 +270,7 @@ class ListItemView(widgetset.TableView):
         column = widgetset.TableColumn(header, renderer, info=0)
         if resizable:
             column.set_resizable(True)
-            column.set_min_width(50)
+            column.set_min_width(renderer.min_width)
         column.connect_weak('clicked', self._on_column_clicked, sort_name)
         self._sort_name_to_column[sort_name] = column
         return column

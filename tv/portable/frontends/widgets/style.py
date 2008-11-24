@@ -775,6 +775,7 @@ class ListViewRenderer(widgetset.CustomCellRenderer):
     bold = False
     color = (0.20, 0.20, 0.20)
     font_size = 0.77
+    min_width = 50
 
     def get_size(self, style, layout):
         height = layout.font(self.font_size, bold=self.bold).line_height()
@@ -830,6 +831,8 @@ class SizeRenderer(ListViewRenderer):
         return displaytext.size(self.info.size)
 
 class StateCircleRenderer(widgetset.CustomCellRenderer):
+    min_width = 25
+
     def __init__(self):
         widgetset.CustomCellRenderer.__init__(self)
         self.unwatched_icon = imagepool.get_surface(resources.path(
