@@ -379,9 +379,9 @@ class NewGuide(BackendMessage):
 
 class NewChannel(BackendMessage):
     """Create a new channel."""
-    def __init__(self, url, trackback=None):
+    def __init__(self, url, section=u"video"):
         self.url = util.toUni(url)
-        self.trackback = trackback
+        self.section = section
 
 class NewChannelSearchChannel(BackendMessage):
     """Creates a new channel based on a search through a channel."""

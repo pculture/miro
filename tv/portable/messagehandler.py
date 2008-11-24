@@ -743,10 +743,7 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_new_channel(self, message):
         url = message.url
         if not get_feed_by_url(url):
-            Feed(url)
-            if message.trackback:
-                httpclient.grabURL(message.trackback,
-                        lambda x: None, lambda x: None)
+            Feed(url, section=message.section)
 
     def handle_new_channel_search_channel(self, message):
         term = message.search_term

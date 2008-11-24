@@ -45,6 +45,7 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import newsearchchannel
+from miro.frontends.widgets import newchanneldialog
 from miro.frontends.widgets import addtoplaylistdialog
 from miro.frontends.widgets import removechannelsdialog
 from miro.frontends.widgets import diagnostics
@@ -442,12 +443,9 @@ class Application:
             app.widgetapp.copy_text_to_clipboard(selection.file_url)
 
     def add_new_channel(self):
-        url = self.ask_for_url(_('Add Channel'),
-                _('Enter the URL of the channel to add'),
-                _('Add Channel - Invalid URL'),
-                _('The address you entered is not a valid url.\nPlease check the URL and try again.\n\nEnter the URL of the channel to add'))
+        url, section = newchanneldialog.run_dialog()
         if url is not None:
-            messages.NewChannel(url).send_to_backend()
+            messages.NewChannel(url, section).send_to_backend()
 
     def add_new_search_channel(self):
         data = newsearchchannel.run_dialog()
