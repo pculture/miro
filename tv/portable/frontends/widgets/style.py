@@ -776,19 +776,27 @@ class ListViewRenderer(widgetset.CustomCellRenderer):
     color = (0.20, 0.20, 0.20)
     font_size = 0.77
     min_width = 50
+    right_aligned = False
 
     def get_size(self, style, layout):
         height = layout.font(self.font_size, bold=self.bold).line_height()
         return 5, height
 
     def render(self, context, layout, selected, hotspot, hover):
+        # we could use cellpack for this, but it's so simple we handle it
+        # manually
         layout.set_font(self.font_size, bold=self.bold)
         if not selected and context.style.use_custom_style:
             layout.set_text_color(self.color)
         else:
             layout.set_text_color(context.style.text_color)
         textbox = layout.textbox(self._get_text())
-        textbox.draw(context, 0, 0, context.width, context.height)
+        text_width = textbox.get_size()[0]
+        if self.right_aligned:
+            x = max(context.width - text_width, 0)
+        else:
+            x = 0
+        textbox.draw(context, x, 0, context.width, context.height)
 
 class NameRenderer(ListViewRenderer):
     bold = True
@@ -827,6 +835,8 @@ class LengthRenderer(ListViewRenderer):
         return displaytext.duration(self.info.duration)
 
 class SizeRenderer(ListViewRenderer):
+    right_aligned = True
+
     def _get_text(self):
         return displaytext.size(self.info.size)
 

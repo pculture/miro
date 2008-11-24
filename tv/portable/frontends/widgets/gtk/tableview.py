@@ -390,6 +390,13 @@ class TableColumn(signals.SignalEmitter):
         self.renderer = renderer
         weak_connect(self._column, 'clicked', self._header_clicked)
 
+    def set_right_aligned(self, right_aligned):
+        """Horizontal alignment of the header label."""
+        if right_aligned:
+            self._column.set_alignment(1.0)
+        else:
+            self._column.set_alignment(0.0)
+
     def set_min_width(self, width):
         self._column.props.min_width = width
 

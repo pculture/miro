@@ -523,6 +523,7 @@ class TableColumn(signals.SignalEmitter):
         signals.SignalEmitter.__init__(self)
         self.create_signal('clicked')
         self._column = NSTableColumn.alloc().initWithIdentifier_(attrs)
+        self._column.setHeaderCell_(MiroTableHeaderCell.alloc().init())
         self._column.headerCell().setStringValue_(title)
         self._column.setEditable_(NO)
         self._column.setResizingMask_(NSTableColumnNoResizing)
@@ -530,6 +531,12 @@ class TableColumn(signals.SignalEmitter):
         self.sort_order_ascending = True
         self.sort_indicator_visible = False
         renderer.setDataCell_(self._column)
+
+    def set_right_aligned(self, right_aligned):
+        if right_aligned:
+            self._column.headerCell().setAlignment_(NSRightTextAlignment)
+        else:
+            self._column.headerCell().setAlignment_(NSLeftTextAlignment)
 
     def set_min_width(self, width):
         self._column.setMinWidth_(width)
@@ -582,6 +589,16 @@ class MiroTableHeaderView(NSTableHeaderView):
                 cell.highlight_withFrame_inView_(True, frame, self)
                 cell.drawSortIndicatorWithFrame_inView_ascending_priority_(
                         frame, self, column.sort_order_ascending, 0)
+
+class MiroTableHeaderCell(NSTableHeaderCell):
+    def drawInteriorWithFrame_inView_(self, frame, view):
+        # Take into account differences in intercellSpacing() (the default is
+        # 3, but that can change using TableView.set_column_spacing())
+        extra_space = view.tableView().intercellSpacing().width - 3
+        padded_frame = NSMakeRect(frame.origin.x + (extra_space / 2),
+                frame.origin.y, frame.size.width - extra_space,
+                frame.size.height)
+        NSTableHeaderCell.drawInteriorWithFrame_inView_(self, padded_frame, view)
 
 class TableView(Widget):
     """Displays data as a tabular list.  TableView follows the GTK TreeView
