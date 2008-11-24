@@ -174,6 +174,7 @@ class ItemListController(object):
                 'size': itemlist.SizeSort,
                 'description': itemlist.DescriptionSort,
                 'feed-name': itemlist.FeedNameSort,
+                'state': itemlist.ItemStateSort,
         }
         sorter = sort_key_map[sort_key](ascending)
         for item_view in self.all_item_views():

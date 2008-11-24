@@ -110,6 +110,17 @@ class FeedNameSort(ItemSort):
     def sort_key(self, item):
         return item.feed_name
 
+class ItemStateSort(ItemSort):
+    def sort_key(self, item):
+        if item.state == 'downloading':
+            return 1 # downloading
+        elif item.downloaded and not item.video_watched:
+            return 2 # unwatched
+        elif not item.item_viewed and not item.expiration_date:
+            return 0 # new
+        else:
+            return 3 # other
+
 class ItemListGroup(object):
     """Manages a set of ItemLists.
 

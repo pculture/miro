@@ -767,3 +767,86 @@ class PlaylistItemRenderer(ItemRenderer):
         button.set_min_width(125)
         hbox.pack(cellpack.Hotspot('remove', button))
         return hbox
+
+# Renderers for the list view
+class ListViewRenderer(widgetset.CustomCellRenderer):
+    bold = False
+    color = (0.20, 0.20, 0.20)
+
+    def get_size(self, style, layout):
+        height = layout.font(1.0, bold=self.bold).line_height()
+        return 5, height
+
+    def render(self, context, layout, selected, hotspot, hover):
+        layout.set_font(1.0, bold=self.bold)
+        layout.set_text_color(self.color)
+        textbox = layout.textbox(self._get_text())
+        textbox.draw(context, 0, 0, context.width, context.height)
+
+class NameRenderer(ListViewRenderer):
+    bold = True
+    def _get_text(self):
+        return self.info.name
+
+    def _get_color(self):
+        if self.info.state == 'downloading':
+            return DOWNLOADING_COLOR
+        elif self.info.downloaded and not self.info.video_watched:
+            return UNWATCHED_COLOR
+        elif self.info.expiration_date:
+            return WATCHED_COLOR
+        elif not self.info.item_viewed:
+            return AVAILABLE_COLOR
+        else:
+            return WATCHED_COLOR
+    color = property(_get_color)
+
+class DescriptionRenderer(ListViewRenderer):
+    color = (0.6, 0.6, 0.6)
+
+    def _get_text(self):
+        return self.info.description_text.replace('\n', ' ')
+
+class FeedNameRenderer(ListViewRenderer):
+    def _get_text(self):
+        return self.info.feed_name
+
+class DateRenderer(ListViewRenderer):
+    def _get_text(self):
+        return displaytext.release_date(self.info.release_date)
+
+class LengthRenderer(ListViewRenderer):
+    def _get_text(self):
+        return displaytext.duration(self.info.duration)
+
+class SizeRenderer(ListViewRenderer):
+    def _get_text(self):
+        return displaytext.size(self.info.size)
+
+class StateCircleRenderer(widgetset.CustomCellRenderer):
+    def __init__(self):
+        widgetset.CustomCellRenderer.__init__(self)
+        self.unwatched_icon = imagepool.get_surface(resources.path(
+            'images/status-icon-newly-downloaded.png'))
+        self.new_icon = imagepool.get_surface(resources.path(
+            'images/status-icon-new.png'))
+        self.downloading_icon = imagepool.get_surface(resources.path(
+            'images/status-icon-downloading.png'))
+        self.width, self.height = self.unwatched_icon.get_size()
+
+    def get_size(self, style, layout):
+        return self.width, self.height
+
+    def render(self, context, layout, selected, hotspot, hover):
+        if self.info.state == 'downloading':
+            icon = self.downloading_icon
+        elif self.info.downloaded and not self.info.video_watched:
+            icon = self.unwatched_icon
+        elif not self.info.item_viewed and not self.info.expiration_date:
+            icon = self.new_icon
+        else:
+            return
+        x = int((context.width - self.width) / 2)
+        y = int((context.height - self.height) / 2)
+        icon.draw(context, x, y, self.width, self.height)
+
