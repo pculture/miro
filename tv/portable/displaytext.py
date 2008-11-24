@@ -38,16 +38,16 @@ from miro.gtcache import ngettext
 def download_rate(rate):
     if rate >= (1 << 30):
         value = "%1.1f" % (rate / float(1 << 30))
-        return _("%(size)sGB/s", {"size": value})
+        return _("%(size)s GB/s", {"size": value})
     elif rate >= (1 << 20):
         value = "%1.1f" % (rate / float(1 << 20))
-        return _("%(size)sMB/s", {"size": value})
+        return _("%(size)s MB/s", {"size": value})
     elif rate >= (1 << 10):
         value = "%1.1f" % (rate / float(1 << 10))
-        return _("%(size)sKB/s", {"size": value})
+        return _("%(size)s KB/s", {"size": value})
     else:
         value = "%1.1f" % rate
-        return _("%(size)sB/s", {"size": value})
+        return _("%(size)s B/s", {"size": value})
 
 def time(secs):
     if secs > 3600:
@@ -69,15 +69,15 @@ def size(bytes):
     # probably ditch one of them.
     if bytes >= (1 << 30):
         value = "%.1f" % (bytes / float(1 << 30))
-        return _("%(size)sGB", {"size": value})
+        return _("%(size)s GB", {"size": value})
     elif bytes >= (1 << 20):
         value = "%.1f" % (bytes / float(1 << 20))
-        return _("%(size)sMB", {"size": value})
+        return _("%(size)s MB", {"size": value})
     elif bytes >= (1 << 10):
         value = "%.1f" % (bytes / float(1 << 10))
-        return _("%(size)sKB", {"size": value})
+        return _("%(size)s KB", {"size": value})
     else:
-        return _("%(size)sB", {"size": bytes})
+        return _("%(size)s B", {"size": bytes})
 
 def expiration_date(exp_date):
     offset = exp_date - datetime.datetime.now()
