@@ -385,21 +385,24 @@ class NewChannel(BackendMessage):
 
 class NewChannelSearchChannel(BackendMessage):
     """Creates a new channel based on a search through a channel."""
-    def __init__(self, channel_info, search_term):
+    def __init__(self, channel_info, search_term, section):
         self.channel_info = channel_info
         self.search_term = search_term
+        self.section = section
 
 class NewChannelSearchEngine(BackendMessage):
     """Creates a new channel from a search engine."""
-    def __init__(self, search_engine_info, search_term):
+    def __init__(self, search_engine_info, search_term, section):
         self.search_engine_info = search_engine_info
         self.search_term = search_term
+        self.section = section
 
 class NewChannelSearchURL(BackendMessage):
     """Creates a new channel from a url."""
-    def __init__(self, url, search_term):
+    def __init__(self, url, search_term, section):
         self.url = url
         self.search_term = search_term
+        self.section = section
 
 class NewWatchedFolder(BackendMessage):
     """Creates a new watched folder."""

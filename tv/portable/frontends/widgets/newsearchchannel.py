@@ -49,9 +49,9 @@ def run_dialog():
 
     In the case of "Create Channel", returns a tuple of:
 
-    * ("channel", ChannelInfo, search_term str)
-    * ("search_engine", SearchEngineInfo, search_term str)
-    * ("url", url str, search_term str)
+    * ("channel", ChannelInfo, search_term str, section str)
+    * ("search_engine", SearchEngineInfo, search_term str, section str)
+    * ("url", url str, search_term str, section str)
 
     In the case of "Cancel", returns None.
     """
@@ -127,24 +127,41 @@ def run_dialog():
 
             extra.pack_start(widgetutil.align_top(hb2, top_pad=6))
 
+            hb3 = widgetset.HBox()
+            hb3.pack_start(widgetutil.align_top(widgetset.Label(_('Add new channel to this section:')), top_pad=3), padding=5)
+
+            rbg_section = widgetset.RadioButtonGroup()
+            video_rb = widgetset.RadioButton(_("video"), rbg_section)
+            audio_rb = widgetset.RadioButton(_("audio"), rbg_section)
+            hb3.pack_start(video_rb)
+            hb3.pack_start(audio_rb)
+            extra.pack_start(widgetutil.align_top(hb3, top_pad=6))
+
             window.set_extra_widget(extra)
             response = window.run()
 
             if response == 0 and searchterm.get_text():
                 term = searchterm.get_text()
                 selected_option = rbg.get_selected()
+                if rbg_section.get_selected() == video_rb:
+                    section = u"video"
+                else:
+                    section = u"audio"
                 if selected_option is channel_rb:
                     return ("channel",
                             channels[channel_option.get_selected()],
-                            term)
+                            term,
+                            section)
                 elif selected_option is search_engine_rb:
                     return ("search_engine",
                             search_engines[search_engine_option.get_selected()],
-                            term)
+                            term,
+                            section)
                 else:
                     return ("url",
                             url_text.get_text(),
-                            term)
+                            term,
+                            section)
         except (SystemExit, KeyboardInterrupt):
             raise
         except:

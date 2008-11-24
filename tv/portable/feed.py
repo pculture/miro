@@ -699,7 +699,7 @@ class Feed(DDBObject):
         else:
             title = self.actualFeed.get_title()
             if self.searchTerm is not None:
-                title = u"'%s' on %s" % (self.searchTerm, title)
+                title = u"%s: %s" % (title, self.searchTerm)
             return title
 
     def has_original_title(self):

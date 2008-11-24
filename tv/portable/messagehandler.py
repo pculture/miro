@@ -748,6 +748,7 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_new_channel_search_channel(self, message):
         term = message.search_term
         channel_info = message.channel_info
+        section = message.section
         location = channel_info.base_href
 
         if isinstance(term, unicode):
@@ -761,25 +762,25 @@ class BackendMessageHandler(messages.MessageHandler):
 
         url = u"dtv:searchTerm:%s?%s" % (urlencode(location), urlencode(term))
         if not get_feed_by_url(url):
-            Feed(url)
+            Feed(url, section=section)
 
     def handle_new_channel_search_engine(self, message):
         sei = message.search_engine_info
         term = message.search_term
+        section = message.section
 
-        title = "%s: %s" % (sei.title, term)
         url = searchengines.get_request_url(sei.name, term)
 
         if not url:
             return
 
         if not get_feed_by_url(url):
-            f = Feed(url)
-            f.setTitle(title)
+            f = Feed(url, section=section)
 
     def handle_new_channel_search_url(self, message):
         url = message.url
         term = message.search_term
+        section = message.section
 
         if isinstance(term, unicode):
             term = term.encode("utf-8")
@@ -791,7 +792,7 @@ class BackendMessageHandler(messages.MessageHandler):
 
         url = u"dtv:searchTerm:%s?%s" % (urlencode(normalized), urlencode(term))
         if not get_feed_by_url(url):
-            Feed(url)
+            Feed(url, section=section)
 
     def handle_new_channel_folder(self, message):
         folder = ChannelFolder(message.name)

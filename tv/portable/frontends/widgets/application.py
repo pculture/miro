@@ -454,11 +454,11 @@ class Application:
             return
 
         if data[0] == "channel":
-            messages.NewChannelSearchChannel(data[1], data[2]).send_to_backend()
+            messages.NewChannelSearchChannel(data[1], data[2], data[3]).send_to_backend()
         elif data[0] == "search_engine":
-            messages.NewChannelSearchEngine(data[1], data[2]).send_to_backend()
+            messages.NewChannelSearchEngine(data[1], data[2], data[3]).send_to_backend()
         elif data[0] == "url":
-            messages.NewChannelSearchURL(data[1], data[2]).send_to_backend()
+            messages.NewChannelSearchURL(data[1], data[2], data[3]).send_to_backend()
 
     def add_new_channel_folder(self, add_selected=False):
         title = _('Create Channel Folder')
