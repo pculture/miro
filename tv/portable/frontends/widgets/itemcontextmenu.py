@@ -113,8 +113,6 @@ class ItemContextMenuHandler(object):
                     menu.append((_('Stop seeding'), messages.StopUpload(item.id).send_to_backend))
                 else:
                     menu.append((_('Start seeding'), messages.StartUpload(item.id).send_to_backend))
-            menu.append((_('Reveal File'),
-                lambda : app.widgetapp.open_file(item.video_path)))
         elif item.download_info is not None and item.download_info.state != 'failed':
             menu = [
                     (_('Cancel Download'),
@@ -131,6 +129,18 @@ class ItemContextMenuHandler(object):
                 (_('Download'),
                     messages.StartDownload(item.id).send_to_backend)
             ]
+
+        view_menu = [(_('Web page'), lambda: app.widgetapp.open_url(item.permalink))]
+        if item.commentslink and item.commentslink != item.permalink:
+            view_menu.append((_('Comments'), lambda: app.widgetapp.open_url(item.commentslink)))
+        if item.license and item.license != item.permalink:
+            view_menu.append((_('License'), lambda: app.widgetapp.open_url(item.license)))
+        if item.downloaded and item.file_url != item.permalink:
+            view_menu.append((_('File in Browser'), lambda: app.widgetapp.open_url(item.file_url)))
+        if item.downloaded:
+            view_menu.append((_('File in Finder'), lambda: app.widgetapp.open_file(item.video_path)))
+
+        menu.append((_('View'), view_menu))
 
         menu.append(
             (_('Share'),
