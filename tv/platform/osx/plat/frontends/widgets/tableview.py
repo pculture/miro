@@ -77,16 +77,6 @@ def _unpack_row_column(value):
     column = value & ((1 << 16) - 1)
     return row, column
 
-def _get_tableview_wrapper(tableview):
-    """Get a tableview wrapper, if we don't find one for the table view itself
-    it's most certainly because the table view is enclosed in a header view so
-    get the superview wrapper as a second try.
-    """
-    wrapper = wrappermap.wrapper(tableview)
-    if wrapper is None:
-        wrapper = wrappermap.wrapper(tableview.superview())
-    return wrapper
-
 class HotspotTracker(object):
     """Contains the info on the currently tracked hotspot.  See:
     https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView
@@ -161,7 +151,7 @@ class MiroTableCell(NSTextFieldCell):
                 font.leading())
 
     def highlightColorWithFrame_inView_(self, frame, view):
-        if _get_tableview_wrapper(view).draws_selection:
+        if wrappermap.wrapper(view).draws_selection:
             return NSCell.highlightColorWithFrame_inView_(self, frame, view)
         else:
             return nil
@@ -178,7 +168,7 @@ class MiroTableImageCell(NSImageCell):
         return self.value_dict['image'].size().height
 
     def highlightColorWithFrame_inView_(self, frame, view):
-        if _get_tableview_wrapper(view).draws_selection:
+        if wrappermap.wrapper(view).draws_selection:
             return NSImageCell.highlightColorWithFrame_inView_(self, frame, view)
         else:
             return nil
@@ -197,7 +187,7 @@ class MiroCheckboxCell(NSButtonCell):
         return self.cellSize().height
 
     def highlightColorWithFrame_inView_(self, frame, view):
-        if _get_tableview_wrapper(view).draws_selection:
+        if wrappermap.wrapper(view).draws_selection:
             return NSButtonCell.highlightColorWithFrame_inView_(self, frame, view)
         else:
             return nil
@@ -220,7 +210,7 @@ class MiroCheckboxCell(NSButtonCell):
             column = tableview.columnAtPoint_(at)
             row = tableview.rowAtPoint_(at)
             if column != -1 and row != -1:
-                wrapper = _get_tableview_wrapper(tableview)
+                wrapper = wrappermap.wrapper(tableview)
                 renderer = wrapper.renderers[column]
                 iter = wrapper.model.iter_for_row(tableview, row)
                 renderer.emit('clicked', iter)
@@ -265,7 +255,7 @@ class CustomTableCell(NSCell):
         return self
 
     def highlightColorWithFrame_inView_(self, frame, view):
-        if _get_tableview_wrapper(view).draws_selection:
+        if wrappermap.wrapper(view).draws_selection:
             return NSCell.highlightColorWithFrame_inView_(self, frame, view)
         else:
             return nil
@@ -354,7 +344,7 @@ class TableViewDelegate(NSObject):
             cell.hotspot = None
 
     def tableView_didClickTableColumn_(self, tableview, column):
-        wrapper = _get_tableview_wrapper(tableview)
+        wrapper = wrappermap.wrapper(tableview)
         for column_wrapper in wrapper.columns:
             if column_wrapper._column is column:
                 column_wrapper.emit('clicked')
@@ -376,7 +366,7 @@ class OutlineViewDelegate(NSObject):
             cell.hotspot = None
 
     def outlineView_didClickTableColumn_(self, tableview, column):
-        wrapper = _get_tableview_wrapper(tableview)
+        wrapper = wrappermap.wrapper(tableview)
         for column_wrapper in wrapper.columns:
             if column_wrapper._column is column:
                 column_wrapper.emit('clicked')
@@ -411,19 +401,19 @@ class TableViewCommon(object):
 
     def moveColumn_toColumn_(self, src, dest):
         # Need to switch the TableColumn objects too
-        columns = _get_tableview_wrapper(self).columns
+        columns = wrappermap.wrapper(self).columns
         columns[src], columns[dest] = columns[dest], columns[src]
         self.SuperClass.moveColumn_toColumn_(self, src, dest)
 
     def highlightSelectionInClipRect_(self, rect):
-        if _get_tableview_wrapper(self).draws_selection:
+        if wrappermap.wrapper(self).draws_selection:
             self.SuperClass.highlightSelectionInClipRect_(self, rect)
 
     def canDragRowsWithIndexes_atPoint_(self, indexes, point):
         return YES
 
     def draggingSourceOperationMaskForLocal_(self, local):
-        drag_source = _get_tableview_wrapper(self).drag_source
+        drag_source = wrappermap.wrapper(self).drag_source
         if drag_source and local:
             return drag_source.allowed_actions()
         return NSDragOperationNone
@@ -492,7 +482,7 @@ class TableViewCommon(object):
         if not selection.containsIndex_(row):
             index_set = NSIndexSet.alloc().initWithIndex_(row)
             self.selectRowIndexes_byExtendingSelection_(index_set, NO)
-        wrapper = _get_tableview_wrapper(self)
+        wrapper = wrappermap.wrapper(self)
         if wrapper.context_menu_callback is not None:
             menu_items = wrapper.context_menu_callback(wrapper)
             menu = osxmenus.make_context_menu(menu_items)
@@ -512,7 +502,7 @@ class TableViewCommon(object):
             self.hotspot_tracker.update_position(point)
             self.hotspot_tracker.update_hit()
             if self.hotspot_tracker.hit:
-                _get_tableview_wrapper(self).send_hotspot_clicked()
+                wrappermap.wrapper(self).send_hotspot_clicked()
             self.hotspot_tracker.redraw_cell()
             self.hotspot_tracker = None
         else:
@@ -580,7 +570,7 @@ class MiroOutlineView(NSOutlineView):
 class MiroTableHeaderView(NSTableHeaderView):
     def drawRect_(self, rect):
         NSTableHeaderView.drawRect_(self, rect)
-        wrapper = _get_tableview_wrapper(self.tableView())
+        wrapper = wrappermap.wrapper(self.tableView())
         # Manually handle sort column drawing
         for i, column in enumerate(wrapper.columns):
             if column.sort_indicator_visible:
