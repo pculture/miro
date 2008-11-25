@@ -40,6 +40,7 @@ from miro.frontends.widgets import prefpanel
 from miro import messages
 from miro import downloader
 from miro.plat import resources
+from miro.plat.frontends.widgets import widgetset
 
 class DownloadsController(itemlistcontroller.ItemListController):
     def __init__(self):
