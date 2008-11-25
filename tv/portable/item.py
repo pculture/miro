@@ -978,7 +978,7 @@ class Item(DDBObject):
             return self.downloader.getTotalSize()
         else:
             enc = self.getFirstVideoEnclosure()
-            if enc is not None:
+            if enc is not None and "torrent" not in enc.get("type", ""):
                 try:
                     return int(enc['length'])
                 except (KeyError, ValueError):
