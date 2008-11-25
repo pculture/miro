@@ -392,7 +392,7 @@ class NewChannelSearchChannel(BackendMessage):
 
 class NewChannelSearchEngine(BackendMessage):
     """Creates a new channel from a search engine."""
-    def __init__(self, search_engine_info, search_term, section):
+    def __init__(self, search_engine_info, search_term, section=u"video"):
         self.search_engine_info = search_engine_info
         self.search_term = search_term
         self.section = section
