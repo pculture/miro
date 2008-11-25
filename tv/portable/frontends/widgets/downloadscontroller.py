@@ -60,9 +60,15 @@ class DownloadsController(itemlistcontroller.ItemListController):
 
         self.widget.titlebar_vbox.pack_start(self.toolbar)
 
-        self.widget.normal_view_vbox.pack_start(self.indydownloads_section)
-        self.widget.normal_view_vbox.pack_start(self.downloads_section)
-        self.widget.normal_view_vbox.pack_start(self.seeding_section)
+        vbox = widgetset.VBox()
+        vbox.pack_start(self.indydownloads_section)
+        vbox.pack_start(self.downloads_section)
+        vbox.pack_start(self.seeding_section)
+
+        scroller = widgetset.Scroller(False, True)
+        scroller.add(vbox)
+
+        self.widget.normal_view_vbox.pack_start(scroller, expand=True)
 
     def make_titlebar(self):
         image_path = resources.path("images/icon-downloading_large.png")

@@ -773,9 +773,7 @@ class ItemContainerWidget(widgetset.VBox):
         self.pack_start(self.toolbar)
         self.background = ItemListBackground()
         self.background.add(self.normal_view_vbox)
-        scroller = widgetset.Scroller(True, True)
-        scroller.add(self.background)
-        self.pack_start(scroller, expand=True)
+        self.pack_start(self.background, expand=True)
 
     def on_list_view(self, toolbar):
         if self.background.child is not self.list_view_vbox:

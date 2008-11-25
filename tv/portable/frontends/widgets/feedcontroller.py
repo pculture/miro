@@ -75,9 +75,16 @@ class FeedController(itemlistcontroller.ItemListController):
             sep = separator.HSeparator((0.85, 0.85, 0.85), (0.95, 0.95, 0.95))
             self.widget.titlebar_vbox.pack_start(sep)
             self.widget.titlebar_vbox.pack_start(self._make_toolbar(feed_info))
-        self.widget.normal_view_vbox.pack_start(self.downloading_section)
-        self.widget.normal_view_vbox.pack_start(self.full_section)
-        self.widget.normal_view_vbox.pack_start(self.downloaded_section)
+
+        vbox = widgetset.VBox()
+        vbox.pack_start(self.downloading_section)
+        vbox.pack_start(self.full_section)
+        vbox.pack_start(self.downloaded_section)
+
+        scroller = widgetset.Scroller(False, True)
+        scroller.add(vbox)
+
+        self.widget.normal_view_vbox.pack_start(scroller, expand=True)
 
     def _show_all(self):
         self._show_more_count = 0

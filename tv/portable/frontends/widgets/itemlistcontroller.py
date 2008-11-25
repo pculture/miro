@@ -97,7 +97,9 @@ class ItemListController(object):
         self.widget = itemlistwidgets.ItemContainerWidget()
         self.item_list = itemlist.ItemList()
         self.list_item_view = self._make_list_item_view()
-        self.widget.list_view_vbox.pack_start(self.list_item_view, expand=True)
+        scroller = widgetset.Scroller(True, True)
+        scroller.add(self.list_item_view)
+        self.widget.list_view_vbox.pack_start(scroller, expand=True)
         self.widget.toolbar.connect('sort-changed', self.on_sort_changed)
         self.list_item_view.connect('sort-changed', self.on_sort_changed)
         self.build_widget()
@@ -333,7 +335,9 @@ class SimpleItemListController(ItemListController):
         self.titlebar = self.make_titlebar()
         self.item_view = self.build_item_view()
         self.widget.titlebar_vbox.pack_start(self.titlebar)
-        self.widget.normal_view_vbox.pack_start(self.item_view)
+        scroller = widgetset.Scroller(False, True)
+        scroller.add(self.item_view)
+        self.widget.normal_view_vbox.pack_start(scroller, expand=True)
 
     def build_item_view(self):
         return itemlistwidgets.ItemView(self.item_list)

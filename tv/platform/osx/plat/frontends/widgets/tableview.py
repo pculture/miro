@@ -605,6 +605,10 @@ class TableView(Widget):
     widget fairly closely.
     """
 
+    CREATES_VIEW = False
+    # Bit of a hack.  We create several views.  By setting CREATES_VIEW to
+    # False, we get to position the views manually.
+
     def __init__(self, model):
         Widget.__init__(self)
         self.create_signal('selection-changed')
@@ -631,8 +635,6 @@ class TableView(Widget):
         self.header_view = MiroTableHeaderView.alloc().initWithFrame_(
             NSMakeRect(0, 0, 0, HEADER_HEIGHT))
         self.tableview.setHeaderView_(self.header_view)
-        self.view_with_header = FlippedView.alloc().init()
-        self.view_with_header.addSubview_(self.header_view)
         self.set_show_headers(True)
         self.notifications = NotificationForwarder.create(self.tableview)
         if self.is_tree():
@@ -737,20 +739,44 @@ class TableView(Widget):
         self.tableview.recalcTrackingRects()
 
     def viewport_created(self):
+        wrappermap.add(self.tableview, self)
         self._do_layout()
+        self._add_views()
         self.tableview.recalcTrackingRects()
+
+    def viewport_removed(self):
+        self._remove_views()
+        wrappermap.remove(self.tableview)
 
     def viewport_scrolled(self):
         self.tableview.recalcTrackingRects()
 
+    def _should_place_header_view(self):
+        return self._show_headers and not self.parent_is_scroller
+
+    def _add_views(self):
+        self.viewport.view.addSubview_(self.tableview)
+        if self._should_place_header_view():
+            self.viewport.view.addSubview_(self.header_view)
+
+    def _remove_views(self):
+        self.tableview.removeFromSuperview()
+        self.header_view.removeFromSuperview()
+
     def _do_layout(self):
+        x = self.viewport.placement.origin.x
+        y = self.viewport.placement.origin.y
+        width = self.viewport.get_width()
+        height = self.viewport.get_height()
+        if self._should_place_header_view():
+            self.header_view.setFrame_(NSMakeRect(x, y, width, HEADER_HEIGHT))
+            self.tableview.setFrame_(NSMakeRect(x, y + HEADER_HEIGHT, 
+                width, height - HEADER_HEIGHT))
+        else:
+            self.tableview.setFrame_(NSMakeRect(x, y, width, height))
+
         if self.auto_resize:
             self._autoresize_columns()
-        if self._show_headers:
-            y = HEADER_HEIGHT
-            height = self.view_with_header.frame().size.height - y
-            width = self.view_with_header.frame().size.width
-            self.tableview.setFrame_(NSMakeRect(0, y, width, height))
         self.queue_redraw()
 
     def _autoresize_columns(self):
@@ -890,14 +916,10 @@ class TableView(Widget):
 
     def set_show_headers(self, show):
         self._show_headers = show
-        if show:
-            self.view = self.view_with_header
-            if self.tableview.superview() is not self.view_with_header:
-                self.view_with_header.addSubview_(self.tableview)
-        else:
-            self.view = self.tableview
-            if self.tableview.superview() is self.view_with_header:
-                self.tableview.removeFromSuperview()
+        if self.viewport is not None:
+            self._remove_views()
+            self._do_layout()
+            self._add_views()
         self.invalidate_size_request()
 
     def set_search_column(self, model_index):

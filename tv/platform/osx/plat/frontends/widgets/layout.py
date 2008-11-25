@@ -46,7 +46,9 @@ from Foundation import *
 from objc import YES, NO, nil, signature
 import WebKit
 
+from miro.plat.frontends.widgets import tableview
 from miro.plat.frontends.widgets import wrappermap
+from miro.plat.frontends.widgets import viewport
 from miro.plat.frontends.widgets.base import Container, Bin, FlippedView
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
 from miro.util import Matrix
@@ -655,6 +657,14 @@ class Scroller(Bin):
         self.clip_notifications.connect(self._on_clip_view_bounds_change,
                 'NSViewBoundsDidChangeNotification')
 
+    def add(self, child):
+        child.parent_is_scroller = True
+        Bin.add(self, child)
+
+    def remove(self):
+        child.parent_is_scroller = False
+        Bin.add(self, child)
+
     def remove_viewport(self):
         Bin.remove_viewport(self)
         self.clip_notifications.disconnect()
@@ -700,7 +710,16 @@ class Scroller(Bin):
             child_height = max(child_height, self.view.contentSize().height)
             self.document_view.setFrameSize_(NSSize(child_width,
                 child_height))
-            self.child.place(self.document_view.frame(), self.document_view)
+            if isinstance(self.child, tableview.TableView):
+                # Hack to allow the content of a table view to scroll, but not
+                # the headers
+                self.child.place(self.document_view.frame(), self.view)
+                self.view.setDocumentView_(self.child.tableview)
+            elif self.child.CREATES_VIEW:
+                self.child.place(self.document_view.frame(), self.view)
+                self.view.setDocumentView_(self.child.view)
+            else:
+                self.child.place(self.document_view.frame(), self.document_view)
             self.document_view.setNeedsDisplay_(YES)
 
 class ExpanderView(FlippedView):
