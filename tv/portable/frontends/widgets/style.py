@@ -120,7 +120,7 @@ class TabRenderer(widgetset.CustomCellRenderer):
         hbox = cellpack.HBox(spacing=4)
         if hasattr(self.data, "indent") and self.data.indent:
             hbox.pack_space(15)
-        alignment = cellpack.Alignment(self.data.icon, yalign=0.5, yscale=0.0, 
+        alignment = cellpack.Alignment(self.data.icon, yalign=0.5, yscale=0.0,
                 xalign=0.0, xscale=0.0, min_width=20)
         hbox.pack(alignment)
         hbox.pack(cellpack.align_middle(cellpack.TruncatedTextLine(titlebox)), expand=True)
@@ -133,13 +133,17 @@ class TabRenderer(widgetset.CustomCellRenderer):
 
     def pack_bubbles(self, hbox, layout):
         if getattr(self.data, 'is_updating', None):
-            self.pack_bubble(hbox, layout, 'updating', DOWNLOADING_COLOR)
-        if self.data.unwatched > 0:
-            self.pack_bubble(hbox, layout, self.data.unwatched,
-                    UNWATCHED_COLOR)
-        if self.data.available > 0:
-            self.pack_bubble(hbox, layout, self.data.available,
-                    AVAILABLE_COLOR)
+            updating_image = widgetutil.make_surface("icon-updating")
+            alignment = cellpack.Alignment(updating_image, yalign=0.5, yscale=0.0,
+                    xalign=0.0, xscale=0.0, min_width=20)
+            hbox.pack(alignment)
+        else:
+            if self.data.unwatched > 0:
+                self.pack_bubble(hbox, layout, self.data.unwatched,
+                        UNWATCHED_COLOR)
+            if self.data.available > 0:
+                self.pack_bubble(hbox, layout, self.data.available,
+                        AVAILABLE_COLOR)
 
     def pack_bubble(self, hbox, layout, count, color):
         radius = (layout.current_font.line_height() + 2) / 2.0
@@ -378,7 +382,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
     def pack_info(self, layout):
         vbox = cellpack.VBox(3)
-        alignment = cellpack.Alignment(cellpack.pad(vbox, right=10), 
+        alignment = cellpack.Alignment(cellpack.pad(vbox, right=10),
             xalign=0.0, min_width=180)
 
         # Create the "normal info" box
@@ -406,7 +410,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             show_details_text = layout.textbox(_('Show Details'), underline=True)
             vbox.pack(cellpack.Hotspot('details_toggle', show_details_text))
             return alignment
-        
+
         hide_details_text = layout.textbox(_('Hide Details'), underline=True)
         vbox.pack(cellpack.Hotspot('details_toggle', hide_details_text))
 
@@ -442,7 +446,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
                 details_rows.append(
                     (_('Local file'), _('show'), 'show_local_file'))
 
-        if (self.data.download_info is not None 
+        if (self.data.download_info is not None
                 and self.data.download_info.torrent):
             # if self.data.leechers is None (rather than say, 0 or
             # some positive integer) then it wasn't transferring, and
@@ -648,7 +652,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             title_ascent):
         right = x + width - 6
         bottom = y + title_ascent
-        bump.draw(context, right - bump.width, bottom - bump.height, 
+        bump.draw(context, right - bump.width, bottom - bump.height,
                 bump.width, bump.height)
 
     def setup_style(self, style):
@@ -868,4 +872,3 @@ class StateCircleRenderer(widgetset.CustomCellRenderer):
         x = int((context.width - self.width) / 2)
         y = int((context.height - self.height) / 2)
         icon.draw(context, x, y, self.width, self.height)
-
