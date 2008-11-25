@@ -74,6 +74,9 @@ class LicenseUpdater(object):
                 self.fetch_license, 'Fetch License Name')
 
     def fetch_license(self):
+        if not self.license_uri:
+            return _('license page')
+
         # retrieve the license document and parse it for RDFa
         try:
             # this throws an AttributeError way down in urllib in some cases
