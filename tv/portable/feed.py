@@ -47,6 +47,7 @@ from miro import dialogs
 from miro import eventloop
 from miro import feedupdate
 from miro import filters
+from miro import flashscraper
 from miro import prefs
 from miro.plat import resources
 from miro import downloader
@@ -1301,6 +1302,8 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                 mimetype = filetypes.guess_mime_type(url)
                 if mimetype is not None:
                     entry['enclosures'] = [{'url':toUni(url), 'type':toUni(mimetype)}]
+                elif flashscraper.is_maybe_flashscrapable(url):
+                    entry['enclosures'] = [{'url':toUni(url), 'type':toUni("video/flv")}]
                 else:
                     logging.info('unknown url type %s, not generating enclosure' % url)
 

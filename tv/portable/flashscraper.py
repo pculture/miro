@@ -111,6 +111,11 @@ def _youtube_callback_step2(info, videoID, callback):
     try:
         body = info['body']
         params = cgi.parse_qs(body)
+        if params.get("status", [""])[0] == "fail":
+            logging.info("youtube download failed because: %s", params.get("reason", ["unknown"])[0])
+            callback(None)
+            return
+
         token = params['token'][0]
 
         lodef_url = u"http://www.youtube.com/get_video?video_id=%s&t=%s&eurl=&el=embedded&ps=default" % (videoID, token)
