@@ -824,7 +824,7 @@ class NameRenderer(ListViewRenderer):
         elif self.info.downloaded and not self.info.video_watched:
             self.color = UNWATCHED_COLOR
         elif self.info.expiration_date:
-            self.color = WATCHED_COLOR
+            self.color = ListViewRenderer.color
         elif not self.info.item_viewed:
             self.color = AVAILABLE_COLOR
         else:
