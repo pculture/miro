@@ -143,7 +143,6 @@ class Scroller(Bin):
         if (isinstance(self.child._widget, gtk.TreeView) or
                 isinstance(self.child._widget, gtk.TextView)):
             # child has native scroller
-            print 'adding nativ: ', self.child
             self._widget.add(self.child._widget)
         else:
             self._widget.add_with_viewport(self.child._widget)
