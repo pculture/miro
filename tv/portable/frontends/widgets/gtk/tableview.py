@@ -211,18 +211,17 @@ class MiroTreeView(gtk.TreeView):
     def __init__(self, model=None):
         gtk.TreeView.__init__(self, model)
         self.drag_dest_at_bottom = False
+        self.height_without_pad_bottom = -1
 
     def do_size_request(self, req):
         gtk.TreeView.do_size_request(self, req)
+        self.height_without_pad_bottom = req.height
         req.height += self.PAD_BOTTOM
 
     def set_drag_dest_at_bottom(self, value):
         if value != self.drag_dest_at_bottom:
             self.drag_dest_at_bottom = value
-            ret = self.bottom_drag_dest_coords()
-            if not ret:
-                return
-            x1, x2, y = ret
+            x1, x2, y = self.bottom_drag_dest_coords()
             area = gtk.gdk.Rectangle(x1-1, y-1, x2-x1+2,2)
             self.window.invalidate_rect(area, True)
 
@@ -247,31 +246,22 @@ class MiroTreeView(gtk.TreeView):
 
     def do_expose_event(self, event):
         gtk.TreeView.do_expose_event(self, event)
+        x, y = self.tree_to_widget_coords(0, self.height_without_pad_bottom)
         event.window.draw_rectangle(self.style.base_gc[self.state], True,
-                0, self.allocation.height - self.PAD_BOTTOM,
-                self.allocation.width, self.PAD_BOTTOM)
-        if not self.drag_dest_at_bottom:
-            return
-        last_path = self.last_path()
-        if last_path:
-            columns = self.get_columns()
-            if len(columns) == 0:
-                return
+                x, y, self.allocation.width, self.PAD_BOTTOM)
+        if self.drag_dest_at_bottom:
             gc = self.get_style().fg_gc[self.state]
             x1, x2, y = self.bottom_drag_dest_coords()
             event.window.draw_line(gc, x1, y, x2, y)
 
     def bottom_drag_dest_coords(self):
-        last_path = self.last_path()
-        if last_path:
-            columns = self.get_columns()
-            if len(columns) == 0:
-                return None
-            right = self.get_background_area(last_path, columns[-1])
-            x1 = self.get_left_offset()
-            x2 = right.x + right.width
-            y = right.y + right.height -1
-            return x1, x2, y
+        visible = self.get_visible_rect()
+        x1 = visible.x
+        x2 = visible.x + visible.width
+        y = visible.height - self.PAD_BOTTOM
+        x1, _ = self.tree_to_widget_coords(x1, y)
+        x2, y = self.tree_to_widget_coords(x2, y)
+        return x1, x2, y
 
     def last_path(self):
         model = self.get_model()
@@ -330,8 +320,7 @@ class HotspotTracker(object):
             self.hit = True
 
     def update_position(self, event):
-        self.x, self.y = self.treeview.widget_to_tree_coords(int(event.x),
-                int(event.y))
+        self.x, self.y = int(event.x), int(event.y)
 
     def calc_cell_state(self):
         if self.treeview.get_selection().path_is_selected(self.path):
