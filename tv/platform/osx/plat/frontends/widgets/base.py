@@ -112,8 +112,8 @@ class Widget(signals.SignalEmitter):
         if self.viewport is not None:
             self.viewport.remove()
             self.viewport = None
-        if self.CREATES_VIEW:
-            wrappermap.remove(self.view)
+            if self.CREATES_VIEW:
+                wrappermap.remove(self.view)
 
     def create_view(self, rect):
         """Implemented by subclasses with CREATES_VIEW set.  It must return a
