@@ -298,6 +298,8 @@ def make_context_menu(menu_items):
             if callback is None:
                 font_size = NSFont.systemFontSize()
                 font = NSFont.fontWithName_size_("Lucida Sans Italic", font_size)
+                if font is None:
+                    font = NSFont.systemFontOfSize_(font_size)
                 attributes = {NSFontAttributeName: font}
                 attributed_label = NSAttributedString.alloc().initWithString_attributes_(label, attributes)
                 nsitem.setAttributedTitle_(attributed_label)
