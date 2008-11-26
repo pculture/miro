@@ -43,8 +43,13 @@ from miro.plat.frontends.widgets import widgetset
 
 PI = math.pi
 
+def css_to_color(css_string):
+    parts = (css_string[1:3], css_string[3:5], css_string[5:7])
+    return ((int(value, 16) / 255.0) for value in parts)
+
 AVAILABLE_COLOR = (38/255.0, 140/255.0, 250/255.0) # blue
 UNWATCHED_COLOR = (0.31, 0.75, 0.12) # green
+UNWATCHED_TEXT_COLOR = css_to_color('#399415') # darker green
 DOWNLOADING_COLOR = (0.90, 0.45, 0.08) # orange
 WATCHED_COLOR = (0.33, 0.33, 0.33) # dark grey
 EXPIRING_COLOR = (0.95, 0.82, 0.11) # yellow-ish
@@ -333,7 +338,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         if self.data.state == 'downloading':
             layout.set_text_color(DOWNLOADING_COLOR)
         elif self.data.downloaded and not self.data.video_watched:
-            layout.set_text_color(UNWATCHED_COLOR)
+            layout.set_text_color(UNWATCHED_TEXT_COLOR)
         elif self.data.expiration_date:
             layout.set_text_color(WATCHED_COLOR)
         elif not self.data.item_viewed:
@@ -776,7 +781,7 @@ class PlaylistItemRenderer(ItemRenderer):
 # Renderers for the list view
 class ListViewRenderer(widgetset.CustomCellRenderer):
     bold = False
-    color = (0.20, 0.20, 0.20)
+    color = (0.17, 0.17, 0.17)
     font_size = 0.77
     min_width = 50
     right_aligned = False
@@ -823,7 +828,7 @@ class NameRenderer(ListViewRenderer):
         elif not self.info.item_viewed:
             self.color = AVAILABLE_COLOR
         else:
-            self.color = WATCHED_COLOR
+            self.color = ListViewRenderer.color
 
 class DescriptionRenderer(ListViewRenderer):
     color = (0.6, 0.6, 0.6)
