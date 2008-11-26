@@ -896,6 +896,7 @@ class DownloadInfo(object):
     state -- one of 'downloading', 'uploading', 'finished', 'failed' or 
         'paused'.  'uploading' is for torrents only.  It means that we've
         finished downloding the torrent and are now seeding it.
+    eta -- Estimated seconds before the download is finished
     startup_activity -- The current stage of starting up
     finished -- True if the item has finished downloading
     torrent -- Is this a Torrent download?
@@ -913,6 +914,7 @@ class DownloadInfo(object):
         else:
             self.reason_failed = u""
             self.short_reason_failed = u""
+        self.eta = downloader.getETA()
 
 class WatchedFolderInfo(object):
     """Tracks the state of a watched folder.

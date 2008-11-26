@@ -246,17 +246,19 @@ class ListItemView(widgetset.TableView):
         self._sort_name_to_column = {}
         self._current_sort_column = None
         self._set_initial_widths = False
-        self.add_column(self._make_column('', style.StateCircleRenderer(),
-            'state', False))
-        self.add_column(self._make_column(_('Title'), style.NameRenderer(), 'name'))
-        self.add_column(self._make_column(_('Description'),
-            style.DescriptionRenderer(), 'description'))
+        self._make_column('', style.StateCircleRenderer(), 'state', False)
+        self._make_column(_('Title'), style.NameRenderer(), 'name')
+        self._make_column(_('Description'), style.DescriptionRenderer(),
+                'description')
         if display_channel:
-            self.add_column(self._make_column(_('Feed'), style.FeedNameRenderer(),
-                'feed-name'))
-        self.add_column(self._make_column(_('Date'), style.DateRenderer(), 'date'))
-        self.add_column(self._make_column(_('Length'), style.LengthRenderer(), 'length'))
-        self.add_column(self._make_column(_('Size'), style.SizeRenderer(), 'size'))
+            self._make_column(_('Feed'), style.FeedNameRenderer(),
+                    'feed-name')
+        self._make_column(_('Date'), style.DateRenderer(), 'date')
+        self._make_column(_('Length'), style.LengthRenderer(), 'length')
+        self._make_column(_('Size'), style.SizeRenderer(), 'size')
+        self._make_column(_('Status'), style.StatusRenderer(), 'status')
+        self._make_column(_('Time Left'), style.ETARenderer(), 'eta')
+        self._make_column(_('Speed'), style.DownloadRateRenderer(), 'rate')
         self.set_show_headers(True)
         self.set_columns_draggable(True)
         self.set_column_spacing(12)
@@ -275,7 +277,7 @@ class ListItemView(widgetset.TableView):
             column.set_right_aligned(True)
         column.connect_weak('clicked', self._on_column_clicked, sort_name)
         self._sort_name_to_column[sort_name] = column
-        return column
+        self.add_column(column)
 
     def do_size_allocated(self, width, height):
         if not self._set_initial_widths:
@@ -293,7 +295,10 @@ class ListItemView(widgetset.TableView):
                 (70, 0.5),  # channel name
                 (80, 0),   # date
                 (80, 0),   # duration
-                (60, 0),    # size
+                (70, 0),    # size
+                (140, 0),   # status
+                (100, 0),    # eta
+                (60, 0),    # download rate
             ]
             if not self.display_channel:
                 del width_specs[3]

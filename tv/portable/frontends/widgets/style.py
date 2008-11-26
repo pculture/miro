@@ -508,8 +508,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         if dl_info.rate > 0:
             parts.append(displaytext.download_rate(dl_info.rate))
         if self.data.size > 0 and dl_info.rate > 0:
-            bytes_left = self.data.size - dl_info.downloaded_size
-            parts.append(displaytext.time(bytes_left / dl_info.rate))
+            parts.append(displaytext.time(dl_info.eta))
         layout.set_font(0.77)
         layout.set_text_color(self.text_color)
         return layout.textbox(' - '.join(parts))
@@ -789,60 +788,101 @@ class ListViewRenderer(widgetset.CustomCellRenderer):
     def render(self, context, layout, selected, hotspot, hover):
         # we could use cellpack for this, but it's so simple we handle it
         # manually
+        self._setup_render()
         layout.set_font(self.font_size, bold=self.bold)
         if not selected and context.style.use_custom_style:
             layout.set_text_color(self.color)
         else:
             layout.set_text_color(context.style.text_color)
-        textbox = layout.textbox(self._get_text())
+        textbox = layout.textbox(self.text)
+        textbox.set_wrap_style('char')
         text_width = textbox.get_size()[0]
         if self.right_aligned:
+            textbox.set_alignment('right')
             x = max(context.width - text_width, 0)
         else:
             x = 0
         textbox.draw(context, x, 0, context.width, context.height)
 
+    def _setup_render(self):
+        """Prepare to render the text.  This method must set the text
+        attribute and may also set the color, bold or other attributes.
+        """
+        raise NotImplementedError()
+
 class NameRenderer(ListViewRenderer):
     bold = True
-    def _get_text(self):
-        return self.info.name
 
-    def _get_color(self):
+    def _setup_render(self):
+        self.text = self.info.name
         if self.info.state == 'downloading':
-            return DOWNLOADING_COLOR
+            self.color = DOWNLOADING_COLOR
         elif self.info.downloaded and not self.info.video_watched:
-            return UNWATCHED_COLOR
+            self.color = UNWATCHED_COLOR
         elif self.info.expiration_date:
-            return WATCHED_COLOR
+            self.color = WATCHED_COLOR
         elif not self.info.item_viewed:
-            return AVAILABLE_COLOR
+            self.color = AVAILABLE_COLOR
         else:
-            return WATCHED_COLOR
-    color = property(_get_color)
+            self.color = WATCHED_COLOR
 
 class DescriptionRenderer(ListViewRenderer):
     color = (0.6, 0.6, 0.6)
 
-    def _get_text(self):
-        return self.info.description_text.replace('\n', ' ')
+    def _setup_render(self):
+        self.text = self.info.description_text.replace('\n', ' ')
 
 class FeedNameRenderer(ListViewRenderer):
-    def _get_text(self):
-        return self.info.feed_name
+    def _setup_render(self):
+        self.text = self.info.feed_name
 
 class DateRenderer(ListViewRenderer):
-    def _get_text(self):
-        return displaytext.release_date_slashes(self.info.release_date)
+    def _setup_render(self):
+        self.text = displaytext.release_date_slashes(self.info.release_date)
 
 class LengthRenderer(ListViewRenderer):
-    def _get_text(self):
-        return displaytext.duration(self.info.duration)
+    def _setup_render(self):
+        self.text = displaytext.duration(self.info.duration)
+
+class StatusRenderer(ListViewRenderer):
+    bold = True
+    def _setup_render(self):
+        if self.info.state == 'downloading':
+            self.text = _('Downloading')
+            self.color = DOWNLOADING_COLOR
+        elif self.info.downloaded and not self.info.video_watched:
+            self.text = _('Unwatched')
+            self.color = UNWATCHED_COLOR
+        elif self.info.expiration_date:
+            self.text = displaytext.expiration_date(self.info.expiration_date)
+            self.color = EXPIRING_COLOR
+        elif not self.info.item_viewed:
+            self.text = _('Newly Available')
+            self.color = AVAILABLE_COLOR
+        else:
+            self.text = ''
+
+class ETARenderer(ListViewRenderer):
+    right_aligned = True
+
+    def _setup_render(self):
+        if self.info.state == 'downloading':
+            self.text = displaytext.time(self.info.download_info.eta)
+        else:
+            self.text = ''
+
+class DownloadRateRenderer(ListViewRenderer):
+    def _setup_render(self):
+        if self.info.state == 'downloading':
+            self.text = displaytext.download_rate(self.info.download_info.rate)
+        else:
+            self.text = ''
 
 class SizeRenderer(ListViewRenderer):
     right_aligned = True
 
-    def _get_text(self):
-        return displaytext.size(self.info.size)
+    def _setup_render(self):
+        self.text = displaytext.size(self.info.size)
 
 class StateCircleRenderer(widgetset.CustomCellRenderer):
     min_width = 25

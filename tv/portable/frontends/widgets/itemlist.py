@@ -38,6 +38,8 @@ They also handle temporarily filtering out items based the user's search
 terms.
 """
 
+import sys
+
 from miro import search
 from miro import util
 from miro.frontends.widgets import imagepool
@@ -110,7 +112,10 @@ class FeedNameSort(ItemSort):
     def sort_key(self, item):
         return item.feed_name
 
-class ItemStateSort(ItemSort):
+class StatusCircleSort(ItemSort):
+    # Weird sort, this one is for when the user clicks on the header above the
+    # status bumps.  It's almost the same as StatusSort, but there isn't a
+    # bump for expireing.
     def sort_key(self, item):
         if item.state == 'downloading':
             return 1 # downloading
@@ -120,6 +125,34 @@ class ItemStateSort(ItemSort):
             return 0 # new
         else:
             return 3 # other
+
+class StatusSort(ItemSort):
+    def sort_key(self, item):
+        if self.info.state == 'downloading':
+            return 2 # downloading
+        elif self.info.downloaded and not self.info.video_watched:
+            return 3 # unwatched
+        elif self.info.expiration_date:
+            return 4 # expiring
+        elif not self.info.item_viewed:
+            return 0 # new
+        else:
+            return 1 # other
+
+class ETASort(ItemSort):
+    def sort_key(self, item):
+        if item.download_info is not None:
+            eta = item.download_info.eta
+            if eta > 0:
+                return eta
+        return sys.maxint
+
+class DownloadRateSort(ItemSort):
+    def sort_key(self, item):
+        if item.download_info is not None:
+            return item.download_info.rate
+        else:
+            return -1
 
 class ItemListGroup(object):
     """Manages a set of ItemLists.
