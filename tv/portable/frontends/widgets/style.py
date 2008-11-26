@@ -798,7 +798,6 @@ class ListViewRenderer(widgetset.CustomCellRenderer):
         textbox.set_wrap_style('char')
         text_width = textbox.get_size()[0]
         if self.right_aligned:
-            textbox.set_alignment('right')
             x = max(context.width - text_width, 0)
         else:
             x = 0

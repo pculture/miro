@@ -28,7 +28,6 @@
 
 """Format strings to send to the user."""
 
-import locale
 import math
 import datetime
 
@@ -105,7 +104,7 @@ def release_date(release_date):
 
 def release_date_slashes(release_date):
     if release_date > datetime.datetime.min:
-        return release_date.strftime(locale.nl_langinfo(locale.D_FMT))
+        return release_date.strftime("%x")
     else:
         return ''
 
