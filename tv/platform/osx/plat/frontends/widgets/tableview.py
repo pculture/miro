@@ -624,7 +624,6 @@ class TableView(Widget):
         self.set_fixed_height(False)
         self.header_view = MiroTableHeaderView.alloc().initWithFrame_(
             NSMakeRect(0, 0, 0, HEADER_HEIGHT))
-        self.tableview.setHeaderView_(self.header_view)
         self.set_show_headers(True)
         self.notifications = NotificationForwarder.create(self.tableview)
         if self.is_tree():
@@ -906,6 +905,10 @@ class TableView(Widget):
 
     def set_show_headers(self, show):
         self._show_headers = show
+        if show:
+            self.tableview.setHeaderView_(self.header_view)
+        else:
+            self.tableview.setHeaderView_(None)
         if self.viewport is not None:
             self._remove_views()
             self._do_layout()
