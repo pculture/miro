@@ -45,7 +45,7 @@ PI = math.pi
 
 def css_to_color(css_string):
     parts = (css_string[1:3], css_string[3:5], css_string[5:7])
-    return ((int(value, 16) / 255.0) for value in parts)
+    return tuple((int(value, 16) / 255.0) for value in parts)
 
 AVAILABLE_COLOR = (38/255.0, 140/255.0, 250/255.0) # blue
 UNWATCHED_COLOR = (0.31, 0.75, 0.12) # green
@@ -782,7 +782,7 @@ class PlaylistItemRenderer(ItemRenderer):
 class ListViewRenderer(widgetset.CustomCellRenderer):
     bold = False
     color = (0.17, 0.17, 0.17)
-    font_size = 0.77
+    font_size = 0.82
     min_width = 50
     right_aligned = False
 

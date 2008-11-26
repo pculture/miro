@@ -289,16 +289,16 @@ class ListItemView(widgetset.TableView):
             # initial size.  In the form of:
             # (min_width, extra_width_weighting)
             width_specs = [
-                (25, 0),    # bump
+                (20, 0),    # bump
                 (100, 1),   # title
                 (100, 1),   # description
                 (70, 0.5),  # channel name
                 (80, 0),   # date
-                (80, 0),   # duration
+                (60, 0),   # duration
                 (70, 0),    # size
                 (140, 0),   # status
-                (100, 0),    # eta
-                (60, 0),    # download rate
+                (80, 0),    # eta
+                (50, 0),    # download rate
             ]
             if not self.display_channel:
                 del width_specs[3]
