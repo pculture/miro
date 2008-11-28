@@ -299,7 +299,7 @@ class ListItemView(widgetset.TableView):
                 (60, 0),   # duration
                 (70, 0),    # size
                 (140, 0),   # status
-                (110, 0),   # downloading
+                (140, 0),   # downloading
                 (80, 0),    # eta
                 (50, 0),    # download rate
             ]

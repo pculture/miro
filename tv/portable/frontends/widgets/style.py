@@ -940,13 +940,14 @@ class DownloadingRenderer(widgetset.CustomCellRenderer):
     def render(self, context, layout, selected, hotspot, hover):
         if self.info.state not in ('downloading', 'paused'):
             return
-        progress_bar = ProgressBarDrawer(10, self.info)
+        progress_bar = ProgressBarDrawer(self.info)
         hbox = cellpack.HBox(spacing=9)
         if self.info.state == 'downloading':
             hbox.pack(self.pause_button)
         else:
             hbox.pack(self.resume_button)
-        hbox.pack(cellpack.align_middle(progress_bar), expand=True)
+        drawing_area = cellpack.DrawingArea(20, 10, progress_bar.draw)
+        hbox.pack(cellpack.align_middle(drawing_area), expand=True)
         hbox.pack(self.cancel_button)
         hbox.render_layout(context)
 
@@ -959,7 +960,6 @@ class DownloadingRenderer(widgetset.CustomCellRenderer):
                 return 'resume'
         elif x > width - self.cancel_button.width:
             return 'cancel'
-        print x, width, self.cancel_button.width
 
 class ProgressBarDrawer(cellpack.Packer):
     """Helper object to draw the progress bar (which is actually quite
@@ -978,13 +978,9 @@ class ProgressBarDrawer(cellpack.Packer):
     BORDER_GRADIENT_TOP = (0.58, 0.58, 0.58)
     BORDER_GRADIENT_BOTTOM = (0.68, 0.68, 0.68)
 
-    def __init__(self, height, info):
-        self.height = height
+    def __init__(self, info):
         self.progress_ratio = (float(info.download_info.downloaded_size) /
                 info.size)
-
-    def _calc_size(self):
-        return 20, self.height
 
     def _layout(self, context, x, y, width, height):
         self.x, self.y, self.width, self.height = x, y, width, height
