@@ -38,6 +38,8 @@ from miro.plat.frontends.widgets import widgetset
 BLACK = (0, 0, 0)
 WHITE = (1, 1, 1)
 
+PI = math.pi
+
 def round_rect(context, x, y, width, height, edge_radius):
     edge_radius = min(edge_radius, min(width, height)/2.0)
     inner_width = width - edge_radius*2
@@ -47,19 +49,46 @@ def round_rect(context, x, y, width, height, edge_radius):
     y_inner1 = y + edge_radius
     y_inner2 = y + height - edge_radius
 
-
     context.move_to(x+edge_radius, y)
     context.rel_line_to(inner_width, 0)
-    pi = math.pi
-    # Our basic strategy for the corners is to make a curve with the
-    # control points at the corner where a non-round rectangle would be
-    context.arc(x_inner2, y_inner1, edge_radius, -pi/2, 0)
+
+    context.arc(x_inner2, y_inner1, edge_radius, -PI/2, 0)
     context.rel_line_to(0, inner_height)
-    context.arc(x_inner2, y_inner2, edge_radius, 0, pi/2)
+    context.arc(x_inner2, y_inner2, edge_radius, 0, PI/2)
     context.rel_line_to(-inner_width, 0)
-    context.arc(x_inner1, y_inner2, edge_radius, pi/2, pi)
+    context.arc(x_inner1, y_inner2, edge_radius, PI/2, PI)
     context.rel_line_to(0, -inner_height)
-    context.arc(x_inner1, y_inner1, edge_radius, pi, pi*3/2)
+    context.arc(x_inner1, y_inner1, edge_radius, PI, PI*3/2)
+
+def circular_rect(context, x, y, width, height):
+    """Make a path for a rectangle with the left/right side being circles."""
+
+    radius = height / 2.0
+    inner_width = width - height
+    inner_y = y + radius
+    inner_x1 = x + radius
+    inner_x2 = inner_x1 + inner_width
+
+    context.move_to(inner_x1, y)
+    context.rel_line_to(inner_width, 0)
+    context.arc(inner_x2, inner_y, radius, -PI/2, PI/2)
+    context.rel_line_to(-inner_width, 0)
+    context.arc(inner_x1, inner_y, radius, PI/2, -PI/2)
+
+def circular_rect_negative(context, x, y, width, height):
+    """The same path as circular_rect(), but going counter clockwise.  """
+
+    radius = height / 2.0
+    inner_width = width - height
+    inner_y = y + radius
+    inner_x1 = x + radius
+    inner_x2 = inner_x1 + inner_width
+
+    context.move_to(inner_x1, y)
+    context.arc_negative(inner_x1, inner_y, radius, -PI/2, PI/2)
+    context.rel_line_to(inner_width, 0)
+    context.arc_negative(inner_x2, inner_y, radius, PI/2, -PI/2)
+    context.rel_line_to(-inner_width, 0)
 
 def draw_rounded_icon(context, icon, x, y, width, height, inset=0):
     """Draw an icon with the corners rounded.

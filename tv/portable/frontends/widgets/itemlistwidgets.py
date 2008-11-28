@@ -257,6 +257,8 @@ class ListItemView(widgetset.TableView):
         self._make_column(_('Length'), style.LengthRenderer(), 'length')
         self._make_column(_('Size'), style.SizeRenderer(), 'size')
         self._make_column(_('Status'), style.StatusRenderer(), 'status')
+        self._make_column(_('Downloading'), style.DownloadingRenderer(),
+                'progress')
         self._make_column(_('Time Left'), style.ETARenderer(), 'eta')
         self._make_column(_('Speed'), style.DownloadRateRenderer(), 'rate')
         self.set_show_headers(True)
@@ -297,6 +299,7 @@ class ListItemView(widgetset.TableView):
                 (60, 0),   # duration
                 (70, 0),    # size
                 (140, 0),   # status
+                (110, 0),   # downloading
                 (80, 0),    # eta
                 (50, 0),    # download rate
             ]

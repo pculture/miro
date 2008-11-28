@@ -309,8 +309,7 @@ class HotspotTracker(object):
             return
         self.renderer = wrappermap.wrapper(gtk_renderer)
         self.attr_map = self.treeview_wrapper.attr_map_for_column[self.column]
-        cell_area = treeview.get_cell_area(self.path, self.column)
-        if not rect_contains_point(cell_area, event.x, event.y):
+        if not rect_contains_point(self.calc_cell_area(), event.x, event.y):
             # Mouse is in the padding around the actual cell area
             return
         self.update_position(event)
@@ -318,6 +317,16 @@ class HotspotTracker(object):
         self.name = self.calc_hotspot()
         if self.name is not None:
             self.hit = True
+
+    def calc_cell_area(self):
+        cell_area = self.treeview.get_cell_area(self.path, self.column)
+        xpad = self.renderer._renderer.props.xpad
+        ypad = self.renderer._renderer.props.ypad
+        cell_area.x += xpad
+        cell_area.y += ypad
+        cell_area.width -= xpad * 2
+        cell_area.height -= ypad * 2
+        return cell_area
 
     def update_position(self, event):
         self.x, self.y = int(event.x), int(event.y)
@@ -332,7 +341,7 @@ class HotspotTracker(object):
             return gtk.STATE_NORMAL
 
     def calc_hotspot(self):
-        cell_area = self.treeview.get_cell_area(self.path, self.column)
+        cell_area = self.calc_cell_area()
         if rect_contains_point(cell_area, self.x, self.y):
             model = self.treeview.get_model()
             self.renderer.cell_data_func(self.column, self.renderer._renderer,

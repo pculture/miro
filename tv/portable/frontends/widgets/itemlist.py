@@ -154,6 +154,13 @@ class DownloadRateSort(ItemSort):
         else:
             return -1
 
+class ProgressSort(ItemSort):
+    def sort_key(self, item):
+        if item.state in ('downloading', 'paused'):
+            return float(item.download_info.downloaded_size) / item.size
+        else:
+            return -1
+
 class ItemListGroup(object):
     """Manages a set of ItemLists.
 

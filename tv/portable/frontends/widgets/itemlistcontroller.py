@@ -111,9 +111,9 @@ class ItemListController(object):
         self.context_menu_handler = self.make_context_menu_handler()
         context_callback = self.context_menu_handler.callback
         for item_view in self.normal_item_views():
-            item_view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
             item_view.connect_weak('selection-changed', self.on_selection_changed)
         for item_view in self.all_item_views():
+            item_view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
             item_view.set_context_menu_callback(context_callback)
             item_view.set_drag_source(self.make_drag_handler())
             item_view.set_drag_dest(self.make_drop_handler())
@@ -180,6 +180,7 @@ class ItemListController(object):
                 'status': itemlist.StatusSort,
                 'eta': itemlist.ETASort,
                 'rate': itemlist.DownloadRateSort,
+                'progress': itemlist.ProgressSort,
         }
         sorter = sort_key_map[sort_key](ascending)
         for item_list in self.item_list_group.item_lists:

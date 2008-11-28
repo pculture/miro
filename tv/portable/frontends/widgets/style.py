@@ -916,3 +916,198 @@ class StateCircleRenderer(widgetset.CustomCellRenderer):
         x = int((context.width - self.width) / 2)
         y = int((context.height - self.height) / 2)
         icon.draw(context, x, y, self.width, self.height)
+
+class DownloadingRenderer(widgetset.CustomCellRenderer):
+    right_aligned = False
+    min_width = 25
+    height = 16
+
+    def __init__(self):
+        widgetset.CustomCellRenderer.__init__(self)
+        self.pause_button = imagepool.get_surface(resources.path(
+            'images/pause-button.png'))
+        self.resume_button = imagepool.get_surface(resources.path(
+            'images/resume-button.png'))
+        self.cancel_button = imagepool.get_surface(resources.path(
+            'images/cancel-button.png'))
+
+    def get_size(self, style, layout):
+        return self.min_width, self.height
+
+    def render(self, context, layout, selected, hotspot, hover):
+        if self.info.state not in ('downloading', 'paused'):
+            return
+        progress_bar = ProgressBarDrawer(10, self.info)
+        hbox = cellpack.HBox(spacing=9)
+        if self.info.state == 'downloading':
+            hbox.pack(self.pause_button)
+        else:
+            hbox.pack(self.resume_button)
+        hbox.pack(cellpack.align_middle(progress_bar), expand=True)
+        hbox.pack(self.cancel_button)
+        hbox.render_layout(context)
+
+    def hotspot_test(self, style, layout, x, y, width, height):
+        # Just calculate this manually, instead of laying everything out
+        if x < self.pause_button.width:
+            if self.info.state == 'downloading':
+                return 'pause'
+            else:
+                return 'resume'
+        elif x > width - self.cancel_button.width:
+            return 'cancel'
+        print x, width, self.cancel_button.width
+
+class ProgressBarDrawer(cellpack.Packer):
+    """Helper object to draw the progress bar (which is actually quite
+    complicated.
+    """
+
+
+    PROGRESS_BASE_TOP = (0.92, 0.53, 0.21)
+    PROGRESS_BASE_BOTTOM = (0.90, 0.45, 0.08)
+    BASE = (0.76, 0.76, 0.76)
+
+    PROGRESS_BORDER_TOP = (0.80, 0.51, 0.28)
+    PROGRESS_BORDER_BOTTOM = (0.76, 0.44, 0.16)
+    PROGRESS_BORDER_HIGHLIGHT = (1.0, 0.68, 0.42)
+
+    BORDER_GRADIENT_TOP = (0.58, 0.58, 0.58)
+    BORDER_GRADIENT_BOTTOM = (0.68, 0.68, 0.68)
+
+    def __init__(self, height, info):
+        self.height = height
+        self.progress_ratio = (float(info.download_info.downloaded_size) /
+                info.size)
+
+    def _calc_size(self):
+        return 20, self.height
+
+    def _layout(self, context, x, y, width, height):
+        self.x, self.y, self.width, self.height = x, y, width, height
+        context.set_line_width(1)
+        self.progress_width = int(width * self.progress_ratio)
+        self.half_height = height / 2
+        if self.progress_width < self.half_height:
+            self.progress_end = 'left'
+        elif width - self.progress_width < self.half_height:
+            self.progress_end = 'right'
+        else:
+            self.progress_end = 'middle'
+        self._draw_base(context)
+        self._draw_border(context)
+
+    def _draw_base(self, context):
+        # set the clip region to be the outline of the progress bar.  This way
+        # we can just draw rectangles and not have to worry about the circular
+        # edges.
+        context.save()
+        self._outer_border(context)
+        context.clip()
+        # draw our rectangles
+        half_height = self.height / 2
+        self._progress_top_rectangle(context)
+        context.set_color(self.PROGRESS_BASE_TOP)
+        context.fill()
+        self._progress_bottom_rectangle(context)
+        context.set_color(self.PROGRESS_BASE_BOTTOM)
+        context.fill()
+        self._non_progress_rectangle(context)
+        context.set_color(self.BASE)
+        context.fill()
+        # restore the old clipping region
+        context.restore()
+
+    def _draw_border(self, context):
+        # Set the clipping region to be the on the border of the progess bar.
+        # This is a little tricky.  We have to make a path around the outside
+        # of the border that goes in one direction, then a path that is inset
+        # by 1 px going the other direction.  This causes the clip region to
+        # be the 1 px area between the 2 paths.
+        context.save()
+        self._outer_border(context)
+        self._inner_border(context)
+        context.clip()
+        # Render the borders
+        self._progress_top_rectangle(context)
+        context.set_color(self.PROGRESS_BORDER_TOP)
+        context.fill()
+        self._progress_bottom_rectangle(context)
+        context.set_color(self.PROGRESS_BORDER_BOTTOM)
+        context.fill()
+        self._non_progress_rectangle(context)
+        gradient = widgetset.Gradient(0, 0, 0, self.height)
+        gradient.set_start_color(self.BORDER_GRADIENT_TOP)
+        gradient.set_end_color(self.BORDER_GRADIENT_BOTTOM)
+        context.gradient_fill(gradient)
+        context.fill()
+        # Restore the old clipping region
+        context.restore()
+        self._draw_progress_highlight(context)
+        self._draw_progress_right(context)
+
+    def _draw_progress_right(self, context):
+        if self.progress_width == self.width:
+            return
+        radius = self.half_height
+        if self.progress_end == 'left':
+            # need to figure out how tall to draw the border.
+            # pythagoras to the rescue
+            a = radius - self.progress_width
+            upper_height = math.floor(math.sqrt(radius**2 - a**2))
+        elif self.progress_end == 'right':
+            a = self.width - self.progress_width
+            upper_height = math.floor(math.sqrt(radius**2 - a**2))
+        else:
+            upper_height = self.height / 2
+        top = self.y + (self.height / 2) - upper_height
+        context.rectangle(self.x + self.progress_width-1, top, 1, upper_height)
+        context.set_color(self.PROGRESS_BORDER_TOP)
+        context.fill()
+        context.rectangle(self.x + self.progress_width-1, top + upper_height,
+                1, upper_height)
+        context.set_color(self.PROGRESS_BORDER_BOTTOM)
+        context.fill()
+
+    def _draw_progress_highlight(self, context):
+        width = self.progress_width - 2 # highlight is 1 px in on both sides
+        if width <= 0:
+            return
+        radius = self.half_height - 2
+        left = self.x + 1.5 # start 1 px to the right of self.x
+        top = self.y + 1.5
+        context.move_to(left, top + radius)
+        if self.progress_end == 'left':
+            # need to figure out the angle to end on, use some trig
+            length = float(radius - width)
+            theta = -(PI / 2) - math.asin(length/radius)
+            context.arc(left + radius, top + radius, radius, -PI, theta)
+        else:
+            context.arc(left + radius, top + radius, radius, -PI, -PI/2)
+            # draw a line to the right end of the progress bar (but don't go
+            # past the circle on the right side)
+            x = min(left + width,
+                    self.x + self.width - self.half_height - 0.5)
+            context.line_to(x, top)
+        context.set_color(self.PROGRESS_BORDER_HIGHLIGHT)
+        context.stroke()
+
+    def _outer_border(self, context):
+        widgetutil.circular_rect(context, self.x, self.y,
+                self.width, self.height)
+
+    def _inner_border(self, context):
+        widgetutil.circular_rect_negative(context, self.x + 1, self.y + 1,
+                self.width - 2, self.height - 2)
+
+    def _progress_top_rectangle(self, context):
+        context.rectangle(self.x, self.y,
+                self.progress_width, self.half_height)
+
+    def _progress_bottom_rectangle(self, context):
+        context.rectangle(self.x, self.y + self.half_height,
+                self.progress_width, self.half_height)
+
+    def _non_progress_rectangle(self, context):
+        context.rectangle(self.x + self.progress_width, self.y,
+                self.width - self.progress_width, self.height)
