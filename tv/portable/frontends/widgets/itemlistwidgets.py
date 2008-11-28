@@ -117,8 +117,8 @@ class ItemListTitlebar(widgetset.Background):
         alignment = widgetset.Alignment(yalign=0.5, xalign=0.5)
         alignment.add(icon_widget)
         alignment.set_size_request(-1, 61)
-        hbox.pack_start(alignment)
-        hbox.pack_start(self.title_drawer, padding=15, expand=True)
+        hbox.pack_start(alignment, padding=15)
+        hbox.pack_start(self.title_drawer, expand=True)
         # Pack stuff to the right
         extra = self._build_titlebar_extra()
         if extra:
@@ -148,7 +148,7 @@ class ItemListTitlebar(widgetset.Background):
         self.create_signal('search-changed')
         self.searchbox = widgetset.SearchTextEntry()
         self.searchbox.connect('changed', self._on_search_changed)
-        return widgetutil.align_middle(self.searchbox, right_pad=35)
+        return widgetutil.align_middle(self.searchbox, right_pad=35, left_pad=15)
 
     def _on_save_search(self, button):
         self.emit('save-search')
