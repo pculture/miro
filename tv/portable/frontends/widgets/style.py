@@ -854,6 +854,9 @@ class StatusRenderer(ListViewRenderer):
         if self.info.state == 'downloading':
             self.text = _('Downloading')
             self.color = DOWNLOADING_COLOR
+        elif self.info.state == 'paused':
+            self.text = _('Paused')
+            self.color = DOWNLOADING_COLOR
         elif self.info.downloaded and not self.info.video_watched:
             self.text = _('Unwatched')
             self.color = UNWATCHED_COLOR
