@@ -141,16 +141,21 @@ class StatusSort(ItemSort):
 
 class ETASort(ItemSort):
     def sort_key(self, item):
-        if item.download_info is not None:
+        if item.state in ('downloading', 'paused'):
             eta = item.download_info.eta
             if eta > 0:
                 return eta
-        return sys.maxint
+        elif not self._reverse:
+            return sys.maxint
+        else:
+            return -sys.maxint
 
 class DownloadRateSort(ItemSort):
     def sort_key(self, item):
-        if item.download_info is not None:
+        if item.state in ('downloading', 'paused'):
             return item.download_info.rate
+        elif not self._reverse:
+            return sys.maxint
         else:
             return -1
 
@@ -158,6 +163,8 @@ class ProgressSort(ItemSort):
     def sort_key(self, item):
         if item.state in ('downloading', 'paused'):
             return float(item.download_info.downloaded_size) / item.size
+        elif not self._reverse:
+            return sys.maxint
         else:
             return -1
 
