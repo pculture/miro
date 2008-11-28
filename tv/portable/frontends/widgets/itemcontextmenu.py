@@ -165,7 +165,7 @@ class ItemContextMenuHandler(object):
     def _make_context_menu_multiple(self, selection):
         """Make the context menu for multiple items."""
         watched = unwatched = downloaded = downloading = available = \
-                uploadable = expiring = 0
+                paused = uploadable = expiring = 0
         for info in selection:
             if info.downloaded:
                 downloaded += 1
@@ -175,6 +175,8 @@ class ItemContextMenuHandler(object):
                         expiring += 1
                 else:
                     unwatched += 1
+            elif info.state == 'paused':
+                paused += 1
             elif info.download_info is not None:
                 downloading += 1
                 if (info.download_info.torrent and
@@ -240,6 +242,19 @@ class ItemContextMenuHandler(object):
                     messages.PauseDownload(item.id).send_to_backend()
             menu.append((_('Cancel Download'), cancel_all))
             menu.append((_('Pause Download'), pause_all))
+
+        if paused:
+            if len(menu) > 0:
+                menu.append(None)
+            menu.append((ngettext('1 Paused Item',
+                                  '%(count)d Paused Items',
+                                  paused,
+                                  {"count": paused}),
+                         None))
+            def resume_all():
+                for item in selection:
+                    messages.ResumeDownload(item.id).send_to_backend()
+            menu.append((_('Resume Download'), resume_all))
 
         if uploadable > 0:
             def restart_all():
