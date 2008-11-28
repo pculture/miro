@@ -668,7 +668,7 @@ class HeaderToolbar(widgetset.Background):
         button = SortBarButton(text)
         button.connect('clicked', self._on_button_clicked, sort_key)
         self._button_map[sort_key] = button
-        self._button_hbox.pack_start(button)
+        self._button_hbox.pack_start(button, padding=4)
 
     def _on_button_clicked(self, button, sort_key):
         if self._current_sort_key == sort_key:
@@ -694,6 +694,14 @@ class HeaderToolbar(widgetset.Background):
         gradient.set_end_color((0.42, 0.42, 0.42))
         context.rectangle(0, 0, context.width, context.height)
         context.gradient_fill(gradient)
+        context.set_color((0.4, 0.4, 0.4))
+        context.move_to(0.5, 0.5)
+        context.rel_line_to(context.width, 0)
+        context.stroke()
+        context.set_color((0.16, 0.16, 0.16))
+        context.move_to(0.5, context.height-0.5)
+        context.rel_line_to(context.width, 0)
+        context.stroke()
 
 class SortBarButton(widgetset.CustomButton):
     SORT_NONE = 0
@@ -710,38 +718,40 @@ class SortBarButton(widgetset.CustomButton):
         self.queue_redraw()
 
     def size_request(self, layout):
-        layout.set_font(0.82, bold=True)
+        layout.set_font(0.8, bold=True)
         text_size = layout.textbox(self._text).get_size()
-        return text_size[0] + 16, text_size[1] + 6
+        return text_size[0] + 36, text_size[1] + 6
 
     def draw(self, context, layout):
-        layout.set_font(0.82, bold=True)
+        if self.state == 'hover' or self.state == 'pressed' or self._sort_state != self.SORT_NONE:
+            if self._sort_state != self.SORT_NONE:
+                context.set_color((0.29, 0.29, 0.29))
+            else:
+                context.set_color((0.7, 0.7, 0.7))
+            widgetutil.round_rect(context, 0.5, 0.5, context.width - 2, context.height - 2, 8)
+            context.fill()
+        layout.set_font(0.8, bold=True)
         layout.set_text_color((1, 1, 1))
         textbox = layout.textbox(self._text)
         text_size = textbox.get_size()
-        y = int((context.height - textbox.get_size()[1]) / 2)
-        textbox.draw(context, y, 2, text_size[0], text_size[1])
+        y = int((context.height - textbox.get_size()[1]) / 2) - 1.5
+        textbox.draw(context, 12, y, text_size[0], text_size[1])
         context.set_color((1, 1, 1))
-        self._draw_trangle(context, text_size[0] + 6)
-        if self.state == 'hover' or self.state == 'pressed':
-            widgetutil.round_rect(context, 0.5, 0.5, context.width - 2,
-                    context.height - 2, 4)
-            context.set_line_width(1)
-            context.stroke()
+        self._draw_triangle(context, text_size[0] + 18)
 
-    def _draw_trangle(self, context, left):
-        top = int((context.height - 8) / 2)
+    def _draw_triangle(self, context, left):
+        top = int((context.height - 4) / 2)
         if self._sort_state == self.SORT_DOWN:
             context.move_to(left, top)
-            context.rel_line_to(8, 0)
-            context.rel_line_to(-4, 8)
-            context.rel_line_to(-4, -8)
+            context.rel_line_to(6, 0)
+            context.rel_line_to(-3, 4)
+            context.rel_line_to(-3, -4)
             context.fill()
         elif self._sort_state == self.SORT_UP:
-            context.move_to(left, top + 8)
-            context.rel_line_to(8, 0)
-            context.rel_line_to(-4, -8)
-            context.rel_line_to(-4, 8)
+            context.move_to(left, top + 4)
+            context.rel_line_to(6, 0)
+            context.rel_line_to(-3, -4)
+            context.rel_line_to(-3, 4)
             context.fill()
 
 class ItemListBackground(widgetset.Background):
