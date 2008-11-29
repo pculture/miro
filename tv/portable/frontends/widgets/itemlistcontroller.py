@@ -100,8 +100,10 @@ class ItemListController(object):
         scroller = widgetset.Scroller(True, True)
         scroller.add(self.list_item_view)
         self.widget.list_view_vbox.pack_start(scroller, expand=True)
-        self.widget.toolbar.connect('sort-changed', self.on_sort_changed)
-        self.list_item_view.connect('sort-changed', self.on_sort_changed)
+        self.widget.toolbar.connect_weak('sort-changed', self.on_sort_changed)
+        self.list_item_view.connect_weak('sort-changed', self.on_sort_changed)
+        self.list_item_view.connect_weak('row-double-clicked',
+                self.on_row_double_clicked)
         self.build_widget()
 
     def _make_list_item_view(self):
@@ -167,6 +169,18 @@ class ItemListController(object):
         for item_view in self.all_item_views():
             item_view.model_changed()
         app.inline_search_memory.set_search(self.type, self.id, search_text)
+
+    def on_row_double_clicked(self, item_view, iter):
+        info = item_view.model[iter][0]
+        if info.downloaded:
+            items = item_view.item_list.get_items(start_id=info.id)
+            self._play_item_list(items)
+        elif info.state == 'downloading':
+            messages.PauseDownload(info.id).send_to_backend()
+        elif info.state == 'paused':
+            messages.ResumeDownload(info.id).send_to_backend()
+        elif info.download_info is None:
+            messages.StartDownload(info.id).send_to_backend()
 
     def on_sort_changed(self, object, sort_key, ascending):
         sort_key_map = {

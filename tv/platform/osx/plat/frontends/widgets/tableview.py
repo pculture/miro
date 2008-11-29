@@ -463,7 +463,17 @@ class TableViewCommon(object):
         if event.modifierFlags() & NSControlKeyMask:
             self.handleContextMenu_(event)
             return
+
         point = self.convertPoint_fromView_(event.locationInWindow(), nil)
+
+        if event.clickCount() == 2:
+            wrapper = wrappermap.wrapper(self)
+            row = self.rowAtPoint_(point)
+            if row != -1:
+                iter = wrapper.model.iter_for_row(self, row)
+                wrapper.emit('row-double-clicked', iter)
+            return
+
         hotspot_tracker = HotspotTracker(self, point)
         if hotspot_tracker.hit:
             self.hotspot_tracker = hotspot_tracker
@@ -603,6 +613,7 @@ class TableView(Widget):
         Widget.__init__(self)
         self.create_signal('selection-changed')
         self.create_signal('hotspot-clicked')
+        self.create_signal('row-double-clicked')
         self.model = model
         self.columns = []
         self.context_menu_callback = None

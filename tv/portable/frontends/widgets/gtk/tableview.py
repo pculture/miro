@@ -454,6 +454,7 @@ class TableView(Widget):
         self.create_signal('row-collapsed')
         self.create_signal('selection-changed')
         self.create_signal('hotspot-clicked')
+        self.create_signal('row-double-clicked')
         self.wrapped_widget_connect('row-expanded', self.on_row_expanded)
         self.wrapped_widget_connect('row-collapsed', self.on_row_collapsed)
         self.wrapped_widget_connect('button-press-event', self.on_button_press)
@@ -673,6 +674,13 @@ class TableView(Widget):
             self.hotspot_tracker.update_hit()
 
     def on_button_press(self, treeview, event):
+        if event.type == gtk.gdk._2BUTTON_PRESS:
+            path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
+            if path_info is not None:
+                iter = treeview.get_model().get_iter(path_info[0])
+                self.emit('row-double-clicked', iter)
+            return
+
         if self.hotspot_tracker is None:
             hotspot_tracker = HotspotTracker(treeview, event)
             if hotspot_tracker.hit:

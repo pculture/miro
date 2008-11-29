@@ -935,7 +935,7 @@ class DownloadingRenderer(ListViewRenderer):
 
     def get_size(self, style, layout):
         layout.set_font(self.font_size)
-        sizer_button = layout.button("FOO")
+        sizer_button = layout.button("FOO", False)
         height = max(self.pause_button.height, sizer_button.get_size()[1])
         return self.min_width, height
 
