@@ -169,10 +169,6 @@ class OverlayPalette (NSWindowController):
                 
     def enter_fullscreen(self, videoWindow):
         if self.window().isVisible():
-            newFrame = self.window().frame()
-            newFrame.size.width = 824
-            newFrame.origin.x = self.getHorizontalPosition(videoWindow, newFrame.size.width)
-            self.window().setFrame_display_animate_(newFrame, YES, YES)
             self.adjustContent(videoWindow, True)
             self.fsButton.setImage_(NSImage.imageNamed_('fs-button-exitfullscreen'))
             self.fsButton.setAlternateImage_(NSImage.imageNamed_('fs-button-exitfullscreen-alt'))
@@ -199,12 +195,12 @@ class OverlayPalette (NSWindowController):
 
     def adjustContent(self, videoWindow, animate):
         newFrame = self.window().frame()
-        if videoWindow.is_fullscreen:
+        if videoWindow.is_fullscreen or app.playback_manager.detached_window is not None:
             self.playbackControls.setHidden_(NO)
-            newFrame.size.width = 824
+            newFrame.size.height = 198
         else:
             self.playbackControls.setHidden_(YES)
-            newFrame.size.width = 516
+            newFrame.size.height = 110
         newFrame.origin.x = self.getHorizontalPosition(videoWindow, newFrame.size.width)
         self.window().setFrame_display_animate_(newFrame, YES, animate)
 
@@ -425,6 +421,22 @@ class OverlayPaletteView (NSView):
 ###############################################################################
 
 class OverlayPaletteControlsView (NSView):
+
+    def drawRect_(self, rect):
+        bounds = self.bounds()
+        NSColor.colorWithDeviceWhite_alpha_(1.0, 0.6).set()
+
+        path = NSBezierPath.bezierPath()
+        path.moveToPoint_(NSPoint(0.5, 0.5))
+        path.relativeLineToPoint_(NSPoint(bounds.size.width, 0))
+        path.setLineWidth_(2)
+        path.stroke()
+
+        path = NSBezierPath.bezierPath()
+        path.moveToPoint_(NSPoint(0.5, bounds.size.height-1.5))
+        path.relativeLineToPoint_(NSPoint(bounds.size.width, 0))
+        path.setLineWidth_(2)
+        path.stroke()
         
     def hitTest_(self, point):
         # Our buttons have transparent parts, but we still want mouse clicks
