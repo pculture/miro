@@ -248,8 +248,6 @@ class ListItemView(widgetset.TableView):
         self._set_initial_widths = False
         self._make_column('', style.StateCircleRenderer(), 'state', False)
         self._make_column(_('Title'), style.NameRenderer(), 'name')
-        self._make_column(_('Description'), style.DescriptionRenderer(),
-                'description')
         if display_channel:
             self._make_column(_('Feed'), style.FeedNameRenderer(),
                     'feed-name')
@@ -261,6 +259,8 @@ class ListItemView(widgetset.TableView):
                 'progress')
         self._make_column(_('Time Left'), style.ETARenderer(), 'eta')
         self._make_column(_('Speed'), style.DownloadRateRenderer(), 'rate')
+        self._make_column(_('Description'), style.DescriptionRenderer(),
+                'description')
         self.set_show_headers(True)
         self.set_columns_draggable(True)
         self.set_column_spacing(12)
@@ -293,7 +293,6 @@ class ListItemView(widgetset.TableView):
             width_specs = [
                 (20, 0),    # bump
                 (100, 1),   # title
-                (100, 1),   # description
                 (70, 0.5),  # channel name
                 (80, 0),   # date
                 (60, 0),   # duration
@@ -302,6 +301,7 @@ class ListItemView(widgetset.TableView):
                 (160, 0),   # downloading
                 (80, 0),    # eta
                 (50, 0),    # download rate
+                (100, 1),   # description
             ]
             if not self.display_channel:
                 del width_specs[3]

@@ -801,12 +801,13 @@ class ListViewRenderer(widgetset.CustomCellRenderer):
             layout.set_text_color(context.style.text_color)
         textbox = layout.textbox(self.text)
         textbox.set_wrap_style('char')
-        text_width = textbox.get_size()[0]
+        text_size = textbox.get_size()
         if self.right_aligned:
-            x = max(context.width - text_width, 0)
+            x = max(context.width - text_size[0], 0)
         else:
             x = 0
-        textbox.draw(context, x, 0, context.width, context.height)
+        y = (context.height - text_size[1]) / 2.0
+        textbox.draw(context, x, y, text_size[0], text_size[1])
 
     def _setup_render(self):
         """Prepare to render the text.  This method must set the text
@@ -976,11 +977,11 @@ class DownloadingRenderer(ListViewRenderer):
 
     def pack_buttons(self, layout):
         hbox = cellpack.HBox(spacing=6)
-        if self.info.download_info is None:
+        if not self.info.downloaded:
             button = layout.button(_('Download'), self.hotspot=='download')
             button.set_min_width(65)
             hbox.pack(cellpack.Hotspot('download', button))
-        elif self.info.downloaded:
+        else:
             if self.info.expiration_date:
                 button = layout.button(_('Keep'), self.hotspot=='keep')
                 button.set_min_width(65)
