@@ -657,12 +657,16 @@ class HeaderToolbar(widgetset.Background):
 
     def _on_normal_clicked(self, button):
         self.emit('normal-view-clicked')
+
+    def _on_list_clicked(self, button):
+        self.emit('list-view-clicked')
+
+    def switch_to_normal_view(self):
         self._button_hbox_container.show()
         self.normal_button.disable()
         self.list_button.enable()
 
-    def _on_list_clicked(self, button):
-        self.emit('list-view-clicked')
+    def switch_to_list_view(self):
         self._button_hbox_container.hide()
         self.list_button.disable()
         self.normal_button.enable()
@@ -785,20 +789,26 @@ class ItemContainerWidget(widgetset.VBox):
         self.list_view_vbox = widgetset.VBox()
         self.titlebar_vbox = widgetset.VBox()
         self.toolbar = HeaderToolbar()
-        self.toolbar.connect('list-view-clicked', self.on_list_view)
-        self.toolbar.connect('normal-view-clicked', self.on_normal_view)
+        self.toolbar.connect('list-view-clicked', self.switch_to_list_view)
+        self.toolbar.connect('normal-view-clicked',
+                self.switch_to_normal_view)
         self.pack_start(self.titlebar_vbox)
         self.pack_start(self.toolbar)
         self.background = ItemListBackground()
         self.background.add(self.normal_view_vbox)
         self.pack_start(self.background, expand=True)
+        self.in_list_view = False
 
-    def on_list_view(self, toolbar):
-        if self.background.child is not self.list_view_vbox:
+    def switch_to_list_view(self, toolbar=None):
+        if not self.in_list_view:
             self.background.remove()
             self.background.add(self.list_view_vbox)
+            self.toolbar.switch_to_list_view()
+            self.in_list_view = True
 
-    def on_normal_view(self, toolbar):
-        if self.background.child is not self.normal_view_vbox:
+    def switch_to_normal_view(self, toolbar=None):
+        if self.in_list_view:
             self.background.remove()
             self.background.add(self.normal_view_vbox)
+            self.toolbar.switch_to_normal_view()
+            self.in_list_view = False

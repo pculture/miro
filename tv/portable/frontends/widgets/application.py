@@ -92,6 +92,7 @@ class Application:
         messages.TrackGuides().send_to_backend()
         messages.QuerySearchInfo().send_to_backend()
         messages.TrackWatchedFolders().send_to_backend()
+        messages.QueryFrontendState().send_to_backend()
 
         app.item_list_controller_manager = \
                 itemlistcontroller.ItemListControllerManager()
@@ -829,7 +830,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
         # Messages that we need to see before the UI is ready
         self._pre_startup_messages = set([
             'guide-list',
-            'search-info'
+            'search-info',
+            'frontend-state',
         ])
 
     def handle_startup_failure(self, message):
@@ -949,3 +951,32 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
     def handle_search_complete(self, message):
         app.search_manager.handle_search_complete(message)
+
+    def handle_current_frontend_state(self, message):
+        app.list_view_memory = ListViewDisplayStore(message)
+        self._saw_pre_startup_message('frontend-state')
+
+class ListViewDisplayStore(object):
+    """Stores which views were left in list mode by the user."""
+
+    # Maybe this should get its own module, but I'm it seems small enough to
+    # me -- BDK
+
+    def __init__(self, message):
+        self.current_displays = set(message.list_view_displays)
+
+    def _key(self, type, id):
+        return '%s:%s' % (type, id)
+
+    def query(self, type, id):
+        return self._key(type, id) in self.current_displays
+
+    def add(self, type, id):
+        self.current_displays.add(self._key(type, id))
+        m = messages.SaveFrontendState(list(self.current_displays))
+        m.send_to_backend()
+
+    def remove(self, type, id):
+        self.current_displays.discard(self._key(type, id))
+        m = messages.SaveFrontendState(list(self.current_displays))
+        m.send_to_backend()

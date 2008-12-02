@@ -38,6 +38,8 @@ import types
 from miro import config
 from miro import prefs
 
+NO_CHANGES = set() # looks nicer as a return value
+
 class DatabaseTooNewError(Exception):
     """Error that we raise when we see a database that is newer than the
     version that we can update too.
@@ -992,6 +994,12 @@ def upgrade68(objectList):
             o.savedData['section'] = u'video'
             changed.add(o)
     return changed
+
+def upgrade69(objectList):
+    """
+    Added the WidgetsFrontendState
+    """
+    return NO_CHANGES
 
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """

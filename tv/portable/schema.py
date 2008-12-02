@@ -48,6 +48,7 @@ import time
 from types import NoneType
 from fasttypes import LinkedList
 from miro.plat.utils import FilenameType
+from miro.frontendstate import WidgetsFrontendState
 
 class ValidationError(Exception):
     """Error thrown when we try to save invalid data."""
@@ -507,7 +508,14 @@ class ThemeHistorySchema(DDBObjectSchema):
         ('pastThemes', SchemaList(SchemaString(noneOk=True), noneOk=False)),
     ]
 
-VERSION = 68
+class WidgetsFrontendStateSchema(DDBObjectSchema):
+    klass = WidgetsFrontendState
+    classString = 'widgets-frontend-state'
+    fields = DDBObjectSchema.fields + [
+        ('list_view_displays', SchemaList(SchemaBinary())),
+    ]
+
+VERSION = 69
 objectSchemas = [
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,
@@ -515,5 +523,5 @@ objectSchemas = [
     SearchDownloadsFeedImplSchema, RemoteDownloaderSchema,
     HTTPAuthPasswordSchema, ChannelGuideSchema, ManualFeedImplSchema, SingleFeedImplSchema,
     PlaylistSchema, ChannelFolderSchema, PlaylistFolderSchema,
-    TabOrderSchema, ThemeHistorySchema
+    TabOrderSchema, ThemeHistorySchema, WidgetsFrontendStateSchema
 ]

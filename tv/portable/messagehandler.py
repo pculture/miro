@@ -36,6 +36,7 @@ from miro import database
 from miro import eventloop
 from miro import feed
 from miro import filters
+from miro.frontendstate import WidgetsFrontendState
 from miro import guide
 from miro import httpclient
 from miro import indexes
@@ -1220,3 +1221,22 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_report_crash(self, message):
         app.controller.sendBugReport(message.report, message.text, message.send_report)
+
+    def handle_save_frontend_state(self, message):
+        view = app.db.filterWithIndex(indexes.objectsByClass,
+                WidgetsFrontendState)
+        try:
+            state = getSingletonDDBObject(view)
+        except LookupError:
+            state = WidgetsFrontendState()
+        state.list_view_displays = message.list_view_displays
+        state.signalChange()
+
+    def handle_query_frontend_state(self, message):
+        view = app.db.filterWithIndex(indexes.objectsByClass,
+                WidgetsFrontendState)
+        try:
+            state = getSingletonDDBObject(view)
+        except LookupError:
+            state = WidgetsFrontendState()
+        messages.CurrentFrontendState(state.list_view_displays).send_to_frontend()

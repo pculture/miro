@@ -634,6 +634,14 @@ class ReportCrash(BackendMessage):
         self.text = text
         self.send_report = send_report
 
+class SaveFrontendState(BackendMessage):
+    """Save data for the frontend."""
+    def __init__(self, list_view_displays):
+        self.list_view_displays = list_view_displays
+
+class QueryFrontendState(BackendMessage):
+    """Ask for a CurrentFrontendState message to be sent back."""
+
 # Frontend Messages
 
 class StartupSuccess(FrontendMessage):
@@ -1117,3 +1125,8 @@ class SearchComplete(FrontendMessage):
         self.engine = engine
         self.query = query
         self.result_count = result_count
+
+class CurrentFrontendState(FrontendMessage):
+    """Returns the latest data saved with SaveFrontendState."""
+    def __init__(self, list_view_displays):
+        self.list_view_displays = list_view_displays

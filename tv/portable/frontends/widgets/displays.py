@@ -220,6 +220,10 @@ class ItemListDisplay(TabDisplay):
         tab = selected_tabs[0]
         self.controller = self.make_controller(tab)
         self.widget = self.controller.widget
+        if app.list_view_memory.query(type, tab.id):
+            self.widget.switch_to_list_view()
+        self.type = type
+        self.id = tab.id
 
     def on_selected(self):
         app.item_list_controller_manager.controller_created(self.controller)
@@ -237,6 +241,10 @@ class ItemListDisplay(TabDisplay):
     def cleanup(self):
         self.controller.stop_tracking()
         app.item_list_controller_manager.controller_destroyed(self.controller)
+        if self.widget.in_list_view:
+            app.list_view_memory.add(self.type, self.id)
+        else:
+            app.list_view_memory.remove(self.type, self.id)
 
     def make_controller(self, tab):
         raise NotImplementedError()
