@@ -7,20 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-07 16:29-0500\n"
-"PO-Revision-Date: 2008-03-09 11:28+0000\n"
-"Last-Translator: Vassilis Skoullis <Unknown>\n"
+"POT-Creation-Date: 2008-11-21 13:21-0500\n"
+"PO-Revision-Date: 2008-12-02 17:09+0000\n"
+"Last-Translator: j0hn <j0hn_07_@hotmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-11-21 18:08+0000\n"
+"X-Launchpad-Export-Date: 2008-12-03 16:22+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:4
 msgid "OK"
-msgstr "OK"
+msgstr "Εντάξει"
 
 #: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:6
 #: ../../portable/frontends/widgets/firsttimedialog.py:273
@@ -29,7 +29,7 @@ msgid "Cancel"
 msgstr "Ακύρωση"
 
 #: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:8
-#: ../../portable/frontends/widgets/prefpanel.py:612
+#: ../../portable/frontends/widgets/prefpanel.py:618
 msgid "Channels"
 msgstr "Κανάλια"
 
@@ -60,11 +60,11 @@ msgstr[1] ""
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
 msgid "Enable tray icon"
-msgstr ""
+msgstr "Ενεργοποίηση ελαχιστοποίησης του Miro στην μπάρα εργαλείων"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:42
 msgid "When I click the red close button:"
-msgstr ""
+msgstr "Όταν πατήσω πάνω στο κόκκινο κουμπί για τον τερματισμό του Miro:"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:45
 msgid "Close to tray so that downloads can continue."
@@ -72,13 +72,13 @@ msgstr "Ελαχιστοποίηση στην μπάρα εργαλείων ώσ
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
 msgid "Quit Miro completely."
+msgstr "Πλήρη έξοδο από το Miro"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:109
+msgid "Close to tray?"
 msgstr ""
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:94
-msgid "Close to tray?"
-msgstr "Ελαχιστοποίηση στην μπάρα εργαλείων;"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:95
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:110
 msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
@@ -87,45 +87,48 @@ msgstr ""
 "ελαχιστοποιείται στην μπάρα εργαλείων ή να τερματίζεται; Μπορείτε να "
 "αλλάξετε αυτή την ρύθμιση αργότερα στις Επιλογές."
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:144
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:160
 msgid "Error Bombing Item"
 msgstr "Σφάλμα Αντικειμένου Bombing"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:146
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:162
 msgid "Error Recommending Item"
 msgstr "Σφάλμα συνιστώμενου αντικειμένου"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:148
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:164
 msgid "Error Opening Website"
 msgstr "Σφάλμα στο άνοιγμα ιστοσελίδας"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:153
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:169
 #, python-format
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr ""
+"Υπήρξε ένα πρόβλημα ανοίγοντας το %(url)s.Παρακαλώ ξαναδοκιμάστε σε λίγα "
+"δευτερόλεπτα"
 
-#: ../../platform/windows-xul/plat/flash.py:97
-#, python-format
-msgid "Restart %(appname)s?"
-msgstr ""
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
+msgid "Install Adobe Flash?"
+msgstr "Θέλετε να εγκαταστήσετε το Adobe Flash;"
 
-#: ../../platform/windows-xul/plat/flash.py:99
-#, python-format
-msgid ""
-"To enable the Flash plugin, %(appname)s needs to be restarted.  Click Yes to "
-"shut %(appname)s down, or No to do it later."
-msgstr ""
-
-#: ../../platform/windows-xul/plat/flash.py:125
-msgid "Install Flash?"
-msgstr ""
-
-#: ../../platform/windows-xul/plat/flash.py:127
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
 #, python-format
 msgid ""
-"For the best %(appname)s experience, you should install Adobe Flash.  Do "
-"this now?"
+"For the best %(appname)s experience, we suggest you install Adobe Flash.  "
+"Would you like to do this now?"
+msgstr ""
+
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
+msgid "Install Adobe Flash"
+msgstr ""
+
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
+msgid ""
+"Your browser will load the web-site where you can download and install Adobe "
+"Flash.\n"
+"\n"
+"You should quit Miro now and start it up again after Adobe Flash has been "
+"installed."
 msgstr ""
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
@@ -146,90 +149,134 @@ msgstr ""
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:80
 msgid "None"
-msgstr ""
+msgstr "Κανένα"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:86
 msgid "Use this for video when playing audio:"
 msgstr ""
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
-msgid "Services"
-msgstr "Υπηρεσίες"
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:116
+#: ../../portable/frontends/widgets/itemcontextmenu.py:137
+msgid "Share"
+msgstr "Διαμοιραστείτε"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:169
-msgid "Hide Miro"
-msgstr "Απόκρυψη του Miro"
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:120
+#: ../../portable/frontends/widgets/style.py:305
+#: ../../portable/frontends/widgets/style.py:763
+#: ../../portable/frontends/widgets/itemcontextmenu.py:110
+#: ../../portable/frontends/widgets/itemcontextmenu.py:203
+#: ../../portable/dialogs.py:105
+msgid "Keep"
+msgstr "Διατήρηση"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:170
-msgid "Hide Others"
-msgstr "Απόκρυψη άλλων"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:171
-msgid "Show All"
-msgstr "Εμφάνιση όλων"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:176
-msgid "Preferences..."
-msgstr "Προτιμήσεις..."
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
-msgid "Quit Miro"
-msgstr "'Εξοδος απο το Miro"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
-msgid "Close Window"
-msgstr "Κλείσιμο Παραθύρου"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:186
-msgid "Cut"
-msgstr "Αποκοπή"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:187
-msgid "Copy"
-msgstr "Αντιγραφή"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:188
-msgid "Paste"
-msgstr "Επικόλληση"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:189
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:124
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:213
 #: ../../portable/frontends/widgets/style.py:311
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
 #: ../../portable/dialogs.py:106
 msgid "Delete"
 msgstr "Διαγραφή"
 
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:128
+msgid "Add to Library"
+msgstr ""
+
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:191
+msgid "Services"
+msgstr "Υπηρεσίες"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:193
+msgid "Hide Miro"
+msgstr "Απόκρυψη του Miro"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:194
+msgid "Hide Others"
+msgstr "Απόκρυψη άλλων"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:195
+msgid "Show All"
+msgstr "Εμφάνιση όλων"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:200
+msgid "Preferences..."
+msgstr "Προτιμήσεις..."
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:202
+msgid "Quit Miro"
+msgstr "'Εξοδος απο το Miro"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:205
+msgid "Close Window"
+msgstr "Κλείσιμο Παραθύρου"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:210
+msgid "Cut"
+msgstr "Αποκοπή"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:211
+msgid "Copy"
+msgstr "Αντιγραφή"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:212
+msgid "Paste"
+msgstr "Επικόλληση"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:215
 msgid "Select All"
 msgstr "Επιλογή Όλων"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:193
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:217
 msgid "Edit"
 msgstr "Επεξεργασία"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:198
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:222
+msgid "Present Half Size"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:223
+msgid "Present Actual Size"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:224
+msgid "Present Double Size"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:226
+msgid "Present Video"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:233
 msgid "Zoom"
 msgstr "Μεγέθυνση"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:199
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:234
 msgid "Minimize"
 msgstr "Ελαχιστοποίηση"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:201
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:236
 msgid "Main Window"
 msgstr "Κύριο Παραθυρο"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:203
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:238
 msgid "Bring All to Front"
-msgstr ""
+msgstr "Μεταφορά Όλων Εμπρός"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:205
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:240
 msgid "Window"
 msgstr "Παράθυρο"
 
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:210
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:245
 msgid "Miro Help"
 msgstr "Βοήθεια για το  Miro"
+
+#: ../../platform/osx/plat/frontends/widgets/application.py:140
+msgid "Download Completed"
+msgstr "Το κατέβασμα ολοκληρώθηκε"
+
+#: ../../platform/osx/plat/frontends/widgets/application.py:141
+#, python-format
+msgid "Download of video '%s' is finished."
+msgstr "Το κατέβασμα του βίντεο '%s' έχει τελειώσει."
 
 #: ../../portable/theme.py:124
 msgid "Custom Channels"
@@ -243,7 +290,7 @@ msgstr ""
 
 #: ../../portable/theme.py:148
 msgid "Sample Channels"
-msgstr ""
+msgstr "Δείγμα Καναλιών"
 
 #: ../../portable/theme.py:168
 msgid "Example Playlist"
@@ -273,27 +320,27 @@ msgstr ""
 msgid "%(size)sB"
 msgstr ""
 
-#: ../../portable/opml.py:169
+#: ../../portable/opml.py:180
 msgid "OPML Import failed"
 msgstr "Η Εισαγωγή OPML απέτυχε"
 
-#: ../../portable/opml.py:170
+#: ../../portable/opml.py:181
 msgid ""
 "The selected OPML file appears to be invalid.  Import was interrupted."
 msgstr ""
 
-#: ../../portable/opml.py:175
+#: ../../portable/opml.py:186
 msgid "OPML Import summary"
 msgstr ""
 
-#: ../../portable/opml.py:176
+#: ../../portable/opml.py:187
 #, python-format
 msgid "Successfully imported %(count)d feed."
 msgid_plural "Successfully imported %(count)d feeds."
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/opml.py:182
+#: ../../portable/opml.py:193
 #, python-format
 msgid "Skipped %(count)d feed already present."
 msgid_plural "Skipped %(count)d feeds already present."
@@ -327,17 +374,17 @@ msgid ""
 "Recent changes may be lost."
 msgstr ""
 
-#: ../../portable/messagehandler.py:1078
+#: ../../portable/messagehandler.py:1180
 msgid "Subscribed to new channel:"
-msgstr ""
+msgstr "Εγγεγραμμένους στο νέο κανάλι:"
 
-#: ../../portable/messagehandler.py:1081
+#: ../../portable/messagehandler.py:1183
 msgid "Subscribed to new channels:"
-msgstr ""
+msgstr "Εγγεγραμμένοι στα νέα κανάλια:"
 
 #: ../../portable/startup.py:91
 msgid "Unknown Error"
-msgstr ""
+msgstr "Άγνωστο Σφάλμα"
 
 #: ../../portable/startup.py:93
 #, python-format
@@ -388,15 +435,15 @@ msgstr[1] ""
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Λήγει σε %(count)d ώρα"
+msgstr[1] "Λήγει σε %(count)d ώρες"
 
 #: ../../portable/displaytext.py:94
 #, python-format
 msgid "Expires in %(count)d minute"
 msgid_plural "Expires in %(count)d minutes"
 msgstr[0] ""
-msgstr[1] ""
+msgstr[1] "Λήγει σε %(count)d λεπτά"
 
 #: ../../portable/downloader.py:232
 msgid "activity"
@@ -415,63 +462,64 @@ msgstr ""
 msgid "starting up"
 msgstr "εκκίνηση"
 
-#: ../../portable/dl_daemon/download.py:492
+#: ../../portable/dl_daemon/download.py:496
 msgid "Error"
 msgstr "Σφάλμα"
 
-#: ../../portable/dl_daemon/download.py:581
+#: ../../portable/dl_daemon/download.py:585
 #, python-format
 msgid "Could not write to %(filename)s"
 msgstr ""
 
-#: ../../portable/dl_daemon/download.py:606
-#: ../../portable/dl_daemon/download.py:817
+#: ../../portable/dl_daemon/download.py:610
+#: ../../portable/dl_daemon/download.py:821
 msgid "Not enough disk space"
 msgstr "Δεν υπάρχει αρκετός χώρος στο δίσκο"
 
-#: ../../portable/dl_daemon/download.py:607
-#: ../../portable/dl_daemon/download.py:818
+#: ../../portable/dl_daemon/download.py:611
+#: ../../portable/dl_daemon/download.py:822
 #, python-format
 msgid "%(amount)s MB required to store this video"
-msgstr ""
+msgstr "%(amount)s MB χρείαζοντε για να αποθηκεύσετε αυτό το βίντεο"
 
-#: ../../portable/dl_daemon/download.py:622
+#: ../../portable/dl_daemon/download.py:626
 #, python-format
 msgid "Couldn't open %(filename)s for writing"
 msgstr ""
 
-#: ../../portable/dl_daemon/download.py:829
+#: ../../portable/dl_daemon/download.py:833
 msgid "BitTorrent failure"
 msgstr "Αποτυχία BitTorrent"
 
-#: ../../portable/dl_daemon/download.py:830
+#: ../../portable/dl_daemon/download.py:834
 msgid "BitTorrent failed to startup"
 msgstr "Αποτυχημένη εκκίνηση του BitTorrent"
 
-#: ../../portable/dl_daemon/download.py:1014
+#: ../../portable/dl_daemon/download.py:1018
 msgid "Corrupt Torrent"
 msgstr "Κατεστραμμένο Torrent"
 
-#: ../../portable/dl_daemon/download.py:1015
+#: ../../portable/dl_daemon/download.py:1019
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
-msgstr ""
+msgstr "Το αρχείο torrent στο %(url)s δέν ήταν έκυρο"
 
-#: ../../portable/dl_daemon/download.py:1040
+#: ../../portable/dl_daemon/download.py:1044
 msgid "Torrent file deleted"
 msgstr "Το αρχείο torrent διαγράφηκε"
 
-#: ../../portable/dl_daemon/download.py:1041
+#: ../../portable/dl_daemon/download.py:1045
 msgid "The torrent file for this item was deleted outside of Miro."
 msgstr ""
+"Το αρχείο torrent για αυτό το αντικείμενο δε διαγράφηκε έξω απο το Miro."
 
 #: ../../portable/menubar.py:184
 msgid "_Open..."
-msgstr "_Άνοιγμα"
+msgstr "_Άνοιγμα..."
 
 #: ../../portable/menubar.py:185
 msgid "_Download Item..."
-msgstr ""
+msgstr "_Κατέβασε το Αντικείμενο...."
 
 #: ../../portable/menubar.py:186
 msgid "Check _Version"
@@ -483,7 +531,7 @@ msgstr ""
 
 #: ../../portable/menubar.py:189
 msgid "_Remove Items"
-msgstr ""
+msgstr "_Αφαίρεσε το Αντικείμενα"
 
 #: ../../portable/menubar.py:190
 msgid "Re_name Item"
@@ -495,7 +543,7 @@ msgstr ""
 
 #: ../../portable/menubar.py:192
 msgid "Save Items _As..."
-msgstr ""
+msgstr "Αποθήκευση Αντικειμένων _Ως"
 
 #: ../../portable/menubar.py:193
 msgid "Copy Item _URL"
@@ -563,7 +611,7 @@ msgstr "_Διαγραφή φακέλλων καναλιών..."
 
 #: ../../portable/menubar.py:222
 msgid "_Remove Channel Folder..."
-msgstr "_Διαγραφή φακέλλου καναλιού..."
+msgstr "_Διαγραφή φακέλου καναλιού"
 
 #: ../../portable/menubar.py:224
 msgid "_Update Channel"
@@ -590,8 +638,8 @@ msgid "_Send this channel to a friend"
 msgstr "_Στείλτε αυτό το κανάλι σε έναν φίλο"
 
 #: ../../portable/menubar.py:232
-msgid "Copy Channel _Link"
-msgstr "Αντι_γραφή συνδέσμου καναλιού"
+msgid "Copy Channel URL"
+msgstr "Αντιγραφή διεύθυνσης δικτύου (url)  του καναλιού"
 
 #: ../../portable/menubar.py:236
 msgid "New _Playlist..."
@@ -623,15 +671,15 @@ msgstr "_Αφαίρεσε τον Φάκελο του Playlist"
 
 #: ../../portable/menubar.py:254 ../../portable/menubar.py:255
 msgid "_Play"
-msgstr ""
+msgstr "_Αναπαραγωγή"
 
 #: ../../portable/menubar.py:256
 msgid "_Pause"
-msgstr ""
+msgstr "_Παύση"
 
 #: ../../portable/menubar.py:257
 msgid "_Stop"
-msgstr ""
+msgstr "_Διακοπή"
 
 #: ../../portable/menubar.py:259
 msgid "_Next Video"
@@ -643,23 +691,23 @@ msgstr "_Προηγούμενο βίντεο"
 
 #: ../../portable/menubar.py:262
 msgid "Skip _Forward"
-msgstr ""
+msgstr "Παράκαμψη προς τα _Μπροστά"
 
 #: ../../portable/menubar.py:263
 msgid "Skip _Back"
-msgstr ""
+msgstr "Παράκαμψη προς τα _Πίσω"
 
 #: ../../portable/menubar.py:265
 msgid "Volume _Up"
-msgstr ""
+msgstr "_Αύξυση έντασης"
 
 #: ../../portable/menubar.py:266
 msgid "Volume _Down"
-msgstr "_Μείωση έντασης"
+msgstr "_Μείωση Έντασης"
 
 #: ../../portable/menubar.py:268
 msgid "_Fullscreen"
-msgstr ""
+msgstr "_Πλήρης οθόνη"
 
 #: ../../portable/menubar.py:269
 msgid "_Toggle Detached/Attached"
@@ -680,7 +728,7 @@ msgstr "_Βοήθεια"
 #: ../../portable/menubar.py:277
 #: ../../portable/frontends/widgets/diagnostics.py:99
 msgid "Diagnostics"
-msgstr ""
+msgstr "Διαγνωστικά"
 
 #: ../../portable/menubar.py:278
 msgid "Report a _Bug"
@@ -692,7 +740,7 @@ msgstr ""
 
 #: ../../portable/menubar.py:280
 msgid "_Planet Miro"
-msgstr ""
+msgstr "_Πλανήτης Miro"
 
 #: ../../portable/menubar.py:285
 msgid "_Video"
@@ -714,37 +762,6 @@ msgstr "_Λίστες"
 msgid "P_layback"
 msgstr "Α_ναπαραγωγή"
 
-#: ../../portable/menubar.py:301
-#, python-format
-msgid "Play Unwatched (%(unwatched)d)"
-msgstr ""
-
-#: ../../portable/menubar.py:302
-#, python-format
-msgid "Pause All Downloads (%(downloading)d)"
-msgstr ""
-
-#: ../../portable/menubar.py:303
-#, python-format
-msgid "Resume All Downloads (%(paused)d)"
-msgstr ""
-
-#: ../../portable/menubar.py:305
-msgid "Options..."
-msgstr "Επιλογές..."
-
-#: ../../portable/menubar.py:307
-msgid "Hide Window"
-msgstr "Απόκρυψη Παραθύρου"
-
-#: ../../portable/menubar.py:307
-msgid "Show Window"
-msgstr "Εμφάνιση Παραθύρου"
-
-#: ../../portable/menubar.py:308 ../../portable/dialogs.py:89
-msgid "Quit"
-msgstr "'Εξοδος"
-
 #: ../../portable/frontends/widgets/crashdialog.py:46
 #: ../../portable/httpclient.py:158
 msgid "Internal Error"
@@ -764,493 +781,520 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/crashdialog.py:64
 msgid "Describe what you were doing when you got this error:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/style.py:305
-#: ../../portable/frontends/widgets/style.py:779
-#: ../../portable/frontends/widgets/itemcontextmenu.py:106
-#: ../../portable/frontends/widgets/itemcontextmenu.py:199
-#: ../../portable/dialogs.py:105
-msgid "Keep"
-msgstr "Διατήρηση"
+msgstr "Περίγραψε τι έκενες όταν εμφανίστηκε το παρακάτω σφάλμα:"
 
 #: ../../portable/frontends/widgets/style.py:309
-#: ../../portable/frontends/widgets/prefpanel.py:473
-#: ../../portable/frontends/widgets/tablist.py:460
-#: ../../portable/frontends/widgets/tablist.py:469
-#: ../../portable/frontends/widgets/tablist.py:475
-#: ../../portable/frontends/widgets/tablist.py:500
-#: ../../portable/frontends/widgets/tablist.py:506
-#: ../../portable/frontends/widgets/tablist.py:511
+#: ../../portable/frontends/widgets/prefpanel.py:479
+#: ../../portable/frontends/widgets/tablist.py:517
+#: ../../portable/frontends/widgets/tablist.py:530
+#: ../../portable/frontends/widgets/tablist.py:536
+#: ../../portable/frontends/widgets/tablist.py:570
+#: ../../portable/frontends/widgets/tablist.py:576
+#: ../../portable/frontends/widgets/tablist.py:581
 #: ../../portable/dialogs.py:107
 msgid "Remove"
 msgstr "Αφαίρεση"
 
 #: ../../portable/frontends/widgets/style.py:317
-#: ../../portable/frontends/widgets/itemcontextmenu.py:110
+#: ../../portable/frontends/widgets/itemcontextmenu.py:114
 msgid "Stop seeding"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:391
+#: ../../portable/frontends/widgets/style.py:385
 msgid "Date:"
-msgstr ""
+msgstr "Ημερομηνία:"
 
-#: ../../portable/frontends/widgets/style.py:392
+#: ../../portable/frontends/widgets/style.py:386
 msgid "Length:"
-msgstr ""
+msgstr "Διάρκεια:"
 
-#: ../../portable/frontends/widgets/style.py:393
+#: ../../portable/frontends/widgets/style.py:387
 msgid "Size:"
-msgstr ""
+msgstr "Μέγεθος:"
 
-#: ../../portable/frontends/widgets/style.py:396
+#: ../../portable/frontends/widgets/style.py:390
 msgid "Channel:"
 msgstr "Κανάλι:"
 
-#: ../../portable/frontends/widgets/style.py:410
+#: ../../portable/frontends/widgets/style.py:404
 msgid "Show Details"
-msgstr ""
+msgstr "Εμφάνιση λεπτομερειών"
 
-#: ../../portable/frontends/widgets/style.py:414
+#: ../../portable/frontends/widgets/style.py:408
 msgid "Hide Details"
-msgstr ""
+msgstr "Απόκρυψη λεπτομερειών"
 
-#: ../../portable/frontends/widgets/style.py:428
+#: ../../portable/frontends/widgets/style.py:422
 msgid "Web page"
-msgstr ""
+msgstr "Ιστοσελίδα"
 
-#: ../../portable/frontends/widgets/style.py:428
+#: ../../portable/frontends/widgets/style.py:422
 msgid "permalink"
-msgstr ""
+msgstr "μόνιμη υπερσύνδεση"
 
-#: ../../portable/frontends/widgets/style.py:430
+#: ../../portable/frontends/widgets/style.py:424
 msgid "Comments"
-msgstr ""
+msgstr "Σχόλια"
 
-#: ../../portable/frontends/widgets/style.py:430
+#: ../../portable/frontends/widgets/style.py:424
 msgid "commentslink"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:433
+#: ../../portable/frontends/widgets/style.py:427
 msgid "File link"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:433
+#: ../../portable/frontends/widgets/style.py:427
 msgid "direct link to file"
 msgstr "απευθείας σύνδεσμος στο αρχείο"
 
-#: ../../portable/frontends/widgets/style.py:434
+#: ../../portable/frontends/widgets/style.py:428
 msgid "File type"
-msgstr ""
+msgstr "Τύπος αρχείου"
 
-#: ../../portable/frontends/widgets/style.py:437
-#: ../../portable/frontends/widgets/style.py:439
+#: ../../portable/frontends/widgets/style.py:431
+#: ../../portable/frontends/widgets/style.py:433
 msgid "License"
-msgstr ""
+msgstr "Άδεια χρήσης"
 
-#: ../../portable/frontends/widgets/style.py:439
+#: ../../portable/frontends/widgets/style.py:433
 msgid "see permalink"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:441
+#: ../../portable/frontends/widgets/style.py:435
 msgid "Filename"
-msgstr ""
+msgstr "Όνομα Αρχείου"
 
-#: ../../portable/frontends/widgets/style.py:444
+#: ../../portable/frontends/widgets/style.py:438
 msgid "Local directory"
-msgstr ""
+msgstr "Local directory"
 
-#: ../../portable/frontends/widgets/style.py:444
-#: ../../portable/frontends/widgets/style.py:447
+#: ../../portable/frontends/widgets/style.py:438
+#: ../../portable/frontends/widgets/style.py:441
 msgid "show"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:447
+#: ../../portable/frontends/widgets/style.py:441
 msgid "Local file"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:456
+#: ../../portable/frontends/widgets/style.py:450
 msgid "Leechers"
-msgstr ""
+msgstr "Χρήστες παράσιτα"
 
-#: ../../portable/frontends/widgets/style.py:458
+#: ../../portable/frontends/widgets/style.py:452
 msgid "Seeders"
-msgstr ""
+msgstr "Διαμοιραστές"
 
-#: ../../portable/frontends/widgets/style.py:460
+#: ../../portable/frontends/widgets/style.py:454
 msgid "Up Rate"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:462
+#: ../../portable/frontends/widgets/style.py:456
 msgid "Down Rate"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:464
+#: ../../portable/frontends/widgets/style.py:458
 msgid "Up Total"
 msgstr "Πάνω σύνολο"
 
-#: ../../portable/frontends/widgets/style.py:465
+#: ../../portable/frontends/widgets/style.py:459
 msgid "Down Total"
 msgstr "Κάτω σύνολο"
 
-#: ../../portable/frontends/widgets/style.py:477
+#: ../../portable/frontends/widgets/style.py:471
 msgid "Unwatched"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:494 ../../portable/item.py:618
+#: ../../portable/frontends/widgets/style.py:488 ../../portable/item.py:618
 msgid "queued for download"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:499
+#: ../../portable/frontends/widgets/style.py:493
 msgid "paused"
-msgstr ""
+msgstr "σε παύση"
 
-#: ../../portable/frontends/widgets/style.py:544
+#: ../../portable/frontends/widgets/style.py:538
 msgid "Download Torrent"
-msgstr ""
+msgstr "Λήψη torrent"
 
-#: ../../portable/frontends/widgets/style.py:546
-#: ../../portable/frontends/widgets/style.py:609
-#: ../../portable/frontends/widgets/itemcontextmenu.py:128
-#: ../../portable/frontends/widgets/itemcontextmenu.py:212
+#: ../../portable/frontends/widgets/style.py:540
+#: ../../portable/frontends/widgets/style.py:603
+#: ../../portable/frontends/widgets/itemcontextmenu.py:132
+#: ../../portable/frontends/widgets/itemcontextmenu.py:216
 #: ../../portable/dialogs.py:95
 msgid "Download"
 msgstr "Λήψη αρχείου"
 
-#: ../../portable/frontends/widgets/style.py:566
+#: ../../portable/frontends/widgets/style.py:560
 msgid "queued for autodownload"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:603
-#: ../../portable/frontends/widgets/itemcontextmenu.py:121
-#: ../../portable/frontends/widgets/itemcontextmenu.py:229
+#: ../../portable/frontends/widgets/style.py:597
+#: ../../portable/frontends/widgets/itemcontextmenu.py:125
+#: ../../portable/frontends/widgets/itemcontextmenu.py:233
 msgid "Pause Download"
-msgstr "Παύση Μεταφόρτωσης"
+msgstr "Παύση λήψης"
 
-#: ../../portable/frontends/widgets/style.py:606
-#: ../../portable/frontends/widgets/itemcontextmenu.py:124
+#: ../../portable/frontends/widgets/style.py:600
+#: ../../portable/frontends/widgets/itemcontextmenu.py:128
 msgid "Resume Download"
-msgstr ""
+msgstr "Συνέχιση λήψης"
 
-#: ../../portable/frontends/widgets/style.py:782
+#: ../../portable/frontends/widgets/style.py:766
 msgid "Remove from playlist"
-msgstr ""
+msgstr "Διαγραφή απο την Λίστα"
 
-#: ../../portable/frontends/widgets/prefpanel.py:266
+#: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
-msgstr ""
+msgstr "Να ανοίγει αυτόματα το Miro με την εκκίνηση του υπολογιστή."
 
-#: ../../portable/frontends/widgets/prefpanel.py:270
+#: ../../portable/frontends/widgets/prefpanel.py:271
 msgid "Warn me if I attempt to quit with downloads in progress."
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:280
-msgid "Every day"
-msgstr ""
-
 #: ../../portable/frontends/widgets/prefpanel.py:281
+msgid "Every day"
+msgstr "Κάθε μέρα"
+
+#: ../../portable/frontends/widgets/prefpanel.py:282
 msgid "Every hour"
 msgstr "Κάθε ώρα"
 
-#: ../../portable/frontends/widgets/prefpanel.py:282
+#: ../../portable/frontends/widgets/prefpanel.py:283
 msgid "Every 30 minutes"
 msgstr "Κάθε 30 λεπτά"
 
-#: ../../portable/frontends/widgets/prefpanel.py:283
+#: ../../portable/frontends/widgets/prefpanel.py:284
 msgid "Manually"
 msgstr "Χειροκίνητα"
 
-#: ../../portable/frontends/widgets/prefpanel.py:288
+#: ../../portable/frontends/widgets/prefpanel.py:289
 #: ../../portable/frontends/widgets/statictabs.py:72
 msgid "New"
 msgstr "Νέο"
 
-#: ../../portable/frontends/widgets/prefpanel.py:289
+#: ../../portable/frontends/widgets/prefpanel.py:290
 msgid "All"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:290
+#: ../../portable/frontends/widgets/prefpanel.py:291
 msgid "Off"
-msgstr ""
+msgstr "Ανενεργό"
 
-#: ../../portable/frontends/widgets/prefpanel.py:296
+#: ../../portable/frontends/widgets/prefpanel.py:297
 msgid "0"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:297
+#: ../../portable/frontends/widgets/prefpanel.py:298
 msgid "20"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:298
+#: ../../portable/frontends/widgets/prefpanel.py:299
 msgid "50"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:299
+#: ../../portable/frontends/widgets/prefpanel.py:300
 msgid "100"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:300
+#: ../../portable/frontends/widgets/prefpanel.py:301
 msgid "1000"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:306
+#: ../../portable/frontends/widgets/prefpanel.py:307
 msgid "Default settings for new channels:"
-msgstr ""
+msgstr "(Προεπιλεγμένες ρυθμίσεις για νέα κανάλια)"
 
-#: ../../portable/frontends/widgets/prefpanel.py:310
+#: ../../portable/frontends/widgets/prefpanel.py:311
 msgid "(These can be changed using the channel's settings button)"
 msgstr ""
+"(Αυτό μπορεί να αλλάξει χρησιμοποιώντας το κουμπί ρυμίσεων του καναλιού)"
 
-#: ../../portable/frontends/widgets/prefpanel.py:314
+#: ../../portable/frontends/widgets/prefpanel.py:315
 msgid "Check for new content:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:319
+#: ../../portable/frontends/widgets/prefpanel.py:320
 msgid "Auto download setting:"
-msgstr ""
+msgstr "Ρύθμιση αυτόματης λήψης:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:325
+#: ../../portable/frontends/widgets/prefpanel.py:326
 msgid "Remember this many old items:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:326
+#: ../../portable/frontends/widgets/prefpanel.py:327
 msgid "(in addition to the current contents)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:339
+#: ../../portable/frontends/widgets/prefpanel.py:340
 msgid "Maximum number of manual downloads at a time:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:346
+#: ../../portable/frontends/widgets/prefpanel.py:347
 msgid "Maximum number of auto-downloads at a time:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:356
+#: ../../portable/frontends/widgets/prefpanel.py:357
 msgid "Bittorrent:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:359
+#: ../../portable/frontends/widgets/prefpanel.py:360
 msgid "Limit upstream bandwidth to:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:368
-#: ../../portable/frontends/widgets/prefpanel.py:379
+#: ../../portable/frontends/widgets/prefpanel.py:369
+#: ../../portable/frontends/widgets/prefpanel.py:380
 msgid "KB/s"
-msgstr ""
+msgstr "KB/δευτ."
 
-#: ../../portable/frontends/widgets/prefpanel.py:371
+#: ../../portable/frontends/widgets/prefpanel.py:372
 msgid "Limit downstream bandwidth to:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:382
+#: ../../portable/frontends/widgets/prefpanel.py:383
 msgid "Limit torrent connections to:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:399
+#: ../../portable/frontends/widgets/prefpanel.py:400
 msgid "Starting port:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:403
+#: ../../portable/frontends/widgets/prefpanel.py:404
 msgid "Ending port:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:409
+#: ../../portable/frontends/widgets/prefpanel.py:410
 msgid "Automatically forward ports.  (UPNP)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:413
+#: ../../portable/frontends/widgets/prefpanel.py:414
 msgid "Ignore unencrypted connections."
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:417
+#: ../../portable/frontends/widgets/prefpanel.py:418
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:434
+#: ../../portable/frontends/widgets/prefpanel.py:435
 #: ../../portable/frontends/widgets/firsttimedialog.py:184
 msgid "Change"
-msgstr "Αλλαγή"
+msgstr "Τροποποίηση"
 
-#: ../../portable/frontends/widgets/prefpanel.py:438
+#: ../../portable/frontends/widgets/prefpanel.py:439
 msgid "Choose Movies Directory"
-msgstr ""
+msgstr "Διαλέξτε Κατάλογο Ταινιών"
 
-#: ../../portable/frontends/widgets/prefpanel.py:451
+#: ../../portable/frontends/widgets/prefpanel.py:452
 msgid "Migrate existing movies?"
 msgstr "Μεταφορά υπαρχουσών ταινιών;"
 
-#: ../../portable/frontends/widgets/prefpanel.py:452
+#: ../../portable/frontends/widgets/prefpanel.py:453
 msgid ""
 "You've selected a new folder to download movies to.  Should Miro migrate "
 "your existing downloads there? (Currently dowloading movies will not be "
 "moved until they finish.)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:471
+#: ../../portable/frontends/widgets/prefpanel.py:477
 #: ../../portable/dialogs.py:103
 msgid "Add"
 msgstr "Προσθήκη"
 
-#: ../../portable/frontends/widgets/prefpanel.py:487
+#: ../../portable/frontends/widgets/prefpanel.py:493
 msgid "No watched folders"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:515
+#: ../../portable/frontends/widgets/prefpanel.py:521
 msgid "Add Watched Folder"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:533
+#: ../../portable/frontends/widgets/prefpanel.py:539
 msgid "Store downloads in this folder:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:540
+#: ../../portable/frontends/widgets/prefpanel.py:546
 msgid "Watch for new videos in these folders and include them in library:"
 msgstr ""
+"Παρακολούθησε για νέα βίντεο μέσα σε αυτούς τους φακέλους και συμπερίλαβέ τα "
+"σην βιβλιοθήκη:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:559
+#: ../../portable/frontends/widgets/prefpanel.py:565
 msgid "Keep at least this much free space on my drive:"
-msgstr ""
+msgstr "Κράτα τουλάχιστον τόσο ελεύθερο χώρο στον δίσκο:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:562
 #: ../../portable/frontends/widgets/prefpanel.py:568
+#: ../../portable/frontends/widgets/prefpanel.py:574
 msgid "GB"
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:571
-#: ../../portable/frontends/widgets/channelsettingspanel.py:98
+#: ../../portable/frontends/widgets/prefpanel.py:577
 msgid "1 day"
 msgstr "1 ημέρα"
 
-#: ../../portable/frontends/widgets/prefpanel.py:572
-#: ../../portable/frontends/widgets/channelsettingspanel.py:99
+#: ../../portable/frontends/widgets/prefpanel.py:578
 msgid "3 days"
 msgstr "3 μέρες"
 
-#: ../../portable/frontends/widgets/prefpanel.py:573
-#: ../../portable/frontends/widgets/channelsettingspanel.py:100
+#: ../../portable/frontends/widgets/prefpanel.py:579
 msgid "6 days"
 msgstr "6 μέρες"
 
-#: ../../portable/frontends/widgets/prefpanel.py:574
-#: ../../portable/frontends/widgets/channelsettingspanel.py:101
+#: ../../portable/frontends/widgets/prefpanel.py:580
 msgid "10 days"
 msgstr "10 μέρες"
 
-#: ../../portable/frontends/widgets/prefpanel.py:575
-#: ../../portable/frontends/widgets/channelsettingspanel.py:102
+#: ../../portable/frontends/widgets/prefpanel.py:581
 msgid "1 month"
 msgstr "1 μήνας"
 
-#: ../../portable/frontends/widgets/prefpanel.py:576
+#: ../../portable/frontends/widgets/prefpanel.py:582
 #: ../../portable/frontends/widgets/channelsettingspanel.py:55
-#: ../../portable/frontends/widgets/channelsettingspanel.py:103
+#: ../../portable/frontends/widgets/channelsettingspanel.py:102
 msgid "never"
 msgstr "ποτέ"
 
-#: ../../portable/frontends/widgets/prefpanel.py:581
+#: ../../portable/frontends/widgets/prefpanel.py:587
 msgid "By default, videos expire after:"
 msgstr "Από προεπιλογή, τα βίντεο λήγουν μετά από:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:590
+#: ../../portable/frontends/widgets/prefpanel.py:596
 msgid "Always play videos in a separate window."
-msgstr ""
+msgstr "Πάντα να παίζεις βίντεο σε ξεχωσριστά παράθυρα."
 
-#: ../../portable/frontends/widgets/prefpanel.py:594
+#: ../../portable/frontends/widgets/prefpanel.py:600
 msgid "Resume playing a video from the point it was last stopped."
 msgstr ""
 
-#: ../../portable/frontends/widgets/prefpanel.py:599
+#: ../../portable/frontends/widgets/prefpanel.py:605
 msgid "Play videos one after another"
 msgstr "Αναπαραγωγή βίντεο διαδοχικά"
 
-#: ../../portable/frontends/widgets/prefpanel.py:600
+#: ../../portable/frontends/widgets/prefpanel.py:606
 msgid "Stop after each video"
-msgstr ""
+msgstr "Διακοπή μετά από κάθε βίντεο"
 
-#: ../../portable/frontends/widgets/prefpanel.py:611
+#: ../../portable/frontends/widgets/prefpanel.py:617
 msgid "General"
 msgstr "Γενικά"
 
-#: ../../portable/frontends/widgets/prefpanel.py:613
-#: ../../portable/frontends/widgets/downloadscontroller.py:75
+#: ../../portable/frontends/widgets/prefpanel.py:619
+#: ../../portable/frontends/widgets/downloadscontroller.py:70
 msgid "Downloads"
 msgstr "Λήψεις"
 
-#: ../../portable/frontends/widgets/prefpanel.py:614
+#: ../../portable/frontends/widgets/prefpanel.py:620
 msgid "Folders"
 msgstr "Φάκελοι"
 
-#: ../../portable/frontends/widgets/prefpanel.py:615
+#: ../../portable/frontends/widgets/prefpanel.py:621
 msgid "Disk space"
-msgstr ""
+msgstr "Χώρος στο δίσκο"
 
-#: ../../portable/frontends/widgets/prefpanel.py:616
+#: ../../portable/frontends/widgets/prefpanel.py:622
 msgid "Playback"
 msgstr "Αναπαραγωγή"
 
-#: ../../portable/frontends/widgets/prefpanel.py:620
+#: ../../portable/frontends/widgets/prefpanel.py:626
 msgid "Preferences"
-msgstr "Επιλογές"
+msgstr "Προτιμήσεις"
 
 #: ../../portable/frontends/widgets/channelsettingspanel.py:58
-#: ../../portable/item.py:444
 #, python-format
-msgid "%(count)d hour"
-msgid_plural "%(count)d hours"
+msgid "%(count)d hour ago"
+msgid_plural "%(count)d hours ago"
 msgstr[0] ""
-msgstr[1] ""
+msgstr[1] "%(count)d ώρες πρίν"
 
 #: ../../portable/frontends/widgets/channelsettingspanel.py:64
-#: ../../portable/item.py:439
 #, python-format
-msgid "%(count)d day"
-msgid_plural "%(count)d days"
+msgid "%(count)d day ago"
+msgid_plural "%(count)d days ago"
 msgstr[0] ""
 msgstr[1] ""
 
 #: ../../portable/frontends/widgets/channelsettingspanel.py:70
 #, python-format
-msgid "%(count)d month"
-msgid_plural "%(count)d months"
+msgid "%(count)d month ago"
+msgid_plural "%(count)d months ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/channelsettingspanel.py:94
-msgid "Videos expire after"
-msgstr "Τα Videos λήγουν μετά τις"
+#: ../../portable/frontends/widgets/channelsettingspanel.py:92
+msgid "Auto-Expire Videos:"
+msgstr "Αυτόματη λήξη Βίντεο:"
 
-#: ../../portable/frontends/widgets/channelsettingspanel.py:96
+#: ../../portable/frontends/widgets/channelsettingspanel.py:95
 #, python-format
-msgid "Default (%(expiration)s)"
+msgid "Watched %(expiration)s (Default)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/channelsettingspanel.py:138
-msgid "Remember this many older items in addition to the current contents"
+#: ../../portable/frontends/widgets/channelsettingspanel.py:97
+msgid "Watched 1 day ago"
+msgstr "Προβλήθηκε μία μέρα πρίν"
+
+#: ../../portable/frontends/widgets/channelsettingspanel.py:98
+msgid "Watched 3 days ago"
+msgstr "Προβλήθηκε τρείς μέρες πρίν"
+
+#: ../../portable/frontends/widgets/channelsettingspanel.py:99
+msgid "Watched 6 days ago"
+msgstr "Προβλήθηκε έξι μέρες πρίν"
+
+#: ../../portable/frontends/widgets/channelsettingspanel.py:100
+msgid "Watched 10 days ago"
+msgstr "Προβλήθηκε δέκα μέρες πρίν"
+
+#: ../../portable/frontends/widgets/channelsettingspanel.py:101
+msgid "Watched 1 month ago"
+msgstr "Προβλήθηκε ένα μήνα πρίν"
+
+#: ../../portable/frontends/widgets/channelsettingspanel.py:137
+msgid "Outdated Feed Items:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/channelsettingspanel.py:140
+#: ../../portable/frontends/widgets/channelsettingspanel.py:139
 #, python-format
-msgid "Default (%(number)s)"
+msgid "Keep %(number)s (Default)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/channelsettingspanel.py:173
-msgid ""
-"Don't Auto Download when more than this many videos are waiting unwatched"
-msgstr ""
+#: ../../portable/frontends/widgets/channelsettingspanel.py:169
+msgid "Remove All"
+msgstr "Αφαίρεση όλων"
 
-#: ../../portable/frontends/widgets/channelsettingspanel.py:212
-msgid "Clear older items now"
-msgstr ""
-
-#: ../../portable/frontends/widgets/channelsettingspanel.py:225
+#: ../../portable/frontends/widgets/channelsettingspanel.py:182
 msgid "Old items have been removed."
 msgstr ""
 
-#: ../../portable/frontends/widgets/channelsettingspanel.py:232
+#: ../../portable/frontends/widgets/channelsettingspanel.py:193
+msgid "Pause Auto-Downloading when this many items are unwatched:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/channelsettingspanel.py:197
+msgid "1 unwateched item"
+msgstr ""
+
+#: ../../portable/frontends/widgets/channelsettingspanel.py:198
+msgid "3 unwatched items"
+msgstr ""
+
+#: ../../portable/frontends/widgets/channelsettingspanel.py:199
+msgid "5 unwatched items"
+msgstr ""
+
+#: ../../portable/frontends/widgets/channelsettingspanel.py:200
+msgid "10 unwatched items"
+msgstr ""
+
+#: ../../portable/frontends/widgets/channelsettingspanel.py:201
+msgid "15 unwatched items"
+msgstr ""
+
+#: ../../portable/frontends/widgets/channelsettingspanel.py:241
 msgid "Channel Settings"
 msgstr "Ρυθμήσεις καναλιού"
 
-#: ../../portable/frontends/widgets/browser.py:99
+#: ../../portable/frontends/widgets/browser.py:90
 msgid "Open in browser"
 msgstr ""
 
@@ -1278,40 +1322,40 @@ msgstr "Αναζήτηση για:"
 msgid "In this:"
 msgstr "Σε αυτό:"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:203
+#: ../../portable/frontends/widgets/itemlistcontroller.py:224
 msgid "Error Revealing File"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:204
+#: ../../portable/frontends/widgets/itemlistcontroller.py:225
 #, python-format
 msgid "The file \"%(filename)s\" was deleted from outside Miro."
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:342
+#: ../../portable/frontends/widgets/itemlistcontroller.py:363
 msgid "New Videos"
 msgstr "Νέα Βίντεο"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:348
+#: ../../portable/frontends/widgets/itemlistcontroller.py:369
 #: ../../portable/frontends/widgets/statictabs.py:55
 msgid "Video Search"
 msgstr "Αναζήτηση βίντεο"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:360
+#: ../../portable/frontends/widgets/itemlistcontroller.py:381
 msgid "No Results Found"
-msgstr ""
+msgstr "Δέν βρέθηκαν αποτελέσματα"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:414
+#: ../../portable/frontends/widgets/itemlistcontroller.py:434
 #: ../../portable/frontends/widgets/statictabs.py:60
 msgid "Library"
 msgstr "Βιβλιοθήκη"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:420
+#: ../../portable/frontends/widgets/itemlistcontroller.py:440
 #: ../../portable/frontends/widgets/statictabs.py:65
 msgid "Single Items"
 msgstr ""
 
 #: ../../portable/frontends/widgets/removeitemsdialog.py:49
-#: ../../portable/frontends/widgets/itemlistwidgets.py:444
+#: ../../portable/frontends/widgets/itemlistwidgets.py:547
 #: ../../portable/frontends/widgets/removechannelsdialog.py:50
 #, python-format
 msgid "Remove channel"
@@ -1323,13 +1367,13 @@ msgstr[1] ""
 #: ../../portable/frontends/widgets/removechannelsdialog.py:61
 msgid "Are you sure you want to remove this channel:"
 msgid_plural "Are you sure you want to remove these channels:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Είστε σίγουρος ότι θέλετε να αφαιρέσετε αυτό το κανάλι:"
+msgstr[1] "Είστε σίγουρος ότι θέλετε να αφαιρέσετε αυτά το κανάλια:"
 
 #: ../../portable/frontends/widgets/removeitemsdialog.py:80
 #: ../../portable/frontends/widgets/removechannelsdialog.py:81
 msgid "Keep items that have been downloaded in my library."
-msgstr ""
+msgstr "Διατήρησε τα αρχεία που έχω κατεβάσει στην βιβλιοθήκη μου."
 
 #: ../../portable/frontends/widgets/removeitemsdialog.py:86
 #: ../../portable/frontends/widgets/removechannelsdialog.py:93
@@ -1343,7 +1387,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: ../../portable/frontends/widgets/diagnostics.py:57
-#: ../../portable/frontends/widgets/gtk/trayicon.py:61
+#: ../../portable/frontends/widgets/gtk/trayicon.py:83
 msgid "Show"
 msgstr "Προβολή"
 
@@ -1371,53 +1415,53 @@ msgstr ""
 msgid "Space free on disk:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/feedcontroller.py:108
+#: ../../portable/frontends/widgets/feedcontroller.py:110
 msgid "Downloaded"
-msgstr ""
+msgstr "Ληφθέντα"
 
-#: ../../portable/frontends/widgets/feedcontroller.py:118
+#: ../../portable/frontends/widgets/feedcontroller.py:120
 msgid "Full Channel"
 msgstr ""
 
-#: ../../portable/frontends/widgets/feedcontroller.py:161
+#: ../../portable/frontends/widgets/feedcontroller.py:163
 #, python-format
 msgid "Show 1 More Item"
 msgid_plural "Show %(count)d More Items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/feedcontroller.py:194
-#: ../../portable/frontends/widgets/feedcontroller.py:221
+#: ../../portable/frontends/widgets/feedcontroller.py:196
+#: ../../portable/frontends/widgets/feedcontroller.py:223
 #, python-format
 msgid "%(count)d Downloading"
 msgid_plural "%(count)d Downloading"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/feedcontroller.py:205
-#: ../../portable/frontends/widgets/feedcontroller.py:217
+#: ../../portable/frontends/widgets/feedcontroller.py:207
+#: ../../portable/frontends/widgets/feedcontroller.py:219
 #, python-format
 msgid "%(count)d Video"
 msgid_plural "%(count)d Videos"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/feedcontroller.py:227
+#: ../../portable/frontends/widgets/feedcontroller.py:229
 #, python-format
 msgid "%(count)d Video Matches Search"
 msgid_plural "%(count)d Videos Match Search"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/feedcontroller.py:232
+#: ../../portable/frontends/widgets/feedcontroller.py:234
 msgid "All Videos Match Search"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:109
+#: ../../portable/frontends/widgets/application.py:112
 msgid "Movies directory gone"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:111
+#: ../../portable/frontends/widgets/application.py:114
 #, python-format
 msgid ""
 "%(shortappname)s can't find the primary video directory located at:\n"
@@ -1435,33 +1479,38 @@ msgid ""
 "relaunch %(shortappname)s."
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:238
+#: ../../portable/frontends/widgets/application.py:256
 msgid "Open Files..."
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:246
+#: ../../portable/frontends/widgets/application.py:267
+#: ../../portable/frontends/widgets/application.py:272
 msgid "Open Files - Error"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:247
-#: ../../portable/frontends/widgets/application.py:507
+#: ../../portable/frontends/widgets/application.py:268
+#: ../../portable/frontends/widgets/application.py:542
 #, python-format
 msgid "File %(filename)s does not exist."
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:284
-msgid "New Download"
+#: ../../portable/frontends/widgets/application.py:273
+msgid "The following files do not exist:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:285
+#: ../../portable/frontends/widgets/application.py:310
+msgid "New Download"
+msgstr "Νέα λήψη"
+
+#: ../../portable/frontends/widgets/application.py:311
 msgid "Enter the URL of the item to download"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:286
+#: ../../portable/frontends/widgets/application.py:312
 msgid "New Download - Invalid URL"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:287
+#: ../../portable/frontends/widgets/application.py:313
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -1469,23 +1518,23 @@ msgid ""
 "Enter the URL of the item to download"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:295
+#: ../../portable/frontends/widgets/application.py:321
 msgid "Miro is up to date"
-msgstr ""
+msgstr "Το Miro είναι ενημερωμένο"
 
-#: ../../portable/frontends/widgets/application.py:296
+#: ../../portable/frontends/widgets/application.py:322
 msgid "Miro is up to date!"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:318
-#: ../../portable/frontends/widgets/application.py:648
+#: ../../portable/frontends/widgets/application.py:344
+#: ../../portable/frontends/widgets/application.py:693
 #, python-format
 msgid "Remove %(name)s"
 msgid_plural "Remove %(count)d items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/application.py:325
+#: ../../portable/frontends/widgets/application.py:351
 msgid ""
 "One of these items was not downloaded from a channel. Would you like to "
 "delete it or just remove it from the Library?"
@@ -1495,38 +1544,39 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/application.py:340
+#: ../../portable/frontends/widgets/application.py:366
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/application.py:370
+#: ../../portable/frontends/widgets/application.py:396
+#: ../../portable/frontends/widgets/itemcontextmenu.py:100
 msgid "Rename Item"
-msgstr ""
+msgstr "Μετονομασία αντικειμένου"
 
-#: ../../portable/frontends/widgets/application.py:371
+#: ../../portable/frontends/widgets/application.py:397
 msgid "Enter the new name for the item"
-msgstr ""
+msgstr "Εισάγετε το νέο όνομα για το αντικείμενο"
 
-#: ../../portable/frontends/widgets/application.py:385
+#: ../../portable/frontends/widgets/application.py:420
 msgid "Save Item As..."
-msgstr ""
+msgstr "Αποθήκεθση Ως..."
 
-#: ../../portable/frontends/widgets/application.py:410
+#: ../../portable/frontends/widgets/application.py:445
 msgid "Add Channel"
-msgstr "Προσθήκη καναλιού"
+msgstr "Προσθήκη Καναλιού"
 
-#: ../../portable/frontends/widgets/application.py:411
+#: ../../portable/frontends/widgets/application.py:446
 msgid "Enter the URL of the channel to add"
 msgstr "Εισάγετε το URL του καναλιού που θα προσθέσετε"
 
-#: ../../portable/frontends/widgets/application.py:412
+#: ../../portable/frontends/widgets/application.py:447
 msgid "Add Channel - Invalid URL"
-msgstr ""
+msgstr "Προσθήκη Καναλιού - Άκυρο URL"
 
-#: ../../portable/frontends/widgets/application.py:413
+#: ../../portable/frontends/widgets/application.py:448
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -1534,28 +1584,28 @@ msgid ""
 "Enter the URL of the channel to add"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:431
+#: ../../portable/frontends/widgets/application.py:466
 msgid "Create Channel Folder"
 msgstr "Δημιουργία φακέλου καναλιού"
 
-#: ../../portable/frontends/widgets/application.py:432
-#: ../../portable/singleclick.py:310
+#: ../../portable/frontends/widgets/application.py:467
+#: ../../portable/singleclick.py:312
 msgid "Enter a name for the new channel folder"
 msgstr "Εισάγετε όνομα για το νέο φάκελο καναλιού"
 
-#: ../../portable/frontends/widgets/application.py:444
+#: ../../portable/frontends/widgets/application.py:479
 msgid "Add Guide"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:445
+#: ../../portable/frontends/widgets/application.py:480
 msgid "Enter the URL of the Miro guide to add"
-msgstr ""
+msgstr "Εισάγετε το URL του οδηγού του Mirο για προσθήκη"
 
-#: ../../portable/frontends/widgets/application.py:446
+#: ../../portable/frontends/widgets/application.py:481
 msgid "Add Guide - Invalid URL"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:447
+#: ../../portable/frontends/widgets/application.py:482
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -1563,288 +1613,335 @@ msgid ""
 "Enter the URL of the Miro guide to add"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:497
+#: ../../portable/frontends/widgets/application.py:532
 msgid "Import OPML File"
 msgstr "Εισαγωγή Αρχείου OPML"
 
-#: ../../portable/frontends/widgets/application.py:499
+#: ../../portable/frontends/widgets/application.py:534
 msgid "OPML Files"
 msgstr "Αρχεία OPML"
 
-#: ../../portable/frontends/widgets/application.py:506
+#: ../../portable/frontends/widgets/application.py:541
 msgid "Import OPML File - Error"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:512
+#: ../../portable/frontends/widgets/application.py:547
 msgid "Export OPML File"
 msgstr "Εξαγωγή Αρχείου OPML"
 
-#: ../../portable/frontends/widgets/application.py:558
+#: ../../portable/frontends/widgets/application.py:582
 msgid "Create Playlist"
 msgstr "Δημιουργία λίστας αναπαραγωγής"
 
-#: ../../portable/frontends/widgets/application.py:559
+#: ../../portable/frontends/widgets/application.py:583
 msgid "Enter a name for the new playlist"
 msgstr "Εισάγετε ένα όνομα για την νέα λίστα αναπαραγωγής"
 
-#: ../../portable/frontends/widgets/application.py:566
+#: ../../portable/frontends/widgets/application.py:604
 msgid "Create Playlist Folder"
 msgstr "Δημιουργία φακέλου λίστας αναπαραγωγής"
 
-#: ../../portable/frontends/widgets/application.py:567
+#: ../../portable/frontends/widgets/application.py:605
 msgid "Enter a name for the new playlist folder"
 msgstr "Εισάγετε όνομα για το νέο φάκελο της λίστας αναπαραγωγής"
 
-#: ../../portable/frontends/widgets/application.py:588
-#: ../../portable/frontends/widgets/tablist.py:459
+#: ../../portable/frontends/widgets/application.py:626
+#: ../../portable/frontends/widgets/tablist.py:516
 msgid "Rename Channel Folder"
 msgstr "Επανονομασία  Φακέλου  του Καναλιού"
 
-#: ../../portable/frontends/widgets/application.py:589
+#: ../../portable/frontends/widgets/application.py:627
 #, python-format
 msgid "Enter a new name for the channel folder %(name)s"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:593
-#: ../../portable/frontends/widgets/tablist.py:466 ../../portable/feed.py:848
+#: ../../portable/frontends/widgets/application.py:631
+#: ../../portable/frontends/widgets/tablist.py:526
 msgid "Rename Channel"
 msgstr "Μετονομασία Καναλιού"
 
-#: ../../portable/frontends/widgets/application.py:594
-#: ../../portable/feed.py:849
+#: ../../portable/frontends/widgets/application.py:632
 #, python-format
 msgid "Enter a new name for the channel %(name)s"
-msgstr ""
+msgstr "Εισάγετε νέο όνομα για το κανάλι %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:598
-#: ../../portable/frontends/widgets/tablist.py:505
+#: ../../portable/frontends/widgets/application.py:636
+#: ../../portable/frontends/widgets/tablist.py:575
 #: ../../portable/playlist.py:179
 msgid "Rename Playlist"
 msgstr "Μετονομασία λίστας αναπαραγωγής"
 
-#: ../../portable/frontends/widgets/application.py:599
+#: ../../portable/frontends/widgets/application.py:637
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:603
-#: ../../portable/frontends/widgets/tablist.py:499
+#: ../../portable/frontends/widgets/application.py:641
+#: ../../portable/frontends/widgets/tablist.py:569
 msgid "Rename Playlist Folder"
 msgstr "Μετονομασία φακέλου λίστας αναπαραγωγής"
 
-#: ../../portable/frontends/widgets/application.py:604
+#: ../../portable/frontends/widgets/application.py:642
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
-msgstr ""
+msgstr "Εισάγετε νέο όνομα για τον φάκελο της λίστας αναπαραγωγής %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:607
-#: ../../portable/frontends/widgets/tablist.py:416
+#: ../../portable/frontends/widgets/application.py:645
+#: ../../portable/frontends/widgets/tablist.py:473
 msgid "Rename Site"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:608
+#: ../../portable/frontends/widgets/application.py:646
 #, python-format
 msgid "Enter a new name for the site %(name)s"
-msgstr ""
+msgstr "Εισάγετε νέο όνομα για τον ιστότοπο %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:625
+#: ../../portable/frontends/widgets/application.py:670
 #, python-format
 msgid "Remove playlist"
 msgid_plural "Remove %(count)d playlists"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/application.py:630
-#: ../../portable/frontends/widgets/application.py:649
+#: ../../portable/frontends/widgets/application.py:675
+#: ../../portable/frontends/widgets/application.py:694
 #, python-format
 msgid "Are you sure you want to remove %(name)s?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/application.py:674
+#: ../../portable/frontends/widgets/application.py:719
 msgid "Are you sure you want to quit?"
 msgstr "Θέλετε σίγουρα να κλείσετε την εφαρμογή;"
 
-#: ../../portable/frontends/widgets/application.py:676
+#: ../../portable/frontends/widgets/application.py:721
 #, python-format
 msgid "You have 1 download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/application.py:681
+#: ../../portable/frontends/widgets/application.py:726
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "Ειδοποίηση όταν προσπαθήσω να κλείσω το πρόγραμμα ενώ κατεβάζω"
 
-#: ../../portable/frontends/widgets/application.py:879
+#: ../../portable/frontends/widgets/application.py:940
 msgid "Message"
-msgstr ""
+msgstr "Μήνυμα"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:147
+#: ../../portable/frontends/widgets/itemlistwidgets.py:175
 msgid "Save Search"
-msgstr ""
+msgstr "Αποθήκευση Αναζήτησης"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:256
+#: ../../portable/frontends/widgets/itemlistwidgets.py:359
 msgid "Save as a Channel"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:293
+#: ../../portable/frontends/widgets/itemlistwidgets.py:396
 msgid "Pause All"
 msgstr "Παύση Όλων"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:300
+#: ../../portable/frontends/widgets/itemlistwidgets.py:403
 msgid "Resume All"
 msgstr "Σνέχιση Όλων"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:307
+#: ../../portable/frontends/widgets/itemlistwidgets.py:410
 msgid "Cancel All"
-msgstr ""
+msgstr "Ακύρωση Όλων"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:314
+#: ../../portable/frontends/widgets/itemlistwidgets.py:417
 msgid "Download Settings"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:360
+#: ../../portable/frontends/widgets/itemlistwidgets.py:463
 #, python-format
 msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:366
+#: ../../portable/frontends/widgets/itemlistwidgets.py:469
 #, python-format
 msgid "%(available)s free for downloads (%(amount)s free on disk)"
 msgstr ""
+"%(available)s ελεύθερα για αρχεία λήψεων (%(amount)s ελεύθερα στον δίσκο)"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:371
+#: ../../portable/frontends/widgets/itemlistwidgets.py:474
 #, python-format
 msgid "%(amount)s free on disk"
-msgstr ""
+msgstr "%(amount)s ελεύθερα στον δίσκο"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:390
+#: ../../portable/frontends/widgets/itemlistwidgets.py:493
 #, python-format
 msgid "%(rate)s uploading"
-msgstr ""
+msgstr "%(rate)s αποστολής"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:392
+#: ../../portable/frontends/widgets/itemlistwidgets.py:495
 #, python-format
 msgid "%(rate)s downloading"
-msgstr ""
+msgstr "%(rate)s λήψεων"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:425
+#: ../../portable/frontends/widgets/itemlistwidgets.py:528
 msgid "Auto Download"
-msgstr ""
+msgstr "Αττόματη λήψη αρχείων"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:430
+#: ../../portable/frontends/widgets/itemlistwidgets.py:533
 msgid "all"
-msgstr ""
+msgstr "όλα"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:430
+#: ../../portable/frontends/widgets/itemlistwidgets.py:533
 msgid "new"
-msgstr ""
+msgstr "νέα"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:430
+#: ../../portable/frontends/widgets/itemlistwidgets.py:533
 msgid "off"
-msgstr ""
+msgstr "απενεργοποιημένο"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:434
+#: ../../portable/frontends/widgets/itemlistwidgets.py:537
 msgid "Send to a friend"
-msgstr ""
+msgstr "Στείλτε το σε ένα φίλο"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:439
+#: ../../portable/frontends/widgets/itemlistwidgets.py:542
 msgid "Settings"
 msgstr "Ρυθμίσεις"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:504
+#: ../../portable/frontends/widgets/itemlistwidgets.py:620
 msgid "Name"
-msgstr ""
+msgstr "Όνομα"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:505
+#: ../../portable/frontends/widgets/itemlistwidgets.py:621
 msgid "Date"
-msgstr ""
+msgstr "Ημερομηνία"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:506
+#: ../../portable/frontends/widgets/itemlistwidgets.py:622
 msgid "Size"
-msgstr ""
+msgstr "Μέγεθος"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:507
+#: ../../portable/frontends/widgets/itemlistwidgets.py:623
 msgid "Length"
+msgstr "Διάρκεια"
+
+#: ../../portable/frontends/widgets/displays.py:336
+msgid ""
+"Miro can't play this file.  You may be able to open it with a different "
+"program"
 msgstr ""
 
-#: ../../portable/frontends/widgets/displays.py:410
+#: ../../portable/frontends/widgets/displays.py:344
+msgid "Filename:"
+msgstr "Όνομα αρχείου:"
+
+#: ../../portable/frontends/widgets/displays.py:347
+msgid "File type:"
+msgstr "Τύπος αρχείου:"
+
+#: ../../portable/frontends/widgets/displays.py:352
+#: ../../portable/frontends/widgets/itemcontextmenu.py:117
+msgid "Reveal File"
+msgstr "Εμφάνιση Αχείου"
+
+#: ../../portable/frontends/widgets/displays.py:353
+msgid "Play Externally"
+msgstr "Αναπαραγωγή Εξωτερικά"
+
+#: ../../portable/frontends/widgets/displays.py:354
+msgid "Skip"
+msgstr "Παράλειψη"
+
+#: ../../portable/frontends/widgets/displays.py:520
 #, python-format
 msgid "%d Channel Folders Selected"
-msgstr ""
+msgstr "%d φάκελος καναλιού επιλέχθει"
 
-#: ../../portable/frontends/widgets/displays.py:412
+#: ../../portable/frontends/widgets/displays.py:522
 #, python-format
 msgid "(contains %d channels)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/displays.py:415
+#: ../../portable/frontends/widgets/displays.py:525
 #, python-format
 msgid "%d Playlist Folders Selected"
 msgstr ""
 
-#: ../../portable/frontends/widgets/displays.py:417
+#: ../../portable/frontends/widgets/displays.py:527
 #, python-format
 msgid "(contains %d playlists)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/displays.py:424
+#: ../../portable/frontends/widgets/displays.py:534
 #, python-format
 msgid "%d Channels Selected"
 msgstr ""
 
-#: ../../portable/frontends/widgets/displays.py:427
+#: ../../portable/frontends/widgets/displays.py:537
 #, python-format
 msgid "%d Playlists Selected"
 msgstr ""
 
-#: ../../portable/frontends/widgets/displays.py:432
+#: ../../portable/frontends/widgets/displays.py:542
 msgid "Delete All"
-msgstr ""
+msgstr "Διαγραφή Όλων"
 
-#: ../../portable/frontends/widgets/displays.py:436
+#: ../../portable/frontends/widgets/displays.py:546
 msgid "Put Into a New Folder"
+msgstr "Τοπαθέτησε το σε νέο φάκελο"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:63
+#, python-format
+msgid "Play Next Unwatched (%(unwatched)d)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:59
+#: ../../portable/frontends/widgets/gtk/trayicon.py:67
+#, python-format
+msgid "Play All Unwatched (%(unwatched)d)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:70
+#, python-format
+msgid "Pause All Downloads (%(downloading)d)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:73
+#, python-format
+msgid "Resume All Downloads (%(paused)d)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:81
 msgid "Hide"
 msgstr "Απόκρυψη"
 
-#: ../../portable/frontends/widgets/gtk/video.py:171
+#: ../../portable/frontends/widgets/gtk/video.py:173
 msgid "EMAIL A FRIEND"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/video.py:176
-#: ../../portable/frontends/widgets/gtk/video.py:296
+#: ../../portable/frontends/widgets/gtk/video.py:178
+#: ../../portable/frontends/widgets/gtk/video.py:298
 msgid "COMMENTS"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/video.py:180
-#: ../../portable/frontends/widgets/gtk/video.py:302
+#: ../../portable/frontends/widgets/gtk/video.py:182
+#: ../../portable/frontends/widgets/gtk/video.py:304
 msgid "PERMALINK"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/video.py:191
-msgid "KEEP"
-msgstr "ΚΡΑΤΑ"
-
-#: ../../portable/frontends/widgets/gtk/video.py:200
-msgid "DELETE"
-msgstr "ΔΙΑΓΡΑΦΗ"
-
-#: ../../portable/frontends/widgets/gtk/video.py:204
+#: ../../portable/frontends/widgets/gtk/video.py:193
 msgid "ADD TO LIBRARY"
 msgstr ""
 
+#: ../../portable/frontends/widgets/gtk/video.py:198
+msgid "KEEP"
+msgstr "ΚΡΑΤΑ"
+
+#: ../../portable/frontends/widgets/gtk/video.py:207
+msgid "DELETE"
+msgstr "ΔΙΑΓΡΑΦΗ"
+
 #: ../../portable/frontends/widgets/gtk/window.py:492
 msgid "All files"
-msgstr ""
+msgstr "Όλα τα αρχεία"
 
 #: ../../portable/frontends/widgets/gtk/window.py:521
 msgid "Choose"
-msgstr ""
+msgstr "Επιλέξτε"
 
 #: ../../portable/frontends/widgets/gtk/window.py:548
 #, python-format
@@ -1857,44 +1954,45 @@ msgstr ""
 msgid "Stop watching watched directories."
 msgstr ""
 
-#: ../../portable/frontends/widgets/tablist.py:415
-#: ../../portable/frontends/widgets/tablist.py:468
+#: ../../portable/frontends/widgets/tablist.py:472
+#: ../../portable/frontends/widgets/tablist.py:529
 msgid "Copy URL to clipboard"
 msgstr "Αντιγραφή του  URL στο πρόχειρο"
 
-#: ../../portable/frontends/widgets/tablist.py:417
+#: ../../portable/frontends/widgets/tablist.py:474
 msgid "Remove Site"
-msgstr ""
+msgstr "Αφαίρεση Ιστότοπου"
 
-#: ../../portable/frontends/widgets/tablist.py:458
+#: ../../portable/frontends/widgets/tablist.py:515
 msgid "Update Channels In Folder"
-msgstr ""
+msgstr "Ενημέρωσαι τα καλάλια μέσα στον φάκελο"
 
-#: ../../portable/frontends/widgets/tablist.py:465
+#: ../../portable/frontends/widgets/tablist.py:522
 msgid "Update Channel Now"
 msgstr "Ενημέρωση καναλιού τώρα"
 
-#: ../../portable/frontends/widgets/tablist.py:467
-msgid "Toggle Audio/Video Section"
+#: ../../portable/frontends/widgets/tablist.py:528
+#: ../../portable/frontends/widgets/itemcontextmenu.py:102
+msgid "Revert Name"
 msgstr ""
 
-#: ../../portable/frontends/widgets/tablist.py:474
+#: ../../portable/frontends/widgets/tablist.py:535
 msgid "Update Channels Now"
 msgstr "Ανανέωση καναλιών τώρα"
 
-#: ../../portable/frontends/widgets/tablist.py:527
+#: ../../portable/frontends/widgets/tablist.py:597
 msgid "SITES"
-msgstr ""
+msgstr "ΙΣΤΟΤΟΠΟΙ"
 
-#: ../../portable/frontends/widgets/tablist.py:529
+#: ../../portable/frontends/widgets/tablist.py:599
 msgid "FEEDS"
 msgstr ""
 
-#: ../../portable/frontends/widgets/tablist.py:531
+#: ../../portable/frontends/widgets/tablist.py:601
 msgid "AUDIO FEEDS"
 msgstr ""
 
-#: ../../portable/frontends/widgets/tablist.py:533
+#: ../../portable/frontends/widgets/tablist.py:603
 msgid "PLAYLISTS"
 msgstr ""
 
@@ -1971,17 +2069,17 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:189
 msgid "Choose directory to search for media files"
-msgstr ""
+msgstr "Επιλέγξτε τον κατάλογο για αναζήτηση αρχείων πολυμέσων"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:200
 #: ../../portable/frontends/widgets/firsttimedialog.py:280
 msgid "< Previous"
-msgstr ""
+msgstr "<Προηγούμενο"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:213
 #: ../../portable/frontends/widgets/firsttimedialog.py:215
 #: ../../portable/frontends/widgets/firsttimedialog.py:272
-#: ../../portable/feed.py:2293 ../../portable/feed.py:2388
+#: ../../portable/feed.py:2287 ../../portable/feed.py:2382
 msgid "Search"
 msgstr "Αναζήτηση"
 
@@ -2005,8 +2103,8 @@ msgstr[1] ""
 #, python-format
 msgid "found %(count)s media files"
 msgid_plural "found %(count)s media files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "βρέθηκαν %(count)s αρχεία πολυμέσων"
+msgstr[1] "βρέθηκαν %(count)s αρχεία πολυμέσων"
 
 #: ../../portable/frontends/widgets/statictabs.py:43
 msgid "Miro Guide"
@@ -2016,115 +2114,115 @@ msgstr "Όδηγός του Miro"
 msgid "Downloading"
 msgstr "Γίνεται λήψη"
 
-#: ../../portable/frontends/widgets/downloadscontroller.py:84
+#: ../../portable/frontends/widgets/downloadscontroller.py:79
 msgid "Single and external downloads"
 msgstr ""
 
-#: ../../portable/frontends/widgets/downloadscontroller.py:87
+#: ../../portable/frontends/widgets/downloadscontroller.py:82
 msgid "Channel downloads"
-msgstr ""
+msgstr "Το κανάλι κατεβάζει"
 
-#: ../../portable/frontends/widgets/downloadscontroller.py:90
+#: ../../portable/frontends/widgets/downloadscontroller.py:85
 msgid "Seeding"
-msgstr ""
+msgstr "Μοίρασμα"
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
+msgid "Add a Playlist"
+msgstr "Προσθήκη στην Λίστα"
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
+msgid "Add items to an existing playlist or a new one."
+msgstr "Προσθήκη αντικειμένων σε μια υπάρχουσα ή σε μια νέα λίστα"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
 msgstr "Διαγραφή από τη Βιβλιοθήκη"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:94
-#: ../../portable/frontends/widgets/itemcontextmenu.py:180
+#: ../../portable/frontends/widgets/itemcontextmenu.py:184
 msgid "Play"
 msgstr "Αναπαραγωγή"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
-msgid "Play Just this Video"
+msgid "Play Just this Item"
 msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:96
-#: ../../portable/frontends/widgets/itemcontextmenu.py:181
-msgid "Add to New Playlist"
-msgstr ""
+#: ../../portable/frontends/widgets/itemcontextmenu.py:185
+msgid "Add to Playlist"
+msgstr "Προσθήκη στη λίστα"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:100
-#: ../../portable/frontends/widgets/itemcontextmenu.py:188
+#: ../../portable/frontends/widgets/itemcontextmenu.py:104
+#: ../../portable/frontends/widgets/itemcontextmenu.py:192
 msgid "Mark as Unwatched"
 msgstr "Σημείωσε ως Αθέατο"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:103
-#: ../../portable/frontends/widgets/itemcontextmenu.py:193
+#: ../../portable/frontends/widgets/itemcontextmenu.py:107
+#: ../../portable/frontends/widgets/itemcontextmenu.py:197
 msgid "Mark as Watched"
-msgstr ""
+msgstr "Σημείωσε ως προβλημένο"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:112
+#: ../../portable/frontends/widgets/itemcontextmenu.py:116
 msgid "Start seeding"
-msgstr ""
+msgstr "Έναρξη διαμοιρασμού"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:113
-msgid "Reveal File"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:117
-#: ../../portable/frontends/widgets/itemcontextmenu.py:228
+#: ../../portable/frontends/widgets/itemcontextmenu.py:121
+#: ../../portable/frontends/widgets/itemcontextmenu.py:232
 msgid "Cancel Download"
-msgstr "Ακύρωση Μεταφόρτωσης"
+msgstr "Ακύρωση Λήψης"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:133
-msgid "Share"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:134
+#: ../../portable/frontends/widgets/itemcontextmenu.py:138
 msgid "Email to friend"
-msgstr ""
+msgstr "Στείλτε ηλ. μήνυμα σε ένα φίλο"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:137
+#: ../../portable/frontends/widgets/itemcontextmenu.py:141
 msgid "Post to Video Bomb"
 msgstr "Αποστολή στο Video Bomb"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:140
+#: ../../portable/frontends/widgets/itemcontextmenu.py:144
 msgid "Post to Del.icio.us"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:143
+#: ../../portable/frontends/widgets/itemcontextmenu.py:147
 msgid "Post to Digg"
-msgstr ""
+msgstr "Δημοσίευση στο Digg"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:146
+#: ../../portable/frontends/widgets/itemcontextmenu.py:150
 msgid "Post to Reddit"
 msgstr "Δημοσίευση στο Reddit"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:175
+#: ../../portable/frontends/widgets/itemcontextmenu.py:179
 #, python-format
 msgid "1 Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ένα Ληφθέν Αρχείο"
+msgstr[1] "%(count)d Ληφθέντα Αρχεία"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:204
+#: ../../portable/frontends/widgets/itemcontextmenu.py:208
 #, python-format
 msgid "1 Available Item"
 msgid_plural "%(count)d Available Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ένα Διαθέσιμο Αντικείμενο"
+msgstr[1] "%(count)d Διαθέσιμα Αντικείμενα"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:217
+#: ../../portable/frontends/widgets/itemcontextmenu.py:221
 #, python-format
 msgid "1 Downloading Item"
 msgid_plural "%(count)d Downloading Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ένα αντικείμενο πρός λήψη"
+msgstr[1] "%(count)d αντικείμενα πρός λήψη"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:235
+#: ../../portable/frontends/widgets/itemcontextmenu.py:239
 msgid "Restart Upload"
 msgstr "Επανεκκίνηση Ανεβάσματος"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:249
+#: ../../portable/frontends/widgets/itemcontextmenu.py:253
 msgid "Remove From Playlist"
 msgstr "Αφαίρεση από τη λίστα αναπαραγωγής"
 
 #: ../../portable/dialogs.py:83
 msgid "Ok"
-msgstr "ΟΚ"
+msgstr "Εντάξει"
 
 #: ../../portable/dialogs.py:84
 msgid "Close"
@@ -2132,7 +2230,11 @@ msgstr "Κλείσιμο"
 
 #: ../../portable/dialogs.py:86
 msgid "Done"
-msgstr ""
+msgstr "Έγινε"
+
+#: ../../portable/dialogs.py:89
+msgid "Quit"
+msgstr "'Εξοδος"
 
 #: ../../portable/dialogs.py:90
 msgid "Continue"
@@ -2140,7 +2242,7 @@ msgstr "Συνέχεια"
 
 #: ../../portable/dialogs.py:91
 msgid "Ignore"
-msgstr "Παράβλεψη"
+msgstr "Αγνόηση"
 
 #: ../../portable/dialogs.py:92
 msgid "Submit Crash Report"
@@ -2160,7 +2262,7 @@ msgstr "Αφαίρεση Καταχώρησης"
 
 #: ../../portable/dialogs.py:97
 msgid "Delete File"
-msgstr "Διαγραφή αρχείου"
+msgstr "Διαγραφή Aρχείου"
 
 #: ../../portable/dialogs.py:98
 msgid "Delete Files"
@@ -2168,7 +2270,7 @@ msgstr "Διαγραφή αρχείων"
 
 #: ../../portable/dialogs.py:99
 msgid "Keep Videos"
-msgstr ""
+msgstr "Κράτα τα Βίντεο"
 
 #: ../../portable/dialogs.py:100
 msgid "Delete Videos"
@@ -2204,15 +2306,15 @@ msgstr "Κατέβασε παρα όλα αυτα"
 
 #: ../../portable/dialogs.py:112
 msgid "Don't Install"
-msgstr ""
+msgstr "Μήν εγκαθιστάς"
 
 #: ../../portable/dialogs.py:113
 msgid "Subscribe"
-msgstr ""
+msgstr "Εγγραφή"
 
 #: ../../portable/dialogs.py:114
 msgid "Stop Watching"
-msgstr ""
+msgstr "Σταμάτημα Προβολής"
 
 #: ../../portable/playlist.py:180
 #, python-format
@@ -2237,11 +2339,11 @@ msgstr "Κατεβάζει τώρα."
 
 #: ../../portable/singleclick.py:111
 msgid "It has already been downloaded."
-msgstr ""
+msgstr "Αυτό έχει ήδη κατέβει."
 
 #: ../../portable/singleclick.py:142
 msgid "Download Error"
-msgstr "Σφάλμα στο κατέβασμα"
+msgstr "Σφάλμα λήψης"
 
 #: ../../portable/singleclick.py:144
 #, python-format
@@ -2251,28 +2353,28 @@ msgid ""
 "URL: %(url)s"
 msgstr ""
 
-#: ../../portable/singleclick.py:208
+#: ../../portable/singleclick.py:210
 msgid "File Download"
 msgstr "Λήψη Αρχείου"
 
-#: ../../portable/singleclick.py:209
+#: ../../portable/singleclick.py:211
 #, python-format
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or an RSS feed."
 msgstr ""
 
-#: ../../portable/singleclick.py:289
+#: ../../portable/singleclick.py:291
 msgid "Subscribing to multiple channels"
 msgstr "Γίνετε συνδρομητές σε πολλαπλά κανάλια"
 
-#: ../../portable/singleclick.py:290
+#: ../../portable/singleclick.py:292
 #, python-format
 msgid "Create channel?"
 msgid_plural "Create %(count)d channels?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Δημιουργία καναλιού;"
+msgstr[1] "Δημιουργία %(count)d καναλιών;"
 
-#: ../../portable/singleclick.py:314
+#: ../../portable/singleclick.py:316
 #, python-format
 msgid ""
 "NOTE: You are already subscribed to one of these channels.  These channels "
@@ -2283,34 +2385,34 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/singleclick.py:329
+#: ../../portable/singleclick.py:331
 msgid "Subscription error"
 msgstr "Σφάλμα εγγραφής"
 
-#: ../../portable/singleclick.py:339
+#: ../../portable/singleclick.py:341
 #, python-format
 msgid ""
 "This %(appname)s channel file has an invalid format: %(url)s.  Please notify "
 "the publisher of this file."
 msgstr ""
 
-#: ../../portable/singleclick.py:348
+#: ../../portable/singleclick.py:350
 #, python-format
 msgid ""
 "This %(appname)s channel file has the wrong content type: %(url)s. Please "
 "notify the publisher of this file."
 msgstr ""
 
-#: ../../portable/singleclick.py:356
+#: ../../portable/singleclick.py:358
 #, python-format
 msgid "Could not download the %(appname)s channel file: %(url)s"
 msgstr ""
 
-#: ../../portable/singleclick.py:406
+#: ../../portable/singleclick.py:408
 msgid "Invalid Torrent"
 msgstr "Μη έγκυρο Torrent"
 
-#: ../../portable/singleclick.py:408
+#: ../../portable/singleclick.py:410
 #, python-format
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
@@ -2321,6 +2423,20 @@ msgstr ""
 msgid "license page"
 msgstr ""
 
+#: ../../portable/item.py:439
+#, python-format
+msgid "%(count)d day"
+msgid_plural "%(count)d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/item.py:444
+#, python-format
+msgid "%(count)d hour"
+msgid_plural "%(count)d hours"
+msgstr[0] ""
+msgstr[1] ""
+
 #: ../../portable/item.py:449
 #, python-format
 msgid "%(count)d minute"
@@ -2328,18 +2444,19 @@ msgid_plural "%(count)d minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/item.py:721 ../../portable/item.py:737
+#: ../../portable/item.py:733 ../../portable/item.py:749
+#: ../../portable/item.py:761
 msgid "no title"
-msgstr ""
+msgstr "δεν υπάρχει τίτλος"
 
-#: ../../portable/item.py:986
+#: ../../portable/item.py:1010
 msgid "starting up..."
 msgstr "εκκίνηση..."
 
 #: ../../portable/httpclient.py:90
 #, python-format
 msgid "Error: %(msg)s"
-msgstr ""
+msgstr "Σφάλμα: %(msg)s"
 
 #: ../../portable/httpclient.py:105 ../../portable/httpclient.py:111
 msgid "Can't connect"
@@ -2348,7 +2465,7 @@ msgstr "Αδυναμία σύνδεσης"
 #: ../../portable/httpclient.py:106
 #, python-format
 msgid "Connection Error: %(msg)s"
-msgstr ""
+msgstr "Σφάλμα Σύνδεσης: %(msg)s"
 
 #: ../../portable/httpclient.py:112
 msgid "SSL connection error"
@@ -2361,7 +2478,7 @@ msgstr "σφάλμα HTTP"
 #: ../../portable/httpclient.py:120
 #, python-format
 msgid "Bad Status Line: %(msg)s"
-msgstr ""
+msgstr "Κάκη γραμμή κατάστασης: %(msg)s"
 
 #: ../../portable/httpclient.py:125
 #, python-format
@@ -2430,7 +2547,7 @@ msgstr "Σφάλμα ανάγνωσης"
 #: ../../portable/httpclient.py:180
 #, python-format
 msgid "Error while reading from \"%(path)s\""
-msgstr ""
+msgstr "Σφάλμα κατα την ανάγνωση \"%(path)s\""
 
 #: ../../portable/httpclient.py:376
 msgid "Unknown Error code"
@@ -2448,29 +2565,31 @@ msgstr "Άγνωστο"
 msgid "Internal Error: Not ready to send"
 msgstr "Εσωτερικό Σφάλμα: Δεν είναι έτοιμη η αποστολή"
 
-#: ../../portable/feed.py:946
+#: ../../portable/feed.py:940
 msgid "Error loading feed"
-msgstr "Σφάλμα φόρτωσης του feed"
+msgstr "Σφάλμα φόρτωσης του τροφοδότη (feed)"
 
-#: ../../portable/feed.py:948
+#: ../../portable/feed.py:942
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 msgstr ""
+"Δέν ήταν δυνατή ησύνδεση του τροφοδότη (feed) στο %(url)s "
+"(%(errordescription)s)."
 
-#: ../../portable/feed.py:951
+#: ../../portable/feed.py:945
 msgid "Would you like to keep the feed?"
-msgstr "Θέλετε να κρατήσετε το feed"
+msgstr "Θέλετε να κρατήσετε τον τροφοδότη (feed)"
 
-#: ../../portable/feed.py:1076
+#: ../../portable/feed.py:1070
 msgid "Bad content-type"
 msgstr "Κατεστραμένου τύπου-αρχείο"
 
-#: ../../portable/feed.py:1089
+#: ../../portable/feed.py:1083
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
-msgstr ""
+msgstr "Το κανάλι δέν είναι συμβατό με %(appname)s"
 
-#: ../../portable/feed.py:1092
+#: ../../portable/feed.py:1086
 #, python-format
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
@@ -2480,11 +2599,18 @@ msgid ""
 "\n"
 "Do you want to try to load this channel anyway?"
 msgstr ""
+"Αλλά θα προσπαθήσουμε το καλύτερο δυνατόν για να αρπάξουμε τα αρχεία. Αυτό "
+"μπορεί να χρειαστεί επιπλέον χρόνο για να βάλει σε λίστα τα βίντεο επίσης η "
+"περιγραφή μπορεί να μοίαζει αστεία. Παρακαλούμε να επικοινωνήσετε με τον "
+"εκδότη του %(url)s και ζητήστε εάν μπορεί να παρέχει τροφοδότες(feed) σε "
+"μορφή που θα δουλεύει με %(appname)s.\n"
+"\n"
+"Θέλετε να προσπαθήσετε να φορτώσετε αυτό το κανάλι παρόλα αυτά;"
 
-#: ../../portable/feed.py:2407
+#: ../../portable/feed.py:2401
 msgid "Local Files"
 msgstr "Τοπικά Αρχεία"
 
-#: ../../portable/feed.py:2421
+#: ../../portable/feed.py:2415
 msgid "Playing File"
 msgstr "Aρχείο που παίζει τωρα"
