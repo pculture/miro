@@ -275,9 +275,14 @@ def fill_template(templatepath, outpath, **vars):
 # Data files
 data_files = []
 data_files.extend(find_data_files('xulrunner', XULRUNNER_SDK_BIN_PATH))
+
 image_loader_path = os.path.join('lib', 'gtk-2.0', '2.10.0', 'loaders')
-data_files.extend(find_data_files(image_loader_path, 
-    os.path.join(GTK_ROOT_PATH, image_loader_path)))
+theme_engine_path = os.path.join('lib', 'gtk-2.0', '2.10.0', 'engines')
+theme_path = os.path.join('share', 'themes')
+for path in (image_loader_path, theme_engine_path, theme_path):
+    src_path = os.path.join(GTK_ROOT_PATH, path)
+    data_files.extend(find_data_files(path, src_path))
+
 data_files.append(('', iglob(os.path.join(GTK_BIN_PATH, '*.dll'))))
 data_files.extend(find_data_files('vlc-plugins', 
     os.path.join(VLC_PATH, 'vlc-plugins')))

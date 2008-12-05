@@ -62,6 +62,8 @@ class WindowsApplication(Application):
         gtk.gdk.threads_init()
         self.startup()
         gtk.gdk.threads_enter()
+        settings = gtk.settings_get_default()
+        settings.set_property('gtk-theme-name', "MS-Windows")
         try:
             gtk.main()
         finally:

@@ -328,6 +328,7 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
 
   RMDir /r "${directory}\etc"
   RMDir /r "${directory}\lib"
+  RMDir /r "${directory}\share"
   RMDir /r "${directory}\resources"
   RMDir /r "${directory}\xulrunner"
   RMDir /r "${directory}\vlc-plugins"
@@ -605,6 +606,7 @@ unzipok:
   File  "library.zip"
   File  /r etc
   File  /r lib
+  File  /r share
   File  /r resources
   File  /r xulrunner
   File  /r vlc-plugins
