@@ -412,10 +412,13 @@ class StyledButton(object):
     def draw(self, context, x, y, width, height):
         radius = height / 2
         self.draw_button(context, x, y, width, height, radius)
-        self.draw_text(context, x, y, radius)
+        self.draw_text(context, x, y, width, height, radius)
 
-    def draw_text(self, context, x, y, radius):
+    def draw_text(self, context, x, y, width, height, radius):
         context.set_color(self.TEXT_COLOR)
-        context.move_to(x + 0.5 + self.PAD_HORIZONTAL + radius, 
-                y + 0.5 + self.PAD_VERTICAL)
+        text_width, text_height = self.layout.get_pixel_size()
+        # draw the text in the center of the button
+        x += (width - text_width) / 2
+        y += (height - text_height) / 2
+        context.move_to(x, y)
         context.context.show_layout(self.layout)
