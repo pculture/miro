@@ -385,7 +385,7 @@ class NewChannel(BackendMessage):
 
 class NewChannelSearchChannel(BackendMessage):
     """Creates a new channel based on a search through a channel."""
-    def __init__(self, channel_info, search_term, section):
+    def __init__(self, channel_info, search_term, section=u"video"):
         self.channel_info = channel_info
         self.search_term = search_term
         self.section = section
