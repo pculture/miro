@@ -85,11 +85,11 @@ class Display(signals.SignalEmitter):
 class TabDisplay(Display):
     """Display that displays the selection in the tab list."""
 
-    def __init__(self, type, selected_tabs):
+    def __init__(self, tab_type, selected_tabs):
         raise NotImplementedError()
 
     @staticmethod
-    def should_display(type, selected_tabs):
+    def should_display(tab_type, selected_tabs):
         """Test if this display should be shown.  """
         raise NotImplementedError()
 
@@ -139,11 +139,11 @@ class DisplayManager(object):
 
         self.selected_tab_list = selected_tab_list
         self.selected_tabs = selected_tabs
-        type = selected_tab_list.type
+        tab_type = selected_tab_list.type
 
         for klass in self.display_classes:
-            if klass.should_display(type, selected_tabs):
-                self.select_display(klass(type, selected_tabs))
+            if klass.should_display(tab_type, selected_tabs):
+                self.select_display(klass(tab_type, selected_tabs))
                 return
         raise AssertionError("Can't find display for %s %s" % (tabs,
             selected_tabs))
@@ -185,10 +185,10 @@ class DisplayManager(object):
 
 class GuideDisplay(TabDisplay):
     @staticmethod
-    def should_display(type, selected_tabs):
-        return type == 'static' and selected_tabs[0].id == 'guide'
+    def should_display(tab_type, selected_tabs):
+        return tab_type == 'static' and selected_tabs[0].id == 'guide'
 
-    def __init__(self, type, selected_tabs):
+    def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
         self.widget = selected_tabs[0].browser
 
@@ -204,10 +204,10 @@ class SiteDisplay(TabDisplay):
                 pass
 
     @staticmethod
-    def should_display(type, selected_tabs):
-        return type == 'site' and len(selected_tabs) == 1
+    def should_display(tab_type, selected_tabs):
+        return tab_type == 'site' and len(selected_tabs) == 1
 
-    def __init__(self, type, selected_tabs):
+    def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
         guide_info = selected_tabs[0]
         if guide_info.id not in self._open_sites:
@@ -215,14 +215,14 @@ class SiteDisplay(TabDisplay):
         self.widget = self._open_sites[guide_info.id]
 
 class ItemListDisplay(TabDisplay):
-    def __init__(self, type, selected_tabs):
+    def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
         tab = selected_tabs[0]
         self.controller = self.make_controller(tab)
         self.widget = self.controller.widget
-        if app.list_view_memory.query(type, tab.id):
+        if app.list_view_memory.query(tab_type, tab.id):
             self.widget.switch_to_list_view()
-        self.type = type
+        self.type = tab_type
         self.id = tab.id
 
     def on_selected(self):
@@ -251,8 +251,8 @@ class ItemListDisplay(TabDisplay):
 
 class FeedDisplay(ItemListDisplay):
     @staticmethod
-    def should_display(type, selected_tabs):
-        return type == 'feed' and len(selected_tabs) == 1
+    def should_display(tab_type, selected_tabs):
+        return tab_type == 'feed' and len(selected_tabs) == 1
 
     def on_selected(self):
         ItemListDisplay.on_selected(self)
@@ -274,8 +274,8 @@ class FeedDisplay(ItemListDisplay):
 
 class AudioFeedDisplay(FeedDisplay):
     @staticmethod
-    def should_display(type, selected_tabs):
-        return type == 'audio-feed' and len(selected_tabs) == 1
+    def should_display(tab_type, selected_tabs):
+        return tab_type == 'audio-feed' and len(selected_tabs) == 1
 
     def on_selected(self):
         ItemListDisplay.on_selected(self)
@@ -290,8 +290,8 @@ class AudioFeedDisplay(FeedDisplay):
 
 class PlaylistDisplay(ItemListDisplay):
     @staticmethod
-    def should_display(type, selected_tabs):
-        return type == 'playlist' and len(selected_tabs) == 1
+    def should_display(tab_type, selected_tabs):
+        return tab_type == 'playlist' and len(selected_tabs) == 1
 
     def on_selected(self):
         ItemListDisplay.on_selected(self)
@@ -310,40 +310,40 @@ class PlaylistDisplay(ItemListDisplay):
 
 class DownloadingDisplay(ItemListDisplay):
     @staticmethod
-    def should_display(type, selected_tabs):
-        return type == 'static' and selected_tabs[0].id == 'downloading'
+    def should_display(tab_type, selected_tabs):
+        return tab_type == 'static' and selected_tabs[0].id == 'downloading'
 
     def make_controller(self, tab):
         return downloadscontroller.DownloadsController()
 
 class NewVideosDisplay(ItemListDisplay):
     @staticmethod
-    def should_display(type, selected_tabs):
-        return type == 'static' and selected_tabs[0].id == 'new'
+    def should_display(tab_type, selected_tabs):
+        return tab_type == 'static' and selected_tabs[0].id == 'new'
 
     def make_controller(self, tab):
         return itemlistcontroller.NewController()
 
 class SearchDisplay(ItemListDisplay):
     @staticmethod
-    def should_display(type, selected_tabs):
-        return type == 'static' and selected_tabs[0].id == 'search'
+    def should_display(tab_type, selected_tabs):
+        return tab_type == 'static' and selected_tabs[0].id == 'search'
 
     def make_controller(self, tab):
         return itemlistcontroller.SearchController()
 
 class LibraryDisplay(ItemListDisplay):
     @staticmethod
-    def should_display(type, selected_tabs):
-        return type == 'static' and selected_tabs[0].id == 'library'
+    def should_display(tab_type, selected_tabs):
+        return tab_type == 'static' and selected_tabs[0].id == 'library'
 
     def make_controller(self, tab):
         return itemlistcontroller.LibraryController()
 
 class IndividualDownloadsDisplay(ItemListDisplay):
     @staticmethod
-    def should_display(type, selected_tabs):
-        return type == 'static' and selected_tabs[0].id == 'individual_downloads'
+    def should_display(tab_type, selected_tabs):
+        return tab_type == 'static' and selected_tabs[0].id == 'individual_downloads'
 
     def make_controller(self, tab):
         return itemlistcontroller.IndividualDownloadsController()
@@ -506,15 +506,17 @@ class VideoDisplay(Display):
 
 class MultipleSelectionDisplay(TabDisplay):
     @staticmethod
-    def should_display(type, selected_tabs):
+    def should_display(tab_type, selected_tabs):
         return len(selected_tabs) > 1
 
-    def __init__(self, type, selected_tabs):
+    def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
-        self.type = type
+        self.type = tab_type
         self.child_count = self.folder_count = self.folder_child_count = 0
-        if type == 'feed':
+        if tab_type == 'feed':
             tab_list = app.tab_list_manager.feed_list
+        elif tab_type == 'audio-feed':
+            tab_list = app.tab_list_manager.audio_feed_list
         else:
             tab_list = app.tab_list_manager.playlist_list
         for tab in selected_tabs:
@@ -524,7 +526,7 @@ class MultipleSelectionDisplay(TabDisplay):
             else:
                 self.child_count += 1
         vbox = widgetset.VBox(spacing=20)
-        label = self._make_label(type, selected_tabs)
+        label = self._make_label(tab_type, selected_tabs)
         label.set_size(2)
         label.set_color((0.3, 0.3, 0.3))
         vbox.pack_start(widgetutil.align_center(label))
@@ -532,10 +534,10 @@ class MultipleSelectionDisplay(TabDisplay):
             self._make_buttons()))
         self.widget = widgetutil.align_middle(vbox)
 
-    def _make_label(self, type, selected_tabs):
+    def _make_label(self, tab_type, selected_tabs):
         label_parts = []
         if self.folder_count > 0:
-            if type == 'feed':
+            if tab_type in ('feed', 'audio-feed'):
                 label_parts.append(_('%d Channel Folders Selected') %
                         self.folder_count)
                 label_parts.append(_('(contains %d channels)') %
@@ -549,7 +551,7 @@ class MultipleSelectionDisplay(TabDisplay):
         if self.child_count > 0 and self.folder_count > 0:
             label_parts.append('')
         if self.child_count > 0:
-            if type == 'feed':
+            if tab_type in ('feed', 'audio-feed'):
                 label_parts.append(_('%d Channels Selected') %
                         self.child_count)
             else:
@@ -570,23 +572,24 @@ class MultipleSelectionDisplay(TabDisplay):
         return hbox
 
     def _on_delete_clicked(self, button):
-        if self.type == 'feed':
+        if self.type in ('feed', 'audio-feed'):
             app.widgetapp.remove_current_feed()
         else:
             app.widgetapp.remove_current_playlist()
 
     def _on_new_folder_clicked(self, button):
-        if self.type == 'feed':
+        if self.type in ('feed', 'audio-feed'):
+            section = {"feed": u"video", "audio-feed": u"audio"}
             app.widgetapp.add_new_channel_folder(add_selected=True)
         else:
             app.widgetapp.add_new_playlist_folder(add_selected=True)
 
 class DummyDisplay(TabDisplay):
     @staticmethod
-    def should_display(type, selected_tabs):
+    def should_display(tab_type, selected_tabs):
         return True
 
-    def __init__(self, type, selected_tabs):
+    def __init__(self, tab_type, selected_tabs):
         Display.__init__(self)
         text = '\n'.join(tab.name for tab in selected_tabs)
         label = widgetset.Label(text)
