@@ -277,6 +277,17 @@ class AudioFeedDisplay(FeedDisplay):
     def should_display(type, selected_tabs):
         return type == 'audio-feed' and len(selected_tabs) == 1
 
+    def on_selected(self):
+        ItemListDisplay.on_selected(self)
+        self._name_signal_handler = app.tab_list_manager.audio_feed_list.connect(
+                'tab-name-changed', self._on_name_changed)
+
+    def cleanup(self):
+        ItemListDisplay.cleanup(self)
+        app.tab_list_manager.audio_feed_list.disconnect(self._name_signal_handler)
+        if widgetutil.feed_exists(self.feed_id):
+            messages.MarkChannelSeen(self.feed_id).send_to_backend()
+
 class PlaylistDisplay(ItemListDisplay):
     @staticmethod
     def should_display(type, selected_tabs):
