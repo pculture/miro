@@ -31,6 +31,7 @@
 import struct
 import logging
 
+from objc import nil
 from AppKit import *
 from Foundation import *
 
@@ -41,86 +42,20 @@ from miro.gtcache import gettext as _
 from miro.frontends.widgets import menus
 from miro.plat.frontends.widgets import wrappermap
 
-class MenuHandler(NSObject):
-    def initWithAction_(self, action):
-        self = NSObject.init(self)
-        self.action = action
-        return self
-
-    def validateUserInterfaceItem_(self, menuitem):
-        group_names = menus.get_all_action_group_name(self.action)
-        for group_name in group_names:
-            if group_name in app.menu_manager.enabled_groups:
-                return True
-        return False
-
-    def handleMenuItem_(self, sender):        
-        if self.action == "HideMiro":
-            NSApp().hide_(None)
-
-        elif self.action == "HideOthers":
-            NSApp().hideOtherApplications_(None)
-
-        elif self.action == "ShowAll":
-            NSApp().unhideAllApplications_(None)
-
-        elif self.action == "CloseWindow":
-            key_window =  NSApplication.sharedApplication().keyWindow()
-            if key_window is not None:
-                window = wrappermap.wrapper(key_window)
-                window.close()
-
-        elif self.action == "Cut":
-            NSApp().sendAction_to_from_("cut:", None, sender)
-
-        elif self.action == "Copy":
-            NSApp().sendAction_to_from_("copy:", None, sender)
-
-        elif self.action == "Paste":
-            NSApp().sendAction_to_from_("paste:", None, sender)
-
-        elif self.action == "Delete":
-            NSApp().sendAction_to_from_("delete:", None, sender)
-
-        elif self.action == "SelectAll":
-            NSApp().sendAction_to_from_("selectAll:", None, sender)
-
-        elif self.action == "PresentActualSize":
-            self.present_movie('natural-size')
-
-        elif self.action == "PresentDoubleSize":
-            self.present_movie('double-size')
-        
-        elif self.action == "PresentHalfSize":
-            self.present_movie('half-size')
-
-        elif self.action == "Zoom":
-            NSApp().sendAction_to_from_("performZoom:", None, sender)
-
-        elif self.action == "Minimize":
-            NSApp().sendAction_to_from_("performMiniaturize:", None, sender)
-
-        elif self.action == "ShowMain":
-            app.widgetapp.window.nswindow.makeKeyAndOrderFront_(sender)
-
-        elif self.action == "BringAllToFront":
-            NSApp().sendAction_to_from_("arrangeInFront:", None, sender)
-
-        else:
-            handler = menus.lookup_handler(self.action)
-            if handler is not None:
-                handler()
-            else:
-                logging.warn("No handler for %s" % self.action)
-    
-    def present_movie(self, mode):
-        if app.playback_manager.is_playing:
-            app.playback_manager.set_presentation_mode(mode)
-        else:
-            app.item_list_controller_manager.play_selection(mode)
-
-# Keep a reference to each MenuHandler we create
-all_handlers = set()
+STD_ACTION_MAP = {
+    "HideMiro":         (NSApp(), 'hide:'),
+    "HideOthers":       (NSApp(), 'hideOtherApplications:'),
+    "ShowAll":          (NSApp(), 'unhideAllApplications:'),
+    "Cut":              (nil,     'cut:'),
+    "Copy":             (nil,     'copy:'),
+    "Paste":            (nil,     'paste:'),
+    "Delete":           (nil,     'delete:'),
+    "SelectAll":        (nil,     'selectAll:'),
+    "Zoom":             (nil,     'performZoom:'),
+    "Minimize":         (nil,     'performMiniaturize:'),
+    "BringAllToFront":  (nil,     'arrangeInFront:'),
+    "CloseWindow":      (nil,     'performClose:'),
+}
 
 MODIFIERS_MAP = {
     MOD:   NSCommandKeyMask,
@@ -158,10 +93,13 @@ def make_menu_item(menu_item):
                     nsmenuitem.setKeyEquivalent_(KEYS_MAP[shortcut.key])
                     nsmenuitem.setKeyEquivalentModifierMask_(make_modifier_mask(shortcut))
                     break
-        handler = MenuHandler.alloc().initWithAction_(menu_item.action)
-        nsmenuitem.setTarget_(handler)
-        nsmenuitem.setAction_('handleMenuItem:')
-        all_handlers.add(handler)
+        if menu_item.action in STD_ACTION_MAP:
+            nsmenuitem.setTarget_(STD_ACTION_MAP[menu_item.action][0])
+            nsmenuitem.setAction_(STD_ACTION_MAP[menu_item.action][1])
+        else:
+            nsmenuitem.setRepresentedObject_(menu_item.action)
+            nsmenuitem.setTarget_(NSApp().delegate())
+            nsmenuitem.setAction_('handleMenuItem:')
     return nsmenuitem
 
 def populate_single_menu(nsmenu, miro_menu):

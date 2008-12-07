@@ -48,6 +48,7 @@ from miro import messages
 from miro import filetypes
 from miro import eventloop
 from miro import singleclick
+from miro.frontends.widgets import menus
 from miro.frontends.widgets.application import Application
 from miro.plat import growl
 from miro.plat import _growlImage
@@ -325,3 +326,34 @@ class AppController(NSObject):
             eventloop.addIdle(lambda:singleclick.add_subscription_url('miro:', 'application/x-miro', url), "Open Miro URL")
         elif url.startswith('democracy:'):
             eventloop.addIdle(lambda:singleclick.add_subscription_url('democracy:', 'application/x-democracy', url), "Open Democracy URL")
+
+    def validateUserInterfaceItem_(self, menuitem):
+        action = menuitem.representedObject()
+        group_names = menus.get_all_action_group_name(action)
+        for group_name in group_names:
+            if group_name in app.menu_manager.enabled_groups:
+                return True
+        return False
+
+    def handleMenuItem_(self, sender):
+        action = sender.representedObject()
+        if action == "PresentActualSize":
+            self.present_movie('natural-size')
+        elif action == "PresentDoubleSize":
+            self.present_movie('double-size')
+        elif action == "PresentHalfSize":
+            self.present_movie('half-size')
+        elif action == "ShowMain":
+            app.widgetapp.window.nswindow.makeKeyAndOrderFront_(sender)
+        else:
+            handler = menus.lookup_handler(action)
+            if handler is not None:
+                handler()
+            else:
+                logging.warn("No handler for %s" % action)
+    
+    def present_movie(self, mode):
+        if app.playback_manager.is_playing:
+            app.playback_manager.set_presentation_mode(mode)
+        else:
+            app.item_list_controller_manager.play_selection(mode)
