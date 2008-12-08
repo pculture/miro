@@ -53,6 +53,7 @@ UNWATCHED_TEXT_COLOR = css_to_color('#399415') # darker green
 DOWNLOADING_COLOR = (0.90, 0.45, 0.08) # orange
 WATCHED_COLOR = (0.33, 0.33, 0.33) # dark grey
 EXPIRING_COLOR = (0.95, 0.82, 0.11) # yellow-ish
+EXPIRING_TEXT_COLOR = css_to_color('#7b949d')
 
 TAB_LIST_BACKGROUND_COLOR = (221/255.0, 227/255.0, 234/255.0)
 TAB_LIST_HEADER_COLOR = (100/255.0, 109/255.0, 125/255.0)
@@ -884,7 +885,7 @@ class StatusRenderer(ListViewRenderer):
         elif self.info.expiration_date:
             self.text = displaytext.expiration_date_short(
                     self.info.expiration_date)
-            self.color = EXPIRING_COLOR
+            self.color = EXPIRING_TEXT_COLOR
         elif not self.info.item_viewed:
             self.text = _('Newly Available')
             self.color = AVAILABLE_COLOR
@@ -908,6 +909,7 @@ class ETARenderer(ListViewRenderer):
             self.text = ''
 
 class DownloadRateRenderer(ListViewRenderer):
+    right_aligned = True
     def _setup_layout(self):
         if self.info.state == 'downloading':
             self.text = displaytext.download_rate(self.info.download_info.rate)

@@ -257,7 +257,7 @@ class ListItemView(widgetset.TableView):
                 'progress')
         self._make_column(_('Status'), style.StatusRenderer(), 'status')
         self._make_column(_('Size'), style.SizeRenderer(), 'size')
-        self._make_column(_('Time Left'), style.ETARenderer(), 'eta')
+        self._make_column(_('ETA'), style.ETARenderer(), 'eta')
         self._make_column(_('Speed'), style.DownloadRateRenderer(), 'rate')
         self._make_column(_('Description'), style.DescriptionRenderer(),
                 'description')
@@ -294,17 +294,17 @@ class ListItemView(widgetset.TableView):
                 (20, 0),    # bump
                 (100, 1),   # title
                 (70, 0.5),  # channel name
-                (80, 0),   # date
+                (85, 0),   # date
                 (60, 0),   # duration
                 (130, 0),   # downloading
-                (190, 0),   # status
-                (70, 0),    # size
-                (80, 0),    # eta
-                (50, 0),    # download rate
+                (160, 0),   # status
+                (65, 0),    # size
+                (50, 0),    # eta
+                (75, 0),    # download rate
                 (100, 1),   # description
             ]
             if not self.display_channel:
-                del width_specs[3]
+                del width_specs[2]
             available_width = self.width_for_columns(width)
             min_width = sum(spec[0] for spec in width_specs)
             extra_width = max(available_width - min_width, 0)
