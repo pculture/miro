@@ -50,6 +50,7 @@ from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistwidgets
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
+from miro.frontends.widgets import separator
 from miro.plat.frontends.widgets import widgetset
 from miro.plat import resources
 
@@ -397,14 +398,19 @@ class SearchController(SimpleItemListController):
         self.toolbar.connect("save-search", self._on_save_search)
         if app.search_manager.text != '':
             self.toolbar.show()
+        sep = separator.HSeparator((0.85, 0.85, 0.85), (0.95, 0.95, 0.95))
+        self.widget.titlebar_vbox.pack_start(sep)
         self.widget.titlebar_vbox.pack_start(self.toolbar)
 
     def build_widget(self):
-        SimpleItemListController.build_widget(self)
         label = widgetset.Label(_('No Results Found'))
+        label.set_bold(True)
+        label.set_color((0.8, 0.8, 0.8))
         label.set_size(2)
-        self.no_results_label = widgetutil.HideableWidget(label)
+        aligned = widgetutil.align_center(label, top_pad=24)
+        self.no_results_label = widgetutil.HideableWidget(aligned)
         self.widget.normal_view_vbox.pack_start(self.no_results_label)
+        SimpleItemListController.build_widget(self)
 
     def initialize_search(self):
         if app.search_manager.text != '':

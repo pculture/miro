@@ -366,7 +366,7 @@ class HideableSection(widgetutil.HideableWidget):
         hbox.pack_start(widgetutil.pad(self.info_label, left=7))
         self.expander.set_label(hbox)
 
-class SearchToolbar(widgetutil.HideableWidget):
+class SearchToolbar(widgetset.Background):
     """Toolbar for the search page.
 
     It's a hidable widget that contains the save search button.
@@ -378,14 +378,34 @@ class SearchToolbar(widgetutil.HideableWidget):
     """
 
     def __init__(self):
-        save_button = widgetset.Button(_('Save as a Channel'))
+        widgetset.Background.__init__(self)
+        hbox = widgetset.HBox()
+        self.add(hbox)
+        save_button = widgetset.Button(_('Save as a Channel'), style='smooth')
+        save_button.set_size(widgetconst.SIZE_SMALL)
         save_button.connect('clicked', self._on_save_clicked)
-        child = widgetutil.align_left(save_button, left_pad=5, bottom_pad=5)
-        widgetutil.HideableWidget.__init__(self, child)
+        aligned = widgetutil.align_left(save_button, top_pad=5, left_pad=5, bottom_pad=5)
+        self.hideable = widgetutil.HideableWidget(aligned)
+        hbox.pack_start(self.hideable)
         self.create_signal('save-search')
 
     def _on_save_clicked(self, button):
         self.emit('save-search')
+
+    def show(self):
+        self.hideable.show()
+
+    def hide(self):
+        self.hideable.hide()
+
+    def draw(self, context, layout):
+        if not context.style.use_custom_titlebar_background:
+            return
+        gradient = widgetset.Gradient(0, 0, 0, context.height)
+        gradient.set_start_color((0.90, 0.90, 0.90))
+        gradient.set_end_color((0.79, 0.79, 0.79))
+        context.rectangle(0, 0, context.width, context.height)
+        context.gradient_fill(gradient)
 
 class DownloadToolbar(widgetset.VBox):
     """Widget that shows free space, pause/resume/... buttons for downloads,
