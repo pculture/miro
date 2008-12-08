@@ -34,6 +34,7 @@ from miro import signals
 from miro.frontends.widgets.gtk import window
 from miro.frontends.widgets.gtk import wrappermap
 from miro.frontends.widgets.gtk.weakconnect import weak_connect
+from miro.frontends.widgets.gtk.keymap import gtk_key_map
 
 def make_gdk_color(miro_color):
     def convert_value(value):
@@ -55,6 +56,7 @@ class Widget(signals.SignalEmitter):
     def __init__(self, *signal_names):
         signals.SignalEmitter.__init__(self, *signal_names)
         self.create_signal('size-allocated')
+        self.create_signal('key-press')
         self.style_mods = {}
         self.use_custom_style = False
         self._disabled = False
@@ -73,6 +75,7 @@ class Widget(signals.SignalEmitter):
         self.wrapped_widget_connect('hierarchy_changed',
                 self.on_hierarchy_changed)
         self.wrapped_widget_connect('size-allocate', self.on_size_allocate)
+        self.wrapped_widget_connect('key-press-event', self.on_key_press)
         self.use_custom_style_callback = None
 
     def on_hierarchy_changed(self, widget, previous_toplevel):
@@ -96,6 +99,14 @@ class Widget(signals.SignalEmitter):
 
     def on_size_allocate(self, widget, allocation):
         self.emit('size-allocated', allocation.width, allocation.height)
+
+    def on_key_press(self, widget, event):
+        gtk_keyval = gtk.gdk.keyval_name(event.keyval)
+        if len(gtk_keyval) == 1:
+            key = gtk_keyval
+        else:
+            key = gtk_key_map.get(gtk_keyval)
+        self.emit('key-press', key)
 
     def on_use_custom_style_changed(self, window):
         self.use_custom_style = window.use_custom_style

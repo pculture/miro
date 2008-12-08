@@ -31,6 +31,7 @@
 from miro import app
 from miro import signals
 from miro import messages
+from miro import menubar
 from miro.gtcache import gettext as _
 from miro.plat import resources
 from miro.frontends.widgets import style
@@ -366,6 +367,7 @@ class TabList(signals.SignalEmitter):
         self.create_signal('tab-name-changed')
         self.view = TabListView(style.TabRenderer())
         self.view.allow_multiple_select(self.ALLOW_MULTIPLE)
+        self.view.connect_weak('key-press', self.on_key_press)
         self.view.connect('row-expanded', self.on_row_expanded_change, True)
         self.view.connect('row-collapsed', self.on_row_expanded_change, False)
         self.iter_map = {}
@@ -393,6 +395,10 @@ class TabList(signals.SignalEmitter):
         for id in selected_ids:
             self.view.select(self.iter_map[id])
         self.doing_change = False
+
+    def on_key_press(self, view, key):
+        if key == menubar.DELETE:
+            self.on_delete_key_pressed()
 
     def on_row_expanded_change(self, view, iter, expanded):
         id = self.view.model[iter][0].id
@@ -457,10 +463,17 @@ class TabList(signals.SignalEmitter):
             child_iter = self.view.model.next_iter(child_iter)
         return count
 
+    def on_delete_key_pressed(self):
+        """For subclasses to override."""
+        pass
+
 class SiteList(TabList):
     type = 'site'
 
     ALLOW_MULTIPLE = False
+
+    def on_delete_key_pressed(self):
+        app.widgetapp.remove_current_site()
 
     def init_info(self, info):
         thumb_path = resources.path('images/icon-site.png')
@@ -495,6 +508,9 @@ class FeedList(NestedTabList):
         TabList.__init__(self)
         self.view.set_drag_source(FeedListDragHandler())
         self.view.set_drag_dest(FeedListDropHandler(self))
+
+    def on_delete_key_pressed(self):
+        app.widgetapp.remove_current_feed()
 
     def init_info(self, info):
         info.icon = imagepool.get_surface(info.tab_icon, size=(20, 20))
@@ -550,6 +566,9 @@ class PlaylistList(NestedTabList):
         TabList.__init__(self)
         self.view.set_drag_source(PlaylistListDragHandler())
         self.view.set_drag_dest(PlaylistListDropHandler(self))
+
+    def on_delete_key_pressed(self):
+        app.widgetapp.remove_current_playlist()
 
     def init_info(self, info):
         if info.is_folder:

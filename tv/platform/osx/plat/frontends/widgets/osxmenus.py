@@ -67,11 +67,17 @@ MODIFIERS_MAP = {
 KEYS_MAP = {
     SPACE: " ",
     BKSPACE: struct.pack("H", NSBackspaceCharacter),
+    DELETE: NSDeleteFunctionKey,
     RIGHT_ARROW: NSRightArrowFunctionKey,
     LEFT_ARROW: NSLeftArrowFunctionKey,
     UP_ARROW: NSUpArrowFunctionKey,
     DOWN_ARROW: NSDownArrowFunctionKey
 }
+
+REVERSE_MODIFIERS_MAP = dict((i[1], i[0]) for i in MODIFIERS_MAP.items())
+REVERSE_KEYS_MAP = dict((i[1], i[0]) for i in KEYS_MAP.items() 
+        if i[0] != BKSPACE)
+REVERSE_KEYS_MAP[u'\x7f'] = BKSPACE
 
 def make_modifier_mask(shortcut):
     mask = 0

@@ -33,11 +33,13 @@ from Foundation import *
 from objc import YES, NO, nil
 from PyObjCTools import AppHelper
 
+from miro import menubar
 from miro import signals
 from miro.frontends.widgets import widgetconst
+from miro.plat.frontends.widgets import osxmenus
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
-from miro.plat.frontends.widgets.base import Container, FlippedView
+from miro.plat.frontends.widgets.base import Widget, Container, FlippedView
 from miro.plat.frontends.widgets.layout import VBox, HBox, Alignment
 from miro.plat.frontends.widgets.control import Button
 from miro.plat.frontends.widgets.simple import Label
@@ -47,6 +49,19 @@ from miro.plat.frontends.widgets.rect import Rect, NSRectWrapper
 # object stay alive as long as the window is alive.
 alive_windows = set()
 
+class MiroWindow(NSWindow):
+    def keyDown_(self, event):
+        key = event.characters()
+        if len(key) != 1 or not key.isalpha():
+            key = osxmenus.REVERSE_KEYS_MAP.get(key)
+        responder = self.firstResponder()
+        while responder is not None:
+            wrapper = wrappermap.wrapper(responder)
+            if isinstance(wrapper, Widget):
+                wrapper.emit('key-press', key)
+            responder = responder.nextResponder()
+        return NSWindow.keyDown_(self, event)
+
 class Window(signals.SignalEmitter):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPIfor a description of the API for this class."""
     def __init__(self, title, rect):
@@ -54,7 +69,7 @@ class Window(signals.SignalEmitter):
         self.create_signal('active-change')
         self.create_signal('will-close')
         self.create_signal('did-move')
-        self.nswindow = NSWindow.alloc()
+        self.nswindow = MiroWindow.alloc()
         self.nswindow.initWithContentRect_styleMask_backing_defer_(
                 rect.nsrect,
                 self.get_style_mask(),

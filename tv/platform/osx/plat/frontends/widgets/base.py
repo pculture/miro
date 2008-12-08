@@ -52,7 +52,7 @@ class Widget(signals.SignalEmitter):
 
     def __init__(self):
         signals.SignalEmitter.__init__(self, 'size-request-changed',
-                'size-allocated')
+                'size-allocated', 'key-press')
         self.viewport = None
         self.parent_is_scroller = False
         self.manual_size_request = None

@@ -41,6 +41,7 @@ from miro import signals
 from miro import dialogs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets.gtk import wrappermap, widgets
+from miro.frontends.widgets.gtk.keymap import menubar_mod_map, menubar_key_map
 from miro.frontends.widgets import menus
 from miro.plat import resources
 
@@ -70,23 +71,6 @@ STOCK_IDS = {
     "Help": gtk.STOCK_HELP,
     "About": gtk.STOCK_ABOUT,
     "Translate": gtk.STOCK_EDIT
-}
-
-menubar_mod_map = {
-    menubar.CTRL: '<Ctrl>',
-    menubar.ALT: '<Alt>',
-    menubar.SHIFT: '<Shift>',
-}
-
-menubar_key_map = {
-    menubar.RIGHT_ARROW: 'Right',
-    menubar.LEFT_ARROW: 'Left',
-    menubar.UP_ARROW: 'Up',
-    menubar.DOWN_ARROW: 'Down',
-    menubar.SPACE: 'space',
-    menubar.ENTER: 'Return',
-    menubar.DELETE: 'Delete',
-    menubar.BKSPACE: 'BackSpace',
 }
 
 for i in range(1, 13):

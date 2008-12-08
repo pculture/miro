@@ -42,6 +42,7 @@ from urlparse import urljoin
 
 from miro import app
 from miro import messages
+from miro import menubar
 from miro import subscription
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import dialogs
@@ -116,6 +117,7 @@ class ItemListController(object):
         for item_view in self.all_item_views():
             item_view.connect_weak('selection-changed', self.on_selection_changed)
             item_view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
+            item_view.connect_weak('key-press', self.on_key_press)
             item_view.set_context_menu_callback(context_callback)
             item_view.set_drag_source(self.make_drag_handler())
             item_view.set_drag_dest(self.make_drop_handler())
@@ -202,6 +204,10 @@ class ItemListController(object):
         for item_view in self.all_item_views():
             item_view.model_changed()
         self.list_item_view.change_sort_indicator(sort_key, ascending)
+
+    def on_key_press(self, view, key):
+        if key == menubar.DELETE:
+            app.widgetapp.remove_items(self.get_selection())
 
     def on_hotspot_clicked(self, itemview, name, iter):
         """Hotspot handler for ItemViews."""

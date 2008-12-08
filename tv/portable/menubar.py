@@ -185,7 +185,7 @@ VideoItems = [
     MenuItem(_("_Download Item..."), "NewDownload", ()),
     MenuItem(_("Check _Version"), "CheckVersion", ()),
     Separator(),
-    MenuItem(_("_Remove Item..."), "RemoveItems", (Key(DELETE),Key(BKSPACE, MOD)), enabled=False,
+    MenuItem(_("_Remove Item..."), "RemoveItems", (Key(BKSPACE, MOD),), enabled=False,
              plural=_("_Remove Items")),
     MenuItem(_("Re_name Item"), "RenameItem", (), enabled=False),
     MenuItem(_("Save Item _As..."), "SaveItem", (Key("s",MOD),), enabled=False,
@@ -206,7 +206,6 @@ EditItems = [
     MenuItem(_("_Copy"), "ClipboardCopy", (Key("c",MOD),)),
     MenuItem(_("_Paste"), "ClipboardPaste", (Key("v",MOD),)),
     MenuItem(_("Select _All"), "ClipboardSelectAll", (Key("a",MOD),)),
-    MenuItem(_("_Delete"), "ClipboardSelectAll", (Key(DELETE),Key(BKSPACE,MOD))),
 ]
 
 ChannelItems = [
@@ -216,7 +215,7 @@ ChannelItems = [
     MenuItem(_("New _Folder..."), "NewChannelFolder", (Key("n",MOD,SHIFT),)),
     Separator(),
     MenuItem(_("Re_name Channel..."), "RenameChannel", (), enabled=False),
-    MenuItem(_("_Remove Channel..."), "RemoveChannels", (Key(DELETE),Key(BKSPACE, MOD)), enabled=False,
+    MenuItem(_("_Remove Channel..."), "RemoveChannels", (Key(BKSPACE, MOD),), enabled=False,
              plural=_("_Remove Channels..."),
              folders=_("_Remove Channel Folders..."),
              folder=_("_Remove Channel Folder..."),
@@ -237,7 +236,7 @@ PlaylistItems = [
     MenuItem(_("New Playlist Fol_der..."), "NewPlaylistFolder",(Key("p",MOD,SHIFT),)),
     Separator(),
     MenuItem(_("Re_name Playlist"),"RenamePlaylist",(), enabled=False),
-    MenuItem(_("_Remove Playlist"),"RemovePlaylists", (Key(DELETE),Key(BKSPACE, MOD)), enabled=False,
+    MenuItem(_("_Remove Playlist"),"RemovePlaylists", (Key(BKSPACE, MOD),), enabled=False,
              plural=_("_Remove Playlists"),
              folders=_("_Remove Playlist Folders"),
              folder=_("_Remove Playlist Folder"),
