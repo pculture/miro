@@ -228,7 +228,6 @@ def on_planet():
 
 
 # action_group name -> list of MenuItem labels belonging to action_group
-# NOTE: menu items can belong to at most one group!
 action_groups = {
         'FeedSelected': [
             'RenameChannel',
@@ -350,6 +349,7 @@ class MenuManager(signals.SignalEmitter):
         is a list of ItemInfo objects containing the current selection.
         """
         self.reset()
+        self.enabled_groups.add('FeedsSelected')
         for item in selected_items:
             if item.downloaded:
                 self.enabled_groups.add('PlayableSelected')
