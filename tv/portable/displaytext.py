@@ -96,6 +96,24 @@ def expiration_date(exp_date):
                         math.ceil(offset.seconds/60.0),
                         {"count": math.ceil(offset.seconds/60.0)})
 
+def expiration_date_short(exp_date):
+    offset = exp_date - datetime.datetime.now()
+    if offset.days > 0:
+        return ngettext("Expires: %(count)d day",
+                        "Expires: %(count)d days",
+                        offset.days,
+                        {"count": offset.days})
+    elif offset.seconds > 3600:
+        return ngettext("Expires: %(count)d hour",
+                        "Expires: %(count)d hours",
+                        math.ceil(offset.seconds/3600.0),
+                        {"count": math.ceil(offset.seconds/3600.0)})
+    else:
+        return ngettext("Expires: %(count)d minute",
+                        "Expires: %(count)d minutes",
+                        math.ceil(offset.seconds/60.0),
+                        {"count": math.ceil(offset.seconds/60.0)})
+
 def release_date(release_date):
     if release_date > datetime.datetime.min:
         return release_date.strftime("%b %d %Y")

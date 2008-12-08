@@ -320,6 +320,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             button = layout.button(_('Remove'), self.hotspot=='delete')
         else:
             button = layout.button(_('Delete'), self.hotspot=='delete')
+
         button.set_min_width(65)
         hbox.pack(cellpack.Hotspot('delete', button))
         if (self.data.download_info is not None
@@ -790,36 +791,54 @@ class ListViewRenderer(widgetset.CustomCellRenderer):
         height = layout.font(self.font_size, bold=self.bold).line_height()
         return 5, height
 
+    def hotspot_test(self, style, layout, x, y, width, height):
+        self.hotspot = None
+        self.selected = False
+        self.style = style
+        packing = self.layout(layout)
+        hotspot_info = packing.find_hotspot(x, y, width, height)
+        if hotspot_info is None:
+            return None
+        else:
+            return hotspot_info[0]
+
     def render(self, context, layout, selected, hotspot, hover):
-        # we could use cellpack for this, but it's so simple we handle it
-        # manually
-        self._setup_render()
+        self.hotspot = hotspot
+        self.style = context.style
+        self.selected = selected
+        packing = self.layout(layout)
+        packing.render_layout(context)
+
+    def layout(self, layout):
+        self._setup_layout()
         layout.set_font(self.font_size, bold=self.bold)
-        if not selected and context.style.use_custom_style:
+        if not self.selected and self.style.use_custom_style:
             layout.set_text_color(self.color)
         else:
-            layout.set_text_color(context.style.text_color)
+            layout.set_text_color(self.style.text_color)
         textbox = layout.textbox(self.text)
         textbox.set_wrap_style('char')
         text_size = textbox.get_size()
-        if self.right_aligned:
-            x = max(context.width - text_size[0], 0)
-        else:
-            x = 0
-        y = (context.height - text_size[1]) / 2.0
-        textbox.draw(context, x, y, text_size[0], text_size[1])
+        hbox = cellpack.HBox()
+        hbox.pack(cellpack.align_middle(textbox))
+        self._pack_extra(layout, hbox)
+        return hbox
 
-    def _setup_render(self):
-        """Prepare to render the text.  This method must set the text
+    def _setup_layout(self):
+        """Prepare to layout the cell.  This method must set the text
         attribute and may also set the color, bold or other attributes.
         """
         raise NotImplementedError()
 
-class NameRenderer(ListViewRenderer):
-    bold = True
+    def _pack_extra(self, layout, hbox):
+        """Pack extra stuff in the hbox that we created in layout()."""
+        pass
 
-    def _setup_render(self):
+class NameRenderer(ListViewRenderer):
+
+    def _setup_layout(self):
         self.text = self.info.name
+        self.bold = self.info.downloaded
         if self.info.state == 'downloading':
             self.color = DOWNLOADING_COLOR
         elif self.info.downloaded and not self.info.video_watched:
@@ -834,24 +853,24 @@ class NameRenderer(ListViewRenderer):
 class DescriptionRenderer(ListViewRenderer):
     color = (0.6, 0.6, 0.6)
 
-    def _setup_render(self):
+    def _setup_layout(self):
         self.text = self.info.description_text.replace('\n', ' ')
 
 class FeedNameRenderer(ListViewRenderer):
-    def _setup_render(self):
+    def _setup_layout(self):
         self.text = self.info.feed_name
 
 class DateRenderer(ListViewRenderer):
-    def _setup_render(self):
+    def _setup_layout(self):
         self.text = displaytext.release_date_slashes(self.info.release_date)
 
 class LengthRenderer(ListViewRenderer):
-    def _setup_render(self):
+    def _setup_layout(self):
         self.text = displaytext.duration(self.info.duration)
 
 class StatusRenderer(ListViewRenderer):
     bold = True
-    def _setup_render(self):
+    def _setup_layout(self):
         if self.info.state == 'downloading':
             self.text = _('Downloading')
             self.color = DOWNLOADING_COLOR
@@ -862,7 +881,8 @@ class StatusRenderer(ListViewRenderer):
             self.text = _('Unwatched')
             self.color = UNWATCHED_COLOR
         elif self.info.expiration_date:
-            self.text = displaytext.expiration_date(self.info.expiration_date)
+            self.text = displaytext.expiration_date_short(
+                    self.info.expiration_date)
             self.color = EXPIRING_COLOR
         elif not self.info.item_viewed:
             self.text = _('Newly Available')
@@ -870,17 +890,24 @@ class StatusRenderer(ListViewRenderer):
         else:
             self.text = ''
 
+    def _pack_extra(self, layout, hbox):
+        if self.info.expiration_date:
+            layout.set_font(self.font_size, bold=False)
+            button = layout.button(_('Keep'), self.hotspot=='keep')
+            hbox.pack_space(8)
+            hbox.pack(cellpack.Hotspot('keep', button))
+
 class ETARenderer(ListViewRenderer):
     right_aligned = True
 
-    def _setup_render(self):
+    def _setup_layout(self):
         if self.info.state == 'downloading':
             self.text = displaytext.time(self.info.download_info.eta)
         else:
             self.text = ''
 
 class DownloadRateRenderer(ListViewRenderer):
-    def _setup_render(self):
+    def _setup_layout(self):
         if self.info.state == 'downloading':
             self.text = displaytext.download_rate(self.info.download_info.rate)
         else:
@@ -889,7 +916,7 @@ class DownloadRateRenderer(ListViewRenderer):
 class SizeRenderer(ListViewRenderer):
     right_aligned = True
 
-    def _setup_render(self):
+    def _setup_layout(self):
         self.text = displaytext.size(self.info.size)
 
 class StateCircleRenderer(widgetset.CustomCellRenderer):
@@ -963,7 +990,7 @@ class DownloadingRenderer(ListViewRenderer):
 
     def pack_progress_bar(self, layout):
         progress_bar = ProgressBarDrawer(self.info)
-        hbox = cellpack.HBox(spacing=9)
+        hbox = cellpack.HBox(spacing=2)
         if self.info.state == 'downloading':
             hotspot = cellpack.Hotspot('pause', self.pause_button)
         else:
@@ -979,19 +1006,7 @@ class DownloadingRenderer(ListViewRenderer):
         hbox = cellpack.HBox(spacing=6)
         if not self.info.downloaded:
             button = layout.button(_('Download'), self.hotspot=='download')
-            button.set_min_width(65)
             hbox.pack(cellpack.Hotspot('download', button))
-        else:
-            if self.info.expiration_date:
-                button = layout.button(_('Keep'), self.hotspot=='keep')
-                button.set_min_width(65)
-                hbox.pack(cellpack.Hotspot('keep', button))
-            if self.info.is_external:
-                button = layout.button(_('Remove'), self.hotspot=='delete')
-            else:
-                button = layout.button(_('Delete'), self.hotspot=='delete')
-            button.set_min_width(65)
-            hbox.pack(cellpack.Hotspot('delete', button))
         return cellpack.align_middle(hbox)
 
 class ProgressBarDrawer(cellpack.Packer):

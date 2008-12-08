@@ -253,10 +253,10 @@ class ListItemView(widgetset.TableView):
                     'feed-name')
         self._make_column(_('Date'), style.DateRenderer(), 'date')
         self._make_column(_('Length'), style.LengthRenderer(), 'length')
-        self._make_column(_('Size'), style.SizeRenderer(), 'size')
-        self._make_column(_('Status'), style.StatusRenderer(), 'status')
-        self._make_column(_('Downloading'), style.DownloadingRenderer(),
+        self._make_column(_('Download'), style.DownloadingRenderer(),
                 'progress')
+        self._make_column(_('Status'), style.StatusRenderer(), 'status')
+        self._make_column(_('Size'), style.SizeRenderer(), 'size')
         self._make_column(_('Time Left'), style.ETARenderer(), 'eta')
         self._make_column(_('Speed'), style.DownloadRateRenderer(), 'rate')
         self._make_column(_('Description'), style.DescriptionRenderer(),
@@ -296,9 +296,9 @@ class ListItemView(widgetset.TableView):
                 (70, 0.5),  # channel name
                 (80, 0),   # date
                 (60, 0),   # duration
+                (130, 0),   # downloading
+                (190, 0),   # status
                 (70, 0),    # size
-                (140, 0),   # status
-                (160, 0),   # downloading
                 (80, 0),    # eta
                 (50, 0),    # download rate
                 (100, 1),   # description
