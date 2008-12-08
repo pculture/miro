@@ -67,9 +67,9 @@ def _pack_row_column(row, column):
     """Convert a row, column pair into a integer suitable for passing to
     NSView.addTrackingRect_owner_userData_assumeInside_.
     """
-    if column > 1 << 16:
+    if column > (1 << 16):
         raise ValueError("column value too big: ", column)
-    return row << 16 + column
+    return (row << 16) + column
 
 def _unpack_row_column(value):
     """Reverse the work of _pack_row_column()."""
