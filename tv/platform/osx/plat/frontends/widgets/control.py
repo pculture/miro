@@ -64,6 +64,7 @@ class BaseTextEntry(SizedControl):
         self.height = self.font.pointSize() + self.font.leading()
         self.view.setFont_(self.font)
         self.view.setEditable_(YES)
+        self.view.cell().setScrollable_(YES)
         self.view.cell().setLineBreakMode_(NSLineBreakByClipping)
         self.sizer_cell = self.view.cell().copy()
         if initial_text:
