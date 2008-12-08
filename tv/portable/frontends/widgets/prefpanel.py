@@ -117,7 +117,7 @@ def attach_radio(widget_values, descriptor):
             if widget is w:
                 config.set(descriptor, v)
 
-    pref_value = bool(config.get(descriptor))
+    pref_value = config.get(descriptor)
     for w, v in widget_values:
         w.connect('clicked', radio_changed)
         if v == pref_value:
