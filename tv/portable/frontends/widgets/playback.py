@@ -159,9 +159,6 @@ class PlaybackManager (signals.SignalEmitter):
             total = self.video_display.get_total_playback_time()
             self.emit('playback-did-progress', elapsed, total)
 
-    def on_detached_window_close(self, window):
-        self.stop()
-
     def on_display_removed(self, display):
         self.stop()
     
@@ -199,9 +196,6 @@ class PlaybackManager (signals.SignalEmitter):
             return
         if save_resume_time:
             self.update_current_resume_time()
-        self.exit_playback()
-    
-    def exit_playback(self):
         self.cancel_update_timer()
         self.cancel_mark_as_watched()
         self.is_playing = False
@@ -372,10 +366,15 @@ class DetachedWindow (widgetset.Window):
     def __init__(self, title, rect):
         widgetset.Window.__init__(self, title, rect)
         self.closing = False
+        self.stop_on_close = True
 
     def close(self, stop_playback=True):
         if not self.closing:
-            self.closing = True
-            if stop_playback:
-                app.playback_manager.stop()
+            self.stop_on_close = stop_playback
             widgetset.Window.close(self)
+
+    def on_will_close(self, notification):
+        if not self.closing:
+            self.closing = True
+            if self.stop_on_close:
+                app.playback_manager.stop()
