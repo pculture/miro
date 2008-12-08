@@ -334,6 +334,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.is_fullscreen = True
     
     def exit_fullscreen(self):
+        self.presentation_mode = 'fit-to-bounds'
         self.video_display.exit_fullscreen()
         self.is_fullscreen = False
 

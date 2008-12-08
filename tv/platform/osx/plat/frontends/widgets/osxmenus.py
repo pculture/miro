@@ -157,9 +157,9 @@ def populate_menu():
 
     # Playback menu
     presentMenuItems = [
-        MenuItem(_("Present Half Size"), "PresentHalfSize", ()),
-        MenuItem(_("Present Actual Size"), "PresentActualSize", ()),
-        MenuItem(_("Present Double Size"), "PresentDoubleSize", ()),
+        MenuItem(_("Present Half Size"), "PresentHalfSize", (Key("0", MOD),)),
+        MenuItem(_("Present Actual Size"), "PresentActualSize", (Key("1", MOD),)),
+        MenuItem(_("Present Double Size"), "PresentDoubleSize", (Key("2", MOD),)),
     ]
     presentMenu = Menu(_("Present Video"), "Present", *presentMenuItems)
     menubar.findMenu("Playback").menuitems.append(presentMenu)
@@ -171,7 +171,7 @@ def populate_menu():
         MenuItem(_("Zoom"), "Zoom", ()),
         MenuItem(_("Minimize"), "Minimize", (Key("m", MOD),)),
         Separator(),
-        MenuItem(_("Main Window"), "ShowMain", (Key("0", MOD),)),
+        MenuItem(_("Main Window"), "ShowMain", (Key("M", MOD, SHIFT),)),
         Separator(),
         MenuItem(_("Bring All to Front"), "BringAllToFront", ()),
     ]
