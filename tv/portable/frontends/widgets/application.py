@@ -561,7 +561,7 @@ class Application:
         emailfriend_url = config.get(prefs.EMAILFRIEND_URL)
         if not emailfriend_url.endswith("?"):
             emailfriend_url += "?"
-        query = urllib.urlencode({"url": url, "title": title})
+        query = urllib.urlencode({"url": url, "title": title.encode('utf-8')})
         app.widgetapp.open_url(emailfriend_url + query)
 
     def copy_channel_url(self):
