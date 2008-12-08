@@ -40,7 +40,7 @@ def appRoot():
     exe_path = unicode(sys.executable, sys.getfilesystemencoding())
     return os.path.dirname(exe_path)
 
-def resourceRoot():
+def root():
     return os.path.join(appRoot(), 'resources')
 
 # Note: some of these functions are probably not absolutely correct in
@@ -53,7 +53,7 @@ def resourceRoot():
 # expected to be supplied in Unix format, with forward-slashes as
 # separators. The output, though, uses the native platform separator.
 def path(relative_path):
-    abspath = os.path.abspath(os.path.join(resourceRoot(), relative_path))
+    abspath = os.path.abspath(os.path.join(root(), relative_path))
     return abspath.replace("/", "\\")
 
 def url(relative_path):

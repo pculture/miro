@@ -45,6 +45,7 @@ from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
+from miro.plat import resources
 
 class FeedController(itemlistcontroller.ItemListController):
     """Controller object for feeds."""
@@ -63,11 +64,12 @@ class FeedController(itemlistcontroller.ItemListController):
 
     def build_widget(self):
         feed_info = widgetutil.get_feed_info(self.id)
-        icon = imagepool.get(feed_info.thumbnail, size=(61, 61))
+        icon = imagepool.get(feed_info.thumbnail, size=(41, 41))
         self._make_item_views()
 
+        add_icon_box = not self.is_folder and not feed_info.thumbnail.startswith(resources.root())
         self.titlebar = itemlistwidgets.ChannelTitlebar(feed_info.name, icon,
-                add_icon_box=not self.is_folder)
+                add_icon_box=add_icon_box)
         self.titlebar.connect('search-changed', self._on_search_changed)
         self.titlebar.connect('save-search', self._on_save_search)
         self.widget.titlebar_vbox.pack_start(self.titlebar)

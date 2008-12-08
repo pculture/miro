@@ -31,11 +31,14 @@ import os
 import urllib
 from miro.plat import bundle
 
+def root():
+    return os.path.join(bundle.getBundleResourcePath(), u'resources')
+
 # Find the full path to a resource data file. 'relative_path' is
 # expected to be supplied in Unix format, with forward-slashes as
 # separators. The output, though, uses the native platform separator.
 def path(relative_path):
-    rsrcpath = os.path.join(bundle.getBundleResourcePath(), u'resources', relative_path)
+    rsrcpath = os.path.join(root(), relative_path)
     return str(os.path.abspath(rsrcpath))
 
 # As path(), but return a file: URL instead.

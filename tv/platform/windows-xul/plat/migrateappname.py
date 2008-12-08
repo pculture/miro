@@ -72,7 +72,7 @@ def migrateSupport(oldAppName, newAppName):
                 return True
             count += 1
             if (name == oldAppName):
-                filename = os.path.join(resources.resourceRoot(),"..",("%s.exe" % templateVars['shortAppName']))
+                filename = os.path.join(resources.root(),"..",("%s.exe" % templateVars['shortAppName']))
                 filename = os.path.normpath(filename)
                 writable_folder = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER,
                                            runSubkey, 0,_winreg.KEY_SET_VALUE)

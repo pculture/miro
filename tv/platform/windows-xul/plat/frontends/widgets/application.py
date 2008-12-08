@@ -212,7 +212,7 @@ class WindowsApplication(Application):
         if value:
             # We don't use the app name for the .exe, so branded
             # versions work
-            filename = os.path.join(resources.resourceRoot(), "..", "Miro.exe")
+            filename = os.path.join(resources.root(), "..", "Miro.exe")
             filename = os.path.normpath(filename)
             themeName = config.get(prefs.THEME_NAME)
             if themeName is not None:
