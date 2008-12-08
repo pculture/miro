@@ -1040,8 +1040,18 @@ class Item(DDBObject):
         if self.looks_like_torrent():
             return u'.torrent'
 
-        enclosure = self.getFirstVideoEnclosure()
+        if self.downloader:
+            mtype, subtype = self.downloader.contentType.split('/', 1)
+            mtype = mtype.lower()
+            if mtype in self.KNOWN_MIME_TYPES:
+                format = subtype.split(';')[0].upper()
+                if mtype == u'audio':
+                    format += u' AUDIO'
+                if format.startswith(u'X-'):
+                    format = format[2:]
+                return u'.%s' % self.MIME_SUBSITUTIONS.get(format, format).lower()
 
+        enclosure = self.getFirstVideoEnclosure()
         if enclosure:
             try:
                 extension = enclosure['url'].split('.')[-1]
