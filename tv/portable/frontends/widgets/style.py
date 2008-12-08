@@ -820,7 +820,8 @@ class ListViewRenderer(widgetset.CustomCellRenderer):
         textbox.set_wrap_style('char')
         text_size = textbox.get_size()
         hbox = cellpack.HBox()
-        hbox.pack(cellpack.align_middle(textbox))
+        textline = cellpack.TruncatedTextLine(textbox)
+        hbox.pack(cellpack.align_middle(textline), expand=True)
         self._pack_extra(layout, hbox)
         return hbox
 
