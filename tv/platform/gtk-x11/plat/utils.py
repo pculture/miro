@@ -138,7 +138,7 @@ def unicodeToFilename(filename, path=None):
         first, last = os.path.splitext(filename)
 
         if first:
-            return u"".join(first[:-1], last)
+            return u"".join([first[:-1], last])
 
         return last[:-1]
 
