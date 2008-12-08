@@ -37,6 +37,7 @@ from miro import app
 from miro import messages
 from miro import signals
 from miro.gtcache import gettext as _
+from miro.gtcache import ngettext
 from miro.frontends.widgets import browser
 from miro.frontends.widgets import downloadscontroller
 from miro.frontends.widgets import feedcontroller
@@ -130,8 +131,8 @@ class DisplayManager(object):
 
     def select_display_for_tabs(self, selected_tab_list, selected_tabs):
         """Select a display to show in the right-hand side.  """
-        if (selected_tab_list is self.selected_tab_list and 
-                selected_tabs == self.selected_tabs and 
+        if (selected_tab_list is self.selected_tab_list and
+                selected_tabs == self.selected_tabs and
                 len(self.display_stack) > 0 and
                 isinstance(self.display_stack[-1], TabDisplay)):
             logging.debug('not reselecting')
@@ -482,7 +483,7 @@ class VideoDisplay(Display):
     def enter_fullscreen(self):
         self.renderer.enter_fullscreen()
         self.in_fullscreen = True
-    
+
     def exit_fullscreen(self):
         self.renderer.exit_fullscreen()
         self.in_fullscreen = False
@@ -536,27 +537,47 @@ class MultipleSelectionDisplay(TabDisplay):
 
     def _make_label(self, tab_type, selected_tabs):
         label_parts = []
+        # NOTE: we need to use ngettext because some languages have multiple
+        # plural forms.
         if self.folder_count > 0:
             if tab_type in ('feed', 'audio-feed'):
-                label_parts.append(_('%d Channel Folders Selected') %
-                        self.folder_count)
-                label_parts.append(_('(contains %d channels)') %
-                        self.folder_child_count)
+                label_parts.append(ngettext(
+                        '%(count)d Channel Folder Selected',
+                        '%(count)d Channel Folders Selected',
+                        self.folder_count,
+                        {"count": self.folder_count}))
+                label_parts.append(ngettext(
+                        '(contains %(count)d channel)',
+                        '(contains %(count)d channels)',
+                        self.folder_child_count,
+                        {"count": self.folder_child_count}))
             else:
-                label_parts.append(_('%d Playlist Folders Selected') %
-                        self.folder_count)
-                label_parts.append(_('(contains %d playlists)') %
-                        self.folder_child_count)
+                label_parts.append(ngettext(
+                        '%(count)d Playlist Folder Selected',
+                        '%(count)d Playlist Folders Selected',
+                        self.folder_count,
+                        {"count": self.folder_count}))
+                label_parts.append(ngettext(
+                        '(contains %(count)d playlist)',
+                        '(contains %(count)d playlist)',
+                        self.folder_child_count,
+                        {"count": self.folder_child_count}))
 
         if self.child_count > 0 and self.folder_count > 0:
             label_parts.append('')
         if self.child_count > 0:
             if tab_type in ('feed', 'audio-feed'):
-                label_parts.append(_('%d Channels Selected') %
-                        self.child_count)
+                label_parts.append(ngettext(
+                        '%(count)d Channel Selected',
+                        '%(count)d Channels Selected',
+                        self.child_count,
+                        {"count": self.child_count}))
             else:
-                label_parts.append(_('%d Playlists Selected') %
-                        self.child_count)
+                label_parts.append(ngettext(
+                        '%(count)d Playlist Selected',
+                        '%(count)d Playlists Selected',
+                        self.child_count,
+                        {"count": self.child_count}))
         return widgetset.Label('\n'.join(label_parts))
 
     def _make_buttons(self):
