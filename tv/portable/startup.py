@@ -211,11 +211,17 @@ def check_movies_gone():
     if is_movies_directory_gone():
         if _movies_directory_gone_handler:
             logging.info("Movies directory is gone -- calling handler.")
-            _movies_directory_gone_handler(lambda: eventloop.addUrgentCall(startup_network_stuff, "startup network stuf"))
+            _movies_directory_gone_handler(lambda: eventloop.addUrgentCall(fix_movies_gone, "startup network stuf"))
             return
         else:
             logging.warn("Movies directory is gone -- no handler installed!")
 
+    eventloop.addUrgentCall(startup_network_stuff, "startup network stuff")
+
+@startup_function
+def fix_movies_gone():
+    from miro.plat import config as platformcfg
+    config.set(prefs.MOVIES_DIRECTORY, platformcfg.get(prefs.MOVIES_DIRECTORY))
     eventloop.addUrgentCall(startup_network_stuff, "startup network stuff")
 
 @startup_function
