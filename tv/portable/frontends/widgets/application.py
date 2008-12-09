@@ -108,9 +108,9 @@ class Application:
                                  self.get_main_window_dimensions())
 
     def handle_movies_gone(self, continue_callback):
-        call_on_ui_thread(lambda: self.__handle_movies_gone(continue_callback))
+        call_on_ui_thread(lambda: self._handle_movies_gone(continue_callback))
 
-    def __handle_movies_gone(self, continue_callback):
+    def _handle_movies_gone(self, continue_callback):
         title = _("Movies directory gone")
         description = _(
             "%(shortappname)s can't find the primary video directory "
@@ -141,9 +141,9 @@ class Application:
         continue_callback()
 
     def handle_first_time(self, continue_callback):
-        call_on_ui_thread(lambda: self.__handle_first_time(continue_callback))
+        call_on_ui_thread(lambda: self._handle_first_time(continue_callback))
 
-    def __handle_first_time(self, continue_callback):
+    def _handle_first_time(self, continue_callback):
         startup.mark_first_time()
         firsttimedialog.FirstTimeDialog(continue_callback).run()
 
@@ -766,9 +766,9 @@ class Application:
         print "FIXME - up to date!"
 
     def handle_error(self, obj, report):
-        call_on_ui_thread(self.__handle_error, obj, report)
+        call_on_ui_thread(self._handle_error, obj, report)
 
-    def __handle_error(self, obj, report):
+    def _handle_error(self, obj, report):
         if self.ignore_errors:
             logging.warn("Ignoring Error:\n%s", report)
             return
