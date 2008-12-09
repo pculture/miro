@@ -503,7 +503,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         else:
             left_button = cellpack.Hotspot('resume', self.resume_button)
         hbox.pack(cellpack.pad(cellpack.align_left(left_button), left=3))
-        hbox.pack(cellpack.align_center(self.download_textbox(layout)), expand=True)
+        hbox.pack(cellpack.align_middle(cellpack.align_center(self.download_textbox(layout))), expand=True)
         hbox.pack(cellpack.pad(cellpack.align_right(cellpack.Hotspot('cancel', self.cancel_button)), right=3))
 
         background = cellpack.Background(cellpack.align_middle(hbox), min_width=356, min_height=20)
