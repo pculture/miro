@@ -2221,34 +2221,37 @@ class DirectoryFeedImpl(FeedImpl):
 
     def update(self):
         self.ufeed.confirmDBThread()
-        moviesDir = config.get(prefs.MOVIES_DIRECTORY)
-        # Files known about by real feeds
-        knownFiles = set()
+        movies_dir = config.get(prefs.MOVIES_DIRECTORY)
+        # files known about by real feeds
+        known_files = set()
         for item in views.toplevelItems:
             if item.feed_id is not self.ufeed.id:
-                knownFiles.add(item.get_filename())
+                known_files.add(item.get_filename())
             if item.isContainerItem:
                 item.find_new_children()
 
-        knownFiles.add(os.path.join(moviesDir, "Incomplete Downloads"))
+        incomplete_dir = os.path.join(movies_dir, "Incomplete Downloads")
+        known_files.add(incomplete_dir)
 
-        # Remove items that are in feeds, but we have in our list
+        # remove items that are in feeds, but we have in our list
         for item in self.items:
-            if item.get_filename() in knownFiles:
+            if item.get_filename() in known_files:
                 item.remove()
 
-        # Now that we've checked for items that need to be removed, we
-        # add our items to knownFiles so that they don't get added
+        # now that we've checked for items that need to be removed, we
+        # add our items to known_files so that they don't get added
         # multiple times to this feed.
         for x in self.items:
-            knownFiles.add(x.get_filename())
+            known_files.add(x.get_filename())
 
-        #Adds any files we don't know about
-        #Files on the filesystem
-        if fileutil.isdir(moviesDir):
-            all_files = fileutil.miro_allfiles(moviesDir)
+        # adds any files we don't know about
+        # files on the filesystem
+        if fileutil.isdir(movies_dir):
+            all_files = fileutil.miro_allfiles(movies_dir)
             for file_ in all_files:
-                if file_ not in knownFiles and filetypes.is_video_filename(filenameToUnicode(file_)):
+                if (file_ not in known_files
+                        and not file_.startswith(incomplete_dir)
+                        and filetypes.is_video_filename(filenameToUnicode(file_))):
                     itemmod.FileItem(file_, feed_id=self.ufeed.id)
 
         for item in self.items:
