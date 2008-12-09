@@ -181,16 +181,32 @@ class AutoflushingStream:
 def make_dummy_socket_pair():
     """Create a pair of sockets connected to each other on the local
     interface.  Used to implement SocketHandler.wakeup().
+
+    On Unixish systems, port 0 will pick the next available port.
+    But that appears to have problems on Windows possibly with
+    firewall software.  So if we hit a socketerror with port 0, we
+    try ports between 50000 and 65500.
     """
-    dummy_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    dummy_server.bind(('127.0.0.1', 0))
-    dummy_server.listen(1)
-    server_address = dummy_server.getsockname()
-    first = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    first.connect(server_address)
-    second, address = dummy_server.accept()
-    dummy_server.close()
-    return first, second
+    port = 0
+    while 1:
+        try:
+            dummy_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            dummy_server.bind(("127.0.0.1", port))
+            dummy_server.listen(1)
+            server_address = dummy_server.getsockname()
+            first = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            first.connect(server_address)
+            second, address = dummy_server.accept()
+            dummy_server.close()
+            return first, second
+        except socket.error:
+            # if we hit this, then it's hopeless--give up
+            if port > 65500:
+                raise
+            # bump us into ephemeral ports if we need to try a bunch
+            if port == 0:
+                port = 50000
+            port += 10
 
 def get_torrent_info_hash(path):
     try:
