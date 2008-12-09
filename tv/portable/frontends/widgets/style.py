@@ -321,30 +321,37 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         title = layout.textbox(self.data.name)
         # FIXME - title should wrap to the next line instead of being
         # truncated; ben said this might be hard/impossible
-        vbox.pack(cellpack.ClippedTextBox(title))
+        if not self.show_details:
+            vbox.pack(cellpack.ClippedTextBox(title))
+        else:
+            main_width = self._calculate_main_width(layout)
+            title.set_width(main_width)
+            vbox.pack(title)
 
         if self.show_details:
             description = self.make_description(layout)
             description.set_wrap_style('word')
-            # We need to calculate the width available to the main area, so
-            # that we can know where to wrap and therefore what height we want
-            # to request
-            #
-            # Note: self.total_width gets set in TableView.do_size_allocate(),
-            # so this will fail if we haven't been allocated a size yet.
-            # However, this shouldn't be a problem, because show_details is
-            # set to False initially.
-            right_side = self.pack_right(layout).get_size()[0]
-            static_width = (
-                    154 # left side
-                    + (12 + 20) * 2 # border padding
-                    + 18 # Padding between main and left
-                    + 20) # padding between main and right
-            description.set_width(self.total_width - static_width - right_side)
+            description.set_width(main_width)
         else:
             description = cellpack.ClippedTextBox(self.make_description(layout))
         vbox.pack(cellpack.Hotspot('description', description), expand=True)
         return vbox
+
+    def _calculate_main_width(self, layout):
+        # Calculate the width available to the main area.  This lets us know
+        # where to wrap the title and description in show_details mode.
+        #
+        # Note: self.total_width gets set in TableView.do_size_allocate(),
+        # so this will fail if we haven't been allocated a size yet.
+        # However, this shouldn't be a problem, because show_details is
+        # set to False initially.
+        right_side = self.pack_right(layout).get_size()[0]
+        static_width = (
+                154 # left side
+                + (12 + 20) * 2 # border padding
+                + 18 # Padding between main and left
+                + 20) # padding between main and right
+        return self.total_width - static_width - right_side
 
     def set_info_left_color(self, layout):
         if self.use_custom_style:
