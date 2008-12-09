@@ -129,7 +129,7 @@ def migrate_file(source, dest, callback, retry_after=10, retry_for=60):
                 # permission denied, assume this means it's open by another
                 # process on windows.
                 logging.info('Retrying migration')
-                eventloop.addTimeout(retry_after, migrate_file, 
+                eventloop.addTimeout(retry_after, migrate_file,
                         "Migrate File Retry", args=(source, dest, callback,
                             retry_after, retry_for - retry_after))
     except TypeError, e:
@@ -175,8 +175,8 @@ def delete(path, retry_after=10, retry_for=60):
             # process on windows.
             deletes_in_progress.add(path)
             logging.info('Retrying delete')
-            eventloop.addTimeout(retry_after, delete, 
-                    "Delete File Retry", args=(path, retry_after, 
+            eventloop.addTimeout(retry_after, delete,
+                    "Delete File Retry", args=(path, retry_after,
                         retry_for - retry_after))
     else:
         deletes_in_progress.discard(path)
@@ -222,22 +222,22 @@ def miro_allfiles(directory):
     """Directory listing that's safe and convenient for finding new videos in
     a directory.
 
-    Returns the tuple (files, directories) where both elements are a list of
-    absolute pathnames.  OSErrors are silently ignored.  Hidden files aren't
-    returned.  Pathnames are run through os.path.normcase.
-    """
+    Returns a list of files consisting of absolute pathnames.
 
+    OSErrors are silently ignored.  Hidden files aren't returned.  Pathnames
+    are run through os.path.normcase.
+    """
     files = []
     expanded_directory = expand_filename(directory)
     expanded_directory = os.path.abspath(os.path.normcase(expanded_directory))
     if expanded_directory in deletes_in_progress:
-        return
+        return []
     try:
         listing = os.listdir(expanded_directory)
     except OSError:
-        return [], []
+        return []
     for name in listing:
-        if name[0] == '.' or name.lower() == 'thumbs.db':
+        if name.startswith('.') or name.lower() == 'thumbs.db':
             # thumbs.db is a windows file that speeds up thumbnails.  We know
             # it's not a movie file.
             continue
