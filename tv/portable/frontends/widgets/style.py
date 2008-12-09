@@ -326,13 +326,21 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         if self.show_details:
             description = self.make_description(layout)
             description.set_wrap_style('word')
-            # this is a little goofy--we figure out the width of the description
-            # based on the width of the right side of the splitter minus the
-            # width of the packed right and stable width of the left side and
-            # margins and padding and all that.
+            # We need to calculate the width available to the main area, so
+            # that we can know where to wrap and therefore what height we want
+            # to request
+            #
+            # Note: self.total_width gets set in TableView.do_size_allocate(),
+            # so this will fail if we haven't been allocated a size yet.
+            # However, this shouldn't be a problem, because show_details is
+            # set to False initially.
             right_side = self.pack_right(layout).get_size()[0]
-            w = app.widgetapp.get_right_width()
-            description.set_width(w - 300 - right_side)
+            static_width = (
+                    154 # left side
+                    + (12 + 20) * 2 # border padding
+                    + 18 # Padding between main and left
+                    + 20) # padding between main and right
+            description.set_width(self.total_width - static_width - right_side)
         else:
             description = cellpack.ClippedTextBox(self.make_description(layout))
         vbox.pack(cellpack.Hotspot('description', description), expand=True)

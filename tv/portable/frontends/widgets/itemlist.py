@@ -329,6 +329,16 @@ class ItemList(object):
         iter = self._iter_map[item_id]
         self.model.update_value(iter, 1, value)
 
+    def find_show_details_rows(self):
+        """Return a list of iters for rows with in show details mode."""
+        retval = []
+        iter = self.model.first_iter()
+        while iter is not None:
+            if self.model[iter][1]:
+                retval.append(iter)
+            iter = self.model.next_iter(iter)
+        return retval
+
     def update_throbber(self, item_id):
         try:
             iter = self._iter_map[item_id]

@@ -50,6 +50,7 @@ from miro.frontends.widgets import style
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
+from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.utils import get_available_bytes_for_movies
 
 class TitleDrawer(widgetset.DrawingArea):
@@ -222,18 +223,42 @@ class ItemView(widgetset.TableView):
         self.display_channel = display_channel
         self.item_list = item_list
         self.set_draws_selection(False)
-        renderer = self.build_renderer()
-        self.column = widgetset.TableColumn('item', renderer, data=0,
+        self.renderer = self.build_renderer()
+        self.renderer.total_width = -1
+        self.column = widgetset.TableColumn('item', self.renderer, data=0,
                 show_details=1, throbber_counter=2)
-        self.column.set_min_width(renderer.MIN_WIDTH)
+        self.set_column_spacing(0)
+        self.column.set_min_width(self.renderer.MIN_WIDTH)
         self.add_column(self.column)
         self.set_show_headers(False)
         self.allow_multiple_select(True)
         self.set_auto_resizes(True)
         self.set_background_color(widgetutil.WHITE)
+        self._recalculate_heights_queued = False
 
     def build_renderer(self):
         return style.ItemRenderer(self.display_channel)
+
+    def do_size_allocated(self, width, height):
+        if width != self.renderer.total_width:
+            self.renderer.total_width = width
+            # We want to resize the rows with show_details set to True,
+            # because they may have gotten taller/shorter based on the
+            # description getting less/more width.  However, if the user is
+            # quickly resizing the window, we don't want to flood the system.
+            # Use call_on_ui_thread, which amounts to waiting until the widget
+            # system is idle.
+            if not self._recalculate_heights_queued:
+                self._recalculate_heights_queued = True
+                call_on_ui_thread(self._recalculate_show_details_heights)
+
+    def _recalculate_show_details_heights(self):
+        self._recalculate_heights_queued = False
+        for iter in self.item_list.find_show_details_rows():
+            # We want to make this row's height get re-calculated, so we use a
+            # bit of a hack, we "update" the row to the value it currently has
+            row = self.item_list.model[iter]
+            self.item_list.model.update(iter, *row)
 
 class ListItemView(widgetset.TableView):
     """TableView that displays a list of items using the list view."""
