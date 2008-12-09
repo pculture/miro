@@ -127,7 +127,8 @@ class WindowsApplication(Application):
     def quit_ui(self):
         for widget in persistentwindow.get_widgets():
             widget.destroy()
-        self.trayicon.set_visible(False)
+        if hasattr(self, "trayicon"):
+            self.trayicon.set_visible(False)
         gtk.main_quit()
 
     def get_clipboard_text(self):
