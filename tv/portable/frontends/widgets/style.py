@@ -251,6 +251,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         self.hover = False
         if self.show_details:
             left_size = self.pack_left(layout).get_size()[1]
+            right_side = self.pack_right(layout)
+            self.right_side_width = right_side.get_size()[0]
             main_size = self.pack_main(layout).get_size()[1]
             info_bar_size = 48
             total_size = max(left_size, main_size + info_bar_size)
@@ -345,13 +347,12 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         # so this will fail if we haven't been allocated a size yet.
         # However, this shouldn't be a problem, because show_details is
         # set to False initially.
-        right_side = self.pack_right(layout).get_size()[0]
         static_width = (
                 154 # left side
                 + (12 + 20) * 2 # border padding
                 + 18 # Padding between main and left
                 + 20) # padding between main and right
-        return self.total_width - static_width - right_side
+        return self.total_width - static_width - self.right_side_width
 
     def set_info_left_color(self, layout):
         if self.use_custom_style:
@@ -732,9 +733,11 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         vbox = cellpack.VBox()
         vbox.pack_space(6)
         inner_hbox = cellpack.HBox()
+        right_side = self.pack_right(layout)
+        self.right_side_width = right_side.get_size()[0]
         inner_hbox.pack(self.pack_main(layout), expand=True)
         inner_hbox.pack_space(20)
-        inner_hbox.pack(self.pack_right(layout))
+        inner_hbox.pack(right_side)
         vbox.pack(inner_hbox, expand=True)
 
         vbox.pack(self.pack_infobar(layout))
