@@ -36,6 +36,7 @@ from miro import app
 from miro import messages
 from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import threads
+from miro.plat.frontends.widgets import drawing
 
 ###############################################################################
 
@@ -132,14 +133,12 @@ class OverlayPalette (NSWindowController):
         self.seekBackwardButton.setCell_(SkipSeekButtonCell.cellFromButtonCell_direction_delay_(self.seekBackwardButton.cell(), -1, 0.0))
         self.seekBackwardButton.cell().setAllowsSkipping(False)
 
-        self.progressSlider.track = NSImage.imageNamed_(u'fs-progress-background')
         self.progressSlider.cursor = NSImage.imageNamed_(u'fs-progress-slider')
         self.progressSlider.sliderWasClicked = self.progressSliderWasClicked
         self.progressSlider.sliderWasDragged = self.progressSliderWasDragged
         self.progressSlider.sliderWasReleased = self.progressSliderWasReleased
         self.progressSlider.setShowCursor_(True)
 
-        self.volumeSlider.track = NSImage.imageNamed_(u'fs-volume-background')
         self.volumeSlider.cursor = NSImage.imageNamed_(u'fs-volume-slider')
         self.volumeSlider.sliderWasDragged = self.volumeSliderWasDragged
         self.volumeSlider.setShowCursor_(True)
@@ -524,7 +523,12 @@ class Slider (NSView):
 class OverlayPaletteSlider (Slider):
 
     def drawTrack(self):
-        self.track.compositeToPoint_operation_((0, 2), NSCompositeSourceOver)
+        from miro.frontends.widgets import widgetutil
+        rect = self.bounds()
+        ctx = drawing.DrawingContext(self, rect, rect)
+        ctx.set_color((1,1,1), 0.4)
+        widgetutil.circular_rect(ctx, 0, 2, rect.size.width, rect.size.height - 4)
+        ctx.fill()
 
 ###############################################################################
 
