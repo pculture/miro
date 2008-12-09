@@ -141,7 +141,7 @@ class LayoutManager(object):
         text_box.reset(text, self.current_font, color, self.shadow, underline)
         return text_box
 
-    def button(self, text, pressed):
+    def button(self, text, pressed=False, disabled=False, style='normal'):
         return Button(text, self.current_font, pressed)
 
     def reset(self):

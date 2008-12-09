@@ -37,24 +37,31 @@ from miro.gtcache import ngettext
 def download_rate(rate):
     if rate >= (1 << 30):
         value = "%1.1f" % (rate / float(1 << 30))
-        return _("%(size)s GB/s", {"size": value})
+        return _("%(size)s gb/s", {"size": value})
     elif rate >= (1 << 20):
         value = "%1.1f" % (rate / float(1 << 20))
-        return _("%(size)s MB/s", {"size": value})
+        return _("%(size)s mb/s", {"size": value})
     elif rate >= (1 << 10):
         value = "%1.1f" % (rate / float(1 << 10))
-        return _("%(size)s KB/s", {"size": value})
-    else:
+        return _("%(size)s kb/s", {"size": value})
+    elif rate > 0:
         value = "%1.1f" % rate
-        return _("%(size)s B/s", {"size": value})
+        return _("%(size)s b/s", {"size": value})
+    else:
+        return ""
 
 def time(secs):
-    if secs > 3600:
-        hours, secs = divmod(secs, 3600)
-        minutes, seconds = divmod(secs, 60)
-        return '%2d:%02d:%02d' % (hours, minutes, seconds)
-    else:
-        return '%2d:%02d' % divmod(secs, 60)
+    if secs >= (60 * 60 * 24):
+        t_dy = secs / (60 * 60 * 24)
+        return ngettext('%(num)d day', '%(num)d days', t_dy, {"num": t_dy})
+    if secs >= (60 * 60):
+        t_hr = secs / (60 * 60)
+        return ngettext('%(num)d hr', '%(num)d hrs', t_hr, {"num": t_hr})
+    if secs >= 60:
+        t_min = secs / 60
+        return ngettext('%(num)d min', '%(num)d mins', t_min, {"num": t_min})
+
+    return ngettext('%(num)d sec', '%(num)d secs', secs, {"num": secs})
 
 def size(bytes):
     # when switching from the enclosure reported size to the downloader
@@ -68,15 +75,15 @@ def size(bytes):
     # probably ditch one of them.
     if bytes >= (1 << 30):
         value = "%.1f" % (bytes / float(1 << 30))
-        return _("%(size)s GB", {"size": value})
+        return _("%(size)s gb", {"size": value})
     elif bytes >= (1 << 20):
         value = "%.1f" % (bytes / float(1 << 20))
-        return _("%(size)s MB", {"size": value})
+        return _("%(size)s mb", {"size": value})
     elif bytes >= (1 << 10):
         value = "%.1f" % (bytes / float(1 << 10))
-        return _("%(size)s KB", {"size": value})
+        return _("%(size)s kb", {"size": value})
     else:
-        return _("%(size)s B", {"size": bytes})
+        return _("%(size)s b", {"size": bytes})
 
 def expiration_date(exp_date):
     offset = exp_date - datetime.datetime.now()
@@ -116,7 +123,7 @@ def expiration_date_short(exp_date):
 
 def release_date(release_date):
     if release_date > datetime.datetime.min:
-        return release_date.strftime("%b %d %Y")
+        return release_date.strftime("%B %d, %Y")
     else:
         return ''
 

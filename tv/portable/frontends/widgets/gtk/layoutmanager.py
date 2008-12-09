@@ -92,12 +92,15 @@ class LayoutManager(object):
         textbox.set_text(text, underline=underline)
         return textbox
 
-    def button(self, text, pressed=False):
-        if use_native_buttons:
-            return NativeButton(text, self.pango_context, self.current_font, 
+    def button(self, text, pressed=False, disabled=False, style='normal'):
+        if style == 'webby':
+            return StyledButton(text, self.pango_context, self.current_font,
+                    pressed, disabled)
+        elif use_native_buttons:
+            return NativeButton(text, self.pango_context, self.current_font,
                     pressed, self.style, self.widget)
         else:
-            return StyledButton(text, self.pango_context, self.current_font, 
+            return StyledButton(text, self.pango_context, self.current_font,
                     pressed)
 
     def update_cairo_context(self, cairo_context):
@@ -283,7 +286,7 @@ class NativeButton(object):
         self.pressed = pressed
         self.layout.set_font_description(font.description.copy())
         self.layout.set_text(text)
-        self.pad_x = style.xthickness + 1
+        self.pad_x = style.xthickness + 11
         self.pad_y = style.ythickness + 1
         self.style = style
         self.widget = widget
@@ -332,7 +335,7 @@ class NativeButton(object):
         else:
             widget = self.widget
 
-        self.style.paint_box(window, state, shadow, None, widget, "button", 
+        self.style.paint_box(window, state, shadow, None, widget, "button",
                 int(x), int(y), int(width), int(height))
 
     def draw_text(self, window, x, y):
@@ -341,24 +344,27 @@ class NativeButton(object):
             state = gtk.STATE_ACTIVE
         else:
             state = gtk.STATE_NORMAL
-        self.style.paint_layout(window, state, True, None, None, None, 
+        self.style.paint_layout(window, state, True, None, None, None,
                 x + offset_x, y + offset_y, self.layout)
 
 class StyledButton(object):
     PAD_HORIZONTAL = 4
-    PAD_VERTICAL = 2
+    PAD_VERTICAL = 3
     TOP_COLOR = (1, 1, 1)
     BOTTOM_COLOR = (0.86, 0.86, 0.86)
     LINE_COLOR = (0.69, 0.69, 0.69)
     TEXT_COLOR = (0, 0, 0)
+    DISABLED_COLOR = (0.86, 0.86, 0.86)
+    DISABLED_TEXT_COLOR = (0.5, 0.5, 0.5)
 
-    def __init__(self, text, context, font, pressed):
+    def __init__(self, text, context, font, pressed, disabled=False):
         self.layout = pango.Layout(context)
         self.font = font
         self.layout.set_font_description(font.description.copy())
         self.layout.set_text(text)
         self.min_width = 0
         self.pressed = pressed
+        self.disabled = disabled
 
     def set_min_width(self, width):
         self.min_width = width
@@ -368,7 +374,7 @@ class StyledButton(object):
         height += self.PAD_VERTICAL * 2
         if height % 2 == 1:
             # make height even so that the radius of our circle is whole
-            height += 1 
+            height += 1
         width += self.PAD_HORIZONTAL * 2 + height
         return max(self.min_width, width), height
 
@@ -378,7 +384,6 @@ class StyledButton(object):
         extra_x = max(0, int((self.min_width - width - self.pad_x * 2) / 2))
         x = self.pad_x + extra_x
         return gtk.gdk.Rectangle(x, y, width, height)
-
 
     def draw_path(self, context, x, y, width, height, radius):
         inner_width = width - radius * 2
@@ -391,7 +396,10 @@ class StyledButton(object):
     def draw_button(self, context, x, y, width, height, radius):
         context.context.save()
         self.draw_path(context, x, y, width, height, radius)
-        if self.pressed:
+        if self.disabled:
+            end_color = self.DISABLED_COLOR
+            start_color = self.DISABLED_COLOR
+        elif self.pressed:
             end_color = self.TOP_COLOR
             start_color = self.BOTTOM_COLOR
         else:
@@ -415,7 +423,10 @@ class StyledButton(object):
         self.draw_text(context, x, y, width, height, radius)
 
     def draw_text(self, context, x, y, width, height, radius):
-        context.set_color(self.TEXT_COLOR)
+        if self.disabled:
+            context.set_color(self.DISABLED_TEXT_COLOR)
+        else:
+            context.set_color(self.TEXT_COLOR)
         text_width, text_height = self.layout.get_pixel_size()
         # draw the text in the center of the button
         x += (width - text_width) / 2

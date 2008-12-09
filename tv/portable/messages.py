@@ -882,17 +882,12 @@ class ItemInfo(object):
                 # gettorrentdetails only
                 self.leechers = status.get('seeders', 0)
                 self.seeders = status.get('leechers', 0)
-                self.up_rate = util.formatSizeForUser(
-                    status.get('upRate', 0), zeroString=u"-")
-                self.down_rate = util.formatSizeForUser(
-                    status.get('rate', 0), zeroString=u"-")
+                self.up_rate = status.get('upRate', 0)
+                self.down_rate = status.get('rate', 0)
 
             # gettorrentdetailsfinished & gettorrentdetails
-            self.up_total = util.formatSizeForUser(
-                status.get('uploaded', 0), zeroString=u"-")
-            self.down_total = util.formatSizeForUser(
-                status.get('currentSize', 0), zeroString=u"-")
-
+            self.up_total = status.get('uploaded', 0)
+            self.down_total = status.get('currentSize', 0)
 
 class DownloadInfo(object):
     """Tracks the download state of an item.

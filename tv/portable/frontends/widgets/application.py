@@ -182,6 +182,11 @@ class Application:
         """
         return Rect(100, 300, 800, 600)
 
+    def get_right_width(self):
+        """Returns the width of the right side of the splitter.
+        """
+        return self.window.get_frame().get_width() - self.window.splitter.get_left_width()
+
     def on_volume_change(self, slider, volume):
         app.playback_manager.set_volume(volume)
 

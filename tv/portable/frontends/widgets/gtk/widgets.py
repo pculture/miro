@@ -44,6 +44,9 @@ class Rect(gtk.gdk.Rectangle):
     def __str__(self):
         return "%d,%d,%d,%d" % (self.x, self.y, self.width, self.height)
 
+    def get_width(self):
+        return self.width
+
 class Window:
     """The main Miro window.  """
 
