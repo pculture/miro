@@ -419,7 +419,6 @@ class VideoDisplay(Display):
         self._showing_renderer = True
         self.in_fullscreen = False
 
-
     def show_renderer(self):
         if not self._showing_renderer:
             self.widget.remove(self.cant_play_widget)
@@ -437,12 +436,14 @@ class VideoDisplay(Display):
         self.emit('ready-to-play')
 
     def _open_error(self):
+        messages.MarkItemWatched(self.item_info_id).send_to_backend()
         self.show_play_external()
         self.emit('cant-play')
 
     def setup(self, item_info, volume):
         self.show_renderer()
         self.cant_play_widget.set_video_path(item_info.video_path)
+        self.item_info_id = item_info.id
         self.renderer.set_movie_item(item_info, self._open_success,
                 self._open_error)
         self.set_volume(volume)
