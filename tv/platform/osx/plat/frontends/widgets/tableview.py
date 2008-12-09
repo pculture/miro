@@ -211,9 +211,9 @@ class MiroCheckboxCell(NSButtonCell):
             row = tableview.rowAtPoint_(at)
             if column != -1 and row != -1:
                 wrapper = wrappermap.wrapper(tableview)
-                renderer = wrapper.renderers[column]
-                iter = wrapper.model.iter_for_row(tableview, row)
-                renderer.emit('clicked', iter)
+                column = wrapper.columns[column]
+                itr = wrapper.model.iter_for_row(tableview, row)
+                column.renderer.emit('clicked', itr)
         return NSButtonCell.stopTracking_at_inView_mouseIsUp_(self, lastPoint,
                 at, tableview, mouseIsUp)
 
