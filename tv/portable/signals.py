@@ -73,7 +73,7 @@ class Callback:
         self.extra_args = extra_args
 
     def invoke(self, obj, args):
-        self.func(obj, *(args + self.extra_args))
+        return self.func(obj, *(args + self.extra_args))
 
     def is_dead(self):
         return False
@@ -86,7 +86,9 @@ class WeakCallback:
     def invoke(self, obj, args):
         callback = self.ref()
         if callback is not None:
-            callback(obj, *(args + self.extra_args))
+            return callback(obj, *(args + self.extra_args))
+        else:
+            return None
 
     def is_dead(self):
         return self.ref() is None
@@ -140,15 +142,21 @@ class SignalEmitter:
             self.signal_callbacks[signal] = {}
 
     def emit(self, name, *args):
+        callback_returned_true = False
         try:
             self_callback = getattr(self, 'do_' + name.replace('-', '_'))
         except AttributeError:
             pass
         else:
-            self_callback(*args)
-        for callback in self.get_callbacks(name).values():
-            callback.invoke(self, args)
+            if self_callback(*args):
+                callback_returned_true = True
+        if not callback_returned_true:
+            for callback in self.get_callbacks(name).values():
+                if callback.invoke(self, args):
+                    callback_returned_true = True
+                    break
         self.clear_old_weak_references()
+        return callback_returned_true
 
     def clear_old_weak_references(self):
         for callback_map in self.signal_callbacks.values():

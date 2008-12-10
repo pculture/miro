@@ -34,7 +34,7 @@ from miro import signals
 from miro.frontends.widgets.gtk import window
 from miro.frontends.widgets.gtk import wrappermap
 from miro.frontends.widgets.gtk.weakconnect import weak_connect
-from miro.frontends.widgets.gtk.keymap import gtk_key_map
+from miro.frontends.widgets.gtk import keymap
 
 def make_gdk_color(miro_color):
     def convert_value(value):
@@ -101,12 +101,8 @@ class Widget(signals.SignalEmitter):
         self.emit('size-allocated', allocation.width, allocation.height)
 
     def on_key_press(self, widget, event):
-        gtk_keyval = gtk.gdk.keyval_name(event.keyval)
-        if len(gtk_keyval) == 1:
-            key = gtk_keyval
-        else:
-            key = gtk_key_map.get(gtk_keyval)
-        self.emit('key-press', key)
+        key, modifiers = keymap.translate_gtk_event(event)
+        return self.emit('key-press', key, modifiers)
 
     def on_use_custom_style_changed(self, window):
         self.use_custom_style = window.use_custom_style

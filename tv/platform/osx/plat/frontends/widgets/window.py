@@ -54,11 +54,13 @@ class MiroWindow(NSWindow):
         key = event.characters()
         if len(key) != 1 or not key.isalpha():
             key = osxmenus.REVERSE_KEYS_MAP.get(key)
+        mods = osxmenus.translate_event_modifiers(event)
         responder = self.firstResponder()
         while responder is not None:
             wrapper = wrappermap.wrapper(responder)
-            if isinstance(wrapper, Widget):
-                wrapper.emit('key-press', key)
+            if isinstance(wrapper, Widget) or isinstance(wrapper, Window):
+                if wrapper.emit('key-press', key, mods):
+                    return # signal handler returned True, stop processing
             responder = responder.nextResponder()
         return NSWindow.keyDown_(self, event)
 
@@ -69,6 +71,7 @@ class Window(signals.SignalEmitter):
         self.create_signal('active-change')
         self.create_signal('will-close')
         self.create_signal('did-move')
+        self.create_signal('key-press')
         self.nswindow = MiroWindow.alloc()
         self.nswindow.initWithContentRect_styleMask_backing_defer_(
                 rect.nsrect,

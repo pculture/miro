@@ -33,7 +33,7 @@ from miro import config
 from miro import prefs
 from string import Template
 
-CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12 = range(24)
+CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, ESCAPE, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12 = range(25)
 platform = config.get(prefs.APP_PLATFORM)
 
 if platform == "osx":
@@ -258,8 +258,8 @@ PlaybackItems = [
     MenuItem(_("_Next Video"), "NextVideo", (Key(RIGHT_ARROW, MOD),), enabled=False),
     MenuItem(_("_Previous Video"), "PreviousVideo", (Key(LEFT_ARROW, MOD),), enabled=False),
     Separator(),
-    MenuItem(_("Skip _Forward"), "FastForward", (Key(RIGHT_ARROW),), enabled=False),
-    MenuItem(_("Skip _Back"), "Rewind", (Key(LEFT_ARROW),), enabled=False),
+    MenuItem(_("Skip _Forward"), "FastForward", (), enabled=False),
+    MenuItem(_("Skip _Back"), "Rewind", (), enabled=False),
     Separator(),
     MenuItem(_("Volume _Up"), "UpVolume", (Key(UP_ARROW, MOD),), enabled=False),
     MenuItem(_("Volume _Down"), "DownVolume", (Key(DOWN_ARROW,MOD),), enabled=False),

@@ -41,7 +41,7 @@ from miro import signals
 from miro import dialogs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets.gtk import wrappermap, widgets
-from miro.frontends.widgets.gtk.keymap import menubar_mod_map, menubar_key_map
+from miro.frontends.widgets.gtk import keymap
 from miro.frontends.widgets import menus
 from miro.plat import resources
 
@@ -75,12 +75,12 @@ STOCK_IDS = {
 
 for i in range(1, 13):
     name = 'F%d' % i
-    menubar_key_map[getattr(menubar, name)] = name
+    keymap.menubar_key_map[getattr(menubar, name)] = name
 
 def get_accel_string(shortcut):
-    mod_str = ''.join(menubar_mod_map[mod] for mod in shortcut.modifiers)
+    mod_str = ''.join(keymap.menubar_mod_map[mod] for mod in shortcut.modifiers)
     try:
-        key_str = menubar_key_map[shortcut.key]
+        key_str = keymap.menubar_key_map[shortcut.key]
     except KeyError:
         key_str = shortcut.key
     return mod_str + key_str
@@ -96,12 +96,25 @@ class WrappedWindow(gtk.Window):
         gtk.Window.do_focus_out_event(self, event)
         wrappermap.wrapper(self).emit('active-change')
 
+    def do_key_press_event(self, event):
+        key, modifiers = keymap.translate_gtk_event(event)
+        if wrappermap.wrapper(self).emit('key-press', key, modifiers):
+            return # handler returned True, don't process the key more
+        elif (gtk.gdk.keyval_name(event.keyval) == 'Return' and
+                event.state & gtk.gdk.MOD1_MASK and
+                app.playback_manager.is_playing):
+            # Hack for having 2 shortcuts for fullscreen
+            app.widgetapp.on_fullscreen_clicked()
+            return
+        return gtk.Window.do_key_press_event(self, event)
+
 gobject.type_register(WrappedWindow)
 
 class WindowBase(signals.SignalEmitter):
     def __init__(self):
         signals.SignalEmitter.__init__(self)
         self.create_signal('use-custom-style-changed')
+        self.create_signal('key-press')
 
     def set_window(self, window):
         self._window = window
@@ -208,7 +221,6 @@ class MainWindow(Window):
         self.create_signal('save-maximized')
         app.menu_manager.connect('enabled-changed', self.on_menu_change)
 
-        self._window.connect('key-press-event', self.on_key_press)
         self._window.connect('key-release-event', self.on_key_release)
         self._window.connect('window-state-event', self.on_window_state_event)
         self._window.connect('configure-event', self.on_configure_event)
@@ -225,43 +237,6 @@ class MainWindow(Window):
     def on_window_state_event(self, widget, event):
         maximized = (event.new_window_state & gtk.gdk.WINDOW_STATE_MAXIMIZED) != 0
         self.emit('save-maximized', maximized)
-
-    def on_key_press(self, widget, event):
-        if app.playback_manager.is_playing:
-            if (gtk.gdk.keyval_name(event.keyval) == 'Escape'
-                    and app.playback_manager.is_fullscreen):
-                app.widgetapp.on_fullscreen_clicked()
-                return True
-
-            if event.state & gtk.gdk.CONTROL_MASK:
-                if gtk.gdk.keyval_name(event.keyval) == 'Right':
-                    app.widgetapp.on_forward_clicked()
-                    return True
-
-                if gtk.gdk.keyval_name(event.keyval) == 'Left':
-                    app.widgetapp.on_previous_dclicked()
-                    return True
-
-            if event.state & gtk.gdk.MOD1_MASK:
-                if gtk.gdk.keyval_name(event.keyval) == 'Return':
-                    app.widgetapp.on_fullscreen_clicked()
-                    return True
-
-            if gtk.gdk.keyval_name(event.keyval) == 'Right':
-                app.widgetapp.on_skip_forward()
-                return True
-
-            if gtk.gdk.keyval_name(event.keyval) == 'Left':
-                app.widgetapp.on_skip_backward()
-                return True
-
-            if gtk.gdk.keyval_name(event.keyval) == 'Up':
-                app.widgetapp.up_volume()
-                return True
-
-            if gtk.gdk.keyval_name(event.keyval) == 'Down':
-                app.widgetapp.down_volume()
-                return True
 
     def on_key_release(self, widget, event):
         if app.playback_manager.is_playing:

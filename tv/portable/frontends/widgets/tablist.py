@@ -396,9 +396,10 @@ class TabList(signals.SignalEmitter):
             self.view.select(self.iter_map[id])
         self.doing_change = False
 
-    def on_key_press(self, view, key):
+    def on_key_press(self, view, key, mods):
         if key == menubar.DELETE:
             self.on_delete_key_pressed()
+            return True
 
     def on_row_expanded_change(self, view, iter, expanded):
         id = self.view.model[iter][0].id

@@ -205,9 +205,10 @@ class ItemListController(object):
             item_view.model_changed()
         self.list_item_view.change_sort_indicator(sort_key, ascending)
 
-    def on_key_press(self, view, key):
+    def on_key_press(self, view, key, mods):
         if key == menubar.DELETE:
             app.widgetapp.remove_items(self.get_selection())
+            return True
 
     def on_hotspot_clicked(self, itemview, name, iter):
         """Hotspot handler for ItemViews."""

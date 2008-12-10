@@ -29,6 +29,8 @@
 """keymap.py -- Map portable key values to GTK ones.
 """
 
+import gtk
+
 from miro import menubar
 
 menubar_mod_map = {
@@ -46,8 +48,34 @@ menubar_key_map = {
     menubar.ENTER: 'Return',
     menubar.DELETE: 'Delete',
     menubar.BKSPACE: 'BackSpace',
+    menubar.ESCAPE: 'Escape',
 }
 
 # These are reversed versions of menubar_key_map and menubar_mod_map
 gtk_key_map = dict((i[1], i[0]) for i in menubar_key_map.items())
-gtk_mod_map = dict((i[1], i[0]) for i in menubar_mod_map.items())
+
+def translate_gtk_modifiers(event):
+    """Convert a keypress event to a set of modifiers from the portable
+    menubar module.
+    """
+    modifiers = set()
+    if event.state & gtk.gdk.CONTROL_MASK:
+        modifiers.add(menubar.CTRL)
+    if event.state & gtk.gdk.MOD1_MASK:
+        modifiers.add(menubar.ALT)
+    if event.state & gtk.gdk.SHIFT_MASK:
+        modifiers.add(menubar.SHIFT)
+    return modifiers
+
+def translate_gtk_event(event):
+    """Convert a GTK key event into the tuple (key, modifiers) where key and
+    modifiers are from the portable menubar module.
+    """
+
+    gtk_keyval = gtk.gdk.keyval_name(event.keyval)
+    if len(gtk_keyval) == 1:
+        key = gtk_keyval
+    else:
+        key = gtk_key_map.get(gtk_keyval)
+    modifiers = translate_gtk_modifiers(event)
+    return key, modifiers

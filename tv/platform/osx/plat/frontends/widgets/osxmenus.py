@@ -37,7 +37,7 @@ from Foundation import *
 
 from miro import app
 from miro.menubar import menubar, Menu, MenuItem, Separator, Key
-from miro.menubar import MOD, CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE
+from miro.menubar import MOD, CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, ESCAPE
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import menus
 from miro.plat.frontends.widgets import wrappermap
@@ -78,6 +78,7 @@ REVERSE_MODIFIERS_MAP = dict((i[1], i[0]) for i in MODIFIERS_MAP.items())
 REVERSE_KEYS_MAP = dict((i[1], i[0]) for i in KEYS_MAP.items() 
         if i[0] != BKSPACE)
 REVERSE_KEYS_MAP[u'\x7f'] = BKSPACE
+REVERSE_KEYS_MAP[u'\x1b'] = ESCAPE
 
 def make_modifier_mask(shortcut):
     mask = 0
@@ -258,3 +259,14 @@ def make_context_menu(menu_items):
                     nsitem.setAction_('handleMenuItem:')
         nsmenu.addItem_(nsitem)
     return nsmenu
+
+def translate_event_modifiers(event):
+    mods = set()
+    flags = event.modifierFlags()
+    if flags & NSCommandKeyMask:
+        mods.add(CMD)
+    if flags & NSAlternateKeyMask:
+        mods.add(ALT)
+    if flags & NSShiftKeyMask:
+        mods.add(SHIFT)
+    return mods
