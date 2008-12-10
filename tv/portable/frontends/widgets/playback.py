@@ -374,7 +374,7 @@ class DetachedWindow (widgetset.Window):
             self.stop_on_close = stop_playback
             widgetset.Window.close(self)
 
-    def on_will_close(self, notification):
+    def do_will_close(self):
         if not self.closing:
             self.closing = True
             if self.stop_on_close:
