@@ -29,7 +29,6 @@
 """Main Miro widget."""
 
 from miro import app
-from miro import menubar
 
 from miro.frontends.widgets import tablist
 from miro.frontends.widgets import videobox
@@ -81,34 +80,3 @@ class MiroWindow(widgetset.MainWindow):
 
     def set_main_area(self, widget):
         self.main_area_holder.set(widget)
-
-    def do_key_press(self, key, mods):
-        if app.playback_manager.is_playing:
-            if key == menubar.ESCAPE and app.playback_manager.is_fullscreen:
-                app.widgetapp.on_fullscreen_clicked()
-                return True
-
-            if menubar.MOD in mods:
-                if key == menubar.RIGHT_ARROW:
-                    app.widgetapp.on_forward_clicked()
-                    return True
-
-                if key == menubar.LEFT_ARROW:
-                    app.widgetapp.on_previous_clicked()
-                    return True
-
-            if key == menubar.RIGHT_ARROW:
-                app.widgetapp.on_skip_forward()
-                return True
-
-            if key == menubar.LEFT_ARROW:
-                app.widgetapp.on_skip_backward()
-                return True
-
-            if key == menubar.UP_ARROW:
-                app.widgetapp.up_volume()
-                return True
-
-            if key == menubar.DOWN_ARROW:
-                app.widgetapp.down_volume()
-                return True

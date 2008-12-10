@@ -106,6 +106,12 @@ class Application:
 
         self.window = MiroWindow(config.get(prefs.LONG_APP_NAME),
                                  self.get_main_window_dimensions())
+        self.window.connect_weak('key-press', self.on_key_press)
+
+    def on_key_press(self, window, key, mods):
+        if (app.playback_manager.is_playing and
+                app.playback_manager.detached_window is None):
+            return playback.handle_key_press(key, mods)
 
     def handle_movies_gone(self, continue_callback):
         call_on_ui_thread(lambda: self._handle_movies_gone(continue_callback))

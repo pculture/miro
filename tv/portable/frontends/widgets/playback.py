@@ -29,6 +29,7 @@
 import os
 
 from miro import app
+from miro import menubar
 from miro import prefs
 from miro import config
 from miro import signals
@@ -379,3 +380,37 @@ class DetachedWindow (widgetset.Window):
             self.closing = True
             if self.stop_on_close:
                 app.playback_manager.stop()
+
+    def do_key_press(self, key, mods):
+        if handle_key_press(key, mods):
+            return True
+        if menubar.MOD in mods and key == 't':
+            app.playback_manager.toggle_detached_mode()
+            return True
+        return False
+
+def handle_key_press(key, mods):
+    """Handle a playback key press events """
+
+    if len(mods) != 0:
+        return False
+
+    if key == menubar.ESCAPE and app.playback_manager.is_fullscreen:
+        app.widgetapp.on_fullscreen_clicked()
+        return True
+
+    if key == menubar.RIGHT_ARROW:
+        app.widgetapp.on_skip_forward()
+        return True
+
+    if key == menubar.LEFT_ARROW:
+        app.widgetapp.on_skip_backward()
+        return True
+
+    if key == menubar.UP_ARROW:
+        app.widgetapp.up_volume()
+        return True
+
+    if key == menubar.DOWN_ARROW:
+        app.widgetapp.down_volume()
+        return True
