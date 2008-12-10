@@ -937,8 +937,8 @@ class ListViewRenderer(widgetset.CustomCellRenderer):
         else:
             layout.set_text_color(self.style.text_color)
         textbox = layout.textbox(self.text)
-        textbox.set_wrap_style('char')
-        text_size = textbox.get_size()
+        if self.right_aligned:
+            textbox.set_alignment('right')
         hbox = cellpack.HBox()
         textline = cellpack.TruncatedTextLine(textbox)
         hbox.pack(cellpack.align_middle(textline), expand=True)

@@ -224,16 +224,23 @@ class TextBox(object):
         cairo_context.set_source_rgb(*self.color)
         underline_drawer = UnderlineDrawer(self.underlines)
         line_height = 0
+        alignment = self.layout.get_alignment()
         for i in xrange(self.layout.get_line_count()):
             line = self.layout.get_line(i)
             extents = line.get_pixel_extents()[1]
             next_line_height = line_height + extents[3]
             if next_line_height > height:
                 break
+            if alignment == pango.ALIGN_CENTER:
+                line_x = max(x, x + (width - extents[2]) / 2.0)
+            elif alignment == pango.ALIGN_RIGHT:
+                line_x = max(x, x + width - extents[2])
+            else:
+                line_x = x
             baseline = y + line_height + pango.ASCENT(extents)
-            context.move_to(x, baseline)
+            context.move_to(line_x, baseline)
             cairo_context.show_layout_line(line)
-            underline_drawer.draw(context, x, baseline, line)
+            underline_drawer.draw(context, line_x, baseline, line)
             line_height = next_line_height
         cairo_context.restore()
         cairo_context.new_path()
