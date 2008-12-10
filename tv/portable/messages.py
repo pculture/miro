@@ -762,6 +762,7 @@ class GuideInfo(object):
     url -- URL for the guide
     allowed_urls -- URLs that should be also considered part of the guide
     default -- is this the default channel guide?
+    favicon -- the favicon for the guide
     """
     def __init__(self, guide):
         self.name = guide.get_title()
@@ -769,6 +770,7 @@ class GuideInfo(object):
         self.url = guide.getURL()
         self.default = guide.getDefault()
         self.allowed_urls = guide.allowedURLs
+        self.favicon = guide.get_favicon_path()
 
 class ItemInfo(object):
     """Tracks the state of an item

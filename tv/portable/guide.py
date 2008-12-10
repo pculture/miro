@@ -40,6 +40,7 @@ from miro import prefs
 from miro import views
 from miro import httpclient
 from miro import iconcache
+from miro import fileutil
 
 HTMLPattern = re.compile("^.*(<head.*?>.*</body\s*>)", re.S)
 
@@ -157,11 +158,15 @@ class ChannelGuide(DDBObject):
     def downloadGuide(self):
         httpclient.grabURL(self.getURL(), self.guideDownloaded, self.guideError)
 
-    @returnsUnicode
-    def getIconURL(self):
+    def get_favicon_path(self):
+        """Returns the path to the favicon file.  It's either the favicon of
+        the site or the default icon image.
+        """
         if self.getDefault():
-            return resources.url("images/icon-guide_small.png")
-        return resources.url("images/site-icon.png")
+            return resources.path("images/icon-guide_small.png")
+        if self.favicon:
+            return fileutil.expand_filename(self.iconCache.get_filename())
+        return resources.path("images/icon-site.png")
 
     def getThumbnailURL(self):
         if self.favicon:
@@ -184,7 +189,6 @@ class ChannelGuide(DDBObject):
                 self.history = self.history[:self.historyLocation+1]
             self.history.append(url)
             self.historyLocation += 1
-
 
     def getHistoryURL(self, direction):
         if direction is not None:

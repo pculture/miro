@@ -477,8 +477,11 @@ class SiteList(TabList):
         app.widgetapp.remove_current_site()
 
     def init_info(self, info):
-        thumb_path = resources.path('images/icon-site.png')
-        info.icon = imagepool.get_surface(thumb_path)
+        if info.favicon:
+            info.icon = imagepool.get_surface(info.favicon)
+        else:
+            thumb_path = resources.path('images/icon-site.png')
+            info.icon = imagepool.get_surface(thumb_path)
         info.unwatched = info.available = 0
 
     def on_context_menu(self, table_view):
