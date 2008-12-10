@@ -42,7 +42,6 @@ from miro.frontends.widgets import style
 from miro.frontends.widgets.widgetutil import build_hbox
 from miro.util import clampText, returnsUnicode
 
-STOP_WATCHING = "stop_watching"
 KEEP_ITEMS = "keep_items"
 
 def run_dialog(channel_infos, downloaded_items, downloading_items, watched_feeds):
@@ -82,11 +81,14 @@ def run_dialog(channel_infos, downloaded_items, downloading_items, watched_feeds
                 cbx_downloaded.set_checked(True)
                 v.pack_start(widgetutil.align_left(cbx_downloaded, bottom_pad=5))
 
-            cbx_watched = None
             if watched_feeds:
-                cbx_watched = widgetset.Checkbox(_("Stop watching watched directories."))
-                cbx_watched.set_checked(True)
-                v.pack_start(widgetutil.align_left(cbx_watched, bottom_pad=5))
+                lab = widgetset.Label(_(
+                    "Watched folders will be removed from the sidebar but their contents will "
+                    "still appear in your library.  You can stop watching watched folders completely "
+                    "in the Miro preference panel."
+                ))
+                lab.set_wrap(True)
+                v.pack_start(widgetutil.align_left(lab, bottom_pad=5))
 
             if downloading_items:
                 lab_downloading = widgetset.Label(ngettext(
@@ -106,11 +108,9 @@ def run_dialog(channel_infos, downloaded_items, downloading_items, watched_feeds
             if ret == 0:
                 # this is silly, but it sets us up for adding additional
                 # bits later.
-                ret = {KEEP_ITEMS: False, STOP_WATCHING: False}
+                ret = {KEEP_ITEMS: False}
                 if downloaded_items:
                     ret[KEEP_ITEMS] = cbx_downloaded.get_checked()
-                if watched_feeds:
-                    ret[STOP_WATCHING] = cbx_watched.get_checked()
                 return ret
         except (SystemExit, KeyboardInterrupt):
             raise

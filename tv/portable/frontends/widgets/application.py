@@ -519,8 +519,7 @@ class Application:
         if ret:
             for ci in channel_infos:
                 if ci.is_directory_feed:
-                    if ret[removechannelsdialog.STOP_WATCHING]:
-                        messages.SetWatchedFolderVisible(ci.id, False).send_to_backend()
+                    messages.SetWatchedFolderVisible(ci.id, False).send_to_backend()
                 else:
                     messages.DeleteChannel(ci.id, ci.is_folder,
                         ret[removechannelsdialog.KEEP_ITEMS]
