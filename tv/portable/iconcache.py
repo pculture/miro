@@ -196,9 +196,11 @@ class IconCache:
         needsChange = False
 
         if (info == None or (info['status'] != 304 and info['status'] != 200) 
-                or 'content-type' not in info 
-                or info['content-type'].startswith('text')):
-            self.error_callback(url)
+                or 'content-type' not in info):
+            self.error_callback(url, "bad response")
+            return
+        if info['content-type'].startswith('text'):
+            self.error_callback(url, "content-type is %s" % info["content-type"])
             return
         try:
             # Our cache is good.  Hooray!
@@ -288,12 +290,10 @@ class IconCache:
             self.needsUpdate = True
             iconCacheUpdater.update_finished()
             return
-        try:
+
+        if hasattr(self.dbItem, "getThumbnailURL"):
             url = self.dbItem.getThumbnailURL()
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            # FIXME - bad code; what exceptions get thrown here?
+        else:
             url = self.url
 
         # Only verify each icon once per run unless the url changes
