@@ -2237,7 +2237,7 @@ class DirectoryFeedImpl(FeedImpl):
         incomplete_dir = os.path.join(movies_dir, "Incomplete Downloads")
         known_files.add(incomplete_dir)
 
-        known_files = [os.path.normcase(k) for k in known_files]
+        known_files = set([os.path.normcase(k) for k in known_files])
 
         # remove items that are in feeds, but we have in our list
         for item in self.items:
@@ -2248,7 +2248,7 @@ class DirectoryFeedImpl(FeedImpl):
         # add our items to known_files so that they don't get added
         # multiple times to this feed.
         for x in self.items:
-            known_files.append(os.path.normcase(x.get_filename()))
+            known_files.add(os.path.normcase(x.get_filename()))
 
         # adds any files we don't know about
         # files on the filesystem
