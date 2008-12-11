@@ -229,7 +229,7 @@ def miro_allfiles(directory):
     """
     files = []
     expanded_directory = expand_filename(directory)
-    expanded_directory = os.path.abspath(os.path.normcase(expanded_directory))
+    expanded_directory = os.path.abspath(expanded_directory)
     if expanded_directory in deletes_in_progress:
         return []
     try:
@@ -241,8 +241,8 @@ def miro_allfiles(directory):
             # thumbs.db is a windows file that speeds up thumbnails.  We know
             # it's not a movie file.
             continue
-        path = os.path.join(directory, os.path.normcase(name))
-        expanded_path = os.path.join(expanded_directory, os.path.normcase(name))
+        path = os.path.join(directory, name)
+        expanded_path = os.path.join(expanded_directory, name)
         if expanded_path in deletes_in_progress:
             continue
         try:
