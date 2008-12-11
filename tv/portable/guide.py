@@ -28,7 +28,7 @@
 
 import re
 import logging
-from HTMLParser import HTMLParser
+from HTMLParser import HTMLParser, HTMLParseError
 from urlparse import urlparse, urljoin
 
 from miro.plat import resources
@@ -65,7 +65,7 @@ class ChannelGuide(DDBObject):
             self.history = []
 
         DDBObject.__init__(self)
-        self.downloadGuide()
+        self.download_guide()
 
     def onRestore(self):
         DDBObject.onRestore(self)
@@ -77,8 +77,8 @@ class ChannelGuide(DDBObject):
         else:
             self.iconCache.dbItem = self
             self.iconCache.requestUpdate(True)
-        
-        self.downloadGuide()
+
+        self.download_guide()
 
     def __str__(self):
         return "Miro Guide <%s>" % self.url
@@ -131,52 +131,52 @@ class ChannelGuide(DDBObject):
         self.userTitle = title
         self.signalChange(needsSave=True)
 
-    def guideDownloaded(self, info):
+    def guide_downloaded(self, info):
         self.updated_url = unicode(info["updated-url"])
+        parser = None
         try:
             parser = GuideHTMLParser(self.updated_url)
             parser.feed(info["body"])
             parser.close()
         except (SystemExit, KeyboardInterrupt):
             raise
-        except:
+        except HTMLParseError:
             pass
-        else:
-            self.title = unicode(parser.title)
-            if parser.favicon is not None:
-                self.favicon = unicode(parser.favicon)
-            else:
-                self.favicon = None
-            self.extendHistory(self.updated_url)
-            self.iconCache.requestUpdate(True)
-            self.signalChange()
 
-    def guideError(self, error):
+        if parser:
+            self.title = unicode(parser.title)
+        if parser and parser.favicon is not None:
+            self.favicon = unicode(parser.favicon)
+        else:
+            parsed = urlparse(self.updated_url)
+            self.favicon = parsed[0] + u"://" + parsed[1] + u"/favicon.ico"
+        self.extendHistory(self.updated_url)
+        self.iconCache.requestUpdate(True)
+        self.signalChange()
+
+    def guide_error(self, error):
         # FIXME - this should display some kind of error page to the user
         logging.warn("Error downloading guide: %s", error)
 
-    def downloadGuide(self):
-        httpclient.grabURL(self.getURL(), self.guideDownloaded, self.guideError)
+    def download_guide(self):
+        httpclient.grabURL(self.getURL(), self.guide_downloaded, self.guide_error)
 
     def get_favicon_path(self):
         """Returns the path to the favicon file.  It's either the favicon of
         the site or the default icon image.
         """
-        if self.getDefault():
-            return resources.path("images/icon-guide_small.png")
         if self.favicon:
             return fileutil.expand_filename(self.iconCache.get_filename())
+        if self.getDefault():
+            return resources.path("images/icon-guide_small.png")
         return resources.path("images/icon-site.png")
 
+    def iconChanged(self, needsSave=True):
+        self.confirmDBThread()
+        self.signalChange(needsSave=True)
+
     def getThumbnailURL(self):
-        if self.favicon:
-            return self.favicon
-        else:
-            if self.updated_url:
-                parsed = urlparse(self.updated_url)
-            else:
-                parsed = urlparse(self.getURL())
-            return parsed[0] + u"://" + parsed[1] + u"/favicon.ico"
+        return self.favicon
 
     def extendHistory(self, url):
         if self.historyLocation is None:
@@ -218,10 +218,11 @@ class GuideHTMLParser(HTMLParser):
         if tag == 'title' and self.title == None:
             self.in_title = True
             self.title = u""
-        if (tag == 'link' and attrdict.has_key('rel') and
-                attrdict.has_key('type') and attrdict.has_key('href') and
-                'icon' in attrdict['rel'].split(' ') and
-                attrdict['type'].startswith("image/")):
+        if (tag == 'link' and attrdict.has_key('rel')
+                and attrdict.has_key('type')
+                and attrdict.has_key('href')
+                and 'icon' in attrdict['rel'].split(' ')
+                and attrdict['type'].startswith("image/")):
             self.favicon = urljoin(self.baseurl, attrdict['href']).decode('ascii', 'ignore')
 
     def handle_data(self, data):
