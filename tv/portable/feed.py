@@ -2249,8 +2249,10 @@ class DirectoryFeedImpl(FeedImpl):
         if fileutil.isdir(movies_dir):
             all_files = fileutil.miro_allfiles(movies_dir)
             for file_ in all_files:
+                # FIXME - this prevents files from ANY Incomplete Downloads
+                # directory which isn't quite right.
                 if (file_ not in known_files
-                        and not file_.startswith(incomplete_dir)
+                        and not "incomplete downloads" in file_.lower()
                         and filetypes.is_video_filename(filenameToUnicode(file_))):
                     itemmod.FileItem(file_, feed_id=self.ufeed.id)
 
