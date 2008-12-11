@@ -2248,7 +2248,7 @@ class DirectoryFeedImpl(FeedImpl):
         # add our items to known_files so that they don't get added
         # multiple times to this feed.
         for x in self.items:
-            known_files.add(os.path.normcase(x.get_filename()))
+            known_files.append(os.path.normcase(x.get_filename()))
 
         # adds any files we don't know about
         # files on the filesystem
