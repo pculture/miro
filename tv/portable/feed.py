@@ -2220,6 +2220,10 @@ class DirectoryFeedImpl(FeedImpl):
             self.scheduleUpdateEvents(-1)
 
     def update(self):
+        # FIXME - this method and the fileutils.miro_allfiles methods
+        # should be re-written to better handle U3/PortableApps-style 
+        # pathnames, case-insensitive file-systems, and file-systems 
+        # that do 8.3 paths.  what we have here is a veritable mess.
         self.ufeed.confirmDBThread()
         movies_dir = config.get(prefs.MOVIES_DIRECTORY)
         # files known about by real feeds
@@ -2233,27 +2237,31 @@ class DirectoryFeedImpl(FeedImpl):
         incomplete_dir = os.path.join(movies_dir, "Incomplete Downloads")
         known_files.add(incomplete_dir)
 
+        known_files = [os.path.normcase(k) for k in known_files]
+
         # remove items that are in feeds, but we have in our list
         for item in self.items:
-            if item.get_filename() in known_files:
+            if os.path.normcase(item.get_filename()) in known_files:
                 item.remove()
 
         # now that we've checked for items that need to be removed, we
         # add our items to known_files so that they don't get added
         # multiple times to this feed.
         for x in self.items:
-            known_files.add(x.get_filename())
+            known_files.add(os.path.normcase(x.get_filename()))
 
         # adds any files we don't know about
         # files on the filesystem
         if fileutil.isdir(movies_dir):
             all_files = fileutil.miro_allfiles(movies_dir)
             for file_ in all_files:
+                file_ = os.path.normcase(file_)
                 # FIXME - this prevents files from ANY Incomplete Downloads
                 # directory which isn't quite right.
                 if (file_ not in known_files
                         and not "incomplete downloads" in file_.lower()
                         and filetypes.is_video_filename(filenameToUnicode(file_))):
+                    print "adding it!"
                     itemmod.FileItem(file_, feed_id=self.ufeed.id)
 
         for item in self.items:
