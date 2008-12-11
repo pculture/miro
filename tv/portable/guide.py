@@ -143,15 +143,16 @@ class ChannelGuide(DDBObject):
         except HTMLParseError:
             pass
 
-        if parser:
+        if parser and parser.title is not None:
             self.title = unicode(parser.title)
-        if parser and parser.favicon is not None:
-            self.favicon = unicode(parser.favicon)
-        else:
-            parsed = urlparse(self.updated_url)
-            self.favicon = parsed[0] + u"://" + parsed[1] + u"/favicon.ico"
+        if self.favicon == None:
+            if parser and parser.favicon is not None:
+                self.favicon = unicode(parser.favicon)
+            else:
+                parsed = urlparse(self.updated_url)
+                self.favicon = parsed[0] + u"://" + parsed[1] + u"/favicon.ico"
+            self.iconCache.requestUpdate(True)
         self.extendHistory(self.updated_url)
-        self.iconCache.requestUpdate(True)
         self.signalChange()
 
     def guide_error(self, error):
@@ -167,9 +168,7 @@ class ChannelGuide(DDBObject):
         """
         if self.favicon:
             return fileutil.expand_filename(self.iconCache.get_filename())
-        if self.getDefault():
-            return resources.path("images/icon-guide_small.png")
-        return resources.path("images/icon-site.png")
+        return resources.path("images/icon-guide_large.png")
 
     def iconChanged(self, needsSave=True):
         self.confirmDBThread()
