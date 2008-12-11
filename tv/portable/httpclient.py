@@ -345,7 +345,7 @@ class AsyncSocket(object):
         self.socket.setblocking(0)
         self.connectionErrback = errback
         def handleGetHostByNameException(e):
-            trap_call(self, errback, ConnectionError(e[1]))
+            trap_call(self, errback, ConnectionError(e[1] + " (host: %s)" % host))
         def onAddressLookup(address):
             if self.socket is None:
                 # the connection was closed while we were calling gethostbyname
