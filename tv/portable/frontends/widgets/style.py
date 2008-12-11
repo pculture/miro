@@ -216,7 +216,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         self.play_button = imagepool.get_surface(resources.path(
             'images/play-button.png'))
         self.thumb_overlay = imagepool.get_surface(resources.path(
-            'images/thumb-overlay-small.png'))
+            'images/thumb-overlay.png'))
         self.alert_image = imagepool.get_surface(resources.path(
             'images/status-icon-alert.png'))
         # We cache the size of our rows to save us from re-caclulating all the

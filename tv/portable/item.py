@@ -717,9 +717,9 @@ class Item(DDBObject):
                 return feed.getThumbnailPath()
             elif (self.get_video_filename()
                      and filetypes.is_audio_filename(self.get_video_filename())):
-                return resources.path("images/thumb-default-audio_large.png")
+                return resources.path("images/thumb-default-audio.png")
             else:
-                return resources.path("images/thumb-default_large.png")
+                return resources.path("images/thumb-default-video.png")
 
     @returnsUnicode
     def get_title(self):
