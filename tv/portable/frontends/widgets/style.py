@@ -215,12 +215,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             'images/video-download-resume.png'))
         self.play_button = imagepool.get_surface(resources.path(
             'images/play-button.png'))
-        self.play_button_pressed = imagepool.get_surface(resources.path(
-            'images/play-button-pressed.png'))
         self.thumb_overlay = imagepool.get_surface(resources.path(
             'images/thumb-overlay-small.png'))
-        self.thumb_overlay_large = imagepool.get_surface(resources.path(
-            'images/thumb-overlay-large.png'))
         self.alert_image = imagepool.get_surface(resources.path(
             'images/status-icon-alert.png'))
         # We cache the size of our rows to save us from re-caclulating all the
