@@ -687,7 +687,7 @@ class HeaderToolbar(widgetset.Background):
         self.list_button = ViewSwitchButton('list-view-button')
         self.list_button.connect('clicked', self._on_list_clicked)
         self._hbox.pack_start(widgetutil.align_middle(self.normal_button,
-            left_pad=4))
+            left_pad=12))
         self._hbox.pack_start(widgetutil.align_middle(self.list_button))
         self._hbox.pack_end(widgetutil.align_middle(self._button_hbox_container))
         self.add(self._hbox)
