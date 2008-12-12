@@ -2340,6 +2340,10 @@ class SearchFeedImpl(RSSMultiFeedImpl):
             if item.get_state() not in ('new', 'not-downloaded'):
                 item.setFeed(downloadsFeed.id)
 
+    def set_info(self, engine, query):
+        self.lastEngine = engine
+        self.lastQuery = query
+
     def lookup(self, engine, query):
         checkU(engine)
         checkU(query)

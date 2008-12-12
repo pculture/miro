@@ -72,8 +72,10 @@ class SearchManager(signals.SignalEmitter):
         m.send_to_backend()
 
     def handle_search_complete(self, message):
-        self.searching = False
-        self.emit('search-complete', message.result_count)
+        if message.engine == self.engine and message.query == self.text:
+            # make sure that the search complete is the current one
+            self.searching = False
+            self.emit('search-complete', message.result_count)
 
 class InlineSearchMemory(object):
     """Remembers inline searches the user has performed """

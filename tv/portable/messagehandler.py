@@ -898,12 +898,11 @@ class BackendMessageHandler(messages.MessageHandler):
         search_feed = app.controller.get_global_feed('dtv:search')
         search_downloads_feed = app.controller.get_global_feed('dtv:searchDownloads')
 
-        search_feed.lastEngine = searchengine_id
-        search_feed.lastQuery = terms
         search_feed.preserveDownloads(search_downloads_feed)
         if terms:
             search_feed.lookup(searchengine_id, terms)
         else:
+            search_feed.set_info(searchengine_id, u'')
             search_feed.reset()
 
     def _search_update_finished(self, feed):
