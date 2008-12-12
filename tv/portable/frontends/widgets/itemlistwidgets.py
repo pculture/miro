@@ -697,7 +697,7 @@ class HeaderToolbar(widgetset.Background):
         self._make_button(_('Name'), 'name')
         self._make_button(_('Date'), 'date')
         self._make_button(_('Size'), 'size')
-        self._make_button(_('Length'), 'length')
+        self._make_button(_('Time'), 'length')
         self._button_map['date'].set_sort_state(SortBarButton.SORT_DOWN)
 
     def _on_normal_clicked(self, button):
