@@ -516,7 +516,7 @@ def get_mozilla_stuff():
 
         if mozIncludeBase is not None:
             for subdir in ['dom', 'gfx', 'widget', 'commandhandler', 'uriloader',
-                           'webbrwsr', 'necko', 'windowwatcher']:
+                           'webbrwsr', 'necko', 'windowwatcher', 'unstable']:
                 path = os.path.join(mozIncludeBase, subdir)
                 mozilla_browser_options['include_dirs'].append(path)
 
@@ -563,6 +563,16 @@ mozprompt_ext = \
             os.path.join(platform_widgets_dir, 'mozprompt.pyx'),
             os.path.join(platform_widgets_dir, 'PromptService.cc'),
         ],
+        **mozilla_browser_options
+    )
+
+windowcreator_ext = \
+    Extension("miro.plat.frontends.widgets.windowcreator",
+        [
+            os.path.join(platform_widgets_dir, 'windowcreator.pyx'),
+            os.path.join(platform_widgets_dir, 'MiroWindowCreator.cc'),
+        ],
+        language="c++",
         **mozilla_browser_options
     )
 
@@ -812,6 +822,7 @@ if libtorrent_ext:
     ext_modules.append(libtorrent_ext)
 ext_modules.append(pygtkhacks_ext)
 ext_modules.append(mozprompt_ext)
+ext_modules.append(windowcreator_ext)
 ext_modules.append(Extension("miro.database", [os.path.join(portable_dir, 'database.pyx')]))
 ext_modules.append(Extension("miro.sorts", [os.path.join(portable_dir, 'sorts.pyx')]))
 

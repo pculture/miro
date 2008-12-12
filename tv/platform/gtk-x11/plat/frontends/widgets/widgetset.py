@@ -30,12 +30,14 @@ import gtkmozembed
 import gtk
 import gobject
 
+from miro import app
 # Most of our stuff comes from the portable code, except the video renderer
 # and the browser.
 from miro.frontends.widgets.gtk.widgetset import *
 
 # We need to provide a Browser
 from miro.plat.frontends.widgets import mozprompt
+from miro.plat.frontends.widgets import windowcreator
 xpcom_setup = False
 
 class MiroMozEmbed(gtkmozembed.MozEmbed):
@@ -112,8 +114,14 @@ class Browser(Widget):
         self._widget.stop_load()
 
 
+class NewWindowMonitor:
+    def on_new_window(self, uri):
+        app.widgetapp.open_url(uri)
+_new_window_monitor = NewWindowMonitor()
+
 def do_xpcom_setup():
     global xpcom_setup
 
     mozprompt.stop_prompts()
     xpcom_setup = True
+    windowcreator.install_window_creator(_new_window_monitor)
