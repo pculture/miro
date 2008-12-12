@@ -459,13 +459,13 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     def pack_flap(self, layout):
         vbox = cellpack.VBox()
         vbox.pack_space(25)
-        hbox = cellpack.HBox()
+        hbox = cellpack.HBox(spacing=15)
 
         layout.set_font(0.77)
 
         comments_hotspot = self._make_button(layout, _('Comments'),
                 'visit_comments', not self.data.commentslink)
-        hbox.pack(cellpack.align_center(comments_hotspot), expand=True)
+        hbox.pack(cellpack.align_left(comments_hotspot), expand=True)
 
         if file_navigator_name:
             reveal_text = _('Reveal in %(progname)s', {"progname": file_navigator_name})
@@ -473,18 +473,18 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             reveal_text = _('Reveal File')
         reveal_hotspot = self._make_button(layout, reveal_text,
                 'show_local_file', not self.data.downloaded)
-        hbox.pack(cellpack.align_center(reveal_hotspot), expand=True)
+        hbox.pack(cellpack.align_center(reveal_hotspot))
 
         permalink_hotspot = self._make_button(layout, _('Web Page'),
                 'visit_webpage', not self.data.permalink)
-        hbox.pack(cellpack.align_center(permalink_hotspot), expand=True)
+        hbox.pack(cellpack.align_center(permalink_hotspot))
 
         fileurl_hotspot = self._make_button(layout, _('File URL'),
                 'visit_filelink', not (self.data.file_url and self.data.file_url.startswith('file:')))
-        hbox.pack(cellpack.align_center(fileurl_hotspot), expand=True)
+        hbox.pack(cellpack.align_center(fileurl_hotspot))
 
         license_hotspot = self._make_button(layout, _('License Page'), 'visit_license', not self.data.license)
-        hbox.pack(cellpack.align_center(license_hotspot), expand=True)
+        hbox.pack(cellpack.align_center(license_hotspot))
 
         vbox.pack(hbox)
         return vbox
