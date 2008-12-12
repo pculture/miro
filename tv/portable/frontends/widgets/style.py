@@ -202,6 +202,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     GRADIENT_HEIGHT = 25
     FLAP_HEIGHT = 40
     FLAP_BACKGROUND_COLOR = (225.0 / 255.0, 225.0 / 255.0, 225.0 / 255.0)
+    FLAP_HIGHLIGHT_COLOR = (237.0 / 255.0, 237.0 / 255.0, 237.0 / 255.0)
 
     def __init__(self, display_channel=True):
         widgetset.CustomCellRenderer.__init__(self)
@@ -829,7 +830,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         # Draw the highlight of outer border
         context.set_line_width(1)
         self.make_border_path(context, x, y, width, height, 1.5)
-        context.set_color(widgetutil.WHITE)
+        context.set_color(self.FLAP_HIGHLIGHT_COLOR)
         context.stroke()
         # Paint inner box background
         self.make_border_path(context, x, y, width, height - self.FLAP_HEIGHT, 0.5)
