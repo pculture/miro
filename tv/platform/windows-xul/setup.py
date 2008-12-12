@@ -202,6 +202,7 @@ xulrunnerbrowser_ext = Extension("miro.plat.frontends.widgets.xulrunnerbrowser",
         sources = [
             os.path.join(xulrunnerbrowser_ext_dir, 'xulrunnerbrowser.pyx'),
             os.path.join(xulrunnerbrowser_ext_dir, 'MiroBrowserEmbed.cpp'),
+            os.path.join(xulrunnerbrowser_ext_dir, 'MiroWindowCreator.cpp'),
             os.path.join(xulrunnerbrowser_ext_dir, 'FixFocus.cpp'),
             os.path.join(xulrunnerbrowser_ext_dir, 'Init.cpp'),
             ]

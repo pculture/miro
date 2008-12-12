@@ -68,11 +68,22 @@ cdef extern from "MiroBrowserEmbed.h":
         void (*SetFocusCallback)(focusCallback callback, void* data)
         void (*SetURICallback)(uriCallback callback, void* data)
         void (*SetNetworkCallback)(networkCallback callback, void* data)
-    # Trick Cython into creating constructor and destructor code
+    # Trick Pyrex into creating constructor and destructor code
     MiroBrowserEmbed *new_MiroBrowserEmbed "new MiroBrowserEmbed" ()
     void del_MiroBrowserEmbed "delete" (MiroBrowserEmbed *rect)
     void addref(MiroBrowserEmbed* browser)
     void release(MiroBrowserEmbed* browser)
+
+cdef extern from "MiroWindowCreator.h":
+    ctypedef void(*newWindowCallback)(char* data, void* data)
+
+    ctypedef struct MiroWindowCreator:
+        nsresult (*install)()
+        void (*SetNewWindowCallback)(newWindowCallback, void*)
+
+    # Trick Pyrex into creating constructor and destructor code
+    MiroWindowCreator *new_MiroWindowCreator "new MiroWindowCreator" ()
+    void del_MiroWindowCreator "delete" (MiroWindowCreator *rect)
 
 cdef extern from "Init.h":
     nsresult init_xulrunner(char* xul_dir, char* app_dir)
@@ -94,6 +105,14 @@ def initialize(xul_dir, app_dir):
     rv = init_xulrunner(xul_dir, app_dir)
     if rv != NS_OK:
         raise XPCOMError("init_xulrunner failed with code: %d" % rv)
+
+def install_window_creator(new_window_handler):
+    cdef MiroWindowCreator *creator
+    creator = new_MiroWindowCreator()
+    rv = creator.install()
+    if rv != NS_OK:
+        raise XPCOMError("MiroWindowCreator.install() failed with code: %d" % rv)
+    creator.SetNewWindowCallback(newWindowCallbackGlue, <void *>new_window_handler)
 
 def shutdown():
     shutdown_xulrunner()
@@ -127,6 +146,13 @@ cdef void networkCallbackGlue(PRBool is_start, void* data) with gil:
         retval = PyObject_CallMethod(<PyObject*>data, "on_net_start", "")
     else:
         retval = PyObject_CallMethod(<PyObject*>data, "on_net_stop", "")
+    if retval:
+        Py_DECREF(retval)
+
+cdef void newWindowCallbackGlue(char* uri, void* data) with gil:
+    cdef PyObject* retval
+
+    retval = PyObject_CallMethod(<PyObject*>data, "on_new_window", "s", uri)
     if retval:
         Py_DECREF(retval)
 
