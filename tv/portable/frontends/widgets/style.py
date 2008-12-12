@@ -580,7 +580,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         if details_rows:
             details_box = self.create_pseudo_table(layout, details_rows)
-            vbox.pack(cellpack.align_left(cellpack.pad(details_box, left=10)), expand=True)
+            vbox.pack(cellpack.align_center(details_box), expand=True)
         return vbox
 
     def draw_emblem(self, context, x, y, width, height, color):
