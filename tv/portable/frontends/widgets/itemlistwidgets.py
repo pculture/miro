@@ -617,7 +617,7 @@ class FeedToolbar(widgetset.Background):
         remove_button.set_color(style.TOOLBAR_GRAY)
         remove_button.connect('clicked', self._on_remove_clicked)
 
-        hbox.pack_start(widgetutil.align_middle(label, right_pad=2))
+        hbox.pack_start(widgetutil.align_middle(label, right_pad=2, left_pad=6))
         hbox.pack_start(widgetutil.align_middle(self.autdownload_menu))
         hbox.pack_end(widgetutil.align_middle(remove_button))
         hbox.pack_end(widgetutil.align_middle(settings_button))
