@@ -622,7 +622,7 @@ class FeedToolbar(widgetset.Background):
         hbox.pack_end(widgetutil.align_middle(remove_button))
         hbox.pack_end(widgetutil.align_middle(settings_button))
         hbox.pack_end(widgetutil.align_middle(send_button))
-        self.add(widgetutil.pad(hbox, top=4, bottom=4, left=10, right=10))
+        self.add(widgetutil.pad(hbox, top=4, bottom=4, left=10, right=14))
 
     def set_autodownload_mode(self, autodownload_mode):
         if autodownload_mode == 'all':
