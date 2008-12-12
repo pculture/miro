@@ -28,7 +28,6 @@
 
 """Constants that define the look-and-feel."""
 
-import datetime
 import math
 import os
 import logging
@@ -392,7 +391,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         return table
 
     def pack_right(self, layout):
-        vbox = cellpack.VBox()
+        vbox = cellpack.VBox(spacing=3)
 
         # release date
         release_date = displaytext.release_date(self.data.release_date)
