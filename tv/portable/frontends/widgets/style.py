@@ -591,7 +591,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         inner_width = width - radius
 
         # draw the outline
-        context.set_line_width(1)
+        context.set_line_width(2)
         # border is slightly darker than the color
         context.set_color(tuple([max(0.0, c - 0.1) for c in color]))
         context.move_to(x + inner_width, y + y_offset)
