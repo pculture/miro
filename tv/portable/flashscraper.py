@@ -146,7 +146,7 @@ def _scrape_google_video_url(url, callback):
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        print "DTV: WARNING, unable to scrape Google Video URL: %s" % url
+        logging.warning("unable to scrape Google Video URL: %s" % url)
         callback(None)
 
 def _scrape_lulu_video_url(url, callback):
@@ -158,7 +158,7 @@ def _scrape_lulu_video_url(url, callback):
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        print "DTV: WARNING, unable to scrape LuLu.tv Video URL: %s" % url
+        logging.warning("unable to scrape LuLu.tv Video URL: %s" % url)
         callback(None)
 
 def _scrape_vmix_video_url(url, callback):
@@ -175,7 +175,7 @@ def _scrape_vmix_video_url(url, callback):
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        print "DTV: WARNING, unable to scrape VMix Video URL: %s" % url
+        logging.warning("unable to scrape VMix Video URL: %s" % url)
         callback(None)
 
 def _scrape_vmix_callback(info, callback):
@@ -186,11 +186,11 @@ def _scrape_vmix_callback(info, callback):
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        print "DTV: WARNING, unsable to scrape XML for VMix Video URL %s" % info['redirected-url']
+        logging.warning("unsable to scrape XML for VMix Video URL %s" % info['redirected-url'])
         callback(None)
 
 def _scrape_vmix_errback(err, callback):
-    print "DTV: WARNING, network error scraping VMix Video URL"
+    logging.warning("network error scraping VMix Video URL")
     callback(None)
 
 def _scrape_dailymotion_video_url(url, callback):
@@ -210,11 +210,11 @@ def _scrape_dailymotion_callback(info, callback):
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        print "DTV: WARNING, unable to scrape Daily Motion URL: %s" % url
+        logging.warning("unable to scrape Daily Motion URL: %s" % url)
         callback(None)
 
 def _scrape_dailymotion_errback(info, callback):
-    print "DTV: WARNING, network error scraping Daily Motion Video URL"
+    logging.warning("network error scraping Daily Motion Video URL")
     callback(None)
 
 def _scrape_vsocial_video_url(url, callback):
@@ -227,7 +227,7 @@ def _scrape_vsocial_video_url(url, callback):
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        print "DTV: WARNING, unable to scrape VSocial URL: %s" % url
+        logging.warning("unable to scrape VSocial URL: %s" % url)
         callback(None)
 
 def _scrape_veohtv_video_url(url, callback):
@@ -242,7 +242,7 @@ def _scrape_veohtv_video_url(url, callback):
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        print "DTV: WARNING, unable to scrape Veoh URL: %s" % url
+        logging.warning("unable to scrape Veoh URL: %s" % url)
         callback(None)
 
 def _scrape_veohtv_callback(info, callback):
@@ -257,11 +257,11 @@ def _scrape_veohtv_callback(info, callback):
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        print "DTV: WARNING, unable to scrape Veoh URL data: %s" % url
+        logging.warning("unable to scrape Veoh URL data: %s" % url)
         callback(None)
 
 def _scrape_veohtv_errback(err, callback):
-    print "DTV: WARNING, network error scraping Veoh TV Video URL"
+    logging.warning("network error scraping Veoh TV Video URL")
     callback(None)
 
 def _scrape_break_video_url(url, callback):
@@ -278,16 +278,16 @@ def _scrape_break_callback(info, callback):
     except (SystemExit, KeyboardInterrupt):
         raise
     except:
-        print "DTV: WARNING, unable to scrape Break URL: %s" % url
+        logging.warning("unable to scrape Break URL: %s" % url)
         callback(None)
 
 def _scrape_break_errback(info, callback):
-    print "DTV: WARNING, network error scraping Break Video URL"
+    logging.warning("network error scraping Break Video URL")
     callback(None)
 
 def _scrape_green_peace_video_url(url, callback):
-    print "DTV: Warning, unable to scrape Green peace Video URL %s" % url
-    print callback(None)
+    logging.warning("unable to scrape Green peace Video URL %s" % url)
+    callback(None)
 
 # =============================================================================
 
