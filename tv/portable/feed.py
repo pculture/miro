@@ -1684,7 +1684,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         del self.download_dc[url]
 
     def feedparser_errback(self, e, url):
-        if not self.ufeed.idExists():
+        if not self.ufeed.idExists() or url not in self.download_dc:
             return
         if e:
             logging.info("Error updating feed: %s (%s): %s", self.url, url, e)
@@ -1694,7 +1694,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
 
     def feedparser_callback(self, parsed, url):
         self.ufeed.confirmDBThread()
-        if not self.ufeed.idExists():
+        if not self.ufeed.idExists() or url not in self.download_dc:
             return
         start = clock()
         parsed = unicodify(parsed)
@@ -2313,10 +2313,17 @@ class SearchFeedImpl(RSSMultiFeedImpl):
             status = u'idle-no-results'
         return status
 
+    def _reset_downloads(self):
+        for dc in self.download_dc.values():
+            dc.cancel()
+        self.download_dc = {}
+        self.updating = 0
+
     def reset(self, url=u'', searchState=False):
         self.ufeed.confirmDBThread()
         was_searching = self.searching
         try:
+            self._reset_downloads()
             self.initialUpdate = True
             for item in self.items:
                 item.remove()
