@@ -234,26 +234,6 @@ class TextBox(object):
             raise ValueError("Unknown align value: %s" % align)
         self.update_paragraph_style()
 
-#    def line_count(self):
-#        glyph_count = self.layout_manager.numberOfGlyphs()
-#        retval = 0
-#        index = 0
-#        while index < glyph_count:
-#            _, glyph_range =  self.layout_manager.lineFragmentRectForGlyphAtIndex_effectiveRange_(index, None)
-#            index = NSMaxRange(glyph_range)
-#            retval += 1
-#        return retval
-
-#    def get_glyph_range_for_line(self, line):
-#        glyph_count = self.layout_manager.numberOfGlyphs()
-#        index = 0
-#        for i in xrange(line + 1):
-#            if index >= glyph_count:
-#                raise IndexError("Not enough lines")
-#            _, glyph_range = self.layout_manager.lineFragmentRectForGlyphAtIndex_effectiveRange_(index)
-#            index = NSMaxRange(glyph_range)
-#        return glyph_range
-
     def get_size(self):
         # The next line is there just to force cocoa to layout the text
         self.layout_manager.glyphRangeForTextContainer_(self.text_container)

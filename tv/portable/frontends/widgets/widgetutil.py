@@ -233,13 +233,6 @@ class Shadow(object):
         self.offset = offset
         self.blur_radius = blur_radius
 
-#def middle_baseline(font, height):
-#    """Calculate a baseline that will position a line of text in the middle
-#    of a box height pixels tall.
-#    """
-#    extra = max(0, height - font.line_height())
-#    return font.ascent() + (extra / 2.0)
-
 def get_feed_info(feed_id):
     tablist = app.tab_list_manager.which_tablist_has_id(feed_id)
     return tablist.get_info(feed_id)
