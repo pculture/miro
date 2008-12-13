@@ -489,20 +489,32 @@ class BackendMessageHandler(messages.MessageHandler):
             self.playlist_tracker = None
 
     def handle_mark_channel_seen(self, message):
-        feed = database.defaultDatabase.getObjectByID(message.id)
-        feed.markAsViewed()
+        try:
+            feed = database.defaultDatabase.getObjectByID(message.id)
+            feed.markAsViewed()
+        except database.ObjectNotFoundError:
+            logging.warning("handle_mark_channel_seen: can't find channel by id %s", message.id)
 
     def handle_mark_item_watched(self, message):
-        item = views.items.getObjectByID(message.id)
-        item.markItemSeen()
+        try:
+            item = views.items.getObjectByID(message.id)
+            item.markItemSeen()
+        except database.ObjectNotFoundError:
+            logging.warning("handle_mark_item_seen: can't find channel by id %s", message.id)
 
     def handle_mark_item_unwatched(self, message):
-        item = views.items.getObjectByID(message.id)
-        item.markItemUnseen()
+        try:
+            item = views.items.getObjectByID(message.id)
+            item.markItemUnseen()
+        except database.ObjectNotFoundError:
+            logging.warning("handle_mark_item_unwatched: can't find channel by id %s", message.id)
 
     def handle_set_item_resume_time(self, message):
-        item = views.items.getObjectByID(message.id)
-        item.setResumeTime(message.resume_time)
+        try:
+            item = views.items.getObjectByID(message.id)
+            item.setResumeTime(message.resume_time)
+        except database.ObjectNotFoundError:
+            logging.warning("handle_set_item_resume_time: can't find channel by id %s", message.id)
 
     def handle_set_channel_expire(self, message):
         channel_info = message.channel_info
