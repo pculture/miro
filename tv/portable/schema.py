@@ -378,6 +378,7 @@ class RSSMultiFeedImplSchema(FeedImplSchema):
     fields = FeedImplSchema.fields + [
         ('etag', SchemaDict(SchemaString(),SchemaString(noneOk=True))),
         ('modified', SchemaDict(SchemaString(),SchemaString(noneOk=True))),
+        ('query', SchemaString(noneOk=True)),
     ]
 
 class ScraperFeedImplSchema(FeedImplSchema):

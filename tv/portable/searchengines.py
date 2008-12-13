@@ -152,7 +152,7 @@ def get_request_url(engine_name, query, filter_adult_contents=True, limit=50):
     if engine_name == u'all':
         all_urls = [urlencode(engine.get_request_url(query, filter_adult_contents, limit)) 
                     for engine in _engines if engine.name != u'all']
-        return "dtv:multi:" + ','.join(all_urls)
+        return "dtv:multi:" + ','.join(all_urls) + "," + query
 
     for engine in _engines:
         if engine.name == engine_name:

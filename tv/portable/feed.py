@@ -697,11 +697,11 @@ class Feed(DDBObject):
     def get_title(self):
         if self.userTitle is not None:
             return self.userTitle
-        else:
-            title = self.actualFeed.get_title()
-            if self.searchTerm is not None:
-                title = u"%s: %s" % (title, self.searchTerm)
-            return title
+
+        title = self.actualFeed.get_title()
+        if self.searchTerm is not None:
+            title = u"%s: %s" % (title, self.searchTerm)
+        return title
 
     def has_original_title(self):
         return self.userTitle == None
@@ -902,7 +902,6 @@ class Feed(DDBObject):
         elif self.origURL.startswith(u"dtv:multi:"):
             newFeed = RSSMultiFeedImpl(self.origURL, self)
         elif self.origURL.startswith(u"dtv:searchTerm:"):
-
             url = self.origURL[len(u"dtv:searchTerm:"):]
             (url, search) = url.rsplit("?", 1)
             url = urldecode(url)
@@ -913,7 +912,7 @@ class Feed(DDBObject):
             #  - utf-8 decode the result.
             search = urldecode(search.encode('ascii')).decode('utf-8')
             self.searchTerm = search
-            if url.startswith (u"dtv:multi:"):
+            if url.startswith(u"dtv:multi:"):
                 newFeed = RSSMultiFeedImpl(url, self)
             else:
                 self.download = grabURL(url,
@@ -1641,7 +1640,6 @@ class RSSFeedImpl(RSSFeedImplBase):
         self.update()
 
 class RSSMultiFeedImpl(RSSFeedImplBase):
-
     def __init__(self, url, ufeed, title=None, visible=True):
         RSSFeedImplBase.__init__(self, url, ufeed, title, visible)
         self.oldItems = []
@@ -1649,12 +1647,23 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         self.modified = {}
         self.download_dc = {}
         self.updating = 0
+        self.query = None
         self.splitURLs()
+
+    def get_title(self):
+        if self.query:
+            return _("Search All: %(text)s", {"text": self.query})
+        return RSSFeedImplBase.get_title(self)
 
     def splitURLs(self):
         if self.url.startswith("dtv:multi:"):
             url = self.url[len("dtv:multi:"):]
-            self.urls = [urldecode (x) for x in url.split(",")]
+            urls = [urldecode (x) for x in url.split(",")]
+            self.urls = urls[:-1]
+            if u"http" in urls[-1]:
+                self.urls.append(urls[-1])
+            else:
+                self.query = urls[-1]
         else:
             self.urls = [self.url]
 
@@ -2261,7 +2270,6 @@ class DirectoryFeedImpl(FeedImpl):
                 if (file_ not in known_files
                         and not "incomplete downloads" in file_.lower()
                         and filetypes.is_video_filename(filenameToUnicode(file_))):
-                    print "adding it!"
                     itemmod.FileItem(file_, feed_id=self.ufeed.id)
 
         for item in self.items:

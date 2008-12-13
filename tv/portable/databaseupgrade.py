@@ -1001,6 +1001,13 @@ def upgrade69(objectList):
     """
     return NO_CHANGES
 
+def upgrade70(objectList):
+    """
+    Added for the query item in the RSSMultiFeedImpl.
+    """
+    return NO_CHANGES
+
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()
