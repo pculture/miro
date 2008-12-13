@@ -60,6 +60,25 @@ def round_rect(context, x, y, width, height, edge_radius):
     context.rel_line_to(0, -inner_height)
     context.arc(x_inner1, y_inner1, edge_radius, PI, PI*3/2)
 
+def round_rect_reverse(context, x, y, width, height, edge_radius):
+    edge_radius = min(edge_radius, min(width, height)/2.0)
+    inner_width = width - edge_radius*2
+    inner_height = height - edge_radius*2
+    x_inner1 = x + edge_radius
+    x_inner2 = x + width - edge_radius
+    y_inner1 = y + edge_radius
+    y_inner2 = y + height - edge_radius
+
+    context.move_to(x+edge_radius, y)
+    context.arc_negative(x_inner1, y_inner1, edge_radius, PI*3/2, PI)
+    context.rel_line_to(0, inner_height)
+    context.arc_negative(x_inner1, y_inner2, edge_radius, PI, PI/2)
+    context.rel_line_to(inner_width, 0)
+    context.arc_negative(x_inner2, y_inner2, edge_radius, PI/2, 0)
+    context.rel_line_to(0, -inner_height)
+    context.arc_negative(x_inner2, y_inner1, edge_radius, 0, -PI/2)
+    context.rel_line_to(-inner_width, 0)
+
 def circular_rect(context, x, y, width, height):
     """Make a path for a rectangle with the left/right side being circles."""
 

@@ -192,7 +192,8 @@ class FakeDownloadInfo(object):
 
 class ItemRenderer(widgetset.CustomCellRenderer):
     MIN_WIDTH = 600
-    BORDER_COLOR = (0.78, 0.78, 0.78)
+    BORDER_COLOR_TOP = css_to_color('#d0d0d0')
+    BORDER_COLOR_BOTTOM = css_to_color('#9c9c9c')
     SELECTED_BACKGROUND_FLAP_COLOR = (0.84, 0.88, 0.90)
     SELECTED_BACKGROUND_COLOR = (0.94, 0.97, 0.99)
     SELECTED_HIGHLIGHT_COLOR = (0.43, 0.63, 0.82)
@@ -437,24 +438,6 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             return button
         hotspot = cellpack.Hotspot(hotspot_name, button)
         return hotspot
-
-    def draw_flap_background(self, context, x, y, width, height):
-        radius = 4
-        context.move_to(x, y)
-        context.rel_line_to(width, 0)
-        context.rel_line_to(0, height - radius)
-        context.arc(x + width - radius, y + height - radius, radius, 0, PI/2)
-        context.rel_line_to(-width + radius + radius, 0)
-        context.arc(x + radius, y + height - radius, radius, PI/2, PI)
-        context.rel_line_to(0, -height + radius)
-        context.set_color((225.0 / 255.0, 225.0 / 255.0, 225.0 / 255.0))
-        context.fill()
-
-        context.set_line_width(1)
-        context.move_to(x, y)
-        context.rel_line_to(width, 0)
-        context.set_color(self.BORDER_COLOR)
-        context.stroke()
 
     def pack_flap(self, layout):
         vbox = cellpack.VBox()
@@ -765,7 +748,12 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         widgetutil.round_rect(context, x + inset, y + inset,
                 width - inset*2, height - inset*2, 7)
 
+    def make_border_path_reverse(self, context, x, y, width, height, inset):
+        widgetutil.round_rect_reverse(context, x + inset, y + inset,
+                width - inset*2, height - inset*2, 7)
+
     def draw_background(self, context, x, y, width, height, selected):
+        # Draw the gradient
         if selected:
             self.make_border_path(context, x, y, width, height, 0)
             context.set_color(self.SELECTED_BACKGROUND_COLOR)
@@ -773,15 +761,10 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
             bg_color_start = self.SELECTED_BACKGROUND_COLOR
             bg_color_end = tuple(max(c - 0.16, 0.0) for c in bg_color_start)
-            border_width = 3
-            border_color = self.SELECTED_HIGHLIGHT_COLOR
         else:
             bg_color_start = context.style.bg_color
             bg_color_end = tuple(c - 0.06 for c in bg_color_start)
-            border_width = 1
-            border_color = self.BORDER_COLOR
         context.save()
-        # Draw the gradient
         self.make_border_path(context, x, y, width, height, 0)
         context.clip()
         top = y + height - self.GRADIENT_HEIGHT
@@ -792,15 +775,33 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         context.gradient_fill(gradient)
         context.restore()
         # Draw the border
-        self.make_border_path(context, x, y, width, height, 0.5)
-        context.set_line_width(border_width)
-        context.set_color(border_color)
-        context.stroke()
+        self.draw_border(context, selected, x, y, width, height)
         # Draw the highlight
         context.set_line_width(1)
         self.make_border_path(context, x, y, width, height, 1.5)
         context.set_color(widgetutil.WHITE)
         context.stroke()
+
+    def draw_border(self, context, selected, x, y, width, height):
+        if self.selected:
+            self.make_border_path(context, x, y, width, height, 0.5)
+            context.set_line_width(3)
+            context.set_color(self.SELECTED_HIGHLIGHT_COLOR)
+            context.stroke()
+        else:
+            # we want to draw the border using a gradient.  So we set the clip
+            # area to be exactly where the border should be, then do a
+            # gradient fill
+            context.save()
+            self.make_border_path(context, x, y, width, height, 0)
+            self.make_border_path_reverse(context, x, y, width, height, 1)
+            context.clip()
+            gradient = widgetset.Gradient(x, y, x, y + height)
+            gradient.set_start_color(self.BORDER_COLOR_TOP)
+            gradient.set_end_color(self.BORDER_COLOR_BOTTOM)
+            context.rectangle(x, y, width, height)
+            context.gradient_fill(gradient)
+            context.restore()
 
     def draw_background_details(self, context, x, y, width, height, selected):
         if selected:
@@ -814,7 +815,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             bg_color_start = context.style.bg_color
             bg_color_end = tuple(c - 0.06 for c in bg_color_start)
             border_width = 1
-            border_color = self.BORDER_COLOR
+            border_color = self.BORDER_COLOR_BOTTOM
 
         context.save()
         # Draw background color
@@ -845,10 +846,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         self.make_border_path(context, x, top, width, self.GRADIENT_HEIGHT, 2)
         context.gradient_fill(gradient)
         # Draw the inner border
-        context.set_line_width(border_width)
-        self.make_border_path(context, x, y, width, height - self.FLAP_HEIGHT, 0.5)
-        context.set_color(border_color)
-        context.stroke()
+        self.draw_border(context, selected, x, y, width, height - self.FLAP_HEIGHT)
         # Draw the highlight of inner border
         context.set_line_width(1)
         self.make_border_path(context, x, y, width, height - self.FLAP_HEIGHT, 1.5)
