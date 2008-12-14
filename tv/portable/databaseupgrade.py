@@ -1003,8 +1003,17 @@ def upgrade69(objectList):
 
 def upgrade70(objectList):
     """
-    Added for the query item in the RSSMultiFeedImpl.
+    Added for the query item in the RSSMultiFeedImpl and SearchFeedImpl.
     """
+    changed = set()
+    for o in objectList:
+        if o.classString == 'feed':
+            feedImpl = o.savedData['actualFeed']
+            if feedImpl.classString in ('search-feed-impl', 'rss-multi-feed-impl'):
+                feedImpl.savedData['query'] = u""
+                changed.add(o)
+    return changed
+
     return NO_CHANGES
 
 
