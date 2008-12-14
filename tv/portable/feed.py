@@ -2297,6 +2297,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
         self.lastQuery = u''
         self.ufeed.autoDownloadable = False
         self.ufeed.signalChange()
+        self.query = u''
 
     @returnsUnicode
     def quoteLastQuery(self):
