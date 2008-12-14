@@ -516,7 +516,8 @@ def get_mozilla_stuff():
 
         if mozIncludeBase is not None:
             for subdir in ['dom', 'gfx', 'widget', 'commandhandler', 'uriloader',
-                           'webbrwsr', 'necko', 'windowwatcher', 'unstable']:
+                           'webbrwsr', 'necko', 'windowwatcher', 'unstable',
+                           'embed_base']:
                 path = os.path.join(mozIncludeBase, subdir)
                 mozilla_browser_options['include_dirs'].append(path)
 
