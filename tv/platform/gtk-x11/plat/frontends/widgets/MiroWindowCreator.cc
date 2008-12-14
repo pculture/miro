@@ -78,7 +78,7 @@ NS_IMETHODIMP MiroWindowCreator::CreateChromeWindow2(
         PRUint32 contextFlags, nsIURI *uri, PRBool *cancel,
         nsIWebBrowserChrome **_retval)
 {
-    nsCAutoString specString;
+    nsCString specString;
     if((chromeFlags & nsIWebBrowserChrome::CHROME_OPENAS_CHROME) == 0) {
         if(uri) {
             uri->GetSpec(specString);
