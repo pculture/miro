@@ -108,7 +108,6 @@ class BackendMessage(Message):
         else:
             handler.handle(self)
 
-
 class FrontendMessage(Message):
     """Base class for Messages that get sent to the frontend."""
 
@@ -137,6 +136,7 @@ class StopTrackingChannels(BackendMessage):
 
 class QuerySearchInfo(BackendMessage):
     """Ask the backend to send a CurrentSearchInfo message.  """
+    pass
 
 class TrackPlaylists(BackendMessage):
     """Begin tracking playlists.
@@ -520,6 +520,8 @@ class KeepVideo(BackendMessage):
     """Cancel the auto-expiration of an item's video"""
     def __init__(self, id):
         self.id = id
+    def __repr__(self):
+        return BackendMessage.__repr__(self) + (", id: %s" % self.id)
 
 class SaveItemAs(BackendMessage):
     """Saves an item in the dark clutches of Miro to somewhere else."""
@@ -541,6 +543,8 @@ class DeleteVideo(BackendMessage):
     """Delete the video for an item's video"""
     def __init__(self, id):
         self.id = id
+    def __repr__(self):
+        return BackendMessage.__repr__(self) + (", id: %s" % self.id)
 
 class RenameVideo(BackendMessage):
     """Renames the video"""
@@ -622,7 +626,6 @@ class SubscriptionLinkClicked(BackendMessage):
     """Inform the backend that the user clicked on a subscription link in a
     web browser.
     """
-
     def __init__(self, url):
         self.url = url
 
@@ -648,6 +651,7 @@ class StartupSuccess(FrontendMessage):
     """The startup process is complete.  The frontend should wait for this
     signal to show the UI to the user.
     """
+    pass
 
 class StartupFailure(FrontendMessage):
     """The startup process failed.  The frontend should inform the user that
