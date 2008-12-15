@@ -220,6 +220,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             'images/thumb-overlay.png'))
         self.alert_image = imagepool.get_surface(resources.path(
             'images/status-icon-alert.png'))
+        self.channel_title_icon = imagepool.get_surface(resources.path(
+            'images/icon-channel-title.png'))
         # We cache the size of our rows to save us from re-caclulating all the
         # time.  cached_size_parameters stores things like the base font size
         # that the cached value depends on.
@@ -315,7 +317,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
     def pack_main(self, layout):
         layout.set_text_color(self.text_color)
-        vbox = cellpack.VBox(spacing=6)
+        vbox = cellpack.VBox()
         layout.set_font(1.0, family="Helvetica", bold=True)
         title = layout.textbox(self.data.name)
         # FIXME - title should wrap to the next line instead of being
@@ -326,6 +328,20 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             main_width = self._calculate_main_width(layout)
             title.set_width(main_width)
             vbox.pack(title)
+
+        if self.display_channel:
+            vbox.pack_space(1)
+            hbox = cellpack.HBox()
+            hbox.pack(cellpack.align_middle(self.channel_title_icon))
+            hbox.pack_space(4)
+            layout.set_font(0.8, family="Helvetica", bold=True)
+            hbox.pack(layout.textbox(_("From")))
+            hbox.pack_space(6)
+            layout.set_font(0.8, family="Helvetica")
+            hbox.pack(cellpack.ClippedTextBox(layout.textbox(self.data.feed_name)), expand=True)
+            vbox.pack(hbox)
+
+        vbox.pack_space(6)
 
         if self.show_details:
             description = self.make_description(layout)

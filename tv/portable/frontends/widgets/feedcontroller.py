@@ -57,7 +57,7 @@ class FeedController(itemlistcontroller.ItemListController):
 
     def _make_list_item_view(self):
         return itemlistwidgets.ListItemView(self.item_list, 
-                display_channel=False)
+                display_channel=self.is_folder)
 
     def make_context_menu_handler(self):
         return itemcontextmenu.ItemContextMenuHandler()
@@ -109,10 +109,10 @@ class FeedController(itemlistcontroller.ItemListController):
 
     def _make_item_views(self):
         self.downloading_view = itemlistwidgets.ItemView(
-                itemlist.DownloadingItemList(), False)
+                itemlist.DownloadingItemList(), self.is_folder)
         self.downloaded_view = itemlistwidgets.ItemView(
-                itemlist.DownloadedItemList(), False)
-        self.full_view = itemlistwidgets.ItemView(itemlist.ItemList(), False)
+                itemlist.DownloadedItemList(), self.is_folder)
+        self.full_view = itemlistwidgets.ItemView(itemlist.ItemList(), self.is_folder)
         self.downloading_section = itemlistwidgets.HideableSection(
                 "", self.downloading_view)
         self.downloaded_section = itemlistwidgets.HideableSection(

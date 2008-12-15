@@ -392,6 +392,9 @@ class NewController(SimpleItemListController):
     image_filename = 'icon-new_large.png'
     title = _("New Videos")
 
+    def build_item_view(self):
+        return itemlistwidgets.ItemView(self.item_list, True)
+
 class SearchController(SimpleItemListController):
     type = 'search'
     id = None
@@ -467,6 +470,9 @@ class LibraryController(SimpleItemListController):
     id = None
     image_filename = 'icon-library_large.png'
     title = _("Library")
+
+    def build_item_view(self):
+        return itemlistwidgets.ItemView(self.item_list, True)
 
 class IndividualDownloadsController(SimpleItemListController):
     type = 'individual_downloads'
