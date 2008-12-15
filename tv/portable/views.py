@@ -37,6 +37,7 @@ def initialize():
     global items, fileItems, toplevelItems, nonContainerItems, unwatchedItems
     global watchableItems, newWatchableItems, uniqueWatchableItems, uniqueNewWatchableItems, manualItems, searchItems, individualItems
     global feeds, remoteDownloads
+    global sites
     global httpauths, autoUploads, guides, default_guide
     global manualFeed, singleFeed, directoryFeed, newlyDownloadedItems
     global downloadingItems, pausedItems, manualDownloads, autoDownloads, allDownloadingItems
@@ -99,6 +100,8 @@ def initialize():
     searchItems = items.filter(filters.searchItems)
     # for the single items tab--this has manual items and items from searches
     individualItems = items.filter(filters.individualItems)
+
+    sites = app.db.filterWithIndex(indexes.objectsByClass, guide.ChannelGuide)
 
     # NOTE: we can't use the objectsByClass index for fileItems, because it
     # agregates all Item subclasses into one group.

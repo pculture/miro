@@ -481,7 +481,11 @@ class SiteList(TabList):
             thumb_path = info.favicon
         else:
             thumb_path = resources.path('images/icon-guide_large.png')
-        info.icon = imagepool.get_surface(thumb_path, size=(20, 20))
+        surface = imagepool.get_surface(thumb_path)
+        if surface.width > 20 or surface.height > 20:
+            info.icon = imagepool.get_surface(thumb_path, size=(20, 20))
+        else:
+            info.icon = imagepool.get_surface(thumb_path)
         info.unwatched = info.available = 0
 
     def on_context_menu(self, table_view):

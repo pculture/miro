@@ -39,7 +39,7 @@ from miro import fileutil
 import random
 
 RUNNING_MAX = 3
-    
+
 def clear_orphans():
     from miro import views
     knownIcons = set()
@@ -55,9 +55,13 @@ def clear_orphans():
             for resized in feed.iconCache.resized_filenames.values():
                 knownIcons.add(os.path.normcase(fileutil.expand_filename(resized)))
 
+    for site in views.sites:
+        if site.iconCache and site.iconCache.filename:
+            knownIcons.add(os.path.normcase(fileutil.expand_filename(site.iconCache.filename)))
+
     cachedir = fileutil.expand_filename(config.get(prefs.ICON_CACHE_DIRECTORY))
     if os.path.isdir(cachedir):
-        existingFiles = [os.path.normcase(os.path.join(cachedir, f)) 
+        existingFiles = [os.path.normcase(os.path.join(cachedir, f))
                 for f in os.listdir(cachedir)]
         for filename in existingFiles:
             if (os.path.exists(filename)
@@ -104,7 +108,7 @@ class IconCacheUpdater:
         else:
             self.runningCount -= 1
             return
-        
+
         addIdle(item.request_icon, "Icon Request")
 
     @asIdle
@@ -195,7 +199,7 @@ class IconCache:
         needsSave = False
         needsChange = False
 
-        if (info == None or (info['status'] != 304 and info['status'] != 200) 
+        if (info == None or (info['status'] != 304 and info['status'] != 200)
                 or 'content-type' not in info):
             self.error_callback(url, "bad response")
             return
@@ -238,7 +242,7 @@ class IconCache:
             if self.filename:
                 self.remove_file(self.filename)
 
-            # Create a new filename always to avoid browser caching in case a 
+            # Create a new filename always to avoid browser caching in case a
             # file changes.
             # Add a random unique id
             parts = unicodify(info["filename"]).split('.')
@@ -310,7 +314,7 @@ class IconCache:
             return
 
         # Last try, get the icon from HTTP.
-        httpclient.grabURL(url, lambda info: self.update_icon_cache(url, info), 
+        httpclient.grabURL(url, lambda info: self.update_icon_cache(url, info),
                 lambda error: self.error_callback(url, error))
 
     def requestUpdate(self, is_vital=False):
