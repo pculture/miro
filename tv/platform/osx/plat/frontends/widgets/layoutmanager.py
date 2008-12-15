@@ -142,7 +142,10 @@ class LayoutManager(object):
         return text_box
 
     def button(self, text, pressed=False, disabled=False, style='normal'):
-        return Button(text, self.current_font, pressed)
+        if style == 'webby':
+            return StyledButton(text, self.current_font, pressed)
+        else:
+            return NativeButton(text, self.current_font, pressed)
 
     def reset(self):
         text_box_pool.reclaim_textboxes()
@@ -279,33 +282,108 @@ class Font(object):
         return Font.line_height_sizer.defaultLineHeightForFont_(self.nsfont)
 
 class Button(object):
-    PAD_WIDTH = 0
-    PAD_HEIGHT = 4
-
-    def __init__(self, text, font, pressed):
-        self.text = text
-        self.font = font
-        self.cell = NSButtonCell.alloc().init()
+    
+    def __init__(self, cell, text, font, pressed, disabled):
+        self.min_width = 0
+        self.cell = cell
         self.cell.setTitle_(text)
-        self.cell.setBezelStyle_(NSRoundRectBezelStyle)
         self.cell.setButtonType_(NSMomentaryPushInButton)
         self.cell.setFont_(font.nsfont)
-        self.cell.setHighlighted_(pressed)
-        self.min_width = 0
-
-    def text_area(self):
-        bounds = NSRect(NSZeroPoint, NSSize(*self.get_size()))
-        return NSRectWrapper(self.cell.cellSizeForBounds_(bounds))
-
-    def set_min_width(self, min_width):
-        self.min_width = min_width
+        self.cell.setEnabled_(not disabled)
+        if pressed:
+            self.cell.setState_(NSOnState)
+        else:
+            self.cell.setState_(NSOffState)
 
     def get_size(self):
         size = self.cell.cellSize()
-        width = max(self.min_width, size.width + self.PAD_WIDTH)
-        return width, size.height + self.PAD_HEIGHT
+        return size.width, size.height
 
     def draw(self, context, x, y, width, height):
         rect = NSMakeRect(x, y, width, height)
+        NSGraphicsContext.currentContext().saveGraphicsState()
         self.cell.drawWithFrame_inView_(rect, context.view)
+        NSGraphicsContext.currentContext().restoreGraphicsState()
         context.path.removeAllPoints()
+
+class NativeButton(Button):
+
+    def __init__(self, text, font, pressed, disabled=False):
+        cell = NSButtonCell.alloc().init()
+        cell.setBezelStyle_(NSRoundRectBezelStyle)
+        Button.__init__(self, cell, text, font, pressed, disabled)
+
+class StyledButtonCell(NSButtonCell):
+    PAD_HORIZONTAL = 4
+    PAD_VERTICAL = 3
+    TOP_COLOR = (1, 1, 1)
+    BOTTOM_COLOR = (0.86, 0.86, 0.86)
+    LINE_COLOR = (0.69, 0.69, 0.69)
+    TEXT_COLOR = (0, 0, 0)
+    DISABLED_COLOR = (0.86, 0.86, 0.86)
+    DISABLED_TEXT_COLOR = (0.5, 0.5, 0.5)
+    
+    def init(self):
+        NSButtonCell.init(self)
+        self.setBezelStyle_(NSSmallSquareBezelStyle)
+        return self
+    
+    def cellSize(self):
+        width, height = NSButtonCell.cellSize(self)
+        height += self.PAD_VERTICAL * 2
+        if height % 2 == 1:
+            # make height even so that the radius of our circle is whole
+            height += 1
+        width += self.PAD_HORIZONTAL * 2 + height
+        return NSSize(width, height)
+    
+    def draw_path(self, context, x, y, width, height, radius):
+        inner_width = width - radius * 2
+        context.move_to(x + radius, y)
+        context.rel_line_to(inner_width, 0)
+        context.arc(x + width - radius, y+radius, radius, -math.pi/2, math.pi/2)
+        context.rel_line_to(-inner_width, 0)
+        context.arc(x + radius, y+radius, radius, math.pi/2, -math.pi/2)
+
+    def draw_button(self, context, x, y, width, height, radius):
+        from miro.plat.frontends.widgets import drawing
+        self.draw_path(context, x, y, width, height, radius)
+        if not self.isEnabled():
+            end_color = self.DISABLED_COLOR
+            start_color = self.DISABLED_COLOR
+        elif self.state() == NSOnState:
+            end_color = self.TOP_COLOR
+            start_color = self.BOTTOM_COLOR
+        else:
+            context.set_line_width(1)
+            start_color = self.TOP_COLOR
+            end_color = self.BOTTOM_COLOR
+        gradient = drawing.Gradient(x, y, x, y+height)
+        gradient.set_start_color(start_color)
+        gradient.set_end_color(end_color)
+        context.gradient_fill(gradient)
+        context.set_line_width(1)
+        self.draw_path(context, x+0.5, y+0.5, width, height, radius)
+        context.set_color(self.LINE_COLOR)
+        context.stroke()
+
+    def drawBezelWithFrame_inView_(self, rect, view):
+        from miro.plat.frontends.widgets import drawing
+        size = self.cellSize()
+        radius = size.height / 2
+        context = drawing.DrawingContext(view, rect, rect)
+        self.draw_button(context, 0, 0, size.width, size.height, radius)
+    
+    def drawTitle_withFrame_inView_(self, title, rect, view):
+        csize = self.cellSize()
+        size = title.size()
+        origin = NSPoint((csize.width - size.width) / 2, 
+                         0.5 + (csize.height - size.height) / 2)
+        title.drawAtPoint_(origin)
+        return NSRect(origin, size)
+
+class StyledButton(Button):
+
+    def __init__(self, text, font, pressed, disabled=False):
+        cell = StyledButtonCell.alloc().init()
+        Button.__init__(self, cell, text, font, pressed, disabled)
