@@ -32,6 +32,9 @@ cdef extern from "Python.h":
     ctypedef struct PyObject
     PyObject* PyObject_CallMethod(PyObject *o, char* name, char* format, ...)
     void Py_DECREF(PyObject*)
+    ctypedef int PyGILState_STATE
+    PyGILState_STATE PyGILState_Ensure()
+    void PyGILState_Release(PyGILState_STATE)
 
 cdef extern from "nscore.h":
     ctypedef unsigned int nsresult
@@ -57,9 +60,12 @@ def install_window_creator(new_window_handler):
         raise XPCOMError("MiroWindowCreator.install() failed with code: %d" % rv)
     creator.SetNewWindowCallback(newWindowCallbackGlue, <void *>new_window_handler)
 
-cdef void newWindowCallbackGlue(char* uri, void* data) with gil:
+cdef void newWindowCallbackGlue(char* uri, void* data):
+    cdef PyGILState_STATE gil
     cdef PyObject* retval
+    gil = PyGILState_Ensure()
 
     retval = PyObject_CallMethod(<PyObject*>data, "on_new_window", "s", uri)
     if retval:
         Py_DECREF(retval)
+    PyGILState_Release(gil)
