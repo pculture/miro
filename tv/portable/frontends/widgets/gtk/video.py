@@ -423,6 +423,10 @@ class VideoRenderer(VBox):
                 'motion-notify-event', self.on_mouse_motion)
         app.widgetapp.window.menubar.hide()
         self.schedule_hide_controls(self.HIDE_CONTROLS_TIMEOUT)
+        # make sure all hide() calls go through, otherwise we get the wrong
+        # size on windows (#10810)
+        while gtk.events_pending(): 
+            gtk.main_iteration()
         _window().fullscreen()
 
     def prepare_switch_to_attached_playback(self):
