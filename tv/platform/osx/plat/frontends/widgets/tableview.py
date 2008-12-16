@@ -100,8 +100,7 @@ class HotspotTracker(object):
         self.hit = (self.name is not None)
 
     def calc_cell_hotspot(self, column, row):
-        if (self.hit and self.column == column.identifier() 
-                and self.row == row):
+        if (self.hit and self.column == column and self.row == row):
             return self.name
         else:
             return None
@@ -336,7 +335,8 @@ def calc_row_height(view, model_row):
 class TableViewDelegate(NSObject):
     def tableView_willDisplayCell_forTableColumn_row_(self, view, cell,
             column, row):
-        cell.column = view.column_index_map[column]
+        column = view.column_index_map[column]
+        cell.column = column
         cell.row = row
         if view.hotspot_tracker:
             cell.hotspot = view.hotspot_tracker.calc_cell_hotspot(column, row)
@@ -366,7 +366,8 @@ class OutlineViewDelegate(NSObject):
     def outlineView_willDisplayCell_forTableColumn_item_(self, view, cell,
             column, item):
         row = view.rowForItem_(item)
-        cell.column = view.column_index_map[column]
+        column = view.column_index_map[column]
+        cell.column = column
         cell.row = row
         if view.hotspot_tracker:
             cell.hotspot = view.hotspot_tracker.calc_cell_hotspot(column, row)
