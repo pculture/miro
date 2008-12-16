@@ -287,6 +287,8 @@ class UnderlineDrawer(object):
                 self.next_underline()
 
 class NativeButton(object):
+    ICON_PAD = 4
+
     def __init__(self, text, context, font, pressed, style, widget):
         self.layout = pango.Layout(context)
         self.font = font
@@ -301,31 +303,46 @@ class NativeButton(object):
         # doesn't seem to support Border objects very well, so can't get it
         # from the widget style.
         self.min_width = 0
+        self.icon = None
 
     def set_min_width(self, width):
         self.min_width = width
 
+    def set_icon(self, icon):
+        self.icon = icon
+
     def get_size(self):
-        text_size = self.layout.get_pixel_size()
-        width = text_size[0] + self.pad_x * 2
-        height = text_size[1] + self.pad_y * 2
+        width, height = self.layout.get_pixel_size()
+        if self.icon:
+            width += self.icon.width + self.ICON_PAD
+            height = max(height, self.icon.height)
+        width += self.pad_x * 2
+        height += self.pad_y * 2
         return max(self.min_width, width), height
 
-    def text_area(self):
-        width, height = self.layout.get_pixel_size()
-        y = self.pad_y
-        extra_x = max(0, int((self.min_width - width - self.pad_x * 2) / 2))
-        x = self.pad_x + extra_x
-        return gtk.gdk.Rectangle(x, y, width, height)
-
     def draw(self, context, x, y, width, height):
+        text_width, text_height = self.layout.get_pixel_size()
+        if self.icon:
+            inner_width = text_width + self.icon.width + self.ICON_PAD
+            # calculate the icon position x and y are still in cairo coordinates
+            icon_x = x + (width - inner_width) / 2.0
+            icon_y = y + (height - self.icon.height) / 2.0
+            text_x = icon_x + self.icon.width + self.ICON_PAD
+        else:
+            text_x = x + (width - text_width) / 2.0
+        text_y = y + (height - text_height) / 2.0
+
         x, y = context.context.user_to_device(x, y)
+        text_x, text_y = context.context.user_to_device(text_x, text_y)
         # Hmm, maybe we should somehow support floating point numbers here,
         # but I don't know how to.
         x, y, width, height = (int(f) for f in (x, y, width, height))
         context.context.get_target().flush()
         self.draw_box(context.window, x, y, width, height)
-        self.draw_text(context.window, x, y)
+        self.draw_text(context.window, text_x, text_y)
+        if self.icon:
+            self.icon.draw(context, icon_x, icon_y, self.icon.width,
+                    self.icon.height)
 
     def draw_box(self, window, x, y, width, height):
         if self.pressed:
@@ -346,13 +363,12 @@ class NativeButton(object):
                 int(x), int(y), int(width), int(height))
 
     def draw_text(self, window, x, y):
-        offset_x, offset_y, _, _ = self.text_area()
         if self.pressed:
             state = gtk.STATE_ACTIVE
         else:
             state = gtk.STATE_NORMAL
         self.style.paint_layout(window, state, True, None, None, None,
-                x + offset_x, y + offset_y, self.layout)
+                int(x), int(y), self.layout)
 
 class StyledButton(object):
     PAD_HORIZONTAL = 4
@@ -363,6 +379,7 @@ class StyledButton(object):
     TEXT_COLOR = (0, 0, 0)
     DISABLED_COLOR = (0.86, 0.86, 0.86)
     DISABLED_TEXT_COLOR = (0.5, 0.5, 0.5)
+    ICON_PAD = 4
 
     def __init__(self, text, context, font, pressed, disabled=False):
         self.layout = pango.Layout(context)
@@ -372,25 +389,25 @@ class StyledButton(object):
         self.min_width = 0
         self.pressed = pressed
         self.disabled = disabled
+        self.icon = None
+
+    def set_icon(self, icon):
+        self.icon = icon
 
     def set_min_width(self, width):
         self.min_width = width
 
     def get_size(self):
         width, height = self.layout.get_pixel_size()
+        if self.icon:
+            width += self.icon.width + self.ICON_PAD
+            height = max(height, self.icon.height)
         height += self.PAD_VERTICAL * 2
         if height % 2 == 1:
             # make height even so that the radius of our circle is whole
             height += 1
         width += self.PAD_HORIZONTAL * 2 + height
         return max(self.min_width, width), height
-
-    def text_area(self):
-        width, height = self.layout.get_pixel_size()
-        y = self.pad_y
-        extra_x = max(0, int((self.min_width - width - self.pad_x * 2) / 2))
-        x = self.pad_x + extra_x
-        return gtk.gdk.Rectangle(x, y, width, height)
 
     def draw_path(self, context, x, y, width, height, radius):
         inner_width = width - radius * 2
@@ -427,16 +444,23 @@ class StyledButton(object):
     def draw(self, context, x, y, width, height):
         radius = height / 2
         self.draw_button(context, x, y, width, height, radius)
-        self.draw_text(context, x, y, width, height, radius)
+
+        text_width, text_height = self.layout.get_pixel_size()
+        # draw the text in the center of the button
+        text_x = x + (width - text_width) / 2
+        text_y = y + (height - text_height) / 2
+        if self.icon:
+            icon_x = text_x - (self.icon.width + self.ICON_PAD) / 2
+            text_x += (self.icon.width + self.ICON_PAD) / 2
+            icon_y = y + (height - self.icon.height) / 2
+            self.icon.draw(context, icon_x, icon_y, self.icon.width,
+                    self.icon.height)
+        self.draw_text(context, text_x, text_y, width, height, radius)
 
     def draw_text(self, context, x, y, width, height, radius):
         if self.disabled:
             context.set_color(self.DISABLED_TEXT_COLOR)
         else:
             context.set_color(self.TEXT_COLOR)
-        text_width, text_height = self.layout.get_pixel_size()
-        # draw the text in the center of the button
-        x += (width - text_width) / 2
-        y += (height - text_height) / 2
         context.move_to(x, y)
         context.context.show_layout(self.layout)

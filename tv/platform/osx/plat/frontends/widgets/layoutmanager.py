@@ -294,6 +294,12 @@ class Button(object):
             self.cell.setState_(NSOnState)
         else:
             self.cell.setState_(NSOffState)
+        self.cell.setImagePosition_(NSImageLeft)
+
+    def set_icon(self, icon):
+        image = icon.image.copy()
+        image.setFlipped_(NO)
+        self.cell.setImage_(image)
 
     def get_size(self):
         size = self.cell.cellSize()
@@ -322,20 +328,29 @@ class StyledButtonCell(NSButtonCell):
     TEXT_COLOR = (0, 0, 0)
     DISABLED_COLOR = (0.86, 0.86, 0.86)
     DISABLED_TEXT_COLOR = (0.5, 0.5, 0.5)
+    ICON_PAD = 4
     
     def init(self):
         NSButtonCell.init(self)
         self.setBezelStyle_(NSSmallSquareBezelStyle)
         return self
-    
+
     def cellSize(self):
         width, height = NSButtonCell.cellSize(self)
+        if self.image():
+            width += self.image().size().width + self.ICON_PAD
+            height = max(height, self.image().size().height)
         height += self.PAD_VERTICAL * 2
         if height % 2 == 1:
             # make height even so that the radius of our circle is whole
             height += 1
         width += self.PAD_HORIZONTAL * 2 + height
         return NSSize(width, height)
+
+    def setImage_(self, image):
+        if image is not None:
+            image.setFlipped_(YES)
+        NSButtonCell.setImage_(self, image)
     
     def draw_path(self, context, x, y, width, height, radius):
         inner_width = width - radius * 2
@@ -373,14 +388,31 @@ class StyledButtonCell(NSButtonCell):
         radius = size.height / 2
         context = drawing.DrawingContext(view, rect, rect)
         self.draw_button(context, 0, 0, size.width, size.height, radius)
-    
-    def drawTitle_withFrame_inView_(self, title, rect, view):
+
+    def _calc_inner_x(self):
         csize = self.cellSize()
+        size = self.attributedTitle().size()
+        if self.image():
+            width = size.width + self.image().size().width + self.ICON_PAD
+        else:
+            width = size.width
+        return (csize.width - width) / 2
+
+    def drawTitle_withFrame_inView_(self, title, rect, view):
         size = title.size()
-        origin = NSPoint((csize.width - size.width) / 2, 
-                         0.5 + (csize.height - size.height) / 2)
+        x = self._calc_inner_x()
+        if self.image():
+            x += self.image().size().width + self.ICON_PAD
+        origin = NSPoint(x, 0.5 + (self.cellSize().height - size.height) / 2)
         title.drawAtPoint_(origin)
         return NSRect(origin, size)
+
+    def drawImage_withFrame_inView_(self, image, rect, view):
+        x = self._calc_inner_x()
+        y = (self.cellSize().height - image.size().height) / 2
+        image.drawAtPoint_fromRect_operation_fraction_(NSPoint(x, y),
+                NSRect(NSPoint(0, 0), image.size()), NSCompositeSourceOver,
+                1.0)
 
 class StyledButton(Button):
 

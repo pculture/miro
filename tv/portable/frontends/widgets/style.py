@@ -222,6 +222,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             'images/status-icon-alert.png'))
         self.channel_title_icon = imagepool.get_surface(resources.path(
             'images/icon-channel-title.png'))
+        self.download_arrow = imagepool.get_surface(resources.path(
+            'images/download-arrow.png'))
         # We cache the size of our rows to save us from re-caclulating all the
         # time.  cached_size_parameters stores things like the base font size
         # that the cached value depends on.
@@ -624,6 +626,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
                 button = layout.button(_('Download Torrent'), self.hotspot=='download', style='webby')
             else:
                 button = layout.button(_('Download'), self.hotspot=='download', style='webby')
+            button.set_icon(self.download_arrow)
             hotspot = cellpack.Hotspot('download', button)
             hbox.pack(cellpack.align_middle(hotspot))
 
