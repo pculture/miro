@@ -56,7 +56,6 @@ class Browser(Widget):
     def __init__(self):
         Widget.__init__(self)
         self.set_widget(MiroMozEmbed())
-        self.url = None
         self.wrapped_widget_connect('open-uri', self.on_open_uri)
         self.wrapped_widget_connect('realize', self.on_realize)
         self.wrapped_widget_connect('net-start', self.on_net_start)
@@ -75,13 +74,14 @@ class Browser(Widget):
 
     def on_open_uri(self, browser, uri):
         if self.should_load_url(uri):
-            self.url = uri
             return False
         else:
             return True
 
     def get_current_url(self):
-        return self.url
+        return self._widget.get_location()
+
+    url = property(get_current_url)
 
     def forward(self):
         if self._widget.can_go_forward():
