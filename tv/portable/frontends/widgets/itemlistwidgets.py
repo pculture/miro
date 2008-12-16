@@ -263,9 +263,11 @@ class ItemView(widgetset.TableView):
 class ListItemView(widgetset.TableView):
     """TableView that displays a list of items using the list view."""
 
-    def __init__(self, item_list, display_channel=True):
+    def __init__(self, item_list, display_channel=True,
+            display_download_info=True):
         widgetset.TableView.__init__(self, item_list.model)
         self.display_channel = display_channel
+        self.display_download_info = display_download_info
         self.create_signal('sort-changed')
         self.item_list = item_list
         self._sort_name_to_column = {}
@@ -280,8 +282,9 @@ class ListItemView(widgetset.TableView):
         self._make_column(_('Length'), style.LengthRenderer(), 'length')
         self._make_column(_('Status'), style.StatusRenderer(), 'status')
         self._make_column(_('Size'), style.SizeRenderer(), 'size')
-        self._make_column(_('ETA'), style.ETARenderer(), 'eta')
-        self._make_column(_('Speed'), style.DownloadRateRenderer(), 'rate')
+        if display_download_info:
+            self._make_column(_('ETA'), style.ETARenderer(), 'eta')
+            self._make_column(_('Speed'), style.DownloadRateRenderer(), 'rate')
         self.set_show_headers(True)
         self.set_columns_draggable(True)
         self.set_column_spacing(12)
@@ -316,26 +319,31 @@ class ListItemView(widgetset.TableView):
             # below can invoke anothor size-allocate signal
             self._set_initial_widths = True
             # width_specs contains the info we need to give columns their
-            # initial size.  In the form of:
+            # initial size.  It maps column names to
             # (min_width, extra_width_weighting)
-            width_specs = [
-                (20, 0),    # bump
-                (130, 1),   # title
-                (70, 0.5),  # channel name
-                (85, 0),   # date
-                (60, 0),   # duration
-                (160, 0),   # status
-                (65, 0),    # size
-                (50, 0),    # eta
-                (75, 0),    # download rate
-            ]
-            if not self.display_channel:
-                del width_specs[2]
+            width_specs = {
+                'state': (20, 0),    # bump
+                'name': (130, 1),   # title
+                'feed-name': (70, 0.5),  # channel name
+                'date': (85, 0),   # date
+                'length': (60, 0),   # duration
+                'status': (160, 0),   # status
+                'size': (65, 0),    # size
+                'eta': (50, 0),    # eta
+                'rate': (75, 0),    # download rate
+            }
+
+            for key in width_specs.keys():
+                if key not in self._sort_name_to_column:
+                    # column not visible on this view
+                    del width_specs[key]
+
             available_width = self.width_for_columns(width)
-            min_width = sum(spec[0] for spec in width_specs)
+            min_width = sum(spec[0] for spec in width_specs.values())
             extra_width = max(available_width - min_width, 0)
-            total_weight = sum(spec[1] for spec in width_specs)
-            for column, spec in zip(self.columns, width_specs):
+            total_weight = sum(spec[1] for spec in width_specs.values())
+            for name, spec in width_specs.items():
+                column = self._sort_name_to_column[name]
                 extra = int(extra_width * spec[1] / total_weight)
                 column.set_width(spec[0] + extra)
 

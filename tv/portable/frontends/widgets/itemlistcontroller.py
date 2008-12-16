@@ -98,7 +98,7 @@ class ItemListController(object):
     def _init_widget(self):
         self.widget = itemlistwidgets.ItemContainerWidget()
         self.item_list = itemlist.ItemList()
-        self.list_item_view = self._make_list_item_view()
+        self.list_item_view = self.build_list_item_view()
         scroller = widgetset.Scroller(True, True)
         scroller.add(self.list_item_view)
         self.widget.list_view_vbox.pack_start(scroller, expand=True)
@@ -108,7 +108,7 @@ class ItemListController(object):
                 self.on_row_double_clicked)
         self.build_widget()
 
-    def _make_list_item_view(self):
+    def build_list_item_view(self):
         return itemlistwidgets.ListItemView(self.item_list)
 
     def _init_item_views(self):
@@ -395,6 +395,10 @@ class NewController(SimpleItemListController):
     def build_item_view(self):
         return itemlistwidgets.ItemView(self.item_list, True)
 
+    def build_list_item_view(self):
+        return itemlistwidgets.ListItemView(self.item_list,
+                display_download_info=False)
+
 class SearchController(SimpleItemListController):
     type = 'search'
     id = None
@@ -473,6 +477,10 @@ class LibraryController(SimpleItemListController):
 
     def build_item_view(self):
         return itemlistwidgets.ItemView(self.item_list, True)
+
+    def build_list_item_view(self):
+        return itemlistwidgets.ListItemView(self.item_list,
+                display_download_info=False)
 
 class IndividualDownloadsController(SimpleItemListController):
     type = 'individual_downloads'

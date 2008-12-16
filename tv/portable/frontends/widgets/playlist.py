@@ -119,6 +119,10 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
     def build_item_view(self):
         return PlaylistItemView(self.item_list, self.id)
 
+    def build_list_item_view(self):
+        return itemlistwidgets.ListItemView(self.item_list,
+                display_download_info=False)
+
     def make_drop_handler(self):
         handler = DropHandler(self.id, self.item_view)
         handler.connect('new-order', self._on_new_order)

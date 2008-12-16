@@ -55,7 +55,7 @@ class FeedController(itemlistcontroller.ItemListController):
         self._show_more_count = 0
         itemlistcontroller.ItemListController.__init__(self, 'feed', id)
 
-    def _make_list_item_view(self):
+    def build_list_item_view(self):
         return itemlistwidgets.ListItemView(self.item_list, 
                 display_channel=self.is_folder)
 
