@@ -199,12 +199,8 @@ class IconCache:
         needsSave = False
         needsChange = False
 
-        if (info == None or (info['status'] != 304 and info['status'] != 200)
-                or 'content-type' not in info):
+        if info == None or (info['status'] != 304 and info['status'] != 200):
             self.error_callback(url, "bad response")
-            return
-        if info['content-type'].startswith('text'):
-            self.error_callback(url, "content-type is %s" % info["content-type"])
             return
         try:
             # Our cache is good.  Hooray!
