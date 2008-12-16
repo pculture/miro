@@ -315,7 +315,7 @@ class NativeButton(Button):
 
 class StyledButtonCell(NSButtonCell):
     PAD_HORIZONTAL = 4
-    PAD_VERTICAL = 3
+    PAD_VERTICAL = 1
     TOP_COLOR = (1, 1, 1)
     BOTTOM_COLOR = (0.86, 0.86, 0.86)
     LINE_COLOR = (0.69, 0.69, 0.69)
