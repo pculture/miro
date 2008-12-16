@@ -104,8 +104,6 @@ class ItemListController(object):
         self.widget.list_view_vbox.pack_start(scroller, expand=True)
         self.widget.toolbar.connect_weak('sort-changed', self.on_sort_changed)
         self.list_item_view.connect_weak('sort-changed', self.on_sort_changed)
-        self.list_item_view.connect_weak('row-double-clicked',
-                self.on_row_double_clicked)
         self.build_widget()
 
     def build_list_item_view(self):
@@ -118,6 +116,8 @@ class ItemListController(object):
             item_view.connect_weak('selection-changed', self.on_selection_changed)
             item_view.connect_weak('hotspot-clicked', self.on_hotspot_clicked)
             item_view.connect_weak('key-press', self.on_key_press)
+            item_view.connect_weak('row-double-clicked',
+                    self.on_row_double_clicked)
             item_view.set_context_menu_callback(context_callback)
             item_view.set_drag_source(self.make_drag_handler())
             item_view.set_drag_dest(self.make_drop_handler())
