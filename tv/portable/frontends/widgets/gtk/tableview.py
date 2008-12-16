@@ -518,6 +518,7 @@ class TableView(Widget):
         self.wrapped_widget_connect('drag-leave', self.on_drag_leave)
         self.wrapped_widget_connect('drag-data-received',
                 self.on_drag_data_received)
+        self.wrapped_widget_connect('unrealize', self.on_unrealize)
         weak_connect(self.selection, 'changed', self.on_selection_changed)
         weak_connect(self.model._model, 'row-inserted', self.on_row_inserted)
         weak_connect(self.model._model, 'row-deleted', self.on_row_deleted)
@@ -842,6 +843,10 @@ class TableView(Widget):
             return True
         if event.button == 1:
             self.drag_button_down = False
+
+    def on_unrealize(self, treeview):
+        self.hotspot_tracker = None
+        self.drag_button_down = False
 
     def _redraw_cell(self, path, column):
         cell_area = self._widget.get_cell_area(path, column)
