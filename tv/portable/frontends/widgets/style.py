@@ -450,10 +450,13 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         return cellpack.pad(vbox, right=8)
 
-    def _make_button(self, layout, text, hotspot_name, disabled=False):
+    def _make_button(self, layout, text, hotspot_name, disabled=False,
+            icon=None):
         button = layout.button(text, self.hotspot==hotspot_name, disabled=disabled, style='webby')
         if disabled:
             return button
+        if icon:
+            button.set_icon(icon)
         hotspot = cellpack.Hotspot(hotspot_name, button)
         return hotspot
 
@@ -621,13 +624,12 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         if self.data.downloaded:
             hbox.pack(cellpack.align_middle(cellpack.Hotspot('play', self.play_button)))
         else:
-            # FIXME - need the download image to the left of the button
             if self.data.file_type == 'application/x-bittorrent':
-                button = layout.button(_('Download Torrent'), self.hotspot=='download', style='webby')
+                text = _('Download Torrent')
             else:
-                button = layout.button(_('Download'), self.hotspot=='download', style='webby')
-            button.set_icon(self.download_arrow)
-            hotspot = cellpack.Hotspot('download', button)
+                text = _('Download')
+            hotspot = self._make_button(layout, text, 'download',
+                    icon=self.download_arrow)
             hbox.pack(cellpack.align_middle(hotspot))
 
         if self.data.download_info and self.data.download_info.state == 'failed':
@@ -704,20 +706,21 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         hbox = cellpack.HBox(spacing=5)
         layout.set_font(0.85)
         if self.data.expiration_date:
-            button = layout.button(_('Keep'), self.hotspot=='keep', style='webby')
-            hbox.pack(cellpack.align_middle(cellpack.Hotspot('keep', button)))
+            hotspot = self._make_button(layout, _('Keep'), 'keep')
+            hbox.pack(cellpack.align_middle(hotspot))
 
         if self.data.is_external:
-            button = layout.button(_('Remove'), self.hotspot=='delete', style='webby')
+            hotspot = self._make_button(layout, _('Remove'), 'delete')
         else:
-            button = layout.button(_('Delete'), self.hotspot=='delete', style='webby')
+            hotspot = self._make_button(layout, _('Delete'), 'delete')
 
-        hbox.pack(cellpack.align_middle(cellpack.Hotspot('delete', button)))
+        hbox.pack(cellpack.align_middle(hotspot))
         if (self.data.download_info is not None
                 and self.data.download_info.torrent):
             if self.data.download_info.state in ("uploading", "uploading-paused"):
-                button = layout.button(_('Stop seeding'), self.hotspot=='stop_seeding', style='webby')
-                hbox.pack(cellpack.align_middle(cellpack.Hotspot('stop_seeding', button)))
+                hotspot = self._make_button(layout, _('Stop seeding'), 
+                    'stop_seeding')
+                hbox.pack(cellpack.align_middle(hotspot))
 
         return hbox
 
@@ -906,10 +909,10 @@ class PlaylistItemRenderer(ItemRenderer):
         hbox = cellpack.HBox(spacing=5)
         layout.set_font(0.85)
         if self.data.expiration_date:
-            button = layout.button(_('Keep'), self.hotspot=='keep', style='webby')
-            hbox.pack(cellpack.align_middle(cellpack.Hotspot('keep', button)))
-        button = layout.button(_('Remove from playlist'), self.hotspot=='remove', style='webby')
-        hbox.pack(cellpack.align_middle(cellpack.Hotspot('remove', button)))
+            hotspot = self._make_button(layout, _('Keep'), 'keep')
+            hbox.pack(cellpack.align_middle(hotspot))
+        hotspot = self._make_button(layout, _('Remove from playlist'), 'remove')
+        hbox.pack(cellpack.align_middle(hotspot))
         return hbox
 
 # Renderers for the list view
