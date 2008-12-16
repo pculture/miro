@@ -295,6 +295,8 @@ class ListItemView(widgetset.TableView):
         self.allow_multiple_select(True)
 
     def get_tooltip(self, iter, column):
+        if self._sort_name_to_column['name'] is not column:
+            return None
         info = self.item_list.model[iter][0]
         if info.description_text:
             return info.description_text
