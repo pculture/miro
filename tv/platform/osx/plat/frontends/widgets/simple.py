@@ -76,6 +76,16 @@ class ImageDisplay(Widget):
     def calc_size_request(self):
         return self.image.width, self.image.height
 
+class AnimatedImageDisplay(Widget):
+    def __init__(self, path):
+        Widget.__init__(self)
+        self.nsimage = NSImage.alloc().initByReferencingFile_(filenameToUnicode(path))
+        self.view = NSImageView.alloc().init()
+        self.view.setImage_(self.nsimage)
+
+    def calc_size_request(self):
+        return self.nsimage.size().width, self.nsimage.size().height
+
 class Label(Widget):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, text="", wrap=False):

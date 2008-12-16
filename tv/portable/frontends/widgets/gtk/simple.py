@@ -57,6 +57,12 @@ class ImageDisplay(Widget):
         self.set_widget(gtk.Image())
         self._widget.set_from_pixbuf(image.pixbuf)
 
+class AnimatedImageDisplay(Widget):
+    def __init__(self, path):
+        Widget.__init__(self)
+        self.set_widget(gtk.Image())
+        self._widget.set_from_animation(gtk.gdk.PixbufAnimation(path))
+
 class Label(Widget):
     """Widget that displays simple text."""
     def __init__(self, text=""):

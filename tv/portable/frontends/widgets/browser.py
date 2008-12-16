@@ -38,6 +38,7 @@ from miro import guide
 from miro import messages
 from miro import subscription
 from miro import util
+from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.frontends.widgets import linkhandler
@@ -92,6 +93,11 @@ class BrowserToolbar(widgetset.HBox):
         self.browser_open_button.connect(
             'clicked', self._on_browser_open_activate)
         self.pack_end(widgetutil.align_middle(self.browser_open_button, right_pad=4))
+
+        self.loading_icon = widgetutil.HideableWidget(
+                widgetset.AnimatedImageDisplay(
+                    resources.path('images/load-indicator.gif')))
+        self.pack_end(widgetutil.align_middle(self.loading_icon, right_pad=6))
 
     def _on_back_button_clicked(self, button):
         self.emit('browser-back')
@@ -172,10 +178,12 @@ class BrowserNav(widgetset.VBox):
     def _on_net_start(self, widget):
         self.toolbar.stop_button.enable()
         self.enable_disable_navigation()
+        self.toolbar.loading_icon.show()
 
     def _on_net_stop(self, widget):
         self.toolbar.stop_button.disable()
         self.enable_disable_navigation()
+        self.toolbar.loading_icon.hide()
 
     def _on_browser_back(self, widget):
         self.browser.back()
