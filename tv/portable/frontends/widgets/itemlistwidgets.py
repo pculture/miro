@@ -282,8 +282,6 @@ class ListItemView(widgetset.TableView):
         self._make_column(_('Size'), style.SizeRenderer(), 'size')
         self._make_column(_('ETA'), style.ETARenderer(), 'eta')
         self._make_column(_('Speed'), style.DownloadRateRenderer(), 'rate')
-        self._make_column(_('Description'), style.DescriptionRenderer(),
-                'description')
         self.set_show_headers(True)
         self.set_columns_draggable(True)
         self.set_column_spacing(12)
@@ -292,6 +290,13 @@ class ListItemView(widgetset.TableView):
         self.set_alternate_row_backgrounds(True)
         self.set_fixed_height(True)
         self.allow_multiple_select(True)
+
+    def get_tooltip(self, iter, column):
+        info = self.item_list.model[iter][0]
+        if info.description_text:
+            return info.description_text
+        else:
+            return None
 
     def _make_column(self, header, renderer, sort_name, resizable=True):
         column = widgetset.TableColumn(header, renderer, info=0)
@@ -323,7 +328,6 @@ class ListItemView(widgetset.TableView):
                 (65, 0),    # size
                 (50, 0),    # eta
                 (75, 0),    # download rate
-                (100, 1),   # description
             ]
             if not self.display_channel:
                 del width_specs[2]

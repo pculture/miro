@@ -40,6 +40,7 @@ cdef extern from "gtk/gtk.h":
     ctypedef struct GtkTreePath
     ctypedef struct GtkEntry
     ctypedef struct GObject
+    ctypedef struct GtkTooltip
     ctypedef struct GtkBorder:
         gint left
         gint right
@@ -57,6 +58,8 @@ cdef extern from "gtk/gtk.h":
                                      GtkBorder *border)
     cdef void gtk_entry_set_text (GtkEntry        *entry,
                                      char* text)
+    cdef void gtk_tooltip_set_text (GtkTooltip  *tooltip, char *text)
+
 cdef extern from "Python.h":
     ctypedef struct PyObject
 
@@ -89,3 +92,12 @@ def set_entry_border(object py_entry, int top, int right, int bottom, int left):
     border.top = top
     border.bottom = bottom
     gtk_entry_set_inner_border(entry, &border)
+
+def set_tooltip_text(object tooltip, text):
+    # For some reason this isn't available on pygtk 2.12.1 for windows, so we
+    # have to implement it ourselves.
+    cdef GtkTooltip* gtk_tooltip
+    cdef PyGObject *pygobject
+    pygobject = <PyGObject *>tooltip
+    gtk_tooltip = <GtkTooltip*>(pygobject_get(pygobject))
+    gtk_tooltip_set_text(gtk_tooltip, text)

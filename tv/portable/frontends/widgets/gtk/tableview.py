@@ -442,6 +442,7 @@ class TableView(Widget):
         self.selection = self._widget.get_selection()
         self.columns = []
         self.attr_map_for_column = {}
+        self.gtk_column_to_wrapper = {}
         self.background_color = None
         self.drag_button_down = False
         self._renderer_xpad = self._renderer_ypad = 0
@@ -473,6 +474,38 @@ class TableView(Widget):
         weak_connect(self.model._model, 'row-deleted', self.on_row_deleted)
         weak_connect(self.model._model, 'row-changed', self.on_row_changed)
         self.layout_manager = LayoutManager(self._widget)
+        if hasattr(self, 'get_tooltip'):
+            self._widget.set_property('has-tooltip', True)
+            self.wrapped_widget_connect('query-tooltip', self.on_tooltip)
+            self._last_tooltip_place = None
+
+    def on_tooltip(self, treeview, x, y, keyboard_mode, tooltip):
+        # x, y are relative to the entire widget, but we want them to be
+        # relative to our bin window.  The bin window doesn't include things
+        # like the column headers.
+        origin = treeview.window.get_origin()
+        bin_origin = treeview.get_bin_window().get_origin()
+        x += origin[0] - bin_origin[0]
+        y += origin[1] - bin_origin[1]
+        path_info = treeview.get_path_at_pos(x, y)
+        if path_info is None:
+            self._last_tooltip_place = None
+            return False
+        if (self._last_tooltip_place is not None and 
+                path_info[:2] != self._last_tooltip_place):
+            # the default GTK behaviour is to keep the tooltip in the same
+            # position, but this is looks bad when we move to a different row.
+            # So return False once to stop this.
+            self._last_tooltip_place = None
+            return False
+        self._last_tooltip_place = path_info[:2]
+        iter = treeview.get_model().get_iter(path_info[0])
+        column = self.gtk_column_to_wrapper[path_info[1]]
+        text = self.get_tooltip(iter, column)
+        if text is None:
+            return False
+        pygtkhacks.set_tooltip_text(tooltip, text)
+        return True
 
     def set_background_color(self, color):
         self.background_color = self.make_color(color)
@@ -532,11 +565,13 @@ class TableView(Widget):
         self._widget.append_column(column._column)
         self.columns.append(column)
         self.attr_map_for_column[column._column] = column.attrs
+        self.gtk_column_to_wrapper[column._column] = column
         self.setup_new_column(column)
 
     def remove_column(self, index):
         column = self.columns.pop(index)
         del self.attr_map_for_column[column._column]
+        del self.gtk_column_to_wrapper[column._column]
         self._widget.remove_column(index)
 
     def width_for_columns(self, total_width):

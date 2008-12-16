@@ -349,6 +349,14 @@ class TableViewDelegate(NSObject):
             if column_wrapper._column is column:
                 column_wrapper.emit('clicked')
 
+    def tableView_toolTipForCell_rect_tableColumn_row_mouseLocation_(self, tableview, cell, rect, column, row, location):
+        wrapper = wrappermap.wrapper(tableview)
+        iter = tableview.dataSource().model.iter_for_row(tableview, row)
+        for wrapper_column in wrapper.columns:
+            if wrapper_column._column is column:
+                break
+        return (wrapper.get_tooltip(iter, wrapper_column), rect)
+
 class VariableHeightTableViewDelegate(TableViewDelegate):
     def tableView_heightOfRow_(self, table_view, row):
         iter = table_view.dataSource().model.iter_for_row(table_view, row)
@@ -370,6 +378,14 @@ class OutlineViewDelegate(NSObject):
         for column_wrapper in wrapper.columns:
             if column_wrapper._column is column:
                 column_wrapper.emit('clicked')
+
+    def outlineView_toolTipForCell_rect_tableColumn_row_mouseLocation_(self, tableview, cell, rect, column, row, location):
+        wrapper = wrappermap.wrapper(tableview)
+        iter = tableview.dataSource().model.iter_for_row(tableview, row)
+        for wrapper_column in wrapper.columns:
+            if wrapper_column._column is column:
+                break
+        return (wrapper.get_tooltip(iter, wrapper_column), rect)
 
 class VariableHeightOutlineViewDelegate(OutlineViewDelegate):
     def outlineView_heightOfRowByItem_(self, outline_view, item):
@@ -889,6 +905,8 @@ class TableView(Widget):
             mask |= NSTableViewSolidVerticalGridLineMask
         self.tableview.setGridStyleMask_(mask)
 
+    def get_tooltip(self, iter, column):
+        return None
 
     def add_column(self, column):
         self.columns.append(column)
