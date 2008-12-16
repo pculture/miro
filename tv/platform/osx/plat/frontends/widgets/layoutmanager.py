@@ -37,6 +37,7 @@ from Foundation import *
 from objc import YES, NO, nil
 
 from miro.plat import utils
+from miro.plat.frontends.widgets import drawing
 
 INFINITE = 1000000 # size of an "infinite" dimension
 
@@ -351,7 +352,7 @@ class StyledButtonCell(NSButtonCell):
         if image is not None:
             image.setFlipped_(YES)
         NSButtonCell.setImage_(self, image)
-    
+
     def draw_path(self, context, x, y, width, height, radius):
         inner_width = width - radius * 2
         context.move_to(x + radius, y)
@@ -361,7 +362,6 @@ class StyledButtonCell(NSButtonCell):
         context.arc(x + radius, y+radius, radius, math.pi/2, -math.pi/2)
 
     def draw_button(self, context, x, y, width, height, radius):
-        from miro.plat.frontends.widgets import drawing
         self.draw_path(context, x, y, width, height, radius)
         if not self.isEnabled():
             end_color = self.DISABLED_COLOR
@@ -383,7 +383,6 @@ class StyledButtonCell(NSButtonCell):
         context.stroke()
 
     def drawBezelWithFrame_inView_(self, rect, view):
-        from miro.plat.frontends.widgets import drawing
         size = self.cellSize()
         radius = size.height / 2
         context = drawing.DrawingContext(view, rect, rect)

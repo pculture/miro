@@ -36,10 +36,6 @@ from Quartz import *
 from objc import YES, NO, nil
 
 from miro.plat import utils
-from miro.plat.frontends.widgets import wrappermap
-from miro.plat.frontends.widgets.base import Widget, SimpleBin, FlippedView
-from miro.plat.frontends.widgets.layoutmanager import LayoutManager
-from miro.plat.frontends.widgets.rect import NSRectWrapper
 
 class ImageSurface:
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
@@ -243,20 +239,6 @@ class Gradient(object):
     def get_image(self):
         return self.filter.valueForKey_('outputImage')
 
-class DrawingView(FlippedView):
-    def init(self):
-        FlippedView.init(self)
-        self.layout_manager = LayoutManager()
-        return self
-
-    def isOpaque(self):
-        return wrappermap.wrapper(self).is_opaque()
-
-    def drawRect_(self, rect):
-        context = DrawingContext(self, self.bounds(), rect)
-        context.style = DrawingStyle()
-        wrappermap.wrapper(self).draw(context, self.layout_manager)
-
 class DrawingMixin(object):
     def calc_size_request(self):
         return self.size_request(self.view.layout_manager)
@@ -272,20 +254,3 @@ class DrawingMixin(object):
     def draw(self, context, layout_manager):
         pass
 
-class DrawingArea(DrawingMixin, Widget):
-    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
-    def __init__(self):
-        Widget.__init__(self)
-        self.view = DrawingView.alloc().init()
-
-class Background(DrawingMixin, SimpleBin):
-    """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
-    def __init__(self):
-        SimpleBin.__init__(self)
-        self.view = DrawingView.alloc().init()
-
-    def calc_size_request(self):
-        drawing_size = DrawingMixin.calc_size_request(self)
-        container_size = SimpleBin.calc_size_request(self)
-        return (max(container_size[0], drawing_size[0]), 
-                max(container_size[1], drawing_size[1]))

@@ -35,7 +35,8 @@ from miro.plat.frontends.widgets.const import *
 from miro.plat.frontends.widgets.control import TextEntry, SecureTextEntry, SearchTextEntry, VideoSearchTextEntry
 from miro.plat.frontends.widgets.control import Checkbox, Button, OptionMenu, RadioButtonGroup, RadioButton
 from miro.plat.frontends.widgets.customcontrol import CustomButton, ContinuousCustomButton, CustomSlider
-from miro.plat.frontends.widgets.drawing import DrawingContext, ImageSurface, DrawingArea, Background, Gradient
+from miro.plat.frontends.widgets.drawing import DrawingContext, ImageSurface, Gradient
+from miro.plat.frontends.widgets.drawingwidgets import DrawingArea, Background
 from miro.plat.frontends.widgets.rect import Rect
 from miro.plat.frontends.widgets.layout import VBox, HBox, Alignment, Splitter, Table, Scroller, Expander, TabContainer
 from miro.plat.frontends.widgets.window import Window, MainWindow, Dialog, FileSaveDialog, FileOpenDialog
