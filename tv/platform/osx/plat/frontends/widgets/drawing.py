@@ -192,7 +192,6 @@ class DrawingContext:
                 gradient.rect_for_flipped_rect(path_rect))
         NSGraphicsContext.currentContext().restoreGraphicsState()
 
-
 class Gradient(object):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, x1, y1, x2, y2):

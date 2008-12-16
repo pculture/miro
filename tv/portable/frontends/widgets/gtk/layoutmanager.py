@@ -375,8 +375,9 @@ class StyledButton(object):
     PAD_VERTICAL = 3
     TOP_COLOR = (1, 1, 1)
     BOTTOM_COLOR = (0.86, 0.86, 0.86)
-    LINE_COLOR = (0.69, 0.69, 0.69)
-    TEXT_COLOR = (0, 0, 0)
+    LINE_COLOR_TOP = (0.71, 0.71, 0.71)
+    LINE_COLOR_BOTTOM = (0.45, 0.45, 0.45)
+    TEXT_COLOR = (0.184, 0.184, 0.184)
     DISABLED_COLOR = (0.86, 0.86, 0.86)
     DISABLED_TEXT_COLOR = (0.5, 0.5, 0.5)
     ICON_PAD = 4
@@ -437,7 +438,10 @@ class StyledButton(object):
         context.fill()
         context.set_line_width(1)
         self.draw_path(context, x+0.5, y+0.5, width, height, radius)
-        context.set_source_rgb(*self.LINE_COLOR)
+        gradient = cairo.LinearGradient(x, y, x, y + height)
+        gradient.add_color_stop_rgb(0, *self.LINE_COLOR_TOP)
+        gradient.add_color_stop_rgb(1, *self.LINE_COLOR_BOTTOM)
+        context.context.set_source(gradient)
         context.stroke()
         context.context.restore()
 

@@ -325,7 +325,8 @@ class StyledButtonCell(NSButtonCell):
     PAD_VERTICAL = 1
     TOP_COLOR = (1, 1, 1)
     BOTTOM_COLOR = (0.86, 0.86, 0.86)
-    LINE_COLOR = (0.69, 0.69, 0.69)
+    LINE_COLOR_TOP = (0.71, 0.71, 0.71)
+    LINE_COLOR_BOTTOM = (0.45, 0.45, 0.45)
     TEXT_COLOR = (0, 0, 0)
     DISABLED_COLOR = (0.86, 0.86, 0.86)
     DISABLED_TEXT_COLOR = (0.5, 0.5, 0.5)
@@ -353,6 +354,13 @@ class StyledButtonCell(NSButtonCell):
             image.setFlipped_(YES)
         NSButtonCell.setImage_(self, image)
 
+    def setTitle_(self, title):
+        attributes = NSMutableDictionary.alloc().init()
+        color = NSColor.colorWithDeviceRed_green_blue_alpha_(0.184, 0.184,
+                0.184, 1)
+        attributes.setObject_forKey_(color, NSForegroundColorAttributeName)
+        self.setAttributedTitle_(NSAttributedString.alloc().initWithString_attributes_(title, attributes))
+
     def draw_path(self, context, x, y, width, height, radius):
         inner_width = width - radius * 2
         context.move_to(x + radius, y)
@@ -360,6 +368,14 @@ class StyledButtonCell(NSButtonCell):
         context.arc(x + width - radius, y+radius, radius, -math.pi/2, math.pi/2)
         context.rel_line_to(-inner_width, 0)
         context.arc(x + radius, y+radius, radius, math.pi/2, -math.pi/2)
+
+    def draw_path_reverse(self, context, x, y, width, height, radius):
+        inner_width = width - radius * 2
+        context.move_to(x + radius, y)
+        context.arc_negative(x + radius, y+radius, radius, -math.pi/2, math.pi/2)
+        context.rel_line_to(inner_width, 0)
+        context.arc_negative(x + width - radius, y+radius, radius, math.pi/2, -math.pi/2)
+        context.rel_line_to(-inner_width, 0)
 
     def draw_button(self, context, x, y, width, height, radius):
         self.draw_path(context, x, y, width, height, radius)
@@ -377,10 +393,19 @@ class StyledButtonCell(NSButtonCell):
         gradient.set_start_color(start_color)
         gradient.set_end_color(end_color)
         context.gradient_fill(gradient)
-        context.set_line_width(1)
-        self.draw_path(context, x+0.5, y+0.5, width, height, radius)
-        context.set_color(self.LINE_COLOR)
-        context.stroke()
+        self._draw_border(context, x, y, width, height, radius)
+
+    def _draw_border(self, context, x, y, width, height, radius):
+        self.draw_path(context, x, y, width, height, radius)
+        self.draw_path_reverse(context, x+1, y+1, width-2, height-2, radius-1)
+        gradient = drawing.Gradient(x, y, x, y+height)
+        gradient.set_start_color(self.LINE_COLOR_TOP)
+        gradient.set_end_color(self.LINE_COLOR_BOTTOM)
+        context.save()
+        context.clip()
+        context.rectangle(x, y, width, height)
+        context.gradient_fill(gradient)
+        context.restore()
 
     def drawBezelWithFrame_inView_(self, rect, view):
         size = self.cellSize()
