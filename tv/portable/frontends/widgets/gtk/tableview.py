@@ -225,6 +225,55 @@ class MiroTreeView(gtk.TreeView):
             area = gtk.gdk.Rectangle(x1-1, y-1, x2-x1+2,2)
             self.window.invalidate_rect(area, True)
 
+    def do_move_cursor(self, step, count):
+        if isinstance(self.get_parent(), gtk.ScrolledWindow):
+            # If our parent is a ScrolledWindow, let GTK take care of this
+            return gtk.TreeView.do_move_cursor(self, step, count)
+        else:
+            # Otherwise, we have to search up the widget tree for a
+            # ScrolledWindow to take care of it
+            selection = self.get_selection()
+            model, start_selection = selection.get_selected_rows()
+            gtk.TreeView.do_move_cursor(self, step, count)
+
+            model, end_selection = selection.get_selected_rows()
+            newly_selected = set(end_selection) - set(start_selection)
+            down = (count > 0)
+
+            return self.scroll_ancestor(newly_selected, down)
+
+    def scroll_ancestor(self, newly_selected, down):
+        # Try to figure out what just became selected.  If multiple things
+        # somehow became selected, select the outermost one
+        if len(newly_selected) == 0:
+            return False
+        if down:
+            path_to_show = max(newly_selected)
+        else:
+            path_to_show = min(newly_selected)
+
+        # Try to find a Viewport in the widget tree
+        ancestor = self.get_parent()
+        while not isinstance(ancestor, gtk.Viewport):
+            if ancestor is None:
+                return False
+            ancestor = ancestor.get_parent()
+
+        vadjustment = ancestor.get_vadjustment()
+        column = self.get_columns()[0]
+        rect = self.get_background_area(path_to_show, column)
+        _, top = self.translate_coordinates(ancestor, 0, rect.y)
+        top += vadjustment.value
+        bottom = top + rect.height
+        if down:
+            if bottom > vadjustment.value + vadjustment.page_size:
+                bottom_value = min(bottom, vadjustment.upper)
+                vadjustment.set_value(bottom_value - vadjustment.page_size)
+        else:
+            if top < vadjustment.value:
+                vadjustment.set_value(max(vadjustment.lower, top))
+        return True
+
     def set_drag_dest_row(self, row, position):
         """Works like set_drag_dest_row, except row can be None which will
         cause the treeview to set the drag indicator below the bottom of the
