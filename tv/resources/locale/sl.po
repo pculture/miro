@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2008-11-21 13:21-0500\n"
-"PO-Revision-Date: 2008-11-24 09:10+0000\n"
+"POT-Creation-Date: 2008-12-03 11:40-0500\n"
+"PO-Revision-Date: 2008-12-10 09:17+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,57 +15,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
 "n%100==4 ? 3 : 0);\n"
-"X-Launchpad-Export-Date: 2008-12-03 16:23+0000\n"
+"X-Launchpad-Export-Date: 2008-12-16 20:27+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: SLOVENIA\n"
 "X-Poedit-Language: Slovenian\n"
 "X-Poedit-SourceCharset: utf-8\n"
-
-#: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:4
-msgid "OK"
-msgstr "V redu"
-
-#: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:6
-#: ../../portable/frontends/widgets/firsttimedialog.py:273
-#: ../../portable/dialogs.py:85
-msgid "Cancel"
-msgstr "Prekliči"
-
-#: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:8
-#: ../../portable/frontends/widgets/prefpanel.py:618
-msgid "Channels"
-msgstr "Kanali"
-
-#: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:10
-#, python-format
-msgid "parsed %(countfiles)d files - found %(countvideos)d videos"
-msgstr ""
-"razčlenjenih %(countfiles)d datotek - najdenih %(countvideos)d posnetkov"
-
-#: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:12
-#, python-format
-msgid "bad parsed %(countfiles)d files - found %(countvideos)d videos"
-msgstr ""
-"slabo razčlenjenih %(countfiles)d datotek - najdenih %(countvideos)d "
-"posnetkov"
-
-#: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:14
-#, python-format
-msgid "%(count)d video found"
-msgid_plural "%(count)d videos found"
-msgstr[0] "Najdenih %(count)d posnetkov"
-msgstr[1] "Najden %(count)d posnetek"
-msgstr[2] "Najdena %(count)d posnetka"
-msgstr[3] "Najdeni %(count)d posnetki"
-
-#: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:16
-#, python-format
-msgid "bad %(count)d video found"
-msgid_plural "bad %(count)d videos found"
-msgstr[0] "najdenih %(count)d slabih posnetkov"
-msgstr[1] "najden %(count)d slab posnetek"
-msgstr[2] "najdena %(count)d slaba posnetka"
-msgstr[3] "najdeni %(count)d slabi posnetki"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
@@ -174,22 +128,24 @@ msgid "Use this for video when playing audio:"
 msgstr "Pri predvajanju zvoka posnetkov uporabi:"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:116
-#: ../../portable/frontends/widgets/itemcontextmenu.py:137
+#: ../../portable/frontends/widgets/itemcontextmenu.py:146
 msgid "Share"
 msgstr "Daj v skupno rabo"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:120
-#: ../../portable/frontends/widgets/style.py:305
-#: ../../portable/frontends/widgets/style.py:763
-#: ../../portable/frontends/widgets/itemcontextmenu.py:110
-#: ../../portable/frontends/widgets/itemcontextmenu.py:203
+#: ../../portable/frontends/widgets/style.py:635
+#: ../../portable/frontends/widgets/style.py:780
+#: ../../portable/frontends/widgets/style.py:992
+#: ../../portable/frontends/widgets/itemcontextmenu.py:109
+#: ../../portable/frontends/widgets/itemcontextmenu.py:214
 #: ../../portable/dialogs.py:105
 msgid "Keep"
 msgstr "Ohrani"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:124
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:213
-#: ../../portable/frontends/widgets/style.py:311
+#: ../../portable/frontends/widgets/style.py:641
+#: ../../portable/frontends/widgets/style.py:998
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
 #: ../../portable/dialogs.py:106
 msgid "Delete"
@@ -315,25 +271,21 @@ msgid "Example Playlist"
 msgstr "Primer seznama predvajanja"
 
 #: ../../portable/util.py:259 ../../portable/util.py:261
-#: ../../portable/displaytext.py:71
 #, python-format
 msgid "%(size)sGB"
 msgstr "%(size)sGB"
 
 #: ../../portable/util.py:265 ../../portable/util.py:267
-#: ../../portable/displaytext.py:74
 #, python-format
 msgid "%(size)sMB"
 msgstr "%(size)sMB"
 
 #: ../../portable/util.py:271 ../../portable/util.py:273
-#: ../../portable/displaytext.py:77
 #, python-format
 msgid "%(size)sKB"
 msgstr "%(size)skB"
 
 #: ../../portable/util.py:277 ../../portable/util.py:279
-#: ../../portable/displaytext.py:79
 #, python-format
 msgid "%(size)sB"
 msgstr "%(size)sB"
@@ -399,11 +351,11 @@ msgstr ""
 "nekaj filmov iz svoje zbirke.\n"
 "Zadnje spremembe bodo morda izgubljene."
 
-#: ../../portable/messagehandler.py:1180
+#: ../../portable/messagehandler.py:1178
 msgid "Subscribed to new channel:"
 msgstr "Naročeni na nov kanal:"
 
-#: ../../portable/messagehandler.py:1183
+#: ../../portable/messagehandler.py:1181
 msgid "Subscribed to new channels:"
 msgstr "Naročeni na nove kanale:"
 
@@ -435,25 +387,96 @@ msgstr ""
 
 #: ../../portable/displaytext.py:40
 #, python-format
-msgid "%(size)sGB/s"
-msgstr "%(size)sGB/s"
+msgid "%(size)s gb/s"
+msgstr "%(size)s Gb/s"
 
 #: ../../portable/displaytext.py:43
 #, python-format
-msgid "%(size)sMB/s"
-msgstr "%(size)sMB/s"
+msgid "%(size)s mb/s"
+msgstr "%(size)s Mb/s"
 
 #: ../../portable/displaytext.py:46
 #, python-format
-msgid "%(size)sKB/s"
-msgstr "%(size)skB/s"
+msgid "%(size)s kb/s"
+msgstr "%(size)s kb/s"
 
 #: ../../portable/displaytext.py:49
 #, python-format
-msgid "%(size)sB/s"
-msgstr "%(size)sB/s"
+msgid "%(size)s b/s"
+msgstr "%(size)s b/s"
 
-#: ../../portable/displaytext.py:84
+#: ../../portable/displaytext.py:65
+#, python-format
+msgid "%(num)d day"
+msgid_plural "%(num)d days"
+msgstr[0] "%(num)d dni"
+msgstr[1] "%(num)d dan"
+msgstr[2] "%(num)d dneva"
+msgstr[3] "%(num)d dni"
+
+#: ../../portable/displaytext.py:68
+#, python-format
+msgid "%(num)d hr"
+msgid_plural "%(num)d hrs"
+msgstr[0] "%(num)d ur"
+msgstr[1] "%(num)d ura"
+msgstr[2] "%(num)d uri"
+msgstr[3] "%(num)d ure"
+
+#: ../../portable/displaytext.py:71
+#, python-format
+msgid "%(num)d min"
+msgid_plural "%(num)d mins"
+msgstr[0] "%(num)d minut"
+msgstr[1] "%(num)d minuto"
+msgstr[2] "%(num)d minuti"
+msgstr[3] "%(num)d minute"
+
+#: ../../portable/displaytext.py:74
+#, python-format
+msgid "%(num)d sec"
+msgid_plural "%(num)d secs"
+msgstr[0] "%(num)d sekund"
+msgstr[1] "%(num)d sekundo"
+msgstr[2] "%(num)d sekundi"
+msgstr[3] "%(num)d sekund"
+
+#: ../../portable/displaytext.py:77
+#, python-format
+msgid "%(day)s %(hr)s"
+msgstr "%(day)s %(hr)s"
+
+#: ../../portable/displaytext.py:79
+#, python-format
+msgid "%(hr)s %(min)s"
+msgstr "%(hr)s %(min)s"
+
+#: ../../portable/displaytext.py:81
+#, python-format
+msgid "%(min)s %(sec)s"
+msgstr "%(min)s %(sec)s"
+
+#: ../../portable/displaytext.py:99
+#, python-format
+msgid "%(size)s gb"
+msgstr "%(size)s Gb"
+
+#: ../../portable/displaytext.py:102
+#, python-format
+msgid "%(size)s mb"
+msgstr "%(size)s Mb"
+
+#: ../../portable/displaytext.py:105
+#, python-format
+msgid "%(size)s kb"
+msgstr "%(size)s kb"
+
+#: ../../portable/displaytext.py:107
+#, python-format
+msgid "%(size)s b"
+msgstr "%(size)s b"
+
+#: ../../portable/displaytext.py:112
 #, python-format
 msgid "Expires in %(count)d day"
 msgid_plural "Expires in %(count)d days"
@@ -462,7 +485,7 @@ msgstr[1] "Poteče v %(count)d dnevu"
 msgstr[2] "Poteče v %(count)d dneh"
 msgstr[3] "Poteče v %(count)d dneh"
 
-#: ../../portable/displaytext.py:89
+#: ../../portable/displaytext.py:117
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
@@ -471,7 +494,7 @@ msgstr[1] "Poteče v %(count)d uri"
 msgstr[2] "Poteče v %(count)d urah"
 msgstr[3] "Poteče v %(count)d urah"
 
-#: ../../portable/displaytext.py:94
+#: ../../portable/displaytext.py:122
 #, python-format
 msgid "Expires in %(count)d minute"
 msgid_plural "Expires in %(count)d minutes"
@@ -498,6 +521,7 @@ msgid "starting up"
 msgstr "zaganjanje"
 
 #: ../../portable/dl_daemon/download.py:496
+#: ../../portable/frontends/widgets/style.py:599
 msgid "Error"
 msgstr "Napaka"
 
@@ -797,6 +821,48 @@ msgstr "_Seznami predvajanja"
 msgid "P_layback"
 msgstr "P_redvajaj"
 
+#: ../../portable/frontends/widgets/newchanneldialog.py:60
+msgid "URL:"
+msgstr "URL:"
+
+#: ../../portable/frontends/widgets/newchanneldialog.py:69
+msgid "Channel should go in this section:"
+msgstr "Kanal naj gre v ta odsek:"
+
+#: ../../portable/frontends/widgets/newchanneldialog.py:71
+#: ../../portable/frontends/widgets/newsearchchannel.py:134
+msgid "video"
+msgstr "slika"
+
+#: ../../portable/frontends/widgets/newchanneldialog.py:72
+#: ../../portable/frontends/widgets/newsearchchannel.py:135
+msgid "audio"
+msgstr "zvok"
+
+#: ../../portable/frontends/widgets/newchanneldialog.py:110
+msgid "Add Channel"
+msgstr "Dodaj kanal"
+
+#: ../../portable/frontends/widgets/newchanneldialog.py:111
+msgid "Enter the URL of the channel to add"
+msgstr "Vnesite naslov URL novega kanala"
+
+#: ../../portable/frontends/widgets/newchanneldialog.py:122
+msgid "Add Channel - Invalid URL"
+msgstr "Dodaj kanal - Neveljaven URL"
+
+#: ../../portable/frontends/widgets/newchanneldialog.py:123
+msgid ""
+"The address you entered is not a valid url.\n"
+"Please check the URL and try again.\n"
+"\n"
+"Enter the URL of the channel to add"
+msgstr ""
+"Naslov, ki ste ga vnesli, ni veljaven URL.\n"
+"Prosimo, preverite URL in poskusite znova.\n"
+"\n"
+"Vnesite URL kanala, ki ga želite dodati."
+
 #: ../../portable/frontends/widgets/crashdialog.py:46
 #: ../../portable/httpclient.py:158
 msgid "Internal Error"
@@ -822,167 +888,134 @@ msgstr ""
 msgid "Describe what you were doing when you got this error:"
 msgstr "Opišite, kaj ste počeli, ko ste doživeli to napako:"
 
-#: ../../portable/frontends/widgets/style.py:309
-#: ../../portable/frontends/widgets/prefpanel.py:479
-#: ../../portable/frontends/widgets/tablist.py:517
-#: ../../portable/frontends/widgets/tablist.py:530
-#: ../../portable/frontends/widgets/tablist.py:536
-#: ../../portable/frontends/widgets/tablist.py:570
-#: ../../portable/frontends/widgets/tablist.py:576
-#: ../../portable/frontends/widgets/tablist.py:581
-#: ../../portable/dialogs.py:107
-msgid "Remove"
-msgstr "Odstrani"
+#: ../../portable/frontends/widgets/style.py:406
+msgid "Show More"
+msgstr "Pokaži  več"
 
-#: ../../portable/frontends/widgets/style.py:317
-#: ../../portable/frontends/widgets/itemcontextmenu.py:114
-msgid "Stop seeding"
-msgstr "Nehaj sejati"
+#: ../../portable/frontends/widgets/style.py:409
+msgid "Show Less"
+msgstr "Pokaži manj"
 
-#: ../../portable/frontends/widgets/style.py:385
-msgid "Date:"
-msgstr "Datum:"
-
-#: ../../portable/frontends/widgets/style.py:386
-msgid "Length:"
-msgstr "Dolžina:"
-
-#: ../../portable/frontends/widgets/style.py:387
-msgid "Size:"
-msgstr "Velikost:"
-
-#: ../../portable/frontends/widgets/style.py:390
-msgid "Channel:"
-msgstr "Kanal:"
-
-#: ../../portable/frontends/widgets/style.py:404
-msgid "Show Details"
-msgstr "Pokaži podrobnosti"
-
-#: ../../portable/frontends/widgets/style.py:408
-msgid "Hide Details"
-msgstr "Skrij podrobnosti"
-
-#: ../../portable/frontends/widgets/style.py:422
-msgid "Web page"
-msgstr "Spletna stran"
-
-#: ../../portable/frontends/widgets/style.py:422
-msgid "permalink"
-msgstr "trajna povezava"
-
-#: ../../portable/frontends/widgets/style.py:424
+#: ../../portable/frontends/widgets/style.py:432
+#: ../../portable/frontends/widgets/style.py:434
+#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Comments"
 msgstr "Komentarji"
 
-#: ../../portable/frontends/widgets/style.py:424
-msgid "commentslink"
-msgstr "povezavakomentarja"
-
-#: ../../portable/frontends/widgets/style.py:427
-msgid "File link"
-msgstr "Povezava datoteke"
-
-#: ../../portable/frontends/widgets/style.py:427
-msgid "direct link to file"
-msgstr "neposredna povezava z datoteko"
-
-#: ../../portable/frontends/widgets/style.py:428
-msgid "File type"
-msgstr "Vrsta datoteke"
-
-#: ../../portable/frontends/widgets/style.py:431
-#: ../../portable/frontends/widgets/style.py:433
-msgid "License"
-msgstr "Licenca"
-
-#: ../../portable/frontends/widgets/style.py:433
-msgid "see permalink"
-msgstr "ogled trajne povezave"
-
-#: ../../portable/frontends/widgets/style.py:435
-msgid "Filename"
-msgstr "Ime datoteke"
-
-#: ../../portable/frontends/widgets/style.py:438
-msgid "Local directory"
-msgstr "Krajevna mapa"
-
-#: ../../portable/frontends/widgets/style.py:438
+#: ../../portable/frontends/widgets/style.py:439
 #: ../../portable/frontends/widgets/style.py:441
-msgid "show"
-msgstr "pokaži"
+msgid "Reveal in Finder"
+msgstr "Razkrij v Finderju"
 
-#: ../../portable/frontends/widgets/style.py:441
-msgid "Local file"
-msgstr "Krajevna datoteka"
+#: ../../portable/frontends/widgets/style.py:445
+#: ../../portable/frontends/widgets/style.py:447
+msgid "Web Page"
+msgstr "Spletna stran"
 
-#: ../../portable/frontends/widgets/style.py:450
-msgid "Leechers"
-msgstr "Pijavke"
+#: ../../portable/frontends/widgets/style.py:451
+#: ../../portable/frontends/widgets/style.py:453
+msgid "File URL"
+msgstr "URL datoteke"
 
-#: ../../portable/frontends/widgets/style.py:452
-msgid "Seeders"
-msgstr "Sejalci"
-
-#: ../../portable/frontends/widgets/style.py:454
-msgid "Up Rate"
-msgstr "Hitrost prenosa na strežnik"
-
-#: ../../portable/frontends/widgets/style.py:456
-msgid "Down Rate"
-msgstr "Hitrost prenosa s strežnika"
-
-#: ../../portable/frontends/widgets/style.py:458
-msgid "Up Total"
-msgstr "Skupaj poslano"
-
+#: ../../portable/frontends/widgets/style.py:457
 #: ../../portable/frontends/widgets/style.py:459
-msgid "Down Total"
-msgstr "Skupaj prejeto"
+msgid "License Page"
+msgstr "Stran z licenco"
 
-#: ../../portable/frontends/widgets/style.py:471
+#: ../../portable/frontends/widgets/style.py:469
+#: ../../portable/frontends/widgets/style.py:610
+#: ../../portable/frontends/widgets/style.py:868
 msgid "Unwatched"
 msgstr "Neopazovano"
 
-#: ../../portable/frontends/widgets/style.py:488 ../../portable/item.py:618
+#: ../../portable/frontends/widgets/style.py:486 ../../portable/item.py:618
 msgid "queued for download"
 msgstr "v vrsti za prenos"
 
-#: ../../portable/frontends/widgets/style.py:493
+#: ../../portable/frontends/widgets/style.py:489
 msgid "paused"
 msgstr "ustavljeno"
 
-#: ../../portable/frontends/widgets/style.py:538
+#: ../../portable/frontends/widgets/style.py:544
+msgid "File Type"
+msgstr "Vrsta datoteke"
+
+#: ../../portable/frontends/widgets/style.py:554
+msgid "Seeders"
+msgstr "Sejalci"
+
+#: ../../portable/frontends/widgets/style.py:556
+msgid "Leechers"
+msgstr "Pijavke"
+
+#: ../../portable/frontends/widgets/style.py:561
+msgid "Upload Rate"
+msgstr "Hitrost oddajanja"
+
+#: ../../portable/frontends/widgets/style.py:562
+msgid "Upload Total"
+msgstr "Skupaj oddano"
+
+#: ../../portable/frontends/widgets/style.py:567
+msgid "Down Rate"
+msgstr "Hitrost prenosa s strežnika"
+
+#: ../../portable/frontends/widgets/style.py:568
+msgid "Down Total"
+msgstr "Skupaj prejeto"
+
+#: ../../portable/frontends/widgets/style.py:589
 msgid "Download Torrent"
 msgstr "Prenesi torrent"
 
-#: ../../portable/frontends/widgets/style.py:540
-#: ../../portable/frontends/widgets/style.py:603
-#: ../../portable/frontends/widgets/itemcontextmenu.py:132
-#: ../../portable/frontends/widgets/itemcontextmenu.py:216
+#: ../../portable/frontends/widgets/style.py:591
+#: ../../portable/frontends/widgets/style.py:987
+#: ../../portable/frontends/widgets/itemcontextmenu.py:129
+#: ../../portable/frontends/widgets/itemcontextmenu.py:227
 #: ../../portable/dialogs.py:95
 msgid "Download"
 msgstr "Prenesi"
 
-#: ../../portable/frontends/widgets/style.py:560
+#: ../../portable/frontends/widgets/style.py:607
 msgid "queued for autodownload"
 msgstr "v vrsti za samodejni prenos"
 
-#: ../../portable/frontends/widgets/style.py:597
-#: ../../portable/frontends/widgets/itemcontextmenu.py:125
-#: ../../portable/frontends/widgets/itemcontextmenu.py:233
-msgid "Pause Download"
-msgstr "Zaustavi prenos"
+#: ../../portable/frontends/widgets/style.py:625
+#: ../../portable/frontends/widgets/style.py:874
+msgid "Newly Available"
+msgstr "Sveže na voljo"
 
-#: ../../portable/frontends/widgets/style.py:600
-#: ../../portable/frontends/widgets/itemcontextmenu.py:128
-msgid "Resume Download"
-msgstr "Nadaljuj s prenosom"
+#: ../../portable/frontends/widgets/style.py:639
+#: ../../portable/frontends/widgets/style.py:996
+#: ../../portable/frontends/widgets/prefpanel.py:479
+#: ../../portable/frontends/widgets/tablist.py:517
+#: ../../portable/frontends/widgets/tablist.py:529
+#: ../../portable/frontends/widgets/tablist.py:535
+#: ../../portable/frontends/widgets/tablist.py:569
+#: ../../portable/frontends/widgets/tablist.py:575
+#: ../../portable/frontends/widgets/tablist.py:580
+#: ../../portable/dialogs.py:107
+msgid "Remove"
+msgstr "Odstrani"
 
-#: ../../portable/frontends/widgets/style.py:766
+#: ../../portable/frontends/widgets/style.py:647
+#: ../../portable/frontends/widgets/itemcontextmenu.py:113
+msgid "Stop seeding"
+msgstr "Nehaj sejati"
+
+#: ../../portable/frontends/widgets/style.py:783
 msgid "Remove from playlist"
 msgstr "Odstrani s seznama predvajanja"
+
+#: ../../portable/frontends/widgets/style.py:862
+#: ../../portable/frontends/widgets/itemlistwidgets.py:260
+#: ../../portable/frontends/widgets/statictabs.py:79
+msgid "Downloading"
+msgstr "Sprejemanje"
+
+#: ../../portable/frontends/widgets/style.py:865
+msgid "Paused"
+msgstr "Zaustavljen"
 
 #: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
@@ -1009,15 +1042,18 @@ msgid "Manually"
 msgstr "Ročno"
 
 #: ../../portable/frontends/widgets/prefpanel.py:289
+#: ../../portable/frontends/widgets/itemlistwidgets.py:554
 #: ../../portable/frontends/widgets/statictabs.py:72
 msgid "New"
 msgstr "Nov"
 
 #: ../../portable/frontends/widgets/prefpanel.py:290
+#: ../../portable/frontends/widgets/itemlistwidgets.py:554
 msgid "All"
 msgstr "Vse"
 
 #: ../../portable/frontends/widgets/prefpanel.py:291
+#: ../../portable/frontends/widgets/itemlistwidgets.py:554
 msgid "Off"
 msgstr "Izključeno"
 
@@ -1218,8 +1254,12 @@ msgstr "Ustavi po vsakem"
 msgid "General"
 msgstr "Splošno"
 
+#: ../../portable/frontends/widgets/prefpanel.py:618
+msgid "Channels"
+msgstr "Kanali"
+
 #: ../../portable/frontends/widgets/prefpanel.py:619
-#: ../../portable/frontends/widgets/downloadscontroller.py:70
+#: ../../portable/frontends/widgets/downloadscontroller.py:77
 msgid "Downloads"
 msgstr "Prenosi"
 
@@ -1368,40 +1408,44 @@ msgstr "Poišči:"
 msgid "In this:"
 msgstr "V tem:"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:224
+#: ../../portable/frontends/widgets/newsearchchannel.py:131
+msgid "Add new channel to this section:"
+msgstr "Kanal dodaj temu odseku:"
+
+#: ../../portable/frontends/widgets/itemlistcontroller.py:245
 msgid "Error Revealing File"
 msgstr "Napaka pri razkrivanju datoteke"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:225
+#: ../../portable/frontends/widgets/itemlistcontroller.py:246
 #, python-format
 msgid "The file \"%(filename)s\" was deleted from outside Miro."
 msgstr "Datoteka \"%(filename)s\" je bila izbrisana zunaj programa Miro."
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:363
+#: ../../portable/frontends/widgets/itemlistcontroller.py:386
 msgid "New Videos"
 msgstr "Novi videi"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:369
+#: ../../portable/frontends/widgets/itemlistcontroller.py:392
 #: ../../portable/frontends/widgets/statictabs.py:55
 msgid "Video Search"
 msgstr "Iskanje posnetkov"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:381
+#: ../../portable/frontends/widgets/itemlistcontroller.py:404
 msgid "No Results Found"
 msgstr "Ni zadetkov"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:434
+#: ../../portable/frontends/widgets/itemlistcontroller.py:457
 #: ../../portable/frontends/widgets/statictabs.py:60
 msgid "Library"
 msgstr "Knjižnica"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:440
+#: ../../portable/frontends/widgets/itemlistcontroller.py:463
 #: ../../portable/frontends/widgets/statictabs.py:65
 msgid "Single Items"
 msgstr "Posamezne izbire"
 
 #: ../../portable/frontends/widgets/removeitemsdialog.py:49
-#: ../../portable/frontends/widgets/itemlistwidgets.py:547
+#: ../../portable/frontends/widgets/itemlistwidgets.py:570
 #: ../../portable/frontends/widgets/removechannelsdialog.py:50
 #, python-format
 msgid "Remove channel"
@@ -1475,15 +1519,15 @@ msgstr "Mesto datoteke zbirke podatkov:"
 msgid "Space free on disk:"
 msgstr "Prostor na disku:"
 
-#: ../../portable/frontends/widgets/feedcontroller.py:110
+#: ../../portable/frontends/widgets/feedcontroller.py:117
 msgid "Downloaded"
 msgstr "Preneseno"
 
-#: ../../portable/frontends/widgets/feedcontroller.py:120
+#: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Full Channel"
 msgstr "Celoten kanal"
 
-#: ../../portable/frontends/widgets/feedcontroller.py:163
+#: ../../portable/frontends/widgets/feedcontroller.py:170
 #, python-format
 msgid "Show 1 More Item"
 msgid_plural "Show %(count)d More Items"
@@ -1492,8 +1536,8 @@ msgstr[1] "Pokaži %(count)d izbiro več"
 msgstr[2] "Pokaži %(count)d izbiri več"
 msgstr[3] "Pokaži %(count)d izbire več"
 
-#: ../../portable/frontends/widgets/feedcontroller.py:196
-#: ../../portable/frontends/widgets/feedcontroller.py:223
+#: ../../portable/frontends/widgets/feedcontroller.py:203
+#: ../../portable/frontends/widgets/feedcontroller.py:230
 #, python-format
 msgid "%(count)d Downloading"
 msgid_plural "%(count)d Downloading"
@@ -1502,8 +1546,8 @@ msgstr[1] "%(count)d prenos v teku"
 msgstr[2] "%(count)d prenosa v teku"
 msgstr[3] "%(count)d prenosi v teku"
 
-#: ../../portable/frontends/widgets/feedcontroller.py:207
-#: ../../portable/frontends/widgets/feedcontroller.py:219
+#: ../../portable/frontends/widgets/feedcontroller.py:214
+#: ../../portable/frontends/widgets/feedcontroller.py:226
 #, python-format
 msgid "%(count)d Video"
 msgid_plural "%(count)d Videos"
@@ -1512,7 +1556,7 @@ msgstr[1] "%(count)d posnetek"
 msgstr[2] "%(count)d posnetka"
 msgstr[3] "%(count)d posnetki"
 
-#: ../../portable/frontends/widgets/feedcontroller.py:229
+#: ../../portable/frontends/widgets/feedcontroller.py:236
 #, python-format
 msgid "%(count)d Video Matches Search"
 msgid_plural "%(count)d Videos Match Search"
@@ -1521,15 +1565,15 @@ msgstr[1] "%(count)d posnetek se ujema z iskanim"
 msgstr[2] "%(count)d posnetka se ujemata z iskanim"
 msgstr[3] "%(count)d posnetki se ujemajo z iskanim"
 
-#: ../../portable/frontends/widgets/feedcontroller.py:234
+#: ../../portable/frontends/widgets/feedcontroller.py:241
 msgid "All Videos Match Search"
 msgstr "Vsi posnetki so zadetki"
 
-#: ../../portable/frontends/widgets/application.py:112
+#: ../../portable/frontends/widgets/application.py:113
 msgid "Movies directory gone"
 msgstr "Mape s filmi ni več"
 
-#: ../../portable/frontends/widgets/application.py:114
+#: ../../portable/frontends/widgets/application.py:115
 #, python-format
 msgid ""
 "%(shortappname)s can't find the primary video directory located at:\n"
@@ -1559,38 +1603,38 @@ msgstr ""
 "Če prete program, lahko povežete pogon ali drugače rešite težavo in ponovno "
 "poženete %(shortappname)s."
 
-#: ../../portable/frontends/widgets/application.py:256
+#: ../../portable/frontends/widgets/application.py:262
 msgid "Open Files..."
 msgstr "Odpri datoteke ..."
 
-#: ../../portable/frontends/widgets/application.py:267
-#: ../../portable/frontends/widgets/application.py:272
+#: ../../portable/frontends/widgets/application.py:273
+#: ../../portable/frontends/widgets/application.py:278
 msgid "Open Files - Error"
 msgstr "Odpri datoteke - Napaka"
 
-#: ../../portable/frontends/widgets/application.py:268
-#: ../../portable/frontends/widgets/application.py:542
+#: ../../portable/frontends/widgets/application.py:274
+#: ../../portable/frontends/widgets/application.py:545
 #, python-format
 msgid "File %(filename)s does not exist."
 msgstr "Datoteka %(filename)s ne obstaja."
 
-#: ../../portable/frontends/widgets/application.py:273
+#: ../../portable/frontends/widgets/application.py:279
 msgid "The following files do not exist:"
 msgstr "Naslednje datoteke ne obstajajo:"
 
-#: ../../portable/frontends/widgets/application.py:310
+#: ../../portable/frontends/widgets/application.py:316
 msgid "New Download"
 msgstr "Nov prenos"
 
-#: ../../portable/frontends/widgets/application.py:311
+#: ../../portable/frontends/widgets/application.py:317
 msgid "Enter the URL of the item to download"
 msgstr "Vnesite URL izbranega za prenos"
 
-#: ../../portable/frontends/widgets/application.py:312
+#: ../../portable/frontends/widgets/application.py:318
 msgid "New Download - Invalid URL"
 msgstr "Nov prenos - Neveljaven URL"
 
-#: ../../portable/frontends/widgets/application.py:313
+#: ../../portable/frontends/widgets/application.py:319
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -1602,16 +1646,16 @@ msgstr ""
 "\n"
 "Vnesite URL izbranega za prenos"
 
-#: ../../portable/frontends/widgets/application.py:321
+#: ../../portable/frontends/widgets/application.py:327
 msgid "Miro is up to date"
 msgstr "Miro je posodobljen"
 
-#: ../../portable/frontends/widgets/application.py:322
+#: ../../portable/frontends/widgets/application.py:328
 msgid "Miro is up to date!"
 msgstr "Miro je posodobljen!"
 
-#: ../../portable/frontends/widgets/application.py:344
-#: ../../portable/frontends/widgets/application.py:693
+#: ../../portable/frontends/widgets/application.py:350
+#: ../../portable/frontends/widgets/application.py:696
 #, python-format
 msgid "Remove %(name)s"
 msgid_plural "Remove %(count)d items"
@@ -1620,7 +1664,7 @@ msgstr[1] "Odstrani %(count)d predmet"
 msgstr[2] "Odstrani %(count)d predmeta"
 msgstr[3] "Odstrani %(count)d predmete"
 
-#: ../../portable/frontends/widgets/application.py:351
+#: ../../portable/frontends/widgets/application.py:357
 msgid ""
 "One of these items was not downloaded from a channel. Would you like to "
 "delete it or just remove it from the Library?"
@@ -1640,7 +1684,7 @@ msgstr[3] ""
 "Nekaj od teh izbir ni bilo prenesenih s kanala. Jih želite izbrisati ali "
 "zgolj odstraniti iz knjižnice?"
 
-#: ../../portable/frontends/widgets/application.py:366
+#: ../../portable/frontends/widgets/application.py:372
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
@@ -1649,65 +1693,41 @@ msgstr[1] "Ste prepričani, da želite izbrisati ves %(count)d predmet?"
 msgstr[2] "Ste prepričani, da želite izbrisati vsa %(count)d predmeta?"
 msgstr[3] "Ste prepričani, da želite izbrisati vse %(count)d predmete?"
 
-#: ../../portable/frontends/widgets/application.py:396
-#: ../../portable/frontends/widgets/itemcontextmenu.py:100
+#: ../../portable/frontends/widgets/application.py:402
+#: ../../portable/frontends/widgets/itemcontextmenu.py:99
 msgid "Rename Item"
 msgstr "Preimenuj predmet"
 
-#: ../../portable/frontends/widgets/application.py:397
+#: ../../portable/frontends/widgets/application.py:403
 msgid "Enter the new name for the item"
 msgstr "Vnesite novo ime za element"
 
-#: ../../portable/frontends/widgets/application.py:420
+#: ../../portable/frontends/widgets/application.py:426
 msgid "Save Item As..."
 msgstr "Shrani predmet kot ..."
 
-#: ../../portable/frontends/widgets/application.py:445
-msgid "Add Channel"
-msgstr "Dodaj kanal"
-
-#: ../../portable/frontends/widgets/application.py:446
-msgid "Enter the URL of the channel to add"
-msgstr "Vnesite naslov URL novega kanala"
-
-#: ../../portable/frontends/widgets/application.py:447
-msgid "Add Channel - Invalid URL"
-msgstr "Dodaj kanal - Neveljaven URL"
-
-#: ../../portable/frontends/widgets/application.py:448
-msgid ""
-"The address you entered is not a valid url.\n"
-"Please check the URL and try again.\n"
-"\n"
-"Enter the URL of the channel to add"
-msgstr ""
-"Naslov, ki ste ga vnesli, ni veljaven URL.\n"
-"Prosimo, preverite URL in poskusite znova.\n"
-"\n"
-"Vnesite URL kanala, ki ga želite dodati."
-
-#: ../../portable/frontends/widgets/application.py:466
+#: ../../portable/frontends/widgets/application.py:469
 msgid "Create Channel Folder"
 msgstr "Ustvari mapo kanalov"
 
-#: ../../portable/frontends/widgets/application.py:467
+#: ../../portable/frontends/widgets/application.py:470
 #: ../../portable/singleclick.py:312
 msgid "Enter a name for the new channel folder"
 msgstr "Vnesite ime za novo mapo kanala"
 
-#: ../../portable/frontends/widgets/application.py:479
+#: ../../portable/frontends/widgets/application.py:482
 msgid "Add Guide"
 msgstr "Dodaj vodnika"
 
-#: ../../portable/frontends/widgets/application.py:480
+#: ../../portable/frontends/widgets/application.py:483
 msgid "Enter the URL of the Miro guide to add"
 msgstr "Vnesite URL vodnika Miro, ki ga želite dodati"
 
-#: ../../portable/frontends/widgets/application.py:481
+#: ../../portable/frontends/widgets/application.py:484
 msgid "Add Guide - Invalid URL"
 msgstr "Dodaj vodnika - Neveljaven URL"
 
-#: ../../portable/frontends/widgets/application.py:482
+#: ../../portable/frontends/widgets/application.py:485
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -1719,90 +1739,90 @@ msgstr ""
 "\n"
 "Vnesite URL vodnika Miro, ki ga želite dodati."
 
-#: ../../portable/frontends/widgets/application.py:532
+#: ../../portable/frontends/widgets/application.py:535
 msgid "Import OPML File"
 msgstr "Uvozi datoteko OPML"
 
-#: ../../portable/frontends/widgets/application.py:534
+#: ../../portable/frontends/widgets/application.py:537
 msgid "OPML Files"
 msgstr "Datoteke OPML"
 
-#: ../../portable/frontends/widgets/application.py:541
+#: ../../portable/frontends/widgets/application.py:544
 msgid "Import OPML File - Error"
 msgstr "Uvozi datoteko OPML - Napaka"
 
-#: ../../portable/frontends/widgets/application.py:547
+#: ../../portable/frontends/widgets/application.py:550
 msgid "Export OPML File"
 msgstr "Izvozi datoteko OPML"
 
-#: ../../portable/frontends/widgets/application.py:582
+#: ../../portable/frontends/widgets/application.py:585
 msgid "Create Playlist"
 msgstr "Ustvari seznam predvajanja"
 
-#: ../../portable/frontends/widgets/application.py:583
+#: ../../portable/frontends/widgets/application.py:586
 msgid "Enter a name for the new playlist"
 msgstr "Vnesite ime za nov seznam predvajanja"
 
-#: ../../portable/frontends/widgets/application.py:604
+#: ../../portable/frontends/widgets/application.py:607
 msgid "Create Playlist Folder"
 msgstr "Ustvari mapo s seznami predvajanja"
 
-#: ../../portable/frontends/widgets/application.py:605
+#: ../../portable/frontends/widgets/application.py:608
 msgid "Enter a name for the new playlist folder"
 msgstr "Vnesite novo ime za novo mapo s seznami predvajanja"
 
-#: ../../portable/frontends/widgets/application.py:626
+#: ../../portable/frontends/widgets/application.py:629
 #: ../../portable/frontends/widgets/tablist.py:516
 msgid "Rename Channel Folder"
 msgstr "Preimenuj mapo s kanali"
 
-#: ../../portable/frontends/widgets/application.py:627
+#: ../../portable/frontends/widgets/application.py:630
 #, python-format
 msgid "Enter a new name for the channel folder %(name)s"
 msgstr "Vnesite novo ime za mapo kanalov %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:631
-#: ../../portable/frontends/widgets/tablist.py:526
+#: ../../portable/frontends/widgets/application.py:634
+#: ../../portable/frontends/widgets/tablist.py:525
 msgid "Rename Channel"
 msgstr "Preimenuj kanal"
 
-#: ../../portable/frontends/widgets/application.py:632
+#: ../../portable/frontends/widgets/application.py:635
 #, python-format
 msgid "Enter a new name for the channel %(name)s"
 msgstr "Vnesite novo ime za kanal %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:636
-#: ../../portable/frontends/widgets/tablist.py:575
+#: ../../portable/frontends/widgets/application.py:639
+#: ../../portable/frontends/widgets/tablist.py:574
 #: ../../portable/playlist.py:179
 msgid "Rename Playlist"
 msgstr "Preimenuj seznam predvajanja"
 
-#: ../../portable/frontends/widgets/application.py:637
+#: ../../portable/frontends/widgets/application.py:640
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr "Vnesite novo ime za seznam predvajanja %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:641
-#: ../../portable/frontends/widgets/tablist.py:569
+#: ../../portable/frontends/widgets/application.py:644
+#: ../../portable/frontends/widgets/tablist.py:568
 msgid "Rename Playlist Folder"
 msgstr "Preimenuj mapo s seznami predvajanja"
 
-#: ../../portable/frontends/widgets/application.py:642
+#: ../../portable/frontends/widgets/application.py:645
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
 msgstr "Vnesite novo ime za mapo seznama predvajanja %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:645
+#: ../../portable/frontends/widgets/application.py:648
 #: ../../portable/frontends/widgets/tablist.py:473
 msgid "Rename Site"
 msgstr "Preimenuj mesto"
 
-#: ../../portable/frontends/widgets/application.py:646
+#: ../../portable/frontends/widgets/application.py:649
 #, python-format
 msgid "Enter a new name for the site %(name)s"
 msgstr "Vnesite novo ime za %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:670
+#: ../../portable/frontends/widgets/application.py:673
 #, python-format
 msgid "Remove playlist"
 msgid_plural "Remove %(count)d playlists"
@@ -1811,8 +1831,8 @@ msgstr[1] "Odstrani %(count)d seznam predvajanja"
 msgstr[2] "Odstrani %(count)d seznama predvajanja"
 msgstr[3] "Odstrani %(count)d sezname predvajanja"
 
-#: ../../portable/frontends/widgets/application.py:675
-#: ../../portable/frontends/widgets/application.py:694
+#: ../../portable/frontends/widgets/application.py:678
+#: ../../portable/frontends/widgets/application.py:697
 #, python-format
 msgid "Are you sure you want to remove %(name)s?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
@@ -1825,11 +1845,11 @@ msgstr[2] ""
 msgstr[3] ""
 "Ste prepričani, da želite odstaniti te %(count)s sezname predvajanja?"
 
-#: ../../portable/frontends/widgets/application.py:719
+#: ../../portable/frontends/widgets/application.py:722
 msgid "Are you sure you want to quit?"
 msgstr "Ali ste prepričani, da želite zapustiti program?"
 
-#: ../../portable/frontends/widgets/application.py:721
+#: ../../portable/frontends/widgets/application.py:724
 #, python-format
 msgid "You have 1 download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
@@ -1838,103 +1858,118 @@ msgstr[1] "Poteka %(count)d prenos.  Želite kljub temu zaključiti?"
 msgstr[2] "Potekata %(count)d prenosa.  Želite kljub temu zaključiti?"
 msgstr[3] "Potekajo %(count)d prenosi.  Želite kljub temu zaključiti?"
 
-#: ../../portable/frontends/widgets/application.py:726
+#: ../../portable/frontends/widgets/application.py:729
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "Opozori me, če ob izhodu iz programa poteka prenos"
 
-#: ../../portable/frontends/widgets/application.py:940
+#: ../../portable/frontends/widgets/application.py:943
 msgid "Message"
 msgstr "Sporočilo"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:175
+#: ../../portable/frontends/widgets/itemlistwidgets.py:176
 msgid "Save Search"
 msgstr "Shrani poizvedbo"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:359
+#: ../../portable/frontends/widgets/itemlistwidgets.py:250
+msgid "Title"
+msgstr "Naslov"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:251
+msgid "Description"
+msgstr "Opis"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:254
+msgid "Feed"
+msgstr "Vir"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:256
+#: ../../portable/frontends/widgets/itemlistwidgets.py:653
+msgid "Date"
+msgstr "Datum"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:257
+#: ../../portable/frontends/widgets/itemlistwidgets.py:655
+msgid "Length"
+msgstr "Dolžina"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:258
+#: ../../portable/frontends/widgets/itemlistwidgets.py:654
+msgid "Size"
+msgstr "Velikost"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:259
+msgid "Status"
+msgstr "Stanje"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:262
+msgid "Time Left"
+msgstr "Preostali čas"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:263
+msgid "Speed"
+msgstr "Hitrost"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:381
 msgid "Save as a Channel"
 msgstr "Shrani kot kanal"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:396
+#: ../../portable/frontends/widgets/itemlistwidgets.py:418
 msgid "Pause All"
 msgstr "Ustavi vse"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:403
+#: ../../portable/frontends/widgets/itemlistwidgets.py:425
 msgid "Resume All"
 msgstr "Nadaljuj vse"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:410
+#: ../../portable/frontends/widgets/itemlistwidgets.py:432
 msgid "Cancel All"
 msgstr "Prekliči vse"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:417
+#: ../../portable/frontends/widgets/itemlistwidgets.py:439
 msgid "Download Settings"
 msgstr "Nastavitve prenosa"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:463
+#: ../../portable/frontends/widgets/itemlistwidgets.py:485
 #, python-format
 msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
 msgstr ""
 "%(available)s pod mejo prostora za prenose (%(amount)s prosto na disku)"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:469
+#: ../../portable/frontends/widgets/itemlistwidgets.py:491
 #, python-format
 msgid "%(available)s free for downloads (%(amount)s free on disk)"
 msgstr "%(available)s na voljo za prenose (%(amount)s prosto na disku)"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:474
+#: ../../portable/frontends/widgets/itemlistwidgets.py:496
 #, python-format
 msgid "%(amount)s free on disk"
 msgstr "%(amount)s prostora na disku"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:493
+#: ../../portable/frontends/widgets/itemlistwidgets.py:515
 #, python-format
 msgid "%(rate)s uploading"
 msgstr "%(rate)s - prenos na strežnik"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:495
+#: ../../portable/frontends/widgets/itemlistwidgets.py:517
 #, python-format
 msgid "%(rate)s downloading"
 msgstr "%(rate)s - prenos s strežnika"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:528
+#: ../../portable/frontends/widgets/itemlistwidgets.py:550
 msgid "Auto Download"
 msgstr "Samodejno prenesi"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:533
-msgid "all"
-msgstr "vse"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:533
-msgid "new"
-msgstr "nove"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:533
-msgid "off"
-msgstr "izključeno"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:537
+#: ../../portable/frontends/widgets/itemlistwidgets.py:560
 msgid "Send to a friend"
 msgstr "Pošlji prijatelju"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:542
+#: ../../portable/frontends/widgets/itemlistwidgets.py:565
 msgid "Settings"
 msgstr "Nastavitve"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
+#: ../../portable/frontends/widgets/itemlistwidgets.py:652
 msgid "Name"
 msgstr "Ime"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:621
-msgid "Date"
-msgstr "Datum"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:622
-msgid "Size"
-msgstr "Velikost"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:623
-msgid "Length"
-msgstr "Dolžina"
 
 #: ../../portable/frontends/widgets/displays.py:336
 msgid ""
@@ -1953,7 +1988,6 @@ msgid "File type:"
 msgstr "Vrsta datoteke:"
 
 #: ../../portable/frontends/widgets/displays.py:352
-#: ../../portable/frontends/widgets/itemcontextmenu.py:117
 msgid "Reveal File"
 msgstr "Pokaži datoteko"
 
@@ -2075,7 +2109,7 @@ msgid "Stop watching watched directories."
 msgstr "Prenehaj opazovati opazovane mape."
 
 #: ../../portable/frontends/widgets/tablist.py:472
-#: ../../portable/frontends/widgets/tablist.py:529
+#: ../../portable/frontends/widgets/tablist.py:528
 msgid "Copy URL to clipboard"
 msgstr "Kopiraj URL v odložišče"
 
@@ -2091,28 +2125,27 @@ msgstr "Posodobi kanale v mapi"
 msgid "Update Channel Now"
 msgstr "Posodobi kanal"
 
-#: ../../portable/frontends/widgets/tablist.py:528
-#: ../../portable/frontends/widgets/itemcontextmenu.py:102
-msgid "Revert Name"
-msgstr "Povrni ime"
+#: ../../portable/frontends/widgets/tablist.py:527
+msgid "Revert Channel Name"
+msgstr "Povrni ime kanala"
 
-#: ../../portable/frontends/widgets/tablist.py:535
+#: ../../portable/frontends/widgets/tablist.py:534
 msgid "Update Channels Now"
 msgstr "Posodobi kanale"
 
-#: ../../portable/frontends/widgets/tablist.py:597
+#: ../../portable/frontends/widgets/tablist.py:596
 msgid "SITES"
 msgstr "MESTA"
 
-#: ../../portable/frontends/widgets/tablist.py:599
+#: ../../portable/frontends/widgets/tablist.py:598
 msgid "FEEDS"
 msgstr "Viri"
 
-#: ../../portable/frontends/widgets/tablist.py:601
+#: ../../portable/frontends/widgets/tablist.py:600
 msgid "AUDIO FEEDS"
 msgstr "Zvočni viri"
 
-#: ../../portable/frontends/widgets/tablist.py:603
+#: ../../portable/frontends/widgets/tablist.py:602
 msgid "PLAYLISTS"
 msgstr "Seznami predvajanja"
 
@@ -2212,7 +2245,7 @@ msgstr "< Nazaj"
 #: ../../portable/frontends/widgets/firsttimedialog.py:213
 #: ../../portable/frontends/widgets/firsttimedialog.py:215
 #: ../../portable/frontends/widgets/firsttimedialog.py:272
-#: ../../portable/feed.py:2287 ../../portable/feed.py:2382
+#: ../../portable/feed.py:2290 ../../portable/feed.py:2385
 msgid "Search"
 msgstr "Najdi"
 
@@ -2224,6 +2257,11 @@ msgstr "Dokončaj"
 #: ../../portable/frontends/widgets/firsttimedialog.py:263
 msgid "Searching for media files"
 msgstr "Iskanje medijskih datotek"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:273
+#: ../../portable/dialogs.py:85
+msgid "Cancel"
+msgstr "Prekliči"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:309
 #, python-format
@@ -2247,19 +2285,15 @@ msgstr[3] "najdene %(count)s datoteke"
 msgid "Miro Guide"
 msgstr "Vodnik Miro"
 
-#: ../../portable/frontends/widgets/statictabs.py:79
-msgid "Downloading"
-msgstr "Sprejemanje"
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:79
+#: ../../portable/frontends/widgets/downloadscontroller.py:86
 msgid "Single and external downloads"
 msgstr "Posamezni in zunanji prenosi"
 
-#: ../../portable/frontends/widgets/downloadscontroller.py:82
+#: ../../portable/frontends/widgets/downloadscontroller.py:89
 msgid "Channel downloads"
 msgstr "Kanalni prenosi"
 
-#: ../../portable/frontends/widgets/downloadscontroller.py:85
+#: ../../portable/frontends/widgets/downloadscontroller.py:92
 msgid "Seeding"
 msgstr "Sejanje"
 
@@ -2276,7 +2310,7 @@ msgid "Remove From the Library"
 msgstr "Odstrani iz knjižnice"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:94
-#: ../../portable/frontends/widgets/itemcontextmenu.py:184
+#: ../../portable/frontends/widgets/itemcontextmenu.py:195
 msgid "Play"
 msgstr "Predvajaj"
 
@@ -2285,50 +2319,84 @@ msgid "Play Just this Item"
 msgstr "Predvajaj le tega"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:96
-#: ../../portable/frontends/widgets/itemcontextmenu.py:185
+#: ../../portable/frontends/widgets/itemcontextmenu.py:196
 msgid "Add to Playlist"
 msgstr "Dodaj na predvajalni seznam"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:104
-#: ../../portable/frontends/widgets/itemcontextmenu.py:192
+#: ../../portable/frontends/widgets/itemcontextmenu.py:101
+msgid "Revert Item Name"
+msgstr "Povrni ime elementa"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:103
+#: ../../portable/frontends/widgets/itemcontextmenu.py:203
 msgid "Mark as Unwatched"
 msgstr "Označi kot ne ogledano"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:107
-#: ../../portable/frontends/widgets/itemcontextmenu.py:197
+#: ../../portable/frontends/widgets/itemcontextmenu.py:106
+#: ../../portable/frontends/widgets/itemcontextmenu.py:208
 msgid "Mark as Watched"
 msgstr "Označi kot ogledano"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:116
+#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr "Začni sejati"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:121
-#: ../../portable/frontends/widgets/itemcontextmenu.py:232
+#: ../../portable/frontends/widgets/itemcontextmenu.py:118
+#: ../../portable/frontends/widgets/itemcontextmenu.py:243
 msgid "Cancel Download"
 msgstr "Prekliči prenos"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:138
+#: ../../portable/frontends/widgets/itemcontextmenu.py:122
+#: ../../portable/frontends/widgets/itemcontextmenu.py:244
+msgid "Pause Download"
+msgstr "Zaustavi prenos"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:125
+#: ../../portable/frontends/widgets/itemcontextmenu.py:257
+msgid "Resume Download"
+msgstr "Nadaljuj s prenosom"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:133
+msgid "Web page"
+msgstr "Spletna stran"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:137
+msgid "License"
+msgstr "Licenca"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:139
+msgid "File in Browser"
+msgstr "Datoteka v brskalniku"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:141
+msgid "File in Finder"
+msgstr "Datoteka v Finderju"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:143
+msgid "View"
+msgstr "Pokaži"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:147
 msgid "Email to friend"
 msgstr "Pošlji prijatelju po e-pošti"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:141
+#: ../../portable/frontends/widgets/itemcontextmenu.py:150
 msgid "Post to Video Bomb"
 msgstr "Pošlji na Video Bomb"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:144
+#: ../../portable/frontends/widgets/itemcontextmenu.py:153
 msgid "Post to Del.icio.us"
 msgstr "Objavi na Del.icio.us"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:147
+#: ../../portable/frontends/widgets/itemcontextmenu.py:156
 msgid "Post to Digg"
 msgstr "Objavi na Digg"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:150
+#: ../../portable/frontends/widgets/itemcontextmenu.py:159
 msgid "Post to Reddit"
 msgstr "Pošlji na Reddit"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:179
+#: ../../portable/frontends/widgets/itemcontextmenu.py:190
 #, python-format
 msgid "1 Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
@@ -2337,7 +2405,7 @@ msgstr[1] "%(count)d prenesen element"
 msgstr[2] "%(count)d prenesena elementa"
 msgstr[3] "%(count)d preneseni elementi"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:208
+#: ../../portable/frontends/widgets/itemcontextmenu.py:219
 #, python-format
 msgid "1 Available Item"
 msgid_plural "%(count)d Available Items"
@@ -2346,7 +2414,7 @@ msgstr[1] "%(count)d predmet na voljo"
 msgstr[2] "%(count)d predmeta na voljo"
 msgstr[3] "%(count)d predmeti na voljo"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:221
+#: ../../portable/frontends/widgets/itemcontextmenu.py:232
 #, python-format
 msgid "1 Downloading Item"
 msgid_plural "%(count)d Downloading Items"
@@ -2355,11 +2423,20 @@ msgstr[1] "%(count)d prenos s strežnika"
 msgstr[2] "%(count)d prenosa s strežnika"
 msgstr[3] "%(count)d prenosi s strežnika"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:239
+#: ../../portable/frontends/widgets/itemcontextmenu.py:249
+#, python-format
+msgid "1 Paused Item"
+msgid_plural "%(count)d Paused Items"
+msgstr[0] "%(count)d na čakanju"
+msgstr[1] "%(count)d na čakanju"
+msgstr[2] "%(count)d na čakanju"
+msgstr[3] "%(count)d na čakanju"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:263
 msgid "Restart Upload"
 msgstr "Ponovno zaženi prenos"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:253
+#: ../../portable/frontends/widgets/itemcontextmenu.py:277
 msgid "Remove From Playlist"
 msgstr "Odstrani s seznama predvajanja"
 
@@ -2583,7 +2660,7 @@ msgstr ""
 "Datoteka torrenta %(filename)s se zdi okvarjena, zato je ni mogoče odpreti. "
 "[OK]"
 
-#: ../../portable/license.py:92
+#: ../../portable/license.py:78 ../../portable/license.py:95
 msgid "license page"
 msgstr "stran licence"
 
@@ -2735,29 +2812,29 @@ msgstr "Neznano"
 msgid "Internal Error: Not ready to send"
 msgstr "Notranja napaka: ni pripravljeno za pošiljanje"
 
-#: ../../portable/feed.py:940
+#: ../../portable/feed.py:941
 msgid "Error loading feed"
 msgstr "Napaka ob nalaganju vira"
 
-#: ../../portable/feed.py:942
+#: ../../portable/feed.py:943
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 msgstr "Vira z naslova %(url)s ni mogoče naložiti (%(errordescription)s)."
 
-#: ../../portable/feed.py:945
+#: ../../portable/feed.py:946
 msgid "Would you like to keep the feed?"
 msgstr "Želite ohraniti vir?"
 
-#: ../../portable/feed.py:1070
+#: ../../portable/feed.py:1071
 msgid "Bad content-type"
 msgstr "Napačna vrsta vsebine"
 
-#: ../../portable/feed.py:1083
+#: ../../portable/feed.py:1084
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
 msgstr "Kanal ni kompatibilen z %(appname)s"
 
-#: ../../portable/feed.py:1086
+#: ../../portable/feed.py:1087
 #, python-format
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
@@ -2774,11 +2851,11 @@ msgstr ""
 "\n"
 "Želite kljub temu poskusiti naložiti ta kanal?"
 
-#: ../../portable/feed.py:2401
+#: ../../portable/feed.py:2404
 msgid "Local Files"
 msgstr "Krajevne datoteke"
 
-#: ../../portable/feed.py:2415
+#: ../../portable/feed.py:2418
 msgid "Playing File"
 msgstr "Predvajanje datoteke"
 

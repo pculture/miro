@@ -2,56 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Democracy\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-21 13:21-0500\n"
-"PO-Revision-Date: 2008-11-26 13:50+0000\n"
-"Last-Translator: Roberto Bernardinello <Unknown>\n"
+"POT-Creation-Date: 2008-12-03 11:40-0500\n"
+"PO-Revision-Date: 2008-12-15 22:00+0000\n"
+"Last-Translator: Stemby <carlo.stemberger@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-12-03 16:22+0000\n"
+"X-Launchpad-Export-Date: 2008-12-16 20:27+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-
-#: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:4
-msgid "OK"
-msgstr "OK"
-
-#: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:6
-#: ../../portable/frontends/widgets/firsttimedialog.py:273
-#: ../../portable/dialogs.py:85
-msgid "Cancel"
-msgstr "Annulla"
-
-#: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:8
-#: ../../portable/frontends/widgets/prefpanel.py:618
-msgid "Channels"
-msgstr "Canali"
-
-#: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:10
-#, python-format
-msgid "parsed %(countfiles)d files - found %(countvideos)d videos"
-msgstr "analizzati %(countfiles)d file - trovati %(countvideos)d video"
-
-#: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:12
-#, python-format
-msgid "bad parsed %(countfiles)d files - found %(countvideos)d videos"
-msgstr ""
-"analisi erronea di %(countfiles)d files - trovato %(countvideos)d videos"
-
-#: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:14
-#, python-format
-msgid "%(count)d video found"
-msgid_plural "%(count)d videos found"
-msgstr[0] "%(count)d video trovato"
-msgstr[1] "%(count)d video trovati"
-
-#: ../../resources/testdata/locale/fr/LC_MESSAGES/teststring.py:16
-#, python-format
-msgid "bad %(count)d video found"
-msgid_plural "bad %(count)d videos found"
-msgstr[0] "trovato %(count)d video errato"
-msgstr[1] "trovati %(count)d video errati"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
@@ -164,22 +124,24 @@ msgid "Use this for video when playing audio:"
 msgstr "Usa questo come video quando si riproduce l'audio:"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:116
-#: ../../portable/frontends/widgets/itemcontextmenu.py:137
+#: ../../portable/frontends/widgets/itemcontextmenu.py:146
 msgid "Share"
 msgstr "Condividi"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:120
-#: ../../portable/frontends/widgets/style.py:305
-#: ../../portable/frontends/widgets/style.py:763
-#: ../../portable/frontends/widgets/itemcontextmenu.py:110
-#: ../../portable/frontends/widgets/itemcontextmenu.py:203
+#: ../../portable/frontends/widgets/style.py:635
+#: ../../portable/frontends/widgets/style.py:780
+#: ../../portable/frontends/widgets/style.py:992
+#: ../../portable/frontends/widgets/itemcontextmenu.py:109
+#: ../../portable/frontends/widgets/itemcontextmenu.py:214
 #: ../../portable/dialogs.py:105
 msgid "Keep"
 msgstr "Mantieni"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:124
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:213
-#: ../../portable/frontends/widgets/style.py:311
+#: ../../portable/frontends/widgets/style.py:641
+#: ../../portable/frontends/widgets/style.py:998
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
 #: ../../portable/dialogs.py:106
 msgid "Delete"
@@ -307,25 +269,21 @@ msgid "Example Playlist"
 msgstr "Playlist di esempio"
 
 #: ../../portable/util.py:259 ../../portable/util.py:261
-#: ../../portable/displaytext.py:71
 #, python-format
 msgid "%(size)sGB"
 msgstr "%(size)sGB"
 
 #: ../../portable/util.py:265 ../../portable/util.py:267
-#: ../../portable/displaytext.py:74
 #, python-format
 msgid "%(size)sMB"
 msgstr "%(size)sMB"
 
 #: ../../portable/util.py:271 ../../portable/util.py:273
-#: ../../portable/displaytext.py:77
 #, python-format
 msgid "%(size)sKB"
 msgstr "%(size)sKB"
 
 #: ../../portable/util.py:277 ../../portable/util.py:279
-#: ../../portable/displaytext.py:79
 #, python-format
 msgid "%(size)sB"
 msgstr "%(size)sB"
@@ -390,11 +348,11 @@ msgstr ""
 "alcuni filmati dalla tua collezione.\n"
 "I cambiamenti recenti potrebbero essere persi."
 
-#: ../../portable/messagehandler.py:1180
+#: ../../portable/messagehandler.py:1178
 msgid "Subscribed to new channel:"
 msgstr "Sottoscritto ad un nuovo canale:"
 
-#: ../../portable/messagehandler.py:1183
+#: ../../portable/messagehandler.py:1181
 msgid "Subscribed to new channels:"
 msgstr "Sottoscritto a nuovi canali:"
 
@@ -426,39 +384,102 @@ msgstr ""
 
 #: ../../portable/displaytext.py:40
 #, python-format
-msgid "%(size)sGB/s"
-msgstr "%(size)sGB/s"
+msgid "%(size)s gb/s"
+msgstr ""
 
 #: ../../portable/displaytext.py:43
 #, python-format
-msgid "%(size)sMB/s"
-msgstr "%(size)sMB/s"
+msgid "%(size)s mb/s"
+msgstr ""
 
 #: ../../portable/displaytext.py:46
 #, python-format
-msgid "%(size)sKB/s"
-msgstr "%(size)sKB/s"
+msgid "%(size)s kb/s"
+msgstr ""
 
 #: ../../portable/displaytext.py:49
 #, python-format
-msgid "%(size)sB/s"
-msgstr "%(size)sB/s"
+msgid "%(size)s b/s"
+msgstr ""
 
-#: ../../portable/displaytext.py:84
+#: ../../portable/displaytext.py:65
+#, python-format
+msgid "%(num)d day"
+msgid_plural "%(num)d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/displaytext.py:68
+#, python-format
+msgid "%(num)d hr"
+msgid_plural "%(num)d hrs"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/displaytext.py:71
+#, python-format
+msgid "%(num)d min"
+msgid_plural "%(num)d mins"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/displaytext.py:74
+#, python-format
+msgid "%(num)d sec"
+msgid_plural "%(num)d secs"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/displaytext.py:77
+#, python-format
+msgid "%(day)s %(hr)s"
+msgstr ""
+
+#: ../../portable/displaytext.py:79
+#, python-format
+msgid "%(hr)s %(min)s"
+msgstr ""
+
+#: ../../portable/displaytext.py:81
+#, python-format
+msgid "%(min)s %(sec)s"
+msgstr ""
+
+#: ../../portable/displaytext.py:99
+#, python-format
+msgid "%(size)s gb"
+msgstr ""
+
+#: ../../portable/displaytext.py:102
+#, python-format
+msgid "%(size)s mb"
+msgstr ""
+
+#: ../../portable/displaytext.py:105
+#, python-format
+msgid "%(size)s kb"
+msgstr ""
+
+#: ../../portable/displaytext.py:107
+#, python-format
+msgid "%(size)s b"
+msgstr ""
+
+#: ../../portable/displaytext.py:112
 #, python-format
 msgid "Expires in %(count)d day"
 msgid_plural "Expires in %(count)d days"
 msgstr[0] "Scadrà fra %(count)d giorno"
 msgstr[1] "Scadrà fra %(count)d giorni"
 
-#: ../../portable/displaytext.py:89
+#: ../../portable/displaytext.py:117
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
 msgstr[0] "Scadrà fra %(count)d ora"
 msgstr[1] "Scadrà fra %(count)d ore"
 
-#: ../../portable/displaytext.py:94
+#: ../../portable/displaytext.py:122
 #, python-format
 msgid "Expires in %(count)d minute"
 msgid_plural "Expires in %(count)d minutes"
@@ -483,6 +504,7 @@ msgid "starting up"
 msgstr "Avvio in corso"
 
 #: ../../portable/dl_daemon/download.py:496
+#: ../../portable/frontends/widgets/style.py:599
 msgid "Error"
 msgstr "Errore"
 
@@ -782,6 +804,48 @@ msgstr "_Playlist"
 msgid "P_layback"
 msgstr "T_rasmetti"
 
+#: ../../portable/frontends/widgets/newchanneldialog.py:60
+msgid "URL:"
+msgstr "URL:"
+
+#: ../../portable/frontends/widgets/newchanneldialog.py:69
+msgid "Channel should go in this section:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newchanneldialog.py:71
+#: ../../portable/frontends/widgets/newsearchchannel.py:134
+msgid "video"
+msgstr "video"
+
+#: ../../portable/frontends/widgets/newchanneldialog.py:72
+#: ../../portable/frontends/widgets/newsearchchannel.py:135
+msgid "audio"
+msgstr "audio"
+
+#: ../../portable/frontends/widgets/newchanneldialog.py:110
+msgid "Add Channel"
+msgstr "Aggiungi Canale"
+
+#: ../../portable/frontends/widgets/newchanneldialog.py:111
+msgid "Enter the URL of the channel to add"
+msgstr "Inserisci la URL del canale da aggiungere"
+
+#: ../../portable/frontends/widgets/newchanneldialog.py:122
+msgid "Add Channel - Invalid URL"
+msgstr "Aggiungi canale - URL non valido"
+
+#: ../../portable/frontends/widgets/newchanneldialog.py:123
+msgid ""
+"The address you entered is not a valid url.\n"
+"Please check the URL and try again.\n"
+"\n"
+"Enter the URL of the channel to add"
+msgstr ""
+"L'indirizzo inserito non è una URL valida.\n"
+"Rivedi la URL è riprova.\n"
+"\n"
+"Inserisci la URL del canale da aggiungere"
+
 #: ../../portable/frontends/widgets/crashdialog.py:46
 #: ../../portable/httpclient.py:158
 msgid "Internal Error"
@@ -807,167 +871,134 @@ msgstr ""
 msgid "Describe what you were doing when you got this error:"
 msgstr "Descrivere che cosa stavi facendo quando è aparso questo errore:"
 
-#: ../../portable/frontends/widgets/style.py:309
-#: ../../portable/frontends/widgets/prefpanel.py:479
-#: ../../portable/frontends/widgets/tablist.py:517
-#: ../../portable/frontends/widgets/tablist.py:530
-#: ../../portable/frontends/widgets/tablist.py:536
-#: ../../portable/frontends/widgets/tablist.py:570
-#: ../../portable/frontends/widgets/tablist.py:576
-#: ../../portable/frontends/widgets/tablist.py:581
-#: ../../portable/dialogs.py:107
-msgid "Remove"
-msgstr "Elimina"
+#: ../../portable/frontends/widgets/style.py:406
+msgid "Show More"
+msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:317
-#: ../../portable/frontends/widgets/itemcontextmenu.py:114
-msgid "Stop seeding"
-msgstr "Ferma la condivisione"
+#: ../../portable/frontends/widgets/style.py:409
+msgid "Show Less"
+msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:385
-msgid "Date:"
-msgstr "Data:"
-
-#: ../../portable/frontends/widgets/style.py:386
-msgid "Length:"
-msgstr "Durata:"
-
-#: ../../portable/frontends/widgets/style.py:387
-msgid "Size:"
-msgstr "Dimensione:"
-
-#: ../../portable/frontends/widgets/style.py:390
-msgid "Channel:"
-msgstr "Canale:"
-
-#: ../../portable/frontends/widgets/style.py:404
-msgid "Show Details"
-msgstr "Mostra dettagli"
-
-#: ../../portable/frontends/widgets/style.py:408
-msgid "Hide Details"
-msgstr "Nascondi dettagli"
-
-#: ../../portable/frontends/widgets/style.py:422
-msgid "Web page"
-msgstr "Pagina web"
-
-#: ../../portable/frontends/widgets/style.py:422
-msgid "permalink"
-msgstr "permalink"
-
-#: ../../portable/frontends/widgets/style.py:424
+#: ../../portable/frontends/widgets/style.py:432
+#: ../../portable/frontends/widgets/style.py:434
+#: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Comments"
 msgstr "Commenti"
 
-#: ../../portable/frontends/widgets/style.py:424
-msgid "commentslink"
-msgstr "Vincolo di commenti"
-
-#: ../../portable/frontends/widgets/style.py:427
-msgid "File link"
-msgstr "Link a file"
-
-#: ../../portable/frontends/widgets/style.py:427
-msgid "direct link to file"
-msgstr "link diretto al file"
-
-#: ../../portable/frontends/widgets/style.py:428
-msgid "File type"
-msgstr "Tipo di file"
-
-#: ../../portable/frontends/widgets/style.py:431
-#: ../../portable/frontends/widgets/style.py:433
-msgid "License"
-msgstr "Licenza"
-
-#: ../../portable/frontends/widgets/style.py:433
-msgid "see permalink"
-msgstr "visualizza permalink"
-
-#: ../../portable/frontends/widgets/style.py:435
-msgid "Filename"
-msgstr "Nome del file"
-
-#: ../../portable/frontends/widgets/style.py:438
-msgid "Local directory"
-msgstr "Directory locale"
-
-#: ../../portable/frontends/widgets/style.py:438
+#: ../../portable/frontends/widgets/style.py:439
 #: ../../portable/frontends/widgets/style.py:441
-msgid "show"
-msgstr "mostra"
+msgid "Reveal in Finder"
+msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:441
-msgid "Local file"
-msgstr "File locale"
+#: ../../portable/frontends/widgets/style.py:445
+#: ../../portable/frontends/widgets/style.py:447
+msgid "Web Page"
+msgstr "Pagina web"
 
-#: ../../portable/frontends/widgets/style.py:450
-msgid "Leechers"
-msgstr "Ricettori"
+#: ../../portable/frontends/widgets/style.py:451
+#: ../../portable/frontends/widgets/style.py:453
+msgid "File URL"
+msgstr "URL del file"
 
-#: ../../portable/frontends/widgets/style.py:452
-msgid "Seeders"
-msgstr "Seeders"
-
-#: ../../portable/frontends/widgets/style.py:454
-msgid "Up Rate"
-msgstr "Fattore Up"
-
-#: ../../portable/frontends/widgets/style.py:456
-msgid "Down Rate"
-msgstr "Fattore Down"
-
-#: ../../portable/frontends/widgets/style.py:458
-msgid "Up Total"
-msgstr "Su totale"
-
+#: ../../portable/frontends/widgets/style.py:457
 #: ../../portable/frontends/widgets/style.py:459
-msgid "Down Total"
-msgstr "Giù totale"
+msgid "License Page"
+msgstr "Pagina della licenza"
 
-#: ../../portable/frontends/widgets/style.py:471
+#: ../../portable/frontends/widgets/style.py:469
+#: ../../portable/frontends/widgets/style.py:610
+#: ../../portable/frontends/widgets/style.py:868
 msgid "Unwatched"
 msgstr "Non visto"
 
-#: ../../portable/frontends/widgets/style.py:488 ../../portable/item.py:618
+#: ../../portable/frontends/widgets/style.py:486 ../../portable/item.py:618
 msgid "queued for download"
 msgstr "In coda per lo scaricamento"
 
-#: ../../portable/frontends/widgets/style.py:493
+#: ../../portable/frontends/widgets/style.py:489
 msgid "paused"
 msgstr "in pausa"
 
-#: ../../portable/frontends/widgets/style.py:538
+#: ../../portable/frontends/widgets/style.py:544
+msgid "File Type"
+msgstr "Tipo di file"
+
+#: ../../portable/frontends/widgets/style.py:554
+msgid "Seeders"
+msgstr "Seeders"
+
+#: ../../portable/frontends/widgets/style.py:556
+msgid "Leechers"
+msgstr "Ricettori"
+
+#: ../../portable/frontends/widgets/style.py:561
+msgid "Upload Rate"
+msgstr "Velocità di upload"
+
+#: ../../portable/frontends/widgets/style.py:562
+msgid "Upload Total"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:567
+msgid "Down Rate"
+msgstr "Fattore Down"
+
+#: ../../portable/frontends/widgets/style.py:568
+msgid "Down Total"
+msgstr "Giù totale"
+
+#: ../../portable/frontends/widgets/style.py:589
 msgid "Download Torrent"
 msgstr "Scarica torrent"
 
-#: ../../portable/frontends/widgets/style.py:540
-#: ../../portable/frontends/widgets/style.py:603
-#: ../../portable/frontends/widgets/itemcontextmenu.py:132
-#: ../../portable/frontends/widgets/itemcontextmenu.py:216
+#: ../../portable/frontends/widgets/style.py:591
+#: ../../portable/frontends/widgets/style.py:987
+#: ../../portable/frontends/widgets/itemcontextmenu.py:129
+#: ../../portable/frontends/widgets/itemcontextmenu.py:227
 #: ../../portable/dialogs.py:95
 msgid "Download"
 msgstr "Scaricamento"
 
-#: ../../portable/frontends/widgets/style.py:560
+#: ../../portable/frontends/widgets/style.py:607
 msgid "queued for autodownload"
 msgstr "In coda per l'autoscaricamento"
 
-#: ../../portable/frontends/widgets/style.py:597
-#: ../../portable/frontends/widgets/itemcontextmenu.py:125
-#: ../../portable/frontends/widgets/itemcontextmenu.py:233
-msgid "Pause Download"
-msgstr "Sospendi il download"
+#: ../../portable/frontends/widgets/style.py:625
+#: ../../portable/frontends/widgets/style.py:874
+msgid "Newly Available"
+msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:600
-#: ../../portable/frontends/widgets/itemcontextmenu.py:128
-msgid "Resume Download"
-msgstr "Continua Download"
+#: ../../portable/frontends/widgets/style.py:639
+#: ../../portable/frontends/widgets/style.py:996
+#: ../../portable/frontends/widgets/prefpanel.py:479
+#: ../../portable/frontends/widgets/tablist.py:517
+#: ../../portable/frontends/widgets/tablist.py:529
+#: ../../portable/frontends/widgets/tablist.py:535
+#: ../../portable/frontends/widgets/tablist.py:569
+#: ../../portable/frontends/widgets/tablist.py:575
+#: ../../portable/frontends/widgets/tablist.py:580
+#: ../../portable/dialogs.py:107
+msgid "Remove"
+msgstr "Elimina"
 
-#: ../../portable/frontends/widgets/style.py:766
+#: ../../portable/frontends/widgets/style.py:647
+#: ../../portable/frontends/widgets/itemcontextmenu.py:113
+msgid "Stop seeding"
+msgstr "Ferma la condivisione"
+
+#: ../../portable/frontends/widgets/style.py:783
 msgid "Remove from playlist"
 msgstr "Elimina dalla playlist"
+
+#: ../../portable/frontends/widgets/style.py:862
+#: ../../portable/frontends/widgets/itemlistwidgets.py:260
+#: ../../portable/frontends/widgets/statictabs.py:79
+msgid "Downloading"
+msgstr "Downnload in corso"
+
+#: ../../portable/frontends/widgets/style.py:865
+msgid "Paused"
+msgstr "In pausa"
 
 #: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
@@ -995,15 +1026,18 @@ msgid "Manually"
 msgstr "Manualmente"
 
 #: ../../portable/frontends/widgets/prefpanel.py:289
+#: ../../portable/frontends/widgets/itemlistwidgets.py:554
 #: ../../portable/frontends/widgets/statictabs.py:72
 msgid "New"
 msgstr "Nuovo"
 
 #: ../../portable/frontends/widgets/prefpanel.py:290
+#: ../../portable/frontends/widgets/itemlistwidgets.py:554
 msgid "All"
 msgstr "Tutto"
 
 #: ../../portable/frontends/widgets/prefpanel.py:291
+#: ../../portable/frontends/widgets/itemlistwidgets.py:554
 msgid "Off"
 msgstr "Off"
 
@@ -1206,8 +1240,12 @@ msgstr "Ferma dopo ogni video"
 msgid "General"
 msgstr "Importazioni generali"
 
+#: ../../portable/frontends/widgets/prefpanel.py:618
+msgid "Channels"
+msgstr "Canali"
+
 #: ../../portable/frontends/widgets/prefpanel.py:619
-#: ../../portable/frontends/widgets/downloadscontroller.py:70
+#: ../../portable/frontends/widgets/downloadscontroller.py:77
 msgid "Downloads"
 msgstr "File Scaricati"
 
@@ -1354,40 +1392,44 @@ msgstr "Cerca:"
 msgid "In this:"
 msgstr "In questo:"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:224
+#: ../../portable/frontends/widgets/newsearchchannel.py:131
+msgid "Add new channel to this section:"
+msgstr "Aggiungi un nuovo canale a questa sezione"
+
+#: ../../portable/frontends/widgets/itemlistcontroller.py:245
 msgid "Error Revealing File"
 msgstr "Errore Rivelando File"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:225
+#: ../../portable/frontends/widgets/itemlistcontroller.py:246
 #, python-format
 msgid "The file \"%(filename)s\" was deleted from outside Miro."
 msgstr "Il file \"%(filename)s\" non è stato cancellato da Miro."
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:363
+#: ../../portable/frontends/widgets/itemlistcontroller.py:386
 msgid "New Videos"
 msgstr "Nuovi Video"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:369
+#: ../../portable/frontends/widgets/itemlistcontroller.py:392
 #: ../../portable/frontends/widgets/statictabs.py:55
 msgid "Video Search"
 msgstr "Ricerca video"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:381
+#: ../../portable/frontends/widgets/itemlistcontroller.py:404
 msgid "No Results Found"
 msgstr "Nessun risultato trovato"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:434
+#: ../../portable/frontends/widgets/itemlistcontroller.py:457
 #: ../../portable/frontends/widgets/statictabs.py:60
 msgid "Library"
 msgstr "Libreria:"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:440
+#: ../../portable/frontends/widgets/itemlistcontroller.py:463
 #: ../../portable/frontends/widgets/statictabs.py:65
 msgid "Single Items"
 msgstr "Elemento singolo"
 
 #: ../../portable/frontends/widgets/removeitemsdialog.py:49
-#: ../../portable/frontends/widgets/itemlistwidgets.py:547
+#: ../../portable/frontends/widgets/itemlistwidgets.py:570
 #: ../../portable/frontends/widgets/removechannelsdialog.py:50
 #, python-format
 msgid "Remove channel"
@@ -1451,53 +1493,53 @@ msgstr "Locazione file del database:"
 msgid "Space free on disk:"
 msgstr "Spazio disponibile nell'hard disk:"
 
-#: ../../portable/frontends/widgets/feedcontroller.py:110
+#: ../../portable/frontends/widgets/feedcontroller.py:117
 msgid "Downloaded"
 msgstr "Scaricato"
 
-#: ../../portable/frontends/widgets/feedcontroller.py:120
+#: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Full Channel"
 msgstr "Canale Pieno"
 
-#: ../../portable/frontends/widgets/feedcontroller.py:163
+#: ../../portable/frontends/widgets/feedcontroller.py:170
 #, python-format
 msgid "Show 1 More Item"
 msgid_plural "Show %(count)d More Items"
 msgstr[0] "Mostrare 1 Elemento in Più"
 msgstr[1] "Mostrare %(count)d Elementi in Più"
 
-#: ../../portable/frontends/widgets/feedcontroller.py:196
-#: ../../portable/frontends/widgets/feedcontroller.py:223
+#: ../../portable/frontends/widgets/feedcontroller.py:203
+#: ../../portable/frontends/widgets/feedcontroller.py:230
 #, python-format
 msgid "%(count)d Downloading"
 msgid_plural "%(count)d Downloading"
 msgstr[0] "%(count)d in download"
 msgstr[1] "%(count)d in download"
 
-#: ../../portable/frontends/widgets/feedcontroller.py:207
-#: ../../portable/frontends/widgets/feedcontroller.py:219
+#: ../../portable/frontends/widgets/feedcontroller.py:214
+#: ../../portable/frontends/widgets/feedcontroller.py:226
 #, python-format
 msgid "%(count)d Video"
 msgid_plural "%(count)d Videos"
 msgstr[0] "%(count)d video"
 msgstr[1] "%(count)d video"
 
-#: ../../portable/frontends/widgets/feedcontroller.py:229
+#: ../../portable/frontends/widgets/feedcontroller.py:236
 #, python-format
 msgid "%(count)d Video Matches Search"
 msgid_plural "%(count)d Videos Match Search"
 msgstr[0] "%(count)d Ricerche di Abinamento di Video"
 msgstr[1] "%(count)d Ricercha di Abinamento di Video"
 
-#: ../../portable/frontends/widgets/feedcontroller.py:234
+#: ../../portable/frontends/widgets/feedcontroller.py:241
 msgid "All Videos Match Search"
 msgstr "Tutte le Ricerche di Abinamento di Video"
 
-#: ../../portable/frontends/widgets/application.py:112
+#: ../../portable/frontends/widgets/application.py:113
 msgid "Movies directory gone"
 msgstr "Directory dei filmati sparito"
 
-#: ../../portable/frontends/widgets/application.py:114
+#: ../../portable/frontends/widgets/application.py:115
 #, python-format
 msgid ""
 "%(shortappname)s can't find the primary video directory located at:\n"
@@ -1527,38 +1569,38 @@ msgstr ""
 "Se esci, potrai connetterti al drive o altrimenti rimediare il problema e "
 "riavviare %(shortappname)s."
 
-#: ../../portable/frontends/widgets/application.py:256
+#: ../../portable/frontends/widgets/application.py:262
 msgid "Open Files..."
 msgstr "Apri file..."
 
-#: ../../portable/frontends/widgets/application.py:267
-#: ../../portable/frontends/widgets/application.py:272
+#: ../../portable/frontends/widgets/application.py:273
+#: ../../portable/frontends/widgets/application.py:278
 msgid "Open Files - Error"
 msgstr "Apri file - Errore"
 
-#: ../../portable/frontends/widgets/application.py:268
-#: ../../portable/frontends/widgets/application.py:542
+#: ../../portable/frontends/widgets/application.py:274
+#: ../../portable/frontends/widgets/application.py:545
 #, python-format
 msgid "File %(filename)s does not exist."
 msgstr "Il file %(filename)s non esiste."
 
-#: ../../portable/frontends/widgets/application.py:273
+#: ../../portable/frontends/widgets/application.py:279
 msgid "The following files do not exist:"
 msgstr "I seguenti file non esistono:"
 
-#: ../../portable/frontends/widgets/application.py:310
+#: ../../portable/frontends/widgets/application.py:316
 msgid "New Download"
 msgstr "Nuovo download"
 
-#: ../../portable/frontends/widgets/application.py:311
+#: ../../portable/frontends/widgets/application.py:317
 msgid "Enter the URL of the item to download"
 msgstr "Inserire la URL del elemento da scaricare"
 
-#: ../../portable/frontends/widgets/application.py:312
+#: ../../portable/frontends/widgets/application.py:318
 msgid "New Download - Invalid URL"
 msgstr "Nuovo download - URL non valido"
 
-#: ../../portable/frontends/widgets/application.py:313
+#: ../../portable/frontends/widgets/application.py:319
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -1570,23 +1612,23 @@ msgstr ""
 "\n"
 "Inserire la URL del elemento da scaricare"
 
-#: ../../portable/frontends/widgets/application.py:321
+#: ../../portable/frontends/widgets/application.py:327
 msgid "Miro is up to date"
 msgstr "Miro è aggiornato"
 
-#: ../../portable/frontends/widgets/application.py:322
+#: ../../portable/frontends/widgets/application.py:328
 msgid "Miro is up to date!"
 msgstr "Miro è aggiornato !"
 
-#: ../../portable/frontends/widgets/application.py:344
-#: ../../portable/frontends/widgets/application.py:693
+#: ../../portable/frontends/widgets/application.py:350
+#: ../../portable/frontends/widgets/application.py:696
 #, python-format
 msgid "Remove %(name)s"
 msgid_plural "Remove %(count)d items"
 msgstr[0] "Eliminare elemento"
 msgstr[1] "Eliminare %(count)d elementi"
 
-#: ../../portable/frontends/widgets/application.py:351
+#: ../../portable/frontends/widgets/application.py:357
 msgid ""
 "One of these items was not downloaded from a channel. Would you like to "
 "delete it or just remove it from the Library?"
@@ -1600,72 +1642,48 @@ msgstr[1] ""
 "Alcuni di questi elementi non sono stati scaricati da un canale. Vuoi "
 "rimuoverli o solamente toglierli dalla libreria?"
 
-#: ../../portable/frontends/widgets/application.py:366
+#: ../../portable/frontends/widgets/application.py:372
 #, python-format
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
 msgstr[0] "Sicuro di voler eliminare l'elemento?"
 msgstr[1] "Sicuro di voler eliminare tutti i %(count)d elementi?"
 
-#: ../../portable/frontends/widgets/application.py:396
-#: ../../portable/frontends/widgets/itemcontextmenu.py:100
+#: ../../portable/frontends/widgets/application.py:402
+#: ../../portable/frontends/widgets/itemcontextmenu.py:99
 msgid "Rename Item"
 msgstr "Rinomina Elemento"
 
-#: ../../portable/frontends/widgets/application.py:397
+#: ../../portable/frontends/widgets/application.py:403
 msgid "Enter the new name for the item"
 msgstr "Inserire il nuovo nome per l'elemento"
 
-#: ../../portable/frontends/widgets/application.py:420
+#: ../../portable/frontends/widgets/application.py:426
 msgid "Save Item As..."
 msgstr "Salvare Elemento Come..."
 
-#: ../../portable/frontends/widgets/application.py:445
-msgid "Add Channel"
-msgstr "Aggiungi Canale"
-
-#: ../../portable/frontends/widgets/application.py:446
-msgid "Enter the URL of the channel to add"
-msgstr "Inserisci la URL del canale da aggiungere"
-
-#: ../../portable/frontends/widgets/application.py:447
-msgid "Add Channel - Invalid URL"
-msgstr "Aggiungi canale - URL non valido"
-
-#: ../../portable/frontends/widgets/application.py:448
-msgid ""
-"The address you entered is not a valid url.\n"
-"Please check the URL and try again.\n"
-"\n"
-"Enter the URL of the channel to add"
-msgstr ""
-"L'indirizzo inserito non è una URL valida.\n"
-"Rivedi la URL è riprova.\n"
-"\n"
-"Inserisci la URL del canale da aggiungere"
-
-#: ../../portable/frontends/widgets/application.py:466
+#: ../../portable/frontends/widgets/application.py:469
 msgid "Create Channel Folder"
 msgstr "Crea cartella del canale"
 
-#: ../../portable/frontends/widgets/application.py:467
+#: ../../portable/frontends/widgets/application.py:470
 #: ../../portable/singleclick.py:312
 msgid "Enter a name for the new channel folder"
 msgstr "Immetti il nome della nuova cartella del canale"
 
-#: ../../portable/frontends/widgets/application.py:479
+#: ../../portable/frontends/widgets/application.py:482
 msgid "Add Guide"
 msgstr "Aggiungi guida"
 
-#: ../../portable/frontends/widgets/application.py:480
+#: ../../portable/frontends/widgets/application.py:483
 msgid "Enter the URL of the Miro guide to add"
 msgstr "Inserisci l'URL della guida Miro da aggiungere"
 
-#: ../../portable/frontends/widgets/application.py:481
+#: ../../portable/frontends/widgets/application.py:484
 msgid "Add Guide - Invalid URL"
 msgstr "Aggiungi guida - URL non valido"
 
-#: ../../portable/frontends/widgets/application.py:482
+#: ../../portable/frontends/widgets/application.py:485
 msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
@@ -1677,214 +1695,229 @@ msgstr ""
 "\n"
 "Inserisci la URL della guida Miro da aggiungere"
 
-#: ../../portable/frontends/widgets/application.py:532
+#: ../../portable/frontends/widgets/application.py:535
 msgid "Import OPML File"
 msgstr "Importa File OPML"
 
-#: ../../portable/frontends/widgets/application.py:534
+#: ../../portable/frontends/widgets/application.py:537
 msgid "OPML Files"
 msgstr "I file OPML"
 
-#: ../../portable/frontends/widgets/application.py:541
+#: ../../portable/frontends/widgets/application.py:544
 msgid "Import OPML File - Error"
 msgstr "Importa file OPML - Errore"
 
-#: ../../portable/frontends/widgets/application.py:547
+#: ../../portable/frontends/widgets/application.py:550
 msgid "Export OPML File"
 msgstr "Esporta File OPML"
 
-#: ../../portable/frontends/widgets/application.py:582
+#: ../../portable/frontends/widgets/application.py:585
 msgid "Create Playlist"
 msgstr "Crea playlist"
 
-#: ../../portable/frontends/widgets/application.py:583
+#: ../../portable/frontends/widgets/application.py:586
 msgid "Enter a name for the new playlist"
 msgstr "Inserisci un nome per la nuova playlist"
 
-#: ../../portable/frontends/widgets/application.py:604
+#: ../../portable/frontends/widgets/application.py:607
 msgid "Create Playlist Folder"
 msgstr "Crea Cartella Playlist"
 
-#: ../../portable/frontends/widgets/application.py:605
+#: ../../portable/frontends/widgets/application.py:608
 msgid "Enter a name for the new playlist folder"
 msgstr "Inserisci un nome per la nuova cartella playlist"
 
-#: ../../portable/frontends/widgets/application.py:626
+#: ../../portable/frontends/widgets/application.py:629
 #: ../../portable/frontends/widgets/tablist.py:516
 msgid "Rename Channel Folder"
 msgstr "Rinomina la cartella del canale"
 
-#: ../../portable/frontends/widgets/application.py:627
+#: ../../portable/frontends/widgets/application.py:630
 #, python-format
 msgid "Enter a new name for the channel folder %(name)s"
 msgstr "Inserisci un nuovo nome per la cartella di canali %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:631
-#: ../../portable/frontends/widgets/tablist.py:526
+#: ../../portable/frontends/widgets/application.py:634
+#: ../../portable/frontends/widgets/tablist.py:525
 msgid "Rename Channel"
 msgstr "Rinomina canale"
 
-#: ../../portable/frontends/widgets/application.py:632
+#: ../../portable/frontends/widgets/application.py:635
 #, python-format
 msgid "Enter a new name for the channel %(name)s"
 msgstr "Inserisci un nuovo nome per il canale %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:636
-#: ../../portable/frontends/widgets/tablist.py:575
+#: ../../portable/frontends/widgets/application.py:639
+#: ../../portable/frontends/widgets/tablist.py:574
 #: ../../portable/playlist.py:179
 msgid "Rename Playlist"
 msgstr "Rinomina Playlist"
 
-#: ../../portable/frontends/widgets/application.py:637
+#: ../../portable/frontends/widgets/application.py:640
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr "Immetti un nuovo nome per la playlist %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:641
-#: ../../portable/frontends/widgets/tablist.py:569
+#: ../../portable/frontends/widgets/application.py:644
+#: ../../portable/frontends/widgets/tablist.py:568
 msgid "Rename Playlist Folder"
 msgstr "Rinomina Cartella Playlist"
 
-#: ../../portable/frontends/widgets/application.py:642
+#: ../../portable/frontends/widgets/application.py:645
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
 msgstr "Immetti un nuovo nome per la cartella di playlist %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:645
+#: ../../portable/frontends/widgets/application.py:648
 #: ../../portable/frontends/widgets/tablist.py:473
 msgid "Rename Site"
 msgstr "Rinomina sito"
 
-#: ../../portable/frontends/widgets/application.py:646
+#: ../../portable/frontends/widgets/application.py:649
 #, python-format
 msgid "Enter a new name for the site %(name)s"
 msgstr "Inserisci un nuovo nome per il sito %(name)s"
 
-#: ../../portable/frontends/widgets/application.py:670
+#: ../../portable/frontends/widgets/application.py:673
 #, python-format
 msgid "Remove playlist"
 msgid_plural "Remove %(count)d playlists"
 msgstr[0] "Rimuovi playlist"
 msgstr[1] "Rimuovi %(count)d playlist"
 
-#: ../../portable/frontends/widgets/application.py:675
-#: ../../portable/frontends/widgets/application.py:694
+#: ../../portable/frontends/widgets/application.py:678
+#: ../../portable/frontends/widgets/application.py:697
 #, python-format
 msgid "Are you sure you want to remove %(name)s?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
 msgstr[0] "Sei sicuro di voler eliminare %(count)s playlist?"
 msgstr[1] "Sei sicuro di voler eliminare queste %(count)s playlist?"
 
-#: ../../portable/frontends/widgets/application.py:719
+#: ../../portable/frontends/widgets/application.py:722
 msgid "Are you sure you want to quit?"
 msgstr "Sei sicuro di voler uscire?"
 
-#: ../../portable/frontends/widgets/application.py:721
+#: ../../portable/frontends/widgets/application.py:724
 #, python-format
 msgid "You have 1 download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] "Hai un download in corso. Uscire comunque?"
 msgstr[1] "Hai %(count)d downloads in corso. Uscire comunque?"
 
-#: ../../portable/frontends/widgets/application.py:726
+#: ../../portable/frontends/widgets/application.py:729
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr "Avvisami quando cerco di uscire mentre sono in corso dei download"
 
-#: ../../portable/frontends/widgets/application.py:940
+#: ../../portable/frontends/widgets/application.py:943
 msgid "Message"
 msgstr "Messaggio"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:175
+#: ../../portable/frontends/widgets/itemlistwidgets.py:176
 msgid "Save Search"
 msgstr "Salvare Ricerca"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:359
+#: ../../portable/frontends/widgets/itemlistwidgets.py:250
+msgid "Title"
+msgstr "Titolo"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:251
+msgid "Description"
+msgstr "Descrizione"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:254
+msgid "Feed"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:256
+#: ../../portable/frontends/widgets/itemlistwidgets.py:653
+msgid "Date"
+msgstr "Data"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:257
+#: ../../portable/frontends/widgets/itemlistwidgets.py:655
+msgid "Length"
+msgstr "Lunghezza"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:258
+#: ../../portable/frontends/widgets/itemlistwidgets.py:654
+msgid "Size"
+msgstr "Dimensione"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:259
+msgid "Status"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:262
+msgid "Time Left"
+msgstr "Tempo restante"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:263
+msgid "Speed"
+msgstr "Velocità"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:381
 msgid "Save as a Channel"
 msgstr "Salva come Canale"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:396
+#: ../../portable/frontends/widgets/itemlistwidgets.py:418
 msgid "Pause All"
 msgstr "Metti in pausa tutto"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:403
+#: ../../portable/frontends/widgets/itemlistwidgets.py:425
 msgid "Resume All"
 msgstr "Riprendi tutto"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:410
+#: ../../portable/frontends/widgets/itemlistwidgets.py:432
 msgid "Cancel All"
 msgstr "Annullare tutto"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:417
+#: ../../portable/frontends/widgets/itemlistwidgets.py:439
 msgid "Download Settings"
 msgstr "Scaricare Impostazioni"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:463
+#: ../../portable/frontends/widgets/itemlistwidgets.py:485
 #, python-format
 msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
 msgstr ""
 "%(available)s è sotto il limite di spazio per gli scaricamenti (%(amount)s "
 "liberi sul disco)"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:469
+#: ../../portable/frontends/widgets/itemlistwidgets.py:491
 #, python-format
 msgid "%(available)s free for downloads (%(amount)s free on disk)"
 msgstr ""
 "%(available)s liberi per gli scaricamenti (%(amount)s liberi sul disco)"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:474
+#: ../../portable/frontends/widgets/itemlistwidgets.py:496
 #, python-format
 msgid "%(amount)s free on disk"
 msgstr "%(amount)s disponibile nel disco fisso"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:493
+#: ../../portable/frontends/widgets/itemlistwidgets.py:515
 #, python-format
 msgid "%(rate)s uploading"
 msgstr "%(rate)s uploading"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:495
+#: ../../portable/frontends/widgets/itemlistwidgets.py:517
 #, python-format
 msgid "%(rate)s downloading"
 msgstr "%(rate)s downloading"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:528
+#: ../../portable/frontends/widgets/itemlistwidgets.py:550
 msgid "Auto Download"
 msgstr "Scaricamento automatico"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:533
-msgid "all"
-msgstr "tutto"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:533
-msgid "new"
-msgstr "nuovo"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:533
-msgid "off"
-msgstr "off"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:537
+#: ../../portable/frontends/widgets/itemlistwidgets.py:560
 msgid "Send to a friend"
 msgstr "Invia ad un amico"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:542
+#: ../../portable/frontends/widgets/itemlistwidgets.py:565
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
+#: ../../portable/frontends/widgets/itemlistwidgets.py:652
 msgid "Name"
 msgstr "Nome"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:621
-msgid "Date"
-msgstr "Data"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:622
-msgid "Size"
-msgstr "Dimensione"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:623
-msgid "Length"
-msgstr "Lunghezza"
 
 #: ../../portable/frontends/widgets/displays.py:336
 msgid ""
@@ -1903,7 +1936,6 @@ msgid "File type:"
 msgstr "Tipo file:"
 
 #: ../../portable/frontends/widgets/displays.py:352
-#: ../../portable/frontends/widgets/itemcontextmenu.py:117
 msgid "Reveal File"
 msgstr "Scopri file"
 
@@ -2026,7 +2058,7 @@ msgid "Stop watching watched directories."
 msgstr "Fermare di guardare le directory dei già visti."
 
 #: ../../portable/frontends/widgets/tablist.py:472
-#: ../../portable/frontends/widgets/tablist.py:529
+#: ../../portable/frontends/widgets/tablist.py:528
 msgid "Copy URL to clipboard"
 msgstr "Copia la URL nella cipboard"
 
@@ -2042,28 +2074,27 @@ msgstr "Aggiornare canali nella cartella"
 msgid "Update Channel Now"
 msgstr "Aggiorna canali ora"
 
-#: ../../portable/frontends/widgets/tablist.py:528
-#: ../../portable/frontends/widgets/itemcontextmenu.py:102
-msgid "Revert Name"
+#: ../../portable/frontends/widgets/tablist.py:527
+msgid "Revert Channel Name"
 msgstr ""
 
-#: ../../portable/frontends/widgets/tablist.py:535
+#: ../../portable/frontends/widgets/tablist.py:534
 msgid "Update Channels Now"
 msgstr "Aggiorna i Canali ora"
 
-#: ../../portable/frontends/widgets/tablist.py:597
+#: ../../portable/frontends/widgets/tablist.py:596
 msgid "SITES"
 msgstr "SITI"
 
-#: ../../portable/frontends/widgets/tablist.py:599
+#: ../../portable/frontends/widgets/tablist.py:598
 msgid "FEEDS"
 msgstr "FEED"
 
-#: ../../portable/frontends/widgets/tablist.py:601
+#: ../../portable/frontends/widgets/tablist.py:600
 msgid "AUDIO FEEDS"
 msgstr "FEEDS DI AUDIO"
 
-#: ../../portable/frontends/widgets/tablist.py:603
+#: ../../portable/frontends/widgets/tablist.py:602
 msgid "PLAYLISTS"
 msgstr "PLAYLIST"
 
@@ -2165,7 +2196,7 @@ msgstr "< Precedente"
 #: ../../portable/frontends/widgets/firsttimedialog.py:213
 #: ../../portable/frontends/widgets/firsttimedialog.py:215
 #: ../../portable/frontends/widgets/firsttimedialog.py:272
-#: ../../portable/feed.py:2287 ../../portable/feed.py:2382
+#: ../../portable/feed.py:2290 ../../portable/feed.py:2385
 msgid "Search"
 msgstr "Ricerca"
 
@@ -2177,6 +2208,11 @@ msgstr "Fatto"
 #: ../../portable/frontends/widgets/firsttimedialog.py:263
 msgid "Searching for media files"
 msgstr "Cercandi dei file multimedia"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:273
+#: ../../portable/dialogs.py:85
+msgid "Cancel"
+msgstr "Annulla"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:309
 #, python-format
@@ -2196,25 +2232,21 @@ msgstr[1] "trovati %(count)s file multimedia"
 msgid "Miro Guide"
 msgstr "Guida di Miro"
 
-#: ../../portable/frontends/widgets/statictabs.py:79
-msgid "Downloading"
-msgstr "Downnload in corso"
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:79
+#: ../../portable/frontends/widgets/downloadscontroller.py:86
 msgid "Single and external downloads"
 msgstr "Scaricamenti unici ed esterni"
 
-#: ../../portable/frontends/widgets/downloadscontroller.py:82
+#: ../../portable/frontends/widgets/downloadscontroller.py:89
 msgid "Channel downloads"
 msgstr "Scaricamento dei canali"
 
-#: ../../portable/frontends/widgets/downloadscontroller.py:85
+#: ../../portable/frontends/widgets/downloadscontroller.py:92
 msgid "Seeding"
 msgstr "In Condivisione"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
-msgstr ""
+msgstr "Aggiungi una playlist"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
 msgid "Add items to an existing playlist or a new one."
@@ -2225,7 +2257,7 @@ msgid "Remove From the Library"
 msgstr "Rimuovi dalla Libreria"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:94
-#: ../../portable/frontends/widgets/itemcontextmenu.py:184
+#: ../../portable/frontends/widgets/itemcontextmenu.py:195
 msgid "Play"
 msgstr "Riproduci"
 
@@ -2234,75 +2266,116 @@ msgid "Play Just this Item"
 msgstr "Esegui solo questo oggetto"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:96
-#: ../../portable/frontends/widgets/itemcontextmenu.py:185
+#: ../../portable/frontends/widgets/itemcontextmenu.py:196
 msgid "Add to Playlist"
 msgstr "Aggiungi alla playlist"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:104
-#: ../../portable/frontends/widgets/itemcontextmenu.py:192
+#: ../../portable/frontends/widgets/itemcontextmenu.py:101
+msgid "Revert Item Name"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:103
+#: ../../portable/frontends/widgets/itemcontextmenu.py:203
 msgid "Mark as Unwatched"
 msgstr "Marca come non visto"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:107
-#: ../../portable/frontends/widgets/itemcontextmenu.py:197
+#: ../../portable/frontends/widgets/itemcontextmenu.py:106
+#: ../../portable/frontends/widgets/itemcontextmenu.py:208
 msgid "Mark as Watched"
 msgstr "Segna come \"Già visto\""
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:116
+#: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
 msgstr "Avvio condivisione"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:121
-#: ../../portable/frontends/widgets/itemcontextmenu.py:232
+#: ../../portable/frontends/widgets/itemcontextmenu.py:118
+#: ../../portable/frontends/widgets/itemcontextmenu.py:243
 msgid "Cancel Download"
 msgstr "Annulla scaricamento"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:138
+#: ../../portable/frontends/widgets/itemcontextmenu.py:122
+#: ../../portable/frontends/widgets/itemcontextmenu.py:244
+msgid "Pause Download"
+msgstr "Sospendi il download"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:125
+#: ../../portable/frontends/widgets/itemcontextmenu.py:257
+msgid "Resume Download"
+msgstr "Continua Download"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:133
+msgid "Web page"
+msgstr "Pagina web"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:137
+msgid "License"
+msgstr "Licenza"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:139
+msgid "File in Browser"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:141
+msgid "File in Finder"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:143
+msgid "View"
+msgstr "Visualizza"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:147
 msgid "Email to friend"
 msgstr "Inviarlo per email ad un amico"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:141
+#: ../../portable/frontends/widgets/itemcontextmenu.py:150
 msgid "Post to Video Bomb"
 msgstr "Pubblica su Video Bomb"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:144
+#: ../../portable/frontends/widgets/itemcontextmenu.py:153
 msgid "Post to Del.icio.us"
 msgstr "Pubblicare su Del.icio.us"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:147
+#: ../../portable/frontends/widgets/itemcontextmenu.py:156
 msgid "Post to Digg"
 msgstr "Pubblicare su Digg"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:150
+#: ../../portable/frontends/widgets/itemcontextmenu.py:159
 msgid "Post to Reddit"
 msgstr "Pubblica su Reddit"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:179
+#: ../../portable/frontends/widgets/itemcontextmenu.py:190
 #, python-format
 msgid "1 Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
 msgstr[0] "1 elemento scaricato"
 msgstr[1] "%(count)d elementi scaricati"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:208
+#: ../../portable/frontends/widgets/itemcontextmenu.py:219
 #, python-format
 msgid "1 Available Item"
 msgid_plural "%(count)d Available Items"
 msgstr[0] "1 elemento disponibile"
 msgstr[1] "%(count)d elementi disponibili"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:221
+#: ../../portable/frontends/widgets/itemcontextmenu.py:232
 #, python-format
 msgid "1 Downloading Item"
 msgid_plural "%(count)d Downloading Items"
 msgstr[0] "1 elemento in download"
 msgstr[1] "%(count)d elementi in download"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:239
+#: ../../portable/frontends/widgets/itemcontextmenu.py:249
+#, python-format
+msgid "1 Paused Item"
+msgid_plural "%(count)d Paused Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:263
 msgid "Restart Upload"
 msgstr "Riprendi il download"
 
-#: ../../portable/frontends/widgets/itemcontextmenu.py:253
+#: ../../portable/frontends/widgets/itemcontextmenu.py:277
 msgid "Remove From Playlist"
 msgstr "Rimuovi dalla Playlist"
 
@@ -2519,7 +2592,7 @@ msgstr ""
 "Il file torrent %(filename)s risulta essere corrotto e non può essere "
 "aperto. [OK]"
 
-#: ../../portable/license.py:92
+#: ../../portable/license.py:78 ../../portable/license.py:95
 msgid "license page"
 msgstr "pagina della licenza"
 
@@ -2665,29 +2738,29 @@ msgstr "Sconosciuto"
 msgid "Internal Error: Not ready to send"
 msgstr "Errore interno: Non pronto a inviare"
 
-#: ../../portable/feed.py:940
+#: ../../portable/feed.py:941
 msgid "Error loading feed"
 msgstr "Errore caricamento feed"
 
-#: ../../portable/feed.py:942
+#: ../../portable/feed.py:943
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 msgstr "Impossibile caricare il feed all'URL %(url)s (%(errordescription)s)."
 
-#: ../../portable/feed.py:945
+#: ../../portable/feed.py:946
 msgid "Would you like to keep the feed?"
 msgstr "Vuoi tenere il feed?"
 
-#: ../../portable/feed.py:1070
+#: ../../portable/feed.py:1071
 msgid "Bad content-type"
 msgstr "Contenuto di tipo non valido."
 
-#: ../../portable/feed.py:1083
+#: ../../portable/feed.py:1084
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
 msgstr "Il canale non è compatibile con %(appname)s"
 
-#: ../../portable/feed.py:1086
+#: ../../portable/feed.py:1087
 #, python-format
 msgid ""
 "But we'll try our best to grab the files. It may take extra time to list the "
@@ -2704,11 +2777,11 @@ msgstr ""
 "\n"
 "Vuoi provare a caricare questo canale comunque?"
 
-#: ../../portable/feed.py:2401
+#: ../../portable/feed.py:2404
 msgid "Local Files"
 msgstr "File locali"
 
-#: ../../portable/feed.py:2415
+#: ../../portable/feed.py:2418
 msgid "Playing File"
 msgstr "Riproduci File"
 
@@ -3200,6 +3273,9 @@ msgstr "Riproduci File"
 #~ "interna  o convinzione errata $when. Ci scusiamo e suggeriamo di riavviare "
 #~ "$shortAppName. Questo ridurrà la possibilità di perdere le tue preferenze e "
 #~ "le sottoscrizioni ai canali."
+
+#~ msgid "OK"
+#~ msgstr "OK"
 
 #~ msgid "The fall of $shortAppName??"
 #~ msgstr "L'arresto di $shortAppName??"
@@ -4063,11 +4139,11 @@ msgstr "Riproduci File"
 #~ msgid "Search _custom folder:"
 #~ msgstr "Cerca in cartella personalizzata (_c):"
 
+#~ msgid "Channel:"
+#~ msgstr "Canale:"
+
 #~ msgid "Search Engine:"
 #~ msgstr "Motore di ricerca:"
-
-#~ msgid "URL:"
-#~ msgstr "URL:"
 
 #~ msgid "Cancel Search"
 #~ msgstr "Cancella Ricerca"
@@ -4273,9 +4349,6 @@ msgstr "Riproduci File"
 #~ msgid "Will retry in %s"
 #~ msgstr "Nuovo tentativo fra %s"
 
-#~ msgid "Paused"
-#~ msgstr "In pausa"
-
 #~ msgid "Total Down:"
 #~ msgstr "Down totale:"
 
@@ -4294,14 +4367,23 @@ msgstr "Riproduci File"
 #~ msgid "Web page:"
 #~ msgstr "Pagina Web:"
 
+#~ msgid "permalink"
+#~ msgstr "permalink"
+
 #~ msgid "File link:"
 #~ msgstr "Link al file:"
+
+#~ msgid "direct link to file"
+#~ msgstr "link diretto al file"
 
 #~ msgid "REVEAL LOCAL FOLDER"
 #~ msgstr "RIVELA CARTELLA LOCALE"
 
 #~ msgid "REVEAL LOCAL FILE"
 #~ msgstr "RIVELA FILE LOCALE"
+
+#~ msgid "Up Total"
+#~ msgstr "Su totale"
 
 #~ msgid "Item Details"
 #~ msgstr "Dettagli elemento"

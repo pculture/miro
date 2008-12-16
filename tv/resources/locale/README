@@ -9,15 +9,25 @@ https://develop.participatoryculture.org/trac/democracy/wiki/TranslationGuide
 Summary
 =======
 
-Upload to Launchpad
--------------------
+Export strings to Launchpad
+---------------------------
 
-Run ``build-messages.sh`` to build the ``messages.pot`` file to upload to 
-Launchpad.
+Run ``export-strings.sh`` to build the ``messages.pot`` file.  Then go to
+the Launchpad site and upload the ``messages.pot`` file.
+
+Commit everything.
 
 
-Download from Launchpad
------------------------
+Import translations from Launchpad
+----------------------------------
 
-Run ``build-catalgos.py`` to fix ``.po`` files and other issues and then
-generate the ``.mo`` files.
+Go to the Launchpad site and export all ``.po`` files.
+
+They'll send you an email with the url to download the ``.tar.gz`` file
+from.
+
+Move the file into this directory (``tv/resources/locale/``), extract all the files,
+move the files in ``democracyplayer/`` into this directory, remove the ``democracyplayer/``
+directory and run ``import-translations.py``.
+
+Commit everything.
