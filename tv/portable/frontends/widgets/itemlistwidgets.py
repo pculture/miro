@@ -278,8 +278,6 @@ class ListItemView(widgetset.TableView):
                     'feed-name')
         self._make_column(_('Date'), style.DateRenderer(), 'date')
         self._make_column(_('Length'), style.LengthRenderer(), 'length')
-        self._make_column(_('Download'), style.DownloadingRenderer(),
-                'progress')
         self._make_column(_('Status'), style.StatusRenderer(), 'status')
         self._make_column(_('Size'), style.SizeRenderer(), 'size')
         self._make_column(_('ETA'), style.ETARenderer(), 'eta')
@@ -317,11 +315,10 @@ class ListItemView(widgetset.TableView):
             # (min_width, extra_width_weighting)
             width_specs = [
                 (20, 0),    # bump
-                (100, 1),   # title
+                (130, 1),   # title
                 (70, 0.5),  # channel name
                 (85, 0),   # date
                 (60, 0),   # duration
-                (130, 0),   # downloading
                 (160, 0),   # status
                 (65, 0),    # size
                 (50, 0),    # eta

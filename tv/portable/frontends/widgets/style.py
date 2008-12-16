@@ -918,8 +918,10 @@ class ListViewRenderer(widgetset.CustomCellRenderer):
     right_aligned = False
 
     def get_size(self, style, layout):
-        height = layout.font(self.font_size, bold=self.bold).line_height()
-        return 5, height
+        return 5, self.calc_height(style, layout)
+
+    def calc_height(self, style, layout):
+        return layout.font(self.font_size, bold=self.bold).line_height()
 
     def hotspot_test(self, style, layout, x, y, width, height):
         self.hotspot = None
@@ -952,6 +954,7 @@ class ListViewRenderer(widgetset.CustomCellRenderer):
         hbox = cellpack.HBox()
         textline = cellpack.TruncatedTextLine(textbox)
         hbox.pack(cellpack.align_middle(textline), expand=True)
+        layout.set_font(self.font_size, bold=False)
         self._pack_extra(layout, hbox)
         return hbox
 
@@ -966,6 +969,9 @@ class ListViewRenderer(widgetset.CustomCellRenderer):
         pass
 
 class NameRenderer(ListViewRenderer):
+    def calc_height(self, style, layout):
+        default = ListViewRenderer.calc_height(self, style, layout)
+        return max(default, 18) # include enough height for the download button
 
     def _setup_layout(self):
         self.text = self.info.name
@@ -980,6 +986,12 @@ class NameRenderer(ListViewRenderer):
             self.color = AVAILABLE_COLOR
         else:
             self.color = ListViewRenderer.color
+
+    def _pack_extra(self, layout, hbox):
+        if not (self.info.downloaded or
+                self.info.state in ('downloading', 'paused')):
+            button = layout.button(_('Download'), self.hotspot=='download')
+            hbox.pack(cellpack.Hotspot('download', button))
 
 class DescriptionRenderer(ListViewRenderer):
     color = (0.6, 0.6, 0.6)
@@ -1001,14 +1013,18 @@ class LengthRenderer(ListViewRenderer):
 
 class StatusRenderer(ListViewRenderer):
     bold = True
+
+    def __init__(self):
+        ListViewRenderer.__init__(self)
+        self.pause_button = imagepool.get_surface(resources.path(
+            'images/pause-button.png'))
+        self.resume_button = imagepool.get_surface(resources.path(
+            'images/resume-button.png'))
+        self.cancel_button = imagepool.get_surface(resources.path(
+            'images/cancel-button.png'))
+
     def _setup_layout(self):
-        if self.info.state == 'downloading':
-            self.text = _('Downloading')
-            self.color = DOWNLOADING_COLOR
-        elif self.info.state == 'paused':
-            self.text = _('Paused')
-            self.color = DOWNLOADING_COLOR
-        elif self.info.downloaded and not self.info.video_watched:
+        if self.info.downloaded and not self.info.video_watched:
             self.text = _('Unplayed')
             self.color = UNPLAYED_COLOR
         elif self.info.expiration_date:
@@ -1021,9 +1037,28 @@ class StatusRenderer(ListViewRenderer):
         else:
             self.text = ''
 
+    def layout(self, layout):
+        if self.info.state in ('downloading', 'paused'):
+            return self.pack_progress_bar(layout)
+        else:
+            return ListViewRenderer.layout(self, layout)
+
+    def pack_progress_bar(self, layout):
+        progress_bar = ProgressBarDrawer(self.info)
+        hbox = cellpack.HBox(spacing=2)
+        if self.info.state == 'downloading':
+            hotspot = cellpack.Hotspot('pause', self.pause_button)
+        else:
+            hotspot = cellpack.Hotspot('resume', self.resume_button)
+        hbox.pack(cellpack.align_middle(hotspot))
+        drawing_area = cellpack.DrawingArea(20, 10, progress_bar.draw)
+        hbox.pack(cellpack.align_middle(drawing_area), expand=True)
+        hotspot = cellpack.Hotspot('cancel', self.cancel_button)
+        hbox.pack(cellpack.align_middle(hotspot))
+        return hbox
+
     def _pack_extra(self, layout, hbox):
         if self.info.expiration_date:
-            layout.set_font(self.font_size, bold=False)
             button = layout.button(_('Keep'), self.hotspot=='keep')
             hbox.pack_space(8)
             hbox.pack(cellpack.Hotspot('keep', button))
@@ -1079,67 +1114,6 @@ class StateCircleRenderer(widgetset.CustomCellRenderer):
         x = int((context.width - self.width) / 2)
         y = int((context.height - self.height) / 2)
         icon.draw(context, x, y, self.width, self.height)
-
-class DownloadingRenderer(ListViewRenderer):
-    min_width = 25
-    height = 16
-
-    def __init__(self):
-        widgetset.CustomCellRenderer.__init__(self)
-        self.pause_button = imagepool.get_surface(resources.path(
-            'images/pause-button.png'))
-        self.resume_button = imagepool.get_surface(resources.path(
-            'images/resume-button.png'))
-        self.cancel_button = imagepool.get_surface(resources.path(
-            'images/cancel-button.png'))
-
-    def get_size(self, style, layout):
-        layout.set_font(self.font_size)
-        sizer_button = layout.button("FOO", False)
-        height = max(self.pause_button.height, sizer_button.get_size()[1])
-        return self.min_width, height
-
-    def render(self, context, layout, selected, hotspot, hover):
-        self.hotspot = hotspot
-        packing = self.pack(layout)
-        packing.render_layout(context)
-
-    def pack(self, layout):
-        layout.set_font(self.font_size)
-        if self.info.state in ('downloading', 'paused'):
-            return self.pack_progress_bar(layout)
-        else:
-            return self.pack_buttons(layout)
-
-    def hotspot_test(self, style, layout, x, y, width, height):
-        self.hotspot = None
-        packing = self.pack(layout)
-        hotspot_info = packing.find_hotspot(x, y, width, height)
-        if hotspot_info is None:
-            return None
-        else:
-            return hotspot_info[0]
-
-    def pack_progress_bar(self, layout):
-        progress_bar = ProgressBarDrawer(self.info)
-        hbox = cellpack.HBox(spacing=2)
-        if self.info.state == 'downloading':
-            hotspot = cellpack.Hotspot('pause', self.pause_button)
-        else:
-            hotspot = cellpack.Hotspot('resume', self.resume_button)
-        hbox.pack(cellpack.align_middle(hotspot))
-        drawing_area = cellpack.DrawingArea(20, 10, progress_bar.draw)
-        hbox.pack(cellpack.align_middle(drawing_area), expand=True)
-        hotspot = cellpack.Hotspot('cancel', self.cancel_button)
-        hbox.pack(cellpack.align_middle(hotspot))
-        return hbox
-
-    def pack_buttons(self, layout):
-        hbox = cellpack.HBox(spacing=6)
-        if not self.info.downloaded:
-            button = layout.button(_('Download'), self.hotspot=='download')
-            hbox.pack(cellpack.Hotspot('download', button))
-        return cellpack.align_middle(hbox)
 
 class ProgressBarDrawer(cellpack.Packer):
     """Helper object to draw the progress bar (which is actually quite
