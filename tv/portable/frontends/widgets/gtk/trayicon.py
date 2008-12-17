@@ -99,6 +99,7 @@ if gtk.check_version(2, 10, 0) == None:
                     button, activate_time, status_icon)
 
         def on_play_unwatched(self, widget):
+            self._show_window()
             messages.PlayAllUnwatched().send_to_backend()
 
         def on_pause_downloads(self, widget):
@@ -108,26 +109,39 @@ if gtk.check_version(2, 10, 0) == None:
             messages.ResumeAllDownloads().send_to_backend()
 
         def on_preferences(self, widget):
+            self._show_window()
             app.widgetapp.preferences()
 
         def on_quit(self, widget):
             app.widgetapp.quit()
 
+        def _show_window(self):
+            window = app.widgetapp.window
+            if window.is_visible():
+                return
+            window.show()
+            if self._hid_pref_panel:
+                prefpanel.show_window()
+
+        def _hide_window(self):
+            window = app.widgetapp.window
+            if not window.is_visible():
+                return
+            window.close()
+            for dialog in window_mod.running_dialogs:
+                dialog._window.hide()
+            if prefpanel.is_window_shown():
+                self._hid_pref_panel = True
+                prefpanel.hide_window()
+            else:
+                self._hid_pref_panel = False
+
         def on_click(self, widget):
             window = app.widgetapp.window
             if window.is_visible():
-                window.close()
-                for dialog in window_mod.running_dialogs:
-                    dialog._window.hide()
-                if prefpanel.is_window_shown():
-                    self._hid_pref_panel = True
-                    prefpanel.hide_window()
-                else:
-                    self._hid_pref_panel = False
+                self._hide_window()
             else:
-                window.show()
-                if self._hid_pref_panel:
-                    prefpanel.show_window()
+                self._show_window()
 
         def displayNotification(self, text):
             try:
