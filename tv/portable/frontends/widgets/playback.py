@@ -68,10 +68,21 @@ class PlaybackManager (signals.SignalEmitter):
         self.create_signal('will-fullscreen')
         self.create_signal('playback-did-progress')
         app.info_updater.connect('items-removed', self._on_items_removed)
+        app.info_updater.connect('items-changed', self._on_items_changed)
 
     def _on_items_removed(self, obj, id_list):
         """Remove any deleted items from our playlist."""
+        self._handle_items_deleted(id_list)
 
+    def _on_items_changed(self, obj, info_list):
+        if self.playlist is None:
+            return
+        deleted = [info.id for info in info_list \
+                if info.id in self.id_to_position and not info.downloaded]
+        if len(deleted) > 0:
+            self._handle_items_deleted(deleted)
+
+    def _handle_items_deleted(self, id_list):
         if self.playlist is None:
             return
         to_delete = []
