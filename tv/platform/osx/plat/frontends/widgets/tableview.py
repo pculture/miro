@@ -404,6 +404,7 @@ class TableViewCommon(object):
         self._tracking_rects = []
         self.hover_info = None
         self.column_index_map = {}
+        self.setFocusRingType_(NSFocusRingTypeNone)
         return self
 
     def addTableColumn_(self, column):
