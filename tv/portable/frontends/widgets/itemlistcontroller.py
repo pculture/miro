@@ -218,7 +218,7 @@ class ItemListController(object):
 
         item_info = itemview.model[iter][0]
         show_details = itemview.model[iter][1]
-        if name == 'download':
+        if name in ('download', 'thumbnail-download'):
             messages.StartDownload(item_info.id).send_to_backend()
         elif name == 'pause':
             messages.PauseDownload(item_info.id).send_to_backend()
@@ -265,7 +265,7 @@ class ItemListController(object):
                 messages.SubscriptionLinkClicked(url).send_to_backend()
             else:
                 app.widgetapp.open_url(urljoin(base_href, url))
-        elif name == 'play':
+        elif name in ('play', 'thumbnail-play'):
             id = item_info.id
             items = itemview.item_list.get_items(start_id=id)
             self._play_item_list(items)

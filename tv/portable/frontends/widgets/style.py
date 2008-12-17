@@ -547,7 +547,10 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     def pack_left(self, layout):
         vbox = cellpack.VBox(spacing=6)
         thumbnail = cellpack.DrawingArea(154, 105, self.draw_thumbnail)
-        vbox.pack(thumbnail)
+        if self.data.downloaded:
+            vbox.pack(cellpack.Hotspot('thumbnail-play', thumbnail))
+        else:
+            vbox.pack(cellpack.Hotspot('thumbnail-download', thumbnail))
 
         if not self.show_details:
             return vbox
