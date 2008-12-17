@@ -67,7 +67,41 @@ class PlaybackManager (signals.SignalEmitter):
         self.create_signal('did-stop')
         self.create_signal('will-fullscreen')
         self.create_signal('playback-did-progress')
-    
+        app.info_updater.connect('items-removed', self._on_items_removed)
+
+    def _on_items_removed(self, obj, id_list):
+        """Remove any deleted items from our playlist."""
+
+        if self.playlist is None:
+            return
+        to_delete = []
+        deleting_current = False
+        # Figure out what which items are in our playlist.
+        for id in id_list:
+            try:
+                pos = self.id_to_position[id]
+            except KeyError:
+                continue
+            to_delete.append(pos)
+            if pos == self.position:
+                deleting_current = True
+        if len(to_delete) == 0:
+            return
+        # Delete those items (we need to do it last to first)
+        to_delete.sort(reverse=True)
+        for pos in to_delete:
+            del self.playlist[pos]
+            if pos < self.position:
+                self.position -= 1
+        if self.position >= len(self.playlist):
+            # we deleted the current movie and all the ones after it
+            self.stop(save_resume_time=False)
+        elif deleting_current:
+            self.play_from_position(self.position, save_resume_time=False)
+        if self.playlist is not None:
+            # Recalculate id_to_position, since the playlist has changed
+            self._calc_id_to_position()
+
     def set_volume(self, volume):
         self.volume = volume
         if self.video_display is not None:
@@ -89,6 +123,7 @@ class PlaybackManager (signals.SignalEmitter):
     def start_with_items(self, item_infos, presentation_mode='fit-to-bounds'):
         self.playlist = item_infos
         self.position = 0
+        self._calc_id_to_position()
         self.presentation_mode = presentation_mode
         if not self.is_playing:
             self.video_display = VideoDisplay()
@@ -104,6 +139,10 @@ class PlaybackManager (signals.SignalEmitter):
         self._play_current()
         if self.presentation_mode != 'fit-to-bounds':
             self.fullscreen()
+
+    def _calc_id_to_position(self):
+        self.id_to_position = dict((info.id, i) for i, info in
+                enumerate(self.playlist))
     
     def prepare_attached_playback(self):
         splitter = app.widgetapp.window.splitter
@@ -162,7 +201,7 @@ class PlaybackManager (signals.SignalEmitter):
 
     def on_display_removed(self, display):
         self.stop()
-    
+
     def play(self):
         duration = self.video_display.get_total_playback_time()
         self.emit('will-play', duration)
@@ -296,26 +335,21 @@ class PlaybackManager (signals.SignalEmitter):
     def _on_cant_play(self, video_display):
         self.emit('cant-play-file')
 
-    def play_next_movie(self, save_current_resume_time=True):
-        self.cancel_update_timer()
-        self.cancel_mark_as_watched()
-        if config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE) or (self.position == len(self.playlist) - 1):
-            self.stop(save_current_resume_time)
-        else:
-            if save_current_resume_time:
-                self.update_current_resume_time()
-            self.position += 1
-            self._play_current()
+    def play_next_movie(self, save_resume_time=True):
+        self.play_from_position(self.position + 1, save_resume_time)
 
-    def play_prev_movie(self, save_current_resume_time=True):
+    def play_prev_movie(self, save_resume_time=True):
+        self.play_from_position(self.position - 1, save_resume_time)
+
+    def play_from_position(self, new_position, save_resume_time=True):
         self.cancel_update_timer()
         self.cancel_mark_as_watched()
         if config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
             self.stop()
         else:
-            if save_current_resume_time:
+            if save_resume_time:
                 self.update_current_resume_time()
-            self.position -= 1
+            self.position = new_position
             self._play_current()
 
     def skip_forward(self):
