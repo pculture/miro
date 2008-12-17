@@ -35,6 +35,7 @@ from miro.frontends.widgets import share
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.plat import resources
+from miro.plat.frontends.widgets import file_navigator_name
 
 
 class ItemContextMenuHandler(object):
@@ -135,10 +136,14 @@ class ItemContextMenuHandler(object):
             view_menu.append((_('Comments'), lambda: app.widgetapp.open_url(item.commentslink)))
         if item.license and item.license != item.permalink:
             view_menu.append((_('License'), lambda: app.widgetapp.open_url(item.license)))
-        if item.downloaded and item.file_url != item.permalink:
-            view_menu.append((_('File in Browser'), lambda: app.widgetapp.open_url(item.file_url)))
         if item.downloaded:
-            view_menu.append((_('File in Finder'), lambda: app.widgetapp.open_file(item.video_path)))
+            if item.file_url != item.permalink and not item.file_url.startswith('file://'):
+                view_menu.append((_('File in Browser'), lambda: app.widgetapp.open_url(item.file_url)))
+            if file_navigator_name:
+                reveal_text = _('File in %(progname)s', {"progname": file_navigator_name})
+            else:
+                reveal_text = _('File on Disk')
+            view_menu.append((reveal_text, lambda: app.widgetapp.open_file(item.video_path)))
 
         menu.append((_('View'), view_menu))
 

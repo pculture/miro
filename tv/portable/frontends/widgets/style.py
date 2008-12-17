@@ -484,7 +484,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         hbox.pack(cellpack.align_center(permalink_hotspot))
 
         fileurl_hotspot = self._make_button(layout, _('File URL'),
-                'visit_filelink', not (self.data.file_url and self.data.file_url.startswith('file:')))
+                'visit_filelink', not (self.data.file_url and not self.data.file_url.startswith('file:')))
         hbox.pack(cellpack.align_center(fileurl_hotspot))
 
         license_hotspot = self._make_button(layout, _('License Page'), 'visit_license', not self.data.license)
