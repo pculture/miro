@@ -139,14 +139,12 @@ class WindowBase(signals.SignalEmitter):
 class Window(WindowBase):
     """The main Miro window.  """
 
-    window_class = WrappedWindow
-
     def __init__(self, title, rect=None):
         """Create the Miro Main Window.  Title is the name to give the window,
         rect specifies the position it should have on screen.
         """
         WindowBase.__init__(self)
-        self.set_window(self.window_class())
+        self.set_window(self._make_gtk_window())
         self._window.set_title(title)
         if rect:
             self._window.set_default_size(rect.width, rect.height)
@@ -160,6 +158,9 @@ class Window(WindowBase):
         alive_windows.add(self)
 
         self._window.connect('delete-event', self.on_delete)
+
+    def _make_gtk_window(self):
+        return WrappedWindow()
 
     def on_delete(self, widget, event):
         self.emit('will-close')

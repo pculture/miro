@@ -41,6 +41,7 @@ from miro import util
 from miro import messages
 from miro import displaytext
 from miro.plat import screensaver
+from miro.frontends.widgets.gtk.window import Window, WrappedWindow
 from miro.frontends.widgets.gtk.widgetset import Widget, VBox, Label, HBox, Alignment, Background
 from miro.frontends.widgets.gtk.persistentwindow import PersistentWindow
 
@@ -137,6 +138,28 @@ def can_play_file(path, yes_callback, no_callback):
         return
     logging.warn("can_play_file: app.renderer is None")
     no_callback()
+
+class VideoOverlay(Window):
+    def __init__(self):
+        Window.__init__(self, 'Miro Video Overlay')
+        self._window.set_transient_for(_window())
+        self.vbox = VBox()
+        self.set_content_widget(self.vbox)
+
+    def _make_gtk_window(self):
+        return WrappedWindow(gtk.WINDOW_POPUP)
+
+    def position_on_screen(self):
+        window = self._window
+        parent_window = window.get_transient_for()
+        screen = parent_window.get_screen()
+        monitor = screen.get_monitor_at_window(parent_window.window)
+        screen_rect = screen.get_monitor_geometry(monitor)
+        my_width, my_height = self.vbox.get_size_request()
+        window.set_default_size(my_width, my_height)
+        window.resize(screen_rect.width, my_height)
+        window.move(screen_rect.x, screen_rect.y + screen_rect.height -
+                my_height)
 
 class VideoWidget(Widget):
     def __init__(self, renderer):
@@ -417,9 +440,10 @@ class VideoRenderer(VBox):
         self.screensaver_manager = screensaver.create_manager()
         if self.screensaver_manager is not None:
             self.screensaver_manager.disable()
+        self._make_overlay()
         self.motion_handler = self.wrapped_widget_connect(
                 'motion-notify-event', self.on_mouse_motion)
-        self.videobox_motion_handler = _videobox_widget().connect(
+        self.videobox_motion_handler = self.overlay._window.connect(
                 'motion-notify-event', self.on_mouse_motion)
         app.widgetapp.window.menubar.hide()
         self.schedule_hide_controls(self.HIDE_CONTROLS_TIMEOUT)
@@ -428,6 +452,26 @@ class VideoRenderer(VBox):
         while gtk.events_pending(): 
             gtk.main_iteration()
         _window().fullscreen()
+
+    def _make_overlay(self):
+        main_window = app.widgetapp.window
+        main_window.right_vbox.remove(main_window.videobox)
+        self.overlay = VideoOverlay()
+        self.remove(self._video_details)
+        self.overlay.vbox.pack_start(self._video_details)
+        self.overlay.vbox.pack_start(main_window.videobox)
+        self.overlay.position_on_screen()
+        self.overlay.show()
+
+    def _destroy_overlay(self):
+        main_window = app.widgetapp.window
+        self.overlay.vbox.remove(self._video_details)
+        self.overlay.vbox.remove(main_window.videobox)
+        self.pack_start(self._video_details)
+        main_window.right_vbox.pack_start(main_window.videobox)
+
+        self.overlay.destroy()
+        del self.overlay
 
     def prepare_switch_to_attached_playback(self):
         pass
@@ -442,25 +486,26 @@ class VideoRenderer(VBox):
         return False
 
     def on_mouse_motion(self, widget, event):
-        if not _videobox_widget().props.visible:
+        if not self.overlay.is_visible():
             self.show_controls()
             self.schedule_hide_controls(self.HIDE_CONTROLS_TIMEOUT)
         else:
             self.last_motion_time = time.time()
 
     def show_controls(self):
-        self._video_details.show()
-        _videobox_widget().show()
         _window().window.set_cursor(None)
+        self.overlay.show()
+
+    def hide_controls(self):
+        _window().window.set_cursor(self.hidden_cursor)
+        self.overlay.close()
 
     def on_hide_controls_timeout(self):
         # Check if the mouse moved before the timeout
         time_since_motion = int((time.time() - self.last_motion_time) * 1000)
         timeout_left = self.HIDE_CONTROLS_TIMEOUT - time_since_motion
         if timeout_left <= 0:
-            self._video_details.hide()
-            _window().window.set_cursor(self.hidden_cursor)
-            _videobox_widget().hide()
+            self.hide_controls()
             self.hide_controls_timeout = None
         else:
             self.schedule_hide_controls(timeout_left)
@@ -480,9 +525,8 @@ class VideoRenderer(VBox):
             self.screensaver_manager = None
         app.widgetapp.window.menubar.show()
         self._video_details.show()
-        _videobox_widget().show()
+        self._destroy_overlay()
         _window().unfullscreen()
         self._widget.disconnect(self.motion_handler)
-        _videobox_widget().disconnect(self.videobox_motion_handler)
         self.cancel_hide_controls()
         _window().window.set_cursor(None)

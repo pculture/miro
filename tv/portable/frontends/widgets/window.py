@@ -57,18 +57,18 @@ class MiroWindow(widgetset.MainWindow):
         
         self.videobox = videobox.VideoBox()
         self.search_box = searchbox.SearchBox()
-        left_vbox = widgetset.VBox()
-        left_vbox.pack_start(tablist.TabListBox(), True)
-        left_vbox.pack_start(self.search_box)
+        self.left_vbox = widgetset.VBox()
+        self.left_vbox.pack_start(tablist.TabListBox(), True)
+        self.left_vbox.pack_start(self.search_box)
 
         self.main_area_holder = WidgetHolder()
-        right_vbox = widgetset.VBox()
-        right_vbox.pack_start(self.main_area_holder, True)
-        right_vbox.pack_start(self.videobox)
+        self.right_vbox = widgetset.VBox()
+        self.right_vbox.pack_start(self.main_area_holder, True)
+        self.right_vbox.pack_start(self.videobox)
 
         self.splitter = widgetset.Splitter()
-        self.splitter.set_left(left_vbox)
-        self.splitter.set_right(right_vbox)
+        self.splitter.set_left(self.left_vbox)
+        self.splitter.set_right(self.right_vbox)
         self.splitter.set_left_width(200)
 
         self.set_content_widget(self.splitter)
