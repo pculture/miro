@@ -282,7 +282,7 @@ class VideoDetailsWidget(Background):
             self._expiration_label.hide()
             self._keep_link.hide()
             self._dash.hide()
-
+            self._channel_name.set_text("")
         else:
             channels = app.tab_list_manager.feed_list.get_feeds()
             channels = [ci for ci in channels if ci.id == item_info.feed_id]
