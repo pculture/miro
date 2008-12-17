@@ -445,10 +445,6 @@ class bdist_nsis(Command):
         self.copy_file("miro-installer.ico", self.dist_dir)
         self.copy_file("miro-install-image.bmp", self.dist_dir)
 
-        self.copy_file("OCSetupHlp.nsh", self.dist_dir)
-        self.copy_file("OCSetupHlp.dll", self.dist_dir)
-        self.copy_file("DLMgr.exe", self.dist_dir)
-
         nsisVars = {}
         for (ourName, nsisName) in [
                 ('appVersion', 'CONFIG_VERSION'),
