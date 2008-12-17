@@ -207,8 +207,11 @@ class ItemListController(object):
 
     def on_key_press(self, view, key, mods):
         if key == menubar.DELETE:
-            app.widgetapp.remove_items(self.get_selection())
-            return True
+            return self.handle_delete()
+
+    def handle_delete(self):
+        app.widgetapp.remove_items(self.get_selection())
+        return True
 
     def on_hotspot_clicked(self, itemview, name, iter):
         """Hotspot handler for ItemViews."""

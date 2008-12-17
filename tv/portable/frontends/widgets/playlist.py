@@ -134,6 +134,12 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
         else:
             return itemcontextmenu.ItemContextMenuHandlerPlaylist(self.id)
 
+    def handle_delete(self):
+        selected = [info.id for info in self.get_selection()]
+        m = messages.RemoveVideosFromPlaylist(self.id, selected)
+        m.send_to_backend()
+        return True
+
     def handle_item_list(self, message):
         self._sorter.add_items(message.items)
         itemlistcontroller.SimpleItemListController.handle_item_list(self,
