@@ -170,7 +170,7 @@ class ChannelGuide(DDBObject):
         """
         if self.iconCache and self.iconCache.get_filename():
             return fileutil.expand_filename(self.iconCache.get_filename())
-        return resources.path("images/icon-guide_large.png")
+        return resources.path("images/icon-site.png")
 
     def iconChanged(self, needsSave=True):
         self.confirmDBThread()

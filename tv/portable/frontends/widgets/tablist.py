@@ -480,7 +480,7 @@ class SiteList(TabList):
         if info.favicon:
             thumb_path = info.favicon
         else:
-            thumb_path = resources.path('images/icon-guide_large.png')
+            thumb_path = resources.path('images/icon-site.png')
         surface = imagepool.get_surface(thumb_path)
         if surface.width > 20 or surface.height > 20:
             info.icon = imagepool.get_surface(thumb_path, size=(20, 20))
