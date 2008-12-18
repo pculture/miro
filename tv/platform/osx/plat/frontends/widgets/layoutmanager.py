@@ -287,10 +287,10 @@ class Button(object):
     def __init__(self, cell, text, font, pressed, disabled):
         self.min_width = 0
         self.cell = cell
-        self.cell.setTitle_(text)
         self.cell.setButtonType_(NSMomentaryPushInButton)
         self.cell.setFont_(font.nsfont)
         self.cell.setEnabled_(not disabled)
+        self.cell.setTitle_(text)
         if pressed:
             self.cell.setState_(NSOnState)
         else:
@@ -342,11 +342,13 @@ class StyledButtonCell(NSButtonCell):
         if self.image():
             width += self.image().size().width + self.ICON_PAD
             height = max(height, self.image().size().height)
-        height += self.PAD_VERTICAL * 2
+            height += self.PAD_VERTICAL * 2
+        else:
+            width += 48
         if height % 2 == 1:
             # make height even so that the radius of our circle is whole
             height += 1
-        width += self.PAD_HORIZONTAL * 2 #+ height
+        width += self.PAD_HORIZONTAL * 2
         return NSSize(width, height)
 
     def setImage_(self, image):
@@ -356,9 +358,9 @@ class StyledButtonCell(NSButtonCell):
 
     def setTitle_(self, title):
         attributes = NSMutableDictionary.alloc().init()
-        color = NSColor.colorWithDeviceRed_green_blue_alpha_(0.184, 0.184,
-                0.184, 1)
+        color = NSColor.colorWithDeviceRed_green_blue_alpha_(self.TEXT_COLOR[0], self.TEXT_COLOR[1], self.TEXT_COLOR[2], 1.0)
         attributes.setObject_forKey_(color, NSForegroundColorAttributeName)
+        attributes.setObject_forKey_(self.font(), NSFontAttributeName)
         self.setAttributedTitle_(NSAttributedString.alloc().initWithString_attributes_(title, attributes))
 
     def draw_path(self, context, x, y, width, height, radius):
@@ -423,12 +425,6 @@ class StyledButtonCell(NSButtonCell):
         return (csize.width - width) / 2
 
     def drawTitle_withFrame_inView_(self, title, rect, view):
-        title = title.mutableCopy()
-        color = NSColor.colorWithDeviceRed_green_blue_alpha_(self.TEXT_COLOR[0], self.TEXT_COLOR[1], self.TEXT_COLOR[2], 1.0)
-        rnge = NSRange(0, title.length())
-        title.addAttribute_value_range_(NSForegroundColorAttributeName, color, rnge)
-        title.addAttribute_value_range_(NSFontAttributeName, self.font(), rnge)
-
         size = title.size()
         x = self._calc_inner_x()
         if self.image():
