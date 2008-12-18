@@ -1198,7 +1198,7 @@ class BackendMessageHandler(messages.MessageHandler):
                     title, body, 'feed-subscribe').send_to_frontend()
             elif type == 'download':
                 for url, additional in normalizedURLs:
-                    singleclick.add_download(url, additional)
+                    singleclick.download_video_url(url, additional)
             elif type == 'site':
                 for url, additional in normalizedURLs:
                     if guide.getGuideByURL (url) is None:

@@ -225,6 +225,10 @@ def download_video(entry):
     newItem = item.Item(entry, feed_id=manualFeed.getID())
     newItem.download()
 
+def download_video_url(url, additional=None):
+    entry = _build_entry(url, None, additional)
+    download_video(entry)
+
 def add_torrent(path, torrentInfohash):
     manualFeed = get_manual_feed()
     for i in manualFeed.items:
