@@ -247,9 +247,10 @@ class VideoDetailsWidget(Background):
         messages.AddItemToLibrary(self.item_info.id).send_to_backend()
 
     def handle_delete(self, widget):
+        item_info = self.item_info
         self.reset()
         app.playback_manager.on_movie_finished()
-        app.widgetapp.remove_items([self.item_info])
+        app.widgetapp.remove_items([item_info])
 
     def handle_commentslink(self, widget):
         app.widgetapp.open_url(self.item_info.commentslink)
@@ -268,11 +269,9 @@ class VideoDetailsWidget(Background):
             if item_info.is_single:
                 self._add_to_library_link.show()
                 self._delete_link.hide()
-
             else:
                 self._add_to_library_link.hide()
                 self._delete_link.show()
-
         else:
             if item_info.video_watched:
                 if item_info.expiration_date is not None:
