@@ -621,7 +621,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         if self.show_progress_bar:
             return cellpack.align_bottom(self.pack_download_status(layout))
 
-        hbox = cellpack.HBox(spacing=5)
+        hbox = cellpack.HBox(spacing=10)
         layout.set_font(0.85)
         if self.data.downloaded:
             hbox.pack(cellpack.align_middle(cellpack.Hotspot('play', self.play_button)))
@@ -632,7 +632,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
                 text = _('Download')
             hotspot = self._make_button(layout, text, 'download',
                     icon=self.download_arrow)
-            hbox.pack(cellpack.pad(cellpack.align_middle(hotspot), bottom=6))
+            hbox.pack(cellpack.align_middle(cellpack.align_middle(hotspot)))
 
         if self.data.download_info and self.data.download_info.state == 'failed':
             layout.set_font(0.80, bold=True)
@@ -645,7 +645,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             inner_hbox.pack(cellpack.align_middle(layout.textbox(self.data.download_info.short_reason_failed)))
 
             emblem_color = (1.0, 252.0 / 255.0, 183.0 / 255.0)
-            emblem = cellpack.Background(inner_hbox, margin=(4, 20, 4, 0))
+            emblem = cellpack.Background(inner_hbox, margin=(4, 20, 4, 4))
             emblem.set_callback(self.draw_emblem, emblem_color)
 
             hbox = cellpack.HBox(spacing=5)
@@ -664,7 +664,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             inner_hbox.pack_space(2)
 
             emblem_color = UNPLAYED_COLOR
-            emblem = cellpack.Background(inner_hbox, margin=(4, 20, 4, 0))
+            emblem = cellpack.Background(inner_hbox, margin=(4, 20, 4, 4))
             emblem.set_callback(self.draw_emblem, emblem_color)
 
             hbox = cellpack.HBox(spacing=5)
@@ -677,7 +677,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             inner_hbox = hbox
             inner_hbox.pack(cellpack.align_middle(layout.textbox(text)))
             emblem_color = (232.0 / 255.0, 240.0 / 255.0, 242.0 / 255.0)
-            emblem = cellpack.Background(inner_hbox, margin=(4, 10, 4, 0))
+            emblem = cellpack.Background(inner_hbox, margin=(4, 4, 4, 4))
             emblem.set_callback(self.draw_emblem, emblem_color)
 
             hbox = cellpack.HBox(spacing=5)
@@ -691,7 +691,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             inner_hbox.pack_space(2)
 
             emblem_color = AVAILABLE_COLOR
-            emblem = cellpack.Background(inner_hbox, margin=(4, 10, 4, 0))
+            emblem = cellpack.Background(inner_hbox, margin=(4, 4, 4, 4))
             emblem.set_callback(self.draw_emblem, emblem_color)
 
             hbox = cellpack.HBox(spacing=5)
@@ -702,7 +702,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         if self.data.downloaded:
             hbox.pack(self.pack_video_buttons(layout))
 
-        return cellpack.align_bottom(cellpack.pad(hbox, top=5))
+        return cellpack.align_bottom(cellpack.pad(hbox, top=5, bottom=6))
 
     def pack_video_buttons(self, layout):
         hbox = cellpack.HBox(spacing=5)

@@ -380,7 +380,7 @@ class StyledButton(object):
     TEXT_COLOR = (0.184, 0.184, 0.184)
     DISABLED_COLOR = (0.86, 0.86, 0.86)
     DISABLED_TEXT_COLOR = (0.5, 0.5, 0.5)
-    ICON_PAD = 4
+    ICON_PAD = 8
 
     def __init__(self, text, context, font, pressed, disabled=False):
         self.layout = pango.Layout(context)
