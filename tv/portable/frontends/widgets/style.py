@@ -684,7 +684,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             hbox = cellpack.HBox(spacing=5)
             hbox.pack(cellpack.pad(emblem))
 
-        elif not self.data.item_viewed:
+        elif not self.data.item_viewed and self.data.state == "new":
             layout.set_font(0.80, bold=True)
             layout.set_text_color((1, 1, 1))
             inner_hbox = hbox
