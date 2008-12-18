@@ -482,8 +482,8 @@ class SiteList(TabList):
         else:
             thumb_path = resources.path('images/icon-site.png')
         surface = imagepool.get_surface(thumb_path)
-        if surface.width > 20 or surface.height > 20:
-            info.icon = imagepool.get_surface(thumb_path, size=(20, 20))
+        if surface.width > 16 or surface.height > 16:
+            info.icon = imagepool.get_surface(thumb_path, size=(16, 16))
         else:
             info.icon = imagepool.get_surface(thumb_path)
         info.unwatched = info.available = 0
@@ -521,7 +521,7 @@ class FeedList(NestedTabList):
         app.widgetapp.remove_current_feed()
 
     def init_info(self, info):
-        info.icon = imagepool.get_surface(info.tab_icon, size=(20, 20))
+        info.icon = imagepool.get_surface(info.tab_icon, size=(16, 16))
 
     def get_feeds(self):
         infos = [self.view.model[i][0] for i in self.iter_map.values()]
