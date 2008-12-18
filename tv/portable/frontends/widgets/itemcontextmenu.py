@@ -131,7 +131,9 @@ class ItemContextMenuHandler(object):
                     messages.StartDownload(item.id).send_to_backend)
             ]
 
-        view_menu = [(_('Web page'), lambda: app.widgetapp.open_url(item.permalink))]
+        view_menu = []
+        if not item.is_external:
+            view_menu.append((_('Web page'), lambda: app.widgetapp.open_url(item.permalink)))
         if item.commentslink and item.commentslink != item.permalink:
             view_menu.append((_('Comments'), lambda: app.widgetapp.open_url(item.commentslink)))
         if item.license and item.license != item.permalink:
@@ -147,23 +149,14 @@ class ItemContextMenuHandler(object):
 
         menu.append((_('View'), view_menu))
 
-        menu.append(
-            (_('Share'),
-             [((_('Email to friend'),
-                resources.path('images/share-email.png')),
-               lambda: share.share_email(item)),
-              ((_('Post to Video Bomb'),
-                resources.path('images/share-videobomb.png')),
-               lambda: share.share_video_bomb(item)),
-              ((_('Post to Del.icio.us'),
-                resources.path('images/share-delicious.png')),
-               lambda: share.share_delicious(item)),
-              ((_('Post to Digg'),
-                resources.path('images/share-digg.png')),
-               lambda: share.share_digg(item)),
-              ((_('Post to Reddit'),
-                resources.path('images/share-reddit.png')),
-               lambda: share.share_reddit(item))]))
+        if not item.is_external:
+            share_menu = [
+                ((_('Email to friend'), resources.path('images/share-email.png')), lambda: share.share_email(item)),
+                ((_('Post to Video Bomb'), resources.path('images/share-videobomb.png')), lambda: share.share_video_bomb(item)),
+                ((_('Post to Del.icio.us'), resources.path('images/share-delicious.png')), lambda: share.share_delicious(item)),
+                ((_('Post to Digg'), resources.path('images/share-digg.png')), lambda: share.share_digg(item)),
+                ((_('Post to Reddit'), resources.path('images/share-reddit.png')), lambda: share.share_reddit(item))]
+            menu.append((_('Share'), share_menu))
                
         return menu
 
