@@ -166,6 +166,8 @@ def is_x64():
 root_dir = get_root_dir()
 portable_dir = os.path.join(root_dir, 'portable')
 portable_frontend_dir = os.path.join(portable_dir, 'frontends')
+portable_xpcom_dir = os.path.join(portable_frontend_dir, 'widgets', 'gtk',
+        'xpcom')
 dl_daemon_dir = os.path.join(portable_dir, 'dl_daemon')
 test_dir = os.path.join(portable_dir, 'test')
 resource_dir = os.path.join(root_dir, 'resources')
@@ -567,6 +569,16 @@ mozprompt_ext = \
         **mozilla_browser_options
     )
 
+httpobserver_ext = \
+    Extension("miro.plat.frontends.widgets.httpobserver",
+        [
+            os.path.join(platform_widgets_dir, 'httpobserver.pyx'),
+            os.path.join(portable_xpcom_dir, 'HttpObserver.cc'),
+        ],
+        **mozilla_browser_options
+    )
+
+
 windowcreator_ext = \
     Extension("miro.plat.frontends.widgets.windowcreator",
         [
@@ -823,6 +835,7 @@ if libtorrent_ext:
     ext_modules.append(libtorrent_ext)
 ext_modules.append(pygtkhacks_ext)
 ext_modules.append(mozprompt_ext)
+ext_modules.append(httpobserver_ext)
 ext_modules.append(windowcreator_ext)
 ext_modules.append(Extension("miro.database", [os.path.join(portable_dir, 'database.pyx')]))
 ext_modules.append(Extension("miro.sorts", [os.path.join(portable_dir, 'sorts.pyx')]))

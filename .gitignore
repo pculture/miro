@@ -9,6 +9,7 @@ tv/platform/gtk-x11/plat/frontends/widgets/mozprompt.pxi
 tv/platform/gtk-x11/plat/frontends/widgets/windowcreator.cpp
 tv/platform/gtk-x11/plat/frontends/widgets/mozprompt.c
 tv/platform/gtk-x11/plat/frontends/widgets/mozprompt.h
+tv/platform/gtk-x11/plat/frontends/widgets/httpobserver.c
 tv/platform/gtk-x11/xine/xine.c
 tv/platform/gtk-x11/xine/xine_extractor
 tv/platform/windows-xul/build

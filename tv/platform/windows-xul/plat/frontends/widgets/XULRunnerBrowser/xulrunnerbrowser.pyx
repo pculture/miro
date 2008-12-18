@@ -85,6 +85,9 @@ cdef extern from "MiroWindowCreator.h":
     MiroWindowCreator *new_MiroWindowCreator "new MiroWindowCreator" ()
     void del_MiroWindowCreator "delete" (MiroWindowCreator *rect)
 
+cdef extern from "HttpObserver.h":
+    nsresult startObserving()
+
 cdef extern from "Init.h":
     nsresult init_xulrunner(char* xul_dir, char* app_dir)
     nsresult c_setup_user_agent "setup_user_agent" (char* vendor, char* vendor_sub, char* comment)
@@ -106,6 +109,9 @@ def initialize(xul_dir, app_dir):
     rv = init_xulrunner(xul_dir, app_dir)
     if rv != NS_OK:
         raise XPCOMError("init_xulrunner failed with code: %d" % rv)
+    rv = startObserving()
+    if rv != NS_OK:
+        raise XPCOMError("startObserving failed with code: %d" % rv)
 
 def setup_user_agent(vendor, vendor_sub, vendor_comment):
     cdef nsresult rv

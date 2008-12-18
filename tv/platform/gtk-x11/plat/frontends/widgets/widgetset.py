@@ -37,6 +37,7 @@ from miro.frontends.widgets.gtk.widgetset import *
 
 # We need to provide a Browser
 from miro.plat.frontends.widgets import mozprompt
+from miro.plat.frontends.widgets import httpobserver
 from miro.plat.frontends.widgets import windowcreator
 xpcom_setup = False
 
@@ -123,5 +124,6 @@ def do_xpcom_setup():
     global xpcom_setup
 
     mozprompt.stop_prompts()
+    httpobserver.start_http_observer()
     xpcom_setup = True
     windowcreator.install_window_creator(_new_window_monitor)
