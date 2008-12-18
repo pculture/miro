@@ -265,6 +265,17 @@ class Application:
         self.on_volume_change(slider, v)
         self.on_volume_set(slider)
 
+    def check_then_open_file(self, filename):
+        if not os.path.exists(filename):
+            basename = os.path.basename(filename)
+            dialogs.show_message(
+                _("Error Revealing File"),
+                _("The file \"%(filename)s\" was deleted from outside Miro.",
+                  {"filename": basename}),
+                dialogs.WARNING_MESSAGE)
+        else:
+            self.open_file(filename)
+
     def open_video(self):
         title = _('Open Files...')
         filenames = dialogs.ask_for_open_pathname(title, select_multiple=True)

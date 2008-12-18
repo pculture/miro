@@ -249,15 +249,7 @@ class ItemListController(object):
         elif name == 'visit_license':
             app.widgetapp.open_url(item_info.license)
         elif name == 'show_local_file':
-            if not os.path.exists(item_info.video_path):
-                basename = os.path.basename(item_info.video_path)
-                dialogs.show_message(
-                    _("Error Revealing File"),
-                    _("The file \"%(filename)s\" was deleted from outside Miro.",
-                      {"filename": basename}),
-                    dialogs.WARNING_MESSAGE)
-            else:
-                app.widgetapp.open_file(item_info.video_path)
+            app.widgetapp.check_then_open_file(item_info.video_path)
         elif name.startswith('description-link:'):
             url = name.split(':', 1)[1]
             base_href = widgetutil.get_feed_info(item_info.feed_id).base_href
