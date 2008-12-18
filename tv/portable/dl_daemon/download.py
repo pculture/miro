@@ -1013,6 +1013,10 @@ class BTDownloader(BGDownloader):
         if not self.restarting:
             try:
                 metainfo = lt.bdecode(self.metainfo)
+                # if we don't get valid torrent metadata back, then the
+                # metainfo is None.  treat that like a runtime error.
+                if not metainfo:
+                    raise RuntimeError()
                 name = metainfo['info']['name']
             except RuntimeError:
                 self.handleError(_("Corrupt Torrent"),
