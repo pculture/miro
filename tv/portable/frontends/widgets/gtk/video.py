@@ -193,9 +193,9 @@ class VideoDetailsWidget(Background):
 
         # right side
         v = VBox()
-        self._email_link = ClickableLabel(_("EMAIL A FRIEND"))
-        self._email_link.connect('clicked', self.handle_email)
-        v.pack_start(_align_right(self._email_link, right_pad=5))
+        self._share_link = ClickableLabel(_("SHARE"))
+        self._share_link.connect('clicked', self.handle_share)
+        v.pack_start(_align_right(self._share_link, right_pad=5))
 
         h2 = HBox()
         self._comments_link = ClickableLabel(_("COMMENTS"))
@@ -255,9 +255,8 @@ class VideoDetailsWidget(Background):
     def handle_commentslink(self, widget):
         app.widgetapp.open_url(self.item_info.commentslink)
 
-    def handle_email(self, widget):
-        link = self.item_info.commentslink or self.item_info.permalink or self.item_info.file_url
-        app.widgetapp.mail_to_friend(link, self.item_info.name)
+    def handle_share(self, widget):
+        app.widgetapp.share_item(self.item_info)
 
     def handle_permalink(self, widget):
         app.widgetapp.open_url(self.item_info.permalink)
@@ -297,8 +296,11 @@ class VideoDetailsWidget(Background):
         self.item_info = item_info
         self._item_name.set_text(util.clampText(item_info.name, 100))
 
+        if item_info.has_sharable_url:
+            self._share_link.show()
+        else:
+            self._share_link.hide()
         if item_info.is_external:
-            self._email_link.hide()
             self._comments_link.hide()
             self._permalink_link.hide()
             self._expiration_label.hide()

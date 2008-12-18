@@ -265,6 +265,14 @@ class Application:
         self.on_volume_change(slider, v)
         self.on_volume_set(slider)
 
+    def share_item(self, item):
+        share_items = {"weburl": item.permalink,
+                "mediaurl": item.file_url,
+                "name": item.name}
+        query_string = "&".join(["%s=%s" % (key, urllib.quote(val)) for key, val in share_items.items()])
+        share_url = "http://miroguide.com/share-item/?%s" % query_string
+        self.open_url(share_url)
+
     def check_then_open_file(self, filename):
         if not os.path.exists(filename):
             basename = os.path.basename(filename)

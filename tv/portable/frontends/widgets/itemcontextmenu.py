@@ -31,7 +31,6 @@
 
 from miro import app
 from miro import messages
-from miro.frontends.widgets import share
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.plat import resources
@@ -149,15 +148,9 @@ class ItemContextMenuHandler(object):
 
         menu.append((_('View'), view_menu))
 
-        if not item.is_external:
-            share_menu = [
-                ((_('Email to friend'), resources.path('images/share-email.png')), lambda: share.share_email(item)),
-                ((_('Post to Video Bomb'), resources.path('images/share-videobomb.png')), lambda: share.share_video_bomb(item)),
-                ((_('Post to Del.icio.us'), resources.path('images/share-delicious.png')), lambda: share.share_delicious(item)),
-                ((_('Post to Digg'), resources.path('images/share-digg.png')), lambda: share.share_digg(item)),
-                ((_('Post to Reddit'), resources.path('images/share-reddit.png')), lambda: share.share_reddit(item))]
-            menu.append((_('Share'), share_menu))
-               
+        if item.has_sharable_url:
+            menu.append((_('Share'), lambda: app.widgetapp.share_item(item)))
+
         return menu
 
     def _make_context_menu_multiple(self, selection):
