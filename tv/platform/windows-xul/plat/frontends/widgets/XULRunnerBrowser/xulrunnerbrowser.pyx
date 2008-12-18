@@ -87,6 +87,7 @@ cdef extern from "MiroWindowCreator.h":
 
 cdef extern from "Init.h":
     nsresult init_xulrunner(char* xul_dir, char* app_dir)
+    nsresult c_setup_user_agent "setup_user_agent" (char* vendor, char* vendor_sub, char* comment)
     void shutdown_xulrunner()
 
 cdef extern from "pythread.h":
@@ -105,6 +106,12 @@ def initialize(xul_dir, app_dir):
     rv = init_xulrunner(xul_dir, app_dir)
     if rv != NS_OK:
         raise XPCOMError("init_xulrunner failed with code: %d" % rv)
+
+def setup_user_agent(vendor, vendor_sub, vendor_comment):
+    cdef nsresult rv
+    rv = c_setup_user_agent(vendor, vendor_sub, vendor_comment)
+    if rv != NS_OK:
+        raise XPCOMError("setup_user_agent failed with code: %d" % rv)
 
 def install_window_creator(new_window_handler):
     cdef MiroWindowCreator *creator

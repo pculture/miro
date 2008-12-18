@@ -40,7 +40,9 @@
 #include "nsEmbedString.h"
 #include "nsILocalFile.h"
 #include "nsXPCOMGlue.h" 
+#include "pref/nsIPref.h"
 #include "xulapp/nsXULAppAPI.h"
+#include "xpcom/nsServiceManagerUtils.h"
 
 #include "Init.h"
 
@@ -82,6 +84,22 @@ nsresult init_xulrunner(const char* xul_dir, const char* app_dir)
     NS_ENSURE_SUCCESS(rv, rv);
 
     rv = XRE_InitEmbedding(xul_dir_file, app_dir_file, 0, 0, 0);
+    NS_ENSURE_SUCCESS(rv, rv);
+    return NS_OK;
+}
+
+
+nsresult setup_user_agent(const char* vendor, const char* vendor_sub, 
+        const char* comment)
+{
+    nsresult rv;
+    nsCOMPtr<nsIPref> prefs(do_GetService(NS_PREF_CONTRACTID, &rv));
+    NS_ENSURE_SUCCESS(rv, rv);
+    rv = prefs->SetCharPref("general.useragent.vendor", vendor);
+    NS_ENSURE_SUCCESS(rv, rv);
+    rv = prefs->SetCharPref("general.useragent.vendorSub", vendor_sub);
+    NS_ENSURE_SUCCESS(rv, rv);
+    rv = prefs->SetCharPref("general.useragent.vendorComment", comment);
     NS_ENSURE_SUCCESS(rv, rv);
     return NS_OK;
 }

@@ -144,6 +144,8 @@ class WindowsApplication(Application):
         app_dir = os.path.dirname(sys.executable)
         xul_dir = os.path.join(app_dir, 'xulrunner')
         xulrunnerbrowser.initialize(xul_dir, app_dir)
+        xulrunnerbrowser.setup_user_agent(config.get(prefs.LONG_APP_NAME),
+                config.get(prefs.APP_VERSION), config.get(prefs.PROJECT_URL))
         xulrunnerbrowser.install_window_creator(self)
 
     def on_new_window(self, uri):
