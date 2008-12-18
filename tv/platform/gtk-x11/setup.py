@@ -569,13 +569,16 @@ mozprompt_ext = \
         **mozilla_browser_options
     )
 
+http_observer_options = mozilla_browser_options.copy()
+http_observer_options['include_dirs'].append(portable_xpcom_dir)
+
 httpobserver_ext = \
     Extension("miro.plat.frontends.widgets.httpobserver",
         [
             os.path.join(platform_widgets_dir, 'httpobserver.pyx'),
             os.path.join(portable_xpcom_dir, 'HttpObserver.cc'),
         ],
-        **mozilla_browser_options
+        **http_observer_options
     )
 
 
