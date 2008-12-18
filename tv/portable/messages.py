@@ -42,6 +42,7 @@ import logging
 import re
 import urlparse
 
+from miro.gtcache import gettext as _
 from miro.folder import ChannelFolder, PlaylistFolder
 from miro.plat import resources
 from miro import util
@@ -876,6 +877,8 @@ class ItemInfo(object):
 
         if item.downloader:
             self.download_info = DownloadInfo(item.downloader)
+        elif self.state == 'downloading':
+            self.download_info = PendingDownloadInfo()
         else:
             self.download_info = None
 
@@ -924,6 +927,21 @@ class DownloadInfo(object):
             self.reason_failed = u""
             self.short_reason_failed = u""
         self.eta = downloader.getETA()
+
+class PendingDownloadInfo(DownloadInfo):
+    """DownloadInfo object for pending downloads (downloads queued, but not
+    started because we've reached some limit)
+    """
+    def __init__(self):
+        self.downloaded_size = 0
+        self.rate = 0
+        self.state = 'pending'
+        self.startup_activity = _('queued for download')
+        self.finished = False
+        self.torrent = False
+        self.reason_failed = u""
+        self.short_reason_failed = u""
+        self.eta = 0
 
 class WatchedFolderInfo(object):
     """Tracks the state of a watched folder.

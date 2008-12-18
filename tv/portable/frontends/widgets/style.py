@@ -497,9 +497,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         dl_info = self.download_info
         layout.set_font(0.80, bold=True)
         layout.set_text_color((1.0, 1.0, 1.0))
-        if self.data.pending_manual_dl:
-            return layout.textbox(_('queued for download'))
-        elif dl_info.state == 'paused' or dl_info.rate == 0:
+        if dl_info.state == 'paused' or dl_info.rate == 0:
             if dl_info.state == 'paused':
                 return layout.textbox(_('paused'))
             else:
@@ -1081,10 +1079,11 @@ class ETARenderer(ListViewRenderer):
     right_aligned = True
 
     def _setup_layout(self):
+        self.text = ''
         if self.info.state == 'downloading':
-            self.text = displaytext.time(self.info.download_info.eta)
-        else:
-            self.text = ''
+            eta = self.info.download_info.eta
+            if eta > 0:
+                self.text = displaytext.time(self.info.download_info.eta)
 
 class DownloadRateRenderer(ListViewRenderer):
     right_aligned = True
