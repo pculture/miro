@@ -621,7 +621,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             return cellpack.align_bottom(self.pack_download_status(layout))
 
         hbox = cellpack.HBox(spacing=5)
-        layout.set_font(0.80)
+        layout.set_font(0.85)
         if self.data.downloaded:
             hbox.pack(cellpack.align_middle(cellpack.Hotspot('play', self.play_button)))
         else:
@@ -631,7 +631,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
                 text = _('Download')
             hotspot = self._make_button(layout, text, 'download',
                     icon=self.download_arrow)
-            hbox.pack(cellpack.align_middle(hotspot))
+            hbox.pack(cellpack.pad(cellpack.align_middle(hotspot), bottom=6))
 
         if self.data.download_info and self.data.download_info.state == 'failed':
             layout.set_font(0.80, bold=True)

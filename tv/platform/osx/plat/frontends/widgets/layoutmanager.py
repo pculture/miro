@@ -321,16 +321,16 @@ class NativeButton(Button):
         Button.__init__(self, cell, text, font, pressed, disabled)
 
 class StyledButtonCell(NSButtonCell):
-    PAD_HORIZONTAL = 4
+    PAD_HORIZONTAL = 1
     PAD_VERTICAL = 1
     TOP_COLOR = (1, 1, 1)
     BOTTOM_COLOR = (0.86, 0.86, 0.86)
     LINE_COLOR_TOP = (0.71, 0.71, 0.71)
     LINE_COLOR_BOTTOM = (0.45, 0.45, 0.45)
-    TEXT_COLOR = (0, 0, 0)
+    TEXT_COLOR = (0.4, 0.4, 0.4)
     DISABLED_COLOR = (0.86, 0.86, 0.86)
     DISABLED_TEXT_COLOR = (0.5, 0.5, 0.5)
-    ICON_PAD = 4
+    ICON_PAD = 10
     
     def init(self):
         NSButtonCell.init(self)
@@ -346,7 +346,7 @@ class StyledButtonCell(NSButtonCell):
         if height % 2 == 1:
             # make height even so that the radius of our circle is whole
             height += 1
-        width += self.PAD_HORIZONTAL * 2 + height
+        width += self.PAD_HORIZONTAL * 2 #+ height
         return NSSize(width, height)
 
     def setImage_(self, image):
@@ -423,12 +423,19 @@ class StyledButtonCell(NSButtonCell):
         return (csize.width - width) / 2
 
     def drawTitle_withFrame_inView_(self, title, rect, view):
+        title = title.mutableCopy()
+        color = NSColor.colorWithDeviceRed_green_blue_alpha_(self.TEXT_COLOR[0], self.TEXT_COLOR[1], self.TEXT_COLOR[2], 1.0)
+        rnge = NSRange(0, title.length())
+        title.addAttribute_value_range_(NSForegroundColorAttributeName, color, rnge)
+        title.addAttribute_value_range_(NSFontAttributeName, self.font(), rnge)
+
         size = title.size()
         x = self._calc_inner_x()
         if self.image():
             x += self.image().size().width + self.ICON_PAD
         origin = NSPoint(x, 0.5 + (self.cellSize().height - size.height) / 2)
         title.drawAtPoint_(origin)
+
         return NSRect(origin, size)
 
     def drawImage_withFrame_inView_(self, image, rect, view):
