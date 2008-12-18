@@ -81,6 +81,9 @@ class PlaybackManager (signals.SignalEmitter):
                 if info.id in self.id_to_position and not info.downloaded]
         if len(deleted) > 0:
             self._handle_items_deleted(deleted)
+        changed = [info for info in info_list if info.id in self.id_to_position]
+        for info in changed:
+            self.playlist[self.id_to_position[info.id]] = info
 
     def _handle_items_deleted(self, id_list):
         if self.playlist is None:
