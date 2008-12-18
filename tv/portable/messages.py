@@ -479,6 +479,8 @@ class StartDownload(BackendMessage):
     """Start downloading an item."""
     def __init__(self, id):
         self.id = id
+    def __repr__(self):
+        return BackendMessage.__repr__(self) + (", id: %s" % self.id)
 
 class CancelDownload(BackendMessage):
     """Cancel downloading an item."""
