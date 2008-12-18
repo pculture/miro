@@ -40,6 +40,7 @@ from miro.frontends.widgets import cellpack
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 from miro.plat import resources
+from miro.plat.frontends.widgets import const
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import file_navigator_name
 
@@ -197,6 +198,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     SELECTED_BACKGROUND_FLAP_COLOR = (0.84, 0.88, 0.90)
     SELECTED_BACKGROUND_COLOR = (0.94, 0.97, 0.99)
     SELECTED_HIGHLIGHT_COLOR = (0.43, 0.63, 0.82)
+    ITEM_TITLE_COLOR = (0.2, 0.2, 0.2)
     ITEM_DESC_COLOR = (0.4, 0.4, 0.4)
     EMBLEM_FONT_SIZE = 0.77
     GRADIENT_HEIGHT = 25
@@ -302,7 +304,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         return cellpack.Background(inner, margin=(5, 20, 5, 20))
 
     def make_description(self, layout):
-        layout.set_font(0.85, family="Helvetica")
+        layout.set_font(0.85, family=const.ITEM_DESC_FONT)
         layout.set_text_color(self.ITEM_DESC_COLOR)
         text = self.data.description_text
         links = self.data.description_links
@@ -318,9 +320,9 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         return textbox
 
     def pack_main(self, layout):
-        layout.set_text_color(self.text_color)
         vbox = cellpack.VBox()
-        layout.set_font(1.0, family="Helvetica", bold=True)
+        layout.set_font(1.1, family=const.ITEM_TITLE_FONT, bold=True)
+        layout.set_text_color(self.ITEM_TITLE_COLOR)
         title = layout.textbox(self.data.name)
         # FIXME - title should wrap to the next line instead of being
         # truncated; ben said this might be hard/impossible
@@ -733,7 +735,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         outer_hbox.pack_space(18)
 
         vbox = cellpack.VBox()
-        vbox.pack_space(6)
+        vbox.pack_space(4)
         inner_hbox = cellpack.HBox()
         right_side = self.pack_right(layout)
         self.right_side_width = right_side.get_size()[0]
