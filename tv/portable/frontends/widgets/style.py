@@ -40,7 +40,6 @@ from miro.frontends.widgets import cellpack
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 from miro.plat import resources
-from miro.plat.frontends.widgets import const
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import file_navigator_name
 
@@ -304,7 +303,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         return cellpack.Background(inner, margin=(5, 20, 5, 20))
 
     def make_description(self, layout):
-        layout.set_font(0.85, family=const.ITEM_DESC_FONT)
+        layout.set_font(0.85, family=widgetset.ITEM_DESC_FONT)
         layout.set_text_color(self.ITEM_DESC_COLOR)
         text = self.data.description_text
         links = self.data.description_links
@@ -321,7 +320,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
     def pack_main(self, layout):
         vbox = cellpack.VBox()
-        layout.set_font(1.1, family=const.ITEM_TITLE_FONT, bold=True)
+        layout.set_font(1.1, family=widgetset.ITEM_TITLE_FONT, bold=True)
         layout.set_text_color(self.ITEM_TITLE_COLOR)
         title = layout.textbox(self.data.name)
         # FIXME - title should wrap to the next line instead of being
