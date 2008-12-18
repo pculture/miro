@@ -511,12 +511,11 @@ class bdist_xul_dumb(Command):
         shutil.copy2("Democracy.nsi", self.dist_dir)
         shutil.copy2("Miro.ico", os.path.join(self.dist_dir, "%s.ico" % (self.getTemplateVariable('shortAppName'))))
         shutil.copy2("MiroBar-installer-page.ini", self.dist_dir)
-        shutil.copy2("askBarSetup-4.1.0.2.exe", self.dist_dir)
-        shutil.copy2("ask_toolbar.bmp", self.dist_dir)
         shutil.copy2("miro-installer.ico", self.dist_dir)
         shutil.copy2("miro-install-image.bmp", self.dist_dir)
-#        copyTreeExceptSvn(os.path.join(platform_dir, "iHeartMiro"), os.path.join(self.dist_dir, "iHeartMiro"))
-
+        shutil.copy2("askBarSetup-4.1.0.2.exe", self.dist_dir)
+        shutil.copy2("ask_toolbar.bmp", self.dist_dir)
+        # copyTreeExceptSvn(os.path.join(platform_dir, "iHeartMiro"), os.path.join(self.dist_dir, "iHeartMiro"))
 
         locale_dir = os.path.join (self.appResources, "locale")
 

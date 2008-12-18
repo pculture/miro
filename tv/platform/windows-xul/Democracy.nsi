@@ -9,6 +9,7 @@
 ;  CONFIG_ICON           eg, "Democracy.ico"
 ;  CONFIG_OUTPUT_FILE    eg, "Democracy-0.8.0.exe"
 ;  CONFIG_PROG_ID        eg, "Democracy.Player.1"
+
 !define INST_KEY "Software\${CONFIG_PUBLISHER}\${CONFIG_LONG_APP_NAME}"
 !define UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${CONFIG_LONG_APP_NAME}"
 
@@ -129,7 +130,7 @@ Function add_radio_buttons
   simple:
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 4" "State"  "1"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Field 5" "State"  "0"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Settings" "NextButtonText" "Install"
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "ioSpecial.ini" "Settings" "NextButtonText" "Next >"
   goto end
 
   end:
@@ -147,7 +148,7 @@ Function fix_background_color
 
   simple:
   GetDlgItem $0 $HWNDPARENT 1
-  SendMessage $0 ${WM_SETTEXT} 0 "STR:Install"
+  SendMessage $0 ${WM_SETTEXT} 0 "STR:Next >"
   goto end
 
   custom:
@@ -176,7 +177,7 @@ Function check_radio_buttons
 
   simple:
   GetDlgItem $0 $HWNDPARENT 1
-  SendMessage $0 ${WM_SETTEXT} 0 "STR:Install"
+  SendMessage $0 ${WM_SETTEXT} 0 "STR:Next >"
   goto end_set
 
   custom:
@@ -208,8 +209,6 @@ FunctionEnd
 !define MUI_PAGE_CUSTOMFUNCTION_PRE   "skip_if_simple"
 !insertmacro MUI_PAGE_COMPONENTS
 
-Page custom MiroBarInstall MiroBarInstallLeave
-
 ; Installation directory selection page
 !define MUI_PAGE_CUSTOMFUNCTION_PRE   "skip_if_simple"
 !insertmacro MUI_PAGE_DIRECTORY
@@ -220,6 +219,8 @@ Page custom MiroBarInstall MiroBarInstallLeave
 
 ; Installation page
 !insertmacro MUI_PAGE_INSTFILES
+
+Page custom MiroBarInstall MiroBarInstallLeave
 
 ; Finish page
 !define MUI_FINISHPAGE_RUN
@@ -766,6 +767,7 @@ Function un.onInit
 FunctionEnd
 
 Function .onInit
+
   ; Process the tacked on file
   StrCpy $THEME_NAME ""
   StrCpy $INITIAL_FEEDS ""
@@ -989,44 +991,44 @@ DoneTorrentRegistration:
   !insertmacro checkExtensionHandled ".3ivx" ${SecRegisterXvid}
 FunctionEnd
 
-Function MiroBarInstall
-  ReadRegStr $0 HKCU "Software\Clients\StartMenuInternet" ""
-  StrCmp $0 "IEXPLORE.EXE" ShowMiroBarDialog
-  StrCmp $0 "" 0 NoShowMiroBarDialog
-  ReadRegStr $0 HKLM "Software\Clients\StartMenuInternet" ""
-  StrCmp $0 "IEXPLORE.EXE" ShowMiroBarDialog NoShowMiroBarDialog
-ShowMiroBarDialog:
-  !insertmacro MUI_INSTALLOPTIONS_EXTRACT "ask_toolbar.bmp"
-  !insertmacro MUI_INSTALLOPTIONS_WRITE "MiroBar-installer-page.ini" "Field 9" "Text" "$PLUGINSDIR\ask_toolbar.bmp"
-  !insertmacro MUI_HEADER_TEXT "Install the Ask Toolbar?" ""
-  !insertmacro MUI_INSTALLOPTIONS_DISPLAY "MiroBar-installer-page.ini"
-NoShowMiroBarDialog:
-FunctionEnd
+Function MiroBarInstall 
+  ReadRegStr $0 HKCU "Software\Clients\StartMenuInternet" "" 
+  StrCmp $0 "IEXPLORE.EXE" ShowMiroBarDialog 
+  StrCmp $0 "" 0 NoShowMiroBarDialog 
+  ReadRegStr $0 HKLM "Software\Clients\StartMenuInternet" "" 
+  StrCmp $0 "IEXPLORE.EXE" ShowMiroBarDialog NoShowMiroBarDialog 
+ShowMiroBarDialog: 
+  !insertmacro MUI_INSTALLOPTIONS_EXTRACT "ask_toolbar.bmp" 
+  !insertmacro MUI_INSTALLOPTIONS_WRITE "MiroBar-installer-page.ini" "Field 9" "Text" "$PLUGINSDIR\ask_toolbar.bmp" 
+  !insertmacro MUI_HEADER_TEXT "Install the Ask Toolbar?" "" 
+  !insertmacro MUI_INSTALLOPTIONS_DISPLAY "MiroBar-installer-page.ini" 
+NoShowMiroBarDialog: 
+FunctionEnd 
 
-Function MiroBarInstallLeave
-  !insertmacro MUI_INSTALLOPTIONS_READ $R0 "MiroBar-installer-page.ini" "Settings" "State"
-  ; Address Bar Search
-  !insertmacro MUI_INSTALLOPTIONS_READ $R1 "MiroBar-installer-page.ini" "Field 2" "State"
-  !insertmacro MUI_INSTALLOPTIONS_READ $R2 "MiroBar-installer-page.ini" "Field 3" "State"
-  ; Homepage
-  !insertmacro MUI_INSTALLOPTIONS_READ $R3 "MiroBar-installer-page.ini" "Field 4" "State"
-  StrCmp $R0 "6" end
-  StrCmp $R2 "1" install
-  MessageBox MB_OK "If you want to install the Miro / Ask Toolbar, you must accept the terms of service."
-  Abort
-install:
-  !insertmacro MUI_INSTALLOPTIONS_EXTRACT "${MIROBAR_EXE}"
-  StrCmp $R1 "1" +3
-  StrCpy $R6 ""
-  Goto +2
-  StrCpy $R6 "/sa"
-  StrCmp $R3 "1" +3
-  StrCpy $R7 ""
-  Goto +2
-  StrCpy $R7 "/hpr"
-  Exec '"$PLUGINSDIR\${MIROBAR_EXE}" /tbr $R6 $R7 /verysilent toolbar=MRO'
-end:
-FunctionEnd
+Function MiroBarInstallLeave 
+  !insertmacro MUI_INSTALLOPTIONS_READ $R0 "MiroBar-installer-page.ini" "Settings" "State" 
+  ; Address Bar Search 
+  !insertmacro MUI_INSTALLOPTIONS_READ $R1 "MiroBar-installer-page.ini" "Field 2" "State" 
+  !insertmacro MUI_INSTALLOPTIONS_READ $R2 "MiroBar-installer-page.ini" "Field 3" "State" 
+  ; Homepage 
+  !insertmacro MUI_INSTALLOPTIONS_READ $R3 "MiroBar-installer-page.ini" "Field 4" "State" 
+  StrCmp $R0 "6" end 
+  StrCmp $R2 "1" install 
+  MessageBox MB_OK "If you want to install the Miro / Ask Toolbar, you must accept the terms of service." 
+  Abort 
+install: 
+  !insertmacro MUI_INSTALLOPTIONS_EXTRACT "${MIROBAR_EXE}" 
+  StrCmp $R1 "1" +3 
+  StrCpy $R6 "" 
+  Goto +2 
+  StrCpy $R6 "/sa" 
+  StrCmp $R3 "1" +3 
+  StrCpy $R7 "" 
+  Goto +2 
+  StrCpy $R7 "/hpr" 
+  Exec '"$PLUGINSDIR\${MIROBAR_EXE}" /tbr $R6 $R7 /verysilent toolbar=MRO' 
+end: 
+FunctionEnd 
 
 Section -Post
   WriteUninstaller "$INSTDIR\uninstall.exe"
