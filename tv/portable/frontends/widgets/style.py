@@ -977,14 +977,12 @@ class ListViewRenderer(widgetset.CustomCellRenderer):
         pass
 
 class NameRenderer(ListViewRenderer):
-    def __init__(self):
-        ListViewRenderer.__init__(self)
-        self.download_button = imagepool.get_surface(resources.path(
-            'images/small-download-button.png'))
+    button_font_size = 0.77
 
     def calc_height(self, style, layout):
         default = ListViewRenderer.calc_height(self, style, layout)
-        return max(default, self.download_button.height)
+        button = layout.button(_("Download"))
+        return max(default, button.get_size()[1])
 
     def _setup_layout(self):
         self.text = self.info.name
@@ -1003,8 +1001,10 @@ class NameRenderer(ListViewRenderer):
     def _pack_extra(self, layout, hbox):
         if not (self.info.downloaded or
                 self.info.state in ('downloading', 'paused')):
-            button = self.download_button
-            hbox.pack(cellpack.Hotspot('download', button))
+            layout.set_font(self.button_font_size)
+            button = layout.button(_('Download'))
+            hbox.pack(cellpack.align_middle(cellpack.Hotspot('download',
+                button)))
 
 class DescriptionRenderer(ListViewRenderer):
     color = (0.6, 0.6, 0.6)
