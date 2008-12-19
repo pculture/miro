@@ -867,7 +867,9 @@ class TableView(Widget):
                 self._redraw_cell(*self.hover_info)
 
     def on_motion_notify(self, treeview, event):
-        self._update_hover(treeview, event)
+        # We don't use hovers for 2.0, so let's this is disabled to save some
+        # CPU cycles
+        # self._update_hover(treeview, event)
 
         if self.hotspot_tracker:
             self.hotspot_tracker.update_position(event)

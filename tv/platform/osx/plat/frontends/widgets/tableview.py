@@ -437,6 +437,9 @@ class TableViewCommon(object):
         return NSDragOperationNone
 
     def recalcTrackingRects(self):
+        # We aren't using mouse hover for 2.0, so let's skip this.  It just
+        # wastes CPU cycles
+        return
         if self.hover_info is not None:
             rect = self.frameOfCellAtColumn_row_(self.hover_info[1],
                     self.hover_info[0])
