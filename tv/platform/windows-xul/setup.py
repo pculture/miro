@@ -184,6 +184,7 @@ xulrunnerbrowser_ext = Extension("miro.plat.frontends.widgets.xulrunnerbrowser",
             os.path.join(XULRUNNER_SDK_PATH, 'sdk', 'include'),
             os.path.join(XULRUNNER_SDK_PATH, 'include'),
             os.path.join(XULRUNNER_SDK_PATH, 'include', 'xpcom'),
+            portable_xpcom_dir,
         ] + GTK_INCLUDE_DIRS,
         define_macros=[
             ("XP_WIN", 1), 
