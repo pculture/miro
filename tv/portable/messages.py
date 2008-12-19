@@ -1038,10 +1038,10 @@ class ItemList(FrontendMessage):
     id -- id of the object being tracked (same as in TrackItems)
     items -- list of ItemInfo objects
     """
-    def __init__(self, type, id, items):
+    def __init__(self, type, id, item_infos):
         self.type = type
         self.id = id
-        self.items = [ItemInfo(item) for item in items]
+        self.items = item_infos
 
 class ItemsChanged(FrontendMessage):
     """Informs the frontend that the items in a feed have changed.

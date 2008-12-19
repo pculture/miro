@@ -28,6 +28,7 @@
 
 """messagehandler.py -- Backend message handler"""
 
+from copy import copy
 import logging
 
 from miro import app
@@ -66,6 +67,7 @@ class ViewTracker(object):
         self.add_callbacks()
         self.reset_changes()
         self.ignore_changes = False
+        self._last_sent_info = {}
 
     def reset_changes(self):
         self.changed = set()
@@ -86,11 +88,35 @@ class ViewTracker(object):
                 # don't send any message
                 self.removed.remove(self.added.pop(i))
         message = self.make_changed_message(
-                [self.InfoClass(obj) for obj in self.added],
-                [self.InfoClass(obj) for obj in self.changed],
-                [obj.id for obj in self.removed])
-        message.send_to_frontend()
+                self._make_added_list(self.added),
+                self._make_changed_list(self.changed),
+                self._make_removed_list(self.removed))
+        if message.added or message.changed or message.removed:
+            message.send_to_frontend()
         self.reset_changes()
+
+    def _make_new_info(self, obj):
+        info = self.InfoClass(obj)
+        self._last_sent_info[obj.id] = copy(info)
+        return info
+
+    def _make_added_list(self, added):
+        return [self._make_new_info(obj) for obj in added]
+
+    def _make_changed_list(self, changed):
+        retval = []
+        for obj in changed:
+            info = self.InfoClass(obj)
+            if info.__dict__ != self._last_sent_info[obj.id].__dict__:
+                retval.append(info)
+                self._last_sent_info[obj.id] = copy(info)
+        return retval
+
+    def _make_removed_list(self, removed):
+        for obj in removed:
+            del self._last_sent_info[obj.id]
+        return [obj.id for obj in removed]
+
 
     def schedule_send_messages(self):
         # We don't send messages immediately so that if an object gets changed
@@ -168,7 +194,7 @@ class TabTracker(ViewTracker):
         response = messages.TabList(self.type)
         current_folder_id = None
         for tab in self.get_tab_view():
-            info = self.InfoClass(tab.obj)
+            info = self._make_new_info(tab.obj)
             if tab.obj.getFolder() is None:
                 response.append(info)
                 if isinstance(tab.obj, FolderBase):
@@ -224,7 +250,7 @@ class GuideTracker(ViewTracker):
         return messages.TabsChanged('guide', added, changed, removed)
 
     def send_initial_list(self):
-        info_list = [messages.GuideInfo(g) for g in views.guides]
+        info_list = self._make_added_list(views.guides)
         messages.GuideList(info_list).send_to_frontend()
 
 class WatchedFolderTracker(ViewTracker):
@@ -237,8 +263,7 @@ class WatchedFolderTracker(ViewTracker):
         return messages.WatchedFoldersChanged(added, changed, removed)
 
     def send_initial_list(self):
-        info_list = [messages.WatchedFolderInfo(feed) \
-                for feed in views.watchedFolders]
+        info_list = self._make_added_list(views.watchedFolders)
         messages.WatchedFolderList(info_list).send_to_frontend()
 
 class ItemTrackerBase(ViewTracker):
@@ -252,7 +277,8 @@ class ItemTrackerBase(ViewTracker):
         return [self.view]
 
     def send_initial_list(self):
-        messages.ItemList(self.type, self.id, self.view).send_to_frontend()
+        infos = self._make_added_list(self.view)
+        messages.ItemList(self.type, self.id, infos).send_to_frontend()
 
 class FeedItemTracker(ItemTrackerBase):
     type = 'feed'
