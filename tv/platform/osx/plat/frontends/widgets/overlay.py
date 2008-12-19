@@ -68,7 +68,6 @@ class OverlayPalette (NSWindowController):
     titleLabel          = IBOutlet('titleLabel')
     feedLabel           = IBOutlet('feedLabel')
     shareButton         = IBOutlet('shareButton')
-    shareMenu           = IBOutlet('shareMenu')
     keepButton          = IBOutlet('keepButton')
     deleteButton        = IBOutlet('deleteButton')
     addToLibButton      = IBOutlet('addToLibButton')
@@ -298,8 +297,8 @@ class OverlayPalette (NSWindowController):
         app.widgetapp.remove_items([item_info])
         
     def share_(self, sender):
-        event = NSApplication.sharedApplication().currentEvent()
-        NSMenu.popUpContextMenu_withEvent_forView_(self.shareMenu, event, sender)
+        item_info = self.item_info
+        app.widgetapp.share_item(item_info)
     
     def addToLibrary_(self, sender):
         messages.AddItemToLibrary(self.item_info.id).send_to_backend()
