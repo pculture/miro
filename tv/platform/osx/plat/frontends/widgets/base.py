@@ -231,7 +231,6 @@ class Container(Widget):
         self.invalidate_size_request()
         if self.viewport:
             self.place_children()
-            self.queue_redraw()
 
     def viewport_created(self):
         self.place_children()
