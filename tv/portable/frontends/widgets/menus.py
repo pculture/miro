@@ -226,22 +226,34 @@ def on_translate():
 def on_planet():
     app.widgetapp.open_url(config.get(prefs.PLANET_URL))
 
-
 # action_group name -> list of MenuItem labels belonging to action_group
 action_groups = {
+        'NonPlaying': [
+            'Open',
+            'NewDownload',
+            'NewChannel',
+            'NewGuide',
+            'NewSearchChannel',
+            'NewChannelFolder',
+            'UpdateAllChannels',
+            'ImportChannels',
+            'ExportChannels',
+            'NewPlaylist',
+            'NewPlaylistFolder'
+        ],
         'FeedSelected': [
             'RenameChannel',
             'MailChannel',
             'CopyChannelURL'
         ],
-        'FeedsSelected' : [
+        'FeedsSelected': [
             'RemoveChannels',
             'UpdateChannels',
         ],
-        'PlaylistSelected' : [
+        'PlaylistSelected': [
             'RenamePlaylist',
         ],
-        'PlaylistsSelected' : [
+        'PlaylistsSelected': [
             'RemovePlaylists',
         ],
         'PlayableSelected': [
@@ -295,6 +307,8 @@ class MenuManager(signals.SignalEmitter):
         if app.playback_manager.is_playing and app.playback_manager.detached_window is not None:
             self.enabled_groups.add('PlayableSelected')
             self.enabled_groups.add('Playing')
+        else:
+            self.enabled_groups.add('NonPlaying')
 
     def set_play_pause(self, state):
         # don't call reset here!
@@ -361,6 +375,5 @@ class MenuManager(signals.SignalEmitter):
         """
         self.reset()
         self.enabled_groups = set(['AlwaysOn'])
-        self.enabled_groups.add('PlayableSelected')
         self.enabled_groups.add('Playing')
         self.emit('enabled-changed')
