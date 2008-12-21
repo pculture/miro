@@ -282,11 +282,12 @@ class Font(object):
     def line_height(self):
         return Font.line_height_sizer.defaultLineHeightForFont_(self.nsfont)
 
-class Button(object):
-    
-    def __init__(self, cell, text, font, pressed, disabled):
+class NativeButton(object):
+
+    def __init__(self, text, font, pressed, disabled=False):
         self.min_width = 0
-        self.cell = cell
+        self.cell = NSButtonCell.alloc().init()
+        self.cell.setBezelStyle_(NSRoundRectBezelStyle)
         self.cell.setButtonType_(NSMomentaryPushInButton)
         self.cell.setFont_(font.nsfont)
         self.cell.setEnabled_(not disabled)
@@ -313,16 +314,10 @@ class Button(object):
         NSGraphicsContext.currentContext().restoreGraphicsState()
         context.path.removeAllPoints()
 
-class NativeButton(Button):
-
-    def __init__(self, text, font, pressed, disabled=False):
-        cell = NSButtonCell.alloc().init()
-        cell.setBezelStyle_(NSRoundRectBezelStyle)
-        Button.__init__(self, cell, text, font, pressed, disabled)
-
-class StyledButtonCell(NSButtonCell):
-    PAD_HORIZONTAL = 1
-    PAD_VERTICAL = 1
+class StyledButton(object):
+    PAD_HORIZONTAL = 24
+    BIG_PAD_VERTICAL = 4
+    SMALL_PAD_VERTICAL = 2
     TOP_COLOR = (1, 1, 1)
     BOTTOM_COLOR = (0.86, 0.86, 0.86)
     LINE_COLOR_TOP = (0.71, 0.71, 0.71)
@@ -330,61 +325,52 @@ class StyledButtonCell(NSButtonCell):
     TEXT_COLOR = (0.4, 0.4, 0.4)
     DISABLED_COLOR = (0.86, 0.86, 0.86)
     DISABLED_TEXT_COLOR = (0.5, 0.5, 0.5)
-    ICON_PAD = 10
+    ICON_PAD = 8
     
-    def init(self):
-        NSButtonCell.init(self)
-        self.setBezelStyle_(NSSmallSquareBezelStyle)
-        return self
+    def __init__(self, text, font, pressed, disabled=False):
+        attributes = NSMutableDictionary.alloc().init()
+        color = NSColor.colorWithDeviceRed_green_blue_alpha_(self.TEXT_COLOR[0], self.TEXT_COLOR[1], self.TEXT_COLOR[2], 1.0)
+        attributes.setObject_forKey_(color, NSForegroundColorAttributeName)
+        attributes.setObject_forKey_(font.nsfont, NSFontAttributeName)
+        self.title = NSAttributedString.alloc().initWithString_attributes_(text, attributes)
+        self.pressed = pressed
+        self.disabled = disabled
+        self.image = None
 
-    def cellSize(self):
-        width, height = NSButtonCell.cellSize(self)
-        if self.image():
-            width += self.image().size().width + self.ICON_PAD
-            height = max(height, self.image().size().height)
-            height += self.PAD_VERTICAL * 2
+    def set_icon(self, icon):
+        self.image = icon.image.copy()
+        self.image.setFlipped_(YES)
+
+    def get_size(self):
+        width, height = self.get_text_size()
+        if self.image is not None:
+            width += self.image.size().width + self.ICON_PAD
+            height = max(height, self.image.size().height)
+            height += self.BIG_PAD_VERTICAL * 2
         else:
-            width += 48
+            height += self.SMALL_PAD_VERTICAL * 2
         if height % 2 == 1:
             # make height even so that the radius of our circle is whole
             height += 1
         width += self.PAD_HORIZONTAL * 2
-        return NSSize(width, height)
+        return width, height
 
-    def setImage_(self, image):
-        if image is not None:
-            image.setFlipped_(YES)
-        NSButtonCell.setImage_(self, image)
+    def get_text_size(self):
+        size = self.title.size()
+        return size.width, size.height
 
-    def setTitle_(self, title):
-        attributes = NSMutableDictionary.alloc().init()
-        color = NSColor.colorWithDeviceRed_green_blue_alpha_(self.TEXT_COLOR[0], self.TEXT_COLOR[1], self.TEXT_COLOR[2], 1.0)
-        attributes.setObject_forKey_(color, NSForegroundColorAttributeName)
-        attributes.setObject_forKey_(self.font(), NSFontAttributeName)
-        self.setAttributedTitle_(NSAttributedString.alloc().initWithString_attributes_(title, attributes))
+    def draw(self, context, x, y, width, height):
+        self._draw_button(context, x, y, width, height)
+        self._draw_title(context, x, y)
+        context.path.removeAllPoints()
 
-    def draw_path(self, context, x, y, width, height, radius):
-        inner_width = width - radius * 2
-        context.move_to(x + radius, y)
-        context.rel_line_to(inner_width, 0)
-        context.arc(x + width - radius, y+radius, radius, -math.pi/2, math.pi/2)
-        context.rel_line_to(-inner_width, 0)
-        context.arc(x + radius, y+radius, radius, math.pi/2, -math.pi/2)
-
-    def draw_path_reverse(self, context, x, y, width, height, radius):
-        inner_width = width - radius * 2
-        context.move_to(x + radius, y)
-        context.arc_negative(x + radius, y+radius, radius, -math.pi/2, math.pi/2)
-        context.rel_line_to(inner_width, 0)
-        context.arc_negative(x + width - radius, y+radius, radius, math.pi/2, -math.pi/2)
-        context.rel_line_to(-inner_width, 0)
-
-    def draw_button(self, context, x, y, width, height, radius):
-        self.draw_path(context, x, y, width, height, radius)
-        if not self.isEnabled():
+    def _draw_button(self, context, x, y, width, height):
+        radius = height / 2
+        self._draw_path(context, x, y, width, height, radius)
+        if self.disabled:
             end_color = self.DISABLED_COLOR
             start_color = self.DISABLED_COLOR
-        elif self.state() == NSOnState:
+        elif self.pressed:
             end_color = self.TOP_COLOR
             start_color = self.BOTTOM_COLOR
         else:
@@ -397,9 +383,25 @@ class StyledButtonCell(NSButtonCell):
         context.gradient_fill(gradient)
         self._draw_border(context, x, y, width, height, radius)
 
+    def _draw_path(self, context, x, y, width, height, radius):
+        inner_width = width - radius * 2
+        context.move_to(x + radius, y)
+        context.rel_line_to(inner_width, 0)
+        context.arc(x + width - radius, y+radius, radius, -math.pi/2, math.pi/2)
+        context.rel_line_to(-inner_width, 0)
+        context.arc(x + radius, y+radius, radius, math.pi/2, -math.pi/2)
+
+    def _draw_path_reverse(self, context, x, y, width, height, radius):
+        inner_width = width - radius * 2
+        context.move_to(x + radius, y)
+        context.arc_negative(x + radius, y+radius, radius, -math.pi/2, math.pi/2)
+        context.rel_line_to(inner_width, 0)
+        context.arc_negative(x + width - radius, y+radius, radius, math.pi/2, -math.pi/2)
+        context.rel_line_to(-inner_width, 0)
+
     def _draw_border(self, context, x, y, width, height, radius):
-        self.draw_path(context, x, y, width, height, radius)
-        self.draw_path_reverse(context, x+1, y+1, width-2, height-2, radius-1)
+        self._draw_path(context, x, y, width, height, radius)
+        self._draw_path_reverse(context, x+1, y+1, width-2, height-2, radius-1)
         gradient = drawing.Gradient(x, y, x, y+height)
         gradient.set_start_color(self.LINE_COLOR_TOP)
         gradient.set_end_color(self.LINE_COLOR_BOTTOM)
@@ -409,40 +411,14 @@ class StyledButtonCell(NSButtonCell):
         context.gradient_fill(gradient)
         context.restore()
 
-    def drawBezelWithFrame_inView_(self, rect, view):
-        size = self.cellSize()
-        radius = size.height / 2
-        context = drawing.DrawingContext(view, rect, rect)
-        self.draw_button(context, 0, 0, size.width, size.height, radius)
-
-    def _calc_inner_x(self):
-        csize = self.cellSize()
-        size = self.attributedTitle().size()
-        if self.image():
-            width = size.width + self.image().size().width + self.ICON_PAD
+    def _draw_title(self, context, x, y):
+        c_width, c_height = self.get_size()
+        t_width, t_height = self.get_text_size()
+        x = x + self.PAD_HORIZONTAL
+        y = y + (c_height - t_height) / 2
+        if self.image is not None:
+            self.image.drawAtPoint_fromRect_operation_fraction_(NSPoint(x, y+3), NSZeroRect, NSCompositeSourceOver, 1.0)
+            x += self.image.size().width + self.ICON_PAD
         else:
-            width = size.width
-        return (csize.width - width) / 2
-
-    def drawTitle_withFrame_inView_(self, title, rect, view):
-        size = title.size()
-        x = self._calc_inner_x()
-        if self.image():
-            x += self.image().size().width + self.ICON_PAD
-        origin = NSPoint(x, 0.5 + (self.cellSize().height - size.height) / 2)
-        title.drawAtPoint_(origin)
-
-        return NSRect(origin, size)
-
-    def drawImage_withFrame_inView_(self, image, rect, view):
-        x = self._calc_inner_x()
-        y = (self.cellSize().height - image.size().height) / 2
-        image.drawAtPoint_fromRect_operation_fraction_(NSPoint(x, y),
-                NSRect(NSPoint(0, 0), image.size()), NSCompositeSourceOver,
-                1.0)
-
-class StyledButton(Button):
-
-    def __init__(self, text, font, pressed, disabled=False):
-        cell = StyledButtonCell.alloc().init()
-        Button.__init__(self, cell, text, font, pressed, disabled)
+            y += 0.5
+        self.title.drawAtPoint_(NSPoint(x, y))
