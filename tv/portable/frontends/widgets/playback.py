@@ -469,3 +469,7 @@ def handle_key_press(key, mods):
     if key == menubar.DOWN_ARROW:
         app.widgetapp.down_volume()
         return True
+
+    if key == menubar.SPACE:
+        app.playback_manager.play_pause()
+        return True
