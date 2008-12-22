@@ -88,6 +88,7 @@ def run_dialog(channel_infos, downloaded_items, downloading_items, watched_feeds
                     "in the Miro preference panel."
                 ))
                 lab.set_wrap(True)
+                lab.set_size_request(390, -1)
                 v.pack_start(widgetutil.align_left(lab, bottom_pad=5))
 
             if downloading_items:
@@ -99,6 +100,7 @@ def run_dialog(channel_infos, downloaded_items, downloading_items, watched_feeds
                     len(channel_infos)
                 ))
                 lab_downloading.set_wrap(True)
+                lab_downloading.set_size_request(390, -1)
                 v.pack_start(widgetutil.align_left(lab_downloading))
 
             rc_window.set_extra_widget(v)
