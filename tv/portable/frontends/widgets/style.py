@@ -493,12 +493,11 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         license_hotspot = self._make_button(layout, _('License Page'), 'visit_license', not self.data.license)
         hbox.pack(cellpack.align_center(license_hotspot))
-        hbox.pack_space(12)
 
         # 12px between the normal content and the flap border and 8px between
         # the border and the top of the flap buttons.
         vbox.pack_space(20)
-        vbox.pack(hbox)
+        vbox.pack(cellpack.pad(hbox, left=2, right=15))
         vbox.pack_space(8)
         self.flap_height = vbox.get_size()[1] - 12
         # don't count space between the normal content and the flap
