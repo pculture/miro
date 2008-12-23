@@ -130,6 +130,11 @@ def _videobox_widget():
     return app.widgetapp.window.videobox._widget
 
 def _window():
+    """Returns the window used for playback.  This is either the main window
+    or the detached window.
+    """
+    if app.playback_manager.detached_window:
+        return app.playback_manager.detached_window._window
     return app.widgetapp.window._window
 
 def can_play_file(path, yes_callback, no_callback):
