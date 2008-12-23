@@ -151,6 +151,7 @@ class Box(Packer):
         """
         self.spacing = spacing
         self.children = []
+        self.children_end = []
         self.expand_count = 0
 
     def pack(self, child, expand=False):
@@ -169,20 +170,43 @@ class Box(Packer):
         if expand:
             self.expand_count += 1
 
+    def pack_end(self, child, expand=False):
+        """Add a new child to the end box.  The child will be placed before
+        all the children packed before with pack_end.  Arguments:
+        
+        child -- child to pack.  It can be anything with a get_size() method,
+            including TextBoxes, ImageSurfarces, Buttons, Boxes and
+            Backgrounds.
+        expand -- If True, then the child will enlarge if space available is
+            more than the space required.
+        """
+        if not (hasattr(child, 'draw') and hasattr(child, 'get_size')):
+            raise TypeError("%s can't be drawn" % child)
+        self.children_end.append(Packing(child, expand))
+        if expand:
+            self.expand_count += 1
+
     def pack_space(self, size, expand=False):
         """Pack whitespace into the box."""
         self.children.append(WhitespacePacking(size, expand))
         if expand:
             self.expand_count += 1
 
+    def pack_space_end(self, size, expand=False):
+        """Pack whitespace into the end of box."""
+        self.children_end.append(WhitespacePacking(size, expand))
+        if expand:
+            self.expand_count += 1
+
     def _calc_size(self):
         length = 0
         breadth = 0 
-        for packing in self.children:
+        for packing in self.children + self.children_end:
             child_length, child_breadth = packing.calc_size(self._translate)
             length += child_length
             breadth = max(breadth, child_breadth)
-        length += self.spacing * (len(self.children) - 1)
+        total_children = len(self.children) + len(self.children_end)
+        length += self.spacing * (total_children - 1)
         return self._translate(length, breadth)
 
     def _extra_space_iter(self, total_extra_space):
@@ -214,6 +238,15 @@ class Box(Packer):
                 child_length += extra_space_iter.next()
             yield packing, pos, child_length
             pos += child_length + self.spacing
+
+        pos = total_length
+        for packing in self.children_end:
+            child_length, child_breadth = packing.calc_size(self._translate)
+            if packing.expand:
+                child_length += extra_space_iter.next()
+            pos -= child_length
+            yield packing, pos, child_length
+            pos -= self.spacing
 
     def _layout(self, context, x, y, width, height):
         total_length, total_breadth = self._translate(width, height)

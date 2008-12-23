@@ -203,7 +203,6 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     ITEM_DESC_COLOR = (0.4, 0.4, 0.4)
     EMBLEM_FONT_SIZE = 0.77
     GRADIENT_HEIGHT = 25
-    FLAP_HEIGHT = 40
     FLAP_BACKGROUND_COLOR = (225.0 / 255.0, 225.0 / 255.0, 225.0 / 255.0)
     FLAP_HIGHLIGHT_COLOR = (237.0 / 255.0, 237.0 / 255.0, 237.0 / 255.0)
 
@@ -296,12 +295,15 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             return hotspot
 
     def add_background(self, content):
-        inner = cellpack.Background(content, margin=(12, 12, 12, 12))
+        if self.show_details:
+            background_drawer = self.draw_background_details
+            bottom_pad = 0 # pack_flap handles this for us
+        else:
+            background_drawer = self.draw_background
+            bottom_pad = 12
+        inner = cellpack.Background(content, margin=(12, bottom_pad, 0, 12))
         if self.use_custom_style:
-            if self.show_details:
-                inner.set_callback(self.draw_background_details)
-            else:
-                inner.set_callback(self.draw_background)
+            inner.set_callback(background_drawer)
         return cellpack.Background(inner, margin=(5, 20, 5, 20))
 
     def make_description(self, layout):
@@ -465,7 +467,6 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
     def pack_flap(self, layout):
         vbox = cellpack.VBox()
-        vbox.pack_space(25)
         hbox = cellpack.HBox(spacing=15)
 
         layout.set_font(0.77)
@@ -492,8 +493,15 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         license_hotspot = self._make_button(layout, _('License Page'), 'visit_license', not self.data.license)
         hbox.pack(cellpack.align_center(license_hotspot))
+        hbox.pack_space(12)
 
+        # 12px between the normal content and the flap border and 8px between
+        # the border and the top of the flap buttons.
+        vbox.pack_space(20)
         vbox.pack(hbox)
+        vbox.pack_space(8)
+        self.flap_height = vbox.get_size()[1] - 12
+        # don't count space between the normal content and the flap
         return vbox
 
     def download_textbox(self, layout):
@@ -749,8 +757,9 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         outer_hbox.pack(vbox, expand=True)
         outer_vbox.pack(outer_hbox)
+        outer_hbox.pack_space(12)
         if self.show_details:
-            outer_vbox.pack(cellpack.align_bottom(self.pack_flap(layout)), expand=True)
+            outer_vbox.pack_end(self.pack_flap(layout))
         return self.add_background(outer_vbox)
 
     def setup_style(self, style):
@@ -836,13 +845,17 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
     def draw_background_details(self, context, x, y, width, height):
         # draw the normal background on top of the flap
-        self.draw_background(context, x, y, width, height-self.FLAP_HEIGHT)
+        self.draw_background(context, x, y, width, height-self.flap_height)
 
         # Draw the bottom flap
         if self.selected:
             flap_bg_color = self.SELECTED_BACKGROUND_FLAP_COLOR
             border_color = self.SELECTED_BORDER_COLOR_BOTTOM
             border_width = 3
+            # add a bit extra space to make the buttons appear vertically
+            # centered with the larger border
+            height += 2
+            self.flap_height += 2
         else:
             flap_bg_color = self.FLAP_BACKGROUND_COLOR
             border_color = self.BORDER_COLOR_BOTTOM
@@ -850,8 +863,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         # clip to the region where the flap is.
         context.save()
-        context.rectangle(x, y + height-self.FLAP_HEIGHT, width, 
-                self.FLAP_HEIGHT)
+        context.rectangle(x, y + height-self.flap_height, width, 
+                self.flap_height)
         context.clip()
         # Draw flap background
         self.make_border_path(context, x, y, width, height, border_width)
@@ -863,7 +876,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         self.make_border_path(context, x, y, width, height, border_width + 0.5)
         context.stroke()
         # Draw the top highlight for the flap
-        context.move_to(x, y + height - self.FLAP_HEIGHT + 0.5)
+        context.move_to(x, y + height - self.flap_height + 0.5)
         context.rel_line_to(width, 0)
         context.stroke()
         context.restore()
@@ -872,8 +885,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         # border dosen't quite reach the top of the flap.  Draw the outer
         # border
         context.save()
-        context.rectangle(x, y + height-self.FLAP_HEIGHT-5, width,
-                self.FLAP_HEIGHT+5)
+        context.rectangle(x, y + height-self.flap_height-5, width,
+                self.flap_height+5)
         context.clip()
 
         self.make_border_path(context, x, y, width, height, border_width / 2.0)
