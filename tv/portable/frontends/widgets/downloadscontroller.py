@@ -66,8 +66,11 @@ class DownloadsController(itemlistcontroller.ItemListController):
         vbox.pack_start(self.downloads_section)
         vbox.pack_start(self.seeding_section)
 
+        background = widgetset.SolidBackground((1, 1, 1))
+        background.add(vbox)
+
         scroller = widgetset.Scroller(False, True)
-        scroller.add(vbox)
+        scroller.add(background)
 
         self.widget.normal_view_vbox.pack_start(scroller, expand=True)
 
