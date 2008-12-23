@@ -194,9 +194,11 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     MIN_WIDTH = 600
     BORDER_COLOR_TOP = css_to_color('#d0d0d0')
     BORDER_COLOR_BOTTOM = css_to_color('#9c9c9c')
-    SELECTED_BACKGROUND_FLAP_COLOR = (0.84, 0.88, 0.90)
+    SELECTED_BORDER_COLOR_TOP = css_to_color('#c0ddfd')
+    SELECTED_BORDER_COLOR_BOTTOM = css_to_color('#82b9f4')
+    SELECTED_BACKGROUND_FLAP_COLOR = css_to_color('#5293d1')
     SELECTED_BACKGROUND_COLOR = (0.94, 0.97, 0.99)
-    SELECTED_HIGHLIGHT_COLOR = (0.43, 0.63, 0.82)
+    SELECTED_BACKGROUND_COLOR_BOTTOM = css_to_color('#cae3fe')
     ITEM_TITLE_COLOR = (0.2, 0.2, 0.2)
     ITEM_DESC_COLOR = (0.4, 0.4, 0.4)
     EMBLEM_FONT_SIZE = 0.77
@@ -297,9 +299,9 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         inner = cellpack.Background(content, margin=(12, 12, 12, 12))
         if self.use_custom_style:
             if self.show_details:
-                inner.set_callback(self.draw_background_details, self.selected)
+                inner.set_callback(self.draw_background_details)
             else:
-                inner.set_callback(self.draw_background, self.selected)
+                inner.set_callback(self.draw_background)
         return cellpack.Background(inner, margin=(5, 20, 5, 20))
 
     def make_description(self, layout):
@@ -776,18 +778,20 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         widgetutil.round_rect_reverse(context, x + inset, y + inset,
                 width - inset*2, height - inset*2, 7)
 
-    def draw_background(self, context, x, y, width, height, selected):
+    def draw_background(self, context, x, y, width, height):
         # Draw the gradient
-        if selected:
+        if self.selected:
             self.make_border_path(context, x, y, width, height, 0)
             context.set_color(self.SELECTED_BACKGROUND_COLOR)
             context.fill()
 
             bg_color_start = self.SELECTED_BACKGROUND_COLOR
-            bg_color_end = tuple(max(c - 0.16, 0.0) for c in bg_color_start)
+            bg_color_end = self.SELECTED_BACKGROUND_COLOR_BOTTOM
+            highlight_inset = 3.5
         else:
             bg_color_start = context.style.bg_color
             bg_color_end = tuple(c - 0.06 for c in bg_color_start)
+            highlight_inset = 1.5
         context.save()
         self.make_border_path(context, x, y, width, height, 0)
         context.clip()
@@ -799,82 +803,82 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         context.gradient_fill(gradient)
         context.restore()
         # Draw the border
-        self.draw_border(context, selected, x, y, width, height)
+        self.draw_border(context, x, y, width, height)
         # Draw the highlight
         context.set_line_width(1)
-        self.make_border_path(context, x, y, width, height, 1.5)
+        self.make_border_path(context, x, y, width, height, highlight_inset)
         context.set_color(widgetutil.WHITE)
         context.stroke()
 
-    def draw_border(self, context, selected, x, y, width, height):
+    def draw_border(self, context, x, y, width, height):
         if self.selected:
-            self.make_border_path(context, x, y, width, height, 0.5)
-            context.set_line_width(3)
-            context.set_color(self.SELECTED_HIGHLIGHT_COLOR)
-            context.stroke()
-        else:
-            # we want to draw the border using a gradient.  So we set the clip
-            # area to be exactly where the border should be, then do a
-            # gradient fill
-            context.save()
-            self.make_border_path(context, x, y, width, height, 0)
-            self.make_border_path_reverse(context, x, y, width, height, 1)
-            context.clip()
-            gradient = widgetset.Gradient(x, y, x, y + height)
-            gradient.set_start_color(self.BORDER_COLOR_TOP)
-            gradient.set_end_color(self.BORDER_COLOR_BOTTOM)
-            context.rectangle(x, y, width, height)
-            context.gradient_fill(gradient)
-            context.restore()
-
-    def draw_background_details(self, context, x, y, width, height, selected):
-        if selected:
-            bg_color = self.SELECTED_BACKGROUND_FLAP_COLOR
-            bg_color_start = self.SELECTED_BACKGROUND_COLOR
-            bg_color_end = tuple(max(c - 0.16, 0.0) for c in bg_color_start)
+            start_color = self.SELECTED_BORDER_COLOR_TOP
+            end_color = self.SELECTED_BORDER_COLOR_BOTTOM
             border_width = 3
-            border_color = self.SELECTED_HIGHLIGHT_COLOR
         else:
-            bg_color = self.FLAP_BACKGROUND_COLOR
-            bg_color_start = context.style.bg_color
-            bg_color_end = tuple(c - 0.06 for c in bg_color_start)
+            start_color = self.BORDER_COLOR_TOP
+            end_color = self.BORDER_COLOR_BOTTOM
             border_width = 1
-            border_color = self.BORDER_COLOR_BOTTOM
-
+        # we want to draw the border using a gradient.  So we set the clip
+        # area to be exactly where the border should be, then do a
+        # gradient fill
         context.save()
-        # Draw background color
         self.make_border_path(context, x, y, width, height, 0)
-        context.set_color(bg_color)
-        context.fill()
-        # Draw the outer border
-        context.set_line_width(border_width)
-        self.make_border_path(context, x, y, width, height, 0.5)
-        context.set_color(border_color)
-        context.stroke()
-        # Draw the highlight of outer border
-        context.set_line_width(1)
-        self.make_border_path(context, x, y, width, height, 1.5)
-        context.set_color(self.FLAP_HIGHLIGHT_COLOR)
-        context.stroke()
-        # Paint inner box background
-        self.make_border_path(context, x, y, width, height - self.FLAP_HEIGHT, 0.5)
-        context.set_color(bg_color_start)
-        context.fill()
-        # Gradient
-        top = y + height - self.GRADIENT_HEIGHT - self.FLAP_HEIGHT
-        gradient = widgetset.Gradient(0, top, 0, top + self.GRADIENT_HEIGHT)
-        gradient.set_start_color(bg_color_start)
-        gradient.set_end_color(bg_color_end)
-        # FIXME - this is technically wrong and results in rounded corners on the
-        # upper side--but it's on the light side and unnoticeable.
-        self.make_border_path(context, x, top, width, self.GRADIENT_HEIGHT, 2)
+        self.make_border_path_reverse(context, x, y, width, height,
+                border_width)
+        context.clip()
+        gradient = widgetset.Gradient(x, y, x, y + height)
+        gradient.set_start_color(start_color)
+        gradient.set_end_color(end_color)
+        context.rectangle(x, y, width, height)
         context.gradient_fill(gradient)
-        # Draw the inner border
-        self.draw_border(context, selected, x, y, width, height - self.FLAP_HEIGHT)
-        # Draw the highlight of inner border
+        context.restore()
+
+    def draw_background_details(self, context, x, y, width, height):
+        # draw the normal background on top of the flap
+        self.draw_background(context, x, y, width, height-self.FLAP_HEIGHT)
+
+        # Draw the bottom flap
+        if self.selected:
+            flap_bg_color = self.SELECTED_BACKGROUND_FLAP_COLOR
+            border_color = self.SELECTED_BORDER_COLOR_BOTTOM
+            border_width = 3
+        else:
+            flap_bg_color = self.FLAP_BACKGROUND_COLOR
+            border_color = self.BORDER_COLOR_BOTTOM
+            border_width = 1
+
+        # clip to the region where the flap is.
+        context.save()
+        context.rectangle(x, y + height-self.FLAP_HEIGHT, width, 
+                self.FLAP_HEIGHT)
+        context.clip()
+        # Draw flap background
+        self.make_border_path(context, x, y, width, height, border_width)
+        context.set_color(flap_bg_color)
+        context.fill()
+        # Draw the left, right and bottom highlight for the flap
+        context.set_color(self.FLAP_HIGHLIGHT_COLOR)
         context.set_line_width(1)
-        self.make_border_path(context, x, y, width, height - self.FLAP_HEIGHT, 1.5)
-        context.set_color(widgetutil.WHITE)
+        self.make_border_path(context, x, y, width, height, border_width + 0.5)
+        context.stroke()
+        # Draw the top highlight for the flap
+        context.move_to(x, y + height - self.FLAP_HEIGHT + 0.5)
+        context.rel_line_to(width, 0)
+        context.stroke()
+        context.restore()
+        # Draw the flap border.  Start a little above the usual start of the
+        # flap to account for the fact that the rounded corner of the normal
+        # border dosen't quite reach the top of the flap.  Draw the outer
+        # border
+        context.save()
+        context.rectangle(x, y + height-self.FLAP_HEIGHT-5, width,
+                self.FLAP_HEIGHT+5)
+        context.clip()
+
+        self.make_border_path(context, x, y, width, height, border_width / 2.0)
+        context.set_color(border_color)
+        context.set_line_width(border_width)
         context.stroke()
         context.restore()
 
