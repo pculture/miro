@@ -242,6 +242,13 @@ class DrawingMixin(object):
     def calc_size_request(self):
         return self.size_request(self.view.layout_manager)
 
+    # squish width / squish height only make sense on GTK
+    def set_squish_width(self, setting):
+        pass
+
+    def set_squish_height(self, setting):
+        pass
+
     # Default implementations for methods that subclasses override.
 
     def is_opaque(self):

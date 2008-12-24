@@ -693,9 +693,11 @@ class HeaderToolbar(widgetset.Background):
                 self._button_hbox)
         self._button_hbox_container.show()
         self.normal_button = ViewSwitchButton('normal-view-button')
+        self.normal_button.set_squish_width(True)
         self.normal_button.connect('clicked', self._on_normal_clicked)
         self.normal_button.disable()
         self.list_button = ViewSwitchButton('list-view-button')
+        self.list_button.set_squish_width(True)
         self.list_button.connect('clicked', self._on_list_clicked)
         self._hbox.pack_start(widgetutil.align_middle(self.normal_button,
             left_pad=12))

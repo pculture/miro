@@ -66,11 +66,13 @@ class BrowserToolbar(widgetset.HBox):
         self.create_signal('browser-open')
 
         self.back_button = imagebutton.ImageButton('navback')
+        self.back_button.set_squish_width(True)
         self.back_button.connect('clicked', self._on_back_button_clicked)
         self.back_button.disable()
         self.pack_start(widgetutil.align_middle(self.back_button, left_pad=4))
         
         self.forward_button = imagebutton.ImageButton('navforward')
+        self.forward_button.set_squish_width(True)
         self.forward_button.connect('clicked', self._on_forward_button_clicked)
         self.forward_button.disable()
         self.pack_start(widgetutil.align_middle(self.forward_button))

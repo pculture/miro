@@ -148,9 +148,17 @@ class CustomDrawingMixin(object):
         if self.flags() & gtk.CAN_FOCUS:
             focus_space = (self.style_get_property('focus-padding') +
                     self.style_get_property('focus-line-width'))
-            context.width -= focus_space * 2
-            context.height -= focus_space * 2
-            context.translate(focus_space, focus_space)
+            if not wrapper.squish_width:
+                context.width -= focus_space * 2
+                translate_x = focus_space
+            else:
+                translate_x = 0
+            if not wrapper.squish_height:
+                context.height -= focus_space * 2
+                translate_y = focus_space
+            else:
+                translate_y = 0
+            context.translate(translate_x, translate_y)
         wrapper.layout_manager.update_cairo_context(context.context)
         self.draw(wrapper, context)
 
@@ -163,6 +171,13 @@ class CustomDrawingMixin(object):
         width, height = wrapper.size_request(wrapper.layout_manager)
         requesition.width = width
         requesition.height = height
+        if self.flags() & gtk.CAN_FOCUS:
+            focus_space = (self.style_get_property('focus-padding') +
+                    self.style_get_property('focus-line-width'))
+            if not wrapper.squish_width:
+                requesition.width += focus_space * 2
+            if not wrapper.squish_height:
+                requesition.height += focus_space * 2
 
 class MiroDrawingArea(CustomDrawingMixin, gtk.Widget):
     def __init__(self):
@@ -191,6 +206,15 @@ gobject.type_register(MiroDrawingArea)
 gobject.type_register(BackgroundWidget)
 
 class Drawable:
+    def __init__(self):
+        self.squish_width = self.squish_height = False
+
+    def set_squish_width(self, setting):
+        self.squish_width = setting
+
+    def set_squish_height(self, setting):
+        self.squish_height = setting
+
     def set_widget(self, drawing_widget):
         if self.is_opaque() and 0:
             box = gtk.EventBox()
@@ -212,9 +236,11 @@ class Drawable:
 class DrawingArea(Drawable, Widget):
     def __init__(self):
         Widget.__init__(self)
+        Drawable.__init__(self)
         self.set_widget(MiroDrawingArea())
 
 class Background(Drawable, Bin):
     def __init__(self):
         Bin.__init__(self)
+        Drawable.__init__(self)
         self.set_widget(BackgroundWidget())

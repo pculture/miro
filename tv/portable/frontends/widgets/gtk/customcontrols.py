@@ -42,14 +42,6 @@ from miro.frontends.widgets.gtk.drawing import CustomDrawingMixin, Drawable
 from miro.plat.frontends.widgets import timer
 
 class CustomControlMixin(CustomDrawingMixin):
-    def do_size_request(self, requesition):
-        CustomDrawingMixin.do_size_request(self, requesition)
-        if self.flags() & gtk.CAN_FOCUS:
-            focus_space = 2 * (self.style_get_property('focus-padding') +
-                    self.style_get_property('focus-line-width'))
-            requesition.width += focus_space
-            requesition.height += focus_space
-
     def do_expose_event(self, event):
         CustomDrawingMixin.do_expose_event(self, event)
         if self.is_focus():
@@ -176,6 +168,7 @@ class CustomButton(Drawable, Widget):
         the button is pressed.  The image must have the same size.
         """
         Widget.__init__(self)
+        Drawable.__init__(self)
         self.set_widget(CustomButtonWidget())
         self.create_signal('clicked')
         self.forward_signal('clicked')
@@ -183,6 +176,7 @@ class CustomButton(Drawable, Widget):
 class ContinuousCustomButton(Drawable, Widget):
     def __init__(self):
         Widget.__init__(self)
+        Drawable.__init__(self)
         self.set_widget(ContinuousCustomButtonWidget())
         self.button_down = False
         self.button_held = False
@@ -229,6 +223,7 @@ class ContinuousCustomButton(Drawable, Widget):
 class CustomSlider(Drawable, Widget):
     def __init__(self):
         Widget.__init__(self)
+        Drawable.__init__(self)
         self.create_signal('pressed')
         self.create_signal('released')
         self.create_signal('changed')
