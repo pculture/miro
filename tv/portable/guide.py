@@ -228,7 +228,12 @@ class GuideHTMLParser(HTMLParser):
 
     def handle_data(self, data):
         if self.in_title:
-            self.title += data
+            try:
+                self.title += data
+            except UnicodeDecodeError:
+                # FIXME - not all sites are in utf-8 and we should
+                # handle this better
+                pass
 
     def handle_endtag(self, tag):
         if tag == 'title' and self.in_title:
