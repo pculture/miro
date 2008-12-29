@@ -8,21 +8,21 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-12-03 11:40-0500\n"
-"PO-Revision-Date: 2008-10-31 06:59+0000\n"
-"Last-Translator: Hassan Ibraheem <Unknown>\n"
+"PO-Revision-Date: 2008-12-21 13:40+0000\n"
+"Last-Translator: Mohamed Darif <Unknown>\n"
 "Language-Team: Arabic <ar@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n % 100 >= "
 "3 && n % 100 <= 10 ? 3 : n % 100 >= 11 && n % 100 <= 99 ? 4 : 5;\n"
-"X-Launchpad-Export-Date: 2008-12-16 20:27+0000\n"
+"X-Launchpad-Export-Date: 2008-12-29 15:24+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
 msgid "Enable tray icon"
-msgstr ""
+msgstr "اظهار ألأيقونة فى الشريط"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:42
 msgid "When I click the red close button:"
@@ -30,7 +30,7 @@ msgstr "حين أنقر زر الإغلاق الأحمر:"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:45
 msgid "Close to tray so that downloads can continue."
-msgstr "إغلاق إلى الشريط ليستمر بالتنزيل."
+msgstr "إغلاق إلى الشريط ليستمر hgjpldg"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
 msgid "Quit Miro completely."
@@ -68,7 +68,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
-msgstr ""
+msgstr "حمل أدوب فلاش؟"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
 #, python-format
@@ -79,7 +79,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
-msgstr ""
+msgstr "حمل أدوب فلاش"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
 msgid ""
@@ -89,6 +89,9 @@ msgid ""
 "You should quit Miro now and start it up again after Adobe Flash has been "
 "installed."
 msgstr ""
+"سوف يقوم المصتكشف بعرض الموقع حيث يمكنكم تحميل و تثبيت أدوب فلاش.\n"
+"\n"
+"عليكم مغادرة ميرو الآن و اعادة تشغيله بعد تثبيت أدوب فلاش."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
 msgid "Renderer options:"
@@ -192,19 +195,19 @@ msgstr "تحرير"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:222
 msgid "Present Half Size"
-msgstr ""
+msgstr "نصف البعد الحالى"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:223
 msgid "Present Actual Size"
-msgstr ""
+msgstr "البعد الحالى"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:224
 msgid "Present Double Size"
-msgstr ""
+msgstr "ضعف البعد الحالى"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:226
 msgid "Present Video"
-msgstr ""
+msgstr "الفيديو الحالى"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:233
 msgid "Zoom"
@@ -232,7 +235,7 @@ msgstr "مساعدة ميرو"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:140
 msgid "Download Completed"
-msgstr "أكمَل التنزيل"
+msgstr "تم التحمبل"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:141
 #, python-format
@@ -251,7 +254,7 @@ msgstr ""
 
 #: ../../portable/theme.py:148
 msgid "Sample Channels"
-msgstr ""
+msgstr "عينة القنوات"
 
 #: ../../portable/theme.py:168
 msgid "Example Playlist"

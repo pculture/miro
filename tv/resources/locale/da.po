@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-12-03 11:40-0500\n"
-"PO-Revision-Date: 2008-11-16 13:16+0000\n"
-"Last-Translator: TLE <k.nielsen81@gmail.com>\n"
+"PO-Revision-Date: 2008-12-21 20:59+0000\n"
+"Last-Translator: Sbockj <Unknown>\n"
 "Language-Team: Danish <da@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2008-12-16 20:27+0000\n"
+"X-Launchpad-Export-Date: 2008-12-29 15:24+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -64,10 +64,11 @@ msgstr "Fejl ved åbning af hjemmeside"
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr ""
+"Der er sket en fejl ved åbningen af %(url)s. Prøv igen om få sekunder"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
-msgstr ""
+msgstr "Vil du installere Adobe Flash?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
 #, python-format
@@ -78,7 +79,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
-msgstr ""
+msgstr "Installér Adobe Flash"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
 msgid ""
