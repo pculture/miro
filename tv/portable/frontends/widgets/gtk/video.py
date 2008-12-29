@@ -40,9 +40,10 @@ from miro import signals
 from miro import util
 from miro import messages
 from miro import displaytext
+from miro.plat import resources
 from miro.plat import screensaver
 from miro.frontends.widgets.gtk.window import Window, WrappedWindow
-from miro.frontends.widgets.gtk.widgetset import Widget, VBox, Label, HBox, Alignment, Background
+from miro.frontends.widgets.gtk.widgetset import Widget, VBox, Label, HBox, Alignment, Background, DrawingArea
 from miro.frontends.widgets.gtk.persistentwindow import PersistentWindow
 
 BLACK = (0.0, 0.0, 0.0)
@@ -109,20 +110,44 @@ def make_hidden_cursor():
     color = gtk.gdk.Color()
     return gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
 
+def make_label(text, handler, visible=True):
+    if visible:
+        lab = ClickableLabel(text)
+        lab.connect('clicked', handler)
+        return lab
+
+    lab = Label(text)
+    lab.set_size(0.77)
+    lab.set_color((0.0, 0.0, 0.0))
+    return lab
+
 def _align_left(widget, top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
-    """Align left."""
+    """Align left and pad."""
     alignment = Alignment(0, 0, 0, 1)
     alignment.set_padding(top_pad, bottom_pad, left_pad, right_pad)
     alignment.add(widget)
     return alignment
 
 def _align_right(widget, top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
-    """Align right."""
+    """Align right and pad."""
     alignment = Alignment(1, 0, 0, 1)
     alignment.set_padding(top_pad, bottom_pad, left_pad, right_pad)
     alignment.add(widget)
     return alignment
 
+def _align_center(widget, top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
+    """Align center (horizontally) and pad."""
+    alignment = Alignment(0.5, 0, 0, 1)
+    alignment.set_padding(top_pad, bottom_pad, left_pad, right_pad)
+    alignment.add(widget)
+    return alignment
+
+def _align_middle(widget, top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
+    """Align center (vertically) and pad."""
+    alignment = Alignment(0, 0.5, 0, 0)
+    alignment.set_padding(top_pad, bottom_pad, left_pad, right_pad)
+    alignment.add(widget)
+    return alignment
 
 # Couple of utility functions to grab GTK widgets out of the widget tree for
 # fullscreen code
@@ -175,69 +200,114 @@ class VideoWidget(Widget):
         self._widget.add_events(gtk.gdk.BUTTON_PRESS_MASK)
         renderer.set_widget(self._widget)
 
+class Divider(DrawingArea):
+    def size_request(self, layout):
+        return (1, 25)
+
+    def draw(self, context, layout):
+        context.set_line_width(1)
+        context.set_color((46.0 / 255.0, 46.0 / 255.0, 46.0 / 255.0))
+        context.move_to(0, 0)
+        context.rel_line_to(0, context.height)
+        context.stroke()
+
 class VideoDetailsWidget(Background):
     def __init__(self):
         Background.__init__(self)
-        self.add(self.build_video_details())
+        self.item_info = None
+        self.rebuild_video_details()
+        self._delete_link = None
 
-    def build_video_details(self):
-        h = HBox()
+    def rebuild_video_details(self):
+        # this removes the child widget if there is one
+        self.remove()
+
+        if not self.item_info:
+            self.add(HBox())
+            return
+
+        info = self.item_info
+
+        outer_hbox = HBox(5)
 
         # left side
         v = VBox()
-        self._item_name = Label("")
+        self._item_name = Label(util.clampText(info.name, 100))
         self._item_name.set_bold(True)
         self._item_name.set_size(1.0)
         self._item_name.set_color(WHITE)
-        v.pack_start(_align_left(self._item_name, left_pad=5))
+        v.pack_start(_align_left(self._item_name, left_pad=5, top_pad=3))
 
         self._channel_name = Label("")
+        if not info.is_external:
+            channels = app.tab_list_manager.feed_list.get_feeds()
+            channels = [ci for ci in channels if ci.id == info.feed_id]
+            if len(channels) == 0:
+                self._channel_name.set_text("")
+            else:
+                self._channel_name.set_text(util.clampText(channels[0].name, 100))
         self._channel_name.set_color(WHITE)
-        v.pack_start(_align_left(self._channel_name, left_pad=5))
-        h.pack_start(v)
+        v.pack_start(_align_left(self._channel_name, left_pad=5, bottom_pad=3))
 
-        # right side
-        v = VBox()
-        self._share_link = ClickableLabel(_("SHARE"))
-        self._share_link.connect('clicked', self.handle_share)
-        v.pack_start(_align_right(self._share_link, right_pad=5))
+        outer_hbox.pack_start(_align_middle(v), expand=True)
 
-        h2 = HBox()
-        self._comments_link = ClickableLabel(_("COMMENTS"))
-        self._comments_link.connect('clicked', self.handle_commentslink)
-        h2.pack_start(_align_right(self._comments_link, right_pad=10), expand=True)
+        if info.is_external:
+            if info.is_single:
+                outer_hbox.pack_start(_align_middle(make_label(_("Add to library"), self.handle_add_to_library, True)))
+            else:
+                outer_hbox.pack_start(_align_middle(make_label(_("Delete"), self.handle_delete, True)))
+        else:
+            # keep / delete
+            v = VBox()
+            lab = make_label(_("Keep"), self.handle_keep, info.expiration_date is not None)
+            v.pack_start(_align_center(lab))
 
-        self._permalink_link = ClickableLabel(_("PERMALINK"))
-        self._permalink_link.connect('clicked', self.handle_permalink)
-        h2.pack_start(_align_right(self._permalink_link, right_pad=5))
-        v.pack_start(h2)
+            self._delete_link = make_label(_("Delete"), self.handle_delete)
+            v.pack_start(_align_center(self._delete_link))
+            outer_hbox.pack_start(_align_middle(v))
 
-        h2 = HBox()
-        self._expiration_label = Label("")
-        self._expiration_label.set_size(0.77)
-        self._expiration_label.set_color(WHITE)
-        h2.pack_start(_align_right(self._expiration_label, right_pad=15), expand=True)
+            outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
 
-        self._add_to_library_link = ClickableLabel(_("ADD TO LIBRARY"))
-        self._add_to_library_link.connect('clicked', self.handle_add_to_library)
-        h2.pack_start(_align_right(self._add_to_library_link, right_pad=5))
-        v.pack_start(h2)
+            # expires, share - link
+            v = VBox()
+            if info.expiration_date is not None:
+                text = displaytext.expiration_date(info.expiration_date)
+            else:
+                text = " "
+            self._expiration_label = Label(text)
+            self._expiration_label.set_size(0.77)
+            self._expiration_label.set_color((152.0 / 255.0, 152.0 / 255.0, 152.0 / 255.0))
+            v.pack_start(_align_center(self._expiration_label))
 
-        self._keep_link = ClickableLabel(_("KEEP"))
-        self._keep_link.connect('clicked', self.handle_keep)
-        h2.pack_start(_align_right(self._keep_link, right_pad=5))
+            h2 = HBox()
+            lab = make_label(_("Share"), self.handle_share, info.has_sharable_url)
+            h2.pack_start(_align_center(lab))
 
-        self._dash = Label("-")
-        self._dash.set_size(0.77)
-        self._dash.set_color(WHITE)
-        h2.pack_start(_align_right(self._dash, right_pad=5))
+            self._dash = Label("-")
+            self._dash.set_size(0.77)
+            self._dash.set_color(WHITE)
+            h2.pack_start(_align_middle(self._dash, left_pad=5, right_pad=5))
 
-        self._delete_link = ClickableLabel(_("DELETE"))
-        self._delete_link.connect('clicked', self.handle_delete)
-        h2.pack_start(_align_right(self._delete_link, right_pad=5))
+            if info.commentslink:
+                self._permalink_link = ClickableLabel(_("Comments"))
+                self._permalink_link.connect('clicked', self.handle_commentslink)
+            elif info.permalink:
+                self._permalink_link = ClickableLabel(_("Permalink"))
+                self._permalink_link.connect('clicked', self.handle_permalink)
+            else:
+                self._permalink_link = ClickableLabel(_("Permalink"))
+                self._permalink_link.connect('clicked', self.handle_permalink)
+            h2.pack_start(self._permalink_link)
+            if not info.commentslink and not info.permalink:
+                self._permalink_link.hide()
+            v.pack_start(_align_center(h2))
+            outer_hbox.pack_start(_align_middle(v))
 
-        h.pack_start(_align_right(v), expand=True)
-        return h
+        outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
+
+        # FIXME - add popout/popin buttons here
+
+        self.add(outer_hbox)
 
     def hide(self):
         self._widget.hide()
@@ -268,84 +338,31 @@ class VideoDetailsWidget(Background):
 
     def update_info(self, item_info):
         self.item_info = item_info
-
-        if item_info.is_external:
-            if item_info.is_single:
-                self._add_to_library_link.show()
-                self._delete_link.hide()
-            else:
-                self._add_to_library_link.hide()
-                self._delete_link.show()
-        else:
-            if item_info.video_watched:
-                if item_info.expiration_date is not None:
-                    text = displaytext.expiration_date(item_info.expiration_date)
-                    self._expiration_label.set_text(text)
-                    self._expiration_label.show()
-                    self._keep_link.show()
-                    self._dash.show()
-                else:
-                    self._expiration_label.hide()
-                    self._keep_link.hide()
-                    self._dash.hide()
-            else:
-                self._expiration_label.hide()
-                self._keep_link.show()
-                self._dash.show()
+        self.rebuild_video_details()
 
     def set_video_details(self, item_info):
         """This gets called when the item is set to play.  It should make
         no assumptions about the state of the video details prior to being
         called.
         """
-        self.item_info = item_info
-        self._item_name.set_text(util.clampText(item_info.name, 100))
-
-        if item_info.has_sharable_url:
-            self._share_link.show()
-        else:
-            self._share_link.hide()
-        if item_info.is_external:
-            self._comments_link.hide()
-            self._permalink_link.hide()
-            self._expiration_label.hide()
-            self._keep_link.hide()
-            self._dash.hide()
-            self._channel_name.set_text("")
-        else:
-            channels = app.tab_list_manager.feed_list.get_feeds()
-            channels = [ci for ci in channels if ci.id == item_info.feed_id]
-            if len(channels) == 0:
-                self._channel_name.set_text("")
-            else:
-                self._channel_name.set_text(util.clampText(channels[0].name, 100))
-
-            self._add_to_library_link.hide()
-
-            if item_info.commentslink:
-                self._comments_link.show()
-                self._comments_link.set_text(_("COMMENTS"))
-            else:
-                self._comments_link.hide()
-
-            if item_info.permalink:
-                self._permalink_link.show()
-                self._permalink_link.set_text(_("PERMALINK"))
-            else:
-                self._permalink_link.hide()
-
         self.update_info(item_info)
 
     def draw(self, context, layout):
         context.set_color(BLACK)
         context.rectangle(0, 0, context.width, context.height)
         context.fill()
+        context.set_color((46.0 / 255.0, 46.0 / 255.0, 46.0 / 255.0))
+        context.set_line_width(1)
+        context.move_to(0, 0)
+        context.rel_line_to(context.width, 0)
+        context.stroke()
 
     def is_opaque(self):
         return True
 
     def reset(self):
-        self._delete_link.on_leave_notify(None, None)
+        if self._delete_link:
+            self._delete_link.on_leave_notify(None, None)
 
 class VideoRenderer(VBox):
     """Video renderer widget.
