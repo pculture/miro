@@ -260,7 +260,7 @@ class VideoDetailsWidget(Background):
             # keep / delete
             v = VBox()
             lab = make_label(_("Keep"), self.handle_keep, info.expiration_date is not None)
-            v.pack_start(_align_center(lab))
+            v.pack_start(_align_center(lab, bottom_pad=2))
 
             self._delete_link = make_label(_("Delete"), self.handle_delete)
             v.pack_start(_align_center(self._delete_link))
@@ -277,7 +277,7 @@ class VideoDetailsWidget(Background):
             self._expiration_label = Label(text)
             self._expiration_label.set_size(0.77)
             self._expiration_label.set_color((152.0 / 255.0, 152.0 / 255.0, 152.0 / 255.0))
-            v.pack_start(_align_center(self._expiration_label))
+            v.pack_start(_align_center(self._expiration_label, bottom_pad=2))
 
             h2 = HBox()
             lab = make_label(_("Share"), self.handle_share, info.has_sharable_url)
