@@ -165,4 +165,10 @@ class ThemeHistory(DDBObject):
                 # feed
                 else:
                     d_feed = feed.Feed(default[0], initiallyAutoDownloadable=default[1])
+
+            # create example playlist
             playlist.SavedPlaylist(_(u"Example Playlist"))
+
+            # create default site
+            cg = guide.ChannelGuide(u"http://getsatisfaction.com/participatoryculturefoundation/topics/new?query")
+            cg.setTitle(_("Miro - Report a Problem"))
