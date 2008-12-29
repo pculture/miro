@@ -321,7 +321,7 @@ def is_movies_directory_gone():
 
 def setup_theme():
     themeHistory = _get_theme_history()
-    themeHistory.checkNewTheme()
+    themeHistory.check_new_theme()
 
 def install_message_handler():
     handler = messagehandler.BackendMessageHandler()

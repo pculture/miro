@@ -53,28 +53,28 @@ class ThemeHistory(DDBObject):
             self.theme = unicode(self.theme)
         # if we don't have a theme, self.theme will be None
         self.pastThemes.append(self.theme)
-        self.onFirstRun()
+        self.on_first_run()
 
     # We used to do this on restore, but we need to make sure that the
     # whole database is loaded because we're checking to see if objects
     # are present.  So, we call it when we access the object in app.py
-    def checkNewTheme(self):
+    def check_new_theme(self):
         self.theme = config.get(prefs.THEME_NAME)
         if self.theme is not None:
             self.theme = unicode(self.theme)
         if self.theme not in self.pastThemes:
             self.pastThemes.append(self.theme)
-            self.onFirstRun()
+            self.on_first_run()
             self.signalChange()
         if self.lastTheme != self.theme:
             self.lastTheme = self.theme
-            self.onThemeChange()
+            self.on_theme_change()
 
     @asUrgent
-    def onThemeChange(self):
+    def on_theme_change(self):
         self.signalChange()
 
-    def onFirstRun(self):
+    def on_first_run(self):
         logging.info("Spawning Miro Guide...")
         guideURL = unicode(config.get(prefs.CHANNEL_GUIDE_URL))
         if guide.getGuideByURL(guideURL) is None:
@@ -108,13 +108,13 @@ class ThemeHistory(DDBObject):
                 # if guide.getGuideByURL(prefs.CHANNEL_GUIDE_URL.default) is None:
                 #     guide.ChannelGuide(prefs.CHANNEL_GUIDE_URL.default)
                 self.pastThemes.append(None)
-                self._installDefaultFeeds()
+                self._install_default_feeds()
         else: # no theme
-            self._installDefaultFeeds()
+            self._install_default_feeds()
         signals.system.theme_first_run(self.theme)
 
     @asUrgent
-    def _installDefaultFeeds(self):
+    def _install_default_feeds(self):
         initialFeeds = resources.path("initial-feeds.democracy")
         if os.path.exists(initialFeeds):
             type, urls = subscription.parse_file(initialFeeds)
