@@ -2158,36 +2158,33 @@ class DirectoryWatchFeedImpl(FeedImpl):
         self.signalChange()
 
     def update(self):
-        def isBasenameHidden(filename):
-            if filename[-1] == os.sep:
-                filename = filename[:-1]
-            return os.path.basename(filename)[0] == FilenameType('.')
         self.ufeed.confirmDBThread()
 
         # Files known about by real feeds (other than other directory
         # watch feeds)
-        knownFiles = set()
+        known_files = set()
         for item in views.toplevelItems:
             if not item.getFeed().getURL().startswith("dtv:directoryfeed"):
-                knownFiles.add(item.get_filename())
+                known_files.add(item.get_filename())
 
         # Remove items that are in feeds, but we have in our list
         for item in self.items:
-            if item.get_filename() in knownFiles:
+            if item.get_filename() in known_files:
                 item.remove()
 
         # Now that we've checked for items that need to be removed, we
-        # add our items to knownFiles so that they don't get added
+        # add our items to known_files so that they don't get added
         # multiple times to this feed.
         for x in self.items:
-            knownFiles.add(x.get_filename())
+            known_files.add(x.get_filename())
 
-        #Adds any files we don't know about
-        #Files on the filesystem
+        # adds any files we don't know about on the filesystem
         if fileutil.isdir(self.dir):
             all_files = fileutil.miro_allfiles(self.dir)
             for file_ in all_files:
-                if file_ not in knownFiles and filetypes.is_video_filename(filenameToUnicode(file_)):
+                ufile = filenameToUnicode(file_)
+                if (file_ not in known_files
+                        and (filetypes.is_video_filename(ufile) or filetypes.is_audio_filename(ufile))):
                     itemmod.FileItem(file_, feed_id=self.ufeed.id)
 
         for item in self.items:
