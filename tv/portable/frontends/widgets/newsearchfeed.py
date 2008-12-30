@@ -26,8 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""miro.frontends.widgets.newsearchchannel -- Holds dialog and processing
-code for the New Search Channel dialog.
+"""miro.frontends.widgets.newsearchfeed -- Holds dialog and processing
+code for the New Search Feed dialog.
 """
 
 from miro.gtcache import gettext as _
@@ -37,26 +37,26 @@ from miro.util import clampText
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.dialogs import MainDialog
-from miro.dialogs import BUTTON_CANCEL, BUTTON_CREATE_CHANNEL
+from miro.dialogs import BUTTON_CANCEL, BUTTON_CREATE_FEED
 
 from miro import app
 
 import logging
 
 def run_dialog():
-    """Creates and launches the New Search Channel dialog.  This dialog waits
-    for the user to press "Create Channel" or "Cancel".
+    """Creates and launches the New Search Feed dialog.  This dialog waits
+    for the user to press "Create Feed" or "Cancel".
 
-    In the case of "Create Channel", returns a tuple of:
+    In the case of "Create Feed", returns a tuple of:
 
-    * ("channel", ChannelInfo, search_term str, section str)
+    * ("feed", ChannelInfo, search_term str, section str)
     * ("search_engine", SearchEngineInfo, search_term str, section str)
     * ("url", url str, search_term str, section str)
 
     In the case of "Cancel", returns None.
     """
-    title = _('New Search Channel')
-    description = _('A search channel contains items that match a search term.')
+    title = _('New Search Feed')
+    description = _('A search feed contains items that match a search term.')
 
     channels = app.tab_list_manager.feed_list.get_feeds()
     channels += app.tab_list_manager.audio_feed_list.get_feeds()
@@ -65,7 +65,7 @@ def run_dialog():
     window = MainDialog(title, description)
     try:
         try:
-            window.add_button(BUTTON_CREATE_CHANNEL.text)
+            window.add_button(BUTTON_CREATE_FEED.text)
             window.add_button(BUTTON_CANCEL.text)
 
             extra = widgetset.VBox()
@@ -84,7 +84,7 @@ def run_dialog():
             choice_table.set_row_spacing(5)
             rbg = widgetset.RadioButtonGroup()
 
-            channel_rb = widgetset.RadioButton("Channel:", rbg)
+            channel_rb = widgetset.RadioButton("Feed:", rbg)
             channel_option = widgetset.OptionMenu([clampText(ci.name) for ci in channels])
             choice_table.pack(channel_rb, 0, 0)
             choice_table.pack(channel_option, 1, 0)
@@ -129,7 +129,7 @@ def run_dialog():
             extra.pack_start(widgetutil.align_top(hb2, top_pad=6))
 
             hb3 = widgetset.HBox()
-            hb3.pack_start(widgetutil.align_top(widgetset.Label(_('Add new channel to this section:')), top_pad=3), padding=5)
+            hb3.pack_start(widgetutil.align_top(widgetset.Label(_('Add new feed to this section:')), top_pad=3), padding=5)
 
             rbg_section = widgetset.RadioButtonGroup()
             video_rb = widgetset.RadioButton(_("video"), rbg_section)
@@ -149,7 +149,7 @@ def run_dialog():
                 else:
                     section = u"audio"
                 if selected_option is channel_rb:
-                    return ("channel",
+                    return ("feed",
                             channels[channel_option.get_selected()],
                             term,
                             section)
@@ -166,6 +166,6 @@ def run_dialog():
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
-            logging.exception("newsearchchannel threw exception.")
+            logging.exception("newsearchfeed threw exception.")
     finally:
         window.destroy()

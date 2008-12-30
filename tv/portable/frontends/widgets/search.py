@@ -68,7 +68,7 @@ class SearchManager(signals.SignalEmitter):
         self.emit('search-started')
 
     def save_search(self):
-        m = messages.NewChannelSearchEngine(searchengines.get_engine_for_name(self.engine), self.text)
+        m = messages.NewFeedSearchEngine(searchengines.get_engine_for_name(self.engine), self.text)
         m.send_to_backend()
 
     def handle_search_complete(self, message):

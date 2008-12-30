@@ -26,8 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""miro.frontends.widgets.newchanneldialog -- Holds dialog and processing
-code for adding a new channel.
+"""miro.frontends.widgets.newfeed -- Holds dialog and processing
+code for adding a new feed.
 """
 
 from miro.gtcache import gettext as _
@@ -36,7 +36,7 @@ from miro import searchengines
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
 from miro.frontends.widgets.dialogs import MainDialog
-from miro.dialogs import BUTTON_CANCEL, BUTTON_CREATE_CHANNEL
+from miro.dialogs import BUTTON_CANCEL, BUTTON_CREATE_FEED
 
 from miro import app
 from miro import feed
@@ -44,15 +44,15 @@ from miro import feed
 import logging
 
 def _run_dialog(title, description, initial_text):
-    """Creates and launches the New Channel dialog.  This dialog waits for
-    the user to press "Create Channel" or "Cancel".
+    """Creates and launches the New Feed dialog.  This dialog waits for
+    the user to press "Create Feed" or "Cancel".
 
     Returns a tuple of the (url, section).
     """
     window = MainDialog(title, description)
     try:
         try:
-            window.add_button(BUTTON_CREATE_CHANNEL.text)
+            window.add_button(BUTTON_CREATE_FEED.text)
             window.add_button(BUTTON_CANCEL.text)
 
             extra = widgetset.VBox()
@@ -66,7 +66,7 @@ def _run_dialog(title, description, initial_text):
             h.pack_start(url_entry, expand=True)
             extra.pack_start(h, padding=5)
 
-            lab = widgetset.Label(_('Channel should go in this section:'))
+            lab = widgetset.Label(_('Feed should go in this section:'))
             rbg = widgetset.RadioButtonGroup()
             video_rb = widgetset.RadioButton(_("video"), rbg)
             audio_rb = widgetset.RadioButton(_("audio"), rbg)
@@ -91,13 +91,13 @@ def _run_dialog(title, description, initial_text):
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
-            logging.exception("newchanneldialog threw exception.")
+            logging.exception("newfeed threw exception.")
     finally:
         window.destroy()
         
 def run_dialog():
-    """Creates and launches the New Channel dialog.  This dialog waits for
-    the user to press "Create Channel" or "Cancel".
+    """Creates and launches the New Feed dialog.  This dialog waits for
+    the user to press "Create Feed" or "Cancel".
 
     Returns a tuple of the (url, section).
     """
@@ -107,8 +107,8 @@ def run_dialog():
     else:
         text = ""
 
-    title = _('Add Channel')
-    description = _('Enter the URL of the channel to add')
+    title = _('Add Feed')
+    description = _('Enter the URL of the feed to add')
 
     while 1:
         text, section = _run_dialog(title, description, initial_text=text)
@@ -119,5 +119,5 @@ def run_dialog():
         if feed.validate_feed_url(normalized_url):
             return (normalized_url, section)
 
-        title = _('Add Channel - Invalid URL')
-        description = _('The address you entered is not a valid url.\nPlease check the URL and try again.\n\nEnter the URL of the channel to add')
+        title = _('Add Feed - Invalid URL')
+        description = _('The address you entered is not a valid url.\nPlease check the URL and try again.\n\nEnter the URL of the feed to add')

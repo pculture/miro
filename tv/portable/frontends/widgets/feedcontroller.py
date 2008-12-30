@@ -108,7 +108,7 @@ class FeedController(itemlistcontroller.ItemListController):
 
     def _on_save_search(self, widget, search_text):
         info = widgetutil.get_feed_info(self.id)
-        messages.NewChannelSearchChannel(info, search_text).send_to_backend()
+        messages.NewFeedSearchChannel(info, search_text).send_to_backend()
 
     def _make_item_views(self):
         self.downloading_view = itemlistwidgets.ItemView(
@@ -129,7 +129,7 @@ class FeedController(itemlistcontroller.ItemListController):
         full_section_vbox.pack_start(self.full_view, expand=True)
         full_section_vbox.pack_start(self.show_more_container)
         self.full_section = itemlistwidgets.HideableSection(
-                _("Full Channel"), full_section_vbox)
+                _("Full Feed"), full_section_vbox)
 
     def _make_toolbar(self, feed_info):
         toolbar = itemlistwidgets.FeedToolbar()

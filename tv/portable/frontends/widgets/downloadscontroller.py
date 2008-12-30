@@ -89,7 +89,7 @@ class DownloadsController(itemlistcontroller.ItemListController):
         self.indydownloads_section = HideableSection(_("Single and external downloads"), self.indydownloads_view)
 
         self.downloads_view = ItemView(itemlist.ChannelDownloadItemList())
-        self.downloads_section = HideableSection(_("Channel downloads"), self.downloads_view)
+        self.downloads_section = HideableSection(_("Feed downloads"), self.downloads_view)
 
         self.seeding_view = ItemView(itemlist.SeedingItemList())
         self.seeding_section = HideableSection(_("Seeding"), self.seeding_view)

@@ -62,4 +62,4 @@ def ask_for_feed_subscribe(url):
     choices = (dialogs.BUTTON_SUBSCRIBE, dialogs.BUTTON_CANCEL)
     ret = dialogs.show_choice_dialog(title, text, choices)
     if ret == dialogs.BUTTON_SUBSCRIBE:
-        messages.NewChannel(url).send_to_backend()
+        messages.NewFeed(url).send_to_backend()

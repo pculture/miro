@@ -543,13 +543,13 @@ class MultipleSelectionDisplay(TabDisplay):
         if self.folder_count > 0:
             if tab_type in ('feed', 'audio-feed'):
                 label_parts.append(ngettext(
-                        '%(count)d Channel Folder Selected',
-                        '%(count)d Channel Folders Selected',
+                        '%(count)d Feed Folder Selected',
+                        '%(count)d Feed Folders Selected',
                         self.folder_count,
                         {"count": self.folder_count}))
                 label_parts.append(ngettext(
-                        '(contains %(count)d channel)',
-                        '(contains %(count)d channels)',
+                        '(contains %(count)d feed)',
+                        '(contains %(count)d feeds)',
                         self.folder_child_count,
                         {"count": self.folder_child_count}))
             else:
@@ -569,8 +569,8 @@ class MultipleSelectionDisplay(TabDisplay):
         if self.child_count > 0:
             if tab_type in ('feed', 'audio-feed'):
                 label_parts.append(ngettext(
-                        '%(count)d Channel Selected',
-                        '%(count)d Channels Selected',
+                        '%(count)d Feed Selected',
+                        '%(count)d Feeds Selected',
                         self.child_count,
                         {"count": self.child_count}))
             else:

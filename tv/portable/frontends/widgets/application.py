@@ -484,7 +484,7 @@ class Application:
         if not data:
             return
 
-        if data[0] == "channel":
+        if data[0] == "feed":
             messages.NewFeedSearchChannel(data[1], data[2], data[3]).send_to_backend()
         elif data[0] == "search_engine":
             messages.NewFeedSearchEngine(data[1], data[2], data[3]).send_to_backend()
@@ -541,7 +541,7 @@ class Application:
                     messages.SetWatchedFolderVisible(ci.id, False).send_to_backend()
                 else:
                     messages.DeleteChannel(ci.id, ci.is_folder,
-                        ret[removechannelsdialog.KEEP_ITEMS]
+                        ret[removefeeds.KEEP_ITEMS]
                     ).send_to_backend()
 
     def update_selected_feeds(self):
@@ -656,12 +656,12 @@ class Application:
             t = 'playlist-folder'
 
         if t == 'feed-folder':
-            title = _('Rename Channel Folder')
+            title = _('Rename Feed Folder')
             description = _('Enter a new name for the feed folder %(name)s',
                             {"name": info.name})
 
         elif t in ('feed', 'audio-feed'):
-            title = _('Rename Channel')
+            title = _('Rename Feed')
             description = _('Enter a new name for the feed %(name)s',
                             {"name": info.name})
 

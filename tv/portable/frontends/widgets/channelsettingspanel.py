@@ -26,7 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Defines the channel settings panel."""
+"""Defines the feed settings panel."""
 
 import logging
 
@@ -237,8 +237,8 @@ def _build_auto_download(channel, grid):
     auto_download_cbx.connect('toggled', checkbox_changed)
 
 def run_dialog(channel):
-    """Displays the channel settings panel dialog."""
-    pref_window = MainDialog(_("Channel Settings"))
+    """Displays the feed settings panel dialog."""
+    pref_window = MainDialog(_("Feed Settings"))
     try:
         try:
             v = widgetset.VBox(spacing=10)
@@ -263,6 +263,6 @@ def run_dialog(channel):
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
-            logging.exception("channel settings panel threw exception.")
+            logging.exception("feed settings panel threw exception.")
     finally:
         pref_window.destroy()

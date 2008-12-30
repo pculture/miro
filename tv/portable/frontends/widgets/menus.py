@@ -86,10 +86,10 @@ def on_quit():
     app.widgetapp.quit()
 
 
-# Channels menu
+# Feeds menu
 
 @action_handler("NewFeed")
-def on_new_channel():
+def on_new_feed():
     app.widgetapp.add_new_feed()
 
 @action_handler("NewGuide")
@@ -147,7 +147,7 @@ def on_new_playlist_folder():
     app.widgetapp.add_new_playlist_folder()
 
 @action_handler("RenamePlaylist")
-def on_rename_channel():
+def on_rename_playlist():
     app.widgetapp.rename_something()
 
 @action_handler("RemovePlaylists")
@@ -323,14 +323,14 @@ class MenuManager(signals.SignalEmitter):
         self.enabled_groups.add('FeedsSelected')
         if len(selected_feeds) == 1:
             if selected_feeds[0].is_folder:
-                self.states["folder"].append("RemoveChannels")
+                self.states["folder"].append("RemoveFeeds")
             self.enabled_groups.add('FeedSelected')
         else:
             if len([s for s in selected_feeds if s.is_folder]) == len(selected_feeds):
-                self.states["folders"].append("RemoveChannels")
+                self.states["folders"].append("RemoveFeeds")
             else:
-                self.states["plural"].append("RemoveChannels")
-            self.states["plural"].append("UpdateChannels")
+                self.states["plural"].append("RemoveFeeds")
+            self.states["plural"].append("UpdateFeeds")
         self.emit('enabled-changed')
 
     def handle_site_selection(self, selected_sites):

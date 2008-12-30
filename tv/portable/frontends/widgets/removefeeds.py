@@ -26,7 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Defines the "remove channels" dialog."""
+"""Defines the "remove feeds" dialog."""
 
 import logging
 
@@ -45,9 +45,9 @@ from miro.util import clampText, returnsUnicode
 KEEP_ITEMS = "keep_items"
 
 def run_dialog(channel_infos, downloaded_items, downloading_items, watched_feeds):
-    """Displays the remove channels dialog."""
-    title = ngettext('Remove channel',
-                     'Remove %(count)d channels',
+    """Displays the remove feeds dialog."""
+    title = ngettext('Remove Feed',
+                     'Remove %(count)d Feeds',
                      len(channel_infos),
                      {"count": len(channel_infos)})
 
@@ -57,8 +57,8 @@ def run_dialog(channel_infos, downloaded_items, downloading_items, watched_feeds
             v = widgetset.VBox(spacing=5)
 
             lab = widgetset.Label(ngettext(
-                "Are you sure you want to remove this channel:",
-                "Are you sure you want to remove these channels:",
+                "Are you sure you want to remove this feed:",
+                "Are you sure you want to remove these feeds:",
                 len(channel_infos)
             ))
             lab.set_wrap(True)
@@ -93,9 +93,9 @@ def run_dialog(channel_infos, downloaded_items, downloading_items, watched_feeds
 
             if downloading_items:
                 lab_downloading = widgetset.Label(ngettext(
-                    "Are you sure you want to remove this channel?  "
+                    "Are you sure you want to remove this feed?  "
                     "The downloads currently in progress will be canceled.",
-                    "Are you sure you want to remove these channels?  "
+                    "Are you sure you want to remove these feeds?  "
                     "The downloads currently in progress will be canceled.",
                     len(channel_infos)
                 ))
@@ -117,6 +117,6 @@ def run_dialog(channel_infos, downloaded_items, downloading_items, watched_feeds
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
-            logging.exception("remove channels dialog threw exception.")
+            logging.exception("removefeeds threw exception.")
     finally:
         rc_window.destroy()

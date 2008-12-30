@@ -417,7 +417,7 @@ class SearchToolbar(widgetset.Background):
         widgetset.Background.__init__(self)
         hbox = widgetset.HBox()
         self.add(hbox)
-        save_button = widgetset.Button(_('Save as a Channel'), style='smooth')
+        save_button = widgetset.Button(_('Save as a Feed'), style='smooth')
         save_button.set_size(widgetconst.SIZE_SMALL)
         save_button.connect('clicked', self._on_save_clicked)
         aligned = widgetutil.align_left(save_button, top_pad=5, left_pad=5, bottom_pad=5)
@@ -623,7 +623,7 @@ class FeedToolbar(widgetset.Background):
         settings_button.set_color(style.TOOLBAR_GRAY)
         settings_button.connect('clicked', self._on_settings_clicked)
 
-        remove_button = widgetset.Button(_("Remove channel"), style='smooth')
+        remove_button = widgetset.Button(_("Remove feed"), style='smooth')
         remove_button.set_size(widgetconst.SIZE_SMALL)
         remove_button.set_color(style.TOOLBAR_GRAY)
         remove_button.connect('clicked', self._on_remove_clicked)
