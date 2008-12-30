@@ -321,7 +321,7 @@ class AppController(NSObject):
             elif filetypes.is_audio_filename(path):
                 messages.DownloadURL(url).send_to_backend()
             else:
-                messages.NewChannel(url).send_to_backend()
+                messages.NewFeed(url).send_to_backend()
         elif url.startswith('miro:'):
             eventloop.addIdle(lambda:singleclick.add_subscription_url('miro:', 'application/x-miro', url), "Open Miro URL")
         elif url.startswith('democracy:'):
