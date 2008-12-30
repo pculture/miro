@@ -35,7 +35,7 @@ from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro import messages
 from miro.frontends.widgets import channelsettingspanel
-from miro.frontends.widgets import removechannelsdialog
+from miro.frontends.widgets import removefeeds
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
 from miro.frontends.widgets import itemlistcontroller
