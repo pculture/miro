@@ -80,6 +80,6 @@ def run_dialog(obj, report):
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
-            logging.exception("newsearchchannel threw exception.")
+            logging.exception("crashdialog threw exception.")
     finally:
         window.destroy()
