@@ -181,18 +181,18 @@ class MenuBar:
         return None
 
 VideoItems = [
-    MenuItem(_("_Open..."), "Open", (Key("o", MOD),)),
-    MenuItem(_("_Download Item..."), "NewDownload", ()),
+    MenuItem(_("_Open"), "Open", (Key("o", MOD),)),
+    MenuItem(_("_Download Item"), "NewDownload", ()),
     MenuItem(_("Check _Version"), "CheckVersion", ()),
     Separator(),
-    MenuItem(_("_Remove Item..."), "RemoveItems", (Key(BKSPACE, MOD),), enabled=False,
+    MenuItem(_("_Remove Item"), "RemoveItems", (Key(BKSPACE, MOD),), enabled=False,
              plural=_("_Remove Items")),
     MenuItem(_("Re_name Item"), "RenameItem", (), enabled=False),
-    MenuItem(_("Save Item _As..."), "SaveItem", (Key("s",MOD),), enabled=False,
-             plural=_("Save Items _As...")),
+    MenuItem(_("Save Item _As"), "SaveItem", (Key("s",MOD),), enabled=False,
+             plural=_("Save Items _As")),
     MenuItem(_("Copy Item _URL"), "CopyItemURL", (Key("u", MOD),), enabled=False),
     Separator(),
-    MenuItem(_("_Options..."), "EditPreferences", ()),
+    MenuItem(_("_Options"), "EditPreferences", ()),
     MenuItem(_("_Quit"), "Quit", (Key("q",MOD),)),
 ]
 
@@ -208,32 +208,30 @@ EditItems = [
     MenuItem(_("Select _All"), "ClipboardSelectAll", (Key("a",MOD),)),
 ]
 
-ChannelItems = [
-    MenuItem(_("Add _Channel"), "NewChannel", (Key("n",MOD),)),
-    MenuItem(_("Add Site..."), "NewGuide", ()),
-    MenuItem(_("New Searc_h Channel..."), "NewSearchChannel", ()),
-    MenuItem(_("New _Folder..."), "NewChannelFolder", (Key("n",MOD,SHIFT),)),
+FeedItems = [
+    MenuItem(_("Add _Feed"), "NewFeed", (Key("n",MOD),)),
+    MenuItem(_("Add Site"), "NewGuide", ()),
+    MenuItem(_("New Searc_h Feed"), "NewSearchFeed", ()),
+    MenuItem(_("New _Folder"), "NewFeedFolder", (Key("n",MOD,SHIFT),)),
     Separator(),
-    MenuItem(_("Re_name Channel..."), "RenameChannel", (), enabled=False),
-    MenuItem(_("_Remove Channel..."), "RemoveChannels", (Key(BKSPACE, MOD),), enabled=False,
-             plural=_("_Remove Channels..."),
-             folders=_("_Remove Channel Folders..."),
-             folder=_("_Remove Channel Folder..."),
+    MenuItem(_("Re_name"), "RenameFeed", (), enabled=False),
+    MenuItem(_("_Remove"), "RemoveFeeds", (Key(BKSPACE, MOD),), enabled=False,
+             folder=_("_Remove Folder"),
              ),
-    MenuItem(_("_Update Channel"), "UpdateChannels", (Key("r",MOD),Key(F5)), enabled=False,
-             plural=_("_Update Channels")),
-    MenuItem(_("Update _All Channels"), "UpdateAllChannels", (Key("r",MOD,SHIFT),)),
+    MenuItem(_("_Update Feed"), "UpdateFeeds", (Key("r",MOD),Key(F5)), enabled=False,
+             plural=_("_Update Feeds")),
+    MenuItem(_("Update _All Feeds"), "UpdateAllFeeds", (Key("r",MOD,SHIFT),)),
     Separator(),
-    MenuItem(_("_Import Channels (OPML)..."), "ImportChannels", ()),
-    MenuItem(_("E_xport Channels (OPML)..."), "ExportChannels", ()),
+    MenuItem(_("_Import Feeds (OPML)"), "ImportFeeds", ()),
+    MenuItem(_("E_xport Feeds (OPML)"), "ExportFeeds", ()),
     Separator(),
-    MenuItem(_("_Send this channel to a friend"), "MailChannel", (), enabled=False),
-    MenuItem(_("Copy Channel URL"), "CopyChannelURL", (), enabled=False),
+    MenuItem(_("_Share with a Friend"), "ShareFeed", (), enabled=False),
+    MenuItem(_("Copy URL"), "CopyFeedURL", (), enabled=False),
 ]
 
 PlaylistItems = [
-    MenuItem(_("New _Playlist..."), "NewPlaylist", (Key("p",MOD),)),
-    MenuItem(_("New Playlist Fol_der..."), "NewPlaylistFolder",(Key("p",MOD,SHIFT),)),
+    MenuItem(_("New _Playlist"), "NewPlaylist", (Key("p",MOD),)),
+    MenuItem(_("New Playlist Fol_der"), "NewPlaylistFolder",(Key("p",MOD,SHIFT),)),
     Separator(),
     MenuItem(_("Re_name Playlist"),"RenamePlaylist",(), enabled=False),
     MenuItem(_("_Remove Playlist"),"RemovePlaylists", (Key(BKSPACE, MOD),), enabled=False,
@@ -289,7 +287,7 @@ else:
 # allowing platforms to change the menu structures before computing
 # menubar.
 menubar = MenuBar(Menu(main_title, "Video", *VideoItems),
-                  Menu(_("_Channels"), "Channels", *ChannelItems),
+                  Menu(_("_Feeds"), "Feeds", *FeedItems),
                   Menu(_("_Playlists"), "Playlists", *PlaylistItems),
                   Menu(_("P_layback"), "Playback", *PlaybackItems),
                   Menu(_("_Help"), "Help", *HelpItems),

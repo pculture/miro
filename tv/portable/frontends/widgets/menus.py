@@ -88,53 +88,53 @@ def on_quit():
 
 # Channels menu
 
-@action_handler("NewChannel")
+@action_handler("NewFeed")
 def on_new_channel():
-    app.widgetapp.add_new_channel()
+    app.widgetapp.add_new_feed()
 
 @action_handler("NewGuide")
 def on_new_guidel():
     app.widgetapp.add_new_guide()
 
-@action_handler("NewSearchChannel")
-def on_new_search_channel():
-    app.widgetapp.add_new_search_channel()
+@action_handler("NewSearchFeed")
+def on_new_search_feed():
+    app.widgetapp.add_new_search_feed()
 
-@action_handler("NewChannelFolder")
-def on_new_channel_folder():
-    app.widgetapp.add_new_channel_folder()
+@action_handler("NewFeedFolder")
+def on_new_feed_folder():
+    app.widgetapp.add_new_feed_folder()
 
-@action_handler("RenameChannel")
-def on_rename_channel():
+@action_handler("RenameFeed")
+def on_rename_feed():
     app.widgetapp.rename_something()
 
-@action_handler("RemoveChannels")
-def on_remove_channels():
+@action_handler("RemoveFeeds")
+def on_remove_feeds():
     app.widgetapp.remove_current_feed()
 
-@action_handler("UpdateChannels")
-def on_update_channels():
-    app.widgetapp.update_selected_channels()
+@action_handler("UpdateFeeds")
+def on_update_feeds():
+    app.widgetapp.update_selected_feeds()
 
-@action_handler("UpdateAllChannels")
-def on_update_all_channels():
-    app.widgetapp.update_all_channels()
+@action_handler("UpdateAllFeeds")
+def on_update_all_feeds():
+    app.widgetapp.update_all_feeds()
 
-@action_handler("ImportChannels")
-def on_import_channels():
-    app.widgetapp.import_channels()
+@action_handler("ImportFeeds")
+def on_import_feeds():
+    app.widgetapp.import_feeds()
 
-@action_handler("ExportChannels")
-def on_export_channels():
-    app.widgetapp.export_channels()
+@action_handler("ExportFeeds")
+def on_export_feeds():
+    app.widgetapp.export_feeds()
 
-@action_handler("MailChannel")
-def on_mail_channel():
-    app.widgetapp.mail_channel()
+@action_handler("ShareFeed")
+def on_share_feed():
+    app.widgetapp.share_feed()
 
-@action_handler("CopyChannelURL")
-def on_copy_channel_url():
-    app.widgetapp.copy_channel_url()
+@action_handler("CopyFeedURL")
+def on_copy_feed_url():
+    app.widgetapp.copy_feed_url()
 
 # Playlists menu
 
@@ -231,24 +231,24 @@ action_groups = {
         'NonPlaying': [
             'Open',
             'NewDownload',
-            'NewChannel',
+            'NewFeed',
             'NewGuide',
-            'NewSearchChannel',
-            'NewChannelFolder',
-            'UpdateAllChannels',
-            'ImportChannels',
-            'ExportChannels',
+            'NewSearchFeed',
+            'NewFeedFolder',
+            'UpdateAllFeeds',
+            'ImportFeeds',
+            'ExportFeeds',
             'NewPlaylist',
             'NewPlaylistFolder'
         ],
         'FeedSelected': [
-            'RenameChannel',
-            'MailChannel',
-            'CopyChannelURL'
+            'RenameFeed',
+            'ShareFeed',
+            'CopyFeedURL'
         ],
         'FeedsSelected': [
-            'RemoveChannels',
-            'UpdateChannels',
+            'RemoveFeeds',
+            'UpdateFeeds',
         ],
         'PlaylistSelected': [
             'RenamePlaylist',

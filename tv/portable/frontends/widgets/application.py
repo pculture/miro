@@ -44,10 +44,10 @@ from miro import eventloop
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.frontends.widgets import dialogs
-from miro.frontends.widgets import newsearchchannel
-from miro.frontends.widgets import newchanneldialog
+from miro.frontends.widgets import newsearchfeed
+from miro.frontends.widgets import newfeed
 from miro.frontends.widgets import addtoplaylistdialog
-from miro.frontends.widgets import removechannelsdialog
+from miro.frontends.widgets import removefeeds
 from miro.frontends.widgets import diagnostics
 from miro.frontends.widgets import crashdialog
 from miro.frontends.widgets import itemlistcontroller
@@ -380,10 +380,10 @@ class Application:
 
         if external_count > 0:
             description = ngettext(
-                'One of these items was not downloaded from a channel. '
+                'One of these items was not downloaded from a feed. '
                 'Would you like to delete it or just remove it from the Library?',
 
-                'Some of these items were not downloaded from a channel. '
+                'Some of these items were not downloaded from a feed. '
                 'Would you like to delete them or just remove them from the Library?',
 
                 external_count
@@ -473,27 +473,27 @@ class Application:
         if selection.file_url:
             app.widgetapp.copy_text_to_clipboard(selection.file_url)
 
-    def add_new_channel(self):
-        url, section = newchanneldialog.run_dialog()
+    def add_new_feed(self):
+        url, section = newfeed.run_dialog()
         if url is not None:
-            messages.NewChannel(url, section).send_to_backend()
+            messages.NewFeed(url, section).send_to_backend()
 
-    def add_new_search_channel(self):
-        data = newsearchchannel.run_dialog()
+    def add_new_search_feed(self):
+        data = newsearchfeed.run_dialog()
 
         if not data:
             return
 
         if data[0] == "channel":
-            messages.NewChannelSearchChannel(data[1], data[2], data[3]).send_to_backend()
+            messages.NewFeedSearchChannel(data[1], data[2], data[3]).send_to_backend()
         elif data[0] == "search_engine":
-            messages.NewChannelSearchEngine(data[1], data[2], data[3]).send_to_backend()
+            messages.NewFeedSearchEngine(data[1], data[2], data[3]).send_to_backend()
         elif data[0] == "url":
-            messages.NewChannelSearchURL(data[1], data[2], data[3]).send_to_backend()
+            messages.NewFeedSearchURL(data[1], data[2], data[3]).send_to_backend()
 
-    def add_new_channel_folder(self, add_selected=False):
-        title = _('Create Channel Folder')
-        description = _('Enter a name for the new channel folder')
+    def add_new_feed_folder(self, add_selected=False):
+        title = _('Create Feed Folder')
+        description = _('Enter a name for the new feed folder')
 
         name = dialogs.ask_for_string(title, description)
         if name:
@@ -502,7 +502,7 @@ class Application:
                 child_ids = [info.id for info in infos]
             else:
                 child_ids = None
-            messages.NewChannelFolder(name, child_ids).send_to_backend()
+            messages.NewFeedFolder(name, child_ids).send_to_backend()
 
     def add_new_guide(self):
         url = self.ask_for_url(_('Add Guide'),
@@ -533,7 +533,7 @@ class Application:
             else:
                 watched_feeds = True
 
-        ret = removechannelsdialog.run_dialog(channel_infos, downloaded_items,
+        ret = removefeeds.run_dialog(channel_infos, downloaded_items,
                 downloading_items, watched_feeds)
         if ret:
             for ci in channel_infos:
@@ -544,47 +544,52 @@ class Application:
                         ret[removechannelsdialog.KEEP_ITEMS]
                     ).send_to_backend()
 
-    def update_selected_channels(self):
+    def update_selected_feeds(self):
         t, channel_infos = app.tab_list_manager.get_selection()
         if t in ('feed', 'audio-feed'):
             for ci in channel_infos:
                 if ci.is_folder:
-                    messages.UpdateChannelFolder(ci.id).send_to_backend()
+                    messages.UpdateFeedFolder(ci.id).send_to_backend()
                 else:
-                    messages.UpdateChannel(ci.id).send_to_backend()
+                    messages.UpdateFeed(ci.id).send_to_backend()
 
-    def update_all_channels(self):
-        messages.UpdateAllChannels().send_to_backend()
+    def update_all_feeds(self):
+        messages.UpdateAllFeeds().send_to_backend()
 
-    def import_channels(self):
+    def import_feeds(self):
         title = _('Import OPML File')
         filename = dialogs.ask_for_open_pathname(title,
-                                      filters=[(_('OPML Files'), ['opml'])])
+                filters=[(_('OPML Files'), ['opml'])])
         if not filename:
             return
 
         if os.path.isfile(filename):
-            messages.ImportChannels(filename).send_to_backend()
+            messages.ImportFeeds(filename).send_to_backend()
         else:
             dialogs.show_message(_('Import OPML File - Error'),
                                  _('File %(filename)s does not exist.',
                                    {"filename": filename}),
                                  dialogs.WARNING_MESSAGE)
 
-    def export_channels(self):
+    def export_feeds(self):
         title = _('Export OPML File')
         filename = dialogs.ask_for_save_pathname(title, "miro_subscriptions.opml")
 
         if not filename:
             return
 
-        messages.ExportChannels(filename).send_to_backend()
+        messages.ExportFeeds(filename).send_to_backend()
 
-    def mail_channel(self):
+    def share_feed(self):
         t, channel_infos = app.tab_list_manager.get_selection()
         if t in ('feed', 'audio-feed') and len(channel_infos) == 1:
             ci = channel_infos[0]
-            self.mail_to_friend(ci.base_href, ci.name)
+            share_items = {"weburl": ci.base_href,
+                    "name": ci.name}
+            query_string = "&".join(["%s=%s" % (key, urllib.quote(val)) for key, val in share_items.items()])
+            # FIXME - what's this supposed to do?
+            share_url = "http://miroguide.com/share-item/?%s" % query_string
+            self.open_url(share_url)
 
     def mail_to_friend(self, url, title):
         emailfriend_url = config.get(prefs.EMAILFRIEND_URL)
@@ -593,7 +598,7 @@ class Application:
         query = urllib.urlencode({"url": url, "title": title.encode('utf-8')})
         app.widgetapp.open_url(emailfriend_url + query)
 
-    def copy_channel_url(self):
+    def copy_feed_url(self):
         t, channel_infos = app.tab_list_manager.get_selection()
         if t in ('feed', 'audio-feed') and len(channel_infos) == 1:
             app.widgetapp.copy_text_to_clipboard(channel_infos[0].base_href)
@@ -652,12 +657,12 @@ class Application:
 
         if t == 'feed-folder':
             title = _('Rename Channel Folder')
-            description = _('Enter a new name for the channel folder %(name)s',
+            description = _('Enter a new name for the feed folder %(name)s',
                             {"name": info.name})
 
         elif t in ('feed', 'audio-feed'):
             title = _('Rename Channel')
-            description = _('Enter a new name for the channel %(name)s',
+            description = _('Enter a new name for the feed %(name)s',
                             {"name": info.name})
 
         elif t == 'playlist':

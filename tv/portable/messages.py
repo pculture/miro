@@ -279,8 +279,8 @@ class CleanChannel(BackendMessage):
     def __init__(self, channel_id):
         self.channel_id = channel_id
 
-class ImportChannels(BackendMessage):
-    """Tell the backend to import channels from an .opml file.
+class ImportFeeds(BackendMessage):
+    """Tell the backend to import feeds from an .opml file.
 
     Attributes:
     filename -- file name that exists
@@ -288,8 +288,8 @@ class ImportChannels(BackendMessage):
     def __init__(self, filename):
         self.filename = filename
 
-class ExportChannels(BackendMessage):
-    """Tell the backend to export channels to an .opml file.
+class ExportFeeds(BackendMessage):
+    """Tell the backend to export feeds to an .opml file.
 
     Attributes:
     filename -- file name to export to
@@ -310,13 +310,13 @@ class RenameObject(BackendMessage):
         self.id = id
         self.new_name = util.toUni(new_name)
 
-class UpdateChannel(BackendMessage):
-    """Updates a channel."""
+class UpdateFeed(BackendMessage):
+    """Updates a feed."""
     def __init__(self, id):
         self.id = id
 
-class UpdateChannelFolder(BackendMessage):
-    """Updates the channels in a channel folder."""
+class UpdateFeedFolder(BackendMessage):
+    """Updates the feeds in a feed folder."""
     def __init__(self, id):
         self.id = id
 
@@ -341,8 +341,8 @@ class SetItemResumeTime(BackendMessage):
         self.id = id
         self.resume_time = time
 
-class UpdateAllChannels(BackendMessage):
-    """Updates all channels."""
+class UpdateAllFeeds(BackendMessage):
+    """Updates all feeds."""
     pass
 
 class DeleteChannel(BackendMessage):
@@ -378,28 +378,28 @@ class NewGuide(BackendMessage):
     def __init__(self, url):
         self.url = util.toUni(url)
 
-class NewChannel(BackendMessage):
-    """Create a new channel."""
+class NewFeed(BackendMessage):
+    """Creates a new feed."""
     def __init__(self, url, section=u"video"):
         self.url = util.toUni(url)
         self.section = section
 
-class NewChannelSearchChannel(BackendMessage):
-    """Creates a new channel based on a search through a channel."""
+class NewFeedSearchChannel(BackendMessage):
+    """Creates a new feed based on a search through a feed."""
     def __init__(self, channel_info, search_term, section=u"video"):
         self.channel_info = channel_info
         self.search_term = search_term
         self.section = section
 
-class NewChannelSearchEngine(BackendMessage):
-    """Creates a new channel from a search engine."""
+class NewFeedSearchEngine(BackendMessage):
+    """Creates a new feed from a search engine."""
     def __init__(self, search_engine_info, search_term, section=u"video"):
         self.search_engine_info = search_engine_info
         self.search_term = search_term
         self.section = section
 
-class NewChannelSearchURL(BackendMessage):
-    """Creates a new channel from a url."""
+class NewFeedSearchURL(BackendMessage):
+    """Creates a new feed from a url."""
     def __init__(self, url, search_term, section):
         self.url = url
         self.search_term = search_term
@@ -422,8 +422,8 @@ class NewPlaylist(BackendMessage):
         self.name = util.toUni(name)
         self.ids = ids
 
-class NewChannelFolder(BackendMessage):
-    """Create a new channel folder."""
+class NewFeedFolder(BackendMessage):
+    """Create a new feed folder."""
     def __init__(self, name, child_feed_ids):
         self.name = util.toUni(name)
         self.child_feed_ids = child_feed_ids

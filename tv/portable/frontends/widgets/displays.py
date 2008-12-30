@@ -602,7 +602,7 @@ class MultipleSelectionDisplay(TabDisplay):
     def _on_new_folder_clicked(self, button):
         if self.type in ('feed', 'audio-feed'):
             section = {"feed": u"video", "audio-feed": u"audio"}
-            app.widgetapp.add_new_channel_folder(add_selected=True)
+            app.widgetapp.add_new_feed_folder(add_selected=True)
         else:
             app.widgetapp.add_new_playlist_folder(add_selected=True)
 

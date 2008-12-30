@@ -593,10 +593,10 @@ class BackendMessageHandler(messages.MessageHandler):
         else:
             obj.clean_old_items()
 
-    def handle_import_channels(self, message):
+    def handle_import_feeds(self, message):
         opml.Importer().import_subscriptions(message.filename)
 
-    def handle_export_channels(self, message):
+    def handle_export_feeds(self, message):
         opml.Exporter().export_subscriptions(message.filename)
 
     def handle_rename_object(self, message):
@@ -622,7 +622,7 @@ class BackendMessageHandler(messages.MessageHandler):
         else:
             folder.setExpanded(message.expanded)
 
-    def handle_update_channel(self, message):
+    def handle_update_feed(self, message):
         view = views.visibleFeeds
         try:
             feed = view.getObjectByID(message.id)
@@ -631,7 +631,7 @@ class BackendMessageHandler(messages.MessageHandler):
         else:
             feed.update()
 
-    def handle_update_channel_folder(self, message):
+    def handle_update_feed_folder(self, message):
         view = views.channelFolders
         try:
             f = view.getObjectByID(message.id)
@@ -642,7 +642,7 @@ class BackendMessageHandler(messages.MessageHandler):
             for feed in view:
                 feed.update()
 
-    def handle_update_all_channels(self, message):
+    def handle_update_all_feeds(self, message):
         for f in views.feeds:
             f.scheduleUpdateEvents(0)
 
@@ -779,12 +779,12 @@ class BackendMessageHandler(messages.MessageHandler):
         if guide.getGuideByURL(url) is None:
             guide.ChannelGuide(url, [u'*'])
 
-    def handle_new_channel(self, message):
+    def handle_new_feed(self, message):
         url = message.url
         if not get_feed_by_url(url):
             Feed(url, section=message.section)
 
-    def handle_new_channel_search_channel(self, message):
+    def handle_new_feed_search_channel(self, message):
         term = message.search_term
         channel_info = message.channel_info
         section = message.section
@@ -803,7 +803,7 @@ class BackendMessageHandler(messages.MessageHandler):
         if not get_feed_by_url(url):
             Feed(url, section=section)
 
-    def handle_new_channel_search_engine(self, message):
+    def handle_new_feed_search_engine(self, message):
         sei = message.search_engine_info
         term = message.search_term
         section = message.section
@@ -816,7 +816,7 @@ class BackendMessageHandler(messages.MessageHandler):
         if not get_feed_by_url(url):
             f = Feed(url, section=section)
 
-    def handle_new_channel_search_url(self, message):
+    def handle_new_feed_search_url(self, message):
         url = message.url
         term = message.search_term
         section = message.section
@@ -833,7 +833,7 @@ class BackendMessageHandler(messages.MessageHandler):
         if not get_feed_by_url(url):
             Feed(url, section=section)
 
-    def handle_new_channel_folder(self, message):
+    def handle_new_feed_folder(self, message):
         folder = ChannelFolder(message.name)
         if message.child_feed_ids is not None:
             for id in message.child_feed_ids:
