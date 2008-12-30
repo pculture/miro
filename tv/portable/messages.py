@@ -254,27 +254,27 @@ class StopTrackingWatchedFolders(BackendMessage):
     """Stop tracking watched folders."""
     pass
 
-class SetChannelExpire(BackendMessage):
-    """Sets the expiration for a channel."""
+class SetFeedExpire(BackendMessage):
+    """Sets the expiration for a feed."""
     def __init__(self, channel_info, expire_type, expire_time):
         self.channel_info = channel_info
         self.expire_type = expire_type
         self.expire_time = expire_time
 
-class SetChannelMaxNew(BackendMessage):
-    """Sets the channel's max new property."""
+class SetFeedMaxNew(BackendMessage):
+    """Sets the feed's max new property."""
     def __init__(self, channel_info, max_new):
         self.channel_info = channel_info
         self.max_new = max_new
 
-class SetChannelMaxOldItems(BackendMessage):
-    """Sets the channels max old items property."""
+class SetFeedMaxOldItems(BackendMessage):
+    """Sets the feed's max old items property."""
     def __init__(self, channel_info, max_old_items):
         self.channel_info = channel_info
         self.max_old_items = max_old_items
 
-class CleanChannel(BackendMessage):
-    """Tells the backend to clean the old items from a channel.
+class CleanFeed(BackendMessage):
+    """Tells the backend to clean the old items from a feed.
     """
     def __init__(self, channel_id):
         self.channel_id = channel_id
@@ -298,7 +298,7 @@ class ExportFeeds(BackendMessage):
         self.filename = filename
 
 class RenameObject(BackendMessage):
-    """Tell the backend to rename a channel/playlist/folder.
+    """Tell the backend to rename a feed/playlist/folder.
     
     Attributes:
     type -- 'feed', 'playlist', 'feed-folder' or 'playlist-folder'
@@ -320,8 +320,8 @@ class UpdateFeedFolder(BackendMessage):
     def __init__(self, id):
         self.id = id
 
-class MarkChannelSeen(BackendMessage):
-    """Mark a channel as seen"""
+class MarkFeedSeen(BackendMessage):
+    """Mark a feed as seen"""
     def __init__(self, id):
         self.id = id
 
@@ -345,8 +345,8 @@ class UpdateAllFeeds(BackendMessage):
     """Updates all feeds."""
     pass
 
-class DeleteChannel(BackendMessage):
-    """Delete a channel."""
+class DeleteFeed(BackendMessage):
+    """Delete a feed."""
     def __init__(self, id, is_folder, keep_items):
         self.id = id
         self.is_folder = is_folder
@@ -355,7 +355,7 @@ class DeleteChannel(BackendMessage):
 class DeleteWatchedFolder(BackendMessage):
     """Delete a watched folder.
 
-    NOTE: this separate from  DeleteChannel since not all watched folders are
+    NOTE: this separate from DeleteFeed since not all watched folders are
     visible.
     """
     def __init__(self, id):
@@ -384,7 +384,7 @@ class NewFeed(BackendMessage):
         self.url = util.toUni(url)
         self.section = section
 
-class NewFeedSearchChannel(BackendMessage):
+class NewFeedSearchFeed(BackendMessage):
     """Creates a new feed based on a search through a feed."""
     def __init__(self, channel_info, search_term, section=u"video"):
         self.channel_info = channel_info
@@ -429,7 +429,7 @@ class NewFeedFolder(BackendMessage):
         self.child_feed_ids = child_feed_ids
 
 class NewPlaylistFolder(BackendMessage):
-    """Create a new channel folder."""
+    """Create a new playlist folder."""
     def __init__(self, name, child_playlist_ids):
         self.name = util.toUni(name)
         self.child_playlist_ids = child_playlist_ids
@@ -555,8 +555,8 @@ class RenameVideo(BackendMessage):
         self.id = id
         self.new_name = new_name
 
-class RevertChannelTitle(BackendMessage):
-    """Reverts the channel's title back to the original"""
+class RevertFeedTitle(BackendMessage):
+    """Reverts the feed's title back to the original"""
     def __init__(self, id):
         self.id = id
 

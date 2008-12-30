@@ -205,7 +205,7 @@ class CustomCellRenderer(object):
 class MiroTreeView(gtk.TreeView):
     """Extends the GTK TreeView widget to help implement TableView
     https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView"""
-    # Add a tiny bit of padding so that the user can drag channels below
+    # Add a tiny bit of padding so that the user can drag feeds below
     # the table, i.e. to the bottom row, as a top-level
     PAD_BOTTOM = 3
     def __init__(self, model=None):

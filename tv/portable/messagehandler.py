@@ -514,35 +514,35 @@ class BackendMessageHandler(messages.MessageHandler):
             self.playlist_tracker.unlink()
             self.playlist_tracker = None
 
-    def handle_mark_channel_seen(self, message):
+    def handle_mark_feed_seen(self, message):
         try:
             feed = database.defaultDatabase.getObjectByID(message.id)
             feed.markAsViewed()
         except database.ObjectNotFoundError:
-            logging.warning("handle_mark_channel_seen: can't find channel by id %s", message.id)
+            logging.warning("handle_mark_feed_seen: can't find feed by id %s", message.id)
 
     def handle_mark_item_watched(self, message):
         try:
             item = views.items.getObjectByID(message.id)
             item.markItemSeen()
         except database.ObjectNotFoundError:
-            logging.warning("handle_mark_item_seen: can't find channel by id %s", message.id)
+            logging.warning("handle_mark_item_seen: can't find item by id %s", message.id)
 
     def handle_mark_item_unwatched(self, message):
         try:
             item = views.items.getObjectByID(message.id)
             item.markItemUnseen()
         except database.ObjectNotFoundError:
-            logging.warning("handle_mark_item_unwatched: can't find channel by id %s", message.id)
+            logging.warning("handle_mark_item_unwatched: can't find item by id %s", message.id)
 
     def handle_set_item_resume_time(self, message):
         try:
             item = views.items.getObjectByID(message.id)
             item.setResumeTime(message.resume_time)
         except database.ObjectNotFoundError:
-            logging.warning("handle_set_item_resume_time: can't find channel by id %s", message.id)
+            logging.warning("handle_set_item_resume_time: can't find item by id %s", message.id)
 
-    def handle_set_channel_expire(self, message):
+    def handle_set_feed_expire(self, message):
         channel_info = message.channel_info
         expire_type = message.expire_type
         expire_time = message.expire_time
@@ -557,9 +557,9 @@ class BackendMessageHandler(messages.MessageHandler):
                 channel.setExpiration(u"feed", expire_time)
 
         except database.ObjectNotFoundError:
-            logging.warning("handle_set_channel_expire: can't find channel by id %s", channel_info.id)
+            logging.warning("handle_set_feed_expire: can't find feed by id %s", channel_info.id)
 
-    def handle_set_channel_max_new(self, message):
+    def handle_set_feed_max_new(self, message):
         channel_info = message.channel_info
         value = message.max_new
 
@@ -571,9 +571,9 @@ class BackendMessageHandler(messages.MessageHandler):
                 channel.set_max_new(value)
 
         except database.ObjectNotFoundError:
-            logging.warning("handle_set_channel_max_new: can't find channel by id %s", channel_info.id)
+            logging.warning("handle_set_feed_max_new: can't find feed by id %s", channel_info.id)
 
-    def handle_set_channel_max_old_items(self, message):
+    def handle_set_feed_max_old_items(self, message):
         channel_info = message.channel_info
         max_old_items = message.max_old_items
 
@@ -582,14 +582,14 @@ class BackendMessageHandler(messages.MessageHandler):
             channel.setMaxOldItems(max_old_items)
 
         except database.ObjectNotFoundError:
-            logging.warning("handle_set_channel_max_new: can't find channel by id %s", channel_info.id)
+            logging.warning("handle_set_feed_max_new: can't find feed by id %s", channel_info.id)
 
-    def handle_clean_channel(self, message):
+    def handle_clean_feed(self, message):
         channel_id = message.channel_id
         try:
             obj = views.feeds.getObjectByID(channel_id)
         except database.ObjectNotFoundError:
-            logging.warn("handle_clean_channel: object not found id: %s" % channel_id)
+            logging.warn("handle_clean_feed: object not found id: %s" % channel_id)
         else:
             obj.clean_old_items()
 
@@ -618,7 +618,7 @@ class BackendMessageHandler(messages.MessageHandler):
         try:
             folder = folder_view.getObjectByID(message.id)
         except database.ObjectNotFoundError:
-            logging.warn("channel folder not found")
+            logging.warn("feed folder not found")
         else:
             folder.setExpanded(message.expanded)
 
@@ -646,7 +646,7 @@ class BackendMessageHandler(messages.MessageHandler):
         for f in views.feeds:
             f.scheduleUpdateEvents(0)
 
-    def handle_delete_channel(self, message):
+    def handle_delete_feed(self, message):
         if message.is_folder:
             view = views.channelFolders
         else:
@@ -654,7 +654,7 @@ class BackendMessageHandler(messages.MessageHandler):
         try:
             channel = view.getObjectByID(message.id)
         except database.ObjectNotFoundError:
-            logging.warn("channel not found: %s" % message.id)
+            logging.warn("feed not found: %s" % message.id)
         else:
             if message.keep_items:
                 move_to = getSingletonDDBObject(views.manualFeed)
@@ -784,7 +784,7 @@ class BackendMessageHandler(messages.MessageHandler):
         if not get_feed_by_url(url):
             Feed(url, section=message.section)
 
-    def handle_new_feed_search_channel(self, message):
+    def handle_new_feed_search_feed(self, message):
         term = message.search_term
         channel_info = message.channel_info
         section = message.section
@@ -1128,11 +1128,11 @@ class BackendMessageHandler(messages.MessageHandler):
         else:
             item.setTitle(message.new_name)
 
-    def handle_revert_channel_title(self, message):
+    def handle_revert_feed_title(self, message):
         try:
             feed = views.feeds.getObjectByID(message.id)
         except database.ObjectNotFoundError:
-            logging.warn("RevertChannelTitle: Feed not found -- %s", message.id)
+            logging.warn("RevertFeedTitle: Feed not found -- %s", message.id)
         else:
             feed.revert_title()
 
@@ -1213,10 +1213,10 @@ class BackendMessageHandler(messages.MessageHandler):
 
                 # send a notification to the user
                 if len(feed_names) == 1:
-                    title = _("Subscribed to new channel:")
+                    title = _("Subscribed to new feed:")
                     body = feed_names[0]
                 else:
-                    title = _('Subscribed to new channels:')
+                    title = _('Subscribed to new feeds:')
                     body = '\n'.join(
                         [' - %s' % feed_name for feed_name in feed_names])
 

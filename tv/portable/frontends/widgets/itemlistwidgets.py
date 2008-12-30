@@ -590,16 +590,16 @@ class FeedToolbar(widgetset.Background):
 
     signals:
        show-settings (widget) -- The show settings button was pressed
-       send-to-friend (widget) -- The "send to a friend" button was pressed
+       share (widget) -- The "share" button was pressed
        auto-download-changed (widget, value) -- The auto-download setting was
            changed by the user
     """
 
     def __init__(self):
         widgetset.Background.__init__(self)
-        self.create_signal('remove-channel')
+        self.create_signal('remove-feed')
         self.create_signal('show-settings')
-        self.create_signal('send-to-a-friend')
+        self.create_signal('share')
         self.create_signal('auto-download-changed')
         hbox = widgetset.HBox(spacing=5)
 
@@ -613,10 +613,10 @@ class FeedToolbar(widgetset.Background):
         self.autdownload_menu.set_size(widgetconst.SIZE_SMALL)
         self.autdownload_menu.connect('changed', self._on_autodownload_changed)
 
-        send_button = widgetset.Button(_("Send to a friend"), style='smooth')
-        send_button.set_size(widgetconst.SIZE_SMALL)
-        send_button.set_color(style.TOOLBAR_GRAY)
-        send_button.connect('clicked', self._on_send_clicked)
+        share_button = widgetset.Button(_("Share feed"), style='smooth')
+        share_button.set_size(widgetconst.SIZE_SMALL)
+        share_button.set_color(style.TOOLBAR_GRAY)
+        share_button.connect('clicked', self._on_share_clicked)
 
         settings_button = widgetset.Button(_("Settings"), style='smooth')
         settings_button.set_size(widgetconst.SIZE_SMALL)
@@ -632,7 +632,7 @@ class FeedToolbar(widgetset.Background):
         hbox.pack_start(widgetutil.align_middle(self.autdownload_menu))
         hbox.pack_end(widgetutil.align_middle(remove_button))
         hbox.pack_end(widgetutil.align_middle(settings_button))
-        hbox.pack_end(widgetutil.align_middle(send_button))
+        hbox.pack_end(widgetutil.align_middle(share_button))
         self.add(widgetutil.pad(hbox, top=4, bottom=4, left=10, right=14))
 
     def set_autodownload_mode(self, autodownload_mode):
@@ -655,11 +655,11 @@ class FeedToolbar(widgetset.Background):
     def _on_settings_clicked(self, button):
         self.emit('show-settings')
 
-    def _on_send_clicked(self, button):
-        self.emit('send-to-a-friend')
+    def _on_share_clicked(self, button):
+        self.emit('share')
 
     def _on_remove_clicked(self, button):
-        self.emit('remove-channel')
+        self.emit('remove-feed')
 
     def _on_autodownload_changed(self, widget, option):
         self.emit('auto-download-changed', self.autodownload_options[option][0])

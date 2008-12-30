@@ -64,7 +64,7 @@ from miro import messages
 
 _commandLineArgs = []
 commandLineVideoIds = None
-commandLineView = None 
+commandLineView = None
 
 def get_manual_feed():
     manualFeed = util.getSingletonDDBObject(views.manualFeed)
@@ -76,7 +76,7 @@ def add_video(path, single=False):
     views.items.confirmDBThread()
     for i in views.items:
         itemFilename = i.get_filename()
-        if (itemFilename != '' and 
+        if (itemFilename != '' and
                 os.path.exists(itemFilename) and
                 samefile(itemFilename, path)):
             print "Not adding duplicate video: %s" % path.decode('ascii', 'ignore')
@@ -155,12 +155,12 @@ def add_download(url, additional=None):
         """
         if data["body"]:
             if filetypes.is_maybe_rss(data["body"]):
-                # FIXME - this is silly since we just did a GET and we do 
+                # FIXME - this is silly since we just did a GET and we do
                 # another one in add_feeds
                 logging.info("%s is a feed--adding it." % url)
                 add_feeds([url])
                 return
-        
+
         download_unknown_mime_type(url)
 
     def callback_flash(old_url, additional=additional):
@@ -178,7 +178,7 @@ def add_download(url, additional=None):
 
     def callback(headers, additional=additional):
         """We need to figure out if the URL is a external video link, or a link to
-        a channel.
+        a feed.
         """
         if check_url_exists(url):
             return
@@ -210,7 +210,7 @@ def download_unknown_mime_type(url):
     title = _('File Download')
     text = _('This file at %(url)s does not appear to be audio, video, or an RSS feed.',
              {"url": url})
-    dialog = dialogs.ChoiceDialog(title, text, 
+    dialog = dialogs.ChoiceDialog(title, text,
             dialogs.BUTTON_DOWNLOAD_ANYWAY, dialogs.BUTTON_CANCEL)
     def callback(dialog):
         if check_url_exists(url):
@@ -275,7 +275,7 @@ def add_subscriptions(type_, urls):
             for url in urls:
                 if guide.getGuideByURL(url) is None:
                     guide.ChannelGuide(url, [u'*'])
-                    
+
 def filter_existing_feed_urls(urls):
     return [u for u in urls if feed.get_feed_by_url(u) is None]
 
@@ -292,9 +292,9 @@ def add_feeds(urls, newFolderName=None):
             lastFeed = f
 
 def ask_for_multiple_feeds(urls):
-    title = _("Subscribing to multiple channels") 
-    description = ngettext("Create channel?",
-                           "Create %(count)d channels?",
+    title = _("Subscribing to multiple feeds")
+    description = ngettext("Create feed?",
+                           "Create %(count)d feeds?",
                            len(urls),
                            {"count": len(urls)})
     d = dialogs.ThreeChoiceDialog(title, description, dialogs.BUTTON_ADD,
@@ -309,18 +309,18 @@ def ask_for_multiple_feeds(urls):
 def ask_for_new_folder_name(urls):
     newURLCount = len(filter_existing_feed_urls(urls))
     existingURLCount = len(urls) - newURLCount
-    title = ngettext("Adding channel to a new folder"
-                     "Adding %(count)d channels to a new folder",
+    title = ngettext("Adding feed to a new folder"
+                     "Adding %(count)d feeds to a new folder",
                      newURLCount,
                      {"count": newURLCount})
-    description = _("Enter a name for the new channel folder")
+    description = _("Enter a name for the new feed folder")
     if existingURLCount > 0:
         description += "\n\n"
         description += ngettext(
-            "NOTE: You are already subscribed to one of these channels.  These "
-            "channels will stay where they currently are.",
-            "NOTE: You are already subscribed to %(count)d of these channels.  These "
-            "channels will stay where they currently are.",
+            "NOTE: You are already subscribed to one of these feeds.  These "
+            "feeds will stay where they currently are.",
+            "NOTE: You are already subscribed to %(count)d of these feeds.  These "
+            "feeds will stay where they currently are.",
             existingURLCount,
             {"count": existingURLCount}
         )
@@ -342,7 +342,7 @@ def add_subscription_url(prefix, expectedContentType, url):
             type_, urls = subscription.parse_content(info['body'])
             if urls is None:
                 text = _(
-                    "This %(appname)s channel file has an invalid format: "
+                    "This %(appname)s feed file has an invalid format: "
                     "%(url)s.  Please notify the publisher of this file.",
                     {"appname": config.get(prefs.SHORT_APP_NAME), "url": realURL}
                 )
@@ -351,7 +351,7 @@ def add_subscription_url(prefix, expectedContentType, url):
                 add_subscriptions(type_, urls)
         else:
             text = _(
-                "This %(appname)s channel file has the wrong content type: "
+                "This %(appname)s feed file has the wrong content type: "
                 "%(url)s. Please notify the publisher of this file.",
                 {"appname": config.get(prefs.SHORT_APP_NAME), "url": realURL}
             )
@@ -359,7 +359,7 @@ def add_subscription_url(prefix, expectedContentType, url):
 
     def errback(error):
         text = _(
-            "Could not download the %(appname)s channel file: %(url)s",
+            "Could not download the %(appname)s feed file: %(url)s",
             {"appname": config.get(prefs.SHORT_APP_NAME), "url": realURL}
         )
         complain_about_subscription_url(text)
@@ -434,7 +434,7 @@ def parse_command_line_args(args=None):
         f = util.getSingletonDDBObject(views.singleFeed)
         item_infos = [messages.ItemInfo(i) for i in f.items]
         messages.PlayMovie(item_infos).send_to_frontend()
-        
+
     if addedDownloads:
         # FIXME - switch to downloads tab?
         pass

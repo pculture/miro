@@ -615,7 +615,7 @@ class PlaybackPanel(PanelBuilder):
 
 # Add the initial panels
 add_panel("general", _("General"), GeneralPanel, 'images/pref-tab-general.png')
-add_panel("feeds", _("Feeds"), FeedsPanel, 'images/pref-tab-channels.png')
+add_panel("feeds", _("Feeds"), FeedsPanel, 'images/pref-tab-feeds.png')
 add_panel("downloads", _("Downloads"), DownloadsPanel, 'images/pref-tab-downloads.png')
 add_panel("folders", _("Folders"), FoldersPanel, 'images/pref-tab-folders.png')
 add_panel("disk_space", _("Disk space"), DiskSpacePanel, 'images/pref-tab-disk-space.png')

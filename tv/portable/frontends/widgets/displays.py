@@ -267,7 +267,7 @@ class FeedDisplay(ItemListDisplay):
         ItemListDisplay.cleanup(self)
         app.tab_list_manager.feed_list.disconnect(self._name_signal_handler)
         if widgetutil.feed_exists(self.feed_id):
-            messages.MarkChannelSeen(self.feed_id).send_to_backend()
+            messages.MarkFeedSeen(self.feed_id).send_to_backend()
 
     def make_controller(self, tab):
         self.feed_id = tab.id
@@ -287,7 +287,7 @@ class AudioFeedDisplay(FeedDisplay):
         ItemListDisplay.cleanup(self)
         app.tab_list_manager.audio_feed_list.disconnect(self._name_signal_handler)
         if widgetutil.feed_exists(self.feed_id):
-            messages.MarkChannelSeen(self.feed_id).send_to_backend()
+            messages.MarkFeedSeen(self.feed_id).send_to_backend()
 
 class PlaylistDisplay(ItemListDisplay):
     @staticmethod

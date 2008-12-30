@@ -299,23 +299,23 @@ class MainWindow(Window):
             else:
                 action_group.set_sensitive(False)
 
-        removeChannels = menubar.menubar.getLabel("RemoveFeeds")
-        updateChannels = menubar.menubar.getLabel("UpdateFeeds")
+        removeFeeds = menubar.menubar.getLabel("RemoveFeeds")
+        updateFeeds = menubar.menubar.getLabel("UpdateFeeds")
         removePlaylists = menubar.menubar.getLabel("RemovePlaylists")
         removeItems = menubar.menubar.getLabel("RemoveItems")
 
         for state, actions in menu_manager.states.items():
             if "RemoveFeeds" in actions:
-                removeChannels = menubar.menubar.getLabel("RemoveFeeds", state)
+                removeFeeds = menubar.menubar.getLabel("RemoveFeeds", state)
             if "UpdateFeeds" in actions:
-                updateChannels = menubar.menubar.getLabel("UpdateFeeds", state)
+                updateFeeds = menubar.menubar.getLabel("UpdateFeeds", state)
             if "RemovePlaylists" in actions:
                 removePlaylists = menubar.menubar.getLabel("RemovePlaylists", state)
             if "RemoveItems" in actions:
                 removeItems = menubar.menubar.getLabel("RemoveItems", state)
 
-        self.action_groups["FeedsSelected"].get_action("RemoveFeeds").set_property("label", removeChannels)
-        self.action_groups["FeedsSelected"].get_action("UpdateFeeds").set_property("label", updateChannels)
+        self.action_groups["FeedsSelected"].get_action("RemoveFeeds").set_property("label", removeFeeds)
+        self.action_groups["FeedsSelected"].get_action("UpdateFeeds").set_property("label", updateFeeds)
         self.action_groups["PlaylistsSelected"].get_action("RemovePlaylists").set_property("label", removePlaylists)
         self.action_groups["PlayableSelected"].get_action("RemoveItems").set_property("label", removeItems)
 

@@ -34,7 +34,7 @@ from miro import app
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro import messages
-from miro.frontends.widgets import channelsettingspanel
+from miro.frontends.widgets import feedsettingspanel
 from miro.frontends.widgets import removefeeds
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
@@ -108,7 +108,7 @@ class FeedController(itemlistcontroller.ItemListController):
 
     def _on_save_search(self, widget, search_text):
         info = widgetutil.get_feed_info(self.id)
-        messages.NewFeedSearchChannel(info, search_text).send_to_backend()
+        messages.NewFeedSearchFeed(info, search_text).send_to_backend()
 
     def _make_item_views(self):
         self.downloading_view = itemlistwidgets.ItemView(
@@ -135,8 +135,8 @@ class FeedController(itemlistcontroller.ItemListController):
         toolbar = itemlistwidgets.FeedToolbar()
         toolbar.set_autodownload_mode(feed_info.autodownload_mode)
         toolbar.connect('show-settings', self._on_show_settings)
-        toolbar.connect('remove-channel', self._on_remove_channel)
-        toolbar.connect('send-to-a-friend', self._on_send_to_a_friend)
+        toolbar.connect('remove-feed', self._on_remove_feed)
+        toolbar.connect('share', self._on_share)
         toolbar.connect('auto-download-changed',
                 self._on_auto_download_changed)
         return toolbar
@@ -147,16 +147,16 @@ class FeedController(itemlistcontroller.ItemListController):
     def default_item_view(self):
         return self.downloaded_view
 
-    def _on_remove_channel(self, widget):
+    def _on_remove_feed(self, widget):
         info = widgetutil.get_feed_info(self.id)
         app.widgetapp.remove_feeds([info])
 
     def _on_show_settings(self, widget):
         info = widgetutil.get_feed_info(self.id)
-        channelsettingspanel.run_dialog(info)
+        feedsettingspanel.run_dialog(info)
 
-    def _on_send_to_a_friend(self, widget):
-        app.widgetapp.mail_channel()
+    def _on_share(self, widget):
+        app.widgetapp.share_feed()
 
     def _on_auto_download_changed(self, widget, setting):
         messages.AutodownloadChange(self.id, setting).send_to_backend()

@@ -485,7 +485,7 @@ class Application:
             return
 
         if data[0] == "feed":
-            messages.NewFeedSearchChannel(data[1], data[2], data[3]).send_to_backend()
+            messages.NewFeedSearchFeed(data[1], data[2], data[3]).send_to_backend()
         elif data[0] == "search_engine":
             messages.NewFeedSearchEngine(data[1], data[2], data[3]).send_to_backend()
         elif data[0] == "url":
@@ -540,7 +540,7 @@ class Application:
                 if ci.is_directory_feed:
                     messages.SetWatchedFolderVisible(ci.id, False).send_to_backend()
                 else:
-                    messages.DeleteChannel(ci.id, ci.is_folder,
+                    messages.DeleteFeed(ci.id, ci.is_folder,
                         ret[removefeeds.KEEP_ITEMS]
                     ).send_to_backend()
 
@@ -687,12 +687,12 @@ class Application:
         if name:
             messages.RenameObject(t, info.id, name).send_to_backend()
 
-    def revert_channel_name(self):
+    def revert_feed_name(self):
         t, channel_infos = app.tab_list_manager.get_selection()
         if not channel_infos:
             return
         info = channel_infos[0]
-        messages.RevertChannelTitle(info.id).send_to_backend()
+        messages.RevertFeedTitle(info.id).send_to_backend()
 
     def remove_current_playlist(self):
         t, infos = app.tab_list_manager.get_selection()

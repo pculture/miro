@@ -128,7 +128,7 @@ def _build_video_expires(channel, grid):
             expire_type = "feed"
             expire_time = int(value)
 
-        messages.SetChannelExpire(channel, expire_type, expire_time).send_to_backend()
+        messages.SetFeedExpire(channel, expire_type, expire_time).send_to_backend()
     expire_combo.connect('changed', expire_changed)
 
     grid.pack(expire_combo, grid.ALIGN_LEFT)
@@ -160,9 +160,9 @@ def _build_remember_items(channel, grid):
         value = older_options[index][0]
 
         if value == u"system":
-            messages.SetChannelMaxOldItems(channel, -1).send_to_backend()
+            messages.SetFeedMaxOldItems(channel, -1).send_to_backend()
         else:
-            messages.SetChannelMaxOldItems(channel, int(value)).send_to_backend()
+            messages.SetFeedMaxOldItems(channel, int(value)).send_to_backend()
 
     older_combo.connect('changed', older_changed)
 
@@ -174,7 +174,7 @@ def _build_remember_items(channel, grid):
     lab.set_color(widgetconst.DIALOG_NOTE_COLOR)
 
     def _handle_clicked(widget):
-        messages.CleanChannel(channel.id).send_to_backend()
+        messages.CleanFeed(channel.id).send_to_backend()
         # FIXME - we don't really know if it got cleaned or if it errored out
         # at this point.  but ...  we need to give some kind of feedback to
         # the user and it's not likely that it failed and if it did, it'd
@@ -220,7 +220,7 @@ def _build_auto_download(channel, grid):
 
     def max_new_changed(widget, index):
         value = max_new_options[index][0]
-        messages.SetChannelMaxNew(channel, int(value)).send_to_backend()
+        messages.SetFeedMaxNew(channel, int(value)).send_to_backend()
 
     def checkbox_changed(widget):
         if widget.get_checked():
@@ -229,7 +229,7 @@ def _build_auto_download(channel, grid):
         else:
             max_new_combo.disable()
             max_new_changed(max_new_combo, 2)
-            messages.SetChannelMaxNew(channel, u"unlimited").send_to_backend()
+            messages.SetFeedMaxNew(channel, u"unlimited").send_to_backend()
 
     grid.pack(max_new_combo, grid.ALIGN_LEFT)
 
