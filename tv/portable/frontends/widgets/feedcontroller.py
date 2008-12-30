@@ -162,16 +162,16 @@ class FeedController(itemlistcontroller.ItemListController):
         messages.AutodownloadChange(self.id, setting).send_to_backend()
 
     def _expand_lists_initially(self):
-        video_downloaded = self.downloaded_view.item_list.get_count() > 0
+        item_downloaded = self.downloaded_view.item_list.get_count() > 0
         feed_info = widgetutil.get_feed_info(self.id)
         autodownload_mode = feed_info.autodownload_mode
         self.downloaded_section.expand()
         self.full_section.show()
         all_items = self.full_view.item_list.get_items()
         viewed_items = [item for item in all_items if item.item_viewed]
-        if not (video_downloaded and len(all_items) == len(viewed_items)):
+        if not (item_downloaded and len(all_items) == len(viewed_items)):
             self.full_section.expand()
-        if video_downloaded and 0 < len(viewed_items) < len(all_items):
+        if item_downloaded and 0 < len(viewed_items) < len(all_items):
             text = ngettext('Show 1 More Item',
                             'Show %(count)d More Items',
                             len(viewed_items),
@@ -216,8 +216,8 @@ class FeedController(itemlistcontroller.ItemListController):
 
     def _update_downloaded_section(self, watchable):
         if watchable > 0:
-            text = ngettext("%(count)d Video",
-                            "%(count)d Videos",
+            text = ngettext("%(count)d Item",
+                            "%(count)d Items",
                             watchable,
                             {"count": watchable})
             text = u"|  %s  " % text
@@ -226,23 +226,23 @@ class FeedController(itemlistcontroller.ItemListController):
         else:
             self.downloaded_section.hide()
 
-    def _update_full_section(self, downloads, videos):
+    def _update_full_section(self, downloads, items):
         if self._search_text == '':
-            videotext = ngettext("%(count)d Video",
-                                 "%(count)d Videos",
-                                 videos,
-                                 {"count": videos})
+            itemtext = ngettext("%(count)d Item",
+                                 "%(count)d Items",
+                                 items,
+                                 {"count": items})
             downloadingtext = ngettext("%(count)d Downloading",
                                        "%(count)d Downloading",
                                        downloads,
                                        {"count": downloads})
-            text = u"|  %s  |  %s" % (videotext, downloadingtext)
+            text = u"|  %s  |  %s" % (itemtext, downloadingtext)
         elif self.full_view.item_list.get_hidden_count() > 0:
-            text = ngettext("%(count)d Video Matches Search",
-                    "%(count)d Videos Match Search",
-                    videos, {"count": videos})
+            text = ngettext("%(count)d Item Matches Search",
+                    "%(count)d Items Match Search",
+                    items, {"count": items})
             text = u"|  %s" % text
         else:
-            text = _("All Videos Match Search")
+            text = _("All Items Match Search")
             text = u"|  %s" % text
         self.full_section.set_info(text)
