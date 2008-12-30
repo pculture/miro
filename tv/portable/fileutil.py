@@ -189,6 +189,7 @@ def miro_listdir(directory):
     absolute pathnames.  OSErrors are silently ignored.  Hidden files aren't
     returned.  Pathnames are run through os.path.normcase.
     """
+    # FIXME - this doesn't look used anywhere
 
     files = []
     directories = []
