@@ -390,19 +390,20 @@ class DynamicDatabase:
     def count_databases(self):
         count = 1
         size = len(self.objects)
-        for (db, func) in self.subFilters:
+        for db, func in self.subFilters:
             new = db.count_databases()
             count = count + new[0]
             size = size + new[1]
-        for (db) in self.clones:
+        for db in self.clones:
+            db = db[0]
             new = db.count_databases()
             count = count + new[0]
             size = size + new[1]
-        for (db, func) in self.subSorts:
+        for db, func in self.subSorts:
             new = db.count_databases()
             count = count + new[0]
             size = size + new[1]
-        for (db, func) in self.subMaps:
+        for db, func in self.subMaps:
             new = db.count_databases()
             count = count + new[0]
             size = size + new[1]

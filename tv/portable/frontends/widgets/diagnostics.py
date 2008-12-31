@@ -33,6 +33,10 @@ giving them useful information.
 Add new items to the ITEMS variable.
 """
 
+import os
+import stat
+import logging
+
 from miro.gtcache import gettext as _
 
 from miro.plat.frontends.widgets import widgetset
@@ -53,6 +57,24 @@ def open_helper(d):
         app.widgetapp.open_file(d)
     return _open_handler
 
+def get_database_size():
+    path = config.get(prefs.SQLITE_PATHNAME)
+    if path and os.path.isfile(path):
+        try:
+            return os.stat(path)[stat.ST_SIZE]
+        except IOError:
+            pass
+    return 0
+
+def get_database_object_count():
+    # FIXME - this might not be thread-safe given that we're calling it
+    # from the frontend and it's doing things in the db.  But....  it
+    # should be a read-only endeavor, so it should be ok.
+    from miro import database
+    logging.info("defaultDatabase: %s", repr(database.defaultDatabase))
+    count, size = database.defaultDatabase.count_databases()
+    return count
+
 SEPARATOR = None
 SHOW = _("Show")
 
@@ -65,22 +87,18 @@ ITEMS = [
       "data": config.get(prefs.MOVIES_DIRECTORY),
       "button_face": SHOW,
       "button_fun": open_helper(config.get(prefs.MOVIES_DIRECTORY)) },
-
     { "label": _("Icon cache location:"),
       "data": config.get(prefs.ICON_CACHE_DIRECTORY),
       "button_face": SHOW,
       "button_fun": open_helper(config.get(prefs.ICON_CACHE_DIRECTORY)) },
-
     { "label": _("Log file location:"),
       "data": config.get(prefs.LOG_PATHNAME),
       "button_face": SHOW,
       "button_fun": open_helper(config.get(prefs.LOG_PATHNAME)) },
-
     { "label": _("Downloader log file location:"),
       "data": config.get(prefs.DOWNLOADER_LOG_PATHNAME),
       "button_face": SHOW,
       "button_fun": open_helper(config.get(prefs.DOWNLOADER_LOG_PATHNAME)) },
-
     { "label": _("Database file location:"),
       "data": config.get(prefs.SQLITE_PATHNAME),
       "button_face": SHOW,
@@ -89,7 +107,11 @@ ITEMS = [
     SEPARATOR,
 
     { "label": _("Space free on disk:"),
-      "data": lambda : util.formatSizeForUser(get_available_bytes_for_movies(), "0B", False) }
+      "data": lambda : util.formatSizeForUser(get_available_bytes_for_movies(), "0B", False) },
+    { "label": _("Database size:"),
+      "data": lambda : util.formatSizeForUser(get_database_size(), "0B", False) },
+    { "label": _("Total number of db objects:"),
+      "data": lambda : "%d" % get_database_object_count() }
 ]
 
 def run_dialog():
