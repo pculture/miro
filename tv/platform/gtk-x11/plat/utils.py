@@ -60,11 +60,12 @@ def get_available_bytes_for_movies():
     d = config.get(prefs.MOVIES_DIRECTORY)
 
     if not os.path.exists(d):
+        # FIXME - this is a bogus value.  need to "do the right thing"
+        # here.
         return 0
 
     statinfo = os.statvfs(d)
     return statinfo.f_frsize * statinfo.f_bavail
-
 
 backend_thread = None
 
