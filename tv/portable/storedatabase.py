@@ -995,7 +995,13 @@ class LiveStorage:
             eventloop.addIdle(self.checkpoint, "Remove Unused Database Logs")
             end = clock()
             if end - start > 0.05 and util.chatter:
-                logging.timing ("Database load slow: %.3f", end - start)
+                logging.timing("Database load slow: %.3f", end - start)
+            try:
+                import stat
+                logging.info("Database size on disk (in bytes): %s", os.stat(self.dbPath)[stat.ST_SIZE])
+                logging.info("Database object count: %s", database.defaultDatabase.count_databases()[0])
+            except IOError:
+                logging.error("IOError when statting database file.")
         except sql.DatabaseError, e:
             logging.error(e)
             raise
