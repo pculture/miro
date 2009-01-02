@@ -139,7 +139,7 @@ public:
 	{
 		observer_ptr o(new (m_rpc.allocator().malloc()) announce_observer(
 			m_rpc.allocator(), m_info_hash, m_listen_port, r.write_token));
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		o->m_in_constructor = false;
 #endif
 		m_rpc.invoke(messages::announce_peer, r.addr, o);
@@ -161,7 +161,7 @@ class node_impl : boost::noncopyable
 typedef std::map<node_id, torrent_entry> table_t;
 public:
 	node_impl(boost::function<void(msg const&)> const& f
-		, dht_settings const& settings);
+		, dht_settings const& settings, boost::optional<node_id> nid);
 
 	virtual ~node_impl() {}
 
@@ -186,7 +186,6 @@ public:
 
 	typedef table_t::iterator data_iterator;
 
-	void set_node_id(node_id const& nid) { m_id = nid; }
 	node_id const& nid() const { return m_id; }
 
 	boost::tuple<int, int> size() const{ return m_table.size(); }

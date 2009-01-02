@@ -157,7 +157,6 @@ namespace aux {
 #endif
 		, m_tracker_manager(m_settings, m_tracker_proxy)
 		, m_listen_port_retries(listen_port_range.second - listen_port_range.first)
-		, m_listen_interface(address::from_string(listen_interface), listen_port_range.first)
 		, m_abort(false)
 		, m_paused(false)
 		, m_max_uploads(8)
@@ -189,6 +188,10 @@ namespace aux {
 		, m_total_failed_bytes(0)
 		, m_total_redundant_bytes(0)
 	{
+		error_code ec;
+		m_listen_interface = tcp::endpoint(address::from_string(listen_interface, ec), listen_port_range.first);
+		TORRENT_ASSERT(!ec);
+
 		m_tcp_mapping[0] = -1;
 		m_tcp_mapping[1] = -1;
 		m_udp_mapping[0] = -1;
@@ -268,7 +271,6 @@ namespace aux {
 			*i = printable[rand() % (sizeof(printable)-1)];
 		}
 
-		error_code ec;
 		m_timer.expires_from_now(seconds(1), ec);
 		m_timer.async_wait(
 			bind(&session_impl::second_tick, this, _1));
@@ -504,7 +506,7 @@ namespace aux {
 		// abort all connections
 		while (!m_connections.empty())
 		{
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 			int conn = m_connections.size();
 #endif
 			(*m_connections.begin())->disconnect("stopping torrent");
@@ -905,7 +907,7 @@ namespace aux {
 
 		boost::intrusive_ptr<peer_connection> c(
 			new bt_peer_connection(*this, s, endp, 0));
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		c->m_in_constructor = false;
 #endif
 
@@ -923,7 +925,7 @@ namespace aux {
 // too expensive
 //		INVARIANT_CHECK;
 
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 //		for (aux::session_impl::torrent_map::const_iterator i = m_torrents.begin()
 //			, end(m_torrents.end()); i != end; ++i)
 //			TORRENT_ASSERT(!i->second->has_peer((peer_connection*)p));
@@ -1105,9 +1107,12 @@ namespace aux {
 			++i;
 		}
 
-		// drain the IP overhead from the bandwidth limiters
-		m_download_channel.drain(m_stat.download_ip_overhead());
-		m_upload_channel.drain(m_stat.upload_ip_overhead());
+		if (m_settings.rate_limit_ip_overhead)
+		{
+			// drain the IP overhead from the bandwidth limiters
+			m_download_channel.drain(m_stat.download_ip_overhead());
+			m_upload_channel.drain(m_stat.upload_ip_overhead());
+		}
 
 		m_stat.second_tick(tick_interval);
 
@@ -1611,23 +1616,17 @@ namespace aux {
 
 		do
 		{
-#ifndef BOOST_NO_EXCEPTIONS
-			try
+			error_code ec;
+			m_io_service.run(ec);
+			TORRENT_ASSERT(m_abort == true);
+			if (ec)
 			{
-#endif
-				m_io_service.run();
-				TORRENT_ASSERT(m_abort == true);
-#ifndef BOOST_NO_EXCEPTIONS
-			}
-			catch (std::exception& e)
-			{
-#ifndef NDEBUG
-				std::cerr << e.what() << "\n";
-				std::string err = e.what();
+#ifdef TORRENT_DEBUG
+				std::cerr << ec.message() << "\n";
+				std::string err = ec.message();
 #endif
 				TORRENT_ASSERT(false);
 			}
-#endif
 		}
 		while (!m_abort);
 
@@ -1637,7 +1636,7 @@ namespace aux {
 
 		session_impl::mutex_t::scoped_lock l(m_mutex);
 /*
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		for (torrent_map::iterator i = m_torrents.begin();
 			i != m_torrents.end(); ++i)
 		{
@@ -1661,7 +1660,7 @@ namespace aux {
 	{
 		std::map<sha1_hash, boost::shared_ptr<torrent> >::iterator i
 			= m_torrents.find(info_hash);
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		for (std::map<sha1_hash, boost::shared_ptr<torrent> >::iterator j
 			= m_torrents.begin(); j != m_torrents.end(); ++j)
 		{
@@ -1852,7 +1851,7 @@ namespace aux {
 				t.delete_files();
 			t.abort();
 
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 			sha1_hash i_hash = t.torrent_file().info_hash();
 #endif
 			t.set_queue_position(-1);
@@ -1875,7 +1874,18 @@ namespace aux {
 
 		tcp::endpoint new_interface;
 		if (net_interface && std::strlen(net_interface) > 0)
-			new_interface = tcp::endpoint(address::from_string(net_interface), port_range.first);
+		{
+			error_code ec;
+			new_interface = tcp::endpoint(address::from_string(net_interface, ec), port_range.first);
+			if (ec)
+			{
+#if defined TORRENT_VERBOSE_LOGGING || defined TORRENT_LOGGING || defined TORRENT_ERROR_LOGGING
+				(*m_logger) << time_now_string() << "listen_on: " << net_interface
+					<< " failed: " << ec.message() << "\n";
+#endif
+				return false;
+			}
+		}
 		else
 			new_interface = tcp::endpoint(address_v4::any(), port_range.first);
 
@@ -2083,7 +2093,7 @@ namespace aux {
 				, m_dht_settings.service_port
 				, m_dht_settings.service_port);
 		}
-		m_dht = new dht::dht_tracker(m_dht_socket, m_dht_settings);
+		m_dht = new dht::dht_tracker(m_dht_socket, m_dht_settings, &startup_state);
 		if (!m_dht_socket.is_open() || m_dht_socket.local_port() != m_dht_settings.service_port)
 		{
 			m_dht_socket.bind(m_dht_settings.service_port);
@@ -2493,7 +2503,7 @@ namespace aux {
 #endif
 	}	
 
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 	void session_impl::check_invariant() const
 	{
 		std::set<int> unique;

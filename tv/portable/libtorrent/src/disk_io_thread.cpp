@@ -88,6 +88,9 @@ namespace libtorrent
 		l.unlock();
 
 		m_disk_io_thread.join();
+		l.lock();
+		TORRENT_ASSERT(m_abort == true);
+		m_jobs.clear();
 	}
 
 	void disk_io_thread::get_cache_info(sha1_hash const& ih, std::vector<cached_piece_info>& ret) const
@@ -175,7 +178,10 @@ namespace libtorrent
 			}
 			++i;
 		}
-		m_signal.notify_all();
+		disk_io_job j;
+		j.action = disk_io_job::abort_torrent;
+		j.storage = s;
+		add_job(j);
 	}
 
 	bool range_overlap(int start1, int length1, int start2, int length2)
@@ -356,7 +362,7 @@ namespace libtorrent
 		}
 		TORRENT_ASSERT(buffer_size == 0);
 //		std::cerr << " flushing p: " << p.piece << " cached_blocks: " << m_cache_stats.cache_size << std::endl;
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		for (int i = 0; i < blocks_in_piece; ++i)
 			TORRENT_ASSERT(p.blocks[i] == 0);
 #endif
@@ -411,7 +417,10 @@ namespace libtorrent
 
 		if (end_block == start_block) return -2;
 
-		int buffer_size = piece_size - (end_block - 1) * m_block_size + (end_block - start_block - 1) * m_block_size;
+		// the buffer_size is the size of the buffer we need to read
+		// all these blocks.
+		const int buffer_size = (std::min)((end_block - start_block) * m_block_size
+			, piece_size - start_block * m_block_size);
 		TORRENT_ASSERT(buffer_size <= piece_size);
 		TORRENT_ASSERT(buffer_size + start_block * m_block_size <= piece_size);
 		boost::scoped_array<char> buf;
@@ -434,6 +443,7 @@ namespace libtorrent
 			if (p.blocks[i] == 0) break;
 			TORRENT_ASSERT(offset <= buffer_size);
 			TORRENT_ASSERT(piece_offset <= piece_size);
+			TORRENT_ASSERT(offset + block_size <= buffer_size);
 			if (buf)
 			{
 				std::memcpy(p.blocks[i], buf.get() + offset, block_size);
@@ -498,7 +508,7 @@ namespace libtorrent
 		return ret;
 	}
 
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 	void disk_io_thread::check_invariant() const
 	{
 		int cached_write_blocks = 0;
@@ -687,7 +697,7 @@ namespace libtorrent
 		m_signal.notify_all();
 	}
 
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 	bool disk_io_thread::is_disk_buffer(char* buffer) const
 	{
 #ifdef TORRENT_DISABLE_POOL_ALLOCATOR
@@ -734,7 +744,7 @@ namespace libtorrent
 			j.error = ec;
 			j.error_file = j.storage->error_file();
 			j.storage->clear_error();
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 			std::cout << "ERROR: '" << j.str << "' " << j.error_file << std::endl;
 #endif
 			return true;
@@ -799,6 +809,28 @@ namespace libtorrent
 
 			switch (j.action)
 			{
+				case disk_io_job::abort_torrent:
+				{
+					mutex_t::scoped_lock jl(m_queue_mutex);
+					for (std::list<disk_io_job>::iterator i = m_jobs.begin();
+						i != m_jobs.end();)
+					{
+						if (i->storage != j.storage)
+						{
+							++i;
+							continue;
+						}
+						if (i->action == disk_io_job::check_files)
+						{
+							if (i->callback) m_ios.post(bind(i->callback
+									, piece_manager::disk_check_aborted, *i));
+							m_jobs.erase(i++);
+							continue;
+						}
+						++i;
+					}
+					break;
+				}
 				case disk_io_job::abort_thread:
 				{
 					mutex_t::scoped_lock jl(m_queue_mutex);
@@ -829,7 +861,7 @@ namespace libtorrent
 					if (test_error(j))
 					{
 						ret = -1;
-						return;
+						break;
 					}
 #ifdef TORRENT_DISK_STATS
 					m_log << log_time() << " read " << j.buffer_size << std::endl;

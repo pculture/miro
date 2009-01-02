@@ -142,7 +142,7 @@ namespace libtorrent
 #else
 		: m_fd(-1)
 #endif
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		, m_open_mode(0)
 #endif
 	{}
@@ -153,7 +153,7 @@ namespace libtorrent
 #else
 		: m_fd(-1)
 #endif
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		, m_open_mode(0)
 #endif
 	{
@@ -171,9 +171,9 @@ namespace libtorrent
 #ifdef TORRENT_WINDOWS
 
 #ifdef UNICODE
-		std::wstring file_path(safe_convert(path.native_file_string()));
+		std::wstring file_path(safe_convert(path.external_file_string()));
 #else
-		std::string file_path = utf8_native(path.native_file_string());
+		std::string file_path = utf8_native(path.external_file_string());
 #endif
 
 		m_file_handle = CreateFile(
@@ -205,7 +205,7 @@ namespace libtorrent
 			| S_IRGRP | S_IWGRP
 			| S_IROTH | S_IWOTH;
 
-		m_fd = ::open(path.native_file_string().c_str()
+		m_fd = ::open(path.external_file_string().c_str()
 			, map_open_mode(mode.m_mask), permissions);
 
 		if (m_fd == -1)
@@ -214,7 +214,7 @@ namespace libtorrent
 			return false;
 		}
 #endif
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		m_open_mode = mode;
 #endif
 		TORRENT_ASSERT(is_open());
@@ -241,7 +241,7 @@ namespace libtorrent
 		::close(m_fd);
 		m_fd = -1;
 #endif
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		m_open_mode = 0;
 #endif
 	}

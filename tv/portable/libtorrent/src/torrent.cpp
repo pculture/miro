@@ -295,7 +295,7 @@ namespace libtorrent
 		m_obfuscated_hash = h.final();
 #endif
 
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		m_files_checked = false;
 #endif
 		INVARIANT_CHECK;
@@ -550,7 +550,9 @@ namespace libtorrent
 					std::string ip = e->dict_find_string_value("ip");
 					int port = e->dict_find_int_value("port");
 					if (ip.empty() || port == 0) continue;
-					tcp::endpoint a(address::from_string(ip), (unsigned short)port);
+					error_code ec;
+					tcp::endpoint a(address::from_string(ip, ec), (unsigned short)port);
+					if (ec) continue;
 					m_policy.peer_from_tracker(a, id, peer_info::resume_data, 0);
 				}
 			}
@@ -567,7 +569,9 @@ namespace libtorrent
 					std::string ip = e->dict_find_string_value("ip");
 					int port = e->dict_find_int_value("port");
 					if (ip.empty() || port == 0) continue;
-					tcp::endpoint a(address::from_string(ip), (unsigned short)port);
+					error_code ec;
+					tcp::endpoint a(address::from_string(ip, ec), (unsigned short)port);
+					if (ec) continue;
 					policy::peer* p = m_policy.peer_from_tracker(a, id, peer_info::resume_data, 0);
 					if (p) p->banned = true;
 				}
@@ -746,7 +750,7 @@ namespace libtorrent
 			}
 			m_error = j.str;
 			pause();
-			m_ses.done_checking(shared_from_this());
+			if (!m_abort) m_ses.done_checking(shared_from_this());
 			return;
 		}
 
@@ -769,7 +773,10 @@ namespace libtorrent
 	{
 		INVARIANT_CHECK;
 
-		m_net_interface = tcp::endpoint(address::from_string(net_interface), 0);
+		error_code ec;
+		address a(address::from_string(net_interface, ec));
+		if (ec) return;
+		m_net_interface = tcp::endpoint(a, 0);
 	}
 
 	void torrent::on_tracker_announce_disp(boost::weak_ptr<torrent> p
@@ -1177,7 +1184,7 @@ namespace libtorrent
 			if (m_picker->have_piece(index)) continue;
 			TORRENT_ASSERT(i->finished <= m_picker->blocks_in_piece(index));
 
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 			for (std::vector<piece_picker::downloading_piece>::const_iterator j = boost::next(i);
 				j != dl_queue.end(); ++j)
 			{
@@ -1237,7 +1244,7 @@ namespace libtorrent
 				{
 					downloading_piece[block] = p->bytes_downloaded;
 				}
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 				TORRENT_ASSERT(p->bytes_downloaded <= p->full_block_bytes);
 				int last_piece = m_torrent_file->num_pieces() - 1;
 				if (p->piece_index == last_piece
@@ -1259,7 +1266,7 @@ namespace libtorrent
 		TORRENT_ASSERT(total_done <= m_torrent_file->total_size());
 		TORRENT_ASSERT(wanted_done <= m_torrent_file->total_size());
 
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 
 		if (total_done >= m_torrent_file->total_size())
 		{
@@ -1454,7 +1461,7 @@ namespace libtorrent
 		std::set<void*> peers;
 		std::copy(downloaders.begin(), downloaders.end(), std::inserter(peers, peers.begin()));
 
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		for (std::vector<void*>::iterator i = downloaders.begin()
 			, end(downloaders.end()); i != end; ++i)
 		{
@@ -1536,7 +1543,7 @@ namespace libtorrent
 
 		TORRENT_ASSERT(m_picker->have_piece(index) == false);
 
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		for (std::vector<void*>::iterator i = downloaders.begin()
 			, end(downloaders.end()); i != end; ++i)
 		{
@@ -1599,8 +1606,11 @@ namespace libtorrent
 		// files belonging to the torrents
 		disconnect_all();
 		if (m_owning_storage.get())
+		{
 			m_storage->async_release_files(
 				bind(&torrent::on_files_released, shared_from_this(), _1, _2));
+			m_storage->abort_disk_io();
+		}
 		
 		if (m_state == torrent_status::checking_files)
 			m_ses.done_checking(shared_from_this());
@@ -2324,7 +2334,7 @@ namespace libtorrent
 			m_ses, shared_from_this(), s, a, url, 0));
 		if (!c) return;
 			
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		c->m_in_constructor = false;
 #endif
 
@@ -2897,7 +2907,7 @@ namespace libtorrent
 		TORRENT_ASSERT(peerinfo->connection == 0);
 
 		peerinfo->connected = time_now();
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		// this asserts that we don't have duplicates in the policy's peer list
 		peer_iterator i_ = std::find_if(m_connections.begin(), m_connections.end()
 			, bind(&peer_connection::remote, _1) == peerinfo->ip());
@@ -2920,7 +2930,7 @@ namespace libtorrent
 		boost::intrusive_ptr<peer_connection> c(new bt_peer_connection(
 			m_ses, shared_from_this(), s, a, peerinfo));
 
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		c->m_in_constructor = false;
 #endif
 
@@ -3060,12 +3070,12 @@ namespace libtorrent
 #endif
 		TORRENT_ASSERT(m_connections.find(p) == m_connections.end());
 		peer_iterator ci = m_connections.insert(p).first;
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		error_code ec;
 		TORRENT_ASSERT(p->remote() == p->get_socket()->remote_endpoint(ec) || ec);
 #endif
 
-#if !defined NDEBUG && !defined TORRENT_DISABLE_INVARIANT_CHECKS
+#if defined TORRENT_DEBUG && !defined TORRENT_DISABLE_INVARIANT_CHECKS
 		m_policy.check_invariant();
 #endif
 		return true;
@@ -3100,7 +3110,7 @@ namespace libtorrent
 			else
 				(*p->m_logger) << "*** CLOSING CONNECTION 'pausing'\n";
 #endif
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 			std::size_t size = m_connections.size();
 #endif
 			if (p->is_disconnecting())
@@ -3535,7 +3545,7 @@ namespace libtorrent
 		return m_ses.settings();
 	}
 
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 	void torrent::check_invariant() const
 	{
 		session_impl::mutex_t::scoped_lock l(m_ses.m_mutex);
@@ -3611,7 +3621,7 @@ namespace libtorrent
 		}
 		else
 		{
-			TORRENT_ASSERT(m_abort || m_picker->num_pieces() == 0);
+			TORRENT_ASSERT(m_abort || !m_picker || m_picker->num_pieces() == 0);
 		}
 
 #ifdef TORRENT_EXPENSIVE_INVARIANT_CHECKS
@@ -4227,7 +4237,7 @@ namespace libtorrent
 		TORRENT_ASSERT(piece_index >= 0);
 		TORRENT_ASSERT(piece_index < m_torrent_file->num_pieces());
 		TORRENT_ASSERT(piece_index < (int)m_picker->num_pieces());
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		if (m_picker)
 		{
 			int blocks_in_piece = m_picker->blocks_in_piece(piece_index);
@@ -4240,7 +4250,7 @@ namespace libtorrent
 
 		m_storage->async_hash(piece_index, bind(&torrent::on_piece_verified
 			, shared_from_this(), _1, _2, f));
-#if !defined NDEBUG && !defined TORRENT_DISABLE_INVARIANT_CHECKS
+#if defined TORRENT_DEBUG && !defined TORRENT_DISABLE_INVARIANT_CHECKS
 		check_invariant();
 #endif
 	}
@@ -4421,7 +4431,7 @@ namespace libtorrent
 	
 	void torrent::set_state(torrent_status::state_t s)
 	{
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		if (s == torrent_status::seeding)
 			TORRENT_ASSERT(is_seed());
 		if (s == torrent_status::finished)

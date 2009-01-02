@@ -75,7 +75,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 //#define TORRENT_PARTIAL_HASH_LOG
 
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 #include <ios>
 #include <iostream>
 #include <iomanip>
@@ -159,7 +159,7 @@ namespace
 		// First create branch, by calling ourself recursively
 		create_directories_win(ph.branch_path());
 		// Now that parent's path exists, create the directory
-		std::wstring wph(safe_convert(ph.native_directory_string()));
+		std::wstring wph(safe_convert(ph.external_directory_string()));
 		CreateDirectory(wph.c_str(), 0);
 		return true;
 	}
@@ -207,7 +207,7 @@ namespace
 	std::time_t last_write_time_win( const fs::path & ph )
 	{
 		struct _stat path_stat;
-		std::wstring wph(safe_convert(ph.native_file_string()));
+		std::wstring wph(safe_convert(ph.external_file_string()));
 		if ( ::_wstat( wph.c_str(), &path_stat ) != 0 )
 			boost::throw_exception( filesystem_error(
 			"boost::filesystem::last_write_time",
@@ -242,7 +242,7 @@ using boost::bind;
 using namespace ::boost::multi_index;
 using boost::multi_index::multi_index_container;
 
-#if !defined(NDEBUG) && defined(TORRENT_STORAGE_DEBUG)
+#if defined TORRENT_DEBUG && defined TORRENT_STORAGE_DEBUG
 namespace
 {
 	using namespace libtorrent;
@@ -272,9 +272,9 @@ namespace libtorrent
 			for (basic_directory_iterator<Path> i(old_path), end; i != end; ++i)
 			{
 #if BOOST_VERSION < 103600
-				recursive_copy(i->path(), new_path / i->leaf(), ec);
+				recursive_copy(i->path(), new_path / i->path().leaf(), ec);
 #else
-				recursive_copy(i->path(), new_path / i->filename(), ec);
+				recursive_copy(i->path(), new_path / i->path().filename(), ec);
 #endif
 				if (ec) return;
 			}
@@ -390,7 +390,7 @@ namespace libtorrent
 				|| (!compact_mode && size < s->first))
 			{
 				if (error) *error = "filesize mismatch for file '"
-					+ i->path.native_file_string()
+					+ i->path.external_file_string()
 					+ "', size: " + boost::lexical_cast<std::string>(size)
 					+ ", expected to be " + boost::lexical_cast<std::string>(s->first)
 					+ " bytes";
@@ -403,7 +403,7 @@ namespace libtorrent
 				(!compact_mode && (time > s->second + 5 * 60) || time < s->second - 1))
 			{
 				if (error) *error = "timestamp mismatch for file '"
-					+ i->path.native_file_string()
+					+ i->path.external_file_string()
 					+ "', modification date: " + boost::lexical_cast<std::string>(time)
 					+ ", expected to have modification date "
 					+ boost::lexical_cast<std::string>(s->second);
@@ -463,7 +463,7 @@ namespace libtorrent
 	sha1_hash storage::hash_for_slot(int slot, partial_hash& ph, int piece_size)
 	{
 		TORRENT_ASSERT(!error());
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		hasher partial;
 		hasher whole;
 		int slot_size1 = piece_size;
@@ -484,7 +484,7 @@ namespace libtorrent
 			if (error()) return sha1_hash(0);
 			ph.h.update(&m_scratch_buffer[0], slot_size);
 		}
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		sha1_hash ret = ph.h.final();
 		TORRENT_ASSERT(ret == whole.final());
 		return ret;
@@ -821,7 +821,7 @@ namespace libtorrent
 			{
 				if (i->size != fs->first)
 				{
-					error = "file size for '" + i->path.native_file_string()
+					error = "file size for '" + i->path.external_file_string()
 						+ "' was expected to be "
 						+ boost::lexical_cast<std::string>(i->size) + " bytes";
 					return false;
@@ -847,7 +847,7 @@ namespace libtorrent
 		save_path = complete(save_path);
 
 #if defined(_WIN32) && defined(UNICODE) && BOOST_VERSION < 103400
-		std::wstring wsave_path(safe_convert(save_path.native_file_string()));
+		std::wstring wsave_path(safe_convert(save_path.external_file_string()));
 		if (!exists_win(save_path))
 			CreateDirectory(wsave_path.c_str(), 0);
 		else if ((GetFileAttributes(wsave_path.c_str()) & FILE_ATTRIBUTE_DIRECTORY) == 0)
@@ -904,7 +904,7 @@ namespace libtorrent
 		return false;
 	}
 
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 /*
 	void storage::shuffle()
 	{
@@ -999,7 +999,7 @@ namespace libtorrent
 		TORRENT_ASSERT(offset < m_files.piece_size(slot));
 		TORRENT_ASSERT(size > 0);
 
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		std::vector<file_slice> slices
 			= files().map_block(slot, offset, size);
 		TORRENT_ASSERT(!slices.empty());
@@ -1046,7 +1046,7 @@ namespace libtorrent
 			return size;
 		}
 
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		size_type in_tell = in->tell(ec);
 		TORRENT_ASSERT(in_tell == file_offset + file_iter->file_base && !ec);
 #endif
@@ -1061,7 +1061,7 @@ namespace libtorrent
 
 		size_type result = left_to_read;
 
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		int counter = 0;
 #endif
 
@@ -1073,7 +1073,7 @@ namespace libtorrent
 
 			if (read_bytes > 0)
 			{
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 				TORRENT_ASSERT(int(slices.size()) > counter);
 				size_type slice_size = slices[counter].size;
 				TORRENT_ASSERT(slice_size == read_bytes);
@@ -1105,7 +1105,7 @@ namespace libtorrent
 			if (left_to_read > 0)
 			{
 				++file_iter;
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 				// empty files are not returned by map_block, so if
 				// this file was empty, don't increment the slice counter
 				if (read_bytes > 0) ++counter;
@@ -1148,7 +1148,7 @@ namespace libtorrent
 		TORRENT_ASSERT(offset >= 0);
 		TORRENT_ASSERT(size > 0);
 
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		std::vector<file_slice> slices
 			= files().map_block(slot, offset, size);
 		TORRENT_ASSERT(!slices.empty());
@@ -1200,7 +1200,7 @@ namespace libtorrent
 		TORRENT_ASSERT(left_to_write >= 0);
 
 		int buf_pos = 0;
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		int counter = 0;
 #endif
 		while (left_to_write > 0)
@@ -1239,7 +1239,7 @@ namespace libtorrent
 
 			if (left_to_write > 0)
 			{
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 				if (write_bytes > 0) ++counter;
 #endif
 				++file_iter;
@@ -1331,6 +1331,11 @@ namespace libtorrent
 		m_io_thread.add_job(j, handler);
 	}
 
+	void piece_manager::abort_disk_io()
+	{
+		m_io_thread.stop(this);
+	}
+
 	void piece_manager::async_delete_files(
 		boost::function<void(int, disk_io_job const&)> const& handler)
 	{
@@ -1398,7 +1403,7 @@ namespace libtorrent
 		// since that is the size of the pool allocator's buffers
 		TORRENT_ASSERT(r.length <= 16 * 1024);
 		m_io_thread.add_job(j, handler);
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 		boost::recursive_mutex::scoped_lock l(m_mutex);
 		// if this assert is hit, it suggests
 		// that check_files was not successful
@@ -1569,7 +1574,7 @@ namespace libtorrent
 			std::map<int, partial_hash>::iterator i = m_piece_hasher.find(piece_index);
 			if (i != m_piece_hasher.end())
 			{
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 				TORRENT_ASSERT(i->second.offset > 0);
 				int hash_offset = i->second.offset;
 				TORRENT_ASSERT(offset >= hash_offset);
@@ -2574,7 +2579,7 @@ namespace libtorrent
 			&& m_slot_to_piece[piece_index] >= 0)
 		{
 
-#if !defined(NDEBUG) && defined(TORRENT_STORAGE_DEBUG)
+#if defined TORRENT_DEBUG && defined TORRENT_STORAGE_DEBUG
 			std::stringstream s;
 
 			s << "there is another piece at our slot, swapping..";
@@ -2609,7 +2614,7 @@ namespace libtorrent
 
 			slot_index = piece_index;
 
-#if !defined(NDEBUG) && defined(TORRENT_STORAGE_DEBUG)
+#if defined TORRENT_DEBUG && defined TORRENT_STORAGE_DEBUG
 			debug_log();
 #endif
 		}
@@ -2677,7 +2682,7 @@ namespace libtorrent
 		return m_slot_to_piece[slot];
 	}
 		
-#ifndef NDEBUG
+#ifdef TORRENT_DEBUG
 	void piece_manager::check_invariant() const
 	{
 		boost::recursive_mutex::scoped_lock lock(m_mutex);

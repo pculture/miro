@@ -59,6 +59,8 @@ POSSIBILITY OF SUCH DAMAGE.
 using boost::bind;
 using namespace libtorrent;
 
+static error_code ec;
+
 upnp::upnp(io_service& ios, connection_queue& cc
 	, address const& listen_interface, std::string const& user_agent
 	, portmap_callback_t const& cb, bool ignore_nonrouters, void* state)
@@ -66,7 +68,7 @@ upnp::upnp(io_service& ios, connection_queue& cc
 	, m_callback(cb)
 	, m_retry_count(0)
 	, m_io_service(ios)
-	, m_socket(ios, udp::endpoint(address_v4::from_string("239.255.255.250"), 1900)
+	, m_socket(ios, udp::endpoint(address_v4::from_string("239.255.255.250", ec), 1900)
 		, bind(&upnp::on_reply, self(), _1, _2, _3), false)
 	, m_broadcast_timer(ios)
 	, m_refresh_timer(ios)
@@ -351,31 +353,35 @@ void upnp::on_reply(udp::endpoint const& from, char* buffer
 		return;
 	} 
 
-	std::vector<ip_route> routes = enum_routes(m_io_service, ec);
-	if (m_ignore_non_routers && std::find_if(routes.begin(), routes.end()
-		, bind(&ip_route::gateway, _1) == from.address()) == routes.end())
+	if (m_ignore_non_routers)
 	{
-		// this upnp device is filtered because it's not in the
-		// list of configured routers
+		std::vector<ip_route> routes = enum_routes(m_io_service, ec);
+	
+		if (std::find_if(routes.begin(), routes.end()
+			, bind(&ip_route::gateway, _1) == from.address()) == routes.end())
+		{
+			// this upnp device is filtered because it's not in the
+			// list of configured routers
 #ifdef TORRENT_UPNP_LOGGING
-		if (ec)
-		{
-			m_log << time_now_string() << " <== (" << from << ") error: "
-				<< ec.message() << std::endl;
-		}
-		else
-		{
-			m_log << time_now_string() << " <== (" << from << ") UPnP device "
-				"ignored because it's not a router on our network ";
-			for (std::vector<ip_route>::const_iterator i = routes.begin()
-				, end(routes.end()); i != end; ++i)
+			if (ec)
 			{
-				m_log << "(" << i->gateway << ", " << i->netmask << ") ";
+				m_log << time_now_string() << " <== (" << from << ") error: "
+					<< ec.message() << std::endl;
 			}
-			m_log << std::endl;
-		}
+			else
+			{
+				m_log << time_now_string() << " <== (" << from << ") UPnP device "
+					"ignored because it's not a router on our network ";
+				for (std::vector<ip_route>::const_iterator i = routes.begin()
+					, end(routes.end()); i != end; ++i)
+				{
+					m_log << "(" << i->gateway << ", " << i->netmask << ") ";
+				}
+				m_log << std::endl;
+			}
 #endif
-		return;
+			return;
+		}
 	}
 
 	http_parser p;
@@ -901,8 +907,16 @@ void upnp::on_upnp_xml(error_code const& e
 		}
 	}
 	
-	if (s.url_base.empty()) d.control_url = s.control_url;
-	else d.control_url = s.url_base + s.control_url;
+	if (!s.url_base.empty())
+	{
+		// avoid double slashes in path
+		if (s.url_base[s.url_base.size()-1] == '/'
+			&& !s.control_url.empty()
+			&& s.control_url[0] == '/')
+			s.url_base.erase(s.url_base.end()-1);
+		d.control_url = s.url_base + s.control_url;
+	}
+	else d.control_url = s.control_url;
 
 	std::string protocol;
 	std::string auth;
