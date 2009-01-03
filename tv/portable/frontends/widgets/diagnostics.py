@@ -110,8 +110,8 @@ ITEMS = [
       "data": lambda : util.formatSizeForUser(get_available_bytes_for_movies(), "0B", False) },
     { "label": _("Database size:"),
       "data": lambda : util.formatSizeForUser(get_database_size(), "0B", False) },
-    { "label": _("Total number of db objects:"),
-      "data": lambda : "%d" % get_database_object_count() }
+    # { "label": _("Total number of db objects:"),
+    #   "data": lambda : "%d" % get_database_object_count() }
 ]
 
 def run_dialog():
