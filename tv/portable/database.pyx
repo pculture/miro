@@ -387,6 +387,9 @@ class DynamicDatabase:
                 self.objectLocs[id] = it
         #self.checkObjLocs()
 
+    def count_objects(self):
+        return len(self.objects)
+
     def count_databases(self):
         count = 1
         size = len(self.objects)

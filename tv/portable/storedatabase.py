@@ -999,7 +999,7 @@ class LiveStorage:
             try:
                 import stat
                 logging.info("Database size on disk (in bytes): %s", os.stat(self.dbPath)[stat.ST_SIZE])
-                logging.info("Database object count: %s", database.defaultDatabase.count_databases()[0])
+                logging.info("Database object count: %s", database.defaultDatabase.count_objects())
             except IOError:
                 logging.error("IOError when statting database file.")
         except sql.DatabaseError, e:

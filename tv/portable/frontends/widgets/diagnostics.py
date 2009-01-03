@@ -71,9 +71,7 @@ def get_database_object_count():
     # from the frontend and it's doing things in the db.  But....  it
     # should be a read-only endeavor, so it should be ok.
     from miro import database
-    logging.info("defaultDatabase: %s", repr(database.defaultDatabase))
-    count, size = database.defaultDatabase.count_databases()
-    return count
+    return database.defaultDatabase.count_objects()
 
 SEPARATOR = None
 SHOW = _("Show")
@@ -110,8 +108,8 @@ ITEMS = [
       "data": lambda : util.formatSizeForUser(get_available_bytes_for_movies(), "0B", False) },
     { "label": _("Database size:"),
       "data": lambda : util.formatSizeForUser(get_database_size(), "0B", False) },
-    # { "label": _("Total number of db objects:"),
-    #   "data": lambda : "%d" % get_database_object_count() }
+    { "label": _("Total number of db objects:"),
+      "data": lambda : "%d" % get_database_object_count() }
 ]
 
 def run_dialog():
