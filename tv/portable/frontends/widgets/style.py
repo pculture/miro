@@ -1163,7 +1163,7 @@ class ProgressBarDrawer(cellpack.Packer):
     BORDER_GRADIENT_BOTTOM = (0.68, 0.68, 0.68)
 
     def __init__(self, info):
-        if info.download_info:
+        if info.download_info and info.size > 0.0:
             self.progress_ratio = (float(info.download_info.downloaded_size) /
                     info.size)
         else:
