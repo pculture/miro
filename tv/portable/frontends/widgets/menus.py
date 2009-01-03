@@ -304,9 +304,11 @@ class MenuManager(signals.SignalEmitter):
         self.states = {"plural": [], "folder": [], "folders": []}
         self.play_pause_state = "play"
         self.enabled_groups = set(['AlwaysOn'])
-        if app.playback_manager.is_playing and app.playback_manager.detached_window is not None:
+        if app.playback_manager.is_playing:
             self.enabled_groups.add('PlayableSelected')
             self.enabled_groups.add('Playing')
+            if app.playback_manager.detached_window is not None:
+                self.enabled_groups.add('NonPlaying')
         else:
             self.enabled_groups.add('NonPlaying')
 
@@ -374,6 +376,4 @@ class MenuManager(signals.SignalEmitter):
         """Handle the user playing an item.
         """
         self.reset()
-        self.enabled_groups = set(['AlwaysOn'])
-        self.enabled_groups.add('Playing')
         self.emit('enabled-changed')
