@@ -43,7 +43,7 @@ from miro import displaytext
 from miro.plat import resources
 from miro.plat import screensaver
 from miro.frontends.widgets.gtk.window import Window, WrappedWindow
-from miro.frontends.widgets.gtk.widgetset import Widget, VBox, Label, HBox, Alignment, Background, DrawingArea
+from miro.frontends.widgets.gtk.widgetset import Widget, VBox, Label, HBox, Alignment, Background, DrawingArea, ImageSurface, Image, CustomButton
 from miro.frontends.widgets.gtk.persistentwindow import PersistentWindow
 
 BLACK = (0.0, 0.0, 0.0)
@@ -98,6 +98,17 @@ class ClickableLabel(Widget):
     def show(self):
         self.label._widget.show()
 
+class ClickableImageButton(CustomButton):
+    def __init__(self, image_path):
+        CustomButton.__init__(self)
+        self.image = ImageSurface(Image(image_path))
+
+    def size_request(self, layout):
+        return self.image.width, self.image.height
+
+    def draw(self, context, layout):
+        self.image.draw(context, 0, 0, self.image.width, self.image.height)
+
 class NullRenderer(signals.SignalEmitter):
     def __init__(self):
         signals.SignalEmitter.__init__(self, 'cant-play', 'ready-to-play')
@@ -120,6 +131,11 @@ def make_label(text, handler, visible=True):
     lab.set_size(0.77)
     lab.set_color((0.0, 0.0, 0.0))
     return lab
+
+def make_image_button(image_path, handler):
+    b = ClickableImageButton(image_path)
+    b.connect('clicked', handler)
+    return b
 
 def _align_left(widget, top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
     """Align left and pad."""
@@ -305,7 +321,12 @@ class VideoDetailsWidget(Background):
 
         outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
 
-        # FIXME - add popout/popin buttons here
+        if app.playback_manager.detached_window is not None:
+            popin_image = make_image_button(resources.path('images/popin.png'), self.handle_popin_popout)
+            outer_hbox.pack_start(_align_middle(popin_image, right_pad=15))
+        else:
+            popout_image = make_image_button(resources.path('images/popout.png'), self.handle_popin_popout)
+            outer_hbox.pack_start(_align_middle(popout_image, right_pad=15))
 
         self.add(outer_hbox)
 
@@ -314,6 +335,9 @@ class VideoDetailsWidget(Background):
 
     def show(self):
         self._widget.show()
+
+    def handle_popin_popout(self, widget):
+        app.playback_manager.toggle_detached_mode()
 
     def handle_keep(self, widget):
         messages.KeepVideo(self.item_info.id).send_to_backend()
@@ -496,11 +520,14 @@ class VideoRenderer(VBox):
         self.overlay.destroy()
         del self.overlay
 
+    def rebuild_video_details(self):
+        self._video_details.rebuild_video_details()
+
     def prepare_switch_to_attached_playback(self):
-        pass
+        gobject.timeout_add(0.1, self.rebuild_video_details)
 
     def prepare_switch_to_detached_playback(self):
-        pass
+        gobject.timeout_add(0.1, self.rebuild_video_details)
 
     def on_button_press(self, widget, event):
         if event.type == gtk.gdk._2BUTTON_PRESS:
