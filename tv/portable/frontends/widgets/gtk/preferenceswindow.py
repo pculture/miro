@@ -48,7 +48,8 @@ class PreferencesGtkWindow(gtk.Window):
 gobject.type_register(PreferencesGtkWindow)
 
 class PreferencesWindow(window.Window):
-    window_class = PreferencesGtkWindow
+    def _make_gtk_window(self):
+        return PreferencesGtkWindow()
 
     def __init__(self, title):
         window.Window.__init__(self, title)
