@@ -301,7 +301,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         else:
             background_drawer = self.draw_background
             bottom_pad = 12
-        inner = cellpack.Background(content, margin=(12, bottom_pad, 0, 12))
+        inner = cellpack.Background(content, margin=(11, bottom_pad, 0, 13))
         if self.use_custom_style:
             inner.set_callback(background_drawer)
         return cellpack.Background(inner, margin=(5, 20, 5, 20))
@@ -743,7 +743,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         outer_hbox.pack_space(18)
 
         vbox = cellpack.VBox()
-        vbox.pack_space(4)
+        vbox.pack_space(5)
         inner_hbox = cellpack.HBox()
         right_side = self.pack_right(layout)
         self.right_side_width = right_side.get_size()[0]
