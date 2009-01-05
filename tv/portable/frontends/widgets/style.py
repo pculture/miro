@@ -780,11 +780,11 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
     def make_border_path(self, context, x, y, width, height, inset):
         widgetutil.round_rect(context, x + inset, y + inset,
-                width - inset*2, height - inset*2, 7)
+                width - inset*2, height - inset*2, 7-inset)
 
     def make_border_path_reverse(self, context, x, y, width, height, inset):
         widgetutil.round_rect_reverse(context, x + inset, y + inset,
-                width - inset*2, height - inset*2, 7)
+                width - inset*2, height - inset*2, 7-inset)
 
     def draw_background(self, context, x, y, width, height):
         # Draw the gradient
@@ -795,11 +795,11 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
             bg_color_start = self.SELECTED_BACKGROUND_COLOR
             bg_color_end = self.SELECTED_BACKGROUND_COLOR_BOTTOM
-            highlight_inset = 3.5
+            highlight_inset = 4
         else:
             bg_color_start = context.style.bg_color
             bg_color_end = tuple(c - 0.06 for c in bg_color_start)
-            highlight_inset = 1.5
+            highlight_inset = 2
         context.save()
         self.make_border_path(context, x, y, width, height, 0)
         context.clip()
@@ -813,7 +813,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         # Draw the border
         self.draw_border(context, x, y, width, height)
         # Draw the highlight
-        context.set_line_width(1)
+        context.set_line_width(2)
         self.make_border_path(context, x, y, width, height, highlight_inset)
         context.set_color(widgetutil.WHITE)
         context.stroke()
@@ -871,8 +871,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         context.fill()
         # Draw the left, right and bottom highlight for the flap
         context.set_color(self.FLAP_HIGHLIGHT_COLOR)
-        context.set_line_width(1)
-        self.make_border_path(context, x, y, width, height, border_width + 0.5)
+        context.set_line_width(2)
+        self.make_border_path(context, x, y, width, height, border_width + 1)
         context.stroke()
         # Draw the top highlight for the flap
         context.move_to(x, y + height - self.flap_height + 0.5)
