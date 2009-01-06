@@ -337,6 +337,8 @@ class VideoDetailsWidget(Background):
         self._widget.show()
 
     def handle_popin_popout(self, widget):
+        if app.playback_manager.is_fullscreen:
+            app.playback_manager.exit_fullscreen()
         app.playback_manager.toggle_detached_mode()
 
     def handle_keep(self, widget):
@@ -524,10 +526,10 @@ class VideoRenderer(VBox):
         self._video_details.rebuild_video_details()
 
     def prepare_switch_to_attached_playback(self):
-        gobject.timeout_add(0.1, self.rebuild_video_details)
+        gobject.timeout_add(0, self.rebuild_video_details)
 
     def prepare_switch_to_detached_playback(self):
-        gobject.timeout_add(0.1, self.rebuild_video_details)
+        gobject.timeout_add(0, self.rebuild_video_details)
 
     def on_button_press(self, widget, event):
         if event.type == gtk.gdk._2BUTTON_PRESS:
