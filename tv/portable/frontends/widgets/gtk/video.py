@@ -299,7 +299,7 @@ class VideoDetailsWidget(Background):
             lab = make_label(_("Share"), self.handle_share, info.has_sharable_url)
             h2.pack_start(_align_center(lab))
 
-            self._dash = Label("-")
+            self._dash = Label("|")
             self._dash.set_size(0.77)
             self._dash.set_color(WHITE)
             h2.pack_start(_align_middle(self._dash, left_pad=5, right_pad=5))
