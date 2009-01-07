@@ -173,7 +173,10 @@ def get_last_engine():
     name or None.
     """
     e = config.get(prefs.LAST_SEARCH_ENGINE)
-    return get_engine_for_name(e)
+    engine = get_engine_for_name(e)
+    if engine:
+        return engine
+    return get_search_engines()[0]
 
 def set_last_engine(engine):
     """Takes a SearchEngine and persists it to preferences."""

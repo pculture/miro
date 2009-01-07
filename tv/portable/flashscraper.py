@@ -193,30 +193,6 @@ def _scrape_vmix_errback(err, callback):
     logging.warning("network error scraping VMix Video URL")
     callback(None)
 
-def _scrape_dailymotion_video_url(url, callback):
-    httpclient.grabHeaders(url, lambda x: _scrape_dailymotion_callback(x, callback),
-                           lambda x: _scrape_dailymotion_errback(x, callback))
-
-def _scrape_dailymotion_callback(info, callback):
-    url = info['redirected-url']
-    try:
-        components = urlparse.urlsplit(url)
-        params = cgi.parse_qs(components[3])
-        url = unquote_plus(params['video'][0]).decode('ascii', 'replace')
-        url = url.split("||")[0]
-        url = url.split("@@")[0]
-        url = u"http://www.dailymotion.com%s" % url
-        callback(url)
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
-        logging.warning("unable to scrape Daily Motion URL: %s" % url)
-        callback(None)
-
-def _scrape_dailymotion_errback(info, callback):
-    logging.warning("network error scraping Daily Motion Video URL")
-    callback(None)
-
 def _scrape_vsocial_video_url(url, callback):
     try:
         components = urlparse.urlsplit(url)
@@ -296,7 +272,6 @@ scraperInfoMap = [
     {'pattern': re.compile(r'http://video.google.com/googleplayer.swf'), 'func': _scrape_google_video_url},
     {'pattern': re.compile(r'http://([^/]+\.)?lulu.tv/wp-content/flash_play/flvplayer'), 'func': _scrape_lulu_video_url},
     {'pattern': re.compile(r'http://([^/]+\.)?vmix.com/flash/super_player.swf'), 'func': _scrape_vmix_video_url},
-    {'pattern': re.compile(r'http://([^/]+\.)?dailymotion.com/swf'), 'func': _scrape_dailymotion_video_url},
     {'pattern': re.compile(r'http://([^/]+\.)?vsocial.com/flash/vp.swf'), 'func': _scrape_vsocial_video_url},
     {'pattern': re.compile(r'http://([^/]+\.)?veoh.com/multiplayer.swf'), 'func': _scrape_veohtv_video_url},
     {'pattern': re.compile(r'http://([^/]+\.)?greenpeaceweb.org/GreenpeaceTV1Col.swf'), 'func': _scrape_green_peace_video_url},
