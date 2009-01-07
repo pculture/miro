@@ -184,7 +184,10 @@ class PlaybackManager (signals.SignalEmitter):
         self.detached_window.show()
     
     def finish_detached_playback(self):
-        config.set(prefs.DETACHED_WINDOW_FRAME, str(self.detached_window.get_frame()))
+        # this prevents negative x and y values from getting saved
+        coords = str(self.detached_window.get_frame())
+        coords = ",".join([str(max(0, int(c))) for c in coords.split(",")])
+        config.set(prefs.DETACHED_WINDOW_FRAME, coords)
         config.save()
         self.align.remove()
         self.align = None
