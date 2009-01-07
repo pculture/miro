@@ -196,7 +196,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     BORDER_COLOR_BOTTOM = css_to_color('#9c9c9c')
     SELECTED_BORDER_COLOR_TOP = css_to_color('#c0ddfd')
     SELECTED_BORDER_COLOR_BOTTOM = css_to_color('#82b9f4')
-    SELECTED_BACKGROUND_FLAP_COLOR = css_to_color('#5293d1')
+    SELECTED_BACKGROUND_FLAP_COLOR = css_to_color('#82b9f4')
     SELECTED_BACKGROUND_COLOR = (0.94, 0.97, 0.99)
     SELECTED_BACKGROUND_COLOR_BOTTOM = css_to_color('#cae3fe')
     ITEM_TITLE_COLOR = (0.2, 0.2, 0.2)
@@ -860,32 +860,43 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             border_color = self.BORDER_COLOR_BOTTOM
             border_width = 1
 
+        flap_top = y + height - self.flap_height
+
         # clip to the region where the flap is.
         context.save()
-        context.rectangle(x, y + height-self.flap_height, width, 
-                self.flap_height)
+        context.rectangle(x, flap_top, width, self.flap_height)
         context.clip()
         # Draw flap background
-        self.make_border_path(context, x, y, width, height, border_width)
+        self.make_border_path(context, x, y, width, height, 0)
         context.set_color(flap_bg_color)
         context.fill()
-        # Draw the left, right and bottom highlight for the flap
-        context.set_color(self.FLAP_HIGHLIGHT_COLOR)
-        context.set_line_width(2)
-        self.make_border_path(context, x, y, width, height, border_width + 1)
-        context.stroke()
-        # Draw the top highlight for the flap
-        context.move_to(x, y + height - self.flap_height + 0.5)
-        context.rel_line_to(width, 0)
-        context.stroke()
+        if not self.selected:
+            # Draw the left, right and bottom highlight for the flap
+            context.set_color(self.FLAP_HIGHLIGHT_COLOR)
+            context.set_line_width(2)
+            self.make_border_path(context, x, y, width, height, border_width + 1)
+            context.stroke()
+            # Draw the top highlight for the flap
+            context.move_to(x, flap_top + 0.5)
+            context.rel_line_to(width, 0)
+            context.stroke()
         context.restore()
+        if self.selected:
+            # color in the pixels above the flap, but below the rounded corner
+            # of the upper border.  We should do this if selected is False as
+            # well, but it's not noticable in that case.
+            context.set_color(flap_bg_color)
+            context.rectangle(x+3, flap_top-2, 2, 2)
+            context.fill()
+            context.rectangle(x+width-5, flap_top-2, 2, 2)
+            context.fill()
+
         # Draw the flap border.  Start a little above the usual start of the
         # flap to account for the fact that the rounded corner of the normal
         # border dosen't quite reach the top of the flap.  Draw the outer
         # border
         context.save()
-        context.rectangle(x, y + height-self.flap_height-5, width,
-                self.flap_height+5)
+        context.rectangle(x, flap_top-5, width, self.flap_height+5)
         context.clip()
 
         self.make_border_path(context, x, y, width, height, border_width / 2.0)
