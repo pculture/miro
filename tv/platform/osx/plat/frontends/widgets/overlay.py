@@ -31,10 +31,12 @@ import time
 from objc import nil, YES, NO, IBOutlet
 from AppKit import *
 from Foundation import *
+from PyObjCTools import AppHelper
 
 from miro import app
 from miro import messages
 from miro.gtcache import gettext as _
+from miro.plat import resources
 from miro.plat.frontends.widgets import threads
 from miro.plat.frontends.widgets import drawing
 
@@ -72,6 +74,7 @@ class OverlayPalette (NSWindowController):
     deleteButton        = IBOutlet('deleteButton')
     addToLibButton      = IBOutlet('addToLibButton')
     fsButton            = IBOutlet('fsButton')
+    popInOutButton      = IBOutlet('popInOutButton')
     
     playbackControls    = IBOutlet('playbackControls')
     playPauseButton     = IBOutlet('playPauseButton')
@@ -192,6 +195,16 @@ class OverlayPalette (NSWindowController):
         self.window().setFrameOrigin_(NSPoint(x, y))
 
     def adjustContent(self, videoWindow, animate):
+        if videoWindow.is_fullscreen:
+            self.popInOutButton.setHidden_(YES)
+        else:
+            if app.playback_manager.detached_window is None:
+                image_path = resources.path('images/popout.png')
+            else:
+                image_path = resources.path('images/popin.png')
+            self.popInOutButton.setImage_(NSImage.alloc().initWithContentsOfFile_(image_path))
+            self.popInOutButton.setHidden_(NO)
+
         newFrame = self.window().frame()
         if videoWindow.is_fullscreen or app.playback_manager.detached_window is not None:
             self.playbackControls.setHidden_(NO)
@@ -308,6 +321,9 @@ class OverlayPalette (NSWindowController):
 
     def toggleFullScreen_(self, sender):
         app.playback_manager.toggle_fullscreen()
+
+    def toggleAttachedDetached_(self, sender):
+        app.playback_manager.toggle_detached_mode()
 
     def skipBackward_(self, sender):
         app.playback_manager.play_prev_movie()

@@ -45,6 +45,8 @@
 				<string>id</string>
 				<key>stop</key>
 				<string>id</string>
+				<key>toggleAttachedDetached</key>
+				<string>id</string>
 				<key>toggleFullScreen</key>
 				<string>id</string>
 			</dict>
@@ -67,6 +69,8 @@
 				<key>playPauseButton</key>
 				<string>id</string>
 				<key>playbackControls</key>
+				<string>id</string>
+				<key>popInOutButton</key>
 				<string>id</string>
 				<key>progressSlider</key>
 				<string>id</string>
