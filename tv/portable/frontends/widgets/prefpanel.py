@@ -523,6 +523,7 @@ class _WatchedFolderHelper(object):
                 transient_for=_pref_window)
         if dir is not None:
             app.watched_folder_manager.add(dir)
+            self._check_no_folders()
 
     def _remove_clicked(self, button):
         iter = self._table.get_selected()
