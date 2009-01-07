@@ -208,7 +208,7 @@ EditItems = [
     MenuItem(_("Select _All"), "ClipboardSelectAll", (Key("a",MOD),)),
 ]
 
-FeedItems = [
+SidebarItems = [
     MenuItem(_("Add _Feed"), "NewFeed", (Key("n",MOD),)),
     MenuItem(_("Add Site"), "NewGuide", ()),
     MenuItem(_("New Searc_h Feed"), "NewSearchFeed", ()),
@@ -287,7 +287,7 @@ else:
 # allowing platforms to change the menu structures before computing
 # menubar.
 menubar = MenuBar(Menu(main_title, "Video", *VideoItems),
-                  Menu(_("_Feeds"), "Feeds", *FeedItems),
+                  Menu(_("_Sidebar"), "Sidebar", *SidebarItems),
                   Menu(_("_Playlists"), "Playlists", *PlaylistItems),
                   Menu(_("P_layback"), "Playback", *PlaybackItems),
                   Menu(_("_Help"), "Help", *HelpItems),
