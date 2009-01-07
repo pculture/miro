@@ -37,7 +37,7 @@ import traceback
 from objc import YES, NO, nil, signature
 from AppKit import *
 from Foundation import *
-from PyObjCTools import AppHelper, Conversion
+from PyObjCTools import Conversion
 from ExceptionHandling import NSExceptionHandler, NSLogAndHandleEveryExceptionMask, NSStackTraceKey
 
 from miro import app
