@@ -654,11 +654,10 @@ class LiveStorageBDB:
                     output_object(value)
                     indentation = indentation - 1
                     indent()
+                elif isinstance (value, unicode):
+                    output.write (value.encode('ascii', 'replace'))
                 else:
-                    if type(value) == unicode:
-                        output.write (value.encode('ascii', 'replace'))
-                    else:
-                        output.write (str(value))
+                    output.write (str(value))
                 output.write ('</%s>\n' % (key,))
             indentation = indentation - 1
             indent()
@@ -1068,11 +1067,10 @@ class LiveStorage:
                     output_object(value)
                     indentation = indentation - 1
                     indent()
+                elif isinstance (value, unicode):
+                    output.write (value.encode('ascii', 'replace'))
                 else:
-                    if type(value) == unicode:
-                        output.write (value.encode('ascii', 'replace'))
-                    else:
-                        output.write (str(value))
+                    output.write (str(value))
                 output.write ('</%s>\n' % (key,))
             indentation = indentation - 1
             indent()
