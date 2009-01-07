@@ -42,7 +42,11 @@ class SearchBox(style.LowerBox):
         style.LowerBox.__init__(self)
         self.search_field = widgetset.VideoSearchTextEntry()
         self.search_field.connect('validate', self.on_search)
-        self.add(widgetutil.align_middle(self.search_field, 0, 0, 16, 16))
+        self.add(widgetutil.align_middle(self.search_field, 0, 0, 16, 0))
+
+    def size_request(self, layout):
+        width, height = style.LowerBox.size_request(self, layout)
+        return (200, height)
 
     def on_search(self, obj):
         app.search_manager.set_search_info(obj.selected_engine().name, obj.get_text())

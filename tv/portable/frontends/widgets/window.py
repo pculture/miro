@@ -55,23 +55,23 @@ class MiroWindow(widgetset.MainWindow):
     def __init__(self, title, rect):
         widgetset.MainWindow.__init__(self, title, rect)
         
-        self.videobox = videobox.VideoBox()
-        self.search_box = searchbox.SearchBox()
-        self.left_vbox = widgetset.VBox()
-        self.left_vbox.pack_start(tablist.TabListBox(), True)
-        self.left_vbox.pack_start(self.search_box)
-
         self.main_area_holder = WidgetHolder()
-        self.right_vbox = widgetset.VBox()
-        self.right_vbox.pack_start(self.main_area_holder, True)
-        self.right_vbox.pack_start(self.videobox)
-
         self.splitter = widgetset.Splitter()
-        self.splitter.set_left(self.left_vbox)
-        self.splitter.set_right(self.right_vbox)
+        self.splitter.set_left(tablist.TabListBox())
+        self.splitter.set_right(self.main_area_holder)
         self.splitter.set_left_width(200)
+        
+        hbox = widgetset.HBox()
+        self.search_box = searchbox.SearchBox()
+        self.videobox = videobox.VideoBox()
+        hbox.pack_start(self.search_box)
+        hbox.pack_end(self.videobox, expand=True)
 
-        self.set_content_widget(self.splitter)
+        vbox = widgetset.VBox()
+        vbox.pack_start(self.splitter, expand=True)
+        vbox.pack_end(hbox)
+
+        self.set_content_widget(vbox)
         self.connect("active-change", self.on_active_change)
 
     def on_active_change(self, window):
