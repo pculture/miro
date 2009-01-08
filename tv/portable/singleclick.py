@@ -210,14 +210,16 @@ def download_unknown_mime_type(url):
     title = _('File Download')
     text = _('This file at %(url)s does not appear to be audio, video, or an RSS feed.',
              {"url": url})
-    dialog = dialogs.ChoiceDialog(title, text,
-            dialogs.BUTTON_DOWNLOAD_ANYWAY, dialogs.BUTTON_CANCEL)
+    dialog = dialogs.ThreeChoiceDialog(title, text,
+            dialogs.BUTTON_DOWNLOAD_ANYWAY, dialogs.BUTTON_OPEN_IN_EXTERNAL_BROWSER, dialogs.BUTTON_CANCEL)
     def callback(dialog):
         if check_url_exists(url):
             return
         if dialog.choice == dialogs.BUTTON_DOWNLOAD_ANYWAY:
             # Fake a viedo mime type, so we will download the item.
             download_video(item.get_entry_for_url(url, 'video/x-unknown'))
+        elif dialog.choice == dialogs.BUTTON_OPEN_IN_EXTERNAL_BROWSER:
+            messages.OpenInExternalBrowser(url).send_to_frontend()
     dialog.run(callback)
 
 def download_video(entry):

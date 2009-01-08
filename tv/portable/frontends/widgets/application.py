@@ -982,6 +982,9 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def handle_play_movie(self, message):
         app.playback_manager.start_with_items(message.item_infos)
 
+    def handle_open_in_external_browser(self, message):
+        app.widgetapp.open_url(message.url)
+
     def handle_message_to_user(self, message):
         title = message.title or _("Message")
         desc = message.desc

@@ -1155,3 +1155,8 @@ class CurrentFrontendState(FrontendMessage):
     """Returns the latest data saved with SaveFrontendState."""
     def __init__(self, list_view_displays):
         self.list_view_displays = list_view_displays
+
+class OpenInExternalBrowser(FrontendMessage):
+    """Opens the specified url in an external browser."""
+    def __init__(self, url):
+        self.url = url
