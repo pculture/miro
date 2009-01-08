@@ -147,7 +147,7 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
 
     def handle_items_changed(self, message):
         self._sorter.add_items(message.added)
-        self._sorter.forget_items(message.removed)
+        self._sorter.forget_items([r[0] for r in message.removed])
         itemlistcontroller.SimpleItemListController.handle_items_changed(self,
                 message)
 

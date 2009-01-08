@@ -115,8 +115,10 @@ class ViewTracker(object):
     def _make_removed_list(self, removed):
         for obj in removed:
             del self._last_sent_info[obj.id]
-        return [obj.id for obj in removed]
+        return [self._make_removed_item(obj) for obj in removed]
 
+    def _make_removed_item(self, obj):
+        return obj.id
 
     def schedule_send_messages(self):
         # We don't send messages immediately so that if an object gets changed
@@ -272,6 +274,9 @@ class ItemTrackerBase(ViewTracker):
     def make_changed_message(self, added, changed, removed):
         return messages.ItemsChanged(self.type, self.id,
                 added, changed, removed)
+
+    def _make_removed_item(self, obj):
+        return (obj.id, obj.idExists())
 
     def get_object_views(self):
         return [self.view]

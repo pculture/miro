@@ -1056,7 +1056,9 @@ class ItemsChanged(FrontendMessage):
     added -- list containing an ItemInfo object for each added item.  The
         order will be the order they were added.
     changed -- set containing an ItemInfo for each changed item.
-    removed -- set containing ids for each item that was removed
+    removed -- list of (id, exists) tuples for each item that was removed.
+        exists is True for items removed from the object being tracked, but
+        still exists in the Libary.
     """
 
     def __init__(self, type, id, added, changed, removed):

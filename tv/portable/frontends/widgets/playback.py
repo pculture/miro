@@ -70,9 +70,12 @@ class PlaybackManager (signals.SignalEmitter):
         app.info_updater.connect('items-removed', self._on_items_removed)
         app.info_updater.connect('items-changed', self._on_items_changed)
 
-    def _on_items_removed(self, obj, id_list):
+    def _on_items_removed(self, obj, removed_list):
         """Remove any deleted items from our playlist."""
-        self._handle_items_deleted(id_list)
+        # Don't remove items that were removed from our view, but still exist
+        # in the library.  (#10973)
+        deleted_from_library = [r[0] for r in removed_list if not r[1]]
+        self._handle_items_deleted(deleted_from_library)
 
     def _on_items_changed(self, obj, info_list):
         if self.playlist is None:

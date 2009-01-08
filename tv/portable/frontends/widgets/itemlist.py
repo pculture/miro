@@ -238,8 +238,9 @@ class ItemListGroup(object):
         for sublist in self.item_lists:
             sublist.update_items(changed_items, already_sorted=True)
 
-    def remove_items(self, removed_ids):
+    def remove_items(self, removed_list):
         """Remove items from the list."""
+        removed_ids = [r[0] for r in removed_list]
         for sublist in self.item_lists:
             sublist.remove_items(removed_ids)
 
