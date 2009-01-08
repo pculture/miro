@@ -202,11 +202,11 @@ class MessageHandler(object):
             cmd_line = pickle.loads(data)
         except:
             logging.warn("Error unpickling message (%r)" % data)
-
-        args = commandline.parse_command_line_string(cmd_line)
-        eventloop.addIdle(singleclick.parse_command_line_args, 
-                'parse command line', args=(args[1:],))
-        gobject.idle_add(app.widgetapp.window._window.present)
+        else:
+            args = commandline.parse_command_line_string(cmd_line)
+            eventloop.addIdle(singleclick.parse_command_line_args, 
+                    'parse command line', args=(args[1:],))
+            gobject.idle_add(app.widgetapp.window._window.present)
 
 def send_command_line_args():
     message = pickle.dumps(commandline.get_command_line_string())
