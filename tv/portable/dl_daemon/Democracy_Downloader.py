@@ -79,7 +79,8 @@ def launch():
     from miro import httpclient
 
     port = int(os.environ['DEMOCRACY_DOWNLOADER_PORT'])
-    server = daemon.DownloaderDaemon(port)
+    short_app_name = os.environ['DEMOCRACY_SHORT_APP_NAME']
+    server = daemon.DownloaderDaemon(port, short_app_name)
 
     # remove the limits for the connection pool, we limit them
     # ourselves in the downloader code.  Don't try to pipeline

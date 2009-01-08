@@ -40,7 +40,6 @@ from xml.sax.saxutils import escape
 from distutils import sysconfig 
 from distutils.core import Command
 import distutils.command.install_data
-import distutils.command.build_py
 from distutils.ccompiler import new_compiler
 
 ###############################################################################
@@ -305,25 +304,6 @@ app_config = os.path.join(resources_dir, 'app.config.template')
 template_vars = util.read_simple_config_file(app_config)
 
 ###############################################################################
-
-#### Our specialized build_py command ####
-class build_py(distutils.command.build_py.build_py):
-    """build_py extends the default build_py implementation so that the
-    platform and portable directories get merged into the miro
-    package.
-    """
-
-    def expand_templates(self):
-        for path in [os.path.join(portable_dir, 'dl_daemon', 'daemon.py')]:
-            template = string.Template(open(path + ".template", 'rt').read())
-            fout = open(path, 'wt')
-            fout.write(template.substitute(**template_vars))
-        
-    def run(self):
-        """Extend build_py's module list to include the miro modules."""
-        self.expand_templates()
-        return distutils.command.build_py.build_py.run(self)
-
 
 #### Our specialized install_data command ####
 class install_data(distutils.command.install_data.install_data):
@@ -644,7 +624,6 @@ if __name__ == "__main__":
         },
         data_files=data_files,
         cmdclass={
-            'build_py': build_py,
             'build_ext': build_ext,
             'install_data': install_data,
             'bdist_miro': bdist_miro,

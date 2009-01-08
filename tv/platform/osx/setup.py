@@ -418,7 +418,6 @@ class MiroBuild (py2app):
     def run(self):
         print "Building %s v%s (%s)" % (self.config.get('longAppName'), self.config.get('appVersion'), self.config.get('appRevision'))
         
-        self.setup_dynamic_sources()
         self.setup_info_plist()
 
         py2app.run(self)
@@ -436,12 +435,6 @@ class MiroBuild (py2app):
 
         if self.make_dmg:
             self.make_disk_image()
-    
-    def setup_dynamic_sources(self):
-        daemonTemplate = os.path.join(ROOT_DIR, 'portable/dl_daemon/daemon.py.template')
-        target = os.path.join(ROOT_DIR, 'portable/dl_daemon/daemon.py')
-        data = self.config.get_data()
-        self.fillTemplate(daemonTemplate, target, **data)
     
     def setup_info_plist(self):
         def updatePListEntry(plist, key, conf, prioritizeTheme=True):

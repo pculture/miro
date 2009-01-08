@@ -64,11 +64,12 @@ def startDownloadDaemon(oldpid, port):
     daemonEnv = {
         'DEMOCRACY_DOWNLOADER_PORT' : str(port),
         'DEMOCRACY_DOWNLOADER_FIRST_LAUNCH' : firstDaemonLaunch,
+        'DEMOCRACY_SHORT_APP_NAME' : config.get(prefs.SHORT_APP_NAME),
     }
     launchDownloadDaemon(oldpid, daemonEnv)
     firstDaemonLaunch = '0'
 
-def getDataFile():
+def getDataFile(short_app_name):
     try:
         uid = os.getuid()
     except (SystemExit, KeyboardInterrupt):
@@ -77,11 +78,11 @@ def getDataFile():
         # This works for win32, where we don't have getuid()
         uid = os.environ['USERNAME']
        
-    shortAppName = "$shortAppName"
-    return os.path.join(tempfile.gettempdir(), ('%s_Download_Daemon_%s.txt' % (shortAppName,uid)))
+    return os.path.join(tempfile.gettempdir(),
+            ('%s_Download_Daemon_%s.txt' % (short_app_name, uid)))
 
 pidfile = None
-def writePid(pid):
+def writePid(short_app_name, pid):
     """Write out our pid.
 
     This method locks the pid file until the downloader exits.  On windows
@@ -94,7 +95,7 @@ def writePid(pid):
     # support.  We want to create the file if nessecary, but not truncate it
     # if it's already around.  We can't truncate it because on unix we haven't
     # locked the file yet.
-    fd = os.open(getDataFile(), os.O_WRONLY | os.O_CREAT)
+    fd = os.open(getDataFile(short_app_name), os.O_WRONLY | os.O_CREAT)
     pidfile = os.fdopen(fd, 'w')
     try:
         import fcntl
@@ -113,9 +114,9 @@ def writePid(pid):
     # NOTE 2: we purposely don't close the file, to achieve locking on
     # windows.
 
-def readPid():
+def readPid(short_app_name):
     try:
-        f = open(getDataFile(), "r")
+        f = open(getDataFile(short_app_name), "r")
     except IOError:
         return None
     try:
@@ -191,9 +192,9 @@ class Daemon(ConnectionHandler):
             self.sendData(pack("I",len(raw)) + raw, callback)
 
 class DownloaderDaemon(Daemon):
-    def __init__(self, port):
+    def __init__(self, port, short_app_name):
         # before anything else, write out our PID 
-        writePid(os.getpid())
+        writePid(short_app_name, os.getpid())
         # connect to the controller and start our listen loop
         Daemon.__init__(self)
         self.openConnection('127.0.0.1', port, self.onConnection, self.onError)
@@ -220,7 +221,7 @@ class ControllerDaemon(Daemon):
         Daemon.__init__(self)
         self.stream.acceptConnection('127.0.0.1', 0, self.onConnection, self.onError)
         self.port = self.stream.port
-        startDownloadDaemon(readPid(), self.port)
+        startDownloadDaemon(self.read_pid(), self.port)
         data = {}
         remoteConfigItems = [prefs.LIMIT_UPSTREAM,
                    prefs.UPSTREAM_LIMIT_IN_KBS,
@@ -261,6 +262,10 @@ class ControllerDaemon(Daemon):
         if not self.shutdown:
             c = command.UpdateConfigCommand (self, key, value)
             c.send()
+
+    def read_pid(self):
+        short_app_name = config.get(prefs.SHORT_APP_NAME)
+        return readPid(short_app_name)
             
     def handleClose(self, type):
         if not self.shutdown:
@@ -272,7 +277,7 @@ class ControllerDaemon(Daemon):
 
     def shutdown_timeout_cb(self):
         logging.warning ("killing download daemon")
-        killProcess(readPid())
+        killProcess(self.read_pid())
         self.shutdownResponse()
 
     def shutdownResponse(self):

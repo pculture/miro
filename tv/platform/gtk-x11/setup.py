@@ -127,7 +127,6 @@ from distutils.util import change_root
 from distutils import dir_util, log, sysconfig
 from glob import glob
 from string import Template
-import distutils.command.build_py
 import distutils.command.install_data
 import os
 import pwd
@@ -737,26 +736,6 @@ class test_system(Command):
         # we have most of the pieces here?
         pass
 
-#### Our specialized build_py command ####
-class build_py(distutils.command.build_py.build_py):
-    """build_py extends the default build_py implementation so that the
-    platform and portable directories get merged into the miro
-    package.
-    """
-
-    def expand_templates(self):
-        conf = util.read_simple_config_file(app_config)
-        for path in [os.path.join(portable_dir, 'dl_daemon', 'daemon.py')]:
-            template = Template(read_file(path + ".template"))
-            expanded = template.substitute(**conf)
-            write_file(path, expanded)
-
-    def run (self):
-        """Extend build_py's module list to include the miro modules."""
-        self.expand_templates()
-        return distutils.command.build_py.build_py.run(self)
-
-
 #### install_theme installs a specifified theme .zip
 class install_theme(Command):
     description = 'Install a provided theme to /usr/share/miro/themes'
@@ -878,7 +857,6 @@ setup(name='miro',
     cmdclass = {
         'test_system': test_system,
         'build_ext': build_ext,
-        'build_py': build_py,
         'install_data': install_data,
         'install_theme': install_theme,
         'clean': clean,
