@@ -92,7 +92,7 @@ class ThemeHistory(DDBObject):
                 filepath = resources.theme_path(config.get(prefs.THEME_NAME), 
                     config.get(prefs.DEFAULT_CHANNELS_FILE))
                 if os.path.exists(filepath):
-                    importer.importSubscriptionsFrom(filepath,
+                    importer.import_subscriptions(filepath,
                             showSummary = False)
                 else:
                     logging.warn("Theme subscription file doesn't exist: %s",

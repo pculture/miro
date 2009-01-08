@@ -47,6 +47,13 @@ def startup():
     from miro import gtcache
     gtcache.init()
 
+    from miro.plat import commandline
+    args = commandline.get_command_line()[1:]
+    if '--theme' in args:
+        index = args.index('--theme')
+        theme = args[index + 1]
+        del args[index:index+1]
+
     from miro import startup
     startup.initialize(theme)
 
@@ -54,8 +61,7 @@ def startup():
     migrateappname.migrateSupport('Democracy', 'Miro')
 
     from miro import singleclick
-    from miro.plat import commandline
-    singleclick.set_command_line_args(commandline.get_command_line()[1:])
+    singleclick.set_command_line_args(args)
 
     # Kick off the application
     from miro.plat.frontends.widgets.application import WindowsApplication
