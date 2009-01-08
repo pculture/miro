@@ -1256,6 +1256,7 @@ class LiveStorage:
 
     def close(self):
         database.confirmDBThread()
+        self.cursor.execute("VACUUM")
         self.runUpdate()
         self.closed = True
         self.cursor.close()
