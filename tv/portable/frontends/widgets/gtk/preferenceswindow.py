@@ -37,24 +37,9 @@ from miro.frontends.widgets.gtk import window
 from miro.frontends.widgets.gtk import wrappermap
 from miro.plat import resources
 
-class PreferencesGtkWindow(gtk.Window):
-    def do_map(self):
-        gtk.Window.do_map(self)
-        wrappermap.wrapper(self).emit('show')
-
-    def do_unmap(self):
-        gtk.Window.do_unmap(self)
-        wrappermap.wrapper(self).emit('hide')
-gobject.type_register(PreferencesGtkWindow)
-
 class PreferencesWindow(window.Window):
-    def _make_gtk_window(self):
-        return PreferencesGtkWindow()
-
     def __init__(self, title):
         window.Window.__init__(self, title)
-        self.create_signal('show')
-        self.create_signal('hide')
         self.tab_container = layout.TabContainer()
         self.content_widget = gtk.VBox(spacing=12)
         self.content_widget.pack_start(self.tab_container._widget)

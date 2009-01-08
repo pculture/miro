@@ -72,6 +72,8 @@ class Window(signals.SignalEmitter):
         self.create_signal('will-close')
         self.create_signal('did-move')
         self.create_signal('key-press')
+        self.create_signal('show')
+        self.create_signal('hide')
         self.nswindow = MiroWindow.alloc()
         self.nswindow.initWithContentRect_styleMask_backing_defer_(
                 rect.nsrect,
@@ -114,6 +116,7 @@ class Window(signals.SignalEmitter):
 
     def on_will_close(self, notification):
         self.emit('will-close')
+        self.emit('hide')
 
     def is_active(self):
         return self.nswindow.isMainWindow()
@@ -123,6 +126,7 @@ class Window(signals.SignalEmitter):
             raise ValueError("Window destroyed")
         self.nswindow.makeKeyAndOrderFront_(nil)
         self.nswindow.makeMainWindow()
+        self.emit('show')
 
     def close(self):
         self.nswindow.close()
@@ -455,8 +459,6 @@ class ToolbarDelegate (NSObject):
 class PreferencesWindow (Window):
     def __init__(self, title):
         Window.__init__(self, title, Rect(0, 0, 640, 440))
-        self.create_signal('show')
-        self.create_signal('hide')
         self.panels = dict()
         self.identifiers = list()
         self.first_show = True
@@ -503,7 +505,3 @@ class PreferencesWindow (Window):
             self.nswindow.center()
             self.first_show = False
         Window.show(self)
-        self.emit('show')
-
-    def on_will_close(self, notification):
-        self.emit('hide')

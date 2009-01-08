@@ -89,6 +89,13 @@ def get_stock_id(n):
     return STOCK_IDS.get(n, None)
 
 class WrappedWindow(gtk.Window):
+    def do_map(self):
+        gtk.Window.do_map(self)
+        wrappermap.wrapper(self).emit('show')
+
+    def do_unmap(self):
+        gtk.Window.do_unmap(self)
+        wrappermap.wrapper(self).emit('hide')
     def do_focus_in_event(self, event):
         gtk.Window.do_focus_in_event(self, event)
         wrappermap.wrapper(self).emit('active-change')
@@ -100,21 +107,29 @@ class WrappedWindow(gtk.Window):
         key, modifiers = keymap.translate_gtk_event(event)
         if wrappermap.wrapper(self).emit('key-press', key, modifiers):
             return # handler returned True, don't process the key more
-        elif (gtk.gdk.keyval_name(event.keyval) == 'Return' and
+        return gtk.Window.do_key_press_event(self, event)
+
+gobject.type_register(WrappedWindow)
+
+class WrappedMainWindow(WrappedWindow):
+    def do_key_press_event(self, event):
+        if (gtk.gdk.keyval_name(event.keyval) == 'Return' and
                 event.state & gtk.gdk.MOD1_MASK and
                 app.playback_manager.is_playing):
             # Hack for having 2 shortcuts for fullscreen
             app.widgetapp.on_fullscreen_clicked()
             return
-        return gtk.Window.do_key_press_event(self, event)
+        return WrappedWindow.do_key_press_event(self, event)
 
-gobject.type_register(WrappedWindow)
+gobject.type_register(WrappedMainWindow)
 
 class WindowBase(signals.SignalEmitter):
     def __init__(self):
         signals.SignalEmitter.__init__(self)
         self.create_signal('use-custom-style-changed')
         self.create_signal('key-press')
+        self.create_signal('show')
+        self.create_signal('hide')
 
     def set_window(self, window):
         self._window = window
@@ -226,6 +241,9 @@ class MainWindow(Window):
         self._window.connect('window-state-event', self.on_window_state_event)
         self._window.connect('configure-event', self.on_configure_event)
         self.connect('will-close', self.on_close)
+
+    def _make_gtk_window(self):
+        return WrappedMainWindow()
 
     def on_close(self, window):
         app.widgetapp.on_close()
