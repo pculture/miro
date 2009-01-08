@@ -242,3 +242,23 @@ class WindowsApplication(Application):
                     pass
                 else:
                     raise
+
+    def handle_update_available(self, obj, item):
+        call_on_ui_thread(self.show_update_available, item)
+
+    def show_update_available(self, item):
+        releaseNotes = item.get('description', '')
+
+        ret = dialogs.show_choice_dialog(
+                _("Update available!"),
+                _("A new version of %s is available for download.\n"
+                  "%s\n"
+                  "Do you want to download it?") % (
+                config.get(prefs.LONG_APP_NAME), releaseNotes),
+                (dialogs.BUTTON_YES, dialogs.BUTTON_NO))
+
+        if ret == dialogs.BUTTON_YES:
+            enclosures = [enclosure for enclosure in item['enclosures']
+                          if enclosure['type'] == 'application/octet-stream']
+            downloadURL = enclosures[0]['href']
+            self.open_url(downloadURL)
