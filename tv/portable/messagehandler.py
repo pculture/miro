@@ -118,6 +118,7 @@ class ViewTracker(object):
         return [self._make_removed_item(obj) for obj in removed]
 
     def _make_removed_item(self, obj):
+        # By default the removed list is just a list of IDs
         return obj.id
 
     def schedule_send_messages(self):
@@ -276,6 +277,9 @@ class ItemTrackerBase(ViewTracker):
                 added, changed, removed)
 
     def _make_removed_item(self, obj):
+        # For TrackItems, the removed list is a list of (id, exist) tuples.
+        # Exists is True for items that were removed from this particular
+        # view, but still exist in the library.
         return (obj.id, obj.idExists())
 
     def get_object_views(self):
