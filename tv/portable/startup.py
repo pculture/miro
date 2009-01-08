@@ -157,7 +157,6 @@ def startup():
     logging.info("Revision:   %s", config.get(prefs.APP_REVISION))
     logging.info("Builder:    %s", config.get(prefs.BUILD_MACHINE))
     logging.info("Build Time: %s", config.get(prefs.BUILD_TIME))
-    util.print_mem_usage("Pre everything memory check")
     eventloop.connect('thread-started', lambda obj, thread: database.set_thread(thread))
     logging.info("Starting event loop thread")
     eventloop.startup()
@@ -166,7 +165,6 @@ def startup():
 @startup_function
 def finish_startup():
     views.initialize()
-    util.print_mem_usage("Pre-database memory check:")
     logging.info("Restoring database...")
     try:
         database.defaultDatabase.liveStorage = storedatabase.LiveStorage()
@@ -216,44 +214,45 @@ def check_movies_gone():
         else:
             logging.warn("Movies directory is gone -- no handler installed!")
 
-    eventloop.addUrgentCall(startup_network_stuff, "startup network stuff")
+    eventloop.addUrgentCall(reconnect_downloaders, "reconnect downloaders")
 
 @startup_function
 def fix_movies_gone():
     from miro.plat import config as platformcfg
     config.set(prefs.MOVIES_DIRECTORY, platformcfg.get(prefs.MOVIES_DIRECTORY))
-    eventloop.addUrgentCall(startup_network_stuff, "startup network stuff")
+    eventloop.addUrgentCall(reconnect_downloaders, "reconnect downloaders")
 
 @startup_function
-def startup_network_stuff():
+def reconnect_downloaders():
+    """Last bit of startup required before we load the frontend.  """
     # Uncomment the next line to test startup error handling
-    # raise StartupError("Test Error", "Startup Failed"
-    downloader.startupDownloader()
+    # raise StartupError("Test Error", "Startup Failed")
+    item.reconnect_downloaders()
+    messages.StartupSuccess().send_to_frontend()
 
-    util.print_mem_usage("Post-downloader memory check")
+@eventloop.idle_iterator
+def on_frontend_started():
+    """Perform startup actions that should happen after the frontend is
+    already up and running.
+    """
 
     # Start the automatic downloader daemon
-    logging.info("Spawning auto downloader...")
+    logging.info("Starting auto downloader...")
     autodler.start_downloader()
-
-    item.reconnect_downloaders()
+    yield
     feed.expire_items()
-    eventloop.addUrgentCall(startup_compute_stuff, "startup compute stuff")
-
-@startup_function
-def startup_compute_stuff():
+    yield
     starttime = clock()
     iconcache.clear_orphans()
     logging.timing("Icon clear: %.3f", clock() - starttime)
     logging.info("Starting movie data updates")
+    yield
     moviedata.movieDataUpdater.startThread()
-    eventloop.addUrgentCall(finalize_startup, "finalize startup")
-
-@startup_function
-def finalize_startup():
-    eventloop.addIdle(parse_command_line_args, "parsing command line args")
+    yield
+    parse_command_line_args()
+    yield
+    downloader.startupDownloader()
     eventloop.addTimeout(3, autoupdate.check_for_updates, "Check for updates")
-    messages.StartupSuccess().send_to_frontend()
 
 def setup_global_feeds():
     setup_global_feed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
@@ -324,7 +323,7 @@ def setup_theme():
     themeHistory.check_new_theme()
 
 def install_message_handler():
-    handler = messagehandler.BackendMessageHandler()
+    handler = messagehandler.BackendMessageHandler(on_frontend_started)
     messages.BackendMessage.install_handler(handler)
 
 def _get_theme_history():

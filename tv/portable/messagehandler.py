@@ -420,8 +420,9 @@ class UnwatchedCountTracker(CountTracker):
         return messages.UnwatchedCountChanged(count)
 
 class BackendMessageHandler(messages.MessageHandler):
-    def __init__(self):
+    def __init__(self, frontend_startup_callback):
         messages.MessageHandler.__init__(self)
+        self.frontend_startup_callback = frontend_startup_callback
         self.channel_tracker = None
         self.audio_channel_tracker = None
         self.playlist_tracker = None
@@ -465,6 +466,12 @@ class BackendMessageHandler(messages.MessageHandler):
             return views.guides
         else:
             raise ValueError("Unknown Type: %s" % type)
+
+    def handle_frontend_started(self, message):
+        # add a little bit more delay to let things simmer down a bit.  The
+        # calls here are low-priority, so we can afford to wait a bit.
+        eventloop.addTimeout(2, self.frontend_startup_callback,
+                'frontend startup callback')
 
     def handle_query_search_info(self, message):
         search_feed = app.controller.get_global_feed('dtv:search')

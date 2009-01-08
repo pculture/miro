@@ -107,6 +107,18 @@ class Application:
         self.window = MiroWindow(config.get(prefs.LONG_APP_NAME),
                                  self.get_main_window_dimensions())
         self.window.connect_weak('key-press', self.on_key_press)
+        self._window_show_callback = self.window.connect_weak('show',
+                self.on_window_show)
+
+    def on_window_show(self, window):
+        m = messages.FrontendStarted()
+        # Use call_on_ui_thread to introduce a bit of a delay.  On GTK it uses
+        # gobject.add_idle(), so it won't run until the GUI processing is
+        # idle.  I'm (BDK) not sure what happens on Cocoa, but it's worth a
+        # try there as well.
+        call_on_ui_thread(m.send_to_backend)
+        self.window.disconnect(self._window_show_callback)
+        del self._window_show_callback
 
     def on_key_press(self, window, key, mods):
         if (app.playback_manager.is_playing and

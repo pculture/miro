@@ -122,6 +122,10 @@ class FrontendMessage(Message):
 
 # Backend Messages
 
+class FrontendStarted(BackendMessage):
+    """Inform the backend that the frontend has finished starting up."""
+    pass
+
 class TrackChannels(BackendMessage):
     """Begin tracking channels.
 
