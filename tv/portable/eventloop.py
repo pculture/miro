@@ -473,3 +473,46 @@ def asUrgent(func):
 def checkHeapSize():
     logging.info ("Heap size: %d.", len(_eventLoop.scheduler.heap))
     addTimeout(5, checkHeapSize, "Check Heap Size")
+
+def idle_iterate(func, name, args=None, kwargs=None):
+    """Iterate over a generator function using addIdle for each iteration.
+
+    This allows long running functions to be split up into distinct steps,
+    after each step other idle functions will have a chance to run.
+
+    For example:
+
+    def foo(x, y, z):
+        # do some computation
+        yield
+        # more computation
+        yield
+        # more computation
+        yield
+
+    eventloop.idle_iterate(foo, 'Foo', args=(1, 2, 3))
+    """
+
+    if args is None:
+        args = ()
+    if kwargs is None:
+        kwargs = {}
+    iter = func(*args, **kwargs)
+    addIdle(_idle_iterate_step, name, args=(iter, name))
+
+def _idle_iterate_step(iter, name):
+    try:
+        rv = iter.next()
+    except StopIteration:
+        return
+    else:
+        if rv is not None:
+            logging.warn("idle_iterate yield value ignored: %s (%s)", 
+                    rv, name)
+        addIdle(_idle_iterate_step, name, args=(iter, name))
+
+def idle_iterator(func):
+    """Decorator to wrap a generator function in a idle_iterate() call."""
+    def queuer(*args, **kwargs):
+        return idle_iterate(func, "%s() (using idle_iterator)" % func.__name__, args=args, kwargs=kwargs)
+    return queuer

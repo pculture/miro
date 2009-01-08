@@ -29,19 +29,21 @@
 import os
 from miro import httpclient
 from fasttypes import LinkedList
-from miro.eventloop import asIdle, addIdle, addTimeout
+from miro import eventloop
 from miro.download_utils import nextFreeFilename, getFileURLPath
 from miro.util import unicodify
 from miro.plat.utils import unicodeToFilename
 from miro import config
 from miro import prefs
 from miro import fileutil
+from miro import views
 import random
 
 RUNNING_MAX = 3
 
+
+@eventloop.idle_iterator
 def clear_orphans():
-    from miro import views
     knownIcons = set()
     for item in views.items:
         if item.iconCache and item.iconCache.filename:
@@ -49,15 +51,21 @@ def clear_orphans():
             for resized in item.iconCache.resized_filenames.values():
                 knownIcons.add(os.path.normcase(fileutil.expand_filename(resized)))
 
+    yield
+
     for feed in views.feeds:
         if feed.iconCache and feed.iconCache.filename:
             knownIcons.add(os.path.normcase(fileutil.expand_filename(feed.iconCache.filename)))
             for resized in feed.iconCache.resized_filenames.values():
                 knownIcons.add(os.path.normcase(fileutil.expand_filename(resized)))
 
+    yield
+
     for site in views.sites:
         if site.iconCache and site.iconCache.filename:
             knownIcons.add(os.path.normcase(fileutil.expand_filename(site.iconCache.filename)))
+
+    yield
 
     cachedir = fileutil.expand_filename(config.get(prefs.ICON_CACHE_DIRECTORY))
     if os.path.isdir(cachedir):
@@ -72,6 +80,7 @@ def clear_orphans():
                     os.remove(filename)
                 except OSError:
                     pass
+            yield
 
 class IconCacheUpdater:
     def __init__(self):
@@ -80,7 +89,7 @@ class IconCacheUpdater:
         self.runningCount = 0
         self.inShutdown = False
 
-    @asIdle
+    @eventloop.asIdle
     def requestUpdate(self, item, is_vital=False):
         if is_vital:
             item.dbItem.confirmDBThread()
@@ -88,7 +97,7 @@ class IconCacheUpdater:
                    and item.url == item.dbItem.getThumbnailURL()):
                 is_vital = False
         if self.runningCount < RUNNING_MAX:
-            addIdle(item.request_icon, "Icon Request")
+            eventloop.addIdle(item.request_icon, "Icon Request")
             self.runningCount += 1
         else:
             if is_vital:
@@ -109,13 +118,13 @@ class IconCacheUpdater:
             self.runningCount -= 1
             return
 
-        addIdle(item.request_icon, "Icon Request")
+        eventloop.addIdle(item.request_icon, "Icon Request")
 
-    @asIdle
+    @eventloop.asIdle
     def clear_vital(self):
         self.vital = LinkedList()
 
-    @asIdle
+    @eventloop.asIdle
     def shutdown(self):
         self.inShutdown = True
 
@@ -186,7 +195,7 @@ class IconCache:
             self.needsUpdate = False
             self.requestUpdate(True)
         elif error is not None:
-            addTimeout(3600, self.requestUpdate, "Thumbnail request for %s" % url)
+            eventloop.addTimeout(3600, self.requestUpdate, "Thumbnail request for %s" % url)
         iconCacheUpdater.update_finished()
 
     def update_icon_cache(self, url, info):
