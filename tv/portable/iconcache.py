@@ -51,7 +51,7 @@ def clear_orphans():
             for resized in item.iconCache.resized_filenames.values():
                 knownIcons.add(os.path.normcase(fileutil.expand_filename(resized)))
 
-    yield
+    yield None
 
     for feed in views.feeds:
         if feed.iconCache and feed.iconCache.filename:
@@ -59,13 +59,13 @@ def clear_orphans():
             for resized in feed.iconCache.resized_filenames.values():
                 knownIcons.add(os.path.normcase(fileutil.expand_filename(resized)))
 
-    yield
+    yield None
 
     for site in views.sites:
         if site.iconCache and site.iconCache.filename:
             knownIcons.add(os.path.normcase(fileutil.expand_filename(site.iconCache.filename)))
 
-    yield
+    yield None
 
     cachedir = fileutil.expand_filename(config.get(prefs.ICON_CACHE_DIRECTORY))
     if os.path.isdir(cachedir):
@@ -80,7 +80,7 @@ def clear_orphans():
                     os.remove(filename)
                 except OSError:
                     pass
-            yield
+            yield None
 
 class IconCacheUpdater:
     def __init__(self):

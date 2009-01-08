@@ -239,19 +239,19 @@ def on_frontend_started():
 
     logging.info("Starting auto downloader...")
     autodler.start_downloader()
-    yield
+    yield None
     feed.expire_items()
-    yield
+    yield None
     starttime = clock()
     logging.timing("Icon clear: %.3f", clock() - starttime)
     logging.info("Starting movie data updates")
-    yield
+    yield None
     moviedata.movieDataUpdater.startThread()
-    yield
+    yield None
     parse_command_line_args()
-    yield
+    yield None
     autoupdate.check_for_updates()
-    yield
+    yield None
     # Wait a bit before starting the downloader daemon.  It can cause a bunch
     # of disk/CPU load, so try to avoid it slowing other stuff down.
     eventloop.addTimeout(5, downloader.startupDownloader,
