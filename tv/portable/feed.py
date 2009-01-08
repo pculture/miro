@@ -577,6 +577,7 @@ class FeedImpl:
     def onRestore(self):
         self.updating = False
         self.calc_item_list()
+        restored_feeds.append(self.ufeed)
 
     def onRemove(self):
         """Called when the feed uses this FeedImpl is removed from the DB.
@@ -1627,12 +1628,8 @@ class RSSFeedImpl(RSSFeedImplBase):
     def onRestore(self):
         """Called by pickle during deserialization
         """
-        #FIXME: the update dies if all of the items aren't restored, so we
-        # wait a little while before we start the update
         FeedImpl.onRestore(self)
         self.download = None
-        if not config.get(prefs.CHECK_CHANNELS_EVERY_X_MN) == -1:
-            self.scheduleUpdateEvents(INITIAL_FEED_UPDATE_DELAY)
 
     def clean_old_items(self):
         self.modified = None
@@ -1800,7 +1797,6 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         self.download_dc = {}
         self.updating = 0
         self.splitURLs()
-        self.scheduleUpdateEvents(INITIAL_FEED_UPDATE_DELAY)
 
     def clean_old_items(self):
         self.modified = {}
@@ -2116,12 +2112,8 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
         """Called by pickle during deserialization
         """
         FeedImpl.onRestore(self)
-
-        #FIXME: the update dies if all of the items aren't restored, so we
-        # wait a little while before we start the update
         self.downloads = set()
         self.tempHistory = {}
-        self.scheduleUpdateEvents(.1)
 
 class DirectoryWatchFeedImpl(FeedImpl):
     def __init__(self, ufeed, directory, visible=True):
@@ -2197,12 +2189,6 @@ class DirectoryWatchFeedImpl(FeedImpl):
 
         self.scheduleUpdateEvents(-1)
 
-    def onRestore(self):
-        FeedImpl.onRestore(self)
-        #FIXME: the update dies if all of the items aren't restored, so we
-        # wait a little while before we start the update
-        self.scheduleUpdateEvents(.1)
-
 class DirectoryFeedImpl(FeedImpl):
     """A feed of all of the Movies we find in the movie folder that don't
     belong to a "real" feed.  If the user changes her movies folder, this feed
@@ -2274,13 +2260,6 @@ class DirectoryFeedImpl(FeedImpl):
                 item.remove()
 
         self.scheduleUpdateEvents(-1)
-
-    def onRestore(self):
-        FeedImpl.onRestore(self)
-        #FIXME: the update dies if all of the items aren't restored, so we
-        # wait a little while before we start the update
-        self.scheduleUpdateEvents(.1)
-
 
 class SearchFeedImpl(RSSMultiFeedImpl):
     """Search and Search Results feeds
@@ -2612,3 +2591,11 @@ def expire_items():
 
 def get_feed_by_url(url):
     return views.feeds.getItemWithIndex(indexes.feedsByURL, url)
+
+restored_feeds = []
+def start_updates():
+    global restored_feeds
+    for feed in restored_feeds:
+        if feed.idExists():
+            feed.scheduleUpdateEvents(INITIAL_FEED_UPDATE_DELAY)
+    restored_feeds = []
