@@ -638,6 +638,15 @@ def limitUploaders():
     killUploaders()
         
 
+def initController():
+    """Intializes the download daemon controller.
+
+    This doesn't actually start up the downloader daemon, that's done in
+    startupDownloader.  Commands will be queued until then.
+    """
+
+    RemoteDownloader.initializeDaemon()
+
 def startupDownloader():
     """Initialize the downloaders.
 
@@ -648,7 +657,7 @@ def startupDownloader():
     """
 
     cleanupIncompleteDownloads()
-    RemoteDownloader.initializeDaemon()
+    RemoteDownloader.dldaemon.start_downloader_daemon()
     limitUploaders()
     restartDownloads()
 

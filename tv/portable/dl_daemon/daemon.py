@@ -221,7 +221,6 @@ class ControllerDaemon(Daemon):
         Daemon.__init__(self)
         self.stream.acceptConnection('127.0.0.1', 0, self.onConnection, self.onError)
         self.port = self.stream.port
-        startDownloadDaemon(self.read_pid(), self.port)
         data = {}
         remoteConfigItems = [prefs.LIMIT_UPSTREAM,
                    prefs.UPSTREAM_LIMIT_IN_KBS,
@@ -257,6 +256,9 @@ class ControllerDaemon(Daemon):
         c = command.InitialConfigCommand(self, data)
         c.send()
         config.add_change_callback(self.updateConfig)
+
+    def start_downloader_daemon(self):
+        startDownloadDaemon(self.read_pid(), self.port)
 
     def updateConfig (self, key, value):
         if not self.shutdown:

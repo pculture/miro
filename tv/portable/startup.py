@@ -228,6 +228,7 @@ def reconnect_downloaders():
     # Uncomment the next line to test startup error handling
     # raise StartupError("Test Error", "Startup Failed")
     item.reconnect_downloaders()
+    downloader.initController()
     messages.StartupSuccess().send_to_frontend()
 
 @eventloop.idle_iterator
