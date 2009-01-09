@@ -260,10 +260,10 @@ class WindowsApplication(Application):
 
         ret = dialogs.show_choice_dialog(
                 _("Update available!"),
-                _("A new version of %s is available for download.\n"
-                  "%s\n"
-                  "Do you want to download it?") % (
-                config.get(prefs.LONG_APP_NAME), releaseNotes),
+                _("A new version of %(appname)s is available for download.\n"
+                  "%(notes)s\n"
+                  "Do you want to download it?", 
+                  {"appname": config.get(prefs.LONG_APP_NAME), "notes": releaseNotes}),
                 (dialogs.BUTTON_YES, dialogs.BUTTON_NO))
 
         if ret == dialogs.BUTTON_YES:
