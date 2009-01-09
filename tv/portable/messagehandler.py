@@ -751,6 +751,21 @@ class BackendMessageHandler(messages.MessageHandler):
                 item.signalChange()
                 item.obj.signalChange()
 
+        for id_, feeds in message.folder_children.iteritems():
+            feed_folder = views.allTabs.getObjectByID(id_)
+            for mem in feeds:
+                mem = views.allTabs.getObjectByID(mem.id)
+                if feed_folder.type == u'audio-feed' and mem.type != u'audio-feed':
+                    mem.type = u'audio-feed'
+                    mem.obj.section = u'audio'
+                    mem.signalChange()
+                    mem.obj.signalChange()
+                elif feed_folder.type == u'feed' and mem.type != u'feed':
+                    mem.type = u'feed'
+                    mem.obj.section = u'video'
+                    mem.signalChange()
+                    mem.obj.signalChange()
+
         for info_type, info_list in message.toplevels.iteritems():
             folder_view = self.folder_view_for_type(info_type)
 
