@@ -417,7 +417,7 @@ class VideoRenderer(VBox):
         self.videobox_motion_handler = None
         self.hidden_cursor = make_hidden_cursor()
         # piggyback on the TrackItemsManually message that playback.py sends.
-        app.info_updater.add_item_callback('manual', 'playback-list',
+        app.info_updater.item_changed_callbacks.add('manual', 'playback-list',
                 self._on_items_changed)
         self._item_id = None
 
@@ -425,8 +425,8 @@ class VideoRenderer(VBox):
 
     def teardown(self):
         self.renderer.reset()
-        app.info_updater.remove_item_callback('manual', 'playback-list',
-                self._on_items_changed)
+        app.info_updater.item_changed_callbacks.remove('manual',
+                'playback-list', self._on_items_changed)
         self._items_changed_callback = None
 
     def _on_items_changed(self, message):

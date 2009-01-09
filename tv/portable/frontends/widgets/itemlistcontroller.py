@@ -277,19 +277,21 @@ class ItemListController(object):
         items = self.get_selection()
         app.menu_manager.handle_item_list_selection(items)
 
-    def should_handle_message(self, message):
-        """Inspect a ItemList or ItemsChanged message and figure out if it's
-        meant for this ItemList.
-        """
-        return message.type == self.type and message.id == self.id
-
     def start_tracking(self):
         """Send the message to start tracking items."""
         messages.TrackItems(self.type, self.id).send_to_backend()
+        app.info_updater.item_list_callbacks.add(self.type, self.id,
+                self.handle_item_list)
+        app.info_updater.item_changed_callbacks.add(self.type, self.id,
+                self.handle_items_changed)
 
     def stop_tracking(self):
         """Send the message to stop tracking items."""
         messages.StopTrackingItems(self.type, self.id).send_to_backend()
+        app.info_updater.item_list_callbacks.remove(self.type, self.id,
+                self.handle_item_list)
+        app.info_updater.item_changed_callbacks.remove(self.type, self.id,
+                self.handle_items_changed)
 
     def handle_item_list(self, message):
         """Handle an ItemList message meant for this ItemContainer."""
@@ -523,18 +525,6 @@ class ItemListControllerManager(object):
             return []
         else:
             return self.displayed.get_selection()
-
-    def handle_item_list(self, message):
-        for controller in self.all_controllers:
-            if controller.should_handle_message(message):
-                controller.handle_item_list(message)
-        self.handle_playable_items()
-
-    def handle_items_changed(self, message):
-        for controller in self.all_controllers:
-            if controller.should_handle_message(message):
-                controller.handle_items_changed(message)
-        self.handle_playable_items()
 
     def handle_playable_items(self):
         if self.displayed is not None:

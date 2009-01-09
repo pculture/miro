@@ -822,6 +822,34 @@ class Application:
     def on_backend_shutdown(self, obj):
         logging.info('Shutting down...')
 
+class InfoUpdaterCallbackList(object):
+    """Tracks the list of callbacks for InfoUpdater."""
+
+    def __init__(self):
+        self._callbacks = collections.defaultdict(set)
+
+    def add(self, type, id, callback):
+        key = (type, id)
+        self._callbacks[key].add(callback)
+
+    def remove(self, type, id, callback):
+        key = (type, id)
+        callback_set = self._callbacks[key]
+        callback_set.remove(callback)
+        if len(callback_set) == 0:
+            del self._callbacks[key]
+
+    def get(self, type, id):
+        """Get the list of callbacks for type, id."""
+        key = (type, id)
+        if key not in self._callbacks:
+            return []
+        else:
+            # return a new list of callbacks, so that if we iterate over the
+            # return value, we don't have to worry about callbacks being
+            # removed midway.
+            return list(self._callbacks[key])
+
 class InfoUpdater(signals.SignalEmitter):
     """Track channel/item updates from the backend.
 
@@ -846,30 +874,18 @@ class InfoUpdater(signals.SignalEmitter):
         self.create_signal('sites-changed')
         self.create_signal('sites-removed')
 
-        self.item_callbacks = collections.defaultdict(set)
-
-    def add_item_callback(self, type, id, callback):
-        """Register a callback function to be called when we see an
-        ItemsChanged message.
-        """
-        key = (type, id)
-        self.item_callbacks[key].add(callback)
-
-    def remove_item_callback(self, type, id, callback):
-        """Unregester a callback passed in to add_item_callback() """
-        key = (type, id)
-        all_callbacks = self.item_callbacks[key]
-        all_callbacks.remove(callback)
-        if len(all_callbacks) == 0:
-            del self.item_callbacks[key]
+        self.item_list_callbacks = InfoUpdaterCallbackList()
+        self.item_changed_callbacks = InfoUpdaterCallbackList()
 
     def handle_items_changed(self, message):
-        key = (message.type, message.id)
-        if key in list(self.item_callbacks): 
-            # copy the callback list, since some might get removed
-            all_callbacks = list(self.item_callbacks[key])
-            for callback in all_callbacks:
-                callback(message)
+        callback_list = self.item_changed_callbacks
+        for callback in callback_list.get(message.type, message.id):
+            callback(message)
+
+    def handle_item_list(self, message):
+        callback_list = self.item_list_callbacks
+        for callback in callback_list.get(message.type, message.id):
+            callback(message)
 
     def handle_tabs_changed(self, message):
         if message.type == 'feed':
@@ -973,11 +989,12 @@ class WidgetsMessageHandler(messages.MessageHandler):
         app.info_updater.handle_tabs_changed(message)
 
     def handle_item_list(self, message):
-        app.item_list_controller_manager.handle_item_list(message)
+        app.info_updater.handle_item_list(message)
+        app.item_list_controller_manager.handle_playable_items()
 
     def handle_items_changed(self, message):
-        app.item_list_controller_manager.handle_items_changed(message)
         app.info_updater.handle_items_changed(message)
+        app.item_list_controller_manager.handle_playable_items()
 
     def handle_download_count_changed(self, message):
         app.widgetapp.download_count = message.count

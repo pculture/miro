@@ -67,7 +67,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.create_signal('did-stop')
         self.create_signal('will-fullscreen')
         self.create_signal('playback-did-progress')
-        app.info_updater.add_item_callback('manual', 'playback-list',
+        app.info_updater.item_changed_callbacks.add('manual', 'playback-list',
                 self._on_items_changed)
 
     def _on_items_changed(self, message):
