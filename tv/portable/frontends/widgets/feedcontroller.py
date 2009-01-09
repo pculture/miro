@@ -172,7 +172,7 @@ class FeedController(itemlistcontroller.ItemListController):
         if not (item_downloaded and len(all_items) == len(viewed_items)):
             self.full_section.expand()
         if item_downloaded and 0 < len(viewed_items) < len(all_items):
-            text = ngettext('Show 1 More Item',
+            text = ngettext('Show %(count)d More Item',
                             'Show %(count)d More Items',
                             len(viewed_items),
                             {"count": len(viewed_items)})
@@ -229,9 +229,9 @@ class FeedController(itemlistcontroller.ItemListController):
     def _update_full_section(self, downloads, items):
         if self._search_text == '':
             itemtext = ngettext("%(count)d Item",
-                                 "%(count)d Items",
-                                 items,
-                                 {"count": items})
+                                "%(count)d Items",
+                                items,
+                                {"count": items})
             downloadingtext = ngettext("%(count)d Downloading",
                                        "%(count)d Downloading",
                                        downloads,

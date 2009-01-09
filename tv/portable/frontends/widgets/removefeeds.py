@@ -46,10 +46,7 @@ KEEP_ITEMS = "keep_items"
 
 def run_dialog(channel_infos, downloaded_items, downloading_items, watched_feeds):
     """Displays the remove feeds dialog."""
-    title = ngettext('Remove Feed',
-                     'Remove %(count)d Feeds',
-                     len(channel_infos),
-                     {"count": len(channel_infos)})
+    title = ngettext('Remove Feed', 'Remove Feeds', len(channel_infos))
 
     rc_window = MainDialog(title)
     try:

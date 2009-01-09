@@ -386,10 +386,7 @@ class Application:
             messages.DeleteVideo(selection[0].id).send_to_backend()
             return
 
-        title = ngettext('Remove %(name)s',
-                         'Remove %(count)d items',
-                         total_count,
-                         {"count": total_count, "name": selection[0].name})
+        title = ngettext('Remove item', 'Remove items', total_count)
 
         if external_count > 0:
             description = ngettext(
@@ -713,15 +710,12 @@ class Application:
             self.remove_playlists(infos)
 
     def remove_playlists(self, playlist_infos):
-        title = ngettext('Remove playlist',
-                         'Remove %(count)d playlists',
-                         len(playlist_infos),
-                         {"count": len(playlist_infos)})
+        title = ngettext('Remove playlist', 'Remove playlists', len(playlist_infos))
         description = ngettext(
-            'Are you sure you want to remove %(name)s?',
+            'Are you sure you want to remove this playlist?',
             'Are you sure you want to remove these %(count)s playlists?',
             len(playlist_infos),
-            {"count": len(playlist_infos), "name": playlist_infos[0].name}
+            {"count": len(playlist_infos)}
             )
 
         ret = dialogs.show_choice_dialog(title, description,
@@ -764,7 +758,7 @@ class Application:
             ret = quitwhiledownloading.rundialog(
                 _("Are you sure you want to quit?"),
                 ngettext(
-                    "You have 1 download in progress.  Quit anyway?",
+                    "You have %(count)d download in progress.  Quit anyway?",
                     "You have %(count)d downloads in progress.  Quit anyway?",
                     self.download_count,
                     {"count": self.download_count}

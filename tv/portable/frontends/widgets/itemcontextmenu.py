@@ -178,7 +178,7 @@ class ItemContextMenuHandler(object):
 
         menu = []
         if downloaded > 0:
-            menu.append((ngettext('1 Downloaded Item',
+            menu.append((ngettext('%(count)d Downloaded Item',
                                   '%(count)d Downloaded Items',
                                   downloaded,
                                   {"count": downloaded}),
@@ -207,7 +207,7 @@ class ItemContextMenuHandler(object):
         if available > 0:
             if len(menu) > 0:
                 menu.append(None)
-            menu.append((ngettext('1 Available Item',
+            menu.append((ngettext('%(count)d Available Item',
                                   '%(count)d Available Items',
                                   available,
                                   {"count": available}),
@@ -220,7 +220,7 @@ class ItemContextMenuHandler(object):
         if downloading:
             if len(menu) > 0:
                 menu.append(None)
-            menu.append((ngettext('1 Downloading Item',
+            menu.append((ngettext('%(count)d Downloading Item',
                                   '%(count)d Downloading Items',
                                   downloading,
                                   {"count": downloading}),
@@ -237,7 +237,7 @@ class ItemContextMenuHandler(object):
         if paused:
             if len(menu) > 0:
                 menu.append(None)
-            menu.append((ngettext('1 Paused Item',
+            menu.append((ngettext('%(count)d Paused Item',
                                   '%(count)d Paused Items',
                                   paused,
                                   {"count": paused}),

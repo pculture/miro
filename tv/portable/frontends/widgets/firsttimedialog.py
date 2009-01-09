@@ -311,7 +311,7 @@ class FirstTimeDialog(widgetset.Window):
                         num_parsed,
                         {"count": num_parsed})
 
-                num_media_files = ngettext("found %(count)s media files",
+                num_media_files = ngettext("found %(count)s media file",
                         "found %(count)s media files",
                         num_found,
                         {"count": num_found})
