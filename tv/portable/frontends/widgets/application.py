@@ -29,7 +29,6 @@
 """Application class.  Portable code to handle the high-level running of Miro.
 """
 
-import collections
 import os
 import logging
 import urllib
@@ -820,11 +819,11 @@ class InfoUpdaterCallbackList(object):
     """Tracks the list of callbacks for InfoUpdater."""
 
     def __init__(self):
-        self._callbacks = collections.defaultdict(set)
+        self._callbacks = {}
 
     def add(self, type, id, callback):
         key = (type, id)
-        self._callbacks[key].add(callback)
+        self._callbacks.setdefault(key, set()).add(callback)
 
     def remove(self, type, id, callback):
         key = (type, id)
