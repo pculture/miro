@@ -42,3 +42,10 @@ WINDOW_DIMENSIONS = Pref(key="windowdimensions",
 WINDOW_MAXIMIZED = Pref(key="windowmaximized",
                         default=False,
                         platformSpecific=False)
+
+WINDOWS_ICON = Pref(key='windowsIcon',
+                    default=None,
+                    # this is platform specific, but if we set this to
+                    # True then it won't look up the value in the
+                    # theme's app.config file
+                    platformSpecific=False)

@@ -83,6 +83,13 @@ SHOW_TRAYICON = Pref(key="showTrayicon",
                      default=True,
                      platformSpecific=False)
 
+WINDOWS_ICON = Pref(key='windowsIcon',
+                    default=None,
+                    # this is platform specific, but if we set this to
+                    # True then it won't look up the value in the
+                    # theme's app.config file
+                    platformSpecific=False)
+
 # build a lookup for preferences by alias
 PREFERENCES = {}
 for mem in dir():

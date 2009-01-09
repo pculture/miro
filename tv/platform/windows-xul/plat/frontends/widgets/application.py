@@ -85,6 +85,16 @@ class WindowsApplication(Application):
             self.set_run_at_startup(value)
 
     def build_window(self):
+        # we set the icon first (if available) so that it doesn't flash
+        # on when the window is realized in Application.build_window()
+        icopath = os.path.join(resources.appRoot(), "Miro.ico")
+        if config.get(prefs.THEME_NAME) and config.get(options.WINDOWS_ICON):
+            themeIcoPath = resources.theme_path(config.get(prefs.THEME_NAME),
+                                                config.get(options.WINDOWS_ICON))
+            if os.path.exists(themeIcoPath):
+                icopath = themeIcoPath
+                self.window._window.set_icon_from_file(icopath)
+
         Application.build_window(self)
         self.window.connect('save-dimensions', self.set_main_window_dimensions)
         self.window.connect('save-maximized', self.set_main_window_maximized)
@@ -99,7 +109,6 @@ class WindowsApplication(Application):
         config.add_change_callback(self.on_pref_changed)
 
         if trayicon.trayicon_is_supported:
-            icopath = os.path.join(resources.appRoot(), "Miro.ico")
             self.trayicon = trayicon.Trayicon(icopath)
             if config.get(options.SHOW_TRAYICON):
                 self.trayicon.set_visible(True)
