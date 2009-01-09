@@ -66,10 +66,12 @@ class MiroWindow(widgetset.MainWindow):
         self.videobox = videobox.VideoBox()
         hbox.pack_start(self.search_box)
         hbox.pack_end(self.videobox, expand=True)
+        self.controls_hbox = hbox
 
         vbox = widgetset.VBox()
         vbox.pack_start(self.splitter, expand=True)
         vbox.pack_end(hbox)
+        self.main_vbox = vbox
 
         self.set_content_widget(vbox)
         self.connect("active-change", self.on_active_change)

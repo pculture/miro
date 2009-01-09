@@ -506,20 +506,20 @@ class VideoRenderer(VBox):
 
     def _make_overlay(self):
         main_window = app.widgetapp.window
-        main_window.right_vbox.remove(main_window.videobox)
+        main_window.main_vbox.remove(main_window.controls_hbox)
         self.overlay = VideoOverlay()
         self.remove(self._video_details)
         self.overlay.vbox.pack_start(self._video_details)
-        self.overlay.vbox.pack_start(main_window.videobox)
+        self.overlay.vbox.pack_start(main_window.controls_hbox)
         self.overlay.position_on_screen()
         self.overlay.show()
 
     def _destroy_overlay(self):
         main_window = app.widgetapp.window
         self.overlay.vbox.remove(self._video_details)
-        self.overlay.vbox.remove(main_window.videobox)
+        self.overlay.vbox.remove(main_window.controls_hbox)
         self.pack_start(self._video_details)
-        main_window.right_vbox.pack_start(main_window.videobox)
+        main_window.main_vbox.pack_start(main_window.controls_hbox)
 
         self.overlay.destroy()
         del self.overlay
