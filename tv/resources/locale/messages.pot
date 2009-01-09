@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-09 12:43-0500\n"
+"POT-Creation-Date: 2009-01-09 16:06-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,38 +34,38 @@ msgstr ""
 msgid "Quit Miro completely."
 msgstr ""
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:114
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:123
 msgid "Close to tray?"
 msgstr ""
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:115
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:124
 msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
 msgstr ""
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:172
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:181
 msgid "Error Bombing Item"
 msgstr ""
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:174
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:183
 msgid "Error Recommending Item"
 msgstr ""
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:176
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:185
 msgid "Error Opening Website"
 msgstr ""
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:181
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:190
 #, python-format
 msgid "There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr ""
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:253
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:262
 msgid "Update available!"
 msgstr ""
 
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:254
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:263
 #, python-format
 msgid ""
 "A new version of %(appname)s is available for download.\n"
@@ -397,21 +397,21 @@ msgstr ""
 
 #: ../../portable/displaytext.py:56
 #, python-format
-msgid "%(num)d day"
+msgid "%(num).1f day"
 msgid_plural "%(num).1f days"
 msgstr[0] ""
 msgstr[1] ""
 
 #: ../../portable/displaytext.py:59
 #, python-format
-msgid "%(num)d hr"
+msgid "%(num).1f hr"
 msgid_plural "%(num).1f hrs"
 msgstr[0] ""
 msgstr[1] ""
 
 #: ../../portable/displaytext.py:62
 #, python-format
-msgid "%(num)d min"
+msgid "%(num).1f min"
 msgid_plural "%(num).1f mins"
 msgstr[0] ""
 msgstr[1] ""
