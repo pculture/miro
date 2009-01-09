@@ -230,11 +230,11 @@ class TabListDropHandler(object):
 
     def accept_drop(self, table_view, model, type, source_actions, parent,
             position, data):
-        if (type == 'feed'
+        if (type in ('feed', 'feed-with-folder')
                 and self.tablist == app.tab_list_manager.audio_feed_list):
             source_tablist = app.tab_list_manager.feed_list
             dest_tablist = self.tablist
-        elif (type == 'audio-feed'
+        elif (type in ('audio-feed', 'audio-feed-with-folder')
                 and self.tablist == app.tab_list_manager.feed_list):
             source_tablist = app.tab_list_manager.audio_feed_list
             dest_tablist = self.tablist
@@ -296,7 +296,7 @@ class FeedListDragHandler(TabListDragHandler):
 
 class AudioFeedListDropHandler(TabListDropHandler):
     item_type = 'audio-feed'
-    folder_type = 'feed-with-folder'
+    folder_type = 'audio-feed-with-folder'
 
     def allowed_types(self):
         return (self.item_type, self.folder_type,
@@ -304,7 +304,7 @@ class AudioFeedListDropHandler(TabListDropHandler):
 
 class AudioFeedListDragHandler(TabListDragHandler):
     item_type = 'audio-feed'
-    folder_type = 'feed-with-folder'
+    folder_type = 'audio-feed-with-folder'
 
     def allowed_types(self):
         return (self.item_type, self.folder_type,
