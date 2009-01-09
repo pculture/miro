@@ -1041,7 +1041,7 @@ class Item(DDBObject):
             return u'.torrent'
 
         if self.downloader:
-            if self.downloader.contentType:
+            if self.downloader.contentType and "/" in self.downloader.contentType:
                 mtype, subtype = self.downloader.contentType.split('/', 1)
                 mtype = mtype.lower()
                 if mtype in self.KNOWN_MIME_TYPES:
