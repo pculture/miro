@@ -118,14 +118,8 @@ def ngettext(text1, text2, count, values=None):
     """
     text1 = text1.encode('utf-8')
     text2 = text2.encode('utf-8')
-    try:
-        s = _gtcache[(text1, text2, count)]
-    except (KeyboardInterrupt, SystemExit):
-        raise
-    except:
-        s = _gt.ngettext(text1, text2, count).decode('utf-8')
-        _gtcache[(text1, text2, count)] = s
 
+    s = _gt.ngettext(text1, text2, count).decode('utf-8')
     try:
         if values:
             s = s % values
@@ -136,9 +130,7 @@ def ngettext(text1, text2, count, values=None):
         # FIXME - not sure if this is the most useful logging statement in 
         # the world
         logging.warn("gtcache.ngettext: translation has bad formatting characters.  returning english form.  '%s'", text1)
-        if count <= 1:
-            _gtcache[(text1, text2, count)] = text1
+        if count == 1:
             return text1 % values
         else:
-            _gtcache[(text1, text2, count)] = text2
             return text2 % values
