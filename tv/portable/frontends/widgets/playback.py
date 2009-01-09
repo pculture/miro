@@ -67,26 +67,23 @@ class PlaybackManager (signals.SignalEmitter):
         self.create_signal('did-stop')
         self.create_signal('will-fullscreen')
         self.create_signal('playback-did-progress')
-        app.info_updater.connect('items-removed', self._on_items_removed)
-        app.info_updater.connect('items-changed', self._on_items_changed)
+        app.info_updater.add_item_callback('manual', 'playback-list',
+                self._on_items_changed)
 
-    def _on_items_removed(self, obj, removed_list):
-        """Remove any deleted items from our playlist."""
-        # Don't remove items that were removed from our view, but still exist
-        # in the library.  (#10973)
-        deleted_from_library = [r[0] for r in removed_list if not r[1]]
-        self._handle_items_deleted(deleted_from_library)
-
-    def _on_items_changed(self, obj, info_list):
+    def _on_items_changed(self, message):
         if self.playlist is None:
             return
-        deleted = [info.id for info in info_list \
-                if info.id in self.id_to_position and not info.downloaded]
+        deleted = message.removed[:]
+        for info in message.changed:
+            if info.id not in self.id_to_position:
+                # item was removed from our playlist already
+                continue
+            if not info.downloaded:
+                deleted.append(info.id)
+            else:
+                self.playlist[self.id_to_position[info.id]] = info
         if len(deleted) > 0:
             self._handle_items_deleted(deleted)
-        changed = [info for info in info_list if info.id in self.id_to_position]
-        for info in changed:
-            self.playlist[self.id_to_position[info.id]] = info
 
     def _handle_items_deleted(self, id_list):
         if self.playlist is None:
@@ -142,6 +139,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.position = 0
         self._calc_id_to_position()
         self.presentation_mode = presentation_mode
+        self._start_tracking_items()
         if not self.is_playing:
             self.video_display = VideoDisplay()
             self.video_display.connect('removed', self.on_display_removed)
@@ -156,6 +154,15 @@ class PlaybackManager (signals.SignalEmitter):
         self._play_current()
         if self.presentation_mode != 'fit-to-bounds':
             self.fullscreen()
+
+    def _start_tracking_items(self):
+        id_list = [info.id for info in self.playlist]
+        m = messages.TrackItemsManually('playback-list', id_list)
+        m.send_to_backend()
+
+    def _stop_tracking_items(self):
+        m = messages.StopTrackingItems('manual', 'playback-list')
+        m.send_to_backend()
 
     def _calc_id_to_position(self):
         self.id_to_position = dict((info.id, i) for i, info in
@@ -254,6 +261,7 @@ class PlaybackManager (signals.SignalEmitter):
     def stop(self, save_resume_time=True):
         if not self.is_playing:
             return
+        self._stop_tracking_items()
         if save_resume_time:
             self.update_current_resume_time()
         self.cancel_update_timer()

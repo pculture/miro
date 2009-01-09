@@ -416,19 +416,21 @@ class VideoRenderer(VBox):
         self.motion_handler = None
         self.videobox_motion_handler = None
         self.hidden_cursor = make_hidden_cursor()
-        self._items_changed_callback = app.info_updater.connect(
-                'items-changed', self._on_items_changed)
+        # piggyback on the TrackItemsManually message that playback.py sends.
+        app.info_updater.add_item_callback('manual', 'playback-list',
+                self._on_items_changed)
         self._item_id = None
 
         self._video_widget.wrapped_widget_connect('button-press-event', self.on_button_press)
 
     def teardown(self):
         self.renderer.reset()
-        app.info_updater.disconnect(self._items_changed_callback)
+        app.info_updater.remove_item_callback('manual', 'playback-list',
+                self._on_items_changed)
         self._items_changed_callback = None
 
-    def _on_items_changed(self, controller, changed_items):
-        for item_info in changed_items:
+    def _on_items_changed(self, message):
+        for item_info in message.changed:
             if item_info.id == self._item_id:
                 self._video_details.update_info(item_info)
                 break

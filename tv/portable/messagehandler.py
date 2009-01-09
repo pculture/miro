@@ -115,11 +115,8 @@ class ViewTracker(object):
     def _make_removed_list(self, removed):
         for obj in removed:
             del self._last_sent_info[obj.id]
-        return [self._make_removed_item(obj) for obj in removed]
+        return [obj.id for obj in removed]
 
-    def _make_removed_item(self, obj):
-        # By default the removed list is just a list of IDs
-        return obj.id
 
     def schedule_send_messages(self):
         # We don't send messages immediately so that if an object gets changed
@@ -276,12 +273,6 @@ class ItemTrackerBase(ViewTracker):
         return messages.ItemsChanged(self.type, self.id,
                 added, changed, removed)
 
-    def _make_removed_item(self, obj):
-        # For TrackItems, the removed list is a list of (id, exist) tuples.
-        # Exists is True for items that were removed from this particular
-        # view, but still exist in the library.
-        return (obj.id, obj.idExists())
-
     def get_object_views(self):
         return [self.view]
 
@@ -315,6 +306,22 @@ class PlaylistItemTracker(ItemTrackerBase):
         self.view = playlist.trackedItems.view
         self.id = playlist.id
         ItemTrackerBase.__init__(self)
+
+class ManualItemTracker(ItemTrackerBase):
+    type = 'manual'
+
+    def __init__(self, id, id_list):
+        self.id = id
+        self.id_set = set(id_list)
+        self.view = views.items.filter(self.filter)
+        ItemTrackerBase.__init__(self)
+
+    def filter(self, obj):
+        return obj.id in self.id_set
+
+    def unlink(self):
+        ItemTrackerBase.unlink(self)
+        self.view.unlink()
 
 class DownloadingItemsTracker(ItemTrackerBase):
     type = 'downloads'
@@ -380,6 +387,8 @@ def make_item_tracker(message):
         except database.ObjectNotFoundError:
             playlist = views.playlistFolders.getObjectByID(message.id)
             return PlaylistItemTracker(playlist)
+    elif message.type == 'manual':
+        return ManualItemTracker(message.id, message.ids_to_track)
     else:
         logging.warn("Unknown TrackItems type: %s", message.type)
 
@@ -964,7 +973,11 @@ class BackendMessageHandler(messages.MessageHandler):
                 len(feed.items)).send_to_frontend()
 
     def item_tracker_key(self, message):
-        return (message.type, message.id)
+        if message.type != 'manual':
+            return (message.type, message.id)
+        else:
+            # make sure the item list is a tuple, so it can be hashed.
+            return (message.type, tuple(message.id))
 
     def handle_track_items(self, message):
         key = self.item_tracker_key(message)
@@ -982,6 +995,10 @@ class BackendMessageHandler(messages.MessageHandler):
         else:
             item_tracker = self.item_trackers[key]
         item_tracker.send_initial_list()
+
+    def handle_track_items_manually(self, message):
+        # handle_track_items can handle this message too
+        self.handle_track_items(message)
 
     def handle_stop_tracking_items(self, message):
         key = self.item_tracker_key(message)

@@ -192,6 +192,18 @@ class TrackItems(BackendMessage):
         self.type = type
         self.id = id
 
+class TrackItemsManually(BackendMessage):
+    """Track a manually specified list of items.
+
+    ItemList and ItemsChanged messages will have "manual" as the type and
+    will use the id specified in the constructed.
+    """
+
+    def __init__(self, id, ids_to_track):
+        self.id = id
+        self.ids_to_track = ids_to_track
+        self.type = 'manual'
+
 class StopTrackingItems(BackendMessage):
     """Stop tracking items for a feed."""
 
@@ -1056,9 +1068,7 @@ class ItemsChanged(FrontendMessage):
     added -- list containing an ItemInfo object for each added item.  The
         order will be the order they were added.
     changed -- set containing an ItemInfo for each changed item.
-    removed -- list of (id, exists) tuples for each item that was removed.
-        exists is True for items removed from the object being tracked, but
-        still exists in the Libary.
+    removed -- set containing ids for each item that was removed
     """
 
     def __init__(self, type, id, added, changed, removed):

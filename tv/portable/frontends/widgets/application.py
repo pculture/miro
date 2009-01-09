@@ -29,6 +29,7 @@
 """Application class.  Portable code to handle the high-level running of Miro.
 """
 
+import collections
 import os
 import logging
 import urllib
@@ -822,13 +823,13 @@ class Application:
         logging.info('Shutting down...')
 
 class InfoUpdater(signals.SignalEmitter):
-    """Emits signals when we get channel/item updates from the backend.
+    """Track channel/item updates from the backend.
+
+    To track item updates, use add_item_callback().  To track tab
+    updates, connect to one of the signals below.
 
     Signals:
 
-        items-added (self, info_list) -- New items were added
-        items-changed (self, info_list) -- Items were changed
-        items-removed (self, info_list) -- Items were removed
         feeds-added (self, info_list) -- New feeds were added
         feeds-changed (self, info_list) -- Feeds were changed
         feeds-removed (self, info_list) -- Feeds were removed
@@ -838,9 +839,6 @@ class InfoUpdater(signals.SignalEmitter):
     """
     def __init__(self):
         signals.SignalEmitter.__init__(self)
-        self.create_signal('items-added')
-        self.create_signal('items-changed')
-        self.create_signal('items-removed')
         self.create_signal('feeds-added')
         self.create_signal('feeds-changed')
         self.create_signal('feeds-removed')
@@ -848,13 +846,30 @@ class InfoUpdater(signals.SignalEmitter):
         self.create_signal('sites-changed')
         self.create_signal('sites-removed')
 
+        self.item_callbacks = collections.defaultdict(set)
+
+    def add_item_callback(self, type, id, callback):
+        """Register a callback function to be called when we see an
+        ItemsChanged message.
+        """
+        key = (type, id)
+        self.item_callbacks[key].add(callback)
+
+    def remove_item_callback(self, type, id, callback):
+        """Unregester a callback passed in to add_item_callback() """
+        key = (type, id)
+        all_callbacks = self.item_callbacks[key]
+        all_callbacks.remove(callback)
+        if len(all_callbacks) == 0:
+            del self.item_callbacks[key]
+
     def handle_items_changed(self, message):
-        if message.added:
-            self.emit('items-added', message.added)
-        if message.changed:
-            self.emit('items-changed', message.changed)
-        if message.removed:
-            self.emit('items-removed', message.removed)
+        key = (message.type, message.id)
+        if key in list(self.item_callbacks): 
+            # copy the callback list, since some might get removed
+            all_callbacks = list(self.item_callbacks[key])
+            for callback in all_callbacks:
+                callback(message)
 
     def handle_tabs_changed(self, message):
         if message.type == 'feed':
