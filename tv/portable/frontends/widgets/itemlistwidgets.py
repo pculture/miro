@@ -299,7 +299,10 @@ class ListItemView(widgetset.TableView):
             return None
         info = self.item_list.model[iter][0]
         if info.description_text:
-            return info.description_text
+            text = info.description_text
+            if len(text) > 1000:
+                text = text[:994] + ' [...]'
+            return text
         else:
             return None
 
