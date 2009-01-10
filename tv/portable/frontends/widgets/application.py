@@ -783,16 +783,12 @@ class Application:
 
     def connect_to_signals(self):
         signals.system.connect('error', self.handle_error)
-        signals.system.connect('download-complete', self.handle_download_complete)
         signals.system.connect('update-available', self.handle_update_available)
         signals.system.connect('new-dialog', self.handle_dialog)
         signals.system.connect('shutdown', self.on_backend_shutdown)
 
     def handle_dialog(self, obj, dialog):
         call_on_ui_thread(rundialog.run, dialog)
-
-    def handle_download_complete(self, obj, item):
-        print "FIXME - DOWLOAD COMPLETE"
 
     def handle_update_available(self, obj, item):
         print "FIXME - update available!"

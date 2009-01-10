@@ -199,11 +199,6 @@ class SystemSignals(SignalEmitter):
         - rssItem -- The RSS item for the latest version (in sparkle
           appcast format).
 
-    "download-complete" - An item has finished downloading.
-
-        Arguments:
-        - item -- The object that finished downloading.
-
     "new-dialog" - The backend wants to display a dialog to the user.
 
         Arguments:
@@ -223,7 +218,7 @@ class SystemSignals(SignalEmitter):
     def __init__(self):
         SignalEmitter.__init__(self, 'error', 'startup-success',
                 'startup-failure', 'shutdown',
-                'update-available', 'download-complete', 'new-dialog',
+                'update-available', 'new-dialog',
                 'theme-first-run', 'videos-added')
 
     def shutdown(self):
@@ -231,9 +226,6 @@ class SystemSignals(SignalEmitter):
 
     def update_available(self, latest):
         self.emit('update-available', latest)
-
-    def download_complete(self, item):
-        self.emit('download-complete', item)
 
     def new_dialog(self, dialog):
         self.emit('new-dialog', dialog)
