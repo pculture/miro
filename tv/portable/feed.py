@@ -2595,6 +2595,8 @@ def get_feed_by_url(url):
 restored_feeds = []
 def start_updates():
     global restored_feeds
+    if config.get(prefs.CHECK_CHANNELS_EVERY_X_MN) == -1:
+        return
     for feed in restored_feeds:
         if feed.idExists():
             feed.scheduleUpdateEvents(INITIAL_FEED_UPDATE_DELAY)
