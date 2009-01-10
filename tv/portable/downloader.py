@@ -618,10 +618,6 @@ def cleanupIncompleteDownloads():
                 # FIXME - maybe a permissions error?
                 pass
 
-def restartDownloads():
-    for downloader in downloads_at_startup:
-        downloader.restartIfNeeded()
-
 def killUploaders(*args):
     torrent_limit = config.get(prefs.UPSTREAM_TORRENT_LIMIT)
     while (views.autoUploads.len() > torrent_limit):
@@ -635,7 +631,29 @@ def limitUploaders():
     views.autoUploads.addAddCallback(killUploaders)
     config.add_change_callback(configChangeUploaders)
     killUploaders()
-        
+
+class DownloadDaemonStarter(object):
+    def __init__(self):
+        RemoteDownloader.initializeDaemon()
+        self.downloads_at_startup = list(views.remoteDownloads)
+        self.started = False
+
+    def startup(self):
+        cleanupIncompleteDownloads()
+        RemoteDownloader.dldaemon.start_downloader_daemon()
+        limitUploaders()
+        self.restart_downloads()
+        self.started = True
+
+    def restart_downloads(self):
+        for downloader in self.downloads_at_startup:
+            downloader.restartIfNeeded()
+
+    def shutdown(self, callback):
+        if not self.started:
+            callback()
+        else:
+            RemoteDownloader.dldaemon.shutdownDownloaderDaemon(callback=callback)
 
 def initController():
     """Intializes the download daemon controller.
@@ -643,10 +661,8 @@ def initController():
     This doesn't actually start up the downloader daemon, that's done in
     startupDownloader.  Commands will be queued until then.
     """
-    global downloads_at_startup
-
-    RemoteDownloader.initializeDaemon()
-    downloads_at_startup = list(views.remoteDownloads)
+    global daemon_starter
+    daemon_starter = DownloadDaemonStarter()
 
 def startupDownloader():
     """Initialize the downloaders.
@@ -657,16 +673,10 @@ def startupDownloader():
     get created.
     """
 
-    cleanupIncompleteDownloads()
-    RemoteDownloader.dldaemon.start_downloader_daemon()
-    limitUploaders()
-    restartDownloads()
+    daemon_starter.startup()
 
 def shutdownDownloader(callback=None):
-    if hasattr(RemoteDownloader, 'dldaemon') and RemoteDownloader.dldaemon is not None:
-        RemoteDownloader.dldaemon.shutdownDownloaderDaemon(callback=callback)
-    else:
-        callback()
+    daemon_starter.shutdown(callback)
 
 def lookupDownloader(url):
     return views.remoteDownloads.getItemWithIndex(indexes.downloadsByURL, url)
