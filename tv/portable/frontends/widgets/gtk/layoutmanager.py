@@ -135,6 +135,7 @@ class Font(object):
 class TextBox(object):
     def __init__(self, context, font, color):
         self.layout = pango.Layout(context)
+        self.layout.set_wrap(pango.WRAP_WORD_CHAR)
         self.font = font
         self.color = color
         self.layout.set_font_description(font.description.copy())
