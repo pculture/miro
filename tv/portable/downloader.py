@@ -619,8 +619,7 @@ def cleanupIncompleteDownloads():
                 pass
 
 def restartDownloads():
-    views.remoteDownloads.confirmDBThread()
-    for downloader in views.remoteDownloads:
+    for downloader in downloads_at_startup:
         downloader.restartIfNeeded()
 
 def killUploaders(*args):
@@ -644,8 +643,10 @@ def initController():
     This doesn't actually start up the downloader daemon, that's done in
     startupDownloader.  Commands will be queued until then.
     """
+    global downloads_at_startup
 
     RemoteDownloader.initializeDaemon()
+    downloads_at_startup = list(views.remoteDownloads)
 
 def startupDownloader():
     """Initialize the downloaders.
