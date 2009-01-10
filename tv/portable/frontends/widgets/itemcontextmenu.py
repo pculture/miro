@@ -168,7 +168,7 @@ class ItemContextMenuHandler(object):
                     unwatched += 1
             elif info.state == 'paused':
                 paused += 1
-            elif info.download_info is not None:
+            elif info.state == 'downloading':
                 downloading += 1
                 if (info.download_info.torrent and
                         info.download_info.state != 'uploading'):
