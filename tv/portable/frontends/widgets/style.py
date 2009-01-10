@@ -1014,16 +1014,6 @@ class NameRenderer(ListViewRenderer):
     def _setup_layout(self):
         self.text = self.info.name
         self.bold = self.info.downloaded
-        if self.info.state == 'downloading':
-            self.color = DOWNLOADING_COLOR
-        elif self.info.downloaded and not self.info.video_watched:
-            self.color = UNPLAYED_COLOR
-        elif self.info.expiration_date:
-            self.color = ListViewRenderer.color
-        elif not self.info.item_viewed:
-            self.color = AVAILABLE_COLOR
-        else:
-            self.color = ListViewRenderer.color
 
     def _pack_extra(self, layout, hbox):
         if not (self.info.downloaded or
