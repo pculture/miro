@@ -383,6 +383,16 @@ class SimpleItemListController(ItemListController):
         image_path = resources.path("images/%s" % self.image_filename)
         return imagepool.get(image_path)
 
+    def on_initial_list(self):
+        self.check_for_empty_list()
+
+    def on_items_changed(self):
+        self.check_for_empty_list()
+
+    def check_for_empty_list(self):
+        list_empty = (self.item_list.get_count() == 0)
+        self.widget.set_list_empty_mode(list_empty)
+
 class NewController(SimpleItemListController):
     type = 'new'
     id = None
@@ -413,14 +423,10 @@ class SearchController(SimpleItemListController):
         self.widget.titlebar_vbox.pack_start(self.toolbar)
 
     def build_widget(self):
-        label = widgetset.Label(_('No Results Found'))
-        label.set_bold(True)
-        label.set_color((0.8, 0.8, 0.8))
-        label.set_size(2)
-        aligned = widgetutil.align_center(label, top_pad=24)
-        self.no_results_label = widgetutil.HideableWidget(aligned)
-        self.widget.normal_view_vbox.pack_start(self.no_results_label)
         SimpleItemListController.build_widget(self)
+        text = _('No Results Found')
+        self.widget.list_empty_mode_vbox.pack_start(
+                itemlistwidgets.EmptyListHeader(text))
 
     def initialize_search(self):
         if app.search_manager.text != '':
@@ -429,7 +435,7 @@ class SearchController(SimpleItemListController):
     def on_initial_list(self):
         if (not app.search_manager.searching and app.search_manager.text != ''
                 and self.item_list.get_count() == 0):
-            self.no_results_label.show()
+            self.widget.set_list_empty_mode(True)
 
     def make_titlebar(self):
         icon = self._make_icon()
@@ -456,7 +462,7 @@ class SearchController(SimpleItemListController):
         app.search_manager.disconnect(self._complete_handle)
 
     def _on_search_started(self, search_manager):
-        self.no_results_label.hide()
+        self.widget.set_list_empty_mode(False)
         if search_manager.text != '':
             self.toolbar.show()
         else:
@@ -464,7 +470,7 @@ class SearchController(SimpleItemListController):
 
     def _on_search_complete(self, search_manager, result_count):
         if search_manager.text != '' and result_count == 0:
-            self.no_results_label.show()
+            self.widget.set_list_empty_mode(True)
 
 class LibraryController(SimpleItemListController):
     type = 'library'
@@ -484,6 +490,16 @@ class IndividualDownloadsController(SimpleItemListController):
     id = None
     image_filename = 'icon-individual_large.png'
     title = _("Single Items")
+
+    def build_widget(self):
+        SimpleItemListController.build_widget(self)
+        text = _('No Items to Display')
+        self.widget.list_empty_mode_vbox.pack_start(
+                itemlistwidgets.EmptyListHeader(text))
+        text = _('This tab keeps track of downloads that aren\'t part of '
+                'a feed.')
+        self.widget.list_empty_mode_vbox.pack_start(
+                itemlistwidgets.EmptyListDescription(text))
 
 class ItemListControllerManager(object):
     """Manages ItemListController objects.

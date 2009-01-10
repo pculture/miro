@@ -32,6 +32,7 @@ import itertools
 
 from miro import messages
 from miro import signals
+from miro.gtcache import gettext as _
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import itemcontextmenu
 from miro.frontends.widgets import itemlist
@@ -140,16 +141,32 @@ class PlaylistView(itemlistcontroller.SimpleItemListController):
         m.send_to_backend()
         return True
 
+    def build_widget(self):
+        itemlistcontroller.SimpleItemListController.build_widget(self)
+        text = _('This Playlist is Empty')
+        self.widget.list_empty_mode_vbox.pack_start(
+                itemlistwidgets.EmptyListHeader(text))
+        text = _('To add an item, drag it onto the name of this playlist '
+                'in the sidebar.')
+        self.widget.list_empty_mode_vbox.pack_start(
+                itemlistwidgets.EmptyListDescription(text))
+
     def handle_item_list(self, message):
         self._sorter.add_items(message.items)
         itemlistcontroller.SimpleItemListController.handle_item_list(self,
                 message)
+        self.check_for_empty_list()
 
     def handle_items_changed(self, message):
         self._sorter.add_items(message.added)
         self._sorter.forget_items(message.removed)
         itemlistcontroller.SimpleItemListController.handle_items_changed(self,
                 message)
+        self.check_for_empty_list()
+
+    def check_for_empty_list(self):
+        list_empty = (self.item_list.get_count() == 0)
+        self.widget.set_list_empty_mode(list_empty)
 
     def _on_new_order(self, drop_handler, order):
         self._sorter.set_new_order(order)

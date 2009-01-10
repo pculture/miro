@@ -831,6 +831,25 @@ class ItemListBackground(widgetset.Background):
             context.rectangle(0, 0, context.width, context.height)
             context.fill()
 
+class EmptyListHeader(widgetset.Alignment):
+    """Header Label for empty item lists."""
+    def __init__(self, text):
+        widgetset.Alignment.__init__(self, xalign=0.5, xscale=0.0)
+        self.set_padding(24, 0, 0, 0)
+        self.label = widgetset.Label(text)
+        self.label.set_bold(True)
+        self.label.set_color((0.8, 0.8, 0.8))
+        self.label.set_size(2)
+        self.add(self.label)
+
+class EmptyListDescription(widgetset.Alignment):
+    """Label for descriptions of empty item lists."""
+    def __init__(self, text):
+        widgetset.Alignment.__init__(self, xalign=0.5, xscale=0.0)
+        self.label = widgetset.Label(text)
+        self.label.set_color((0.8, 0.8, 0.8))
+        self.add(self.label)
+
 class ItemContainerWidget(widgetset.VBox):
     """A Widget for displaying objects that contain items (feeds, playlists,
     folders, downloads tab, etc).
@@ -840,6 +859,7 @@ class ItemContainerWidget(widgetset.VBox):
        titlebar_vbox - VBox for the title bar
        normal_view_vbox - VBox for normal view of the items
        list_view_vbox - VBox for list view of the items
+       list_empty_mode_vbox - VBox for list empty mode
        toolbar -- HeaderToolbar for the widget
     """
 
@@ -849,6 +869,7 @@ class ItemContainerWidget(widgetset.VBox):
         self.normal_view_vbox = widgetset.VBox()
         self.list_view_vbox = widgetset.VBox()
         self.titlebar_vbox = widgetset.VBox()
+        self.list_empty_mode_vbox = widgetset.VBox()
         self.toolbar = HeaderToolbar()
         self.toolbar.connect('list-view-clicked', self.switch_to_list_view)
         self.toolbar.connect('normal-view-clicked',
@@ -859,17 +880,33 @@ class ItemContainerWidget(widgetset.VBox):
         self.background.add(self.normal_view_vbox)
         self.pack_start(self.background, expand=True)
         self.in_list_view = False
+        self.list_empty_mode = False
 
     def switch_to_list_view(self, toolbar=None):
         if not self.in_list_view:
-            self.background.remove()
-            self.background.add(self.list_view_vbox)
+            if not self.list_empty_mode:
+                self.background.remove()
+                self.background.add(self.list_view_vbox)
             self.toolbar.switch_to_list_view()
             self.in_list_view = True
 
     def switch_to_normal_view(self, toolbar=None):
         if self.in_list_view:
-            self.background.remove()
-            self.background.add(self.normal_view_vbox)
+            if not self.list_empty_mode:
+                self.background.remove()
+                self.background.add(self.normal_view_vbox)
             self.toolbar.switch_to_normal_view()
             self.in_list_view = False
+
+    def set_list_empty_mode(self, enabled):
+        if enabled == self.list_empty_mode:
+            return
+
+        self.background.remove()
+        if enabled:
+            self.background.add(self.list_empty_mode_vbox)
+        elif self.in_list_view:
+            self.background.add(self.list_view_vbox)
+        else:
+            self.background.add(self.normal_view_vbox)
+        self.list_empty_mode = enabled
