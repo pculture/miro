@@ -1064,11 +1064,19 @@ class StatusRenderer(ListViewRenderer):
         elif not self.info.item_viewed:
             self.text = _('Newly Available')
             self.color = AVAILABLE_COLOR
+        elif (self.info.download_info and
+                self.info.download_info.rate == 0):
+            if self.info.download_info.state == 'paused':
+                self.text = _('paused')
+            else:
+                self.text = self.info.download_info.startup_activity
+            self.color = DOWNLOADING_COLOR
         else:
             self.text = ''
 
     def layout(self, layout):
-        if self.info.state in ('downloading', 'paused'):
+        if (self.info.state in ('downloading', 'paused') and
+                self.info.download_info.rate > 0):
             return self.pack_progress_bar(layout)
         else:
             return ListViewRenderer.layout(self, layout)
