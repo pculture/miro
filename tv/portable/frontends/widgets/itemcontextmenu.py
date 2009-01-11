@@ -155,33 +155,39 @@ class ItemContextMenuHandler(object):
 
     def _make_context_menu_multiple(self, selection):
         """Make the context menu for multiple items."""
-        watched = unwatched = downloaded = downloading = available = \
-                paused = uploadable = expiring = 0
+        watched = []
+        unwatched = []
+        downloaded = []
+        downloading = []
+        available = []
+        paused = []
+        uploadable = []
+        expiring = []
         for info in selection:
             if info.downloaded:
-                downloaded += 1
+                downloaded.append(info)
                 if info.video_watched:
-                    watched += 1
+                    watched.append(info)
                     if info.expiration_date:
-                        expiring += 1
+                        expiring.append(info)
                 else:
-                    unwatched += 1
+                    unwatched.append(info)
             elif info.state == 'paused':
-                paused += 1
+                paused.append(info)
             elif info.state == 'downloading':
-                downloading += 1
+                downloading.append(info)
                 if (info.download_info.torrent and
                         info.download_info.state != 'uploading'):
-                    uploadable += 1
+                    uploadable.append(info)
             else:
-                available += 1
+                available.append(info)
 
         menu = []
-        if downloaded > 0:
+        if downloaded:
             menu.append((ngettext('%(count)d Downloaded Item',
                                   '%(count)d Downloaded Items',
-                                  downloaded,
-                                  {"count": downloaded}),
+                                  len(downloaded),
+                                  {"count": len(downloaded)}),
                          None))
             menu.append((_('Play'), app.widgetapp.play_selection)),
             menu.append((_('Add to Playlist'),
@@ -189,31 +195,31 @@ class ItemContextMenuHandler(object):
             self._add_remove_context_menu_item(menu, selection)
             if watched:
                 def mark_unwatched():
-                    for item in selection:
+                    for item in watched:
                         messages.MarkItemUnwatched(item.id).send_to_backend()
                 menu.append((_('Mark as Unwatched'), mark_unwatched))
             if unwatched:
                 def mark_watched():
-                    for item in selection:
+                    for item in unwatched:
                         messages.MarkItemWatched(item.id).send_to_backend()
                 menu.append((_('Mark as Watched'), mark_watched))
             if expiring:
                 def keep_videos():
-                    for item in selection:
+                    for item in expiring:
                         if item.expiration_date:
                             messages.KeepVideo(item.id).send_to_backend()
                 menu.append((_('Keep'), keep_videos))
 
-        if available > 0:
+        if available:
             if len(menu) > 0:
                 menu.append(None)
             menu.append((ngettext('%(count)d Available Item',
                                   '%(count)d Available Items',
-                                  available,
-                                  {"count": available}),
+                                  len(available),
+                                  {"count": len(available)}),
                          None))
             def download_all():
-                for item in selection:
+                for item in available:
                     messages.StartDownload(item.id).send_to_backend()
             menu.append((_('Download'), download_all))
 
@@ -222,14 +228,14 @@ class ItemContextMenuHandler(object):
                 menu.append(None)
             menu.append((ngettext('%(count)d Downloading Item',
                                   '%(count)d Downloading Items',
-                                  downloading,
-                                  {"count": downloading}),
+                                  len(downloading),
+                                  {"count": len(downloading)}),
                          None))
             def cancel_all():
-                for item in selection:
+                for item in downloading:
                     messages.CancelDownload(item.id).send_to_backend()
             def pause_all():
-                for item in selection:
+                for item in downloading:
                     messages.PauseDownload(item.id).send_to_backend()
             menu.append((_('Cancel Download'), cancel_all))
             menu.append((_('Pause Download'), pause_all))
@@ -239,17 +245,21 @@ class ItemContextMenuHandler(object):
                 menu.append(None)
             menu.append((ngettext('%(count)d Paused Item',
                                   '%(count)d Paused Items',
-                                  paused,
-                                  {"count": paused}),
+                                  len(paused),
+                                  {"count": len(paused)}),
                          None))
             def resume_all():
-                for item in selection:
+                for item in paused:
                     messages.ResumeDownload(item.id).send_to_backend()
             menu.append((_('Resume Download'), resume_all))
+            def cancel_all():
+                for item in paused:
+                    messages.CancelDownload(item.id).send_to_backend()
+            menu.append((_('Cancel Download'), cancel_all))
 
-        if uploadable > 0:
+        if uploadable:
             def restart_all():
-                for item in selection:
+                for item in uploadable:
                     messages.StartUpload(item.id).send_to_backend()
             menu.append((_('Restart Upload'), restart_all))
 
