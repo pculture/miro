@@ -907,8 +907,8 @@ class ItemInfo(object):
             status = item.downloader.status
             if item.is_transferring():
                 # gettorrentdetails only
-                self.leechers = status.get('seeders', 0)
-                self.seeders = status.get('leechers', 0)
+                self.leechers = status.get('leechers', 0)
+                self.seeders = status.get('seeders', 0)
                 self.up_rate = status.get('upRate', 0)
                 self.down_rate = status.get('rate', 0)
 
