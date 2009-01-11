@@ -591,6 +591,16 @@ windowcreator_ext = \
         **mozilla_browser_options
     )
 
+pluginsdir_ext = \
+    Extension("miro.plat.frontends.widgets.pluginsdir",
+        [
+            os.path.join(platform_widgets_dir, 'pluginsdir.pyx'),
+            os.path.join(platform_widgets_dir, 'MiroPluginsDir.cc'),
+        ],
+        language="c++",
+        **mozilla_browser_options
+    )
+
 
 #### Xine Extension ####
 xine_options = parse_pkg_config('pkg-config',
@@ -819,6 +829,7 @@ ext_modules.append(pygtkhacks_ext)
 ext_modules.append(mozprompt_ext)
 ext_modules.append(httpobserver_ext)
 ext_modules.append(windowcreator_ext)
+ext_modules.append(pluginsdir_ext)
 ext_modules.append(Extension("miro.database", [os.path.join(portable_dir, 'database.pyx')]))
 ext_modules.append(Extension("miro.sorts", [os.path.join(portable_dir, 'sorts.pyx')]))
 

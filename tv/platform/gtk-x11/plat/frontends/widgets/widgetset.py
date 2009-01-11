@@ -39,6 +39,7 @@ from miro.frontends.widgets.gtk.widgetset import *
 from miro.plat.frontends.widgets import mozprompt
 from miro.plat.frontends.widgets import httpobserver
 from miro.plat.frontends.widgets import windowcreator
+from miro.plat.frontends.widgets import pluginsdir
 xpcom_setup = False
 
 class MiroMozEmbed(gtkmozembed.MozEmbed):
@@ -127,3 +128,4 @@ def do_xpcom_setup():
     httpobserver.start_http_observer()
     xpcom_setup = True
     windowcreator.install_window_creator(_new_window_monitor)
+    pluginsdir.setup_plugins_dir()
