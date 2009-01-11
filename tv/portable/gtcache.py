@@ -127,8 +127,6 @@ def ngettext(text1, text2, count, values=None):
 
     except ValueError:
         import logging
-        # FIXME - not sure if this is the most useful logging statement in 
-        # the world
         logging.warn("gtcache.ngettext: translation has bad formatting characters.  returning english form.  '%s'", text1)
         if count == 1:
             return text1 % values
