@@ -119,7 +119,7 @@ def setup_logging(inDownloader=False):
             level = logging.WARN
         console.setLevel(level)
 
-        formatter = logging.Formatter('%(levelname)-8s %(message)s')
+        formatter = logging.Formatter('%(relativeCreated)d %(levelname)-8s %(message)s')
         console.setFormatter(formatter)
 
         logging.getLogger('').addHandler(console)
