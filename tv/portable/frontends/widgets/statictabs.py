@@ -31,6 +31,7 @@
 from miro import app
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import browser
+from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
 
 class StaticTab(object):
@@ -45,10 +46,25 @@ class ChannelGuideTab(StaticTab):
 
     def __init__(self):
         StaticTab.__init__(self)
+        self._set_from_info(app.widgetapp.default_guide_info)
         self.browser = browser.BrowserNav(app.widgetapp.default_guide_info)
 
     def update(self, guide_info):
+        self._set_from_info(guide_info)
         self.browser.guide_info = guide_info
+
+    def _set_from_info(self, guide_info):
+        if guide_info is None:
+            return
+        self.name = guide_info.name
+        if guide_info.faviconIsDefault:
+            self.icon = widgetutil.make_surface(self.icon_name)
+        else:
+            surface = imagepool.get_surface(guide_info.favicon)
+            if surface.width > 16 or surface.height > 16:
+                self.icon = imagepool.get_surface(guide_info.favicon, size=(16, 16))
+            else:
+                self.icon = surface
 
 class SearchTab(StaticTab):
     id = 'search'
