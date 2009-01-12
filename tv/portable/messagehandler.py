@@ -877,13 +877,29 @@ class BackendMessageHandler(messages.MessageHandler):
         folder = ChannelFolder(message.name, message.section)
 
         if message.child_feed_ids is not None:
+            section = message.section
             for id in message.child_feed_ids:
-                feed = views.feeds.getObjectByID(id)
-                feed.setFolder(folder)
-            tab_order = getSingletonDDBObject(views.channelTabOrder)
+                feed_ = views.feeds.getObjectByID(id)
+                feed_.setFolder(folder)
+                if feed_.section != section:
+                    feed_tab = views.allTabs.getObjectByID(feed_.id)
+                    if section == u'video':
+                        feed_tab.type = u'feed'
+                        feed_.section = u'video'
+                    else:
+                        feed_tab.type = u'audio-feed'
+                        feed_.section = u'audio'
+                    feed_tab.signalChange()
+                    feed_.signalChange()
+            if section == u'video':
+                tab_order = getSingletonDDBObject(views.channelTabOrder)
+                tracker = self.channel_tracker
+            else:
+                tab_order = getSingletonDDBObject(views.audioChannelTabOrder)
+                tracker = self.audio_channel_tracker
             tab_order.move_tab_after(folder.id, message.child_feed_ids)
             tab_order.signalChange()
-            self.channel_tracker.send_whole_list = True
+            tracker.send_whole_list = True
 
     def handle_new_watched_folder(self, message):
         path = osFilenameToFilenameType(message.path)
