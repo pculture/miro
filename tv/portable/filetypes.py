@@ -32,7 +32,7 @@ VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.ogv', '.anx', '.mp
 AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka']
 FEED_EXTENSIONS = ['.xml', '.rss', '.atom']
 
-UNSUPPORTED_MIMETYPES = ( "video/3gpp", )
+UNSUPPORTED_MIMETYPES = ("video/3gpp", "video/vnd.rn-realvideo", "video/x-ms-asf")
 
 MIMETYPES_EXT_MAP = {
     'video/quicktime':  ['.mov'],
