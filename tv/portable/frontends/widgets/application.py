@@ -501,8 +501,8 @@ class Application:
         elif data[0] == "url":
             messages.NewFeedSearchURL(data[1], data[2], data[3]).send_to_backend()
 
-    def add_new_feed_folder(self, add_selected=False):
-        name, section = newfolder.run_dialog()
+    def add_new_feed_folder(self, add_selected=False, default_type='feed'):
+        name, section = newfolder.run_dialog(default_type)
         if name is not None:
             if add_selected:
                 t, infos = app.tab_list_manager.get_selection()

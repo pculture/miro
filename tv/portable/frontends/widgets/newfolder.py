@@ -43,7 +43,7 @@ from miro import feed
 
 import logging
 
-def _run_dialog(title, description):
+def _run_dialog(title, description, default_type):
     """Creates and launches the New Folder dialog.  This dialog waits for
     the user to press "Create Folder" or "Cancel".
 
@@ -69,6 +69,10 @@ def _run_dialog(title, description):
             rbg = widgetset.RadioButtonGroup()
             video_rb = widgetset.RadioButton(_("video"), rbg)
             audio_rb = widgetset.RadioButton(_("audio"), rbg)
+            if default_type == 'feed':
+                video_rb.set_selected()
+            else:
+                audio_rb.set_selected()
 
             extra.pack_start(widgetutil.build_hbox((lab, video_rb, audio_rb)))
 
@@ -94,7 +98,7 @@ def _run_dialog(title, description):
     finally:
         window.destroy()
         
-def run_dialog():
+def run_dialog(default_type):
     """Creates and launches the New Folder dialog.  This dialog waits for
     the user to press "Create Folder" or "Cancel".
 
@@ -103,7 +107,7 @@ def run_dialog():
     title = _('Create Feed Folder')
 
     name, section = _run_dialog(_('Create Feed Folder'),
-            _('Enter the name of the folder to add'))
+            _('Enter the name of the folder to add'), default_type)
     if name == None:
         return (None, None)
 
