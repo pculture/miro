@@ -240,10 +240,9 @@ class TabListDropHandler(object):
             dest_tablist = self.tablist
         else:
             source_tablist = dest_tablist = self.tablist
-
+        selected_infos = app.tab_list_manager.get_selection()[1]
+        selected_rows = [info.id for info in selected_infos]
         source_tablist.doing_change = dest_tablist.doing_change = True
-        selected_rows = [model[iter][0].id for iter in \
-                table_view.get_selection()]
         source_tablist.view.unselect_all()
         dest_tablist.view.unselect_all()
         dragged_ids = set([int(id) for id in data.split('-')])
@@ -267,6 +266,7 @@ class TabListDropHandler(object):
             dest_tablist.model_changed()
         for id in expanded_rows:
             dest_tablist.view.set_row_expanded(dest_tablist.iter_map[id], True)
+        print 'selected: ', selected_rows
         for id in selected_rows:
             iter = dest_tablist.iter_map[id]
             parent = model.parent_iter(iter)
