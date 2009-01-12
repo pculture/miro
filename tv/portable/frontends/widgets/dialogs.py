@@ -38,6 +38,7 @@ of the dialogs run modally.
 """
 
 from miro import app
+from miro.frontends.widgets import style
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets import widgetutil
 from miro.dialogs import BUTTON_OK, BUTTON_CANCEL, BUTTON_IGNORE, \
@@ -71,6 +72,26 @@ class MainDialog(widgetset.Dialog):
     def __init__(self, title, description=None):
         widgetset.Dialog.__init__(self, title, description)
         set_transient_for_main(self)
+
+class ProgressDialog(widgetset.Window):
+    def __init__(self, title):
+        self.progress_bar = style.ProgressBarWidget()
+        self.label = widgetset.Label()
+        self.label.set_size(1.2)
+        self.vbox = widgetset.VBox(spacing=6)
+        self.vbox.pack_end(widgetutil.align_center(self.label))
+        self.vbox.pack_end(self.progress_bar)
+        height = self.vbox.get_size_request()[1] + 24
+        widgetset.Window.__init__(self, title,
+                widgetset.Rect(0, 0, 600, height))
+        self.set_content_widget(self.vbox)
+
+    def update(self, description, current, total):
+        self.label.set_text("%s (%s/%s)" % (description, current, total))
+        if total > 0:
+            self.progress_bar.update(float(current) / total)
+        else:
+            self.progress_bar.update(0.0)
 
 def show_about():
     window = widgetset.AboutDialog()

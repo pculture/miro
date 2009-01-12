@@ -897,6 +897,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
             'search-info',
             'frontend-state',
         ])
+        self.migration_progress_dialog = None
 
     def handle_startup_failure(self, message):
         dialogs.show_message(message.summary, message.description,
@@ -1023,6 +1024,19 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def handle_current_frontend_state(self, message):
         app.list_view_memory = ListViewDisplayStore(message)
         self._saw_pre_startup_message('frontend-state')
+
+    def handle_migration_progress(self, message):
+        if self.migration_progress_dialog is None:
+            self.migration_progress_dialog = dialogs.ProgressDialog(
+                    _('Migrating Files'))
+            self.migration_progress_dialog.show()
+
+        if message.finished:
+            self.migration_progress_dialog.destroy()
+            self.migration_progress_dialog = None
+        else:
+            self.migration_progress_dialog.update(_('Migrating files'),
+                    message.iteration, message.total_files)
 
 class ListViewDisplayStore(object):
     """Stores which views were left in list mode by the user."""

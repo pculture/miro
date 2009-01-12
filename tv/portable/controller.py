@@ -110,31 +110,6 @@ class Controller:
             signals.system.failed_exn("while shutting down")
             exit(1)
 
-    @eventloop.asUrgent
-    def changeMoviesDirectory(self, newDir, migrate):
-        oldDir = config.get(prefs.MOVIES_DIRECTORY)
-        config.set(prefs.MOVIES_DIRECTORY, newDir)
-        if migrate:
-            views.remoteDownloads.confirmDBThread()
-            for download in views.remoteDownloads:
-                if download.isFinished():
-                    logging.info("migrating %s", download.get_filename())
-                    download.migrate(newDir)
-            # Pass in case they don't exist or are not empty:
-            try:
-                fileutil.rmdir(os.path.join(oldDir, 'Incomplete Downloads'))
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
-                pass
-            try:
-                fileutil.rmdir(oldDir)
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
-                pass
-        util.getSingletonDDBObject(views.directoryFeed).update()
-
     def sendBugReport(self, report, description, send_database):
         def callback(result):
             self.sendingCrashReport -= 1

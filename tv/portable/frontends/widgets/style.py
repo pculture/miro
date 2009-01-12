@@ -531,7 +531,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         hbox.pack(cellpack.pad(cellpack.align_right(cellpack.Hotspot('cancel', self.cancel_button)), right=3))
 
         background = cellpack.Background(cellpack.align_middle(hbox), min_width=356, min_height=20)
-        background.set_callback(ProgressBarDrawer(self.data).draw)
+        background.set_callback(ItemProgressBarDrawer(self.data).draw)
         return cellpack.pad(background, top=5)
 
     def _make_thumbnail_button(self, hotspot_name, button, xalign, yalign):
@@ -1082,7 +1082,7 @@ class StatusRenderer(ListViewRenderer):
             return ListViewRenderer.layout(self, layout)
 
     def pack_progress_bar(self, layout):
-        progress_bar = ProgressBarDrawer(self.info)
+        progress_bar = ItemProgressBarDrawer(self.info)
         hbox = cellpack.HBox(spacing=2)
         if self.info.state == 'downloading':
             hotspot = cellpack.Hotspot('pause', self.pause_button)
@@ -1159,7 +1159,6 @@ class ProgressBarDrawer(cellpack.Packer):
     complicated.
     """
 
-
     PROGRESS_BASE_TOP = (0.92, 0.53, 0.21)
     PROGRESS_BASE_BOTTOM = (0.90, 0.45, 0.08)
     BASE = (0.76, 0.76, 0.76)
@@ -1171,12 +1170,11 @@ class ProgressBarDrawer(cellpack.Packer):
     BORDER_GRADIENT_TOP = (0.58, 0.58, 0.58)
     BORDER_GRADIENT_BOTTOM = (0.68, 0.68, 0.68)
 
-    def __init__(self, info):
-        if info.download_info and info.size > 0.0:
-            self.progress_ratio = (float(info.download_info.downloaded_size) /
-                    info.size)
-        else:
-            self.progress_ratio = 0.0
+    def __init__(self, progress_ratio):
+        self.progress_ratio = progress_ratio
+
+    def draw(self, context):
+        self._layout(context, 0, 0, context.width, context.height)
 
     def _layout(self, context, x, y, width, height):
         self.x, self.y, self.width, self.height = x, y, width, height
@@ -1306,3 +1304,26 @@ class ProgressBarDrawer(cellpack.Packer):
     def _non_progress_rectangle(self, context):
         context.rectangle(self.x + self.progress_width, self.y,
                 self.width - self.progress_width, self.height)
+
+class ItemProgressBarDrawer(ProgressBarDrawer):
+    def __init__(self, info):
+        if info.download_info and info.size > 0.0:
+            self.progress_ratio = (float(info.download_info.downloaded_size) /
+                    info.size)
+        else:
+            self.progress_ratio = 0.0
+
+class ProgressBarWidget(widgetset.DrawingArea):
+    def __init__(self):
+        widgetset.DrawingArea.__init__(self)
+        self.progress = 0.0
+
+    def update(self, progress):
+        self.progress = progress
+        self.queue_redraw()
+
+    def size_request(self, layout):
+        return (30, 16)
+
+    def draw(self, context, layout):
+        ProgressBarDrawer(self.progress).draw(context)

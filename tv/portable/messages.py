@@ -452,7 +452,11 @@ class NewPlaylistFolder(BackendMessage):
         self.child_playlist_ids = child_playlist_ids
 
 class ChangeMoviesDirectory(BackendMessage):
-    """Change the current movies directory."""
+    """Change the current movies directory.
+
+    If migrate is True, then the backend will send a series of
+    MigrationProgress messages while the migration happens.
+    """
     def __init__(self, path, migrate):
         self.path = path
         self.migrate = migrate
@@ -1175,3 +1179,10 @@ class OpenInExternalBrowser(FrontendMessage):
     """Opens the specified url in an external browser."""
     def __init__(self, url):
         self.url = url
+
+class MigrationProgress(FrontendMessage):
+    """Inform the frontend of progress while we migrate files."""
+    def __init__(self, iteration, total_files, finished):
+        self.iteration = iteration
+        self.total_files = total_files
+        self.finished = finished

@@ -30,6 +30,7 @@
 
 from copy import copy
 import logging
+import time
 
 from miro import app
 from miro import config
@@ -1309,25 +1310,37 @@ class BackendMessageHandler(messages.MessageHandler):
         old_dir = config.get(prefs.MOVIES_DIRECTORY)
         config.set(prefs.MOVIES_DIRECTORY, message.path)
         if message.migrate:
-            views.remoteDownloads.confirmDBThread()
-            for download in views.remoteDownloads:
-                if download.isFinished():
-                    logging.info("migrating %s", download.get_filename())
-                    download.migrate(message.path)
-            # Pass in case they don't exist or are not empty:
-            try:
-                fileutil.rmdir(os.path.join(old_dir, 'Incomplete Downloads'))
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
-                pass
-            try:
-                fileutil.rmdir(old_dir)
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
-                pass
+            self._migrate(message.path)
         util.getSingletonDDBObject(views.directoryFeed).update()
+
+    def _migrate(self, new_path):
+        to_migrate = [d for d in views.remoteDownloads if d.isFinished()]
+        migration_count = len(to_migrate)
+        last_progress_time = 0
+        for i, download in enumerate(to_migrate):
+            current_time = time.time()
+            if current_time > last_progress_time + 0.5:
+                m = messages.MigrationProgress(i, migration_count, False)
+                m.send_to_frontend()
+                last_progress_time = current_time
+            logging.info("migrating %s", download.get_filename())
+            download.migrate(new_path)
+        # Pass in case they don't exist or are not empty:
+        try:
+            fileutil.rmdir(os.path.join(old_dir, 'Incomplete Downloads'))
+        except (SystemExit, KeyboardInterrupt):
+            raise
+        except:
+            pass
+        try:
+            fileutil.rmdir(old_dir)
+        except (SystemExit, KeyboardInterrupt):
+            raise
+        except:
+            pass
+        m = messages.MigrationProgress(migration_count, migration_count, True)
+        m.send_to_frontend()
+
 
     def handle_report_crash(self, message):
         app.controller.sendBugReport(message.report, message.text, message.send_report)
