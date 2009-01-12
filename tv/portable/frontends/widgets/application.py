@@ -1019,7 +1019,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
         app.widgetapp.send_notification(message.title, message.body)
 
     def handle_search_complete(self, message):
-        app.search_manager.handle_search_complete(message)
+        if app.widgetapp.ui_initialized:
+            app.search_manager.handle_search_complete(message)
 
     def handle_current_frontend_state(self, message):
         app.list_view_memory = ListViewDisplayStore(message)
