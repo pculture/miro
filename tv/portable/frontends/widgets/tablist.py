@@ -206,7 +206,7 @@ class TabListDropHandler(object):
         return widgetset.DRAG_ACTION_COPY
 
     def allowed_types(self):
-        return (self.item_type, self.folder_type)
+        return self.item_types + self.folder_types
 
     def validate_drop(self, table_view, model, type, source_actions, parent,
             position):
@@ -222,7 +222,7 @@ class TabListDropHandler(object):
         if position == -1 and not is_folder:
             # Only folders can be dropped on
             return widgetset.DRAG_ACTION_NONE
-        if (type == self.folder_type and
+        if (type in self.folder_types and
                 ((position == -1 and is_folder) or parent is not None)):
             # Don't allow folders to be dropped in other folders
             return widgetset.DRAG_ACTION_NONE
@@ -279,40 +279,20 @@ class TabListDropHandler(object):
         return True
 
 class FeedListDropHandler(TabListDropHandler):
-    item_type = 'feed'
-    folder_type = 'feed-with-folder'
-
-    def allowed_types(self):
-        return (self.item_type, self.folder_type,
-                'audio-feed', 'audio-feed-with-folder')
+    item_types = ('feed', 'audio-feed')
+    folder_types = ('feed-with-folder', 'audio-feed-with-folder')
 
 class FeedListDragHandler(TabListDragHandler):
     item_type = 'feed'
     folder_type = 'feed-with-folder'
 
-    def allowed_types(self):
-        return (self.item_type, self.folder_type,
-                'audio-feed', 'audio-feed-with-folder')
-
-class AudioFeedListDropHandler(TabListDropHandler):
-    item_type = 'audio-feed'
-    folder_type = 'audio-feed-with-folder'
-
-    def allowed_types(self):
-        return (self.item_type, self.folder_type,
-                'feed', 'feed-with-folder')
-
 class AudioFeedListDragHandler(TabListDragHandler):
     item_type = 'audio-feed'
     folder_type = 'audio-feed-with-folder'
 
-    def allowed_types(self):
-        return (self.item_type, self.folder_type,
-                'feed', 'feed-with-folder')
-
 class PlaylistListDropHandler(TabListDropHandler):
-    item_type = 'playlist'
-    folder_type = 'playlist-with-folder'
+    item_types = ('playlist',)
+    folder_types = ('playlist-with-folder',)
 
     def allowed_actions(self):
         return (TabListDropHandler.allowed_actions(self) | 
@@ -563,7 +543,7 @@ class AudioFeedList(FeedList):
     def __init__(self):
         TabList.__init__(self)
         self.view.set_drag_source(AudioFeedListDragHandler())
-        self.view.set_drag_dest(AudioFeedListDropHandler(self))
+        self.view.set_drag_dest(FeedListDropHandler(self))
 
     type = 'audio-feed'
 
