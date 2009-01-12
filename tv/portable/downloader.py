@@ -113,7 +113,6 @@ def generateDownloadID():
 
 class RemoteDownloader(DDBObject):
     """Download a file using the downloader daemon."""
-
     def __init__(self, url, item, contentType=None, channelName=None):
         checkU(url)
         if contentType:
@@ -257,6 +256,7 @@ class RemoteDownloader(DDBObject):
             self.contentType = contentType
         if url is not None:
             self.url = url
+            logging.debug("downloading url %s" % self.url)
             c = command.StartNewDownloadCommand(RemoteDownloader.dldaemon,
                                                 self.url, self.dlid, self.contentType, self.channelName)
             c.send()
