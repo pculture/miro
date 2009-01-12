@@ -160,8 +160,8 @@ class OverlayPalette (NSWindowController):
         self.adjustContent(video_window, False)
         self.update_(nil)
 
-    def on_items_changed(self, changed_items):
-        for item_info in changed_items:
+    def on_items_changed(self, changed):
+        for item_info in changed:
             if item_info.id == self.item_info.id:
                 self.keepButton.setEnabled_(item_info.can_be_saved)
                 self.shareButton.setEnabled_(item_info.has_sharable_url)

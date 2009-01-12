@@ -141,7 +141,7 @@ class VideoRenderer (Widget):
         self.video_window.orderFront_(nil)
         self.adjust_video_frame()
         self.window_moved_handler = wrappermap.wrapper(self.view.window()).connect('did-move', self.on_window_moved)
-        self.item_changed_handler = app.info_updater.connect('items-changed', self.on_items_changed)
+        app.info_updater.item_changed_callbacks.add('manual', 'playback-list', self.on_items_changed)
 
     def place(self, rect, containing_view):
         Widget.place(self, rect, containing_view)
@@ -150,11 +150,11 @@ class VideoRenderer (Widget):
     def on_window_moved(self, window):
         self.adjust_video_frame()
 
-    def on_items_changed(self, controller, changed_items):
-        self.video_window.on_items_changed(changed_items)
+    def on_items_changed(self, message):
+        self.video_window.on_items_changed(message.changed)
         
     def remove_viewport(self):
-        app.info_updater.disconnect(self.item_changed_handler)
+        app.info_updater.item_changed_callbacks.remove('manual', 'playback-list', self.on_items_changed)
         self.item_changed_handler = None
         self.prevent_system_sleep(False)
         self.detach_from_parent_window()
@@ -355,8 +355,8 @@ class VideoWindow (NSWindow):
         self.palette = None
         super(VideoWindow, self).close()
 
-    def on_items_changed(self, changed_items):
-        self.palette.on_items_changed(changed_items)
+    def on_items_changed(self, changed):
+        self.palette.on_items_changed(changed)
 
     def canBecomeMainWindow(self):
         return NO
