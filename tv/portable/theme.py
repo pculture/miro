@@ -72,6 +72,18 @@ class ThemeHistory(DDBObject):
 
     @asUrgent
     def on_theme_change(self):
+        if self.theme is None: # vanilla Miro
+            guideURL = config.get(prefs.CHANNEL_GUIDE_URL)
+            if guide.getGuideByURL(guideURL) is None:
+                # This happens when the DB is initialized with a theme that
+                # doesn't have it's own set of default channels; None is
+                # artifically added to the pastThemes lists to prevent the
+                # default channels from being added again.  However, it means
+                # that we need to add the Miro Guide to the DB ourselves.
+                logging.warn('Installing default guide after switch to vanilla Miro')
+                guide.ChannelGuide(guideURL,
+                                   unicode(config.get(
+                            prefs.CHANNEL_GUIDE_ALLOWED_URLS)).split())
         self.signalChange()
 
     def on_first_run(self):
