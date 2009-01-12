@@ -874,7 +874,8 @@ class BackendMessageHandler(messages.MessageHandler):
             Feed(url, section=section)
 
     def handle_new_feed_folder(self, message):
-        folder = ChannelFolder(message.name)
+        folder = ChannelFolder(message.name, message.section)
+
         if message.child_feed_ids is not None:
             for id in message.child_feed_ids:
                 feed = views.feeds.getObjectByID(id)

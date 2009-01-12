@@ -46,6 +46,7 @@ from miro.gtcache import ngettext
 from miro.frontends.widgets import dialogs
 from miro.frontends.widgets import newsearchfeed
 from miro.frontends.widgets import newfeed
+from miro.frontends.widgets import newfolder
 from miro.frontends.widgets import addtoplaylistdialog
 from miro.frontends.widgets import removefeeds
 from miro.frontends.widgets import diagnostics
@@ -501,17 +502,14 @@ class Application:
             messages.NewFeedSearchURL(data[1], data[2], data[3]).send_to_backend()
 
     def add_new_feed_folder(self, add_selected=False):
-        title = _('Create Feed Folder')
-        description = _('Enter a name for the new feed folder')
-
-        name = dialogs.ask_for_string(title, description)
-        if name:
+        name, section = newfolder.run_dialog()
+        if name is not None:
             if add_selected:
                 t, infos = app.tab_list_manager.get_selection()
                 child_ids = [info.id for info in infos]
             else:
                 child_ids = None
-            messages.NewFeedFolder(name, child_ids).send_to_backend()
+            messages.NewFeedFolder(name, section, child_ids).send_to_backend()
 
     def add_new_guide(self):
         url = self.ask_for_url(_('Add Guide'),

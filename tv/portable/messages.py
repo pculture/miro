@@ -440,8 +440,9 @@ class NewPlaylist(BackendMessage):
 
 class NewFeedFolder(BackendMessage):
     """Create a new feed folder."""
-    def __init__(self, name, child_feed_ids):
+    def __init__(self, name, section, child_feed_ids):
         self.name = util.toUni(name)
+        self.section = section
         self.child_feed_ids = child_feed_ids
 
 class NewPlaylistFolder(BackendMessage):
