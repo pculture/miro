@@ -79,6 +79,9 @@ SHOW_ERROR_DIALOG           = Pref( key='showErrorDialog',       default=True,  
 # this is the name of the last search engine used
 LAST_SEARCH_ENGINE = \
     Pref(key='LastSearchEngine', default=u"all", platformSpecific=False)
+# comma-separated list of search engine names; see searchengines.py for more information
+SEARCH_ORDERING = \
+    Pref(key='SearchOrdering', default=None, platformSpecific=False)
 
 # These have a hardcoded default which can be overridden by setting an
 # environment variable.

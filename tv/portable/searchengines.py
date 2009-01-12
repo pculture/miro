@@ -36,7 +36,7 @@ from miro import prefs
 import logging
 
 class SearchEngineInfo:
-    def __init__(self, name, title, url, sort_order=0):
+    def __init__(self, name, title, url, sort_order=0, filename=None):
         checkU(name)
         checkU(title)
         checkU(url)
@@ -44,6 +44,8 @@ class SearchEngineInfo:
         self.title = title
         self.url = url
         self.sort_order = sort_order
+        self.filename = filename # used for changing icon location on themed
+                                 # searches
 
     def get_request_url(self, query, filterAdultContents, limit):
         requestURL = self.url.replace(u"%s", urlencode(query))
@@ -118,7 +120,9 @@ def load_search_engine(filename):
         if sort == None:
             sort = 0
 
-        _engines.append(SearchEngineInfo(id_, displayname, url))
+        _engines.append(SearchEngineInfo(id_, displayname, url,
+                                         sort_order=sort,
+                                         filename=filename))
 
     except (SystemExit, KeyboardInterrupt):
         raise
@@ -126,16 +130,40 @@ def load_search_engine(filename):
         warn(filename, "Exception parsing file")
 
 def create_engines():
+    global _engines
     delete_engines()
     engines = search_for_search_engines(resources.path("searchengines"))
     engines_dir = os.path.join(config.get(prefs.SUPPORT_DIRECTORY), "searchengines")
     engines.update(search_for_search_engines(engines_dir))
+    if config.get(prefs.THEME_NAME):
+        theme_engines_dir = resources.theme_path(config.get(prefs.THEME_NAME),
+                                                 'searchengines')
+        engines.update(search_for_search_engines(theme_engines_dir))
     for fn in engines.itervalues():
         load_search_engine(fn)
 
     _engines.append(SearchEngineInfo(u"all", u"Search All", u"", -1))
     _engines.sort(lambda a, b: cmp((a.sort_order, a.name, a.title), 
                                    (b.sort_order, b.name, b.title)))
+
+    # SEARCH_ORDERING is a comma-separated list of search engine names to
+    # include.  An * as the last engine includes the rest of the engines.
+    if config.get(prefs.SEARCH_ORDERING):
+        search_names = config.get(prefs.SEARCH_ORDERING).split(',')
+        new_engines = []
+        if '*' in search_names and '*' in search_names[:-1]:
+            raise RuntimeError('wildcard search ordering must be at the end')
+        for name in search_names:
+            if name != '*':
+                engine = get_engine_for_name(name)
+                if not engine:
+                    warn(__file__, 'Invalid search name: %r' % name)
+                else:
+                    new_engines.append(engine)
+                    _engines.remove(engine)
+            else:
+                new_engines.extend(_engines)
+        _engines = new_engines
 
 @returnsUnicode
 def get_request_url(engine_name, query, filter_adult_contents=True, limit=50):
