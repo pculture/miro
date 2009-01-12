@@ -36,6 +36,7 @@
 
 #include "MiroPluginsDir.h"
 #include "nsAppDirectoryServiceDefs.h"
+#include "nsXPCOMCID.h"
 #include "nsCOMPtr.h"
 #include "nsIDirectoryService.h"
 #include "nsISimpleEnumerator.h"
