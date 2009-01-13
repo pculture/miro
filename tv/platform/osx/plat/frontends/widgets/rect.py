@@ -33,7 +33,14 @@ from Foundation import NSMakeRect, NSRectFromString, NSStringFromRect
 class Rect(object):
     @classmethod
     def from_string(cls, rect_string):
-        return NSRectWrapper(NSRectFromString(rect_string))
+        if rect_string.startswith('{{'):
+            return NSRectWrapper(NSRectFromString(rect_string))
+        else:
+            try:
+                items = [int(i) for i in rect_string.split(',')]
+                return Rect(*items)
+            except:
+                return None
 
     def __init__(self, x, y, width, height):
         self.nsrect = NSMakeRect(x, y, width, height)
@@ -63,7 +70,7 @@ class Rect(object):
     height = property(get_height, set_height)
     
     def __str__(self):
-        return NSStringFromRect(self.nsrect)
+        return "%d,%d,%d,%d" % (self.nsrect.origin.x, self.nsrect.origin.y, self.nsrect.size.width, self.nsrect.size.height)
 
 class NSRectWrapper(Rect):
     def __init__(self, nsrect):

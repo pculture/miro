@@ -36,7 +36,6 @@ from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets.base import Widget, SimpleBin, FlippedView
 from miro.plat.frontends.widgets import drawing
 from miro.plat.frontends.widgets.layoutmanager import LayoutManager
-from miro.plat.frontends.widgets.rect import NSRectWrapper
 
 class DrawableButtonCell(NSButtonCell):
     def startTrackingAt_inView_(self, point, view):
