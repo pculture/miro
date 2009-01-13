@@ -86,7 +86,7 @@ class OverlayPalette (NSWindowController):
     timeIndicator       = IBOutlet('timeIndicator')
     volumeSlider        = IBOutlet('volumeSlider')
     
-    HOLD_TIME = 2
+    HOLD_TIME = 4
 
     @classmethod
     def get_instance(cls):
@@ -159,6 +159,7 @@ class OverlayPalette (NSWindowController):
         self.addToLibButton.setHidden_(not item_info.is_external)
         self.adjustContent(video_window, False)
         self.update_(nil)
+        self.reveal(video_window)
 
     def on_items_changed(self, changed):
         for item_info in changed:
