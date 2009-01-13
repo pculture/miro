@@ -38,6 +38,7 @@ TODO:
 import threading
 import errno
 import select
+import socket
 import heapq
 import Queue
 import logging
@@ -242,7 +243,10 @@ class EventLoop(signals.SignalEmitter):
         self.removedWriteCallbacks.add(socket.fileno())
 
     def wakeup(self):
-        self.wakeSender.send("b")
+        try:
+            self.wakeSender.send("b")
+        except socket.error, e:
+            logging.warn("Error waking up eventloop (%s)", e)
 
     def callInThread(self, callback, errback, function, name, *args, **kwargs):
         self.threadPool.queueCall(callback, errback, function, name, *args, **kwargs)
