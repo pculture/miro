@@ -218,6 +218,8 @@ class SearchListTitlebar(ItemListTitlebar):
 class ItemView(widgetset.TableView):
     """TableView that displays a list of items using the standard view.  """
 
+    draws_selection = True
+
     def __init__(self, item_list, display_channel=True):
         widgetset.TableView.__init__(self, item_list.model)
         self.display_channel = display_channel

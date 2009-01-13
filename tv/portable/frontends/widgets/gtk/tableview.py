@@ -145,7 +145,8 @@ class GTKCustomCellRenderer(gtk.GenericCellRenderer):
                 cell_area.width - xpad * 2, cell_area.height - ypad * 2)
         context = drawing.DrawingContext(window, area, expose_area)
         widget_wrapper = wrappermap.wrapper(widget)
-        if selected and widget_wrapper.use_custom_style:
+        if (selected and widget_wrapper.draws_selection and
+                widget_wrapper.use_custom_style):
             # Draw the base color as our background.  This erases the gradient
             # that GTK draws for selected items.
             area = widget.get_background_area(self.path, self.column)
@@ -484,6 +485,9 @@ class TableColumn(signals.SignalEmitter):
 
 class TableView(Widget):
     """https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPITableView"""
+
+    draws_selection = False
+
     def __init__(self, model):
         Widget.__init__(self)
         self.model = model
