@@ -1173,9 +1173,6 @@ class ProgressBarDrawer(cellpack.Packer):
     def __init__(self, progress_ratio):
         self.progress_ratio = progress_ratio
 
-    def draw(self, context):
-        self._layout(context, 0, 0, context.width, context.height)
-
     def _layout(self, context, x, y, width, height):
         self.x, self.y, self.width, self.height = x, y, width, height
         context.set_line_width(1)
@@ -1326,4 +1323,5 @@ class ProgressBarWidget(widgetset.DrawingArea):
         return (30, 16)
 
     def draw(self, context, layout):
-        ProgressBarDrawer(self.progress).draw(context)
+        ProgressBarDrawer(self.progress).draw(context, 0, 0, context.width,
+                context.height)
