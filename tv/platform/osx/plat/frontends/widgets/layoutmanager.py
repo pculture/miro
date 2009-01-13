@@ -315,7 +315,7 @@ class NativeButton(object):
         context.path.removeAllPoints()
 
 class StyledButton(object):
-    PAD_HORIZONTAL = 24
+    PAD_HORIZONTAL = 11
     BIG_PAD_VERTICAL = 4
     SMALL_PAD_VERTICAL = 2
     TOP_COLOR = (1, 1, 1)
