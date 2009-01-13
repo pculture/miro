@@ -62,6 +62,8 @@ class PlaybackManager (signals.SignalEmitter):
         self.create_signal('selecting-file')
         self.create_signal('cant-play-file')
         self.create_signal('will-play')
+        self.create_signal('will-play-attached')
+        self.create_signal('will-play-detached')
         self.create_signal('will-pause')
         self.create_signal('will-stop')
         self.create_signal('did-stop')
@@ -169,6 +171,7 @@ class PlaybackManager (signals.SignalEmitter):
                 enumerate(self.playlist))
     
     def prepare_attached_playback(self):
+        self.emit('will-play-attached')
         splitter = app.widgetapp.window.splitter
         self.previous_left_width = splitter.get_left_width()
         self.previous_left_widget = splitter.left
@@ -182,6 +185,7 @@ class PlaybackManager (signals.SignalEmitter):
         app.widgetapp.window.splitter.set_left(self.previous_left_widget)
     
     def prepare_detached_playback(self):
+        self.emit('will-play-detached')
         detached_window_frame = config.get(prefs.DETACHED_WINDOW_FRAME)
         if detached_window_frame is None:
             detached_window_frame = widgetset.Rect(0, 0, 800, 600)
