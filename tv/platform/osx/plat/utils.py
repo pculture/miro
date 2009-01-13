@@ -67,13 +67,18 @@ def get_pyobjc_major_version():
 def get_available_bytes_for_movies():
     pool = NSAutoreleasePool.alloc().init()
     fm = NSFileManager.defaultManager()
-    info = fm.fileSystemAttributesAtPath_(config.get(prefs.MOVIES_DIRECTORY))
-    try:
+    movies_dir = config.get(prefs.MOVIES_DIRECTORY)
+    if not os.path.exists(movies_dir):
+        try:
+            os.makedirs(movies_dir)
+        except IOError:
+            del pool
+            return -1
+    info = fm.fileSystemAttributesAtPath_(movies_dir)
+    if info:
         available = info[NSFileSystemFreeSize]
-    except:
-        # We could not retrieve the available disk size for some reason, default
-        # to something huge to allow downloads.
-        available = 1024 * 1024 * 1024 * 1024
+    else:
+        available = -1
     del pool
     return available
 
