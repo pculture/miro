@@ -673,7 +673,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             inner_hbox.pack_space(2)
 
             emblem_color = UNPLAYED_COLOR
-            emblem = cellpack.Background(inner_hbox, margin=(4, 20, 4, 4))
+            emblem = cellpack.Background(inner_hbox, margin=(5, 20, 4, 4))
             emblem.set_callback(self.draw_emblem, emblem_color)
 
             hbox = cellpack.HBox(spacing=5)
