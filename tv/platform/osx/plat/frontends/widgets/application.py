@@ -54,7 +54,7 @@ from miro.plat import growl
 from miro.plat import _growlImage
 from miro.plat import migrateappname
 from miro.plat.utils import ensureDownloadDaemonIsTerminated, filenameTypeToOSFilename, osFilenamesToFilenameTypes
-from miro.plat.frontends.widgets import video, osxmenus
+from miro.plat.frontends.widgets import video, osxmenus, sparkleupdater
 from miro.plat.frontends.widgets.rect import Rect
 from miro.gtcache import gettext as _
 
@@ -175,11 +175,17 @@ class OSXApplication(Application):
         defaults.setPersistentDomain_forName_(lwdomain, 'loginwindow')
         defaults.synchronize()
 
+    def handle_update_available(self, obj, item):
+        sparkleupdater.handleNewUpdate(item)
+
 
 class AppController(NSObject):
 
     def initWithApp_(self, application):
         self.init()
+
+        sparkleupdater.setup()
+        
         self.application = application
         self.growl_notifier = None
         self.open_after_startup = None
