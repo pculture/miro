@@ -279,12 +279,22 @@ class Application:
         self.on_volume_set(slider)
 
     def share_item(self, item):
-        share_items = {"weburl": item.permalink,
-                "mediaurl": item.file_url,
-                "name": item.name}
+        share_items = {"file_url": item.file_url,
+                "item_name": item.name}
+        if item.feed_url:
+            share_items["feed_url"] = item.feed_url
         query_string = "&".join(["%s=%s" % (key, urllib.quote(val)) for key, val in share_items.items()])
-        share_url = "http://miroguide.com/share-item/?%s" % query_string
+        share_url = "http://miroguide.com/share/item/?%s" % query_string
         self.open_url(share_url)
+
+    def share_feed(self):
+        t, channel_infos = app.tab_list_manager.get_selection()
+        if t in ('feed', 'audio-feed') and len(channel_infos) == 1:
+            ci = channel_infos[0]
+            share_items = {"feed_url": ci.base_href}
+            query_string = "&".join(["%s=%s" % (key, urllib.quote(val)) for key, val in share_items.items()])
+            share_url = "http://miroguide.com/share/feed/?%s" % query_string
+            self.open_url(share_url)
 
     def check_then_open_file(self, filename):
         if not os.path.exists(filename):
@@ -586,17 +596,6 @@ class Application:
             return
 
         messages.ExportFeeds(filename).send_to_backend()
-
-    def share_feed(self):
-        t, channel_infos = app.tab_list_manager.get_selection()
-        if t in ('feed', 'audio-feed') and len(channel_infos) == 1:
-            ci = channel_infos[0]
-            share_items = {"weburl": ci.base_href,
-                    "name": ci.name}
-            query_string = "&".join(["%s=%s" % (key, urllib.quote(val)) for key, val in share_items.items()])
-            # FIXME - what's this supposed to do?
-            share_url = "http://miroguide.com/share-item/?%s" % query_string
-            self.open_url(share_url)
 
     def mail_to_friend(self, url, title):
         emailfriend_url = config.get(prefs.EMAILFRIEND_URL)
