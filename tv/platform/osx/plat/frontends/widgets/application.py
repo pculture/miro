@@ -67,6 +67,11 @@ class OSXApplication(Application):
         Application.__init__(self)
         self.gotQuit = False
 
+    def run(self):
+        self.app_controller = AppController.alloc().initWithApp_(self)
+        NSApplication.sharedApplication().setDelegate_(self.app_controller)
+        NSApplicationMain(sys.argv)        
+
     def connect_to_signals(self):
         Application.connect_to_signals(self)
         eventloop.connect('begin-loop', self.beginLoop)
@@ -79,6 +84,12 @@ class OSXApplication(Application):
         Application.startup_ui(self)
         video.register_quicktime_components()
 
+    # This callback should only be called once, after startup is done.
+    # (see superclass implementation)
+    def on_window_show(self, window):
+        Application.on_window_show(self, window)
+        self.app_controller.finish_startup()
+        
     def on_pref_changed(self, key, value):
         if key == prefs.RUN_AT_STARTUP.key:
             self.set_launch_at_startup(bool(value))
@@ -89,11 +100,6 @@ class OSXApplication(Application):
 
     def endLoop(self, loop):
         del loop.pool
-
-    def run(self):
-        self.app_controller = AppController.alloc().initWithApp_(self)
-        NSApplication.sharedApplication().setDelegate_(self.app_controller)
-        NSApplicationMain(sys.argv)        
     
     def do_quit(self):
         windowFrame = self.window.nswindow.frame()
@@ -176,6 +182,8 @@ class AppController(NSObject):
         self.init()
         self.application = application
         self.growl_notifier = None
+        self.open_after_startup = None
+        self.startup_done = False
         return self
 
     def setup_growl_notifier(self):
@@ -206,6 +214,11 @@ class AppController(NSObject):
         except:
             traceback.print_exc()
             NSApplication.sharedApplication().terminate_(nil)
+
+    def finish_startup(self):
+        if self.open_after_startup is not None:
+            self.do_open_files(self.open_after_startup)
+        self.startup_done = True
 
     def applicationShouldTerminate_(self, sender):
         # External termination requests (through Dock menu or AppleScript) call
@@ -266,8 +279,14 @@ class AppController(NSObject):
 
     def application_openFiles_(self, nsapp, filenames):
         filenames = osFilenamesToFilenameTypes(filenames)
-        messages.OpenIndividualFiles(filenames).send_to_backend()
+        if self.startup_done:
+            self.do_open_files(filenames)
+        else:
+            self.open_after_startup = filenames
         nsapp.replyToOpenOrPrint_(NSApplicationDelegateReplySuccess)
+
+    def do_open_files(self, filenames):
+        messages.OpenIndividualFiles(filenames).send_to_backend()
 
     def workspaceWillSleep_(self, notification):
         def pauseRunningDownloaders(self=self):
