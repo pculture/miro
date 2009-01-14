@@ -137,9 +137,9 @@ class VideoRenderer (Widget):
         self.video_window = VideoWindow.alloc().initWithContentRect_styleMask_backing_defer_(self.view.frame(), NSBorderlessWindowMask, NSBackingStoreBuffered, NO)
         self.video_window.setContentView_(self.video_view)
 
+        self.adjust_video_frame()
         self.view.window().addChildWindow_ordered_(self.video_window, NSWindowAbove)
         self.video_window.orderFront_(nil)
-        self.adjust_video_frame()
         self.window_moved_handler = wrappermap.wrapper(self.view.window()).connect('did-move', self.on_window_moved)
         app.info_updater.item_changed_callbacks.add('manual', 'playback-list', self.on_items_changed)
 
