@@ -47,30 +47,21 @@ class ImageSurface:
         self.width = image.width
         self.height = image.height
 
+    def get_size(self):
+        return self.width, self.height
+
     def draw(self, context, x, y, width, height, fraction=1.0):
         if self.width == 0 or self.height == 0:
             return
         NSGraphicsContext.currentContext().setShouldAntialias_(YES)
         NSGraphicsContext.currentContext().setImageInterpolation_(NSImageInterpolationHigh)
-        endy = y + height
-        while y < endy:
-            current_height = min(self.height, endy - y)
-            self._draw_line(x, y, width, current_height, fraction)
-            y += height
-        context.path.removeAllPoints()
-
-    def get_size(self):
-        return self.width, self.height
-
-    def _draw_line(self, x, y, width, height, fraction=1.0):
-        endx = x + width
-        while x < endx:
-            at = NSPoint(x, y)
-            current_width = min(self.width, endx - x)
-            dest_rect = NSRect(at, NSSize(current_width, height))
-            source_rect = NSMakeRect(0, 0, current_width, height)
+        if self.width <= width and self.height <= height:
+            dest_rect = NSRect((x, y), (width, height))
             self.image.drawInRect_fromRect_operation_fraction_(dest_rect, NSZeroRect, NSCompositeSourceOver, fraction)
-            x += current_width
+        else:
+            NSColor.colorWithPatternImage_(self.image).set()
+            NSRectFill(NSRect((x, y), (width, height)))
+        context.path.removeAllPoints()
 
 class DrawingStyle(object):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
@@ -182,14 +173,11 @@ class DrawingContext:
         self.path.removeAllPoints()
 
     def gradient_fill_preserve(self, gradient):
-        gradient.set_input_points(self)
         NSGraphicsContext.currentContext().saveGraphicsState()
-        path_rect = self.path.bounds()
         self.path.addClip()
-        context = NSGraphicsContext.currentContext().CIContext()
-        context.drawImage_atPoint_fromRect_(gradient.get_image(),
-                path_rect.origin, 
-                gradient.rect_for_flipped_rect(path_rect))
+        path_rect = self.path.bounds()
+        source_rect = gradient.rect_for_flipped_rect(path_rect)
+        gradient.get_image().drawAtPoint_fromRect_operation_fraction_(path_rect.origin, source_rect, NSCompositeSourceOver, 1.0)
         NSGraphicsContext.currentContext().restoreGraphicsState()
 
 class Gradient(object):
@@ -210,16 +198,7 @@ class Gradient(object):
         return NSRect(origin, rect.size)
 
     def set_input_points(self, drawing_context):
-        return
-        # Adjust for the fact the coordinate systems are flipped
-        y1 = drawing_context.height - self.y1
-        y2 = drawing_context.height - self.y2
-        if utils.getMajorOSVersion() < 9:
-            self.filter.setValue_forKey_(self.ci_point(self.x1, y1), 'inputPoint0')
-            self.filter.setValue_forKey_(self.ci_point(self.x2, y2), 'inputPoint1')
-        else:
-            self.filter.setValue_forKey_(self.ci_point(self.x1, y1), 'inputPoint1')
-            self.filter.setValue_forKey_(self.ci_point(self.x2, y2), 'inputPoint0')
+        pass
 
     def set_start_color(self, (red, green, blue)):
         self.filter.setValue_forKey_(self.ci_color(red, green, blue), 
