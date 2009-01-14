@@ -185,11 +185,14 @@ class Config (object):
                     extract = False
                     break            
             if extract:
-                data = themeArchive.read(entry)
                 path = os.path.join(target, entry)
-                f = open(path, "wt")
-                f.write(data)
-                f.close()
+                if entry.endswith('/'):
+                    os.makedirs(path)
+                else:
+                    data = themeArchive.read(entry)
+                    f = open(path, "wt")
+                    f.write(data)
+                    f.close()
         themeArchive.close()
     
     def get_icon_file(self):
@@ -530,10 +533,16 @@ class MiroBuild (py2app):
             print "    (all skipped, already bundled)"
         else:
             os.makedirs(targetDir)
-            for f in glob(os.path.join(sourceDir, "*")):
-                dest = os.path.join(targetDir, os.path.basename(f))
-                print "    %s" % dest
-                shutil.copy(f, dest)
+            def copyDirectory(d):
+                for f in glob(os.path.join(d, "*")):
+                    dest = os.path.join(targetDir, f[len(sourceDir)+1:])
+                    print "    %s" % dest
+                    if os.path.isfile(f):
+                        shutil.copy(f, dest)
+                    elif os.path.isdir(f):
+                        os.makedirs(dest)
+                        copyDirectory(f)
+            copyDirectory(sourceDir)
     
     def clean_up_incomplete_lproj(self):
         print "Wiping out incomplete lproj folders"

@@ -42,6 +42,7 @@ from miro.plat.frontends.widgets.base import Widget
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
 
 from miro import searchengines
+from miro import config, prefs
 
 class SizedControl(Widget):
     def set_size(self, size):
@@ -446,6 +447,14 @@ NSVideoSearchField.setCellClass_(VideoSearchFieldCell)
 
 def _getEngineIcon(engine):
     engineIconPath = resources.path('images/search_icon_%s.png' % engine.name)
+    if config.get(prefs.THEME_NAME) and engine.filename:
+        if engine.filename.startswith(resources.theme_path(
+            config.get(prefs.THEME_NAME), 'searchengines')):
+                # this search engine came from a theme; look up the icon in the
+                # theme directory instead
+                engineIconPath = resources.theme_path(
+                    config.get(prefs.THEME_NAME),
+                    'images/search_icon_%s.png' % engine.name)
     if not os.path.exists(engineIconPath):
         return nil
     return NSImage.alloc().initByReferencingFile_(engineIconPath)
