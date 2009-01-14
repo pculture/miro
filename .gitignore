@@ -20,7 +20,6 @@ tv/platform/osx/Miro.app
 tv/platform/osx/build
 tv/portable/*.pyc
 tv/portable/*.c
-tv/portable/dl_daemon/daemon.py
 tv/portable/frontends/widgets/gtk/pygtkhacks.c
 
 .DS_Store
