@@ -846,7 +846,7 @@ class BTDownloader(BGDownloader):
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
-            logging.exception("DTV: Warning: Error shutting down torrent")
+            logging.exception("Miro: Error shutting down torrent")
 
     def _pauseTorrent(self):
         try:
@@ -856,7 +856,7 @@ class BTDownloader(BGDownloader):
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
-            logging.exception("DTV: Warning: Error pausing torrent")
+            logging.exception("Miro: Error pausing torrent")
 
     def _resumeTorrent(self):
         if self.torrent is not None:
@@ -866,7 +866,7 @@ class BTDownloader(BGDownloader):
             except (SystemExit, KeyboardInterrupt):
                 raise
             except:
-                logging.exception("DTV: Warning: Error resuming torrent")
+                logging.exception("Miro: Error resuming torrent")
         else:
             self._startTorrent()
 
