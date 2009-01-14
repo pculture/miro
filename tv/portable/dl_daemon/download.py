@@ -257,7 +257,7 @@ class TorrentSession:
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
-            pass
+            logging.warning("removeTorrent failed.")
 
     def updateTorrents(self):
         # Copy this set into a list in case any of the torrents gets removed during the iteration.
@@ -827,6 +827,7 @@ class BTDownloader(BGDownloader):
                 self.torrent = torrentSession.session.add_torrent(torrent_info, name, lt.bdecode(self.fastResumeData), lt.storage_mode_t.storage_mode_allocate)
             else:
                 self.torrent = torrentSession.session.add_torrent(torrent_info, name, None, lt.storage_mode_t.storage_mode_allocate)
+            self.torrent.auto_managed(False)
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
