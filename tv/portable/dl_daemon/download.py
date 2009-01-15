@@ -228,7 +228,6 @@ class TorrentSession:
 
     def shutdown(self):
         config.remove_change_callback(self.configChanged)
-        del self.session
 
     def configChanged(self, key, value):
         if key == prefs.BT_MIN_PORT.key:
