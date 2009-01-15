@@ -3,7 +3,7 @@
 This script is for importing a Launchpad export of all available .po
 files.  It:
 
- * fixes the filenames to what Miro uses, 
+ * fixes the filenames to what Miro uses,
  * fixes some bugs we've seen in some of the translations, and
  * calls msgfmt on the .po files creating .mo files
 
