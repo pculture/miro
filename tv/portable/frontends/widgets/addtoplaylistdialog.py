@@ -73,13 +73,13 @@ def run_dialog():
             choice_table.set_row_spacing(5)
             rbg = widgetset.RadioButtonGroup()
 
-            existing_rb = widgetset.RadioButton("Existing playlist:", rbg)
+            existing_rb = widgetset.RadioButton(_("Existing playlist:"), rbg)
             existing_option = widgetset.OptionMenu([clampText(pi.name) for pi in playlists])
 
             choice_table.pack(existing_rb, 0, 0)
             choice_table.pack(existing_option, 1, 0)
 
-            new_rb = widgetset.RadioButton("New playlist:", rbg)
+            new_rb = widgetset.RadioButton(_("New playlist:"), rbg)
             new_text = widgetset.TextEntry()
             choice_table.pack(new_rb, 0, 1)
             choice_table.pack(new_text, 1, 1)

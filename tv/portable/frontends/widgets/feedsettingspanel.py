@@ -138,11 +138,11 @@ def _build_remember_items(channel, grid):
     older_options = [
         ("-1", _("Keep %(number)s (Default)",
                  {"number": config.get(prefs.MAX_OLD_ITEMS_DEFAULT)})),
-        ("0", "Keep 0"),
-        ("20", "Keep 20"),
-        ("50", "Keep 50"),
-        ("100", "Keep 100"),
-        ("1000", "Keep 1000")
+        ("0", _("Keep 0")),
+        ("20", _("Keep 20")),
+        ("50", _("Keep 50")),
+        ("100", _("Keep 100")),
+        ("1000", _("Keep 1000"))
     ]
     older_values = [o[0] for o in older_options]
     older_combo = widgetset.OptionMenu([o[1] for o in older_options])

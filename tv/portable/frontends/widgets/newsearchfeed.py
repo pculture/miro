@@ -84,18 +84,18 @@ def run_dialog():
             choice_table.set_row_spacing(5)
             rbg = widgetset.RadioButtonGroup()
 
-            channel_rb = widgetset.RadioButton("Feed:", rbg)
+            channel_rb = widgetset.RadioButton(_("Feed:"), rbg)
             channel_option = widgetset.OptionMenu([clampText(ci.name) for ci in channels])
             choice_table.pack(channel_rb, 0, 0)
             choice_table.pack(channel_option, 1, 0)
 
-            search_engine_rb = widgetset.RadioButton("Search engine:", rbg)
+            search_engine_rb = widgetset.RadioButton(_("Search engine:"), rbg)
             search_engines = searchengines.get_search_engines()
             search_engine_option = widgetset.OptionMenu([se.title for se in search_engines])
             choice_table.pack(search_engine_rb, 0, 1)
             choice_table.pack(search_engine_option, 1, 1)
 
-            url_rb = widgetset.RadioButton("URL:", rbg)
+            url_rb = widgetset.RadioButton(_("URL:"), rbg)
             url_text = widgetset.TextEntry()
             choice_table.pack(url_rb, 0, 2)
             choice_table.pack(url_text, 1, 2)
