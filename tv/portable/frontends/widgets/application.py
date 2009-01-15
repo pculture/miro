@@ -522,10 +522,10 @@ class Application:
             messages.NewFeedFolder(name, section, child_ids).send_to_backend()
 
     def add_new_guide(self):
-        url = self.ask_for_url(_('Add Guide'),
-                _('Enter the URL of the Miro guide to add'),
-                _('Add Guide - Invalid URL'),
-                _('The address you entered is not a valid url.\nPlease check the URL and try again.\n\nEnter the URL of the Miro guide to add'))
+        url = self.ask_for_url(_('Add Site'),
+                _('Enter the URL of the site to add'),
+                _('Add Site - Invalid URL'),
+                _('The address you entered is not a valid url.\nPlease check the URL and try again.\n\nEnter the URL of the site to add'))
 
         if url is not None:
             messages.NewGuide(url).send_to_backend()
