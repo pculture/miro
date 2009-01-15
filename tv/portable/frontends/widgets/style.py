@@ -206,6 +206,33 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     FLAP_BACKGROUND_COLOR = (225.0 / 255.0, 225.0 / 255.0, 225.0 / 255.0)
     FLAP_HIGHLIGHT_COLOR = (237.0 / 255.0, 237.0 / 255.0, 237.0 / 255.0)
 
+    FROM_TEXT = _("From")
+    SHOW_MORE_TEXT = _("Show More")
+    SHOW_LESS_TEXT = _("Show Less")
+    COMMENTS_TEXT = _("Comments")
+    REVEAL_IN_TEXT = (file_navigator_name and
+            _("Reveal in %(progname)s", {"progname": file_navigator_name}) or _("Reveal File"))
+    WEB_PAGE_TEXT = _("Web Page")
+    FILE_URL_TEXT = _("File URL")
+    LICENSE_PAGE_TEXT = _("License Page")
+    FILE_TYPE_TEXT = _("File Type")
+    SEEDERS_TEXT = _("Seeders")
+    LEECHERS_TEXT = _("Leechers")
+    UPLOAD_RATE_TEXT = _("Upload Rate")
+    UPLOAD_TOTAL_TEXT = _("Upload Total")
+    DOWN_RATE_TEXT = _("Down Rate")
+    DOWN_TOTAL_TEXT = _("Down Total")
+    DOWNLOAD_TEXT = _("Download")
+    DOWNLOAD_TORRENT_TEXT = _("Download Torrent")
+    ERROR_TEXT = _("Error")
+    QUEUED_TEXT = _("queued for autodownload")
+    UNPLAYED_TEXT = _("Unplayed")
+    NEWLY_AVAILABLE_TEXT = _("Newly Available")
+    KEEP_TEXT = _("Keep")
+    REMOVE_TEXT = _("Remove")
+    DELETE_TEXT = _("Delete")
+    STOP_SEEDING_TEXT = _("Stop seeding")
+
     def __init__(self, display_channel=True):
         widgetset.CustomCellRenderer.__init__(self)
         self.separator = imagepool.get_surface(resources.path(
@@ -342,7 +369,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             hbox.pack(cellpack.align_middle(self.channel_title_icon))
             hbox.pack_space(4)
             layout.set_font(0.8, family="Helvetica", bold=True)
-            hbox.pack(layout.textbox(_("From")))
+            hbox.pack(layout.textbox(self.FROM_TEXT))
             hbox.pack_space(6)
             layout.set_font(0.8, family="Helvetica")
             hbox.pack(cellpack.ClippedTextBox(layout.textbox(self.data.feed_name)), expand=True)
@@ -442,10 +469,10 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             vbox.pack(cellpack.align_right(layout.textbox(size)))
 
         if not self.show_details:
-            details_text = layout.textbox(_('Show More'))
+            details_text = layout.textbox(self.SHOW_MORE_TEXT)
             details_image = cellpack.align_middle(widgetutil.make_surface('show-more-info'))
         else:
-            details_text = layout.textbox(_('Show Less'))
+            details_text = layout.textbox(self.SHOW_LESS_TEXT)
             details_image = cellpack.align_middle(widgetutil.make_surface('show-less-info'))
         hbox = cellpack.HBox(spacing=5)
         hbox.pack(details_text)
@@ -471,27 +498,23 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         layout.set_font(0.77)
 
-        comments_hotspot = self._make_button(layout, _('Comments'),
+        comments_hotspot = self._make_button(layout, self.COMMENTS_TEXT,
                 'visit_comments', not self.data.commentslink)
         hbox.pack(cellpack.align_left(comments_hotspot), expand=True)
 
-        if file_navigator_name:
-            reveal_text = _('Reveal in %(progname)s', {"progname": file_navigator_name})
-        else:
-            reveal_text = _('Reveal File')
-        reveal_hotspot = self._make_button(layout, reveal_text,
+        reveal_hotspot = self._make_button(layout, self.REVEAL_IN_TEXT,
                 'show_local_file', not self.data.downloaded)
         hbox.pack(cellpack.align_center(reveal_hotspot))
 
-        permalink_hotspot = self._make_button(layout, _('Web Page'),
+        permalink_hotspot = self._make_button(layout, self.WEB_PAGE_TEXT,
                 'visit_webpage', not self.data.permalink)
         hbox.pack(cellpack.align_center(permalink_hotspot))
 
-        fileurl_hotspot = self._make_button(layout, _('File URL'),
+        fileurl_hotspot = self._make_button(layout, self.FILE_URL_TEXT,
                 'visit_filelink', not (self.data.file_url and not self.data.file_url.startswith('file:')))
         hbox.pack(cellpack.align_center(fileurl_hotspot))
 
-        license_hotspot = self._make_button(layout, _('License Page'), 'visit_license', not self.data.license)
+        license_hotspot = self._make_button(layout, self.LICENSE_PAGE_TEXT, 'visit_license', not self.data.license)
         hbox.pack(cellpack.align_center(license_hotspot))
 
         # 12px between the normal content and the flap border and 8px between
@@ -567,7 +590,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         # if downloaded, then show the file type
         if self.data.downloaded:
-            details_rows.append((_('File Type'), self.data.file_format, None))
+            details_rows.append((self.FILE_TYPE_TEXT, self.data.file_format, None))
 
         # torrent information
         if (self.data.download_info is not None
@@ -577,21 +600,21 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             # these next four bits don't apply
             if self.data.leechers is not None:
                 details_rows.append(
-                    (_('Seeders'), str(self.data.seeders), None))
+                    (self.SEEDERS_TEXT, str(self.data.seeders), None))
                 details_rows.append(
-                    (_('Leechers'), str(self.data.leechers), None))
+                    (self.LEECHERS_TEXT, str(self.data.leechers), None))
                 details_rows.append((None, None, None))
 
             if self.data.leechers is not None:
                 details_rows.append(
-                    (_('Upload Rate'), displaytext.download_rate(self.data.up_rate), None))
-            details_rows.append((_('Upload Total'), displaytext.size(self.data.up_total), None))
+                    (self.UPLOAD_RATE_TEXT, displaytext.download_rate(self.data.up_rate), None))
+            details_rows.append((self.UPLOAD_TOTAL_TEXT, displaytext.size(self.data.up_total), None))
             details_rows.append((None, None, None))
 
             if self.data.leechers is not None:
                 details_rows.append(
-                    (_('Down Rate'), displaytext.download_rate(self.data.down_rate), None))
-            details_rows.append((_('Down Total'), displaytext.size(self.data.down_total), None))
+                    (self.DOWN_RATE_TEXT, displaytext.download_rate(self.data.down_rate), None))
+            details_rows.append((self.DOWN_TOTAL_TEXT, displaytext.size(self.data.down_total), None))
 
         if details_rows:
             details_box = self.create_pseudo_table(layout, details_rows)
@@ -636,9 +659,9 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             hbox.pack(cellpack.align_middle(cellpack.Hotspot('play', self.play_button)))
         else:
             if self.data.file_type == 'application/x-bittorrent':
-                text = _('Download Torrent')
+                text = self.DOWNLOAD_TORRENT_TEXT
             else:
-                text = _('Download')
+                text = self.DOWNLOAD_TEXT
             hotspot = self._make_button(layout, text, 'download',
                     icon=self.download_arrow)
             hbox.pack(cellpack.align_middle(cellpack.align_middle(hotspot)))
@@ -649,7 +672,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             inner_hbox = hbox
 
             inner_hbox.pack(cellpack.align_middle(self.alert_image))
-            inner_hbox.pack(cellpack.align_middle(layout.textbox(_("Error"))))
+            inner_hbox.pack(cellpack.align_middle(layout.textbox(self.ERROR_TEXT)))
             inner_hbox.pack(cellpack.align_middle(layout.textbox(u"-")))
             inner_hbox.pack(cellpack.align_middle(layout.textbox(self.data.download_info.short_reason_failed)))
 
@@ -663,13 +686,13 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         elif self.data.pending_auto_dl:
             hbox.pack_space(2)
             layout.set_font(0.80, bold=True)
-            hbox.pack(cellpack.align_middle(layout.textbox(_('queued for autodownload'))))
+            hbox.pack(cellpack.align_middle(layout.textbox(self.QUEUED_TEXT)))
 
         elif self.data.downloaded and not self.data.video_watched:
             layout.set_font(0.80, bold=True)
             layout.set_text_color((1, 1, 1))
             inner_hbox = hbox
-            inner_hbox.pack(cellpack.align_middle(layout.textbox(_('Unplayed'))))
+            inner_hbox.pack(cellpack.align_middle(layout.textbox(self.UNPLAYED_TEXT)))
             inner_hbox.pack_space(2)
 
             emblem_color = UNPLAYED_COLOR
@@ -696,7 +719,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             layout.set_font(0.80, bold=True)
             layout.set_text_color((1, 1, 1))
             inner_hbox = hbox
-            inner_hbox.pack(cellpack.align_middle(layout.textbox(_('Newly Available'))))
+            inner_hbox.pack(cellpack.align_middle(layout.textbox(self.NEWLY_AVAILABLE_TEXT)))
             inner_hbox.pack_space(2)
 
             emblem_color = AVAILABLE_COLOR
@@ -717,19 +740,19 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         hbox = cellpack.HBox(spacing=5)
         layout.set_font(0.85)
         if self.data.expiration_date:
-            hotspot = self._make_button(layout, _('Keep'), 'keep')
+            hotspot = self._make_button(layout, self.KEEP_TEXT, 'keep')
             hbox.pack(cellpack.align_middle(hotspot))
 
         if self.data.is_external:
-            hotspot = self._make_button(layout, _('Remove'), 'delete')
+            hotspot = self._make_button(layout, self.REMOVE_TEXT, 'delete')
         else:
-            hotspot = self._make_button(layout, _('Delete'), 'delete')
+            hotspot = self._make_button(layout, self.DELETE_TEXT, 'delete')
 
         hbox.pack(cellpack.align_middle(hotspot))
         if (self.data.download_info is not None
                 and self.data.download_info.torrent):
             if self.data.download_info.state in ("uploading", "uploading-paused"):
-                hotspot = self._make_button(layout, _('Stop seeding'), 
+                hotspot = self._make_button(layout, self.STOP_SEEDING_TEXT,
                     'stop_seeding')
                 hbox.pack(cellpack.align_middle(hotspot))
 
