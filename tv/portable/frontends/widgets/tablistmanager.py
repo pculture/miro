@@ -42,6 +42,7 @@ class TabListManager(object):
         self.widget_to_tablist = {}
         for tab_list in self.all_tab_lists():
             self.widget_to_tablist[tab_list.view] = tab_list
+        self.__table_view = None
 
     def populate_tab_list(self):
         self.static_tab_list.build_tabs()
@@ -148,6 +149,9 @@ class TabListManager(object):
 
     def get_selection(self):
         table_view = self.__table_view
-        selected_tabs = [table_view.model[i][0] for i in
-                table_view.get_selection()]
-        return self.selected_tab_list.type, selected_tabs
+        if table_view is not None:
+            selected_tabs = [table_view.model[i][0] for i in
+                    table_view.get_selection()]
+            return self.selected_tab_list.type, selected_tabs
+        else:
+            return None, []
