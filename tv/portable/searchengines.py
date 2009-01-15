@@ -34,6 +34,7 @@ import os
 from miro import config
 from miro import prefs
 import logging
+from miro.gtcache import gettext as _
 
 class SearchEngineInfo:
     def __init__(self, name, title, url, sort_order=0, filename=None):
@@ -142,7 +143,7 @@ def create_engines():
     for fn in engines.itervalues():
         load_search_engine(fn)
 
-    _engines.append(SearchEngineInfo(u"all", u"Search All", u"", -1))
+    _engines.append(SearchEngineInfo(u"all", _("Search All"), u"", -1))
     _engines.sort(lambda a, b: cmp((a.sort_order, a.name, a.title), 
                                    (b.sort_order, b.name, b.title)))
 
