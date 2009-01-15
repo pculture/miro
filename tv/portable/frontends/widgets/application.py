@@ -284,7 +284,7 @@ class Application:
         if item.feed_url:
             share_items["feed_url"] = item.feed_url
         query_string = "&".join(["%s=%s" % (key, urllib.quote(val)) for key, val in share_items.items()])
-        share_url = "http://miroguide.com/share/item/?%s" % query_string
+        share_url = "%s/item/?%s" % (config.get(prefs.SHARE_URL), query_string)
         self.open_url(share_url)
 
     def share_feed(self):
@@ -293,7 +293,7 @@ class Application:
             ci = channel_infos[0]
             share_items = {"feed_url": ci.base_href}
             query_string = "&".join(["%s=%s" % (key, urllib.quote(val)) for key, val in share_items.items()])
-            share_url = "http://miroguide.com/share/feed/?%s" % query_string
+            share_url = "%s/feed/?%s" % (config.get(prefs.SHARE_URL), query_string)
             self.open_url(share_url)
 
     def check_then_open_file(self, filename):
@@ -596,13 +596,6 @@ class Application:
             return
 
         messages.ExportFeeds(filename).send_to_backend()
-
-    def mail_to_friend(self, url, title):
-        emailfriend_url = config.get(prefs.EMAILFRIEND_URL)
-        if not emailfriend_url.endswith("?"):
-            emailfriend_url += "?"
-        query = urllib.urlencode({"url": url, "title": title.encode('utf-8')})
-        app.widgetapp.open_url(emailfriend_url + query)
 
     def copy_feed_url(self):
         t, channel_infos = app.tab_list_manager.get_selection()

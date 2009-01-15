@@ -96,16 +96,10 @@ if 'DTV_CHANNELGUIDE_FIRST_TIME_URL' in os.environ:
 else:
     effectiveChannelGuideFirstTime = u'https://www.miroguide.com/firsttime'
 
-if 'DTV_VIDEOBOMB_URL' in os.environ:
-    effectiveVideobomb = util.unicodify(os.environ['DTV_VIDEOBOMB_URL'])
+if 'DTV_SHARE_URL' in os.environ:
+    effectiveShare = util.unicodify(os.environ['DTV_SHARE_URL'])
 else:
-    effectiveVideobomb = u'http://www.videobomb.com/api/submit_or_bomb'
-
-if 'DTV_EMAILFRIEND_URL' in os.environ:
-    effectiveEmailfriend = util.unicodify(os.environ['DTV_VIDEOBOMB_URL'])
-else:
-    effectiveEmailfriend = u'http://www.videobomb.com/democracy_channel/email_friend?'
-
+    effectiveShare = u'https://www.miroguide.com/share'
 
 if 'DTV_AUTOUPDATE_URL' in os.environ:
     effectiveAutoupdate = util.unicodify(os.environ['DTV_AUTOUPDATE_URL'])
@@ -123,11 +117,9 @@ CHANNEL_GUIDE_ALLOWED_URLS = Pref(key='ChannelGuideAllowedURLs',
                               platformSpecific=False)
 ADDITIONAL_CHANNEL_GUIDES = Pref(key='additionalChannelGuides', default='',
                                   platformSpecific=False)
-VIDEOBOMB_URL     = Pref(key='VideobombURL',    default=effectiveVideobomb,
+SHARE_URL         = Pref(key='ShareURL',        default=effectiveShare,
                          platformSpecific=False)
 AUTOUPDATE_URL    = Pref(key='AutoupdateURL',   default=effectiveAutoupdate,
-                         platformSpecific=False)
-EMAILFRIEND_URL   = Pref(key='EmailfriendURL',  default=effectiveEmailfriend,
                          platformSpecific=False)
 DONATE_URL        = Pref(key='DonateURL', default=u"http://www.getmiro.com/donate/",
                          platformSpecific=False)
