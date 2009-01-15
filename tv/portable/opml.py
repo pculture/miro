@@ -46,6 +46,7 @@ from miro import eventloop
 
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
+from miro.xhtmltools import urlencode
 
 class Exporter(object):
     def __init__(self):
@@ -109,34 +110,33 @@ class Exporter(object):
         else:
             spacer = u'\t\t'
 
-        # FIXME - RSSFeedImpl items should be of type "rss", but
-        # it's not clear what type other things should be.  We
-        # mark them as "mirofeed"--this should get changed if there
-        # are issues.
-        if isinstance(thefeed.getActualFeed(), feed.RSSFeedImpl):
-            feedtype = u'type="rss"'
-            extraArgs = []
-            autoDownload = thefeed.getAutoDownloadMode()
-            if autoDownload != 'new':
-                extraArgs.append(
-                    'miro:autoDownload=%s' % saxutils.quoteattr(autoDownload))
-            expiryTime = thefeed.expire
-            if expiryTime != 'system':
-                if expiryTime == 'feed':
-                    expiryTime = unicode(thefeed.get_expiration_time())
-                extraArgs.append(
-                    'miro:expiryTime=%s' % saxutils.quoteattr(expiryTime))
-            extraArgs = u' '.join(extraArgs)
-        else:
-            feedtype = u'type="mirofeed"'
-            extraArgs = u''
+        # skip watched folders and other non-RSSFeedImpl derivatives
+        if not isinstance(thefeed.getActualFeed(), feed.RSSFeedImpl):
+            return
 
-        self.io.write(
-            u'%s<outline %s text=%s xmlUrl=%s miro:section=%s %s/>\n' % (
-                    spacer, feedtype, saxutils.quoteattr(thefeed.get_title()),
-                    saxutils.quoteattr(thefeed.getURL()),
-                    saxutils.quoteattr(thefeed.section),
-                    extraArgs))
+        extraArgs = []
+
+        search_term = thefeed.getSearchTerm()
+        if search_term:
+            extraArgs.append('miro:searchTerm=%s' % saxutils.quoteattr(search_term))
+
+        autoDownload = thefeed.getAutoDownloadMode()
+        if autoDownload != 'new':
+            extraArgs.append('miro:autoDownload=%s' % saxutils.quoteattr(autoDownload))
+
+        expiryTime = thefeed.expire
+        if expiryTime != 'system':
+            if expiryTime == 'feed':
+                expiryTime = unicode(thefeed.get_expiration_time())
+            extraArgs.append('miro:expiryTime=%s' % saxutils.quoteattr(expiryTime))
+        extraArgs = u' '.join(extraArgs)
+
+        self.io.write(u'%s<outline type="rss" text=%s xmlUrl=%s miro:section=%s %s/>\n' % (
+                spacer,
+                saxutils.quoteattr(thefeed.get_title()),
+                saxutils.quoteattr(thefeed.getBaseURL()),
+                saxutils.quoteattr(thefeed.section),
+                extraArgs))
 
     def _write_site_entry(self, site):
         quoted_url = saxutils.quoteattr(site.url)
@@ -223,6 +223,11 @@ class Importer(object):
 
     def _handle_feed_entry(self, entry):
         url = entry.getAttribute("xmlUrl")
+
+        search_term = entry.getAttribute('miro:searchTerm')
+        if search_term:
+            url = u"dtv:searchTerm:%s?%s" % (urlencode(url), urlencode(search_term))
+
         f = feed.get_feed_by_url(url)
         if f is None:
             if self.currentFolder:
@@ -265,7 +270,7 @@ class Importer(object):
     
     def _handle_folder_entry(self, entry):
         title = entry.getAttribute("text")
-        section = unicode(entry.getAttribute("miro_section"))
+        section = unicode(entry.getAttribute("miro:section"))
         if section not in (u'audio', u'video'):
             section = u'video'
         self.currentFolder = folder.ChannelFolder(title, section)
