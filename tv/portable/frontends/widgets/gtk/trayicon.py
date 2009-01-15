@@ -60,12 +60,12 @@ if gtk.check_version(2, 10, 0) == None:
             window = app.widgetapp.window
 
             if config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
-                menu_items.append((_("Play Next Unwatched (%(unwatched)d)",
-                                {"unwatched": app.widgetapp.unwatched_count}),
+                menu_items.append((_("Play Next Unplayed (%(unplayed)d)",
+                                {"unplayed": app.widgetapp.unwatched_count}),
                         self.on_play_unwatched))
             else:
-                menu_items.append((_("Play All Unwatched (%(unwatched)d)",
-                                {"unwatched": app.widgetapp.unwatched_count}),
+                menu_items.append((_("Play All Unplayed (%(unplayed)d)",
+                                {"unplayed": app.widgetapp.unwatched_count}),
                         self.on_play_unwatched))
             menu_items.append((_("Pause All Downloads (%(downloading)d)",
                             {"downloading": app.widgetapp.download_count}),

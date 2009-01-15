@@ -100,10 +100,10 @@ class ItemContextMenuHandler(object):
             if not item.has_original_name:
                 menu.append((_('Revert Item Name'), app.widgetapp.revert_item_name))
             if item.video_watched:
-                menu.append((_('Mark as Unwatched'),
+                menu.append((_('Mark as Unplayed'),
                     messages.MarkItemUnwatched(item.id).send_to_backend))
             else:
-                menu.append((_('Mark as Watched'),
+                menu.append((_('Mark as Played'),
                     messages.MarkItemWatched(item.id).send_to_backend))
             if item.expiration_date:
                 menu.append((_('Keep'),
@@ -197,12 +197,12 @@ class ItemContextMenuHandler(object):
                 def mark_unwatched():
                     for item in watched:
                         messages.MarkItemUnwatched(item.id).send_to_backend()
-                menu.append((_('Mark as Unwatched'), mark_unwatched))
+                menu.append((_('Mark as Unplayed'), mark_unwatched))
             if unwatched:
                 def mark_watched():
                     for item in unwatched:
                         messages.MarkItemWatched(item.id).send_to_backend()
-                menu.append((_('Mark as Watched'), mark_watched))
+                menu.append((_('Mark as Played'), mark_watched))
             if expiring:
                 def keep_videos():
                     for item in expiring:
