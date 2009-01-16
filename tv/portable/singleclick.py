@@ -134,7 +134,31 @@ def _build_entry(url, contentType, additional):
 
     return entry
 
-def add_download(url, additional=None):
+def download_unknown_mime_type(url):
+    title = _('File Download')
+    text = _('This file at %(url)s does not appear to be audio, video, or an RSS feed.',
+             {"url": url})
+    dialog = dialogs.ThreeChoiceDialog(title, text,
+            dialogs.BUTTON_DOWNLOAD_ANYWAY, dialogs.BUTTON_OPEN_IN_EXTERNAL_BROWSER, dialogs.BUTTON_CANCEL)
+    def callback(dialog):
+        if check_url_exists(url):
+            return
+        if dialog.choice == dialogs.BUTTON_DOWNLOAD_ANYWAY:
+            # Fake a viedo mime type, so we will download the item.
+            download_video(item.get_entry_for_url(url, 'video/x-unknown'))
+        elif dialog.choice == dialogs.BUTTON_OPEN_IN_EXTERNAL_BROWSER:
+            messages.OpenInExternalBrowser(url).send_to_frontend()
+    dialog.run(callback)
+
+def add_download(url, additional=None, handle_unknown_callback=download_unknown_mime_type):
+    """Given a url, this tries to figure out what it is (video, audio, torrent, rss feed,
+    flash file that Mirocan scrape) and handles it accordingly.
+
+    If it can't figure out what it is, then it calls handle_unknown_callback with the url of
+    the thing it can't identify and thus doesn't know what to do with.
+
+    The additional parameter is a dict of metadata to toss in the entry Miro builds.
+    """
     if check_url_exists(url):
         return
 
@@ -161,7 +185,7 @@ def add_download(url, additional=None):
                 add_feeds([url])
                 return
 
-        download_unknown_mime_type(url)
+        handle_unknown_callback(url)
 
     def callback_flash(old_url, additional=additional):
         def _callback(url, contentType="video/flv", additional=additional):
@@ -172,7 +196,7 @@ def add_download(url, additional=None):
                 download_video(entry)
                 return
 
-            download_unknown_mime_type(old_url)
+            handle_unknown_callback(url)
 
         flashscraper.try_scraping_url(url, _callback)
 
@@ -202,25 +226,9 @@ def add_download(url, additional=None):
         if filetypes.is_video_enclosure(entry['enclosures'][0]):
             download_video(entry)
         else:
-            download_unknown_mime_type(url)
+            handle_unknown_callback(url)
 
     httpclient.grabHeaders(url, callback, errback)
-
-def download_unknown_mime_type(url):
-    title = _('File Download')
-    text = _('This file at %(url)s does not appear to be audio, video, or an RSS feed.',
-             {"url": url})
-    dialog = dialogs.ThreeChoiceDialog(title, text,
-            dialogs.BUTTON_DOWNLOAD_ANYWAY, dialogs.BUTTON_OPEN_IN_EXTERNAL_BROWSER, dialogs.BUTTON_CANCEL)
-    def callback(dialog):
-        if check_url_exists(url):
-            return
-        if dialog.choice == dialogs.BUTTON_DOWNLOAD_ANYWAY:
-            # Fake a viedo mime type, so we will download the item.
-            download_video(item.get_entry_for_url(url, 'video/x-unknown'))
-        elif dialog.choice == dialogs.BUTTON_OPEN_IN_EXTERNAL_BROWSER:
-            messages.OpenInExternalBrowser(url).send_to_frontend()
-    dialog.run(callback)
 
 def download_video(entry):
     manualFeed = get_manual_feed()

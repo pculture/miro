@@ -472,8 +472,9 @@ class RemoveVideosFromPlaylist(BackendMessage):
         self.video_ids = video_ids
 
 class DownloadURL(BackendMessage):
-    def __init__(self, url):
+    def __init__(self, url, handle_unknown_callback=None):
         self.url = util.toUni(url)
+        self.handle_unknown_callback = handle_unknown_callback
 
 class OpenIndividualFile(BackendMessage):
     def __init__(self, filename):

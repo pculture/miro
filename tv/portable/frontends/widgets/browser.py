@@ -31,6 +31,7 @@ what to do with them.
 """
 
 import logging
+from urlparse import urlparse
 
 from miro import app
 from miro import filetypes
@@ -124,6 +125,9 @@ class Browser(widgetset.Browser):
         widgetset.Browser.__init__(self)
         self.guide_info = guide_info
     
+    def handle_unknown_url(self, url):
+        self.navigate(url)
+
     def should_load_url(self, url):
         """Returns True if the Miro browser should handle the url and False
         otherwise.
@@ -133,14 +137,21 @@ class Browser(widgetset.Browser):
         * if the url is something that Miro should download instead
         * other things?
         """
-        logging.info("got %s", url)
+        logging.debug("got %s", url)
 
         url = util.toUni(url)
         if subscription.is_subscribe_link(url):
             messages.SubscriptionLinkClicked(url).send_to_backend()
             return False
 
-        # FIXME - handle downloadable items here
+        # parse the path out of the url and run that through the filetypes
+        # code to see if it might be a video, audio or torrent file.
+        # if so, try downloading it.
+        ret = urlparse(url)
+        if filetypes.is_allowed_filename(ret.path):
+            logging.debug("miro wants to handle %s", url)
+            messages.DownloadURL(url, self.handle_unknown_url).send_to_backend()
+            return False
 
         return True
 
