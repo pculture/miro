@@ -62,14 +62,14 @@ from miro import prefs
 from miro.plat.utils import samefile, filenameToUnicode, unicodeToFilename
 from miro import messages
 
-_commandLineArgs = []
-commandLineVideoIds = None
-commandLineView = None
+_command_line_args = []
+_command_line_video_ids = None
+_command_line_view = None
 
 def get_manual_feed():
-    manualFeed = util.getSingletonDDBObject(views.manualFeed)
-    manualFeed.confirmDBThread()
-    return manualFeed
+    manual_feed = util.getSingletonDDBObject(views.manualFeed)
+    manual_feed.confirmDBThread()
+    return manual_feed
 
 def add_video(path, single=False):
     path = os.path.abspath(path)
@@ -80,7 +80,7 @@ def add_video(path, single=False):
                 os.path.exists(itemFilename) and
                 samefile(itemFilename, path)):
             print "Not adding duplicate video: %s" % path.decode('ascii', 'ignore')
-            commandLineVideoIds.add(i.getID())
+            _command_line_video_ids.add(i.getID())
             return
     if single:
         correctFeed = util.getSingletonDDBObject(views.singleFeed)
@@ -91,7 +91,7 @@ def add_video(path, single=False):
         correctFeed = get_manual_feed()
     fileItem = item.FileItem(path, feed_id=correctFeed.getID())
     fileItem.markItemSeen()
-    commandLineVideoIds.add(fileItem.getID())
+    _command_line_video_ids.add(fileItem.getID())
 
 def check_url_exists(url):
     manualFeed = get_manual_feed()
@@ -244,22 +244,14 @@ def add_torrent(path, torrentInfohash):
     newItem.download()
 
 def reset_command_line_view():
-    global commandLineView, commandLineVideoIds
-    if commandLineView is not None:
-        commandLineView.unlink()
-        commandLineView = None
-    commandLineVideoIds = set()
+    global _command_line_view, _command_line_video_ids
+    if _command_line_view is not None:
+        _command_line_view.unlink()
+        _command_line_view = None
+    _command_line_video_ids = set()
 
 def in_command_line_video_ids(item_):
-    return item_.getID() in commandLineVideoIds
-
-# FIXME - this never gets used
-def play_command_line_view():
-    global commandLineView
-    if len(commandLineVideoIds) == 0:
-        return
-    commandLineView = views.items.filter(in_command_line_video_ids)
-    signals.system.videos_added(commandLineView)
+    return item_.getID() in _command_line_video_ids
 
 def add_feed(path):
     feed.add_feed_from_file(path)
@@ -369,32 +361,32 @@ def add_subscription_url(prefix, expectedContentType, url):
     httpclient.grabURL(realURL, callback, errback)
 
 def set_command_line_args(args):
-    _commandLineArgs.extend(args)
+    _command_line_args.extend(args)
 
 def download_url(url):
     if url.startswith('http:') or url.startswith('https:'):
         add_download(url)
     elif url.startswith('feed:'):
         # hack so feed: acts as http:
-        url = "http:" + url[len("feed:"):]
+        url = "http:" + url[5:]
         add_download(url)
     elif url.startswith('feeds:'):
         # hack so feeds: acts as https:
-        url = "https:" + url[len("feeds:"):]
+        url = "https:" + url[6:]
         add_download(url)
     else:
         parse_command_line_args([unicodeToFilename(url)])
 
 def parse_command_line_args(args=None):
     if args is None:
-        global _commandLineArgs
-        args = _commandLineArgs
-        _commandLineArgs = []
+        global _command_line_args
+        args = _command_line_args
+        _command_line_args = []
 
     reset_command_line_view()
 
-    addedVideos = False
-    addedDownloads = False
+    added_videos = False
+    added_downloads = False
 
     for arg in args:
         if arg.startswith('file://'):
@@ -419,7 +411,7 @@ def parse_command_line_args(args=None):
                     dialogs.MessageBoxDialog(title, msg).run()
                     continue
                 add_torrent(arg, torrentInfohash)
-                addedDownloads = True
+                added_downloads = True
             elif ext in ('.rss', '.rdf', '.atom', '.ato'):
                 add_feed(arg)
             elif ext in ('.miro', '.democracy', '.dem', '.opml'):
@@ -428,15 +420,15 @@ def parse_command_line_args(args=None):
                     add_subscriptions(ret[0], ret[1])
             else:
                 add_video(arg, len(args) == 1)
-                addedVideos = True
+                added_videos = True
         else:
             logging.warning("parse_command_line_args: %s doesn't exist", arg)
 
-    if addedVideos:
+    if added_videos:
         f = util.getSingletonDDBObject(views.singleFeed)
         item_infos = [messages.ItemInfo(i) for i in f.items]
         messages.PlayMovie(item_infos).send_to_frontend()
 
-    if addedDownloads:
+    if added_downloads:
         # FIXME - switch to downloads tab?
         pass
