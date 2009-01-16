@@ -197,7 +197,6 @@ class VideoRenderer (Widget):
     def can_open_file(self, qtmovie):
         threads.warn_if_not_on_main_thread('VideoRenderer.can_open_file')
         can_open = False
-        return False
 
         # Purely referential movies have a no duration, no track and need to be
         # streamed first. Since we don't support this yet, we delegate the
