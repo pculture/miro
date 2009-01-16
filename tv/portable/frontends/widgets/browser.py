@@ -124,8 +124,10 @@ class Browser(widgetset.Browser):
     def __init__(self, guide_info):
         widgetset.Browser.__init__(self)
         self.guide_info = guide_info
+        self.seen_cache = {}
     
     def handle_unknown_url(self, url):
+        self.seen_cache[url] = 1
         self.navigate(url)
 
     def should_load_url(self, url):
@@ -139,6 +141,10 @@ class Browser(widgetset.Browser):
         """
         logging.debug("got %s", url)
 
+        if url in self.seen_cache:
+            del self.seen_cache[url]
+            return True
+
         url = util.toUni(url)
         if subscription.is_subscribe_link(url):
             messages.SubscriptionLinkClicked(url).send_to_backend()
@@ -150,7 +156,7 @@ class Browser(widgetset.Browser):
         ret = urlparse(url)
         if filetypes.is_allowed_filename(ret.path):
             logging.debug("miro wants to handle %s", url)
-            messages.DownloadURL(url, self.handle_unknown_url).send_to_backend()
+            messages.DownloadURL(url, lambda x: call_on_ui_thread(self.handle_unknown_url, x)).send_to_backend()
             return False
 
         return True
