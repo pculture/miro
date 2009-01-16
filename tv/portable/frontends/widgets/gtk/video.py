@@ -423,6 +423,8 @@ class VideoRenderer(VBox):
 
         self._video_widget.wrapped_widget_connect('button-press-event', self.on_button_press)
 
+        self.overlay = None
+
     def teardown(self):
         self.renderer.reset()
         app.info_updater.item_changed_callbacks.remove('manual',
@@ -454,6 +456,8 @@ class VideoRenderer(VBox):
 
     def play(self):
         self.renderer.play()
+        # do this to trigger the overlay showing up for a smidge
+        self.on_mouse_motion(None, None)
 
     def play_from_time(self, resume_time=0):
         self.seek_to_time(resume_time)
@@ -540,6 +544,8 @@ class VideoRenderer(VBox):
         return False
 
     def on_mouse_motion(self, widget, event):
+        if not self.overlay:
+            return
         if not self.overlay.is_visible():
             self.show_controls()
             self.schedule_hide_controls(self.HIDE_CONTROLS_TIMEOUT)
