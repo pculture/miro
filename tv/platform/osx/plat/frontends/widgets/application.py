@@ -50,7 +50,9 @@ from miro import eventloop
 from miro import singleclick
 from miro.frontends.widgets import menus
 from miro.frontends.widgets.application import Application
+from miro.plat import utils
 from miro.plat import growl
+from miro.plat import bundle
 from miro.plat import _growlImage
 from miro.plat import migrateappname
 from miro.plat.utils import ensureDownloadDaemonIsTerminated, filenameTypeToOSFilename, osFilenamesToFilenameTypes
@@ -129,6 +131,22 @@ class OSXApplication(Application):
     def reveal_file(self, fn):
         filename = filenameTypeToOSFilename(fn)
         NSWorkspace.sharedWorkspace().selectFile_inFileViewerRootedAtPath_(filename, nil)
+    
+    def open_file(self, fn):
+        filename = filenameTypeToOSFilename(fn)
+        ws = NSWorkspace.sharedWorkspace()
+        if utils.get_pyobjc_major_version() == 2:
+            ok, externalApp, movieType = ws.getInfoForFile_application_type_(filename, None, None)
+        else:
+            ok, externalApp, movieType = ws.getInfoForFile_application_type_(filename)
+        if ok:
+            if externalApp == bundle.getBundlePath():
+                logging.warn('trying to play movie externally with ourselves.')
+                ok = False
+            else:
+                ok = ws.openFile_withApplication_andDeactivate_(filename, nil, YES)
+        if not ok:
+            logging.warn("movie %s could not be externally opened" % fn)
     
     def get_main_window_dimensions(self):
         windowFrame = config.get(prefs.MAIN_WINDOW_FRAME)

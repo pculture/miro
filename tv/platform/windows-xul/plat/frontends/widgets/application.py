@@ -198,6 +198,9 @@ class WindowsApplication(Application):
             fn = os.path.dirname(fn)
         os.startfile(fn)
 
+    def open_file(self, fn):
+        os.startfile(fn)
+
     def get_main_window_dimensions(self):
         return widgets.Rect.from_string(config.get(options.WINDOW_DIMENSIONS))
 
