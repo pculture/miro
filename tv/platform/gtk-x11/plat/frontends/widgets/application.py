@@ -190,10 +190,12 @@ class GtkX11Application(Application):
         else:
             os.spawnlp(os.P_NOWAIT, "gnome-open", "gnome-open", url)
 
-    def open_file(self, filename):
+    def reveal_file(self, filename):
         if not os.path.isdir(filename):
             filename = os.path.dirname(filename)
+        self.open_file(filename)
 
+    def open_file(self, filename):
         if resources.check_kde():
             os.spawnlp(os.P_NOWAIT, "kfmclient", "kfmclient", "exec", "file://" + filename)
         else:
