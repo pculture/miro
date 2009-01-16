@@ -49,7 +49,8 @@ class DownloadsController(itemlistcontroller.ItemListController):
     def build_widget(self):
         self._make_item_views()
 
-        self.widget.titlebar_vbox.pack_start(self.make_titlebar())
+        self.titlebar = self.make_titlebar()
+        self.widget.titlebar_vbox.pack_start(self.titlebar)
 
         self.toolbar = DownloadToolbar()
         self.toolbar.connect("pause-all", self._on_pause_all)
