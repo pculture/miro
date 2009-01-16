@@ -237,7 +237,6 @@ class VideoRenderer (Widget):
 
     def set_movie_item(self, item_info, callback, errback):
         threads.warn_if_not_on_main_thread('VideoRenderer.set_movie_item')
-        self.video_window.setup(item_info, self)
         qtmovie = self.get_movie_from_file(item_info.video_path)
         self.reset()
         if qtmovie is not nil:
@@ -246,6 +245,7 @@ class VideoRenderer (Widget):
             self.video_view.setNeedsDisplay_(YES)
             self.movie_notifications = NotificationForwarder.create(self.movie)
             self.movie_notifications.connect(self.handle_movie_notification, QTMovieDidEndNotification)
+            self.video_window.setup(item_info, self)
             callback()
         else:
             errback()
