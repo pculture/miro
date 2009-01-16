@@ -193,7 +193,7 @@ class WindowsApplication(Application):
             )
             dialogs.show_message(title, msg, dialogs.WARNING_MESSAGE)
 
-    def open_file(self, fn):
+    def reveal_file(self, fn):
         if not os.path.isdir(fn):
             fn = os.path.dirname(fn)
         os.startfile(fn)

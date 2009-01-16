@@ -126,7 +126,7 @@ class OSXApplication(Application):
         # as under other OSes. Sometimes it blocks, sometimes it doesn't.
         NSWorkspace.sharedWorkspace().openURL_(NSURL.URLWithString_(url))
 
-    def open_file(self, fn):
+    def reveal_file(self, fn):
         filename = filenameTypeToOSFilename(fn)
         NSWorkspace.sharedWorkspace().selectFile_inFileViewerRootedAtPath_(filename, nil)
     

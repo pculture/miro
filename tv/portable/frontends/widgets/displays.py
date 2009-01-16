@@ -394,7 +394,7 @@ class CantPlayWidget(widgetset.SolidBackground):
         return label
 
     def _on_reveal(self, button):
-        app.widgetapp.open_file(os.path.dirname(self.video_path))
+        app.widgetapp.reveal_file(self.video_path)
 
     def _on_play_externally(self, button):
         print 'SHOULD PLAY EXTERNALLY: ', self.video_path

@@ -249,7 +249,7 @@ class ItemListController(object):
         elif name == 'visit_license':
             app.widgetapp.open_url(item_info.license)
         elif name == 'show_local_file':
-            app.widgetapp.check_then_open_file(item_info.video_path)
+            app.widgetapp.check_then_reveal_file(item_info.video_path)
         elif name.startswith('description-link:'):
             url = name.split(':', 1)[1]
             base_href = widgetutil.get_feed_info(item_info.feed_id).base_href

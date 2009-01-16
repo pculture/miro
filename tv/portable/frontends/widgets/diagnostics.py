@@ -54,7 +54,7 @@ from miro.plat.utils import get_available_bytes_for_movies
 
 def open_helper(d):
     def _open_handler(widget):
-        app.widgetapp.open_file(d)
+        app.widgetapp.reveal_file(d)
     return _open_handler
 
 def get_database_size():

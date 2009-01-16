@@ -296,7 +296,7 @@ class Application:
             share_url = "%s/feed/?%s" % (config.get(prefs.SHARE_URL), query_string)
             self.open_url(share_url)
 
-    def check_then_open_file(self, filename):
+    def check_then_reveal_file(self, filename):
         if not os.path.exists(filename):
             basename = os.path.basename(filename)
             dialogs.show_message(
@@ -305,7 +305,7 @@ class Application:
                   {"filename": basename}),
                 dialogs.WARNING_MESSAGE)
         else:
-            self.open_file(filename)
+            self.reveal_file(filename)
 
     def open_video(self):
         title = _('Open Files...')

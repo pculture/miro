@@ -144,7 +144,7 @@ class ItemContextMenuHandler(object):
                 reveal_text = _('File in %(progname)s', {"progname": file_navigator_name})
             else:
                 reveal_text = _('File on Disk')
-            view_menu.append((reveal_text, lambda: app.widgetapp.check_then_open_file(item.video_path)))
+            view_menu.append((reveal_text, lambda: app.widgetapp.check_then_reveal_file(item.video_path)))
 
         menu.append((_('View'), view_menu))
 
