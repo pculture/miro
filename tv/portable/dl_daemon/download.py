@@ -61,6 +61,13 @@ def pauseDownload(dlid):
         return True
     return download.pause()
 
+def info_hash_to_long(info_hash):
+    # the info_hash() method from libtorrent returns a "big_number" object.
+    # This doesn't hash very well: different instances with the same value
+    # will have different hashes.  So we need to convert them to long objects,
+    # though this weird process
+    return long(str(info_hash), 16)
+
 def startDownload(dlid):
     try:
         download = _downloads[dlid]
@@ -167,6 +174,7 @@ class TorrentSession:
 
     def __init__(self):
         self.torrents = set()
+        self.info_hashes = set()
         self.session = None
         self.pnp_on = None
         self.pe_set = None
@@ -247,16 +255,18 @@ class TorrentSession:
         elif key in (prefs.LIMIT_CONNECTIONS_BT.key, prefs.CONNECTION_LIMIT_BT_NUM.key):
             self.setConnectionLimit()
 
-    def add_torrent(self, torrent):
-        self.torrents.add(torrent)
+    def torrent_is_duplicate(self, torrent_info):
+        return info_hash_to_long(torrent_info.info_hash()) in self.info_hashes
 
-    def removeTorrent(self, torrent):
-        try:
-            self.torrents.remove(torrent)
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            logging.warning("removeTorrent failed.")
+    def add_torrent(self, downloader):
+        self.torrents.add(downloader)
+        self.info_hashes.add(info_hash_to_long(downloader.torrent.info_hash()))
+
+    def remove_torrent(self, downloader):
+        if downloader in self.torrents:
+            self.torrents.remove(downloader)
+            info_hash = info_hash_to_long(downloader.torrent.info_hash())
+            self.info_hashes.remove(info_hash)
 
     def updateTorrents(self):
         # Copy this set into a list in case any of the torrents gets removed during the iteration.
@@ -814,6 +824,11 @@ class BTDownloader(BGDownloader):
     def _startTorrent(self):
         try:
             torrent_info = lt.torrent_info(lt.bdecode(self.metainfo))
+            if torrentSession.torrent_is_duplicate(torrent_info):
+                self.handleError(_("Duplicate torrent"),
+                                 _("You are already downloading this "
+                                 "torrent as another item."))
+                return
             self.totalSize = torrent_info.total_size()
 
             if self.firstTime and not self.acceptDownloadSize(self.totalSize):
@@ -837,7 +852,7 @@ class BTDownloader(BGDownloader):
 
     def _shutdownTorrent(self):
         try:
-            torrentSession.removeTorrent(self)
+            torrentSession.remove_torrent(self)
             if self.torrent is not None:
                 self.torrent.pause()
                 self.fastResumeData = lt.bencode(self.torrent.write_resume_data())
@@ -850,7 +865,7 @@ class BTDownloader(BGDownloader):
 
     def _pauseTorrent(self):
         try:
-            torrentSession.removeTorrent(self)
+            torrentSession.remove_torrent(self)
             if self.torrent is not None:
                 self.torrent.pause()
         except (SystemExit, KeyboardInterrupt):
