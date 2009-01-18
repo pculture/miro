@@ -600,7 +600,7 @@ class Application:
     def copy_feed_url(self):
         t, channel_infos = app.tab_list_manager.get_selection()
         if t in ('feed', 'audio-feed') and len(channel_infos) == 1:
-            app.widgetapp.copy_text_to_clipboard(channel_infos[0].base_href)
+            app.widgetapp.copy_text_to_clipboard(channel_infos[0].url)
 
     def copy_site_url(self):
         t, site_infos = app.tab_list_manager.get_selection()
