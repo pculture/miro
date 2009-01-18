@@ -154,7 +154,7 @@ class Browser(widgetset.Browser):
         # code to see if it might be a video, audio or torrent file.
         # if so, try downloading it.
         ret = urlparse(url)
-        if filetypes.is_allowed_filename(ret.path):
+        if filetypes.is_allowed_filename(ret[2]):
             logging.debug("miro wants to handle %s", url)
             messages.DownloadURL(url, lambda x: call_on_ui_thread(self.handle_unknown_url, x)).send_to_backend()
             return False
