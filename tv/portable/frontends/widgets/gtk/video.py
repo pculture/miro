@@ -305,17 +305,12 @@ class VideoDetailsWidget(Background):
             h2.pack_start(_align_middle(self._dash, left_pad=5, right_pad=5))
 
             if info.commentslink:
-                self._permalink_link = ClickableLabel(_("Comments"))
-                self._permalink_link.connect('clicked', self.handle_commentslink)
-            elif info.permalink:
-                self._permalink_link = ClickableLabel(_("Permalink"))
-                self._permalink_link.connect('clicked', self.handle_permalink)
+                self._permalink_link = make_label(_("Comments"), self.handle_commentslink, info.commentslink)
             else:
-                self._permalink_link = ClickableLabel(_("Permalink"))
-                self._permalink_link.connect('clicked', self.handle_permalink)
+                self._permalink_link = make_label(_("Permalink"), self.handle_permalink, info.permalink)
             h2.pack_start(self._permalink_link)
             if not info.commentslink and not info.permalink:
-                self._permalink_link.hide()
+                self._dash.hide()
             v.pack_start(_align_center(h2))
             outer_hbox.pack_start(_align_middle(v))
 
