@@ -46,6 +46,8 @@ from miro import flashscraper
 import logging
 from miro import fileutil
 
+daemon_starter = None
+
 # a hash of download ids that the server knows about.
 _downloads = {}
 
@@ -672,11 +674,13 @@ def startupDownloader():
     from the database.  It must be called before any RemoteDownloader objects
     get created.
     """
-
     daemon_starter.startup()
 
 def shutdownDownloader(callback=None):
-    daemon_starter.shutdown(callback)
+    if daemon_starter:
+        daemon_starter.shutdown(callback)
+    elif callback:
+        callback()
 
 def lookupDownloader(url):
     return views.remoteDownloads.getItemWithIndex(indexes.downloadsByURL, url)
