@@ -81,6 +81,7 @@ class Item(DDBObject):
         self.autoDownloaded = False
         self.pendingManualDL = False
         self.downloader = None
+        self.downloader_id = None
         self.downloadedTime = None
         self.watchedTime = None
         self.pendingReason = u""
@@ -138,8 +139,7 @@ class Item(DDBObject):
     def _look_for_finished_downloader(self):
         dler = downloader.lookupDownloader(self.getURL())
         if dler and dler.isFinished():
-            self.downloader = dler
-            dler.addItem(self)
+            self.set_downloader(dler)
 
     getSelected, setSelected = makeSimpleGetSet(u'selected',
             changeNeedsSave=False)
@@ -622,9 +622,9 @@ class Item(DDBObject):
             self.setAutoDownloaded(autodl)
             self.pendingManualDL = False
 
-        if self.downloader is None:
-            self.downloader = downloader.getDownloader(self)
-        if self.downloader is not None:
+        dler = downloader.getDownloader(self)
+        if dler is not None:
+            self.set_downloader(dler)
             self.downloader.setChannelName(unicodeToFilename(self.get_channel_title(True)))
             if self.downloader.isFinished():
                 self.on_download_finished()
@@ -833,9 +833,7 @@ class Item(DDBObject):
         """
         self.confirmDBThread()
         if self.downloader is not None:
-            self.downloader.removeItem(self)
-            self.downloader = None
-            self.signalChange()
+            self.set_downloader(None)
 
     def get_state(self):
         """Get the state of this item.  The state will be on of the following:
@@ -1155,9 +1153,20 @@ class Item(DDBObject):
 
         for other in views.items:
             if other.downloader is None and other.getURL() == self.getURL():
-                other.downloader = self.downloader
-                self.downloader.addItem(other)
-                other.signalChange(needsSave=False)
+                other.set_downloader(self.downloder)
+
+    def set_downloader(self, downloader):
+        if downloader is self.downloader:
+            return
+        if self.downloader is not None:
+            self.downloader.removeItem(self)
+        self.downloader = downloader
+        if downloader is not None:
+            self.downloader_id = downloader.id
+            downloader.addItem(self)
+        else:
+            self.downloader_id = None
+        self.signalChange()
 
     def save(self):
         self.confirmDBThread()
@@ -1216,8 +1225,7 @@ class Item(DDBObject):
 
     def remove(self):
         if self.downloader is not None:
-            self.downloader.removeItem(self)
-            self.downloader = None
+            self.set_downloader(None)
         if self.iconCache is not None:
             self.iconCache.remove()
             self.iconCache = None
@@ -1233,7 +1241,9 @@ class Item(DDBObject):
         """
 
         if not isinstance (self, FileItem) and self.downloader is None:
-            self.downloader = downloader.getExistingDownloader(self)
+            dler = downloader.getExistingDownloader(self)
+            if dler is not None:
+                self.set_downloader(dler)
             self.fix_incorrect_torrent_subdir()
             if self.downloader is not None:
                 self.signalChange(needsSave=False)

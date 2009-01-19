@@ -32,6 +32,9 @@ NOTE: For really old versions (before the schema.py module, see
 olddatabaseupgrade.py)
 """
 
+from urlparse import urlparse
+import re
+
 from miro import schema
 from miro import util
 import types
@@ -1016,6 +1019,264 @@ def upgrade70(objectList):
 
     return NO_CHANGES
 
+
+def upgrade71(objectList):
+    """
+    Add the downloader_id attribute
+    """
+
+    # So this is a crazy upgrade, because we need to use a ton of functions.
+    # Rather than import a module, all of these were copied from the source
+    # code from r8953 (2009-01-17).  Some slight changes were made, mostly to
+    # drop some error checking.
+
+    def fixFileURLS(url):
+        """Fix file URLS that start with file:// instead of file:///.  Note: this
+        breaks for file URLS that include a hostname, but we never use those and
+        it's not so clear what that would mean anyway -- file URLs is an ad-hoc
+        spec as I can tell.."""
+        if url.startswith('file://'):
+            if not url.startswith('file:///'):
+                url = 'file:///%s' % url[len('file://'):]
+            url = url.replace('\\', '/')
+        return url
+
+    def defaultPort(scheme):
+        if scheme == 'https':
+            return 443
+        elif scheme == 'http':
+            return 80
+        elif scheme == 'rtsp':
+            return 554
+        elif scheme == 'file':
+            return None
+        return 80
+
+    def parseURL(url, split_path=False):
+        url = fixFileURLS(url)
+        (scheme, host, path, params, query, fragment) = util.unicodify(list(urlparse(url)))
+        # Filter invalid URLs with duplicated ports (http://foo.bar:123:123/baz)
+        # which seem to be part of #441.
+        if host.count(':') > 1:
+            host = host[0:host.rfind(':')]
+
+        if scheme == '' and util.chatter:
+            logging.warn("%r has no scheme" % url)
+
+        if ':' in host:
+            host, port = host.split(':')
+            try:
+                port = int(port)
+            except (SystemExit, KeyboardInterrupt):
+                raise
+            except:
+                logging.warn("invalid port for %r" % url)
+                port = defaultPort(scheme)
+        else:
+            port = defaultPort(scheme)
+
+        host = host.lower()
+        scheme = scheme.lower()
+
+        path = path.replace('|', ':') 
+        # Windows drive names are often specified as "C|\foo\bar"
+
+        if path == '' or not path.startswith('/'):
+            path = '/' + path
+        elif re.match(r'/[a-zA-Z]:', path):
+            # Fix "/C:/foo" paths
+            path = path[1:]
+        fullPath = path
+        if split_path:
+            return scheme, host, port, fullPath, params, query
+        else:
+            if params:
+                fullPath += ';%s' % params
+            if query:
+                fullPath += '?%s' % query
+            return scheme, host, port, fullPath
+
+    UNSUPPORTED_MIMETYPES = ("video/3gpp", "video/vnd.rn-realvideo", "video/x-ms-asf")
+    VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.ogv', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid', '.rmvb', '.mkv', '.m2v', '.ogm']
+    AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka']
+    FEED_EXTENSIONS = ['.xml', '.rss', '.atom']
+    def is_video_enclosure(enclosure):
+        """
+        Pass an enclosure dictionary to this method and it will return a boolean
+        saying if the enclosure is a video or not.
+        """
+        return (_has_video_type(enclosure) or
+                _has_video_extension(enclosure, 'url') or
+                _has_video_extension(enclosure, 'href'))
+
+    def _has_video_type(enclosure):
+        return ('type' in enclosure and
+                (enclosure['type'].startswith(u'video/') or
+                 enclosure['type'].startswith(u'audio/') or
+                 enclosure['type'] == u"application/ogg" or
+                 enclosure['type'] == u"application/x-annodex" or
+                 enclosure['type'] == u"application/x-bittorrent" or
+                 enclosure['type'] == u"application/x-shockwave-flash") and
+                (enclosure['type'] not in UNSUPPORTED_MIMETYPES))
+
+    def is_allowed_filename(filename):
+        """
+        Pass a filename to this method and it will return a boolean
+        saying if the filename represents video, audio or torrent.
+        """
+        return is_video_filename(filename) or is_audio_filename(filename) or is_torrent_filename(filename)
+
+    def is_video_filename(filename):
+        """
+        Pass a filename to this method and it will return a boolean
+        saying if the filename represents a video file.
+        """
+        filename = filename.lower()
+        for ext in VIDEO_EXTENSIONS:
+            if filename.endswith(ext):
+                return True
+        return False
+
+    def is_audio_filename(filename):
+        """
+        Pass a filename to this method and it will return a boolean
+        saying if the filename represents an audio file.
+        """
+        filename = filename.lower()
+        for ext in AUDIO_EXTENSIONS:
+            if filename.endswith(ext):
+                return True
+        return False
+
+    def is_torrent_filename(filename):
+        """
+        Pass a filename to this method and it will return a boolean
+        saying if the filename represents a torrent file.
+        """
+        filename = filename.lower()
+        return filename.endswith('.torrent')
+
+    def _has_video_extension(enclosure, key):
+        if key in enclosure:
+            elems = parseURL(enclosure[key], split_path=True)
+            return is_allowed_filename(elems[3])
+        return False
+    def getFirstVideoEnclosure(entry):
+        """
+        Find the first "best" video enclosure in a feedparser entry.
+        Returns the enclosure, or None if no video enclosure is found.
+        """
+        try:
+            enclosures = entry.enclosures
+        except (KeyError, AttributeError):
+            return None
+
+        enclosures = [e for e in enclosures if is_video_enclosure(e)]
+        if len(enclosures) == 0:
+            return None
+
+        enclosures.sort(cmp_enclosures)
+        return enclosures[0]
+
+    def _get_enclosure_size(enclosure):
+        if 'filesize' in enclosure and enclosure['filesize'].isdigit():
+            return int(enclosure['filesize'])
+        else:
+            return None
+
+    def _get_enclosure_bitrate(enclosure):
+        if 'bitrate' in enclosure and enclosure['bitrate'].isdigit():
+            return int(enclosure['bitrate'])
+        else:
+            return None
+
+    def cmp_enclosures(enclosure1, enclosure2):
+        """
+        Returns:
+          -1 if enclosure1 is preferred, 1 if enclosure2 is preferred, and
+          zero if there is no preference between the two of them
+        """
+        # meda:content enclosures have an isDefault which we should pick
+        # since it's the preference of the feed
+        if enclosure1.get("isDefault"):
+            return -1
+        if enclosure2.get("isDefault"):
+            return 1
+
+        # let's try sorting by preference
+        enclosure1_index = _get_enclosure_index(enclosure1)
+        enclosure2_index = _get_enclosure_index(enclosure2)
+        if enclosure1_index < enclosure2_index:
+            return -1
+        elif enclosure2_index < enclosure1_index:
+            return 1
+
+        # next, let's try sorting by bitrate..
+        enclosure1_bitrate = _get_enclosure_bitrate(enclosure1)
+        enclosure2_bitrate = _get_enclosure_bitrate(enclosure2)
+        if enclosure1_bitrate > enclosure2_bitrate:
+            return -1
+        elif enclosure2_bitrate > enclosure1_bitrate:
+            return 1
+
+        # next, let's try sorting by filesize..
+        enclosure1_size = _get_enclosure_size(enclosure1)
+        enclosure2_size = _get_enclosure_size(enclosure2)
+        if enclosure1_size > enclosure2_size:
+            return -1
+        elif enclosure2_size > enclosure1_size:
+            return 1
+
+        # at this point they're the same for all we care
+        return 0
+
+    def _get_enclosure_index(enclosure):
+        try:
+            return PREFERRED_TYPES.index(enclosure.get('type'))
+        except ValueError:
+            return None
+
+    PREFERRED_TYPES = [
+        'application/x-bittorrent',
+        'application/ogg', 'video/ogg', 'audio/ogg',
+        'video/mp4', 'video/quicktime', 'video/mpeg',
+        'video/x-xvid', 'video/x-divx', 'video/x-wmv',
+        'video/x-msmpeg', 'video/x-flv']
+
+
+    def quoteUnicodeURL(url):
+        """Quote international characters contained in a URL according to w3c, see:
+        <http://www.w3.org/International/O-URL-code.html>
+        """
+        quotedChars = []
+        for c in url.encode('utf8'):
+            if ord(c) > 127:
+                quotedChars.append(urllib.quote(c))
+            else:
+                quotedChars.append(c)
+        return u''.join(quotedChars)
+
+    # Now that that's all set, on to the actual upgrade code.
+
+    changed = set()
+    url_to_downloader_id = {}
+
+    for o in objectList:
+        if o.classString == 'remote-downloader':
+            url_to_downloader_id[o.savedData['url']] = o.savedData['id']
+
+    for o in objectList:
+        if o.classString in ('item', 'file-item'):
+            entry = o.savedData['entry']
+            videoEnclosure = getFirstVideoEnclosure(entry)
+            if videoEnclosure is not None and 'url' in videoEnclosure:
+                url = quoteUnicodeURL(videoEnclosure['url'].replace('+', '%20'))
+            else:
+                url = None
+            o.savedData['downloader_id'] = url_to_downloader_id.get(url)
+            changed.add(o)
+
+    return changed
 
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """

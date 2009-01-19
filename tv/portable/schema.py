@@ -289,6 +289,7 @@ class ItemSchema(DDBObjectSchema):
     classString = 'item'
     fields = DDBObjectSchema.fields + [
         ('feed_id', SchemaInt(noneOk=True)),
+        ('downloader_id', SchemaInt(noneOk=True)),
         ('parent_id', SchemaInt(noneOk=True)),
         ('seen', SchemaBool()),
         ('autoDownloaded', SchemaBool()),
@@ -516,7 +517,7 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
         ('list_view_displays', SchemaList(SchemaBinary())),
     ]
 
-VERSION = 70
+VERSION = 71
 objectSchemas = [
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,

@@ -30,7 +30,7 @@ from base64 import b64encode
 from miro.gtcache import gettext as _
 import os
 
-from miro.database import DDBObject, defaultDatabase
+from miro.database import DDBObject, defaultDatabase, ObjectNotFoundError
 from miro.dl_daemon import daemon, command
 from miro.download_utils import nextFreeFilename, getFileURLPath, filterDirectoryName
 from miro.util import get_torrent_info_hash, returnsUnicode, checkU, returnsFilename, unicodify, checkF, toUni
@@ -106,6 +106,20 @@ totalDownRate = 0
 def _getDownloader(dlid):
     return views.remoteDownloads.getItemWithIndex(indexes.downloadsByDLID, dlid)
 
+def relink_downloads(new_dlid, old_dlid):
+    """Change the downloader for all the items that have the downloader
+    specified by old_dlid so that the have the downloader specified by
+    new_dlid.
+
+    We do this when we find out that 2 torrents with different URLs have the
+    same info hash.  In this case the items should share a downloader, but
+    don't currently.  So we call relink_downloads to fix things.
+    """
+    old_downloader = _getDownloader(old_dlid)
+    new_downloader = _getDownloader(new_dlid)
+    for item in old_downloader.itemList:
+        item.set_downloader(new_downloader)
+
 @returnsUnicode
 def generateDownloadID():
     dlid = u"download%08d" % random.randint(0, 99999999)
@@ -120,7 +134,7 @@ class RemoteDownloader(DDBObject):
         if contentType:
             checkU(contentType)
         self.origURL = self.url = url
-        self.itemList = [item]
+        self.itemList = []
         self.dlid = generateDownloadID()
         self.status = {}
         if contentType is None:
@@ -690,10 +704,10 @@ def getExistingDownloaderByURL(url):
     return downloader
 
 def getExistingDownloader(item):
-    downloader = lookupDownloader(item.getURL())
-    if downloader:
-        downloader.addItem(item)
-    return downloader
+    try:
+        return views.remoteDownloads.getObjectByID(item.downloader_id)
+    except ObjectNotFoundError:
+        return None
 
 def getDownloader(item):
     existing = getExistingDownloader(item)

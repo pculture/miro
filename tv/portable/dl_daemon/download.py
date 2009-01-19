@@ -174,7 +174,7 @@ class TorrentSession:
 
     def __init__(self):
         self.torrents = set()
-        self.info_hashes = set()
+        self.info_hash_to_downloader = {}
         self.session = None
         self.pnp_on = None
         self.pe_set = None
@@ -255,18 +255,20 @@ class TorrentSession:
         elif key in (prefs.LIMIT_CONNECTIONS_BT.key, prefs.CONNECTION_LIMIT_BT_NUM.key):
             self.setConnectionLimit()
 
-    def torrent_is_duplicate(self, torrent_info):
-        return info_hash_to_long(torrent_info.info_hash()) in self.info_hashes
+    def find_duplicate_torrent(self, torrent_info):
+        info_hash = info_hash_to_long(torrent_info.info_hash())
+        return self.info_hash_to_downloader.get(info_hash)
 
     def add_torrent(self, downloader):
         self.torrents.add(downloader)
-        self.info_hashes.add(info_hash_to_long(downloader.torrent.info_hash()))
+        info_hash = info_hash_to_long(downloader.torrent.info_hash())
+        self.info_hash_to_downloader[info_hash] = downloader
 
     def remove_torrent(self, downloader):
         if downloader in self.torrents:
             self.torrents.remove(downloader)
             info_hash = info_hash_to_long(downloader.torrent.info_hash())
-            self.info_hashes.remove(info_hash)
+            del self.info_hash_to_downloader[info_hash]
 
     def updateTorrents(self):
         # Copy this set into a list in case any of the torrents gets removed during the iteration.
@@ -824,10 +826,11 @@ class BTDownloader(BGDownloader):
     def _startTorrent(self):
         try:
             torrent_info = lt.torrent_info(lt.bdecode(self.metainfo))
-            if torrentSession.torrent_is_duplicate(torrent_info):
-                self.handleError(_("Duplicate torrent"),
-                                 _("You are already downloading this "
-                                 "torrent as another item."))
+            duplicate = torrentSession.find_duplicate_torrent(torrent_info)
+            if duplicate is not None:
+                c = command.DuplicateTorrent(daemon.lastDaemon,
+                        duplicate.dlid, self.dlid)
+                c.send()
                 return
             self.totalSize = torrent_info.total_size()
 

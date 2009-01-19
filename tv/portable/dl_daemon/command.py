@@ -91,6 +91,14 @@ class DownloaderErrorCommand(Command):
         from miro import signals
         signals.system.failed("In Downloader process", details=self.args[0])
 
+class DuplicateTorrent(Command):
+    # The downloader daemon detected that one download was for the same
+    # torrent as another one.
+    def action(self):
+        original_id, duplicate_id = self.args[0], self.args[1]
+        from miro import downloader
+        downloader.relink_downloads(original_id, duplicate_id)
+
 class ShutDownResponseCommand(Command):
     def action(self):
         self.daemon.shutdownResponse()
