@@ -41,19 +41,6 @@ from miro.plat.frontends.widgets import drawing
 
 INFINITE = 1000000 # size of an "infinite" dimension
 
-def get_font(scale_factor, bold=False, italic=False, family=None):
-    size = round(scale_factor * NSFont.systemFontSize())
-    if family is None:
-        if bold:
-            return NSFont.boldSystemFontOfSize_(size)
-        else:
-            return NSFont.systemFontOfSize_(size)
-    else:
-        if bold:
-            return NSFont.fontWithName_size_(family + " Bold", size)
-        else:
-            return NSFont.fontWithName_size_(family, size)
-
 class MiroLayoutManager(NSLayoutManager):
     """Overide NSLayoutManager to draw better underlines."""
 
@@ -125,7 +112,18 @@ class LayoutManager(object):
         self.set_text_shadow(None)
 
     def font(self, scale_factor, bold=False, italic=False, family=None):
-        return Font(get_font(scale_factor, bold, italic, family))
+        size = round(scale_factor * NSFont.systemFontSize())
+        if family is None:
+            if bold:
+                nsfont = NSFont.boldSystemFontOfSize_(size)
+            else:
+                nsfont = NSFont.systemFontOfSize_(size)
+        else:
+            if bold:
+                nsfont = NSFont.fontWithName_size_(family + " Bold", size)
+            else:
+                nsfont = NSFont.fontWithName_size_(family, size)
+        return Font(nsfont)
 
     def set_font(self, scale_factor, bold=False, italic=False, family=None):
         self.current_font = self.font(scale_factor, bold, italic, family)
