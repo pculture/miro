@@ -1086,10 +1086,12 @@ class Feed(DDBObject):
         title = _("Channel is not compatible with %(appname)s",
                   {"appname": config.get(prefs.SHORT_APP_NAME)})
         description = _(
-            "But we'll try our best to grab the files. It may take extra time "
-            "to list the videos, and descriptions may look funny.  Please "
-            "contact the publishers of %(url)s and ask if they can supply a feed "
-            "in a format that will work with %(appname)s.\n"
+            "This channel is not compatible with %(appname)s "
+            "but we'll try our best to grab the files.  It may take extra time "
+            "to list the videos, and descriptions may look funny.\n"
+            "\n"
+            "Please contact the publishers of %(url)s and ask if they can supply a "
+            "feed in a format that will work with %(appname)s.\n"
             "\n"
             "Do you want to try to load this channel anyway?",
             {"url": info["updated-url"], "appname": config.get(prefs.SHORT_APP_NAME)}
