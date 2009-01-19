@@ -176,12 +176,20 @@ class Downloader:
 # These are both Downloader instances.
 manual_downloader = None
 auto_downloader = None
+autodlers_started = False
+auto_resume_after_start = False
 
 def start_downloader():
     global manual_downloader
     global auto_downloader
+    global autodlers_started
+    global auto_resume_after_start
     manual_downloader = Downloader(False)
     auto_downloader = Downloader(True)
+    autodlers_started = True
+    if auto_resume_after_start:
+        auto_resume_after_start = False
+        resume_downloader()
 
 # FIXME - doesn't seem to be used
 # def pauseDownloader():
@@ -189,8 +197,15 @@ def start_downloader():
 #     auto_downloader.pause()
 
 def resume_downloader():
-    manual_downloader.resume()
-    auto_downloader.resume()
+    global manual_downloader
+    global auto_downloader
+    global autodlers_started
+    global auto_resume_after_start
+    if autodlers_started:
+        manual_downloader.resume()
+        auto_downloader.resume()
+    else:
+        auto_resume_after_start = True
 
 def _update_prefs(key, value):
     if key == prefs.DOWNLOADS_TARGET.key:
