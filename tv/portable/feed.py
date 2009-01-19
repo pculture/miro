@@ -64,6 +64,8 @@ import logging
 from miro.clock import clock
 
 whitespacePattern = re.compile(r"^[ \t\r\n]*$")
+youtubeURLPattern = re.compile(r"^https?://(?:(?:www|gdata).)?youtube.com(?:/.*)?$")
+youtubeTitlePattern = re.compile(r"(?:YouTube :: )?Videos (?:uploaded )?by (?P<name>\w*)")
 
 DEFAULT_FEED_ICON = "images/feedicon.png"
 DEFAULT_FEED_ICON_TABLIST = "images/feedicon-tablist.png"
@@ -1317,6 +1319,10 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                 pass
         if not self.url.startswith("dtv:multi:"):
             if channelTitle != None:
+                if youtubeURLPattern.match(self.url):
+                    titleMatch = youtubeTitlePattern.match(channelTitle)
+                    if titleMatch:
+                        channelTitle = titleMatch.groups('name')[0]
                 self.title = channelTitle
             if (parsed.feed.has_key('image') and
                     parsed.feed.image.has_key('url')):
