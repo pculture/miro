@@ -839,6 +839,7 @@ class BTDownloader(BGDownloader):
             name = os.path.dirname(fileutil.expand_filename(stringify(self.filename)))
             if self.fastResumeData:
                 self.torrent = torrentSession.session.add_torrent(torrent_info, name, lt.bdecode(self.fastResumeData), lt.storage_mode_t.storage_mode_allocate)
+                self.torrent.resume()
             else:
                 self.torrent = torrentSession.session.add_torrent(torrent_info, name, None, lt.storage_mode_t.storage_mode_allocate)
             self.torrent.auto_managed(False)
