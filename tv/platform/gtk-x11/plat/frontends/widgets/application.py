@@ -199,7 +199,7 @@ class GtkX11Application(Application):
         if resources.check_kde():
             os.spawnlp(os.P_NOWAIT, "kfmclient", "kfmclient", "exec", "file://" + filename)
         else:
-            os.spawnlp(os.P_NOWAIT, "nautilus", "nautilus", "file://" + filename)
+            os.spawnlp(os.P_NOWAIT, "gnome-open", "gnome-open", "file://" + filename)
 
     def get_clipboard_text(self):
         """Pulls text from the clipboard and returns it.
