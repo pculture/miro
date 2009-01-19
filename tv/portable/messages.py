@@ -822,7 +822,7 @@ class ItemInfo(object):
     permalink -- URL to a permalink to the item (or None)
     commentslink -- URL to a comments page for the item (or None)
     payment_link -- URL of the payment page associated with the item
-      (or empty string)
+        (or empty string)
     has_sharable_url -- does this item have a sharable URL?
     can_be_saved -- is this an expiring downloaded item?
     downloaded -- has the item been downloaded?
@@ -834,9 +834,8 @@ class ItemInfo(object):
     thumbnail -- path to the thumbnail for this file
     thumbnail_url -- URL for the item's thumbnail (or None)
     file_format -- User-facing format description.  Possibly the file type,
-      pulled from the mime_type, or more generic, like "audio"
+        pulled from the mime_type, or more generic, like "audio"
     license -- this file's license, if known.
-    license_name -- user-facing license name
     file_type -- filetype of the enclosure that would be downloaded
     file_url -- URL of the enclosure that would be downloaded
     download_info -- DownloadInfo object containing info about the download
@@ -889,7 +888,7 @@ class ItemInfo(object):
         self.thumbnail_url = item.getThumbnailURL()
         self.file_format = item.get_format()
         self.license = item.get_license()
-        self.license_name = item.get_license_name()
+        # self.license_name = item.get_license_name()
         self.file_url = item.getURL()
         self.is_container_item = item.isContainerItem
 
