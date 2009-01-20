@@ -342,13 +342,15 @@ class DynamicDatabase:
     added, removed, or changed.
     """
 
-    def __init__(self, objects=[], rootDB=True, sortFunc=None, filterFunc=None, mapFunc=None, cursorID=None, parent=None, resort=False):
+    def __init__(self, objects=None, rootDB=True, sortFunc=None, filterFunc=None, mapFunc=None, cursorID=None, parent=None, resort=False):
         """Create a view of a list of objects.
 
         @param objects A list of object/mapped value pairs to create the
         initial view
         @param rootDB true iff this is not a subview of another DD. Should never be used outside of this class.
         """
+        if objects == None:
+            objects = []
         self.rootDB = rootDB
         self.cursor = None
         self.parent = parent
@@ -1409,7 +1411,6 @@ class DDBObject(signals.SignalEmitter):
 def resetDefaultDatabase():
     """Erases the current database and replaces it with a blank slate
     """
-    global defaultDatabase
     defaultDatabase.__init__()
     import views
     reload(views)
