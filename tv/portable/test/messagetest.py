@@ -36,6 +36,7 @@ class MessageHandlerTest(MiroTestCase):
         messages.BackendMessage.install_handler(TestMessageHandler(self))
 
     def tearDown(self):
+        MiroTestCase.tearDown(self)
         messages.BackendMessage.install_handler(None)
 
     def testMessageMap(self):
@@ -57,21 +58,22 @@ class TestFrontendMessageHandler(object):
 
 class TrackerTest(EventLoopTest):
     def setUp(self):
-        MiroTestCase.setUp(self)
+        EventLoopTest.setUp(self)
         self.test_handler = TestFrontendMessageHandler()
         messages.FrontendMessage.install_handler(self.test_handler)
         self.backend_message_handler = messagehandler.BackendMessageHandler(None)
         messages.BackendMessage.install_handler(self.backend_message_handler)
         self.channelTabOrder = TabOrder(u'channel')
+        self.audioChannelTabOrder = TabOrder(u'audio-channel')
         self.playlistTabOrder = TabOrder(u'playlist')
         # Adding a guide ensures that if we remove all our channel/playlist
         # tabs the selection code won't go crazy.
         self.guide = ChannelGuide(config.get(prefs.CHANNEL_GUIDE_URL))
 
     def tearDown(self):
+        EventLoopTest.tearDown(self)
         messages.BackendMessage.install_handler(None)
         messages.FrontendMessage.install_handler(None)
-        MiroTestCase.tearDown(self)
 
     def checkChangedMessage(self, index, added=None, changed=None,
             removed=None):
@@ -256,17 +258,6 @@ class FeedTrackTest(TrackerTest):
         messages.TrackChannels().send_to_backend()
         self.runUrgentCalls()
 
-#    def testInitialList(self):
-#        self.assertEquals(len(self.test_handler.messages), 1)
-#        message = self.test_handler.messages[0]
-#        self.assert_(isinstance(message, messages.TabList))
-#        self.assertEquals(message.type, 'feed')
-#        self.checkInfoList(message.toplevels,
-#                [self.feed1, self.feed_folder])
-#        self.checkInfoList(message.folder_children[self.feed_folder.id],
-#                [self.feed2])
-#        self.assertEquals(len(message.folder_children), 1)
-
     def checkInfo(self, channelInfo, feed):
         self.assertEquals(channelInfo.name, feed.get_title())
         self.assertEquals(channelInfo.id, feed.id)
@@ -278,6 +269,17 @@ class FeedTrackTest(TrackerTest):
     def checkChangedMessageType(self, message):
         self.assertEquals(type(message), messages.TabsChanged)
         self.assertEquals(message.type, 'feed')
+
+#    def testInitialList(self):
+#        self.assertEquals(len(self.test_handler.messages), 1)
+#        message = self.test_handler.messages[0]
+#        self.assert_(isinstance(message, messages.TabList))
+#        self.assertEquals(message.type, 'feed')
+#        self.checkInfoList(message.toplevels,
+#                [self.feed1, self.feed_folder])
+#        self.checkInfoList(message.folder_children[self.feed_folder.id],
+#                [self.feed2])
+#        self.assertEquals(len(message.folder_children), 1)
 
     def testAdded(self):
         f = Feed(u'http://example.com/3')
