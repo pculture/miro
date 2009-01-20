@@ -83,6 +83,10 @@ class Alignment(Bin):
     def set_padding(self, top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
         self._widget.set_padding(top_pad, bottom_pad, left_pad, right_pad)
 
+class DetachedWindowHolder(Alignment):
+    def __init__(self):
+        Alignment.__init__(self, xscale=1, yscale=1)
+
 class Splitter(Widget):
     def __init__(self):
         """Create a new spliter."""

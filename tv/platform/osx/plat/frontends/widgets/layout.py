@@ -291,6 +291,10 @@ class Alignment(Bin):
         child_rect = NSMakeRect(my_origin.x + child_x, my_origin.y + child_y,  child_width, child_height)
         self.child.place(child_rect, self.viewport.view)
 
+class DetachedWindowHolder(Alignment):
+    def __init__(self):
+        Alignment.__init__(self, bottom_pad=16, xscale=1.0, yscale=1.0)
+
 class MiroSplitView (NSSplitView):
     """Subclass NSSplitView to control how the divider gets drawn."""
 
