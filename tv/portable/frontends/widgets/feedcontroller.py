@@ -168,7 +168,8 @@ class FeedController(itemlistcontroller.ItemListController):
         self.downloaded_section.expand()
         self.full_section.show()
         all_items = self.full_view.item_list.get_items()
-        viewed_items = [item for item in all_items if item.item_viewed]
+        viewed_items = [item for item in all_items \
+                if item.downloaded or item.item_viewed]
         if not (item_downloaded and len(all_items) == len(viewed_items)):
             self.full_section.expand()
         if item_downloaded and 0 < len(viewed_items) < len(all_items):
