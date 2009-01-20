@@ -79,8 +79,6 @@ class Item(DDBObject):
         self.seen = False
         self.autoDownloaded = False
         self.pendingManualDL = False
-        self.downloader = None
-        self.downloader_id = None
         self.downloadedTime = None
         self.watchedTime = None
         self.pendingReason = u""
@@ -105,7 +103,7 @@ class Item(DDBObject):
         self.creationTime = datetime.now()
         self._update_release_date()
         self._init_restore()
-        self._look_for_finished_downloader()
+        self._look_for_downloader()
         DDBObject.__init__(self)
         self.split_item()
 
@@ -135,10 +133,13 @@ class Item(DDBObject):
         self.showMoreInfo = False
         self.updating_movie_info = False
 
-    def _look_for_finished_downloader(self):
-        dler = downloader.lookupDownloader(self.getURL())
-        if dler and dler.isFinished():
-            self.set_downloader(dler)
+    def _look_for_downloader(self):
+        self.downloader = downloader.lookupDownloader(self.getURL())
+        if self.downloader is not None:
+            self.downloader_id = self.downloader.id
+            self.downloader.addItem(self)
+        else:
+            self.downloader_id = None
 
     getSelected, setSelected = makeSimpleGetSet(u'selected',
             changeNeedsSave=False)
