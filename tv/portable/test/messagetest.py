@@ -60,7 +60,7 @@ class TrackerTest(EventLoopTest):
         MiroTestCase.setUp(self)
         self.test_handler = TestFrontendMessageHandler()
         messages.FrontendMessage.install_handler(self.test_handler)
-        self.backend_message_handler = messagehandler.BackendMessageHandler()
+        self.backend_message_handler = messagehandler.BackendMessageHandler(None)
         messages.BackendMessage.install_handler(self.backend_message_handler)
         self.channelTabOrder = TabOrder(u'channel')
         self.playlistTabOrder = TabOrder(u'playlist')

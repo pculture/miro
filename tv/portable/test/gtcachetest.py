@@ -56,7 +56,6 @@ class GettextTest(MiroTestCase):
 
     @make_french
     def test_gettext_values(self):
-
         input = "parsed %(countfiles)d files - found %(countvideos)d videos"
         output = u'%(countfiles)d fichiers analys\xe9s  - %(countvideos)d vid\xe9os trouv\xe9es'
 
@@ -90,7 +89,7 @@ class GettextTest(MiroTestCase):
 
     @make_french
     def test_ngettext(self):
-        # french uses singular 0, 1 and plural for everything else.
+        # french uses singular for 0, 1 and plural for everything else.
         self.assertEqual(gtcache.ngettext("%(count)d video found",
                                           "%(count)d videos found", 0),
                          u'%(count)d vid\xe9o trouv\xe9e')
@@ -114,7 +113,12 @@ class GettextTest(MiroTestCase):
         self.assertEqual(gtcache.ngettext("bad %(count)d video found",
                                           "bad %(count)d videos found", 0,
                                           {"count": 0}),
-                         u'bad 0 video found')
+                         u'bad 0 videos found')
+
+        self.assertEqual(gtcache.ngettext("bad %(count)d video found",
+                                          "bad %(count)d videos found", 1,
+                                          {"count": 1}),
+                         u'bad 1 video found')
 
         self.assertEqual(gtcache.ngettext("bad %(count)d video found",
                                           "bad %(count)d videos found", 2,
