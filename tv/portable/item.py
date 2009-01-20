@@ -50,7 +50,6 @@ from miro.iconcache import IconCache
 from miro import downloader
 from miro import config
 from miro import eventloop
-from miro import license
 from miro import prefs
 from miro.plat import resources
 from miro import views
@@ -1091,10 +1090,6 @@ class Item(DDBObject):
             return self.entry.license
 
         return self.getFeed().get_license()
-
-    @returnsUnicode
-    def get_license_name(self):
-        return license.license_name(self.get_license())
 
     @returnsUnicode
     def get_comments_link(self):

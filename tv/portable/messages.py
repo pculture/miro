@@ -888,7 +888,6 @@ class ItemInfo(object):
         self.thumbnail_url = item.getThumbnailURL()
         self.file_format = item.get_format()
         self.license = item.get_license()
-        # self.license_name = item.get_license_name()
         self.file_url = item.getURL()
         self.is_container_item = item.isContainerItem
 
