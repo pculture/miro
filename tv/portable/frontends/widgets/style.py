@@ -1084,16 +1084,18 @@ class StatusRenderer(ListViewRenderer):
             self.text = displaytext.expiration_date_short(
                     self.info.expiration_date)
             self.color = EXPIRING_TEXT_COLOR
-        elif not self.info.item_viewed:
-            self.text = _('Newly Available')
-            self.color = AVAILABLE_COLOR
         elif (self.info.download_info and
                 self.info.download_info.rate == 0):
             if self.info.download_info.state == 'paused':
                 self.text = _('paused')
+            elif self.info.download_info.state == 'failed':
+                self.text = self.info.download_info.short_reason_failed
             else:
                 self.text = self.info.download_info.startup_activity
             self.color = DOWNLOADING_COLOR
+        elif not self.info.item_viewed:
+            self.text = _('Newly Available')
+            self.color = AVAILABLE_COLOR
         else:
             self.text = ''
 
