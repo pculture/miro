@@ -4,7 +4,7 @@ import tempfile
 from miro import util # This adds logging.timing
 from miro import download_utils
 from miro import httpclient
-from miro.test import schedulertest
+from miro.test.framework import EventLoopTest
 from miro.dl_daemon import download
 
 # BIGTESTFILE = { "url": u"http://www.getmiro.com/images/apple-screen.jpg", 
@@ -33,9 +33,9 @@ class TestingDownloader(download.HTTPDownloader):
         self.lastStatus = self.getStatus()
         self.test.addIdle(self.statusCallback, "status callback")
 
-class HTTPDownloaderTest(schedulertest.EventLoopTest):
+class HTTPDownloaderTest(EventLoopTest):
     def setUp(self):
-        super(HTTPDownloaderTest, self).setUp()
+        EventLoopTest.setUp(self)
         download.chatter = False
         download.nextFreeFilename = testingNextFreeFilename
         download._downloads = {}
@@ -50,7 +50,7 @@ class HTTPDownloaderTest(schedulertest.EventLoopTest):
     def tearDown(self):
         download.nextFreeFilename = download_utils.nextFreeFilename
         download.chatter = True
-        super(HTTPDownloaderTest, self).tearDown()
+        EventLoopTest.tearDown(self)
 
     def stopOnFinished(self):
         if self.downloader.state == "finished":
