@@ -40,7 +40,7 @@ def initialize():
     global sites
     global httpauths, autoUploads, guides, default_guide
     global manualFeed, singleFeed, directoryFeed, newlyDownloadedItems
-    global downloadingItems, pausedItems, manualDownloads, autoDownloads, allDownloadingItems
+    global downloadingItems, pausedItems, manualDownloads, autoDownloads, allDownloadingItems, uniqueDownloadingItems
     global playlists, playlistFolders, channelFolders
     global audioChannelFolders, videoChannelFolders
     global themeHistories, visibleFeeds, watchedFolders
@@ -136,6 +136,7 @@ def initialize():
                                                  'newly-downloaded')
     downloadingItems = items.filterWithIndex(indexes.itemsByState,
                                              'downloading')
+    uniqueDownloadingItems = downloadingItems.filter(filters.uniqueItems)
     pausedItems = items.filterWithIndex(indexes.itemsByState, 'paused')
     downloadingItems.createIndex(indexes.downloadsByCategory)
     manualDownloads = items.filter(filters.manualDownloads)
