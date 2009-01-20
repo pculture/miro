@@ -710,6 +710,7 @@ class TableView(Widget):
     def on_row_removed(self, model, iter):
         self.reload_needed = True
         if self.tableview.isRowSelected_(self.row_for_iter(iter)):
+            self.tableview.deselectAll_(nil)
             self.selection_removed = True
         self.cancel_hotspot_track()
 
