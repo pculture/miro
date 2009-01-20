@@ -663,7 +663,7 @@ class Scroller(Bin):
 
     def remove(self):
         child.parent_is_scroller = False
-        Bin.add(self, child)
+        Bin.remove(self)
 
     def remove_viewport(self):
         Bin.remove_viewport(self)
