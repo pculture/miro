@@ -42,6 +42,10 @@ from miro.plat.frontends.widgets import windowcreator
 from miro.plat.frontends.widgets import pluginsdir
 xpcom_setup = False
 
+# Use the default font
+ITEM_TITLE_FONT = None
+ITEM_DESC_FONT  = None
+
 class MiroMozEmbed(gtkmozembed.MozEmbed):
     def do_destroy(self):
         # For some reason this hangs everything (#10700), so we just ignore it
