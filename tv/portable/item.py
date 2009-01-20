@@ -1149,7 +1149,7 @@ class Item(DDBObject):
 
         for other in views.items:
             if other.downloader is None and other.getURL() == self.getURL():
-                other.set_downloader(self.downloder)
+                other.set_downloader(self.downloader)
 
     def set_downloader(self, downloader):
         if downloader is self.downloader:
