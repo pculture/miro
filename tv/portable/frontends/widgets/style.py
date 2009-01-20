@@ -1077,13 +1077,16 @@ class StatusRenderer(ListViewRenderer):
             'images/cancel-button.png'))
 
     def _setup_layout(self):
-        if self.info.downloaded and not self.info.video_watched:
-            self.text = _('Unplayed')
-            self.color = UNPLAYED_COLOR
-        elif self.info.expiration_date:
-            self.text = displaytext.expiration_date_short(
-                    self.info.expiration_date)
-            self.color = EXPIRING_TEXT_COLOR
+        if self.info.downloaded:
+            if not self.info.video_watched:
+                self.text = _('Unplayed')
+                self.color = UNPLAYED_COLOR
+            elif self.info.expiration_date:
+                self.text = displaytext.expiration_date_short(
+                        self.info.expiration_date)
+                self.color = EXPIRING_TEXT_COLOR
+            else:
+                self.text = ''
         elif (self.info.download_info and
                 self.info.download_info.rate == 0):
             if self.info.download_info.state == 'paused':
