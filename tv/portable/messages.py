@@ -800,8 +800,6 @@ class GuideInfo(object):
         self.default = guide.getDefault()
         self.allowed_urls = guide.allowedURLs
         self.favicon = guide.get_favicon_path()
-        self.faviconIsDefault = not (guide.iconCache and
-                                     guide.iconCache.get_filename())
 
 class ItemInfo(object):
     """Tracks the state of an item

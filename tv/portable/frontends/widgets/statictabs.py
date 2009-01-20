@@ -57,12 +57,12 @@ class ChannelGuideTab(StaticTab):
         if guide_info is None:
             return
         self.name = guide_info.name
-        if guide_info.faviconIsDefault:
+        if guide_info.default:
             self.icon = widgetutil.make_surface(self.icon_name)
         else:
             surface = imagepool.get_surface(guide_info.favicon)
-            if surface.width > 16 or surface.height > 16:
-                self.icon = imagepool.get_surface(guide_info.favicon, size=(16, 16))
+            if surface.width != 23 or surface.height != 23:
+                self.icon = imagepool.get_surface(guide_info.favicon, size=(23, 23))
             else:
                 self.icon = surface
 
