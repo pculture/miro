@@ -324,7 +324,6 @@ class OverlayPalette (NSWindowController):
         app.playback_manager.toggle_fullscreen()
 
     def toggleAttachedDetached_(self, sender):
-        self.remove()
         app.playback_manager.toggle_detached_mode()
 
     def skipBackward_(self, sender):
