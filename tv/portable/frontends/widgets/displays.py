@@ -251,21 +251,27 @@ class ItemListDisplay(TabDisplay):
         raise NotImplementedError()
 
 class FeedDisplay(ItemListDisplay):
-    @staticmethod
-    def should_display(tab_type, selected_tabs):
-        return tab_type == 'feed' and len(selected_tabs) == 1
+    TAB_TYPE = 'feed'
+    UPDATER_SIGNAL_NAME = 'feeds-changed'
+
+    @classmethod
+    def should_display(cls, tab_type, selected_tabs):
+        return tab_type == cls.TAB_TYPE and len(selected_tabs) == 1
 
     def on_selected(self):
         ItemListDisplay.on_selected(self)
-        self._name_signal_handler = app.tab_list_manager.feed_list.connect(
-                'tab-name-changed', self._on_name_changed)
+        self._signal_handler = app.info_updater.connect(
+                self.UPDATER_SIGNAL_NAME, self._on_feeds_changed)
 
-    def _on_name_changed(self, tab_list, old_name, new_name):
-        self.controller.titlebar.update_title(new_name)
+    def _on_feeds_changed(self, updater, info_list):
+        for info in info_list:
+            if info.id == self.id:
+                self.controller.titlebar.update_title(info.name)
+                return
 
     def cleanup(self):
         ItemListDisplay.cleanup(self)
-        app.tab_list_manager.feed_list.disconnect(self._name_signal_handler)
+        app.info_updater.disconnect(self._signal_handler)
         if widgetutil.feed_exists(self.feed_id):
             messages.MarkFeedSeen(self.feed_id).send_to_backend()
 
@@ -274,20 +280,8 @@ class FeedDisplay(ItemListDisplay):
         return feedcontroller.FeedController(tab.id, tab.is_folder)
 
 class AudioFeedDisplay(FeedDisplay):
-    @staticmethod
-    def should_display(tab_type, selected_tabs):
-        return tab_type == 'audio-feed' and len(selected_tabs) == 1
-
-    def on_selected(self):
-        ItemListDisplay.on_selected(self)
-        self._name_signal_handler = app.tab_list_manager.audio_feed_list.connect(
-                'tab-name-changed', self._on_name_changed)
-
-    def cleanup(self):
-        ItemListDisplay.cleanup(self)
-        app.tab_list_manager.audio_feed_list.disconnect(self._name_signal_handler)
-        if widgetutil.feed_exists(self.feed_id):
-            messages.MarkFeedSeen(self.feed_id).send_to_backend()
+    TAB_TYPE = 'audio-feed'
+    UPDATER_SIGNAL_NAME = 'audio-feeds-changed'
 
 class PlaylistDisplay(ItemListDisplay):
     @staticmethod
@@ -296,15 +290,18 @@ class PlaylistDisplay(ItemListDisplay):
 
     def on_selected(self):
         ItemListDisplay.on_selected(self)
-        self._name_signal_handler = app.tab_list_manager.playlist_list.connect(
-                'tab-name-changed', self._on_name_changed)
+        self._signal_handler = app.info_updater.connect('playlists-changed',
+                self._on_playlists_changed)
 
-    def _on_name_changed(self, tab_list, old_name, new_name):
-        self.controller.titlebar.update_title(new_name)
+    def _on_playlists_changed(self, updater, info_list):
+        for info in info_list:
+            if info.id == self.id:
+                self.controller.titlebar.update_title(info.name)
+                return
 
     def cleanup(self):
         ItemListDisplay.cleanup(self)
-        app.tab_list_manager.playlist_list.disconnect(self._name_signal_handler)
+        app.info_updater.disconnect(self._signal_handler)
 
     def make_controller(self, playlist_info):
         return playlist.PlaylistView(playlist_info)

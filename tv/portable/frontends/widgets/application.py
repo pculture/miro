@@ -837,21 +837,25 @@ class InfoUpdater(signals.SignalEmitter):
 
     Signals:
 
-        feeds-added (self, info_list) -- New feeds were added
-        feeds-changed (self, info_list) -- Feeds were changed
-        feeds-removed (self, info_list) -- Feeds were removed
+        feeds-added (self, info_list) -- New video feeds were added
+        feeds-changed (self, info_list) -- Video feeds were changed
+        feeds-removed (self, info_list) -- Video feeds were removed
+        audio-feeds-added (self, info_list) -- New audio feeds were added
+        audio-feeds-changed (self, info_list) -- Audio feeds were changed
+        audio-feeds-removed (self, info_list) -- Audio feeds were removed
         sites-added (self, info_list) -- New sites were added
         sites-changed (self, info_list) -- Sites were changed
         sites-removed (self, info_list) -- Sites were removed
+        playlists-added (self, info_list) -- New playlists were added
+        playlists-changed (self, info_list) -- Playlists were changed
+        playlists-removed (self, info_list) -- Playlists were removed
     """
     def __init__(self):
         signals.SignalEmitter.__init__(self)
-        self.create_signal('feeds-added')
-        self.create_signal('feeds-changed')
-        self.create_signal('feeds-removed')
-        self.create_signal('sites-added')
-        self.create_signal('sites-changed')
-        self.create_signal('sites-removed')
+        for prefix in ('feeds', 'audio-feeds', 'sites', 'playlists'):
+            self.create_signal('%s-added' % prefix)
+            self.create_signal('%s-changed' % prefix)
+            self.create_signal('%s-removed' % prefix)
 
         self.item_list_callbacks = InfoUpdaterCallbackList()
         self.item_changed_callbacks = InfoUpdaterCallbackList()
@@ -869,8 +873,12 @@ class InfoUpdater(signals.SignalEmitter):
     def handle_tabs_changed(self, message):
         if message.type == 'feed':
             signal_start = 'feeds'
+        elif message.type == 'audio-feed':
+            signal_start = 'audio-feeds'
         elif message.type == 'guide':
             signal_start = 'sites'
+        elif message.type == 'playlist':
+            signal_start = 'playlists'
         else:
             return
         if message.added:
