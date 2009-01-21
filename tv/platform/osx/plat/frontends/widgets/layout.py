@@ -161,10 +161,20 @@ class Box(Container):
                 self.expand_count)
         start_end = self._place_packing_list(self.packing_start, 
                 extra_space_iter, 0)
-        if self.expand_count == 0:
+        if self.expand_count == 0 and total_extra_space > 0:
+            # account for empty space after the end of pack_start list and
+            # before the pack_end list.
+            self.draw_empty_space(start_end, total_extra_space)
             start_end += total_extra_space
         self._place_packing_list(reversed(self.packing_end), extra_space_iter, 
                 start_end)
+
+    def draw_empty_space(self, start, length):
+        empty_rect = self.make_child_rect(start, length)
+        my_view = self.viewport.view
+        opaque_view = my_view.opaqueAncestor()
+        empty_rect2 = opaque_view.convertRect_fromView_(empty_rect, my_view)
+        opaque_view.setNeedsDisplayInRect_(empty_rect2)
 
     def _place_packing_list(self, packing_list, extra_space_iter, position):
         for packing in packing_list:
@@ -172,11 +182,18 @@ class Box(Container):
                     self.translate_widget_size(packing.widget)
             if packing.expand:
                 child_length += extra_space_iter.next()
-            position += packing.padding # space before
+            if packing.padding: # space before
+                self.draw_empty_space(position, packing.padding)
+                position += packing.padding
             child_rect = self.make_child_rect(position, child_length)
-            position += packing.padding # space after
+            if packing.padding: # space after
+                self.draw_empty_space(position, packing.padding)
+                position += packing.padding
             packing.widget.place(child_rect, self.viewport.view)
-            position += child_length + self.spacing
+            position += child_length
+            if self.spacing > 0:
+                self.draw_empty_space(position, self.spacing)
+                position += self.spacing
         return position
 
     def enable(self):
