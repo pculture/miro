@@ -25,6 +25,7 @@
 !define OLD_UNINSTALL_SHORTCUT1 "Uninstall Democracy Player.lnk"
 !define OLD_UNINSTALL_SHORTCUT2 "Uninstall Democracy.lnk"
 !define MIROBAR_EXE "askBarSetup-4.1.0.2.exe"
+!define MIROBARCHECKER_EXE "AskInstallChecker.exe"
 
 Name "$APP_NAME"
 OutFile "${CONFIG_OUTPUT_FILE}"
@@ -76,6 +77,7 @@ Var SIMPLE_INSTALL
 ReserveFile "MiroBar-installer-page.ini"
 ReserveFile "ask_toolbar.bmp"
 ReserveFile "${MIROBAR_EXE}"
+ReserveFile "${MIROBARCHECKER_EXE}"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Pages                                                                     ;;
@@ -209,8 +211,6 @@ FunctionEnd
 !define MUI_PAGE_CUSTOMFUNCTION_PRE   "skip_if_simple"
 !insertmacro MUI_PAGE_COMPONENTS
 
-Page custom MiroBarInstall MiroBarInstallLeave
-
 ; Installation directory selection page
 !define MUI_PAGE_CUSTOMFUNCTION_PRE   "skip_if_simple"
 !insertmacro MUI_PAGE_DIRECTORY
@@ -221,6 +221,8 @@ Page custom MiroBarInstall MiroBarInstallLeave
 
 ; Installation page
 !insertmacro MUI_PAGE_INSTFILES
+
+Page custom MiroBarInstall MiroBarInstallLeave
 
 ; Finish page
 !define MUI_FINISHPAGE_RUN
@@ -992,6 +994,15 @@ DoneTorrentRegistration:
 FunctionEnd
 
 Function MiroBarInstall 
+  ; run AskInstallChecker to see if we should ask about ask.com
+  ; or not.  An error means it's already installed and we should
+  ; move along.
+  !insertmacro MUI_INSTALLOPTIONS_EXTRACT "${MIROBARCHECKER_EXE}" 
+  ExecWait '"$PLUGINSDIR\${MIROBARCHECKER_EXE}"' $0
+  StrCmp $0 "0" CheckForIE NoShowMiroBarDialog
+CheckForIE:
+  ; check the registry to see if the default browser is internet
+  ; explorer.  if not, skip ask.com.
   ReadRegStr $0 HKCU "Software\Clients\StartMenuInternet" "" 
   StrCmp $0 "IEXPLORE.EXE" ShowMiroBarDialog 
   StrCmp $0 "" 0 NoShowMiroBarDialog 
