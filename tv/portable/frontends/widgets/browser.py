@@ -150,6 +150,11 @@ class Browser(widgetset.Browser):
             messages.SubscriptionLinkClicked(url).send_to_backend()
             return False
 
+        if filetypes.is_maybe_rss_url(url):
+            logging.debug("miro wants to handle %s", url)
+            messages.DownloadURL(url, lambda x: call_on_ui_thread(self.handle_unknown_url, x)).send_to_backend()
+            return False
+
         # parse the path out of the url and run that through the filetypes
         # code to see if it might be a video, audio or torrent file.
         # if so, try downloading it.

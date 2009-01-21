@@ -167,6 +167,10 @@ def is_maybe_rss(body):
             return True
     return False
 
+def is_maybe_rss_url(url):
+    return (url.startswith("http") and
+            (url.startswith("http://feeds.feedburner.com") or "rss" in url))
+
 def guess_extension(mimetype):
     """
     Pass a mime type to this method and it will return a corresponding file
