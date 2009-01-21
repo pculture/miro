@@ -28,7 +28,7 @@
 
 """statictabs.py -- Tabs that are always present."""
 
-from miro import app
+from miro import app, prefs
 from miro.gtcache import gettext as _
 from miro.frontends.widgets import browser
 from miro.frontends.widgets import imagepool
@@ -56,15 +56,30 @@ class ChannelGuideTab(StaticTab):
     def _set_from_info(self, guide_info):
         if guide_info is None:
             return
-        self.name = guide_info.name
-        if guide_info.default:
+
+        # XXX This code is a bit ugly, because we want to use pretty defaults for
+        # the Miro Guide, but still allow themes to override
+
+        if not guide_info.default or \
+                guide_info.url != prefs.CHANNEL_GUIDE_URL.default:
+            # don't change the title for Miro Guide
+            self.name = guide_info.name
+
+        if guide_info.default and \
+                guide_info.url == prefs.CHANNEL_GUIDE_URL.default:
+            # Miro Guide, so use the big pretty icon
             self.icon = widgetutil.make_surface(self.icon_name)
         else:
-            surface = imagepool.get_surface(guide_info.favicon)
-            if surface.width != 23 or surface.height != 23:
-                self.icon = imagepool.get_surface(guide_info.favicon, size=(23, 23))
+            # theme guide; try to use the favicon
+            if guide_info.faviconIsDefault:
+                self.icon = widgetutil.make_surface(self.icon_name)
             else:
-                self.icon = surface
+                surface = imagepool.get_surface(guide_info.favicon)
+                if surface.width != 23 or surface.height != 23:
+                    self.icon = imagepool.get_surface(guide_info.favicon,
+                                                      size=(23, 23))
+                else:
+                    self.icon = surface
 
 class SearchTab(StaticTab):
     id = 'search'

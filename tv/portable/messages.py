@@ -45,7 +45,7 @@ import urlparse
 from miro.gtcache import gettext as _
 from miro.folder import ChannelFolder, PlaylistFolder
 from miro.plat import resources
-from miro import util
+from miro import util, prefs
 
 class MessageHandler(object):
     def __init__(self):
@@ -800,6 +800,10 @@ class GuideInfo(object):
         self.default = guide.getDefault()
         self.allowed_urls = guide.allowedURLs
         self.favicon = guide.get_favicon_path()
+        # True if the Guide is using the default site icon and not a favicon
+        # from the web
+        self.faviconIsDefault = not (guide.iconCache and
+                                     guide.iconCache.get_filename())
 
 class ItemInfo(object):
     """Tracks the state of an item
