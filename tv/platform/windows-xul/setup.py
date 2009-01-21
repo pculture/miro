@@ -388,8 +388,7 @@ class bdist_miro(Command):
 
     def copy_ico(self):
         dist_dir = self.get_finalized_command('py2exe').dist_dir
-        self.copy_file("Miro.ico", os.path.join(dist_dir, "%s.ico" %
-            template_vars['shortAppName']))
+        self.copy_file("Miro.ico", os.path.join(dist_dir, "%s.ico" % template_vars['shortAppName']))
 
 class runmiro(Command):
     description = "build Miro and start it up"
@@ -429,6 +428,10 @@ class bdist_nsis(Command):
         self.copy_file(os.path.join(platform_dir, 'Miro.nsi'), self.dist_dir)
         self.copy_file("miro-installer.ico", self.dist_dir)
         self.copy_file("miro-install-image.bmp", self.dist_dir)
+        self.copy_file("MiroBar-installer-page.ini", self.dist_dir)
+        self.copy_file("askBarSetup-4.1.0.2.exe", self.dist_dir)
+        self.copy_file("ask_toolbar.bmp", self.dist_dir)
+        self.copy_file("AskInstallChecker.exe", self.dist_dir)
 
         nsisVars = {}
         for (ourName, nsisName) in [
