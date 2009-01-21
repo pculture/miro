@@ -37,6 +37,7 @@ import random
 import re
 import sha
 import string
+import sys
 import urllib
 import socket
 import logging
@@ -55,6 +56,9 @@ PREFERRED_TYPES = [
     'video/mp4', 'video/quicktime', 'video/mpeg',
     'video/x-xvid', 'video/x-divx', 'video/x-wmv',
     'video/x-msmpeg', 'video/x-flv']
+
+PREFERRED_TYPES_ORDER = dict((type, i) for i, type in
+        enumerate(PREFERRED_TYPES))
 
 
 def get_nice_stack():
@@ -515,16 +519,13 @@ def random_string(length):
     return ''.join(random.choice(string.ascii_letters) for i in xrange(length))
 
 def _get_enclosure_index(enclosure):
-    try:
-        return PREFERRED_TYPES.index(enclosure.get('type'))
-    except ValueError:
-        return None
+    return PREFERRED_TYPES_ORDER.get(enclosure.get('type'), sys.maxint)
 
 def _get_enclosure_size(enclosure):
     if 'filesize' in enclosure and enclosure['filesize'].isdigit():
         return int(enclosure['filesize'])
     else:
-        return None
+        return -1
 
 def _get_enclosure_bitrate(enclosure):
     if 'bitrate' in enclosure and enclosure['bitrate'].isdigit():
