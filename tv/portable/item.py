@@ -1107,7 +1107,10 @@ class Item(DDBObject):
         """
         self.confirmDBThread()
         if hasattr(self.entry, "link"):
-            return self.entry.link.decode('ascii', 'replace')
+            try:
+                return self.entry.link.decode('ascii', 'replace')
+            except UnicodeDecodeError:
+                return self.entry.link.decode('ascii', 'ignore')
 
         return u""
 
