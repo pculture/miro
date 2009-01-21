@@ -230,7 +230,6 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     NEWLY_AVAILABLE_TEXT = _("Newly Available")
     KEEP_TEXT = _("Keep")
     REMOVE_TEXT = _("Remove")
-    DELETE_TEXT = _("Delete")
     STOP_SEEDING_TEXT = _("Stop seeding")
 
     def __init__(self, display_channel=True):
@@ -743,10 +742,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             hotspot = self._make_button(layout, self.KEEP_TEXT, 'keep')
             hbox.pack(cellpack.align_middle(hotspot))
 
-        if self.data.is_external:
-            hotspot = self._make_button(layout, self.REMOVE_TEXT, 'delete')
-        else:
-            hotspot = self._make_button(layout, self.DELETE_TEXT, 'delete')
+        hotspot = self._make_button(layout, self.REMOVE_TEXT, 'delete')
 
         hbox.pack(cellpack.align_middle(hotspot))
         if (self.data.download_info is not None
