@@ -29,6 +29,10 @@
 import objc
 import Foundation
 
+from miro import prefs
+from miro import config
+from miro.plat.frontends.widgets.threads import on_ui_thread
+
 ###############################################################################
 
 bundlePath = '%s/Sparkle.framework' % Foundation.NSBundle.mainBundle().privateFrameworksPath()
@@ -36,13 +40,26 @@ objc.loadBundle('Sparkle', globals(), bundle_path=bundlePath)
 
 ###############################################################################
 
+class MiroHost (SUHost):
+    
+    def setObject_forUserDefaultsKey_(self, obj, key):
+        descriptor = prefs.Pref(key=key, default='', platformSpecific=False)
+        config.set(descriptor, obj)
+        
+    def objectForUserDefaultsKey_(self, key):
+        descriptor = prefs.Pref(key=key, default='', platformSpecific=False)
+        return config.get(descriptor)
+
+###############################################################################
+
 def setup():
     """ Instantiate the unique global SUUpdater object."""
-    global updater
-    updater = SUUpdater.alloc().init()
-    updater.scheduleCheckWithInterval_(0)
+    global suUpdater
+    suUpdater = SUUpdater.sharedUpdater()
+    suUpdater.setUpdateCheckInterval_(0)
 
 
+@on_ui_thread
 def handleNewUpdate(latest):
     """ A new update has been found, the Sparkle framework will now take control
     and perform user interaction and automatic update on our behalf. Since the
@@ -78,14 +95,14 @@ def handleNewUpdate(latest):
     dictionary['enclosure'] = suEnclosure
 
     suItem = SUAppcastItem.alloc().initWithDictionary_(dictionary)
+    suHost = MiroHost.alloc().initWithBundle_(None)
 
-    global updater
-    objc.setInstanceVariable(updater, 'updateItem', suItem, True)
-
-    alerter = SUUpdateAlert.alloc().initWithAppcastItem_(suItem)
-    alerter.setDelegate_(updater)
-    alerter.showWindow_(updater)
-    alerter.retain()
+    global suDriver
+    suDriver = SUUIBasedUpdateDriver.alloc().initWithUpdater_(None)
+    objc.setInstanceVariable(suDriver, 'host', suHost, True)
+    objc.setInstanceVariable(suDriver, 'updateItem', suItem, True)
+    if not suDriver.itemContainsSkippedVersion_(suItem):
+        suDriver.didFindValidUpdate()
 
 
 def _transfer(source, skey, dest, dkey=None):
