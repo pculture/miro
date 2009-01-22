@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-01-15 13:13-0500\n"
+"POT-Creation-Date: 2009-01-15 15:07-0500\n"
 "PO-Revision-Date: 2007-12-22 07:26+0000\n"
 "Last-Translator: Marlon Janssen Arao <marlonjanssenarao@yahoo.com>\n"
 "Language-Team: Filipino <fil@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2009-01-15 19:04+0000\n"
+"X-Launchpad-Export-Date: 2009-01-22 03:44+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -275,6 +275,10 @@ msgstr ""
 
 #: ../../portable/theme.py:186
 msgid "Miro - Report a Problem"
+msgstr ""
+
+#: ../../portable/searchengines.py:146
+msgid "Search All"
 msgstr ""
 
 #: ../../portable/util.py:275 ../../portable/util.py:277
@@ -626,6 +630,7 @@ msgid "Add _Feed"
 msgstr ""
 
 #: ../../portable/menubar.py:213
+#: ../../portable/frontends/widgets/application.py:525
 msgid "Add Site"
 msgstr ""
 
@@ -886,6 +891,26 @@ msgstr ""
 #: ../../portable/frontends/widgets/feedsettingspanel.py:139
 #, python-format
 msgid "Keep %(number)s (Default)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:141
+msgid "Keep 0"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:142
+msgid "Keep 20"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:143
+msgid "Keep 50"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:144
+msgid "Keep 100"
+msgstr ""
+
+#: ../../portable/frontends/widgets/feedsettingspanel.py:145
+msgid "Keep 1000"
 msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
@@ -1350,36 +1375,6 @@ msgstr ""
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr ""
 
-#: ../../portable/frontends/widgets/removeitemsdialog.py:49
-#: ../../portable/frontends/widgets/itemlistwidgets.py:631
-msgid "Remove feed"
-msgid_plural "Remove feeds"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/removeitemsdialog.py:57
-#: ../../portable/frontends/widgets/removefeeds.py:57
-msgid "Are you sure you want to remove this feed:"
-msgid_plural "Are you sure you want to remove these feeds:"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../../portable/frontends/widgets/removeitemsdialog.py:77
-#: ../../portable/frontends/widgets/removefeeds.py:77
-msgid "Keep items that have been downloaded in my library."
-msgstr ""
-
-#: ../../portable/frontends/widgets/removeitemsdialog.py:83
-#: ../../portable/frontends/widgets/removefeeds.py:93
-msgid ""
-"Are you sure you want to remove this feed?  The downloads currently in "
-"progress will be canceled."
-msgid_plural ""
-"Are you sure you want to remove these feeds?  The downloads currently in "
-"progress will be canceled."
-msgstr[0] ""
-msgstr[1] ""
-
 #: ../../portable/frontends/widgets/diagnostics.py:77
 #: ../../portable/frontends/widgets/gtk/trayicon.py:83
 msgid "Show"
@@ -1573,16 +1568,12 @@ msgstr ""
 msgid "Save Item As..."
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:525
-msgid "Add Guide"
-msgstr ""
-
 #: ../../portable/frontends/widgets/application.py:526
-msgid "Enter the URL of the Miro guide to add"
+msgid "Enter the URL of the site to add"
 msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:527
-msgid "Add Guide - Invalid URL"
+msgid "Add Site - Invalid URL"
 msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:528
@@ -1590,7 +1581,7 @@ msgid ""
 "The address you entered is not a valid url.\n"
 "Please check the URL and try again.\n"
 "\n"
-"Enter the URL of the Miro guide to add"
+"Enter the URL of the site to add"
 msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:577
@@ -1609,119 +1600,119 @@ msgstr ""
 msgid "Export OPML File"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:621
+#: ../../portable/frontends/widgets/application.py:614
 msgid "Create Playlist"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:622
+#: ../../portable/frontends/widgets/application.py:615
 msgid "Enter a name for the new playlist"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:643
+#: ../../portable/frontends/widgets/application.py:636
 msgid "Create Playlist Folder"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:644
+#: ../../portable/frontends/widgets/application.py:637
 msgid "Enter a name for the new playlist folder"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:665
+#: ../../portable/frontends/widgets/application.py:658
 #: ../../portable/frontends/widgets/tablist.py:520
 msgid "Rename Feed Folder"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:666
+#: ../../portable/frontends/widgets/application.py:659
 #, python-format
 msgid "Enter a new name for the feed folder %(name)s"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:670
+#: ../../portable/frontends/widgets/application.py:663
 msgid "Rename Feed"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:671
+#: ../../portable/frontends/widgets/application.py:664
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:675
+#: ../../portable/frontends/widgets/application.py:668
 #: ../../portable/frontends/widgets/tablist.py:581
 #: ../../portable/playlist.py:179
 msgid "Rename Playlist"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:676
+#: ../../portable/frontends/widgets/application.py:669
 #, python-format
 msgid "Enter a new name for the playlist %(name)s"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:680
+#: ../../portable/frontends/widgets/application.py:673
 #: ../../portable/frontends/widgets/tablist.py:575
 msgid "Rename Playlist Folder"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:681
+#: ../../portable/frontends/widgets/application.py:674
 #, python-format
 msgid "Enter a new name for the playlist folder %(name)s"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:684
+#: ../../portable/frontends/widgets/application.py:677
 #: ../../portable/frontends/widgets/tablist.py:474
 msgid "Rename Site"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:685
+#: ../../portable/frontends/widgets/application.py:678
 #, python-format
 msgid "Enter a new name for the site %(name)s"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:709
+#: ../../portable/frontends/widgets/application.py:702
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/application.py:711
+#: ../../portable/frontends/widgets/application.py:704
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/application.py:729
+#: ../../portable/frontends/widgets/application.py:722
 #, python-format
 msgid "Remove %(name)s"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:730
+#: ../../portable/frontends/widgets/application.py:723
 #, python-format
 msgid "Are you sure you want to remove %(name)s?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:755
+#: ../../portable/frontends/widgets/application.py:748
 msgid "Are you sure you want to quit?"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:757
+#: ../../portable/frontends/widgets/application.py:750
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../../portable/frontends/widgets/application.py:762
+#: ../../portable/frontends/widgets/application.py:755
 msgid "Warn me when I attempt to quit with downloads in progress"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:1008
+#: ../../portable/frontends/widgets/application.py:1001
 msgid "Message"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:1031
+#: ../../portable/frontends/widgets/application.py:1024
 msgid "Migrating Files"
 msgstr ""
 
-#: ../../portable/frontends/widgets/application.py:1038
+#: ../../portable/frontends/widgets/application.py:1031
 msgid "Migrating files"
 msgstr ""
 
@@ -1818,6 +1809,10 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:626
 msgid "Settings"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:631
+msgid "Remove feed"
 msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:715
@@ -1963,6 +1958,16 @@ msgid_plural "Remove Feeds"
 msgstr[0] ""
 msgstr[1] ""
 
+#: ../../portable/frontends/widgets/removefeeds.py:57
+msgid "Are you sure you want to remove this feed:"
+msgid_plural "Are you sure you want to remove these feeds:"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/removefeeds.py:77
+msgid "Keep items that have been downloaded in my library."
+msgstr ""
+
 #: ../../portable/frontends/widgets/removefeeds.py:83
 msgid ""
 "Watched folders will be removed from the sidebar but their contents will "
@@ -1970,7 +1975,18 @@ msgid ""
 "completely in the Miro preference panel."
 msgstr ""
 
+#: ../../portable/frontends/widgets/removefeeds.py:93
+msgid ""
+"Are you sure you want to remove this feed?  The downloads currently in "
+"progress will be canceled."
+msgid_plural ""
+"Are you sure you want to remove these feeds?  The downloads currently in "
+"progress will be canceled."
+msgstr[0] ""
+msgstr[1] ""
+
 #: ../../portable/frontends/widgets/newfeed.py:60
+#: ../../portable/frontends/widgets/newsearchfeed.py:98
 msgid "URL:"
 msgstr ""
 
@@ -2100,6 +2116,14 @@ msgstr "Maghanap ng:"
 #: ../../portable/frontends/widgets/newsearchfeed.py:80
 msgid "In this:"
 msgstr "Dito:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:87
+msgid "Feed:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:92
+msgid "Search engine:"
+msgstr ""
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:132
 msgid "Add new feed to this section:"
@@ -2233,6 +2257,14 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
 msgid "Add items to an existing playlist or a new one."
+msgstr ""
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
+msgid "Existing playlist:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
+msgid "New playlist:"
 msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
