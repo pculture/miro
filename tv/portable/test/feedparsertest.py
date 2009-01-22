@@ -34,12 +34,10 @@ class FeedParserDictTest(MiroTestCase):
 
 class FeedParserTest(MiroTestCase):
     def test_ooze(self):
-        logging.warning("test_ooze")
         feedparser.parse(os.path.join(FEEDPARSERTESTS, "ooze.rss"))
 
     def test_usvideo(self):
         # test for bug 10653
-        logging.warning("test_usvideo")
         d = feedparser.parse(os.path.join(FEEDPARSERTESTS, "usvideo.xml"))
         try:
             foo = d['url']

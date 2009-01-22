@@ -2,6 +2,7 @@ import os
 import os.path
 import unittest
 import gettext
+import logging
 
 from miro import gtcache
 from miro.test.framework import MiroTestCase
@@ -49,6 +50,17 @@ def make_french(f):
     return __make_french
 
 class GettextTest(MiroTestCase):
+    # FIXME - we probably want to test that something is logged instead of
+    # ignoring the logging.
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.oldlevel = logging.getLogger().level
+        logging.getLogger().setLevel(logging.ERROR)
+
+    def tearDown(self):
+        MiroTestCase.tearDown(self)
+        logging.getLogger().setLevel(self.oldlevel)
+
     @make_french
     def test_gettext(self):
         self.assertEqual(gtcache.gettext("OK"), u'Valider')
