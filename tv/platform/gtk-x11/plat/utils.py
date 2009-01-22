@@ -34,6 +34,7 @@ import threading
 from miro import config
 from miro import prefs
 import logging
+import logging.handlers
 import locale
 import urllib
 import sys
@@ -103,26 +104,21 @@ def setup_logging(inDownloader=False):
         else:
             level = logging.INFO
         logging.basicConfig(level=level,
-                            format='%(levelname)-8s %(message)s',
+                            format='%(asctime)s %(levelname)-8s %(message)s',
                             stream=sys.stdout)
     else:
-        logging.basicConfig(level=logging.DEBUG,
-                            format='%(asctime)s %(levelname)-8s %(message)s',
-                            filename=config.get(prefs.LOG_PATHNAME),
-                            filemode="w")
-        console = logging.StreamHandler(sys.stdout)
         if config.get(prefs.APP_VERSION).endswith("svn"):
             level = logging.DEBUG
         elif options.frontend != 'cli':
             level = logging.INFO
         else:
             level = logging.WARN
-        console.setLevel(level)
-
-        formatter = logging.Formatter('%(relativeCreated)d %(levelname)-8s %(message)s')
-        console.setFormatter(formatter)
-
-        logging.getLogger('').addHandler(console)
+        logging.basicConfig(level=level,
+                            format='%(asctime)s %(levelname)-8s %(message)s')
+        rotater = logging.handlers.RotatingFileHandler(config.get(prefs.LOG_PATHNAME), mode="w", maxBytes=500000, backupCount=5)
+        formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
+        rotater.setFormatter(formatter)
+        logging.getLogger('').addHandler(rotater)
 
 @returnsBinary
 def unicodeToFilename(filename, path=None):
