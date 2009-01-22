@@ -31,6 +31,7 @@ import os
 import urllib
 import statvfs
 import logging
+import logging.handlers
 import sys
 import time
 import errno
@@ -95,7 +96,7 @@ def initializeLocale():
 
     print languages
     os.environ["LANGUAGE"] = ':'.join(languages)
-    
+
     localeInitialized = True
     del pool
 
@@ -105,23 +106,17 @@ def setup_logging (inDownloader=False):
                             format='%(levelname)-8s %(message)s',
                             stream=sys.stdout)
     else:
-        logging.basicConfig(level=logging.DEBUG,
-                            format='%(asctime)s %(levelname)-8s %(message)s',
-                            filename=config.get(prefs.LOG_PATHNAME),
-                            filemode="w")
-        console = logging.StreamHandler (sys.stdout)
-
         if config.get(prefs.APP_VERSION).endswith("svn"):
             level = logging.DEBUG
         else:
             level = logging.WARN
-        console.setLevel(level)
-    
-        formatter = logging.Formatter('%(levelname)-8s %(message)s')
-        console.setFormatter(formatter)
+        logging.basicConfig(level=level,
+                            format='%(levelname)-8s %(message)s')
+        rotater = logging.handlers.RotatingFileHandler(config.get(prefs.LOG_PATHNAME), mode="w", maxBytes=500000, backupCount=5)
+        formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
+        rotater.setFormatter(formatter)
+        logging.getLogger('').addHandler(rotater)
 
-        logging.getLogger('').addHandler(console)
-                            
 # Takes in a unicode string representation of a filename and creates a
 # valid byte representation of it attempting to preserve extensions
 #
@@ -140,7 +135,7 @@ def unicodeToFilename(filename, path = None):
     # FIXME: this does not run under 10.3.x
     #MAX_LEN = os.statvfs(path)[statvfs.F_NAMEMAX]-5
     MAX_LEN = 250
-    
+
     filename.replace('/','_').replace("\000","_").replace("\\","_").replace(":","_").replace("*","_").replace("?","_").replace("\"","_").replace("<","_").replace(">","_").replace("|","_")
 
     newFilename = filename.encode('utf-8','replace')
@@ -225,7 +220,7 @@ def getResizedJPEGData(source, width, height):
     else:
         size = NSSize(destinationSize.height * sourceRatio, destinationSize.height)
         pos = NSPoint((destinationSize.width - size.width) / 2.0, 0)
-    
+
     destination = NSImage.alloc().initWithSize_(destinationSize)
     try:
         destination.lockFocus()
@@ -235,13 +230,13 @@ def getResizedJPEGData(source, width, height):
         source.drawInRect_fromRect_operation_fraction_((pos, size), ((0,0), sourceSize), NSCompositeSourceOver, 1.0)
     finally:
         destination.unlockFocus()
-    
+
     tiffData = destination.TIFFRepresentation()
     imageRep = NSBitmapImageRep.imageRepWithData_(tiffData)
     properties = {NSImageCompressionFactor: 0.8}
     jpegData = imageRep.representationUsingType_properties_(NSJPEGFileType, properties)
     jpegData = str(jpegData.bytes())
-    
+
     return jpegData
 
 # Returns the major version of the OS we are currently running on
@@ -279,26 +274,26 @@ def launchDownloadDaemon(oldpid, env):
 
     env['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
     env.update(os.environ)
-            
+
     exe = NSBundle.mainBundle().executablePath()
-    
+
     global dlTask
     dlTask = NSTask.alloc().init()
     dlTask.setLaunchPath_(exe)
     dlTask.setArguments_([u'download_daemon'])
     dlTask.setEnvironment_(env)
-    
+
     controller = NSApplication.sharedApplication().delegate()
     nc = NSNotificationCenter.defaultCenter()
     nc.addObserver_selector_name_object_(controller, 'downloaderDaemonDidTerminate:', NSTaskDidTerminateNotification, dlTask)
 
     logging.info('Launching Download Daemon')
     dlTask.launch()
-    
+
 def ensureDownloadDaemonIsTerminated():
-    # Calling dlTask.waitUntilExit() here could cause problems since we 
+    # Calling dlTask.waitUntilExit() here could cause problems since we
     # cannot specify a timeout, so if the daemon fails to shutdown we could
-    # wait here indefinitely. We therefore manually poll for a specific 
+    # wait here indefinitely. We therefore manually poll for a specific
     # amount of time beyond which we force quit the daemon.
     global dlTask
     if dlTask is not None:
