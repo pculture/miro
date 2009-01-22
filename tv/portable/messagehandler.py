@@ -292,16 +292,20 @@ class ItemTrackerBase(ViewTracker):
 class FeedItemTracker(ItemTrackerBase):
     type = 'feed'
     def __init__(self, feed):
-        self.view = feed.items
+        self.view = feed.items.filter(filters.notDeleted)
         self.id = feed.id
         ItemTrackerBase.__init__(self)
+
+    def unlink(self):
+        ItemTrackerBase.unlink(self)
+        self.view.unlink()
 
 class FeedFolderItemTracker(ItemTrackerBase):
     type = 'feed'
     def __init__(self, folder):
         self.view = views.items.filterWithIndex(
             indexes.itemsByChannelFolder,
-            folder).filter(filters.uniqueItems)
+            folder).filter(filters.uniqueItemsNotDeleted)
         self.id = folder.id
         ItemTrackerBase.__init__(self)
 

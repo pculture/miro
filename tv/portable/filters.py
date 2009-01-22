@@ -115,12 +115,11 @@ def manualDownloads(item):
     return not item.getAutoDownloaded() and not item.is_pending_manual_download() and item.get_state() == 'downloading'
 
 def uniqueItems(item):
-    try:
-        return item.downloader.itemList[0] == item
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
-        return True
+    return (item.downloader is None or
+            item.downloader.itemList[0] == item)
+
+def uniqueItemsNotDeleted(item):
+    return uniqueItems(item) and notDeleted(item)
 
 def watchedFolders(feed):
     return feed.url.startswith("dtv:directoryfeed:")
