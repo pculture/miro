@@ -173,8 +173,9 @@ class Box(Container):
         empty_rect = self.make_child_rect(start, length)
         my_view = self.viewport.view
         opaque_view = my_view.opaqueAncestor()
-        empty_rect2 = opaque_view.convertRect_fromView_(empty_rect, my_view)
-        opaque_view.setNeedsDisplayInRect_(empty_rect2)
+        if opaque_view is not None:
+            empty_rect2 = opaque_view.convertRect_fromView_(empty_rect, my_view)
+            opaque_view.setNeedsDisplayInRect_(empty_rect2)
 
     def _place_packing_list(self, packing_list, extra_space_iter, position):
         for packing in packing_list:
