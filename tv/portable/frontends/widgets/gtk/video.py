@@ -401,6 +401,8 @@ class VideoRenderer(VBox):
         else:
             self.renderer = NullRenderer()
 
+        self.overlay = None
+
         self._video_widget = VideoWidget(self.renderer)
         self.pack_start(self._video_widget, expand=True)
 
@@ -417,8 +419,6 @@ class VideoRenderer(VBox):
         self._item_id = None
 
         self._video_widget.wrapped_widget_connect('button-press-event', self.on_button_press)
-
-        self.overlay = None
 
     def teardown(self):
         self.renderer.reset()
@@ -521,7 +521,7 @@ class VideoRenderer(VBox):
         main_window.main_vbox.pack_start(main_window.controls_hbox)
 
         self.overlay.destroy()
-        del self.overlay
+        self.overlay = None
 
     def rebuild_video_details(self):
         self._video_details.rebuild_video_details()
