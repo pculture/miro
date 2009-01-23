@@ -75,7 +75,7 @@ class MainDialog(widgetset.Dialog):
 
 class ProgressDialog(widgetset.Window):
     def __init__(self, title):
-        self.progress_bar = style.ProgressBarWidget()
+        self.progress_bar = widgetset.ProgressBar()
         self.label = widgetset.Label()
         self.label.set_size(1.2)
         self.vbox = widgetset.VBox(spacing=6)
@@ -89,9 +89,9 @@ class ProgressDialog(widgetset.Window):
     def update(self, description, current, total):
         self.label.set_text("%s (%s/%s)" % (description, current, total))
         if total > 0:
-            self.progress_bar.update(float(current) / total)
+            self.progress_bar.set_progress(float(current) / total)
         else:
-            self.progress_bar.update(0.0)
+            self.progress_bar.set_progress(0.0)
 
 def show_about():
     window = widgetset.AboutDialog()

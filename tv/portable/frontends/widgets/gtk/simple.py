@@ -29,6 +29,7 @@
 """simple.py -- Collection of simple widgets."""
 
 import gtk
+import gobject
 import pango
 
 from miro.frontends.widgets import widgetconst
@@ -188,3 +189,25 @@ class Expander(Bin):
 
     def set_expanded(self, expanded):
         self._widget.set_expanded(expanded)
+
+class ProgressBar(Widget):
+    def __init__(self):
+        Widget.__init__(self)
+        self.set_widget(gtk.ProgressBar())
+        self._timer = None
+
+    def set_progress(self, fraction):
+        self._widget.set_fraction(fraction)
+
+    def start_pulsing(self):
+        if self._timer is None:
+            self._timer = gobject.timeout_add(100, self._do_pulse)
+
+    def stop_pulsing(self):
+        if self._timer:
+            gobject.source_remove(self._timer)
+            self._timer = None
+
+    def _do_pulse(self):
+        self._widget.pulse()
+        return True

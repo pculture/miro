@@ -262,9 +262,9 @@ class FirstTimeDialog(widgetset.Window):
 
         v.pack_start(_build_title(_("Searching for media files")))
 
-        # FIXME - progress meter here
+        progress_bar = widgetset.ProgressBar()
+        v.pack_start(progress_bar)
 
-        # FIXME - not sure why progress_label shows up in the middle
         progress_label = widgetset.Label("")
         progress_label.set_size_request(400, -1)
         v.pack_start(widgetutil.align_left(progress_label))
@@ -287,6 +287,8 @@ class FirstTimeDialog(widgetset.Window):
         v.pack_start(widgetutil.align_right(h))
 
         def handle_cancel_clicked(widget):
+            progress_bar.stop_pulsing()
+            progress_bar.set_progress(1.0)
             search_button.enable()
             cancel_button.disable()
 
@@ -332,6 +334,7 @@ class FirstTimeDialog(widgetset.Window):
             finish_button.disable()
 
             self.finder = util.gather_media_files(self.search_directory)
+            progress_bar.start_pulsing()
             threads.call_on_ui_thread(make_progress)
 
         search_button.connect('clicked', handle_search_clicked)

@@ -185,3 +185,23 @@ class SolidBackground(SimpleBin):
     def set_background_color(self, color):
         self.view.setBackgroundColor_(self.make_color(color))
 
+class ProgressBar(Widget):
+    def __init__(self):
+        Widget.__init__(self)
+        self.view = NSProgressIndicator.alloc().init()
+        self.view.setMaxValue_(1.0)
+        self.view.setIndeterminate_(False)
+
+    def calc_size_request(self):
+        return 20, 20
+
+    def set_progress(self, fraction):
+        self.view.setIndeterminate_(False)
+        self.view.setDoubleValue_(fraction)
+
+    def start_pulsing(self):
+        self.view.setIndeterminate_(True)
+        self.view.startAnimation_(nil)
+
+    def stop_pulsing(self):
+        self.view.stopAnimation_(nil)

@@ -48,6 +48,7 @@ from miro.frontends.widgets.gtk.tableview import TableView, TableModel, \
         TableColumn, TreeTableModel, CellRenderer, ImageCellRenderer, \
         CheckboxCellRenderer, CustomCellRenderer
 from miro.frontends.widgets.gtk.simple import Image, ImageDisplay, \
-        AnimatedImageDisplay, Label, Scroller, Expander, SolidBackground
+        AnimatedImageDisplay, Label, Scroller, Expander, SolidBackground, \
+        ProgressBar
 from miro.frontends.widgets.gtk.video import VideoRenderer, can_play_file
 from miro.frontends.widgets.gtk.widgets import Rect

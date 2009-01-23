@@ -1333,19 +1333,3 @@ class ItemProgressBarDrawer(ProgressBarDrawer):
                     info.size)
         else:
             self.progress_ratio = 0.0
-
-class ProgressBarWidget(widgetset.DrawingArea):
-    def __init__(self):
-        widgetset.DrawingArea.__init__(self)
-        self.progress = 0.0
-
-    def update(self, progress):
-        self.progress = progress
-        self.queue_redraw()
-
-    def size_request(self, layout):
-        return (30, 16)
-
-    def draw(self, context, layout):
-        ProgressBarDrawer(self.progress).draw(context, 0, 0, context.width,
-                context.height)
