@@ -1030,7 +1030,10 @@ class WidgetsMessageHandler(messages.MessageHandler):
         if self.migration_progress_dialog is None:
             self.migration_progress_dialog = dialogs.ProgressDialog(
                     _('Migrating Files'))
-            self.migration_progress_dialog.show()
+            self.migration_progress_dialog.run()
+            # run() will return when we destroy the dialog because of a future
+            # message.
+            return
 
         if message.finished:
             self.migration_progress_dialog.destroy()

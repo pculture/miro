@@ -73,8 +73,9 @@ class MainDialog(widgetset.Dialog):
         widgetset.Dialog.__init__(self, title, description)
         set_transient_for_main(self)
 
-class ProgressDialog(widgetset.Window):
+class ProgressDialog(MainDialog):
     def __init__(self, title):
+        MainDialog.__init__(self, title)
         self.progress_bar = widgetset.ProgressBar()
         self.label = widgetset.Label()
         self.label.set_size(1.2)
@@ -82,9 +83,7 @@ class ProgressDialog(widgetset.Window):
         self.vbox.pack_end(widgetutil.align_center(self.label))
         self.vbox.pack_end(self.progress_bar)
         height = self.vbox.get_size_request()[1] + 24
-        widgetset.Window.__init__(self, title,
-                widgetset.Rect(0, 0, 600, height))
-        self.set_content_widget(self.vbox)
+        self.set_extra_widget(self.vbox)
 
     def update(self, description, current, total):
         self.label.set_text("%s (%s/%s)" % (description, current, total))

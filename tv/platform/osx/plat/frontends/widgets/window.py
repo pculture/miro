@@ -198,6 +198,7 @@ class Dialog(DialogBase):
         self.buttons = []
         self.extra_widget = None
         self.window = None
+        self.running = False
 
     def add_button(self, text):
         button = Button(text)
@@ -258,6 +259,7 @@ class Dialog(DialogBase):
 
     def run(self):
         self.window = self.build_window()
+        self.running = True
         if self.sheet_parent is None:
             response = NSApp().runModalForWindow_(self.window)
         else:
@@ -266,13 +268,20 @@ class Dialog(DialogBase):
                 self.window, self.sheet_parent.nswindow, 
                 delegate, 'sheetDidEnd:returnCode:contextInfo:', 0)
             response = NSApp().runModalForWindow_(self.window)
-            self.window.orderOut_(nil)
+            if self.window:
+                # self.window won't be around if we call destroy() to cancel
+                # the dialog
+                self.window.orderOut_(nil)
+        self.running = False
 
         if response < 0:
             return -1
         return response
-        
+
     def destroy(self):
+        if self.running:
+            NSApp().stopModalWithCode_(-1)
+
         self.window.setContentView_(None)
         self.window.close()
         self.window = None
