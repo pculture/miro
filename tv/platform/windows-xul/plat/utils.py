@@ -36,6 +36,7 @@ from miro import config
 from miro import prefs
 import os
 import logging
+import logging.handlers
 from miro.plat import resources
 import subprocess
 import sys
@@ -124,18 +125,22 @@ def setup_logging(inDownloader=False):
     if _loggingSetup:
         return
 
-    if not inDownloader:
-        logFile = config.get(prefs.LOG_PATHNAME)
-        logStream = open(logFile, "wt")
-        sys.stdout = sys.stderr = AutoflushingStream(logStream)
+    if inDownloader:
+        logging.basicConfig(level=logging.INFO,
+                            format='%(asctime)s %(levelname)-8s %(message)s',
+                            stream=sys.stderr)
     else:
-        # If we're in the dwnloader sys.stdout and sys.stderr have already
-        # been redirected
-        logStream = sys.stderr
-    logging.basicConfig(level=logging.DEBUG,
-                        format='%(asctime)s %(levelname)-8s %(message)s',
-                        stream=logStream)
-    
+        logger = logging.getLogger('')
+        logger.setLevel(logging.DEBUG)
+
+        rotater = logging.handlers.RotatingFileHandler(config.get(prefs.LOG_PATHNAME), mode="w", maxBytes=500000, backupCount=5)
+        rotater.setLevel(logging.DEBUG)
+        formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
+        rotater.setFormatter(formatter)
+        logging.getLogger('').addHandler(rotater)
+        logging.info("=================================================")
+
+
     # Disable the xpcom log handlers.  This just means the log handler we
     # install at the root level will handle it instead.  The xpcom one
     # generates errors when it writes to stderr.
