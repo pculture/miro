@@ -102,14 +102,15 @@ class OSXApplication(Application):
 
     def endLoop(self, loop):
         del loop.pool
-    
+
     def do_quit(self):
-        windowFrame = self.window.nswindow.frame()
-        windowFrame.size.height -= 22
-        config.set(prefs.MAIN_WINDOW_FRAME, NSStringFromRect(windowFrame))
-        config.save()
+        if self.window is not None:
+            windowFrame = self.window.nswindow.frame()
+            windowFrame.size.height -= 22
+            config.set(prefs.MAIN_WINDOW_FRAME, NSStringFromRect(windowFrame))
+            config.save()
         Application.do_quit(self)
-            
+
     def quit_ui(self):
         self.gotQuit = True
         NSApplication.sharedApplication().terminate_(nil)
