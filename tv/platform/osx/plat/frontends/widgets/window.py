@@ -74,14 +74,14 @@ class Window(signals.SignalEmitter):
         self.create_signal('key-press')
         self.create_signal('show')
         self.create_signal('hide')
-        self.nswindow = MiroWindow.alloc()
-        self.nswindow.initWithContentRect_styleMask_backing_defer_(
+        self.nswindow = MiroWindow.alloc().initWithContentRect_styleMask_backing_defer_(
                 rect.nsrect,
                 self.get_style_mask(),
                 NSBackingStoreBuffered,
                 NO)
         self.nswindow.setTitle_(title)
         self.nswindow.setMinSize_(NSSize(800, 600))
+        self.nswindow.setReleasedWhenClosed_(NO)
         self.content_view = FlippedView.alloc().initWithFrame_(rect.nsrect)
         self.content_view.setAutoresizesSubviews_(NO)
         self.nswindow.setContentView_(self.content_view)
@@ -137,6 +137,8 @@ class Window(signals.SignalEmitter):
         self.nswindow.setContentView_(nil)
         wrappermap.remove(self.nswindow)
         alive_windows.discard(self)
+        self.nswindow.release()
+        self.nswindow = None
 
     def place_child(self):
         rect = self.nswindow.contentRectForFrameRect_(self.nswindow.frame())
