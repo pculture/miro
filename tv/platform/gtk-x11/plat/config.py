@@ -91,10 +91,10 @@ class GconfDict:
             fullkey = '/apps/miro/' + key
             if isinstance(value, str):
                 client.set_string(fullkey, value)
-            elif isinstance(value, int):
-                client.set_int(fullkey, value)
             elif isinstance(value, bool):
                 client.set_bool(fullkey, value)
+            elif isinstance(value, int):
+                client.set_int(fullkey, value)
             elif isinstance(value, float):
                 client.set_float(fullkey, value)
             else:
