@@ -112,10 +112,11 @@ def setup_logging (inDownloader=False):
             level = logging.WARN
         logging.basicConfig(level=level,
                             format='%(levelname)-8s %(message)s')
-        rotater = logging.handlers.RotatingFileHandler(config.get(prefs.LOG_PATHNAME), mode="w", maxBytes=500000, backupCount=5)
+        rotater = logging.handlers.RotatingFileHandler(config.get(prefs.LOG_PATHNAME), mode="w", maxBytes=100000, backupCount=5)
         formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
         rotater.setFormatter(formatter)
         logging.getLogger('').addHandler(rotater)
+        rotater.doRollover()
 
 # Takes in a unicode string representation of a filename and creates a
 # valid byte representation of it attempting to preserve extensions

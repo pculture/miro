@@ -119,7 +119,7 @@ def setup_logging(inDownloader=False):
         formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
         rotater.setFormatter(formatter)
         logging.getLogger('').addHandler(rotater)
-        logging.info("===========================================================")
+        rotater.doRollover()
 
 @returnsBinary
 def unicodeToFilename(filename, path=None):
