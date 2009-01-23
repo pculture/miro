@@ -286,8 +286,7 @@ def exit(returnCode):
     ctypes.windll.kernel32.ExitProcess(returnCode)
 
 def movie_data_program_info(movie_path, thumbnail_path):
-    appname = config.get(prefs.SHORT_APP_NAME)
-    exe_path = os.path.join(resources.appRoot(), '%s_MovieData.exe' % appname)
+    exe_path = os.path.join(resources.appRoot(), 'Miro_MovieData.exe')
     cmd_line = (exe_path, movie_path, thumbnail_path)
     env = None
     return (cmd_line, env)
