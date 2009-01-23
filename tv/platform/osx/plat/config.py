@@ -73,6 +73,9 @@ def load():
 
 def save(data):
     try:
+        for k, v in data.iteritems():
+            if v is None:
+                data[k] = ""
         plist = Conversion.propertyListFromPythonCollection(data)
     except:
         print "WARNING!! Error while converting the settings dictionary to a property list:"
