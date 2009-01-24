@@ -270,6 +270,7 @@ def launchDownloadDaemon(oldpid, env):
 
     environ = os.environ.copy()
     environ['MIRO_FRONTEND'] = options.frontend
+    environ['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
     environ.update(env)
     miro_path = os.path.dirname(miro.__file__)
     dl_daemon_path = os.path.join(miro_path, 'dl_daemon')
