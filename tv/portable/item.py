@@ -872,9 +872,8 @@ class Item(DDBObject):
             elif self.expired:
                 self._state = u'expired'
             elif (self.get_viewed() or
-                  (self.downloader and
-                   self.downloader.get_state() in (u'failed', u'stopped')) or
-                  (self.getFeed() and self.getFeed().isAutoDownloadable())):
+                    (self.downloader and
+                        self.downloader.get_state() in (u'failed', u'stopped'))):
                 self._state = u'not-downloaded'
             else:
                 self._state = u'new'

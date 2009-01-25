@@ -39,7 +39,6 @@ import re
 import xml
 
 from miro.database import DDBObject
-from miro.databasehelper import makeSimpleGetSet
 from miro.httpclient import grabURL
 from miro import config
 from miro import iconcache
@@ -53,7 +52,7 @@ from miro.plat import resources
 from miro import downloader
 from miro.util import returnsUnicode, returnsFilename, unicodify, checkU, checkF, quoteUnicodeURL, getFirstVideoEnclosure, escape, toUni
 from miro import fileutil
-from miro.plat.utils import filenameToUnicode, makeURLSafe, unmakeURLSafe, FilenameType
+from miro.plat.utils import filenameToUnicode, makeURLSafe, unmakeURLSafe
 from miro import filetypes
 from miro import item as itemmod
 from miro import views
@@ -309,22 +308,8 @@ class FeedImpl:
     def numAvailable(self):
         """Returns string with number of available videos in feed
         """
-        return len(self.availableItems)
-
-    def showBothUAndA(self):
-        """Returns true iff both unwatched and available numbers should be shown
-        """
-        return self.showU() and self.showA()
-
-    def showU(self):
-        """Returns true iff unwatched should be shown
-        """
-        return len(self.unwatchedItems) > 0
-
-    def showA(self):
-        """Returns true iff available should be shown
-        """
-        return len(self.availableItems) > 0 and not self.isAutoDownloadable()
+        return len([item for item in self.availableItems
+                    if not item.is_pending_auto_download()])
 
     def markAsViewed(self):
         """Sets the last time the feed was viewed to now
@@ -1410,6 +1395,8 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                 else:
                     item.eligibleForAutoDownload = False
                 item.signalChange()
+            if self.isAutoDownloadable():
+                self.ufeed.markAsViewed()
             self.ufeed.signalChange()
 
         self.truncateOldItems(old_items)
@@ -1722,7 +1709,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         if in_thread:
             try:
                 parsed = feedparser.parse(html)
-                feedparser_callback(parsed, url)
+                self.feedparser_callback(parsed, url)
             except (SystemExit, KeyboardInterrupt):
                 raise
             except:

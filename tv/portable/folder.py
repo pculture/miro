@@ -125,28 +125,18 @@ class ChannelFolder(FolderBase):
                 return True
         return False
 
-    # Returns true iff unwatched should be shown 
-    def showU(self):
-        return self.numUnwatched() > 0
-
     # Returns string with number of unwatched videos in feed
     def numUnwatched(self):
         unwatched = 0
         for child in self.getChildrenView():
-            if child.showU():
-                unwatched += child.numUnwatched()
+            unwatched += child.numUnwatched()
         return unwatched
-
-    # Returns true iff unwatched should be shown 
-    def showA(self):
-        return self.numAvailable() > 0
 
     # Returns string with number of available videos in feed
     def numAvailable(self):
         available = 0
         for child in self.getChildrenView():
-            if child.showA():
-                available += child.numAvailable()
+            available += child.numAvailable()
         return available
 
     def markAsViewed(self):
