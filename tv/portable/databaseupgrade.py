@@ -34,6 +34,7 @@ olddatabaseupgrade.py)
 
 from urlparse import urlparse
 import re
+import logging
 
 from miro import schema
 from miro import util
@@ -1276,6 +1277,23 @@ def upgrade71(objectList):
             o.savedData['downloader_id'] = url_to_downloader_id.get(url)
             changed.add(o)
 
+    return changed
+
+def upgrade72(objectList):
+    """
+    We upgraded the database wrong in upgrade64, inadvertently adding a
+    str to the allowedURLs list when it should be unicode.  This
+    converts that final str to unicode before the database sanity check
+    catches us.
+    """
+    changed = set()
+    for o in objectList:
+        if o.classString == 'channel-guide':
+            if o.savedData['allowedURLs'] and isinstance(
+                o.savedData['allowedURLs'][-1], str):
+                o.savedData['allowedURLs'][-1] = unicode(
+                    o.savedData['allowedURLs'][-1])
+                changed.add(o)
     return changed
 
 #def upgradeX (objectList):
