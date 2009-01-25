@@ -929,10 +929,7 @@ class Feed(DDBObject):
                     defaultMimeType=u'application/rss+xml')
             logging.debug ("added async callback to create feed %s", self.origURL)
         if newFeed:
-            self.actualFeed = newFeed
-            self.loading = False
-
-            self.signalChange()
+            self.finishGenerateFeed(newFeed)
 
     def _handleFeedLoadingError(self, errorDescription):
         self.download = None
