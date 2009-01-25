@@ -2383,6 +2383,8 @@ class SearchFeedImpl(RSSMultiFeedImpl):
 
     def updateFinished(self, old_items):
         self.searching = False
+        self.ufeed.markAsViewed() # keeps the items from being seen as 'newly
+                                  # available'
         RSSMultiFeedImpl.updateFinished(self, old_items)
 
     def update(self):
