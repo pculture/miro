@@ -53,6 +53,7 @@ from miro.frontends.widgets.gtk import trayicon
 from miro.frontends.widgets.gtk import persistentwindow
 from miro.frontends.widgets.gtk import widgets
 from miro.plat.frontends.widgets import flash
+from miro.plat.frontends.widgets import update
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 
 class WindowsApplication(Application):
@@ -220,7 +221,7 @@ class WindowsApplication(Application):
 
     def set_run_at_startup(self, value):
         runSubkey = "Software\\Microsoft\\Windows\\CurrentVersion\\Run"
-        try: 
+        try:
             folder = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER, runSubkey, 0,
                                      _winreg.KEY_SET_VALUE)
         except WindowsError, e:
@@ -240,7 +241,7 @@ class WindowsApplication(Application):
             if themeName is not None:
                 themeName = themeName.replace("\\", "\\\\").replace('"', '\\"')
                 filename = "%s --theme \"%s\"" % (filename, themeName)
-                
+
             _winreg.SetValueEx(folder, config.get(prefs.LONG_APP_NAME), 0,
                                _winreg.REG_SZ, filename)
 
@@ -248,7 +249,7 @@ class WindowsApplication(Application):
             try:
                 _winreg.DeleteValue(folder, config.get(prefs.LONG_APP_NAME))
             except WindowsError, e:
-                if e.errno == 2: 
+                if e.errno == 2:
                     # registry key doesn't exist, user must have deleted it
                     # manual
                     pass
@@ -260,17 +261,14 @@ class WindowsApplication(Application):
 
     def show_update_available(self, item):
         releaseNotes = item.get('description', '')
+        dialog = update.UpdateAvailableDialog(releaseNotes)
+        try:
+            ret = dialog.run()
 
-        ret = dialogs.show_choice_dialog(
-                _("Update available!"),
-                _("A new version of %(appname)s is available for download.\n"
-                  "%(notes)s\n"
-                  "Do you want to download it?", 
-                  {"appname": config.get(prefs.LONG_APP_NAME), "notes": releaseNotes}),
-                (dialogs.BUTTON_YES, dialogs.BUTTON_NO))
-
-        if ret == dialogs.BUTTON_YES:
-            enclosures = [enclosure for enclosure in item['enclosures']
-                          if enclosure['type'] == 'application/octet-stream']
-            downloadURL = enclosures[0]['href']
-            self.open_url(downloadURL)
+            if ret == dialogs.BUTTON_YES:
+                enclosures = [enclosure for enclosure in item['enclosures']
+                              if enclosure['type'] == 'application/octet-stream']
+                downloadURL = enclosures[0]['href']
+                self.open_url(downloadURL)
+        finally:
+            dialog.destroy()
