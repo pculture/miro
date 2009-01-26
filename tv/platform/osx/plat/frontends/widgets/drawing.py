@@ -178,6 +178,12 @@ class DrawingContext:
         self.path.removeAllPoints()
 
     def gradient_fill_preserve(self, gradient):
+        if self.view.inLiveResize():
+            NSColor.colorWithDeviceRed_green_blue_alpha_(
+                    gradient.start_color[0], gradient.start_color[1],
+                    gradient.start_color[1], 1.0).set()
+            self.path.fill()
+            return
         NSGraphicsContext.currentContext().saveGraphicsState()
         self.path.addClip()
         path_rect = self.path.bounds()
@@ -206,10 +212,12 @@ class Gradient(object):
         pass
 
     def set_start_color(self, (red, green, blue)):
+        self.start_color = (red, green, blue)
         self.filter.setValue_forKey_(self.ci_color(red, green, blue), 
                 'inputColor0')
 
     def set_end_color(self, (red, green, blue)):
+        self.end_color = (red, green, blue)
         self.filter.setValue_forKey_(self.ci_color(red, green, blue),
                 'inputColor1')
 
