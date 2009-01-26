@@ -72,6 +72,9 @@ def startup(props_to_set):
     elif parsed_options.frontend == 'cli':
         from miro.frontends import cli
         cli.run(parsed_options.theme)
+    elif parsed_options.frontend == 'shell':
+        from miro.frontends import shell
+        shell.run()
     else:
         raise ValueError("Unknown frontend: %s" % parsed_options.frontend)
 
