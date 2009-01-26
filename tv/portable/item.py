@@ -1106,7 +1106,9 @@ class Item(DDBObject):
         """Returns the URL of the webpage associated with the item.
         """
         self.confirmDBThread()
-        if hasattr(self.entry, "link"):
+        # if the link doesn't have a decode method, it's probably not a basestring
+        # and thus probably not something we want to return.
+        if hasattr(self.entry, "link") and hasattr(self.entry.link, "decode"):
             try:
                 return self.entry.link.decode('ascii', 'replace')
             except UnicodeDecodeError:
