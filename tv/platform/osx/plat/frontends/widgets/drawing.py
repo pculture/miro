@@ -36,6 +36,7 @@ from Quartz import *
 from objc import YES, NO, nil
 
 from miro.plat import utils
+from miro.plat import shading
 
 class ImageSurface:
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
@@ -178,57 +179,24 @@ class DrawingContext:
         self.path.removeAllPoints()
 
     def gradient_fill_preserve(self, gradient):
-        if self.view.inLiveResize():
-            NSColor.colorWithDeviceRed_green_blue_alpha_(
-                    gradient.start_color[0], gradient.start_color[1],
-                    gradient.start_color[1], 1.0).set()
-            self.path.fill()
-            return
-        NSGraphicsContext.currentContext().saveGraphicsState()
+        context = NSGraphicsContext.currentContext()
+        context.saveGraphicsState()
         self.path.addClip()
-        path_rect = self.path.bounds()
-        source_rect = gradient.rect_for_flipped_rect(path_rect)
-        gradient.get_image().drawAtPoint_fromRect_operation_fraction_(path_rect.origin, source_rect, NSCompositeSourceOver, 1.0)
-        NSGraphicsContext.currentContext().restoreGraphicsState()
+        shading.draw_axial(gradient)
+        context.restoreGraphicsState()
 
 class Gradient(object):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, x1, y1, x2, y2):
-        self.filter = CIFilter.filterWithName_('CILinearGradient')
-        # Make y negative because we want  things to work in flipped
-        # coordinates
-        if utils.getMajorOSVersion() < 9:
-            self.filter.setValue_forKey_(self.ci_point(x1, -y1), 'inputPoint0')
-            self.filter.setValue_forKey_(self.ci_point(x2, -y2), 'inputPoint1')
-        else:
-            self.filter.setValue_forKey_(self.ci_point(x1, -y1), 'inputPoint1')
-            self.filter.setValue_forKey_(self.ci_point(x2, -y2), 'inputPoint0')
-
-    def rect_for_flipped_rect(self, rect):
-        origin = NSPoint(rect.origin.x, -rect.origin.y-rect.size.height)
-        return NSRect(origin, rect.size)
-
-    def set_input_points(self, drawing_context):
-        pass
+        self.x1, self.y1, self.x2, self.y2 = x1, y1, x2, y2
+        self.start_color = None
+        self.end_color = None
 
     def set_start_color(self, (red, green, blue)):
         self.start_color = (red, green, blue)
-        self.filter.setValue_forKey_(self.ci_color(red, green, blue), 
-                'inputColor0')
 
     def set_end_color(self, (red, green, blue)):
         self.end_color = (red, green, blue)
-        self.filter.setValue_forKey_(self.ci_color(red, green, blue),
-                'inputColor1')
-
-    def ci_point(self, x, y):
-        return CIVector.vectorWithX_Y_(x, y)
-
-    def ci_color(self, red, green, blue):
-        return CIColor.colorWithRed_green_blue_(red, green, blue)
-
-    def get_image(self):
-        return self.filter.valueForKey_('outputImage')
 
 class DrawingMixin(object):
     def calc_size_request(self):
