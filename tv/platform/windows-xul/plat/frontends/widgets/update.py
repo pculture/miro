@@ -44,7 +44,7 @@ class UpdateAvailableBrowserWidget(gtk.DrawingArea):
         gtk.DrawingArea.__init__(self)
         self.browser = None
         self.url = url
-        self.set_size_request(200, 200)
+        self.set_size_request(200, 300)
         self.add_events(gtk.gdk.EXPOSURE_MASK)
 
     def navigate(self, url):
@@ -156,7 +156,7 @@ class UpdateAvailableDialog(dialogs.MainDialog):
             _('Do you want to download it now?'))
         self.vbox = widgetset.VBox(spacing=6)
         self.vbox.pack_end(widgetutil.align_center(label2))
-        self.vbox.pack_end(self.browser)
+        self.vbox.pack_end(self.browser, expand=True)
         self.vbox.pack_end(widgetutil.align_center(label))
         self.set_extra_widget(self.vbox)
         self.add_button(dialogs.BUTTON_YES.text)
