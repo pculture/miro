@@ -176,9 +176,9 @@ class LayoutManager(object):
 
     def button(self, text, pressed=False, disabled=False, style='normal'):
         if style == 'webby':
-            return StyledButton(text, self.current_font, pressed)
+            return StyledButton(text, self.current_font, pressed, disabled)
         else:
-            return NativeButton(text, self.current_font, pressed)
+            return NativeButton(text, self.current_font, pressed, disabled)
 
     def reset(self):
         text_box_pool.reclaim_textboxes()
