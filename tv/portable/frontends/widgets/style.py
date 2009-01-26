@@ -207,6 +207,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     FLAP_HIGHLIGHT_COLOR = (237.0 / 255.0, 237.0 / 255.0, 237.0 / 255.0)
 
     FROM_TEXT = _("From")
+    FILE_NAME_TEXT = _("File name:")
     SHOW_MORE_TEXT = _("Show More")
     SHOW_LESS_TEXT = _("Show Less")
     COMMENTS_TEXT = _("Comments")
@@ -383,6 +384,15 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         else:
             description = cellpack.ClippedTextBox(self.make_description(layout))
         vbox.pack(cellpack.Hotspot('description', description), expand=True)
+
+        if self.show_details and self.data.video_path:
+            vbox.pack_space(6)
+            layout.set_font(0.8, family="Helvetica")
+            filename_textbox = layout.textbox(self.FILE_NAME_TEXT + self.data.video_path)
+            filename_textbox.set_width(main_width)
+            filename_textbox.set_wrap_style('char')
+            vbox.pack(filename_textbox, expand=True)
+
         return vbox
 
     def _calculate_main_width(self, layout):
