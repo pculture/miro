@@ -478,7 +478,10 @@ class VideoRenderer(VBox):
     def skip_forward(self):
         current = self.get_elapsed_playback_time()
         duration = self.get_total_playback_time()
-        pos = min(duration, current + 30.0)
+        if duration <= 0.0:
+            pos = current + 30.0
+        else:
+            pos = min(duration, current + 30.0)
         self.seek_to_time(pos)
 
     def skip_backward(self):
