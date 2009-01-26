@@ -67,7 +67,7 @@ youtubeURLPattern = re.compile(r"^https?://(?:(?:www|gdata).)?youtube.com(?:/.*)
 youtubeTitlePattern = re.compile(r"(?:YouTube :: )?Videos (?:uploaded )?by (?P<name>\w*)")
 
 DEFAULT_FEED_ICON = "images/feedicon.png"
-DEFAULT_FEED_ICON_TABLIST = "images/feedicon-tablist.png"
+DEFAULT_FEED_ICON_TABLIST = "images/icon-rss.png"
 
 @returnsUnicode
 def default_feed_icon_url():
