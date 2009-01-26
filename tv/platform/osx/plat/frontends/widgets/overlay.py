@@ -170,20 +170,16 @@ class OverlayPalette (NSWindowController):
                 self.update_(nil)
                 
     def enter_fullscreen(self, videoWindow):
+        self.in_fullscreen = True
         if self.window().isVisible():
             self.adjustContent(videoWindow, True)
-            self.fsButton.setImage_(NSImage.imageNamed_('fs-button-exitfullscreen'))
-            self.fsButton.setAlternateImage_(NSImage.imageNamed_('fs-button-exitfullscreen-alt'))
         else:
             NSCursor.setHiddenUntilMouseMoves_(YES)
-        self.in_fullscreen = True
 
     def exit_fullscreen(self, videoWindow):
+        self.in_fullscreen = False
         if self.window().isVisible():
             self.adjustContent(videoWindow, True)
-            self.fsButton.setImage_(NSImage.imageNamed_('fs-button-enterfullscreen'))
-            self.fsButton.setAlternateImage_(NSImage.imageNamed_('fs-button-enterfullscreen-alt'))
-        self.in_fullscreen = False
 
     def getHorizontalPosition(self, videoWindow, width):
         parentFrame = videoWindow.frame()
@@ -198,6 +194,8 @@ class OverlayPalette (NSWindowController):
     def adjustContent(self, videoWindow, animate):
         if videoWindow.is_fullscreen:
             self.popInOutButton.setHidden_(YES)
+            self.fsButton.setImage_(NSImage.imageNamed_('fs-button-exitfullscreen'))
+            self.fsButton.setAlternateImage_(NSImage.imageNamed_('fs-button-exitfullscreen-alt'))
         else:
             if app.playback_manager.detached_window is None:
                 image_path = resources.path('images/popout.png')
@@ -205,6 +203,8 @@ class OverlayPalette (NSWindowController):
                 image_path = resources.path('images/popin.png')
             self.popInOutButton.setImage_(NSImage.alloc().initWithContentsOfFile_(image_path))
             self.popInOutButton.setHidden_(NO)
+            self.fsButton.setImage_(NSImage.imageNamed_('fs-button-enterfullscreen'))
+            self.fsButton.setAlternateImage_(NSImage.imageNamed_('fs-button-enterfullscreen-alt'))
 
         newFrame = self.window().frame()
         if videoWindow.is_fullscreen or app.playback_manager.detached_window is not None:
