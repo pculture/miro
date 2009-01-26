@@ -105,13 +105,35 @@ class TextBoxPool(object):
 
 text_box_pool = TextBoxPool()
 
-class LayoutManager(object):
-    def __init__(self):
-        self.set_font(1.0)
-        self.set_text_color((0, 0, 0))
-        self.set_text_shadow(None)
+class Font(object):
+    line_height_sizer = NSLayoutManager.alloc().init()
 
-    def font(self, scale_factor, bold=False, italic=False, family=None):
+    def __init__(self, nsfont):
+        self.nsfont = nsfont
+
+    def ascent(self):
+        return self.nsfont.ascender()
+
+    def descent(self):
+        return -self.nsfont.descender()
+
+    def line_height(self):
+        return Font.line_height_sizer.defaultLineHeightForFont_(self.nsfont)
+
+class FontPool(object):
+    def __init__(self):
+        self._cached_fonts = {}
+
+    def get(self, scale_factor, bold, italic, family):
+        cache_key = (scale_factor, bold, italic, family)
+        try:
+            return self._cached_fonts[cache_key]
+        except KeyError:
+            font = self._create(scale_factor, bold, italic, family)
+            self._cached_fonts[cache_key] = font
+            return font
+
+    def _create(self, scale_factor, bold, italic, family):
         size = round(scale_factor * NSFont.systemFontSize())
         if family is None:
             if bold:
@@ -124,6 +146,18 @@ class LayoutManager(object):
             else:
                 nsfont = NSFont.fontWithName_size_(family, size)
         return Font(nsfont)
+
+class LayoutManager(object):
+    font_pool = FontPool()
+    default_font = font_pool.get(1.0, False, False, None)
+
+    def __init__(self):
+        self.current_font = self.default_font
+        self.set_text_color((0, 0, 0))
+        self.set_text_shadow(None)
+
+    def font(self, scale_factor, bold=False, italic=False, family=None):
+        return self.font_pool.get(scale_factor, bold, italic, family)
 
     def set_font(self, scale_factor, bold=False, italic=False, family=None):
         self.current_font = self.font(scale_factor, bold, italic, family)
@@ -148,9 +182,9 @@ class LayoutManager(object):
 
     def reset(self):
         text_box_pool.reclaim_textboxes()
-        self.set_font(1.0)
-        self.set_text_color((0, 0, 0))
-        self.set_text_shadow(None)
+        self.current_font = self.default_font
+        self.text_color = (0, 0, 0)
+        self.shadow = None
 
 class TextBox(object):
     def __init__(self):
@@ -264,21 +298,6 @@ class TextBox(object):
         if self.shadow is not None:
             context.restore()
         context.path.removeAllPoints()
-
-class Font(object):
-    line_height_sizer = NSLayoutManager.alloc().init()
-
-    def __init__(self, nsfont):
-        self.nsfont = nsfont
-
-    def ascent(self):
-        return self.nsfont.ascender()
-
-    def descent(self):
-        return -self.nsfont.descender()
-
-    def line_height(self):
-        return Font.line_height_sizer.defaultLineHeightForFont_(self.nsfont)
 
 class NativeButton(object):
 

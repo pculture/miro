@@ -63,21 +63,26 @@ class ImageSurface:
             NSRectFill(NSRect((x, y), (width, height)))
         context.path.removeAllPoints()
 
+def convert_cocoa_color(color):
+    rgb = color.colorUsingColorSpaceName_(NSDeviceRGBColorSpace)
+    return (rgb.redComponent(), rgb.greenComponent(), rgb.blueComponent())
+
 class DrawingStyle(object):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, bg_color=None, text_color=None):
         self.use_custom_style = True
         self.use_custom_titlebar_background = True
         if text_color is None:
-            text_color = NSColor.textColor()
+            self.text_color = self.default_text_color
+        else:
+            self.text_color = convert_cocoa_color(text_color)
         if bg_color is None:
-            bg_color = NSColor.textBackgroundColor()
-        self.text_color = self.convert_cocoa_color(text_color)
-        self.bg_color = self.convert_cocoa_color(bg_color)
+            self.bg_color = self.default_bg_color
+        else:
+            self.bg_color = convert_cocoa_color(bg_color)
 
-    def convert_cocoa_color(self, color):
-        rgb = color.colorUsingColorSpaceName_(NSDeviceRGBColorSpace)
-        return (rgb.redComponent(), rgb.greenComponent(), rgb.blueComponent())
+    default_text_color = convert_cocoa_color(NSColor.textColor())
+    default_bg_color = convert_cocoa_color(NSColor.textBackgroundColor())
 
 class DrawingContext:
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
