@@ -271,7 +271,8 @@ class VideoDetailsWidget(Background):
             if info.is_single:
                 outer_hbox.pack_start(_align_middle(make_label(_("Add to library"), self.handle_add_to_library, True)))
             else:
-                outer_hbox.pack_start(_align_middle(make_label(_("Delete"), self.handle_delete, True)))
+                self._delete_link = make_label(_("Delete"), self.handle_delete, True)
+                outer_hbox.pack_start(_align_middle(self._delete_link))
         else:
             # keep / delete
             v = VBox()
