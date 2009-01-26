@@ -1028,6 +1028,8 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
     def handle_migration_progress(self, message):
         if self.migration_progress_dialog is None:
+            if message.finished:
+                return
             self.migration_progress_dialog = dialogs.ProgressDialog(
                     _('Migrating Files'))
             self.migration_progress_dialog.run()
