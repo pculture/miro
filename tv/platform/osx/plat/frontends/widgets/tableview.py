@@ -654,6 +654,7 @@ class TableView(Widget):
         self.draws_selection = True
         self.row_height_set = False
         self.set_fixed_height(False)
+        self.auto_resizing = False
         self.header_view = MiroTableHeaderView.alloc().initWithFrame_(
             NSMakeRect(0, 0, 0, HEADER_HEIGHT))
         self.set_show_headers(True)
@@ -733,7 +734,8 @@ class TableView(Widget):
         self.emit('selection-changed')
 
     def on_column_resize(self, notification):
-        self.invalidate_size_request()
+        if not self.auto_resizing:
+            self.invalidate_size_request()
 
     def is_tree(self):
         return isinstance(self.model, tablemodel.TreeTableModel)
@@ -798,8 +800,9 @@ class TableView(Widget):
             self.tableview.setFrame_(NSMakeRect(x, y, width, height))
 
         if self.auto_resize:
+            self.auto_resizing = True
             self._autoresize_columns()
-        self.queue_redraw()
+            self.auto_resizing = False
 
     def _autoresize_columns(self):
         # Resize the column so that they take up the width we are allocated,
@@ -808,11 +811,14 @@ class TableView(Widget):
         # columns, but not more than their max/min width.  Repeat the process
         # until there is no extra space.
         columns = self.tableview.tableColumns()
+        if len(columns) == 1:
+            # we can special case this easily
+            total_width = self.viewport.area().size.width
+            columns[0].setWidth_(total_width)
+            return
         column_width = sum(column.width() for column in columns)
         width_difference = self.viewport.area().size.width - column_width
         width_difference -= self.tableview.intercellSpacing().width * len(columns)
-        if width_difference == 0:
-            return
         while width_difference != 0:
             did_something = False
             columns_left = len(columns)
@@ -958,6 +964,7 @@ class TableView(Widget):
             self._do_layout()
             self._add_views()
         self.invalidate_size_request()
+        self.queue_redraw()
 
     def set_search_column(self, model_index):
         pass
