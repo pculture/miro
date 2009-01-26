@@ -349,14 +349,14 @@ class VideoBox(style.LowerBox):
         self.volume_slider = VolumeSlider()
         self.time_slider = self.timeline.slider
 
-        hbox = widgetset.HBox(spacing=35)
+        hbox = widgetset.HBox(spacing=20)
         hbox.pack_start(self.controls, expand=False)
         hbox.pack_start(widgetutil.align_middle(self.timeline), expand=True)
-        volume_hbox = widgetset.HBox(spacing=5)
+        volume_hbox = widgetset.HBox(spacing=4)
         volume_hbox.pack_start(widgetutil.align_middle(self.volume_muter))
         volume_hbox.pack_start(widgetutil.align_middle(self.volume_slider))
         hbox.pack_start(volume_hbox)
-        self.add(widgetutil.align_middle(hbox, 0, 0, 30, 30))
+        self.add(widgetutil.align_middle(hbox, 0, 0, 25, 25))
 
     def handle_new_selection(self, has_playable):
         self.controls.handle_new_selection(has_playable)
