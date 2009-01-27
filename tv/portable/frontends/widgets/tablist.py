@@ -266,11 +266,14 @@ class TabListDropHandler(object):
             dest_tablist.model_changed()
         for id in expanded_rows:
             dest_tablist.view.set_row_expanded(dest_tablist.iter_map[id], True)
-        for id in selected_rows:
-            iter = dest_tablist.iter_map[id]
-            parent = model.parent_iter(iter)
-            if parent is None or dest_tablist.view.is_row_expanded(parent):
-                dest_tablist.view.select(iter)
+        try:
+            for id in selected_rows:
+                iter = dest_tablist.iter_map[id]
+                parent = model.parent_iter(iter)
+                if parent is None or dest_tablist.view.is_row_expanded(parent):
+                    dest_tablist.view.select(iter)
+        except:
+            pass
 
         send_new_order()
         source_tablist.doing_change = False
