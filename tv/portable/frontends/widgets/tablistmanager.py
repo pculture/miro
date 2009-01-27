@@ -94,6 +94,9 @@ class TabListManager(object):
         view = self.static_tab_list.view
         previously_selected = view.get_selected()
         iter = view.model.nth_iter(index)
+        if (previously_selected is not None and
+                view.model[previously_selected][0] == view.model[iter][0]):
+            return # The tab is already selected
         view.select(iter)
         if previously_selected is not None:
             # We unselect *after* having made the new selection because if we
