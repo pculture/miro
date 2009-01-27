@@ -488,10 +488,6 @@ class _WatchedFolderHelper(object):
         scroller.set_size_request(-1, 120)
         self.folder_list = widgetset.VBox()
         self.folder_list.pack_start(scroller)
-        self.empty_label = widgetutil.HideableWidget(
-                widgetutil.align_center(
-                    widgetset.Label(_("No watched folders"))))
-        self.folder_list.pack_start(self.empty_label)
         self._check_no_folders()
 
     def _on_visible_clicked(self, renderer, iter):
@@ -511,10 +507,8 @@ class _WatchedFolderHelper(object):
 
     def _check_no_folders(self):
         if len(app.watched_folder_manager.model) == 0:
-            self.empty_label.show()
             self.remove_button_holder.hide()
         else:
-            self.empty_label.hide()
             self.remove_button_holder.show()
 
     def _add_clicked(self, button):
