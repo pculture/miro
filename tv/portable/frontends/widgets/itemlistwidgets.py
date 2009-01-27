@@ -197,14 +197,17 @@ class SearchListTitlebar(ItemListTitlebar):
     """Titlebar for the search page.
     """
     def _on_search_activate(self, obj):
-        app.search_manager.set_search_info(obj.selected_engine().name, obj.get_text())
+        app.search_manager.set_search_info(obj.selected_engine(), obj.get_text())
         app.search_manager.perform_search()
 
     def get_engine(self):
-        return self.searchbox.selected_engine().name
+        return self.searchbox.selected_engine()
 
     def get_text(self):
         return self.searchbox.get_text()
+
+    def set_search_engine(self, engine):
+        self.searchbox.select_engine(engine)
 
     def _build_titlebar_extra(self):
         hbox = widgetset.HBox()

@@ -377,12 +377,16 @@ class VideoSearchTextEntry (SearchTextEntry):
         return NSVideoSearchField.alloc().init()
 
     def selected_engine(self):
-        return self.view.currentItem.representedObject()
+        return self.view.currentItem.representedObject().name
+
+    def select_engine(self, engine):
+        self.view.selectEngine_(self.view.menuItemForEngine_(engine))
 
 class NSVideoSearchField (MiroSearchTextField):
 
     def init(self):
         self = MiroSearchTextField.init(self)
+        self._engineToMenuItem = {}
         self.currentItem = nil
         self.setTarget_(self)
         self.setAction_('search:')
@@ -391,7 +395,7 @@ class NSVideoSearchField (MiroSearchTextField):
         self.cell().setSendsWholeSearchString_(YES)
         self.cell().setSendsSearchStringImmediately_(NO)
         self.cell().setScrollable_(YES)
-        self.initFromLastEngine()
+        self.setStringValue_("")
         return self
 
     def makeSearchMenuTemplate(self):
@@ -401,6 +405,7 @@ class NSVideoSearchField (MiroSearchTextField):
             nsitem.setTarget_(self)
             nsitem.setImage_(_getEngineIcon(engine))
             nsitem.setRepresentedObject_(engine)
+            self._engineToMenuItem[engine.name] = nsitem
             menu.insertItem_atIndex_(nsitem, 0)
         return menu
 
@@ -416,21 +421,14 @@ class NSVideoSearchField (MiroSearchTextField):
         if self.stringValue() != "":
             wrappermap.wrapper(self).emit('validate')
 
-    def initFromLastEngine(self):
-        self.setStringValue_("")
-        lastEngine = searchengines.get_last_engine()
-        for engine in searchengines.get_search_engines():
-            if engine.name == lastEngine.name:
-                menu = self.searchMenuTemplate()
-                index = menu.indexOfItemWithRepresentedObject_(engine)
-                menu.performActionForItemAtIndex_(index)
-                return
+    def menuItemForEngine_(self, engine):
+        return self._engineToMenuItem[engine]
 
 class VideoSearchFieldCell (NSSearchFieldCell):
-    
+
     def searchButtonRectForBounds_(self, bounds):
         return NSRect(NSPoint(8.0, 3.0), NSSize(25.0, 16.0))
-        
+
     def searchTextRectForBounds_(self, bounds):
         textBounds = NSSearchFieldCell.searchTextRectForBounds_(self, bounds)
         cancelButtonBounds = NSSearchFieldCell.cancelButtonRectForBounds_(self, bounds)

@@ -118,7 +118,6 @@ class GtkVideoSearchTextEntry(GtkSearchTextEntry):
         self._engine_to_pixbuf = {}
         for engine in searchengines.get_search_engines():
             self._add_engine(engine)
-        self.select_engine(searchengines.get_last_engine())
 
     def _add_engine(self, engine):
         icon_path = resources.path('images/search_icon_%s.png' % engine.name)
@@ -131,21 +130,21 @@ class GtkVideoSearchTextEntry(GtkSearchTextEntry):
                                                  'images/search_icon_%s.png' %
                                                  engine.name)
         pixbuf = gtk.gdk.pixbuf_new_from_file(icon_path)
-        self._engine_to_pixbuf[engine] = pixbuf
+        self._engine_to_pixbuf[engine.name] = pixbuf
         image = gtk.Image()
         image.set_from_pixbuf(pixbuf)
         menu_item = gtk.ImageMenuItem(engine.title)
         menu_item.set_image(image)
-        menu_item.connect('activate', self._on_menu_item_activate, engine)
+        menu_item.connect('activate', self._on_menu_item_activate, engine.name)
         menu_item.show()
         self.menu.append(menu_item)
 
-    def _on_menu_item_activate(self, item, engine):
-        self.select_engine(engine)
+    def _on_menu_item_activate(self, item, engine_name):
+        self.select_engine(engine_name)
 
-    def select_engine(self, engine):
-        self.pixbuf = self._engine_to_pixbuf[engine]
-        self._engine = engine
+    def select_engine(self, engine_name):
+        self.pixbuf = self._engine_to_pixbuf[engine_name]
+        self._engine = engine_name
         self.queue_draw()
 
     def selected_engine(self):
@@ -174,3 +173,5 @@ class VideoSearchTextEntry(SearchTextEntry):
     def selected_engine(self):
         return self._widget.selected_engine()
 
+    def select_engine(self, engine):
+        self._widget.select_engine(engine)

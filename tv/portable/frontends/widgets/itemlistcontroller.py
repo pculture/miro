@@ -462,6 +462,8 @@ class SearchController(SimpleItemListController):
         app.search_manager.disconnect(self._complete_handle)
 
     def _on_search_started(self, search_manager):
+        self.titlebar.set_search_text(search_manager.text)
+        self.titlebar.set_search_engine(search_manager.engine)
         self.widget.set_list_empty_mode(False)
         if search_manager.text != '':
             self.toolbar.show()
