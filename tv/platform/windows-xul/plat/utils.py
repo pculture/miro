@@ -36,7 +36,7 @@ from miro import config
 from miro import prefs
 import os
 import logging
-import logging.handlers
+from logging.handlers import RotatingFileHandler
 from miro.plat import resources
 import subprocess
 import sys
@@ -119,6 +119,34 @@ def initializeLocale():
         os.environ["LANGUAGE"] = lang
     localeInitialized = True
 
+class ApatheticRotatingFileHandler(RotatingFileHandler):
+    """The whole purpose of this class is to prevent rotation errors from
+    percolating up into stdout/stderr and popping up a dialog that's not
+    particularly useful to users or us.
+    """
+    def doRollover(self):
+        # If you shut down Miro then start it up again immediately afterwards,
+        # then we get in this squirrely situation where the log is opened
+        # by another process.  We ignore the exception, but make sure we 
+        # have an open file.  (bug #11228)
+        try:
+            RotatingFileHandler.doRollover(self)
+        except WindowsError:
+            if not self.stream or self.stream.closed:
+                self.stream = open(self.baseFilename, "a")
+
+    def shouldRollover(self, record):
+        # if doRollover doesn't work, then we don't want to find ourselves
+        # in a situation where we're trying to do things on a closed stream.
+        if self.stream.closed:
+            self.stream = open(self.baseFilename, "a")
+        return RotatingFileHandler.shouldRollover(self, record)
+
+    def handleError(self, record):
+        # ignore logging errors that occur rather than printing them to 
+        # stdout/stderr which isn't helpful to us
+        pass
+
 _loggingSetup = False
 def setup_logging(inDownloader=False):
     global _loggingSetup
@@ -133,7 +161,7 @@ def setup_logging(inDownloader=False):
         logger = logging.getLogger('')
         logger.setLevel(logging.DEBUG)
 
-        rotater = logging.handlers.RotatingFileHandler(config.get(prefs.LOG_PATHNAME), mode="w", maxBytes=100000, backupCount=5)
+        rotater = ApatheticRotatingFileHandler(config.get(prefs.LOG_PATHNAME), mode="a", maxBytes=100000, backupCount=5)
         rotater.setLevel(logging.DEBUG)
         formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
         rotater.setFormatter(formatter)
