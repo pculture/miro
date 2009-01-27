@@ -272,7 +272,7 @@ class TabListDropHandler(object):
                 parent = model.parent_iter(iter)
                 if parent is None or dest_tablist.view.is_row_expanded(parent):
                     dest_tablist.view.select(iter)
-        except:
+        except KeyError:
             pass
 
         send_new_order()
