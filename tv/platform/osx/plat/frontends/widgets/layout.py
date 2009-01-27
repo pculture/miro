@@ -679,6 +679,9 @@ class Scroller(Bin):
         self.clip_notifications.connect(self._on_clip_view_bounds_change,
                 'NSViewBoundsDidChangeNotification')
 
+    def set_has_borders(self, has_border):
+        self.view.setBorderType_(NSBezelBorder)
+
     def add(self, child):
         child.parent_is_scroller = True
         Bin.add(self, child)

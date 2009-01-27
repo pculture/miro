@@ -433,6 +433,7 @@ class _MovieDirectoryHelper(object):
     def __init__(self):
         self.label = widgetset.Label()
         self.button = widgetset.Button(_("Change"))
+        self.button.set_size(widgetconst.SIZE_SMALL)
         self.button.connect('clicked', self._on_button_clicked)
 
     def _on_button_clicked(self, button):
@@ -464,19 +465,25 @@ class _MovieDirectoryHelper(object):
 class _WatchedFolderHelper(object):
     def __init__(self):
         self._table = widgetset.TableView(app.watched_folder_manager.model)
-        checkbox = widgetset.CheckboxCellRenderer()
-        checkbox.connect('clicked', self._on_visible_clicked)
+        folder_cell_renderer = widgetset.CellRenderer()
+        folder_cell_renderer.set_text_size(widgetconst.SIZE_SMALL)
         folder_column = widgetset.TableColumn('folder',
-                widgetset.CellRenderer(), value=1)
+                folder_cell_renderer, value=1)
         folder_column.set_min_width(400)
-        visible_column = widgetset.TableColumn('visible', checkbox, value=2)
+        checkbox_cell_renderer = widgetset.CheckboxCellRenderer()
+        checkbox_cell_renderer.set_control_size(widgetconst.SIZE_SMALL)
+        checkbox_cell_renderer.connect('clicked', self._on_visible_clicked)
+        visible_column = widgetset.TableColumn('visible', checkbox_cell_renderer, value=2)
         visible_column.set_min_width(50)
         self._table.add_column(folder_column)
         self._table.add_column(visible_column)
         self._table.allow_multiple_select(False)
+        self._table.set_alternate_row_backgrounds(True)
         self.add_button = widgetset.Button(_("Add"))
+        self.add_button.set_size(widgetconst.SIZE_SMALL)
         self.add_button.connect('clicked', self._add_clicked)
         self.remove_button = widgetset.Button(_("Remove"))
+        self.remove_button.set_size(widgetconst.SIZE_SMALL)
         self.remove_button.connect('clicked', self._remove_clicked)
         self.remove_button_holder = \
                 widgetutil.HideableWidget(self.remove_button)
@@ -484,6 +491,7 @@ class _WatchedFolderHelper(object):
         self.button_box.pack_start(self.add_button)
         self.button_box.pack_start(self.remove_button_holder)
         scroller = widgetset.Scroller(False, True)
+        scroller.set_has_borders(True)
         scroller.add(self._table)
         scroller.set_size_request(-1, 120)
         self.folder_list = widgetset.VBox()

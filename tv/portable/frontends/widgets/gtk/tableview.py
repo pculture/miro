@@ -63,6 +63,9 @@ class CellRenderer(object):
     def setup_attributes(self, column, attr_map): 
         column.add_attribute(self._renderer, 'text', attr_map['value'])
 
+    def set_text_size(self, size):
+        pass
+
     def set_color(self, color):
         self._renderer.props.foreground_gdk = make_gdk_color(color)
 
@@ -100,6 +103,9 @@ class CheckboxCellRenderer(signals.SignalEmitter):
         self.create_signal("clicked")
         self._renderer = GTKCheckboxCellRenderer()
         wrappermap.add(self._renderer, self)
+
+    def set_control_size(self, size):
+        pass
 
     def setup_attributes(self, column, attr_map):
         column.add_attribute(self._renderer, 'active', attr_map['value'])

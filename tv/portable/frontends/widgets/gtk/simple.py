@@ -146,6 +146,9 @@ class Scroller(Bin):
             v_policy = gtk.POLICY_NEVER
         self._widget.set_policy(h_policy, v_policy)
 
+    def set_has_borders(self, has_border):
+        pass
+
     def add_child_to_widget(self):
         if (isinstance(self.child._widget, gtk.TreeView) or
                 isinstance(self.child._widget, gtk.TextView)):

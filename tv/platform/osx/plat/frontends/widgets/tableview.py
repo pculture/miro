@@ -37,6 +37,7 @@ from Foundation import *
 from objc import YES, NO, nil
 
 from miro import signals
+from miro.frontends.widgets import widgetconst
 from miro.plat.frontends.widgets import osxmenus
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets import tablemodel
@@ -223,6 +224,14 @@ class CellRenderer(object):
     def setDataCell_(self, column):
         column.setDataCell_(self.cell)
 
+    def set_text_size(self, size):
+        if size == widgetconst.SIZE_NORMAL:
+            self.cell.setFont_(NSFont.systemFontOfSize_(NSFont.systemFontSize()))
+        elif size == widgetconst.SIZE_SMALL:
+            self.cell.setFont_(NSFont.systemFontOfSize_(11))
+        else:
+            raise ValueError("Unknown size: %s" % size)
+
     def set_bold(self, bold):
         if bold:
             font = NSFont.boldSystemFontOfSize_(NSFont.systemFontSize())
@@ -242,9 +251,16 @@ class ImageCellRenderer(object):
 class CheckboxCellRenderer(signals.SignalEmitter):
     def __init__(self):
         signals.SignalEmitter.__init__(self, 'clicked')
+        self.size = widgetconst.SIZE_NORMAL
+
+    def set_control_size(self, size):
+        self.size = size
 
     def setDataCell_(self, column):
-        column.setDataCell_(MiroCheckboxCell.alloc().init())
+        cell = MiroCheckboxCell.alloc().init()
+        if self.size == widgetconst.SIZE_SMALL:
+            cell.setControlSize_(NSSmallControlSize)
+        column.setDataCell_(cell)
 
 class CustomTableCell(NSCell):
     def init(self):
