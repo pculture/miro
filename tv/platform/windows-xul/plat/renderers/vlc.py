@@ -113,6 +113,7 @@ class VLCRenderer:
         self.play_from_time = None
         self.started_playing = STOPPED
         self._duration = None
+        self._filename = None
         self._rate = 1.0
         self.media_playing = None
         self.callback_info = None
@@ -189,6 +190,7 @@ class VLCRenderer:
     def select_file(self, filename, callback, errback):
         """starts playing the specified file"""
 
+        self._filename = filename
         self.callback_info = (callback, errback)
         self.play_from_time = None
         self.started_playing = STOPPED
@@ -219,7 +221,7 @@ class VLCRenderer:
         libvlc.libvlc_media_player_play(self.media_player, self.exc.ref())
         self.exc.check()
         # For unknown reasons, sometimes we don't see the state changed event
-        # if they happen quickly enough.  To work around thate, check the
+        # if they happen quickly enough.  To work around that, check the
         # initial state of the media player.
         state = libvlc.libvlc_media_player_get_state(self.media_player,
                 self.exc.ref())
@@ -250,7 +252,6 @@ class VLCRenderer:
         self.stop()
         self.play_from_time = None
         self.started_playing = STOPPED
-        self._duration = None
 
     def get_current_time(self):
         t = libvlc.libvlc_media_player_get_time(self.media_player, self.exc.ref())
@@ -267,7 +268,6 @@ class VLCRenderer:
             self.play_from_time = seconds
             return
         t = int(seconds * 1000)
-        logging.warn('set time: %s %s' % (seconds, t))
         libvlc.libvlc_media_player_set_time(self.media_player,
                 ctypes.c_longlong(t), self.exc.ref())
         try:
@@ -276,8 +276,9 @@ class VLCRenderer:
             logging.warn("exception setting current time %s" % e)
 
     def get_duration(self):
-        if self._duration:
-            return self._duration
+        # self._duration = (filename, duration)
+        if self._duration and self._duration[0] == self._filename:
+            return self._duration[1]
 
         length = libvlc.libvlc_media_player_get_length(self.media_player, self.exc.ref())
         try:
@@ -286,8 +287,8 @@ class VLCRenderer:
             logging.warn("exception getting duration: %s" % e)
             return None
 
-        self._duration = length / 1000.0
-        return self._duration
+        self._duration = (self._filename, length / 1000.0)
+        return self._duration[1]
 
     def set_volume(self, volume):
         volume = int(volume * 100)
