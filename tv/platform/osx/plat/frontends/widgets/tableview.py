@@ -905,15 +905,6 @@ class TableView(Widget):
         self.height_changed = self.selection_removed = self.reload_needed = False
         self.iters_to_update = []
 
-    def invalidate_size_request(self):
-        scroll_view = self.tableview.enclosingScrollView()
-        if scroll_view is not None:
-            current_scroll_position = scroll_view.contentView().bounds().origin
-            Widget.invalidate_size_request(self)
-            self.tableview.scrollPoint_(current_scroll_position)
-        else:
-            Widget.invalidate_size_request(self)
-
     def width_for_columns(self, width):
         """If the table is width pixels big, how much width is available for
         the table's columns.

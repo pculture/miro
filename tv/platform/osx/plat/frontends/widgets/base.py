@@ -81,6 +81,19 @@ class Widget(signals.SignalEmitter):
             return self.cached_size_request
 
     def invalidate_size_request(self):
+        if hasattr(self, 'view') and self.view is not None:
+            scroll_view = self.view.enclosingScrollView()
+            if scroll_view is not None:
+                scrolled_view = scroll_view.contentView()
+                current_scroll_position = scrolled_view.bounds().origin
+                self.do_invalidate_size_request()
+                scrolled_view.scrollPoint_(current_scroll_position)
+            else:
+                self.do_invalidate_size_request()
+        else:
+            self.do_invalidate_size_request()
+
+    def do_invalidate_size_request(self):
         """Recalculate the size request for this widget."""
         old_size_request = self.cached_size_request
         self.cached_size_request = None
