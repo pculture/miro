@@ -819,6 +819,7 @@ class TableView(Widget):
             self.auto_resizing = True
             self._autoresize_columns()
             self.auto_resizing = False
+        self.queue_redraw()
 
     def _autoresize_columns(self):
         # Resize the column so that they take up the width we are allocated,
