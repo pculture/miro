@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-01-21 22:38-0500\n"
-"PO-Revision-Date: 2009-01-22 02:03+0000\n"
+"PO-Revision-Date: 2009-01-27 05:46+0000\n"
 "Last-Translator: ytetsu <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-01-26 20:00+0000\n"
+"X-Launchpad-Export-Date: 2009-01-27 18:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -62,11 +62,11 @@ msgstr "ウェブサイトを開く際のエラー"
 #, python-format
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
-msgstr ""
+msgstr "%(url)s を開けませんでした。数秒後に再度試してみてください。"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:265
 msgid "Update available!"
-msgstr ""
+msgstr "更新があります！"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:266
 #, python-format
@@ -75,10 +75,13 @@ msgid ""
 "%(notes)s\n"
 "Do you want to download it?"
 msgstr ""
+"%(appname)s の新バージョンがダウンロードできます。\n"
+"%(notes)s\n"
+"ダウンロードしますか？"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
-msgstr ""
+msgstr "Adobe Flashをインストールしてよろしいですか？"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
 #, python-format
@@ -89,7 +92,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
-msgstr ""
+msgstr "Adobe Flashのインストール"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
 msgid ""
@@ -99,6 +102,9 @@ msgid ""
 "You should quit Miro now and start it up again after Adobe Flash has been "
 "installed."
 msgstr ""
+"ブラウザはAdobe Flashをダウンロード／インストールできるウェブサイトをロードします。\n"
+"\n"
+"ここでMiroを終了してAdobe Flashがインストールされた後で再度起動してください。"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
 msgid "Renderer options:"
@@ -152,7 +158,7 @@ msgstr "削除"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:131
 msgid "Add to Library"
-msgstr ""
+msgstr "ライブラリに追加"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
 msgid "Services"
@@ -172,7 +178,7 @@ msgstr "全て表示"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
 msgid "Preferences..."
-msgstr "選択..."
+msgstr "設定..."
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
@@ -204,15 +210,15 @@ msgstr "編集"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
 msgid "Present Half Size"
-msgstr ""
+msgstr "半分のサイズ"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:168
 msgid "Present Actual Size"
-msgstr ""
+msgstr "実際のサイズ"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:169
 msgid "Present Double Size"
-msgstr ""
+msgstr "二倍のサイズ"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:171
 msgid "Present Video"
@@ -271,31 +277,31 @@ msgstr "プレイリストの例"
 
 #: ../../portable/theme.py:186
 msgid "Miro - Report a Problem"
-msgstr ""
+msgstr "Miro - 問題を報告"
 
 #: ../../portable/searchengines.py:146
 msgid "Search All"
-msgstr ""
+msgstr "全てを検索"
 
 #: ../../portable/util.py:279 ../../portable/util.py:281
 #, python-format
 msgid "%(size)sGB"
-msgstr ""
+msgstr "%(size)sGB"
 
 #: ../../portable/util.py:285 ../../portable/util.py:287
 #, python-format
 msgid "%(size)sMB"
-msgstr ""
+msgstr "%(size)sMB"
 
 #: ../../portable/util.py:291 ../../portable/util.py:293
 #, python-format
 msgid "%(size)sKB"
-msgstr ""
+msgstr "%(size)sKB"
 
 #: ../../portable/util.py:297 ../../portable/util.py:299
 #, python-format
 msgid "%(size)sB"
-msgstr ""
+msgstr "%(size)sB"
 
 #: ../../portable/opml.py:180
 msgid "OPML Import failed"
@@ -314,20 +320,18 @@ msgstr "OPMLインポートの概要"
 #, python-format
 msgid "Successfully imported %(count)d feed."
 msgid_plural "Successfully imported %(count)d feeds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d 個のフィードのインポートに成功しました。"
 
 #: ../../portable/opml.py:193
 #, python-format
 msgid "Skipped %(count)d feed already present."
 msgid_plural "Skipped %(count)d feeds already present."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "既存の %(count)d 個のフィードをスキップしました。"
 
 #: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
-msgstr ""
+msgstr "%(appname)s データベースが正常に保存されました"
 
 #: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
@@ -338,7 +342,7 @@ msgstr "データベースの保存に成功しました。現在、少しのデ
 #: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
-msgstr ""
+msgstr "%(appname)s データベースの保存に失敗しました"
 
 #: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
@@ -348,6 +352,9 @@ msgid ""
 "from your collection.\n"
 "Recent changes may be lost."
 msgstr ""
+"%(appname)s はデータベースの保存が出来ませんでした：　ディスク容量不足。\n"
+"ディスクからファイルを削除するかあなたのコレクション中の動画をいくつか削除されることをお勧めします。\n"
+"最新の変更は失われるでしょう。"
 
 #: ../../portable/messagehandler.py:1293
 msgid "Subscribed to new feed:"
@@ -355,7 +362,7 @@ msgstr ""
 
 #: ../../portable/messagehandler.py:1296
 msgid "Subscribed to new feeds:"
-msgstr ""
+msgstr "新しいフィードを登録："
 
 #: ../../portable/messages.py:965 ../../portable/item.py:618
 msgid "queued for download"
@@ -382,26 +389,28 @@ msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
 "must download the latest version of %(appname)s and run that."
 msgstr ""
+"あなたのデータベースは %(appname)s の新しいバージョンで保存されたものです。%(appname)s "
+"の最新バージョンをダウンロードして実行してください。"
 
 #: ../../portable/displaytext.py:40
 #, python-format
 msgid "%(size)s gb/s"
-msgstr ""
+msgstr "%(size)s gb/s"
 
 #: ../../portable/displaytext.py:43
 #, python-format
 msgid "%(size)s mb/s"
-msgstr ""
+msgstr "%(size)s mb/s"
 
 #: ../../portable/displaytext.py:46
 #, python-format
 msgid "%(size)s kb/s"
-msgstr ""
+msgstr "%(size)s kb/s"
 
 #: ../../portable/displaytext.py:49
 #, python-format
 msgid "%(size)s b/s"
-msgstr ""
+msgstr "%(size)s b/s"
 
 #: ../../portable/displaytext.py:56
 #, python-format
@@ -518,7 +527,7 @@ msgstr "エラー"
 #: ../../portable/dl_daemon/download.py:596
 #, python-format
 msgid "Could not write to %(filename)s"
-msgstr ""
+msgstr "%(filename)s の書込みに失敗しました。"
 
 #: ../../portable/dl_daemon/download.py:621
 #: ../../portable/dl_daemon/download.py:838
@@ -529,12 +538,12 @@ msgstr "ディスクの容量が足りません"
 #: ../../portable/dl_daemon/download.py:839
 #, python-format
 msgid "%(amount)s MB required to store this video"
-msgstr ""
+msgstr "このビデオを保存するためには %(amount)s MB 必要です"
 
 #: ../../portable/dl_daemon/download.py:637
 #, python-format
 msgid "Couldn't open %(filename)s for writing"
-msgstr ""
+msgstr "%(filename)s が書込みのためにオープンできませんでした"
 
 #: ../../portable/dl_daemon/download.py:852
 msgid "BitTorrent failure"
@@ -551,7 +560,7 @@ msgstr "不正なトレント"
 #: ../../portable/dl_daemon/download.py:1042
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
-msgstr ""
+msgstr "%(url)s のトレントファイルは有効なものではありません"
 
 #: ../../portable/dl_daemon/download.py:1067
 msgid "Torrent file deleted"
@@ -567,7 +576,7 @@ msgstr "開く(_O)"
 
 #: ../../portable/menubar.py:185
 msgid "_Download Item"
-msgstr ""
+msgstr "アイテムをダウンロード(_D)"
 
 #: ../../portable/menubar.py:186
 msgid "Check _Version"
@@ -575,11 +584,11 @@ msgstr "バージョン・チェック(_V)"
 
 #: ../../portable/menubar.py:188
 msgid "_Remove Item"
-msgstr ""
+msgstr "アイテムを削除(_R)"
 
 #: ../../portable/menubar.py:189
 msgid "_Remove Items"
-msgstr "アイテムを削除(_R)"
+msgstr "複数アイテムを削除(_R)"
 
 #: ../../portable/menubar.py:190
 msgid "Re_name Item"
@@ -587,7 +596,7 @@ msgstr "アイテムのリネーム(_N)"
 
 #: ../../portable/menubar.py:191
 msgid "Save Item _As"
-msgstr ""
+msgstr "名前をつけてアイテムを保存(_A)"
 
 #: ../../portable/menubar.py:192
 msgid "Save Items _As"
@@ -599,7 +608,7 @@ msgstr "アイテムのURLをコピー(_U)"
 
 #: ../../portable/menubar.py:195
 msgid "_Options"
-msgstr "_設定"
+msgstr "設定(_O)"
 
 #: ../../portable/menubar.py:196
 msgid "_Quit"
@@ -623,12 +632,12 @@ msgstr "全て選択(_A)"
 
 #: ../../portable/menubar.py:212
 msgid "Add _Feed"
-msgstr ""
+msgstr "フィードを追加(_F)"
 
 #: ../../portable/menubar.py:213
 #: ../../portable/frontends/widgets/application.py:525
 msgid "Add Site"
-msgstr ""
+msgstr "サイトを追加"
 
 #: ../../portable/menubar.py:214
 msgid "New Searc_h Feed"
@@ -640,43 +649,43 @@ msgstr ""
 
 #: ../../portable/menubar.py:217
 msgid "Re_name"
-msgstr ""
+msgstr "名前の変更(_N)"
 
 #: ../../portable/menubar.py:218
 msgid "_Remove"
-msgstr ""
+msgstr "削除(_R)"
 
 #: ../../portable/menubar.py:219
 msgid "_Remove Folder"
-msgstr ""
+msgstr "フォルダを削除(_R)"
 
 #: ../../portable/menubar.py:221
 msgid "_Update Feed"
-msgstr ""
+msgstr "フィードを更新(_U)"
 
 #: ../../portable/menubar.py:222
 msgid "_Update Feeds"
-msgstr ""
+msgstr "複数フィードを更新(_U)"
 
 #: ../../portable/menubar.py:223
 msgid "Update _All Feeds"
-msgstr ""
+msgstr "全フィードを更新(_A)"
 
 #: ../../portable/menubar.py:225
 msgid "_Import Feeds (OPML)"
-msgstr ""
+msgstr "フィード(OPML)をインポート(_I)"
 
 #: ../../portable/menubar.py:226
 msgid "E_xport Feeds (OPML)"
-msgstr ""
+msgstr "フィード(OPML)をエクスポート(_x)"
 
 #: ../../portable/menubar.py:228
 msgid "_Share with a Friend"
-msgstr ""
+msgstr "友達と共有する(_S)"
 
 #: ../../portable/menubar.py:229
 msgid "Copy URL"
-msgstr ""
+msgstr "URLをコピー"
 
 #: ../../portable/menubar.py:233
 msgid "New _Playlist"
@@ -789,7 +798,7 @@ msgstr "ファイル(_F)"
 
 #: ../../portable/menubar.py:290
 msgid "_Sidebar"
-msgstr ""
+msgstr "サイドバー(_S)"
 
 #: ../../portable/menubar.py:291
 msgid "_Playlists"
@@ -824,28 +833,25 @@ msgstr "このエラーを得た時に、あなたがしていた事を説明し
 #: ../../portable/frontends/widgets/feedsettingspanel.py:102
 #: ../../portable/frontends/widgets/prefpanel.py:583
 msgid "never"
-msgstr "無尽蔵"
+msgstr "無し"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:58
 #, python-format
 msgid "%(count)d hour ago"
 msgid_plural "%(count)d hours ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d 時間前"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:64
 #, python-format
 msgid "%(count)d day ago"
 msgid_plural "%(count)d days ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d 日前"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:70
 #, python-format
 msgid "%(count)d month ago"
 msgid_plural "%(count)d months ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d 月前"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Videos:"
@@ -858,23 +864,23 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
-msgstr ""
+msgstr "1日前に視聴"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr ""
+msgstr "3日前に視聴"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
-msgstr ""
+msgstr "6日前に視聴"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:100
 msgid "Watched 10 days ago"
-msgstr ""
+msgstr "10日前に視聴"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 1 month ago"
-msgstr ""
+msgstr "1ヶ月前に視聴"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
@@ -883,31 +889,31 @@ msgstr ""
 #: ../../portable/frontends/widgets/feedsettingspanel.py:139
 #, python-format
 msgid "Keep %(number)s (Default)"
-msgstr ""
+msgstr "%(number)s 個を残す（規定値）"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:141
 msgid "Keep 0"
-msgstr ""
+msgstr "全て残さない"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:142
 msgid "Keep 20"
-msgstr ""
+msgstr "20個を残す"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:143
 msgid "Keep 50"
-msgstr ""
+msgstr "50個を残す"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:144
 msgid "Keep 100"
-msgstr ""
+msgstr "100個を残す"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:145
 msgid "Keep 1000"
-msgstr ""
+msgstr "1000個を残す"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
-msgstr ""
+msgstr "すべて削除"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."

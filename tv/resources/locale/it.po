@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: Democracy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-01-21 22:38-0500\n"
-"PO-Revision-Date: 2008-12-15 22:00+0000\n"
-"Last-Translator: Stemby <carlo.stemberger@gmail.com>\n"
+"PO-Revision-Date: 2009-01-27 14:48+0000\n"
+"Last-Translator: Fabrix.xm <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-01-26 20:00+0000\n"
+"X-Launchpad-Export-Date: 2009-01-27 18:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -66,7 +66,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:265
 msgid "Update available!"
-msgstr ""
+msgstr "Aggiornamento disponibile!"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:266
 #, python-format
@@ -163,7 +163,7 @@ msgstr "Elimina"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:131
 msgid "Add to Library"
-msgstr ""
+msgstr "Aggiungi alla Libreria"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
 msgid "Services"
@@ -284,11 +284,11 @@ msgstr "Playlist di esempio"
 
 #: ../../portable/theme.py:186
 msgid "Miro - Report a Problem"
-msgstr ""
+msgstr "Miro - Segnala un problema"
 
 #: ../../portable/searchengines.py:146
 msgid "Search All"
-msgstr ""
+msgstr "Cerca tutto"
 
 #: ../../portable/util.py:279 ../../portable/util.py:281
 #, python-format
@@ -372,11 +372,11 @@ msgstr ""
 
 #: ../../portable/messagehandler.py:1293
 msgid "Subscribed to new feed:"
-msgstr ""
+msgstr "Iscritto a nuovi feed:"
 
 #: ../../portable/messagehandler.py:1296
 msgid "Subscribed to new feeds:"
-msgstr ""
+msgstr "Iscritto a nuovi feed:"
 
 #: ../../portable/messages.py:965 ../../portable/item.py:618
 msgid "queued for download"
@@ -432,15 +432,15 @@ msgstr ""
 #, python-format
 msgid "%(num).1f day"
 msgid_plural "%(num).1f days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).1f giorno"
+msgstr[1] "%(num).1f giorni"
 
 #: ../../portable/displaytext.py:59
 #, python-format
 msgid "%(num).1f hr"
 msgid_plural "%(num).1f hrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).1f ora"
+msgstr[1] "%(num).1f ore"
 
 #: ../../portable/displaytext.py:62
 #, python-format
@@ -501,22 +501,22 @@ msgstr[1] "Scadrà fra %(count)d minuti"
 #, python-format
 msgid "Expires: %(count)d day"
 msgid_plural "Expires: %(count)d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Scade: %(count)d giorno"
+msgstr[1] "Scade: %(count)d giorni"
 
 #: ../../portable/displaytext.py:114
 #, python-format
 msgid "Expires: %(count)d hour"
 msgid_plural "Expires: %(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Scade: %(count)d ora"
+msgstr[1] "Scade: %(count)d ore"
 
 #: ../../portable/displaytext.py:119
 #, python-format
 msgid "Expires: %(count)d minute"
 msgid_plural "Expires: %(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Scade: %(count)d minuto"
+msgstr[1] "Scade: %(count)d minuti"
 
 #: ../../portable/downloader.py:247
 msgid "activity"
@@ -654,7 +654,7 @@ msgstr ""
 #: ../../portable/menubar.py:213
 #: ../../portable/frontends/widgets/application.py:525
 msgid "Add Site"
-msgstr ""
+msgstr "Aggiungi sito"
 
 #: ../../portable/menubar.py:214
 msgid "New Searc_h Feed"
@@ -666,7 +666,7 @@ msgstr ""
 
 #: ../../portable/menubar.py:217
 msgid "Re_name"
-msgstr ""
+msgstr "Ri_nomina"
 
 #: ../../portable/menubar.py:218
 msgid "_Remove"
@@ -702,7 +702,7 @@ msgstr ""
 
 #: ../../portable/menubar.py:229
 msgid "Copy URL"
-msgstr ""
+msgstr "Copia URL"
 
 #: ../../portable/menubar.py:233
 msgid "New _Playlist"
@@ -843,6 +843,8 @@ msgid ""
 "Include entire program database including all video and feed metadata with "
 "crash report"
 msgstr ""
+"Includi nel report l'intero database, compresi tutti i metadata dei video e "
+"dei feed"
 
 #: ../../portable/frontends/widgets/crashdialog.py:64
 msgid "Describe what you were doing when you got this error:"

@@ -8,20 +8,20 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-01-21 22:38-0500\n"
-"PO-Revision-Date: 2009-01-25 19:05+0000\n"
-"Last-Translator: Paco Molinero <paco@byasl.com>\n"
+"PO-Revision-Date: 2009-01-27 02:05+0000\n"
+"Last-Translator: limitedmage <limited.mage@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-01-26 20:00+0000\n"
+"X-Launchpad-Export-Date: 2009-01-27 18:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
 msgid "Enable tray icon"
-msgstr "Habilitar icono en el area de notificación"
+msgstr "Habilitar ícono en el área de notificación"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:42
 msgid "When I click the red close button:"
@@ -34,7 +34,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
 msgid "Quit Miro completely."
-msgstr "Salir de Miro."
+msgstr "Cerrar Miro completamente."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:123
 msgid "Close to tray?"
@@ -451,6 +451,7 @@ msgstr[0] "%(num).1f hr"
 msgid "%(num).1f min"
 msgid_plural "%(num).1f mins"
 msgstr[0] "%(num).1f min"
+msgstr[1] "%(num).1f mins"
 
 #: ../../portable/displaytext.py:64
 #, python-format
@@ -579,7 +580,7 @@ msgstr "Torrente corrupto"
 #: ../../portable/dl_daemon/download.py:1042
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
-msgstr "El torrent-file a %(url)s no es valido"
+msgstr "El archivo de torrent en %(url)s no es válido"
 
 #: ../../portable/dl_daemon/download.py:1067
 msgid "Torrent file deleted"

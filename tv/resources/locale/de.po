@@ -8,20 +8,20 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-01-21 22:38-0500\n"
-"PO-Revision-Date: 2009-01-24 18:39+0000\n"
-"Last-Translator: Nico Gulden <Unknown>\n"
+"PO-Revision-Date: 2009-01-27 11:13+0000\n"
+"Last-Translator: delphiN <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-01-26 20:00+0000\n"
+"X-Launchpad-Export-Date: 2009-01-27 18:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
 msgid "Enable tray icon"
-msgstr "Benachrichtigungsfeldymbol aktivieren"
+msgstr "Tray Icon aktivieren"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:42
 msgid "When I click the red close button:"
@@ -66,8 +66,8 @@ msgstr "Fehler beim Öffnen der Webseite"
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr ""
-"Es gab einen Fehler beim öffnen von %(url)s. Bitte versuchen Sie es in ein "
-"paar Sekunden noch einmal."
+"Es kam zu einem Fehler beim Öffnen von %(url)s. Bitte versuchen Sie es in "
+"ein paar Sekunden noch einmal."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:265
 msgid "Update available!"
@@ -86,7 +86,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
-msgstr "Adobe Flashplayer installieren?"
+msgstr "Adobe Flash installieren?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
 #, python-format
@@ -109,9 +109,10 @@ msgid ""
 "You should quit Miro now and start it up again after Adobe Flash has been "
 "installed."
 msgstr ""
-"Ihr Browser wird die Webseite laden, auf der Sie Adobe Flashplayer "
-"herunterladen und installieren können.Sie sollten Miro jetzt beenden und "
-"nach der Installation von Adobe Flashplayer erneut starten."
+"Ihr Browser wird die Webseite laden, auf der Sie Adobe Flash herunterladen "
+"und installieren können.\n"
+"Sie sollten Miro jetzt beenden und nach der Installation von Adobe Flash "
+"erneut starten."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
 msgid "Renderer options:"
@@ -187,7 +188,7 @@ msgstr "Alle anzeigen"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
 msgid "Preferences..."
-msgstr "Einstellungen …"
+msgstr "Einstellungen..."
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
@@ -207,7 +208,7 @@ msgstr "Kopieren"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
 msgid "Paste"
-msgstr "Einsetzen"
+msgstr "Einfügen"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
 msgid "Select All"
