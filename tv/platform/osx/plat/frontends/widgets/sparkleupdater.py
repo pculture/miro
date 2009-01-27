@@ -52,6 +52,16 @@ class MiroHost (SUHost):
 
 ###############################################################################
 
+class MiroUpdateDriver (SUUIBasedUpdateDriver):
+
+    def downloadDidFinish_(self, download):
+        # WARNING: this bypasses the superclass DSA signature based security measures!
+        # We might want to think about implementing them.
+        # See: <http://sparkle.andymatuschak.org/documentation/pmwiki.php/Documentation/BasicSetup>
+        self.extractUpdate()
+
+###############################################################################
+
 def setup():
     """ Instantiate the unique global SUUpdater object."""
     global suUpdater
@@ -98,7 +108,7 @@ def handleNewUpdate(latest):
     suHost = MiroHost.alloc().initWithBundle_(None)
 
     global suDriver
-    suDriver = SUUIBasedUpdateDriver.alloc().initWithUpdater_(None)
+    suDriver = MiroUpdateDriver.alloc().initWithUpdater_(None)
     objc.setInstanceVariable(suDriver, 'host', suHost, True)
     objc.setInstanceVariable(suDriver, 'updateItem', suItem, True)
     if not suDriver.itemContainsSkippedVersion_(suItem):
