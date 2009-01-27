@@ -421,6 +421,7 @@ class TableViewCommon(object):
         self.hover_info = None
         self.column_index_map = {}
         self.setFocusRingType_(NSFocusRingTypeNone)
+        self.handled_last_mouse_down = False
         return self
 
     def addTableColumn_(self, column):
@@ -499,11 +500,14 @@ class TableViewCommon(object):
     def mouseDown_(self, event):
         if event.modifierFlags() & NSControlKeyMask:
             self.handleContextMenu_(event)
+            self.handled_last_mouse_down = True
             return
 
         point = self.convertPoint_fromView_(event.locationInWindow(), nil)
 
         if event.clickCount() == 2:
+            if self.handled_last_mouse_down:
+                return
             wrapper = wrappermap.wrapper(self)
             row = self.rowAtPoint_(point)
             if row != -1:
@@ -515,7 +519,9 @@ class TableViewCommon(object):
         if hotspot_tracker.hit:
             self.hotspot_tracker = hotspot_tracker
             self.hotspot_tracker.redraw_cell()
+            self.handled_last_mouse_down = True
         else:
+            self.handled_last_mouse_down = False
             self.SuperClass.mouseDown_(self, event)
 
     def rightMouseDown_(self, event):

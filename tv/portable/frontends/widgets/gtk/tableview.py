@@ -508,6 +508,7 @@ class TableView(Widget):
         self.context_menu_callback = self.drag_source = self.drag_dest = None
         self.hotspot_tracker = None
         self.hover_info = None
+        self.handled_last_button_press = False
         self.ignore_selection_changed = False
         self.set_columns_draggable(False)
         self.create_signal('row-expanded')
@@ -770,6 +771,8 @@ class TableView(Widget):
 
     def on_button_press(self, treeview, event):
         if event.type == gtk.gdk._2BUTTON_PRESS:
+            if self.handled_last_button_press:
+                return
             path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
             if path_info is not None:
                 iter = treeview.get_model().get_iter(path_info[0])
@@ -781,10 +784,12 @@ class TableView(Widget):
             if hotspot_tracker.hit:
                 self.hotspot_tracker = hotspot_tracker
                 hotspot_tracker.redraw_cell()
+                self.handled_last_button_press = True
                 return True
         if event.window != treeview.get_bin_window():
             # click is outsite the content area, don't try to handle this.  
             # In particular, our DnD code messes up resizing table columns.
+            self.handled_last_button_press = False
             return
         if event.button == 1:
             self.drag_button_down = True
@@ -802,7 +807,9 @@ class TableView(Widget):
                     selection.select_path(path)
                 menu = self.make_context_menu()
                 menu.popup(None, None, None, event.button, event.time)
+            self.handled_last_button_press = True
             return True
+        self.handled_last_button_press = False
 
     def make_context_menu(self):
         def gen_menu(menu_items):
