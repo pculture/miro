@@ -266,7 +266,6 @@ class TabListDropHandler(object):
             dest_tablist.model_changed()
         for id in expanded_rows:
             dest_tablist.view.set_row_expanded(dest_tablist.iter_map[id], True)
-        print 'selected: ', selected_rows
         for id in selected_rows:
             iter = dest_tablist.iter_map[id]
             parent = model.parent_iter(iter)
