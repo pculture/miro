@@ -196,7 +196,10 @@ def add_download(url, additional=None, handle_unknown_callback=download_unknown_
                 download_video(entry)
                 return
 
-            handle_unknown_callback(url)
+            if url == None:
+                handle_unknown_callback(old_url)
+            else:
+                handle_unknown_callback(url)
 
         flashscraper.try_scraping_url(url, _callback)
 
