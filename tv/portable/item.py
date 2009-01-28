@@ -188,7 +188,7 @@ class Item(DDBObject):
         """returns True if it ran signalChange()"""
         if self.isContainerItem is not None:
             return self.find_new_children()
-        if not isinstance (self, FileItem) and (self.downloader is None or not self.downloader.isFinished()):
+        if not isinstance(self, FileItem) and (self.downloader is None or not self.downloader.isFinished()):
             return False
         filename_root = self.get_filename()
         if fileutil.isdir(filename_root):
@@ -1106,13 +1106,14 @@ class Item(DDBObject):
         """Returns the URL of the webpage associated with the item.
         """
         self.confirmDBThread()
-        # if the link doesn't have a decode method, it's probably not a basestring
-        # and thus probably not something we want to return.
-        if hasattr(self.entry, "link") and hasattr(self.entry.link, "decode"):
+        if hasattr(self.entry, "link"):
+            link = self.entry.link
+            if isinstance(link, unicode):
+                return link
             try:
-                return self.entry.link.decode('ascii', 'replace')
+                return link.decode('ascii', 'replace')
             except UnicodeDecodeError:
-                return self.entry.link.decode('ascii', 'ignore')
+                return link.decode('ascii', 'ignore')
 
         return u""
 
