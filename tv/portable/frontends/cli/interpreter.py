@@ -40,7 +40,7 @@ from miro import util
 from miro import views
 from miro.frontends.cli import clidialog
 
-def runInEventLoop(func):
+def run_in_event_loop(func):
     def decorated(*args, **kwargs):
         return_hack = []
         event = threading.Event()
@@ -62,7 +62,7 @@ class MiroInterpreter(cmd.Cmd):
         self.tab = None
         self.init_database_objects()
 
-    @runInEventLoop
+    @run_in_event_loop
     def init_database_objects(self):
         self.channelTabs = util.getSingletonDDBObject(views.channelTabOrder)
         self.playlistTabs = util.getSingletonDDBObject(views.playlistTabOrder)
@@ -109,7 +109,7 @@ class MiroInterpreter(cmd.Cmd):
     def do_quit(self, line):
         self.quit_flag = True
 
-    @runInEventLoop
+    @run_in_event_loop
     def do_feed(self, line):
         for tab in self.channelTabs.getView():
             if tab.obj.get_title() == line:
@@ -118,7 +118,7 @@ class MiroInterpreter(cmd.Cmd):
                 return
         print "Error: %s not found" % line
 
-    @runInEventLoop
+    @run_in_event_loop
     def do_rmfeed(self, line):
         for tab in self.channelTabs.getView():
             if tab.obj.get_title() == line:
@@ -126,15 +126,15 @@ class MiroInterpreter(cmd.Cmd):
                 return
         print "Error: %s not found" % line
 
-    @runInEventLoop
+    @run_in_event_loop
     def complete_feed(self, text, line, begidx, endidx):
         return self.handle_tab_complete(text, self.channelTabs.getView())
 
-    @runInEventLoop
+    @run_in_event_loop
     def complete_rmfeed(self, text, line, begidx, endidx):
         return self.handle_tab_complete(text, self.channelTabs.getView())
 
-    @runInEventLoop
+    @run_in_event_loop
     def complete_playlist(self, text, line, begidx, endidx):
         return self.handle_tab_complete(text, self.playlistTabs.getView())
 
@@ -155,7 +155,7 @@ class MiroInterpreter(cmd.Cmd):
                 matches.append(item.get_title())
         return matches
 
-    @runInEventLoop
+    @run_in_event_loop
     def do_feeds(self, line):
         current_folder = None
         for tab in self.channelTabs.getView():
@@ -170,12 +170,12 @@ class MiroInterpreter(cmd.Cmd):
             else:
                 print " - %s" % tab.obj.get_title()
 
-    @runInEventLoop
+    @run_in_event_loop
     def do_playlists(self, line):
         for tab in self.playlistTabs.getView():
             print tab.obj.get_title()
 
-    @runInEventLoop
+    @run_in_event_loop
     def do_playlist(self, line):
         for tab in self.playlistTabs.getView():
             if tab.obj.get_title() == line:
@@ -184,7 +184,7 @@ class MiroInterpreter(cmd.Cmd):
                 return
         print "Error: %s not found" % line
 
-    @runInEventLoop
+    @run_in_event_loop
     def do_items(self, line):
         if self.selection_type is None:
             print "Error: No feed/playlist selected"
@@ -209,7 +209,7 @@ class MiroInterpreter(cmd.Cmd):
         else:
             raise ValueError("Unknown tab type")
 
-    @runInEventLoop
+    @run_in_event_loop
     def do_downloads(self, line):
         for tab in views.staticTabs:
             if tab.tabTemplateBase == 'downloadtab':
@@ -259,7 +259,7 @@ class MiroInterpreter(cmd.Cmd):
             if item.get_title().lower() == line:
                 return item
 
-    @runInEventLoop
+    @run_in_event_loop
     def do_stop(self, line):
         if self.selection_type is None:
             print "Error: No feed/playlist selected"
@@ -273,12 +273,12 @@ class MiroInterpreter(cmd.Cmd):
         else:
             print '%s is not being downloaded' % item.get_title()
 
-    @runInEventLoop
+    @run_in_event_loop
     def complete_stop(self, text, line, begidx, endidx):
         return self.handle_item_complete(text, self._get_item_view(),
                 lambda i: i.get_state() in ('downloading', 'paused'))
 
-    @runInEventLoop
+    @run_in_event_loop
     def do_download(self, line):
         if self.selection_type is None:
             print "Error: No feed/playlist selected"
@@ -294,12 +294,12 @@ class MiroInterpreter(cmd.Cmd):
         else:
             item.download()
 
-    @runInEventLoop
+    @run_in_event_loop
     def complete_download(self, text, line, begidx, endidx):
         return self.handle_item_complete(text, self._get_item_view(),
                 lambda i: i.is_downloadable())
 
-    @runInEventLoop
+    @run_in_event_loop
     def do_pause(self, line):
         if self.selection_type is None:
             print "Error: No feed/playlist selected"
@@ -313,12 +313,12 @@ class MiroInterpreter(cmd.Cmd):
         else:
             print '%s is not being downloaded' % item.get_title()
 
-    @runInEventLoop
+    @run_in_event_loop
     def complete_pause(self, text, line, begidx, endidx):
         return self.handle_item_complete(text, self._get_item_view(),
                 lambda i: i.get_state() == 'downloading')
 
-    @runInEventLoop
+    @run_in_event_loop
     def do_resume(self, line):
         if self.selection_type is None:
             print "Error: No feed/playlist selected"
@@ -332,12 +332,12 @@ class MiroInterpreter(cmd.Cmd):
         else:
             print '%s is not a paused download' % item.get_title()
 
-    @runInEventLoop
+    @run_in_event_loop
     def complete_resume(self, text, line, begidx, endidx):
         return self.handle_item_complete(text, self._get_item_view(),
                 lambda i: i.get_state() == 'paused')
 
-    @runInEventLoop
+    @run_in_event_loop
     def do_rm(self, line):
         if self.selection_type is None:
             print "Error: No feed/playlist selected"
@@ -351,12 +351,12 @@ class MiroInterpreter(cmd.Cmd):
         else:
             print '%s is not downloaded' % item.get_title()
 
-    @runInEventLoop
+    @run_in_event_loop
     def complete_rm(self, text, line, begidx, endidx):
         return self.handle_item_complete(text, self._get_item_view(),
                 lambda i: i.is_downloaded())
 
-    @runInEventLoop
+    @run_in_event_loop
     def do_testdialog(self, line):
         d = dialogs.ChoiceDialog("Hello", "I am a test dialog",
                 dialogs.BUTTON_OK, dialogs.BUTTON_CANCEL)
@@ -364,7 +364,7 @@ class MiroInterpreter(cmd.Cmd):
             print "TEST CHOICE: %s" % dialog.choice
         d.run(callback)
 
-    @runInEventLoop
+    @run_in_event_loop
     def do_dumpdatabase(self, line):
         from miro import database
         print "Dumping database...."

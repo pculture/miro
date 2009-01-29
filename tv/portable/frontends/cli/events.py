@@ -30,6 +30,7 @@ import threading
 import Queue
 
 from miro import signals
+from miro import messages
 from miro.frontends.cli.util import print_box
 
 class EventHandler:
@@ -37,35 +38,55 @@ class EventHandler:
         self.startup_failure = None
         self.startup_event = threading.Event()
         self.dialog_queue = Queue.Queue()
+        self.message_handler = CliMessageHandler(self.handle_startup_success, self.handle_startup_failure)
 
     def connect_to_signals(self):
-        signals.system.connect('error', self.handleError)
-        signals.system.connect('download-complete', self.handleDownloadComplete)
-        signals.system.connect('startup-success', self.handleStartupSuccess)
-        signals.system.connect('startup-failure', self.handleStartupFailure)
-        signals.system.connect('new-dialog', self.handleDialog)
-        signals.system.connect('shutdown', self.onBackendShutdown)
+        messages.FrontendMessage.install_handler(self.message_handler)
 
-    def handleDialog(self, obj, dialog):
+        signals.system.connect('error', self.handle_error)
+        signals.system.connect('update-available', self.handle_update_available)
+        signals.system.connect('new-dialog', self.handle_dialog)
+        signals.system.connect('shutdown', self.on_backend_shutdown)
+
+    def handle_update_available(self, obj, item):
+        print "There is a Miro Update available!"
+
+    def handle_dialog(self, obj, dialog):
         self.dialog_queue.put(dialog)
 
-    def handleStartupFailure(self, obj, summary, description):
+    def handle_startup_failure(self, summary, description):
+        print "Startup failure."
         self.startup_failure = (summary, description)
         self.startup_event.set()
 
-    def handleStartupSuccess(self, obj):
+    def handle_startup_success(self):
+        print "Startup success."
         self.startup_event.set()
 
-    def handleDownloadComplete(self, obj, item):
+    def handle_download_complete(self, obj, item):
         print_box('Download Complete: %s' % item)
 
-    def handleError(self, obj, report):
+    def handle_error(self, obj, report):
         print_box('ERROR')
         print
         print report
         print
 
-    def onBackendShutdown(self, obj):
+    def on_backend_shutdown(self, obj):
         print
         print 'Shutting down...'
 
+class CliMessageHandler(messages.MessageHandler):
+    def __init__(self, startup_success, startup_failure):
+        messages.MessageHandler.__init__(self)
+        self.on_startup_success = startup_success
+        self.on_startup_failure = startup_failure
+
+    def call_handler(self, method, message):
+        method(message)
+
+    def handle_startup_failure(self, message):
+        self.on_startup_failure(message.summary, message.description)
+
+    def handle_startup_success(self, message):
+        self.on_startup_success()
