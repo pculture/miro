@@ -70,7 +70,7 @@ class GtkSearchTextEntry(gtk.EventBox):
         # and a minimum height of 28px
         pygtkhacks.set_entry_border(self.entry, 0, 0, 0, 0)
         self.alignment.set_padding(2, 2, 26, 3)
-        self.min_height = 28
+        self.min_height = 24
 
     def do_size_request(self, requesition):
         gtk.EventBox.do_size_request(self, requesition)
