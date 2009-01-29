@@ -65,6 +65,7 @@ from miro.frontends.widgets import firsttimedialog
 from miro.frontends.widgets.window import MiroWindow
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.frontends.widgets.widgetset import Rect
+from miro.plat.utils import unicodeToFilename
 
 class Application:
     def __init__(self):
@@ -595,7 +596,8 @@ class Application:
         if not filename:
             return
 
-        messages.ExportFeeds(filename).send_to_backend()
+        filename = unicodeToFilename(filename.decode("utf-8"))
+        messages.ExportSubscriptions(filename).send_to_backend()
 
     def copy_feed_url(self):
         t, channel_infos = app.tab_list_manager.get_selection()

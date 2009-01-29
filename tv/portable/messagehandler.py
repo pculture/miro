@@ -619,7 +619,7 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_import_feeds(self, message):
         opml.Importer().import_subscriptions(message.filename)
 
-    def handle_export_feeds(self, message):
+    def handle_export_subscriptions(self, message):
         opml.Exporter().export_subscriptions(message.filename)
 
     def handle_rename_object(self, message):

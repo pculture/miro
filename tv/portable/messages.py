@@ -304,8 +304,8 @@ class ImportFeeds(BackendMessage):
     def __init__(self, filename):
         self.filename = filename
 
-class ExportFeeds(BackendMessage):
-    """Tell the backend to export feeds to an .opml file.
+class ExportSubscriptions(BackendMessage):
+    """Tell the backend to export subscriptions to an .opml file.
 
     Attributes:
     filename -- file name to export to
