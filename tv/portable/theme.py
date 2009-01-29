@@ -146,23 +146,12 @@ class ThemeHistory(DDBObject):
 
             defaultFeedURLs = []
 
-            if platform.system() == 'Darwin':
-                defaultFeedURLs.append((u'http://www.getmiro.com/screencasts/mac/mac.feed.rss', False))
-            else:
-                defaultFeedURLs.append((u'http://www.getmiro.com/screencasts/windows/win.feed.rss', False))
-
             defaultFeedURLs.extend([
-                (u'http://feeds.miroguide.com/miroguide/featured', False),
-                (u'http://feeds.miroguide.com/miroguide/toprated', False),
-                (u'http://feeds.miroguide.com/miroguide/popular', False),
                 (u'http://feeds.miroguide.com/miroguide/new', False),
+                (u'http://feeds.miroguide.com/miroguide/featured', False),
+                (u'http://feeds.feedburner.com/earth-touch_podcast_720p', False),
+                (u'http://www.linktv.org/rss/hq/globalpulse.xml', False),
 
-                (_('Sample Channels'), [
-                    (u'http://feeds.feedburner.com/tedtalks_video', False),
-                    (u'http://feeds.theonion.com/OnionNewsNetwork', False),
-                    (u'http://ewheel.democracynow.org/rss.xml', False),
-                    (u'http://www.washingtonpost.com/wp-srv/mmedia/hd_podcast.xml', False),
-                ])
             ])
 
             for default in defaultFeedURLs:
