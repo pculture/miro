@@ -167,7 +167,7 @@ def setup_logging(inDownloader=False):
         rotater.setFormatter(formatter)
         logging.getLogger('').addHandler(rotater)
         rotater.doRollover()
-        sys.stderr = sys.stdout = rotater.stream
+        sys.stderr = sys.stdout = AutoflushingStream(rotater.stream)
 
 
     # Disable the xpcom log handlers.  This just means the log handler we
