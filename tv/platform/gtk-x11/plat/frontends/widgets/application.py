@@ -182,13 +182,7 @@ class GtkX11Application(Application):
                 logging.exception("Problems removing autostart dir.")
 
     def open_url(self, url):
-        # We could use Python's webbrowser.open() here, but
-        # unfortunately, it doesn't have the same semantics under UNIX
-        # as under other OSes. Sometimes it blocks, sometimes it doesn't.
-        if resources.check_kde():
-            os.spawnlp(os.P_NOWAIT, "kfmclient", "kfmclient", "exec", url)
-        else:
-            os.spawnlp(os.P_NOWAIT, "gnome-open", "gnome-open", url)
+        resources.open_url(url)
 
     def reveal_file(self, filename):
         if not os.path.isdir(filename):
@@ -196,10 +190,7 @@ class GtkX11Application(Application):
         self.open_file(filename)
 
     def open_file(self, filename):
-        if resources.check_kde():
-            os.spawnlp(os.P_NOWAIT, "kfmclient", "kfmclient", "exec", "file://" + filename)
-        else:
-            os.spawnlp(os.P_NOWAIT, "gnome-open", "gnome-open", "file://" + filename)
+        resources.open_file(filename)
 
     def get_clipboard_text(self):
         """Pulls text from the clipboard and returns it.

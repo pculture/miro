@@ -46,7 +46,7 @@ def root():
 
 # Find the full path to a resource data file. 'relative_path' is
 # expected to be supplied in Unix format, with forward-slashes as
-# separators. 
+# separators.
 def path(relative_path):
     return os.path.join(resource_root, relative_path)
 
@@ -67,6 +67,21 @@ def theme_path(theme, relative_path):
 
 def check_kde():
     return os.environ.get("KDE_FULL_SESSION", None) != None
+
+def open_url(url):
+    # We could use Python's webbrowser.open() here, but
+    # unfortunately, it doesn't have the same semantics under UNIX
+    # as under other OSes. Sometimes it blocks, sometimes it doesn't.
+    if check_kde():
+        os.spawnlp(os.P_NOWAIT, "kfmclient", "kfmclient", "exec", url)
+    else:
+        os.spawnlp(os.P_NOWAIT, "gnome-open", "gnome-open", url)
+
+def open_file(filename):
+    if check_kde():
+        os.spawnlp(os.P_NOWAIT, "kfmclient", "kfmclient", "exec", "file://" + filename)
+    else:
+        os.spawnlp(os.P_NOWAIT, "gnome-open", "gnome-open", filename)
 
 def get_autostart_dir():
     if check_kde():

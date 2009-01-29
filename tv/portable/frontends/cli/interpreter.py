@@ -39,6 +39,7 @@ from miro import indexes
 from miro import util
 from miro import views
 from miro.frontends.cli import clidialog
+from miro.plat import resources
 
 def run_in_event_loop(func):
     def decorated(*args, **kwargs):
@@ -91,7 +92,7 @@ class MiroInterpreter(cmd.Cmd):
         elif self.tab.type == 'playlist':
             self.prompt = "playlist: %s > " % self.tab.obj.get_title()
             self.selection_type = 'playlist'
-        elif (self.tab.type == 'statictab' and 
+        elif (self.tab.type == 'statictab' and
                 self.tab.tabTemplateBase == 'downloadtab'):
             self.prompt = "downloads > "
             self.selection_type = 'downloads'
@@ -102,7 +103,7 @@ class MiroInterpreter(cmd.Cmd):
         # HACK
         # If the last command results in a dialog, give it a little time to
         # pop up
-        time.sleep(0.1) 
+        time.sleep(0.1)
         while True:
             try:
                 dialog = app.cli_events.dialog_queue.get_nowait()
@@ -166,7 +167,7 @@ class MiroInterpreter(cmd.Cmd):
         text = text.lower()
         matches = []
         for item in view:
-            if (item.get_title().lower().startswith(text) and 
+            if (item.get_title().lower().startswith(text) and
                     filterFunc(item)):
                 matches.append(item.get_title())
         return matches
@@ -186,6 +187,21 @@ class MiroInterpreter(cmd.Cmd):
                 print "[Folder] %s" % tab.obj.get_title()
             else:
                 print " - %s" % tab.obj.get_title()
+
+    @run_in_event_loop
+    def do_play(self, line):
+        """play <name> -- Plays an item by name in an external player."""
+        if self.selection_type is None:
+            print "Error: No feed/playlist selected"
+            return
+        item = self._find_item(line)
+        if item is None:
+            print "No item named %r" % line
+            return
+        if item.is_downloaded():
+            resources.open_file(item.get_video_filename())
+        else:
+            print '%s is not downloaded' % item.get_title()
 
     @run_in_event_loop
     def do_playlists(self, line):
