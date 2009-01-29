@@ -431,6 +431,7 @@ class SearchController(SimpleItemListController):
     def initialize_search(self):
         if app.search_manager.text != '':
             self.titlebar.set_search_text(app.search_manager.text)
+            self.titlebar.set_search_engine(app.search_manager.engine)
 
     def on_initial_list(self):
         if (not app.search_manager.searching and app.search_manager.text != ''
