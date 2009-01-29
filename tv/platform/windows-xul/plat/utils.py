@@ -41,8 +41,8 @@ from miro.plat import resources
 import subprocess
 import sys
 import urllib
-from miro.util import (returnsUnicode, returnsBinary, checkU, checkB, call_command,
-        AutoflushingStream)
+from miro.util import returnsUnicode, returnsBinary, checkU, checkB
+from miro.util import call_command, AutoflushingStream
 from miro import fileutil
 
 localeInitialized = False
@@ -155,8 +155,8 @@ def setup_logging(inDownloader=False):
 
     if inDownloader:
         logging.basicConfig(level=logging.INFO,
-                            format='%(asctime)s %(levelname)-8s %(message)s',
-                            stream=sys.stderr)
+                format='%(asctime)s %(levelname)-8s %(message)s',
+                stream=sys.stderr)
     else:
         logger = logging.getLogger('')
         logger.setLevel(logging.DEBUG)
@@ -179,7 +179,7 @@ def setup_logging(inDownloader=False):
     _loggingSetup = True
 
 @returnsUnicode
-def unicodeToFilename(filename, path = None):
+def unicodeToFilename(filename, path=None):
     """Takes in a unicode string representation of a filename and creates a
     valid byte representation of it attempting to preserve extensions
 
@@ -198,7 +198,7 @@ def unicodeToFilename(filename, path = None):
             firstpart = u""
         # If there's a first part, use that, otherwise shorten what we have
         if len(firstpart) > 0:
-            return u"%s.%s" % (firstpart[:-1],lastpart)
+            return u"%s.%s" % (firstpart[:-1], lastpart)
         else:
             return filename[:-1]
 
@@ -212,7 +212,9 @@ def unicodeToFilename(filename, path = None):
     # nextFilename
     MAX_LEN = 200
     
-    filename.replace('/','_').replace("\000","_").replace("\\","_").replace(":","_").replace("*","_").replace("?","_").replace("\"","_").replace("<","_").replace(">","_").replace("|","_")
+    badchars = ('/', '\000', '\\', ':', '*', '?', '"', '<', '>', '|')
+    for mem in badchars:
+        filename.replace(mem, "_")
 
     newFilename = filename
     while len(newFilename) > MAX_LEN:
@@ -221,7 +223,7 @@ def unicodeToFilename(filename, path = None):
     return newFilename
 
 @returnsUnicode
-def filenameToUnicode(filename, path = None):
+def filenameToUnicode(filename, path=None):
     """Given a filename in raw bytes, return the unicode representation
 
     Since this is not guaranteed to give the same results every time it is run,
@@ -255,7 +257,7 @@ def filenameTypeToOSFilename(filename):
     return filename
 
 @returnsUnicode
-def makeURLSafe(string, safe = '/'):
+def makeURLSafe(string, safe='/'):
     """Takes in a byte string or a unicode string and does the right thing
     to make a URL
     """
@@ -285,8 +287,7 @@ def launchDownloadDaemon(oldpid, env):
     killProcess(oldpid)
     for key, value in env.items():
         os.environ[key] = value
-    os.environ['DEMOCRACY_DOWNLOADER_LOG'] = \
-            config.get(prefs.DOWNLOADER_LOG_PATHNAME)
+    os.environ['DEMOCRACY_DOWNLOADER_LOG'] = config.get(prefs.DOWNLOADER_LOG_PATHNAME)
     # Start the downloader.  We use the subprocess module to turn off the
     # console.  One slightly awkward thing is that the current process
     # might not have a valid stdin/stdout/stderr, so we create a pipe to
