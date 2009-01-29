@@ -991,8 +991,8 @@ class Item(DDBObject):
         if self.downloader is None:
             return 0
         else:
-            size = self.downloader.getTotalSize()
-            dled = self.downloader.getCurrentSize()
+            size = self.get_size()
+            dled = self.downloader.get_current_size()
             if size == 0:
                 return 0
             else:

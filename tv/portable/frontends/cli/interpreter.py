@@ -53,7 +53,13 @@ def run_in_event_loop(func):
         event.wait()
         if return_hack:
             return return_hack[0]
+    decorated.__doc__ = func.__doc__
     return decorated
+
+class FakeTab:
+    def __init__(self, tab_type, tabTemplateBase):
+        self.type = tab_type
+        self.tabTemplateBase = tabTemplateBase
 
 class MiroInterpreter(cmd.Cmd):
     def __init__(self):
@@ -106,11 +112,20 @@ class MiroInterpreter(cmd.Cmd):
 
         return self.quit_flag
 
+    def do_help(self, line):
+        """help -- Lists commands and help."""
+        commands = [m for m in dir(self) if m.startswith("do_")]
+        for mem in commands:
+            docstring = getattr(self, mem).__doc__
+            print "    ", docstring
+
     def do_quit(self, line):
+        """quit -- Quits Miro cli."""
         self.quit_flag = True
 
     @run_in_event_loop
     def do_feed(self, line):
+        """feed <name> -- Selects a feed by name."""
         for tab in self.channelTabs.getView():
             if tab.obj.get_title() == line:
                 self.tab = tab
@@ -120,6 +135,7 @@ class MiroInterpreter(cmd.Cmd):
 
     @run_in_event_loop
     def do_rmfeed(self, line):
+        """rmfeed <name> -- Deletes a feed."""
         for tab in self.channelTabs.getView():
             if tab.obj.get_title() == line:
                 tab.obj.remove()
@@ -157,6 +173,7 @@ class MiroInterpreter(cmd.Cmd):
 
     @run_in_event_loop
     def do_feeds(self, line):
+        """feeds -- Lists all feeds."""
         current_folder = None
         for tab in self.channelTabs.getView():
             if isinstance(tab.obj, folder.ChannelFolder):
@@ -172,11 +189,13 @@ class MiroInterpreter(cmd.Cmd):
 
     @run_in_event_loop
     def do_playlists(self, line):
+        """playlists -- Lists all playlists."""
         for tab in self.playlistTabs.getView():
             print tab.obj.get_title()
 
     @run_in_event_loop
     def do_playlist(self, line):
+        """playlist <name> -- Selects a playlist."""
         for tab in self.playlistTabs.getView():
             if tab.obj.get_title() == line:
                 self.tab = tab
@@ -186,8 +205,9 @@ class MiroInterpreter(cmd.Cmd):
 
     @run_in_event_loop
     def do_items(self, line):
+        """items -- Lists the items in the feed/playlist/tab selected."""
         if self.selection_type is None:
-            print "Error: No feed/playlist selected"
+            print "Error: No tab/feed/playlist selected"
             return
         elif self.selection_type == 'feed':
             feed = self.tab.obj
@@ -211,12 +231,9 @@ class MiroInterpreter(cmd.Cmd):
 
     @run_in_event_loop
     def do_downloads(self, line):
-        for tab in views.staticTabs:
-            if tab.tabTemplateBase == 'downloadtab':
-                self.tab = tab
-                self.tab_changed()
-                return
-        raise ValueError("Couldn't find download tab")
+        """downloads -- Selects the downloads tab."""
+        self.tab = FakeTab("statictab", "downloadtab")
+        self.tab_changed()
 
     def printout_item_list(self, *views):
         totalItems = 0
@@ -261,6 +278,7 @@ class MiroInterpreter(cmd.Cmd):
 
     @run_in_event_loop
     def do_stop(self, line):
+        """stop <name> -- Stops download by name."""
         if self.selection_type is None:
             print "Error: No feed/playlist selected"
             return
@@ -280,6 +298,7 @@ class MiroInterpreter(cmd.Cmd):
 
     @run_in_event_loop
     def do_download(self, line):
+        """download <name> -- Downloads an item by name in the feed/playlist selected."""
         if self.selection_type is None:
             print "Error: No feed/playlist selected"
             return
@@ -301,6 +320,7 @@ class MiroInterpreter(cmd.Cmd):
 
     @run_in_event_loop
     def do_pause(self, line):
+        """pause <name> -- Pauses a download by name."""
         if self.selection_type is None:
             print "Error: No feed/playlist selected"
             return
@@ -320,6 +340,7 @@ class MiroInterpreter(cmd.Cmd):
 
     @run_in_event_loop
     def do_resume(self, line):
+        """resume <name> -- Resumes a download by name."""
         if self.selection_type is None:
             print "Error: No feed/playlist selected"
             return
@@ -339,6 +360,7 @@ class MiroInterpreter(cmd.Cmd):
 
     @run_in_event_loop
     def do_rm(self, line):
+        """rm <name> -- Removes an item by name in the feed/playlist selected."""
         if self.selection_type is None:
             print "Error: No feed/playlist selected"
             return
@@ -358,6 +380,7 @@ class MiroInterpreter(cmd.Cmd):
 
     @run_in_event_loop
     def do_testdialog(self, line):
+        """testdialog -- Tests the cli dialog system."""
         d = dialogs.ChoiceDialog("Hello", "I am a test dialog",
                 dialogs.BUTTON_OK, dialogs.BUTTON_CANCEL)
         def callback(dialog):
@@ -366,6 +389,7 @@ class MiroInterpreter(cmd.Cmd):
 
     @run_in_event_loop
     def do_dumpdatabase(self, line):
+        """dumpdatabase -- Dumps the database."""
         from miro import database
         print "Dumping database...."
         database.defaultDatabase.liveStorage.dumpDatabase(database.defaultDatabase)
