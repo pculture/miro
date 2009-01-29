@@ -97,7 +97,19 @@ class DuplicateTorrent(Command):
     def action(self):
         original_id, duplicate_id = self.args[0], self.args[1]
         from miro import downloader
-        downloader.relink_downloads(original_id, duplicate_id)
+        duplicate = downloader._getDownloader(duplicate_id)
+        original = downloader._getDownloader(original_id)
+        if duplicate is None:
+            logging.warn("duplicate torrent doesn't exist anymore, "
+                    "ignoring (dlid %s)", duplicate_id)
+            return
+        if original is None:
+            logging.warn("original torrent doesn't exist anymore, "
+                    "restarting (dlid %s)", original_id)
+            duplicate.restart()
+            return
+        for item in duplicate.itemList:
+            item.set_downloader(original)
 
 class ShutDownResponseCommand(Command):
     def action(self):
