@@ -37,15 +37,12 @@ import math
 import cairo
 import gtk
 import pango
-import pangocairo
 
 from miro.plat.frontends.widgets import use_native_buttons
 
-font_map = pangocairo.cairo_font_map_get_default()
-
 class LayoutManager(object):
     def __init__(self, widget):
-        self.pango_context = font_map.create_context()
+        self.pango_context = widget.get_pango_context()
         self.update_style(widget.style)
         self.update_direction(widget.get_direction())
         widget.connect('style-set', self.on_style_set)
