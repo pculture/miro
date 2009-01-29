@@ -1054,7 +1054,7 @@ class Item(DDBObject):
         if enclosure:
             try:
                 extension = enclosure['url'].split('.')[-1]
-                extension = extension.lower().decode('ascii', 'replace')
+                extension = extension.lower().encode('ascii', 'replace')
             except (SystemExit, KeyboardInterrupt):
                 raise
             except KeyError:
