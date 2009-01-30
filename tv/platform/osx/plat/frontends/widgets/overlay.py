@@ -75,6 +75,7 @@ class OverlayPalette (NSWindowController):
     addToLibButton      = IBOutlet('addToLibButton')
     fsButton            = IBOutlet('fsButton')
     popInOutButton      = IBOutlet('popInOutButton')
+    popInOutLabel       = IBOutlet('popInOutLabel')
     
     playbackControls    = IBOutlet('playbackControls')
     playPauseButton     = IBOutlet('playPauseButton')
@@ -199,22 +200,15 @@ class OverlayPalette (NSWindowController):
         else:
             if app.playback_manager.detached_window is None:
                 image_path = resources.path('images/popout.png')
+                label = _('Pop Out')
             else:
                 image_path = resources.path('images/popin.png')
+                label = _('Pop In')
             self.popInOutButton.setImage_(NSImage.alloc().initWithContentsOfFile_(image_path))
             self.popInOutButton.setHidden_(NO)
+            self.popInOutLabel.setStringValue_(label)
             self.fsButton.setImage_(NSImage.imageNamed_('fs-button-enterfullscreen'))
             self.fsButton.setAlternateImage_(NSImage.imageNamed_('fs-button-enterfullscreen-alt'))
-
-        newFrame = self.window().frame()
-        if videoWindow.is_fullscreen or app.playback_manager.detached_window is not None:
-            self.playbackControls.setHidden_(NO)
-            newFrame.size.height = 198
-        else:
-            self.playbackControls.setHidden_(YES)
-            newFrame.size.height = 110
-        newFrame.origin.x = self.getHorizontalPosition(videoWindow, newFrame.size.width)
-        self.window().setFrame_display_animate_(newFrame, YES, animate)
 
     def fit_in_video_window(self, video_window):
         return self.window().frame().size.width <= video_window.frame().size.width

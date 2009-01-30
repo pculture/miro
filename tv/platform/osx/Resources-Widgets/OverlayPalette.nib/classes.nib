@@ -72,6 +72,8 @@
 				<string>id</string>
 				<key>popInOutButton</key>
 				<string>id</string>
+				<key>popInOutLabel</key>
+				<string>id</string>
 				<key>progressSlider</key>
 				<string>id</string>
 				<key>seekBackwardButton</key>
