@@ -46,6 +46,7 @@ class PreferencesWindow(window.Window):
         close_button = gtk.Button(stock=gtk.STOCK_CLOSE)
         close_button.connect_object('clicked', gtk.Window.hide, self._window)
         alignment = gtk.Alignment(xalign=1.0)
+        alignment.set_padding(0, 10, 0, 10)
         alignment.add(close_button)
         self.content_widget.pack_start(alignment)
         self._window.add(self.content_widget)
