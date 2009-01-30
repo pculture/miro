@@ -93,7 +93,7 @@ def _youtube_callback(info, callback):
 def _youtube_get_first_successful(info, current_url, urls, callback):
     status = info["status"]
 
-    if not (status == 0 or status / 100 == 4):
+    if status == 200:
         callback(current_url)
         return
 
