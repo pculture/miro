@@ -86,9 +86,14 @@ class Exporter(object):
         self.io.write(u'</body>\n')
         self.io.write(u'</opml>\n')
     
-        f = open(pathname, "w")
-        f.write(self.io.getvalue().encode('utf-8'))
-        f.close()
+        try:
+            f = open(pathname, "w")
+            f.write(self.io.getvalue().encode('utf-8'))
+            f.close()
+        except (SystemExit, KeyboardInterrupt):
+            raise
+        except:
+            logging.exception("Could not create miro_subscriptions.opml file.")
 
     def _open_folder_entry(self, folder):
         if self.currentFolder is not None:
