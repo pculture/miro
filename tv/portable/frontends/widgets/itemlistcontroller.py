@@ -438,6 +438,13 @@ class SearchController(SimpleItemListController):
                 and self.item_list.get_count() == 0):
             self.widget.set_list_empty_mode(True)
 
+    def on_items_changed(self):
+        # Don't check for an empty list here.  Since items don't get removed
+        # from the search feed, we don't need to do anything.  Also, it
+        # results in a false positive just after the search starts when the
+        # items from the last search get removed (#11255)
+        pass
+
     def make_titlebar(self):
         icon = self._make_icon()
         titlebar = itemlistwidgets.SearchListTitlebar(self.title, icon)
