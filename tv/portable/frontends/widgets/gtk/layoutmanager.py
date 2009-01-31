@@ -140,7 +140,7 @@ class TextBox(object):
 
     def set_text(self, text, font=None, color=None, underline=False):
         self.text_chunks = []
-        self.attr_list = pango.AttrList()
+        self.attributes = []
         self.text_length = 0
         self.underlines = []
         self.append_text(text, font, color, underline)
@@ -153,7 +153,7 @@ class TextBox(object):
         endpos = self.text_length = self.text_length + len(text)
         if font is not None:
             attr = pango.AttrFontDesc(font.description, startpos, endpos)
-            self.attr_list.insert(attr)
+            self.attributes.append(attr)
         if underline:
             self.underlines.append((startpos, endpos))
         if color:
@@ -161,7 +161,7 @@ class TextBox(object):
                 return int(round(value * 65535))
             attr = pango.AttrForeground(convert(color[0]), convert(color[1]),
                     convert(color[2]), startpos, endpos)
-            self.attr_list.insert(attr)
+            self.attributes.append(attr)
         self.text_set = False
 
     def set_width(self, width):
@@ -192,7 +192,10 @@ class TextBox(object):
     def ensure_layout(self):
         if not self.text_set:
             self.layout.set_text(''.join(self.text_chunks))
-            self.layout.set_attributes(self.attr_list.copy())
+            attr_list = pango.AttrList()
+            for attr in self.attributes:
+                attr_list.insert(attr)
+            self.layout.set_attributes(attr_list)
             self.text_set = True
 
     def line_count(self):
