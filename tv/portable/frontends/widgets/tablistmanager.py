@@ -158,3 +158,23 @@ class TabListManager(object):
             return self.selected_tab_list.type, selected_tabs
         else:
             return None, []
+
+    def get_selection_and_children(self):
+        """This returns the selection and, in the case of parent rows, returns
+        all children, too.  This is particularly useful for getting selections
+        that include children of folders.
+
+        This returns a list generated from a set--so there are no repeated
+        elements.
+        """
+        table_view = self.__table_view
+        if table_view is not None:
+            selected_tabs = set()
+            for mem in table_view.get_selection():
+                row = table_view.model[mem]
+                selected_tabs.add(row[0])
+                for children in row.iterchildren():
+                    selected_tabs.add(children[0])
+            return self.selected_tab_list.type, list(selected_tabs)
+        else:
+            return None, []

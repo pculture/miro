@@ -532,12 +532,12 @@ class Application:
             messages.NewGuide(url).send_to_backend()
 
     def remove_current_feed(self):
-        t, channel_infos = app.tab_list_manager.get_selection()
+        t, channel_infos = app.tab_list_manager.get_selection_and_children()
         if t in ('feed', 'audio-feed'):
             self.remove_feeds(channel_infos)
 
     def remove_feeds(self, channel_infos):
-        watched_feeds = False
+        has_watched_feeds = False
         downloaded_items = False
         downloading_items = False
 
@@ -549,10 +549,10 @@ class Application:
                 if ci.has_downloading:
                     downloading_items = True
             else:
-                watched_feeds = True
+                has_watched_feeds = True
 
         ret = removefeeds.run_dialog(channel_infos, downloaded_items,
-                downloading_items, watched_feeds)
+                downloading_items, has_watched_feeds)
         if ret:
             for ci in channel_infos:
                 if ci.is_directory_feed:

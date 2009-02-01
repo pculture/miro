@@ -44,7 +44,7 @@ from miro.util import clampText, returnsUnicode
 
 KEEP_ITEMS = "keep_items"
 
-def run_dialog(channel_infos, downloaded_items, downloading_items, watched_feeds):
+def run_dialog(channel_infos, downloaded_items, downloading_items, has_watched_feeds):
     """Displays the remove feeds dialog."""
     title = ngettext('Remove Feed', 'Remove Feeds', len(channel_infos))
 
@@ -78,7 +78,7 @@ def run_dialog(channel_infos, downloaded_items, downloading_items, watched_feeds
                 cbx_downloaded.set_checked(True)
                 v.pack_start(widgetutil.align_left(cbx_downloaded, bottom_pad=5))
 
-            if watched_feeds:
+            if has_watched_feeds:
                 lab = widgetset.Label(_(
                     "Watched folders will be removed from the sidebar but their contents will "
                     "still appear in your library.  You can stop watching watched folders completely "
