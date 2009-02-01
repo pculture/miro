@@ -1,0 +1,6 @@
+<searchengine>
+  <id>dailymotion</id>
+  <displayname>DailyMotion</displayname>
+  <url>http://www.dailymotion.com/rss/search/%s</url>
+  <sort>5</sort>
+</searchengine>
