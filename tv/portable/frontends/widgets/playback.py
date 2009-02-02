@@ -348,7 +348,7 @@ class PlaybackManager (signals.SignalEmitter):
         if self.detached_window is not None:
             self.detached_window.set_title(item_info.name)
 
-    def _play_current(self, new_position=None):
+    def _play_current(self, new_position=None, save_resume_time=True):
         """If you pass in new_position, then this will attempt to play
         that and will update self.position ONLY if the new_position
         doesn't exceed the bounds of the playlist.
@@ -365,7 +365,7 @@ class PlaybackManager (signals.SignalEmitter):
                 self.video_display.stop()
             self._select_current()
         else:
-            self.stop()
+            self.stop(save_resume_time)
 
     def _on_ready_to_play(self, video_display):
         self.open_successful = True
@@ -385,11 +385,11 @@ class PlaybackManager (signals.SignalEmitter):
         self.cancel_update_timer()
         self.cancel_mark_as_watched()
         if config.get(prefs.SINGLE_VIDEO_PLAYBACK_MODE):
-            self.stop()
+            self.stop(save_resume_time)
         else:
             if save_resume_time:
                 self.update_current_resume_time()
-            self._play_current(new_position)
+            self._play_current(new_position, save_resume_time)
 
     def skip_forward(self):
         self.video_display.skip_forward()
