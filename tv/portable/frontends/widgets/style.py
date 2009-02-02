@@ -391,7 +391,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             filename_textbox = layout.textbox(self.FILE_NAME_TEXT + self.data.video_path)
             filename_textbox.set_width(main_width)
             filename_textbox.set_wrap_style('char')
-            vbox.pack(filename_textbox, expand=True)
+            vbox.pack(cellpack.align_bottom(filename_textbox), expand=True)
 
         return vbox
 
