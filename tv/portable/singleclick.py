@@ -63,7 +63,7 @@ from miro.plat.utils import samefile, filenameToUnicode, unicodeToFilename
 from miro import messages
 
 _command_line_args = []
-_command_line_video_ids = None
+_command_line_videos = None
 _command_line_view = None
 
 def get_manual_feed():
@@ -79,8 +79,8 @@ def add_video(path, single=False):
         if (itemFilename != '' and
                 os.path.exists(itemFilename) and
                 samefile(itemFilename, path)):
-            print "Not adding duplicate video: %s" % path.decode('ascii', 'ignore')
-            _command_line_video_ids.add(i.getID())
+            logging.warn("Not adding duplicate video: %s" % path.decode('ascii', 'ignore'))
+            _command_line_videos.add(i)
             return
     if single:
         correctFeed = util.getSingletonDDBObject(views.singleFeed)
@@ -91,7 +91,7 @@ def add_video(path, single=False):
         correctFeed = get_manual_feed()
     fileItem = item.FileItem(path, feed_id=correctFeed.getID())
     fileItem.markItemSeen()
-    _command_line_video_ids.add(fileItem.getID())
+    _command_line_videos.add(fileItem)
 
 def check_url_exists(url):
     manualFeed = get_manual_feed()
@@ -255,14 +255,11 @@ def add_torrent(path, torrentInfohash):
     newItem.download()
 
 def reset_command_line_view():
-    global _command_line_view, _command_line_video_ids
+    global _command_line_view, _command_line_videos
     if _command_line_view is not None:
         _command_line_view.unlink()
         _command_line_view = None
-    _command_line_video_ids = set()
-
-def in_command_line_video_ids(item_):
-    return item_.getID() in _command_line_video_ids
+    _command_line_videos = set()
 
 def add_feed(path):
     feed.add_feed_from_file(path)
@@ -436,8 +433,7 @@ def parse_command_line_args(args=None):
             logging.warning("parse_command_line_args: %s doesn't exist", arg)
 
     if added_videos:
-        f = util.getSingletonDDBObject(views.singleFeed)
-        item_infos = [messages.ItemInfo(i) for i in f.items]
+        item_infos = [messages.ItemInfo(i) for i in _command_line_videos]
         messages.PlayMovie(item_infos).send_to_frontend()
 
     if added_downloads:
