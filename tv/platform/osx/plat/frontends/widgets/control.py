@@ -75,11 +75,14 @@ class BaseTextEntry(SizedControl):
             self.set_width(10)
 
         self.notifications = NotificationForwarder.create(self.view)
-        self.notifications.connect(self.on_changed, 'NSControlTextDidChangeNotification')
 
         self.create_signal('activate')
         self.create_signal('changed')
         self.create_signal('validate')
+
+    def viewport_created(self):
+        SizedControl.viewport_created(self)
+        self.notifications.connect(self.on_changed, 'NSControlTextDidChangeNotification')
 
     def remove_viewport(self):
         SizedControl.remove_viewport(self)

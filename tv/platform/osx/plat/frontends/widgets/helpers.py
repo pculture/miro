@@ -74,8 +74,10 @@ class NotificationForwarder(NSObject):
     def disconnect(self, name=None):
         if name is not None:
             self.center.removeObserver_name_object_(self, name, self.nsobject)
+            self.callback_map.pop(name)
         else:
             self.center.removeObserver_(self)
+            self.callback_map.clear()
 
     def observe_(self, notification):
         name = notification.name()
