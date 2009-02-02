@@ -195,6 +195,7 @@ class OverlayPalette (NSWindowController):
     def adjustContent(self, videoWindow, animate):
         if videoWindow.is_fullscreen:
             self.popInOutButton.setHidden_(YES)
+            self.popInOutLabel.setHidden_(YES)
             self.fsButton.setImage_(NSImage.imageNamed_('fs-button-exitfullscreen'))
             self.fsButton.setAlternateImage_(NSImage.imageNamed_('fs-button-exitfullscreen-alt'))
         else:
@@ -206,6 +207,7 @@ class OverlayPalette (NSWindowController):
                 label = _('Pop In')
             self.popInOutButton.setImage_(NSImage.alloc().initWithContentsOfFile_(image_path))
             self.popInOutButton.setHidden_(NO)
+            self.popInOutLabel.setHidden_(NO)
             self.popInOutLabel.setStringValue_(label)
             self.fsButton.setImage_(NSImage.imageNamed_('fs-button-enterfullscreen'))
             self.fsButton.setAlternateImage_(NSImage.imageNamed_('fs-button-enterfullscreen-alt'))
