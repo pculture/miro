@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: Democracy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-01-21 22:38-0500\n"
-"PO-Revision-Date: 2009-01-27 14:48+0000\n"
-"Last-Translator: Fabrix.xm <Unknown>\n"
+"PO-Revision-Date: 2009-01-30 13:47+0000\n"
+"Last-Translator: Daniele Sapino <daniele.sapino@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-01-27 18:56+0000\n"
+"X-Launchpad-Export-Date: 2009-02-02 18:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -75,6 +75,9 @@ msgid ""
 "%(notes)s\n"
 "Do you want to download it?"
 msgstr ""
+"Una nuova versione di %(appname)s è disponibile da scaricare.\n"
+"%(notes)s\n"
+"Vuoi scaricarla?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
@@ -215,19 +218,19 @@ msgstr "Modifica"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
 msgid "Present Half Size"
-msgstr ""
+msgstr "Mostrare a metà dimensioni"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:168
 msgid "Present Actual Size"
-msgstr ""
+msgstr "Mostrare a dimensioni originali"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:169
 msgid "Present Double Size"
-msgstr ""
+msgstr "Mostrare a dimensioni doppie"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:171
 msgid "Present Video"
-msgstr ""
+msgstr "Mostrare Video"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
 msgid "Zoom"
@@ -411,22 +414,22 @@ msgstr ""
 #: ../../portable/displaytext.py:40
 #, python-format
 msgid "%(size)s gb/s"
-msgstr ""
+msgstr "%(size)s gb/s"
 
 #: ../../portable/displaytext.py:43
 #, python-format
 msgid "%(size)s mb/s"
-msgstr ""
+msgstr "%(size)s mb/s"
 
 #: ../../portable/displaytext.py:46
 #, python-format
 msgid "%(size)s kb/s"
-msgstr ""
+msgstr "%(size)s kb/s"
 
 #: ../../portable/displaytext.py:49
 #, python-format
 msgid "%(size)s b/s"
-msgstr ""
+msgstr "%(size)s b/s"
 
 #: ../../portable/displaytext.py:56
 #, python-format
@@ -446,35 +449,34 @@ msgstr[1] "%(num).1f ore"
 #, python-format
 msgid "%(num).1f min"
 msgid_plural "%(num).1f mins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).1f min"
 
 #: ../../portable/displaytext.py:64
 #, python-format
 msgid "%(num)d sec"
 msgid_plural "%(num)d secs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)d secondo"
+msgstr[1] "%(num)d secondi"
 
 #: ../../portable/displaytext.py:78
 #, python-format
 msgid "%(size)s gb"
-msgstr ""
+msgstr "%(size)s gb"
 
 #: ../../portable/displaytext.py:81
 #, python-format
 msgid "%(size)s mb"
-msgstr ""
+msgstr "%(size)s gb"
 
 #: ../../portable/displaytext.py:84
 #, python-format
 msgid "%(size)s kb"
-msgstr ""
+msgstr "%(size)s gb"
 
 #: ../../portable/displaytext.py:86
 #, python-format
 msgid "%(size)s b"
-msgstr ""
+msgstr "%(size)s gb"
 
 #: ../../portable/displaytext.py:91
 #, python-format
@@ -601,7 +603,7 @@ msgstr "Controlla _Versione"
 
 #: ../../portable/menubar.py:188
 msgid "_Remove Item"
-msgstr ""
+msgstr "_Rimuovi Elemento"
 
 #: ../../portable/menubar.py:189
 msgid "_Remove Items"
@@ -613,11 +615,11 @@ msgstr "Ri_nominare Elemento"
 
 #: ../../portable/menubar.py:191
 msgid "Save Item _As"
-msgstr ""
+msgstr "Salva Elemento _Come"
 
 #: ../../portable/menubar.py:192
 msgid "Save Items _As"
-msgstr ""
+msgstr "Salva Elementi _Come"
 
 #: ../../portable/menubar.py:193
 msgid "Copy Item _URL"
@@ -649,7 +651,7 @@ msgstr "Seleziona _Tutto"
 
 #: ../../portable/menubar.py:212
 msgid "Add _Feed"
-msgstr ""
+msgstr "Aggiungi  _Feed"
 
 #: ../../portable/menubar.py:213
 #: ../../portable/frontends/widgets/application.py:525
@@ -662,7 +664,7 @@ msgstr ""
 
 #: ../../portable/menubar.py:215
 msgid "New _Folder"
-msgstr ""
+msgstr "Nuova _cartella"
 
 #: ../../portable/menubar.py:217
 msgid "Re_name"
@@ -670,35 +672,35 @@ msgstr "Ri_nomina"
 
 #: ../../portable/menubar.py:218
 msgid "_Remove"
-msgstr ""
+msgstr "_Rimuovi"
 
 #: ../../portable/menubar.py:219
 msgid "_Remove Folder"
-msgstr ""
+msgstr "_Rimuovi Cartella"
 
 #: ../../portable/menubar.py:221
 msgid "_Update Feed"
-msgstr ""
+msgstr "_Aggiorna Feed"
 
 #: ../../portable/menubar.py:222
 msgid "_Update Feeds"
-msgstr ""
+msgstr "_Aggiorna Feeds"
 
 #: ../../portable/menubar.py:223
 msgid "Update _All Feeds"
-msgstr ""
+msgstr "Aggiorna _Tutti i Feeds"
 
 #: ../../portable/menubar.py:225
 msgid "_Import Feeds (OPML)"
-msgstr ""
+msgstr "_Importa Feeds (OPML)"
 
 #: ../../portable/menubar.py:226
 msgid "E_xport Feeds (OPML)"
-msgstr ""
+msgstr "E_sporta Feeds (OPML)"
 
 #: ../../portable/menubar.py:228
 msgid "_Share with a Friend"
-msgstr ""
+msgstr "_Condividi con un Amico"
 
 #: ../../portable/menubar.py:229
 msgid "Copy URL"
@@ -815,7 +817,7 @@ msgstr "_File"
 
 #: ../../portable/menubar.py:290
 msgid "_Sidebar"
-msgstr ""
+msgstr "_Riquadro laterale"
 
 #: ../../portable/menubar.py:291
 msgid "_Playlists"
@@ -879,7 +881,7 @@ msgstr[1] "%(count)d mesi fa"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Videos:"
-msgstr ""
+msgstr "Rimozione Video Automatica"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:95
 #, python-format
@@ -946,34 +948,36 @@ msgstr "Gli elementi più antichi sono stati eliminati"
 #: ../../portable/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause Auto-Downloading when this many items are unplayed:"
 msgstr ""
+"Interrompere il download automatico quando questo numero di elementi non "
+"visti è raggiunto"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
-msgstr ""
+msgstr "1 elemento non visto"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:198
 msgid "3 unplayed items"
-msgstr ""
+msgstr "3 elementi non riprodotti"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:199
 msgid "5 unplayed items"
-msgstr ""
+msgstr "5 elementi non riprodotti"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:200
 msgid "10 unplayed items"
-msgstr ""
+msgstr "10 elementi non riprodotti"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:201
 msgid "15 unplayed items"
-msgstr ""
+msgstr "15 elementi non riprodotti"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:241
 msgid "Feed Settings"
-msgstr ""
+msgstr "Impostazioni Feed"
 
 #: ../../portable/frontends/widgets/style.py:209
 msgid "From"
-msgstr ""
+msgstr "Da"
 
 #: ../../portable/frontends/widgets/style.py:210
 msgid "Show More"
@@ -981,7 +985,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:211
 msgid "Show Less"
-msgstr ""
+msgstr "Mostra di meno"
 
 #: ../../portable/frontends/widgets/style.py:212
 #: ../../portable/frontends/widgets/gtk/video.py:308
@@ -1029,7 +1033,7 @@ msgstr "Velocità di upload"
 
 #: ../../portable/frontends/widgets/style.py:222
 msgid "Upload Total"
-msgstr ""
+msgstr "Totale Upload"
 
 #: ../../portable/frontends/widgets/style.py:223
 msgid "Down Rate"
@@ -1059,12 +1063,12 @@ msgstr "In coda per l'autoscaricamento"
 #: ../../portable/frontends/widgets/style.py:229
 #: ../../portable/frontends/widgets/style.py:1078
 msgid "Unplayed"
-msgstr ""
+msgstr "Non visti"
 
 #: ../../portable/frontends/widgets/style.py:230
 #: ../../portable/frontends/widgets/style.py:1096
 msgid "Newly Available"
-msgstr ""
+msgstr "Nuovo"
 
 #: ../../portable/frontends/widgets/style.py:232
 #: ../../portable/frontends/widgets/prefpanel.py:479
@@ -1155,11 +1159,12 @@ msgstr "1000"
 
 #: ../../portable/frontends/widgets/prefpanel.py:307
 msgid "Default settings for new feeds:"
-msgstr ""
+msgstr "Impostazioni predefinite per i nuovi feed"
 
 #: ../../portable/frontends/widgets/prefpanel.py:311
 msgid "(These can be changed using the feed's settings button)"
 msgstr ""
+"Queste possono essere cambiate utilizzando il tasto impostazioni feed"
 
 #: ../../portable/frontends/widgets/prefpanel.py:315
 msgid "Check for new content:"
@@ -1328,7 +1333,7 @@ msgstr "Importazioni generali"
 
 #: ../../portable/frontends/widgets/prefpanel.py:619
 msgid "Feeds"
-msgstr ""
+msgstr "Feed"
 
 #: ../../portable/frontends/widgets/prefpanel.py:620
 #: ../../portable/frontends/widgets/downloadscontroller.py:81
@@ -1388,11 +1393,12 @@ msgstr "Elemento singolo"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:496
 msgid "No Items to Display"
-msgstr ""
+msgstr "Nessun elemento da mostrare"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:499
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr ""
+"Questa scheda tiene traccia dei download che non sono parte di un feed"
 
 #: ../../portable/frontends/widgets/diagnostics.py:77
 #: ../../portable/frontends/widgets/gtk/trayicon.py:83
@@ -1425,11 +1431,11 @@ msgstr "Spazio disponibile nell'hard disk:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:109
 msgid "Database size:"
-msgstr ""
+msgstr "Dimesioni del database"
 
 #: ../../portable/frontends/widgets/diagnostics.py:111
 msgid "Total number of db objects:"
-msgstr ""
+msgstr "Numero totale di oggetti nel database"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:122
 msgid "Downloaded"
@@ -1437,7 +1443,7 @@ msgstr "Scaricato"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:132
 msgid "Full Feed"
-msgstr ""
+msgstr "Feed completo"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:176
 #, python-format
@@ -1459,19 +1465,19 @@ msgstr[1] "%(count)d in download"
 #, python-format
 msgid "%(count)d Item"
 msgid_plural "%(count)d Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d elemento"
+msgstr[1] "%(count)d elementi"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:242
 #, python-format
 msgid "%(count)d Item Matches Search"
 msgid_plural "%(count)d Items Match Search"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d elemento soddisfa i criteri di ricerca"
+msgstr[1] "%(count)d elementi soddisfano i criteri di ricerca"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:247
 msgid "All Items Match Search"
-msgstr ""
+msgstr "Tutti gli elementi soddisfano i criteri di ricerca"
 
 #: ../../portable/frontends/widgets/application.py:133
 msgid "Movies directory gone"
@@ -1570,8 +1576,8 @@ msgstr "Miro è aggiornato !"
 #: ../../portable/frontends/widgets/application.py:399
 msgid "Remove item"
 msgid_plural "Remove items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Rimuovi elemento"
+msgstr[1] "Rimuovi elementi"
 
 #: ../../portable/frontends/widgets/application.py:403
 msgid ""
@@ -1581,7 +1587,11 @@ msgid_plural ""
 "Some of these items were not downloaded from a feed. Would you like to "
 "delete them or just remove them from the Library?"
 msgstr[0] ""
+"Uno di questi elementi non è stato scaricato da un feed. Vuoi cancellarlo o "
+"solo rimuoverlo dalla Libreria?"
 msgstr[1] ""
+"Alcuni di questi elementi non sono stati scaricati da un feed. Vuoi "
+"cancellarli o solo rimuoverli dalla Libreria?"
 
 #: ../../portable/frontends/widgets/application.py:418
 #, python-format
@@ -1609,7 +1619,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:527
 msgid "Add Site - Invalid URL"
-msgstr ""
+msgstr "Aggiungi sito - URL non valido"
 
 #: ../../portable/frontends/widgets/application.py:528
 msgid ""
@@ -1618,6 +1628,10 @@ msgid ""
 "\n"
 "Enter the URL of the site to add"
 msgstr ""
+"L'indirizzo inserito non è un URL valido.\n"
+"Per favore verificate l'URL e provate di nuovo.\n"
+"\n"
+"Inserire l'URL del sito da aggiungere"
 
 #: ../../portable/frontends/widgets/application.py:577
 msgid "Import OPML File"
@@ -1654,7 +1668,7 @@ msgstr "Inserisci un nome per la nuova cartella playlist"
 #: ../../portable/frontends/widgets/application.py:658
 #: ../../portable/frontends/widgets/tablist.py:520
 msgid "Rename Feed Folder"
-msgstr ""
+msgstr "Rinomina la Cartella di Feed"
 
 #: ../../portable/frontends/widgets/application.py:659
 #, python-format
@@ -1663,12 +1677,12 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:663
 msgid "Rename Feed"
-msgstr ""
+msgstr "Rinomina Feed"
 
 #: ../../portable/frontends/widgets/application.py:664
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
-msgstr ""
+msgstr "Inserire un nuovo nome per il feed %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:668
 #: ../../portable/frontends/widgets/tablist.py:581
@@ -1704,20 +1718,20 @@ msgstr "Inserisci un nuovo nome per il sito %(name)s"
 #: ../../portable/frontends/widgets/application.py:702
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Rimuovi playlist"
+msgstr[1] "Rimuovi playlist"
 
 #: ../../portable/frontends/widgets/application.py:704
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Sei sicuro di voler rimuovere questa playlist?"
+msgstr[1] "Sei sicuro di voler rimuovere queste playlist?"
 
 #: ../../portable/frontends/widgets/application.py:722
 #, python-format
 msgid "Remove %(name)s"
-msgstr ""
+msgstr "Rimuovi %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:723
 #, python-format
@@ -1732,8 +1746,8 @@ msgstr "Sei sicuro di voler uscire?"
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "C'è %(count)d download in corso. Uscire comunque?"
+msgstr[1] "Ci sono %(count)d download in corso. Uscire comunque?"
 
 #: ../../portable/frontends/widgets/application.py:755
 msgid "Warn me when I attempt to quit with downloads in progress"
@@ -1749,7 +1763,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:1039
 msgid "Migrating files"
-msgstr ""
+msgstr "Trasferimento Files"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:177
 msgid "Save Search"
@@ -1843,7 +1857,7 @@ msgstr "Scaricamento automatico"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:621
 msgid "Share feed"
-msgstr ""
+msgstr "Condividi Feed"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:626
 msgid "Settings"
@@ -1851,7 +1865,7 @@ msgstr "Impostazioni"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:631
 msgid "Remove feed"
-msgstr ""
+msgstr "Rimuovi Feed"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:715
 msgid "Name"
@@ -1889,15 +1903,15 @@ msgstr "Salta"
 #, python-format
 msgid "%(count)d Feed Folder Selected"
 msgid_plural "%(count)d Feed Folders Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Cartella di Feed Selezionata"
+msgstr[1] "%(count)d Cartelle di Feed Selezionate"
 
 #: ../../portable/frontends/widgets/displays.py:548
 #, python-format
 msgid "(contains %(count)d feed)"
 msgid_plural "(contains %(count)d feeds)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(contiene %(count)d feed)"
+msgstr[1] "(contiene %(count)d feed)"
 
 #: ../../portable/frontends/widgets/displays.py:554
 #, python-format
@@ -1910,22 +1924,22 @@ msgstr[1] ""
 #, python-format
 msgid "(contains %(count)d playlist)"
 msgid_plural "(contains %(count)d playlist)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(contiene %(count)d playlist)"
+msgstr[1] "(contiene %(count)d playlist)"
 
 #: ../../portable/frontends/widgets/displays.py:569
 #, python-format
 msgid "%(count)d Feed Selected"
 msgid_plural "%(count)d Feeds Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Feed Selezionato"
+msgstr[1] "%(count)d Feed Selezionati"
 
 #: ../../portable/frontends/widgets/displays.py:575
 #, python-format
 msgid "%(count)d Playlist Selected"
 msgid_plural "%(count)d Playlists Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Playlist Selezionata"
+msgstr[1] "%(count)d Playlist Selezionate"
 
 #: ../../portable/frontends/widgets/displays.py:582
 msgid "Delete All"
@@ -1937,22 +1951,24 @@ msgstr "Inserisci in una Nuova Cartella"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
-msgstr ""
+msgstr "Questa Playlist è vuota"
 
 #: ../../portable/frontends/widgets/playlist.py:149
 msgid ""
 "To add an item, drag it onto the name of this playlist in the sidebar."
 msgstr ""
+"Per aggiungere un elemento, trascinarlo sul nome di questa playlist nella "
+"barra laterale"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:63
 #, python-format
 msgid "Play Next Unplayed (%(unplayed)d)"
-msgstr ""
+msgstr "Riproduci il prossimo elemento non visto (%(unplayed)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:67
 #, python-format
 msgid "Play All Unplayed (%(unplayed)d)"
-msgstr ""
+msgstr "Riproduci tutti gli elementi non visti (%(unplayed)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:70
 #, python-format
@@ -1970,7 +1986,7 @@ msgstr "Nascondi"
 
 #: ../../portable/frontends/widgets/gtk/video.py:272
 msgid "Add to library"
-msgstr ""
+msgstr "Aggiungi alla Libreria"
 
 #: ../../portable/frontends/widgets/gtk/video.py:310
 msgid "Permalink"

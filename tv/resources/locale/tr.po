@@ -8,20 +8,20 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-01-21 22:38-0500\n"
-"PO-Revision-Date: 2009-01-24 23:52+0000\n"
-"Last-Translator: volkeyn <Unknown>\n"
+"PO-Revision-Date: 2009-01-31 06:59+0000\n"
+"Last-Translator: Murat Bişkin <mbiskin@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-01-27 18:56+0000\n"
+"X-Launchpad-Export-Date: 2009-02-02 18:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
 msgid "Enable tray icon"
-msgstr ""
+msgstr "Simgeyi görev çubuğunda göster"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:42
 msgid "When I click the red close button:"
@@ -79,6 +79,9 @@ msgid ""
 "%(notes)s\n"
 "Do you want to download it?"
 msgstr ""
+"%(appname)s 'nun yeni versiyonu kullanımda.\n"
+"%(notes)s\n"
+"Şimdi indirmek ister misin?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
@@ -90,6 +93,8 @@ msgid ""
 "For the best %(appname)s experience, we suggest you install Adobe Flash.  "
 "Would you like to do this now?"
 msgstr ""
+"%(appname)s 'nun en iyi kullanımı için Adobe Flash'ı kurmanızı öneriyoruz. "
+"Şimdi kurmak ister misin?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
@@ -121,14 +126,16 @@ msgstr "Video dönüştürücü:"
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:77
 msgid "You must restart playback for visualization changes to take effect."
 msgstr ""
+"Görselleştime değişikliklerinin geçerli olması için oynatıcıyı yeniden "
+"başlatman gerekir."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:80
 msgid "None"
-msgstr ""
+msgstr "Hiçbiri"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:86
 msgid "Use this for video when playing audio:"
-msgstr ""
+msgstr "Video sesini çalarken bunu kullan::"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:119
 #: ../../portable/frontends/widgets/gtk/video.py:299
@@ -1421,8 +1428,8 @@ msgstr[1] ""
 msgid "%(count)d Downloading"
 msgid_plural "%(count)d Downloading"
 msgstr[0] ""
-"%(count)d İndiriliyor\n"
-"\n"
+"%(count)d İndiriliyor\r\n"
+"\r\n"
 "%(count)d adet İndiriliyor"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:220
@@ -1543,8 +1550,8 @@ msgstr[1] ""
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
 msgstr[0] ""
-"Bu parçayı silmek istediğinizden emin misiniz?\n"
-"\n"
+"Bu parçayı silmek istediğinizden emin misiniz?\r\n"
+"\r\n"
 "%(count)d sayıda parçayı silmek istediğinizden emin misiniz?"
 
 #: ../../portable/frontends/widgets/application.py:448

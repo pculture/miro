@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-01-21 22:38-0500\n"
-"PO-Revision-Date: 2009-01-22 18:42+0000\n"
-"Last-Translator: Marc Ordinas i Llopis <mail@marcoil.org>\n"
+"PO-Revision-Date: 2009-02-01 22:32+0000\n"
+"Last-Translator: Toni Hermoso Pulido <toniher@softcatala.org>\n"
 "Language-Team: Catalan <ca@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-01-27 18:56+0000\n"
+"X-Launchpad-Export-Date: 2009-02-02 18:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -57,18 +57,18 @@ msgstr "Error al recomanar l'element"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:185
 msgid "Error Opening Website"
-msgstr "Error al obrir el web"
+msgstr "S'ha produït un error en obrir el lloc web"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:190
 #, python-format
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr ""
-"S'ha trobat un problema obrint %(url)s. Torna-ho a provar en uns segons."
+"S'ha produït un error en obrir %(url)s. Torneu-ho a provar en uns segons."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:265
 msgid "Update available!"
-msgstr "Actualització disponible!"
+msgstr "Hi ha una actualització disponible!"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:266
 #, python-format
@@ -77,6 +77,9 @@ msgid ""
 "%(notes)s\n"
 "Do you want to download it?"
 msgstr ""
+"Una nova versió del %(appname)s està disponible.\n"
+"%(notes)s\n"
+"Voleu baixar-la?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
@@ -104,7 +107,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
 msgid "Renderer options:"
-msgstr ""
+msgstr "Opcions de renderitzat:"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
 msgid "You must restart Miro for renderer changes to take effect."
@@ -112,7 +115,7 @@ msgstr "S'ha de reiniciar Miro per tal que els canvis tenguin efecte."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:72
 msgid "Video renderer:"
-msgstr ""
+msgstr "Renderitzador de vídeo:"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:77
 msgid "You must restart playback for visualization changes to take effect."
@@ -180,7 +183,7 @@ msgstr "Preferències...."
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
-msgstr "Surt de Miro"
+msgstr "Surt del Miro"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:150
 msgid "Close Window"
@@ -276,7 +279,7 @@ msgstr "Repertori d'exemple"
 
 #: ../../portable/theme.py:186
 msgid "Miro - Report a Problem"
-msgstr ""
+msgstr "Miro - informeu d'un problema"
 
 #: ../../portable/searchengines.py:146
 msgid "Search All"
@@ -310,6 +313,8 @@ msgstr "Ha fallat la importació"
 msgid ""
 "The selected OPML file appears to be invalid.  Import was interrupted."
 msgstr ""
+"El fitxer OPML seŀleccionat sembla ser invàlid. S'ha interromput la "
+"importació."
 
 #: ../../portable/opml.py:186
 msgid "OPML Import summary"
@@ -358,15 +363,15 @@ msgstr ""
 
 #: ../../portable/messagehandler.py:1293
 msgid "Subscribed to new feed:"
-msgstr ""
+msgstr "Subscrit a un canal nou:"
 
 #: ../../portable/messagehandler.py:1296
 msgid "Subscribed to new feeds:"
-msgstr ""
+msgstr "Subscrit als canals nous:"
 
 #: ../../portable/messages.py:965 ../../portable/item.py:618
 msgid "queued for download"
-msgstr ""
+msgstr "posat a la cua per baixar"
 
 #: ../../portable/startup.py:91
 msgid "Unknown Error"
@@ -462,15 +467,15 @@ msgstr ""
 #, python-format
 msgid "Expires in %(count)d day"
 msgid_plural "Expires in %(count)d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Venç en %(count) dia"
+msgstr[1] "Venç en %(count) dies"
 
 #: ../../portable/displaytext.py:96
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Venç en %(count) hora"
+msgstr[1] "Venç en %(count) hores"
 
 #: ../../portable/displaytext.py:101
 #, python-format
@@ -574,15 +579,15 @@ msgstr "_Obre"
 
 #: ../../portable/menubar.py:185
 msgid "_Download Item"
-msgstr ""
+msgstr "_Baixa l'element"
 
 #: ../../portable/menubar.py:186
 msgid "Check _Version"
-msgstr "Comprova_versió"
+msgstr "Comprova la _versió"
 
 #: ../../portable/menubar.py:188
 msgid "_Remove Item"
-msgstr ""
+msgstr "Sup_rimeix l'element"
 
 #: ../../portable/menubar.py:189
 msgid "_Remove Items"
@@ -630,7 +635,7 @@ msgstr "Selecciona-ho tot"
 
 #: ../../portable/menubar.py:212
 msgid "Add _Feed"
-msgstr ""
+msgstr "A_fegeix un canal"
 
 #: ../../portable/menubar.py:213
 #: ../../portable/frontends/widgets/application.py:525
@@ -639,7 +644,7 @@ msgstr ""
 
 #: ../../portable/menubar.py:214
 msgid "New Searc_h Feed"
-msgstr ""
+msgstr "Crea un cana_l de cerca"
 
 #: ../../portable/menubar.py:215
 msgid "New _Folder"
@@ -651,7 +656,7 @@ msgstr ""
 
 #: ../../portable/menubar.py:218
 msgid "_Remove"
-msgstr ""
+msgstr "Sup_rimeix"
 
 #: ../../portable/menubar.py:219
 msgid "_Remove Folder"
@@ -659,23 +664,23 @@ msgstr ""
 
 #: ../../portable/menubar.py:221
 msgid "_Update Feed"
-msgstr ""
+msgstr "Act_ualitza el canal"
 
 #: ../../portable/menubar.py:222
 msgid "_Update Feeds"
-msgstr ""
+msgstr "Act_ualitza els canals"
 
 #: ../../portable/menubar.py:223
 msgid "Update _All Feeds"
-msgstr ""
+msgstr "_Actualitza tots els canals"
 
 #: ../../portable/menubar.py:225
 msgid "_Import Feeds (OPML)"
-msgstr ""
+msgstr "_Importa canals (OPML)"
 
 #: ../../portable/menubar.py:226
 msgid "E_xport Feeds (OPML)"
-msgstr ""
+msgstr "E_xporta canals (OPML)"
 
 #: ../../portable/menubar.py:228
 msgid "_Share with a Friend"
@@ -683,11 +688,11 @@ msgstr ""
 
 #: ../../portable/menubar.py:229
 msgid "Copy URL"
-msgstr ""
+msgstr "Copia l'URL"
 
 #: ../../portable/menubar.py:233
 msgid "New _Playlist"
-msgstr "_Repertori nou"
+msgstr "Crea un _repertori"
 
 #: ../../portable/menubar.py:234
 msgid "New Playlist Fol_der"
@@ -743,11 +748,11 @@ msgstr "Salta _enrere"
 
 #: ../../portable/menubar.py:262
 msgid "Volume _Up"
-msgstr "_Puja el volum"
+msgstr "_Apuja el volum"
 
 #: ../../portable/menubar.py:263
 msgid "Volume _Down"
-msgstr "_Baixa el volum"
+msgstr "A_baixa el volum"
 
 #: ../../portable/menubar.py:265
 msgid "_Fullscreen"
@@ -759,7 +764,7 @@ msgstr ""
 
 #: ../../portable/menubar.py:270
 msgid "_About Miro"
-msgstr ""
+msgstr "Qu_ant al Miro"
 
 #: ../../portable/menubar.py:271
 msgid "_Donate"
@@ -796,7 +801,7 @@ msgstr "_Fitxer"
 
 #: ../../portable/menubar.py:290
 msgid "_Sidebar"
-msgstr ""
+msgstr "_Barra lateral"
 
 #: ../../portable/menubar.py:291
 msgid "_Playlists"
@@ -1595,7 +1600,7 @@ msgstr "Crea repertori"
 
 #: ../../portable/frontends/widgets/application.py:615
 msgid "Enter a name for the new playlist"
-msgstr "Introduiu un nom per el repertori nou"
+msgstr "Introduïu un nom per al repertori nou"
 
 #: ../../portable/frontends/widgets/application.py:636
 msgid "Create Playlist Folder"

@@ -8,24 +8,24 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-01-21 22:38-0500\n"
-"PO-Revision-Date: 2008-08-19 23:20+0000\n"
-"Last-Translator: farid <faridfedora@gmail.com>\n"
+"PO-Revision-Date: 2009-01-30 21:24+0000\n"
+"Last-Translator: Hussein Jabbari <Unknown>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-01-27 18:56+0000\n"
+"X-Launchpad-Export-Date: 2009-02-02 18:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
 msgid "Enable tray icon"
-msgstr ""
+msgstr "فعال سازی آیکون tray"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:42
 msgid "When I click the red close button:"
-msgstr ""
+msgstr "زمانی که من بر روی دکمه قرمز خروج کلیک می کنم:"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:45
 msgid "Close to tray so that downloads can continue."
@@ -33,11 +33,11 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
 msgid "Quit Miro completely."
-msgstr ""
+msgstr "خرج کامل از Miro"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:123
 msgid "Close to tray?"
-msgstr ""
+msgstr "خروج به tray؟"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:124
 msgid ""
@@ -65,7 +65,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:265
 msgid "Update available!"
-msgstr ""
+msgstr "به روز رسانی قابل دسترسی است !"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:266
 #, python-format
@@ -77,7 +77,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
-msgstr ""
+msgstr "آیا ادوبی فلش نصب شود؟"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
 #, python-format
@@ -88,7 +88,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
-msgstr ""
+msgstr "نصب ادوبی فلش"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
 msgid ""
@@ -109,7 +109,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:72
 msgid "Video renderer:"
-msgstr ""
+msgstr "اراده دهنده ویدئو:"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:77
 msgid "You must restart playback for visualization changes to take effect."
@@ -117,11 +117,11 @@ msgstr ""
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:80
 msgid "None"
-msgstr ""
+msgstr "هیچ‌کدام"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:86
 msgid "Use this for video when playing audio:"
-msgstr ""
+msgstr "از این برای ویدئو زمانی که صدا پخش می شود استفاده شود"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:119
 #: ../../portable/frontends/widgets/gtk/video.py:299
@@ -138,7 +138,7 @@ msgstr "اشتراک"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:211
 #: ../../portable/dialogs.py:106
 msgid "Keep"
-msgstr ""
+msgstr "نگه ‌داشتن"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:127
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
@@ -151,7 +151,7 @@ msgstr "حذف"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:131
 msgid "Add to Library"
-msgstr ""
+msgstr "اضافه کردن به کتابخانه"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
 msgid "Services"
@@ -171,7 +171,7 @@ msgstr "نمایش همه‌"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
 msgid "Preferences..."
-msgstr "ترجیحات..."
+msgstr "تنظیمات..."
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
@@ -183,7 +183,7 @@ msgstr "بستن پنجره‌"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
 msgid "Cut"
-msgstr "برش"
+msgstr "بریدن"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:156
 msgid "Copy"
@@ -231,7 +231,7 @@ msgstr "پنجره اصلی"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
 msgid "Bring All to Front"
-msgstr "جلو آوردن همه"
+msgstr "آوردن همه به جلو"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
 msgid "Window"
@@ -252,7 +252,7 @@ msgstr "دانلود ویدئوی '%s' تمام شد"
 
 #: ../../portable/theme.py:136
 msgid "Custom Channels"
-msgstr ""
+msgstr "کانال های سفارشی"
 
 #: ../../portable/theme.py:138
 #, python-format
@@ -262,19 +262,19 @@ msgstr ""
 
 #: ../../portable/theme.py:160
 msgid "Sample Channels"
-msgstr ""
+msgstr "کانال های نمونه"
 
 #: ../../portable/theme.py:182
 msgid "Example Playlist"
-msgstr ""
+msgstr "لیست پخش نمونه"
 
 #: ../../portable/theme.py:186
 msgid "Miro - Report a Problem"
-msgstr ""
+msgstr "Miro - گزارش خطا"
 
 #: ../../portable/searchengines.py:146
 msgid "Search All"
-msgstr ""
+msgstr "جستجوی همه"
 
 #: ../../portable/util.py:279 ../../portable/util.py:281
 #, python-format
@@ -362,7 +362,7 @@ msgstr ""
 
 #: ../../portable/startup.py:91
 msgid "Unknown Error"
-msgstr ""
+msgstr "خطای نامعلوم"
 
 #: ../../portable/startup.py:93
 #, python-format
@@ -373,7 +373,7 @@ msgstr ""
 
 #: ../../portable/startup.py:173
 msgid "Database too new"
-msgstr ""
+msgstr "هم اکنون دیتا بیس جدید است"
 
 #: ../../portable/startup.py:175
 #, python-format
@@ -512,7 +512,7 @@ msgstr ""
 #: ../../portable/dl_daemon/download.py:507
 #: ../../portable/frontends/widgets/style.py:227
 msgid "Error"
-msgstr ""
+msgstr "خطا"
 
 #: ../../portable/dl_daemon/download.py:596
 #, python-format
@@ -562,23 +562,23 @@ msgstr ""
 
 #: ../../portable/menubar.py:184
 msgid "_Open"
-msgstr ""
+msgstr "_باز کردن"
 
 #: ../../portable/menubar.py:185
 msgid "_Download Item"
-msgstr ""
+msgstr "_دانلود آیتم"
 
 #: ../../portable/menubar.py:186
 msgid "Check _Version"
-msgstr ""
+msgstr "کنترل _نسخه"
 
 #: ../../portable/menubar.py:188
 msgid "_Remove Item"
-msgstr ""
+msgstr "_حذف آیتم"
 
 #: ../../portable/menubar.py:189
 msgid "_Remove Items"
-msgstr ""
+msgstr "_حذف آیتم ها"
 
 #: ../../portable/menubar.py:190
 msgid "Re_name Item"
@@ -598,11 +598,11 @@ msgstr ""
 
 #: ../../portable/menubar.py:195
 msgid "_Options"
-msgstr ""
+msgstr "_تنظیمات"
 
 #: ../../portable/menubar.py:196
 msgid "_Quit"
-msgstr ""
+msgstr "_خروج"
 
 #: ../../portable/menubar.py:205
 msgid "Cu_t"
@@ -647,7 +647,7 @@ msgstr ""
 
 #: ../../portable/menubar.py:219
 msgid "_Remove Folder"
-msgstr ""
+msgstr "_حذف پوشه"
 
 #: ../../portable/menubar.py:221
 msgid "_Update Feed"
@@ -671,15 +671,15 @@ msgstr ""
 
 #: ../../portable/menubar.py:228
 msgid "_Share with a Friend"
-msgstr ""
+msgstr "_به اشتراک گذاری با یک دوست"
 
 #: ../../portable/menubar.py:229
 msgid "Copy URL"
-msgstr ""
+msgstr "کپی آدرس"
 
 #: ../../portable/menubar.py:233
 msgid "New _Playlist"
-msgstr ""
+msgstr "_لیست پخش جدید"
 
 #: ../../portable/menubar.py:234
 msgid "New Playlist Fol_der"
@@ -691,43 +691,43 @@ msgstr ""
 
 #: ../../portable/menubar.py:237
 msgid "_Remove Playlist"
-msgstr ""
+msgstr "_حذف لیست پخش"
 
 #: ../../portable/menubar.py:238
 msgid "_Remove Playlists"
-msgstr ""
+msgstr "_حذف لیستهای پخش"
 
 #: ../../portable/menubar.py:239
 msgid "_Remove Playlist Folders"
-msgstr ""
+msgstr "_حذف پوشه های لیست پخش"
 
 #: ../../portable/menubar.py:240
 msgid "_Remove Playlist Folder"
-msgstr ""
+msgstr "_حذف پوشه لیست پخش"
 
 #: ../../portable/menubar.py:251 ../../portable/menubar.py:252
 msgid "_Play"
-msgstr ""
+msgstr "_پخش"
 
 #: ../../portable/menubar.py:253
 msgid "_Pause"
-msgstr ""
+msgstr "_مکث"
 
 #: ../../portable/menubar.py:254
 msgid "_Stop"
-msgstr ""
+msgstr "_توقف"
 
 #: ../../portable/menubar.py:256
 msgid "_Next Video"
-msgstr ""
+msgstr "_ویدئو بعدی"
 
 #: ../../portable/menubar.py:257
 msgid "_Previous Video"
-msgstr ""
+msgstr "_ویدئو قبلی"
 
 #: ../../portable/menubar.py:259
 msgid "Skip _Forward"
-msgstr ""
+msgstr "پرش به _جلو"
 
 #: ../../portable/menubar.py:260
 msgid "Skip _Back"
@@ -735,15 +735,15 @@ msgstr ""
 
 #: ../../portable/menubar.py:262
 msgid "Volume _Up"
-msgstr ""
+msgstr "_زیاد کردن بلندی صدا"
 
 #: ../../portable/menubar.py:263
 msgid "Volume _Down"
-msgstr ""
+msgstr "_کم کردن بلندی صدا"
 
 #: ../../portable/menubar.py:265
 msgid "_Fullscreen"
-msgstr ""
+msgstr "_تمام صفحه"
 
 #: ../../portable/menubar.py:266
 msgid "_Toggle Detached/Attached"
@@ -755,11 +755,11 @@ msgstr ""
 
 #: ../../portable/menubar.py:271
 msgid "_Donate"
-msgstr ""
+msgstr "_کمک نقدی"
 
 #: ../../portable/menubar.py:272 ../../portable/menubar.py:293
 msgid "_Help"
-msgstr ""
+msgstr "_راهنما"
 
 #: ../../portable/menubar.py:274
 #: ../../portable/frontends/widgets/diagnostics.py:119
@@ -768,11 +768,11 @@ msgstr ""
 
 #: ../../portable/menubar.py:275
 msgid "Report a _Bug"
-msgstr ""
+msgstr "گزارش یک _خطا"
 
 #: ../../portable/menubar.py:276
 msgid "_Translate"
-msgstr ""
+msgstr "_ترجمه"
 
 #: ../../portable/menubar.py:277
 msgid "_Planet Miro"
@@ -780,19 +780,19 @@ msgstr ""
 
 #: ../../portable/menubar.py:282
 msgid "_Video"
-msgstr ""
+msgstr "_ویدئو"
 
 #: ../../portable/menubar.py:284
 msgid "_File"
-msgstr ""
+msgstr "_فایل"
 
 #: ../../portable/menubar.py:290
 msgid "_Sidebar"
-msgstr ""
+msgstr "نوار _کناری"
 
 #: ../../portable/menubar.py:291
 msgid "_Playlists"
-msgstr ""
+msgstr "_لیست پخش"
 
 #: ../../portable/menubar.py:292
 msgid "P_layback"
@@ -801,7 +801,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/crashdialog.py:46
 #: ../../portable/httpclient.py:158
 msgid "Internal Error"
-msgstr ""
+msgstr "خطای داخلی"
 
 #: ../../portable/frontends/widgets/crashdialog.py:52
 msgid ""
@@ -857,11 +857,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
-msgstr ""
+msgstr "دیده شده در یک روز قبل"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr ""
+msgstr "دیده شده در سه روز قبل"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
