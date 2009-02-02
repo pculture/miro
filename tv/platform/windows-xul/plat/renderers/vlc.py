@@ -187,6 +187,14 @@ class VLCRenderer:
                 self.exc.ref())
         self.exc.check()
 
+        widget.add_events(gtk.gdk.EXPOSURE_MASK)
+        widget.connect('expose-event', self._on_expose)
+
+    def _on_expose(self, widget, event):
+        gc = widget.style.black_gc
+        widget.persistent_window.draw_rectangle(gc, True, event.area.x,
+                event.area.y, event.area.width, event.area.height)
+
     def select_file(self, filename, callback, errback):
         """starts playing the specified file"""
 
