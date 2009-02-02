@@ -69,10 +69,14 @@ class FeedController(itemlistcontroller.ItemListController):
         self._make_item_views()
 
         add_icon_box = not self.is_folder and not feed_info.thumbnail.startswith(resources.root())
-        self.titlebar = itemlistwidgets.ChannelTitlebar(feed_info.name, icon,
-                add_icon_box=add_icon_box)
+        if feed_info.is_directory_feed:
+            self.titlebar = itemlistwidgets.ItemListTitlebar(feed_info.name, icon,
+                    add_icon_box=add_icon_box)
+        else:
+            self.titlebar = itemlistwidgets.ChannelTitlebar(feed_info.name, icon,
+                    add_icon_box=add_icon_box)
+            self.titlebar.connect('save-search', self._on_save_search)
         self.titlebar.connect('search-changed', self._on_search_changed)
-        self.titlebar.connect('save-search', self._on_save_search)
         self.widget.titlebar_vbox.pack_start(self.titlebar)
         if not self.is_folder:
             sep = separator.HSeparator((0.85, 0.85, 0.85), (0.95, 0.95, 0.95))
