@@ -50,8 +50,9 @@ from miro.plat import resources
 class FeedController(itemlistcontroller.ItemListController):
     """Controller object for feeds."""
 
-    def __init__(self, id, is_folder):
+    def __init__(self, id, is_folder, is_directory_feed):
         self.is_folder = is_folder
+        self.is_directory_feed = is_directory_feed
         self._show_more_count = 0
         itemlistcontroller.ItemListController.__init__(self, 'feed', id)
 
@@ -133,7 +134,17 @@ class FeedController(itemlistcontroller.ItemListController):
 
     def _make_toolbar(self, feed_info):
         toolbar = itemlistwidgets.FeedToolbar()
-        toolbar.set_autodownload_mode(feed_info.autodownload_mode)
+        if self.is_directory_feed:
+            toolbar.autodownload_label.hide()
+            toolbar.autodownload_menu.hide()
+            toolbar.share_button.hide()
+            toolbar.settings_button.hide()
+        else:
+            toolbar.autodownload_label.show()
+            toolbar.autodownload_menu.show()
+            toolbar.share_button.show()
+            toolbar.settings_button.show()
+            toolbar.set_autodownload_mode(feed_info.autodownload_mode)
         toolbar.connect('show-settings', self._on_show_settings)
         toolbar.connect('remove-feed', self._on_remove_feed)
         toolbar.connect('share', self._on_share)

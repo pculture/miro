@@ -234,6 +234,9 @@ class HideableWidget(widgetset.VBox):
         self._child = child
         self.shown = False
 
+    def child(self):
+        return self._child
+
     def show(self):
         if not self.shown:
             self.pack_start(self._child)

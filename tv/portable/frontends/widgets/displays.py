@@ -277,7 +277,7 @@ class FeedDisplay(ItemListDisplay):
 
     def make_controller(self, tab):
         self.feed_id = tab.id
-        return feedcontroller.FeedController(tab.id, tab.is_folder)
+        return feedcontroller.FeedController(tab.id, tab.is_folder, tab.is_directory_feed)
 
 class AudioFeedDisplay(FeedDisplay):
     TAB_TYPE = 'audio-feed'

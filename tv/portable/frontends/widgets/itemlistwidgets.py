@@ -597,6 +597,7 @@ class FeedToolbar(widgetset.Background):
     """Toolbar that appears below the title in a feed.
 
     signals:
+       remove-feed (widget) -- The "remove feed" button was pressed
        show-settings (widget) -- The show settings button was pressed
        share (widget) -- The "share" button was pressed
        auto-download-changed (widget, value) -- The auto-download setting was
@@ -614,42 +615,47 @@ class FeedToolbar(widgetset.Background):
         label = widgetset.Label(_('Auto Download'))
         label.set_size(widgetconst.SIZE_SMALL)
         label.set_color(style.TOOLBAR_GRAY)
+        self.autodownload_label = widgetutil.HideableWidget(label)
 
         self.autodownload_options = (("all", _("All")), ("new", _("New")), ("off", _("Off")))
 
-        self.autdownload_menu = widgetset.OptionMenu([o[1] for o in self.autodownload_options])
-        self.autdownload_menu.set_size(widgetconst.SIZE_SMALL)
-        self.autdownload_menu.connect('changed', self._on_autodownload_changed)
+        autodownload_menu = widgetset.OptionMenu([o[1] for o in self.autodownload_options])
+        autodownload_menu.set_size(widgetconst.SIZE_SMALL)
+        autodownload_menu.connect('changed', self._on_autodownload_changed)
+        self.autodownload_menu = widgetutil.HideableWidget(autodownload_menu)
 
         share_button = widgetset.Button(_("Share feed"), style='smooth')
         share_button.set_size(widgetconst.SIZE_SMALL)
         share_button.set_color(style.TOOLBAR_GRAY)
         share_button.connect('clicked', self._on_share_clicked)
+        self.share_button = widgetutil.HideableWidget(share_button)
 
         settings_button = widgetset.Button(_("Settings"), style='smooth')
         settings_button.set_size(widgetconst.SIZE_SMALL)
         settings_button.set_color(style.TOOLBAR_GRAY)
         settings_button.connect('clicked', self._on_settings_clicked)
+        self.settings_button = widgetutil.HideableWidget(settings_button)
 
         remove_button = widgetset.Button(_("Remove feed"), style='smooth')
         remove_button.set_size(widgetconst.SIZE_SMALL)
         remove_button.set_color(style.TOOLBAR_GRAY)
         remove_button.connect('clicked', self._on_remove_clicked)
+        self.remove_button = remove_button
 
-        hbox.pack_start(widgetutil.align_middle(label, right_pad=2, left_pad=6))
-        hbox.pack_start(widgetutil.align_middle(self.autdownload_menu))
-        hbox.pack_end(widgetutil.align_middle(remove_button))
-        hbox.pack_end(widgetutil.align_middle(settings_button))
-        hbox.pack_end(widgetutil.align_middle(share_button))
+        hbox.pack_start(widgetutil.align_middle(self.autodownload_label, right_pad=2, left_pad=6))
+        hbox.pack_start(widgetutil.align_middle(self.autodownload_menu))
+        hbox.pack_end(widgetutil.align_middle(self.remove_button))
+        hbox.pack_end(widgetutil.align_middle(self.settings_button))
+        hbox.pack_end(widgetutil.align_middle(self.share_button))
         self.add(widgetutil.pad(hbox, top=4, bottom=4, left=10, right=14))
 
     def set_autodownload_mode(self, autodownload_mode):
         if autodownload_mode == 'all':
-            self.autdownload_menu.set_selected(0)
+            self.autodownload_menu.child().set_selected(0)
         elif autodownload_mode == 'new':
-            self.autdownload_menu.set_selected(1)
+            self.autodownload_menu.child().set_selected(1)
         elif autodownload_mode == 'off':
-            self.autdownload_menu.set_selected(2)
+            self.autodownload_menu.child().set_selected(2)
 
     def draw(self, context, layout):
         if not context.style.use_custom_titlebar_background:
