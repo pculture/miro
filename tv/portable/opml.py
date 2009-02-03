@@ -27,6 +27,7 @@
 # statement from all source files in the program, then also delete it here.
 
 import os
+import logging
 
 from xml.dom import minidom
 from xml.sax import saxutils
