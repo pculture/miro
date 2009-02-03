@@ -63,20 +63,17 @@ class FeedUpdateQueue(object):
         self.run_update_queue()
 
     def update_finished(self, feed):
-        if self.callback_handles:
-            for callback_handle in self.callback_handles.pop(feed.id):
-                feed.disconnect(callback_handle)
-        if feed in self.currently_updating:
-            self.currently_updating.remove(feed)
+        for callback_handle in self.callback_handles.pop(feed.id):
+            feed.disconnect(callback_handle)
+        self.currently_updating.remove(feed)
         self.run_update_queue()
-
-    def on_feed_removed(self, feed, id):
-        self.update_finished(feed)
 
     def run_update_queue(self):
         while (len(self.update_queue) > 0 and 
                 len(self.currently_updating) < MAX_UPDATES):
             feed, update_callback = self.update_queue.pop()
+            if feed in self.currently_updating:
+                continue
             handle = feed.connect('update-finished', self.update_finished)
             handle2 = feed.connect('removed', self.update_finished)
             self.callback_handles[feed.id] = (handle, handle2)
