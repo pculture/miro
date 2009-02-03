@@ -49,6 +49,9 @@ class FeedURLValidationTest(MiroTestCase):
         self.assertEqual(validate_feed_url(u"crap://foo.bar.com"), False)
         self.assertEqual(validate_feed_url(u"crap:///foo.bar.com"), False)
 
+        # FIXME - add tests for all the other kinds of urls that validate_feed_url
+        # handles.
+
 class FeedURLNormalizationTest(MiroTestCase):
     def test(self):
         self.assertEqual(normalize_feed_url(u"http://foo.bar.com"), u"http://foo.bar.com/")
@@ -66,6 +69,9 @@ class FeedURLNormalizationTest(MiroTestCase):
         self.assertEqual(normalize_feed_url(u"feed:///foo.bar.com"), u"http://foo.bar.com/")
 
         self.assertEqual(normalize_feed_url(u"foo.bar.com"), u"http://foo.bar.com/")
+
+        # FIXME - add tests for all the other kinds of feeds that normalize_feed_url
+        # handles.
 
 class FeedTestCase(EventLoopTest):
     def setUp(self):
