@@ -668,6 +668,7 @@ class TableView(Widget):
         else:
             self.tableview = MiroTableView.alloc().init()
             self.data_source = tablemodel.MiroTableViewDataSource.alloc()
+        self.view = self.tableview
         self.data_source.initWithModel_(self.model)
         self.tableview.setDataSource_(self.data_source)
         self.tableview.setVerticalMotionCanBeginDrag_(YES)
