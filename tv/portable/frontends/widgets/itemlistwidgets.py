@@ -481,28 +481,28 @@ class DownloadToolbar(widgetset.VBox):
 
         pause_button = widgetset.Button(_('Pause All'), style='smooth')
         pause_button.set_size(widgetconst.SIZE_SMALL)
-        pause_button.set_color(style.TOOLBAR_GRAY)
+        pause_button.set_color(widgetset.TOOLBAR_GRAY)
         pause_button.connect('clicked', self._on_pause_button_clicked)
         h.pack_start(widgetutil.align_right(pause_button, top_pad=5,
             bottom_pad=5), expand=True)
 
         resume_button = widgetset.Button(_('Resume All'), style='smooth')
         resume_button.set_size(widgetconst.SIZE_SMALL)
-        resume_button.set_color(style.TOOLBAR_GRAY)
+        resume_button.set_color(widgetset.TOOLBAR_GRAY)
         resume_button.connect('clicked', self._on_resume_button_clicked)
         h.pack_start(widgetutil.align_middle(resume_button, top_pad=5,
             bottom_pad=5))
 
         cancel_button = widgetset.Button(_('Cancel All'), style='smooth')
         cancel_button.set_size(widgetconst.SIZE_SMALL)
-        cancel_button.set_color(style.TOOLBAR_GRAY)
+        cancel_button.set_color(widgetset.TOOLBAR_GRAY)
         cancel_button.connect('clicked', self._on_cancel_button_clicked)
         h.pack_start(widgetutil.align_middle(cancel_button, top_pad=5,
             bottom_pad=5))
 
         settings_button = widgetset.Button(_('Download Settings'), style='smooth')
         settings_button.set_size(widgetconst.SIZE_SMALL)
-        settings_button.set_color(style.TOOLBAR_GRAY)
+        settings_button.set_color(widgetset.TOOLBAR_GRAY)
         settings_button.connect('clicked', self._on_settings_button_clicked)
         h.pack_start(widgetutil.align_middle(settings_button, top_pad=5,
             bottom_pad=5, right_pad=16))
@@ -614,7 +614,7 @@ class FeedToolbar(widgetset.Background):
 
         label = widgetset.Label(_('Auto Download'))
         label.set_size(widgetconst.SIZE_SMALL)
-        label.set_color(style.TOOLBAR_GRAY)
+        label.set_color(widgetset.TOOLBAR_GRAY)
         self.autodownload_label = widgetutil.HideableWidget(label)
 
         self.autodownload_options = (("all", _("All")), ("new", _("New")), ("off", _("Off")))
@@ -626,19 +626,19 @@ class FeedToolbar(widgetset.Background):
 
         share_button = widgetset.Button(_("Share feed"), style='smooth')
         share_button.set_size(widgetconst.SIZE_SMALL)
-        share_button.set_color(style.TOOLBAR_GRAY)
+        share_button.set_color(widgetset.TOOLBAR_GRAY)
         share_button.connect('clicked', self._on_share_clicked)
         self.share_button = widgetutil.HideableWidget(share_button)
 
         settings_button = widgetset.Button(_("Settings"), style='smooth')
         settings_button.set_size(widgetconst.SIZE_SMALL)
-        settings_button.set_color(style.TOOLBAR_GRAY)
+        settings_button.set_color(widgetset.TOOLBAR_GRAY)
         settings_button.connect('clicked', self._on_settings_clicked)
         self.settings_button = widgetutil.HideableWidget(settings_button)
 
         remove_button = widgetset.Button(_("Remove feed"), style='smooth')
         remove_button.set_size(widgetconst.SIZE_SMALL)
-        remove_button.set_color(style.TOOLBAR_GRAY)
+        remove_button.set_color(widgetset.TOOLBAR_GRAY)
         remove_button.connect('clicked', self._on_remove_clicked)
         self.remove_button = remove_button
 
