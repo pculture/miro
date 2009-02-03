@@ -281,7 +281,7 @@ class Application:
 
     def share_item(self, item):
         share_items = {"file_url": item.file_url,
-                "item_name": item.name}
+                       "item_name": item.name.encode('utf-8')}
         if item.feed_url:
             share_items["feed_url"] = item.feed_url
         query_string = "&".join(["%s=%s" % (key, urllib.quote(val)) for key, val in share_items.items()])
