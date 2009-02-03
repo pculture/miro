@@ -459,7 +459,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         # size and duration
         duration = displaytext.duration(self.data.duration)
-        size = displaytext.size(self.data.size)
+        size = displaytext.size_string(self.data.size)
 
         layout.set_font(0.75, family="Helvetica")
         self.set_info_right_color(layout)
@@ -546,7 +546,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         if dl_info.rate > 0:
             parts.append(displaytext.download_rate(dl_info.rate))
         if self.data.size > 0 and dl_info.rate > 0:
-            parts.append(displaytext.time(dl_info.eta))
+            parts.append(displaytext.time_string(dl_info.eta))
 
         return layout.textbox(' - '.join(parts))
 
@@ -615,13 +615,13 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             if self.data.leechers is not None:
                 details_rows.append(
                     (self.UPLOAD_RATE_TEXT, displaytext.download_rate(self.data.up_rate), None))
-            details_rows.append((self.UPLOAD_TOTAL_TEXT, displaytext.size(self.data.up_total), None))
+            details_rows.append((self.UPLOAD_TOTAL_TEXT, displaytext.size_string(self.data.up_total), None))
             details_rows.append((None, None, None))
 
             if self.data.leechers is not None:
                 details_rows.append(
                     (self.DOWN_RATE_TEXT, displaytext.download_rate(self.data.down_rate), None))
-            details_rows.append((self.DOWN_TOTAL_TEXT, displaytext.size(self.data.down_total), None))
+            details_rows.append((self.DOWN_TOTAL_TEXT, displaytext.size_string(self.data.down_total), None))
 
         if details_rows:
             details_box = self.create_pseudo_table(layout, details_rows)
@@ -1141,7 +1141,7 @@ class ETARenderer(ListViewRenderer):
         if self.info.state == 'downloading':
             eta = self.info.download_info.eta
             if eta > 0:
-                self.text = displaytext.time(self.info.download_info.eta)
+                self.text = displaytext.time_string(self.info.download_info.eta)
 
 class DownloadRateRenderer(ListViewRenderer):
     right_aligned = True
@@ -1155,7 +1155,7 @@ class SizeRenderer(ListViewRenderer):
     right_aligned = True
 
     def _setup_layout(self):
-        self.text = displaytext.size(self.info.size)
+        self.text = displaytext.size_string(self.info.size)
 
 class StateCircleRenderer(widgetset.CustomCellRenderer):
     min_width = 25

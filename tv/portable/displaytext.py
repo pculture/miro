@@ -50,20 +50,20 @@ def download_rate(rate):
     else:
         return ""
 
-def time(secs):
+def time_string(secs):
     if secs >= (60 * 60 * 24):
-        t_dy = secs / (60 * 60 * 24)
+        t_dy = secs * 1.0 / (60 * 60 * 24)
         return ngettext('%(num).1f day', '%(num).1f days', t_dy, {"num": t_dy})
     if secs >= (60 * 60):
-        t_hr = secs / (60 * 60)
+        t_hr = secs * 1.0 / (60 * 60)
         return ngettext('%(num).1f hr', '%(num).1f hrs', t_hr, {"num": t_hr})
     if secs >= 60:
-        t_min = secs / 60
+        t_min = secs * 1.0 / 60
         return ngettext('%(num).1f min', '%(num).1f mins', t_min, {"num": t_min})
 
     return ngettext('%(num)d sec', '%(num)d secs', secs, {"num": secs})
 
-def size(bytes):
+def size_string(bytes):
     # when switching from the enclosure reported size to the downloader
     # reported size, it takes a while to get the new size and the downloader
     # returns -1.  the user sees the size go to -1B which is weird....
@@ -135,6 +135,6 @@ def release_date_slashes(release_date):
 
 def duration(seconds):
     if seconds > 0:
-        return time(seconds)
+        return time_string(seconds)
     else:
         return ''

@@ -547,18 +547,18 @@ class DownloadToolbar(widgetset.VBox):
                 available = available * -1.0
                 text = _(
                     "%(available)s below downloads space limit (%(amount)s free on disk)",
-                    {"amount": displaytext.size(amount),
-                     "available": displaytext.size(available)}
+                    {"amount": displaytext.size_string(amount),
+                     "available": displaytext.size_string(available)}
                 )
             else:
                 text = _(
                     "%(available)s free for downloads (%(amount)s free on disk)",
-                    {"amount": displaytext.size(amount),
-                     "available": displaytext.size(available)}
+                    {"amount": displaytext.size_string(amount),
+                     "available": displaytext.size_string(available)}
                 )
         else:
             text = _("%(amount)s free on disk",
-                     {"amount": displaytext.size(amount)})
+                     {"amount": displaytext.size_string(amount)})
         self._free_disk_label.set_text(text)
 
     def _on_pause_button_clicked(self, widget):
