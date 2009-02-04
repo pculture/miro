@@ -799,10 +799,17 @@ class Expander(Bin):
             self.BUTTON_PAD_TOP))
         self.content_view = self.view.content_view
 
+    def remove_viewport(self):
+        Bin.remove_viewport(self)
+        if self.label is not None:
+            self.label.remove_viewport()
+
     def set_spacing(self, spacing):
         self.spacing = spacing
 
     def set_label(self, widget):
+        if self.label is not None:
+            self.label.remove_viewport()
         self.label = widget
         self.children_changed()
 
