@@ -32,8 +32,12 @@
 ## Paths and configuration                                                   ##
 ###############################################################################
 
-# The xine hack helps some systems.
-# FIXME - document
+# The xine hack helps some systems.  See bug #7132.
+#
+# As of Miro 2.0, there is a command-line option to enable/disable the hack.
+# It's probably best to leave this as True allowing the hack to be compiled
+# in, and tell users to enable/disable at the command line with the xine-xvhack
+# setting.
 USE_XINE_HACK = True
 
 
@@ -288,7 +292,7 @@ def parse_pkg_config(command, components, options_dict = None):
     return options_dict
 
 def compile_xine_extractor():
-    rv = os.system("gcc %s -o %s `pkg-config --libs --cflags gdk-pixbuf-2.0 glib-2.0 libxine`" % 
+    rv = os.system("gcc %s -o %s `pkg-config --libs --cflags gdk-pixbuf-2.0 glib-2.0 libxine`" %
                    (os.path.join(platform_dir, "xine/xine_extractor.c"), os.path.join(platform_dir, "xine/xine_extractor")))
     if rv != 0:
         raise RuntimeError("xine_extractor compilation failed.  Possibly missing libxine, gdk-pixbuf-2.0, or glib-2.0.")
