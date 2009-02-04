@@ -791,7 +791,7 @@ class TableView(Widget):
         self._add_views()
         self.tableview.recalcTrackingRects()
 
-    def viewport_removed(self):
+    def remove_viewport(self):
         self._remove_views()
         wrappermap.remove(self.tableview)
 
