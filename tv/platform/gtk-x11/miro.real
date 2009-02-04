@@ -37,6 +37,16 @@ if xlibhelper.XInitThreads() == 0:
 
 import os.path
 import sys
+
+# This fixes some/all problems with Python 2.6 support but should be
+# re-addressed when we have a system with Python 2.6 to test with.
+# (bug 11262)
+if sys.version_info[0] == 2 and sys.version_info[1] > 5:
+    import miro.feedparser
+    import miro.storedatabase
+    sys.modules['feedparser'] = miro.feedparser
+    sys.modules['storedatabase'] = miro.storedatabase
+
 import optparse
 
 import pygtk
