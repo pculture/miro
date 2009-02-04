@@ -62,16 +62,18 @@ static PyObject* shading_draw_axial(PyObject* self, PyObject* args)
     PyObject* gradient = NULL;
     PyArg_ParseTuple(args, "O", &gradient);
 
-    PyObject* start_color = PySequence_Fast(PyObject_GetAttrString(gradient, "start_color"), "");
-    PyObject* end_color = PySequence_Fast(PyObject_GetAttrString(gradient, "end_color"), "");
+    PyObject* start_color = PyObject_GetAttrString(gradient, "start_color");
+    PyObject* end_color = PyObject_GetAttrString(gradient, "end_color");
+    PyObject* start_color_seq = PySequence_Fast(start_color, "start_color is not a sequence");
+    PyObject* end_color_seq = PySequence_Fast(end_color, "end_color is not a sequence");
 
     interpolator_info info;
-    info.start_red   = PyFloat_AsDouble(PySequence_Fast_GET_ITEM(start_color, 0));
-    info.start_green = PyFloat_AsDouble(PySequence_Fast_GET_ITEM(start_color, 1));
-    info.start_blue  = PyFloat_AsDouble(PySequence_Fast_GET_ITEM(start_color, 2));
-    info.diff_red    = PyFloat_AsDouble(PySequence_Fast_GET_ITEM(end_color, 0)) - info.start_red;
-    info.diff_green  = PyFloat_AsDouble(PySequence_Fast_GET_ITEM(end_color, 1)) - info.start_green;
-    info.diff_blue   = PyFloat_AsDouble(PySequence_Fast_GET_ITEM(end_color, 2)) - info.start_blue;
+    info.start_red   = PyFloat_AsDouble(PySequence_Fast_GET_ITEM(start_color_seq, 0));
+    info.start_green = PyFloat_AsDouble(PySequence_Fast_GET_ITEM(start_color_seq, 1));
+    info.start_blue  = PyFloat_AsDouble(PySequence_Fast_GET_ITEM(start_color_seq, 2));
+    info.diff_red    = PyFloat_AsDouble(PySequence_Fast_GET_ITEM(end_color_seq, 0)) - info.start_red;
+    info.diff_green  = PyFloat_AsDouble(PySequence_Fast_GET_ITEM(end_color_seq, 1)) - info.start_green;
+    info.diff_blue   = PyFloat_AsDouble(PySequence_Fast_GET_ITEM(end_color_seq, 2)) - info.start_blue;
 
     CGFunctionRef shading_function = CGFunctionCreate(&info,
                                                       1,
@@ -80,10 +82,15 @@ static PyObject* shading_draw_axial(PyObject* self, PyObject* args)
                                                       output_value_ranges,
                                                       &callbacks);
 
-    float x1 = PyFloat_AsDouble(PyObject_GetAttrString(gradient, "x1"));
-    float y1 = PyFloat_AsDouble(PyObject_GetAttrString(gradient, "y1"));
-    float x2 = PyFloat_AsDouble(PyObject_GetAttrString(gradient, "x2"));
-    float y2 = PyFloat_AsDouble(PyObject_GetAttrString(gradient, "y2"));
+    PyObject* x1_obj = PyObject_GetAttrString(gradient, "x1");
+    PyObject* y1_obj = PyObject_GetAttrString(gradient, "y1");
+    PyObject* x2_obj = PyObject_GetAttrString(gradient, "x2");
+    PyObject* y2_obj = PyObject_GetAttrString(gradient, "y2");
+
+    float x1 = PyFloat_AsDouble(x1_obj);
+    float y1 = PyFloat_AsDouble(y1_obj);
+    float x2 = PyFloat_AsDouble(x2_obj);
+    float y2 = PyFloat_AsDouble(y2_obj);
 
     CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
     CGShadingRef shading = CGShadingCreateAxial(colorspace,
@@ -99,6 +106,17 @@ static PyObject* shading_draw_axial(PyObject* self, PyObject* args)
     CGShadingRelease(shading);
     CGColorSpaceRelease(colorspace);
     CGFunctionRelease(shading_function);
+
+    Py_DECREF(start_color);
+    Py_DECREF(end_color);
+    Py_DECREF(start_color_seq);
+    Py_DECREF(end_color_seq);
+    Py_DECREF(x1_obj);
+    Py_DECREF(y1_obj);
+    Py_DECREF(x2_obj);
+    Py_DECREF(y2_obj);
+
+    Py_INCREF(Py_None);
 
     return Py_None;
 }

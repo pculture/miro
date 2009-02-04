@@ -89,12 +89,12 @@ class DrawingContext:
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self, view, drawing_area, rect):
         self.view = view
-        self.path = NSBezierPath.alloc().init()
+        self.path = NSBezierPath.bezierPath()
         self.color = NSColor.blackColor()
         self.width = drawing_area.size.width
         self.height = drawing_area.size.height
         if drawing_area.origin != NSZeroPoint:
-            xform = NSAffineTransform.alloc().init()
+            xform = NSAffineTransform.transform()
             xform.translateXBy_yBy_(drawing_area.origin.x, 
                     drawing_area.origin.y)
             xform.concat()
