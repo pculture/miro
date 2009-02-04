@@ -36,11 +36,7 @@ shouldSyncX = False
 frontend = 'html'
 themeName = None
 
-useXineHack = True
-defaultXineDriver = "xv"
-
 from miro.prefs import Pref
-
 
 USE_RENDERER = Pref(key="useRenderer",
                     default=u"gstreamer",
