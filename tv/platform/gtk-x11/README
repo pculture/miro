@@ -48,6 +48,14 @@ and other files::
 .. Note:: Setting ``HOME`` doesn't work in KDE--it causes other problems.
 
 
+Wiping out preferences
+======================
+
+Miro stores preferences in gconf.  To wipe out all preferences, do::
+
+     gconftool-2 --recursive-unset /apps/miro
+
+
 Unittest instructions
 =====================
 
