@@ -91,6 +91,3 @@ class NotificationForwarder(NSObject):
         except:
             logging.warn("Callback for %s raised exception:%s\n", name,
                     traceback.format_exc())
-
-    def __del__(self):
-        self.disconnect()

@@ -427,8 +427,6 @@ class Splitter(Container):
         self.view.addSubview_(self.left_view)
         self.view.addSubview_(self.right_view)
         self.notifications = NotificationForwarder.create(self.view)
-        self.notifications.connect(self.on_views_resized,
-                'NSSplitViewDidResizeSubviewsNotification')
 
     def get_children(self):
         children = []
@@ -508,7 +506,12 @@ class Splitter(Container):
         old_right = self.right
         self.right = None
         self.child_removed(old_right)
-        
+
+    def viewport_created(self):
+        Container.viewport_created(self)
+        self.notifications.connect(self.on_views_resized,
+                'NSSplitViewDidResizeSubviewsNotification')
+
     def remove_viewport(self):
         Container.remove_viewport(self)
         self.notifications.disconnect()
@@ -674,10 +677,6 @@ class Scroller(Bin):
         self.clip_notifications = NotificationForwarder.create(clip_view)
         clip_view.setPostsFrameChangedNotifications_(YES)
         clip_view.setPostsBoundsChangedNotifications_(YES)
-        self.clip_notifications.connect(self._on_clip_view_frame_change,
-                'NSViewFrameDidChangeNotification')
-        self.clip_notifications.connect(self._on_clip_view_bounds_change,
-                'NSViewBoundsDidChangeNotification')
 
     def set_has_borders(self, has_border):
         self.view.setBorderType_(NSBezelBorder)
@@ -689,6 +688,13 @@ class Scroller(Bin):
     def remove(self):
         child.parent_is_scroller = False
         Bin.remove(self)
+
+    def viewport_created(self):
+        Bin.viewport_created(self)
+        self.clip_notifications.connect(self._on_clip_view_frame_change,
+                'NSViewFrameDidChangeNotification')
+        self.clip_notifications.connect(self._on_clip_view_bounds_change,
+                'NSViewBoundsDidChangeNotification')
 
     def remove_viewport(self):
         Bin.remove_viewport(self)

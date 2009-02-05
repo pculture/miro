@@ -682,20 +682,6 @@ class TableView(Widget):
             NSMakeRect(0, 0, 0, HEADER_HEIGHT))
         self.set_show_headers(True)
         self.notifications = NotificationForwarder.create(self.tableview)
-        if self.is_tree():
-            self.notifications.connect(self.on_expanded,
-                'NSOutlineViewItemDidExpandNotification')
-            self.notifications.connect(self.on_collapsed,
-                'NSOutlineViewItemDidCollapseNotification')
-            self.notifications.connect(self.on_selection_change,
-                    'NSOutlineViewSelectionDidChangeNotification')
-            self.notifications.connect(self.on_column_resize,
-                    'NSOutlineViewColumnDidResizeNotification')
-        else:
-            self.notifications.connect(self.on_selection_change,
-                    'NSTableViewSelectionDidChangeNotification')
-            self.notifications.connect(self.on_column_resize,
-                    'NSTableViewColumnDidResizeNotification')
         self.model.connect_weak('row-changed', self.on_row_change)
         self.model.connect_weak('row-added', self.on_row_added)
         self.model.connect_weak('row-will-be-removed', self.on_row_removed)
@@ -789,11 +775,26 @@ class TableView(Widget):
         wrappermap.add(self.tableview, self)
         self._do_layout()
         self._add_views()
+        if self.is_tree():
+            self.notifications.connect(self.on_expanded,
+                'NSOutlineViewItemDidExpandNotification')
+            self.notifications.connect(self.on_collapsed,
+                'NSOutlineViewItemDidCollapseNotification')
+            self.notifications.connect(self.on_selection_change,
+                    'NSOutlineViewSelectionDidChangeNotification')
+            self.notifications.connect(self.on_column_resize,
+                    'NSOutlineViewColumnDidResizeNotification')
+        else:
+            self.notifications.connect(self.on_selection_change,
+                    'NSTableViewSelectionDidChangeNotification')
+            self.notifications.connect(self.on_column_resize,
+                    'NSTableViewColumnDidResizeNotification')
         self.tableview.recalcTrackingRects()
 
     def remove_viewport(self):
         self._remove_views()
         wrappermap.remove(self.tableview)
+        self.notifications.disconnect()
         self.viewport = None
 
     def viewport_scrolled(self):
