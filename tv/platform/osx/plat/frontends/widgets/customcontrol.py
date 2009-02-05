@@ -52,18 +52,19 @@ class DrawableButtonCell(NSButtonCell):
 
 class DrawableButton(NSButton):
     def init(self):
-        NSButton.init(self)
+        self = NSButton.init(self)
         self.layout_manager = LayoutManager()
         self.tracking_rect = None
         self.mouse_inside = False
         return self
 
-    def viewDidMoveToWindow(self):
-        if self.window() is None and self.tracking_rect is not None:
+    def remove_tracking_rect(self):
+        if self.tracking_rect is not None:
             self.removeTrackingRect_(self.tracking_rect)
             self.tracking_rect = None
-        else:
-            self.reset_tracking_rect()
+
+    def viewDidMoveToWindow(self):
+        self.reset_tracking_rect()
 
     def setFrame_(self, rect):
         NSButton.setFrame_(self, rect)
@@ -72,12 +73,12 @@ class DrawableButton(NSButton):
     def setBounds_(self, rect):
         NSButton.setBounds_(self, rect)
         self.reset_tracking_rect()
-    
+
     def reset_tracking_rect(self):
-        if self.tracking_rect is not None:
-            self.removeTrackingRect_(self.tracking_rect)
-        self.tracking_rect = self.addTrackingRect_owner_userData_assumeInside_(
-                self.bounds(), self, 0, NO)
+        self.remove_tracking_rect()
+        if self.window() is not None:
+            self.tracking_rect = self.addTrackingRect_owner_userData_assumeInside_(
+                    self.bounds(), self, 0, NO)
 
     def mouseEntered_(self, event):
         window = self.window()
@@ -221,6 +222,10 @@ class CustomButton(drawing.DrawingMixin, Widget):
     def disable(self):
         Widget.disable(self)
         self.view.setEnabled_(False)
+
+    def remove_viewport(self):
+        self.view.remove_tracking_rect()
+        Widget.remove_viewport(self)
 
 class ContinuousCustomButton(CustomButton):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
