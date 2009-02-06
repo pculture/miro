@@ -38,11 +38,12 @@ from objc import YES, NO, nil
 
 from miro import signals
 from miro.frontends.widgets import widgetconst
+from miro.plat import shading
 from miro.plat.frontends.widgets import osxmenus
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets import tablemodel
 from miro.plat.frontends.widgets.base import Widget, FlippedView
-from miro.plat.frontends.widgets.drawing import DrawingContext, DrawingStyle
+from miro.plat.frontends.widgets.drawing import DrawingContext, DrawingStyle, Gradient
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
 from miro.plat.frontends.widgets.layoutmanager import LayoutManager
 
@@ -151,10 +152,7 @@ class MiroTableCell(NSTextFieldCell):
                 font.leading())
 
     def highlightColorWithFrame_inView_(self, frame, view):
-        if wrappermap.wrapper(view).draws_selection:
-            return NSCell.highlightColorWithFrame_inView_(self, frame, view)
-        else:
-            return nil
+        return nil
 
     def setObjectValue_(self, value_dict):
         if isinstance(value_dict, dict):
@@ -168,10 +166,7 @@ class MiroTableImageCell(NSImageCell):
         return self.value_dict['image'].size().height
 
     def highlightColorWithFrame_inView_(self, frame, view):
-        if wrappermap.wrapper(view).draws_selection:
-            return NSImageCell.highlightColorWithFrame_inView_(self, frame, view)
-        else:
-            return nil
+        return nil
 
     def setObjectValue_(self, value_dict):
         NSImageCell.setObjectValue_(self, value_dict['image'])
@@ -187,10 +182,7 @@ class MiroCheckboxCell(NSButtonCell):
         return self.cellSize().height
 
     def highlightColorWithFrame_inView_(self, frame, view):
-        if wrappermap.wrapper(view).draws_selection:
-            return NSButtonCell.highlightColorWithFrame_inView_(self, frame, view)
-        else:
-            return nil
+        return nil
 
     def setObjectValue_(self, value_dict):
         if isinstance(value_dict, dict):
@@ -270,10 +262,7 @@ class CustomTableCell(NSCell):
         return self
 
     def highlightColorWithFrame_inView_(self, frame, view):
-        if wrappermap.wrapper(view).draws_selection:
-            return NSCell.highlightColorWithFrame_inView_(self, frame, view)
-        else:
-            return nil
+        return nil
 
     def calcHeight_(self, view):
         self.layout_manager.reset()
@@ -283,14 +272,7 @@ class CustomTableCell(NSCell):
         return cell_size[1]
 
     def make_drawing_style(self, frame, view):
-        if self.isHighlighted() and frame is not None:
-            highlight = NSCell.highlightColorWithFrame_inView_(self, frame, view)
-            text_color = None
-            if view.isDescendantOf_(view.window().firstResponder()):
-                text_color = NSColor.whiteColor()
-            return DrawingStyle(highlight, text_color)
-        else:
-            return DrawingStyle()
+        return DrawingStyle()
 
     def drawInteriorWithFrame_inView_(self, frame, view):
         NSGraphicsContext.currentContext().saveGraphicsState()
@@ -411,6 +393,12 @@ class VariableHeightOutlineViewDelegate(OutlineViewDelegate):
 # TableViewCommon, then copy it into MiroTableView and MiroOutlineView
 
 class TableViewCommon(object):
+    backgroundTop = (0.737, 0.824, 0.922)
+    backgroundBottom = (0.6, 0.733, 0.878)
+
+    backgroundTopInactive = (0.871, 0.871, 0.871)
+    backgroundBottomInactive = (0.804, 0.804, 0.804)
+
     def init(self):
         self = self.SuperClass.init(self)
         self.hotspot_tracker = None
@@ -439,7 +427,25 @@ class TableViewCommon(object):
 
     def highlightSelectionInClipRect_(self, rect):
         if wrappermap.wrapper(self).draws_selection:
-            self.SuperClass.highlightSelectionInClipRect_(self, rect)
+            context = NSGraphicsContext.currentContext()
+            focused = self.isDescendantOf_(self.window().firstResponder())
+            for row in get_all_indexes(self, self.selectedRowIndexes()):
+                self.drawBackgroundGradient_(context, focused, row)
+
+    def drawBackgroundGradient_(self, context, focused, row):
+        rect = self.rectOfRow_(row)
+        context.saveGraphicsState()
+        NSRectClip(rect)
+        gradient = Gradient(rect.origin.x, rect.origin.y,
+                rect.origin.x, rect.origin.y + rect.size.height)
+        if focused:
+            gradient.set_start_color(self.backgroundTop)
+            gradient.set_end_color(self.backgroundBottom)
+        else:
+            gradient.set_start_color(self.backgroundTopInactive)
+            gradient.set_end_color(self.backgroundBottomInactive)
+        shading.draw_axial(gradient)
+        context.restoreGraphicsState()
 
     def canDragRowsWithIndexes_atPoint_(self, indexes, point):
         return YES
