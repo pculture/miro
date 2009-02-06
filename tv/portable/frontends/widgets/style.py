@@ -116,10 +116,12 @@ class TabRenderer(widgetset.CustomCellRenderer):
 
     def render(self, context, layout, selected, hotspot, hover):
         layout.set_text_color(context.style.text_color)
-        if not hasattr(self.data, "bolded") or self.data.bolded:
-            layout.set_font(self.TITLE_FONT_SIZE, bold=self.BOLD_TITLE)
-        else:
-            layout.set_font(self.TITLE_FONT_SIZE)
+        bold = False
+        if selected:
+            bold = True
+        elif not hasattr(self.data, "bolded") or self.data.bolded:
+            bold=self.BOLD_TITLE
+        layout.set_font(self.TITLE_FONT_SIZE, bold=bold)
         titlebox = layout.textbox(self.data.name)
 
         hbox = cellpack.HBox(spacing=4)
