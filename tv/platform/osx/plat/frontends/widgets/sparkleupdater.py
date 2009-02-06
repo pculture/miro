@@ -1,5 +1,5 @@
 # Miro - an RSS based video player application
-# Copyright (C) 2005-2009 Participatory Culture Foundation
+# Copyright (C) 2005-2008 Participatory Culture Foundation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,11 +27,11 @@
 # statement from all source files in the program, then also delete it here.
 
 import objc
+import logging
 import Foundation
 
 from miro import prefs
 from miro import config
-from miro.plat.frontends.widgets.threads import on_ui_thread
 
 ###############################################################################
 
@@ -40,36 +40,36 @@ objc.loadBundle('Sparkle', globals(), bundle_path=bundlePath)
 
 ###############################################################################
 
-class MiroHost (SUHost):
-    
-    def setObject_forUserDefaultsKey_(self, obj, key):
-        descriptor = prefs.Pref(key=key, default='', platformSpecific=False)
-        config.set(descriptor, obj)
-        
-    def objectForUserDefaultsKey_(self, key):
-        descriptor = prefs.Pref(key=key, default='', platformSpecific=False)
-        return config.get(descriptor)
+SUSkippedVersionPref = prefs.Pref(key="SUSkippedVersion", default='', platformSpecific=False)
 
-###############################################################################
+class MiroUpdater (SUUpdater):
 
-class MiroUpdateDriver (SUUIBasedUpdateDriver):
+    def updateAlert_finishedWithChoice_(self, alert, choice):
+        alert.release()
 
-    def downloadDidFinish_(self, download):
-        # WARNING: this bypasses the superclass DSA signature based security measures!
-        # We might want to think about implementing them.
-        # See: <http://sparkle.andymatuschak.org/documentation/pmwiki.php/Documentation/BasicSetup>
-        self.extractUpdate()
+        if choice == 0:    # SUInstallUpdateChoice
+            config.set(SUSkippedVersionPref, '')
+            self.beginDownload()
+
+        elif choice == 1:  # SURemindMeLaterChoice
+            objc.setInstanceVariable(self, 'updateInProgress', objc.NO, True)
+            config.set(SUSkippedVersionPref, '')
+            self.scheduleCheckWithInterval_(30 * 60)
+
+        elif choice == 2:  # SUSkipThisVersionChoice
+            objc.setInstanceVariable(self, 'updateInProgress', objc.NO, True)
+            suItem = objc.getInstanceVariable(updater, 'updateItem')
+            config.set(SUSkippedVersionPref, suItem.fileVersion())
 
 ###############################################################################
 
 def setup():
-    """ Instantiate the unique global SUUpdater object."""
-    global suUpdater
-    suUpdater = SUUpdater.sharedUpdater()
-    suUpdater.setUpdateCheckInterval_(0)
+    """ Instantiate the unique global MiroUpdater object."""
+    global updater
+    updater = MiroUpdater.alloc().init()
+    updater.scheduleCheckWithInterval_(0)
 
 
-@on_ui_thread
 def handleNewUpdate(latest):
     """ A new update has been found, the Sparkle framework will now take control
     and perform user interaction and automatic update on our behalf. Since the
@@ -105,14 +105,18 @@ def handleNewUpdate(latest):
     dictionary['enclosure'] = suEnclosure
 
     suItem = SUAppcastItem.alloc().initWithDictionary_(dictionary)
-    suHost = MiroHost.alloc().initWithBundle_(None)
+    skipped_version = config.get(SUSkippedVersionPref)
+    
+    if suItem.fileVersion() == skipped_version:
+        logging.info("Skipping update by user request")
+    else:
+        global updater
+        objc.setInstanceVariable(updater, 'updateItem', suItem, True)
 
-    global suDriver
-    suDriver = MiroUpdateDriver.alloc().initWithUpdater_(None)
-    objc.setInstanceVariable(suDriver, 'host', suHost, True)
-    objc.setInstanceVariable(suDriver, 'updateItem', suItem, True)
-    if not suDriver.itemContainsSkippedVersion_(suItem):
-        suDriver.didFindValidUpdate()
+        alerter = SUUpdateAlert.alloc().initWithAppcastItem_(suItem)
+        alerter.setDelegate_(updater)
+        alerter.showWindow_(updater)
+        alerter.retain()
 
 
 def _transfer(source, skey, dest, dkey=None):
