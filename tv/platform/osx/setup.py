@@ -460,7 +460,7 @@ class MiroBuild (py2app):
         updatePListEntry(infoPlist, u'NSHumanReadableCopyright', self.config)
 
         infoPlist['CFBundleDevelopmentRegion'] = 'en'
-        infoPlist['CFBundleAllowMixedLocalizations'] = False
+        infoPlist['CFBundleAllowMixedLocalizations'] = True
         infoPlist['CFBundleLocalizations'] = self.get_localizations_list()
         
         self.plist = infoPlist
