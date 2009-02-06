@@ -76,6 +76,7 @@ class StaticTabList(object):
         self.type = 'static'
         self.view = TabListView(style.StaticTabRenderer())
         self.view.allow_multiple_select(False)
+        self.view.set_fixed_height(False)
         self.iter_map = {}
         self.doing_change = False 
         # doing_change will be True if we are changing a bunch of tabs.  This

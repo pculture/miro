@@ -107,10 +107,18 @@ class LowerBox(widgetset.Background):
 class TabRenderer(widgetset.CustomCellRenderer):
     MIN_WIDTH = 25
     MIN_HEIGHT = 24
+    MIN_HEIGHT_TALL = 28
     TITLE_FONT_SIZE = 0.82
     BOLD_TITLE = False
 
     def get_size(self, style, layout):
+        if hasattr(self.data, 'tall') and self.data.tall:
+            min_height = self.MIN_HEIGHT_TALL
+        else:
+            min_height = self.MIN_HEIGHT
+        return (self.MIN_WIDTH, max(min_height,
+            layout.font(self.TITLE_FONT_SIZE).line_height()))
+
         return (self.MIN_WIDTH, max(self.MIN_HEIGHT,
             layout.font(self.TITLE_FONT_SIZE).line_height()))
 
@@ -174,6 +182,7 @@ class TabRenderer(widgetset.CustomCellRenderer):
 
 class StaticTabRenderer(TabRenderer):
     BOLD_TITLE = True
+    MIN_HEIGHT_BIG = 28
 
     def pack_bubbles(self, hbox, layout):
         if self.data.unwatched > 0:

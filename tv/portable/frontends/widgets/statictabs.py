@@ -43,6 +43,7 @@ class ChannelGuideTab(StaticTab):
     id = 'guide'
     name = _('Miro Guide')
     icon_name = 'icon-guide'
+    tall = True
 
     def __init__(self):
         StaticTab.__init__(self)
@@ -85,11 +86,13 @@ class SearchTab(StaticTab):
     id = 'search'
     name = _('Video Search')
     icon_name = 'icon-search'
+    tall = True
 
 class LibraryTab(StaticTab):
     id = 'library'
     name = _('Library')
     icon_name = 'icon-library'
+    tall = True
 
 class IndividualDownloadsTab(StaticTab):
     id = 'individual_downloads'
