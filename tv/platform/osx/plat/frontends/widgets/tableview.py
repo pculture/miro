@@ -274,7 +274,6 @@ class CustomTableCell(NSCell):
     def make_drawing_style(self, frame, view):
         text_color = None
         if (self.isHighlighted() and frame is not None and
-                not view.gradientHighlight and
                 view.isDescendantOf_(view.window().firstResponder())):
             text_color = NSColor.whiteColor()
         return DrawingStyle(text_color=text_color)
@@ -398,12 +397,6 @@ class VariableHeightOutlineViewDelegate(OutlineViewDelegate):
 # TableViewCommon, then copy it into MiroTableView and MiroOutlineView
 
 class TableViewCommon(object):
-    backgroundTop = (0.737, 0.824, 0.922)
-    backgroundBottom = (0.6, 0.733, 0.878)
-
-    backgroundTopInactive = (0.871, 0.871, 0.871)
-    backgroundBottomInactive = (0.804, 0.804, 0.804)
-
     def init(self):
         self = self.SuperClass.init(self)
         self.hotspot_tracker = None
@@ -442,17 +435,29 @@ class TableViewCommon(object):
                 self.drawBackgroundGradient(context, focused, row)
 
     def drawBackgroundGradient(self, context, focused, row):
-        rect = self.rectOfRow_(row)
-        context.saveGraphicsState()
-        NSRectClip(rect)
-        gradient = Gradient(rect.origin.x, rect.origin.y,
-                rect.origin.x, rect.origin.y + rect.size.height)
         if focused:
-            gradient.set_start_color(self.backgroundTop)
-            gradient.set_end_color(self.backgroundBottom)
+            start_color = (0.627, 0.686, 0.812)
+            end_color = (0.439, 0.514, 0.671)
+            line_color = NSColor.colorWithDeviceRed_green_blue_alpha_(
+                    0.569, 0.502, 0.753, 1.0)
         else:
-            gradient.set_start_color(self.backgroundTopInactive)
-            gradient.set_end_color(self.backgroundBottomInactive)
+            start_color = (0.671, 0.694, 0.776)
+            end_color = (0.447, 0.471, 0.596)
+            line_color = NSColor.colorWithDeviceRed_green_blue_alpha_(
+                    0.514, 0.537, 0.655, 1.0)
+
+        rect = self.rectOfRow_(row)
+        top = NSMakeRect(rect.origin.x, rect.origin.y, rect.size.width, 1)
+        context.saveGraphicsState()
+        # draw the top line
+        line_color.set()
+        NSRectFill(top)
+        # draw the gradient
+        NSRectClip(rect)
+        gradient = Gradient(rect.origin.x, rect.origin.y + 1,
+                rect.origin.x, rect.origin.y + rect.size.height - 1)
+        gradient.set_start_color(start_color)
+        gradient.set_end_color(end_color)
         shading.draw_axial(gradient)
         context.restoreGraphicsState()
 
