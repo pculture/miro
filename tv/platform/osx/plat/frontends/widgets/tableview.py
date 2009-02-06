@@ -454,9 +454,11 @@ class TableViewCommon(object):
         line_color.set()
         NSRectFill(top)
         # draw the gradient
+        rect.origin.y += 1
+        rect.size.height -= 1
         NSRectClip(rect)
-        gradient = Gradient(rect.origin.x, rect.origin.y + 1,
-                rect.origin.x, rect.origin.y + rect.size.height - 1)
+        gradient = Gradient(rect.origin.x, rect.origin.y,
+                rect.origin.x, rect.origin.y + rect.size.height)
         gradient.set_start_color(start_color)
         gradient.set_end_color(end_color)
         shading.draw_axial(gradient)
