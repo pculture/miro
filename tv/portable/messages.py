@@ -792,6 +792,8 @@ class GuideInfo(object):
     allowed_urls -- URLs that should be also considered part of the guide
     default -- is this the default channel guide?
     favicon -- the favicon for the guide
+    faviconIsDefault -- true if the guide is using the default site icon and
+                        not a favicon from the web
     """
     def __init__(self, guide):
         self.name = guide.get_title()
@@ -800,8 +802,6 @@ class GuideInfo(object):
         self.default = guide.getDefault()
         self.allowed_urls = guide.allowedURLs
         self.favicon = guide.get_favicon_path()
-        # True if the Guide is using the default site icon and not a favicon
-        # from the web
         self.faviconIsDefault = not (guide.iconCache and
                                      guide.iconCache.get_filename())
 
@@ -992,15 +992,21 @@ class GuideList(FrontendMessage):
     """
 
     def __init__(self, guides):
-        self.default_guide = None
-        self.added_guides = []
-        for guide in guides:
-            if guide.default:
-                if self.default_guide is not None:
-                    raise ValueError("Multiple Default guides")
-                self.default_guide = guide
-            else:
-                self.added_guides.append(guide)
+        self.default_guide = [g for g in guides if g.default]
+        if len(self.default_guide) == 0:
+            # The problem here is that Miro persists guides and it's possible
+            # for it to have a default channel guide persisted, but when you
+            # set the channel guide via the DTV_CHANNELGUIDE_URL, then there's
+            # no default guide.  So we generate one here.  Bug #11027.
+            from miro import guide, config, prefs
+            cg = guide.ChannelGuide(config.get(prefs.CHANNEL_GUIDE_URL))
+            cg_info = GuideInfo(cg)
+            self.default_guide = [cg_info]
+            # raise ValueError("No default guide set.")
+        if len(self.default_guide) > 1:
+            raise ValueError("Multiple default guides!")
+        self.default_guide = self.default_guide[0]
+        self.added_guides = [g for g in guides if not g.default]
 
 class TabList(FrontendMessage):
     """Sends the frontend the current list of channels and playlists
