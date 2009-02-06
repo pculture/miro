@@ -458,6 +458,10 @@ class MiroBuild (py2app):
         updatePListEntry(infoPlist, u'CFBundleShortVersionString', self.config)
         updatePListEntry(infoPlist, u'CFBundleVersion', self.config)
         updatePListEntry(infoPlist, u'NSHumanReadableCopyright', self.config)
+
+        infoPlist['CFBundleDevelopmentRegion'] = 'en'
+        infoPlist['CFBundleAllowMixedLocalizations'] = False
+        infoPlist['CFBundleLocalizations'] = self.get_localizations_list()
         
         self.plist = infoPlist
 
@@ -502,6 +506,15 @@ class MiroBuild (py2app):
         print "Copying config file to application bundle"
         shutil.move(self.appConfigPath, os.path.join(self.prsrcRoot, 'app.config'))
 
+    def get_localizations_list(self):
+        localeDir = os.path.join(ROOT_DIR, 'resources', 'locale')
+        entries = os.listdir(localeDir)
+        localizations = list()
+        for e in entries:
+            if e.endswith('.po'):
+                localizations.append(os.path.splitext(e)[0])
+        return localizations
+
     def copy_localization_files(self):
         # Copy the gettext MO files in a 'locale' folder inside the
         # application bundle resources folder. Doing this manually at
@@ -510,7 +523,7 @@ class MiroBuild (py2app):
         # 'locale' folder.
         print "Copying gettext MO files to application bundle"
 
-        localeDir = os.path.join(ROOT_DIR, 'resources/locale')
+        localeDir = os.path.join(ROOT_DIR, 'resources', 'locale')
         lclDir = os.path.join(self.rsrcRoot, 'locale')
         if self.force_update and os.path.exists(lclDir):
             shutil.rmtree(lclDir, True);
