@@ -436,10 +436,10 @@ class TableViewCommon(object):
 
     def drawBackgroundGradient(self, context, focused, row):
         if focused:
-            start_color = (0.627, 0.686, 0.812)
-            end_color = (0.439, 0.514, 0.671)
+            start_color = (0.412, 0.584, 0.792)
+            end_color = (0.153, 0.345, 0.62)
             line_color = NSColor.colorWithDeviceRed_green_blue_alpha_(
-                    0.569, 0.502, 0.753, 1.0)
+                    0.322, 0.506, 0.733, 1.0)
         else:
             start_color = (0.671, 0.694, 0.776)
             end_color = (0.447, 0.471, 0.596)
