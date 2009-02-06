@@ -1017,6 +1017,7 @@ DoneTorrentRegistration:
 FunctionEnd
 
 Function MiroBarInstall
+  StrCmp "$THEME_NAME" "" 0 NoShowMiroBarDialog
   ReadRegStr $0 HKCU "Software\Clients\StartMenuInternet" ""
   StrCmp $0 "IEXPLORE.EXE" ShowMiroBarDialog
   StrCmp $0 "" 0 NoShowMiroBarDialog
