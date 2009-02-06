@@ -32,6 +32,7 @@ import Foundation
 
 from miro import prefs
 from miro import config
+from miro.plat.frontends.widgets.threads import on_ui_thread
 
 ###############################################################################
 
@@ -70,6 +71,7 @@ def setup():
     updater.scheduleCheckWithInterval_(0)
 
 
+@on_ui_thread
 def handleNewUpdate(latest):
     """ A new update has been found, the Sparkle framework will now take control
     and perform user interaction and automatic update on our behalf. Since the
@@ -113,10 +115,10 @@ def handleNewUpdate(latest):
         global updater
         objc.setInstanceVariable(updater, 'updateItem', suItem, True)
 
+        global alerter
         alerter = SUUpdateAlert.alloc().initWithAppcastItem_(suItem)
         alerter.setDelegate_(updater)
         alerter.showWindow_(updater)
-        alerter.retain()
 
 
 def _transfer(source, skey, dest, dkey=None):
