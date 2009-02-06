@@ -33,6 +33,7 @@ import struct
 import logging
 import urlparse
 import traceback
+import time
 
 from objc import YES, NO, nil, signature
 from AppKit import *
