@@ -163,6 +163,27 @@ def query_revision(fn):
     except Exception, e:
         print "Exception thrown when querying revision: %s" % e
 
+class AutoflushingStream:
+    """Converts a stream to an auto-flushing one.  It behaves in exactly the
+    same way, except all write() calls are automatically followed by a
+    flush().
+    """
+    def __init__(self, stream):
+        self.__dict__['stream'] = stream
+
+    def write(self, data):
+        if isinstance(data, unicode):
+            data = data.encode('ascii', 'backslashreplace')
+        self.stream.write(data)
+        self.stream.flush()
+
+    def __getattr__(self, name):
+        return getattr(self.stream, name)
+
+    def __setattr__(self, name, value):
+        return setattr(self.stream, name, value)
+
+
 class AutoLoggingStream(StringIO):
     """Create a stream that intercepts write calls and sends them to the log.
     """

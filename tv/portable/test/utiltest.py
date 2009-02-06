@@ -13,6 +13,32 @@ util.PREFERRED_TYPES = [
     'application/x-bittorrent', 'video/ogg', 'video/mp4',
     'video/quicktime', 'video/mpeg']
 
+class FakeStream:
+    """Fake streams are used for the AutoflushingStream test.  They don't
+    really do much, except check that write is always called with a string
+    object (unicode won't always work when writing to stdout).
+    """
+
+    def write(self, out):
+        if not isinstance(out, str):
+            raise ValueError("Got non-string object (%s) from "
+            "autoflushing stream" % str.__class__)
+    def flush(self):
+        pass
+
+class AutoflushingStreamTest(MiroTestCase):
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.stream = FakeStream()
+        self.afs = util.AutoflushingStream(self.stream)
+
+    def testBasicWrite(self):
+        self.afs.write("Hello World\n")
+        self.afs.write("")
+        self.afs.write("LotsofData" * 200)
+
+    def testUnicodeWrite(self):
+        self.afs.write(u'\xf8')
 
 class LoggingStreamTest(MiroTestCase):
     def setUp(self):
