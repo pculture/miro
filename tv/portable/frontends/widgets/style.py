@@ -106,7 +106,7 @@ class LowerBox(widgetset.Background):
 
 class TabRenderer(widgetset.CustomCellRenderer):
     MIN_WIDTH = 25
-    MIN_HEIGHT = 28
+    MIN_HEIGHT = 24
     TITLE_FONT_SIZE = 0.82
     BOLD_TITLE = False
 
