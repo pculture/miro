@@ -272,7 +272,12 @@ class CustomTableCell(NSCell):
         return cell_size[1]
 
     def make_drawing_style(self, frame, view):
-        return DrawingStyle()
+        text_color = None
+        if (self.isHighlighted() and frame is not None and
+                not view.gradientHighlight and
+                view.isDescendantOf_(view.window().firstResponder())):
+            text_color = NSColor.whiteColor()
+        return DrawingStyle(text_color=text_color)
 
     def drawInteriorWithFrame_inView_(self, frame, view):
         NSGraphicsContext.currentContext().saveGraphicsState()
@@ -407,6 +412,7 @@ class TableViewCommon(object):
         self.column_index_map = {}
         self.setFocusRingType_(NSFocusRingTypeNone)
         self.handled_last_mouse_down = False
+        self.gradientHighlight = False
         return self
 
     def addTableColumn_(self, column):
@@ -427,6 +433,9 @@ class TableViewCommon(object):
 
     def highlightSelectionInClipRect_(self, rect):
         if wrappermap.wrapper(self).draws_selection:
+            if not self.gradientHighlight:
+                return self.SuperClass.highlightSelectionInClipRect_(self,
+                        rect)
             context = NSGraphicsContext.currentContext()
             focused = self.isDescendantOf_(self.window().firstResponder())
             for row in get_all_indexes(self, self.selectedRowIndexes()):
@@ -946,6 +955,9 @@ class TableView(Widget):
         if vertical:
             mask |= NSTableViewSolidVerticalGridLineMask
         self.tableview.setGridStyleMask_(mask)
+
+    def set_gradient_highlight(self, setting):
+        self.tableview.gradientHighlight = setting
 
     def get_tooltip(self, iter, column):
         return None

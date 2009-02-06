@@ -65,6 +65,7 @@ class TabListView(widgetset.TableView):
         self.column.set_min_width(renderer.MIN_WIDTH)
         self.add_column(self.column)
         self.set_show_headers(False)
+        self.set_gradient_highlight(True)
         self.set_background_color(style.TAB_LIST_BACKGROUND_COLOR)
         self.set_fixed_height(True)
         self.set_auto_resizes(True)

@@ -540,6 +540,10 @@ class TableView(Widget):
             self.wrapped_widget_connect('query-tooltip', self.on_tooltip)
             self._last_tooltip_place = None
 
+    def set_gradient_highlight(self, gradient):
+        # This is just an OS X thing.
+        pass
+
     def on_tooltip(self, treeview, x, y, keyboard_mode, tooltip):
         # x, y are relative to the entire widget, but we want them to be
         # relative to our bin window.  The bin window doesn't include things
