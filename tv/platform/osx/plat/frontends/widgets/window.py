@@ -137,7 +137,6 @@ class Window(signals.SignalEmitter):
         self.nswindow.setContentView_(nil)
         wrappermap.remove(self.nswindow)
         alive_windows.discard(self)
-        self.nswindow.release()
         self.nswindow = None
 
     def place_child(self):
