@@ -789,10 +789,11 @@ class TableView(Widget):
         self.tableview.recalcTrackingRects()
 
     def remove_viewport(self):
-        self._remove_views()
-        wrappermap.remove(self.tableview)
-        self.notifications.disconnect()
-        self.viewport = None
+        if self.viewport is not None:
+            self._remove_views()
+            wrappermap.remove(self.tableview)
+            self.notifications.disconnect()
+            self.viewport = None
 
     def viewport_scrolled(self):
         self.tableview.recalcTrackingRects()
