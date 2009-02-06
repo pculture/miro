@@ -430,9 +430,9 @@ class TableViewCommon(object):
             context = NSGraphicsContext.currentContext()
             focused = self.isDescendantOf_(self.window().firstResponder())
             for row in get_all_indexes(self, self.selectedRowIndexes()):
-                self.drawBackgroundGradient_(context, focused, row)
+                self.drawBackgroundGradient(context, focused, row)
 
-    def drawBackgroundGradient_(self, context, focused, row):
+    def drawBackgroundGradient(self, context, focused, row):
         rect = self.rectOfRow_(row)
         context.saveGraphicsState()
         NSRectClip(rect)
