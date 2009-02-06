@@ -274,7 +274,8 @@ class CustomTableCell(NSCell):
     def make_drawing_style(self, frame, view):
         text_color = None
         if (self.isHighlighted() and frame is not None and
-                view.isDescendantOf_(view.window().firstResponder())):
+                (view.isDescendantOf_(view.window().firstResponder()) or
+                    view.gradientHighlight)):
             text_color = NSColor.whiteColor()
         return DrawingStyle(text_color=text_color)
 
