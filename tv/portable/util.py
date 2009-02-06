@@ -45,6 +45,7 @@ from miro import filetypes
 import threading
 import traceback
 import subprocess
+from StringIO import StringIO
 
 
 # Should we print out warning messages.  Turn off in the unit tests.
@@ -162,25 +163,23 @@ def query_revision(fn):
     except Exception, e:
         print "Exception thrown when querying revision: %s" % e
 
-class AutoflushingStream:
-    """Converts a stream to an auto-flushing one.  It behaves in exactly the
-    same way, except all write() calls are automatically followed by a
-    flush().
+class AutoLoggingStream(StringIO):
+    """Create a stream that intercepts write calls and sends them to the log.
     """
-    def __init__(self, stream):
-        self.__dict__['stream'] = stream
+    def __init__(self, logging_callback, prefix):
+        StringIO.__init__(self)
+        # We init from StringIO to give us a bunch of stream-releated methods,
+        # like closed() and read() automatically.
+        self.logging_callback = logging_callback
+        self.prefix = prefix
 
     def write(self, data):
         if isinstance(data, unicode):
             data = data.encode('ascii', 'backslashreplace')
-        self.stream.write(data)
-        self.stream.flush()
-
-    def __getattr__(self, name):
-        return getattr(self.stream, name)
-
-    def __setattr__(self, name, value):
-        return setattr(self.stream, name, value)
+        if data.endswith("\n"):
+            data = data[:-1]
+        if data:
+            self.logging_callback(self.prefix + data)
 
 def make_dummy_socket_pair():
     """Create a pair of sockets connected to each other on the local

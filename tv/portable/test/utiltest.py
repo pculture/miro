@@ -14,32 +14,44 @@ util.PREFERRED_TYPES = [
     'video/quicktime', 'video/mpeg']
 
 
-class FakeStream:
-    """Fake streams are used for the AutoflushingStream test.  They don't
-    really do much, except check that write is always called with a string
-    object (unicode won't always work when writing to stdout).
-    """
-
-    def write(self, out):
-        if not isinstance(out, str):
-            raise ValueError("Got non-string object (%s) from "
-            "autoflushing stream" % str.__class__)
-    def flush(self):
-        pass
-
-class AutoflushingStreamTest(MiroTestCase):
+class LoggingStreamTest(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
-        self.stream = FakeStream()
-        self.afs = util.AutoflushingStream(self.stream)
+        self.warnings = []
+        self.errors = []
+        self.stdout = util.AutoLoggingStream(self.warn_callback, '(from stdout) ')
+        self.stderr = util.AutoLoggingStream(self.err_callback, '(from stderr) ')
+
+    def _check_data(self, data):
+        """Check that write is always called with a string object (unicode
+        won't always work when writing to stdout)
+        """
+        if not isinstance(data, str):
+            raise ValueError("Got non-string object (%r) from LoggingStream" %
+                    data)
+
+    def warn_callback(self, data):
+        self._check_data(data)
+        self.warnings.append(data)
+
+    def err_callback(self, data):
+        self._check_data(data)
+        self.errors.append(data)
 
     def testBasicWrite(self):
-        self.afs.write("Hello World\n")
-        self.afs.write("")
-        self.afs.write("LotsofData" * 200)
+        self.stdout.write("Hello World\n")
+        self.stdout.write("")
+        self.stderr.write("LotsofData" * 200)
+        self.assertEquals(len(self.warnings), 1)
+        self.assertEquals(self.warnings[0], '(from stdout) Hello World')
+        self.assertEquals(len(self.errors), 1)
+        self.assertEquals(self.errors[0], '(from stderr) ' + 
+            "LotsofData" * 200)
 
     def testUnicodeWrite(self):
-        self.afs.write(u'\xf8')
+        self.stdout.write(u'\xf8')
+        self.assertEquals(len(self.warnings), 1)
+        self.assertEquals(self.warnings[0], '(from stdout) \\xf8')
 
 class UtilTest(MiroTestCase):
     def setUp(self):

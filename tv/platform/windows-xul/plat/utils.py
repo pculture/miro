@@ -42,7 +42,7 @@ import subprocess
 import sys
 import urllib
 from miro.util import returnsUnicode, returnsBinary, checkU, checkB
-from miro.util import call_command, AutoflushingStream
+from miro.util import call_command, AutoLoggingStream
 from miro import fileutil
 
 localeInitialized = False
@@ -167,7 +167,8 @@ def setup_logging(inDownloader=False):
         rotater.setFormatter(formatter)
         logging.getLogger('').addHandler(rotater)
         rotater.doRollover()
-        sys.stderr = sys.stdout = AutoflushingStream(rotater.stream)
+        sys.stdout = AutoLoggingStream(logging.warn, '(from stdout) ')
+        sys.stderr = AutoLoggingStream(logging.error, '(from stderr) ')
 
 
     # Disable the xpcom log handlers.  This just means the log handler we
