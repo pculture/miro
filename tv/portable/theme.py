@@ -172,4 +172,4 @@ class ThemeHistory(DDBObject):
 
             # create default site
             cg = guide.ChannelGuide(u"http://beta.legaltorrents.com/")
-            cg.setTitle("LegalTorrents")
+            cg.setTitle(u"LegalTorrents")
