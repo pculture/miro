@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: Democracy Player 0.8.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-03 22:52+0000\n"
-"Last-Translator: Mayel de Borniol <Unknown>\n"
+"PO-Revision-Date: 2009-02-07 09:21+0000\n"
+"Last-Translator: Michael Castielli <michael.castielli@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2009-02-06 17:24+0000\n"
+"X-Launchpad-Export-Date: 2009-02-08 00:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Language: French\n"
 
@@ -333,15 +333,15 @@ msgstr "Résumé de l'import du fichier OPML"
 #, python-format
 msgid "Successfully imported %(count)d feed."
 msgid_plural "Successfully imported %(count)d feeds."
-msgstr[0] "%(count)d source ajoutée avec succès"
-msgstr[1] "%(count)d sources ajoutées avec succès"
+msgstr[0] "Importés avec succès %(count)d source."
+msgstr[1] "Importés avec succès %(count)d sources."
 
 #: ../../portable/opml.py:198
 #, python-format
 msgid "Skipped %(count)d feed already present."
 msgid_plural "Skipped %(count)d feeds already present."
-msgstr[0] "Évitée %(count)d feed déjà présente."
-msgstr[1] "Évitées %(count)d feeds déjà présente."
+msgstr[0] "Skipped %(count)d source already present."
+msgstr[1] "Évitées %(count)d sources déjà présente."
 
 #: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
@@ -888,7 +888,7 @@ msgstr "Expiration automatique des vidéos:"
 #: ../../portable/frontends/widgets/feedsettingspanel.py:95
 #, python-format
 msgid "Watched %(expiration)s (Default)"
-msgstr ""
+msgstr "Visionnées %(expiration)s (par défaut)"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
@@ -1468,8 +1468,8 @@ msgstr[1] "%(count)d Téléchargements"
 #, python-format
 msgid "%(count)d Item"
 msgid_plural "%(count)d Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d élément"
+msgstr[1] "%(count)d éléments"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:257
 #, python-format
@@ -1909,8 +1909,8 @@ msgstr "Passer"
 #, python-format
 msgid "%(count)d Feed Folder Selected"
 msgid_plural "%(count)d Feed Folders Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Dossier de Chaînes Selectionné"
+msgstr[1] "%(count)d Dossiers de Chaînes Selectionnés"
 
 #: ../../portable/frontends/widgets/displays.py:548
 #, python-format
@@ -1923,8 +1923,8 @@ msgstr[1] "(contient %(count)d flux)"
 #, python-format
 msgid "%(count)d Playlist Folder Selected"
 msgid_plural "%(count)d Playlist Folders Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d  dossiers de liste de lecture sélectionnée"
+msgstr[1] "%(count)d  dossiers de liste de lecture sélectionnée"
 
 #: ../../portable/frontends/widgets/displays.py:559
 #, python-format
@@ -1937,15 +1937,15 @@ msgstr[1] "(contient %(count)d listes de lecture)"
 #, python-format
 msgid "%(count)d Feed Selected"
 msgid_plural "%(count)d Feeds Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Source Selected"
+msgstr[1] "%(count)d Sources Selected"
 
 #: ../../portable/frontends/widgets/displays.py:575
 #, python-format
 msgid "%(count)d Playlist Selected"
 msgid_plural "%(count)d Playlists Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d liste de lecture sélectionnée"
+msgstr[1] "%(count)d listes de lecture sélectionnées"
 
 #: ../../portable/frontends/widgets/displays.py:582
 msgid "Delete All"
@@ -2334,7 +2334,7 @@ msgstr "Téléchargements uniques et externes"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:93
 msgid "Feed downloads"
-msgstr ""
+msgstr "Téléchargement de source"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:96
 msgid "Seeding"
@@ -2423,7 +2423,7 @@ msgstr "Fichier dans le navigateur"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:144
 #, python-format
 msgid "File in %(progname)s"
-msgstr ""
+msgstr "Fichier dans %(progname)s"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:146
 msgid "File on Disk"
@@ -2451,8 +2451,8 @@ msgstr[1] "%(count)d éléments disponibles"
 #, python-format
 msgid "%(count)d Downloading Item"
 msgid_plural "%(count)d Downloading Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Téléchargement de %(count)d élément"
+msgstr[1] "Téléchargement de %(count)d éléments"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:246
 #, python-format
@@ -2680,7 +2680,7 @@ msgstr ""
 #: ../../portable/singleclick.py:364
 #, python-format
 msgid "Could not download the %(appname)s feed file: %(url)s"
-msgstr ""
+msgstr "Impossible de télécharger le source de fichier %(appname)s : %(url)s"
 
 #: ../../portable/singleclick.py:414
 msgid "Invalid Torrent"
@@ -2871,6 +2871,14 @@ msgid ""
 "\n"
 "Do you want to try to load this channel anyway?"
 msgstr ""
+"Ce chaîne est incompatible avec %(appname)s mais nous pouvons tenter de "
+"récupérer les fichiers tout de même. L'opération peut prendre du temps, et "
+"les descriptions pourraient apparaitre de manière incorrecte.\n"
+"\n"
+"Merci de contacter l'auteur de %(url)s et lui demander s'il peut fournir un "
+"flux dans un format qui fonctionnera avec %(appname)s.\n"
+"\n"
+"Voulez-vous essayer d'ajouter cette chaîne?"
 
 #: ../../portable/feed.py:1644
 #, python-format

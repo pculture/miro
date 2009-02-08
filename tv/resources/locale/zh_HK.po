@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-06 14:11+0000\n"
+"PO-Revision-Date: 2009-02-07 14:30+0000\n"
 "Last-Translator: softwareadvisor <Unknown>\n"
 "Language-Team: Chinese (Hong Kong) <zh_HK@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-02-06 17:24+0000\n"
+"X-Launchpad-Export-Date: 2009-02-08 00:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -511,109 +511,109 @@ msgstr "初始化"
 #: ../../portable/dl_daemon/download.py:507
 #: ../../portable/frontends/widgets/style.py:228
 msgid "Error"
-msgstr ""
+msgstr "錯誤"
 
 #: ../../portable/dl_daemon/download.py:596
 #, python-format
 msgid "Could not write to %(filename)s"
-msgstr ""
+msgstr "寫唔到 %(filename)s"
 
 #: ../../portable/dl_daemon/download.py:621
 #: ../../portable/dl_daemon/download.py:838
 msgid "Not enough disk space"
-msgstr ""
+msgstr "硬碟唔夠位剩"
 
 #: ../../portable/dl_daemon/download.py:622
 #: ../../portable/dl_daemon/download.py:839
 #, python-format
 msgid "%(amount)s MB required to store this video"
-msgstr ""
+msgstr "需要%(amount)s MB 來儲存該檔案"
 
 #: ../../portable/dl_daemon/download.py:637
 #, python-format
 msgid "Couldn't open %(filename)s for writing"
-msgstr ""
+msgstr "不能開啟並寫入 %(filename)s"
 
 #: ../../portable/dl_daemon/download.py:852
 msgid "BitTorrent failure"
-msgstr ""
+msgstr "BitTorrent 錯誤"
 
 #: ../../portable/dl_daemon/download.py:853
 msgid "BitTorrent failed to startup"
-msgstr ""
+msgstr "BitTorrent 初始化失敗"
 
 #: ../../portable/dl_daemon/download.py:1041
 msgid "Corrupt Torrent"
-msgstr ""
+msgstr "Torrent 程度檔案損壞"
 
 #: ../../portable/dl_daemon/download.py:1042
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
-msgstr ""
+msgstr "在 %(url)s 的Torrent 檔案冇效"
 
 #: ../../portable/dl_daemon/download.py:1067
 msgid "Torrent file deleted"
-msgstr ""
+msgstr "Torrent 檔案已移除"
 
 #: ../../portable/dl_daemon/download.py:1068
 msgid "The torrent file for this item was deleted outside of Miro."
-msgstr ""
+msgstr "這Torrent檔案不是於Miro中刪掉。"
 
 #: ../../portable/menubar.py:184
 msgid "_Open"
-msgstr ""
+msgstr "開啟(_O)"
 
 #: ../../portable/menubar.py:185
 msgid "_Download Item"
-msgstr ""
+msgstr "不載項目(_D)"
 
 #: ../../portable/menubar.py:186
 msgid "Check _Version"
-msgstr ""
+msgstr "檢查新版(_V)"
 
 #: ../../portable/menubar.py:188
 msgid "_Remove Item"
-msgstr ""
+msgstr "移除項目(_R)"
 
 #: ../../portable/menubar.py:189
 msgid "_Remove Items"
-msgstr ""
+msgstr "移除項目(_R)"
 
 #: ../../portable/menubar.py:190
 msgid "Re_name Item"
-msgstr ""
+msgstr "改名(_R)"
 
 #: ../../portable/menubar.py:191
 msgid "Save Item _As"
-msgstr ""
+msgstr "另存為(_A)"
 
 #: ../../portable/menubar.py:192
 msgid "Save Items _As"
-msgstr ""
+msgstr "另存為(_A)"
 
 #: ../../portable/menubar.py:193
 msgid "Copy Item _URL"
-msgstr ""
+msgstr "複製_URL"
 
 #: ../../portable/menubar.py:195
 msgid "_Options"
-msgstr ""
+msgstr "選項(_O)"
 
 #: ../../portable/menubar.py:196
 msgid "_Quit"
-msgstr ""
+msgstr "結束(_Q)"
 
 #: ../../portable/menubar.py:205
 msgid "Cu_t"
-msgstr ""
+msgstr "剪下(_T)"
 
 #: ../../portable/menubar.py:206
 msgid "_Copy"
-msgstr ""
+msgstr "複製(_C)"
 
 #: ../../portable/menubar.py:207
 msgid "_Paste"
-msgstr ""
+msgstr "貼上(_P)"
 
 #: ../../portable/menubar.py:208
 msgid "Select _All"
@@ -621,100 +621,100 @@ msgstr ""
 
 #: ../../portable/menubar.py:212
 msgid "Add _Feed"
-msgstr ""
+msgstr "新增_Feed"
 
 #: ../../portable/menubar.py:213
 #: ../../portable/frontends/widgets/application.py:526
 msgid "Add Site"
-msgstr ""
+msgstr "新增網站"
 
 #: ../../portable/menubar.py:214
 msgid "New Searc_h Feed"
-msgstr ""
+msgstr "新增搜尋Feed(_S)"
 
 #: ../../portable/menubar.py:215
 msgid "New _Folder"
-msgstr ""
+msgstr "新增資料夾(_F)"
 
 #: ../../portable/menubar.py:217
 msgid "Re_name"
-msgstr ""
+msgstr "重新命名(_N)"
 
 #: ../../portable/menubar.py:218
 msgid "_Remove"
-msgstr ""
+msgstr "刪除(_R)"
 
 #: ../../portable/menubar.py:219
 msgid "_Remove Folder"
-msgstr ""
+msgstr "刪除資料夾(_R)"
 
 #: ../../portable/menubar.py:221
 msgid "_Update Feed"
-msgstr ""
+msgstr "更新失敗(_U)"
 
 #: ../../portable/menubar.py:222
 msgid "_Update Feeds"
-msgstr ""
+msgstr "更新Feed(_U)"
 
 #: ../../portable/menubar.py:223
 msgid "Update _All Feeds"
-msgstr ""
+msgstr "更新全部Feed(_A)"
 
 #: ../../portable/menubar.py:225
 msgid "_Import Feeds (OPML)"
-msgstr ""
+msgstr "匯入Feed (OPML) (_I)"
 
 #: ../../portable/menubar.py:226
 msgid "E_xport Feeds (OPML)"
-msgstr ""
+msgstr "匯出Feed (OPML) (_x)"
 
 #: ../../portable/menubar.py:228
 msgid "_Share with a Friend"
-msgstr ""
+msgstr "與人分享(_S)"
 
 #: ../../portable/menubar.py:229
 msgid "Copy URL"
-msgstr ""
+msgstr "複製 URL"
 
 #: ../../portable/menubar.py:233
 msgid "New _Playlist"
-msgstr ""
+msgstr "開新播放列表 (_P)"
 
 #: ../../portable/menubar.py:234
 msgid "New Playlist Fol_der"
-msgstr ""
+msgstr "開新播放列表資料夾 (_D)"
 
 #: ../../portable/menubar.py:236
 msgid "Re_name Playlist"
-msgstr ""
+msgstr "改播放列表嘅名 (_N)"
 
 #: ../../portable/menubar.py:237
 msgid "_Remove Playlist"
-msgstr ""
+msgstr "刪除播放列表(_R)"
 
 #: ../../portable/menubar.py:238
 msgid "_Remove Playlists"
-msgstr ""
+msgstr "刪除播放列表(_R)"
 
 #: ../../portable/menubar.py:239
 msgid "_Remove Playlist Folders"
-msgstr ""
+msgstr "刪除播放列表資料夾(_R)"
 
 #: ../../portable/menubar.py:240
 msgid "_Remove Playlist Folder"
-msgstr ""
+msgstr "刪除播放列表資料夾(_R)"
 
 #: ../../portable/menubar.py:251 ../../portable/menubar.py:252
 msgid "_Play"
-msgstr ""
+msgstr "播放(_P)"
 
 #: ../../portable/menubar.py:253
 msgid "_Pause"
-msgstr ""
+msgstr "暫停(_P)"
 
 #: ../../portable/menubar.py:254
 msgid "_Stop"
-msgstr ""
+msgstr "停止(_S)"
 
 #: ../../portable/menubar.py:256
 msgid "_Next Video"

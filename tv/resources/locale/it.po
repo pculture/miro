@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: Democracy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-05 18:02+0000\n"
+"PO-Revision-Date: 2009-02-07 09:29+0000\n"
 "Last-Translator: Michael Castielli <michael.castielli@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-02-06 17:24+0000\n"
+"X-Launchpad-Export-Date: 2009-02-08 00:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -168,11 +168,11 @@ msgstr "Aggiungi alla Libreria"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:203
 msgid "Pop Out"
-msgstr ""
+msgstr "Riprodurre il video in una finestra separata"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:206
 msgid "Pop In"
-msgstr ""
+msgstr "Riprodurre il video nella stessa finestra"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
 msgid "Services"
@@ -734,7 +734,7 @@ msgstr "_Rimuovi le Cartelle Playlist"
 
 #: ../../portable/menubar.py:240
 msgid "_Remove Playlist Folder"
-msgstr "_Rimuovi Cartella Playlist"
+msgstr "_Rimuovi Cartella di Playlist"
 
 #: ../../portable/menubar.py:251 ../../portable/menubar.py:252
 msgid "_Play"
@@ -1700,7 +1700,7 @@ msgstr "Immetti un nuovo nome per la playlist %(name)s"
 #: ../../portable/frontends/widgets/application.py:675
 #: ../../portable/frontends/widgets/tablist.py:577
 msgid "Rename Playlist Folder"
-msgstr "Rinomina Cartella Playlist"
+msgstr "Rinomina Cartella di Playlist"
 
 #: ../../portable/frontends/widgets/application.py:676
 #, python-format
