@@ -171,5 +171,5 @@ class ThemeHistory(DDBObject):
             playlist.SavedPlaylist(_(u"Example Playlist"))
 
             # create default site
-            cg = guide.ChannelGuide(u"http://getsatisfaction.com/participatoryculturefoundation/topics/new?query")
-            cg.setTitle(_("Miro - Report a Problem"))
+            cg = guide.ChannelGuide(u"http://beta.legaltorrents.com/")
+            cg.setTitle(_("LegalTorrents"))
