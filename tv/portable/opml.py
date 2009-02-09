@@ -267,7 +267,7 @@ class Importer(object):
                     except ValueError:
                         pass
                     else:
-                        f.setExpiration('feed', expiryTime)
+                        f.setExpiration(u'feed', expiryTime)
             if self.currentFolder is not None:
                 f.setFolder(self.currentFolder)
             self.importedFeeds += 1
