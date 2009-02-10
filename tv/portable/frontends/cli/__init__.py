@@ -46,7 +46,7 @@ def run(themeName):
         print_text(app.cli_events.startup_failure[1])
         app.controller.shutdown()
         return
-    print "Startup complete"
+    print "Startup complete."
     app.cli_interpreter = MiroInterpreter()
     app.cli_interpreter.cmdloop()
     app.controller.shutdown()
