@@ -33,7 +33,6 @@ Depends: ${shlibs:Depends},
          python2.5-dbus,
          libxine1-plugins,
          libxine1,
-         gstreamer0.10-ffmpeg,
          gstreamer0.10-plugins-good,
          gstreamer0.10-plugins-base,
          gstreamer0.10-x,
@@ -41,7 +40,11 @@ Depends: ${shlibs:Depends},
          xulrunner-1.9,
          miro-data (>= 2.0)
 Recommends: libxine1-ffmpeg
-Suggests: python-psyco [i386 hurd-i386 netbsd-i386 kfreebsd-i386]
+Suggests: python-psyco [i386 hurd-i386 netbsd-i386 kfreebsd-i386],
+         gstreamer0.10-plugins-bad,
+         gstreamer0.10-plugins-ugly,
+         gstreamer0.10-ffmpeg,
+         python-notify
 Description: GTK+ based RSS video aggregator
  Miro is a platform for Internet television and video.
  It allows you to download and watch videos from RSS feeds (including

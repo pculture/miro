@@ -18,11 +18,12 @@ Upstream Authors:
     Chris Lahey <clahey@clahey.net>
     Paul Swartz <pswartz@pculture.org>
     Will Guaraldi Kahn-Greene <will.guaraldi@pculture.org>
+    Chris Webber <cwebber@pculture.org>
 
 -----
 
 Files: *
-Copyright: © 2005 - 2008 Participatory Culture Foundation
+Copyright: © 2005 - 2009 Participatory Culture Foundation
 License: GPL-2+ | other
     In addition, as a special exception, the copyright holders give 		
     permission to link the code of portions of this program with the OpenSSL 		
@@ -135,29 +136,8 @@ License: MIT | PSF
    
 ------------------------------------------------------------------------------
 
-Files: portable/rdfa.py
-Copyright: © 2006 Elias Torres <elias@torrez.us>
-License: GPL-2
-
-------------------------------------------------------------------------------
-
-Files: protable/setup_portable.py
-Copyright: © Zach Tibbitts ('zachtib') <zach@collegegeek.org>
-License: GPL-2+ | other
-    In addition, as a special exception, the copyright holders give
-    permission to link the code of portions of this program with the OpenSSL
-    library.
-    You must obey the GNU General Public License in all respects for all of
-    the code used other than OpenSSL. If you modify file(s) with this
-    exception, you may extend this exception to your version of the file(s),
-    but you are not obligated to do so. If you do not wish to do so, delete
-    this exception statement from your version. If you delete this exception
-    statement from all source files in the program, then also delete it here.
-
-------------------------------------------------------------------------------
-
 Files: portable/libtorrent/*:
-Copyright: © 2003 - 2007 Arvid Norberg
+Copyright: © 2003 - 2009 Arvid Norberg
 License: BSD-3
 
 ------------------------------------------------------------------------------

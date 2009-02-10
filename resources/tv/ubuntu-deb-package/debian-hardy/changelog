@@ -1,3 +1,11 @@
+miro (2.0-0pcf1) hardy; urgency=low
+
+  * Re-written user interface.
+  * Lots of new features and lots of bug fixes.
+  * Removed dependencies on imagemagick.
+
+ -- Will Kahn-Greene <will.guaraldi@pculture.org>  Mon, 09 Feb 2009 17:20:38 -0500
+
 miro (1.2.8-0pcf2) hardy; urgency=low
 
   * FIXED a bug with the youtube downloads fix reducing startup time

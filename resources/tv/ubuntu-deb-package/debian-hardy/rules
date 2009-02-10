@@ -39,7 +39,6 @@ clean::
 	rm -rf portable/compiled_templates/*
 	rm -f portable/database.c
 	rm -f portable/sorts.c
-	rm -f portable/dl_daemon/daemon.py
 	rm -f platform/gtk-x11/xine/xine.c
 	rm -f platform/gtk-x11/xine/xine_extractor
 	rm -f platform/gtk-x11/frontend_implementation/MozillaBrowser.c
