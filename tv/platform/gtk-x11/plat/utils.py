@@ -277,7 +277,7 @@ def launchDownloadDaemon(oldpid, env):
 
     # run the Miro_Downloader script
     script = os.path.join(dl_daemon_path, 'Democracy_Downloader.py')
-    os.spawnlpe(os.P_NOWAIT, "python", "python", script, environ)
+    os.spawnle(os.P_NOWAIT, sys.executable, sys.executable, script, environ)
 
 def exit(return_code):
     sys.exit(return_code)
