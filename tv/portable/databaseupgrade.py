@@ -35,6 +35,7 @@ olddatabaseupgrade.py)
 from urlparse import urlparse
 import re
 import logging
+import urllib
 
 from miro import schema
 from miro import util
