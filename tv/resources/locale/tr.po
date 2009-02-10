@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-01-31 06:59+0000\n"
-"Last-Translator: Murat Bişkin <mbiskin@gmail.com>\n"
+"PO-Revision-Date: 2009-02-08 03:09+0000\n"
+"Last-Translator: mehmet nur olcay <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-02-08 00:00+0000\n"
+"X-Launchpad-Export-Date: 2009-02-10 04:08+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -691,7 +691,7 @@ msgstr ""
 
 #: ../../portable/menubar.py:229
 msgid "Copy URL"
-msgstr ""
+msgstr "Adresi Kopyala"
 
 #: ../../portable/menubar.py:233
 msgid "New _Playlist"
@@ -767,7 +767,7 @@ msgstr ""
 
 #: ../../portable/menubar.py:270
 msgid "_About Miro"
-msgstr ""
+msgstr "_Miro Hakkında"
 
 #: ../../portable/menubar.py:271
 msgid "_Donate"
@@ -792,7 +792,7 @@ msgstr "_Çevir"
 
 #: ../../portable/menubar.py:277
 msgid "_Planet Miro"
-msgstr ""
+msgstr "_Miro Gezegen"
 
 #: ../../portable/menubar.py:282
 msgid "_Video"
@@ -804,7 +804,7 @@ msgstr "_Dosya"
 
 #: ../../portable/menubar.py:290
 msgid "_Sidebar"
-msgstr ""
+msgstr "_Kenar Çubuğu"
 
 #: ../../portable/menubar.py:291
 msgid "_Playlists"
@@ -833,7 +833,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/crashdialog.py:64
 msgid "Describe what you were doing when you got this error:"
-msgstr ""
+msgstr "Bu hatayı hangi işlem sonucunda aldınız ?"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:55
 #: ../../portable/frontends/widgets/feedsettingspanel.py:102
@@ -873,23 +873,23 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
-msgstr ""
+msgstr "1 gün önce izlendi"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr ""
+msgstr "3 gün önce izlendi"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
-msgstr ""
+msgstr "6 gün önce izlendi"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:100
 msgid "Watched 10 days ago"
-msgstr ""
+msgstr "10 gün önce izlendi"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 1 month ago"
-msgstr ""
+msgstr "1 ay önce izlendi"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
@@ -922,7 +922,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
-msgstr ""
+msgstr "Hepsini Kaldır"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
@@ -934,27 +934,27 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
-msgstr ""
+msgstr "1 çalınmayan dosya"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:198
 msgid "3 unplayed items"
-msgstr ""
+msgstr "3 çalınmayan dosya"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:199
 msgid "5 unplayed items"
-msgstr ""
+msgstr "5 çalınmayan dosya"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:200
 msgid "10 unplayed items"
-msgstr ""
+msgstr "10 çalınmayan dosya"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:201
 msgid "15 unplayed items"
-msgstr ""
+msgstr "15 çalınmayan dosya"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:241
 msgid "Feed Settings"
-msgstr ""
+msgstr "Besleme Ayarları"
 
 #: ../../portable/frontends/widgets/style.py:209
 msgid "From"
@@ -962,21 +962,21 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:210
 msgid "File name:"
-msgstr ""
+msgstr "Dosya adı:"
 
 #: ../../portable/frontends/widgets/style.py:211
 msgid "Show More"
-msgstr ""
+msgstr "Daha Fazla"
 
 #: ../../portable/frontends/widgets/style.py:212
 msgid "Show Less"
-msgstr ""
+msgstr "Daha Az"
 
 #: ../../portable/frontends/widgets/style.py:213
 #: ../../portable/frontends/widgets/gtk/video.py:309
 #: ../../portable/frontends/widgets/itemcontextmenu.py:137
 msgid "Comments"
-msgstr ""
+msgstr "Açıklamalar"
 
 #: ../../portable/frontends/widgets/style.py:215
 #, python-format
@@ -990,19 +990,19 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:216
 msgid "Web Page"
-msgstr ""
+msgstr "Web Sayfası"
 
 #: ../../portable/frontends/widgets/style.py:217
 msgid "File URL"
-msgstr ""
+msgstr "Dosya URL"
 
 #: ../../portable/frontends/widgets/style.py:218
 msgid "License Page"
-msgstr ""
+msgstr "Lisans Bilgisi"
 
 #: ../../portable/frontends/widgets/style.py:219
 msgid "File Type"
-msgstr ""
+msgstr "Dosya Türü"
 
 #: ../../portable/frontends/widgets/style.py:220
 msgid "Seeders"
@@ -1014,7 +1014,7 @@ msgstr "Asalaklar"
 
 #: ../../portable/frontends/widgets/style.py:222
 msgid "Upload Rate"
-msgstr ""
+msgstr "Yükleme Hızı"
 
 #: ../../portable/frontends/widgets/style.py:223
 msgid "Upload Total"
@@ -1022,7 +1022,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:224
 msgid "Down Rate"
-msgstr ""
+msgstr "İndirme Hızı"
 
 #: ../../portable/frontends/widgets/style.py:225
 msgid "Down Total"
@@ -1053,7 +1053,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:231
 #: ../../portable/frontends/widgets/style.py:1106
 msgid "Newly Available"
-msgstr ""
+msgstr "Yeni"
 
 #: ../../portable/frontends/widgets/style.py:233
 #: ../../portable/frontends/widgets/prefpanel.py:485
@@ -1123,27 +1123,27 @@ msgstr "Kapalı"
 
 #: ../../portable/frontends/widgets/prefpanel.py:297
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: ../../portable/frontends/widgets/prefpanel.py:298
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../../portable/frontends/widgets/prefpanel.py:299
 msgid "50"
-msgstr ""
+msgstr "50"
 
 #: ../../portable/frontends/widgets/prefpanel.py:300
 msgid "100"
-msgstr ""
+msgstr "100"
 
 #: ../../portable/frontends/widgets/prefpanel.py:301
 msgid "1000"
-msgstr ""
+msgstr "1000"
 
 #: ../../portable/frontends/widgets/prefpanel.py:307
 msgid "Default settings for new feeds:"
-msgstr ""
+msgstr "Yeni beslemeler için varsayılan ayarlar:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:311
 msgid "(These can be changed using the feed's settings button)"
@@ -1151,11 +1151,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:315
 msgid "Check for new content:"
-msgstr ""
+msgstr "Yeni içerik için kontrol et"
 
 #: ../../portable/frontends/widgets/prefpanel.py:320
 msgid "Auto download setting:"
-msgstr ""
+msgstr "Otomatik indirme ayarları:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:326
 msgid "Remember this many old items:"
@@ -1331,7 +1331,7 @@ msgstr "Seçenekler"
 
 #: ../../portable/frontends/widgets/browser.py:94
 msgid "Open in browser"
-msgstr ""
+msgstr "Tarayıcıda aç"
 
 #: ../../portable/frontends/widgets/rundialog.py:82
 msgid "Username:"
@@ -1352,7 +1352,7 @@ msgstr "Video Arama"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:427
 msgid "No Results Found"
-msgstr ""
+msgstr "Sonuç Bulunamadı"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:489
 #: ../../portable/frontends/widgets/statictabs.py:91

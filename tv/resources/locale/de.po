@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-03 11:45+0000\n"
-"Last-Translator: Aaron Strontsman <Unknown>\n"
+"PO-Revision-Date: 2009-02-09 18:17+0000\n"
+"Last-Translator: Karsten W. Rohrbach <karsten@rohrbach.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-02-08 00:00+0000\n"
+"X-Launchpad-Export-Date: 2009-02-10 04:08+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -80,7 +80,7 @@ msgstr "Eine neue Version von %s steht zum herunterladen bereit."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
-msgstr ""
+msgstr "Möchten Sie jetzt herunterladen?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
@@ -268,7 +268,7 @@ msgstr "Hilfe zu Miro"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:166
 msgid "Download Completed"
-msgstr "Laden abgeschlossen"
+msgstr "Download fertig"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:167
 #, python-format
@@ -277,7 +277,7 @@ msgstr "Das Video '%s' ist geladen."
 
 #: ../../portable/theme.py:136
 msgid "Custom Channels"
-msgstr "Vorausgewählte Kanäle"
+msgstr "Eigene Kanäle"
 
 #: ../../portable/theme.py:138
 #, python-format
@@ -557,7 +557,7 @@ msgstr "In die Datei %(filename)s konnte nicht geschrieben werden"
 #: ../../portable/dl_daemon/download.py:621
 #: ../../portable/dl_daemon/download.py:838
 msgid "Not enough disk space"
-msgstr "Nicht genügend Festplattenspeicher"
+msgstr "Nicht genügend Festplattenplatz"
 
 #: ../../portable/dl_daemon/download.py:622
 #: ../../portable/dl_daemon/download.py:839
@@ -986,7 +986,7 @@ msgstr "Von"
 
 #: ../../portable/frontends/widgets/style.py:210
 msgid "File name:"
-msgstr ""
+msgstr "Dateiname:"
 
 #: ../../portable/frontends/widgets/style.py:211
 msgid "Show More"

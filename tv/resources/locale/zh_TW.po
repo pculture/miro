@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2008-09-26 15:55+0000\n"
-"Last-Translator: hotkey <Unknown>\n"
+"PO-Revision-Date: 2009-02-09 08:37+0000\n"
+"Last-Translator: Fiona Cheng <froen666@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) <zh_TW@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-02-08 00:00+0000\n"
+"X-Launchpad-Export-Date: 2009-02-10 04:08+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -74,11 +74,11 @@ msgstr "已有新版 %s 可供下載。"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
-msgstr ""
+msgstr "您確定要下載嗎?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
-msgstr ""
+msgstr "想要下載Adobe Flash?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
 #, python-format
@@ -89,7 +89,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
-msgstr ""
+msgstr "下載Adobe Flash"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
 msgid ""
@@ -98,7 +98,7 @@ msgid ""
 "\n"
 "You should quit Miro now and start it up again after Adobe Flash has been "
 "installed."
-msgstr ""
+msgstr "您的瀏覽器即將連線至安裝下載Adobe Flash的網站，請您在安裝Adobe Flash後立即關閉Miro並且重新開機。"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
 msgid "Renderer options:"
@@ -106,7 +106,7 @@ msgstr "Renderer選項:"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
 msgid "You must restart Miro for renderer changes to take effect."
-msgstr ""
+msgstr "您必須重新啟動Miro來讓renderer改變生效"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:72
 msgid "Video renderer:"
@@ -152,7 +152,7 @@ msgstr "刪除"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:132
 msgid "Add to Library"
-msgstr ""
+msgstr "加入至資料庫"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:203
 msgid "Pop Out"
@@ -212,19 +212,19 @@ msgstr "編輯"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
 msgid "Present Half Size"
-msgstr ""
+msgstr "顯示一半大小"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:168
 msgid "Present Actual Size"
-msgstr ""
+msgstr "顯示實際大小"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:169
 msgid "Present Double Size"
-msgstr ""
+msgstr "顯示兩被大小"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:171
 msgid "Present Video"
-msgstr ""
+msgstr "顯示影片"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
 msgid "Zoom"
@@ -275,11 +275,11 @@ msgstr "範例播放清單"
 
 #: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
-msgstr ""
+msgstr "Miro - 回報問題"
 
 #: ../../portable/searchengines.py:146
 msgid "Search All"
-msgstr ""
+msgstr "搜尋全部"
 
 #: ../../portable/util.py:279 ../../portable/util.py:281
 #, python-format
@@ -308,7 +308,7 @@ msgstr "OPML 匯入失敗"
 #: ../../portable/opml.py:186
 msgid ""
 "The selected OPML file appears to be invalid.  Import was interrupted."
-msgstr ""
+msgstr "您所選擇的OPML檔案無法使用，匯入中斷。"
 
 #: ../../portable/opml.py:191
 msgid "OPML Import summary"
@@ -366,7 +366,7 @@ msgstr ""
 
 #: ../../portable/messages.py:965 ../../portable/item.py:618
 msgid "queued for download"
-msgstr ""
+msgstr "等候下載"
 
 #: ../../portable/startup.py:91
 msgid "Unknown Error"
@@ -574,7 +574,7 @@ msgstr "開啟舊檔 (_O)"
 
 #: ../../portable/menubar.py:185
 msgid "_Download Item"
-msgstr ""
+msgstr "下載選項"
 
 #: ../../portable/menubar.py:186
 msgid "Check _Version"
@@ -582,27 +582,27 @@ msgstr "檢查版本 (_V)"
 
 #: ../../portable/menubar.py:188
 msgid "_Remove Item"
-msgstr ""
+msgstr "移除選項"
 
 #: ../../portable/menubar.py:189
 msgid "_Remove Items"
-msgstr ""
+msgstr "移除多選項"
 
 #: ../../portable/menubar.py:190
 msgid "Re_name Item"
-msgstr ""
+msgstr "重新命名選項"
 
 #: ../../portable/menubar.py:191
 msgid "Save Item _As"
-msgstr ""
+msgstr "另存新檔"
 
 #: ../../portable/menubar.py:192
 msgid "Save Items _As"
-msgstr ""
+msgstr "另存新檔"
 
 #: ../../portable/menubar.py:193
 msgid "Copy Item _URL"
-msgstr ""
+msgstr "複製物件URL"
 
 #: ../../portable/menubar.py:195
 msgid "_Options"
@@ -635,7 +635,7 @@ msgstr ""
 #: ../../portable/menubar.py:213
 #: ../../portable/frontends/widgets/application.py:526
 msgid "Add Site"
-msgstr ""
+msgstr "加入網址"
 
 #: ../../portable/menubar.py:214
 msgid "New Searc_h Feed"
@@ -655,19 +655,19 @@ msgstr ""
 
 #: ../../portable/menubar.py:219
 msgid "_Remove Folder"
-msgstr ""
+msgstr "刪除檔案夾"
 
 #: ../../portable/menubar.py:221
 msgid "_Update Feed"
-msgstr ""
+msgstr "更新"
 
 #: ../../portable/menubar.py:222
 msgid "_Update Feeds"
-msgstr ""
+msgstr "多項更新"
 
 #: ../../portable/menubar.py:223
 msgid "Update _All Feeds"
-msgstr ""
+msgstr "全部更新"
 
 #: ../../portable/menubar.py:225
 msgid "_Import Feeds (OPML)"
@@ -679,7 +679,7 @@ msgstr ""
 
 #: ../../portable/menubar.py:228
 msgid "_Share with a Friend"
-msgstr ""
+msgstr "與朋友分享"
 
 #: ../../portable/menubar.py:229
 msgid "Copy URL"
@@ -815,7 +815,7 @@ msgstr "內部錯誤"
 msgid ""
 "Miro has encountered an internal error.  You can help us track down this "
 "problem and fix it by submitting an error report."
-msgstr ""
+msgstr "Miro遇到內部錯誤問題，您可以回報來幫助我們修正這個錯誤。"
 
 #: ../../portable/frontends/widgets/crashdialog.py:59
 msgid ""
@@ -825,7 +825,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/crashdialog.py:64
 msgid "Describe what you were doing when you got this error:"
-msgstr ""
+msgstr "描述錯誤發生時的細節"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:55
 #: ../../portable/frontends/widgets/feedsettingspanel.py:102
@@ -856,7 +856,7 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Videos:"
-msgstr ""
+msgstr "自動過期影片"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:95
 #, python-format
@@ -865,23 +865,23 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
-msgstr ""
+msgstr "於1天前瀏覽"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr ""
+msgstr "於3天前瀏覽"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
-msgstr ""
+msgstr "於6天前瀏覽"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:100
 msgid "Watched 10 days ago"
-msgstr ""
+msgstr "於10天前瀏覽"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 1 month ago"
-msgstr ""
+msgstr "於1個月前瀏覽"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
@@ -918,7 +918,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
-msgstr ""
+msgstr "舊物件已被移除"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause Auto-Downloading when this many items are unplayed:"
@@ -926,23 +926,23 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
-msgstr ""
+msgstr "1個未撥放項目"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:198
 msgid "3 unplayed items"
-msgstr ""
+msgstr "3個未撥放項目"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:199
 msgid "5 unplayed items"
-msgstr ""
+msgstr "5個未撥放項目"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:200
 msgid "10 unplayed items"
-msgstr ""
+msgstr "10個未撥放項目"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:201
 msgid "15 unplayed items"
-msgstr ""
+msgstr "15個未撥放項目"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:241
 msgid "Feed Settings"
@@ -958,11 +958,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:211
 msgid "Show More"
-msgstr ""
+msgstr "顯示更多"
 
 #: ../../portable/frontends/widgets/style.py:212
 msgid "Show Less"
-msgstr ""
+msgstr "顯示更少"
 
 #: ../../portable/frontends/widgets/style.py:213
 #: ../../portable/frontends/widgets/gtk/video.py:309
@@ -986,7 +986,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:217
 msgid "File URL"
-msgstr ""
+msgstr "檔案URL"
 
 #: ../../portable/frontends/widgets/style.py:218
 msgid "License Page"
@@ -1035,12 +1035,12 @@ msgstr "下載 torrent 檔案"
 
 #: ../../portable/frontends/widgets/style.py:229
 msgid "queued for autodownload"
-msgstr ""
+msgstr "等候自動下載"
 
 #: ../../portable/frontends/widgets/style.py:230
 #: ../../portable/frontends/widgets/style.py:1088
 msgid "Unplayed"
-msgstr ""
+msgstr "尚未撥放"
 
 #: ../../portable/frontends/widgets/style.py:231
 #: ../../portable/frontends/widgets/style.py:1106
@@ -1071,7 +1071,7 @@ msgstr "暫停"
 
 #: ../../portable/frontends/widgets/style.py:972
 msgid "Remove from playlist"
-msgstr ""
+msgstr "從撥放清單移除"
 
 #: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
@@ -1143,11 +1143,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:315
 msgid "Check for new content:"
-msgstr ""
+msgstr "查看最新內容"
 
 #: ../../portable/frontends/widgets/prefpanel.py:320
 msgid "Auto download setting:"
-msgstr ""
+msgstr "自動下載設定"
 
 #: ../../portable/frontends/widgets/prefpanel.py:326
 msgid "Remember this many old items:"
@@ -1213,11 +1213,11 @@ msgstr "變更"
 
 #: ../../portable/frontends/widgets/prefpanel.py:440
 msgid "Choose Movies Directory"
-msgstr ""
+msgstr "選擇電影目錄"
 
 #: ../../portable/frontends/widgets/prefpanel.py:453
 msgid "Migrate existing movies?"
-msgstr "合併既存影片？"
+msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:454
 msgid ""
@@ -1286,7 +1286,7 @@ msgstr "從上次停止的地方繼續觀賞影片."
 
 #: ../../portable/frontends/widgets/prefpanel.py:608
 msgid "Play videos one after another"
-msgstr ""
+msgstr "連續撥放影片"
 
 #: ../../portable/frontends/widgets/prefpanel.py:609
 msgid "Stop after each video"
@@ -1344,12 +1344,12 @@ msgstr "搜尋影片"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:427
 msgid "No Results Found"
-msgstr ""
+msgstr "搜尋無結果"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:489
 #: ../../portable/frontends/widgets/statictabs.py:91
 msgid "Library"
-msgstr "影片收藏"
+msgstr "資料庫"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:502
 #: ../../portable/frontends/widgets/statictabs.py:96
@@ -1358,7 +1358,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:506
 msgid "No Items to Display"
-msgstr ""
+msgstr "無撥放項目"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
@@ -1395,11 +1395,11 @@ msgstr "硬碟剩餘空間:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:109
 msgid "Database size:"
-msgstr ""
+msgstr "資料庫大小"
 
 #: ../../portable/frontends/widgets/diagnostics.py:111
 msgid "Total number of db objects:"
-msgstr ""
+msgstr "資料庫內物件總計"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -1445,7 +1445,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:134
 msgid "Movies directory gone"
-msgstr ""
+msgstr "電影目錄已不存在"
 
 #: ../../portable/frontends/widgets/application.py:136
 #, python-format
@@ -1491,7 +1491,7 @@ msgstr "檔案 %(filename)s 不存在t."
 
 #: ../../portable/frontends/widgets/application.py:329
 msgid "The following files do not exist:"
-msgstr ""
+msgstr "下列檔案不存在"
 
 #: ../../portable/frontends/widgets/application.py:366
 msgid "New Download"
@@ -1499,7 +1499,7 @@ msgstr "建立新下載"
 
 #: ../../portable/frontends/widgets/application.py:367
 msgid "Enter the URL of the item to download"
-msgstr ""
+msgstr "輸入物件URL以下載"
 
 #: ../../portable/frontends/widgets/application.py:368
 msgid "New Download - Invalid URL"
@@ -1515,11 +1515,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:377
 msgid "Miro is up to date"
-msgstr ""
+msgstr "Miro已有最新版本"
 
 #: ../../portable/frontends/widgets/application.py:378
 msgid "Miro is up to date!"
-msgstr ""
+msgstr "Miro已有最新版本!"
 
 #: ../../portable/frontends/widgets/application.py:400
 msgid "Remove item"
@@ -1542,7 +1542,8 @@ msgstr[1] ""
 msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
 msgstr[0] ""
-msgstr[1] ""
+"您確定要刪除該物件?\r\n"
+"您確定要刪除所有%(count)d物件?"
 
 #: ../../portable/frontends/widgets/application.py:449
 #: ../../portable/frontends/widgets/itemcontextmenu.py:99
@@ -1551,7 +1552,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:450
 msgid "Enter the new name for the item"
-msgstr ""
+msgstr "重新命名該物件"
 
 #: ../../portable/frontends/widgets/application.py:473
 msgid "Save Item As..."
@@ -1572,6 +1573,9 @@ msgid ""
 "\n"
 "Enter the URL of the site to add"
 msgstr ""
+"您所輸入的網址不存在\n"
+"請確認URL並再試一次\n"
+"輸入URL來加入"
 
 #: ../../portable/frontends/widgets/application.py:578
 msgid "Import OPML File"
@@ -1658,8 +1662,7 @@ msgstr "輸入網站 %(name)s 的新名稱"
 #: ../../portable/frontends/widgets/application.py:704
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "移除撥放清單"
 
 #: ../../portable/frontends/widgets/application.py:706
 #, python-format
@@ -1699,11 +1702,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:1036
 msgid "Migrating Files"
-msgstr ""
+msgstr "移動檔案"
 
 #: ../../portable/frontends/widgets/application.py:1046
 msgid "Migrating files"
-msgstr ""
+msgstr "正在移動檔案"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:177
 msgid "Save Search"
@@ -1761,7 +1764,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:503
 msgid "Download Settings"
-msgstr ""
+msgstr "下載設定"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:549
 #, python-format
@@ -1816,7 +1819,7 @@ msgstr ""
 msgid ""
 "Miro can't play this file.  You may be able to open it with a different "
 "program"
-msgstr ""
+msgstr "Miro無法開啟該檔案，您可以嘗試以其他程式撥放。"
 
 #: ../../portable/frontends/widgets/displays.py:361
 msgid "Filename:"
@@ -1828,7 +1831,7 @@ msgstr "檔案類型："
 
 #: ../../portable/frontends/widgets/displays.py:370
 msgid "Play Externally"
-msgstr ""
+msgstr "在外部撥放"
 
 #: ../../portable/frontends/widgets/displays.py:371
 msgid "Skip"
@@ -1882,16 +1885,16 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/displays.py:586
 msgid "Put Into a New Folder"
-msgstr ""
+msgstr "放入新資料夾"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
-msgstr ""
+msgstr "此撥放清單無任何物件"
 
 #: ../../portable/frontends/widgets/playlist.py:149
 msgid ""
 "To add an item, drag it onto the name of this playlist in the sidebar."
-msgstr ""
+msgstr "欲加入物件，請將物件拖曳至側欄撥放清單名稱。"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:63
 #, python-format
@@ -1919,11 +1922,11 @@ msgstr "隱藏"
 
 #: ../../portable/frontends/widgets/gtk/video.py:272
 msgid "Add to library"
-msgstr ""
+msgstr "匯入資料庫"
 
 #: ../../portable/frontends/widgets/gtk/video.py:311
 msgid "Permalink"
-msgstr ""
+msgstr "永久網址"
 
 #: ../../portable/frontends/widgets/gtk/window.py:470
 msgid "All files"
@@ -1954,7 +1957,7 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/removefeeds.py:77
 msgid "Keep items that have been downloaded in my library."
-msgstr ""
+msgstr "保留已下載至資料庫的物件"
 
 #: ../../portable/frontends/widgets/removefeeds.py:83
 msgid ""
@@ -2057,7 +2060,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:611
 msgid "PLAYLISTS"
-msgstr ""
+msgstr "播放清單"
 
 #: ../../portable/frontends/widgets/newfolder.py:60
 msgid "Folder name:"
@@ -2122,7 +2125,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:60
 msgid "Miro First Time Setup"
-msgstr ""
+msgstr "Miro原始設定"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:117
 msgid "Welcome to the Miro First Time Setup"
@@ -2140,7 +2143,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:132
 msgid "Would you like to run Miro on startup?"
-msgstr ""
+msgstr "您想要開機時啟動Miro嗎?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:137
 #: ../../portable/frontends/widgets/firsttimedialog.py:170
@@ -2160,7 +2163,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:156
 msgid "Completing the Miro First Time Setup"
-msgstr ""
+msgstr "正在完成Miro初始化"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:159
 msgid ""
@@ -2172,7 +2175,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:177
 msgid "Restrict to all my personal files."
-msgstr ""
+msgstr "僅限於個人檔案"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:178
 msgid "Search custom folders:"
@@ -2180,7 +2183,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:189
 msgid "Choose directory to search for media files"
-msgstr ""
+msgstr "選擇目錄來搜尋媒體檔案"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:200
 #: ../../portable/frontends/widgets/firsttimedialog.py:280
@@ -2201,7 +2204,7 @@ msgstr "完成"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:263
 msgid "Searching for media files"
-msgstr ""
+msgstr "正在搜尋媒體檔案"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:273
 #: ../../portable/dialogs.py:85
@@ -2244,19 +2247,19 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
-msgstr ""
+msgstr "新增撥放清單"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
 msgid "Add items to an existing playlist or a new one."
-msgstr ""
+msgstr "將物件加入現有或新的撥放清單"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
 msgid "Existing playlist:"
-msgstr ""
+msgstr "現有的撥放清單"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
 msgid "New playlist:"
-msgstr ""
+msgstr "新的撥放清單"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
@@ -2269,7 +2272,7 @@ msgstr "播放"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just this Item"
-msgstr ""
+msgstr "僅撥放此物件"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:96
 #: ../../portable/frontends/widgets/itemcontextmenu.py:193
@@ -2278,17 +2281,17 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:101
 msgid "Revert Item Name"
-msgstr ""
+msgstr "回復物件名稱"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:103
 #: ../../portable/frontends/widgets/itemcontextmenu.py:200
 msgid "Mark as Unplayed"
-msgstr ""
+msgstr "標示為未撥放"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:106
 #: ../../portable/frontends/widgets/itemcontextmenu.py:205
 msgid "Mark as Played"
-msgstr ""
+msgstr "標示為已撥放"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
@@ -2320,7 +2323,7 @@ msgstr "授權"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:142
 msgid "File in Browser"
-msgstr ""
+msgstr "瀏覽器裡的檔案"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:144
 #, python-format
@@ -2329,7 +2332,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:146
 msgid "File on Disk"
-msgstr ""
+msgstr "磁碟裡的檔案"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:149
 msgid "View"
@@ -2486,7 +2489,7 @@ msgstr "已經在下載了"
 
 #: ../../portable/singleclick.py:101
 msgid "That URL is already an external download."
-msgstr ""
+msgstr "此URL以為外部下載"
 
 #: ../../portable/singleclick.py:107
 msgid "Miro will begin downloading it now."
