@@ -694,7 +694,7 @@ class Item(DDBObject):
             return thumb.decode('ascii', 'replace')
         try:
             return thumb["url"].decode('ascii', 'replace')
-        except KeyError:
+        except (KeyError, AttributeError):
             return None
 
     @returnsFilename
