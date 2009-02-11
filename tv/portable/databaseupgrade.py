@@ -1276,7 +1276,10 @@ def upgrade71(objectList):
             else:
                 url = None
             downloader_id = url_to_downloader_id.get(url)
-            if downloader_id is None:
+            if downloader_id is None and hasattr(entry, 'enclosures'):
+                # we didn't get a downloader id using
+                # getFirstVideoEnclosure(), so try other enclosures.  We
+                # changed the way that function worked between 1.2.8 and 2.0.
                 for other_enclosure in entry.enclosures:
                     if 'url' in other_enclosure:
                         url = quoteUnicodeURL(other_enclosure['url'].replace('+', '%20'))
