@@ -1265,7 +1265,7 @@ def upgrade71(objectList):
 
     for o in objectList:
         if o.classString == 'remote-downloader':
-            url_to_downloader_id[o.savedData['url']] = o.savedData['id']
+            url_to_downloader_id[o.savedData['origURL']] = o.savedData['id']
 
     for o in objectList:
         if o.classString in ('item', 'file-item'):
