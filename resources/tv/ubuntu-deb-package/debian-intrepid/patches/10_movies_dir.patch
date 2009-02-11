@@ -17,3 +17,16 @@ Index: platform/gtk-x11/platform/config.py
  
      elif descriptor == prefs.GETTEXT_PATHNAME:
          value = resources.path("../../locale")
+Index: platform/gtk-x11/platform/upgrade.py
+===================================================================
+--- platform/gtk-x11/plat/upgrade.py (revision 9045)
++++ platform/gtk-x11/plat/upgrade.py (working copy)
+@@ -78,7 +78,7 @@
+         _copy_gconf("/apps/democracy/player", "/apps/miro")
+         client.recursive_unset("/apps/democracy", 1)
+         if client.get("/apps/miro/MoviesDirectory") is None:
+-            value = os.path.expanduser('~/Movies/Democracy')
++            value = os.path.expanduser('~/.miro/Movies')
+             client.set_string("/apps/miro/MoviesDirectory", value)
+ 
+             if not os.path.exists(value):
