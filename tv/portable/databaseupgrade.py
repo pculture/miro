@@ -1275,7 +1275,15 @@ def upgrade71(objectList):
                 url = quoteUnicodeURL(videoEnclosure['url'].replace('+', '%20'))
             else:
                 url = None
-            o.savedData['downloader_id'] = url_to_downloader_id.get(url)
+            downloader_id = url_to_downloader_id.get(url)
+            if downloader_id is None:
+                for other_enclosure in entry.enclosures:
+                    if 'url' in other_enclosure:
+                        url = quoteUnicodeURL(other_enclosure['url'].replace('+', '%20'))
+                        downloader_id = url_to_downloader_id.get(url)
+                        if downloader_id is not None:
+                            break
+            o.savedData['downloader_id'] = downloader_id
             changed.add(o)
 
     return changed
