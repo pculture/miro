@@ -280,7 +280,6 @@ class IconCacheSchema (ObjectSchema):
         ('etag', SchemaString(noneOk=True)),
         ('modified', SchemaString(noneOk=True)),
         ('filename', SchemaFilename(noneOk=True)),
-        ('resized_filenames', SchemaDict(SchemaString(), SchemaFilename())),
         ('url', SchemaURL(noneOk=True)),
         ]
 
@@ -517,7 +516,7 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
         ('list_view_displays', SchemaList(SchemaBinary())),
     ]
 
-VERSION = 72
+VERSION = 73
 objectSchemas = [
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,

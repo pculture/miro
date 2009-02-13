@@ -48,16 +48,12 @@ def clear_orphans():
     for item in views.items:
         if item.iconCache and item.iconCache.filename:
             knownIcons.add(os.path.normcase(fileutil.expand_filename(item.iconCache.filename)))
-            for resized in item.iconCache.resized_filenames.values():
-                knownIcons.add(os.path.normcase(fileutil.expand_filename(resized)))
 
     yield None
 
     for feed in views.feeds:
         if feed.iconCache and feed.iconCache.filename:
             knownIcons.add(os.path.normcase(fileutil.expand_filename(feed.iconCache.filename)))
-            for resized in feed.iconCache.resized_filenames.values():
-                knownIcons.add(os.path.normcase(fileutil.expand_filename(resized)))
 
     yield None
 
@@ -134,7 +130,6 @@ class IconCache:
         self.etag = None
         self.modified = None
         self.filename = None
-        self.resized_filenames = {}
         self.url = None
 
         self.updating = False
@@ -162,7 +157,6 @@ class IconCache:
         if self.filename:
             self.remove_file(self.filename)
         self.filename = None
-        self.resized_filenames = {}
         self.url = None
         self.etag = None
         self.modified = None

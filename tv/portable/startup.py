@@ -260,7 +260,7 @@ def on_frontend_started():
     eventloop.addTimeout(30, feed.start_updates, "start feed updates")
     # ditto for clearing stale icon cache files, except it's the very lowest
     # priority
-    eventloop.addTimeout(300, iconcache.clear_orphans, "clear orphans")
+    eventloop.addTimeout(10, iconcache.clear_orphans, "clear orphans")
 
 def setup_global_feeds():
     setup_global_feed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
