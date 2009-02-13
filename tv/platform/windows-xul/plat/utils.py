@@ -37,6 +37,7 @@ from miro import prefs
 import os
 import logging
 from logging.handlers import RotatingFileHandler
+from miro.plat import config as plat_config
 from miro.plat import resources
 import subprocess
 import sys
@@ -169,6 +170,9 @@ def setup_logging(inDownloader=False):
         rotater.doRollover()
         sys.stdout = AutoLoggingStream(logging.warn, '(from stdout) ')
         sys.stderr = AutoLoggingStream(logging.error, '(from stderr) ')
+        if plat_config.config_load_error is not None:
+            logging.warn("Error loading config: %s",
+                    plat_config.config_load_error)
 
 
     # Disable the xpcom log handlers.  This just means the log handler we
