@@ -35,9 +35,11 @@ from miro import prefs
 import miro.plat.utils
 
 _gtcache = None
+codeset = None # The default codeset of our locale (always lower case)
 
 def init():
     global _gtcache
+    global codeset
     _gtcache = {}
     if not miro.plat.utils.localeInitialized:
         raise Exception, "locale not initialized"
@@ -50,6 +52,10 @@ def init():
         import logging
         logging.warn("gtcache.init: setlocale failed.  setting locale to 'C'")
         locale.setlocale(locale.LC_ALL, 'C')
+
+    codeset = locale.getlocale()[1]
+    if codeset is not None:
+        codeset = codeset.lower()
 
     _gt.bindtextdomain("miro", config.get(prefs.GETTEXT_PATHNAME))
     _gt.textdomain("miro")
