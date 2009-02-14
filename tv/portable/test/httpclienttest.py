@@ -87,13 +87,13 @@ class FakeStream:
                ['/democracytest/nohead.php']}
         self.basicAuthPages = {
             'jigsaw.w3.org': {'/HTTP/Basic/':'Basic Z3Vlc3Q6Z3Vlc3Q='}
-            
+
          }
         self.digestAuthPages = {
             'jigsaw.w3.org': {'/HTTP/Digest/':'STUFF GOES HERE'}
-            
+
          }
-        
+
 
     def _tryReadCallback(self):
         if (len(self.pendingOutput)>0 and self.readCallback and not
@@ -113,7 +113,7 @@ class FakeStream:
         self.paused = False
         self._tryReadCallback()
         self.paused = True
-            
+
     def _generateResponse(self, method, uri, version, headers):
         text = None
         now = email.Utils.formatdate(usegmt=True)
@@ -147,7 +147,7 @@ class FakeStream:
                     else:
                         return"""HTTP/1.1 200 OK\r\nContent-Type: text/plain; charset=UTF-8\r\nLast-Modified: %s\r\nDate: %s\r\nContent-Length: %d\r\n\r\n%s""" % (
                             now, now, len(text), text)
-            
+
             elif method == "HEAD":
                 if ((self.noheadPages.has_key(headers["Host"])) and
                     (uri in self.noheadPages[headers["Host"]])):
@@ -283,7 +283,7 @@ class TestingHTTPConnectionPool(httpclient.HTTPConnectionPool):
         conns = self._getServerConnections(scheme, host, port)
         for conn in conns['active']:
             try:
-                if (conn.host == host and conn.port == port and 
+                if (conn.host == host and conn.port == port and
                         conn.path == path):
                     return True
             except:
@@ -293,7 +293,7 @@ class TestingHTTPConnectionPool(httpclient.HTTPConnectionPool):
 class DumbTestingHTTPConnectionPool(TestingHTTPConnectionPool):
     HTTP_CONN = DumbTestingHTTPConnection
     HTTPS_CONN = DumbTestingHTTPConnection
-    
+
 
 class DumbTestHTTPClient(httpclient.HTTPClient):
     connectionPool = DumbTestingHTTPConnectionPool()
@@ -515,7 +515,7 @@ class DumbHTTPClientTest(AsyncSocketTest):
         self.testRequest = DumbTestingHTTPConnection()
         self.testRequest.openConnection('foo.com', 80, lambda x: None,lambda x: None)
         self.testRequest.sendRequest(self.callback, self.errback, "", 80,
-                method='GET', path='/bar/baz;123?a=b') 
+                method='GET', path='/bar/baz;123?a=b')
 
     def testScheme(self):
         conn = httpclient.HTTPConnection()
@@ -583,12 +583,55 @@ HELLO: WORLD\r\n"""
         headers = self.testRequest.headers
         self.assertEquals(headers['x-cache'], 'HIT from pcf2.pcf.osuosl.org')
         self.assertEquals(headers['server'], 'Apache')
-        self.assertEquals(headers['last-modified'], 
+        self.assertEquals(headers['last-modified'],
             'Wed, 10 May 2006 22:30:33 GMT')
         self.assertEquals(headers['content-length'], '14')
         self.assertEquals(self.testRequest.contentLength, 14)
         self.assertEquals(headers['date'], 'Wed, 10 May 2006 22:38:39 GMT')
-        self.assertEquals(headers['content-type'], 
+        self.assertEquals(headers['content-type'],
+            'text/plain; charset=ISO-8859-1')
+
+    def testBasicHeadersMissingLastModified(self):
+        self.testRequest.handleData("""\
+HTTP/1.0 200 OK\r
+Content-Type: text/plain; charset=ISO-8859-1\r
+Date: Wed, 10 May 2006 22:38:39 GMT\r
+X-Cache: HIT from pcf2.pcf.osuosl.org\r
+Server: Apache\r
+Content-Length: 14\r
+\r
+HELLO: WORLD\r\n""")
+        self.testRequest.handleClose(socket.SHUT_RD)
+        headers = self.testRequest.headers
+        self.assertEquals(headers['x-cache'], 'HIT from pcf2.pcf.osuosl.org')
+        self.assertEquals(headers['server'], 'Apache')
+        self.assert_(not headers.has_key('last-modfied'))
+        self.assertEquals(headers['content-length'], '14')
+        self.assertEquals(self.testRequest.contentLength, 14)
+        self.assertEquals(headers['date'], 'Wed, 10 May 2006 22:38:39 GMT')
+        self.assertEquals(headers['content-type'],
+            'text/plain; charset=ISO-8859-1')
+
+    def testBasicHeadersMissingLastModified2(self):
+        self.testRequest.handleData("""\
+HTTP/1.0 200 OK\r
+Content-Type: text/plain; charset=ISO-8859-1\r
+Last-Modified: \r
+Date: Wed, 10 May 2006 22:38:39 GMT\r
+X-Cache: HIT from pcf2.pcf.osuosl.org\r
+Server: Apache\r
+Content-Length: 14\r
+\r
+HELLO: WORLD\r\n""")
+        self.testRequest.handleClose(socket.SHUT_RD)
+        headers = self.testRequest.headers
+        self.assertEquals(headers['x-cache'], 'HIT from pcf2.pcf.osuosl.org')
+        self.assertEquals(headers['server'], 'Apache')
+        self.assert_(not headers.has_key('last-modfied'))
+        self.assertEquals(headers['content-length'], '14')
+        self.assertEquals(self.testRequest.contentLength, 14)
+        self.assertEquals(headers['date'], 'Wed, 10 May 2006 22:38:39 GMT')
+        self.assertEquals(headers['content-type'],
             'text/plain; charset=ISO-8859-1')
 
     def testCallbackError(self):
@@ -686,7 +729,7 @@ HELLO: WORLD\r\n"""
             headers={'Content-Length': 128}))
         def pipelineErrback(error):
             self.pipelineError = error
-        self.testRequest.sendRequest(self.callback, pipelineErrback, "", 80, 
+        self.testRequest.sendRequest(self.callback, pipelineErrback, "", 80,
                 path="/pipelined/path")
         self.testRequest.handleClose(socket.SHUT_RDWR)
         self.assert_(isinstance(self.pipelineError,
@@ -823,7 +866,7 @@ class HTTPClientTestBase(AsyncSocketTest):
         AsyncSocketTest.setUp(self)
         self.testRequest = TestingHTTPConnection()
         self.testRequest.openConnection('foo.com', 80, lambda x: None, lambda x: None)
-        self.testRequest.sendRequest(self.callback, self.errback, "", 80, method='GET', path='/bar/baz;123?a=b') 
+        self.testRequest.sendRequest(self.callback, self.errback, "", 80, method='GET', path='/bar/baz;123?a=b')
         TestHTTPClient.connectionPool = TestingHTTPConnectionPool()
         TestingHeaderGrabber.connectionPool = TestingHTTPConnectionPool()
         self.logins = []
@@ -881,7 +924,7 @@ class HTTPClientTest(HTTPClientTestBase):
         #self.assert_(self.errbackCalled)
 
     def testConnectionFailure(self):
-        httpclient.grabURL("http://slashdot.org:123123", self.callback, 
+        httpclient.grabURL("http://slashdot.org:123123", self.callback,
                 self.errback, clientClass=TestHTTPClient)
         self.runEventLoop()
         self.assert_(self.errbackCalled)
@@ -910,8 +953,8 @@ class HTTPClientTest(HTTPClientTestBase):
         self.assertEquals(self.firstData['body'], self.data['body'])
 
     def testUnexpectedStatusCode(self):
-        """Test what happens when we get a bad status code.  
-        
+        """Test what happens when we get a bad status code.
+
         The header callback should be called, but the on body data callback
         shouldn't.  Also, we should call the errback instead of the callback.
         """
@@ -1163,11 +1206,11 @@ class HTTPClientTest(HTTPClientTestBase):
 #         result = self.data['body'].split()
 #         self.assertEqual(result[0], 'tempfile.txt')
 #         self.assertEqual(result[1], 'application/octet-stream')
-#         self.assertEqual(result[2], '0b26e313ed4a7ca6904b0e9369e5b957')        
+#         self.assertEqual(result[2], '0b26e313ed4a7ca6904b0e9369e5b957')
 
 #     def testRedirectLimit(self):
 #         url = 'http://participatoryculture.org/democracytest/redirect.php'
-#         client = httpclient.HTTPClient(url, self.callback, self.errback) 
+#         client = httpclient.HTTPClient(url, self.callback, self.errback)
 #         client.MAX_REDIRECTS = 2
 #         client.startRequest()
 #         self.runEventLoop()
@@ -1195,7 +1238,7 @@ class HTTPClientTest(HTTPClientTestBase):
 
         def getIt(path, cd=None):
             response = {
-                    'path': path, 
+                    'path': path,
                     'redirected-url': 'http://example.com' + path
             }
             if cd:
@@ -1218,9 +1261,9 @@ class HTTPClientTest(HTTPClientTestBase):
                           getIt("/", 'filename="lots.of.extensions"'))
 
         # FIXME - these two fail
-        self.assertEquals("uncleanfilename", 
+        self.assertEquals("uncleanfilename",
                           getIt("/index", 'filename="\\un/cl:ean*fi?lena<m>|e"'))
-        self.assertEquals("uncleanfil-ename2", 
+        self.assertEquals("uncleanfil-ename2",
                           getIt('/uncl*ean"fil?"ena|m""e2"'))
 
     def testGetCharsetFromResponse(self):
@@ -1237,7 +1280,7 @@ class HTTPClientTest(HTTPClientTestBase):
         self.assertEquals('iso-8859-1', getIt("text/html"))
         self.assertEquals('utf-8', getIt("text/html; charset=utf-8"))
         self.assertEquals('utf-8', getIt("text/html; charset = utf-8"))
-        self.assertEquals('utf-8', 
+        self.assertEquals('utf-8',
                 getIt("text/html; charset=utf-8; extraparam=2"))
 
 
@@ -1284,7 +1327,7 @@ class HTTPConnectionPoolTest(EventLoopTest):
                                       "Closing connection when request is done"),
             lambda error: 0, None, None, None, url, "GET", {})
 
-    
+
     def checkCounts(self, activeCount, freeCount, pendingCount):
         self.assertEquals(self.pool.activeConnectionCount, activeCount)
         self.assertEquals(self.pool.freeConnectionCount, freeCount)
@@ -1384,12 +1427,12 @@ class HTTPConnectionPoolTest(EventLoopTest):
         self.addRequest("http://www.booya.com/2")
         self.assert_(len(self.pool.connections['http:www.baz.com:80']['free'])==0 and len(self.pool.connections['http:www.baz.com:80']['active'])==0)
 
-        # 
+        #
 
 #     def testCleanup(self):
 
         # I'm not sure what this is testing exactly, so I'm not fixing it
-        
+
 #         self.addRequest("http://www.foo.com/")
 #         self.addRequest("http://www.bar.com/")
 #         self.addRequest("http://www.baz.com/")
@@ -1434,7 +1477,7 @@ class HTTPConnectionPoolTest(EventLoopTest):
 #     def testHTTPSConnection(self):
 #         conn = httpclient.HTTPSConnection()
 #         def handleOpen(data):
-#             conn.sendRequest(self.callback, self.errback, 
+#             conn.sendRequest(self.callback, self.errback,
 #                     method="GET", path='/wave/')
 #         def handleError(error):
 #             self.stopEventLoop(False)
@@ -1514,7 +1557,7 @@ class GrabURLTest(AsyncSocketTest):
 #         self.pool.MAX_CONNECTIONS_PER_SERVER = 1
 #         url = "http://www.foo.com/"
 #         self.firstClient = httpclient.HTTPClient(url, self.callback,
-#                 self.errback) 
+#                 self.errback)
 #         self.firstClient.connectionPool = self.pool
 #         self.firstClient.startRequest()
 #         url = "http://www.foo.com/2"
@@ -1527,7 +1570,7 @@ class GrabURLTest(AsyncSocketTest):
 #         conn = self.pool.getConnection('http', 'www.foo.com')
 #         conn.handleData(startResponse(headers={'Content-Length': 128}))
 #         self.pipelinedClient = HTTPClientPipelineCounter(url,
-#                 pipelineCallback, pipelineErrback) 
+#                 pipelineCallback, pipelineErrback)
 #         self.pipelinedClient.connectionPool = self.pool
 #         self.pipelinedClient.startRequest()
 #         self.runPendingIdles()
@@ -1678,19 +1721,19 @@ class CookieExpirationDateTestCase(unittest.TestCase):
         """
         from time import mktime, strptime, localtime
         from miro.httpclient import get_cookie_expiration_date
-        
+
         for cd in ( ("Thu, 03-May-07 22:48:52 GMT", "2007-05-03 22:48:52 GMT" ),
                     ("Fri, 03-Jun-11 13:41:15 GMT", "2011-06-03 13:41:15 GMT" ),
                     ("Sun, 17-Jan-2038 19:14:07 GMT", "2038-01-17 19:14:07 GMT" ),
                     ("Mon, 09-Apr-07 23:50:49 GMT", "2007-04-09 23:50:49 GMT" ),
                     ("Tue, 01-Jan-2030 10:00:00 GMT", "2030-01-01 10:00:00 GMT" ),
                     ("Tue, 17-Jul-2007 02:09:00 GMT", "2007-07-17 02:09:00 GMT") ):
-            
+
             # compare the 9-tuple we get from localtime because tuples are
             # easier to compare (and more accurate for what we're looking for)
             self.assertEquals( localtime(get_cookie_expiration_date(cd[0])),
                                localtime(mktime(strptime(cd[1], "%Y-%m-%d %H:%M:%S %Z"))) )
-            
+
     def testOverflowCookieExpirationDate(self):
         """tests the case of get_cookie_expiration_date where the cookie
         expiration date causes an overflow error when parsing it.
@@ -1700,6 +1743,6 @@ class CookieExpirationDateTestCase(unittest.TestCase):
             return
         from time import localtime
         from miro.httpclient import get_cookie_expiration_date, DATEINFUTURE
-            
+
         self.assertEquals( localtime(get_cookie_expiration_date("Tue, 26-Jul-2050 10:00:00 GMT")),
                            localtime(httpclient.DATEINFUTURE) )
