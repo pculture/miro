@@ -5,7 +5,7 @@ README
 This is the source for Miro, the client-side component of
 the Democracy platform for Internet TV.  It is targeted at average,
 unsophisticated Internet users with broadband connections.  It can be
-built for Mac OS X, Microsoft Windows, or X Windows-based platforms
+built for Mac OS X, Microsoft Windows, or X Window-based platforms
 such as Linux, with a native look and feel on each platform.  There
 is a clean separation between the portable backend and the
 platform-specific frontend in the event that new ports are desired in

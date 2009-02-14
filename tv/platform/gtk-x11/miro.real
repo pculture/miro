@@ -92,15 +92,15 @@ usage = "usage: %prog [options] [torrent files] [video files]"
 parser = optparse.OptionParser(usage=usage)
 parser.add_option('-v', '--version',
                   dest='version', action='store_true', 
-                  help='print version info')
+                  help='Print version info.')
 parser.set_defaults(version=False)
 
 parser.add_option('--theme', 
                   dest='theme', metavar='<THEME>', 
-                  help='Theme to use')
+                  help='Theme to use.')
 parser.add_option('--frontend', 
                   dest='frontend', metavar='<FRONTEND>', 
-                  help='Frontend to use (widgets, cli)')
+                  help='Frontend to use (widgets, cli, shell).')
 parser.set_defaults(frontend="widgets")
 
 group = optparse.OptionGroup(parser, "Settings options")
