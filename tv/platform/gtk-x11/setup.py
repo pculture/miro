@@ -362,16 +362,13 @@ def get_libtorrent_extension(portable_dir):
     try:
         ret = parse_pkg_config("pkg-config", "libtorrent-rasterbar")
         import libtorrent
-        if hasattr(libtorrent, "version_minor") and libtorrent.version_minor >= 14:
-            libtorrent_installed = True
+        libtorrent_installed = True
+        print "libtorrent-rasterbar (0.13 or later) and python bindings are installed--using system version."
+        return None
     except RuntimeError:
         print "libtorrent-rasterbar not installed on this system."
     except ImportError:
         print "python bindings for libtorrent-rasterbar not installed on this system"
-
-    if libtorrent_installed:
-        print "libtorrent-rasterbar (0.14 or later) and python bindings are installed--using system version."
-        return None
 
     include_dirs = [os.path.join(portable_dir, x) for x in
                             ['libtorrent/include', 'libtorrent/include/libtorrent']]

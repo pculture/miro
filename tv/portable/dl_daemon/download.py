@@ -845,12 +845,17 @@ class BTDownloader(BGDownloader):
                 self.torrent.resume()
             else:
                 self.torrent = torrentSession.session.add_torrent(torrent_info, name, None, lt.storage_mode_t.storage_mode_allocate)
-            self.torrent.auto_managed(False)
+            try:
+                if (lt.version_major, lt.version_minor) > (0, 13):
+                    logging.info("libtorrent version is (%d, %d), setting auto_managed to False", lt.version_major, lt.version_minor)
+                    self.torrent.auto_managed(False)
+            except AttributeError:
+                logging.warning("libtorrent module doesn't have version_major or version_minor")
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
-            self.handleError(_('BitTorrent failure'), 
-                             _('BitTorrent failed to startup'))
+            self.handleError(_('BitTorrent failure'), _('BitTorrent failed to startup'))
+            logging.exception("Exception thrown in _startTorrent")
         else:
             torrentSession.add_torrent(self)
 
@@ -865,7 +870,7 @@ class BTDownloader(BGDownloader):
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
-            logging.exception("Miro: Error shutting down torrent")
+            logging.exception("Error shutting down torrent")
 
     def _pauseTorrent(self):
         try:
@@ -875,7 +880,7 @@ class BTDownloader(BGDownloader):
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
-            logging.exception("Miro: Error pausing torrent")
+            logging.exception("Error pausing torrent")
 
     def _resumeTorrent(self):
         if self.torrent is not None:
@@ -885,7 +890,7 @@ class BTDownloader(BGDownloader):
             except (SystemExit, KeyboardInterrupt):
                 raise
             except:
-                logging.exception("Miro: Error resuming torrent")
+                logging.exception("Error resuming torrent")
         else:
             self._startTorrent()
 
