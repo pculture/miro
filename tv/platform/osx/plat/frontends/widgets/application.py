@@ -210,6 +210,7 @@ class AppController(NSObject):
         self.growl_notifier = None
         self.open_after_startup = None
         self.startup_done = False
+        self.pausedDownloaders = list()
         return self
 
     def setup_growl_notifier(self):
