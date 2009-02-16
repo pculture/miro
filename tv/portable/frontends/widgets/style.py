@@ -39,6 +39,7 @@ from miro.gtcache import gettext as _
 from miro.frontends.widgets import cellpack
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
+from miro.plat import utils
 from miro.plat import resources
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import file_navigator_name
@@ -397,7 +398,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         if self.show_details and self.data.video_path:
             vbox.pack_space(6)
             layout.set_font(0.8, family="Helvetica")
-            filename_textbox = layout.textbox(self.FILE_NAME_TEXT + self.data.video_path)
+            filename_textbox = layout.textbox(self.FILE_NAME_TEXT + utils.filenameToUnicode(self.data.video_path))
             filename_textbox.set_width(main_width)
             filename_textbox.set_wrap_style('char')
             vbox.pack(cellpack.align_bottom(filename_textbox), expand=True)
