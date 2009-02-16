@@ -36,6 +36,7 @@ import sys
 import time
 import errno
 import signal
+import locale
 
 from objc import NO, YES, nil
 from Foundation import *
@@ -94,8 +95,8 @@ def initializeLocale():
     except:
         pass
 
-    print languages
     os.environ["LANGUAGE"] = ':'.join(languages)
+    os.environ["LANG"] = locale.normalize(languages[0])
 
     localeInitialized = True
     del pool
