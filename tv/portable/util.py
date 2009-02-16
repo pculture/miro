@@ -823,3 +823,20 @@ class Matrix(object):
         """Iterator that yields all the objects in a column."""
         for i in xrange(self.rows):
             yield self[column, i]
+
+def entity_replace(text):
+    replacements = [
+            ('&#39;', "'"),
+            ('&apos;', "'"),
+            ('&#34;', '"'),
+            ('&quot;', '"'),
+            ('&#38;', '&'),
+            ('&amp;', '&'),
+            ('&#60;', '<'),
+            ('&lt;', '<'),
+            ('&#62;', '>'),
+            ('&gt;', '>'),
+    ] # FIXME: have a more general, charset-aware way to do this.
+    for src, dest in replacements:
+        text = text.replace(src, dest)
+    return text

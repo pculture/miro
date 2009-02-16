@@ -32,7 +32,7 @@ from miro.gtcache import ngettext
 from math import ceil
 from miro.xhtmltools import unescape, xhtmlify
 from xml.sax.saxutils import unescape
-from miro.util import checkU, returnsUnicode, checkF, returnsFilename, quoteUnicodeURL, stringify, getFirstVideoEnclosure, getSingletonDDBObject
+from miro.util import checkU, returnsUnicode, checkF, returnsFilename, quoteUnicodeURL, stringify, getFirstVideoEnclosure, getSingletonDDBObject, entity_replace
 from miro.plat.utils import FilenameType, filenameToUnicode, unicodeToFilename
 import locale
 import os
@@ -727,7 +727,9 @@ class Item(DDBObject):
         """
         if not self.title:
             if hasattr(self.entry, "title"):
-                self.title = self.entry.title
+                # The title attribute shouldn't use entities, but some in the
+                # wild do (#11413).  In that case, try to fix them.
+                self.title = entity_replace(self.entry.title)
             else:
                 enc = self.getFirstVideoEnclosure()
                 self.title = enc.get("url", _("no title")).decode("ascii", "replace")
