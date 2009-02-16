@@ -829,6 +829,7 @@ class ItemInfo(object):
     can_be_saved -- is this an expiring downloaded item?
     downloaded -- has the item been downloaded?
     is_external -- is this item external (true) or from a channel (false)?
+    is_single -- is this item a single (true) or not (false)?
     expiration_date -- datetime object for when the item will expire (or None)
     item_viewed -- has the user ever seen the item?
     video_watched -- has the user watched the video for the item?

@@ -749,7 +749,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         hbox.pack_space(2, expand=True)
 
-        if self.data.downloaded:
+        if self.data.is_external or self.data.is_single or self.data.downloaded:
             hbox.pack(self.pack_video_buttons(layout))
 
         return cellpack.align_bottom(cellpack.pad(hbox, top=5, bottom=6))
