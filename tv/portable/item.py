@@ -1108,6 +1108,11 @@ class Item(DDBObject):
         self.confirmDBThread()
         if hasattr(self.entry, "link"):
             link = self.entry.link
+            if isinstance(link, dict):
+                try:
+                    link = link['href']
+                except KeyError:
+                    return u""
             if isinstance(link, unicode):
                 return link
             try:
