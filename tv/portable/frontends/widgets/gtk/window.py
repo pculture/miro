@@ -44,6 +44,7 @@ from miro.frontends.widgets.gtk import wrappermap, widgets
 from miro.frontends.widgets.gtk import keymap
 from miro.frontends.widgets import menus
 from miro.plat import resources
+from miro.plat import utils
 
 alive_windows = set() # Keeps the objects alive until destroy() is called
 running_dialogs = set()
@@ -490,7 +491,7 @@ class FileSaveDialog(FileDialogBase):
         self._window.set_current_name(text)
 
     def get_filename(self):
-        return self._files[0]
+        return utils.FilenameType(self._files[0])
 
 class DirectorySelectDialog(FileDialogBase):
     def __init__(self, title):

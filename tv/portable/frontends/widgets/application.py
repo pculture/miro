@@ -591,18 +591,12 @@ class Application:
 
     def export_feeds(self):
         title = _('Export OPML File')
-        filename = dialogs.ask_for_save_pathname(title, "miro_subscriptions.opml")
+        filepath = dialogs.ask_for_save_pathname(title, "miro_subscriptions.opml")
 
-        if not filename:
+        if not filepath:
             return
 
-        # need to split this so that we're only running unicodeToFilename on
-        # the filename portion.
-        path, filename = os.path.split(filename)
-
-        filename = unicodeToFilename(filename.decode("utf-8"), FilenameType(path))
-        fullpath = FilenameType(os.path.join(path, filename))
-        messages.ExportSubscriptions(fullpath).send_to_backend()
+        messages.ExportSubscriptions(filepath).send_to_backend()
 
     def copy_feed_url(self):
         t, channel_infos = app.tab_list_manager.get_selection()
