@@ -321,18 +321,22 @@ class PlaybackManager (signals.SignalEmitter):
         self.update_current_resume_time(0)
         self.play_next_movie(False)
 
-    def schedule_mark_as_watched(self):
-        self.mark_as_watched_timeout = timer.add(3, self.mark_as_watched)
+    def schedule_mark_as_watched(self, id_):
+        self.mark_as_watched_timeout = timer.add(3, self.mark_as_watched, id_)
 
     def cancel_mark_as_watched(self):
         if self.mark_as_watched_timeout is not None:
             timer.cancel(self.mark_as_watched_timeout)
             self.mark_as_watched_timeout = None
 
-    def mark_as_watched(self):
-        id = self.playlist[self.position].id
-        messages.MarkItemWatched(id).send_to_backend()
+    def mark_as_watched(self, id_):
         self.mark_as_watched_timeout = None
+        # if we're in a state we don't think we should be in, then we don't
+        # want to mark the item as watched.
+        if not self.playlist or self.playlist[self.position].id != id_:
+            logging.warning("mark_as_watched: not marking the item as watched because we're in a weird state")
+            return
+        messages.MarkItemWatched(id_).send_to_backend()
 
     def get_playing_item(self):
         if self.playlist:
@@ -369,7 +373,7 @@ class PlaybackManager (signals.SignalEmitter):
 
     def _on_ready_to_play(self, video_display):
         self.open_successful = True
-        self.schedule_mark_as_watched()
+        self.schedule_mark_as_watched(self.playlist[self.position].id)
         self.play()
 
     def _on_cant_play(self, video_display):
