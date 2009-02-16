@@ -1003,9 +1003,9 @@ class GuideList(FrontendMessage):
             cg = guide.ChannelGuide(config.get(prefs.CHANNEL_GUIDE_URL))
             cg_info = GuideInfo(cg)
             self.default_guide = [cg_info]
-            # raise ValueError("No default guide set.")
-        if len(self.default_guide) > 1:
-            raise ValueError("Multiple default guides!")
+        elif len(self.default_guide) > 1:
+            logging.warning("Multiple default guides!  Picking the first one.")
+            self.default_guide = [self.default_guide[0]]
         self.default_guide = self.default_guide[0]
         self.added_guides = [g for g in guides if not g.default]
 
