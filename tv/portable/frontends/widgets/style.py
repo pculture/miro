@@ -397,8 +397,10 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         if self.show_details and self.data.video_path:
             vbox.pack_space(6)
-            layout.set_font(0.8, family="Helvetica")
-            filename_textbox = layout.textbox(self.FILE_NAME_TEXT + utils.filenameToUnicode(self.data.video_path))
+            layout.set_font(0.8, family="Helvetica", bold=True)
+            filename_textbox = layout.textbox(self.FILE_NAME_TEXT)
+            filename_textbox.append_text(" ")
+            filename_textbox.append_text(utils.filenameToUnicode(self.data.video_path), font=layout.font(0.8, family="Helvetica"))
             filename_textbox.set_width(main_width)
             filename_textbox.set_wrap_style('char')
             vbox.pack(cellpack.align_bottom(filename_textbox), expand=True)
