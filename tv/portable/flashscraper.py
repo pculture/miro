@@ -265,6 +265,50 @@ def _scrape_green_peace_video_url(url, callback):
     logging.warning("unable to scrape Green peace Video URL %s" % url)
     callback(None)
 
+def _scrape_vimeo_video_url(url, callback):
+    try:
+        id_ = re.compile(r'http://([^/]+\.)?vimeo.com/(\d+)').match(url).group(2)
+        url = u"http://www.vimeo.com/moogaloop/load/clip:%s" % id_
+        httpclient.grabURL(url, lambda x: _scrape_vimeo_callback(x, callback),
+                           lambda x: _scrape_vimeo_errback(x, callback))
+    except (SystemExit, KeyboardInterrupt):
+        raise
+    except:
+        logging.warning("Unable to scrape vimeo.com video URL: %s" % url)
+        callback(None)
+
+def _scrape_vimeo_moogaloop_url(url, callback):
+    try:
+        id_ = re.compile(r'http://([^/]+\.)?vimeo.com/moogaloop.swf\?clip_id=(\d+)').match(url).group(2)
+        url = u"http://www.vimeo.com/moogaloop/load/clip:%s" % id_
+        httpclient.grabURL(url, lambda x: _scrape_vimeo_callback(x, callback),
+                           lambda x: _scrape_vimeo_errback(x, callback))
+    except (SystemExit, KeyboardInterrupt):
+        raise
+    except:
+        logging.warning("Unable to scrape vimeo.com moogaloop URL: %s" % url)
+        callback(None)
+
+def _scrape_vimeo_callback(info, callback):
+    url = info['redirected-url']
+    try:
+        doc = minidom.parseString(info['body'])
+        id_ = re.compile(r'http://www.vimeo.com/moogaloop/load/clip:(\d+)').match(url).group(1)
+        req_sig = doc.getElementsByTagName('request_signature').item(0).firstChild.data.decode('ascii', 'replace')
+        req_sig_expires = doc.getElementsByTagName('request_signature_expires').item(0).firstChild.data.decode('ascii', 'replace')
+        url = u"http://www.vimeo.com/moogaloop/play/clip:%s/%s/%s/?q=sd" % (id_, req_sig, req_sig_expires)
+        # TODO: HD support
+        callback(url)
+    except (SystemExit, KeyboardInterrupt):
+        raise
+    except:
+        logging.warning("Unable to scrape XML for vimeo.com video URL: %s" % url)
+        callback(None)
+
+def _scrape_vimeo_errback(err, callback):
+    logging.warning("Network error scraping vimeo.com video URL")
+    callback(None)
+
 # =============================================================================
 
 scraperInfoMap = [
@@ -276,4 +320,6 @@ scraperInfoMap = [
     {'pattern': re.compile(r'http://([^/]+\.)?veoh.com/multiplayer.swf'), 'func': _scrape_veohtv_video_url},
     {'pattern': re.compile(r'http://([^/]+\.)?greenpeaceweb.org/GreenpeaceTV1Col.swf'), 'func': _scrape_green_peace_video_url},
     {'pattern': re.compile(r'http://([^/]+\.)?break.com/'), 'func': _scrape_break_video_url},
+    {'pattern': re.compile(r'http://([^/]+\.)?vimeo.com/\d+'), 'func': _scrape_vimeo_video_url},
+    {'pattern': re.compile(r'http://([^/]+\.)?vimeo.com/moogaloop.swf'), 'func': _scrape_vimeo_moogaloop_url},
 ]
