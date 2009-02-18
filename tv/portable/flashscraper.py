@@ -119,13 +119,15 @@ def _youtube_callback_step2(info, videoID, callback):
         token = params['token'][0]
 
         lodef_url = u"http://www.youtube.com/get_video?video_id=%s&t=%s&eurl=&el=embedded&ps=default" % (videoID, token)
-        hidef_url = lodef_url + u"&fmt=18"
-        hihidef_url = lodef_url + u"&fmt=22"
-        logging.debug("youtube download: trying %s", hihidef_url)
+        urls = [# lodef_url + u"&fmt=35",
+                lodef_url + u"&fmt=22",
+                lodef_url + u"&fmt=18",
+                lodef_url]
+        logging.debug("youtube download: trying %s", urls[0])
         # go through the urls we have until we find one that's successful or
         # 404 on all of them.
-        httpclient.grabHeaders(hihidef_url,
-                lambda x: _youtube_get_first_successful(x, hihidef_url, [hidef_url, lodef_url], callback),
+        httpclient.grabHeaders(urls[0],
+                lambda x: _youtube_get_first_successful(x, urls[0], urls[1:], callback),
                 lambda x: _youtube_errback(x, callback))
 
     except:
