@@ -60,10 +60,12 @@ if OS_VERSION == 9:
     SANDBOX_DIR = os.path.join(SANDBOX_ROOT_DIR, 'sandbox')
     PYTHON_ROOT = os.path.join(SANDBOX_DIR, "Library", "Frameworks", "Python.framework", "Versions", "Current")
     PYTHON_LIB = os.path.join(PYTHON_ROOT, "Python")
+    PYTHON_VERSION = "2.5"
     sys.path.insert(0, os.path.join(PYTHON_ROOT, 'lib', 'python2.5', 'site-packages'))
 else:
     SANDBOX_DIR = "/usr/local"
     PYTHON_LIB = os.path.join("/", "Library", "Frameworks", "Python.framework", "Versions", "Current", "Python")
+    PYTHON_VERSION = "2.4"
 
 # =============================================================================
 # Look for the Boost library in various common places.
@@ -432,6 +434,7 @@ class MiroBuild (py2app):
         py2app.run(self)
         
         self.fix_frameworks_alias()
+        self.precompile_site_pyc()
         self.copy_quicktime_components()
         self.copy_portable_resources()
         self.copy_config_file()
@@ -537,6 +540,11 @@ class MiroBuild (py2app):
                 os.makedirs(os.path.dirname(dest))
                 shutil.copy2(source, dest)
                 print "    %s" % dest
+    
+    def precompile_site_pyc(self):
+        print "Pre-compiling site.py"
+        import py_compile
+        py_compile.compile(os.path.join(self.rsrcRoot, 'lib', 'python%s' % PYTHON_VERSION, 'site.py'))
     
     def copy_theme_files(self):
         # Copy theme files to the application bundle
