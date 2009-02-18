@@ -57,7 +57,7 @@ from miro.plat import bundle
 from miro.plat import _growlImage
 from miro.plat import migrateappname
 from miro.plat.utils import ensureDownloadDaemonIsTerminated, filenameTypeToOSFilename, osFilenamesToFilenameTypes
-from miro.plat.frontends.widgets import video, osxmenus, sparkleupdater
+from miro.plat.frontends.widgets import video, osxmenus, sparkleupdater, threads
 from miro.plat.frontends.widgets.rect import Rect
 from miro.gtcache import gettext as _
 
@@ -168,6 +168,45 @@ class OSXApplication(Application):
         body = _('Download of video \'%s\' is finished.') % item.get_title()
         icon = _growlImage.Image.imageFromPath(item.getThumbnail())
         self.app_controller.growl_notifier.notify(GROWL_DOWNLOAD_COMPLETE_NOTIFICATION, title, body, icon=icon)
+
+    def handle_unwatched_count_changed(self):
+        try:
+            appIcon = NSImage.imageNamed_(u'NSApplicationIcon')
+            badgedIcon = NSImage.alloc().initWithSize_(appIcon.size())
+            badgedIcon.lockFocus()
+        except:
+            pass
+        else:
+            try:
+                appIcon.compositeToPoint_operation_((0,0), NSCompositeSourceOver)
+                if self.unwatched_count > 0:
+                    digits = len(str(self.unwatched_count))
+                    badge = nil
+                    if digits <= 2:
+                        badge = NSImage.imageNamed_(u'dock_badge_1_2.png')
+                    elif digits <= 5:
+                        badge = NSImage.imageNamed_(u'dock_badge_%d.png' % digits)
+                    else:
+                        logging.warn("Wow, that's a whole lot of new items!")
+                    if badge is not nil:
+                        appIconSize = appIcon.size()
+                        badgeSize = badge.size()
+                        badgeLoc = (appIconSize.width - badgeSize.width, appIconSize.height - badgeSize.height)
+                        badge.compositeToPoint_operation_(badgeLoc, NSCompositeSourceOver)
+                        badgeLabel = NSString.stringWithString_(u'%d' % self.unwatched_count)
+                        badgeLabelFont = NSFont.boldSystemFontOfSize_(24)
+                        badgeLabelColor = NSColor.whiteColor()
+                        badgeParagraphStyle = NSMutableParagraphStyle.alloc().init()
+                        badgeParagraphStyle.setAlignment_(NSCenterTextAlignment)
+                        badgeLabelAttributes = {NSFontAttributeName: badgeLabelFont, 
+                                                NSForegroundColorAttributeName: badgeLabelColor,
+                                                NSParagraphStyleAttributeName: badgeParagraphStyle}
+                        badgeLabelLoc = (badgeLoc[0], badgeLoc[1]-10)
+                        badgeLabel.drawInRect_withAttributes_((badgeLabelLoc, badgeSize), badgeLabelAttributes)
+            finally:
+                badgedIcon.unlockFocus()
+            appl = NSApplication.sharedApplication()
+            threads.call_on_ui_thread(appl.setApplicationIconImage_, badgedIcon)
         
     def set_launch_at_startup(self, launch):
         defaults = NSUserDefaults.standardUserDefaults()

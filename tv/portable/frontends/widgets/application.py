@@ -777,6 +777,9 @@ class Application:
         signals.system.connect('update-available', self.handle_update_available)
         signals.system.connect('new-dialog', self.handle_dialog)
         signals.system.connect('shutdown', self.on_backend_shutdown)
+    
+    def handle_unwatched_count_changed(self):
+        pass
 
     def handle_dialog(self, obj, dialog):
         call_on_ui_thread(rundialog.run, dialog)
@@ -999,6 +1002,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
     def handle_unwatched_count_changed(self, message):
         app.widgetapp.unwatched_count = message.count
+        app.widgetapp.handle_unwatched_count_changed()
 
     def handle_play_movie(self, message):
         app.playback_manager.start_with_items(message.item_infos)
