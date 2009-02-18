@@ -37,6 +37,7 @@ if xlibhelper.XInitThreads() == 0:
 
 import os.path
 import sys
+import string
 
 # This fixes some/all problems with Python 2.6 support but should be
 # re-addressed when we have a system with Python 2.6 to test with.
@@ -76,30 +77,37 @@ def startup(props_to_set):
     from miro import startup
     startup.initialize(parsed_options.theme)
 
-    if parsed_options.frontend == 'widgets':
-        from miro.plat.frontends.widgets.application import GtkX11Application
-        GtkX11Application().run(props_to_set)
-    elif parsed_options.frontend == 'cli':
-        from miro.frontends import cli
-        cli.run(parsed_options.theme)
-    elif parsed_options.frontend == 'shell':
-        from miro.frontends import shell
-        shell.run()
-    else:
-        raise ValueError("Unknown frontend: %s" % parsed_options.frontend)
+    frontend = parsed_options.frontend
+    goodchars = string.letters + "."
+    for c in frontend:
+        if c not in goodchars:
+            raise ValueError("Unknown frontend: %s" % parsed_options.frontend)
+    try:
+        _temp = __import__('miro.plat.frontends.%s' % frontend, globals(), locals(), ['application'], -1)
+        application = _temp.application
+    except ImportError:
+        try:
+            _temp = __import__('miro.frontends.%s' % frontend, globals(), locals(), ['application'], -1)
+            application = _temp.application
+        except ImportError:
+            _temp = __import__(frontend, globals(), locals(), ['application'], -1)
+            application = _temp.application
+        except ImportError:
+            raise ValueError("Unknown frontend: %s" % parsed_options.frontend)
+    application.run_application(props_to_set)
 
 usage = "usage: %prog [options] [torrent files] [video files]"
 parser = optparse.OptionParser(usage=usage)
 parser.add_option('-v', '--version',
-                  dest='version', action='store_true', 
+                  dest='version', action='store_true',
                   help='Print version info.')
 parser.set_defaults(version=False)
 
-parser.add_option('--theme', 
-                  dest='theme', metavar='<THEME>', 
+parser.add_option('--theme',
+                  dest='theme', metavar='<THEME>',
                   help='Theme to use.')
-parser.add_option('--frontend', 
-                  dest='frontend', metavar='<FRONTEND>', 
+parser.add_option('--frontend',
+                  dest='frontend', metavar='<FRONTEND>',
                   help='Frontend to use (widgets, cli, shell).')
 parser.set_defaults(frontend="widgets")
 
@@ -119,21 +127,21 @@ parser.set_defaults(set_prefs=[])
 parser.add_option_group(group)
 
 group = optparse.OptionGroup(parser, "Debugging options")
-group.add_option('--debug', 
-                  action="store_true", 
+group.add_option('--debug',
+                  action="store_true",
                   help='Starts Miro in a gdb session for better debugging.')
-group.add_option('--unittest', 
-                  dest='unittest', action='store_true', 
+group.add_option('--unittest',
+                  dest='unittest', action='store_true',
                   help='Run unittests instead of launching the program.')
 parser.set_defaults(unittest=False)
-group.add_option('--profile', 
-                  metavar='<FILE>', 
+group.add_option('--profile',
+                  metavar='<FILE>',
                   help='Write profiling information to FILE.')
-group.add_option('--bias', 
+group.add_option('--bias',
                   metavar='<BIAS>', type=float,
                   help='Set profiling bias to BIAS.')
 parser.set_defaults(bias=None)
-group.add_option('--sync', 
+group.add_option('--sync',
                   action="store_true",
                   help='Use X syncronously.')
 parser.set_defaults(sync=False)
@@ -183,7 +191,7 @@ def startapp():
     for mem in parsed_options.set_prefs:
         p, val = get_keyval(mem)
         props_to_set.append( (p, val) )
-   
+
     options.shouldSyncX = parsed_options.sync
     options.frontend = parsed_options.frontend
     if parsed_options.theme:
@@ -203,7 +211,7 @@ Miro (%s)
 
 Miro comes with ABSOLUTELY NO WARRANTY.
 
-This is free software, and you are welcome to redistribute it under certain 
+This is free software, and you are welcome to redistribute it under certain
 conditions.  See license.txt for details.
 """ % config.get(prefs.APP_VERSION)
 
@@ -235,8 +243,8 @@ else:
             onetime.OneTime()
             startapp()
         except onetime.NameExistsException:
-            # This onetime.NameExistsException is either dbus.NameExistsException 
-            # or an exception we created ourselves.  Change it to 
+            # This onetime.NameExistsException is either dbus.NameExistsException
+            # or an exception we created ourselves.  Change it to
             # dbus.NameExistsException when we get rid of code that allows Miro to
             # run on platforms with the older dbus-python bindings.
             bus = dbus.SessionBus()
@@ -245,7 +253,7 @@ else:
             for i in xrange(len(args)):
                 args[i] = args[i].decode('latin1')
             dbusargs = dbus.Array(args, signature="s")
-    
+
             iface.handle_args(dbusargs)
         except dbus.DBusException:
             startapp()

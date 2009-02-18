@@ -330,7 +330,7 @@ then
         exit;
     fi
 
-    %(runtimelib)s$GDB -ex 'set breakpoint pending on' -ex 'break gdk_x_error' -ex 'run' --args $PYTHON ./miro.real --sync "$@"
+    %(runtimelib)s$GDB -ex 'set breakpoint pending on' -ex 'run' --args $PYTHON ./miro.real --sync "$@"
 else
     %(runtimelib)smiro.real "$@"
 fi
@@ -855,6 +855,7 @@ setup(name='miro',
         'miro.dl_daemon.private',
         'miro.frontends',
         'miro.frontends.cli',
+        'miro.frontends.shell',
         'miro.frontends.widgets',
         'miro.frontends.widgets.gtk',
         'miro.plat',

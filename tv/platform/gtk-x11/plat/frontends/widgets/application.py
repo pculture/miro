@@ -90,6 +90,9 @@ def set_bool(key, value): return _set_pref('window/' + key, 'set_bool', value)
 def set_player_int(key, value): return _set_pref(key, 'set_int', value)
 def set_player_bool(key, value): return _set_pref(key, 'set_bool', value)
 
+def run_application(props_to_set):
+    GtkX11Application().run(props_to_set)
+
 class GtkX11Application(Application):
     def run(self, props_to_set):
         threads.call_on_ui_thread(mozsetup.setup_mozilla_environment)
