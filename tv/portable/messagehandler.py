@@ -67,6 +67,7 @@ class ViewTracker(object):
     def __init__(self):
         self.add_callbacks()
         self.reset_changes()
+        self.tabs_being_reordered = False
         self._last_sent_info = {}
 
     def reset_changes(self):
@@ -138,6 +139,11 @@ class ViewTracker(object):
             view.remove_change_callback(self.on_object_changed)
 
     def on_object_added(self, obj, id):
+        if self.tabs_being_reordered:
+            # even though we're not sending messages, call _make_new_info() to
+            # update _last_sent_info
+            self._make_new_info(obj)
+            return
         if obj in self.removed:
             # object was already removed, we need to send that message out
             # before we send the add message.
@@ -146,10 +152,17 @@ class ViewTracker(object):
         self.schedule_send_messages()
 
     def on_object_removed(self, obj, id):
+        if self.tabs_being_reordered:
+            # even though we're not sending messages, update _last_sent_info
+            del self._last_sent_info[id]
+            return
         self.removed.add(obj)
         self.schedule_send_messages()
 
     def on_object_changed(self, obj, id):
+        # Don't pay attention to tabs_being_reordered here.  This lets us
+        # update the new/unwatched counts when channels are added/removed from
+        # folders (#10988)
         self.changed.add(obj)
         self.schedule_send_messages()
 
@@ -712,6 +725,22 @@ class BackendMessageHandler(messages.MessageHandler):
         site.remove()
 
     def handle_tabs_reordered(self, message):
+        # The frontend already has the channels in the correct order and with
+        # the correct parents.  Don't send it updates based on the backend
+        # re-aranging things
+        if self.channel_tracker:
+            self.channel_tracker.tabs_being_reordered = True
+        if self.audio_channel_tracker:
+            self.audio_channel_tracker.tabs_being_reordered = True
+        try:
+            self._do_handle_tabs_reordered(message)
+        finally:
+            if self.channel_tracker:
+                self.channel_tracker.tabs_being_reordered = False
+            if self.audio_channel_tracker:
+                self.audio_channel_tracker.tabs_being_reordered = False
+
+    def _do_handle_tabs_reordered(self, message):
         video_order = getSingletonDDBObject(views.channelTabOrder)
         audio_order = getSingletonDDBObject(views.audioChannelTabOrder)
         playlist_order = getSingletonDDBObject(views.playlistTabOrder)
