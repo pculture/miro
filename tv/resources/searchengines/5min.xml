@@ -1,0 +1,6 @@
+<searchengine>
+   <id>5min</id>
+   <displayname>5min</displayname>
+   <url>http://www.5min.com/Rss/Search/%s</url>
+   <sort>9</sort>
+</searchengine>
