@@ -332,6 +332,15 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
   RMDIR ${directory}
 !macroend
 
+!macro clear_out_old_xulrunner directory
+  Delete   "${directory}\application.ini"
+  RMDIR /r "${directory}\chrome"
+  RMDIR /r "${directory}\components"
+  RMDIR /r "${directory}\extensions"
+  RMDIR /r "${directory}\defaults"
+  RMDIR /r "${directory}\plugins"
+!macroend
+
 !macro GetConfigOptionsMacro trim find
 ClearErrors
 Push $R0
@@ -565,7 +574,10 @@ lbl_winnt:
   Quit
 
 is_admin:
+  !insertmacro clear_out_old_xulrunner $INSTDIR
+
   SetShellVarContext all
+
   SetOutPath "$INSTDIR"
 
 StrCmp $ONLY_INSTALL_THEME "1" install_theme
