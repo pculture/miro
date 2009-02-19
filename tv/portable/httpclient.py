@@ -195,7 +195,8 @@ def get_cookie_expiration_date(val):
     fmts = ( '%a, %d %b %Y %H:%M:%S %Z',
              '%a, %d %b %y %H:%M:%S %Z',
              '%a, %d-%b-%Y %H:%M:%S %Z',
-             '%a, %d-%b-%y %H:%M:%S %Z' )
+             '%a, %d-%b-%y %H:%M:%S %Z',
+             '%A, %d-%b-%y %H:%M:%S %Z' )
     
     for fmt in fmts:
         try:

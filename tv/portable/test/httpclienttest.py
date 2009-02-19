@@ -1722,12 +1722,13 @@ class CookieExpirationDateTestCase(unittest.TestCase):
         from time import mktime, strptime, localtime
         from miro.httpclient import get_cookie_expiration_date
 
-        for cd in ( ("Thu, 03-May-07 22:48:52 GMT", "2007-05-03 22:48:52 GMT" ),
-                    ("Fri, 03-Jun-11 13:41:15 GMT", "2011-06-03 13:41:15 GMT" ),
-                    ("Sun, 17-Jan-2038 19:14:07 GMT", "2038-01-17 19:14:07 GMT" ),
-                    ("Mon, 09-Apr-07 23:50:49 GMT", "2007-04-09 23:50:49 GMT" ),
-                    ("Tue, 01-Jan-2030 10:00:00 GMT", "2030-01-01 10:00:00 GMT" ),
-                    ("Tue, 17-Jul-2007 02:09:00 GMT", "2007-07-17 02:09:00 GMT") ):
+        for cd in ( ("Thu, 03-May-07 22:48:52 GMT", "2007-05-03 22:48:52 GMT"),
+                    ("Fri, 03-Jun-11 13:41:15 GMT", "2011-06-03 13:41:15 GMT"),
+                    ("Sun, 17-Jan-2038 19:14:07 GMT", "2038-01-17 19:14:07 GMT"),
+                    ("Mon, 09-Apr-07 23:50:49 GMT", "2007-04-09 23:50:49 GMT"),
+                    ("Tue, 01-Jan-2030 10:00:00 GMT", "2030-01-01 10:00:00 GMT"),
+                    ("Tue, 17-Jul-2007 02:09:00 GMT", "2007-07-17 02:09:00 GMT"),
+                    ("Monday, 15-Feb-10 17:13:07 GMT", "2010-02-15 17:13:07 GMT")):
 
             # compare the 9-tuple we get from localtime because tuples are
             # easier to compare (and more accurate for what we're looking for)
