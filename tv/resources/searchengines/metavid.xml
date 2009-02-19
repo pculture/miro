@@ -1,0 +1,6 @@
+<searchengine>
+   <id>metavid</id>
+   <displayname>Metavid</displayname>
+   <url>http://metavid.org/w/index.php?title=Special:MvExportSearch&amp;order=recent&amp;tracks=ht_en%2Canno_en%2Cthomas_en&amp;f[0][a]=and&amp;f[0][t]=match&amp;f[0][v]=%s</url>
+   <sort>9</sort>
+</searchengine>
