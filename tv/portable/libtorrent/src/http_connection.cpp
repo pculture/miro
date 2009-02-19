@@ -39,7 +39,6 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "libtorrent/connection_queue.hpp"
 
 #include <boost/bind.hpp>
-#include <boost/lexical_cast.hpp>
 #include <string>
 #include <algorithm>
 
@@ -116,7 +115,7 @@ void http_connection::get(std::string const& url, time_duration timeout, int pri
 
 	sendbuffer = headers.str();
 	m_url = url;
-	start(hostname, boost::lexical_cast<std::string>(port), timeout, prio
+	start(hostname, to_string(port).elems, timeout, prio
 		, ps, ssl, handle_redirects, bind_addr);
 }
 
@@ -181,6 +180,7 @@ void http_connection::start(std::string const& hostname, std::string const& port
 		if (m_bind_addr != address_v4::any())
 		{
 			error_code ec;
+			m_sock.open(m_bind_addr.is_v4()?tcp::v4():tcp::v6(), ec);
 			m_sock.bind(tcp::endpoint(m_bind_addr, 0), ec);
 			if (ec)
 			{
@@ -249,6 +249,7 @@ void http_connection::close()
 {
 	error_code ec;
 	m_timer.cancel(ec);
+	m_resolver.cancel();
 	m_limiter_timer.cancel(ec);
 	m_sock.close(ec);
 	m_hostname.clear();
@@ -398,8 +399,11 @@ void http_connection::on_read(error_code const& e
 		TORRENT_ASSERT(m_download_quota >= 0);
 	}
 
-	if (e == asio::error::eof)
+	// when using the asio SSL wrapper, it seems like
+	// we get the shut_down error instead of EOF
+	if (e == asio::error::eof || e == asio::error::shut_down)
 	{
+		error_code ec = asio::error::eof;
 		TORRENT_ASSERT(bytes_transferred == 0);
 		char const* data = 0;
 		std::size_t size = 0;
@@ -408,7 +412,7 @@ void http_connection::on_read(error_code const& e
 			data = m_parser.get_body().begin;
 			size = m_parser.get_body().left();
 		}
-		callback(e, data, size);
+		callback(ec, data, size);
 		close();
 		return;
 	}

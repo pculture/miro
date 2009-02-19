@@ -58,6 +58,7 @@ natpmp::natpmp(io_service& ios, address const& listen_interface, portmap_callbac
 	, m_refresh_timer(ios)
 	, m_next_refresh(-1)
 	, m_disabled(false)
+	, m_abort(false)
 {
 #if defined(TORRENT_LOGGING) || defined(TORRENT_VERBOSE_LOGGING)
 	m_log.open("natpmp.log", std::ios::in | std::ios::out | std::ios::trunc);
@@ -287,10 +288,22 @@ void natpmp::send_map_request(int i)
 
 	error_code ec;
 	m_socket.send_to(asio::buffer(buf, 12), m_nat_endpoint, 0, ec);
-	// linear back-off instead of exponential
-	++m_retry_count;
-	m_send_timer.expires_from_now(milliseconds(250 * m_retry_count), ec);
-	m_send_timer.async_wait(bind(&natpmp::resend_request, self(), i, _1));
+	if (m_abort)
+	{
+		// when we're shutting down, ignore the
+		// responses and just remove all mappings
+		// immediately
+		m_currently_mapping = -1;
+		m.action = mapping_t::action_none;
+		try_next_mapping(i);
+	}
+	else
+	{
+		// linear back-off instead of exponential
+		++m_retry_count;
+		m_send_timer.expires_from_now(milliseconds(250 * m_retry_count), ec);
+		m_send_timer.async_wait(bind(&natpmp::resend_request, self(), i, _1));
+	}
 }
 
 void natpmp::resend_request(int i, error_code const& e)

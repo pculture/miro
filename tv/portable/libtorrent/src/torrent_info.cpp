@@ -44,7 +44,6 @@ POSSIBILITY OF SUCH DAMAGE.
 #pragma warning(push, 1)
 #endif
 
-#include <boost/lexical_cast.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/bind.hpp>
@@ -74,13 +73,12 @@ namespace
 		str += 0x80 | (chr & 0x3f);
 	}
 
-	void verify_encoding(file_entry& target)
+	bool verify_encoding(std::string& target)
 	{
 		std::string tmp_path;
-		std::string file_path = target.path.string();
 		bool valid_encoding = true;
-		for (std::string::iterator i = file_path.begin()
-			, end(file_path.end()); i != end; ++i)
+		for (std::string::iterator i = target.begin()
+			, end(target.end()); i != end; ++i)
 		{
 			// valid ascii-character
 			if ((*i & 0x80) == 0)
@@ -153,7 +151,14 @@ namespace
 		// save the original encoding and replace the
 		// commonly used path with the correctly
 		// encoded string
-		if (!valid_encoding) target.path = tmp_path;
+		if (!valid_encoding) target = tmp_path;
+		return valid_encoding;
+	}
+
+	void verify_encoding(file_entry& target)
+	{
+		std::string p = target.path.string();
+		if (!verify_encoding(p)) target.path = p;
 	}
 
 	bool extract_single_file(lazy_entry const& dict, file_entry& target
@@ -330,12 +335,19 @@ namespace libtorrent
 	torrent_info::~torrent_info()
 	{}
 
+	void torrent_info::copy_on_write()
+	{
+		if (m_orig_files) return;
+		m_orig_files.reset(new file_storage(m_files));
+	}
+
 	void torrent_info::swap(torrent_info& ti)
 	{
 		using std::swap;
 		m_urls.swap(ti.m_urls);
 		m_url_seeds.swap(ti.m_url_seeds);
 		m_files.swap(ti.m_files);
+		m_orig_files.swap(ti.m_orig_files);
 		m_nodes.swap(ti.m_nodes);
 		swap(m_info_hash, ti.m_info_hash);
 		swap(m_creation_date, ti.m_creation_date);
@@ -366,7 +378,7 @@ namespace libtorrent
 		// copy the info section
 		m_info_section_size = section.second;
 		m_info_section.reset(new char[m_info_section_size]);
-		memcpy(m_info_section.get(), section.first, m_info_section_size);
+		std::memcpy(m_info_section.get(), section.first, m_info_section_size);
 		TORRENT_ASSERT(section.first[0] == 'd');
 		TORRENT_ASSERT(section.first[m_info_section_size-1] == 'e');
 
@@ -413,6 +425,9 @@ namespace libtorrent
 			error = "invalid 'name' of torrent (possible exploit attempt)";
 			return false;
 		}
+
+		// correct utf-8 encoding errors
+		verify_encoding(name);
 	
 		// extract file list
 		lazy_entry const* i = info.dict_find_list("files");
@@ -497,20 +512,23 @@ namespace libtorrent
 				}
 			}
 
-			// shuffle each tier
-			std::vector<announce_entry>::iterator start = m_urls.begin();
-			std::vector<announce_entry>::iterator stop;
-			int current_tier = m_urls.front().tier;
-			for (stop = m_urls.begin(); stop != m_urls.end(); ++stop)
+			if (!m_urls.empty())
 			{
-				if (stop->tier != current_tier)
+				// shuffle each tier
+				std::vector<announce_entry>::iterator start = m_urls.begin();
+				std::vector<announce_entry>::iterator stop;
+				int current_tier = m_urls.front().tier;
+				for (stop = m_urls.begin(); stop != m_urls.end(); ++stop)
 				{
-					std::random_shuffle(start, stop);
-					start = stop;
-					current_tier = stop->tier;
+					if (stop->tier != current_tier)
+					{
+						std::random_shuffle(start, stop);
+						start = stop;
+						current_tier = stop->tier;
+					}
 				}
+				std::random_shuffle(start, stop);
 			}
-			std::random_shuffle(start, stop);
 		}
 		
 
@@ -563,9 +581,11 @@ namespace libtorrent
 
 		m_comment = torrent_file.dict_find_string_value("comment.utf-8");
 		if (m_comment.empty()) m_comment = torrent_file.dict_find_string_value("comment");
+		verify_encoding(m_comment);
 	
 		m_created_by = torrent_file.dict_find_string_value("created by.utf-8");
 		if (m_created_by.empty()) m_created_by = torrent_file.dict_find_string_value("created by");
+		verify_encoding(m_created_by);
 
 		lazy_entry const* info = torrent_file.dict_find_dict("info");
 		if (info == 0)

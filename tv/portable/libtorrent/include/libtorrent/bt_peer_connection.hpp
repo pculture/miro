@@ -262,8 +262,8 @@ namespace libtorrent
 		void write_pe3_sync();
 		void write_pe4_sync(int crypto_select);
 
-		void write_pe_vc_cryptofield(buffer::interval& write_buf, 
-									 int crypto_field, int pad_size);
+		void write_pe_vc_cryptofield(buffer::interval& write_buf
+			, int crypto_field, int pad_size);
 
 		// stream key (info hash of attached torrent)
 		// secret is the DH shared secret
@@ -275,14 +275,21 @@ public:
 		// these functions encrypt the send buffer if m_rc4_encrypted
 		// is true, otherwise it passes the call to the
 		// peer_connection functions of the same names
-		void send_buffer(char* buf, int size, int flags = 0);
+		void send_buffer(char const* buf, int size, int flags = 0);
 		buffer::interval allocate_send_buffer(int size);
 		template <class Destructor>
 		void append_send_buffer(char* buffer, int size, Destructor const& destructor)
 		{
 #ifndef TORRENT_DISABLE_ENCRYPTION
 			if (m_rc4_encrypted)
+			{
+				TORRENT_ASSERT(send_buffer_size() == m_encrypted_bytes);
 				m_RC4_handler->encrypt(buffer, size);
+#ifdef TORRENT_DEBUG
+				m_encrypted_bytes += size;
+				TORRENT_ASSERT(m_encrypted_bytes == send_buffer_size() + size);
+#endif
+			}
 #endif
 			peer_connection::append_send_buffer(buffer, size, destructor);
 		}
@@ -290,11 +297,13 @@ public:
 
 private:
 
+		void encrypt_pending_buffer();
+
 		// Returns offset at which bytestream (src, src + src_size)
 		// matches bytestream(target, target + target_size).
 		// If no sync found, return -1
-		int get_syncoffset(char const* src, int src_size,
-						   char const* target, int target_size) const;
+		int get_syncoffset(char const* src, int src_size
+			, char const* target, int target_size) const;
 #endif
 
 		enum state
@@ -332,9 +341,6 @@ private:
 
 		// state of on_receive
 		state m_state;
-
-		// the timeout in seconds
-		int m_timeout;
 
 		static const message_handler m_message_handler[num_supported_messages];
 
@@ -415,6 +421,11 @@ private:
 		bool m_in_constructor;
 		
 		bool m_sent_handshake;
+
+		// the number of bytes in the send buffer
+		// that have been encrypted (only used for
+		// encrypted connections)
+		int m_encrypted_bytes;
 #endif
 
 	};

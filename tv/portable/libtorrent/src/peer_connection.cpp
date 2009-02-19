@@ -52,6 +52,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "libtorrent/policy.hpp"
 #include "libtorrent/socket_type.hpp"
 #include "libtorrent/assert.hpp"
+#include "libtorrent/broadcast_socket.hpp"
 
 //#define TORRENT_CORRUPT_DATA
 
@@ -157,7 +158,7 @@ namespace libtorrent
 #if defined TORRENT_VERBOSE_LOGGING || defined TORRENT_ERROR_LOGGING
 		error_code ec;
 		m_logger = m_ses.create_log(m_remote.address().to_string(ec) + "_"
-			+ boost::lexical_cast<std::string>(m_remote.port()), m_ses.listen_port());
+			+ to_string(m_remote.port()).elems, m_ses.listen_port());
 		(*m_logger) << "*** OUTGOING CONNECTION\n";
 #endif
 #ifdef TORRENT_DEBUG
@@ -265,7 +266,7 @@ namespace libtorrent
 		error_code ec;
 		TORRENT_ASSERT(m_socket->remote_endpoint(ec) == m_remote || ec);
 		m_logger = m_ses.create_log(remote().address().to_string(ec) + "_"
-			+ boost::lexical_cast<std::string>(remote().port()), m_ses.listen_port());
+			+ to_string(remote().port()).elems, m_ses.listen_port());
 		(*m_logger) << "*** INCOMING CONNECTION\n";
 #endif
 		
@@ -2549,6 +2550,10 @@ namespace libtorrent
 		error_code ec;
 		m_socket->close(ec);
 		m_ses.close_connection(this, message);
+
+		// we should only disconnect while we still have
+		// at least one reference left to the connection
+		TORRENT_ASSERT(refcount() > 0);
 	}
 
 	void peer_connection::set_upload_limit(int limit)
@@ -3507,6 +3512,10 @@ namespace libtorrent
 
 		INVARIANT_CHECK;
 
+		// keep ourselves alive in until this function exits in
+		// case we disconnect
+		boost::intrusive_ptr<peer_connection> me(self());
+
 		TORRENT_ASSERT(m_channel_state[download_channel] == peer_info::bw_network);
 		m_channel_state[download_channel] = peer_info::bw_idle;
 
@@ -3773,6 +3782,10 @@ namespace libtorrent
 		session_impl::mutex_t::scoped_lock l(m_ses.m_mutex);
 
 		INVARIANT_CHECK;
+
+		// keep ourselves alive in until this function exits in
+		// case we disconnect
+		boost::intrusive_ptr<peer_connection> me(self());
 
 		TORRENT_ASSERT(m_channel_state[upload_channel] == peer_info::bw_network);
 

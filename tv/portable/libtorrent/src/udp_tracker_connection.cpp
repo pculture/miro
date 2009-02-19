@@ -45,7 +45,11 @@ POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 #include <boost/bind.hpp>
+
+#if defined TORRENT_VERBOSE_LOGGING || defined TORRENT_LOGGING
 #include <boost/lexical_cast.hpp>
+using boost::lexical_cast;
+#endif
 
 #ifdef _MSC_VER
 #pragma warning(pop)
@@ -55,6 +59,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "libtorrent/parse_url.hpp"
 #include "libtorrent/udp_tracker_connection.hpp"
 #include "libtorrent/io.hpp"
+#include "libtorrent/escape_string.hpp"
 
 namespace
 {
@@ -68,7 +73,6 @@ namespace
 }
 
 using boost::bind;
-using boost::lexical_cast;
 
 namespace libtorrent
 {
@@ -111,7 +115,7 @@ namespace libtorrent
 			return;
 		}
 		
-		udp::resolver::query q(hostname, boost::lexical_cast<std::string>(port));
+		udp::resolver::query q(hostname, to_string(port).elems);
 		m_name_lookup.async_resolve(q
 			, boost::bind(
 			&udp_tracker_connection::name_lookup, self(), _1, _2));
@@ -309,7 +313,7 @@ namespace libtorrent
 		char* ptr = buf;
 
 		if (m_transaction_id == 0)
-			m_transaction_id = rand() ^ (rand() << 16);
+			m_transaction_id = std::rand() ^ (std::rand() << 16);
 
 		detail::write_uint32(0x417, ptr);
 		detail::write_uint32(0x27101980, ptr); // connection_id
@@ -331,7 +335,7 @@ namespace libtorrent
 	void udp_tracker_connection::send_udp_scrape()
 	{
 		if (m_transaction_id == 0)
-			m_transaction_id = rand() ^ (rand() << 16);
+			m_transaction_id = std::rand() ^ (std::rand() << 16);
 
 		if (!m_socket.is_open()) return; // the operation was aborted
 
@@ -465,7 +469,7 @@ namespace libtorrent
 	void udp_tracker_connection::send_udp_announce()
 	{
 		if (m_transaction_id == 0)
-			m_transaction_id = rand() ^ (rand() << 16);
+			m_transaction_id = std::rand() ^ (std::rand() << 16);
 
 		if (!m_socket.is_open()) return; // the operation was aborted
 

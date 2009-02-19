@@ -46,7 +46,6 @@ POSSIBILITY OF SUCH DAMAGE.
 #pragma warning(push, 1)
 #endif
 
-#include <boost/lexical_cast.hpp>
 #include <boost/filesystem/convenience.hpp>
 #include <boost/optional.hpp>
 #include <boost/bind.hpp>
@@ -75,7 +74,6 @@ namespace std
 #endif
 
 using boost::bind;
-using boost::mutex;
 using libtorrent::aux::session_impl;
 
 #ifdef BOOST_NO_EXCEPTIONS
@@ -298,7 +296,8 @@ namespace libtorrent
 	void torrent_handle::queue_position_up() const
 	{
 		INVARIANT_CHECK;
-		TORRENT_FORWARD(set_queue_position(t->queue_position() - 1));
+		TORRENT_FORWARD(set_queue_position(t->queue_position() == 0
+			? t->queue_position() : t->queue_position() - 1));
 	}
 
 	void torrent_handle::queue_position_down() const

@@ -258,8 +258,6 @@ void bind_torrent_handle()
     void (torrent_handle::*resolve_countries1)(bool) = &torrent_handle::resolve_countries;
 #endif
 
-    return_value_policy<copy_const_reference> copy;
-
 #define _ allow_threads
 
     class_<torrent_handle>("torrent_handle")
@@ -304,7 +302,7 @@ void bind_torrent_handle()
         .def("piece_priority", _(piece_priority0))
         .def("piece_priority", _(piece_priority1))
         .def("prioritize_pieces", prioritize_pieces)
-        .def("piece_prioritize", piece_priorities)
+        .def("piece_priorities", piece_priorities)
         .def("prioritize_files", prioritize_files)
         .def("file_priorities", file_priorities)
         .def("use_interface", &torrent_handle::use_interface)

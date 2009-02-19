@@ -39,13 +39,46 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <cctype>
 #include <algorithm>
 #include <iostream>
+#include <limits>
+#include <cstring>
 
 #include <boost/optional.hpp>
+#include <boost/array.hpp>
 
 #include "libtorrent/assert.hpp"
+#include "libtorrent/escape_string.hpp"
 
 namespace libtorrent
 {
+
+	// lexical_cast's result depends on the locale. We need
+	// a well defined result
+	boost::array<char, 3 + std::numeric_limits<size_type>::digits10> to_string(size_type n)
+	{
+		boost::array<char, 3 + std::numeric_limits<size_type>::digits10> ret;
+		char *p = &ret.back();;
+		*p = '\0';
+		unsigned_size_type un = n;
+		if (n < 0)  un = -un;
+		do {
+			*--p = '0' + un % 10;
+			un /= 10;
+		} while (un);
+		if (n < 0) *--p = '-';
+		std::memmove(&ret.front(), p, sizeof(ret.elems));
+		return ret;
+	}
+
+	bool is_digit(char c)
+	{
+		return c >= '0' && c <= '9';
+	}
+
+	bool isprint(char c)
+	{
+		return c >= 32 && c < 127;
+	}
+
 	std::string unescape_string(std::string const& s)
 	{
 		std::string ret;

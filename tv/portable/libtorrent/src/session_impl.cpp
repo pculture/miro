@@ -76,6 +76,9 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "libtorrent/kademlia/dht_tracker.hpp"
 #include "libtorrent/enum_net.hpp"
 #include "libtorrent/config.hpp"
+#include "libtorrent/upnp.hpp"
+#include "libtorrent/natpmp.hpp"
+#include "libtorrent/lsd.hpp"
 
 #ifndef TORRENT_WINDOWS
 #include <sys/resource.h>
@@ -560,7 +563,7 @@ namespace aux {
 		if (m_settings.cache_size != s.cache_size)
 			m_disk_thread.set_cache_size(s.cache_size);
 		if (m_settings.cache_expiry != s.cache_expiry)
-			m_disk_thread.set_cache_size(s.cache_expiry);
+			m_disk_thread.set_cache_expiry(s.cache_expiry);
 		// if queuing settings were changed, recalculate
 		// queued torrents sooner
 		if ((m_settings.active_downloads != s.active_downloads
@@ -593,7 +596,14 @@ namespace aux {
 		s.sock.reset(new socket_acceptor(m_io_service));
 		s.sock->open(ep.protocol(), ec);
 		s.sock->set_option(socket_acceptor::reuse_address(true), ec);
-		if (ep.protocol() == tcp::v6()) s.sock->set_option(v6only(v6_only), ec);
+		if (ep.protocol() == tcp::v6())
+		{
+			s.sock->set_option(v6only(v6_only), ec);
+#ifdef TORRENT_WINDOWS
+			// enable Teredo on windows
+			s.sock->set_option(v6_protection_level(PROTECTION_LEVEL_UNRESTRICTED), ec);
+#endif
+		}
 		s.sock->bind(ep, ec);
 		while (ec && retries > 0)
 		{
@@ -959,6 +969,14 @@ namespace aux {
 		m_key = key;
 	}
 
+	void session_impl::unchoke_peer(peer_connection& c)
+	{
+		torrent* t = c.associated_torrent().lock().get();
+		TORRENT_ASSERT(t);
+		if (t->unchoke_peer(c))
+			++m_num_unchoked;
+	}
+
 	int session_impl::next_port()
 	{
 		std::pair<int, int> const& out_ports = m_settings.outgoing_ports;
@@ -1046,7 +1064,7 @@ namespace aux {
 			peer_connection* p = (*i).get();
 			++i;
 			// ignore connections that already have a torrent, since they
-			// are ticket through the torrents' second_ticket
+			// are ticked through the torrents' second_tick
 			if (!p->associated_torrent().expired()) continue;
 			if (m_last_tick - p->connected_time() > seconds(m_settings.handshake_timeout))
 				p->disconnect("timeout: incoming connection");
@@ -1070,8 +1088,6 @@ namespace aux {
 		torrent_map::iterator least_recently_scraped = m_torrents.begin();
 		int num_paused_auto_managed = 0;
 
-		// check each torrent for tracker updates
-		// TODO: do this in a timer-event in each torrent instead
 		for (torrent_map::iterator i = m_torrents.begin();
 			i != m_torrents.end();)
 		{
@@ -1374,7 +1390,7 @@ namespace aux {
 		{
 			torrent* t = *i;
 			if (!t->is_paused() && !is_active(t, settings())
-				&& hard_limit > 0 && total_running < m_max_uploads)
+				&& hard_limit > 0)
 			{
 				--hard_limit;
 				++total_running;
@@ -1385,12 +1401,8 @@ namespace aux {
 			{
 				--hard_limit;
 				++total_running;
-				if (t->state() != torrent_status::queued_for_checking
-					&& t->state() != torrent_status::checking_files)
-				{
-					--num_downloaders;
-					if (t->is_paused()) t->resume();
-				}
+				--num_downloaders;
+				if (t->is_paused()) t->resume();
 			}
 			else
 			{
@@ -1403,7 +1415,7 @@ namespace aux {
 		{
 			torrent* t = *i;
 			if (!t->is_paused() && !is_active(t, settings())
-				&& hard_limit > 0 && total_running < m_max_uploads)
+				&& hard_limit > 0)
 			{
 				--hard_limit;
 				++total_running;
@@ -1612,8 +1624,6 @@ namespace aux {
 			if (m_listen_interface.port() != 0) open_listen_port();
 		}
 
-		ptime timer = time_now();
-
 		do
 		{
 			error_code ec;
@@ -1705,7 +1715,7 @@ namespace aux {
 	{
 		TORRENT_ASSERT(!params.save_path.empty());
 
-		if (params.ti && params.ti->files().num_files() == 0)
+		if (params.ti && params.ti->num_files() == 0)
 		{
 #ifndef BOOST_NO_EXCEPTIONS
 			throw std::runtime_error("no files in torrent");
@@ -1807,23 +1817,35 @@ namespace aux {
 	void session_impl::check_torrent(boost::shared_ptr<torrent> const& t)
 	{
 		if (m_abort) return;
+		TORRENT_ASSERT(t->should_check_files());
+		TORRENT_ASSERT(t->state() != torrent_status::checking_files);
 		if (m_queued_for_checking.empty()) t->start_checking();
+		else t->set_state(torrent_status::queued_for_checking);
+		TORRENT_ASSERT(std::find(m_queued_for_checking.begin()
+			, m_queued_for_checking.end(), t) == m_queued_for_checking.end());
 		m_queued_for_checking.push_back(t);
 	}
 
 	void session_impl::done_checking(boost::shared_ptr<torrent> const& t)
 	{
+		INVARIANT_CHECK;
+
 		if (m_queued_for_checking.empty()) return;
-		check_queue_t::iterator next_check = m_queued_for_checking.begin();
+		boost::shared_ptr<torrent> next_check = *m_queued_for_checking.begin();
 		check_queue_t::iterator done = m_queued_for_checking.end();
 		for (check_queue_t::iterator i = m_queued_for_checking.begin()
 			, end(m_queued_for_checking.end()); i != end; ++i)
 		{
+			TORRENT_ASSERT(*i == t || (*i)->should_check_files());
 			if (*i == t) done = i;
-			if (next_check == done || (*next_check)->queue_position() > (*i)->queue_position())
-				next_check = i;
+			if (next_check == t || next_check->queue_position() > (*i)->queue_position())
+				next_check = *i;
 		}
-		if (next_check != done) (*next_check)->start_checking();
+		// only start a new one if we removed the one that is checking
+		if (done == m_queued_for_checking.end()) return;
+
+		if (next_check != t && t->state() == torrent_status::checking_files)
+			next_check->start_checking();
 		m_queued_for_checking.erase(done);
 	}
 
@@ -2154,11 +2176,26 @@ namespace aux {
 			m_dht_settings.service_port = m_listen_interface.port();
 	}
 
-	entry session_impl::dht_state() const
+	void session_impl::dht_state_callback(boost::condition& c
+		, entry& e, bool& done) const
 	{
 		mutex_t::scoped_lock l(m_mutex);
+		if (m_dht) e = m_dht->state();
+		done = true;
+		c.notify_all();
+	}
+
+	entry session_impl::dht_state() const
+	{
+		boost::condition cond;
+		mutex_t::scoped_lock l(m_mutex);
 		if (!m_dht) return entry();
-		return m_dht->state();
+		entry e;
+		bool done = false;
+		m_io_service.post(boost::bind(&session_impl::dht_state_callback
+			, this, boost::ref(cond), boost::ref(e), boost::ref(done)));
+		while (!done) cond.wait(l);
+		return e;
 	}
 
 	void session_impl::add_dht_node(std::pair<std::string, int> const& node)
@@ -2481,6 +2518,25 @@ namespace aux {
 			, num_buffers * send_buffer_size);
 #endif
 	}
+
+#ifdef TORRENT_STATS
+	void session_impl::log_buffer_usage()
+	{
+		int send_buffer_capacity = 0;
+		int used_send_buffer = 0;
+		for (connection_map::const_iterator i = m_connections.begin()
+			, end(m_connections.end()); i != end; ++i)
+		{
+			send_buffer_capacity += (*i)->send_buffer_capacity();
+			used_send_buffer += (*i)->send_buffer_size();
+		}
+		TORRENT_ASSERT(send_buffer_capacity >= used_send_buffer);
+		m_buffer_usage_logger << log_time() << " send_buffer_size: " << send_buffer_capacity << std::endl;
+		m_buffer_usage_logger << log_time() << " used_send_buffer: " << used_send_buffer << std::endl;
+		m_buffer_usage_logger << log_time() << " send_buffer_utilization: "
+			<< (used_send_buffer * 100.f / send_buffer_capacity) << std::endl;
+	}
+#endif
 
 	void session_impl::free_buffer(char* buf, int size)
 	{

@@ -38,6 +38,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <limits>
 #include <boost/bind.hpp>
 #include <sstream>
+#include <stdlib.h>
 
 #include "libtorrent/web_peer_connection.hpp"
 #include "libtorrent/session.hpp"
@@ -230,11 +231,9 @@ namespace libtorrent
 				request += "\r\nProxy-Connection: keep-alive";
 			}
 			request += "\r\nRange: bytes=";
-			request += boost::lexical_cast<std::string>(size_type(r.piece)
-				* info.piece_length() + r.start);
+			request += to_string(size_type(r.piece) * info.piece_length() + r.start).elems;
 			request += "-";
-			request += boost::lexical_cast<std::string>(r.piece
-				* info.piece_length() + r.start + r.length - 1);
+			request += to_string(r.piece * info.piece_length() + r.start + r.length - 1).elems;
 			if (m_first_request || using_proxy)
 				request += "\r\nConnection: keep-alive";
 			request += "\r\n\r\n";
@@ -243,7 +242,7 @@ namespace libtorrent
 		}
 		else
 		{
-			std::vector<file_slice> files = info.files().map_block(r.piece, r.start
+			std::vector<file_slice> files = info.orig_files().map_block(r.piece, r.start
 				, r.length);
 
 			for (std::vector<file_slice>::iterator i = files.begin();
@@ -255,13 +254,13 @@ namespace libtorrent
 				if (using_proxy)
 				{
 					request += m_url;
-					std::string path = info.files().at(f.file_index).path.string();
+					std::string path = info.orig_files().at(f.file_index).path.string();
 					request += escape_path(path.c_str(), path.length());
 				}
 				else
 				{
 					std::string path = m_path;
-					path += info.files().at(f.file_index).path.string();
+					path += info.orig_files().at(f.file_index).path.string();
 					request += escape_path(path.c_str(), path.length());
 				}
 				request += " HTTP/1.1\r\n";
@@ -287,9 +286,9 @@ namespace libtorrent
 					request += "\r\nProxy-Connection: keep-alive";
 				}
 				request += "\r\nRange: bytes=";
-				request += boost::lexical_cast<std::string>(f.offset);
+				request += to_string(f.offset).elems;
 				request += "-";
-				request += boost::lexical_cast<std::string>(f.offset + f.size - 1);
+				request += to_string(f.offset + f.size - 1).elems;
 				if (m_first_request || using_proxy)
 					request += "\r\nConnection: keep-alive";
 				request += "\r\n\r\n";
@@ -356,6 +355,9 @@ namespace libtorrent
 
 				if (error)
 				{
+#ifdef TORRENT_VERBOSE_LOGGING
+					(*m_logger) << "*** " << std::string(recv_buffer.begin, recv_buffer.end) << "\n";
+#endif
 					disconnect("failed to parse HTTP response", 2);
 					return;
 				}
@@ -384,8 +386,8 @@ namespace libtorrent
 						t->retry_url_seed(m_url);
 					}
 					t->remove_url_seed(m_url);
-					std::string error_msg = boost::lexical_cast<std::string>(m_parser.status_code())
-						+ " " + m_parser.message();
+					std::string error_msg = to_string(m_parser.status_code()).elems
+						+ (" " + m_parser.message());
 					if (m_ses.m_alerts.should_post<url_seed_alert>())
 					{
 						session_impl::mutex_t::scoped_lock l(m_ses.m_mutex);
@@ -409,6 +411,14 @@ namespace libtorrent
 			// we just completed reading the header
 			if (!header_finished)
 			{
+#ifdef TORRENT_VERBOSE_LOGGING
+				(*m_logger) << "*** STATUS: " << m_parser.status_code()
+					<< " " << m_parser.message() << "\n";
+				std::map<std::string, std::string> const& headers = m_parser.headers();
+				for (std::map<std::string, std::string>::const_iterator i = headers.begin()
+					, end(headers.end()); i != end; ++i)
+					(*m_logger) << "   " << i->first << ": " << i->second << "\n";
+#endif
 				if (m_parser.status_code() >= 300 && m_parser.status_code() < 400)
 				{
 					// this means we got a redirection request
@@ -434,7 +444,7 @@ namespace libtorrent
 						int file_index = m_file_requests.front();
 
 						torrent_info const& info = t->torrent_file();
-						std::string path = info.files().at(file_index).path.string();
+						std::string path = info.orig_files().at(file_index).path.string();
 						path = escape_path(path.c_str(), path.length());
 						size_t i = location.rfind(path);
 						if (i == std::string::npos)
@@ -499,7 +509,7 @@ namespace libtorrent
 			else
 			{
 				range_start = 0;
-				range_end = atol(m_parser.header("content-length").c_str());
+				range_end = m_parser.content_length();
 				if (range_end == -1)
 				{
 					// we should not try this server again.
@@ -528,7 +538,7 @@ namespace libtorrent
 			}
 
 			int file_index = m_file_requests.front();
-			peer_request in_range = info.files().map_file(file_index, range_start
+			peer_request in_range = info.orig_files().map_file(file_index, range_start
 				, int(range_end - range_start));
 
 			peer_request front_request = m_requests.front();

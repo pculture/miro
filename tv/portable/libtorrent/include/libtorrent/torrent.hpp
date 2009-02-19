@@ -212,7 +212,7 @@ namespace libtorrent
 
 		void ip_filter_updated() { m_policy.ip_filter_updated(); }
 
-		void set_error(std::string const& msg) { m_error = msg; }
+		void set_error(std::string const& msg);
 		bool has_error() const { return !m_error.empty(); }
 		void pause();
 		void resume();
@@ -228,6 +228,8 @@ namespace libtorrent
 
 		bool is_auto_managed() const { return m_auto_managed; }
 		void auto_managed(bool a);
+
+		bool should_check_files() const;
 
 		void delete_files();
 
@@ -661,6 +663,9 @@ namespace libtorrent
 
 		void update_peer_interest(bool was_finished);
 
+		void queue_torrent_check();
+		void dequeue_torrent_check();
+
 		policy m_policy;
 
 		// total time we've been available on this torrent
@@ -972,6 +977,10 @@ namespace libtorrent
 		// before the files are checked, we don't try to
 		// connect to peers
 		bool m_files_checked:1;
+
+		// this is true if the torrent has been added to
+		// checking queue in the session
+		bool m_queued_for_checking:1;
 
 		// this is true while tracker announcing is enabled
 		// is is disabled while paused and checking files
