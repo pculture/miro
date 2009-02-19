@@ -290,7 +290,7 @@ class DownloadStatusUpdater:
     
     2) The update don't happen fairly infrequently (currently every 5 seconds).
     
-    Becouse updates happen infrequently, DownloadStatusUpdaters should only be
+    Because updates happen infrequently, DownloadStatusUpdaters should only be
     used for progress updates, not events like downloads starting/finishing.
     For those just call updateClient() since they are more urgent, and don't
     happen often enough to cause CPU problems.
@@ -399,7 +399,7 @@ class BGDownloader:
         self.filename = nextFreeFilename(os.path.join(downloadDir, cleaned))
 
     def moveToMoviesDirectory(self):
-        """Move our downloaded file from the Incomplete Downloads directoy to
+        """Move our downloaded file from the Incomplete Downloads directory to
         the movies directory.
         """
         if chatter:
@@ -737,7 +737,7 @@ class HTTPDownloader(BGDownloader):
         return data
 
     ##
-    # Update the download rate and eta based on recieving length bytes
+    # Update the download rate and eta based on receiving length bytes
     def updateRateAndETA(self, length):
         now = clock()
         self.currentSize = self.currentSize + length

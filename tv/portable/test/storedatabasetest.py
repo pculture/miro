@@ -16,7 +16,7 @@ from miro.test.framework import MiroTestCase
 from miro.schema import SchemaString, SchemaInt, SchemaFloat, SchemaSimpleContainer
 from miro.schema import SchemaList, SchemaDict, SchemaObject
 
-# create a dummy schemma
+# create a dummy schema
 class Human:
     def __init__(self, name, age, meters_tall, friends, high_scores = None):
         self.name = name

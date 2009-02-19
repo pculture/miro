@@ -34,7 +34,7 @@ class Command:
 
     def action(self):
         logging.warning ("no action defined for command %s", self.id)
-        #for overrriding
+        #for overriding
 
     def __getstate__(self):
         out = {"id":self.id, "args":self.args, "kws":self.kws, "orig":self.orig}

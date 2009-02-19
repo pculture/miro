@@ -144,7 +144,7 @@ def download_unknown_mime_type(url):
         if check_url_exists(url):
             return
         if dialog.choice == dialogs.BUTTON_DOWNLOAD_ANYWAY:
-            # Fake a viedo mime type, so we will download the item.
+            # Fake a video mime type, so we will download the item.
             download_video(item.get_entry_for_url(url, 'video/x-unknown'))
         elif dialog.choice == dialogs.BUTTON_OPEN_IN_EXTERNAL_BROWSER:
             messages.OpenInExternalBrowser(url).send_to_frontend()
@@ -152,7 +152,7 @@ def download_unknown_mime_type(url):
 
 def add_download(url, additional=None, handle_unknown_callback=download_unknown_mime_type):
     """Given a url, this tries to figure out what it is (video, audio, torrent, rss feed,
-    flash file that Mirocan scrape) and handles it accordingly.
+    flash file that Miro can scrape) and handles it accordingly.
 
     If it can't figure out what it is, then it calls handle_unknown_callback with the url of
     the thing it can't identify and thus doesn't know what to do with.

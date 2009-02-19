@@ -263,7 +263,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             'images/icon-channel-title.png'))
         self.download_arrow = imagepool.get_surface(resources.path(
             'images/download-arrow.png'))
-        # We cache the size of our rows to save us from re-caclulating all the
+        # We cache the size of our rows to save us from re-calculating all the
         # time.  cached_size_parameters stores things like the base font size
         # that the cached value depends on.
         self.cached_size = None
@@ -925,7 +925,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         if self.selected:
             # color in the pixels above the flap, but below the rounded corner
             # of the upper border.  We should do this if selected is False as
-            # well, but it's not noticable in that case.
+            # well, but it's not noticeable in that case.
             context.set_color(flap_bg_color)
             context.rectangle(x+3, flap_top-2, 2, 2)
             context.fill()
@@ -934,7 +934,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         # Draw the flap border.  Start a little above the usual start of the
         # flap to account for the fact that the rounded corner of the normal
-        # border dosen't quite reach the top of the flap.  Draw the outer
+        # border doesn't quite reach the top of the flap.  Draw the outer
         # border
         context.save()
         context.rectangle(x, flap_top-5, width, self.flap_height+5)
@@ -1255,7 +1255,7 @@ class ProgressBarDrawer(cellpack.Packer):
         context.restore()
 
     def _draw_border(self, context):
-        # Set the clipping region to be the on the border of the progess bar.
+        # Set the clipping region to be the on the border of the progress bar.
         # This is a little tricky.  We have to make a path around the outside
         # of the border that goes in one direction, then a path that is inset
         # by 1 px going the other direction.  This causes the clip region to

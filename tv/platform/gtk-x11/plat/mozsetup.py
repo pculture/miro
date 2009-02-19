@@ -26,7 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Functions to assist in seting up the DTV mozilla environment."""
+"""Functions to assist in setting up the DTV mozilla environment."""
 
 import os
 from miro import config

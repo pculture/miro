@@ -28,7 +28,7 @@
 
 """itemlist.py -- Handles TableModel objects that store items.
 
-itemlist, itemlistcontroller and itemlistwidgets work togetherusing the MVC
+itemlist, itemlistcontroller and itemlistwidgets work together using the MVC
 pattern.  itemlist handles the Model, itemlistwidgets handles the View and
 itemlistcontroller handles the Controller.
 
@@ -65,7 +65,7 @@ class ItemSort(object):
     def sort_key(self, item):
         """Return a value that can be used to sort item.
 
-        Must be implemented by sublcasses.
+        Must be implemented by subclasses.
         """
         raise NotImplentedError()
 
@@ -115,7 +115,7 @@ class FeedNameSort(ItemSort):
 class StatusCircleSort(ItemSort):
     # Weird sort, this one is for when the user clicks on the header above the
     # status bumps.  It's almost the same as StatusSort, but there isn't a
-    # bump for expireing.
+    # bump for expiring.
     def sort_key(self, item):
         if item.state == 'downloading':
             return 1 # downloading
@@ -200,7 +200,7 @@ class ItemListGroup(object):
         self._throbber_timeouts[id] = timeout
 
     def _setup_info(self, info):
-        """Initialize a newly recieved ItemInfo."""
+        """Initialize a newly received ItemInfo."""
         info.icon = imagepool.LazySurface(info.thumbnail, (154, 105))
         info.description_text, info.description_links = \
                 self.html_stripper.strip(info.description)

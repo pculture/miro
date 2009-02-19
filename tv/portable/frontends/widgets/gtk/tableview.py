@@ -45,13 +45,13 @@ from miro.frontends.widgets.gtk.layoutmanager import LayoutManager
 from miro.frontends.widgets.gtk.weakconnect import weak_connect
 
 def rect_contains_rect(outside, inside):
-    return (outside.x <= inside.x and 
-            outside.y <= inside.y and 
+    return (outside.x <= inside.x and
+            outside.y <= inside.y and
             outside.x + outside.width >= inside.x + inside.width and
             outside.y + outside.height >= inside.y + inside.height)
 
 def rect_contains_point(rect, x, y):
-    return ((rect.x <= x < rect.x + rect.width) and 
+    return ((rect.x <= x < rect.x + rect.width) and
             (rect.y <= y < rect.y + rect.height))
 
 class CellRenderer(object):
@@ -60,7 +60,7 @@ class CellRenderer(object):
     def __init__(self):
         self._renderer = gtk.CellRendererText()
 
-    def setup_attributes(self, column, attr_map): 
+    def setup_attributes(self, column, attr_map):
         column.add_attribute(self._renderer, 'text', attr_map['value'])
 
     def set_text_size(self, size):
@@ -138,12 +138,12 @@ class GTKCustomCellRenderer(gtk.GenericCellRenderer):
     def on_render(self, window, widget, background_area, cell_area, expose_area,
             flags):
         selected = (flags & gtk.CELL_RENDERER_SELECTED)
-        if selected: 
+        if selected:
             if widget.flags() & gtk.HAS_FOCUS:
                 state = gtk.STATE_SELECTED
             else:
                 state = gtk.STATE_ACTIVE
-        else: 
+        else:
             state = gtk.STATE_NORMAL
         xpad = self.props.xpad
         ypad = self.props.ypad
@@ -163,7 +163,7 @@ class GTKCustomCellRenderer(gtk.GenericCellRenderer):
         owner = wrappermap.wrapper(self)
         widget_wrapper.layout_manager.update_cairo_context(context.context)
         hotspot_tracker = widget_wrapper.hotspot_tracker
-        if (hotspot_tracker and hotspot_tracker.hit and 
+        if (hotspot_tracker and hotspot_tracker.hit and
                 hotspot_tracker.column == self.column and
                 hotspot_tracker.path == self.path):
             hotspot = hotspot_tracker.name
@@ -177,11 +177,11 @@ class GTKCustomCellRenderer(gtk.GenericCellRenderer):
         owner.render(context, widget_wrapper.layout_manager, selected,
                 hotspot, hover)
 
-    def on_activate(self, event, widget, path, background_area, cell_area, 
+    def on_activate(self, event, widget, path, background_area, cell_area,
             flags):
         pass
 
-    def on_start_editing(self, event, widget, path, background_area, 
+    def on_start_editing(self, event, widget, path, background_area,
             cell_area, flags):
         pass
 gobject.type_register(GTKCustomCellRenderer)
@@ -202,7 +202,7 @@ class CustomCellRenderer(object):
         cell.path = model.get_path(iter)
         row = model[iter]
         # Set attributes on self instead cell This works because cell is just
-        # going to turn around and call our methods to do the renderering.
+        # going to turn around and call our methods to do the rendering.
         for name, index in attr_map.items():
             setattr(self, name, row[index])
 
@@ -334,7 +334,7 @@ class MiroTreeView(gtk.TreeView):
         offset = self.style_get_property("horizontal-separator") / 2
         if 1 or isinstance(self.get_model(), TreeTableModel):
             offset += self.style_get_property("expander-size")
-            offset += 4 
+            offset += 4
             # This seems to be hardcoded in GTK see:
             # http://svn.gnome.org/viewvc/gtk%2B/trunk/gtk/gtktreeview.c
             # (look for "#define EXPANDER_EXTRA_PADDING")
@@ -393,7 +393,7 @@ class HotspotTracker(object):
                 return gtk.STATE_SELECTED
             else:
                 return gtk.STATE_ACTIVE
-        else: 
+        else:
             return gtk.STATE_NORMAL
 
     def calc_hotspot(self):
@@ -406,8 +406,8 @@ class HotspotTracker(object):
                 use_base_color=True, state=self.calc_cell_state())
             x = self.x - cell_area.x
             y = self.y - cell_area.y
-            return self.renderer.hotspot_test(style, 
-                    self.treeview_wrapper.layout_manager, 
+            return self.renderer.hotspot_test(style,
+                    self.treeview_wrapper.layout_manager,
                     x, y, cell_area.width, cell_area.height)
         else:
             return None
@@ -428,7 +428,7 @@ class HotspotTracker(object):
 
 class TableColumn(signals.SignalEmitter):
     """A single column of a TableView.
-    
+
     Signals:
 
         clicked (table_column) -- The header for this column was clicked.
@@ -476,7 +476,7 @@ class TableColumn(signals.SignalEmitter):
 
     def set_sort_order(self, ascending):
         """Display a sort indicator on the column header.  Ascending can be
-        either True or False which affects the diraction of the indicator.
+        either True or False which affects the direction of the indicator.
         """
         if ascending:
             self._column.set_sort_order(gtk.SORT_ASCENDING)
@@ -519,9 +519,9 @@ class TableView(Widget):
         self.wrapped_widget_connect('row-expanded', self.on_row_expanded)
         self.wrapped_widget_connect('row-collapsed', self.on_row_collapsed)
         self.wrapped_widget_connect('button-press-event', self.on_button_press)
-        self.wrapped_widget_connect('button-release-event', 
+        self.wrapped_widget_connect('button-release-event',
             self.on_button_release)
-        self.wrapped_widget_connect('motion-notify-event', 
+        self.wrapped_widget_connect('motion-notify-event',
             self.on_motion_notify)
         self.wrapped_widget_connect('drag-data-get', self.on_drag_data_get)
         self.wrapped_widget_connect('drag-end', self.on_drag_end)
@@ -556,9 +556,9 @@ class TableView(Widget):
         if path_info is None:
             self._last_tooltip_place = None
             return False
-        if (self._last_tooltip_place is not None and 
+        if (self._last_tooltip_place is not None and
                 path_info[:2] != self._last_tooltip_place):
-            # the default GTK behaviour is to keep the tooltip in the same
+            # the default GTK behavior is to keep the tooltip in the same
             # position, but this is looks bad when we move to a different row.
             # So return False once to stop this.
             self._last_tooltip_place = None
@@ -791,7 +791,7 @@ class TableView(Widget):
                 self.handled_last_button_press = True
                 return True
         if event.window != treeview.get_bin_window():
-            # click is outsite the content area, don't try to handle this.  
+            # click is outside the content area, don't try to handle this.
             # In particular, our DnD code messes up resizing table columns.
             self.handled_last_button_press = False
             return
@@ -897,7 +897,7 @@ class TableView(Widget):
             self.hotspot_tracker.update_hit()
             return True
 
-        if (self.drag_button_down and 
+        if (self.drag_button_down and
                 self.drag_source and
                 treeview.drag_check_threshold(self.drag_start_x,
                     self.drag_start_y, int(event.x), int(event.y))):
@@ -947,10 +947,10 @@ class TableView(Widget):
         position = gtk_path[-1]
         if gtk_position in (gtk.TREE_VIEW_DROP_BEFORE,
                 gtk.TREE_VIEW_DROP_INTO_OR_BEFORE):
-            # gtk gave us a "before" postion, no need to change it
+            # gtk gave us a "before" position, no need to change it
             yield (parent_iter, position, gtk_path, gtk.TREE_VIEW_DROP_BEFORE)
         else:
-            # gtk gave us an "after" postion, translate that to before the
+            # gtk gave us an "after" position, translate that to before the
             # next row for miro.
             if (self._widget.row_expanded(gtk_path) and
                     model.iter_has_child(iter)):
@@ -969,7 +969,7 @@ class TableView(Widget):
             return True
         drop_action = 0
         for pos_info in self.calc_positions(x, y):
-            drop_action = self.drag_dest.validate_drop(self, self.model, type, 
+            drop_action = self.drag_dest.validate_drop(self, self.model, type,
                     drag_context.actions, pos_info[0], pos_info[1])
             if drop_action:
                 self.set_drag_dest_row(pos_info[2], pos_info[3])
@@ -983,7 +983,7 @@ class TableView(Widget):
     def on_drag_leave(self, treeview, drag_context, timestamp):
         treeview.unset_drag_dest_row()
 
-    def on_drag_data_received(self, treeview, drag_context, x, y, selection, 
+    def on_drag_data_received(self, treeview, drag_context, x, y, selection,
             info, timestamp):
         if not self.drag_dest:
             return
@@ -992,7 +992,7 @@ class TableView(Widget):
             return
         drop_action = 0
         for pos_info in self.calc_positions(x, y):
-            drop_action = self.drag_dest.validate_drop(self, self.model, type, 
+            drop_action = self.drag_dest.validate_drop(self, self.model, type,
                     drag_context.actions, pos_info[0], pos_info[1])
             if drop_action:
                 self.drag_dest.accept_drop(self, self.model, type,

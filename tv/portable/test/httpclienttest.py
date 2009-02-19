@@ -396,7 +396,7 @@ class WeirdCloseConnectionTest(AsyncSocketTest):
         # happens.  The openConnection callback shouldn't be called
         #
         # open a socket on localhost and try to connect to that, this should
-        # be pretty much instantanious, so we don't need a long timeout to
+        # be pretty much instantaneous, so we don't need a long timeout to
         # runEventLoop
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.bind( ('127.0.0.1', 0))
@@ -417,7 +417,7 @@ class WeirdCloseConnectionTest(AsyncSocketTest):
         # happens.  The openConnection callback shouldn't be called
         #
         # open a socket on localhost and try to connect to that, this should
-        # be pretty much instantanious, so we don't need a long timeout to
+        # be pretty much instantaneous, so we don't need a long timeout to
         # runEventLoop
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
@@ -1185,7 +1185,7 @@ class HTTPClientTest(HTTPClientTestBase):
 #         # The redirect chain is:
 #         # redirect.php PERMAMENT REDIRECT -> redirect2.php
 #         # redirect2.php PERMAMENT REDIRECT -> redirect3.php
-#         # redirect3.php TEMORARY REDIRECT -> end.txt
+#         # redirect3.php TEMPORARY REDIRECT -> end.txt
 #         # The updated-url should be redirect3.php, since that it was the 1st
 #         # redirect that was temporary
 #         self.checkRedirect(
@@ -1465,7 +1465,7 @@ class HTTPConnectionPoolTest(EventLoopTest):
 
 # class HTTPSConnectionTest(HTTPClientTestBase):
 #     # We should have more tests here, but I have no idea how to fake SSL
-#     # connections.  So I just put some attemps to connect to an https site
+#     # connections.  So I just put some attempts to connect to an https site
 #     # The first https site I found was:
 #     # WAVE - Web Automated Verification of Enrollment
 #     # https://www.gibill.va.gov/wave/

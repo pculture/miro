@@ -26,7 +26,7 @@ If you have the required dependencies it should build Miro and run it.
 
 See https://develop.participatoryculture.org/projects/dtv/wiki/GTKX11BuildDocs
 for more information on building and executing the GTK-X11 platform code.
-The information at this url is considered the authoritative source.
+The information at this URL is considered the authoritative source.
 
 To run Miro in "debug mode" (i.e. in gdb)::
 

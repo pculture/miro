@@ -118,7 +118,7 @@ class SavableObject:
     classString -- specifies the class this object was converted from.  
     savedData -- dict that stores the data we've saved.
     
-    The SavableObject class is guarenteed to never change.  This means we can
+    The SavableObject class is guaranteed to never change.  This means we can
     always safely unpickle them.
     """
 
@@ -147,12 +147,12 @@ class ConverterBase(object):
 
     The subclasses of ConverterBase are responsible for creating a
     convertObject method, and adding validation to the convertData method
-    (SavableConverter does validation at the begining, SavableUnconverter does
+    (SavableConverter does validation at the beginning, SavableUnconverter does
     it at the end).
     """
 
     def __init__(self, objectSchemas=None):
-        """Contruct a converter.  object schemas is a list of ObjectSchema
+        """Construct a converter.  object schemas is a list of ObjectSchema
         objects to use.  If none is given (the default), the schemas will be
         taken from miro.schema.objectSchemas.
         """
@@ -287,7 +287,7 @@ class ConverterBase(object):
         pass
 
     def getSourceAttr(self, object, attrName):
-        """Retrive the value of an attribute on a source object."""
+        """Retrieve the value of an attribute on a source object."""
         try:
             return getattr(object, attrName)
         except AttributeError:
@@ -523,7 +523,7 @@ def getObjects(pathname, convertOnFail):
             from miro import olddatabaseupgrade
             olddatabaseupgrade.convertOldDatabase(pathname)
             objects = restoreObjectList(pathname)
-            logging.info ("*** Conversion Successfull ***")
+            logging.info ("*** Conversion Successful ***")
         else:
             raise
     except ImportError, e:
@@ -548,7 +548,7 @@ def getObjects(pathname, convertOnFail):
     except databasesanity.DatabaseInsaneError, e:
         signals.system.failed_exn("When restoring database", e)
         # if the database fails the sanity check, try to restore it anyway.
-        # It's better than notheing
+        # It's better than nothing
     skipOnRestore = oldSkipOnRestore
     if not skipOnRestore:
         for object in objects:

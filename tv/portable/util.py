@@ -189,7 +189,7 @@ class AutoLoggingStream(StringIO):
     """
     def __init__(self, logging_callback, prefix):
         StringIO.__init__(self)
-        # We init from StringIO to give us a bunch of stream-releated methods,
+        # We init from StringIO to give us a bunch of stream-related methods,
         # like closed() and read() automatically.
         self.logging_callback = logging_callback
         self.prefix = prefix
@@ -328,7 +328,7 @@ def clampText(text, maxLength=20):
 
 def print_mem_usage(message):
     pass
-# Uncomment for memory usage printouts on linux.
+# Uncomment for memory usage printouts on Linux.
 #    print message
 #    os.system("ps huwwwp %d" % (os.getpid(),))
 
@@ -505,7 +505,7 @@ def quoteUnicodeURL(url):
 def no_console_startupinfo():
     """Returns the startupinfo argument for subprocess.Popen so that we don't
     open a console window.  On platforms other than windows, this is just
-    None.  On windows, it's some win32 sillyness.
+    None.  On windows, it's some win32 silliness.
     """
     if subprocess.mswindows:
         startupinfo = subprocess.STARTUPINFO()

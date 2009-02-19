@@ -28,7 +28,7 @@
 
 """itemlistcontroller.py -- Controllers for item lists.
 
-itemlist, itemlistcontroller and itemlistwidgets work togetherusing the MVC
+itemlist, itemlistcontroller and itemlistwidgets work together using the MVC
 pattern.  itemlist handles the Model, itemlistwidgets handles the View and
 itemlistcontroller handles the Controller.
 
@@ -519,7 +519,7 @@ class ItemListControllerManager(object):
     displayed -- Currently displayed ItemListController or None (this one is
         currently being displayed in the right-hand side)
     all_controllers -- Set of all ItemListControllers in use (these are
-        somewhere in the display stack, but not neccesarily displayed
+        somewhere in the display stack, but not necessarily displayed
         currently).
     """
 

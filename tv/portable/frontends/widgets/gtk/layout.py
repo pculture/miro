@@ -89,7 +89,7 @@ class DetachedWindowHolder(Alignment):
 
 class Splitter(Widget):
     def __init__(self):
-        """Create a new spliter."""
+        """Create a new splitter."""
         Widget.__init__(self)
         self.set_widget(gtk.HPaned())
 

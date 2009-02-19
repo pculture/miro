@@ -28,7 +28,7 @@
 
 """itemlistwidgets.py -- Widgets to display lists of items
 
-itemlist, itemlistcontroller and itemlistwidgets work togetherusing the MVC
+itemlist, itemlistcontroller and itemlistwidgets work together using the MVC
 pattern.  itemlist handles the Model, itemlistwidgets handles the View and
 itemlistcontroller handles the Controller.
 
@@ -143,7 +143,7 @@ class ItemListTitlebar(widgetset.Background):
     def _build_titlebar_extra(self):
         """Builds the widget(s) to place to the right of the title.
 
-        By default we add a search box, but subclasses can overide this.
+        By default we add a search box, but subclasses can override this.
         """
 
         self.create_signal('search-changed')
@@ -326,7 +326,7 @@ class ListItemView(widgetset.TableView):
         if not self._set_initial_widths:
             width -= 20 # allow some room for a scrollbar
             # Set this immediately, because changing the widths of widgets
-            # below can invoke anothor size-allocate signal
+            # below can invoke another size-allocate signal
             self._set_initial_widths = True
             # width_specs contains the info we need to give columns their
             # initial size.  It maps column names to

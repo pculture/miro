@@ -33,7 +33,7 @@ that wraps them.
 import weakref 
 
 # Maps gtk windows -> wrapper objects.  We use a weak references to prevent
-# circular references beween the GTK widget and it's wrapper.  (Keeping a
+# circular references between the GTK widget and it's wrapper.  (Keeping a
 # reference to the GTK widget is fine, since if the wrapper is alive, the GTK
 # widget should be).
 widget_mapping = weakref.WeakValueDictionary()

@@ -69,7 +69,7 @@ class TestValidation(MiroTestCase):
                 'square': (1, 4, u"nine", 16),
                 'fact': (1, 2.0, 6, u"twenty-four"),
             })
-        #make sure circular refrences doen't screw it up
+        #make sure circular references doesn't screw it up
         l = []
         d = {}
         l.extend([l, d])

@@ -120,7 +120,7 @@ BOOST_LIB = 'boost_python'
 
 
 ###############################################################################
-## End of configuration. No user-servicable parts inside                     ##
+## End of configuration. No user-serviceable parts inside                    ##
 ###############################################################################
 
 from distutils.cmd import Command
@@ -143,7 +143,7 @@ import shutil
 
 from Pyrex.Distutils import build_ext
 
-#### usefull paths to have around ####
+#### useful paths to have around ####
 def is_root_dir(d):
     """
     bdist_rpm and possibly other commands copies setup.py into a subdir of
@@ -612,7 +612,7 @@ xine_options = parse_pkg_config('pkg-config',
 # necessary on Debian Etch and Ubuntu Feisty right now.
 #
 # We have a horrible workaround for buggy X drivers in xine_impl.c
-# controled by this variable
+# controlled by this variable
 if USE_XINE_HACK:
     print "Using the Xine driver hack. If you experience trouble playing video,\n   try setting USE_XINE_HACK to False in setup.py."
     if xine_options.has_key('define_macros'):
@@ -748,7 +748,7 @@ class test_system(Command):
         # we have most of the pieces here?
         pass
 
-#### install_theme installs a specifified theme .zip
+#### install_theme installs a specified theme .zip
 class install_theme(Command):
     description = 'Install a provided theme to /usr/share/miro/themes'
     user_options = [("theme=", None, 'ZIP file containing the theme')]
@@ -786,7 +786,7 @@ class install_theme(Command):
         os.makedirs(self.theme_dir)
         for name in self.zipfile.namelist():
             if name.startswith('xul/'):
-                # ignore XUL stuff, we don't need it on linux
+                # ignore XUL stuff, we don't need it on Linux
                 continue
             print 'installing', os.path.join(self.theme_dir, name)
             if name[-1] == '/':

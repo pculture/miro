@@ -130,7 +130,7 @@ class Renderer:
             imagesink.set_xwindow_id(self.widget.persistent_window.xid)
 
     def on_bus_message(self, bus, message):
-        """recieves message posted on the GstBus"""
+        """receives message posted on the GstBus"""
         if message.type == gst.MESSAGE_ERROR:
             if self.select_callbacks is not None:
                 self.select_callbacks[1]()

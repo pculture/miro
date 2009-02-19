@@ -75,7 +75,7 @@ class ViewTracker(object):
         self.removed = set()
         self.added =  []
         # Need to use a list because added messages must be sent in the same
-        # order they were receieved
+        # order they were received
         self.changes_pending = False
 
     def send_messages(self):
@@ -918,7 +918,7 @@ class BackendMessageHandler(messages.MessageHandler):
         if not get_feed_by_url(url):
             feed.Feed(url)
         else:
-            logging.info("Not adding dupplicated watched folder: %s",
+            logging.info("Not adding duplicated watched folder: %s",
                     message.path)
 
     def handle_set_watched_folder_visible(self, message):

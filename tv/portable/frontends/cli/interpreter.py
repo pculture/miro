@@ -283,7 +283,7 @@ class MiroInterpreter(cmd.Cmd):
             return views.items.filterWithIndex(indexes.itemsByChannelFolder,
                     folder)
         else:
-            raise ValueError("Unkown selection type")
+            raise ValueError("Unknown selection type")
 
 
     def _find_item(self, line):

@@ -119,7 +119,7 @@ def setup_global_feed(url, *args, **kwargs):
             allFeeds = [f for f in feedView]
             for extra in allFeeds[1:]:
                 extra.remove()
-            raise StartupError("Database inconsistant",
+            raise StartupError("Database inconsistent",
                     "Too many db objects for %s" % url)
     finally:
         feedView.unlink()
@@ -209,7 +209,7 @@ def check_movies_gone():
     if is_movies_directory_gone():
         if _movies_directory_gone_handler:
             logging.info("Movies directory is gone -- calling handler.")
-            _movies_directory_gone_handler(lambda: eventloop.addUrgentCall(fix_movies_gone, "startup network stuf"))
+            _movies_directory_gone_handler(lambda: eventloop.addUrgentCall(fix_movies_gone, "startup network stuff"))
             return
         else:
             logging.warn("Movies directory is gone -- no handler installed!")

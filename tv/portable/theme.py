@@ -77,7 +77,7 @@ class ThemeHistory(DDBObject):
             if guide.getGuideByURL(guideURL) is None:
                 # This happens when the DB is initialized with a theme that
                 # doesn't have it's own set of default channels; None is
-                # artifically added to the pastThemes lists to prevent the
+                # artificially added to the pastThemes lists to prevent the
                 # default channels from being added again.  However, it means
                 # that we need to add the Miro Guide to the DB ourselves.
                 logging.warn('Installing default guide after switch to vanilla Miro')

@@ -72,7 +72,7 @@ class Window:
 
         It will be allocated the entire area of the widget, except the space
         needed for the titlebar, frame and other decorations.  When the window
-        is resived, content should also be resized.
+        is resized, content should also be resized.
         """
         self._widget.add(widget._widget)
         self._widget.child.show()

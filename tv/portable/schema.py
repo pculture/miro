@@ -78,7 +78,7 @@ class SchemaItem(object):
         etc.  It only checks that the container is the right type, not its
         children.  This isn't a problem because saveObject() calls
         validate() recursively on all the data it saves, therefore validate
-        doesn't have to recirsively validate things.
+        doesn't have to recursively validate things.
         """
 
         if data is None:
@@ -249,7 +249,7 @@ class ObjectSchema(object):
     klass -- the python class that this schema is for
     classString -- a human readable string that represents objectClass
     fields -- list of  (name, SchemaItem) pairs.  One item for each attribute
-        that shoud be stored to disk.
+        that should be stored to disk.
     """
     pass
 

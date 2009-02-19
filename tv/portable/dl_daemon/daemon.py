@@ -103,7 +103,7 @@ def writePid(short_app_name, pid):
     pidfile.write("%s\n" % pid)
     pidfile.flush()
     # NOTE: There may be extra data after the line we write left around from
-    # prevous writes to the pid file.  This is fine since readPid() only reads
+    # previous writes to the pid file.  This is fine since readPid() only reads
     # the 1st line.
     #
     # NOTE 2: we purposely don't close the file, to achieve locking on

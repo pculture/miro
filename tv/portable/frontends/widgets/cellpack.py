@@ -87,7 +87,7 @@ class Packer(object):
     but they only used in custom cell renderers so there's a couple
     differences.  The main difference is that cell renderers don't keep state
     around.  Therefore Packers just get set up, used, then discarded.
-    Also Packers can't recieve events directly, so they have a different
+    Also Packers can't receive events directly, so they have a different
     system to figure out where mouse clicks happened (the Hotspot class).
     """
 

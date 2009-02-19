@@ -128,7 +128,7 @@ def unicodeToFilename(filename, path=None):
     extensions.
 
     Note: This is not guaranteed to give the same results every time it is run,
-    nor is it garanteed to reverse the results of filenameToUnicode.
+    nor is it guaranteed to reverse the results of filenameToUnicode.
     """
     @returnsUnicode
     def shortenFilename(filename):
@@ -174,7 +174,7 @@ def filenameToUnicode(filename, path=None):
     """Given a filename in raw bytes, return the unicode representation
 
     Note: This is not guaranteed to give the same results every time it is run,
-    not is it garanteed to reverse the results of unicodeToFilename.
+    not is it guaranteed to reverse the results of unicodeToFilename.
     """
     if path:
         checkB(path)

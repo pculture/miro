@@ -92,7 +92,7 @@ class PlaylistMixin:
         inserted at the index newPosition, items that are currently at that
         index or after it will be moved back one position.  If new position is
         after the end of the list, the item will be added at the end, if it's
-        less than 0 it will be added at the begining.
+        less than 0 it will be added at the beginning.
         """
 
         self.confirmDBThread()

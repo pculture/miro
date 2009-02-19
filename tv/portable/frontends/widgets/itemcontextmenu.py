@@ -26,7 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""itemcontextmenu.py -- Handle poping up an context menu for an item
+"""itemcontextmenu.py -- Handle popping up an context menu for an item
 """
 
 from miro import app
@@ -75,7 +75,7 @@ class ItemContextMenuHandler(object):
         #
         # Each item is either None or separated into (label, callback),
         # more or less, kinda.  If it's None, it's actually a
-        # seperator. Otherwise..
+        # separator. Otherwise..
         #
         # The label is one of two things:
         #  - A string, which is used as the label for the menu item

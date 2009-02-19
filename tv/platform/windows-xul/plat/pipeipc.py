@@ -31,7 +31,7 @@ Miro processes.
 
 The first proccess to start creates a named pipe, then a thread that listens
 to that pipe.  Subsequent processes send a message over that pipe containing
-command line arguments.  When the first process recieves a message from the
+command line arguments.  When the first process receives a message from the
 pipe, we try to open them using the singleclick module.
 """
 

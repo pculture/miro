@@ -26,7 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""miro.frontends.wigets.gtk.window -- GTK Window widget."""
+"""miro.frontends.widgets.gtk.window -- GTK Window widget."""
 
 import StringIO
 

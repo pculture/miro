@@ -55,7 +55,7 @@ class WeakMethodReference:
     def __init__(self, method):
         self.object = weakref.ref(method.im_self)
         self.func = weakref.ref(method.im_func)
-        # don't create a weak refrence to the class.  That only works for
+        # don't create a weak reference to the class.  That only works for
         # new-style classes.  It's highly unlikely the class will ever need to
         # be garbage collected anyways.
         self.cls = method.im_class

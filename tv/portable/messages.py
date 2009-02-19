@@ -213,7 +213,7 @@ class StopTrackingItems(BackendMessage):
 
 class TrackDownloadCount(BackendMessage):
     """Start tracking the number of downloading items.  After this message is
-    recieved the backend will send a corresponding DownloadCountChanged
+    received the backend will send a corresponding DownloadCountChanged
     message.  It will also send DownloadCountChanged whenever the count
     changes.
     """
@@ -236,7 +236,7 @@ class StopTrackingPausedCount(BackendMessage):
     pass
 
 class TrackNewCount(BackendMessage):
-    """Start tracking the number of new videos.  When this message is recieved
+    """Start tracking the number of new videos.  When this message is received
     the backend will send a corresponding NewCountChanged message.  It will
     also send NewCountChanged whenever the count changes.
     """
@@ -609,7 +609,7 @@ class AutodownloadChange(BackendMessage):
         self.setting = setting
 
 class TabsReordered(BackendMessage):
-    """Inform the backend when the channel tabs are rearanged.  This includes
+    """Inform the backend when the channel tabs are rearranged.  This includes
     simple position changes and also changes to which folders the channels are
     in.
 
@@ -934,7 +934,7 @@ class DownloadInfo(object):
     rate -- current download rate, in bytes per second
     state -- one of 'downloading', 'uploading', 'finished', 'failed' or 
         'paused'.  'uploading' is for torrents only.  It means that we've
-        finished downloding the torrent and are now seeding it.
+        finished downloading the torrent and are now seeding it.
     eta -- Estimated seconds before the download is finished
     startup_activity -- The current stage of starting up
     finished -- True if the item has finished downloading
@@ -1163,7 +1163,7 @@ class NotifyUser(FrontendMessage):
 
     Can optionally give a notification type, so we can filter based on
     whether the user has selected that they are interested in
-    recieving notifications of this type.
+    receiving notifications of this type.
     """
     def __init__(self, title, body, notify_type=None):
         self.title = title
