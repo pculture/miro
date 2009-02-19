@@ -28,6 +28,7 @@
 
 """searchentry.py -- Search entry text box.
 """
+import os.path
 import gobject
 import gtk
 
@@ -122,8 +123,8 @@ class GtkVideoSearchTextEntry(GtkSearchTextEntry):
     def _add_engine(self, engine):
         icon_path = resources.path('images/search_icon_%s.png' % engine.name)
         if config.get(prefs.THEME_NAME) and engine.filename:
-            if engine.filename.startswith(resources.theme_path(
-                    config.get(prefs.THEME_NAME), 'searchengines')):
+            if engine.filename.startswith(os.path.normcase(resources.theme_path(
+                    config.get(prefs.THEME_NAME), 'searchengines'))):
                 # this search engine came from a theme; look up the icon in the
                 # theme directory instead
                 icon_path = resources.theme_path(config.get(prefs.THEME_NAME),

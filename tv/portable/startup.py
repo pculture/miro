@@ -180,9 +180,9 @@ def finish_startup():
         raise StartupError(summary, description)
     database.defaultDatabase.recomputeFilters()
 
+    searchengines.create_engines()
     setup_global_feeds()
     setup_tabs()
-    searchengines.create_engines()
     setup_theme()
     install_message_handler()
 

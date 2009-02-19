@@ -45,8 +45,11 @@ class SearchEngineInfo:
         self.title = title
         self.url = url
         self.sort_order = sort_order
-        self.filename = filename # used for changing icon location on themed
-                                 # searches
+        if filename is not None:
+            self.filename = os.path.normcase(filename)
+            # used for changing icon location on themed searches
+        else:
+            self.filename = None
 
     def get_request_url(self, query, filterAdultContents, limit):
         requestURL = self.url.replace(u"%s", urlencode(query))
@@ -212,4 +215,6 @@ def set_last_engine(engine):
     if not isinstance(engine, basestring):
         engine = engine.name
     engine = str(engine)
+    #if not get_engine_for_name(engine):
+    #    engine = get_search_engines()[0].name
     config.set(prefs.LAST_SEARCH_ENGINE, engine)

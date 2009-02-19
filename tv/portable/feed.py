@@ -2261,7 +2261,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
         self.initialUpdate = True
         self.setUpdateFrequency(-1)
         self.searching = False
-        self.lastEngine = u'all'
+        self.lastEngine = searchengines.get_search_engines()[0].name
         self.lastQuery = u''
         self.ufeed.autoDownloadable = False
         self.ufeed.signalChange()
