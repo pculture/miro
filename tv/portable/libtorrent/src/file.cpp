@@ -167,7 +167,7 @@ namespace libtorrent
 		close();
 #ifdef TORRENT_WINDOWS
 
-#ifdef TORRENT_USE_WPATH
+#if TORRENT_USE_WPATH
 		std::wstring file_path(safe_convert(path.external_file_string()));
 #else
 		std::string file_path = utf8_native(path.external_file_string());
