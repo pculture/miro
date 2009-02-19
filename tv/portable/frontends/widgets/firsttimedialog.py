@@ -31,6 +31,7 @@
 from miro import prefs
 from miro import util
 from miro import messages
+from miro import config
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets import threads
 from miro.frontends.widgets import widgetutil
@@ -57,7 +58,9 @@ def _build_title(text):
 
 class FirstTimeDialog(widgetset.Window):
     def __init__(self, done_firsttime_callback):
-        widgetset.Window.__init__(self, _("Miro First Time Setup"), widgetset.Rect(100, 100, 475, 500))
+        widgetset.Window.__init__(self, _("%s First Time Setup") % \
+                                      config.get(prefs.SHORT_APP_NAME),
+                                  widgetset.Rect(100, 100, 475, 500))
 
         # the directory panel 3 searches for files in
         self.search_directory = None
@@ -114,22 +117,24 @@ class FirstTimeDialog(widgetset.Window):
     def build_first_page(self):
         v = widgetset.VBox(spacing=5)
 
-        v.pack_start(_build_title(_("Welcome to the Miro First Time Setup")))
+        v.pack_start(_build_title(_("Welcome to the %s First Time Setup") % \
+                                      config.get(prefs.SHORT_APP_NAME)))
 
         lab = widgetset.Label(_(
-            "The next few screens will help you set up Miro so that it works best "
+            "The next few screens will help you set up %(name)s so that it works best "
             "for you.\n"
             "\n"
-            "We recommend that you have Miro launch when your computer starts "
+            "We recommend that you have %(name)s launch when your computer starts "
             "up.  This way, downloads in progress can finish downloading and new "
             "media files can be downloaded in the background, ready when you "
             "want to watch."
-            ))
+            ) % {'name': config.get(prefs.SHORT_APP_NAME)})
         lab.set_wrap(True)
         lab.set_size_request(400, -1)
         v.pack_start(widgetutil.align_left(lab))
 
-        lab = widgetset.Label(_("Would you like to run Miro on startup?"))
+        lab = widgetset.Label(_("Would you like to run %s on startup?") % \
+                                  config.get(prefs.SHORT_APP_NAME))
         lab.set_bold(True)
         v.pack_start(widgetutil.align_left(lab))
 
@@ -153,14 +158,15 @@ class FirstTimeDialog(widgetset.Window):
     def build_second_page(self):
         v = widgetset.VBox(spacing=5)
 
-        v.pack_start(_build_title(_("Completing the Miro First Time Setup")))
+        v.pack_start(_build_title(_("Completing the %s First Time Setup") % \
+                                      config.get(prefs.SHORT_APP_NAME)))
 
         lab = widgetset.Label(_(
-            "Miro can find all the media files on your computer to help you "
+            "%(name)s can find all the media files on your computer to help you "
             "organize your collection.\n"
             "\n"
-            "Would you like Miro to look for media files on your computer?"
-            ))
+            "Would you like %(name)s to look for media files on your computer?"
+            ) % {'name': config.get(prefs.SHORT_APP_NAME)})
         lab.set_size_request(400, -1)
         lab.set_wrap(True)
         v.pack_start(widgetutil.align_left(lab))
