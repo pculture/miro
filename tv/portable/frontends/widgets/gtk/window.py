@@ -473,10 +473,10 @@ class FileOpenDialog(FileDialogBase):
         self._window.add_filter(filter)
 
     def get_filenames(self):
-        return self._files
+        return [utils.FilenameType(f) for f in self._files]
 
     def get_filename(self):
-        return self._files[0]
+        return utils.FilenameType(self._files[0])
 
 class FileSaveDialog(FileDialogBase):
     def __init__(self, title):
