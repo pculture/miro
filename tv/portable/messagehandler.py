@@ -913,8 +913,7 @@ class BackendMessageHandler(messages.MessageHandler):
             tracker.send_whole_list = True
 
     def handle_new_watched_folder(self, message):
-        path = osFilenameToFilenameType(message.path)
-        url = u"dtv:directoryfeed:%s" % makeURLSafe(path)
+        url = u"dtv:directoryfeed:%s" % makeURLSafe(message.path)
         if not get_feed_by_url(url):
             feed.Feed(url)
         else:
