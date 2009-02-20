@@ -198,6 +198,8 @@ class VLCRenderer:
     def select_file(self, filename, callback, errback):
         """starts playing the specified file"""
 
+        # filenames coming in are unicode objects, VLC expects utf-8 strings.
+        filename = filename.encode('utf-8')
         self._filename = filename
         self.callback_info = (callback, errback)
         self.play_from_time = None
