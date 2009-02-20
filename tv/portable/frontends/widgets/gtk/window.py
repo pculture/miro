@@ -507,7 +507,7 @@ class DirectorySelectDialog(FileDialogBase):
         self._window.set_filename(text)
 
     def get_directory(self):
-        return self._files[0]
+        return utils.FilenameType(self._files[0])
 
 class AboutDialog(DialogBase):
     def __init__(self):
