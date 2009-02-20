@@ -28,7 +28,7 @@
 
 """search.py -- Manages video searches.
 """
-
+import logging
 from miro import signals
 from miro import messages
 from miro import searchengines
@@ -55,6 +55,11 @@ class SearchManager(signals.SignalEmitter):
         self.searching = False
 
     def set_search_info(self, engine, text):
+        if not searchengines.get_engine_for_name(engine):
+            logging.warn(
+                'Manager asked to set engine to non-existent %s' % engine)
+            self.perform_search(searchengines.get_last_engine().name, '')
+            return
         self.engine = engine
         self.text = text
         searchengines.set_last_engine(self.engine)

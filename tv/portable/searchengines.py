@@ -215,6 +215,6 @@ def set_last_engine(engine):
     if not isinstance(engine, basestring):
         engine = engine.name
     engine = str(engine)
-    #if not get_engine_for_name(engine):
-    #    engine = get_search_engines()[0].name
+    if not get_engine_for_name(engine):
+        engine = str(get_search_engines()[0].name)
     config.set(prefs.LAST_SEARCH_ENGINE, engine)
