@@ -699,22 +699,24 @@ class MiroClean (Command):
         except:
             pass
 
-# =============================================================================
-# This is weird, if we do this from the MiroBuild command we eventually get an
-# error in the macholib module... So let's just do it here.
-# =============================================================================
+if __name__ == "__main__":
+    # =========================================================================
+    # This is weird, if we do this from the MiroBuild command we eventually get
+    # an error in the macholib module... So let's just do it here.
+    # =========================================================================
 
-print 'Extracting frameworks to build directory...'
-frameworks_path = os.path.join(ROOT_DIR, 'platform/osx/build/frameworks')
-extract_binaries('frameworks', frameworks_path, True)
-frameworks = glob(os.path.join(frameworks_path, '*.framework'))
+    print 'Extracting frameworks to build directory...'
+    frameworks_path = os.path.join(ROOT_DIR, 'platform/osx/build/frameworks')
+    extract_binaries('frameworks', frameworks_path, True)
+    frameworks = glob(os.path.join(frameworks_path, '*.framework'))
 
-# =============================================================================
-# Launch the setup process...
-# =============================================================================
+    # =========================================================================
+    # Launch the setup process...
+    # =========================================================================
 
-from Pyrex.Distutils import build_ext
-from distutils.core import setup
+    from Pyrex.Distutils import build_ext
+    from distutils.core import setup
 
-setup( cmdclass = {'build_ext': build_ext, 'clean': MiroClean, 'py2app': MiroBuild}, 
-       options  = {'py2app':{'frameworks': frameworks}} )
+    setup( cmdclass = {'build_ext': build_ext, 'clean': MiroClean,
+                       'py2app': MiroBuild},
+           options  = {'py2app':{'frameworks': frameworks}} )
