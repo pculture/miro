@@ -273,7 +273,7 @@ def add_subscriptions(type_, urls):
                 add_feeds(urls)
         elif type_ == 'download':
             [add_download(url, additional) for url, additional in urls]
-        elif type_ == 'guide':
+        elif type_ in ('guide', 'site'):
             for url in urls:
                 if guide.getGuideByURL(url) is None:
                     guide.ChannelGuide(url, [u'*'])
