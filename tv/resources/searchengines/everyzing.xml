@@ -1,6 +1,6 @@
 <searchengine>
    <id>everyzing</id>
    <displayname>Everyzing</displayname>
-   <url>http://search.everyzing.com/rss.jsp?q=%s&amp;col=en-all-public-ep&amp;start=0&amp;num=50&amp;filter=1&amp;dedupe=1&amp;expand=true&amp;match=query,channel&amp;x=0&amp;y=0&amp;mc=en-all&amp;il=en&amp;format=xml</url>
+   <url>http://search.everyzing.com/rss.jsp?q=%s&amp;col=en-all-public-ep&amp;start=0&amp;num=%l&amp;filter=1&amp;dedupe=1&amp;expand=true&amp;match=query,channel&amp;x=0&amp;y=0&amp;mc=en-all&amp;il=en&amp;format=xml</url>
    <sort>9</sort>
 </searchengine>
