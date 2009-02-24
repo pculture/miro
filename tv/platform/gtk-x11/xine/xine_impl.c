@@ -29,7 +29,6 @@
 */
 
 /*************************************************************************
-
  * xine_impl.c
  *
  * Implementations for the Xine class's methods.
@@ -220,7 +219,8 @@ void _xineSwitchToNormal(_Xine* xine)
   xine->viz = NULL;
 }
 
-void xineAttach(_Xine* xine, const char* displayName, Drawable d, const char *driver, int sync, int use_xv_hack)
+void xineAttach(_Xine* xine, const char* displayName, Drawable d,
+		const char *driver, int sync, int use_xv_hack)
 {
     x11_visual_t vis;
     double screenWidth, screenHeight;
@@ -251,21 +251,23 @@ void xineAttach(_Xine* xine, const char* displayName, Drawable d, const char *dr
     vis.user_data = xine;
   
     /* opening xine output ports */
-#ifdef INCLUDE_XINE_DRIVER_HACK
-    miro_using_xv_driver_hack = 0;    /* by default, don't use the hack */
-    xine->videoPort = xine_open_video_driver(xine->xine, "xv",
-            XINE_VISUAL_TYPE_X11, (void *)&vis);
-    if (!xine->videoPort) {
-#endif
+    // try to use char *driver for video, default to "auto" if NULL
+    if (!driver) {
+      driver = "auto";
+    }
 
-      xine->videoPort = xine_open_video_driver(xine->xine, "auto",
-           XINE_VISUAL_TYPE_X11, (void *)&vis);
-
+    xine->videoPort = xine_open_video_driver(xine->xine, driver,
+         XINE_VISUAL_TYPE_X11, (void *)&vis);
 
 #ifdef INCLUDE_XINE_DRIVER_HACK
-    } else {
-      if (use_xv_hack && !strncmp("xv",driver,3))
+    // by default, don't use the hack
+    miro_using_xv_driver_hack = 0;
+    if (xine->videoPort) {
+      // if we're using the hack and the driver is "xv", then
+      // we turn the hack on.
+      if (use_xv_hack && !strncmp("xv", driver, 3)) {
         miro_using_xv_driver_hack = 1;
+      }
     }
 #endif
 
