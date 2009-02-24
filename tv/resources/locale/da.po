@@ -8,20 +8,20 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-03 11:33+0000\n"
-"Last-Translator: KimAndersen <kimandersen84@gmail.com>\n"
+"PO-Revision-Date: 2009-02-21 20:41+0000\n"
+"Last-Translator: ebp <erik.bp@gmail.com>\n"
 "Language-Team: Danish <da@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-02-10 04:08+0000\n"
+"X-Launchpad-Export-Date: 2009-02-24 21:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
 msgid "Enable tray icon"
-msgstr ""
+msgstr "Aktiver statusområde ikon"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:42
 msgid "When I click the red close button:"
@@ -45,7 +45,8 @@ msgid ""
 "system tray or quit?  You can change this setting later in the Options."
 msgstr ""
 "Når du klikker på det røde kryds, vil du så have Miro til at minimeres til "
-"processlinien eller afslutte programmet?"
+"systembakken eller afslutte programmet? Du kan ændre denne indstilling "
+"senere under Muligheder (Options)"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:182
 msgid "Error Bombing Item"
@@ -89,6 +90,10 @@ msgid ""
 "For the best %(appname)s experience, we suggest you install Adobe Flash.  "
 "Would you like to do this now?"
 msgstr ""
+"For den bedste %(appname)s oplevelse, foreslår vi at du installerer Adobe "
+"Flash. Vil du gøre det nu?\r\n"
+"For the best %(appname)s experience, we suggest you install Adobe Flash.  "
+"Would you like to do this now?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
@@ -102,6 +107,11 @@ msgid ""
 "You should quit Miro now and start it up again after Adobe Flash has been "
 "installed."
 msgstr ""
+"Din browser vil indlæse websiden, hvor du kan hente og installere Adobe "
+"Flash\n"
+"\n"
+"Du bør afslutte Miro og starte det igen efter Adobe Flash er blevet "
+"installeret."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
 msgid "Renderer options:"
@@ -121,11 +131,11 @@ msgstr ""
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:80
 msgid "None"
-msgstr ""
+msgstr "Ingen"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:86
 msgid "Use this for video when playing audio:"
-msgstr ""
+msgstr "Brug denne som video når lyd afspilles"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:120
 #: ../../portable/frontends/widgets/gtk/video.py:300
@@ -155,15 +165,15 @@ msgstr "Slet"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:132
 msgid "Add to Library"
-msgstr ""
+msgstr "Tilføj til bibliotek"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:203
 msgid "Pop Out"
-msgstr ""
+msgstr "Hop ud"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:206
 msgid "Pop In"
-msgstr ""
+msgstr "Hop ind"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
 msgid "Services"
@@ -171,7 +181,7 @@ msgstr "Tjenester"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 msgid "Hide Miro"
-msgstr ""
+msgstr "Skjul Miro"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
 msgid "Hide Others"
@@ -179,7 +189,7 @@ msgstr "Skjul andre"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
 msgid "Show All"
-msgstr "Vis alle"
+msgstr "Vis alt"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
 msgid "Preferences..."
@@ -207,27 +217,27 @@ msgstr "Sæt ind"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
 msgid "Select All"
-msgstr "Vælg alle"
+msgstr "Vælg alt"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
 msgid "Edit"
-msgstr ""
+msgstr "Rediger"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
 msgid "Present Half Size"
-msgstr ""
+msgstr "Nuværende halv størrelse"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:168
 msgid "Present Actual Size"
-msgstr ""
+msgstr "Nuværende faktisk størrelse"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:169
 msgid "Present Double Size"
-msgstr ""
+msgstr "Nuværende dobbel størrelse"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:171
 msgid "Present Video"
-msgstr ""
+msgstr "Nuværende video"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
 msgid "Zoom"
@@ -264,13 +274,13 @@ msgstr "Download af video '%s' er færdig."
 
 #: ../../portable/theme.py:136
 msgid "Custom Channels"
-msgstr "Special kanaler"
+msgstr "Tilpassede kanaler"
 
 #: ../../portable/theme.py:138
 #, python-format
 msgid ""
 "You are running a version of %(appname)s with a custom set of channels."
-msgstr ""
+msgstr "Du kører en version af %(appname)s med tilpassede kanaler"
 
 #: ../../portable/theme.py:171
 msgid "Example Playlist"
@@ -278,35 +288,35 @@ msgstr "Playliste eksempel"
 
 #: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
-msgstr ""
+msgstr "Miro - Anmeld et problem"
 
 #: ../../portable/searchengines.py:146
 msgid "Search All"
-msgstr ""
+msgstr "Søg alle"
 
 #: ../../portable/util.py:279 ../../portable/util.py:281
 #, python-format
 msgid "%(size)sGB"
-msgstr ""
+msgstr "%(size)sGB"
 
 #: ../../portable/util.py:285 ../../portable/util.py:287
 #, python-format
 msgid "%(size)sMB"
-msgstr ""
+msgstr "%(size)sMB"
 
 #: ../../portable/util.py:291 ../../portable/util.py:293
 #, python-format
 msgid "%(size)sKB"
-msgstr ""
+msgstr "%(size)sKB"
 
 #: ../../portable/util.py:297 ../../portable/util.py:299
 #, python-format
 msgid "%(size)sB"
-msgstr ""
+msgstr "%(size)sB"
 
 #: ../../portable/opml.py:185
 msgid "OPML Import failed"
-msgstr "Impotering af OPML fejlede"
+msgstr "OPML Import fejlede"
 
 #: ../../portable/opml.py:186
 msgid ""

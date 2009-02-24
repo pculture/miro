@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-01 22:32+0000\n"
-"Last-Translator: Toni Hermoso Pulido <toniher@softcatala.org>\n"
+"PO-Revision-Date: 2009-02-22 23:38+0000\n"
+"Last-Translator: jordij <Unknown>\n"
 "Language-Team: Catalan <ca@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-02-10 04:08+0000\n"
+"X-Launchpad-Export-Date: 2009-02-24 21:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -25,26 +25,27 @@ msgstr "Activa la icona de la safata del sistema"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:42
 msgid "When I click the red close button:"
-msgstr "Quan cliqui el botó de tancar:"
+msgstr "Quan clico el botó vermell de tancar:"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:45
 msgid "Close to tray so that downloads can continue."
-msgstr "Tanca a la safata de sistema, així les descarregues no s'aturaran."
+msgstr ""
+"Tanca a la safata del sistema, de manera que les baixades no s'aturin."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
 msgid "Quit Miro completely."
-msgstr "Surt totalment"
+msgstr "Tanca el Miro completament."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:124
 msgid "Close to tray?"
-msgstr "Voleu deixar-lo a la safata de sistema?"
+msgstr "Voleu minimitzar-lo a la safata del sistema?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:125
 msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
 msgstr ""
-"Al prémer el botó de sortir, voleu deixar el Miro a la safata de sistema, o "
+"Al prémer el botó de sortir, voleu deixar el Miro a la safata del sistema, o "
 "bé tancar-lo? Podeu modificar-ho més tard a les preferències."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:182
@@ -77,7 +78,7 @@ msgstr "Hi ha una versió nova de %s disponible per descarregar"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
-msgstr ""
+msgstr "Voleu baixar-lo ara?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
@@ -89,6 +90,8 @@ msgid ""
 "For the best %(appname)s experience, we suggest you install Adobe Flash.  "
 "Would you like to do this now?"
 msgstr ""
+"Per una millor experiència amb el %(appname)s és necessari instal·lar "
+"l'Adobe Flash. Voleu fer-ho ara?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
@@ -102,6 +105,11 @@ msgid ""
 "You should quit Miro now and start it up again after Adobe Flash has been "
 "installed."
 msgstr ""
+"El navegador carregarà la pàgina web on es pot descarregar i instal·lar "
+"l'Adobe Flash.\n"
+"\n"
+"S'ha de sortir del Miro i tornar-lo a obrir quan l'Adobe Flash ja s'hagi "
+"instal·lat."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
 msgid "Renderer options:"
@@ -109,7 +117,9 @@ msgstr "Opcions de renderitzat:"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
 msgid "You must restart Miro for renderer changes to take effect."
-msgstr "S'ha de reiniciar Miro per tal que els canvis tenguin efecte."
+msgstr ""
+"S'ha de reiniciar el Miro per tal que els canvis en el renderitzat tinguin "
+"efecte."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:72
 msgid "Video renderer:"
@@ -161,11 +171,11 @@ msgstr "Afegeix a la biblioteca"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:203
 msgid "Pop Out"
-msgstr ""
+msgstr "Finestra independent"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:206
 msgid "Pop In"
-msgstr ""
+msgstr "Finestra interna"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
 msgid "Services"
@@ -201,7 +211,7 @@ msgstr "Retalla"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:156
 msgid "Copy"
-msgstr "Còpia"
+msgstr "Copia"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
 msgid "Paste"
@@ -209,7 +219,7 @@ msgstr "Enganxa"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
 msgid "Select All"
-msgstr "Selecciona tots"
+msgstr "Selecciona-ho tot"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
 msgid "Edit"
@@ -385,6 +395,8 @@ msgid ""
 "An unknown error prevented Miro from startup.  Please file a bug report at "
 "%(url)s."
 msgstr ""
+"Un error desconegut ha evitat que el Miro s'iniciés. Ompliu un informe "
+"d'error a %(url)s."
 
 #: ../../portable/startup.py:173
 msgid "Database too new"
@@ -593,11 +605,11 @@ msgstr "Sup_rimeix l'element"
 
 #: ../../portable/menubar.py:189
 msgid "_Remove Items"
-msgstr ""
+msgstr "Sup_rimeix els elements"
 
 #: ../../portable/menubar.py:190
 msgid "Re_name Item"
-msgstr ""
+msgstr "Rea_nomena l'element"
 
 #: ../../portable/menubar.py:191
 msgid "Save Item _As"
@@ -686,7 +698,7 @@ msgstr "E_xporta canals (OPML)"
 
 #: ../../portable/menubar.py:228
 msgid "_Share with a Friend"
-msgstr ""
+msgstr "_Comparteix-ho amb un amic"
 
 #: ../../portable/menubar.py:229
 msgid "Copy URL"
@@ -791,7 +803,7 @@ msgstr "_Traduir"
 
 #: ../../portable/menubar.py:277
 msgid "_Planet Miro"
-msgstr ""
+msgstr "_Planeta Miro"
 
 #: ../../portable/menubar.py:282
 msgid "_Video"
@@ -921,7 +933,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
-msgstr ""
+msgstr "Suprimeix-ho tot"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
@@ -975,7 +987,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/gtk/video.py:309
 #: ../../portable/frontends/widgets/itemcontextmenu.py:137
 msgid "Comments"
-msgstr ""
+msgstr "Comentaris"
 
 #: ../../portable/frontends/widgets/style.py:215
 #, python-format
@@ -989,7 +1001,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:216
 msgid "Web Page"
-msgstr ""
+msgstr "Pàgina web"
 
 #: ../../portable/frontends/widgets/style.py:217
 msgid "File URL"
@@ -1001,7 +1013,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:219
 msgid "File Type"
-msgstr ""
+msgstr "Tipus de fitxer"
 
 #: ../../portable/frontends/widgets/style.py:220
 msgid "Seeders"

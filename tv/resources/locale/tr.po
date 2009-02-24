@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-08 03:09+0000\n"
-"Last-Translator: mehmet nur olcay <Unknown>\n"
+"PO-Revision-Date: 2009-02-23 13:03+0000\n"
+"Last-Translator: efecan <efecanerdur@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-02-10 04:08+0000\n"
+"X-Launchpad-Export-Date: 2009-02-24 21:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -79,7 +79,7 @@ msgstr "%s'nun indirebileceğiniz yeni bir sürümü var."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
-msgstr ""
+msgstr "Şimdi indirmek ister misiniz?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
@@ -106,6 +106,9 @@ msgid ""
 "You should quit Miro now and start it up again after Adobe Flash has been "
 "installed."
 msgstr ""
+"Adobe Flash'ı indirebileceğiniz bir siteye yönlendireleceksiniz.\n"
+"\n"
+"Miro'yu kapatıp Adobe Flash kurulumundan sonra tekrar başlatmalısınız."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
 msgid "Renderer options:"
@@ -286,11 +289,11 @@ msgstr "Örnek Çalma Listesi"
 
 #: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
-msgstr ""
+msgstr "Miro - Hata Bildir"
 
 #: ../../portable/searchengines.py:146
 msgid "Search All"
-msgstr ""
+msgstr "Tümünü Ara"
 
 #: ../../portable/util.py:279 ../../portable/util.py:281
 #, python-format
@@ -305,7 +308,7 @@ msgstr ""
 #: ../../portable/util.py:291 ../../portable/util.py:293
 #, python-format
 msgid "%(size)sKB"
-msgstr ""
+msgstr "%(size)sKB"
 
 #: ../../portable/util.py:297 ../../portable/util.py:299
 #, python-format
@@ -366,11 +369,11 @@ msgstr ""
 
 #: ../../portable/messagehandler.py:1266
 msgid "Subscribed to new feed:"
-msgstr ""
+msgstr "Yeni beslemeye abone olundu:"
 
 #: ../../portable/messagehandler.py:1269
 msgid "Subscribed to new feeds:"
-msgstr ""
+msgstr "Yeni beslemelere abone olundu:"
 
 #: ../../portable/messages.py:965 ../../portable/item.py:618
 msgid "queued for download"

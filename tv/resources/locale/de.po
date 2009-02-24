@@ -8,46 +8,47 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-09 18:17+0000\n"
-"Last-Translator: Karsten W. Rohrbach <karsten@rohrbach.de>\n"
+"PO-Revision-Date: 2009-02-24 18:29+0000\n"
+"Last-Translator: Richi <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-02-10 04:08+0000\n"
+"X-Launchpad-Export-Date: 2009-02-24 21:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
 msgid "Enable tray icon"
-msgstr "Icon im Benachrichtigungsbereich aktivieren"
+msgstr "Tray-Icon aktivieren"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:42
 msgid "When I click the red close button:"
-msgstr "Beim Klicken auf den roten Schließen-Knopf:"
+msgstr "Wenn ich den roten Schließen-Button klicke:"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:45
 msgid "Close to tray so that downloads can continue."
 msgstr ""
-"In den Benachrichtigungsbereich minimieren, damit Downloads im Hintergrund "
-"fortgesetzt werden können."
+"In das System-Tray minimieren damit Downloads im Hintergrund fortgesetzt "
+"werden können."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
 msgid "Quit Miro completely."
-msgstr "Miro vollständig beenden."
+msgstr "Miro völlständig beenden"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:124
 msgid "Close to tray?"
-msgstr "In den Benachrichtigungsbereich minimieren?"
+msgstr "In das System-Tray schließen?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:125
 msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
 msgstr ""
-"Möchten Sie, dass Miro beendet oder minimiert wird, wenn Sie auf den roten "
-"Schließen-Knopf klicken? Sie können diese Einstellung später ändern."
+"Möchten Sie, dass Miro beendet oder minimiert wird, wenn sie  auf den "
+"\"Beenden\" Button klicken?\r\n"
+"(Sie können diese Einstellung später unter \"Optionen\" ändern.)"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:182
 msgid "Error Bombing Item"
@@ -67,7 +68,7 @@ msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr ""
 "Es kam zu einem Fehler beim Öffnen von %(url)s. Bitte versuchen Sie es in "
-"ein paar Sekunden noch einmal."
+"ein paar Sekunden nochmals."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
 msgid "Update Available"
@@ -76,11 +77,11 @@ msgstr "Ein Update ist verfügbar"
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
 #, python-format
 msgid "A new version of %s is available for download."
-msgstr "Eine neue Version von %s steht zum herunterladen bereit."
+msgstr "Eine neue Version von %s steht zum Herunterladen bereit."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
-msgstr "Möchten Sie jetzt herunterladen?"
+msgstr "Möchten Sie dieses Elemtn jetzt herunterladen?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
@@ -92,8 +93,8 @@ msgid ""
 "For the best %(appname)s experience, we suggest you install Adobe Flash.  "
 "Would you like to do this now?"
 msgstr ""
-"Für die volle %(appname)s-Erfahrung empfehlen wir Ihnen, Adobes Flashplayer "
-"zu installieren. Wollen Sie dies jetzt tun?"
+"Für die besten %(appname)s-Ergebnisse, empfehlen wir die Installation des "
+"Adobe Flash Players. Wollen Sie dies jetzt tun?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
@@ -107,21 +108,21 @@ msgid ""
 "You should quit Miro now and start it up again after Adobe Flash has been "
 "installed."
 msgstr ""
-"Ihr Browser wird die Webseite laden, von der Sie Adobe Flash herunterladen "
-"und installieren können.\n"
+"Sie werden zu der Webseite weitergeleitet, von der Sie Adobe Flash "
+"herunterladen und installieren können.\n"
 "\n"
-"Bitte beenden Sie Miro jetzt und starten Sie es erst nach der Installation "
-"von Adobe Flash erneut."
+"Bitte beenden Sie Miro jetzt und starten Sie es nach der Installation von "
+"Adobe Flash erneut."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
 msgid "Renderer options:"
-msgstr "Renderereinstellungen:"
+msgstr "Wiedergabeeinstellungen:"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
 msgid "You must restart Miro for renderer changes to take effect."
 msgstr ""
-"Sie müssen Miro neu starten, damit ein Wechsel des Renderers übernommen "
-"werden kann."
+"Starten Sie Miro neu, damit die Änderungen der Wiedergabeeinstellungen "
+"übernommen werden."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:72
 msgid "Video renderer:"
@@ -144,7 +145,7 @@ msgstr "Anzuzeigende Visualisierung beim Abspielen von Audiodateien:"
 #: ../../portable/frontends/widgets/gtk/video.py:300
 #: ../../portable/frontends/widgets/itemcontextmenu.py:152
 msgid "Share"
-msgstr "Mit Anderen teilen"
+msgstr "Teilen"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:124
 #: ../../portable/frontends/widgets/style.py:232
@@ -155,7 +156,7 @@ msgstr "Mit Anderen teilen"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:211
 #: ../../portable/dialogs.py:106
 msgid "Keep"
-msgstr "Behalten"
+msgstr "Beibehalten"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:128
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
@@ -172,11 +173,11 @@ msgstr "Zur Bibliothek hinzufügen"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:203
 msgid "Pop Out"
-msgstr ""
+msgstr "Ausklappen"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:206
 msgid "Pop In"
-msgstr ""
+msgstr "Einklappen"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
 msgid "Services"
@@ -192,7 +193,7 @@ msgstr "Andere ausblenden"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
 msgid "Show All"
-msgstr "Alle anzeigen"
+msgstr "Alles anzeigen"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
 msgid "Preferences..."
@@ -256,7 +257,7 @@ msgstr "Hauptfenster"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
 msgid "Bring All to Front"
-msgstr "Alle in den Vordergrund bringen"
+msgstr "Alle in den Vordergrund"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
 msgid "Window"
@@ -264,7 +265,7 @@ msgstr "Fenster"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Miro Help"
-msgstr "Hilfe zu Miro"
+msgstr "Miro Hilfe"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:166
 msgid "Download Completed"
@@ -273,7 +274,7 @@ msgstr "Download fertig"
 #: ../../platform/osx/plat/frontends/widgets/application.py:167
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr "Das Video '%s' ist geladen."
+msgstr "Das Video '%s' ist fertig geladen."
 
 #: ../../portable/theme.py:136
 msgid "Custom Channels"
@@ -489,21 +490,21 @@ msgstr "%(size)s B"
 #, python-format
 msgid "Expires in %(count)d day"
 msgid_plural "Expires in %(count)d days"
-msgstr[0] "Wird in %(count)d Tag gelöscht"
+msgstr[0] "Wird in einem Tag gelöscht"
 msgstr[1] "Wird in %(count)d Tagen gelöscht"
 
 #: ../../portable/displaytext.py:96
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
-msgstr[0] "Wird in %(count)d Stunde gelöscht"
+msgstr[0] "Wird in einer Stunde gelöscht"
 msgstr[1] "Wird in %(count)d Stunden gelöscht"
 
 #: ../../portable/displaytext.py:101
 #, python-format
 msgid "Expires in %(count)d minute"
 msgid_plural "Expires in %(count)d minutes"
-msgstr[0] "Wird in %(count)d Minute gelöscht"
+msgstr[0] "Wird in einer Minute gelöscht"
 msgstr[1] "Wird in %(count)d Minuten gelöscht"
 
 #: ../../portable/displaytext.py:109
@@ -534,11 +535,11 @@ msgstr "Aktivität"
 #: ../../portable/downloader.py:268 ../../portable/httpclient.py:145
 #: ../../portable/httpclient.py:174
 msgid "File not found"
-msgstr "Datei nicht gefunden"
+msgstr "Die Datei wurde nicht gefunden"
 
 #: ../../portable/downloader.py:269
 msgid "Flash URL Scraping Error"
-msgstr "Flash URL Scraping (Datenbeschaffung) Fehler"
+msgstr "Fehler beim Verarbeiten der Flash-URL"
 
 #: ../../portable/downloader.py:447
 msgid "starting up"
@@ -557,7 +558,7 @@ msgstr "In die Datei %(filename)s konnte nicht geschrieben werden"
 #: ../../portable/dl_daemon/download.py:621
 #: ../../portable/dl_daemon/download.py:838
 msgid "Not enough disk space"
-msgstr "Nicht genügend Festplattenplatz"
+msgstr "Nicht genügend Platz auf dem Speichermedium"
 
 #: ../../portable/dl_daemon/download.py:622
 #: ../../portable/dl_daemon/download.py:839
@@ -593,7 +594,8 @@ msgstr "Torrentdatei gelöscht"
 
 #: ../../portable/dl_daemon/download.py:1068
 msgid "The torrent file for this item was deleted outside of Miro."
-msgstr "Die Torrentdatei für diesen Eintrag wurde außerhalb Miros gelöscht."
+msgstr ""
+"Die torrent-Datei für diesen Eintrag wurde außerhalb von Miro gelöscht."
 
 #: ../../portable/menubar.py:184
 msgid "_Open"
@@ -633,7 +635,7 @@ msgstr "Objekt _URL kopieren"
 
 #: ../../portable/menubar.py:195
 msgid "_Options"
-msgstr "_Einstellungen"
+msgstr "_Optionen"
 
 #: ../../portable/menubar.py:196
 msgid "_Quit"
@@ -649,11 +651,11 @@ msgstr "_Kopieren"
 
 #: ../../portable/menubar.py:207
 msgid "_Paste"
-msgstr "Ein_fügen"
+msgstr "E_infügen"
 
 #: ../../portable/menubar.py:208
 msgid "Select _All"
-msgstr "_Alle auswählen"
+msgstr "_Alles auswählen"
 
 #: ../../portable/menubar.py:212
 msgid "Add _Feed"
@@ -726,11 +728,11 @@ msgstr "Wi_edergabeliste umbenennen"
 
 #: ../../portable/menubar.py:237
 msgid "_Remove Playlist"
-msgstr "Wiedergabeliste l_öschen"
+msgstr "Wiedergabeliste _löschen"
 
 #: ../../portable/menubar.py:238
 msgid "_Remove Playlists"
-msgstr "_Wiedergabeliste löschen"
+msgstr "Wiedergabeliste _löschen"
 
 #: ../../portable/menubar.py:239
 msgid "_Remove Playlist Folders"
@@ -1124,7 +1126,7 @@ msgstr "Stündlich"
 
 #: ../../portable/frontends/widgets/prefpanel.py:283
 msgid "Every 30 minutes"
-msgstr "30-minütig"
+msgstr "Alle 30 Minuten"
 
 #: ../../portable/frontends/widgets/prefpanel.py:284
 msgid "Manually"
@@ -1367,7 +1369,7 @@ msgstr "Im Browser öffnen"
 
 #: ../../portable/frontends/widgets/rundialog.py:82
 msgid "Username:"
-msgstr "Benutzername:"
+msgstr "Benutzer:"
 
 #: ../../portable/frontends/widgets/rundialog.py:86
 msgid "Password:"
@@ -1669,11 +1671,11 @@ msgstr "Geben Sie einen Namen für die neue Wiedergabeliste ein"
 
 #: ../../portable/frontends/widgets/application.py:638
 msgid "Create Playlist Folder"
-msgstr "Wiedergabelistenordner erstellen"
+msgstr "Ordner für Wiedergabelisten erstellen"
 
 #: ../../portable/frontends/widgets/application.py:639
 msgid "Enter a name for the new playlist folder"
-msgstr "Geben Sie einen Namen für den neuen Wiedergabelistenordner ein"
+msgstr "Geben Sie einen neuen Namen für den Ordner der Wiedergabeliste ein."
 
 #: ../../portable/frontends/widgets/application.py:660
 #: ../../portable/frontends/widgets/tablist.py:522
@@ -1708,7 +1710,7 @@ msgstr "Geben Sie einen neuen Namen für die Wiedergabeliste %(name)s ein"
 #: ../../portable/frontends/widgets/application.py:675
 #: ../../portable/frontends/widgets/tablist.py:577
 msgid "Rename Playlist Folder"
-msgstr "Wiedergabelistenordner umbenennen"
+msgstr "Ordner für Wiedergabeliste umbenennen"
 
 #: ../../portable/frontends/widgets/application.py:676
 #, python-format
@@ -2301,7 +2303,7 @@ msgstr "Suchen"
 #: ../../portable/frontends/widgets/firsttimedialog.py:215
 #: ../../portable/frontends/widgets/firsttimedialog.py:283
 msgid "Finish"
-msgstr "Fertig stellen"
+msgstr "Beenden"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:263
 msgid "Searching for media files"
@@ -2332,7 +2334,7 @@ msgstr "Miro-Programmführer"
 
 #: ../../portable/frontends/widgets/statictabs.py:110
 msgid "Downloading"
-msgstr "Herunterladen"
+msgstr "Lade herunter"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:90
 msgid "Single and external downloads"

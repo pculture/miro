@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: Democracy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-07 09:29+0000\n"
-"Last-Translator: Michael Castielli <michael.castielli@gmail.com>\n"
+"PO-Revision-Date: 2009-02-16 17:26+0000\n"
+"Last-Translator: Lindisfarne <davide.campa1970@alice.it>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-02-10 04:08+0000\n"
+"X-Launchpad-Export-Date: 2009-02-24 21:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -25,7 +25,8 @@ msgstr "Quando seleziono il bottone rosso di chiusura:"
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:45
 msgid "Close to tray so that downloads can continue."
 msgstr ""
-"Riduci nella tray bar in modo che i download correnti possano continuare."
+"Riduci nell'area di notifica in modo che gli scaricamenti correnti possano "
+"continuare."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
 msgid "Quit Miro completely."
@@ -264,12 +265,12 @@ msgstr "Aiuto di Miro"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:166
 msgid "Download Completed"
-msgstr "Download completo"
+msgstr "Scaricamento competato"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:167
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr "Il download del video '%s' è completato"
+msgstr "Lo scaricamento del video '%s' è completato"
 
 #: ../../portable/theme.py:136
 msgid "Custom Channels"
@@ -410,7 +411,7 @@ msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
 "must download the latest version of %(appname)s and run that."
 msgstr ""
-"Hai una database che fu salvata con una nuova versione di %(appname)s. Devi "
+"Hai un database salvato con una nuova versione di %(appname)s. Devi "
 "scaricare l'ultima versione di %(appname)s ed eseguirlo."
 
 #: ../../portable/displaytext.py:40
@@ -452,6 +453,7 @@ msgstr[1] "%(num).1f ore"
 msgid "%(num).1f min"
 msgid_plural "%(num).1f mins"
 msgstr[0] "%(num).1f min"
+msgstr[1] "%(num).1f min"
 
 #: ../../portable/displaytext.py:64
 #, python-format
@@ -468,17 +470,17 @@ msgstr "%(size)s gb"
 #: ../../portable/displaytext.py:81
 #, python-format
 msgid "%(size)s mb"
-msgstr "%(size)s gb"
+msgstr "%(size)s mb"
 
 #: ../../portable/displaytext.py:84
 #, python-format
 msgid "%(size)s kb"
-msgstr "%(size)s gb"
+msgstr "%(size)s kb"
 
 #: ../../portable/displaytext.py:86
 #, python-format
 msgid "%(size)s b"
-msgstr "%(size)s gb"
+msgstr "%(size)s b"
 
 #: ../../portable/displaytext.py:91
 #, python-format
@@ -950,7 +952,7 @@ msgstr "Gli elementi più antichi sono stati eliminati"
 #: ../../portable/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause Auto-Downloading when this many items are unplayed:"
 msgstr ""
-"Interrompere il download automatico quando questo numero di elementi non "
+"Interrompere lo scaricamento automatico quando questo numero di elementi non "
 "visti è raggiunto"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:197
@@ -1043,7 +1045,7 @@ msgstr "Totale Upload"
 
 #: ../../portable/frontends/widgets/style.py:224
 msgid "Down Rate"
-msgstr "Fattore Down"
+msgstr "Velocità di download"
 
 #: ../../portable/frontends/widgets/style.py:225
 msgid "Down Total"
@@ -1086,7 +1088,7 @@ msgstr "Nuovo"
 #: ../../portable/frontends/widgets/tablist.py:589
 #: ../../portable/dialogs.py:108
 msgid "Remove"
-msgstr "_Rimuovi"
+msgstr "Rimuovi"
 
 #: ../../portable/frontends/widgets/style.py:234
 #: ../../portable/frontends/widgets/itemcontextmenu.py:113
@@ -2101,7 +2103,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/tablist.py:475
 #: ../../portable/frontends/widgets/tablist.py:534
 msgid "Copy URL to clipboard"
-msgstr "Copia la URL nella cipboard"
+msgstr "Copia l'URL nella clipboard"
 
 #: ../../portable/frontends/widgets/tablist.py:477
 msgid "Remove Site"
@@ -2326,7 +2328,7 @@ msgstr "Guida di Miro"
 
 #: ../../portable/frontends/widgets/statictabs.py:110
 msgid "Downloading"
-msgstr "Downnload in corso"
+msgstr "Scaricamento in corso"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:90
 msgid "Single and external downloads"

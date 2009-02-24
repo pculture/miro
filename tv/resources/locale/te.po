@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-01-22 15:39+0000\n"
-"Last-Translator: వీవెన్ (Veeven) <Unknown>\n"
+"PO-Revision-Date: 2009-02-13 12:48+0000\n"
+"Last-Translator: shiva prasad <Unknown>\n"
 "Language-Team: Telugu <te@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-02-10 04:08+0000\n"
+"X-Launchpad-Export-Date: 2009-02-24 21:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -33,7 +33,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
 msgid "Quit Miro completely."
-msgstr ""
+msgstr "మీరోని పూర్తిగా చాలించు."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:124
 msgid "Close to tray?"
@@ -74,7 +74,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
-msgstr ""
+msgstr "మీరిప్పుడే దిగుమతి చేసుకోవాలనుకుంటున్నారా?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
@@ -152,7 +152,7 @@ msgstr "తొలగించు"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:132
 msgid "Add to Library"
-msgstr ""
+msgstr "గ్రంధాలయానికి చేర్చు"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:203
 msgid "Pop Out"
@@ -275,7 +275,7 @@ msgstr ""
 
 #: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
-msgstr ""
+msgstr "మీరో - ఓ సమస్యని నివేదించండి"
 
 #: ../../portable/searchengines.py:146
 msgid "Search All"
@@ -390,22 +390,22 @@ msgstr ""
 #: ../../portable/displaytext.py:40
 #, python-format
 msgid "%(size)s gb/s"
-msgstr ""
+msgstr "%(size)s గిబై/క్ష"
 
 #: ../../portable/displaytext.py:43
 #, python-format
 msgid "%(size)s mb/s"
-msgstr ""
+msgstr "%(size)s మెబై/క్ష"
 
 #: ../../portable/displaytext.py:46
 #, python-format
 msgid "%(size)s kb/s"
-msgstr ""
+msgstr "%(size)s కిబై/క్ష"
 
 #: ../../portable/displaytext.py:49
 #, python-format
 msgid "%(size)s b/s"
-msgstr ""
+msgstr "%(size)s బై/క్ష"
 
 #: ../../portable/displaytext.py:56
 #, python-format
@@ -911,7 +911,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
-msgstr ""
+msgstr "అన్నీ తొలగించు"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
@@ -965,7 +965,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/gtk/video.py:309
 #: ../../portable/frontends/widgets/itemcontextmenu.py:137
 msgid "Comments"
-msgstr ""
+msgstr "వ్యాఖ్యలు"
 
 #: ../../portable/frontends/widgets/style.py:215
 #, python-format
@@ -979,11 +979,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:216
 msgid "Web Page"
-msgstr ""
+msgstr "వెబ్ పేజీ"
 
 #: ../../portable/frontends/widgets/style.py:217
 msgid "File URL"
-msgstr ""
+msgstr "ఫైలు URL"
 
 #: ../../portable/frontends/widgets/style.py:218
 msgid "License Page"
@@ -991,7 +991,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:219
 msgid "File Type"
-msgstr ""
+msgstr "ఫైలు రకం"
 
 #: ../../portable/frontends/widgets/style.py:220
 msgid "Seeders"
@@ -1112,23 +1112,23 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:297
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: ../../portable/frontends/widgets/prefpanel.py:298
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../../portable/frontends/widgets/prefpanel.py:299
 msgid "50"
-msgstr ""
+msgstr "50"
 
 #: ../../portable/frontends/widgets/prefpanel.py:300
 msgid "100"
-msgstr ""
+msgstr "100"
 
 #: ../../portable/frontends/widgets/prefpanel.py:301
 msgid "1000"
-msgstr ""
+msgstr "1000"
 
 #: ../../portable/frontends/widgets/prefpanel.py:307
 msgid "Default settings for new feeds:"
@@ -1295,7 +1295,7 @@ msgstr "సాధారణ"
 
 #: ../../portable/frontends/widgets/prefpanel.py:621
 msgid "Feeds"
-msgstr ""
+msgstr "ఫీడులు"
 
 #: ../../portable/frontends/widgets/prefpanel.py:622
 #: ../../portable/frontends/widgets/downloadscontroller.py:81
@@ -1304,7 +1304,7 @@ msgstr "దిగుమతులు"
 
 #: ../../portable/frontends/widgets/prefpanel.py:623
 msgid "Folders"
-msgstr ""
+msgstr "సంచయాలు"
 
 #: ../../portable/frontends/widgets/prefpanel.py:624
 msgid "Disk space"
@@ -1332,7 +1332,7 @@ msgstr "సంకేతపదం:"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
-msgstr ""
+msgstr "కొత్త వీడియోలు"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:413
 #: ../../portable/frontends/widgets/statictabs.py:86
@@ -1341,7 +1341,7 @@ msgstr "వీడియో వెతుకులాట"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:427
 msgid "No Results Found"
-msgstr ""
+msgstr "ఫలితాలేమీ లేవు"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:489
 #: ../../portable/frontends/widgets/statictabs.py:91
@@ -1392,7 +1392,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/diagnostics.py:109
 msgid "Database size:"
-msgstr ""
+msgstr "డాటాబేసు పరిమాణం:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:111
 msgid "Total number of db objects:"
@@ -1404,7 +1404,7 @@ msgstr "దిగుమతయ్యింది"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:137
 msgid "Full Feed"
-msgstr ""
+msgstr "పూర్తి ఫీడు"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:191
 #, python-format
@@ -1492,7 +1492,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:366
 msgid "New Download"
-msgstr ""
+msgstr "కొత్త దిగుమతి"
 
 #: ../../portable/frontends/widgets/application.py:367
 msgid "Enter the URL of the item to download"
@@ -1677,7 +1677,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:750
 msgid "Are you sure you want to quit?"
-msgstr ""
+msgstr "మీరు నిజంగా త్యజించదల్చుకున్నారా?"
 
 #: ../../portable/frontends/widgets/application.py:752
 #, python-format
@@ -1692,7 +1692,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:1011
 msgid "Message"
-msgstr ""
+msgstr "సందేశం"
 
 #: ../../portable/frontends/widgets/application.py:1036
 msgid "Migrating Files"
@@ -1708,7 +1708,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:282
 msgid "Title"
-msgstr ""
+msgstr "శీర్షిక"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:284
 msgid "Feed"
@@ -1717,20 +1717,20 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemlistwidgets.py:286
 #: ../../portable/frontends/widgets/itemlistwidgets.py:725
 msgid "Date"
-msgstr ""
+msgstr "తేదీ"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:287
 msgid "Length"
-msgstr ""
+msgstr "పొడవు"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:288
 msgid "Status"
-msgstr ""
+msgstr "స్థితి"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:289
 #: ../../portable/frontends/widgets/itemlistwidgets.py:726
 msgid "Size"
-msgstr ""
+msgstr "పరిమాణం"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:291
 msgid "ETA"
@@ -1738,7 +1738,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:292
 msgid "Speed"
-msgstr ""
+msgstr "వేగం"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:428
 msgid "Save as a Feed"
@@ -1758,7 +1758,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:503
 msgid "Download Settings"
-msgstr ""
+msgstr "దిగుమతి అమరికలు"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:549
 #, python-format
@@ -1803,11 +1803,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:724
 msgid "Name"
-msgstr ""
+msgstr "పేరు"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:727
 msgid "Time"
-msgstr ""
+msgstr "సమయం"
 
 #: ../../portable/frontends/widgets/displays.py:353
 msgid ""
@@ -1842,8 +1842,8 @@ msgstr[1] ""
 #, python-format
 msgid "(contains %(count)d feed)"
 msgid_plural "(contains %(count)d feeds)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(%(count)d ఫీడు ఉంది)"
+msgstr[1] "(%(count)d ఫీడులు ఉన్నాయి)"
 
 #: ../../portable/frontends/widgets/displays.py:554
 #, python-format
@@ -1920,11 +1920,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/gtk/video.py:311
 msgid "Permalink"
-msgstr ""
+msgstr "స్థిరలింకు"
 
 #: ../../portable/frontends/widgets/gtk/window.py:470
 msgid "All files"
-msgstr ""
+msgstr "అన్ని ఫైళ్ళు"
 
 #: ../../portable/frontends/widgets/gtk/window.py:499
 msgid "Choose"
@@ -1983,17 +1983,17 @@ msgstr ""
 #: ../../portable/frontends/widgets/newfolder.py:70
 #: ../../portable/frontends/widgets/newsearchfeed.py:135
 msgid "video"
-msgstr ""
+msgstr "వీడియో"
 
 #: ../../portable/frontends/widgets/newfeed.py:72
 #: ../../portable/frontends/widgets/newfolder.py:71
 #: ../../portable/frontends/widgets/newsearchfeed.py:136
 msgid "audio"
-msgstr ""
+msgstr "ఆడియో"
 
 #: ../../portable/frontends/widgets/newfeed.py:110
 msgid "Add Feed"
-msgstr ""
+msgstr "ఫీడుని చేర్చు"
 
 #: ../../portable/frontends/widgets/newfeed.py:111
 msgid "Enter the URL of the feed to add"
@@ -2042,11 +2042,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:605
 msgid "SITES"
-msgstr ""
+msgstr "సైట్లు"
 
 #: ../../portable/frontends/widgets/tablist.py:607
 msgid "FEEDS"
-msgstr ""
+msgstr "ఫీడులు"
 
 #: ../../portable/frontends/widgets/tablist.py:609
 msgid "AUDIO FEEDS"
@@ -2150,7 +2150,7 @@ msgstr "కాదు"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:146
 msgid "Next >"
-msgstr ""
+msgstr "తదుపరి >"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:156
 msgid "Completing the Miro First Time Setup"
@@ -2179,7 +2179,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:200
 #: ../../portable/frontends/widgets/firsttimedialog.py:280
 msgid "< Previous"
-msgstr ""
+msgstr "< గత"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:213
 #: ../../portable/frontends/widgets/firsttimedialog.py:215
@@ -2306,11 +2306,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
-msgstr ""
+msgstr "వెబ్ పేజీ"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:139
 msgid "License"
-msgstr ""
+msgstr "లైసెన్స్"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:142
 msgid "File in Browser"
@@ -2375,7 +2375,7 @@ msgstr ""
 
 #: ../../portable/dialogs.py:86
 msgid "Done"
-msgstr ""
+msgstr "పూర్తయ్యింది"
 
 #: ../../portable/dialogs.py:89
 msgid "Quit"
@@ -2383,7 +2383,7 @@ msgstr "చాలించు"
 
 #: ../../portable/dialogs.py:90
 msgid "Continue"
-msgstr ""
+msgstr "కొనసాగించు"
 
 #: ../../portable/dialogs.py:91
 msgid "Ignore"
@@ -2459,7 +2459,7 @@ msgstr ""
 
 #: ../../portable/dialogs.py:114
 msgid "Don't Install"
-msgstr ""
+msgstr "స్థాపించకు"
 
 #: ../../portable/dialogs.py:115
 msgid "Subscribe"
@@ -2580,27 +2580,27 @@ msgstr ""
 #, python-format
 msgid "%(count)d day"
 msgid_plural "%(count)d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d రోజు"
+msgstr[1] "%(count)d రోజులు"
 
 #: ../../portable/item.py:444
 #, python-format
 msgid "%(count)d hour"
 msgid_plural "%(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d గంట"
+msgstr[1] "%(count)d గంటలు"
 
 #: ../../portable/item.py:449
 #, python-format
 msgid "%(count)d minute"
 msgid_plural "%(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d నిమిషం"
+msgstr[1] "%(count)d నిమిషాలు"
 
 #: ../../portable/item.py:733 ../../portable/item.py:749
 #: ../../portable/item.py:761
 msgid "no title"
-msgstr ""
+msgstr "శీర్షిక లేదు"
 
 #: ../../portable/item.py:1008
 msgid "starting up..."
@@ -2609,7 +2609,7 @@ msgstr "మొదలవుతోంది..."
 #: ../../portable/httpclient.py:90
 #, python-format
 msgid "Error: %(msg)s"
-msgstr ""
+msgstr "పొరపాటు: %(msg)s"
 
 #: ../../portable/httpclient.py:105 ../../portable/httpclient.py:111
 msgid "Can't connect"
@@ -2618,7 +2618,7 @@ msgstr ""
 #: ../../portable/httpclient.py:106
 #, python-format
 msgid "Connection Error: %(msg)s"
-msgstr ""
+msgstr "సంధానపు పొరపాటు: %(msg)s"
 
 #: ../../portable/httpclient.py:112
 msgid "SSL connection error"
@@ -2756,7 +2756,7 @@ msgstr ""
 #: ../../portable/feed.py:1644
 #, python-format
 msgid "Search All: %(text)s"
-msgstr ""
+msgstr "అన్నీ వెతుకు: %(text)s"
 
 #: ../../portable/feed.py:2407
 msgid "Local Files"

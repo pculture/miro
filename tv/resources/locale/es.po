@@ -8,29 +8,29 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-10 03:24+0000\n"
-"Last-Translator: limitedmage <limited.mage@gmail.com>\n"
+"PO-Revision-Date: 2009-02-17 11:43+0000\n"
+"Last-Translator: jordivlc <Unknown>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-02-10 04:08+0000\n"
+"X-Launchpad-Export-Date: 2009-02-24 21:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
 msgid "Enable tray icon"
-msgstr "Habilitar ícono en la Barra de Tareas"
+msgstr "Habilitar icono en la barra de tareas"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:42
 msgid "When I click the red close button:"
-msgstr "Cuando haga click en el botón rojo de cerrar:"
+msgstr "Cuando haga clic en el botón rojo de cerrar:"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:45
 msgid "Close to tray so that downloads can continue."
 msgstr ""
-"Minimizar en la Barra de Tareas para que las descargas puedan continuar."
+"Minimizar en la barra de tareas para que las descargas puedan continuar."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
 msgid "Quit Miro completely."
@@ -38,16 +38,16 @@ msgstr "Cerrar Miro completamente."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:124
 msgid "Close to tray?"
-msgstr "¿Minimizar a la Barra de Tareas?"
+msgstr "¿Minimizar a la barra de tareas?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:125
 msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
 msgstr ""
-"Cuando pulse el botón de cerrar, ¿desea que Miro se minimice en la Barra de "
-"Tareas o que se cierre? Puede cambiar más tarde esta opción desde las "
-"Preferencias."
+"Cuando pulse el botón rojo de cerrar, ¿desea que Miro se minimice en la "
+"barra de tareas o que se cierre? Puede cambiar más tarde esta opción desde "
+"las preferencias."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:182
 msgid "Error Bombing Item"
@@ -122,7 +122,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:72
 msgid "Video renderer:"
-msgstr "Renderizador de video:"
+msgstr "Renderizador de vídeo:"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:77
 msgid "You must restart playback for visualization changes to take effect."
@@ -2871,7 +2871,7 @@ msgstr ""
 "Por favor contacte al editor de %(url)s y pida le suministre la fuente en un "
 "formato compatible con %(appname)s.\n"
 "\n"
-"Desea intentar cargar este canal de todos modos?"
+"¿Desea intentar cargar este canal de todos modos?"
 
 #: ../../portable/feed.py:1644
 #, python-format

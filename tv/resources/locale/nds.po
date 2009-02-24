@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2008-04-25 07:51+0000\n"
-"Last-Translator: chancellor_DE <Unknown>\n"
+"PO-Revision-Date: 2009-02-24 19:25+0000\n"
+"Last-Translator: Richi <Unknown>\n"
 "Language-Team: German, Low <nds@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-02-10 04:08+0000\n"
+"X-Launchpad-Export-Date: 2009-02-24 21:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -168,7 +168,7 @@ msgstr "Dienste"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 msgid "Hide Miro"
-msgstr ""
+msgstr "Miro ausblenden"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
 msgid "Hide Others"
@@ -1098,7 +1098,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemlistwidgets.py:620
 #: ../../portable/frontends/widgets/statictabs.py:103
 msgid "New"
-msgstr ""
+msgstr "Neu"
 
 #: ../../portable/frontends/widgets/prefpanel.py:290
 #: ../../portable/frontends/widgets/itemlistwidgets.py:620

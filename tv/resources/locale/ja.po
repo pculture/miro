@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-01-27 05:46+0000\n"
-"Last-Translator: ytetsu <Unknown>\n"
+"PO-Revision-Date: 2009-02-14 10:31+0000\n"
+"Last-Translator: daisuke <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-02-10 04:08+0000\n"
+"X-Launchpad-Export-Date: 2009-02-24 21:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -75,7 +75,7 @@ msgstr "%sの新しいバージョンをダウンロードできます。"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
-msgstr ""
+msgstr "いますぐダウンロードしてもよろしいですか？"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
@@ -86,7 +86,7 @@ msgstr "Adobe Flashをインストールしてよろしいですか？"
 msgid ""
 "For the best %(appname)s experience, we suggest you install Adobe Flash.  "
 "Would you like to do this now?"
-msgstr ""
+msgstr "%(appname)s を最適に御覧いただくために Adobe Flash のインストールを推奨いたします。今すぐ実行しますか？"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
@@ -602,7 +602,7 @@ msgstr "名前をつけてアイテムを保存(_A)"
 
 #: ../../portable/menubar.py:192
 msgid "Save Items _As"
-msgstr ""
+msgstr "名前を付けてアイテムを保存(_A)"
 
 #: ../../portable/menubar.py:193
 msgid "Copy Item _URL"
@@ -987,11 +987,11 @@ msgstr "Webページ"
 
 #: ../../portable/frontends/widgets/style.py:217
 msgid "File URL"
-msgstr ""
+msgstr "ファイルのURL"
 
 #: ../../portable/frontends/widgets/style.py:218
 msgid "License Page"
-msgstr ""
+msgstr "ライセンスページ"
 
 #: ../../portable/frontends/widgets/style.py:219
 msgid "File Type"
@@ -2682,7 +2682,7 @@ msgstr "タイムアウト"
 #: ../../portable/httpclient.py:164
 #, python-format
 msgid "Connection to %(host)s timed out"
-msgstr ""
+msgstr "%(host)s からの接続がタイムアウトしました"
 
 #: ../../portable/httpclient.py:168
 msgid "Invalid URL"
@@ -2691,12 +2691,12 @@ msgstr "無効なURL"
 #: ../../portable/httpclient.py:169
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr ""
+msgstr "\"%(url)s\" は不正な URL 形式です"
 
 #: ../../portable/httpclient.py:175
 #, python-format
 msgid "The file \"%(path)s\" doesn't exist"
-msgstr ""
+msgstr "ファイル \"%(path)s\" は存在しません"
 
 #: ../../portable/httpclient.py:179
 msgid "Read error"
@@ -2705,7 +2705,7 @@ msgstr "読み込みエラー"
 #: ../../portable/httpclient.py:180
 #, python-format
 msgid "Error while reading from \"%(path)s\""
-msgstr ""
+msgstr "\"%(path)s\" の読み込み中にエラーが発生しました"
 
 #: ../../portable/httpclient.py:376
 msgid "Unknown Error code"
@@ -2761,7 +2761,7 @@ msgstr ""
 #: ../../portable/feed.py:1644
 #, python-format
 msgid "Search All: %(text)s"
-msgstr ""
+msgstr "すべて検索: %(text)s"
 
 #: ../../portable/feed.py:2407
 msgid "Local Files"

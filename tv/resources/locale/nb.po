@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-06 09:59+0000\n"
+"PO-Revision-Date: 2009-02-20 16:16+0000\n"
 "Last-Translator: Marius <Unknown>\n"
 "Language-Team: Norwegian Bokmål <nb@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-02-10 04:08+0000\n"
+"X-Launchpad-Export-Date: 2009-02-24 21:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -168,11 +168,11 @@ msgstr "Legg til bibliotek"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:203
 msgid "Pop Out"
-msgstr ""
+msgstr "Sprett ut"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:206
 msgid "Pop In"
-msgstr ""
+msgstr "Hent inn"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
 msgid "Services"
@@ -1054,7 +1054,7 @@ msgstr "Last ned"
 
 #: ../../portable/frontends/widgets/style.py:227
 msgid "Download Torrent"
-msgstr "Lst ned Torrent"
+msgstr "Last ned Torrent-fil"
 
 #: ../../portable/frontends/widgets/style.py:229
 msgid "queued for autodownload"
@@ -1798,7 +1798,7 @@ msgstr "Hastighet"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:428
 msgid "Save as a Feed"
-msgstr "Lagret som kilde"
+msgstr "Lagre søk som kilde"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:482
 msgid "Pause All"
@@ -1861,7 +1861,7 @@ msgstr "Fjern kilde"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:724
 msgid "Name"
-msgstr "Navn:"
+msgstr "Navn"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:727
 msgid "Time"
@@ -2305,7 +2305,7 @@ msgstr[1] "fant %(count)s mediefiler"
 
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
-msgstr "Miro-veileder"
+msgstr "Miro-guide"
 
 #: ../../portable/frontends/widgets/statictabs.py:110
 msgid "Downloading"
@@ -2350,7 +2350,7 @@ msgstr "Spill av"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just this Item"
-msgstr "Spill bare dette elementet."
+msgstr "Spill bare dette elementet"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:96
 #: ../../portable/frontends/widgets/itemcontextmenu.py:193

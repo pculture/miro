@@ -10,20 +10,20 @@ msgstr ""
 "Project-Id-Version: _democracyplayer-lv\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2008-10-15 11:05+0000\n"
-"Last-Translator: Zakjiii <Unknown>\n"
+"PO-Revision-Date: 2009-02-17 09:26+0000\n"
+"Last-Translator: Raivis Dejus <orvils@gmail.com>\n"
 "Language-Team: Latvian <locale@laka.lv>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-02-10 04:08+0000\n"
+"X-Launchpad-Export-Date: 2009-02-24 21:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
 msgid "Enable tray icon"
-msgstr ""
+msgstr "Aktivizēt palodzes ikonu"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:42
 msgid "When I click the red close button:"
@@ -80,11 +80,11 @@ msgstr "Lejupielādei ir pieejama jauna %s versija."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
-msgstr ""
+msgstr "Vai vēlateis to tagad lejupielādēt?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
-msgstr ""
+msgstr "Instalēt Adobe Flash?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
 #, python-format
@@ -95,7 +95,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
-msgstr ""
+msgstr "Instalēt Adobe Flash"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
 msgid ""
@@ -108,7 +108,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
 msgid "Renderer options:"
-msgstr ""
+msgstr "Renderēšanas opcijas:"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
 msgid "You must restart Miro for renderer changes to take effect."
@@ -116,7 +116,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:72
 msgid "Video renderer:"
-msgstr ""
+msgstr "Viideo renderētājs:"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:77
 msgid "You must restart playback for visualization changes to take effect."
@@ -124,7 +124,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:80
 msgid "None"
-msgstr ""
+msgstr "Neviens"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:86
 msgid "Use this for video when playing audio:"
@@ -158,15 +158,15 @@ msgstr "Izdzēst"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:132
 msgid "Add to Library"
-msgstr ""
+msgstr "Pievienot bibliotēkai"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:203
 msgid "Pop Out"
-msgstr ""
+msgstr "Atdalīt"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:206
 msgid "Pop In"
-msgstr ""
+msgstr "Sakļaut"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
 msgid "Services"
@@ -281,31 +281,31 @@ msgstr "Paraug repertuārs"
 
 #: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
-msgstr ""
+msgstr "Miro - Ziņot par problēmu"
 
 #: ../../portable/searchengines.py:146
 msgid "Search All"
-msgstr ""
+msgstr "Meklēt visus"
 
 #: ../../portable/util.py:279 ../../portable/util.py:281
 #, python-format
 msgid "%(size)sGB"
-msgstr ""
+msgstr "%(size)sGB"
 
 #: ../../portable/util.py:285 ../../portable/util.py:287
 #, python-format
 msgid "%(size)sMB"
-msgstr ""
+msgstr "%(size)sMB"
 
 #: ../../portable/util.py:291 ../../portable/util.py:293
 #, python-format
 msgid "%(size)sKB"
-msgstr ""
+msgstr "%(size)sKB"
 
 #: ../../portable/util.py:297 ../../portable/util.py:299
 #, python-format
 msgid "%(size)sB"
-msgstr ""
+msgstr "%(size)sB"
 
 #: ../../portable/opml.py:185
 msgid "OPML Import failed"
@@ -324,15 +324,17 @@ msgstr "OPML importēšanas kopsavilkums"
 #, python-format
 msgid "Successfully imported %(count)d feed."
 msgid_plural "Successfully imported %(count)d feeds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d barotne veiksmīgi ieimporta."
+msgstr[1] "%(count)d barotnes veiksmīgi ieimportas."
+msgstr[2] "%(count)d barotnes veiksmīgi ieimportas."
 
 #: ../../portable/opml.py:198
 #, python-format
 msgid "Skipped %(count)d feed already present."
 msgid_plural "Skipped %(count)d feeds already present."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d barotne izlaista jau ir pieejama."
+msgstr[1] "%(count)d barotnes izlaistas jau ir pieejamas."
+msgstr[2] "%(count)d barotnes izlaistas jau ir pieejamas."
 
 #: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
@@ -408,102 +410,112 @@ msgstr ""
 #: ../../portable/displaytext.py:46
 #, python-format
 msgid "%(size)s kb/s"
-msgstr ""
+msgstr "%(size)s kb/s"
 
 #: ../../portable/displaytext.py:49
 #, python-format
 msgid "%(size)s b/s"
-msgstr ""
+msgstr "%(size)s b/s"
 
 #: ../../portable/displaytext.py:56
 #, python-format
 msgid "%(num).1f day"
 msgid_plural "%(num).1f days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).1f diena"
+msgstr[1] "%(num).1f dienas"
+msgstr[2] "%(num).1f dienas"
 
 #: ../../portable/displaytext.py:59
 #, python-format
 msgid "%(num).1f hr"
 msgid_plural "%(num).1f hrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).1f st"
+msgstr[1] "%(num).1f st"
+msgstr[2] "%(num).1f st"
 
 #: ../../portable/displaytext.py:62
 #, python-format
 msgid "%(num).1f min"
 msgid_plural "%(num).1f mins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).1f min"
+msgstr[1] "%(num).1f min"
+msgstr[2] "%(num).1f min"
 
 #: ../../portable/displaytext.py:64
 #, python-format
 msgid "%(num)d sec"
 msgid_plural "%(num)d secs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).1d sek"
+msgstr[1] "%(num).1d sek"
+msgstr[2] "%(num).1d sek"
 
 #: ../../portable/displaytext.py:78
 #, python-format
 msgid "%(size)s gb"
-msgstr ""
+msgstr "%(size)s gb"
 
 #: ../../portable/displaytext.py:81
 #, python-format
 msgid "%(size)s mb"
-msgstr ""
+msgstr "%(size)s mb"
 
 #: ../../portable/displaytext.py:84
 #, python-format
 msgid "%(size)s kb"
-msgstr ""
+msgstr "%(size)s kb"
 
 #: ../../portable/displaytext.py:86
 #, python-format
 msgid "%(size)s b"
-msgstr ""
+msgstr "%(size)s b"
 
 #: ../../portable/displaytext.py:91
 #, python-format
 msgid "Expires in %(count)d day"
 msgid_plural "Expires in %(count)d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Noveco pēc %(count)d dienas"
+msgstr[1] "Noveco pēc %(count)d dienām"
+msgstr[2] "Noveco pēc %(count)d dienām"
 
 #: ../../portable/displaytext.py:96
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Noveco pēc %(count)d stundas"
+msgstr[1] "Noveco pēc %(count)d stundām"
+msgstr[2] "Noveco pēc %(count)d stundām"
 
 #: ../../portable/displaytext.py:101
 #, python-format
 msgid "Expires in %(count)d minute"
 msgid_plural "Expires in %(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Noveco pēc %(count)d minūtes"
+msgstr[1] "Noveco pēc %(count)d minūtēm"
+msgstr[2] "Noveco pēc %(count)d minūtēm"
 
 #: ../../portable/displaytext.py:109
 #, python-format
 msgid "Expires: %(count)d day"
 msgid_plural "Expires: %(count)d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Noveco: %(count)d diena"
+msgstr[1] "Noveco: %(count)d dienas"
+msgstr[2] "Noveco: %(count)d dienas"
 
 #: ../../portable/displaytext.py:114
 #, python-format
 msgid "Expires: %(count)d hour"
 msgid_plural "Expires: %(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Noveco: %(count)d stunda"
+msgstr[1] "Noveco: %(count)d stundas"
+msgstr[2] "Noveco: %(count)d stundas"
 
 #: ../../portable/displaytext.py:119
 #, python-format
 msgid "Expires: %(count)d minute"
 msgid_plural "Expires: %(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Noveco: %(count)d minūte"
+msgstr[1] "Noveco: %(count)d minūtes"
+msgstr[2] "Noveco: %(count)d minūtes"
 
 #: ../../portable/downloader.py:233
 msgid "activity"
@@ -530,7 +542,7 @@ msgstr "Kļūda"
 #: ../../portable/dl_daemon/download.py:596
 #, python-format
 msgid "Could not write to %(filename)s"
-msgstr ""
+msgstr "Nevar ierakstīt failā %(filename)s"
 
 #: ../../portable/dl_daemon/download.py:621
 #: ../../portable/dl_daemon/download.py:838
@@ -541,12 +553,12 @@ msgstr "Nav pietiekami daudz brīvās diska vietas"
 #: ../../portable/dl_daemon/download.py:839
 #, python-format
 msgid "%(amount)s MB required to store this video"
-msgstr ""
+msgstr "Šī video saglabāšana inepieciešami %(amount)s MB vietas"
 
 #: ../../portable/dl_daemon/download.py:637
 #, python-format
 msgid "Couldn't open %(filename)s for writing"
-msgstr ""
+msgstr "Nevar atvērt failu %(filename)s rakstīšanai"
 
 #: ../../portable/dl_daemon/download.py:852
 msgid "BitTorrent failure"
@@ -563,7 +575,7 @@ msgstr "Bojāts torrents"
 #: ../../portable/dl_daemon/download.py:1042
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
-msgstr ""
+msgstr "Torrent fails no %(url)s nav derīgs"
 
 #: ../../portable/dl_daemon/download.py:1067
 msgid "Torrent file deleted"
@@ -579,7 +591,7 @@ msgstr "_Atvērt"
 
 #: ../../portable/menubar.py:185
 msgid "_Download Item"
-msgstr ""
+msgstr "Lejupielā_dēt"
 
 #: ../../portable/menubar.py:186
 msgid "Check _Version"
@@ -587,31 +599,31 @@ msgstr "Pārbaudīt _versiju"
 
 #: ../../portable/menubar.py:188
 msgid "_Remove Item"
-msgstr ""
+msgstr "_Aizvākt"
 
 #: ../../portable/menubar.py:189
 msgid "_Remove Items"
-msgstr ""
+msgstr "_Aizvākt"
 
 #: ../../portable/menubar.py:190
 msgid "Re_name Item"
-msgstr ""
+msgstr "Pā_rsaukt"
 
 #: ../../portable/menubar.py:191
 msgid "Save Item _As"
-msgstr ""
+msgstr "S_aglabāt kā"
 
 #: ../../portable/menubar.py:192
 msgid "Save Items _As"
-msgstr ""
+msgstr "S_aglabāt kā"
 
 #: ../../portable/menubar.py:193
 msgid "Copy Item _URL"
-msgstr ""
+msgstr "Kopēt _URL"
 
 #: ../../portable/menubar.py:195
 msgid "_Options"
-msgstr ""
+msgstr "_Opcijas"
 
 #: ../../portable/menubar.py:196
 msgid "_Quit"
@@ -635,48 +647,48 @@ msgstr "Izvēlēties _visu"
 
 #: ../../portable/menubar.py:212
 msgid "Add _Feed"
-msgstr ""
+msgstr "Pievienot _barotni"
 
 #: ../../portable/menubar.py:213
 #: ../../portable/frontends/widgets/application.py:526
 msgid "Add Site"
-msgstr ""
+msgstr "Pievienot vietni"
 
 #: ../../portable/menubar.py:214
 msgid "New Searc_h Feed"
-msgstr ""
+msgstr "Jauna meklēšanas _barotne"
 
 #: ../../portable/menubar.py:215
 msgid "New _Folder"
-msgstr ""
+msgstr "Jauna _mape"
 
 #: ../../portable/menubar.py:217
 msgid "Re_name"
-msgstr ""
+msgstr "Pā_rsaukt"
 
 #: ../../portable/menubar.py:218
 msgid "_Remove"
-msgstr ""
+msgstr "_Aizvākt"
 
 #: ../../portable/menubar.py:219
 msgid "_Remove Folder"
-msgstr ""
+msgstr "_Aizvākt mapi"
 
 #: ../../portable/menubar.py:221
 msgid "_Update Feed"
-msgstr ""
+msgstr "Atjau_unot barotni"
 
 #: ../../portable/menubar.py:222
 msgid "_Update Feeds"
-msgstr ""
+msgstr "Atjau_unot barotnes"
 
 #: ../../portable/menubar.py:223
 msgid "Update _All Feeds"
-msgstr ""
+msgstr "Atjau_unot visas barotnes"
 
 #: ../../portable/menubar.py:225
 msgid "_Import Feeds (OPML)"
-msgstr ""
+msgstr "_Importēt farotnes (OPML)"
 
 #: ../../portable/menubar.py:226
 msgid "E_xport Feeds (OPML)"

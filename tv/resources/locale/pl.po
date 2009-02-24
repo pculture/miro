@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: Democracy Player\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-04 23:07+0000\n"
-"Last-Translator: Jakub 'Livio' Rusinek <jakub.rusinek@gmail.com>\n"
+"PO-Revision-Date: 2009-02-18 21:32+0000\n"
+"Last-Translator: ToxicBeaver <toxicbeaver@gmail.com>\n"
 "Language-Team: Piotr Szmitkowski <pszmitkowski@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-02-10 04:08+0000\n"
+"X-Launchpad-Export-Date: 2009-02-24 21:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-Language: Polish\n"
@@ -24,30 +24,28 @@ msgstr "Pokaż ikonę w obszarze powiadamiania"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:42
 msgid "When I click the red close button:"
-msgstr "Po kliknięciu przycisku zamykania programu:"
+msgstr "Po kliknięciu czerwonego przycisku zamykania programu:"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:45
 msgid "Close to tray so that downloads can continue."
-msgstr ""
-"Minimalizuj do obszaru powiadamiania, dzięki czemu pobieranie będzie "
-"kontynuowane."
+msgstr "Minimalizuj do obszaru powiadamiania, aby kontynuować pobieranie."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
 msgid "Quit Miro completely."
-msgstr "Zakończ Miro"
+msgstr "Zakończ program definitywnie"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:124
 msgid "Close to tray?"
-msgstr "Zminimalizować do obszaru powiadamiania?"
+msgstr "Ukryć w obszarze powiadamiania?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:125
 msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
 msgstr ""
-"Po naciśnięciu przycisku zamykania programu, Miro powinien się "
-"zminimalizować do obszaru powiadamiania, czy zakończyć pracę? To zachowanie "
-"można później zmienić w Opcjach."
+"Po naciśnięciu czerwonego przycisku zamykania programu, czy chciałbyś "
+"zminimalizować Miro do obszaru powiadamiania czy zakończyć pracę? To "
+"ustawienie możesz później zmienić w Opcjach."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:182
 msgid "Error Bombing Item"
@@ -79,7 +77,7 @@ msgstr "Nowa wersja %s jest dostępna do pobrania."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
-msgstr ""
+msgstr "Czy chcesz ściągnąć to teraz?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
@@ -121,7 +119,7 @@ msgstr "Musisz uruchomić Miro ponownie, by zmiany renderera odniosły skutek."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:72
 msgid "Video renderer:"
-msgstr "Renderer wideo"
+msgstr "Render wideo"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:77
 msgid "You must restart playback for visualization changes to take effect."
@@ -168,11 +166,11 @@ msgstr "Dodaj do biblioteki"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:203
 msgid "Pop Out"
-msgstr ""
+msgstr "Odepnij"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:206
 msgid "Pop In"
-msgstr ""
+msgstr "Przypnij"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
 msgid "Services"
@@ -184,15 +182,15 @@ msgstr "Ukryj Miro"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
 msgid "Hide Others"
-msgstr "Ukryj inne okna"
+msgstr "Ukryj Inne"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
 msgid "Show All"
-msgstr "Pokaż wszystkie"
+msgstr "Pokaż Wszystko"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
 msgid "Preferences..."
-msgstr "Preferencje..."
+msgstr "Ustawienia..."
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
 msgid "Quit Miro"
@@ -1406,6 +1404,8 @@ msgstr "Brak elementów do wyświetlenia"
 #: ../../portable/frontends/widgets/itemlistcontroller.py:509
 msgid "This tab keeps track of downloads that aren't part of a feed."
 msgstr ""
+"Ta zakładka przechowuje ścieżkę pobranych elementów, które nie są częścią "
+"kanału."
 
 #: ../../portable/frontends/widgets/diagnostics.py:77
 #: ../../portable/frontends/widgets/gtk/trayicon.py:83
@@ -1780,7 +1780,7 @@ msgstr "Komunikat"
 
 #: ../../portable/frontends/widgets/application.py:1036
 msgid "Migrating Files"
-msgstr ""
+msgstr "Przenoszenie plików"
 
 #: ../../portable/frontends/widgets/application.py:1046
 msgid "Migrating files"
@@ -1990,12 +1990,12 @@ msgstr ""
 #: ../../portable/frontends/widgets/gtk/trayicon.py:63
 #, python-format
 msgid "Play Next Unplayed (%(unplayed)d)"
-msgstr ""
+msgstr "Odtwórz następne nieodtwarzane (%(unplayed)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:67
 #, python-format
 msgid "Play All Unplayed (%(unplayed)d)"
-msgstr ""
+msgstr "Odtwórz wszystkie nieodtwarzane (%(unplayed)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:70
 #, python-format
@@ -2178,7 +2178,7 @@ msgstr "Nazwa folderu:"
 
 #: ../../portable/frontends/widgets/newfolder.py:68
 msgid "Folder should go in this section:"
-msgstr ""
+msgstr "Folder powinien być w sekcji:"
 
 #: ../../portable/frontends/widgets/newfolder.py:107
 #: ../../portable/frontends/widgets/newfolder.py:109
@@ -2249,6 +2249,11 @@ msgid ""
 "way, downloads in progress can finish downloading and new media files can be "
 "downloaded in the background, ready when you want to watch."
 msgstr ""
+"Kolejne kilka okien pomoże Ci dostosować Miro najlepiej do Twoich potrzeb.\n"
+"\n"
+"Zalecane jest, aby Miro został uruchamiany podczas startu komputera. Dzięki "
+"temu, aktywne pobierania będą mogły zostać ukończone, a nowe pliki będą "
+"mogły pobierać się w tle, aby były gotowe do obejrzenia w dowolnej chwili."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:132
 msgid "Would you like to run Miro on startup?"
@@ -2901,11 +2906,19 @@ msgid ""
 "\n"
 "Do you want to try to load this channel anyway?"
 msgstr ""
+"Ten kanał nie jest zgodny z %(appname)s, lecz zrobimy co w naszej mocy, by "
+"przechwycić pliki. Więcej czasu może zająć robienie listy filmików, a opisy "
+"mogą wyglądać śmiesznie.\n"
+"\n"
+"Prosimy skontaktować się z wydawcami %(url)s i zapytać, czy nie mogą zmienić "
+"formatu kanału na taki, który będzie działał z %(appname)s.\n"
+"\n"
+"Czy mimo to chcesz załadować ten kanał?"
 
 #: ../../portable/feed.py:1644
 #, python-format
 msgid "Search All: %(text)s"
-msgstr ""
+msgstr "Przeszukaj wszystko: %(text)s"
 
 #: ../../portable/feed.py:2407
 msgid "Local Files"

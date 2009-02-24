@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-02 23:43+0000\n"
+"PO-Revision-Date: 2009-02-16 23:09+0000\n"
 "Last-Translator: Seanan <Unknown>\n"
 "Language-Team: Irish <ga@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n==2 ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-02-10 04:08+0000\n"
+"X-Launchpad-Export-Date: 2009-02-24 21:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -433,22 +433,25 @@ msgstr[2] "%(num).1f lá"
 #, python-format
 msgid "%(num).1f hr"
 msgid_plural "%(num).1f hrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).1f uair"
+msgstr[1] "%(num).1f uair"
+msgstr[2] "%(num).1f uair"
 
 #: ../../portable/displaytext.py:62
 #, python-format
 msgid "%(num).1f min"
 msgid_plural "%(num).1f mins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).1f nóim"
+msgstr[1] "%(num).1f nóim"
+msgstr[2] "%(num).1f nóim"
 
 #: ../../portable/displaytext.py:64
 #, python-format
 msgid "%(num)d sec"
 msgid_plural "%(num)d secs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)d soic"
+msgstr[1] "%(num)d soic"
+msgstr[2] "%(num)d soic"
 
 #: ../../portable/displaytext.py:78
 #, python-format
@@ -498,22 +501,25 @@ msgstr[2] "As feidhm i %(count)d nóiméid"
 #, python-format
 msgid "Expires: %(count)d day"
 msgid_plural "Expires: %(count)d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "As feidhm: %(count)d lá"
+msgstr[1] "As feidhm: %(count)d lá"
+msgstr[2] "As feidhm: %(count)d lá"
 
 #: ../../portable/displaytext.py:114
 #, python-format
 msgid "Expires: %(count)d hour"
 msgid_plural "Expires: %(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "As feidhm: %(count)d uair"
+msgstr[1] "As feidhm: %(count)d uair"
+msgstr[2] "As feidhm: %(count)d uair"
 
 #: ../../portable/displaytext.py:119
 #, python-format
 msgid "Expires: %(count)d minute"
 msgid_plural "Expires: %(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "As feidhm: %(count)d nóim"
+msgstr[1] "As feidhm: %(count)d nóim"
+msgstr[2] "As feidhm: %(count)d nóim"
 
 #: ../../portable/downloader.py:233
 msgid "activity"
@@ -573,7 +579,7 @@ msgstr "Torrent Truallaithe"
 #: ../../portable/dl_daemon/download.py:1042
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
-msgstr ""
+msgstr "Níl an comhad torrent ag %(url)s ceart"
 
 #: ../../portable/dl_daemon/download.py:1067
 msgid "Torrent file deleted"
@@ -589,7 +595,7 @@ msgstr "_Oscail"
 
 #: ../../portable/menubar.py:185
 msgid "_Download Item"
-msgstr ""
+msgstr "_Íosluchtaigh An Mhír"
 
 #: ../../portable/menubar.py:186
 msgid "Check _Version"
@@ -609,7 +615,7 @@ msgstr "Athainmnigh Mír"
 
 #: ../../portable/menubar.py:191
 msgid "Save Item _As"
-msgstr ""
+msgstr "Taisc An Mhír Mar"
 
 #: ../../portable/menubar.py:192
 msgid "Save Items _As"
@@ -674,15 +680,15 @@ msgstr "_Bain Fillteán"
 
 #: ../../portable/menubar.py:221
 msgid "_Update Feed"
-msgstr ""
+msgstr "Nuashonraigh an Fotha"
 
 #: ../../portable/menubar.py:222
 msgid "_Update Feeds"
-msgstr ""
+msgstr "Nuashonraigh na Fothaí"
 
 #: ../../portable/menubar.py:223
 msgid "Update _All Feeds"
-msgstr ""
+msgstr "Nuashonraigh Gach Fotha"
 
 #: ../../portable/menubar.py:225
 msgid "_Import Feeds (OPML)"
@@ -694,7 +700,7 @@ msgstr ""
 
 #: ../../portable/menubar.py:228
 msgid "_Share with a Friend"
-msgstr ""
+msgstr "Comhroinn le Cara"
 
 #: ../../portable/menubar.py:229
 msgid "Copy URL"
@@ -883,23 +889,23 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
-msgstr ""
+msgstr "Faireadh air lá ó shin"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr ""
+msgstr "Faireadh air 3 lá ó shin"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
-msgstr ""
+msgstr "Faireadh air 6 lá ó shin"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:100
 msgid "Watched 10 days ago"
-msgstr ""
+msgstr "Faireadh air 10 lá ó shin"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 1 month ago"
-msgstr ""
+msgstr "Faireadh air mí ó shin"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
@@ -948,23 +954,23 @@ msgstr "Mír neamhsheinnte amháin"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:198
 msgid "3 unplayed items"
-msgstr ""
+msgstr "3 mhír neamhsheinnte"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:199
 msgid "5 unplayed items"
-msgstr ""
+msgstr "5 mhír neamhsheinnte"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:200
 msgid "10 unplayed items"
-msgstr ""
+msgstr "10 míreanna neamhsheinnte"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:201
 msgid "15 unplayed items"
-msgstr ""
+msgstr "15 mhíreanna neamhsheinnte"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:241
 msgid "Feed Settings"
-msgstr ""
+msgstr "Socruithe an Fhotha"
 
 #: ../../portable/frontends/widgets/style.py:209
 msgid "From"
@@ -1004,11 +1010,11 @@ msgstr "Leathanach Gréasáin"
 
 #: ../../portable/frontends/widgets/style.py:217
 msgid "File URL"
-msgstr ""
+msgstr "URL an Chomhaid"
 
 #: ../../portable/frontends/widgets/style.py:218
 msgid "License Page"
-msgstr ""
+msgstr "Leathanach Ceadúnais"
 
 #: ../../portable/frontends/widgets/style.py:219
 msgid "File Type"
@@ -1175,7 +1181,7 @@ msgstr "Cuimhnigh ar an méid seo seanmhíreanna:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:327
 msgid "(in addition to the current contents)"
-msgstr ""
+msgstr "(le cois an t-inneachair reatha)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:340
 msgid "Maximum number of manual downloads at a time:"
@@ -1308,7 +1314,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:608
 msgid "Play videos one after another"
-msgstr ""
+msgstr "Seinn na físeáin ceann in ndiaidh a chéile"
 
 #: ../../portable/frontends/widgets/prefpanel.py:609
 msgid "Stop after each video"
@@ -1413,15 +1419,15 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/diagnostics.py:107
 msgid "Space free on disk:"
-msgstr ""
+msgstr "Slí shaor ar an diosca:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:109
 msgid "Database size:"
-msgstr ""
+msgstr "Méid an bhunachair sonraí:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:111
 msgid "Total number of db objects:"
-msgstr ""
+msgstr "Líon iomlán míreanna an bhunachair sonraí:"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -1429,14 +1435,15 @@ msgstr "Íosluchtaithe"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:137
 msgid "Full Feed"
-msgstr ""
+msgstr "Fotha Iomlán"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:191
 #, python-format
 msgid "Show %(count)d More Item"
 msgid_plural "Show %(count)d More Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Taispeáin %(count)d Mír Eile"
+msgstr[1] "Taispeáin %(count)d Míreanna Eile"
+msgstr[2] "Taispeáin %(count)d Míreanna Eile"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:224
 #: ../../portable/frontends/widgets/feedcontroller.py:251
@@ -1452,8 +1459,9 @@ msgstr[2] "%(count)d Á Íosluchtú"
 #, python-format
 msgid "%(count)d Item"
 msgid_plural "%(count)d Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d M(h)ír"
+msgstr[1] "%(count)d Míreanna"
+msgstr[2] "%(count)d Míreanna"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:257
 #, python-format
@@ -1526,7 +1534,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:368
 msgid "New Download - Invalid URL"
-msgstr ""
+msgstr "Íosluchtú Nua - URL Mícheart"
 
 #: ../../portable/frontends/widgets/application.py:369
 msgid ""
@@ -1547,8 +1555,9 @@ msgstr "Tá Miro cothrom le dáta!"
 #: ../../portable/frontends/widgets/application.py:400
 msgid "Remove item"
 msgid_plural "Remove items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Bain mír"
+msgstr[1] "Bain na míreanna"
+msgstr[2] "Bain na míreanna"
 
 #: ../../portable/frontends/widgets/application.py:404
 msgid ""
@@ -1773,7 +1782,7 @@ msgstr "Luas"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:428
 msgid "Save as a Feed"
-msgstr ""
+msgstr "Taisc mar Fhotha"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:482
 msgid "Pause All"
@@ -1822,7 +1831,7 @@ msgstr "Uathíosluchtaigh"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:627
 msgid "Share feed"
-msgstr ""
+msgstr "Comhroinn an fotha"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:633
 msgid "Settings"
@@ -1875,8 +1884,9 @@ msgstr[1] ""
 #, python-format
 msgid "(contains %(count)d feed)"
 msgid_plural "(contains %(count)d feeds)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(tá %(count)d fotha ann)"
+msgstr[1] "(tá %(count)d fothaí ann)"
+msgstr[2] "(tá %(count)d fothaí ann)"
 
 #: ../../portable/frontends/widgets/displays.py:554
 #, python-format
@@ -1896,8 +1906,9 @@ msgstr[1] ""
 #, python-format
 msgid "%(count)d Feed Selected"
 msgid_plural "%(count)d Feeds Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Fotha Roghnaithe"
+msgstr[1] "%(count)d Fothaí Roghnaithe"
+msgstr[2] "%(count)d Fothaí Roghnaithe"
 
 #: ../../portable/frontends/widgets/displays.py:575
 #, python-format
@@ -1916,7 +1927,7 @@ msgstr "Cuir I bhFillteán Nua É"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
-msgstr ""
+msgstr "Tá an Seinnréim Folamh"
 
 #: ../../portable/frontends/widgets/playlist.py:149
 msgid ""
@@ -1931,7 +1942,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/gtk/trayicon.py:67
 #, python-format
 msgid "Play All Unplayed (%(unplayed)d)"
-msgstr ""
+msgstr "Seinn Gach Neamhsheinnte (%(unplayed)d)"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:70
 #, python-format
@@ -2012,7 +2023,7 @@ msgstr "URL:"
 
 #: ../../portable/frontends/widgets/newfeed.py:69
 msgid "Feed should go in this section:"
-msgstr ""
+msgstr "Ba chóir don fotha dul sa roinn seo:"
 
 #: ../../portable/frontends/widgets/newfeed.py:71
 #: ../../portable/frontends/widgets/newfolder.py:70
@@ -2057,11 +2068,11 @@ msgstr "Bain an Suíomh"
 
 #: ../../portable/frontends/widgets/tablist.py:521
 msgid "Update Feeds In Folder"
-msgstr ""
+msgstr "Nuashonraigh Fothaí Sa bhFillteán"
 
 #: ../../portable/frontends/widgets/tablist.py:528
 msgid "Update Feed Now"
-msgstr ""
+msgstr "Nuashonraigh An Fotha Anois"
 
 #: ../../portable/frontends/widgets/tablist.py:531
 msgid "Rename"
@@ -2073,7 +2084,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:540
 msgid "Update Feeds Now"
-msgstr ""
+msgstr "Nuashonraigh Fothaí Anois"
 
 #: ../../portable/frontends/widgets/tablist.py:605
 msgid "SITES"
@@ -2085,7 +2096,7 @@ msgstr "FOTHAÍ"
 
 #: ../../portable/frontends/widgets/tablist.py:609
 msgid "AUDIO FEEDS"
-msgstr ""
+msgstr "FOTHAÍ FUAIME"
 
 #: ../../portable/frontends/widgets/tablist.py:611
 msgid "PLAYLISTS"
@@ -2097,7 +2108,7 @@ msgstr "Ainm an fhillteáin:"
 
 #: ../../portable/frontends/widgets/newfolder.py:68
 msgid "Folder should go in this section:"
-msgstr ""
+msgstr "Ba chóir donn fillteán dul sa roinnn seo:"
 
 #: ../../portable/frontends/widgets/newfolder.py:107
 #: ../../portable/frontends/widgets/newfolder.py:109
@@ -2106,7 +2117,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/newfolder.py:110
 msgid "Enter the name of the folder to add"
-msgstr ""
+msgstr "Cuir isteach ainm an fhillteáin le cuir leis"
 
 #: ../../portable/frontends/widgets/linkhandler.py:54
 msgid "Subscribe to Feed"
@@ -2209,7 +2220,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:189
 msgid "Choose directory to search for media files"
-msgstr ""
+msgstr "Roghnaigh an chomhadlann le cuardach le haghaidh comhaid meáin"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:200
 #: ../../portable/frontends/widgets/firsttimedialog.py:280
@@ -2230,7 +2241,7 @@ msgstr "Críochnaigh"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:263
 msgid "Searching for media files"
-msgstr ""
+msgstr "Ag cuardach comhaid meáin"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:273
 #: ../../portable/dialogs.py:85
@@ -2241,8 +2252,9 @@ msgstr "Cealaigh"
 #, python-format
 msgid "parsed %(count)s file"
 msgid_plural "parsed %(count)s files"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "miondealaíodh %(count)s comhad"
+msgstr[1] "miondealaíodh %(count)s comhaid"
+msgstr[2] "miondealaíodh %(count)s comhaid"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:316
 #, python-format
@@ -2285,7 +2297,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
 msgid "New playlist:"
-msgstr ""
+msgstr "Seinnréim nua:"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
@@ -2303,7 +2315,7 @@ msgstr "Seinn An Mhír Seo Amháin"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:96
 #: ../../portable/frontends/widgets/itemcontextmenu.py:193
 msgid "Add to Playlist"
-msgstr ""
+msgstr "Cuir leis an Seinmréim"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:101
 msgid "Revert Item Name"
@@ -2312,12 +2324,12 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemcontextmenu.py:103
 #: ../../portable/frontends/widgets/itemcontextmenu.py:200
 msgid "Mark as Unplayed"
-msgstr ""
+msgstr "Rianaigh mar Neamhsheinnte"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:106
 #: ../../portable/frontends/widgets/itemcontextmenu.py:205
 msgid "Mark as Played"
-msgstr ""
+msgstr "Rianaigh mar Seinnte"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
@@ -2358,7 +2370,7 @@ msgstr "Comhad i %(progname)s"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:146
 msgid "File on Disk"
-msgstr ""
+msgstr "Comhad ar an Dhiosca"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:149
 msgid "View"
@@ -2368,22 +2380,25 @@ msgstr "Amharc"
 #, python-format
 msgid "%(count)d Downloaded Item"
 msgid_plural "%(count)d Downloaded Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Mír Íosluchtaithe"
+msgstr[1] "%(count)d Míreanna Íosluchtaithe"
+msgstr[2] "%(count)d Míreanna Íosluchtaithe"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:216
 #, python-format
 msgid "%(count)d Available Item"
 msgid_plural "%(count)d Available Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Mír Ar Fáil"
+msgstr[1] "%(count)d Míreanna Ar Fáil"
+msgstr[2] "%(count)d Míreanna Ar Fáil"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:229
 #, python-format
 msgid "%(count)d Downloading Item"
 msgid_plural "%(count)d Downloading Items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Mír Á Íosluchtú"
+msgstr[1] "%(count)d Míreanna Á Íosluchtú"
+msgstr[2] "%(count)d Míreanna Á Íosluchtú"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:246
 #, python-format
@@ -2731,7 +2746,7 @@ msgstr "URL Neamhsheasmhach"
 #: ../../portable/httpclient.py:169
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr ""
+msgstr "Ní URL ceart é \"%(url)s\""
 
 #: ../../portable/httpclient.py:175
 #, python-format

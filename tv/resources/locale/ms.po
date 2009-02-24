@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2008-08-28 16:44+0000\n"
-"Last-Translator: abba_adib <Unknown>\n"
+"PO-Revision-Date: 2009-02-11 12:44+0000\n"
+"Last-Translator: riwanzi <Unknown>\n"
 "Language-Team: Malay <ms@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-02-10 04:08+0000\n"
+"X-Launchpad-Export-Date: 2009-02-24 21:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -25,15 +25,15 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:42
 msgid "When I click the red close button:"
-msgstr ""
+msgstr "Apabila saya klik butang tutup berwarna merah:"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:45
 msgid "Close to tray so that downloads can continue."
-msgstr ""
+msgstr "Tutup ke tray supaya proses muat turun boleh diteruskan."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
 msgid "Quit Miro completely."
-msgstr ""
+msgstr "Tutup Miro sepenuhnya."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:124
 msgid "Close to tray?"
@@ -73,15 +73,15 @@ msgstr "Kemaskini boleh didapati"
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
 #, python-format
 msgid "A new version of %s is available for download."
-msgstr "Versi baru bagi %s boleh dibeban kebawah."
+msgstr "Versi baru bagi %s boleh dimuat turun"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
-msgstr ""
+msgstr "Anda hendak memuat turun sekarang?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
-msgstr ""
+msgstr "Pasang Adobe Flash?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
 #, python-format
@@ -117,11 +117,11 @@ msgstr ""
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:77
 msgid "You must restart playback for visualization changes to take effect."
-msgstr ""
+msgstr "Anda mesti ulang semula untuk visual yang diubah berfungsi."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:80
 msgid "None"
-msgstr ""
+msgstr "Tiada"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:86
 msgid "Use this for video when playing audio:"
@@ -155,7 +155,7 @@ msgstr "Padam"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:132
 msgid "Add to Library"
-msgstr ""
+msgstr "Tambah pada perpustakaan."
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:203
 msgid "Pop Out"
@@ -215,19 +215,19 @@ msgstr "Edit"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
 msgid "Present Half Size"
-msgstr ""
+msgstr "Paparkan separuh saiz"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:168
 msgid "Present Actual Size"
-msgstr ""
+msgstr "Paparkan saiz sebenar"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:169
 msgid "Present Double Size"
-msgstr ""
+msgstr "Paparkan saiz 2x"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:171
 msgid "Present Video"
-msgstr ""
+msgstr "Paparkan video"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
 msgid "Zoom"
@@ -260,11 +260,11 @@ msgstr "Beban Kebawah Sempurna"
 #: ../../platform/osx/plat/frontends/widgets/application.py:167
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr "Beban kebawah video '%s' sudah tamat"
+msgstr "Muat turun video '%s' sudah tamat"
 
 #: ../../portable/theme.py:136
 msgid "Custom Channels"
-msgstr ""
+msgstr "Siaran pilihan"
 
 #: ../../portable/theme.py:138
 #, python-format
@@ -274,15 +274,15 @@ msgstr ""
 
 #: ../../portable/theme.py:171
 msgid "Example Playlist"
-msgstr ""
+msgstr "Contoh senarai"
 
 #: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
-msgstr ""
+msgstr "Miro - Laporan masalah"
 
 #: ../../portable/searchengines.py:146
 msgid "Search All"
-msgstr ""
+msgstr "Cari semua"
 
 #: ../../portable/util.py:279 ../../portable/util.py:281
 #, python-format

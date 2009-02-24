@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: Democracy Player 0.8.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-07 09:21+0000\n"
-"Last-Translator: Michael Castielli <michael.castielli@gmail.com>\n"
+"PO-Revision-Date: 2009-02-14 15:02+0000\n"
+"Last-Translator: anod1 <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2009-02-10 04:08+0000\n"
+"X-Launchpad-Export-Date: 2009-02-24 21:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Language: French\n"
 
@@ -46,8 +46,8 @@ msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
 msgstr ""
-"Lorsque vous cliquez sur le bouton de fermeture rouge, souhaitez vous "
-"minimisez Miro dans la barre de tâche ou bien quitter l'application ? Vous "
+"Lorsque vous cliquez sur le bouton de fermeture rouge, souhaitez-vous "
+"minimiser Miro dans la barre de tâche ou bien quitter l'application ? Vous "
 "pourrez modifier ce paramètre plus tard dans les Options."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:182
@@ -56,11 +56,11 @@ msgstr "Erreur lors du vote sur cet élément"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:184
 msgid "Error Recommending Item"
-msgstr "Erreur lors de la recommandation de cet élément"
+msgstr "Impossible de recommander l'élément"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:186
 msgid "Error Opening Website"
-msgstr "Erreur à l'ouverture du site web"
+msgstr "Impossible d'ouvrir le site"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:191
 #, python-format
@@ -93,7 +93,7 @@ msgid ""
 "For the best %(appname)s experience, we suggest you install Adobe Flash.  "
 "Would you like to do this now?"
 msgstr ""
-"Pour une meilleur utilisation de %(appname)s, nous vous conseillons "
+"Pour une meilleure utilisation de %(appname)s, nous vous conseillons "
 "d'installer Adobe Flash. Voulez-vous faire ceci maintenant ?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
@@ -108,8 +108,11 @@ msgid ""
 "You should quit Miro now and start it up again after Adobe Flash has been "
 "installed."
 msgstr ""
-"Votre naviguateur va charger le site web où vous pourrez télécharger et "
-"intaller Adobe Flash"
+"Votre navigateur va ouvrir le site web sur lequel vous pourrez télécharger "
+"et installer Adobe Flash.\n"
+"\n"
+"Vous devriez quitter Miro maintenant et le redémarrer une fois qu'Adobe "
+"Flash sera installé."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
 msgid "Renderer options:"
@@ -121,7 +124,7 @@ msgstr "Il faut redémarrer Miro pour que les changements soient appliqués."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:72
 msgid "Video renderer:"
-msgstr "Moteur de rendu video"
+msgstr "Moteur de rendu vidéo"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:77
 msgid "You must restart playback for visualization changes to take effect."
@@ -135,7 +138,7 @@ msgstr "Aucun"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:86
 msgid "Use this for video when playing audio:"
-msgstr "Utilisez ceci pour la vidéo lorsque vous lisez de l'audio :"
+msgstr "Plugin de visualisation pour l'audio"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:120
 #: ../../portable/frontends/widgets/gtk/video.py:300
@@ -165,7 +168,7 @@ msgstr "Supprimer"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:132
 msgid "Add to Library"
-msgstr "Ajouter à la librairie"
+msgstr "Ajouter à la bibliothéque"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:203
 msgid "Pop Out"
@@ -229,7 +232,7 @@ msgstr "Afficher la moitié de la taille"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:168
 msgid "Present Actual Size"
-msgstr "Afficher taille actuelle"
+msgstr "Afficher la taille réelle"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:169
 msgid "Present Double Size"
@@ -270,7 +273,7 @@ msgstr "Téléchargement terminé"
 #: ../../platform/osx/plat/frontends/widgets/application.py:167
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr "Le téléchargement de la video '%s' est terminé."
+msgstr "La vidéo '%s' est téléchargée."
 
 #: ../../portable/theme.py:136
 msgid "Custom Channels"
@@ -452,6 +455,7 @@ msgstr[1] "%(num).1f h"
 msgid "%(num).1f min"
 msgid_plural "%(num).1f mins"
 msgstr[0] "%(num).1f min"
+msgstr[1] "%(num).1f mins"
 
 #: ../../portable/displaytext.py:64
 #, python-format
@@ -1240,7 +1244,7 @@ msgstr "Arrêter l'envoi des torrents quand ce quota est atteint :"
 #: ../../portable/frontends/widgets/prefpanel.py:435
 #: ../../portable/frontends/widgets/firsttimedialog.py:184
 msgid "Change"
-msgstr "Changer"
+msgstr "Modifier"
 
 #: ../../portable/frontends/widgets/prefpanel.py:440
 msgid "Choose Movies Directory"
@@ -1670,7 +1674,7 @@ msgstr "Entrez un nom pour le nouveau dossier de liste de lectures"
 #: ../../portable/frontends/widgets/application.py:660
 #: ../../portable/frontends/widgets/tablist.py:522
 msgid "Rename Feed Folder"
-msgstr "Renomer un dossier de Flux"
+msgstr "Renommer ce dossier de sources"
 
 #: ../../portable/frontends/widgets/application.py:661
 #, python-format
@@ -1679,12 +1683,12 @@ msgstr "Entrer un nouveau nom pour le dossier de flux %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:665
 msgid "Rename Feed"
-msgstr "Renomer le flux"
+msgstr "Renomer la source"
 
 #: ../../portable/frontends/widgets/application.py:666
 #, python-format
 msgid "Enter a new name for the feed %(name)s"
-msgstr "Entrer un nouveau nom pour le flux %(name)s"
+msgstr "Entrer un nouveau nom pour la source %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:670
 #: ../../portable/frontends/widgets/tablist.py:583
@@ -1781,7 +1785,7 @@ msgstr "Titre"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:284
 msgid "Feed"
-msgstr "Flux"
+msgstr "Source"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:286
 #: ../../portable/frontends/widgets/itemlistwidgets.py:725
@@ -1850,12 +1854,12 @@ msgstr "%(amount)s libre on disk"
 #: ../../portable/frontends/widgets/itemlistwidgets.py:579
 #, python-format
 msgid "%(rate)s uploading"
-msgstr "%(rate)s téléchargement"
+msgstr "Flux montant: %(rate)s"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:581
 #, python-format
 msgid "%(rate)s downloading"
-msgstr "%(rate)s téléchargement"
+msgstr "Flux descendant: %(rate)s"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:615
 msgid "Auto Download"
@@ -1863,7 +1867,7 @@ msgstr "Téléchargement automatique"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:627
 msgid "Share feed"
-msgstr "Partager le flux"
+msgstr "Partager la source"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:633
 msgid "Settings"
@@ -1871,7 +1875,7 @@ msgstr "Réglages"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:639
 msgid "Remove feed"
-msgstr "Supprimer le flux"
+msgstr "Supprimer la source"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:724
 msgid "Name"
@@ -1909,15 +1913,15 @@ msgstr "Passer"
 #, python-format
 msgid "%(count)d Feed Folder Selected"
 msgid_plural "%(count)d Feed Folders Selected"
-msgstr[0] "%(count)d Dossier de Chaînes Selectionné"
-msgstr[1] "%(count)d Dossiers de Chaînes Selectionnés"
+msgstr[0] "%(count)d Dossier de Chaînes Selectionnées"
+msgstr[1] "%(count)d Dossiers de Chaînes Selectionnées"
 
 #: ../../portable/frontends/widgets/displays.py:548
 #, python-format
 msgid "(contains %(count)d feed)"
 msgid_plural "(contains %(count)d feeds)"
-msgstr[0] "(contient %(count)d flux)"
-msgstr[1] "(contient %(count)d flux)"
+msgstr[0] "(contient %(count)d source)"
+msgstr[1] "(contient %(count)d sources)"
 
 #: ../../portable/frontends/widgets/displays.py:554
 #, python-format
@@ -2857,7 +2861,7 @@ msgstr "Mauvais type de contenu"
 #: ../../portable/feed.py:1068
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
-msgstr "Chaîne pas compatible avec %(appname)s"
+msgstr "Cette Chaîne n'est pas compatible avec %(appname)s"
 
 #: ../../portable/feed.py:1071
 #, python-format

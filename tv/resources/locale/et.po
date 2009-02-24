@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-01-22 18:13+0000\n"
-"Last-Translator: drac <Unknown>\n"
+"PO-Revision-Date: 2009-02-12 23:26+0000\n"
+"Last-Translator: maidur <mdr.ksk@gmail.com>\n"
 "Language-Team: Estonian <et@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-02-10 04:08+0000\n"
+"X-Launchpad-Export-Date: 2009-02-24 21:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -77,11 +77,11 @@ msgstr "%s uus versioon on saadaval allalaadimiseks."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
-msgstr ""
+msgstr "Kas tahad selle kohe alla laadida?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
-msgstr ""
+msgstr "Installida Adobe Flash?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
 #, python-format
@@ -92,7 +92,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
-msgstr ""
+msgstr "Installi Adobe Flash"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
 msgid ""
@@ -102,6 +102,11 @@ msgid ""
 "You should quit Miro now and start it up again after Adobe Flash has been "
 "installed."
 msgstr ""
+"Veebibrauser avab veebilehe, kust saab Adobe Flashi alla laadida ja seejärel "
+"installida.\n"
+"\n"
+"Sa peaksid Miro praegu kinni panema ja pärast Adobe Flashi installimist "
+"uuesti käivitama."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
 msgid "Renderer options:"
@@ -346,7 +351,7 @@ msgstr ""
 #: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
-msgstr ""
+msgstr "%(appname)s andmebaasi salvestamine ebaõnnestus"
 
 #: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
@@ -415,8 +420,8 @@ msgstr ""
 #, python-format
 msgid "%(num).1f day"
 msgid_plural "%(num).1f days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).1f päev"
+msgstr[1] "%(num).1f päeva"
 
 #: ../../portable/displaytext.py:59
 #, python-format
@@ -684,7 +689,7 @@ msgstr ""
 
 #: ../../portable/menubar.py:229
 msgid "Copy URL"
-msgstr ""
+msgstr "Kopeeri URL"
 
 #: ../../portable/menubar.py:233
 msgid "New _Playlist"
@@ -773,7 +778,7 @@ msgstr "_Abi"
 #: ../../portable/menubar.py:274
 #: ../../portable/frontends/widgets/diagnostics.py:119
 msgid "Diagnostics"
-msgstr ""
+msgstr "Diagnostika"
 
 #: ../../portable/menubar.py:275
 msgid "Report a _Bug"
@@ -785,7 +790,7 @@ msgstr "_Tõlgi"
 
 #: ../../portable/menubar.py:277
 msgid "_Planet Miro"
-msgstr ""
+msgstr "_Planeet Miro"
 
 #: ../../portable/menubar.py:282
 msgid "_Video"
@@ -838,15 +843,15 @@ msgstr "mitte kunagi"
 #, python-format
 msgid "%(count)d hour ago"
 msgid_plural "%(count)d hours ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d tunni eest"
+msgstr[1] "%(count)d tunni eest"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:64
 #, python-format
 msgid "%(count)d day ago"
 msgid_plural "%(count)d days ago"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d päeva eest"
+msgstr[1] "%(count)d päeva eest"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:70
 #, python-format
@@ -915,11 +920,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
-msgstr ""
+msgstr "Eemalda kõik"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
-msgstr ""
+msgstr "Vanad elemendid on eemaldatud."
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause Auto-Downloading when this many items are unplayed:"
@@ -927,23 +932,23 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
-msgstr ""
+msgstr "1 mängimata element"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:198
 msgid "3 unplayed items"
-msgstr ""
+msgstr "3 mängimata elementi"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:199
 msgid "5 unplayed items"
-msgstr ""
+msgstr "5 mängimata elementi"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:200
 msgid "10 unplayed items"
-msgstr ""
+msgstr "10 mängimata elementi"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:201
 msgid "15 unplayed items"
-msgstr ""
+msgstr "15 mängimata elementi"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:241
 msgid "Feed Settings"
@@ -969,7 +974,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/gtk/video.py:309
 #: ../../portable/frontends/widgets/itemcontextmenu.py:137
 msgid "Comments"
-msgstr ""
+msgstr "Kommentaarid"
 
 #: ../../portable/frontends/widgets/style.py:215
 #, python-format
@@ -983,19 +988,19 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:216
 msgid "Web Page"
-msgstr ""
+msgstr "Veebileht"
 
 #: ../../portable/frontends/widgets/style.py:217
 msgid "File URL"
-msgstr ""
+msgstr "Faili URL"
 
 #: ../../portable/frontends/widgets/style.py:218
 msgid "License Page"
-msgstr ""
+msgstr "Litsentsi leht"
 
 #: ../../portable/frontends/widgets/style.py:219
 msgid "File Type"
-msgstr ""
+msgstr "Failitüüp"
 
 #: ../../portable/frontends/widgets/style.py:220
 msgid "Seeders"
@@ -1041,12 +1046,12 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:230
 #: ../../portable/frontends/widgets/style.py:1088
 msgid "Unplayed"
-msgstr ""
+msgstr "Mängimata"
 
 #: ../../portable/frontends/widgets/style.py:231
 #: ../../portable/frontends/widgets/style.py:1106
 msgid "Newly Available"
-msgstr ""
+msgstr "Värskelt saadaval"
 
 #: ../../portable/frontends/widgets/style.py:233
 #: ../../portable/frontends/widgets/prefpanel.py:485
@@ -1076,7 +1081,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
-msgstr ""
+msgstr "Automaatselt käivita Miro, kui ma sisse login."
 
 #: ../../portable/frontends/widgets/prefpanel.py:271
 msgid "Warn me if I attempt to quit with downloads in progress."
@@ -1168,7 +1173,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:357
 msgid "Bittorrent:"
-msgstr ""
+msgstr "Bittorrent:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:360
 msgid "Limit upstream bandwidth to:"
@@ -1189,11 +1194,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:400
 msgid "Starting port:"
-msgstr ""
+msgstr "Algus-port:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:404
 msgid "Ending port:"
-msgstr ""
+msgstr "Lõpp-port:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:410
 msgid "Automatically forward ports.  (UPNP)"
@@ -1201,7 +1206,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:414
 msgid "Ignore unencrypted connections."
-msgstr ""
+msgstr "Eira krüptimata ühendusi."
 
 #: ../../portable/frontends/widgets/prefpanel.py:418
 msgid "Stop torrent uploads when this ratio is reached:"
@@ -1214,7 +1219,7 @@ msgstr "Muuda"
 
 #: ../../portable/frontends/widgets/prefpanel.py:440
 msgid "Choose Movies Directory"
-msgstr ""
+msgstr "Vali filmide kaust"
 
 #: ../../portable/frontends/widgets/prefpanel.py:453
 msgid "Migrate existing movies?"
@@ -1279,7 +1284,7 @@ msgstr "Vaikimisi aeguvad videod pärast:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:599
 msgid "Always play videos in a separate window."
-msgstr ""
+msgstr "Alati mängi videosid eraldi aknas."
 
 #: ../../portable/frontends/widgets/prefpanel.py:603
 msgid "Resume playing a video from the point it was last stopped."
@@ -1308,7 +1313,7 @@ msgstr "Allalaadimised"
 
 #: ../../portable/frontends/widgets/prefpanel.py:623
 msgid "Folders"
-msgstr "Kataloogid"
+msgstr "Kaustad"
 
 #: ../../portable/frontends/widgets/prefpanel.py:624
 msgid "Disk space"
@@ -1336,7 +1341,7 @@ msgstr "Parool:"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
-msgstr ""
+msgstr "Uued videod"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:413
 #: ../../portable/frontends/widgets/statictabs.py:86
@@ -1345,7 +1350,7 @@ msgstr "Videootsing"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:427
 msgid "No Results Found"
-msgstr ""
+msgstr "Tulemusi ei leitud"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:489
 #: ../../portable/frontends/widgets/statictabs.py:91
@@ -1372,15 +1377,15 @@ msgstr "Näita"
 
 #: ../../portable/frontends/widgets/diagnostics.py:84
 msgid "Movies location:"
-msgstr ""
+msgstr "Filmide asukoht:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:88
 msgid "Icon cache location:"
-msgstr ""
+msgstr "Ikoonide vahemälu asukoht:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:92
 msgid "Log file location:"
-msgstr ""
+msgstr "Logifaili asukoht:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:96
 msgid "Downloader log file location:"
@@ -1388,19 +1393,19 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/diagnostics.py:100
 msgid "Database file location:"
-msgstr ""
+msgstr "Andmebaasi-faili asukoht:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:107
 msgid "Space free on disk:"
-msgstr ""
+msgstr "Vaba ruumi kettal:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:109
 msgid "Database size:"
-msgstr ""
+msgstr "Andmebaasi maht:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:111
 msgid "Total number of db objects:"
-msgstr ""
+msgstr "Andmebaasi objekte:"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -1473,7 +1478,7 @@ msgstr "Viga faili näitamisel"
 #: ../../portable/frontends/widgets/application.py:305
 #, python-format
 msgid "The file \"%(filename)s\" was deleted from outside Miro."
-msgstr ""
+msgstr "Fail \"%(filename)s\" on kustutatud väljastpoolt Mirot."
 
 #: ../../portable/frontends/widgets/application.py:312
 msgid "Open Files..."
@@ -1488,11 +1493,11 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:588
 #, python-format
 msgid "File %(filename)s does not exist."
-msgstr ""
+msgstr "Faili %(filename)s pole olemas."
 
 #: ../../portable/frontends/widgets/application.py:329
 msgid "The following files do not exist:"
-msgstr ""
+msgstr "Järgmisi faile pole olemas:"
 
 #: ../../portable/frontends/widgets/application.py:366
 msgid "New Download"
@@ -1552,11 +1557,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:450
 msgid "Enter the new name for the item"
-msgstr ""
+msgstr "Sisesta elemendi uus nimi"
 
 #: ../../portable/frontends/widgets/application.py:473
 msgid "Save Item As..."
-msgstr ""
+msgstr "Salvesta element kui..."
 
 #: ../../portable/frontends/widgets/application.py:527
 msgid "Enter the URL of the site to add"
@@ -1659,15 +1664,16 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:704
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Eemalda esitusnimekiri"
+msgstr[1] "Eemalda esitusnimekirjad"
 
 #: ../../portable/frontends/widgets/application.py:706
 #, python-format
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
-msgstr[0] ""
+msgstr[0] "Kas oled kindel, et tahad selle esitusnimekirja eemaldada?"
 msgstr[1] ""
+"Kas oled kindel, et tahad need %(count)s esitusnimekirja eemaldada?"
 
 #: ../../portable/frontends/widgets/application.py:724
 #, python-format
@@ -1688,7 +1694,9 @@ msgstr "Kas sa soovid lõpetada?"
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] ""
+"Sul on %(count)d allalaadimine pooleli.  Kas väljud sellegipoolest?"
 msgstr[1] ""
+"Sul on %(count)d allalaadimist pooleli.  Kas väljud sellegipoolest?"
 
 #: ../../portable/frontends/widgets/application.py:757
 msgid "Warn me when I attempt to quit with downloads in progress"
@@ -1712,7 +1720,7 @@ msgstr "Salvesta otsing"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:282
 msgid "Title"
-msgstr ""
+msgstr "Pealkiri"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:284
 msgid "Feed"
@@ -1721,7 +1729,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemlistwidgets.py:286
 #: ../../portable/frontends/widgets/itemlistwidgets.py:725
 msgid "Date"
-msgstr ""
+msgstr "Kuupäev"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:287
 msgid "Length"
@@ -1729,12 +1737,12 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:288
 msgid "Status"
-msgstr ""
+msgstr "Olek"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:289
 #: ../../portable/frontends/widgets/itemlistwidgets.py:726
 msgid "Size"
-msgstr ""
+msgstr "Maht"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:291
 msgid "ETA"
@@ -1742,7 +1750,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:292
 msgid "Speed"
-msgstr ""
+msgstr "Kiirus"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:428
 msgid "Save as a Feed"
@@ -1807,17 +1815,19 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:724
 msgid "Name"
-msgstr ""
+msgstr "Nimi"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:727
 msgid "Time"
-msgstr ""
+msgstr "Aeg"
 
 #: ../../portable/frontends/widgets/displays.py:353
 msgid ""
 "Miro can't play this file.  You may be able to open it with a different "
 "program"
 msgstr ""
+"Miro ei suuda seda faili mängida. Sa võid saada selle faili avada mõne teise "
+"programmiga."
 
 #: ../../portable/frontends/widgets/displays.py:361
 msgid "Filename:"
@@ -1860,8 +1870,8 @@ msgstr[1] ""
 #, python-format
 msgid "(contains %(count)d playlist)"
 msgid_plural "(contains %(count)d playlist)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(sisaldab %(count)d esitusnimekirja)"
+msgstr[1] "(sisaldab %(count)d esitusnimekirja)"
 
 #: ../../portable/frontends/widgets/displays.py:569
 #, python-format
@@ -1874,8 +1884,8 @@ msgstr[1] ""
 #, python-format
 msgid "%(count)d Playlist Selected"
 msgid_plural "%(count)d Playlists Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d esitusnimekiri valitud"
+msgstr[1] "%(count)d esitusnimekirja valitud"
 
 #: ../../portable/frontends/widgets/displays.py:582
 msgid "Delete All"
@@ -1887,7 +1897,7 @@ msgstr "Aseta uude kataloogi"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
-msgstr ""
+msgstr "See esitusnimekiri on tühi"
 
 #: ../../portable/frontends/widgets/playlist.py:149
 msgid ""
@@ -1920,7 +1930,7 @@ msgstr "Peida"
 
 #: ../../portable/frontends/widgets/gtk/video.py:272
 msgid "Add to library"
-msgstr ""
+msgstr "Lisa videokogusse"
 
 #: ../../portable/frontends/widgets/gtk/video.py:311
 msgid "Permalink"
@@ -1928,11 +1938,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/gtk/window.py:470
 msgid "All files"
-msgstr ""
+msgstr "Kõik failid"
 
 #: ../../portable/frontends/widgets/gtk/window.py:499
 msgid "Choose"
-msgstr ""
+msgstr "Vali"
 
 #: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
@@ -1940,6 +1950,8 @@ msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
 "Miro and Miro logo are trademarks of the Participatory Culture Foundation."
 msgstr ""
+"%(copyright)s.  Üksikasju loe LICENSE-failist.\n"
+"Miro ja Miro logo on Participatory Culture Foundation'i kaubamärgid."
 
 #: ../../portable/frontends/widgets/removefeeds.py:49
 msgid "Remove Feed"
@@ -1987,13 +1999,13 @@ msgstr ""
 #: ../../portable/frontends/widgets/newfolder.py:70
 #: ../../portable/frontends/widgets/newsearchfeed.py:135
 msgid "video"
-msgstr ""
+msgstr "video"
 
 #: ../../portable/frontends/widgets/newfeed.py:72
 #: ../../portable/frontends/widgets/newfolder.py:71
 #: ../../portable/frontends/widgets/newsearchfeed.py:136
 msgid "audio"
-msgstr ""
+msgstr "audio"
 
 #: ../../portable/frontends/widgets/newfeed.py:110
 msgid "Add Feed"
@@ -2058,11 +2070,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:611
 msgid "PLAYLISTS"
-msgstr ""
+msgstr "ESITUSNIMEKIRJAD"
 
 #: ../../portable/frontends/widgets/newfolder.py:60
 msgid "Folder name:"
-msgstr ""
+msgstr "Kausta nimi:"
 
 #: ../../portable/frontends/widgets/newfolder.py:68
 msgid "Folder should go in this section:"
@@ -2075,7 +2087,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/newfolder.py:110
 msgid "Enter the name of the folder to add"
-msgstr ""
+msgstr "Sisesta lisatava kausta nimi"
 
 #: ../../portable/frontends/widgets/linkhandler.py:54
 msgid "Subscribe to Feed"
@@ -2112,7 +2124,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:92
 msgid "Search engine:"
-msgstr ""
+msgstr "Otsingumootor:"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:132
 msgid "Add new feed to this section:"
@@ -2154,7 +2166,7 @@ msgstr "Ei"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:146
 msgid "Next >"
-msgstr ""
+msgstr "Järgmine>"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:156
 msgid "Completing the Miro First Time Setup"
@@ -2183,7 +2195,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:200
 #: ../../portable/frontends/widgets/firsttimedialog.py:280
 msgid "< Previous"
-msgstr ""
+msgstr "< Eelmine"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:213
 #: ../../portable/frontends/widgets/firsttimedialog.py:215
@@ -2250,11 +2262,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
 msgid "Existing playlist:"
-msgstr ""
+msgstr "Olemasolev esitusnimekiri:"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
 msgid "New playlist:"
-msgstr ""
+msgstr "Uus esitusnimekiri:"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
@@ -2272,7 +2284,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemcontextmenu.py:96
 #: ../../portable/frontends/widgets/itemcontextmenu.py:193
 msgid "Add to Playlist"
-msgstr ""
+msgstr "Lisa esitusnimekirja"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:101
 msgid "Revert Item Name"
@@ -2281,12 +2293,12 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemcontextmenu.py:103
 #: ../../portable/frontends/widgets/itemcontextmenu.py:200
 msgid "Mark as Unplayed"
-msgstr ""
+msgstr "Märgista mittemängituks"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:106
 #: ../../portable/frontends/widgets/itemcontextmenu.py:205
 msgid "Mark as Played"
-msgstr ""
+msgstr "Märgista mängituks"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
@@ -2310,11 +2322,11 @@ msgstr "Jätka allalaadimist"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:135
 msgid "Web page"
-msgstr ""
+msgstr "Veebileht"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:139
 msgid "License"
-msgstr ""
+msgstr "Litsents"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:142
 msgid "File in Browser"
@@ -2375,11 +2387,11 @@ msgstr "Ok"
 
 #: ../../portable/dialogs.py:84
 msgid "Close"
-msgstr ""
+msgstr "Sulge"
 
 #: ../../portable/dialogs.py:86
 msgid "Done"
-msgstr ""
+msgstr "Valmis"
 
 #: ../../portable/dialogs.py:89
 msgid "Quit"
@@ -2387,11 +2399,11 @@ msgstr "Välju"
 
 #: ../../portable/dialogs.py:90
 msgid "Continue"
-msgstr ""
+msgstr "Jätka"
 
 #: ../../portable/dialogs.py:91
 msgid "Ignore"
-msgstr "Ignoreeri"
+msgstr "Eira"
 
 #: ../../portable/dialogs.py:92
 msgid "Submit Crash Report"

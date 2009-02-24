@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-03 23:28+0000\n"
+"PO-Revision-Date: 2009-02-22 19:53+0000\n"
 "Last-Translator: sg <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-02-10 04:08+0000\n"
+"X-Launchpad-Export-Date: 2009-02-24 21:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -33,7 +33,7 @@ msgstr "Minimaliseer naar systeemvak en blijf downloaden."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
 msgid "Quit Miro completely."
-msgstr "Stop Miro volledig"
+msgstr "Miro afsluiten"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:124
 msgid "Close to tray?"
@@ -44,20 +44,20 @@ msgid ""
 "When you click the red close button, would you like Miro to close to the "
 "system tray or quit?  You can change this setting later in the Options."
 msgstr ""
-"Wanneer u het Miro venster sluit, wilt u Miro volledig stopppen, of wilt u "
-"het minimaliseren naar het systeemvak? U kunt dit achteraf wijzigen."
+"Als U  de (rode) afsluitknop gebruikt, volledig afsluiten of minimaliseren "
+"naar het systeemvak ? U kunt deze setting (later) veranderen in in 'Opties"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:182
 msgid "Error Bombing Item"
-msgstr "Fout bij VideoBomben van item"
+msgstr "Probleem 'bombing' item"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:184
 msgid "Error Recommending Item"
-msgstr "Fout bij aanbevelen item"
+msgstr "Probleem delen item"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:186
 msgid "Error Opening Website"
-msgstr "Fout bij openen website"
+msgstr "Probleem openen website"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:191
 #, python-format
@@ -113,7 +113,7 @@ msgstr ""
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
 msgid "Renderer options:"
-msgstr "Rendering opties"
+msgstr "Renderer opties:"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
 msgid "You must restart Miro for renderer changes to take effect."
@@ -135,7 +135,7 @@ msgstr "Geen"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:86
 msgid "Use this for video when playing audio:"
-msgstr "Gebruik het volgende als video wanneer een audiofragment afspeelt:"
+msgstr "Gebruik deze video tijdens het afspelen van geluid:"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:120
 #: ../../portable/frontends/widgets/gtk/video.py:300
@@ -165,7 +165,7 @@ msgstr "Verwijder"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:132
 msgid "Add to Library"
-msgstr "Voeg toe aan bibliotheek"
+msgstr "Aan bibliotheek toevoegen"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:203
 msgid "Pop Out"
@@ -177,7 +177,7 @@ msgstr "Integreer"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
 msgid "Services"
-msgstr "Diensten"
+msgstr "Voorzieningen"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 msgid "Hide Miro"
@@ -189,7 +189,7 @@ msgstr "Verberg andere"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
 msgid "Show All"
-msgstr "Alles weergeven"
+msgstr "Alles tonen"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
 msgid "Preferences..."
@@ -265,12 +265,12 @@ msgstr "Miro Help"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:166
 msgid "Download Completed"
-msgstr "Download voltooid"
+msgstr "Downloaden voltooid"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:167
 #, python-format
 msgid "Download of video '%s' is finished."
-msgstr "Download van de video '%s' voltooid."
+msgstr "Downloaden video '%s' voltooid."
 
 #: ../../portable/theme.py:136
 msgid "Custom Channels"
@@ -281,7 +281,7 @@ msgstr "Aangepaste kanalen"
 msgid ""
 "You are running a version of %(appname)s with a custom set of channels."
 msgstr ""
-"Je gebruikt een versie van %(appname)s met een aangepaste set van kanalen."
+"Je gebruikt een versie van %(appname)s met een aangepaste set van podcasts."
 
 #: ../../portable/theme.py:171
 msgid "Example Playlist"
@@ -347,7 +347,7 @@ msgstr[1] "Overgeslagen %(count)d feeds reeds aanwezig."
 #: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
-msgstr "%(appname)s gegevensbestand opslaan gelukt"
+msgstr "Opslaan %(appname)s database succesvol"
 
 #: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
@@ -360,7 +360,7 @@ msgstr ""
 #: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
-msgstr "%(appname)s gegevensbestand opslaan mislukt"
+msgstr "Opslaan %(appname)s database mislukt"
 
 #: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
@@ -370,10 +370,10 @@ msgid ""
 "from your collection.\n"
 "Recent changes may be lost."
 msgstr ""
-"%(appname)s heeft het gegevensbestand niet kunnen opslaan: Schijf vol.\n"
-"We adviseren om bestanden van de volle schijf te verwijderen of simpelweg "
-"een aantal films van jouw collectie te verwijderen.\n"
-"Recent opgeslagen aanpassingen kunnen verloren gaan."
+"Opslaan %(appname)s mislukt: onvoldoende ruimte.\n"
+"We raden u aan enkele bestanden van uw schijf of simpelweg enkele video's "
+"uit uw collectie te verwijderen.\n"
+"Recente wijzigingen kunnen verloren gaan."
 
 #: ../../portable/messagehandler.py:1266
 msgid "Subscribed to new feed:"
@@ -385,7 +385,7 @@ msgstr "Geabonneerd op:"
 
 #: ../../portable/messages.py:965 ../../portable/item.py:618
 msgid "queued for download"
-msgstr "toegevoegd aan downloadrij"
+msgstr "in wachtrij"
 
 #: ../../portable/startup.py:91
 msgid "Unknown Error"
@@ -397,8 +397,8 @@ msgid ""
 "An unknown error prevented Miro from startup.  Please file a bug report at "
 "%(url)s."
 msgstr ""
-"Een onbekende fout voorkwam het opstarten van Miro. Zend alsjeblieft  een "
-"probleem rapport naar %(url)s"
+"Een onbekend probleem verhinderde het opstarten van Miro. Meld deze aub op "
+"%(url)s"
 
 #: ../../portable/startup.py:173
 msgid "Database too new"
@@ -416,22 +416,22 @@ msgstr ""
 #: ../../portable/displaytext.py:40
 #, python-format
 msgid "%(size)s gb/s"
-msgstr "%(size)s gb/s"
+msgstr "%(size)s GB/s"
 
 #: ../../portable/displaytext.py:43
 #, python-format
 msgid "%(size)s mb/s"
-msgstr "%(size)s mb/s"
+msgstr "%(size)s MB/s"
 
 #: ../../portable/displaytext.py:46
 #, python-format
 msgid "%(size)s kb/s"
-msgstr "%(size)s kb/s"
+msgstr "%(size)s KB/s"
 
 #: ../../portable/displaytext.py:49
 #, python-format
 msgid "%(size)s b/s"
-msgstr "%(size)s b/s"
+msgstr "%(size)s B/s"
 
 #: ../../portable/displaytext.py:56
 #, python-format
@@ -445,7 +445,7 @@ msgstr[1] "%(num).1f dagen"
 msgid "%(num).1f hr"
 msgid_plural "%(num).1f hrs"
 msgstr[0] "%(num).1f uur"
-msgstr[1] "%(num).1f uren"
+msgstr[1] "%(num).1f uur"
 
 #: ../../portable/displaytext.py:62
 #, python-format
@@ -464,22 +464,22 @@ msgstr[1] "%(num)d seconden"
 #: ../../portable/displaytext.py:78
 #, python-format
 msgid "%(size)s gb"
-msgstr "%(size)s gb"
+msgstr "%(size)s GB"
 
 #: ../../portable/displaytext.py:81
 #, python-format
 msgid "%(size)s mb"
-msgstr "%(size)s mb"
+msgstr "%(size)s MB"
 
 #: ../../portable/displaytext.py:84
 #, python-format
 msgid "%(size)s kb"
-msgstr "%(size)s kb"
+msgstr "%(size)s KB"
 
 #: ../../portable/displaytext.py:86
 #, python-format
 msgid "%(size)s b"
-msgstr "%(size)s b"
+msgstr "%(size)s B"
 
 #: ../../portable/displaytext.py:91
 #, python-format
@@ -548,7 +548,7 @@ msgstr "Probleem"
 #: ../../portable/dl_daemon/download.py:596
 #, python-format
 msgid "Could not write to %(filename)s"
-msgstr "Kon %(filename)s niet beschrijven"
+msgstr "Probleem schrijven naar %(filename)s"
 
 #: ../../portable/dl_daemon/download.py:621
 #: ../../portable/dl_daemon/download.py:838
@@ -559,12 +559,12 @@ msgstr "Onvoldoende vrije ruimte"
 #: ../../portable/dl_daemon/download.py:839
 #, python-format
 msgid "%(amount)s MB required to store this video"
-msgstr "%(amount)s MB is vereist om deze video op te kunnen slaan"
+msgstr "%(amount)s MB is vereist om video op te slaan"
 
 #: ../../portable/dl_daemon/download.py:637
 #, python-format
 msgid "Couldn't open %(filename)s for writing"
-msgstr "Kon %(filename)s niet openen om het te beschrijven"
+msgstr "Toegang tot %(filename)s geweigerd"
 
 #: ../../portable/dl_daemon/download.py:852
 msgid "BitTorrent failure"
@@ -572,7 +572,7 @@ msgstr "Torrentprobleem"
 
 #: ../../portable/dl_daemon/download.py:853
 msgid "BitTorrent failed to startup"
-msgstr "Torrent kon niet opstarten"
+msgstr "Probleem opstarten Torrent"
 
 #: ../../portable/dl_daemon/download.py:1041
 msgid "Corrupt Torrent"
@@ -581,7 +581,7 @@ msgstr "Beschadigde torrent"
 #: ../../portable/dl_daemon/download.py:1042
 #, python-format
 msgid "The torrent file at %(url)s was not valid"
-msgstr "Het torrent bestand op %(url)s is niet geldig"
+msgstr "De torrent op %(url)s is niet geldig"
 
 #: ../../portable/dl_daemon/download.py:1067
 msgid "Torrent file deleted"
@@ -589,7 +589,7 @@ msgstr "Torrent verwijderd"
 
 #: ../../portable/dl_daemon/download.py:1068
 msgid "The torrent file for this item was deleted outside of Miro."
-msgstr "Het torrent bestand voor dit item was verwijderd buiten miro"
+msgstr "De torrent voor dit onderdeel was verwijderd buiten Miro om."
 
 #: ../../portable/menubar.py:184
 msgid "_Open"
@@ -658,11 +658,11 @@ msgstr "Nieuwe _podcast"
 #: ../../portable/menubar.py:213
 #: ../../portable/frontends/widgets/application.py:526
 msgid "Add Site"
-msgstr "Nieuwe site"
+msgstr "Nieuwe website"
 
 #: ../../portable/menubar.py:214
 msgid "New Searc_h Feed"
-msgstr "Nieuwe slimme zoe_kactie"
+msgstr "Nieuwe slimme podca_st"
 
 #: ../../portable/menubar.py:215
 msgid "New _Folder"
@@ -766,11 +766,11 @@ msgstr "Spoel a_chteruit"
 
 #: ../../portable/menubar.py:262
 msgid "Volume _Up"
-msgstr "Vol_ume omhoog"
+msgstr "Geluid _harder"
 
 #: ../../portable/menubar.py:263
 msgid "Volume _Down"
-msgstr "Volume om_laag"
+msgstr "Geluid _zachter"
 
 #: ../../portable/menubar.py:265
 msgid "_Fullscreen"
@@ -807,7 +807,7 @@ msgstr "Ver_taal"
 
 #: ../../portable/menubar.py:277
 msgid "_Planet Miro"
-msgstr "_Planet Miro"
+msgstr "_Planet"
 
 #: ../../portable/menubar.py:282
 msgid "_Video"
@@ -864,22 +864,22 @@ msgstr "nooit"
 #, python-format
 msgid "%(count)d hour ago"
 msgid_plural "%(count)d hours ago"
-msgstr[0] "%(count)d uur geleden"
-msgstr[1] "%(count)d uren geleden"
+msgstr[0] "%(count)d uur"
+msgstr[1] "%(count)d uur"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:64
 #, python-format
 msgid "%(count)d day ago"
 msgid_plural "%(count)d days ago"
-msgstr[0] "%(count)d dag geleden"
-msgstr[1] "%(count)d dagen geleden"
+msgstr[0] "%(count)d dag"
+msgstr[1] "%(count)d dagen"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:70
 #, python-format
 msgid "%(count)d month ago"
 msgid_plural "%(count)d months ago"
-msgstr[0] "%(count)d maand geleden"
-msgstr[1] "%(count)d maanden geleden"
+msgstr[0] "%(count)d maand"
+msgstr[1] "%(count)d maanden"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Videos:"
@@ -912,12 +912,12 @@ msgstr "1 maand"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
-msgstr "Oude afleveringen:"
+msgstr "Te onthouden afleveringen:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:139
 #, python-format
 msgid "Keep %(number)s (Default)"
-msgstr "Onthoud %(number)s minst recente (standaardinstelling)"
+msgstr "Standaardinstelling (%(number)s)"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:141
 msgid "Keep 0"
@@ -925,19 +925,19 @@ msgstr "Onthoud niets"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:142
 msgid "Keep 20"
-msgstr "Onthoud 20 minst recente afleveringen"
+msgstr "20 minst recente afleveringen"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:143
 msgid "Keep 50"
-msgstr "Onthoud 50 minst recente afleveringen"
+msgstr "50 minst recente afleveringen"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:144
 msgid "Keep 100"
-msgstr "Onthoud 100 minst recente afleveringen"
+msgstr "100 minst recente afleveringen"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:145
 msgid "Keep 1000"
-msgstr "Onthoud 1000 minst recente afleveringen"
+msgstr "1000 minst recente afleveringen"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
@@ -949,7 +949,7 @@ msgstr "Oude afleveringen verwijderd"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause Auto-Downloading when this many items are unplayed:"
-msgstr "Sta automatische downloads niet toe bij:"
+msgstr "Niet automatisch downloaden bij:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
@@ -1041,7 +1041,7 @@ msgstr "Geupload"
 
 #: ../../portable/frontends/widgets/style.py:224
 msgid "Down Rate"
-msgstr "Down Rate"
+msgstr "Downloadsnelheid"
 
 #: ../../portable/frontends/widgets/style.py:225
 msgid "Down Total"
@@ -1089,7 +1089,7 @@ msgstr "Verwijder"
 #: ../../portable/frontends/widgets/style.py:234
 #: ../../portable/frontends/widgets/itemcontextmenu.py:113
 msgid "Stop seeding"
-msgstr "Stop met seeden"
+msgstr "Stop seeden"
 
 #: ../../portable/frontends/widgets/style.py:544
 #: ../../portable/frontends/widgets/style.py:1099
@@ -1098,7 +1098,7 @@ msgstr "gepauzeerd"
 
 #: ../../portable/frontends/widgets/style.py:972
 msgid "Remove from playlist"
-msgstr "Uit afspeellijst verwijderen"
+msgstr "Verwijder uit afspeellijst"
 
 #: ../../portable/frontends/widgets/prefpanel.py:267
 msgid "Automatically run Miro when I log in."
@@ -1146,19 +1146,19 @@ msgstr "Onthoud niets"
 
 #: ../../portable/frontends/widgets/prefpanel.py:298
 msgid "20"
-msgstr "Onthoud 20 minst recente afleveringen"
+msgstr "20 minst recente afleveringen"
 
 #: ../../portable/frontends/widgets/prefpanel.py:299
 msgid "50"
-msgstr "Onthoud 50 minst recente afleveringen"
+msgstr "50 minst recente afleveringen"
 
 #: ../../portable/frontends/widgets/prefpanel.py:300
 msgid "100"
-msgstr "Onthoud 100 minst recente afleveringen"
+msgstr "100 minst recente afleveringen"
 
 #: ../../portable/frontends/widgets/prefpanel.py:301
 msgid "1000"
-msgstr "Onthoud 1000 minst recente afleveringen"
+msgstr "1000 minst recente afleveringen"
 
 #: ../../portable/frontends/widgets/prefpanel.py:307
 msgid "Default settings for new feeds:"
@@ -1166,7 +1166,7 @@ msgstr "Standaardinstellingen voor podcasts:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:311
 msgid "(These can be changed using the feed's settings button)"
-msgstr ""
+msgstr "(Deze kunnen met behulp dan de 'Feeds'-knop niet veranderd worden)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:315
 msgid "Check for new content:"
@@ -1178,11 +1178,11 @@ msgstr "Nieuwe afleveringen:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:326
 msgid "Remember this many old items:"
-msgstr "Onthoud oude afleveringen:"
+msgstr "Te onthouden afleveringen:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:327
 msgid "(in addition to the current contents)"
-msgstr "(naast de huidige inhoud)"
+msgstr "(naast de meest recente inhoud)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:340
 msgid "Maximum number of manual downloads at a time:"
@@ -1231,7 +1231,7 @@ msgstr "Negeer niet versleutelde verbindingen"
 
 #: ../../portable/frontends/widgets/prefpanel.py:418
 msgid "Stop torrent uploads when this ratio is reached:"
-msgstr "Stop seeden bij het bereiken van ratio:"
+msgstr "Stop seeden bij het bereiken van een ratio:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:435
 #: ../../portable/frontends/widgets/firsttimedialog.py:184
@@ -1271,7 +1271,8 @@ msgstr "Locatie gedownloade bestanden:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:549
 msgid "Watch for new videos in these folders and include them in library:"
-msgstr "Doorzoek locaties op media en voeg toe aan bibliotheek:"
+msgstr ""
+"Doorzoek locaties automatisch op nieuwe media en voeg toe aan bibliotheek:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:568
 msgid "Keep at least this much free space on my drive:"
@@ -1425,11 +1426,11 @@ msgstr "Vrije ruimte op schijf:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:109
 msgid "Database size:"
-msgstr "Database grootte:"
+msgstr "Grootte van de database:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:111
 msgid "Total number of db objects:"
-msgstr "Objecten,"
+msgstr "Aantal objecten:"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -1443,16 +1444,16 @@ msgstr "Alle afleveringen"
 #, python-format
 msgid "Show %(count)d More Item"
 msgid_plural "Show %(count)d More Items"
-msgstr[0] "Meer onderdelen beschikbaar (%(count)d)"
-msgstr[1] "Meer onderdelen beschikbaar (%(count)d)"
+msgstr[0] "Toon meer onderdelen (%(count)d)"
+msgstr[1] "Toon meer onderdelen (%(count)d)"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:224
 #: ../../portable/frontends/widgets/feedcontroller.py:251
 #, python-format
 msgid "%(count)d Downloading"
 msgid_plural "%(count)d Downloading"
-msgstr[0] "%(count)d aan het Downloaden"
-msgstr[1] "%(count)d aan het Downloaden"
+msgstr[0] "%(count)d download gaande"
+msgstr[1] "%(count)d downloads gaande"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:235
 #: ../../portable/frontends/widgets/feedcontroller.py:247
@@ -1509,16 +1510,16 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:304
 msgid "Error Revealing File"
-msgstr "Fout bij weergave van het bestand"
+msgstr "Probleem tonen onderdeel"
 
 #: ../../portable/frontends/widgets/application.py:305
 #, python-format
 msgid "The file \"%(filename)s\" was deleted from outside Miro."
-msgstr "Het bestand \"%(filename)s\" was buiten Miro om verwijderd."
+msgstr "\"%(filename)s\" was buiten Miro om verwijderd."
 
 #: ../../portable/frontends/widgets/application.py:312
 msgid "Open Files..."
-msgstr "Openen...."
+msgstr "Openen..."
 
 #: ../../portable/frontends/widgets/application.py:323
 #: ../../portable/frontends/widgets/application.py:328
@@ -1529,7 +1530,7 @@ msgstr "Betand Openen - Fout"
 #: ../../portable/frontends/widgets/application.py:588
 #, python-format
 msgid "File %(filename)s does not exist."
-msgstr "Betand %(filename)s bestaat niet."
+msgstr "%(filename)s bestaat niet."
 
 #: ../../portable/frontends/widgets/application.py:329
 msgid "The following files do not exist:"
@@ -1570,8 +1571,8 @@ msgstr "Miro is up-to-date"
 #: ../../portable/frontends/widgets/application.py:400
 msgid "Remove item"
 msgid_plural "Remove items"
-msgstr[0] "Verijwder"
-msgstr[1] "Verwijder"
+msgstr[0] "Behoud bestand"
+msgstr[1] "Behoud bestanden"
 
 #: ../../portable/frontends/widgets/application.py:404
 msgid ""
@@ -1581,13 +1582,11 @@ msgid_plural ""
 "Some of these items were not downloaded from a feed. Would you like to "
 "delete them or just remove them from the Library?"
 msgstr[0] ""
-"Wilt u het geselecteerde bestand (dat niet is  gedownload via een podcast) "
-"definitief verwijderen, of op uw harde schijf laten staan en enkel wissen "
-"uit de Bibliotheek?"
+"Wilt u het geselecteerde onderdeel (dat niet is gedownload via een podcast) "
+"definitief verwijderen, of het bestand op uw schijf laten staan?"
 msgstr[1] ""
-"Wilt u de geselecteerde bestanden (die niet zijn  gedownload via een "
-"podcast) definitief verwijderen, of op uw harde schijf laten staan en enkel "
-"wissen uit de Bibliotheek?"
+"Wilt u de geselecteerde onderdelen (die niet zijn gedownload via een "
+"podcast) definitief verwijderen, of de bestanden op uw schijf laten staan?"
 
 #: ../../portable/frontends/widgets/application.py:419
 #, python-format
@@ -1595,7 +1594,7 @@ msgid "Are you sure you want to delete the item?"
 msgid_plural "Are you sure you want to delete all %(count)d items?"
 msgstr[0] "Weet u zeker dat u dit onderdeel wilt verwijderen?"
 msgstr[1] ""
-"Weet u zeker dat u de %(count)d geselecteerde onderdelen wilt verwijderen?"
+"Weet u zeker dat u deze %(count)d geselecteerde onderdelen wilt verwijderen?"
 
 #: ../../portable/frontends/widgets/application.py:449
 #: ../../portable/frontends/widgets/itemcontextmenu.py:99
@@ -1612,11 +1611,11 @@ msgstr "Bewaar als..."
 
 #: ../../portable/frontends/widgets/application.py:527
 msgid "Enter the URL of the site to add"
-msgstr "Geef de URL van de toe te voegen site op"
+msgstr "Geef de URL van de toe te voegen website op"
 
 #: ../../portable/frontends/widgets/application.py:528
 msgid "Add Site - Invalid URL"
-msgstr "Toevoegen site - ongeldige URL"
+msgstr "Toevoegen website - ongeldige URL"
 
 #: ../../portable/frontends/widgets/application.py:529
 msgid ""
@@ -1705,7 +1704,7 @@ msgstr "Geef een nieuwe naam op voor de afspeellijstmap %(name)s"
 #: ../../portable/frontends/widgets/application.py:679
 #: ../../portable/frontends/widgets/tablist.py:476
 msgid "Rename Site"
-msgstr "Hernoem Site"
+msgstr "Hernoem website"
 
 #: ../../portable/frontends/widgets/application.py:680
 #, python-format
@@ -1766,7 +1765,7 @@ msgstr "Bestanden verplaatsen"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:177
 msgid "Save Search"
-msgstr "Bewaar zoekopdracht"
+msgstr "Nieuwe slimme podcast"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:282
 msgid "Title"
@@ -1783,7 +1782,7 @@ msgstr "Datum"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:287
 msgid "Length"
-msgstr "Lengte"
+msgstr "Duur"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:288
 msgid "Status"
@@ -1804,7 +1803,7 @@ msgstr "Snelheid"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:428
 msgid "Save as a Feed"
-msgstr "Bewaar als slimme zoekactie"
+msgstr "Nieuwe slimme podcast"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:482
 msgid "Pause All"
@@ -1825,7 +1824,7 @@ msgstr "Instellingen"
 #: ../../portable/frontends/widgets/itemlistwidgets.py:549
 #, python-format
 msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
-msgstr "%(available)s te kort (%(amount)s beschikbaar op schijf)"
+msgstr "%(available)s te kort (%(amount)s op schijf)"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:555
 #, python-format
@@ -1840,12 +1839,12 @@ msgstr "%(amount)s vrije ruimte op schijf"
 #: ../../portable/frontends/widgets/itemlistwidgets.py:579
 #, python-format
 msgid "%(rate)s uploading"
-msgstr "%(rate)s uploading"
+msgstr "Bandbreedte uploads: %(rate)s"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:581
 #, python-format
 msgid "%(rate)s downloading"
-msgstr "%(rate)s downloading"
+msgstr "Bandbreedte downloads: %(rate)s"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:615
 msgid "Auto Download"
@@ -1853,7 +1852,7 @@ msgstr "Nieuwe afleveringen"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:627
 msgid "Share feed"
-msgstr "Deel koppeling"
+msgstr "Deel"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:633
 msgid "Settings"
@@ -1869,7 +1868,7 @@ msgstr "Naam"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:727
 msgid "Time"
-msgstr "Tijd"
+msgstr "Duur"
 
 #: ../../portable/frontends/widgets/displays.py:353
 msgid ""
@@ -1880,7 +1879,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/displays.py:361
 msgid "Filename:"
-msgstr "Bestand"
+msgstr "Bestand:"
 
 #: ../../portable/frontends/widgets/displays.py:364
 msgid "File type:"
@@ -1952,6 +1951,7 @@ msgstr "Lege afspeellijst"
 msgid ""
 "To add an item, drag it onto the name of this playlist in the sidebar."
 msgstr ""
+"Om een item toe te voegen dient u deze op de afspeellijst-naam te slepen"
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:63
 #, python-format
@@ -1999,8 +1999,9 @@ msgid ""
 "%(copyright)s.  See LICENSE file for details.\n"
 "Miro and Miro logo are trademarks of the Participatory Culture Foundation."
 msgstr ""
-"%(copyright)s. Zie LICENTIE bestand voor details.\n"
-"Miro en het Miro logo zijn handelmerken van Participatory Culture Foundation."
+"%(copyright)s. Zie LICENTIE bestand voor toegepaste licentie-"
+"overeenkomsten.\n"
+"Miro en het logo zijn handelsmerken van de Participatory Culture Foundation."
 
 #: ../../portable/frontends/widgets/removefeeds.py:49
 msgid "Remove Feed"
@@ -2066,7 +2067,7 @@ msgstr "Abonneren op podcast"
 
 #: ../../portable/frontends/widgets/newfeed.py:111
 msgid "Enter the URL of the feed to add"
-msgstr "Geef de URL van de podcast op"
+msgstr "Geef de URL van de nieuwe podcast op"
 
 #: ../../portable/frontends/widgets/newfeed.py:122
 msgid "Add Feed - Invalid URL"
@@ -2082,7 +2083,7 @@ msgstr ""
 "Het opgegeven adres is een ongeldige URL.\n"
 "Kijk deze aub na en probeer het dan opnieuw.\n"
 "\n"
-"Geef de URL van de te toe te voegen podcast op."
+"Geef de URL van de toe te voegen podcast op."
 
 #: ../../portable/frontends/widgets/tablist.py:475
 #: ../../portable/frontends/widgets/tablist.py:534
@@ -2091,7 +2092,7 @@ msgstr "Kopieer URL naar klembord"
 
 #: ../../portable/frontends/widgets/tablist.py:477
 msgid "Remove Site"
-msgstr "Verwijder Site"
+msgstr "Verwijder website"
 
 #: ../../portable/frontends/widgets/tablist.py:521
 msgid "Update Feeds In Folder"
@@ -2115,15 +2116,15 @@ msgstr "Vernieuw"
 
 #: ../../portable/frontends/widgets/tablist.py:605
 msgid "SITES"
-msgstr "SITES"
+msgstr "WEBSITES"
 
 #: ../../portable/frontends/widgets/tablist.py:607
 msgid "FEEDS"
-msgstr "FEEDS"
+msgstr "VIDEO-PODCASTS"
 
 #: ../../portable/frontends/widgets/tablist.py:609
 msgid "AUDIO FEEDS"
-msgstr "AUDIO PODCASTS"
+msgstr "AUDIO-PODCASTS"
 
 #: ../../portable/frontends/widgets/tablist.py:611
 msgid "PLAYLISTS"
@@ -2164,13 +2165,13 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:58
 msgid "New Search Feed"
-msgstr "Nieuwe slimme zoekactie"
+msgstr "Nieuwe slimme podcast"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:59
 msgid "A search feed contains items that match a search term."
 msgstr ""
-"Een slimme zoekactie wordt weergegeven als een normale podcast, en bevat ten "
-"alle tijde die onderdelen welke aan uw zoekcriteria voldoen"
+"Een slimme podcast geeft de onderdelen welke voldoen aan uw zoekcriteria "
+"weer en wordt automatisch bijgewerkt."
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:74
 msgid "Search for:"
@@ -2218,7 +2219,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:132
 msgid "Would you like to run Miro on startup?"
-msgstr "Wilt u Miro openen na het inloggen?"
+msgstr "Wilt u dat Miro automatisch wordt geopend als u inlogt?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:137
 #: ../../portable/frontends/widgets/firsttimedialog.py:170
@@ -2254,7 +2255,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:177
 msgid "Restrict to all my personal files."
-msgstr "Beperk tot al mijn persoonlijke bestanden."
+msgstr "Beperk tot mijn persoonlijke bestanden."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:178
 msgid "Search custom folders:"
@@ -2306,7 +2307,7 @@ msgstr[1] "%(count)s gevonden"
 
 #: ../../portable/frontends/widgets/statictabs.py:44
 msgid "Miro Guide"
-msgstr "Kanaalgids"
+msgstr "Miro gids"
 
 #: ../../portable/frontends/widgets/statictabs.py:110
 msgid "Downloading"
@@ -2407,7 +2408,7 @@ msgstr "Bestand in browser"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:144
 #, python-format
 msgid "File in %(progname)s"
-msgstr "%(progname)s"
+msgstr "in %(progname)s"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:146
 msgid "File on Disk"
@@ -2447,7 +2448,7 @@ msgstr[1] "%(count)d onderbroken"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:264
 msgid "Restart Upload"
-msgstr "Hervat upload"
+msgstr "Seed"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:278
 msgid "Remove From Playlist"
@@ -2479,7 +2480,7 @@ msgstr "Negeer"
 
 #: ../../portable/dialogs.py:92
 msgid "Submit Crash Report"
-msgstr "Verzend foutenrapport"
+msgstr "Meld probleem"
 
 #: ../../portable/dialogs.py:93
 msgid "Migrate"
@@ -2555,12 +2556,12 @@ msgstr "Abonneer"
 
 #: ../../portable/dialogs.py:116
 msgid "Stop Watching"
-msgstr "Bekijken stoppen"
+msgstr "Stop weergave"
 
 #: ../../portable/playlist.py:180
 #, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr "Geef een naam op voor de afspeellijst %s"
+msgstr "Geef een nieuwe naam op voor de afspeellijst %s"
 
 #: ../../portable/singleclick.py:100
 msgid "Download already exists"
@@ -2590,9 +2591,7 @@ msgstr "Download bestand"
 #, python-format
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or an RSS feed."
-msgstr ""
-"Het bestand afkomstig van %(url)s is waarschijnlijk geen audio, video of RSS "
-"feed."
+msgstr "%(url)s blijkt niet te verwijzen naar een podcast."
 
 #: ../../portable/singleclick.py:166
 msgid "Download Error"
@@ -2605,7 +2604,7 @@ msgid ""
 "\n"
 "URL: %(url)s"
 msgstr ""
-"Miro heeft geen bestand kunnen downloaden van dit URL:\n"
+"Downloaden bestand van URL mislukt:\n"
 "\n"
 "URL: %(url)s"
 
@@ -2687,7 +2686,7 @@ msgstr[1] "%(count)d dagen"
 msgid "%(count)d hour"
 msgid_plural "%(count)d hours"
 msgstr[0] "%(count)d uur"
-msgstr[1] "%(count)d uren"
+msgstr[1] "%(count)d uur"
 
 #: ../../portable/item.py:449
 #, python-format
@@ -2717,7 +2716,7 @@ msgstr "Probleem verbinden"
 #: ../../portable/httpclient.py:106
 #, python-format
 msgid "Connection Error: %(msg)s"
-msgstr "Probleeem verbinden: %(msg)s"
+msgstr "Probleem verbinden: %(msg)s"
 
 #: ../../portable/httpclient.py:112
 msgid "SSL connection error"
@@ -2785,7 +2784,7 @@ msgstr "Ongeldige URL"
 #: ../../portable/httpclient.py:169
 #, python-format
 msgid "\"%(url)s\" is not a valid URL"
-msgstr "\"%(url)s\" is geen geldig URL"
+msgstr "\"%(url)s\" is geen geldige URL"
 
 #: ../../portable/httpclient.py:175
 #, python-format
