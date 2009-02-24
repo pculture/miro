@@ -27,6 +27,7 @@
 # statement from all source files in the program, then also delete it here.
 
 import gtk
+import gobject
 import os
 import gconf
 import shutil
@@ -95,6 +96,10 @@ def run_application(props_to_set):
 
 class GtkX11Application(Application):
     def run(self, props_to_set):
+        gobject.set_application_name(config.get(prefs.SHORT_APP_NAME))
+        gtk.window_set_default_icon_name("miro")
+        os.environ["PULSE_PROP_media.role"] = "video"
+
         threads.call_on_ui_thread(mozsetup.setup_mozilla_environment)
         gtk.gdk.threads_init()
         self.startup()
