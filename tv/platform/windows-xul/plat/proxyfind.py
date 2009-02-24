@@ -33,6 +33,8 @@ from ctypes.wintypes import LPWSTR, BOOL
 import logging
 import re
 
+winhttp_loaded = False
+
 class WINHTTP_CURRENT_USER_IE_PROXY_CONFIG(Structure):
     _fields_ = [
         ('fAutoDetect', BOOL),
@@ -48,11 +50,19 @@ class ProxyInfo:
         self.ignore_hosts = []
 
 def get_proxy_info():
+    global winhttp_loaded
     proxy_info = ProxyInfo()
     ie_proxy_info = WINHTTP_CURRENT_USER_IE_PROXY_CONFIG()
-    rv = windll.winhttp.WinHttpGetIEProxyConfigForCurrentUser(
-            byref(ie_proxy_info))
-
+    try:
+        winhttp = windll.winhttp
+    except WindowsError:
+        # We couldn't load the winhttp module.  Maybe the user doesn't have
+        # SP1 or later?  (#11522)
+        rv = None
+    else:
+        winhttp_loaded = True
+        rv = winhttp.WinHttpGetIEProxyConfigForCurrentUser(
+                byref(ie_proxy_info))
     if not rv or ie_proxy_info.lpszProxy is None:
         return proxy_info
     proxy_info.host, proxy_info.port = \
