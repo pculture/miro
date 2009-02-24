@@ -113,7 +113,7 @@ def autoDownloads(item):
     return item.getAutoDownloaded() and downloadingOrPausedItems(item) and not item.is_uploading()
 
 def manualDownloads(item):
-    return not item.getAutoDownloaded() and not item.is_pending_manual_download() and item.get_state() == 'downloading'
+    return not item.getAutoDownloaded() and not item.is_pending_manual_download() and item.get_state() in ('downloading', 'paused')
 
 def uniqueItems(item):
     return (item.downloader is None or
