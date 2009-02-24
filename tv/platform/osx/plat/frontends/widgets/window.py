@@ -329,7 +329,7 @@ class FileSaveDialog(FileDialogBase):
         self._filename = s
 
     def get_filename(self):
-        return self._filename
+        return self._filename.encode('utf-8')
 
     def run(self):
         response = FileDialogBase.run(self)            
@@ -366,10 +366,10 @@ class FileOpenDialog(FileDialogBase):
             self._types += t
 
     def get_filename(self):
-        return self._filenames[0]
+        return self.get_filenames()[0]
 
     def get_filenames(self):
-        return self._filenames
+        return [f.encode('utf-8') for f in self._filenames]
 
     def run(self):
         response = FileDialogBase.run(self)            
@@ -395,7 +395,7 @@ class DirectorySelectDialog(FileDialogBase):
         self._directory = d
 
     def get_directory(self):
-        return self._directory
+        return self._directory.encode('utf-8')
 
     def run(self):
         response = FileDialogBase.run(self)            
