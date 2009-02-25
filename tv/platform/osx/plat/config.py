@@ -37,7 +37,7 @@ from miro import prefs
 from miro.plat import bundle
 from miro.plat import keychain
 from miro.plat import resources
-from miro.plat.filenames import osFilenameToFilenameType
+from miro.plat.filenames import osFilenameToFilenameType, filenameTypeToOSFilename
 
 sysconfPath = objc.pathForFramework('/System/Library/Frameworks/SystemConfiguration.framework')
 sysconfBundle = NSBundle.bundleWithPath_(sysconfPath)
@@ -76,6 +76,10 @@ def save(data):
         for k, v in data.iteritems():
             if v is None:
                 data[k] = ""
+            elif k == prefs.MOVIES_DIRECTORY.key:
+                if isinstance(v, str):
+                    data[k] = filenameTypeToOSFilename(v)
+
         plist = Conversion.propertyListFromPythonCollection(data)
     except:
         print "WARNING!! Error while converting the settings dictionary to a property list:"
