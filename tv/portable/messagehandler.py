@@ -940,12 +940,10 @@ class BackendMessageHandler(messages.MessageHandler):
             singleclick.add_download(message.url)
 
     def handle_open_individual_file(self, message):
-        fn = osFilenameToFilenameType(message.filename)
-        singleclick.parse_command_line_args([fn])
+        singleclick.parse_command_line_args([message.filename])
 
     def handle_open_individual_files(self, message):
-        fns = [osFilenameToFilenameType(fn) for fn in message.filenames]
-        singleclick.parse_command_line_args(fns)
+        singleclick.parse_command_line_args(message.filenames)
 
     def handle_check_version(self, message):
         up_to_date_callback = message.up_to_date_callback
