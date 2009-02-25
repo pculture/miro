@@ -58,6 +58,7 @@ from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import dialogwidgets
 from miro.frontends.widgets.widgetutil import build_control_line
 from miro.plat import resources
+from miro.plat.utils import filenameToUnicode
 from miro.gtcache import gettext as _
 
 # Note: we do an additional import from prefpanelset half way down the file.
@@ -445,7 +446,7 @@ class _MovieDirectoryHelper(object):
 
     def set_initial_path(self):
         self.path = self.initial_path = config.get(prefs.MOVIES_DIRECTORY)
-        self.label.set_text(self.path)
+        self.label.set_text(filenameToUnicode(self.path))
 
     def on_window_closed(self):
         if self.path != self.initial_path:

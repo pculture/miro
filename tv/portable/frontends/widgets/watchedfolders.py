@@ -31,6 +31,7 @@
 from miro import messages
 from miro import signals
 from miro.plat.frontends.widgets import widgetset
+from miro.plat.utils import filenameToUnicode
 
 class WatchedFolderManager(signals.SignalEmitter):
     """Manages tracking watched folders.
@@ -53,7 +54,8 @@ class WatchedFolderManager(signals.SignalEmitter):
     def handle_watched_folder_list(self, info_list):
         """Handle the WatchedFolderList message."""
         for info in info_list:
-            iter = self.model.append(info.id, info.path, info.visible)
+            iter = self.model.append(info.id, filenameToUnicode(info.path),
+                    info.visible)
             self._iter_map[info.id] = iter
         self.emit('changed')
 
@@ -62,7 +64,7 @@ class WatchedFolderManager(signals.SignalEmitter):
         self.handle_watched_folder_list(added)
         for info in changed:
             iter = self._iter_map[info.id]
-            self.model.update_value(iter, 1, info.path)
+            self.model.update_value(iter, 1, filenameToUnicode(info.path))
             self.model.update_value(iter, 2, info.visible)
         for id in removed:
             iter = self._iter_map.pop(id)
