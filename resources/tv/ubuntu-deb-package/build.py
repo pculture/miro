@@ -4,7 +4,7 @@
 # debian-x directory.  perhaps we should be doing a checkout and use
 # the stuff there?  wbg 10-23-2007
 
-import os, sys, urllib
+import os, sys, urllib, os.path
 from glob import glob
 import shutil
 
@@ -19,6 +19,7 @@ Examples:
     build.py 0.9.5 feisty ./Miro-0.9.5.tar.gz
 """
 
+PBUILDERHOME = os.path.join(os.path.expanduser("~"), ".pbuilder")
  
 def call(cmd):
     """Call an external command.  If the command doesn't exit with status 0,
@@ -41,18 +42,20 @@ debian_dir = os.path.normpath(os.path.join(__file__, '..', 'debian-%s' % distro)
 tarball_name = 'Miro-%s.tar.gz' % version
 tarball_url = sys.argv[3]
 user = os.environ['USER']
+pbuilder_tgz = os.path.join(PBUILDERHOME, "%s-base.tgz" % distro)
 
 if not os.path.isdir(debian_dir):
     usage()
 
 print """\
-Version: %s
-Distribution: %s
+Version:          %s
+Distribution:     %s
 Debian directory: %s
 Tarball Path/URL: %s
+PBuilder base:    %s
 
 Press enter to continue, Ctrl-C to cancel.
-""" % (version, distro, debian_dir, tarball_url)
+""" % (version, distro, debian_dir, tarball_url, pbuilder_tgz)
 raw_input()
 debian_dir = os.path.abspath(debian_dir)
 
@@ -94,6 +97,6 @@ os.mkdir(distro)
 call('mv build-tmp/miro_* %s' % distro)
 
 print "build.py: running pbuilder"
-call('pbuilder build --basetgz ./pbuilder/%s-base.tgz --buildresult ./%s %s/*.dsc' % (distro, distro, distro))
+call('pbuilder build --basetgz %s --buildresult ./%s %s/*.dsc' % (pbuilder_tgz, distro, distro))
 
 print 'build.py: done'
