@@ -945,6 +945,11 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_open_individual_files(self, message):
         singleclick.parse_command_line_args(message.filenames)
 
+    def handle_add_files(self, message):
+        # add all files to Miro in the manualFeed
+        for mem in message.filenames:
+            singleclick.add_video(mem, False)
+
     def handle_check_version(self, message):
         up_to_date_callback = message.up_to_date_callback
         from miro import autoupdate

@@ -484,6 +484,14 @@ class OpenIndividualFiles(BackendMessage):
     def __init__(self, filenames):
         self.filenames = filenames
 
+class AddFiles(BackendMessage):
+    """This is like OpenIndividualFiles, but is handled differently
+    in that adding files doesn't cause videos that were added to be
+    played.
+    """
+    def __init__(self, filenames):
+        self.filenames = filenames
+
 class CheckVersion(BackendMessage):
     def __init__(self, up_to_date_callback):
         self.up_to_date_callback = up_to_date_callback

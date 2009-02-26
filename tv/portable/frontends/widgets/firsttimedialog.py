@@ -87,7 +87,7 @@ class FirstTimeDialog(widgetset.Window):
 
     def on_close(self, widget=None):
         if self.gathered_media_files:
-            messages.OpenIndividualFiles(self.gathered_media_files).send_to_backend()
+            messages.AddFiles(self.gathered_media_files).send_to_backend()
 
         self.disconnect(self.on_close_handler)
         self.on_close_handler = None

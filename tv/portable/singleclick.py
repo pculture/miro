@@ -91,7 +91,8 @@ def add_video(path, single=False):
         correctFeed = get_manual_feed()
     fileItem = item.FileItem(path, feed_id=correctFeed.getID())
     fileItem.markItemSeen()
-    _command_line_videos.add(fileItem)
+    if _command_line_videos:
+        _command_line_videos.add(fileItem)
 
 def check_url_exists(url):
     manualFeed = get_manual_feed()
@@ -386,6 +387,13 @@ def download_url(url):
         parse_command_line_args([unicodeToFilename(url)])
 
 def parse_command_line_args(args=None):
+    """
+    This goes through a list of files which could be arguments passed
+    in on the command line or a list of files from other source.
+
+    If the args list is None, then this pulls from the internal
+    _command_line_args list which is populated by set_command_line_args.
+    """
     if args is None:
         global _command_line_args
         args = _command_line_args
@@ -399,7 +407,7 @@ def parse_command_line_args(args=None):
     for arg in args:
         if arg.startswith('file://'):
             arg = download_utils.getFileURLPath(arg)
-        if arg.startswith('miro:'):
+        elif arg.startswith('miro:'):
             add_subscription_url('miro:', 'application/x-miro', arg)
         elif arg.startswith('democracy:'):
             add_subscription_url('democracy:', 'application/x-democracy', arg)
