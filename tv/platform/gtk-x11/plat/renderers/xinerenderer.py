@@ -214,8 +214,9 @@ class Renderer:
         logging.warn("set_rate not implemented for xine")
 
     def movie_data_program_info(self, movie_path, thumbnail_path):
-        if os.path.exists(resources.path('../../../lib/miro/xine_extractor')):
+        if os.path.exists(resources.path('./../../lib/miro/xine_extractor')):
             path = resources.path('../../../lib/miro/xine_extractor')
+            return ((path, movie_path, thumbnail_path), None)
         else:
             logging.error("xine_extractor cannot be found.")
-        return ((path, movie_path, thumbnail_path), None)
+            raise NotImplementedError()
