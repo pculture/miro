@@ -191,6 +191,9 @@ class FirstTimeDialog(widgetset.Window):
                     transient_for=self)
             if dir_:
                 search_entry.set_text(dir_)
+                self.search_directory = dir_
+            else:
+                self.search_directory = _get_user_media_directory()
         change_button.connect('clicked', handle_change_clicked)
 
         v.pack_start(group_box)
@@ -202,10 +205,9 @@ class FirstTimeDialog(widgetset.Window):
 
         def handle_search_finish_clicked(widget):
             if widget.mode == "search":
-                if rbg2.get_selected() == restrict_rb or not search_entry.get_text():
+                if rbg2.get_selected() == restrict_rb:
                     self.search_directory = _get_user_media_directory()
-                else:
-                    self.search_directory = search_entry.get_text()
+
                 self.next_page()
             else:
                 self.on_close()

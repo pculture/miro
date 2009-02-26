@@ -80,7 +80,8 @@ def add_video(path, single=False):
                 os.path.exists(itemFilename) and
                 samefile(itemFilename, path)):
             logging.warn("Not adding duplicate video: %s" % path.decode('ascii', 'ignore'))
-            _command_line_videos.add(i)
+            if _command_line_videos:
+                _command_line_videos.add(i)
             return
     if single:
         correctFeed = util.getSingletonDDBObject(views.singleFeed)
