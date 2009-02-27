@@ -442,7 +442,7 @@ class _MovieDirectoryHelper(object):
                 transient_for=_pref_window)
         if dir is not None:
             self.path = dir
-            self.label.set_text(dir)
+            self.label.set_text(filenameToUnicode(dir))
 
     def set_initial_path(self):
         self.path = self.initial_path = config.get(prefs.MOVIES_DIRECTORY)
