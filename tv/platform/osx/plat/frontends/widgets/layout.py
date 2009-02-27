@@ -308,6 +308,8 @@ class Alignment(Bin):
         my_origin = self.viewport.area().origin
         child_rect = NSMakeRect(my_origin.x + child_x, my_origin.y + child_y,  child_width, child_height)
         self.child.place(child_rect, self.viewport.view)
+        # Make sure the space not taken up by our child is redrawn.
+        self.viewport.queue_redraw()
 
 class DetachedWindowHolder(Alignment):
     def __init__(self):
