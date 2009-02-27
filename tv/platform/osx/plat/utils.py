@@ -76,7 +76,8 @@ def get_available_bytes_for_movies():
         except IOError:
             del pool
             return -1
-    info = fm.fileSystemAttributesAtPath_(movies_dir)
+    print 'movies dir: %r' % movies_dir
+    info = fm.fileSystemAttributesAtPath_(filenameToUnicode(movies_dir))
     if info:
         available = info[NSFileSystemFreeSize]
     else:
