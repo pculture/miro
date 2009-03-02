@@ -839,12 +839,12 @@ class BTDownloader(BGDownloader):
                                  _("%(amount)s MB required to store this video") % {"amount": self.totalSize / (2 ** 20)})
                 return
 
-            name = os.path.dirname(fileutil.expand_filename(stringify(self.filename)))
+            save_path = os.path.dirname(fileutil.expand_filename(self.filename))
             if self.fastResumeData:
-                self.torrent = torrentSession.session.add_torrent(torrent_info, name, lt.bdecode(self.fastResumeData), lt.storage_mode_t.storage_mode_allocate)
+                self.torrent = torrentSession.session.add_torrent(torrent_info, save_path, lt.bdecode(self.fastResumeData), lt.storage_mode_t.storage_mode_allocate)
                 self.torrent.resume()
             else:
-                self.torrent = torrentSession.session.add_torrent(torrent_info, name, None, lt.storage_mode_t.storage_mode_allocate)
+                self.torrent = torrentSession.session.add_torrent(torrent_info, save_path, None, lt.storage_mode_t.storage_mode_allocate)
             try:
                 if (lt.version_major, lt.version_minor) > (0, 13):
                     logging.info("libtorrent version is (%d, %d), setting auto_managed to False", lt.version_major, lt.version_minor)
