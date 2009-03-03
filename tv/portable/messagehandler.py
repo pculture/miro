@@ -1314,13 +1314,13 @@ class BackendMessageHandler(messages.MessageHandler):
                 raise AssertionError("Unknown subscribe type")
 
     def handle_change_movies_directory(self, message):
-        old_dir = config.get(prefs.MOVIES_DIRECTORY)
+        old_path = config.get(prefs.MOVIES_DIRECTORY)
         config.set(prefs.MOVIES_DIRECTORY, message.path)
         if message.migrate:
-            self._migrate(message.path)
+            self._migrate(old_path, message.path)
         util.getSingletonDDBObject(views.directoryFeed).update()
 
-    def _migrate(self, new_path):
+    def _migrate(self, old_path, new_path):
         to_migrate = [d for d in views.remoteDownloads if d.isFinished()]
         migration_count = len(to_migrate)
         last_progress_time = 0
@@ -1335,13 +1335,13 @@ class BackendMessageHandler(messages.MessageHandler):
             time.sleep(0.3)
         # Pass in case they don't exist or are not empty:
         try:
-            fileutil.rmdir(os.path.join(old_dir, 'Incomplete Downloads'))
+            fileutil.rmdir(os.path.join(old_path, 'Incomplete Downloads'))
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
             pass
         try:
-            fileutil.rmdir(old_dir)
+            fileutil.rmdir(old_path)
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
