@@ -48,4 +48,14 @@ MIROPYTHONPATH=dist/$PREFIX/lib/python$PYTHON_VERSION/site-packages/
 MIROPYTHONPATH=$MIROPYTHONPATH:dist/$PREFIX/lib64/python$PYTHON_VERSION/site-packages/
 MIROPYTHONPATH=$MIROPYTHONPATH:$PYTHONPATH
 
-$PYTHON setup.py install --root=./dist --prefix=$PREFIX && PATH=dist/$PREFIX/bin:$PATH PYTHONPATH=$MIROPYTHONPATH dist/$PREFIX/bin/miro "$@"
+$PYTHON setup.py install --root=./dist --prefix=$PREFIX
+
+echo ""
+
+if [ $? = 0 ]
+then
+    echo "Compile successful.  Running...."
+    PATH=dist/$PREFIX/bin:$PATH PYTHONPATH=$MIROPYTHONPATH dist/$PREFIX/bin/miro "$@"
+else
+    echo "Compile failed.  Review the console text and make necessary changes."
+fi
