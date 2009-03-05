@@ -649,6 +649,8 @@ for dir in ('searchengines', 'images', 'testdata',
 data_files += [
     ('/usr/share/pixmaps',
      glob(os.path.join(platform_dir, 'miro-*.png'))),
+    ('/usr/share/pixmaps',
+     glob(os.path.join(platform_dir, 'miro.xpm'))),
     ('/usr/share/applications',
      [os.path.join(platform_dir, 'miro.desktop')]),
     ('/usr/share/mime/packages',
