@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: Democracy Player 0.8.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-14 15:02+0000\n"
-"Last-Translator: anod1 <Unknown>\n"
+"PO-Revision-Date: 2009-02-27 01:57+0000\n"
+"Last-Translator: Vinnysud <Unknown>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2009-02-24 21:00+0000\n"
+"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Language: French\n"
 
@@ -1748,7 +1748,7 @@ msgstr "Êtes-vous sûr de vouloir supprimer %(name)s ?"
 
 #: ../../portable/frontends/widgets/application.py:750
 msgid "Are you sure you want to quit?"
-msgstr "Êtes-vous sûr de vouloir quitter ?"
+msgstr "Etes vous sûr de vouloir quitter l'application?"
 
 #: ../../portable/frontends/widgets/application.py:752
 #, python-format

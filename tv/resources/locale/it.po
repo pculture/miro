@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: Democracy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-16 17:26+0000\n"
-"Last-Translator: Lindisfarne <davide.campa1970@alice.it>\n"
+"PO-Revision-Date: 2009-02-28 23:02+0000\n"
+"Last-Translator: Guido Iaquinti <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-02-24 21:00+0000\n"
+"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -25,12 +25,11 @@ msgstr "Quando seleziono il bottone rosso di chiusura:"
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:45
 msgid "Close to tray so that downloads can continue."
 msgstr ""
-"Riduci nell'area di notifica in modo che gli scaricamenti correnti possano "
-"continuare."
+"Riduci nella tray bar in modo che i download correnti possano continuare."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
 msgid "Quit Miro completely."
-msgstr "Esci completamente da Miro."
+msgstr "Chiudi Miro"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:124
 msgid "Close to tray?"
@@ -2853,7 +2852,7 @@ msgstr "Vuoi tenere il feed?"
 
 #: ../../portable/feed.py:1055
 msgid "Bad content-type"
-msgstr "Contenuto di tipo non valido."
+msgstr "Contenuto non valido"
 
 #: ../../portable/feed.py:1068
 #, python-format

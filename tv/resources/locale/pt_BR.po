@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-24 18:06+0000\n"
-"Last-Translator: texasjack <Unknown>\n"
+"PO-Revision-Date: 2009-02-25 22:00+0000\n"
+"Last-Translator: Ronaldo Nadaf <Unknown>\n"
 "Language-Team: Portuguese (Brazil) <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2009-02-24 21:00+0000\n"
+"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -1587,7 +1587,11 @@ msgid_plural ""
 "Some of these items were not downloaded from a feed. Would you like to "
 "delete them or just remove them from the Library?"
 msgstr[0] ""
+"Um desses vídeos não foi copiado da fonte. Gostaria de apagá-lo ou somente "
+"removê-lo da biblioteca?"
 msgstr[1] ""
+"Alguns dos itens não foram copiados de sua fonte. Gostaria de apagá-los ou "
+"somente removê-los da biblioteca?"
 
 #: ../../portable/frontends/widgets/application.py:419
 #, python-format
@@ -1599,7 +1603,7 @@ msgstr[1] "Tem certeza que deseja apagar todos os %(count) itens?"
 #: ../../portable/frontends/widgets/application.py:449
 #: ../../portable/frontends/widgets/itemcontextmenu.py:99
 msgid "Rename Item"
-msgstr ""
+msgstr "Renomear Item"
 
 #: ../../portable/frontends/widgets/application.py:450
 msgid "Enter the new name for the item"
@@ -1607,15 +1611,15 @@ msgstr "Digite o novo nome para o item"
 
 #: ../../portable/frontends/widgets/application.py:473
 msgid "Save Item As..."
-msgstr ""
+msgstr "Salvar vídeo como..."
 
 #: ../../portable/frontends/widgets/application.py:527
 msgid "Enter the URL of the site to add"
-msgstr ""
+msgstr "Entre com a URL do site a ser adicionado"
 
 #: ../../portable/frontends/widgets/application.py:528
 msgid "Add Site - Invalid URL"
-msgstr ""
+msgstr "Adicionar Site - URL inválida"
 
 #: ../../portable/frontends/widgets/application.py:529
 msgid ""
@@ -1624,6 +1628,8 @@ msgid ""
 "\n"
 "Enter the URL of the site to add"
 msgstr ""
+"O endereço fornceido não é válido.\n"
+"Verifique o endereço e tente de novo!"
 
 #: ../../portable/frontends/widgets/application.py:578
 msgid "Import OPML File"
@@ -1655,21 +1661,21 @@ msgstr "Criar Pasta de Listas de Reprodução"
 
 #: ../../portable/frontends/widgets/application.py:639
 msgid "Enter a name for the new playlist folder"
-msgstr ""
+msgstr "Entre com nome pasta que vai armazenar a lista"
 
 #: ../../portable/frontends/widgets/application.py:660
 #: ../../portable/frontends/widgets/tablist.py:522
 msgid "Rename Feed Folder"
-msgstr ""
+msgstr "Renomeie a pasta do seu alimentador"
 
 #: ../../portable/frontends/widgets/application.py:661
 #, python-format
 msgid "Enter a new name for the feed folder %(name)s"
-msgstr ""
+msgstr "Forneça o novo nome do seu alimentador %(name)s"
 
 #: ../../portable/frontends/widgets/application.py:665
 msgid "Rename Feed"
-msgstr ""
+msgstr "Renomeie o feed"
 
 #: ../../portable/frontends/widgets/application.py:666
 #, python-format
@@ -1763,11 +1769,11 @@ msgstr "Salvar Pesquisa"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:282
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:284
 msgid "Feed"
-msgstr ""
+msgstr "Fonte de notícias"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:286
 #: ../../portable/frontends/widgets/itemlistwidgets.py:725
@@ -1776,11 +1782,11 @@ msgstr "Data"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:287
 msgid "Length"
-msgstr ""
+msgstr "Duração"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:288
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:289
 #: ../../portable/frontends/widgets/itemlistwidgets.py:726
@@ -1793,7 +1799,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:292
 msgid "Speed"
-msgstr ""
+msgstr "Velocidade"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:428
 msgid "Save as a Feed"
@@ -1809,11 +1815,11 @@ msgstr "Reiniciar todos"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:496
 msgid "Cancel All"
-msgstr ""
+msgstr "Cancelar Tudo"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:503
 msgid "Download Settings"
-msgstr ""
+msgstr "Configurações de Download"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:549
 #, python-format
@@ -1846,7 +1852,7 @@ msgstr "Download Automático"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:627
 msgid "Share feed"
-msgstr ""
+msgstr "Compartilhar fonte de notícias"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:633
 msgid "Settings"
@@ -1854,7 +1860,7 @@ msgstr "Configurações"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:639
 msgid "Remove feed"
-msgstr ""
+msgstr "Remover Fonte de Notícias"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:724
 msgid "Name"
@@ -1862,13 +1868,15 @@ msgstr "Nome"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:727
 msgid "Time"
-msgstr ""
+msgstr "Horário"
 
 #: ../../portable/frontends/widgets/displays.py:353
 msgid ""
 "Miro can't play this file.  You may be able to open it with a different "
 "program"
 msgstr ""
+"Miro não pode abrir o arquivo. Você tem que testá-lo com um programa "
+"diferente."
 
 #: ../../portable/frontends/widgets/displays.py:361
 msgid "Filename:"
@@ -1884,7 +1892,7 @@ msgstr "Reproduzir em Outro Programa"
 
 #: ../../portable/frontends/widgets/displays.py:371
 msgid "Skip"
-msgstr ""
+msgstr "Pular"
 
 #: ../../portable/frontends/widgets/displays.py:543
 #, python-format

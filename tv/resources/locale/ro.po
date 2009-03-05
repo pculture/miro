@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To:  \n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-11 16:27+0000\n"
-"Last-Translator: Bogdan Butnaru <Unknown>\n"
+"PO-Revision-Date: 2009-02-27 15:20+0000\n"
+"Last-Translator: Lucian Lupescu <lupescu81@yahoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1 ? 0: (((n % 100 > 19) || ((n % 100 "
 "== 0) && (n != 0))) ? 2: 1));\n"
-"X-Launchpad-Export-Date: 2009-02-24 21:00+0000\n"
+"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -216,11 +216,11 @@ msgstr "Selectează tot"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
 msgid "Edit"
-msgstr "Editează"
+msgstr "Modifică"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
 msgid "Present Half Size"
-msgstr "Prezent Jumate de Dimensiune"
+msgstr "Prezent Jumătate de Dimensiune"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:168
 msgid "Present Actual Size"
@@ -240,7 +240,7 @@ msgstr "Scalare"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:179
 msgid "Minimize"
-msgstr "Minimizează"
+msgstr "Micşorează"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
 msgid "Main Window"
@@ -396,7 +396,7 @@ msgstr ""
 
 #: ../../portable/startup.py:173
 msgid "Database too new"
-msgstr "Baza de date prea nouă"
+msgstr "Bază de date prea nouă"
 
 #: ../../portable/startup.py:175
 #, python-format
@@ -538,7 +538,7 @@ msgstr "Fișier absent"
 
 #: ../../portable/downloader.py:269
 msgid "Flash URL Scraping Error"
-msgstr "Erare la descifrarea URL-ului Flash"
+msgstr "Eroare la descifrarea URL-ului Flash"
 
 #: ../../portable/downloader.py:447
 msgid "starting up"
@@ -572,7 +572,7 @@ msgstr "Nu s-a putut deschide %(filename)s pentru scriere"
 
 #: ../../portable/dl_daemon/download.py:852
 msgid "BitTorrent failure"
-msgstr "Erroare BitTorrent"
+msgstr "Eroare BitTorrent"
 
 #: ../../portable/dl_daemon/download.py:853
 msgid "BitTorrent failed to startup"
@@ -735,7 +735,7 @@ msgstr "Ște_rge listele de redare"
 
 #: ../../portable/menubar.py:239
 msgid "_Remove Playlist Folders"
-msgstr "Ște_rge directoarele cu liste de redare"
+msgstr "Ște_rge dosarele cu liste de redare"
 
 #: ../../portable/menubar.py:240
 msgid "_Remove Playlist Folder"
@@ -804,11 +804,11 @@ msgstr "Diagnostice"
 
 #: ../../portable/menubar.py:275
 msgid "Report a _Bug"
-msgstr "Raprtea_ză un defect"
+msgstr "Raportea_ză un defect"
 
 #: ../../portable/menubar.py:276
 msgid "_Translate"
-msgstr "_Tradu"
+msgstr "_Traduceţi"
 
 #: ../../portable/menubar.py:277
 msgid "_Planet Miro"
@@ -1315,11 +1315,11 @@ msgstr "o lună"
 
 #: ../../portable/frontends/widgets/prefpanel.py:590
 msgid "By default, videos expire after:"
-msgstr "În mod implicit video-urile expiră după:"
+msgstr "În mod implicit clipurile expiră după:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:599
 msgid "Always play videos in a separate window."
-msgstr "Redă video-urile într-o fereastră separată întotdeauna."
+msgstr "Redă clipurile într-o fereastră separată întotdeauna."
 
 #: ../../portable/frontends/widgets/prefpanel.py:603
 msgid "Resume playing a video from the point it was last stopped."
@@ -1327,11 +1327,11 @@ msgstr "Reia redarea video de unde a fost oprită ultima oară."
 
 #: ../../portable/frontends/widgets/prefpanel.py:608
 msgid "Play videos one after another"
-msgstr "Redă video-uri unul după altul"
+msgstr "Redă clipuri unul după altul"
 
 #: ../../portable/frontends/widgets/prefpanel.py:609
 msgid "Stop after each video"
-msgstr "Oprește redarea după fiecare video"
+msgstr "Oprește redarea după fiecare clip video"
 
 #: ../../portable/frontends/widgets/prefpanel.py:620
 msgid "General"
@@ -1376,12 +1376,12 @@ msgstr "Parolă:"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:400
 msgid "New Videos"
-msgstr "Video-uri noi"
+msgstr "Clipuri noi"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:413
 #: ../../portable/frontends/widgets/statictabs.py:86
 msgid "Video Search"
-msgstr "Căutare video"
+msgstr "Căutare clipuri video"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:427
 msgid "No Results Found"
@@ -1577,11 +1577,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:377
 msgid "Miro is up to date"
-msgstr "Miro este la zi"
+msgstr "Miro este actualizat"
 
 #: ../../portable/frontends/widgets/application.py:378
 msgid "Miro is up to date!"
-msgstr "Miro este la zi!"
+msgstr "Miro este actualizat!"
 
 #: ../../portable/frontends/widgets/application.py:400
 msgid "Remove item"
@@ -1816,7 +1816,7 @@ msgstr "Dimensiune"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:291
 msgid "ETA"
-msgstr "Estimare"
+msgstr "Timp estimat"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:292
 msgid "Speed"
@@ -1879,7 +1879,7 @@ msgstr "Partajează flux"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:633
 msgid "Settings"
-msgstr "Configurare"
+msgstr "Setări"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:639
 msgid "Remove feed"
@@ -2022,7 +2022,7 @@ msgstr "Toate fișierele"
 
 #: ../../portable/frontends/widgets/gtk/window.py:499
 msgid "Choose"
-msgstr ""
+msgstr "Alege"
 
 #: ../../portable/frontends/widgets/gtk/window.py:526
 #, python-format
@@ -2443,12 +2443,12 @@ msgstr "Licență"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:142
 msgid "File in Browser"
-msgstr ""
+msgstr "Fişier în browser"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:144
 #, python-format
 msgid "File in %(progname)s"
-msgstr ""
+msgstr "Fișier în %(progname)s"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:146
 msgid "File on Disk"
@@ -2500,7 +2500,7 @@ msgstr "Înlătură din lista de redare"
 
 #: ../../portable/dialogs.py:83
 msgid "Ok"
-msgstr "Bine"
+msgstr "În regulă"
 
 #: ../../portable/dialogs.py:84
 msgid "Close"
@@ -2512,7 +2512,7 @@ msgstr "Gata"
 
 #: ../../portable/dialogs.py:89
 msgid "Quit"
-msgstr "Renunță"
+msgstr "Renunţă"
 
 #: ../../portable/dialogs.py:90
 msgid "Continue"
@@ -2548,11 +2548,11 @@ msgstr "Șterge fișierele"
 
 #: ../../portable/dialogs.py:99
 msgid "Keep Videos"
-msgstr "Păstrează video-urile"
+msgstr "Păstrează Clipurile"
 
 #: ../../portable/dialogs.py:100
 msgid "Delete Videos"
-msgstr "Șterge video-urile"
+msgstr "Şterge Clipurile"
 
 #: ../../portable/dialogs.py:101
 msgid "Create"
@@ -2605,7 +2605,7 @@ msgstr "Nu mai urmări"
 #: ../../portable/playlist.py:180
 #, python-format
 msgid "Enter a new name for the playlist %s"
-msgstr "Alegeți un nume nou pentru lista de redare %s"
+msgstr "Introduceţi un nume nou pentru lista de redare %s"
 
 #: ../../portable/singleclick.py:100
 msgid "Download already exists"
@@ -2716,7 +2716,7 @@ msgstr "Nu s-a putut descărca fluxul %(appname)s: %(url)s"
 
 #: ../../portable/singleclick.py:414
 msgid "Invalid Torrent"
-msgstr "Torrent invalid"
+msgstr "Formatul torrentului este necorespunzător"
 
 #: ../../portable/singleclick.py:416
 #, python-format
@@ -2835,7 +2835,7 @@ msgstr "Conectarea la %(host)s a durat prea mult"
 
 #: ../../portable/httpclient.py:168
 msgid "Invalid URL"
-msgstr "URL invalid"
+msgstr "URL incorect"
 
 #: ../../portable/httpclient.py:169
 #, python-format
