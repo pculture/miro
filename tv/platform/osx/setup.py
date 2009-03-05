@@ -429,6 +429,7 @@ class MiroBuild (py2app):
     def run(self):
         print "Building %s v%s (%s)" % (self.config.get('longAppName'), self.config.get('appVersion'), self.config.get('appRevision'))
         
+        self.patch_pyobjc_core()
         self.setup_info_plist()
 
         py2app.run(self)
@@ -447,6 +448,25 @@ class MiroBuild (py2app):
 
         if self.make_dmg:
             self.make_disk_image()
+    
+    def patch_pyobjc_core(self):
+        import objc
+        objc_module_path = os.path.dirname(objc.__file__)
+        dyld_py_path = os.path.join(objc_module_path, '_dyld.py')
+
+        if os.path.exists(dyld_py_path):
+            print "Patching %s..." % dyld_py_path
+
+            patched_dyld_py_path = dyld_py_path + ".patched"
+            os.system('sed "s/expanduser(u\\"\\(.*\\)\\")/expanduser(\\"\\1\\").decode(sys.getfilesystemencoding())/" %s > %s' % (dyld_py_path, patched_dyld_py_path))
+            os.remove(dyld_py_path)
+            os.rename(patched_dyld_py_path, dyld_py_path)
+
+            dyld_pyc_path = os.path.join(objc_module_path, '_dyld.pyc')
+            if os.path.exists(dyld_pyc_path):
+                os.remove(dyld_pyc_path)
+        else:
+            print "WARNING: could not find the pyobc-core _dyld module to patch."
     
     def setup_info_plist(self):
         def updatePListEntry(plist, key, conf, prioritizeTheme=True):
