@@ -26,6 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import sys
 import logging
 import os
 import time
@@ -280,4 +281,4 @@ class Renderer:
                 position + (rate * gst.SECOND))
  
     def movie_data_program_info(self, movie_path, thumbnail_path):
-        return (("python", 'plat/renderers/gst_extractor.py', movie_path, thumbnail_path), None)
+        return ((sys.executable, 'plat/renderers/gst_extractor.py', movie_path, thumbnail_path), None)
