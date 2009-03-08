@@ -1,3 +1,45 @@
+miro (2.0.2-0pcf1) hardy; urgency=low
+
+  * #11385 FIXED support for both libtorrent 0.13 and 0.14
+  * #11413 FIXED single quote and double quote translation into Miro 2.0
+  * #11423 FIXED Delete unused icon cache files
+  * #11430 FIXED ValueError?: Multiple default guides!
+  * #11432 FIXED EOFError loading config
+  * #11456 FIXED 'Show More' crashes with UnicodeDecodeError?
+  * #11460 FIXED Non-UTF8 locales break things
+  * #11477 FIXED Miro shows no videos in a specific invalid feed
+  * #11478 FIXED TypeError?: 'NoneType?' object is unsubscriptable
+  * #11479 FIXED AttributeError?: 'AppController?' object has no attribute 
+    'pausedDownloaders'
+  * #11474 FIXED Can't process cookie expiration. Thanks Uwe!
+  * #11022 FIXED "File name:" string is bold. Thanks Zach!
+  * #11245 FIXED OPML import/export issues with non-ascii filenames
+  * #11525 FIXED migrating folders with non-ascii characters
+  * #11527 FIXED watched directories with non-ascii characters
+  * #11528 FIXED playback fails for items in directories with non-ascii 
+    characters
+  * #11544 FIXED handling for site type in subscriptions
+  * #11546 FIXED pause all does not pause queued downloads
+  * #11435 FIXED re-worked xine driver code so that it respects xine-driver 
+    property
+  * #11557 FIXED non-ascii directory names are not displayed properly in 
+    Folder panel of preferences
+  * #11575 FIXED non-ascii movies dir - startup check dir name mangled
+  * #11546 FIXED Pause All does not pause queued downloads
+  * #11554 FIXED first time startup search, non-ascii directory
+  * #11560 FIXED crash when updated torrent that is in a folder with other 
+    files
+  * #11588 FIXED gstreamerrenderer passes "python" as executable for 
+    gst_extractor -- now uses sys.executable 
+  * updated translations synced from LaunchPad? on 3/04/2009
+  * #11516 Updated to libtorrent 0.14.2 
+  * #11518 NEW Added metavid.org search support. Thanks Uwe!
+  * #11461 NEW Added 5min.com search support. Thanks Uwe!
+  * #3858 NEW Added EveryZing? search support. Thanks Uwe!
+  * #11458 NEW Added vimeo.com url scraping support. Thanks Uwe! 
+
+ -- Will Kahn-Greene <will.guaraldi@pculture.org>  Sun, 08 Mar 2009 09:48:37 -0400
+
 miro (2.0.1-0pcf1) hardy; urgency=low
 
   * Updated upgrade patch.
