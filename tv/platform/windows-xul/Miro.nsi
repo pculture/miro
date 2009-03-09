@@ -48,6 +48,8 @@ Var INITIAL_FEEDS
 Var TACKED_ON_FILE
 Var REINSTALL
 Var SIMPLE_INSTALL
+Var PUBLISHER
+Var PROJECT_URL
 
 ; Runs in tv/platform/windows-xul/dist, so 4 ..s.
 !addplugindir ..\..\..\..\dtv-binary-kit\NSIS-Plugins\
@@ -242,8 +244,8 @@ Page custom MiroBarInstall MiroBarInstallLeave
 !define MUI_FINISHPAGE_RUN_TEXT "Run $APP_NAME"
 !define MUI_FINISHPAGE_RUN_FUNCTION "LaunchLink"
 !define MUI_FINISHPAGE_LINK \
-  "${CONFIG_PUBLISHER} homepage."
-!define MUI_FINISHPAGE_LINK_LOCATION "${CONFIG_PROJECT_URL}"
+  "$PUBLISHER homepage."
+!define MUI_FINISHPAGE_LINK_LOCATION "$PROJECT_URL"
 !define MUI_FINISHPAGE_NOREBOOTSUPPORT
 !define MUI_PAGE_CUSTOMFUNCTION_LEAVE "dont_leave_early"
 Function dont_leave_early
@@ -786,6 +788,7 @@ SectionEnd
 
 Function un.onInit
   StrCpy $APP_NAME "${CONFIG_LONG_APP_NAME}"
+  StrCpy $PUBLISHER "${CONFIG_PUBLISHER}"
 FunctionEnd
 
 Function .onInit
@@ -797,6 +800,8 @@ Function .onInit
   StrCpy $APP_NAME "${CONFIG_LONG_APP_NAME}"
   StrCpy $REINSTALL "0"
   StrCpy $SIMPLE_INSTALL "1"
+  StrCpy $PUBLISHER "${CONFIG_PUBLISHER}"
+  StrCpy $PROJECT_URL "${CONFIG_PROJECT_URL}"
 
   !insertmacro MUI_INSTALLOPTIONS_EXTRACT "MiroBar-installer-page.ini"
 
@@ -845,6 +850,7 @@ Function .onInit
   StrCpy $R1 "$THEME_TEMP_DIR\app.config"
   Call GetConfigOption
   Pop $APP_NAME
+
   Goto no_tackon
 
 error_in_theme:
@@ -870,6 +876,18 @@ no_tackon:
   StrCpy $R1 "$THEME_TEMP_DIR\app.config"
   Call GetConfigOption
   Pop $APP_NAME
+  StrCpy $R0 "publisher"
+  Call GetConfigOption
+  Pop $0
+  StrCmp $0 "" find_project_url
+  StrCpy $PUBLISHER $0
+  StrCpy $INSTDIR "$PROGRAMFILES\$PUBLISHER\$APP_NAME"
+find_project_url:
+  StrCpy $0 "projectURL"
+  Call GetConfigOption
+  Pop $0
+  StrCmp $0 "" LocateDone
+  StrCpy $PROJECT_URL $0
 LocateDone:
   ${locate::Close} $0
 
@@ -1078,8 +1096,8 @@ Section -Post
   WriteRegStr HKLM "${UNINST_KEY}" "UninstallString" "$INSTDIR\uninstall.exe"
   WriteRegStr HKLM "${UNINST_KEY}" "DisplayIcon" "$INSTDIR\${CONFIG_EXECUTABLE}"
   WriteRegStr HKLM "${UNINST_KEY}" "DisplayVersion" "${CONFIG_VERSION}"
-  WriteRegStr HKLM "${UNINST_KEY}" "URLInfoAbout" "${CONFIG_PROJECT_URL}"
-  WriteRegStr HKLM "${UNINST_KEY}" "Publisher" "${CONFIG_PUBLISHER}"
+  WriteRegStr HKLM "${UNINST_KEY}" "URLInfoAbout" "${PROJECT_URL}"
+  WriteRegStr HKLM "${UNINST_KEY}" "Publisher" "${PUBLISHER}"
 
   ; We're Vista compatible now, so drop the compatability crap
   DeleteRegValue HKLM "Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" "$INSTDIR\${CONFIG_EXECUTABLE}"
@@ -1114,7 +1132,7 @@ Section "Uninstall" SEC91
 continue:
   ClearErrors
   !insertmacro uninstall $INSTDIR
-  RMDIR "$PROGRAMFILES\${CONFIG_PUBLISHER}"
+  RMDIR "$PROGRAMFILES\${PUBLISHER}"
 
   ; Remove Start Menu shortcuts
   !insertmacro MUI_STARTMENU_GETFOLDER Application $R0
