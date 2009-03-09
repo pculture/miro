@@ -31,6 +31,7 @@ from miro.plat.frontends.widgets import widgetset
 from miro.plat import options
 from miro.frontends.widgets.prefpanel import attach_boolean, attach_radio
 from miro.frontends.widgets.widgetutil import align_left
+from miro import config
 from miro import prefs
 
 def _general_panel():
@@ -43,7 +44,7 @@ def _general_panel():
     extras.append(align_left(lab))
     rbg = widgetset.RadioButtonGroup()
     rad_close = widgetset.RadioButton(_("Close to tray so that downloads can continue."), rbg)
-    rad_quit = widgetset.RadioButton(_("Quit Miro completely."), rbg)
+    rad_quit = widgetset.RadioButton(_("Quit %(appname)s completely.", {'appname': config.get(prefs.SHORT_APP_NAME)}), rbg)
 
     attach_radio([(rad_close, True), (rad_quit, False)], prefs.MINIMIZE_TO_TRAY)
     extras.append(align_left(rad_close, left_pad=20))

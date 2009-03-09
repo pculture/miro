@@ -302,8 +302,9 @@ class Application:
             basename = os.path.basename(filename)
             dialogs.show_message(
                 _("Error Revealing File"),
-                _("The file \"%(filename)s\" was deleted from outside Miro.",
-                  {"filename": basename}),
+                _("The file \"%(filename)s\" was deleted from outside %s(appname.",
+                  {"filename": basename,
+                   "appname": config.get(prefs.SHORT_APP_NAME)}),
                 dialogs.WARNING_MESSAGE)
         else:
             self.reveal_file(filename)
@@ -374,8 +375,10 @@ class Application:
         # this gets called by the backend, so it has to send a message to
         # the frontend to open a dialog
         def up_to_date_callback():
-            messages.MessageToUser(_("Miro is up to date"),
-                                   _("Miro is up to date!")).send_to_frontend()
+            messages.MessageToUser(_("%(appname)s is up to date",
+                                     {'appname': config.get(prefs.SHORT_APP_NAME)}),
+                                   _("%(appname)s is up to date!",
+                                     {'appname': config.get(prefs.SHORT_APP_NAME)})).send_to_frontend()
 
         messages.CheckVersion(up_to_date_callback).send_to_backend()
 
@@ -591,7 +594,9 @@ class Application:
 
     def export_feeds(self):
         title = _('Export OPML File')
-        filepath = dialogs.ask_for_save_pathname(title, "miro_subscriptions.opml")
+        slug = config.get(prefs.SHORT_APP_NAME).lower()
+        slug = slug.replace(' ', '_').replace('-', '_')
+        filepath = dialogs.ask_for_save_pathname(title, "%s_subscriptions.opml" % slug)
 
         if not filepath:
             return

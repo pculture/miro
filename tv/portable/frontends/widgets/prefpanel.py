@@ -264,7 +264,7 @@ class GeneralPanel(PanelBuilder):
     def build_widget(self):
         v = widgetset.VBox(8)
 
-        run_at_startup_cbx = widgetset.Checkbox(_("Automatically run Miro when I log in."))
+        run_at_startup_cbx = widgetset.Checkbox(_("Automatically run %(appname)s when I log in.", {'appname': config.get(prefs.SHORT_APP_NAME)}))
         attach_boolean(run_at_startup_cbx, prefs.RUN_AT_STARTUP)
         v.pack_start(run_at_startup_cbx)
 
@@ -452,9 +452,9 @@ class _MovieDirectoryHelper(object):
         if self.path != self.initial_path:
             title = _("Migrate existing movies?")
             description = _("You've selected a new folder to download movies "
-                    "to.  Should Miro migrate your existing downloads there? "
+                    "to.  Should %(appname) migrate your existing downloads there? "
                     "(Currently dowloading movies will not be moved until "
-                    "they finish.)")
+                    "they finish.)", {'appname': config.get(prefs.SHORT_APP_NAME)})
             response = dialogs.show_choice_dialog(title, description, 
                     (dialogs.BUTTON_MIGRATE, dialogs.BUTTON_DONT_MIGRATE),
                     transient_for=_pref_window)
