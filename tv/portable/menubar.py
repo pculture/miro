@@ -267,15 +267,17 @@ PlaybackItems = [
 ]
 
 HelpItems = [
-    MenuItem(_("_About Miro"), "About", ()),
-    MenuItem(_("_Donate"), "Donate", ()),
+    MenuItem(_("_About %(name)s", {'name': config.get(prefs.SHORT_APP_NAME)}), "About", ())]
+if config.get(prefs.DONATE_URL):
+   HelpItems.append(MenuItem(_("_Donate"), "Donate", ()))
+HelpItems.extend([
     MenuItem(_("_Help"), "Help", (Key(F1),)),
     Separator(),
     MenuItem(_("Diagnostics"), "Diagnostics", ()),
     MenuItem(_("Report a _Bug"), "ReportBug", ()),
-    MenuItem(_("_Translate"), "Translate", ()),
-    MenuItem(_("_Planet Miro"), "Planet", ()),
-]
+    MenuItem(_("_Translate"), "Translate", ())])
+if config.get(prefs.PLANET_URL):
+   HelpItems.append(MenuItem(_("_Planet Miro"), "Planet", ()))
 
 # FIXME - move this to platform-specific code
 if platform == "gtk-x11":
