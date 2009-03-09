@@ -411,13 +411,25 @@ class runmiro(Command):
 class bdist_nsis(Command):
     description = "create Miro installer using NSIS"
 
-    user_options = []
+    user_options = [('generic', None, 'Build a generic installer instead of the Miro-branded installer.'),
+                    ('install-icon=', None, 'ICO file to use for the installer.'),
+                    ('install-image=', None, 'BMP file to use for the welcome/finish pages.')]
 
     def initialize_options(self):
-        pass
+        self.generic = False
+        self.install_icon = None
+        self.install_image = None
 
     def finalize_options(self):
-        pass
+        if self.generic and (self.install_icon or self.install_icon):
+            raise AssertionError('cannot specify install images with generic installer')
+        if self.generic:
+            self.install_icon = 'miro-installer-generic.ico'
+            self.install_image = 'miro-install-generic.bmp'
+        if self.install_icon is None:
+            self.install_icon = 'miro-installer.ico'
+        if self.install_image is None:
+            self.install_image = 'miro-install-image.bmp'
 
     def run(self):
         self.run_command('bdist_miro')
@@ -426,8 +438,8 @@ class bdist_nsis(Command):
         log.info("building installer")
 
         self.copy_file(os.path.join(platform_dir, 'Miro.nsi'), self.dist_dir)
-        self.copy_file("miro-installer.ico", self.dist_dir)
-        self.copy_file("miro-install-image.bmp", self.dist_dir)
+        self.copy_file(self.install_icon, self.dist_dir)
+        self.copy_file(self.install_image, self.dist_dir)
         self.copy_file("MiroBar-installer-page.ini", self.dist_dir)
         self.copy_file("askBarSetup-4.1.0.2.exe", self.dist_dir)
         self.copy_file("ask_toolbar.bmp", self.dist_dir)
@@ -449,9 +461,17 @@ class bdist_nsis(Command):
                 template_vars['shortAppName']
         nsisVars['CONFIG_ICON'] = "%s.ico" % template_vars['shortAppName']
         nsisVars['CONFIG_PROG_ID'] = template_vars['longAppName'].replace(" ", ".") + ".1"
+        nsisVars['MIRO_INSTALL_ICON'] = self.install_icon
+        nsisVars['MIRO_INSTALL_IMAGE'] = self.install_image
+        if self.generic:
+            nsisVars['GENERIC_INSTALLER'] = '1'
 
         # One stage installer
-        outputFile = "%s-%s.exe" % \
+        if self.generic:
+            outputFile = "%s-%s-generic.exe"
+        else:
+            outputFile = "%s-%s.exe"
+        outputFile = outputFile % \
                 (template_vars['shortAppName'], template_vars['appVersion'])
         nsisVars['CONFIG_OUTPUT_FILE'] = outputFile
         nsisVars['CONFIG_TWOSTAGE'] = "No"
@@ -466,7 +486,11 @@ class bdist_nsis(Command):
             return
 
         # Two stage installer
-        outputFile = "%s-%s-twostage.exe" % \
+        if self.generic:
+            outputFile = '%s-%s-generic-twostage.exe'
+        else:
+            outputFile = "%s-%s-twostage.exe"
+        outputFile = outputFile % \
             (template_vars['shortAppName'], template_vars['appVersion'])
         nsisVars['CONFIG_OUTPUT_FILE'] = outputFile
         nsisVars['CONFIG_TWOSTAGE'] = "Yes"

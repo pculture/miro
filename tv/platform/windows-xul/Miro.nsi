@@ -15,8 +15,8 @@
 
 !define RUN_SHORTCUT "${CONFIG_LONG_APP_NAME}.lnk"
 !define UNINSTALL_SHORTCUT "Uninstall ${CONFIG_SHORT_APP_NAME}.lnk"
-!define MUI_ICON "miro-installer.ico"
-!define MUI_UNICON "miro-installer.ico"
+!define MUI_ICON "${MIRO_INSTALL_ICON}"
+!define MUI_UNICON "${MIRO_INSTALL_ICON}"
 
 !define OLD_INST_KEY "Software\Participatory Culture Foundation\Democracy Player"
 !define OLD_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\Democracy Player"
@@ -94,7 +94,7 @@ ReserveFile "${MIROBARCHECKER_EXE}"
 !define MUI_PAGE_CUSTOMFUNCTION_LEAVE "check_radio_buttons"
 
 !define MUI_COMPONENTSPAGE_NODESC
-!define MUI_WELCOMEFINISHPAGE_BITMAP "miro-install-image.bmp"
+!define MUI_WELCOMEFINISHPAGE_BITMAP "${MIRO_INSTALL_IMAGE}"
 !insertmacro MUI_PAGE_WELCOME
 
 Function add_radio_buttons
