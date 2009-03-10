@@ -29,6 +29,7 @@
 import os
 import _winreg
 import cPickle
+import logging
 import string
 import tempfile
 import traceback
@@ -43,7 +44,6 @@ from miro.plat import resources
 from miro.plat import specialfolders
 
 proxy_info = proxyfind.get_proxy_info()
-config_load_error = None
 
 def _getSupportDirectory():
     if u3info.u3_active:
@@ -66,13 +66,12 @@ def _getConfigFile():
     return fileutil.expand_filename(os.path.join(_getSupportDirectory(), "preferences.bin"))
 
 def load():
-    global config_load_error
     filename = _getConfigFile()
     if os.path.exists(filename):
         try:
             return cPickle.load(open(filename))
         except:
-            config_load_error = traceback.format_exc()
+            logging.warn("Error loading config: %s", traceback.format_exc())
     return {}
 
 def save(data):

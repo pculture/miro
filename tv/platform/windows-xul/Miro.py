@@ -41,6 +41,9 @@ def startup():
         return
     pipe_server.start_process()
 
+    from miro.plat import prelogger
+    prelogger.install()
+
     from miro.plat.utils import initializeLocale
     initializeLocale()
 

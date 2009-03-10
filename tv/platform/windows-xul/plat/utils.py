@@ -38,6 +38,7 @@ import os
 import logging
 from logging.handlers import RotatingFileHandler
 from miro.plat import config as plat_config
+from miro.plat import prelogger
 from miro.plat import proxyfind
 from miro.plat import resources
 import subprocess
@@ -167,23 +168,13 @@ def setup_logging(inDownloader=False):
         rotater.setLevel(logging.DEBUG)
         formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
         rotater.setFormatter(formatter)
-        logging.getLogger('').addHandler(rotater)
+        logger.addHandler(rotater)
         rotater.doRollover()
+        for record in prelogger.remove():
+            logger.handle(record)
         sys.stdout = AutoLoggingStream(logging.warn, '(from stdout) ')
         sys.stderr = AutoLoggingStream(logging.error, '(from stderr) ')
-        if plat_config.config_load_error is not None:
-            logging.warn("Error loading config: %s",
-                    plat_config.config_load_error)
 
-        if not proxyfind.winhttp_loaded:
-            logging.warn("WindowsError when loading winhttp")
-
-    # Disable the xpcom log handlers.  This just means the log handler we
-    # install at the root level will handle it instead.  The xpcom one
-    # generates errors when it writes to stderr.
-    xpcomLogger = logging.getLogger('xpcom')
-    for handler in xpcomLogger.handlers[:]:
-        xpcomLogger.removeHandler(handler)
     _loggingSetup = True
 
 @returnsUnicode
