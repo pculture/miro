@@ -135,8 +135,8 @@ class FirstTimeDialog(widgetset.Window):
         lab.set_size_request(400, -1)
         v.pack_start(widgetutil.align_left(lab))
 
-        lab = widgetset.Label(_("Would you like to run %(name)s on startup?"),
-                              {'name': config.get(prefs.SHORT_APP_NAME)})
+        lab = widgetset.Label(_("Would you like to run %(name)s on startup?",
+                              {'name': config.get(prefs.SHORT_APP_NAME)}))
         lab.set_bold(True)
         v.pack_start(widgetutil.align_left(lab))
 
