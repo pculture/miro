@@ -264,8 +264,10 @@ action_groups = {
         'PlayablesSelected': [
             'RemoveItems',
         ],
-        'Playing': [
+        'PlayPause': [
             'PlayPauseVideo',
+        ],
+        'Playing': [
             'StopVideo',
             'NextVideo',
             'PreviousVideo',
@@ -307,6 +309,7 @@ class MenuManager(signals.SignalEmitter):
         self.play_pause_state = "play"
         self.enabled_groups = set(['AlwaysOn'])
         if app.playback_manager.is_playing:
+            self.enabled_groups.add('PlayPause')
             self.enabled_groups.add('Playing')
             if app.playback_manager.detached_window is not None:
                 self.enabled_groups.add('NonPlaying')
@@ -372,6 +375,7 @@ class MenuManager(signals.SignalEmitter):
                 break
         if downloaded:
             self.enabled_groups.add('PlayablesSelected')
+            self.enabled_groups.add('PlayPause')
             if len(selected_items) == 1:
                 self.enabled_groups.add('PlayableSelected')
                 self.states["plural"] = []
@@ -379,6 +383,7 @@ class MenuManager(signals.SignalEmitter):
                 self.enabled_groups.discard('PlayableSelected')
                 self.states["plural"] = ["RemoveItems"]
         else:
+            self.enabled_groups.discard('PlayPause')
             self.enabled_groups.discard('PlayablesSelected')
             self.enabled_groups.discard('PlayableSelected')
             self.states["plural"] = []
