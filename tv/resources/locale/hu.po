@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2008-12-22 09:55+0000\n"
-"Last-Translator: Vanorbert <Unknown>\n"
+"PO-Revision-Date: 2009-03-10 12:19+0000\n"
+"Last-Translator: Will Guaraldi Kahn-Greene <willg@bluesock.org>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -2798,14 +2798,12 @@ msgstr "Fájl lejátszása"
 #~ msgid "Channel requires authentication"
 #~ msgstr "A csatorna bejelentkezést igényel"
 
-#, python-format
 #~ msgid "%s database save failed"
 #~ msgstr "%s elmentése az adatbázisba sikertelen"
 
 #~ msgid "Unknown Runtime Error"
 #~ msgstr "Ismeretlen Hiba"
 
-#, python-format
 #~ msgid "An unknown error has occurred %s."
 #~ msgstr "Ismeretlen hiba lépett fel %s."
 
@@ -2873,7 +2871,6 @@ msgstr "Fájl lejátszása"
 #~ msgid "You found a bug in Democracy!"
 #~ msgstr "Ön talált egy hibát a Democracy-ban!"
 
-#, python-format
 #~ msgid "You have %d download still in progress."
 #~ msgid_plural "You have %d downloads still in progress."
 #~ msgstr[0] "Önnek %d darab letöltése van folyamatban."
@@ -2889,9 +2886,6 @@ msgstr "Fájl lejátszása"
 #~ "újra a $shortAppName programot. Ebből majd tanul a program, és egyúttal "
 #~ "csökken a csatornák és az egyéb beállított értékek elvesztésének az esélye."
 
-#~ msgid "OK"
-#~ msgstr "OK"
-
 #~ msgid "The fall of $shortAppName??"
 #~ msgstr "A $shortAppName program halála??"
 
@@ -2903,15 +2897,6 @@ msgstr "Fájl lejátszása"
 
 #~ msgid "Clear Menu"
 #~ msgstr "Ürítsd ki a menüt"
-
-#~ msgid "Democracy"
-#~ msgstr "Demokrácia"
-
-#~ msgid "Democracy Help"
-#~ msgstr "Segítség a Demokráciának"
-
-#~ msgid "Full Screen"
-#~ msgstr "Teljes képernyő"
 
 #~ msgid "Hide Democracy"
 #~ msgstr "Rejtsd el a Demokráciát"
@@ -2937,17 +2922,11 @@ msgstr "Fájl lejátszása"
 #~ msgid "Quit Democracy"
 #~ msgstr "Lépj ki a Demokráciából"
 
-#~ msgid "Remove Channel..."
-#~ msgstr "Törölj egy csatornát..."
-
 #~ msgid "%channel feed%"
 #~ msgstr "%csatorna forrás%"
 
 #~ msgid "%channel title%"
 #~ msgstr "%csatorna név%"
-
-#~ msgid "%donation label%"
-#~ msgstr "%adakozási címke%"
 
 #~ msgid "00:00:00"
 #~ msgstr "00:00:00"
@@ -2991,15 +2970,11 @@ msgstr "Fájl lejátszása"
 #~ msgid "manually"
 #~ msgstr "majd én magam"
 
-#, python-format
 #~ msgid "(parsed %d files - found %d videos)"
 #~ msgstr "(%d fájlt feldolgoztam, %d videót találtam)"
 
 #~ msgid "Back"
 #~ msgstr "Vissza"
-
-#~ msgid "Browse"
-#~ msgstr "Böngészés"
 
 #~ msgid "Next"
 #~ msgstr "Tovább"
@@ -3017,11 +2992,32 @@ msgstr "Fájl lejátszása"
 #~ msgid "Create new playlist"
 #~ msgstr "Új lejátszási lista"
 
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid "Full Screen"
+#~ msgstr "Teljes képernyő"
+
+#~ msgid "%donation label%"
+#~ msgstr "%adakozási címke%"
+
+#~ msgid "Browse"
+#~ msgstr "Böngészés"
+
+#~ msgid "Starting up"
+#~ msgstr "Ébredezem"
+
+#~ msgid "Democracy Help"
+#~ msgstr "Segítség a Demokráciának"
+
+#~ msgid "Democracy"
+#~ msgstr "Demokrácia"
+
+#~ msgid "Remove Channel..."
+#~ msgstr "Törölj egy csatornát..."
+
 #~ msgid "Create new playlist folder"
 #~ msgstr "Új mappa létrehozása"
 
 #~ msgid "Create new channel folder"
 #~ msgstr "Új mappa létrehozása a csatornának"
-
-#~ msgid "Starting up"
-#~ msgstr "Ébredezem"

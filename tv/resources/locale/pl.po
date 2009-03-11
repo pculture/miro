@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Democracy Player\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-27 22:17+0000\n"
+"PO-Revision-Date: 2009-03-10 11:57+0000\n"
 "Last-Translator: szczym <szczym@obin.org>\n"
 "Language-Team: Piotr Szmitkowski <pszmitkowski@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-Language: Polish\n"
@@ -2931,11 +2931,9 @@ msgstr "Odtwarzany plik"
 #~ msgid "Copy Channel _Link"
 #~ msgstr "_Kopiuj odnośnik do kanału"
 
-#, python-format
 #~ msgid "%s database save failed"
 #~ msgstr "Błąd zapisu do bazy danych %s"
 
-#, python-format
 #~ msgid "An unknown error has occurred %s."
 #~ msgstr "Wystąpił nieznany błąd %s."
 
@@ -2969,17 +2967,11 @@ msgstr "Odtwarzany plik"
 #~ msgid "$log"
 #~ msgstr "$log"
 
-#~ msgid "OK"
-#~ msgstr "OK"
-
 #~ msgid "Channel"
 #~ msgstr "Kanał"
 
 #~ msgid "File"
 #~ msgstr "Plik"
-
-#~ msgid "Full Screen"
-#~ msgstr "Pełny ekran"
 
 #~ msgid "Help"
 #~ msgstr "Pomoc"
@@ -3016,9 +3008,6 @@ msgstr "Odtwarzany plik"
 
 #~ msgid "%channel title%"
 #~ msgstr "%channel title%"
-
-#~ msgid "%donation label%"
-#~ msgstr "%donation label%"
 
 #~ msgid "00:00:00"
 #~ msgstr "00:00:00"
@@ -3072,9 +3061,6 @@ msgstr "Odtwarzany plik"
 #~ msgid "Back"
 #~ msgstr "Wstecz"
 
-#~ msgid "Browse"
-#~ msgstr "Przeglądaj"
-
 #~ msgid ""
 #~ "%message%\n"
 #~ "%message%"
@@ -3082,38 +3068,8 @@ msgstr "Odtwarzany plik"
 #~ "%message%\n"
 #~ "%message%"
 
-#~ msgid "Starting up"
-#~ msgstr "Uruchamianie"
-
 #~ msgid "onStartup called twice"
 #~ msgstr "onStartup wywołano podwójnie"
-
-#, python-format
-#~ msgid "Removing %s"
-#~ msgstr "Usuwanie %s"
-
-#, python-format
-#~ msgid "%d days"
-#~ msgstr "%d dni"
-
-#, python-format
-#~ msgid "Remove %s"
-#~ msgstr "Usuń %s"
-
-#, python-format
-#~ msgid "Are you sure you want to remove the guide %s?"
-#~ msgstr "Czy na pewno chcesz usunąć przewodnik %s?"
-
-#, python-format
-#~ msgid "Are you sure you want to remove %s"
-#~ msgstr "Czy na pewno chcesz usunąć %s?"
-
-#, python-format
-#~ msgid "Remove %s channels"
-#~ msgstr "Usuń %s kanałów"
-
-#~ msgid "Invalid Value"
-#~ msgstr "Niewłaściwa wartość"
 
 #~ msgid "Channels"
 #~ msgstr "Kanały"
@@ -3157,15 +3113,57 @@ msgstr "Odtwarzany plik"
 #~ msgid "_Channels"
 #~ msgstr "_Kanały"
 
-#, python-format
 #~ msgid "The torrent file at %s was not valid"
 #~ msgstr "Plik torrent pochodzący z %s nie jest poprawny"
 
-#, python-format
+#~ msgid "-00:00:00"
+#~ msgstr "-00:00:00"
+
+#~ msgid "Change..."
+#~ msgstr "Zmień..."
+
+#~ msgid "Search this folder:"
+#~ msgstr "Przeszukaj ten folder:"
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid "Full Screen"
+#~ msgstr "Pełny ekran"
+
+#~ msgid "%donation label%"
+#~ msgstr "%donation label%"
+
+#~ msgid "Browse"
+#~ msgstr "Przeglądaj"
+
+#~ msgid "Starting up"
+#~ msgstr "Uruchamianie"
+
+#~ msgid "Removing %s"
+#~ msgstr "Usuwanie %s"
+
+#~ msgid "%d days"
+#~ msgstr "%d dni"
+
+#~ msgid "Remove %s"
+#~ msgstr "Usuń %s"
+
+#~ msgid "Are you sure you want to remove the guide %s?"
+#~ msgstr "Czy na pewno chcesz usunąć przewodnik %s?"
+
+#~ msgid "Are you sure you want to remove %s"
+#~ msgstr "Czy na pewno chcesz usunąć %s?"
+
+#~ msgid "Remove %s channels"
+#~ msgstr "Usuń %s kanałów"
+
+#~ msgid "Invalid Value"
+#~ msgstr "Niewłaściwa wartość"
+
 #~ msgid "Error: %s"
 #~ msgstr "Błąd: %s"
 
-#, python-format
 #~ msgid "Bad Status Code: %s"
 #~ msgstr "Błędny kod statusu: %s"
 
@@ -3175,11 +3173,9 @@ msgstr "Odtwarzany plik"
 #~ msgid "New Search Channel"
 #~ msgstr "Nowy kanał wyszukiwania"
 
-#, python-format
 #~ msgid "%d hours"
 #~ msgstr "%d godzin"
 
-#, python-format
 #~ msgid "%d minutes"
 #~ msgstr "%d minut"
 
@@ -3189,7 +3185,6 @@ msgstr "Odtwarzany plik"
 #~ msgid "WEB PAGE"
 #~ msgstr "Strona internetowa"
 
-#, python-format
 #~ msgid "%s remaining"
 #~ msgstr "pozostało %s"
 
@@ -3199,7 +3194,6 @@ msgstr "Odtwarzany plik"
 #~ msgid "Update Channels Now"
 #~ msgstr "Uaktualnij kanały"
 
-#, python-format
 #~ msgid "Adding %d channels to a new folder"
 #~ msgstr "Dodaje %d kanał/ów do nowego folderu"
 
@@ -3211,15 +3205,6 @@ msgstr "Odtwarzany plik"
 
 #~ msgid "and"
 #~ msgstr "i"
-
-#~ msgid "-00:00:00"
-#~ msgstr "-00:00:00"
-
-#~ msgid "Change..."
-#~ msgstr "Zmień..."
-
-#~ msgid "Search this folder:"
-#~ msgstr "Przeszukaj ten folder:"
 
 #~ msgid "<b>BitTorrent</b>"
 #~ msgstr "<b>BitTorrent</b>"

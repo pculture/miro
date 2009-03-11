@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2008-08-23 13:04+0000\n"
+"PO-Revision-Date: 2009-03-10 12:33+0000\n"
 "Last-Translator: eximag <mln.jvnvc@gmail.com>\n"
 "Language-Team: Serbian <sr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -2779,11 +2779,9 @@ msgstr ""
 #~ msgid "_Open..."
 #~ msgstr "_Otvori..."
 
-#, python-format
 #~ msgid "%s database save failed"
 #~ msgstr "Није успело снимање базе података %s"
 
-#, python-format
 #~ msgid "An unknown error has occurred %s."
 #~ msgstr "Došlo je do nepoznate greške %s."
 
@@ -2811,7 +2809,6 @@ msgstr ""
 #~ msgid " "
 #~ msgstr " "
 
-#, python-format
 #~ msgid "You have %d download still in progress."
 #~ msgid_plural "You have %d downloads still in progress."
 #~ msgstr[0] "Имате %d скидање још увек у току."
@@ -2819,9 +2816,6 @@ msgstr ""
 
 #~ msgid "$log"
 #~ msgstr "$log"
-
-#~ msgid "OK"
-#~ msgstr "U redu"
 
 #~ msgid "About Democracy"
 #~ msgstr "O Democracy"
@@ -2831,12 +2825,6 @@ msgstr ""
 
 #~ msgid "Clear Menu"
 #~ msgstr "Počisti meni"
-
-#~ msgid "Democracy"
-#~ msgstr "Democracy"
-
-#~ msgid "Democracy Help"
-#~ msgstr "Demokracy pomoć"
 
 #~ msgid "Help"
 #~ msgstr "Pomoć"
@@ -2849,9 +2837,6 @@ msgstr ""
 
 #~ msgid "Play Video"
 #~ msgstr "Pokreni video"
-
-#~ msgid "Remove Channel..."
-#~ msgstr "Ukloni Kanal..."
 
 #~ msgid "Rename..."
 #~ msgstr "Promeni ime..."
@@ -2899,7 +2884,6 @@ msgstr ""
 #~ msgid "manually"
 #~ msgstr "manuelno"
 
-#, python-format
 #~ msgid "(parsed %d files - found %d videos)"
 #~ msgstr "(pretraženo %d fajlova - pronađeno %d video fajlova)"
 
@@ -2921,12 +2905,6 @@ msgstr ""
 
 #~ msgid "Create new playlist"
 #~ msgstr "Kreiraj novu plejlistu"
-
-#~ msgid "Starting up"
-#~ msgstr "Startujem"
-
-#~ msgid "Loading window"
-#~ msgstr "Učitavam prozor"
 
 #~ msgid "onStartup called twice"
 #~ msgstr "naUključenju pozvan dvaput"
@@ -2988,55 +2966,26 @@ msgstr ""
 #~ msgid "_Remove Playlists..."
 #~ msgstr "_Ukloni Plejliste..."
 
-#~ msgid "_Remove Videos..."
-#~ msgstr "_Ukloni Video Fajlove..."
-
-#~ msgid "Re_name..."
-#~ msgstr "Promeni_ime"
-
-#~ msgid "Re_name Playlist Folder..."
-#~ msgstr "Promeni-ime Foldera Plejliste..."
-
 #~ msgid "Remove Channel Guides..."
 #~ msgstr "Ukloni TV Vodiče..."
 
 #~ msgid "Remove Video..."
 #~ msgstr "Ukloni Video Fajl..."
 
-#, python-format
 #~ msgid "Could not write to %s"
 #~ msgstr "Ne mogu da upisujem na %s"
 
-#, python-format
 #~ msgid "%s MB required to store this video"
 #~ msgstr "%s MB potrebno za snimanje ovog video fajla"
 
 #~ msgid "The torrent file for this item was deleted "
 #~ msgstr "Odgovarajući torent fajl je obrisan "
 
-#, python-format
-#~ msgid "Error: %s"
-#~ msgstr "Greška: %s"
-
-#, python-format
-#~ msgid "Connection Error: %s"
-#~ msgstr "Grečka u povezivanju %s"
-
-#, python-format
-#~ msgid "Bad Status Code: %s"
-#~ msgstr "Bad Status Code: %s"
-
 #~ msgid "-00:00:00"
 #~ msgstr "-00:00:00"
 
 #~ msgid "Change..."
 #~ msgstr "Promeni..."
-
-#~ msgid ""
-#~ "This folder contains ${count} playlists, but the playlists do not contain "
-#~ "any items."
-#~ msgstr ""
-#~ "Ovaj folder sadrži ${count} plejliste, ali su plejliste bez sadržaja."
 
 #~ msgid "DELETE"
 #~ msgstr "IZBRIŠI"
@@ -3047,5 +2996,47 @@ msgstr ""
 #~ msgid "SHARE IT"
 #~ msgstr "PODELI SA DRUGIMA"
 
+#~ msgid "OK"
+#~ msgstr "U redu"
+
+#~ msgid "Starting up"
+#~ msgstr "Startujem"
+
+#~ msgid "Error: %s"
+#~ msgstr "Greška: %s"
+
+#~ msgid "Bad Status Code: %s"
+#~ msgstr "Bad Status Code: %s"
+
+#~ msgid "Democracy Help"
+#~ msgstr "Demokracy pomoć"
+
+#~ msgid "Democracy"
+#~ msgstr "Democracy"
+
+#~ msgid "Remove Channel..."
+#~ msgstr "Ukloni Kanal..."
+
+#~ msgid "Loading window"
+#~ msgstr "Učitavam prozor"
+
+#~ msgid "_Remove Videos..."
+#~ msgstr "_Ukloni Video Fajlove..."
+
+#~ msgid "Re_name Playlist Folder..."
+#~ msgstr "Promeni-ime Foldera Plejliste..."
+
+#~ msgid "Re_name..."
+#~ msgstr "Promeni_ime"
+
+#~ msgid "Connection Error: %s"
+#~ msgstr "Grečka u povezivanju %s"
+
 #~ msgid "${count} Channels Selected"
 #~ msgstr "${count} kanala izabrano"
+
+#~ msgid ""
+#~ "This folder contains ${count} playlists, but the playlists do not contain "
+#~ "any items."
+#~ msgstr ""
+#~ "Ovaj folder sadrži ${count} plejliste, ali su plejliste bez sadržaja."

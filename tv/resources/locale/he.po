@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-22 16:44+0000\n"
-"Last-Translator: Moshe Sayag <Unknown>\n"
+"PO-Revision-Date: 2009-03-10 12:45+0000\n"
+"Last-Translator: elwis <eliw1990@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -1009,11 +1009,11 @@ msgstr "סוג קובץ"
 
 #: ../../portable/frontends/widgets/style.py:220
 msgid "Seeders"
-msgstr ""
+msgstr "זורעים"
 
 #: ../../portable/frontends/widgets/style.py:221
 msgid "Leechers"
-msgstr ""
+msgstr "יונקים"
 
 #: ../../portable/frontends/widgets/style.py:222
 msgid "Upload Rate"
@@ -1073,7 +1073,7 @@ msgstr "הסר"
 #: ../../portable/frontends/widgets/style.py:234
 #: ../../portable/frontends/widgets/itemcontextmenu.py:113
 msgid "Stop seeding"
-msgstr ""
+msgstr "הפסק זריעה"
 
 #: ../../portable/frontends/widgets/style.py:544
 #: ../../portable/frontends/widgets/style.py:1099
@@ -2284,7 +2284,7 @@ msgstr "הורדות ערוצים"
 
 #: ../../portable/frontends/widgets/downloadscontroller.py:96
 msgid "Seeding"
-msgstr ""
+msgstr "זורע"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
@@ -2336,7 +2336,7 @@ msgstr "סמן כנצפה"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start seeding"
-msgstr ""
+msgstr "התחל זריעה"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:118
 #: ../../portable/frontends/widgets/itemcontextmenu.py:240
@@ -2863,9 +2863,6 @@ msgstr "מנגן קובץ"
 #~ msgid " "
 #~ msgstr " "
 
-#~ msgid "OK"
-#~ msgstr "אישור"
-
 #~ msgid "About Democracy"
 #~ msgstr "אודות נגן דמוקרטיה"
 
@@ -2875,17 +2872,8 @@ msgstr "מנגן קובץ"
 #~ msgid "Clear Menu"
 #~ msgstr "נקה תפריט"
 
-#~ msgid "Democracy"
-#~ msgstr "דמוקרטיה"
-
-#~ msgid "Democracy Help"
-#~ msgstr "עזרה לדמוקרטיה"
-
 #~ msgid "File"
 #~ msgstr "קובץ"
-
-#~ msgid "Full Screen"
-#~ msgstr "מסך מלא"
 
 #~ msgid "Help"
 #~ msgstr "עזרה"
@@ -2975,27 +2963,8 @@ msgstr "מנגן קובץ"
 #~ msgid "Back"
 #~ msgstr "אחורה"
 
-#~ msgid "Browse"
-#~ msgstr "דפדף"
-
-#~ msgid ""
-#~ "Democracy Player can find all the videos on your computer to help you "
-#~ "organize your collection.\n"
-#~ "\n"
-#~ "\n"
-#~ "Would you like Democracy Player to look for video files on your computer?"
-#~ msgstr ""
-#~ "נגן דמוקרטיה יכול לאתר את כל קבצי הוידאו שבמחשב שלך על מנת לעזור לך לארגן את "
-#~ "האוסף שלך.\n"
-#~ "\n"
-#~ "\n"
-#~ "האם ברצונך שנגן דמוקרטיה יחפש קבצי וידאו במחשב שלך?"
-
 #~ msgid "Next"
 #~ msgstr "הבא"
-
-#~ msgid "Searching for Videos"
-#~ msgstr "מחפש קבצי וידאו"
 
 #~ msgid ""
 #~ "The next few screens will help you set up Democracy Player so that it works "
@@ -3010,18 +2979,6 @@ msgstr "מנגן קובץ"
 #~ msgid "Looking for videos at this URL"
 #~ msgstr "חפש וידיאוים בכתובת הזאת"
 
-#~ msgid "SAVE"
-#~ msgstr "שמור"
-
-#~ msgid "Rename Channel Folder"
-#~ msgstr "שנה את שם תקיית הערוץ"
-
-#~ msgid "Create Channel Folder"
-#~ msgstr "צור תקיית ערוץ"
-
-#~ msgid "Enter a name for the new channel folder"
-#~ msgstr "הכנס את השם לתקיית הערוץ החדשה"
-
 #~ msgid "Add Channel..."
 #~ msgstr "הוסף ערוץ ..."
 
@@ -3033,9 +2990,6 @@ msgstr "מנגן קובץ"
 
 #~ msgid "Copy Video URL"
 #~ msgstr "העתק כתובת וידאו"
-
-#~ msgid "Donate"
-#~ msgstr "תרום"
 
 #~ msgid "New Channel Guide..."
 #~ msgstr "מדריך ערוץ חדש..."
@@ -3103,31 +3057,6 @@ msgstr "מנגן קובץ"
 #~ msgid "outside of democracy."
 #~ msgstr "מחוץ לדמוקרטיה"
 
-#~ msgid "New Search Channel"
-#~ msgstr "חיפוש חדש בערוץ"
-
-#~ msgid "A search channel contains items that match a search term."
-#~ msgstr "חיפוש בערוץ מכיל פריט שלא מתאים לתנאים"
-
-#~ msgid "WEB PAGE"
-#~ msgstr "דף אינטרנט"
-
-#~ msgid "downloading..."
-#~ msgstr "מוריד ..."
-
-#~ msgid "Remove From My Collection"
-#~ msgstr "הסר מהאוסף שלי"
-
-#~ msgid "Add to new playlist"
-#~ msgstr "הוסף לרשימת ההשמעה"
-
-#~ msgid ""
-#~ "You have a database that was saved with a newer version of Democracy. You "
-#~ "must download the latest version of Democracy and run that."
-#~ msgstr ""
-#~ "יש לך מסד נתונים שנשמר עם גירסא חדשה יותר של דמוקרטיה . אתה חייב להוריד את "
-#~ "הגירסא החדשה של דמוקרטיה בשביל להריץ את זה."
-
 #~ msgid "-00:00:00"
 #~ msgstr "-00:00:00"
 
@@ -3149,6 +3078,70 @@ msgstr "מנגן קובץ"
 #~ msgid "<label for=\"automatic\">Auto Download</label>"
 #~ msgstr "הורדה אוטומתית"
 
+#~ msgid "OK"
+#~ msgstr "אישור"
+
+#~ msgid "Full Screen"
+#~ msgstr "מסך מלא"
+
+#~ msgid "Browse"
+#~ msgstr "דפדף"
+
+#~ msgid "New Search Channel"
+#~ msgstr "חיפוש חדש בערוץ"
+
+#~ msgid "WEB PAGE"
+#~ msgstr "דף אינטרנט"
+
+#~ msgid "Add to new playlist"
+#~ msgstr "הוסף לרשימת ההשמעה"
+
+#~ msgid "Democracy Help"
+#~ msgstr "עזרה לדמוקרטיה"
+
+#~ msgid "Democracy"
+#~ msgstr "דמוקרטיה"
+
+#~ msgid "Searching for Videos"
+#~ msgstr "מחפש קבצי וידאו"
+
+#~ msgid "SAVE"
+#~ msgstr "שמור"
+
+#~ msgid "Donate"
+#~ msgstr "תרום"
+
+#~ msgid "downloading..."
+#~ msgstr "מוריד ..."
+
+#~ msgid "Remove From My Collection"
+#~ msgstr "הסר מהאוסף שלי"
+
+#~ msgid ""
+#~ "Democracy Player can find all the videos on your computer to help you "
+#~ "organize your collection.\n"
+#~ "\n"
+#~ "\n"
+#~ "Would you like Democracy Player to look for video files on your computer?"
+#~ msgstr ""
+#~ "נגן דמוקרטיה יכול לאתר את כל קבצי הוידאו שבמחשב שלך על מנת לעזור לך לארגן את "
+#~ "האוסף שלך.\n"
+#~ "\n"
+#~ "\n"
+#~ "האם ברצונך שנגן דמוקרטיה יחפש קבצי וידאו במחשב שלך?"
+
+#~ msgid "Rename Channel Folder"
+#~ msgstr "שנה את שם תקיית הערוץ"
+
+#~ msgid "Create Channel Folder"
+#~ msgstr "צור תקיית ערוץ"
+
+#~ msgid "Enter a name for the new channel folder"
+#~ msgstr "הכנס את השם לתקיית הערוץ החדשה"
+
+#~ msgid "A search channel contains items that match a search term."
+#~ msgstr "חיפוש בערוץ מכיל פריט שלא מתאים לתנאים"
+
 #~ msgid "Clear Completed Torrents"
 #~ msgstr "נקה טורנטים שהסתיימו"
 
@@ -3157,3 +3150,10 @@ msgstr "מנגן קובץ"
 
 #~ msgid "Drag channels to this folder to add them."
 #~ msgstr "גרור ערוצים לתייקה הזאת בשביל להוסיף אותם"
+
+#~ msgid ""
+#~ "You have a database that was saved with a newer version of Democracy. You "
+#~ "must download the latest version of Democracy and run that."
+#~ msgstr ""
+#~ "יש לך מסד נתונים שנשמר עם גירסא חדשה יותר של דמוקרטיה . אתה חייב להוריד את "
+#~ "הגירסא החדשה של דמוקרטיה בשביל להריץ את זה."

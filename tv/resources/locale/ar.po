@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-21 15:23+0000\n"
-"Last-Translator: tatiana <taty_samore@hotmail.com>\n"
+"PO-Revision-Date: 2009-03-10 12:48+0000\n"
+"Last-Translator: Will Guaraldi Kahn-Greene <willg@bluesock.org>\n"
 "Language-Team: Arabic <ar@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n % 100 >= "
 "3 && n % 100 <= 10 ? 3 : n % 100 >= 11 && n % 100 <= 99 ? 4 : 5;\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -77,7 +77,7 @@ msgstr "إصدار جديد %s متوفّر للتنزيل."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
-msgstr ""
+msgstr "هل ترغب بتنزيله الآن ؟"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
@@ -234,7 +234,7 @@ msgstr "الفيديو الحالى"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
 msgid "Zoom"
-msgstr "تحجيم"
+msgstr "تكبير"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:179
 msgid "Minimize"

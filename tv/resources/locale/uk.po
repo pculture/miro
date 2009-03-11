@@ -8,21 +8,21 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-03-03 18:41+0000\n"
-"Last-Translator: zima747 <zima747@rambler.ru>\n"
+"PO-Revision-Date: 2009-03-10 12:48+0000\n"
+"Last-Translator: Ivan Gusev <goosevan@ukr.net>\n"
 "Language-Team: Ukranian <serg74@hotmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
 msgid "Enable tray icon"
-msgstr ""
+msgstr "Ввімкнути іконку в треї"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:42
 msgid "When I click the red close button:"
@@ -34,7 +34,7 @@ msgstr "Згорнути до іконки, щоб завантаження пр
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
 msgid "Quit Miro completely."
-msgstr "Вийти з Miro повністю"
+msgstr "Повністю вийти з Miro"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:124
 msgid "Close to tray?"
@@ -50,7 +50,7 @@ msgstr ""
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:182
 msgid "Error Bombing Item"
-msgstr "Error Bombing Item"
+msgstr "Помилка при спробі рекомендувати посилання"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:184
 msgid "Error Recommending Item"
@@ -65,6 +65,8 @@ msgstr "Помилка при відкритті вебсайту"
 msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr ""
+"Наступна адреса не відкрилася: %(url)s. Спробуйте повторити запит за кілька "
+"секунд."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
 msgid "Update Available"
@@ -77,11 +79,11 @@ msgstr "Нова версія %s доступна для завантаженн�
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
 msgid "Do you want to download it now?"
-msgstr ""
+msgstr "Ви хочете її завантажити?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
 msgid "Install Adobe Flash?"
-msgstr ""
+msgstr "Установити Adobe Flash?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
 #, python-format
@@ -89,10 +91,12 @@ msgid ""
 "For the best %(appname)s experience, we suggest you install Adobe Flash.  "
 "Would you like to do this now?"
 msgstr ""
+"Для найкращих вражень від роботи із %(appname)s ми рекомендуємо встановити "
+"Adobe Flash. Ви бажаєте зробити це зараз?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
 msgid "Install Adobe Flash"
-msgstr ""
+msgstr "Установити Adobe Flash"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
 msgid ""
@@ -105,15 +109,17 @@ msgstr ""
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
 msgid "Renderer options:"
-msgstr ""
+msgstr "Опції відтворювача"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
 msgid "You must restart Miro for renderer changes to take effect."
 msgstr ""
+"Ви маєте перезапустити Miro для того, щоб зміни налаштувань відтворювача "
+"набрали чинності."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:72
 msgid "Video renderer:"
-msgstr ""
+msgstr "Відеовідтворювач"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:77
 msgid "You must restart playback for visualization changes to take effect."
@@ -142,7 +148,7 @@ msgstr "Поділитись"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:211
 #: ../../portable/dialogs.py:106
 msgid "Keep"
-msgstr "‚Äì√ª‚Äî√Ö‚Äî√á‚Äì‚àû‚Äì‚â§‚Äì‚àè‚Äî√á‚Äî√"
+msgstr "Залишити"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:128
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
@@ -151,11 +157,11 @@ msgstr "‚Äì√ª‚Äî√Ö‚Äî√á‚Äì‚àû‚Äì‚â§‚Äì�
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
 #: ../../portable/dialogs.py:107
 msgid "Delete"
-msgstr "Видалити"
+msgstr "Знищити"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:132
 msgid "Add to Library"
-msgstr ""
+msgstr "Додати до бібліотеки"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:203
 msgid "Pop Out"
@@ -215,19 +221,19 @@ msgstr "Редагувати"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
 msgid "Present Half Size"
-msgstr ""
+msgstr "Показати у пів розміру"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:168
 msgid "Present Actual Size"
-msgstr ""
+msgstr "Показати у справжньому розмірі"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:169
 msgid "Present Double Size"
-msgstr ""
+msgstr "Показати у подвійному збільшенні"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:171
 msgid "Present Video"
-msgstr ""
+msgstr "Показати відео"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
 msgid "Zoom"
@@ -251,7 +257,7 @@ msgstr "Вікно"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
 msgid "Miro Help"
-msgstr "Довідка по Miro"
+msgstr "Довідка з Miro"
 
 #: ../../platform/osx/plat/frontends/widgets/application.py:166
 msgid "Download Completed"
@@ -276,87 +282,82 @@ msgstr ""
 
 #: ../../portable/theme.py:171
 msgid "Example Playlist"
-msgstr ""
-"‚Äì√º‚Äî√Ñ‚Äì‚àè‚Äì¬∫‚Äì¬µ‚Äî√Ñ "
-"‚Äì√∏‚Äì¬™‚Äì¬µ‚ÄìœÄ‚Äì¬™‚Äì‚àè‚Äî√Ö‚Äî√á‚Äì‚àû"
+msgstr "Плейлист-приклад"
 
 #: ../../portable/theme.py:175
 msgid "Miro - Report a Problem"
-msgstr ""
+msgstr "Miro — повідомити про проблему"
 
 #: ../../portable/searchengines.py:146
 msgid "Search All"
-msgstr ""
+msgstr "Шукати всюди"
 
 #: ../../portable/util.py:279 ../../portable/util.py:281
 #, python-format
 msgid "%(size)sGB"
-msgstr ""
+msgstr "%(size)s ГБ"
 
 #: ../../portable/util.py:285 ../../portable/util.py:287
 #, python-format
 msgid "%(size)sMB"
-msgstr ""
+msgstr "%(size)s МБ"
 
 #: ../../portable/util.py:291 ../../portable/util.py:293
 #, python-format
 msgid "%(size)sKB"
-msgstr ""
+msgstr "%(size)s КБ"
 
 #: ../../portable/util.py:297 ../../portable/util.py:299
 #, python-format
 msgid "%(size)sB"
-msgstr ""
+msgstr "%(size)s Б"
 
 #: ../../portable/opml.py:185
 msgid "OPML Import failed"
-msgstr "OPML імпортування невдалося"
+msgstr "Не вдалося імпортувати OPML"
 
 #: ../../portable/opml.py:186
 msgid ""
 "The selected OPML file appears to be invalid.  Import was interrupted."
-msgstr ""
+msgstr "Обраний OPML-файл здається некоректним. Імпортування було перерване."
 
 #: ../../portable/opml.py:191
 msgid "OPML Import summary"
-msgstr "Підсумки OPML імпорту"
+msgstr "Підсумки імпортування OPML"
 
 #: ../../portable/opml.py:192
 #, python-format
 msgid "Successfully imported %(count)d feed."
 msgid_plural "Successfully imported %(count)d feeds."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Успішно імпортовано %(count)d стрічку."
+msgstr[1] "Успішно імпортовано %(count)d стрічки."
+msgstr[2] "Успішно імпортовано %(count)d стрічок."
 
 #: ../../portable/opml.py:198
 #, python-format
 msgid "Skipped %(count)d feed already present."
 msgid_plural "Skipped %(count)d feeds already present."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Пропущено %(count)d стрічку, яка вже наявна."
+msgstr[1] "Пропущено %(count)d стрічки, які вже наявні."
+msgstr[2] "Пропущено %(count)d стрічок, які вже наявні."
 
 #: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
 #, python-format
 msgid "%(appname)s database save succeeded"
-msgstr ""
+msgstr "Збереження бази даних %(appname)s завершене успішно."
 
 #: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
 msgid ""
 "The database has been successfully saved. It is now safe to quit without "
 "losing any data."
 msgstr ""
-"‚Äì√´‚Äì‚àû‚Äì‚àë‚Äì‚àû ‚Äì¬ ‚Äì‚àû‚ÄìŒ©‚ÄìŒ©‚Äî√£‚Äî√ñ "
-"‚Äî√â‚Äî√Ö‚Äì√∏‚Äì¬µ‚Äî√†‚ÄìŒ©‚Äì√¶ "
-"‚Äî√Ö‚Äì√¶‚Äî√ñ‚Äî√Ñ‚Äì‚àû‚ÄìŒ©‚Äì¬µ‚ÄìŒ©‚Äì‚àû. "
-"‚Äì¬¢‚Äì¬µ‚Äì√∏‚Äì¬µ‚Äî√Ñ‚Äî√  ‚Äì¬∫‚Äì√¶‚Äì‚àÇ‚ÄìŒ©‚Äì√¶ "
-"‚Äì‚â§‚Äî√£‚ÄìœÄ‚Äî√á‚Äì‚àè ‚Äì‚àè‚Äì‚àë ‚Äì√∏‚Äî√Ñ‚Äì√¶‚Äì‚â "
-"‚Äî√Ñ‚Äì‚àû‚Äì¬∫‚Äì¬∫‚Äî√£ ‚ÄìŒ©‚Äì¬µ ‚Äì√∏‚Äì√¶‚Äî√á‚Äì¬µ‚Äî√Ñ‚Äî√®‚Äì‚â§ "
-"‚Äì¬ ‚Äì‚àû‚ÄìŒ©‚ÄìŒ©‚Äî√£‚Äì¬µ."
+"Базу даних успішно збережено. Тепер можна безпечно вийти без втрати жодних "
+"даних."
 
 #: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
 #, python-format
 msgid "%(appname)s database save failed"
-msgstr ""
+msgstr "Збереження бази даних %(appname)s провалилося."
 
 #: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
 #, python-format
@@ -369,15 +370,15 @@ msgstr ""
 
 #: ../../portable/messagehandler.py:1266
 msgid "Subscribed to new feed:"
-msgstr ""
+msgstr "Підписався на нову стрічку:"
 
 #: ../../portable/messagehandler.py:1269
 msgid "Subscribed to new feeds:"
-msgstr ""
+msgstr "Підписався на нові стрічки:"
 
 #: ../../portable/messages.py:965 ../../portable/item.py:618
 msgid "queued for download"
-msgstr ""
+msgstr "в черзі до завантаження"
 
 #: ../../portable/startup.py:91
 msgid "Unknown Error"
@@ -389,13 +390,12 @@ msgid ""
 "An unknown error prevented Miro from startup.  Please file a bug report at "
 "%(url)s."
 msgstr ""
+"Невідома помилка не дало Miro запуститися. Надішліть, будь-ласка, звіт до "
+"%(url)s."
 
 #: ../../portable/startup.py:173
 msgid "Database too new"
-msgstr ""
-"‚Äì¬∞‚Äì¬™‚Äì‚àè‚Äî√†‚Äì‚à´‚Äì√¶‚Äì¬∫ ‚ÄìŒ©‚Äì√¶‚Äì‚â§‚Äì‚àû‚Äî√® "
-"‚Äì‚â§‚Äì¬µ‚Äî√Ñ‚Äî√Ö‚Äì‚àè‚Äî√® ‚Äì¬±‚Äì‚àû‚Äì‚àë‚Äî√£ ‚Äì¬ "
-"‚Äì‚àû‚ÄìŒ©‚ÄìŒ©‚Äî√£‚Äî√ñ"
+msgstr "База даних надто нова"
 
 #: ../../portable/startup.py:175
 #, python-format
@@ -403,47 +403,52 @@ msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
 "must download the latest version of %(appname)s and run that."
 msgstr ""
+"Ваша база даних була створена новішою версією %(appname)s. Ви мусите "
+"завантажити й запускати найновішу версію %(appname)s."
 
 #: ../../portable/displaytext.py:40
 #, python-format
 msgid "%(size)s gb/s"
-msgstr ""
+msgstr "%(size)s Гб/с"
 
 #: ../../portable/displaytext.py:43
 #, python-format
 msgid "%(size)s mb/s"
-msgstr ""
+msgstr "%(size)s Мб/с"
 
 #: ../../portable/displaytext.py:46
 #, python-format
 msgid "%(size)s kb/s"
-msgstr ""
+msgstr "%(size)s Кб/с"
 
 #: ../../portable/displaytext.py:49
 #, python-format
 msgid "%(size)s b/s"
-msgstr ""
+msgstr "%(size)s б/с"
 
 #: ../../portable/displaytext.py:56
 #, python-format
 msgid "%(num).1f day"
 msgid_plural "%(num).1f days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).1f день"
+msgstr[1] "%(num).1f дні"
+msgstr[2] "%(num).1f днів"
 
 #: ../../portable/displaytext.py:59
 #, python-format
 msgid "%(num).1f hr"
 msgid_plural "%(num).1f hrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).1f година"
+msgstr[1] "%(num).1f години"
+msgstr[2] "%(num).1f годин"
 
 #: ../../portable/displaytext.py:62
 #, python-format
 msgid "%(num).1f min"
 msgid_plural "%(num).1f mins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).1f хвилина"
+msgstr[1] "%(num).1f хвилини"
+msgstr[2] "%(num).1f хвилин"
 
 #: ../../portable/displaytext.py:64
 #, python-format
@@ -455,43 +460,46 @@ msgstr[1] ""
 #: ../../portable/displaytext.py:78
 #, python-format
 msgid "%(size)s gb"
-msgstr ""
+msgstr "%(size)s Гб"
 
 #: ../../portable/displaytext.py:81
 #, python-format
 msgid "%(size)s mb"
-msgstr ""
+msgstr "%(size)s Мб"
 
 #: ../../portable/displaytext.py:84
 #, python-format
 msgid "%(size)s kb"
-msgstr ""
+msgstr "%(size)s Кб"
 
 #: ../../portable/displaytext.py:86
 #, python-format
 msgid "%(size)s b"
-msgstr ""
+msgstr "%(size)s б"
 
 #: ../../portable/displaytext.py:91
 #, python-format
 msgid "Expires in %(count)d day"
 msgid_plural "Expires in %(count)d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Закінчується за %(count)d день"
+msgstr[1] "Закінчується за %(count)d дні"
+msgstr[2] "Закінчується за %(count)d днів"
 
 #: ../../portable/displaytext.py:96
 #, python-format
 msgid "Expires in %(count)d hour"
 msgid_plural "Expires in %(count)d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Закінчується за %(count)d годину"
+msgstr[1] "Закінчується за %(count)d години"
+msgstr[2] "Закінчується за %(count)d годин"
 
 #: ../../portable/displaytext.py:101
 #, python-format
 msgid "Expires in %(count)d minute"
 msgid_plural "Expires in %(count)d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Закінчується за %(count)d хвилину"
+msgstr[1] "Закінчується за %(count)d хвилини"
+msgstr[2] "Закінчується за %(count)d хвилин"
 
 #: ../../portable/displaytext.py:109
 #, python-format
@@ -529,7 +537,7 @@ msgstr "Flash URL Scraping Error"
 
 #: ../../portable/downloader.py:447
 msgid "starting up"
-msgstr "Стартує"
+msgstr "запускається"
 
 #: ../../portable/dl_daemon/download.py:507
 #: ../../portable/frontends/widgets/style.py:228

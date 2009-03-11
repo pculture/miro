@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-11 20:27+0000\n"
+"PO-Revision-Date: 2009-03-10 12:41+0000\n"
 "Last-Translator: Oskarius38 <visby38@telia.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -2922,14 +2922,12 @@ msgstr "Spelar fil"
 #~ msgid "Channel requires authentication"
 #~ msgstr "Kanalen kräver autentisering"
 
-#, python-format
 #~ msgid "%s database save failed"
 #~ msgstr "Databas för %s misslyckades att spara"
 
 #~ msgid "Unknown Runtime Error"
 #~ msgstr "Okänt körtidsfel"
 
-#, python-format
 #~ msgid "An unknown error has occurred %s."
 #~ msgstr "Ett okänt fel har inträffat %s."
 
@@ -3241,7 +3239,6 @@ msgstr "Spelar fil"
 #~ msgid "$longAppName"
 #~ msgstr "$longAppName"
 
-#, python-format
 #~ msgid "You have %d download still in progress."
 #~ msgid_plural "You have %d downloads still in progress."
 #~ msgstr[0] "Du har fortfarande %d pågående hämtning."
@@ -3284,53 +3281,20 @@ msgstr "Spelar fil"
 #~ "även minska dina chanser att förlora dina inställningar eller "
 #~ "kanalprenumerationer."
 
-#~ msgid "OK"
-#~ msgstr "OK"
-
 #~ msgid "The fall of $shortAppName??"
 #~ msgstr "Slutet för $shortAppName??"
 
 #~ msgid "About Democracy"
 #~ msgstr "Om Democracy"
 
-#~ msgid "Add a Channel..."
-#~ msgstr "Lägg till en kanal..."
-
-#~ msgid "Add a Guide..."
-#~ msgstr "Lägg till en guide..."
-
 #~ msgid "Channel"
 #~ msgstr "Kanal"
-
-#~ msgid "Check for Update"
-#~ msgstr "Leta efter uppdatering"
 
 #~ msgid "Clear Menu"
 #~ msgstr "Töm meny"
 
-#~ msgid "Copy Channel Link"
-#~ msgstr "Kopiera kanallänk"
-
-#~ msgid "Copy Video Link"
-#~ msgstr "Kopiera videolänk"
-
-#~ msgid "Democracy"
-#~ msgstr "Democracy"
-
-#~ msgid "Democracy Help"
-#~ msgstr "Hjälp för Democracy"
-
-#~ msgid "Donate to Democracy"
-#~ msgstr "Donera till Democracy"
-
 #~ msgid "File"
 #~ msgstr "Arkiv"
-
-#~ msgid "Full Screen"
-#~ msgstr "Helskärm"
-
-#~ msgid "Half Screen"
-#~ msgstr "Halvskärm"
 
 #~ msgid "Help"
 #~ msgstr "Hjälp"
@@ -3365,20 +3329,11 @@ msgstr "Spelar fil"
 #~ msgid "Quit Democracy"
 #~ msgstr "Avsluta Democracy"
 
-#~ msgid "Remove Channel..."
-#~ msgstr "Ta bort kanal..."
-
 #~ msgid "Rename..."
 #~ msgstr "Byt namn..."
 
-#~ msgid "Save Video..."
-#~ msgstr "Spara video..."
-
 #~ msgid "Stop Video"
 #~ msgstr "Stoppa film"
-
-#~ msgid "Tell a Friend"
-#~ msgstr "Tipsa en vän"
 
 #~ msgid "Update All Channels"
 #~ msgstr "Uppdatera alla kanaler"
@@ -3386,17 +3341,11 @@ msgstr "Spelar fil"
 #~ msgid "Update Channel"
 #~ msgstr "Uppdatera kanal"
 
-#~ msgid "Video"
-#~ msgstr "Video"
-
 #~ msgid "%channel feed%"
 #~ msgstr "%channel feed%"
 
 #~ msgid "%channel title%"
 #~ msgstr "%channel title%"
-
-#~ msgid "%donation label%"
-#~ msgstr "%donation label%"
 
 #~ msgid "00:00:00"
 #~ msgstr "00.00.00"
@@ -3466,12 +3415,6 @@ msgstr "Spelar fil"
 #~ msgid "Run Democracy at startup"
 #~ msgstr "Kör Democracy vid uppstart"
 
-#~ msgid "Store downloaded movies in:"
-#~ msgstr "Lagra hämtade filmer i:"
-
-#~ msgid "To avoid internet slowdowns,"
-#~ msgstr "För att undvika att Internetanslutningen blir långsam,"
-
 #~ msgid "every 30 minutes"
 #~ msgstr "två gånger i timmen"
 
@@ -3481,43 +3424,14 @@ msgstr "Spelar fil"
 #~ msgid "manually"
 #~ msgstr "manuellt"
 
-#, python-format
 #~ msgid "(parsed %d files - found %d videos)"
 #~ msgstr "(tolkade %d filer - hittade %d filmer)"
 
 #~ msgid "Back"
 #~ msgstr "Tillbaka"
 
-#~ msgid "Browse"
-#~ msgstr "Bläddra"
-
-#~ msgid ""
-#~ "Democracy Player can find all the videos on your computer to help you "
-#~ "organize your collection.\n"
-#~ "\n"
-#~ "\n"
-#~ "Would you like Democracy Player to look for video files on your computer?"
-#~ msgstr ""
-#~ "Democracy Player kan hitta alla filmer på din dator för att hjälpa dig att "
-#~ "organisera din samling.\n"
-#~ "\n"
-#~ "\n"
-#~ "Vill du att Democracy Player ska leta efter filmer på din dator?"
-
 #~ msgid "Next"
 #~ msgstr "Nästa"
-
-#~ msgid "Restrict to my 'Movies' folder"
-#~ msgstr "Begränsa till min \"Filmer\"-mapp"
-
-#~ msgid "Restrict to my full home folder"
-#~ msgstr "Begränsa till min fullständiga hemmapp"
-
-#~ msgid "Search custom location:"
-#~ msgstr "Sök på alternativ plats:"
-
-#~ msgid "Searching for Videos"
-#~ msgstr "Söker efter filmer"
 
 #~ msgid ""
 #~ "The next few screens will help you set up Democracy Player so that it works "
@@ -3614,68 +3528,15 @@ msgstr "Spelar fil"
 #~ "%message%\n"
 #~ "%message%"
 
-#~ msgid "_Remove Channel Guide"
-#~ msgstr "_Ta bort kanalguide"
-
-#~ msgid "_New Playlist..."
-#~ msgstr "_Ny spellista..."
-
 #~ msgid "Create new playlist"
 #~ msgstr "Skapa ny spellista"
-
-#~ msgid "_New Playlist Folder..."
-#~ msgstr "_Ny spellistemapp..."
-
-#~ msgid "Create new playlist folder"
-#~ msgstr "Skapa ny spellistemapp"
-
-#~ msgid "_New Channel Folder..."
-#~ msgstr "_Ny kanalmapp..."
-
-#~ msgid "Create new channel folder"
-#~ msgstr "Skapa ny kanalmapp"
-
-#~ msgid "_Rename..."
-#~ msgstr "_Byt namn..."
-
-#~ msgid "Rename selected item "
-#~ msgstr "Ta bort markerat objekt "
-
-#~ msgid "_Add Channel Guide..."
-#~ msgstr "_Lägg till kanalguide..."
-
-#, python-format
-#~ msgid ""
-#~ "Error importing democracy modules:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Fel vid importering av moduler för Democracy:\n"
-#~ "%s"
-
-#~ msgid "Starting up"
-#~ msgstr "Startar upp"
-
-#~ msgid "Loading window"
-#~ msgstr "Läser in fönster"
 
 #~ msgid "onStartup called twice"
 #~ msgstr "onStartup anropades två gånger"
 
-#, python-format
 #~ msgid "There was an error opening %s.  Please try again in a few seconds"
 #~ msgstr ""
 #~ "Det inträffade ett fel vid öppning av %s.  Försök igen om några sekunder"
-
-#~ msgid ""
-#~ "External Torrents <a style=\"text-decoration: underline; margin-left: 15px; "
-#~ "font-weight: normal;\" href=\"#\" onclick=\"return "
-#~ "eventURL('action:clearTorrents');\" i18n:translate=\"\" title=\"Clear "
-#~ "Torrents\">Clear Torrents</a>"
-#~ msgstr ""
-#~ "Externa torrentfiler <a style=\"text-decoration: underline; margin-left: "
-#~ "15px; font-weight: normal;\" href=\"#\" onclick=\"return "
-#~ "eventURL('action:clearTorrents');\" i18n:translate=\"\" title=\"Clear "
-#~ "Torrents\">Rensa torrentfiler</a>"
 
 #~ msgid "${count} Downloads in Progress"
 #~ msgstr "${count} pågående hämtningar"
@@ -3689,244 +3550,11 @@ msgstr "Spelar fil"
 #~ msgid "All ${len} Videos Match This Search"
 #~ msgstr "Alla ${len} filmer matchar sökningen"
 
-#~ msgid "${len} Videos Match This Search"
-#~ msgstr "${len} filmer matchar sökningen"
-
 #~ msgid "Looking for videos at this URL"
 #~ msgstr "Letar efter filmer på denna url"
 
-#~ msgid "${count} Videos on this Channel"
-#~ msgstr "${count} filmer på denna kanal"
-
-#~ msgid "${count} Playlists selected"
-#~ msgstr "${count} spellistor markerade"
-
-#~ msgid "Delete selected playlists"
-#~ msgstr "Ta bort markerade spellistor"
-
-#~ msgid "SAVE"
-#~ msgstr "SPARA"
-
-#~ msgid "REVEAL"
-#~ msgstr "VISA"
-
-#~ msgid "${count} Channels selected"
-#~ msgstr "${count} kanaler markerade"
-
-#~ msgid "Delete selected channels"
-#~ msgstr "Ta bort markerade kanaler"
-
-#, python-format
-#~ msgid "Removing %s"
-#~ msgstr "Tar bort %s"
-
-#~ msgid "Deleting this entry will delete all its videos."
-#~ msgstr "Ta bort det här objektet tar även bort alla dess videoklipp."
-
-#, python-format
-#~ msgid "%d days"
-#~ msgstr "%d dagar"
-
-#, python-format
-#~ msgid "%d hrs"
-#~ msgstr "%d h"
-
-#, python-format
-#~ msgid "%d min"
-#~ msgstr "%d min"
-
-#, python-format
-#~ msgid "Expires: %s"
-#~ msgstr "Går ut: %s"
-
-#~ msgid "UNWATCHED"
-#~ msgstr "INTE VISAD"
-
-#~ msgid "NEW"
-#~ msgstr "NY"
-
-#~ msgid ""
-#~ "Would you like to delete this directory and all of its videos or just remove "
-#~ "its entry from My Collection?"
-#~ msgstr ""
-#~ "Vill du ta bort denna katalog och alla dess videoklipp eller bara ta bort "
-#~ "den från Min samling?"
-
-#~ msgid ""
-#~ "Would you like to delete this file or just remove its entry from My "
-#~ "Collection?"
-#~ msgstr "Vill du ta bort denna fil eller bara ta bort den från Min samling?"
-
-#, python-format
-#~ msgid "%s closed connection"
-#~ msgstr "%s stängde anslutningen"
-
-#, python-format
-#~ msgid "%s timed out"
-#~ msgstr "Tidsgränsen för %s har överstigits"
-
-#, python-format
 #~ msgid "%s database save succeeded"
 #~ msgstr "Databas för %s sparades"
-
-#, python-format
-#~ msgid ""
-#~ "%s was unable to save its database: Disk Full.\n"
-#~ "We suggest deleting files from the full disk or simply deleting some movies "
-#~ "from your collection.\n"
-#~ "Recent changes may be lost."
-#~ msgstr ""
-#~ "%s kunde inte spara sin databas: Disken är full.\n"
-#~ "Vi föreslår att du tar bort filer från den fulla disken eller helt enkelt "
-#~ "tar bort några filmer från din\n"
-#~ "samling. Senaste ändringarna kan gå förlorade."
-
-#~ msgid "Rename Channel Folder"
-#~ msgstr "Byt namn på kanalmapp"
-
-#, python-format
-#~ msgid "Enter a new name for the channel folder %s"
-#~ msgstr "Ange ett nytt namn för kanalmappen %s"
-
-#, python-format
-#~ msgid "Enter a new name for the playlist folder %s"
-#~ msgstr "Ange ett nytt namn för spellistemappen %s"
-
-#~ msgid "Create Channel Folder"
-#~ msgstr "Skapa kanalmapp"
-
-#~ msgid "Enter a name for the new channel folder"
-#~ msgstr "Ange ett namn för den nya kanalmappen"
-
-#, python-format
-#~ msgid "You are being subscribed to %d feeds."
-#~ msgstr "Du är på väg att bli prenumerant på %d kanaler."
-
-#, python-format
-#~ msgid ""
-#~ "This Democracy channel file has an invalid format: %s. Please notify the "
-#~ "publisher of this file."
-#~ msgstr ""
-#~ "Denna kanalfil för Democracy har ett ogiltigt format: %s. Informera "
-#~ "utgivaren av denna fil."
-
-#, python-format
-#~ msgid ""
-#~ "This Democracy channel file has the wrong content type: %s. Please notify "
-#~ "the publisher of this file."
-#~ msgstr ""
-#~ "Denna kanalfil för Democracy har en felaktig innehållstyp: %s. Informera "
-#~ "utgivaren av denna fil."
-
-#, python-format
-#~ msgid "Could not download the Democracy channel file: %s."
-#~ msgstr "Kunde inte hämta kanalfilen för Democracy: %s."
-
-#, python-format
-#~ msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-#~ msgstr "Torrentfilen %s verkar vara skadad och kan inte öppnas. [OK]"
-
-#, python-format
-#~ msgid "Couldn't load the feed at %s."
-#~ msgstr "Kunde inte läsa in kanalen på %s."
-
-#, python-format
-#~ msgid "The error was: %s"
-#~ msgstr "Felet var: %s"
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files. It may take extra time to list the "
-#~ "videos, and descriptions may look funny.  Please contact the publishers of "
-#~ "$url and ask if they can supply a feed in a format that will work with "
-#~ "Democracy.\n"
-#~ "\n"
-#~ "Do you want to try to load this channel anyway?"
-#~ msgstr ""
-#~ "Men vi kommer att försöka att fånga filerna. Det kan ta lite extra tid att "
-#~ "lista filmerna, och beskrivningarna kan se konstiga ut.  Kontakta utgivarna "
-#~ "av $url och fråga om de kan tillhandahålla en kanal i ett format som "
-#~ "fungerar med Democracy.\n"
-#~ "\n"
-#~ "Vill du försöka att läsa in denna kanal ändå?"
-
-#, python-format
-#~ msgid "Remove %s"
-#~ msgstr "Ta bort %s"
-
-#, python-format
-#~ msgid "Are you sure you want to remove the guide %s?"
-#~ msgstr "Är du säker på att du vill ta bort guiden %s?"
-
-#, python-format
-#~ msgid "Are you sure you want to remove %s"
-#~ msgstr "Ä du säker på att du vill ta bort %s"
-
-#, python-format
-#~ msgid "Remove %s channels"
-#~ msgstr "Ta bort %s kanaler"
-
-#, python-format
-#~ msgid "Are you sure you want to remove these %s playlists"
-#~ msgstr "Är du säker på att du vill ta bort dessa %s spellistor"
-
-#, python-format
-#~ msgid ""
-#~ "Are you sure you want to remove %s?  Any downloads in progress will be "
-#~ "canceled."
-#~ msgstr ""
-#~ "Är du säker på att du vill ta bort %s?  Alla pågående hämtningar kommer att "
-#~ "avbrytas."
-
-#, python-format
-#~ msgid ""
-#~ "Are you sure you want to remove these %s channels?  Any downloads in "
-#~ "progress will be canceled."
-#~ msgstr ""
-#~ "Är du säker på att du vill ta bort dessa %s kanaler?  Alla pågående "
-#~ "hämtningar kommer att avbrytas."
-
-#~ msgid ""
-#~ "What would you like to do with the videos in this channel that you've "
-#~ "downloaded?"
-#~ msgstr "Vad vill du göra med de filmer i denna kanal som du har hämtat?"
-
-#~ msgid ""
-#~ "What would you like to do with the videos in these channels that you've "
-#~ "downloaded?"
-#~ msgstr "Vad vill du göra med de filmer i dessa kanaler som du har hämtat?"
-
-#~ msgid "Invalid Value"
-#~ msgstr "Ogiltigt värde"
-
-#, python-format
-#~ msgid "%s is invalid.  You must enter a non-negative number."
-#~ msgstr "%s är ogiltig.  Du måste ange ett positivt nummer."
-
-#~ msgid " - Invalid URL"
-#~ msgstr " - Ogiltig url"
-
-#~ msgid ""
-#~ "The address you entered is not a valid URL.\n"
-#~ "Please double check and try again.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Adressen du angav är inte en giltig url.\n"
-#~ "Kontrollera den och försök igen.\n"
-#~ "\n"
-
-#~ msgid "Democracy - Add Channel Guide"
-#~ msgstr "Democracy - Lägg till kanalguide"
-
-#~ msgid "Enter the URL of the channel guide to add"
-#~ msgstr "Ange url:en till kanalguiden som ska läggas till"
-
-#~ msgid ""
-#~ "You are running a version of Democracy Player with a custom set of channels."
-#~ msgstr ""
-#~ "Du kör en version av Democracy Player med en anpassad uppsättning kanaler."
-
-#~ msgid "Exit"
-#~ msgstr "Avsluta"
 
 #~ msgid "Add Channel..."
 #~ msgstr "Lägg till Kanal..."
@@ -3942,9 +3570,6 @@ msgstr "Spelar fil"
 
 #~ msgid "Copy Video URL"
 #~ msgstr "Kopiera filmens URL"
-
-#~ msgid "Donate"
-#~ msgstr "Donera"
 
 #~ msgid "New Channel Guide..."
 #~ msgstr "Ny kanalguide"
@@ -4081,44 +3706,8 @@ msgstr "Spelar fil"
 #~ msgid "_Remove Channel Guide..."
 #~ msgstr "_Ta bort kanalguide..."
 
-#~ msgid "_Remove Channel Guides..."
-#~ msgstr "_Ta bort kanaguider..."
-
-#~ msgid "_Remove Video..."
-#~ msgstr "_Ta bort film..."
-
-#~ msgid "_Remove Videos..."
-#~ msgstr "_Ta bort filmer..."
-
-#~ msgid "Re_name..."
-#~ msgstr "_Byt namn..."
-
-#~ msgid "Re_name Playlist..."
-#~ msgstr "_Byt namn  på spellista..."
-
-#~ msgid "Re_name Playlist Folder..."
-#~ msgstr "_Byt namn på mapp för spellistor..."
-
-#~ msgid "Re_name Channel..."
-#~ msgstr "_Byt namn på kanal..."
-
-#~ msgid "Re_name Channel Folder..."
-#~ msgstr "_Byt namn på mapp för kanaler..."
-
-#~ msgid "Re_name Channel Guide..."
-#~ msgstr "_Byt namn på kanalguide..."
-
-#~ msgid "_Update Channel..."
-#~ msgstr "_Uppdatera kanal..."
-
 #~ msgid "_Update Channels..."
 #~ msgstr "_Uppdatera kanaler..."
-
-#, python-format
-#~ msgid "%d video found"
-#~ msgid_plural "%d videos found"
-#~ msgstr[0] "%d film hittad"
-#~ msgstr[1] "%d filmer hittade"
 
 #~ msgid "Remove Playlist..."
 #~ msgstr "Ta bort spellista..."
@@ -4131,9 +3720,6 @@ msgstr "Spelar fil"
 
 #~ msgid "Remove Playlist Folders..."
 #~ msgstr "Ta bort mappar för spellistor..."
-
-#~ msgid "Remove Channels..."
-#~ msgstr "Ta bort kanaler..."
 
 #~ msgid "Remove Channel Folder..."
 #~ msgstr "Ta bort mapp för kanaler..."
@@ -4174,15 +3760,12 @@ msgstr "Spelar fil"
 #~ msgid "Update Channels..."
 #~ msgstr "Uppdatera kanaler..."
 
-#, python-format
 #~ msgid "Could not write to %s"
 #~ msgstr "Kunde inte skriva till %s"
 
-#, python-format
 #~ msgid "%s MB required to store this video"
 #~ msgstr "%s MB krävs för att lagra denna film"
 
-#, python-format
 #~ msgid "The torrent file at %s was not valid"
 #~ msgstr "Torrentfilen %s var inte giltig"
 
@@ -4192,79 +3775,137 @@ msgstr "Spelar fil"
 #~ msgid "outside of democracy."
 #~ msgstr "utanför democracy"
 
-#, python-format
 #~ msgid "%1.1fGB"
 #~ msgstr "%1.1fGB"
 
-#, python-format
 #~ msgid "%1.1fMB"
 #~ msgstr "%1.1fMB"
 
-#, python-format
-#~ msgid "%1.1fKB"
-#~ msgstr "%1.1fKB"
+#~ msgid "-00:00:00"
+#~ msgstr "-00:00:00"
 
-#, python-format
-#~ msgid "%0.0fB"
-#~ msgstr "%0.0fB"
+#~ msgid "Change..."
+#~ msgstr "Ändra..."
 
-#, python-format
+#~ msgid "Download at most"
+#~ msgstr "Hämta som mest"
+
+#~ msgid "Save downloaded videos in this folder:"
+#~ msgstr "Spara hämtade filmer i denna mapp:"
+
+#~ msgid "To avoid internet slowdowns:"
+#~ msgstr "För att undvika långsamt nätverk:"
+
+#~ msgid "videos at once."
+#~ msgstr "filmer samtidigt."
+
+#~ msgid "Search this folder:"
+#~ msgstr "Sök i denna mapp:"
+
+#~ msgid "STAR"
+#~ msgstr "STJÄRNA"
+
+#~ msgid "SAVED"
+#~ msgstr "SPARAD"
+
+#~ msgid "DELETE"
+#~ msgstr "TA BORT"
+
+#~ msgid "default"
+#~ msgstr "standard"
+
+#~ msgid "Videos expire after"
+#~ msgstr "Filmer går ut efter"
+
+#~ msgid "When turned on, Auto Download should"
+#~ msgstr "När påslagen ska Automatisk hämtning"
+
+#~ msgid ""
+#~ "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
+#~ "unwatched."
+#~ msgstr ""
+#~ "Hämta inte automatiskt när mer än ${maxnew} ${maxnew2} filmer är osedda."
+
+#~ msgid "<label for=\"automatic\">Auto Download</label>"
+#~ msgstr "<label for=\"automatic\">Automatisk hämtning</label>"
+
+#~ msgid ""
+#~ "Democracy can't play this file. You may be able to open it with a different "
+#~ "program.<br></br><br></br><strong>Filename:</strong> "
+#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
+#~ msgstr ""
+#~ "Democracy kan inte spela upp denna fil. Du kanske kan öppna den med ett "
+#~ "annat program.<br></br><br></br><strong>Filnamn:</strong> "
+#~ "${filename}<Br></Br><strong>Filtyp:</strong> ${format}"
+
+#~ msgid "REVEAL FILE"
+#~ msgstr "VISA FIL"
+
+#~ msgid "Skip >> ${countdown}"
+#~ msgstr "Hoppa över >> ${countdown}"
+
+#~ msgid "SHOW FILE"
+#~ msgstr "VISA FIL"
+
+#~ msgid "SHOW FOLDER"
+#~ msgstr "VISA MAPP"
+
+#~ msgid "SHARE IT"
+#~ msgstr "DELA UT DEN"
+
+#~ msgid "STAR IT"
+#~ msgstr "MÄRK DEN"
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid "Full Screen"
+#~ msgstr "Helskärm"
+
+#~ msgid "%donation label%"
+#~ msgstr "%donation label%"
+
+#~ msgid "Browse"
+#~ msgstr "Bläddra"
+
+#~ msgid "Starting up"
+#~ msgstr "Startar upp"
+
+#~ msgid "Removing %s"
+#~ msgstr "Tar bort %s"
+
+#~ msgid "%d days"
+#~ msgstr "%d dagar"
+
+#~ msgid "Remove %s"
+#~ msgstr "Ta bort %s"
+
+#~ msgid "Are you sure you want to remove the guide %s?"
+#~ msgstr "Är du säker på att du vill ta bort guiden %s?"
+
+#~ msgid "Are you sure you want to remove %s"
+#~ msgstr "Ä du säker på att du vill ta bort %s"
+
+#~ msgid "Remove %s channels"
+#~ msgstr "Ta bort %s kanaler"
+
+#~ msgid "Invalid Value"
+#~ msgstr "Ogiltigt värde"
+
 #~ msgid "Error: %s"
 #~ msgstr "Fel: %s"
 
-#, python-format
-#~ msgid "Connection Error: %s"
-#~ msgstr "Anslutningsfel: %s"
-
-#, python-format
-#~ msgid "Bad Status Line: %s"
-#~ msgstr "Felaktig statusrad: %s"
-
-#, python-format
-#~ msgid "Bad Header Line: %s"
-#~ msgstr "Felaktig rubrikrad: %s"
-
-#, python-format
-#~ msgid "Bad Chunk size: %s"
-#~ msgstr "Felaktig paketstorlek: %s"
-
-#, python-format
-#~ msgid "Expected CRLF got: %r"
-#~ msgstr "Förväntade CRLF, fick: %s"
-
-#, python-format
 #~ msgid "Bad Status Code: %s"
 #~ msgstr "Felaktig Statuskod: %s"
-
-#, python-format
-#~ msgid "Connection to %s timed out"
-#~ msgstr "Anslutningen till %s  avbröts (Time Out)"
-
-#, python-format
-#~ msgid "%s is not a valid URL"
-#~ msgstr "%s är inte en giltig URL"
 
 #~ msgid "New Search Channel"
 #~ msgstr "Ny sökkanal"
 
-#~ msgid "A search channel contains items that match a search term."
-#~ msgstr "En sökkanal innehåller objekt som passar med en sökterm."
-
-#, python-format
-#~ msgid "Deleting %s"
-#~ msgstr "Tar bort %s"
-
-#, python-format
 #~ msgid "%d hours"
 #~ msgstr "%d timmar"
 
-#, python-format
 #~ msgid "%d minutes"
 #~ msgstr "%d minuter"
-
-#, python-format
-#~ msgid "Expires in %s"
-#~ msgstr "Går ut om %s"
 
 #~ msgid "TORRENT"
 #~ msgstr "TORRENT"
@@ -4272,12 +3913,83 @@ msgstr "Spelar fil"
 #~ msgid "WEB PAGE"
 #~ msgstr "HEMSIDA"
 
-#~ msgid "downloading..."
-#~ msgstr "hämtar..."
-
-#, python-format
 #~ msgid "%s remaining"
 #~ msgstr "%s återstår"
+
+#~ msgid "Add to new playlist"
+#~ msgstr "Lägg till i ny spellista"
+
+#~ msgid "Update Channels Now"
+#~ msgstr "Uppdatera kanalerna nu"
+
+#~ msgid "Adding %d channels to a new folder"
+#~ msgstr "Lägger till %d kanaler till en ny mapp"
+
+#~ msgid "_Search For:"
+#~ msgstr "_Sök Efter:"
+
+#~ msgid "_URL"
+#~ msgstr "_Url"
+
+#~ msgid "and"
+#~ msgstr "och"
+
+#~ msgid "<b>BitTorrent</b>"
+#~ msgstr "<b>BitTorrent</b>"
+
+#~ msgid "Go"
+#~ msgstr "Gå"
+
+#~ msgid "Channel:"
+#~ msgstr "Kanal:"
+
+#~ msgid "Search Engine:"
+#~ msgstr "Sökmotor:"
+
+#~ msgid "Search For:"
+#~ msgstr "Sök efter:"
+
+#~ msgid "Don't Worry About Disk Space:"
+#~ msgstr "Tänk inte på diskutrymme:"
+
+#~ msgid "Reset Search"
+#~ msgstr "Nollställ sökning"
+
+#~ msgid "You're done!"
+#~ msgstr "Nu är du färdig!"
+
+#~ msgid "Democracy Help"
+#~ msgstr "Hjälp för Democracy"
+
+#~ msgid "Democracy"
+#~ msgstr "Democracy"
+
+#~ msgid "Remove Channel..."
+#~ msgstr "Ta bort kanal..."
+
+#~ msgid "Create new playlist folder"
+#~ msgstr "Skapa ny spellistemapp"
+
+#~ msgid "Create new channel folder"
+#~ msgstr "Skapa ny kanalmapp"
+
+#~ msgid "Searching for Videos"
+#~ msgstr "Söker efter filmer"
+
+#~ msgid "SAVE"
+#~ msgstr "SPARA"
+
+#~ msgid "Donate"
+#~ msgstr "Donera"
+
+#~ msgid "Remove Channels..."
+#~ msgstr "Ta bort kanaler..."
+
+#~ msgid "Expires in %s"
+#~ msgstr "Går ut om %s"
+
+#~ msgid "downloading..."
+#~ msgstr "hämtar..."
 
 #~ msgid "Remove From My Collection"
 #~ msgstr "Ta bort från Min Samling"
@@ -4285,11 +3997,402 @@ msgstr "Spelar fil"
 #~ msgid "Play Just This Video"
 #~ msgstr "Spela enbart denna film"
 
-#~ msgid "Add to new playlist"
-#~ msgstr "Lägg till i ny spellista"
+#~ msgid "(Changes won't go into effect until you restart Democracy Player.)"
+#~ msgstr ""
+#~ "(Ändringar kommer inte ta effekt förrens du startar om Democracy Player.)"
+
+#~ msgid "<b>Playback</b>"
+#~ msgstr "<b>Uppspelning</b>"
+
+#~ msgid "Bit Torrent uses ports between"
+#~ msgstr "Bit torrent använder portar mellan"
+
+#~ msgid "In This:"
+#~ msgstr "I denna:"
+
+#~ msgid "Results for \"${query}\""
+#~ msgstr "Resultat för \"${query}\""
+
+#~ msgid "Empty Playlist"
+#~ msgstr "Tom spellista"
+
+#~ msgid "Drag downloaded videos to this playlist to add them."
+#~ msgstr "Dra hämtade filmer till den här spellistan för att lägga till dem."
+
+#~ msgid "${size} available for downloads"
+#~ msgstr "${size} tillgängligt för hämtningar"
+
+#~ msgid "<b>General</b>"
+#~ msgstr "<b>Allmänt</b>"
+
+#~ msgid "Automatically run Democracy Player when I log in"
+#~ msgstr "Kör automatiskt Democracy Player när jag loggar in"
+
+#~ msgid "_Store downloaded videos in this folder:"
+#~ msgstr "_Lagra hämtade filmer i den här mappen:"
+
+#~ msgid "Cancel Search"
+#~ msgstr "Avbryt sökning"
+
+#~ msgid "Find Videos:"
+#~ msgstr "Sök filmer:"
+
+#~ msgid ""
+#~ "Democracy Player can find all the videos on your computer to help you "
+#~ "organize your collection.\n"
+#~ "\n"
+#~ "\n"
+#~ "Would you like Democracy Player to look for video files on your computer?"
+#~ msgstr ""
+#~ "Democracy Player kan hitta alla filmer på din dator för att hjälpa dig att "
+#~ "organisera din samling.\n"
+#~ "\n"
+#~ "\n"
+#~ "Vill du att Democracy Player ska leta efter filmer på din dator?"
+
+#~ msgid ""
+#~ "Error importing democracy modules:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Fel vid importering av moduler för Democracy:\n"
+#~ "%s"
+
+#~ msgid "${len} Videos Match This Search"
+#~ msgstr "${len} filmer matchar sökningen"
+
+#~ msgid "${count} Videos on this Channel"
+#~ msgstr "${count} filmer på denna kanal"
+
+#~ msgid ""
+#~ "Would you like to delete this file or just remove its entry from My "
+#~ "Collection?"
+#~ msgstr "Vill du ta bort denna fil eller bara ta bort den från Min samling?"
+
+#~ msgid "%s closed connection"
+#~ msgstr "%s stängde anslutningen"
+
+#~ msgid "Could not download the Democracy channel file: %s."
+#~ msgstr "Kunde inte hämta kanalfilen för Democracy: %s."
+
+#~ msgid "Loading window"
+#~ msgstr "Läser in fönster"
+
+#~ msgid ""
+#~ "Are you sure you want to remove %s?  Any downloads in progress will be "
+#~ "canceled."
+#~ msgstr ""
+#~ "Är du säker på att du vill ta bort %s?  Alla pågående hämtningar kommer att "
+#~ "avbrytas."
+
+#~ msgid ""
+#~ "What would you like to do with the videos in this channel that you've "
+#~ "downloaded?"
+#~ msgstr "Vad vill du göra med de filmer i denna kanal som du har hämtat?"
+
+#~ msgid ""
+#~ "What would you like to do with the videos in these channels that you've "
+#~ "downloaded?"
+#~ msgstr "Vad vill du göra med de filmer i dessa kanaler som du har hämtat?"
+
+#~ msgid "%s is invalid.  You must enter a non-negative number."
+#~ msgstr "%s är ogiltig.  Du måste ange ett positivt nummer."
+
+#~ msgid "_Remove Video..."
+#~ msgstr "_Ta bort film..."
+
+#~ msgid "_Remove Videos..."
+#~ msgstr "_Ta bort filmer..."
+
+#~ msgid "Re_name Playlist..."
+#~ msgstr "_Byt namn  på spellista..."
+
+#~ msgid "Re_name Playlist Folder..."
+#~ msgstr "_Byt namn på mapp för spellistor..."
+
+#~ msgid "Re_name Channel..."
+#~ msgstr "_Byt namn på kanal..."
+
+#~ msgid "Re_name Channel Folder..."
+#~ msgstr "_Byt namn på mapp för kanaler..."
+
+#~ msgid "_Update Channel..."
+#~ msgstr "_Uppdatera kanal..."
+
+#~ msgid "%1.1fKB"
+#~ msgstr "%1.1fKB"
+
+#~ msgid "Removing %s items"
+#~ msgstr "Tar bort %s objekt"
+
+#~ msgid ""
+#~ "One or more of these items is a folder.  When you remove or delete a folder, "
+#~ "any items inside that folder will also be removed or deleted."
+#~ msgstr ""
+#~ "Ett eller flera av dessa objekt är en mapp. När du tar flyttar eller tar "
+#~ "bort en mapp kommer objekt i denna också att bli flyttade eller borttagna."
+
+#~ msgid "Rename Channel"
+#~ msgstr "Byt namn på kanal"
+
+#~ msgid "Revert Title to Default"
+#~ msgstr "Nollställ titel till standardtitel"
+
+#~ msgid "Create %d channels?"
+#~ msgstr "Skapa %d kanaler?"
+
+#~ msgid "<b>Searching for Videos</b>"
+#~ msgstr "<b>Söker efter filmer</b>"
+
+#~ msgid "C_hannel:"
+#~ msgstr "Ka_nal:"
+
+#~ msgid "C_reate Channel"
+#~ msgstr "Skapa _kanal"
+
+#~ msgid "Restrict to my full _home folder"
+#~ msgstr "Begränsa till min _hemkatalog"
+
+#~ msgid "Search _Engine:"
+#~ msgstr "Sök_motor:"
+
+#~ msgid "Select custom search directory"
+#~ msgstr "Välj anpassad sökkatalog"
+
+#~ msgid ""
+#~ "This item is a folder.  When you remove a folder, any items inside that "
+#~ "folder will be deleted."
+#~ msgstr ""
+#~ "Det här objektet är en mapp. När du tar bort en mapp kommer alla objekt i "
+#~ "den mappen att tas bort."
+
+#~ msgid "Search _custom folder:"
+#~ msgstr "Sök i _anpassad mapp:"
+
+#~ msgid "Go Big:"
+#~ msgstr "Slå på stort:"
+
+#~ msgid "Leave it On:"
+#~ msgstr "Lämna den på:"
+
+#~ msgid ""
+#~ "Now you can explore the Channel Guide\n"
+#~ "and start watching.  A few tips to get started:"
+#~ msgstr ""
+#~ "Nu kan du utforska kanalguiden\n"
+#~ "och börja se på klipp. Ett par tips för\n"
+#~ "att komma igång:"
+
+#~ msgid "The button to the right of the play button shows videos fullscreen."
+#~ msgstr "Knappen till höger om uppspelningsknappen visa filmer i helskärm."
+
+#~ msgid ""
+#~ "%s was unable to save its database: Disk Full.\n"
+#~ "We suggest deleting files from the full disk or simply deleting some movies "
+#~ "from your collection.\n"
+#~ "Recent changes may be lost."
+#~ msgstr ""
+#~ "%s kunde inte spara sin databas: Disken är full.\n"
+#~ "Vi föreslår att du tar bort filer från den fulla disken eller helt enkelt "
+#~ "tar bort några filmer från din\n"
+#~ "samling. Senaste ändringarna kan gå förlorade."
+
+#~ msgid "Rename Channel Folder"
+#~ msgstr "Byt namn på kanalmapp"
+
+#~ msgid "Enter a new name for the channel folder %s"
+#~ msgstr "Ange ett nytt namn för kanalmappen %s"
+
+#~ msgid "Enter a new name for the playlist folder %s"
+#~ msgstr "Ange ett nytt namn för spellistemappen %s"
+
+#~ msgid "Create Channel Folder"
+#~ msgstr "Skapa kanalmapp"
+
+#~ msgid "Enter a name for the new channel folder"
+#~ msgstr "Ange ett namn för den nya kanalmappen"
+
+#~ msgid ""
+#~ "This Democracy channel file has an invalid format: %s. Please notify the "
+#~ "publisher of this file."
+#~ msgstr ""
+#~ "Denna kanalfil för Democracy har ett ogiltigt format: %s. Informera "
+#~ "utgivaren av denna fil."
+
+#~ msgid ""
+#~ "This Democracy channel file has the wrong content type: %s. Please notify "
+#~ "the publisher of this file."
+#~ msgstr ""
+#~ "Denna kanalfil för Democracy har en felaktig innehållstyp: %s. Informera "
+#~ "utgivaren av denna fil."
+
+#~ msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
+#~ msgstr "Torrentfilen %s verkar vara skadad och kan inte öppnas. [OK]"
+
+#~ msgid ""
+#~ "But we'll try our best to grab the files. It may take extra time to list the "
+#~ "videos, and descriptions may look funny.  Please contact the publishers of "
+#~ "$url and ask if they can supply a feed in a format that will work with "
+#~ "Democracy.\n"
+#~ "\n"
+#~ "Do you want to try to load this channel anyway?"
+#~ msgstr ""
+#~ "Men vi kommer att försöka att fånga filerna. Det kan ta lite extra tid att "
+#~ "lista filmerna, och beskrivningarna kan se konstiga ut.  Kontakta utgivarna "
+#~ "av $url och fråga om de kan tillhandahålla en kanal i ett format som "
+#~ "fungerar med Democracy.\n"
+#~ "\n"
+#~ "Vill du försöka att läsa in denna kanal ändå?"
+
+#~ msgid "Are you sure you want to remove these %s playlists"
+#~ msgstr "Är du säker på att du vill ta bort dessa %s spellistor"
+
+#~ msgid ""
+#~ "Are you sure you want to remove these %s channels?  Any downloads in "
+#~ "progress will be canceled."
+#~ msgstr ""
+#~ "Är du säker på att du vill ta bort dessa %s kanaler?  Alla pågående "
+#~ "hämtningar kommer att avbrytas."
+
+#~ msgid " - Invalid URL"
+#~ msgstr " - Ogiltig url"
+
+#~ msgid ""
+#~ "The address you entered is not a valid URL.\n"
+#~ "Please double check and try again.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Adressen du angav är inte en giltig url.\n"
+#~ "Kontrollera den och försök igen.\n"
+#~ "\n"
+
+#~ msgid "Democracy - Add Channel Guide"
+#~ msgstr "Democracy - Lägg till kanalguide"
+
+#~ msgid "Enter the URL of the channel guide to add"
+#~ msgstr "Ange url:en till kanalguiden som ska läggas till"
+
+#~ msgid ""
+#~ "You are running a version of Democracy Player with a custom set of channels."
+#~ msgstr ""
+#~ "Du kör en version av Democracy Player med en anpassad uppsättning kanaler."
+
+#~ msgid "Re_name..."
+#~ msgstr "_Byt namn..."
+
+#~ msgid "Re_name Channel Guide..."
+#~ msgstr "_Byt namn på kanalguide..."
+
+#~ msgid "%d video found"
+#~ msgid_plural "%d videos found"
+#~ msgstr[0] "%d film hittad"
+#~ msgstr[1] "%d filmer hittade"
+
+#~ msgid "Connection Error: %s"
+#~ msgstr "Anslutningsfel: %s"
+
+#~ msgid "Bad Status Line: %s"
+#~ msgstr "Felaktig statusrad: %s"
+
+#~ msgid "Bad Header Line: %s"
+#~ msgstr "Felaktig rubrikrad: %s"
+
+#~ msgid "Bad Chunk size: %s"
+#~ msgstr "Felaktig paketstorlek: %s"
+
+#~ msgid "Connection to %s timed out"
+#~ msgstr "Anslutningen till %s  avbröts (Time Out)"
+
+#~ msgid "%s is not a valid URL"
+#~ msgstr "%s är inte en giltig URL"
+
+#~ msgid "A search channel contains items that match a search term."
+#~ msgstr "En sökkanal innehåller objekt som passar med en sökterm."
+
+#~ msgid "Deleting %s"
+#~ msgstr "Tar bort %s"
 
 #~ msgid "Mark as Unwatched"
 #~ msgstr "Marker som osedd"
+
+#~ msgid "%d Downloaded Items"
+#~ msgstr "%d hämtade objekt"
+
+#~ msgid "%d Available Items"
+#~ msgstr "%d tillgängliga objekt"
+
+#~ msgid "%d Downloading Items"
+#~ msgstr "%d objekt hämtas"
+
+#~ msgid "Update Channel Now"
+#~ msgstr "Uppdatera kanal nu"
+
+#~ msgid "Enter a new name for the channel %s"
+#~ msgstr "Ange ett nytt namn för kanalen %s"
+
+#~ msgid "Couldn't load the feed at %s (%s)."
+#~ msgstr "Kunde inta läsa in kanalen på %s (%s)."
+
+#~ msgid "Subscribing to multiple channels"
+#~ msgstr "Prenumererar på flera kanaler"
+
+#~ msgid ""
+#~ "NOTE: You are already subscribed to %d of these channels.  These channels "
+#~ "will stay where they currently are."
+#~ msgstr ""
+#~ "OBS: Du prenumererar redan på %d av dessa kanaler. Dessa kanaler kommer inte "
+#~ "att ändras."
+
+#~ msgid "Drag playlists to this folder to add them."
+#~ msgstr "Dra spellistor till den här mappen för att lägga till dem."
+
+#~ msgid ""
+#~ "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
+#~ "playlists)"
+#~ msgstr ""
+#~ "${count} spellistmappar markerade<br><br>(innehåller ${containedcount} "
+#~ "spellistor)"
+
+#~ msgid "Clear Completed Torrents"
+#~ msgstr "Töm färdiga torrent"
+
+#~ msgid "Empty Channel Folder"
+#~ msgstr "Tom kanalmapp"
+
+#~ msgid "Drag channels to this folder to add them."
+#~ msgstr "Dra kanaler till den här mappen för att lägga till dem."
+
+#~ msgid ""
+#~ "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
+#~ "channels)"
+#~ msgstr ""
+#~ "${count} kanalmappar markerade<br><br>(innehåller ${containedcount} kanaler)"
+
+#~ msgid "${count} Channels Selected"
+#~ msgstr "${count} kanaler markerade"
+
+#~ msgid "Local File"
+#~ msgstr "Lokal fil"
+
+#~ msgid "Search custom folder:"
+#~ msgstr "Sök i anpassad mapp:"
+
+#~ msgid "New Channel Folder"
+#~ msgstr "Ny kanalmapp"
+
+#~ msgid "New Channel Guide"
+#~ msgstr "Ny kanal-guide"
+
+#~ msgid "Pause Video"
+#~ msgstr "Pausa film"
+
+#~ msgid "Send This Channel to a Friend..."
+#~ msgstr "Skicka den här kanalen till en vän..."
+
+#~ msgid "_Remove Channel Guides..."
+#~ msgstr "_Ta bort kanaguider..."
+
+#~ msgid "%0.0fB"
+#~ msgstr "%0.0fB"
 
 #~ msgid ""
 #~ "Would you like to delete this folder and all of its videos or just remove "
@@ -4297,10 +4400,6 @@ msgstr "Spelar fil"
 #~ msgstr ""
 #~ "Vill du ta bort denna mapp och alla filmer i den eller bara plocka bort den "
 #~ "från Min samling?"
-
-#, python-format
-#~ msgid "Removing %s items"
-#~ msgstr "Tar bort %s objekt"
 
 #~ msgid ""
 #~ "One or more of these videos was not downloaded from a channel.  Would you "
@@ -4310,79 +4409,11 @@ msgstr "Spelar fil"
 #~ "bort dessa eller bara plocka bort dem från Min samling"
 
 #~ msgid ""
-#~ "One or more of these items is a folder.  When you remove or delete a folder, "
-#~ "any items inside that folder will also be removed or deleted."
-#~ msgstr ""
-#~ "Ett eller flera av dessa objekt är en mapp. När du tar flyttar eller tar "
-#~ "bort en mapp kommer objekt i denna också att bli flyttade eller borttagna."
-
-#~ msgid ""
 #~ "You have a database that was saved with a newer version of Democracy. You "
 #~ "must download the latest version of Democracy and run that."
 #~ msgstr ""
 #~ "Du har en databas som blev sparad med en nyare version av Democracy. Du "
 #~ "måste hämta hem den senaste versionen av Democracy och köra den."
-
-#~ msgid "Update Channels Now"
-#~ msgstr "Uppdatera kanalerna nu"
-
-#, python-format
-#~ msgid "%d Downloaded Items"
-#~ msgstr "%d hämtade objekt"
-
-#, python-format
-#~ msgid "%d Available Items"
-#~ msgstr "%d tillgängliga objekt"
-
-#, python-format
-#~ msgid "%d Downloading Items"
-#~ msgstr "%d objekt hämtas"
-
-#~ msgid "Update Channel Now"
-#~ msgstr "Uppdatera kanal nu"
-
-#~ msgid "Rename Channel"
-#~ msgstr "Byt namn på kanal"
-
-#~ msgid "Revert Title to Default"
-#~ msgstr "Nollställ titel till standardtitel"
-
-#, python-format
-#~ msgid "Enter a new name for the channel %s"
-#~ msgstr "Ange ett nytt namn för kanalen %s"
-
-#, python-format
-#~ msgid "Couldn't load the feed at %s (%s)."
-#~ msgstr "Kunde inta läsa in kanalen på %s (%s)."
-
-#~ msgid "Subscribing to multiple channels"
-#~ msgstr "Prenumererar på flera kanaler"
-
-#, python-format
-#~ msgid "Create %d channels?"
-#~ msgstr "Skapa %d kanaler?"
-
-#, python-format
-#~ msgid "Adding %d channels to a new folder"
-#~ msgstr "Lägger till %d kanaler till en ny mapp"
-
-#, python-format
-#~ msgid ""
-#~ "NOTE: You are already subscribed to %d of these channels.  These channels "
-#~ "will stay where they currently are."
-#~ msgstr ""
-#~ "OBS: Du prenumererar redan på %d av dessa kanaler. Dessa kanaler kommer inte "
-#~ "att ändras."
-
-#~ msgid "(Changes won't go into effect until you restart Democracy Player.)"
-#~ msgstr ""
-#~ "(Ändringar kommer inte ta effekt förrens du startar om Democracy Player.)"
-
-#~ msgid "<b>Playback</b>"
-#~ msgstr "<b>Uppspelning</b>"
-
-#~ msgid "<b>Searching for Videos</b>"
-#~ msgstr "<b>Söker efter filmer</b>"
 
 #~ msgid ""
 #~ "<b>Would you like Democracy Player to look for video files on your "
@@ -4443,33 +4474,12 @@ msgstr "Spelar fil"
 #~ "TV-kanaler, alla är gratis. Klicka helt enkelt \"LÄGG TILL\" för att se på "
 #~ "en kanal."
 
-#~ msgid "Bit Torrent uses ports between"
-#~ msgstr "Bit torrent använder portar mellan"
-
-#~ msgid "C_hannel:"
-#~ msgstr "Ka_nal:"
-
-#~ msgid "C_reate Channel"
-#~ msgstr "Skapa _kanal"
-
 #~ msgid ""
 #~ "Democracy Player can find all the videos on your computer to help you "
 #~ "organize your collection."
 #~ msgstr ""
 #~ "Democracy Player kan hitta all filmer på din dator för att hjälpa dig att "
 #~ "organisera din samling."
-
-#~ msgid "In This:"
-#~ msgstr "I denna:"
-
-#~ msgid "Restrict to my full _home folder"
-#~ msgstr "Begränsa till min _hemkatalog"
-
-#~ msgid "Search _Engine:"
-#~ msgstr "Sök_motor:"
-
-#~ msgid "Select custom search directory"
-#~ msgstr "Välj anpassad sökkatalog"
 
 #~ msgid ""
 #~ "The next few screens will help you set up democracy player so that it works "
@@ -4498,48 +4508,6 @@ msgstr "Spelar fil"
 #~ "filmer en efter en, hämta ner torrentfiler, rekommendera filmer till vänner "
 #~ "och mycket mer."
 
-#~ msgid "_Search"
-#~ msgstr "_Sök"
-
-#~ msgid "_Search For:"
-#~ msgstr "_Sök Efter:"
-
-#~ msgid "_URL"
-#~ msgstr "_Url"
-
-#~ msgid "and"
-#~ msgstr "och"
-
-#~ msgid "-00:00:00"
-#~ msgstr "-00:00:00"
-
-#~ msgid "Change..."
-#~ msgstr "Ändra..."
-
-#~ msgid "Download at most"
-#~ msgstr "Hämta som mest"
-
-#~ msgid "Save downloaded videos in this folder:"
-#~ msgstr "Spara hämtade filmer i denna mapp:"
-
-#~ msgid "To avoid internet slowdowns:"
-#~ msgstr "För att undvika långsamt nätverk:"
-
-#~ msgid "videos at once."
-#~ msgstr "filmer samtidigt."
-
-#~ msgid "Search this folder:"
-#~ msgstr "Sök i denna mapp:"
-
-#~ msgid "Results for \"${query}\""
-#~ msgstr "Resultat för \"${query}\""
-
-#~ msgid "Empty Playlist"
-#~ msgstr "Tom spellista"
-
-#~ msgid "Drag downloaded videos to this playlist to add them."
-#~ msgstr "Dra hämtade filmer till den här spellistan för att lägga till dem."
-
 #~ msgid "Empty Playlist Folder"
 #~ msgstr "Töm spellistmappen"
 
@@ -4550,87 +4518,11 @@ msgstr "Spelar fil"
 #~ "Den här mappen innehåller ${count} spellistor, men spellistorna innehåller "
 #~ "inga objekt."
 
-#~ msgid "Drag playlists to this folder to add them."
-#~ msgstr "Dra spellistor till den här mappen för att lägga till dem."
-
-#~ msgid ""
-#~ "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
-#~ "playlists)"
-#~ msgstr ""
-#~ "${count} spellistmappar markerade<br><br>(innehåller ${containedcount} "
-#~ "spellistor)"
-
 #~ msgid "${count} Playlists Selected"
 #~ msgstr "${count} spellistor markerade"
 
-#~ msgid "STAR"
-#~ msgstr "STJÄRNA"
-
-#~ msgid "SAVED"
-#~ msgstr "SPARAD"
-
-#~ msgid "DELETE"
-#~ msgstr "TA BORT"
-
-#~ msgid "default"
-#~ msgstr "standard"
-
-#~ msgid "Videos expire after"
-#~ msgstr "Filmer går ut efter"
-
-#~ msgid "When turned on, Auto Download should"
-#~ msgstr "När påslagen ska Automatisk hämtning"
-
-#~ msgid ""
-#~ "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
-#~ "unwatched."
-#~ msgstr ""
-#~ "Hämta inte automatiskt när mer än ${maxnew} ${maxnew2} filmer är osedda."
-
-#~ msgid "<label for=\"automatic\">Auto Download</label>"
-#~ msgstr "<label for=\"automatic\">Automatisk hämtning</label>"
-
-#~ msgid ""
-#~ "Democracy can't play this file. You may be able to open it with a different "
-#~ "program.<br></br><br></br><strong>Filename:</strong> "
-#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
-#~ msgstr ""
-#~ "Democracy kan inte spela upp denna fil. Du kanske kan öppna den med ett "
-#~ "annat program.<br></br><br></br><strong>Filnamn:</strong> "
-#~ "${filename}<Br></Br><strong>Filtyp:</strong> ${format}"
-
-#~ msgid "REVEAL FILE"
-#~ msgstr "VISA FIL"
-
-#~ msgid "Skip >> ${countdown}"
-#~ msgstr "Hoppa över >> ${countdown}"
-
-#~ msgid "SHOW FILE"
-#~ msgstr "VISA FIL"
-
-#~ msgid "SHOW FOLDER"
-#~ msgstr "VISA MAPP"
-
-#~ msgid "SHARE IT"
-#~ msgstr "DELA UT DEN"
-
-#~ msgid "STAR IT"
-#~ msgstr "MÄRK DEN"
-
 #~ msgid "${size} disk space free"
 #~ msgstr "${size} ledigt utrymme"
-
-#~ msgid "${size} available for downloads"
-#~ msgstr "${size} tillgängligt för hämtningar"
-
-#~ msgid "Clear Completed Torrents"
-#~ msgstr "Töm färdiga torrent"
-
-#~ msgid "Empty Channel Folder"
-#~ msgstr "Tom kanalmapp"
-
-#~ msgid "Drag channels to this folder to add them."
-#~ msgstr "Dra kanaler till den här mappen för att lägga till dem."
 
 #~ msgid ""
 #~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
@@ -4639,66 +4531,17 @@ msgstr "Spelar fil"
 #~ "<strong i18n:translate=\"\">HOPPA ÖVER INTRO: <a style=\"color: #090;\" "
 #~ "href=\"#\" onclick=\"doneWithIntro();\">Gå till kanalguiden >></a></strong>"
 
-#~ msgid ""
-#~ "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
-#~ "channels)"
-#~ msgstr ""
-#~ "${count} kanalmappar markerade<br><br>(innehåller ${containedcount} kanaler)"
-
-#~ msgid "${count} Channels Selected"
-#~ msgstr "${count} kanaler markerade"
-
-#~ msgid ""
-#~ "This item is a folder.  When you remove a folder, any items inside that "
-#~ "folder will be deleted."
-#~ msgstr ""
-#~ "Det här objektet är en mapp. När du tar bort en mapp kommer alla objekt i "
-#~ "den mappen att tas bort."
-
-#~ msgid "Local File"
-#~ msgstr "Lokal fil"
-
-#~ msgid "<b>BitTorrent</b>"
-#~ msgstr "<b>BitTorrent</b>"
-
-#~ msgid "<b>General</b>"
-#~ msgstr "<b>Allmänt</b>"
-
-#~ msgid "Automatically run Democracy Player when I log in"
-#~ msgstr "Kör automatiskt Democracy Player när jag loggar in"
-
-#~ msgid "Go"
-#~ msgstr "Gå"
-
-#~ msgid "Search _custom folder:"
-#~ msgstr "Sök i _anpassad mapp:"
-
 #~ msgid "Show movies in these directories in My Collection"
 #~ msgstr "Visa filmer i dessa kataloger i Min samling"
 
 #~ msgid "_Add Directory"
 #~ msgstr "_Lägg till katalog"
 
-#~ msgid "_Store downloaded videos in this folder:"
-#~ msgstr "_Lagra hämtade filmer i den här mappen:"
-
 #~ msgid "A search channel contains"
 #~ msgstr "En sökkanal innehåller"
 
 #~ msgid "items that match a search term."
 #~ msgstr "objekt som matchar en sökterm."
-
-#~ msgid "Channel:"
-#~ msgstr "Kanal:"
-
-#~ msgid "Search Engine:"
-#~ msgstr "Sökmotor:"
-
-#~ msgid "Search For:"
-#~ msgstr "Sök efter:"
-
-#~ msgid "Cancel Search"
-#~ msgstr "Avbryt sökning"
 
 #~ msgid "Democracy First Time Setup"
 #~ msgstr "Förstagångskonfiguration av Democracy"
@@ -4711,18 +4554,6 @@ msgstr "Spelar fil"
 #~ "Democracy Player kontrollerar kanaler med jämna mellanrum efter nya filmer "
 #~ "och hämtningar i bakgrunden. Lämna kvar den körande betyder att du har nya "
 #~ "filmer när du är klar att se dem."
-
-#~ msgid "Don't Worry About Disk Space:"
-#~ msgstr "Tänk inte på diskutrymme:"
-
-#~ msgid "Find Videos:"
-#~ msgstr "Sök filmer:"
-
-#~ msgid "Go Big:"
-#~ msgstr "Slå på stort:"
-
-#~ msgid "Leave it On:"
-#~ msgstr "Lämna den på:"
 
 #~ msgid ""
 #~ "Like a TiVo, Democracy Player features an 'expiration' system that helps "
@@ -4737,28 +4568,11 @@ msgstr "Spelar fil"
 #~ "automatiskt."
 
 #~ msgid ""
-#~ "Now you can explore the Channel Guide\n"
-#~ "and start watching.  A few tips to get started:"
-#~ msgstr ""
-#~ "Nu kan du utforska kanalguiden\n"
-#~ "och börja se på klipp. Ett par tips för\n"
-#~ "att komma igång:"
-
-#~ msgid "Reset Search"
-#~ msgstr "Nollställ sökning"
-
-#~ msgid "Search custom folder:"
-#~ msgstr "Sök i anpassad mapp:"
-
-#~ msgid ""
 #~ "The Democracy Channel Guide has hundreds of internet TV channels, all of "
 #~ "them are free.  Just click 'ADD' to watch a channel."
 #~ msgstr ""
 #~ "Democracys kanalguide innehåller hundratals tv-kanaler på Internet, alla är "
 #~ "gratis.  Klicka helt enkelt på \"LÄGG TILL\" för att se på en kanal."
-
-#~ msgid "The button to the right of the play button shows videos fullscreen."
-#~ msgstr "Knappen till höger om uppspelningsknappen visa filmer i helskärm."
 
 #~ msgid ""
 #~ "The next few screens will help you set up Democracy Player so that it works "
@@ -4782,9 +4596,6 @@ msgstr "Spelar fil"
 
 #~ msgid "Would you like to run Democracy on startup?"
 #~ msgstr "Vill du köra Democracy vid uppstart?"
-
-#~ msgid "You're done!"
-#~ msgstr "Nu är du färdig!"
 
 #~ msgid "A"
 #~ msgstr "A"
@@ -4858,12 +4669,6 @@ msgstr "Spelar fil"
 #~ msgid "New Channel"
 #~ msgstr "Ny kanal"
 
-#~ msgid "New Channel Folder"
-#~ msgstr "Ny kanalmapp"
-
-#~ msgid "New Channel Guide"
-#~ msgstr "Ny kanal-guide"
-
 #~ msgid "New Playlist"
 #~ msgstr "Ny spellista"
 
@@ -4875,9 +4680,6 @@ msgstr "Spelar fil"
 
 #~ msgid "P"
 #~ msgstr "P"
-
-#~ msgid "Pause Video"
-#~ msgstr "Pausa film"
 
 #~ msgid "Playlist"
 #~ msgstr "Spellista"
@@ -4897,9 +4699,6 @@ msgstr "Spelar fil"
 #~ msgid "S"
 #~ msgstr "S"
 
-#~ msgid "Send This Channel to a Friend..."
-#~ msgstr "Skicka den här kanalen till en vän..."
-
 #~ msgid "Space"
 #~ msgstr "Blanksteg"
 
@@ -4908,3 +4707,141 @@ msgstr "Spelar fil"
 
 #~ msgid "V"
 #~ msgstr "V"
+
+#~ msgid "Expected CRLF got: %r"
+#~ msgstr "Förväntade CRLF, fick: %s"
+
+#~ msgid "_Search"
+#~ msgstr "_Sök"
+
+#~ msgid "Add a Channel..."
+#~ msgstr "Lägg till en kanal..."
+
+#~ msgid "Add a Guide..."
+#~ msgstr "Lägg till en guide..."
+
+#~ msgid "Check for Update"
+#~ msgstr "Leta efter uppdatering"
+
+#~ msgid "Copy Channel Link"
+#~ msgstr "Kopiera kanallänk"
+
+#~ msgid "Copy Video Link"
+#~ msgstr "Kopiera videolänk"
+
+#~ msgid "Donate to Democracy"
+#~ msgstr "Donera till Democracy"
+
+#~ msgid "Half Screen"
+#~ msgstr "Halvskärm"
+
+#~ msgid "Save Video..."
+#~ msgstr "Spara video..."
+
+#~ msgid "Tell a Friend"
+#~ msgstr "Tipsa en vän"
+
+#~ msgid "Video"
+#~ msgstr "Video"
+
+#~ msgid "Store downloaded movies in:"
+#~ msgstr "Lagra hämtade filmer i:"
+
+#~ msgid "To avoid internet slowdowns,"
+#~ msgstr "För att undvika att Internetanslutningen blir långsam,"
+
+#~ msgid "Restrict to my 'Movies' folder"
+#~ msgstr "Begränsa till min \"Filmer\"-mapp"
+
+#~ msgid "Restrict to my full home folder"
+#~ msgstr "Begränsa till min fullständiga hemmapp"
+
+#~ msgid "Search custom location:"
+#~ msgstr "Sök på alternativ plats:"
+
+#~ msgid "_Remove Channel Guide"
+#~ msgstr "_Ta bort kanalguide"
+
+#~ msgid "_New Playlist..."
+#~ msgstr "_Ny spellista..."
+
+#~ msgid "_New Playlist Folder..."
+#~ msgstr "_Ny spellistemapp..."
+
+#~ msgid "_New Channel Folder..."
+#~ msgstr "_Ny kanalmapp..."
+
+#~ msgid "_Rename..."
+#~ msgstr "_Byt namn..."
+
+#~ msgid "Rename selected item "
+#~ msgstr "Ta bort markerat objekt "
+
+#~ msgid "_Add Channel Guide..."
+#~ msgstr "_Lägg till kanalguide..."
+
+#~ msgid ""
+#~ "External Torrents <a style=\"text-decoration: underline; margin-left: 15px; "
+#~ "font-weight: normal;\" href=\"#\" onclick=\"return "
+#~ "eventURL('action:clearTorrents');\" i18n:translate=\"\" title=\"Clear "
+#~ "Torrents\">Clear Torrents</a>"
+#~ msgstr ""
+#~ "Externa torrentfiler <a style=\"text-decoration: underline; margin-left: "
+#~ "15px; font-weight: normal;\" href=\"#\" onclick=\"return "
+#~ "eventURL('action:clearTorrents');\" i18n:translate=\"\" title=\"Clear "
+#~ "Torrents\">Rensa torrentfiler</a>"
+
+#~ msgid "${count} Playlists selected"
+#~ msgstr "${count} spellistor markerade"
+
+#~ msgid "Delete selected playlists"
+#~ msgstr "Ta bort markerade spellistor"
+
+#~ msgid "REVEAL"
+#~ msgstr "VISA"
+
+#~ msgid "${count} Channels selected"
+#~ msgstr "${count} kanaler markerade"
+
+#~ msgid "Delete selected channels"
+#~ msgstr "Ta bort markerade kanaler"
+
+#~ msgid "Deleting this entry will delete all its videos."
+#~ msgstr "Ta bort det här objektet tar även bort alla dess videoklipp."
+
+#~ msgid "%d hrs"
+#~ msgstr "%d h"
+
+#~ msgid "%d min"
+#~ msgstr "%d min"
+
+#~ msgid "Expires: %s"
+#~ msgstr "Går ut: %s"
+
+#~ msgid "UNWATCHED"
+#~ msgstr "INTE VISAD"
+
+#~ msgid "NEW"
+#~ msgstr "NY"
+
+#~ msgid ""
+#~ "Would you like to delete this directory and all of its videos or just remove "
+#~ "its entry from My Collection?"
+#~ msgstr ""
+#~ "Vill du ta bort denna katalog och alla dess videoklipp eller bara ta bort "
+#~ "den från Min samling?"
+
+#~ msgid "%s timed out"
+#~ msgstr "Tidsgränsen för %s har överstigits"
+
+#~ msgid "You are being subscribed to %d feeds."
+#~ msgstr "Du är på väg att bli prenumerant på %d kanaler."
+
+#~ msgid "Couldn't load the feed at %s."
+#~ msgstr "Kunde inte läsa in kanalen på %s."
+
+#~ msgid "The error was: %s"
+#~ msgstr "Felet var: %s"
+
+#~ msgid "Exit"
+#~ msgstr "Avsluta"

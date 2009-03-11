@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-03-02 21:06+0000\n"
+"PO-Revision-Date: 2009-03-10 12:36+0000\n"
 "Last-Translator: Gonçalo Silva <goncalosilva0@gmail.com>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -2923,7 +2923,6 @@ msgstr "Reproduzindo Ficheiro"
 #~ msgid "Channel requires authentication"
 #~ msgstr "O canal necessita de autenticação"
 
-#, python-format
 #~ msgid "An unknown error has occurred %s."
 #~ msgstr "Ocorreu um erro desconhecido %s."
 
@@ -3218,17 +3217,8 @@ msgstr "Reproduzindo Ficheiro"
 #~ msgid "Clear Menu"
 #~ msgstr "Limpar Menu"
 
-#~ msgid "Democracy"
-#~ msgstr "Democracy"
-
-#~ msgid "Democracy Help"
-#~ msgstr "Ajuda do Democracy"
-
 #~ msgid "File"
 #~ msgstr "Ficheiro"
-
-#~ msgid "Full Screen"
-#~ msgstr "Ecrã Inteiro"
 
 #~ msgid "Help"
 #~ msgstr "Ajuda"
@@ -3263,9 +3253,6 @@ msgstr "Reproduzindo Ficheiro"
 #~ msgid "Quit Democracy"
 #~ msgstr "Sair do Democracy"
 
-#~ msgid "Remove Channel..."
-#~ msgstr "Remover Canal..."
-
 #~ msgid "Rename..."
 #~ msgstr "Mudar o Nome..."
 
@@ -3283,9 +3270,6 @@ msgstr "Reproduzindo Ficheiro"
 
 #~ msgid "%channel title%"
 #~ msgstr "%nome do canal%"
-
-#~ msgid "%donation label%"
-#~ msgstr "%etiqueta donativo%"
 
 #~ msgid "00:00:00"
 #~ msgstr "00:00:00"
@@ -3362,35 +3346,14 @@ msgstr "Reproduzindo Ficheiro"
 #~ msgid "manually"
 #~ msgstr "manualmente"
 
-#, python-format
 #~ msgid "(parsed %d files - found %d videos)"
 #~ msgstr "(analisados %d ficheiros - encontrados %d videos)"
 
 #~ msgid "Back"
 #~ msgstr "Retroceder"
 
-#~ msgid "Browse"
-#~ msgstr "Explorar"
-
-#~ msgid ""
-#~ "Democracy Player can find all the videos on your computer to help you "
-#~ "organize your collection.\n"
-#~ "\n"
-#~ "\n"
-#~ "Would you like Democracy Player to look for video files on your computer?"
-#~ msgstr ""
-#~ "O Democracy Player pode encontrar todos os videos no seu computador para "
-#~ "ajudá-lo a organizar a sua colecção.\n"
-#~ "\n"
-#~ "\n"
-#~ "Gostaria que o Democracy Player procure os ficheiros de vídeo no seu "
-#~ "computador?"
-
 #~ msgid "Next"
 #~ msgstr "Seguinte"
-
-#~ msgid "Searching for Videos"
-#~ msgstr "A Procurar por vídeos"
 
 #~ msgid ""
 #~ "The next few screens will help you set up Democracy Player so that it works "
@@ -3492,30 +3455,9 @@ msgstr "Reproduzindo Ficheiro"
 #~ msgid "Create new playlist"
 #~ msgstr "Criar nova playlist"
 
-#~ msgid "Create new playlist folder"
-#~ msgstr "Criar nova pasta de playlist"
-
-#~ msgid "Create new channel folder"
-#~ msgstr "Criar nova pasta de canal"
-
-#, python-format
-#~ msgid ""
-#~ "Error importing democracy modules:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Erro na importação de modulos do Democracy:\n"
-#~ "%s"
-
-#~ msgid "Starting up"
-#~ msgstr "A iniciar"
-
-#~ msgid "Loading window"
-#~ msgstr "A carregar a janela"
-
 #~ msgid "onStartup called twice"
 #~ msgstr "noInício chamado duas vezes"
 
-#, python-format
 #~ msgid "There was an error opening %s.  Please try again in a few seconds"
 #~ msgstr ""
 #~ "Ocorreu um erro na abertura de %s. Por favor tente de novo daqui a alguns "
@@ -3533,177 +3475,8 @@ msgstr "Reproduzindo Ficheiro"
 #~ msgid "All ${len} Videos Match This Search"
 #~ msgstr "Todos os ${len} vídeos correspondem com a sua pesquisa"
 
-#~ msgid "${len} Videos Match This Search"
-#~ msgstr "${len} Vídeos correspondem com a sua pesquisa"
-
 #~ msgid "Looking for videos at this URL"
 #~ msgstr "Procurando por vídeos neste URL"
-
-#~ msgid "${count} Videos on this Channel"
-#~ msgstr "${count} Vídeos neste canal"
-
-#~ msgid "SAVE"
-#~ msgstr "GRAVAR"
-
-#, python-format
-#~ msgid "Removing %s"
-#~ msgstr "A remover %s"
-
-#, python-format
-#~ msgid "%d days"
-#~ msgstr "%d dias"
-
-#~ msgid ""
-#~ "Would you like to delete this file or just remove its entry from My "
-#~ "Collection?"
-#~ msgstr ""
-#~ "Gostaria de eliminar este ficheiro ou apenas removê-lo de Minha Colecção"
-
-#, python-format
-#~ msgid "%s closed connection"
-#~ msgstr "ligação fechada %s"
-
-#, python-format
-#~ msgid ""
-#~ "%s was unable to save its database: Disk Full.\n"
-#~ "We suggest deleting files from the full disk or simply deleting some movies "
-#~ "from your collection.\n"
-#~ "Recent changes may be lost."
-#~ msgstr ""
-#~ "%s não conseguiu guardar a sua base de dados: Disco Cheio.\n"
-#~ "Sugerimos que apague ficheiro do disco cheio ou simplesmente apague alguns "
-#~ "filmes da sua colecção.\n"
-#~ "Alterações recentes podem-se perder."
-
-#~ msgid "Rename Channel Folder"
-#~ msgstr "Renomear Pasta de canal"
-
-#, python-format
-#~ msgid "Enter a new name for the channel folder %s"
-#~ msgstr "Introduza um novo nome para a pasta de canal %s"
-
-#, python-format
-#~ msgid "Enter a new name for the playlist folder %s"
-#~ msgstr "Introduza um novo nome para a pasta de lista de reprodução %s"
-
-#~ msgid "Create Channel Folder"
-#~ msgstr "Criar nova Pasta de Canal"
-
-#~ msgid "Enter a name for the new channel folder"
-#~ msgstr "Introduza um nome para a nova pasta do canal"
-
-#, python-format
-#~ msgid ""
-#~ "This Democracy channel file has an invalid format: %s. Please notify the "
-#~ "publisher of this file."
-#~ msgstr ""
-#~ "Este ficheiro de canal Democracy tem um formato inválido: %s. Por favor "
-#~ "notifique o editor deste ficheiro."
-
-#, python-format
-#~ msgid ""
-#~ "This Democracy channel file has the wrong content type: %s. Please notify "
-#~ "the publisher of this file."
-#~ msgstr ""
-#~ "Este ficheiro de canal Democracy tem o tipo de conteúdo errado: %s. Por "
-#~ "favor notifique o editor deste ficheiro."
-
-#, python-format
-#~ msgid "Could not download the Democracy channel file: %s."
-#~ msgstr "Não foi possível fazer download do ficheiro de canal Democracy: %s"
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files. It may take extra time to list the "
-#~ "videos, and descriptions may look funny.  Please contact the publishers of "
-#~ "$url and ask if they can supply a feed in a format that will work with "
-#~ "Democracy.\n"
-#~ "\n"
-#~ "Do you want to try to load this channel anyway?"
-#~ msgstr ""
-#~ "Mas tentaremos o melhor para obter os ficheiros. A listagem dos vídeos "
-#~ "poderá ser mais demorada, e as descrições poderáo ficar estranhas. Por favor "
-#~ "contacte os provedores de $url e pergunte-lhes se podem fornecer um feed num "
-#~ "formato que funcione com o Democracy.\n"
-#~ " \n"
-#~ "Quer tentar carregar este canal mesmo assim?"
-
-#, python-format
-#~ msgid "Remove %s"
-#~ msgstr "Remover %s"
-
-#, python-format
-#~ msgid "Are you sure you want to remove the guide %s?"
-#~ msgstr "Tem a certeza que quer remover o guia %s?"
-
-#, python-format
-#~ msgid "Are you sure you want to remove %s"
-#~ msgstr "Tem a certeza que quer remover %s"
-
-#, python-format
-#~ msgid "Remove %s channels"
-#~ msgstr "Remover %s canais"
-
-#, python-format
-#~ msgid "Are you sure you want to remove these %s playlists"
-#~ msgstr "Tem a certeza que quer remover estas %s listas de reprodução"
-
-#, python-format
-#~ msgid ""
-#~ "Are you sure you want to remove %s?  Any downloads in progress will be "
-#~ "canceled."
-#~ msgstr ""
-#~ "Tem a certeza que quer remover %s? As transferência em progresso "
-#~ "relacionadas serão canceladas."
-
-#, python-format
-#~ msgid ""
-#~ "Are you sure you want to remove these %s channels?  Any downloads in "
-#~ "progress will be canceled."
-#~ msgstr ""
-#~ "Tem a certeza que quer remover estes %s canais? As transferências em "
-#~ "progresso relacionadas serão canceladas."
-
-#~ msgid ""
-#~ "What would you like to do with the videos in this channel that you've "
-#~ "downloaded?"
-#~ msgstr "O que gostaria de fazer com os vídeos deste canal que já transferiu?"
-
-#~ msgid ""
-#~ "What would you like to do with the videos in these channels that you've "
-#~ "downloaded?"
-#~ msgstr ""
-#~ "O que gostaria de fazer com os vídeos destes canais que já transferiu?"
-
-#~ msgid "Invalid Value"
-#~ msgstr "Valor inválido"
-
-#, python-format
-#~ msgid "%s is invalid.  You must enter a non-negative number."
-#~ msgstr "%s é inválido. Deve introduzir um número não negativo."
-
-#~ msgid " - Invalid URL"
-#~ msgstr " - URL inválido"
-
-#~ msgid ""
-#~ "The address you entered is not a valid URL.\n"
-#~ "Please double check and try again.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "O endereço que introduziu não é um URL válido.\n"
-#~ "Por favor verifique-o e tente de novo.\n"
-#~ "\n"
-
-#~ msgid "Democracy - Add Channel Guide"
-#~ msgstr "Democracy - Adicionar Guia de Canais"
-
-#~ msgid "Enter the URL of the channel guide to add"
-#~ msgstr "Introduza o URL do guia de canais a adicionar"
-
-#~ msgid ""
-#~ "You are running a version of Democracy Player with a custom set of channels."
-#~ msgstr ""
-#~ "Está a correr uma versáo do Democracy Player com uma selecção de canais "
-#~ "customizada."
 
 #~ msgid "Add Channel..."
 #~ msgstr "Adicionar Canal"
@@ -3837,44 +3610,8 @@ msgstr "Reproduzindo Ficheiro"
 #~ msgid "_Remove Channel Guide..."
 #~ msgstr "_Remover guia do canal..."
 
-#~ msgid "_Remove Channel Guides..."
-#~ msgstr "_Remover guias do canal..."
-
-#~ msgid "_Remove Video..."
-#~ msgstr "_Remover video..."
-
-#~ msgid "_Remove Videos..."
-#~ msgstr "_Remover videos..."
-
-#~ msgid "Re_name..."
-#~ msgstr "Re-nomear..."
-
-#~ msgid "Re_name Playlist..."
-#~ msgstr "Re-nomear playlist..."
-
-#~ msgid "Re_name Playlist Folder..."
-#~ msgstr "Re_nomear pasta da playlist..."
-
-#~ msgid "Re_name Channel..."
-#~ msgstr "Re_nomear canal..."
-
-#~ msgid "Re_name Channel Folder..."
-#~ msgstr "Re_nomear pasta do canal..."
-
-#~ msgid "Re_name Channel Guide..."
-#~ msgstr "Re_nomear guia do canal..."
-
-#~ msgid "_Update Channel..."
-#~ msgstr "_Actualizar canal..."
-
 #~ msgid "_Update Channels..."
 #~ msgstr "_Actualizar canais..."
-
-#, python-format
-#~ msgid "%d video found"
-#~ msgid_plural "%d videos found"
-#~ msgstr[0] "%d video encontrado"
-#~ msgstr[1] "%d videos encontrados"
 
 #~ msgid "Remove Playlist..."
 #~ msgstr "Remover Playlist..."
@@ -3887,9 +3624,6 @@ msgstr "Reproduzindo Ficheiro"
 
 #~ msgid "Remove Playlist Folders..."
 #~ msgstr "Remover pastas da playlist..."
-
-#~ msgid "Remove Channels..."
-#~ msgstr "Remover Canais..."
 
 #~ msgid "Remove Channel Folder..."
 #~ msgstr "Remover Pasta de Canais..."
@@ -3930,15 +3664,12 @@ msgstr "Reproduzindo Ficheiro"
 #~ msgid "Update Channels..."
 #~ msgstr "Actualizar canais..."
 
-#, python-format
 #~ msgid "Could not write to %s"
 #~ msgstr "Não consegue escrever em %s"
 
-#, python-format
 #~ msgid "%s MB required to store this video"
 #~ msgstr "Requer %s Mb para guardar este video"
 
-#, python-format
 #~ msgid "The torrent file at %s was not valid"
 #~ msgstr "O ficheiro torrent em %s não está disponível"
 
@@ -3948,61 +3679,127 @@ msgstr "Reproduzindo Ficheiro"
 #~ msgid "outside of democracy."
 #~ msgstr "fora do democracy."
 
-#, python-format
-#~ msgid "%0.0fB"
-#~ msgstr "%1.1fB"
+#~ msgid "-00:00:00"
+#~ msgstr "-00:00:00"
 
-#, python-format
+#~ msgid "Change..."
+#~ msgstr "Modificar..."
+
+#~ msgid "Download at most"
+#~ msgstr "Descarregar no máximo"
+
+#~ msgid "Save downloaded videos in this folder:"
+#~ msgstr "Guardar vídeos descarregados neste directório:"
+
+#~ msgid "To avoid internet slowdowns:"
+#~ msgstr "Para evitar a lentidão nas descargas da internet:"
+
+#~ msgid "videos at once."
+#~ msgstr "vídeos de uma vez."
+
+#~ msgid "Search this folder:"
+#~ msgstr "Busca neste directório"
+
+#~ msgid "STAR"
+#~ msgstr "MARCAR COMO FAVORITO"
+
+#~ msgid "SAVED"
+#~ msgstr "GUARDADO"
+
+#~ msgid "DELETE"
+#~ msgstr "APAGAR"
+
+#~ msgid "default"
+#~ msgstr "por omissão"
+
+#~ msgid "Videos expire after"
+#~ msgstr "Vídeos expiram a"
+
+#~ msgid "When turned on, Auto Download should"
+#~ msgstr "Quando activo, Auto Descarregar deve"
+
+#~ msgid ""
+#~ "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
+#~ "unwatched."
+#~ msgstr ""
+#~ "Não efectuar autodescarga quando mais do que ${maxnew} ${maxnew2} estejam à "
+#~ "espera de ser vistos"
+
+#~ msgid "<label for=\"automatic\">Auto Download</label>"
+#~ msgstr "<label for=\"automatic\">Download Automático</label>"
+
+#~ msgid ""
+#~ "Democracy can't play this file. You may be able to open it with a different "
+#~ "program.<br></br><br></br><strong>Filename:</strong> "
+#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
+#~ msgstr ""
+#~ "Democracy não pode ler este ficheiro. É possível que seja capaz de o abrir "
+#~ "com um programa diferente. <br></br><br></br><strong>Nome de "
+#~ "ficheiro:</strong> ${filename}<Br></Br><strong>Tipo de ficheiro:</strong> "
+#~ "${format}"
+
+#~ msgid "REVEAL FILE"
+#~ msgstr "MOSTRAR FICHEIRO"
+
+#~ msgid "Skip >> ${countdown}"
+#~ msgstr "Saltar >> ${countdown}"
+
+#~ msgid "SHOW FILE"
+#~ msgstr "MOSTRAR O FICHEIRO"
+
+#~ msgid "SHOW FOLDER"
+#~ msgstr "MOSTRAR A PASTA"
+
+#~ msgid "SHARE IT"
+#~ msgstr "PARTILHAR"
+
+#~ msgid "STAR IT"
+#~ msgstr "COLOCAR ESTRELA"
+
+#~ msgid "Full Screen"
+#~ msgstr "Ecrã Inteiro"
+
+#~ msgid "%donation label%"
+#~ msgstr "%etiqueta donativo%"
+
+#~ msgid "Browse"
+#~ msgstr "Explorar"
+
+#~ msgid "Starting up"
+#~ msgstr "A iniciar"
+
+#~ msgid "Removing %s"
+#~ msgstr "A remover %s"
+
+#~ msgid "%d days"
+#~ msgstr "%d dias"
+
+#~ msgid "Remove %s"
+#~ msgstr "Remover %s"
+
+#~ msgid "Are you sure you want to remove the guide %s?"
+#~ msgstr "Tem a certeza que quer remover o guia %s?"
+
+#~ msgid "Are you sure you want to remove %s"
+#~ msgstr "Tem a certeza que quer remover %s"
+
+#~ msgid "Remove %s channels"
+#~ msgstr "Remover %s canais"
+
+#~ msgid "Invalid Value"
+#~ msgstr "Valor inválido"
+
 #~ msgid "Error: %s"
 #~ msgstr "Erro: %s"
 
-#, python-format
-#~ msgid "Connection Error: %s"
-#~ msgstr "Erro de Ligação: %s"
-
-#, python-format
-#~ msgid "Bad Status Line: %s"
-#~ msgstr "Linha em más condições: %s"
-
-#, python-format
-#~ msgid "Bad Header Line: %s"
-#~ msgstr "Cabeçalho em más condições: %s"
-
-#, python-format
-#~ msgid "Bad Chunk size: %s"
-#~ msgstr "tamanho inválido: %s"
-
-#, python-format
-#~ msgid "Expected CRLF got: %r"
-#~ msgstr "CRLF esperado: %s"
-
-#, python-format
 #~ msgid "Bad Status Code: %s"
 #~ msgstr "Código de estado inválido: %s"
 
-#, python-format
-#~ msgid "Connection to %s timed out"
-#~ msgstr "Ligação a %s expirou"
-
-#, python-format
-#~ msgid "%s is not a valid URL"
-#~ msgstr "%s não é um endereço válido"
-
-#, python-format
-#~ msgid "Deleting %s"
-#~ msgstr "Apagando %s"
-
-#, python-format
 #~ msgid "%d hours"
 #~ msgstr "%d horas"
 
-#, python-format
 #~ msgid "%d minutes"
 #~ msgstr "%d minutos"
-
-#, python-format
-#~ msgid "Expires in %s"
-#~ msgstr "Expira em %s"
 
 #~ msgid "TORRENT"
 #~ msgstr "TORRENT"
@@ -4010,12 +3807,74 @@ msgstr "Reproduzindo Ficheiro"
 #~ msgid "WEB PAGE"
 #~ msgstr "Página web"
 
-#~ msgid "downloading..."
-#~ msgstr "transferindo..."
-
-#, python-format
 #~ msgid "%s remaining"
 #~ msgstr "%s tempo que falta"
+
+#~ msgid "Add to new playlist"
+#~ msgstr "Adicionar à nova playlist"
+
+#~ msgid "_Search For:"
+#~ msgstr "_Pesquisar por:"
+
+#~ msgid "_URL"
+#~ msgstr "_URL"
+
+#~ msgid "and"
+#~ msgstr "e"
+
+#~ msgid "<b>BitTorrent</b>"
+#~ msgstr "<b>BitTorrent</b>"
+
+#~ msgid "Go"
+#~ msgstr "Ir"
+
+#~ msgid "Channel:"
+#~ msgstr "Canal:"
+
+#~ msgid "Search Engine:"
+#~ msgstr "Motor de busca:"
+
+#~ msgid "Search For:"
+#~ msgstr "Pesquisar:"
+
+#~ msgid "Don't Worry About Disk Space:"
+#~ msgstr "Não se Preocupe com Espaço em Disco:"
+
+#~ msgid "Reset Search"
+#~ msgstr "Apagar Procura"
+
+#~ msgid "You're done!"
+#~ msgstr "Terminou!"
+
+#~ msgid "Democracy Help"
+#~ msgstr "Ajuda do Democracy"
+
+#~ msgid "Democracy"
+#~ msgstr "Democracy"
+
+#~ msgid "Remove Channel..."
+#~ msgstr "Remover Canal..."
+
+#~ msgid "Create new playlist folder"
+#~ msgstr "Criar nova pasta de playlist"
+
+#~ msgid "Create new channel folder"
+#~ msgstr "Criar nova pasta de canal"
+
+#~ msgid "Searching for Videos"
+#~ msgstr "A Procurar por vídeos"
+
+#~ msgid "SAVE"
+#~ msgstr "GRAVAR"
+
+#~ msgid "Remove Channels..."
+#~ msgstr "Remover Canais..."
+
+#~ msgid "Expires in %s"
+#~ msgstr "Expira em %s"
+
+#~ msgid "downloading..."
+#~ msgstr "transferindo..."
 
 #~ msgid "Remove From My Collection"
 #~ msgstr "Remover da Minha Colecção"
@@ -4023,11 +3882,397 @@ msgstr "Reproduzindo Ficheiro"
 #~ msgid "Play Just This Video"
 #~ msgstr "Reproduzir apenas este video"
 
-#~ msgid "Add to new playlist"
-#~ msgstr "Adicionar à nova playlist"
+#~ msgid "(Changes won't go into effect until you restart Democracy Player.)"
+#~ msgstr ""
+#~ "(As alterações só entram em efeito depois de reiniciar o Leitor Democracia)"
+
+#~ msgid "<b>Playback</b>"
+#~ msgstr "<b>Reproduzir</b>"
+
+#~ msgid "Bit Torrent uses ports between"
+#~ msgstr "Bit Torrent usa portas entre"
+
+#~ msgid "In This:"
+#~ msgstr "Nisto:"
+
+#~ msgid "Results for \"${query}\""
+#~ msgstr "Resultados para \"${query}\""
+
+#~ msgid "Empty Playlist"
+#~ msgstr "Lista a reproduzir vazia"
+
+#~ msgid "Drag downloaded videos to this playlist to add them."
+#~ msgstr ""
+#~ "Arraste os vídeos transferidos até aqui para os adicionar a esta playlist."
+
+#~ msgid "${size} available for downloads"
+#~ msgstr "${size} disponíveis para descargas"
+
+#~ msgid "<b>General</b>"
+#~ msgstr "<b>Geral</b>"
+
+#~ msgid "Automatically run Democracy Player when I log in"
+#~ msgstr ""
+#~ "Iniciar o Democracy Player automaticamente cada vez que ligar o computador"
+
+#~ msgid "_Store downloaded videos in this folder:"
+#~ msgstr "_Guardar vídeos transferidos nesta pasta:"
+
+#~ msgid "Cancel Search"
+#~ msgstr "Cancelar Busca"
+
+#~ msgid "Find Videos:"
+#~ msgstr "Encontrar Vídeos:"
+
+#~ msgid ""
+#~ "Democracy Player can find all the videos on your computer to help you "
+#~ "organize your collection.\n"
+#~ "\n"
+#~ "\n"
+#~ "Would you like Democracy Player to look for video files on your computer?"
+#~ msgstr ""
+#~ "O Democracy Player pode encontrar todos os videos no seu computador para "
+#~ "ajudá-lo a organizar a sua colecção.\n"
+#~ "\n"
+#~ "\n"
+#~ "Gostaria que o Democracy Player procure os ficheiros de vídeo no seu "
+#~ "computador?"
+
+#~ msgid ""
+#~ "Error importing democracy modules:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Erro na importação de modulos do Democracy:\n"
+#~ "%s"
+
+#~ msgid "${len} Videos Match This Search"
+#~ msgstr "${len} Vídeos correspondem com a sua pesquisa"
+
+#~ msgid "${count} Videos on this Channel"
+#~ msgstr "${count} Vídeos neste canal"
+
+#~ msgid ""
+#~ "Would you like to delete this file or just remove its entry from My "
+#~ "Collection?"
+#~ msgstr ""
+#~ "Gostaria de eliminar este ficheiro ou apenas removê-lo de Minha Colecção"
+
+#~ msgid "%s closed connection"
+#~ msgstr "ligação fechada %s"
+
+#~ msgid "Could not download the Democracy channel file: %s."
+#~ msgstr "Não foi possível fazer download do ficheiro de canal Democracy: %s"
+
+#~ msgid "Loading window"
+#~ msgstr "A carregar a janela"
+
+#~ msgid ""
+#~ "Are you sure you want to remove %s?  Any downloads in progress will be "
+#~ "canceled."
+#~ msgstr ""
+#~ "Tem a certeza que quer remover %s? As transferência em progresso "
+#~ "relacionadas serão canceladas."
+
+#~ msgid ""
+#~ "What would you like to do with the videos in this channel that you've "
+#~ "downloaded?"
+#~ msgstr "O que gostaria de fazer com os vídeos deste canal que já transferiu?"
+
+#~ msgid ""
+#~ "What would you like to do with the videos in these channels that you've "
+#~ "downloaded?"
+#~ msgstr ""
+#~ "O que gostaria de fazer com os vídeos destes canais que já transferiu?"
+
+#~ msgid "%s is invalid.  You must enter a non-negative number."
+#~ msgstr "%s é inválido. Deve introduzir um número não negativo."
+
+#~ msgid "_Remove Video..."
+#~ msgstr "_Remover video..."
+
+#~ msgid "_Remove Videos..."
+#~ msgstr "_Remover videos..."
+
+#~ msgid "Re_name Playlist..."
+#~ msgstr "Re-nomear playlist..."
+
+#~ msgid "Re_name Playlist Folder..."
+#~ msgstr "Re_nomear pasta da playlist..."
+
+#~ msgid "Re_name Channel..."
+#~ msgstr "Re_nomear canal..."
+
+#~ msgid "Re_name Channel Folder..."
+#~ msgstr "Re_nomear pasta do canal..."
+
+#~ msgid "_Update Channel..."
+#~ msgstr "_Actualizar canal..."
+
+#~ msgid "Removing %s items"
+#~ msgstr "A remover %s items"
+
+#~ msgid ""
+#~ "One or more of these items is a folder.  When you remove or delete a folder, "
+#~ "any items inside that folder will also be removed or deleted."
+#~ msgstr ""
+#~ "Um ou mais intens são pastas. Quando remove ou apaga uma pasta, todos os "
+#~ "itens dentro da pasta serão também removidos ou apagados."
+
+#~ msgid "Rename Channel"
+#~ msgstr "Renomear canal"
+
+#~ msgid "Revert Title to Default"
+#~ msgstr "Reverter título para o inicial"
+
+#~ msgid "Create %d channels?"
+#~ msgstr "Criar %d canais?"
+
+#~ msgid "<b>Searching for Videos</b>"
+#~ msgstr "<b>À procura de videos</b>"
+
+#~ msgid "C_hannel:"
+#~ msgstr "C_anal:"
+
+#~ msgid "C_reate Channel"
+#~ msgstr "C_riar Canal"
+
+#~ msgid "Restrict to my full _home folder"
+#~ msgstr "Restringir à pasta inteira da minha conta"
+
+#~ msgid "Search _Engine:"
+#~ msgstr "Motor de _Busca:"
+
+#~ msgid "Select custom search directory"
+#~ msgstr "Seleccionar directoria de pesquisa personalizada"
+
+#~ msgid ""
+#~ "This item is a folder.  When you remove a folder, any items inside that "
+#~ "folder will be deleted."
+#~ msgstr ""
+#~ "Este item é um directório. Quando apaga um directório quaisquer itens dentro "
+#~ "dele serão apagados."
+
+#~ msgid "Search _custom folder:"
+#~ msgstr "Procurar na pasta _custom:"
+
+#~ msgid "Go Big:"
+#~ msgstr "Disfrute ao máximo:"
+
+#~ msgid "Leave it On:"
+#~ msgstr "Deixe-o ligado:"
+
+#~ msgid ""
+#~ "Now you can explore the Channel Guide\n"
+#~ "and start watching.  A few tips to get started:"
+#~ msgstr ""
+#~ "Agora já pode explorar o Guia de Canais\n"
+#~ "e visionar vídeos e filmes. Algumas dicas para começar:"
+
+#~ msgid "The button to the right of the play button shows videos fullscreen."
+#~ msgstr ""
+#~ "O botão à direita do botão \"reproduzir\" mostra os vídeos em ecrã inteiro."
+
+#~ msgid ""
+#~ "%s was unable to save its database: Disk Full.\n"
+#~ "We suggest deleting files from the full disk or simply deleting some movies "
+#~ "from your collection.\n"
+#~ "Recent changes may be lost."
+#~ msgstr ""
+#~ "%s não conseguiu guardar a sua base de dados: Disco Cheio.\n"
+#~ "Sugerimos que apague ficheiro do disco cheio ou simplesmente apague alguns "
+#~ "filmes da sua colecção.\n"
+#~ "Alterações recentes podem-se perder."
+
+#~ msgid "Rename Channel Folder"
+#~ msgstr "Renomear Pasta de canal"
+
+#~ msgid "Enter a new name for the channel folder %s"
+#~ msgstr "Introduza um novo nome para a pasta de canal %s"
+
+#~ msgid "Enter a new name for the playlist folder %s"
+#~ msgstr "Introduza um novo nome para a pasta de lista de reprodução %s"
+
+#~ msgid "Create Channel Folder"
+#~ msgstr "Criar nova Pasta de Canal"
+
+#~ msgid "Enter a name for the new channel folder"
+#~ msgstr "Introduza um nome para a nova pasta do canal"
+
+#~ msgid ""
+#~ "This Democracy channel file has an invalid format: %s. Please notify the "
+#~ "publisher of this file."
+#~ msgstr ""
+#~ "Este ficheiro de canal Democracy tem um formato inválido: %s. Por favor "
+#~ "notifique o editor deste ficheiro."
+
+#~ msgid ""
+#~ "This Democracy channel file has the wrong content type: %s. Please notify "
+#~ "the publisher of this file."
+#~ msgstr ""
+#~ "Este ficheiro de canal Democracy tem o tipo de conteúdo errado: %s. Por "
+#~ "favor notifique o editor deste ficheiro."
+
+#~ msgid ""
+#~ "But we'll try our best to grab the files. It may take extra time to list the "
+#~ "videos, and descriptions may look funny.  Please contact the publishers of "
+#~ "$url and ask if they can supply a feed in a format that will work with "
+#~ "Democracy.\n"
+#~ "\n"
+#~ "Do you want to try to load this channel anyway?"
+#~ msgstr ""
+#~ "Mas tentaremos o melhor para obter os ficheiros. A listagem dos vídeos "
+#~ "poderá ser mais demorada, e as descrições poderáo ficar estranhas. Por favor "
+#~ "contacte os provedores de $url e pergunte-lhes se podem fornecer um feed num "
+#~ "formato que funcione com o Democracy.\n"
+#~ " \n"
+#~ "Quer tentar carregar este canal mesmo assim?"
+
+#~ msgid "Are you sure you want to remove these %s playlists"
+#~ msgstr "Tem a certeza que quer remover estas %s listas de reprodução"
+
+#~ msgid ""
+#~ "Are you sure you want to remove these %s channels?  Any downloads in "
+#~ "progress will be canceled."
+#~ msgstr ""
+#~ "Tem a certeza que quer remover estes %s canais? As transferências em "
+#~ "progresso relacionadas serão canceladas."
+
+#~ msgid " - Invalid URL"
+#~ msgstr " - URL inválido"
+
+#~ msgid ""
+#~ "The address you entered is not a valid URL.\n"
+#~ "Please double check and try again.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "O endereço que introduziu não é um URL válido.\n"
+#~ "Por favor verifique-o e tente de novo.\n"
+#~ "\n"
+
+#~ msgid "Democracy - Add Channel Guide"
+#~ msgstr "Democracy - Adicionar Guia de Canais"
+
+#~ msgid "Enter the URL of the channel guide to add"
+#~ msgstr "Introduza o URL do guia de canais a adicionar"
+
+#~ msgid ""
+#~ "You are running a version of Democracy Player with a custom set of channels."
+#~ msgstr ""
+#~ "Está a correr uma versáo do Democracy Player com uma selecção de canais "
+#~ "customizada."
+
+#~ msgid "Re_name..."
+#~ msgstr "Re-nomear..."
+
+#~ msgid "Re_name Channel Guide..."
+#~ msgstr "Re_nomear guia do canal..."
+
+#~ msgid "%d video found"
+#~ msgid_plural "%d videos found"
+#~ msgstr[0] "%d video encontrado"
+#~ msgstr[1] "%d videos encontrados"
+
+#~ msgid "Connection Error: %s"
+#~ msgstr "Erro de Ligação: %s"
+
+#~ msgid "Bad Status Line: %s"
+#~ msgstr "Linha em más condições: %s"
+
+#~ msgid "Bad Header Line: %s"
+#~ msgstr "Cabeçalho em más condições: %s"
+
+#~ msgid "Bad Chunk size: %s"
+#~ msgstr "tamanho inválido: %s"
+
+#~ msgid "Connection to %s timed out"
+#~ msgstr "Ligação a %s expirou"
+
+#~ msgid "%s is not a valid URL"
+#~ msgstr "%s não é um endereço válido"
+
+#~ msgid "Deleting %s"
+#~ msgstr "Apagando %s"
 
 #~ msgid "Mark as Unwatched"
 #~ msgstr "Marcar como Não Visto"
+
+#~ msgid "%d Available Items"
+#~ msgstr "%d itens disponíveis"
+
+#~ msgid "%d Downloading Items"
+#~ msgstr "%d itens transferindo"
+
+#~ msgid "Update Channel Now"
+#~ msgstr "Actualizar canal agora"
+
+#~ msgid "Enter a new name for the channel %s"
+#~ msgstr "Introduza um novo nome para o canal %s"
+
+#~ msgid "Couldn't load the feed at %s (%s)."
+#~ msgstr "Não consegue carregar o feed a %s (%s)."
+
+#~ msgid "Subscribing to multiple channels"
+#~ msgstr "Subscrever múltiplos canais"
+
+#~ msgid ""
+#~ "NOTE: You are already subscribed to %d of these channels.  These channels "
+#~ "will stay where they currently are."
+#~ msgstr ""
+#~ "NOTA: Já subscreveu %d destes canais. Este canais irão permanecer onde estão "
+#~ "actualmente."
+
+#~ msgid "Drag playlists to this folder to add them."
+#~ msgstr "Arraste playlists até esta pasta para as adicionar."
+
+#~ msgid ""
+#~ "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
+#~ "playlists)"
+#~ msgstr ""
+#~ "${count} Pastas de Playlists Seleccionadas<br></br>(contém ${containedcount} "
+#~ "playlists)"
+
+#~ msgid "Clear Completed Torrents"
+#~ msgstr "Limpar Torrents completas"
+
+#~ msgid "Empty Channel Folder"
+#~ msgstr "Esvaziar Directório de Canais"
+
+#~ msgid "Drag channels to this folder to add them."
+#~ msgstr "Arrastar canais para este directrório para os adicionar."
+
+#~ msgid ""
+#~ "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
+#~ "channels)"
+#~ msgstr ""
+#~ "${count} Directrórios de Canais Seleccionados<br></br>(contem "
+#~ "${containedcount} canais)"
+
+#~ msgid "${count} Channels Selected"
+#~ msgstr "${count} Canais Seleccionados"
+
+#~ msgid "Local File"
+#~ msgstr "Ficheiro Local"
+
+#~ msgid "Search custom folder:"
+#~ msgstr "Procurar numa pasta à escolha:"
+
+#~ msgid "New Channel Folder"
+#~ msgstr "Novo Directório de Canais"
+
+#~ msgid "New Channel Guide"
+#~ msgstr "Novo Guia de Canais"
+
+#~ msgid "Pause Video"
+#~ msgstr "Pausar Vídeo"
+
+#~ msgid "Send This Channel to a Friend..."
+#~ msgstr "Enviar este Canal a um amigo..."
+
+#~ msgid "_Remove Channel Guides..."
+#~ msgstr "_Remover guias do canal..."
+
+#~ msgid "%0.0fB"
+#~ msgstr "%1.1fB"
 
 #~ msgid ""
 #~ "Would you like to delete this folder and all of its videos or just remove "
@@ -4035,10 +4280,6 @@ msgstr "Reproduzindo Ficheiro"
 #~ msgstr ""
 #~ "Deseja apagar esta pasta e todos os seus videos ou apenas remover as suas "
 #~ "entradas da Minha Colecção?"
-
-#, python-format
-#~ msgid "Removing %s items"
-#~ msgstr "A remover %s items"
 
 #~ msgid ""
 #~ "One or more of these videos was not downloaded from a channel.  Would you "
@@ -4048,69 +4289,12 @@ msgstr "Reproduzindo Ficheiro"
 #~ "ou apenas removê-os da Minha Colecção?"
 
 #~ msgid ""
-#~ "One or more of these items is a folder.  When you remove or delete a folder, "
-#~ "any items inside that folder will also be removed or deleted."
-#~ msgstr ""
-#~ "Um ou mais intens são pastas. Quando remove ou apaga uma pasta, todos os "
-#~ "itens dentro da pasta serão também removidos ou apagados."
-
-#~ msgid ""
 #~ "You have a database that was saved with a newer version of Democracy. You "
 #~ "must download the latest version of Democracy and run that."
 #~ msgstr ""
 #~ "Voçê tem uma base de dados que foi gravada numa versão mais recente do "
 #~ "Democracy. Tem de transferir a última versão do Democracy para correr essa "
 #~ "base de dados."
-
-#, python-format
-#~ msgid "%d Available Items"
-#~ msgstr "%d itens disponíveis"
-
-#, python-format
-#~ msgid "%d Downloading Items"
-#~ msgstr "%d itens transferindo"
-
-#~ msgid "Update Channel Now"
-#~ msgstr "Actualizar canal agora"
-
-#~ msgid "Rename Channel"
-#~ msgstr "Renomear canal"
-
-#~ msgid "Revert Title to Default"
-#~ msgstr "Reverter título para o inicial"
-
-#, python-format
-#~ msgid "Enter a new name for the channel %s"
-#~ msgstr "Introduza um novo nome para o canal %s"
-
-#, python-format
-#~ msgid "Couldn't load the feed at %s (%s)."
-#~ msgstr "Não consegue carregar o feed a %s (%s)."
-
-#~ msgid "Subscribing to multiple channels"
-#~ msgstr "Subscrever múltiplos canais"
-
-#, python-format
-#~ msgid "Create %d channels?"
-#~ msgstr "Criar %d canais?"
-
-#, python-format
-#~ msgid ""
-#~ "NOTE: You are already subscribed to %d of these channels.  These channels "
-#~ "will stay where they currently are."
-#~ msgstr ""
-#~ "NOTA: Já subscreveu %d destes canais. Este canais irão permanecer onde estão "
-#~ "actualmente."
-
-#~ msgid "(Changes won't go into effect until you restart Democracy Player.)"
-#~ msgstr ""
-#~ "(As alterações só entram em efeito depois de reiniciar o Leitor Democracia)"
-
-#~ msgid "<b>Playback</b>"
-#~ msgstr "<b>Reproduzir</b>"
-
-#~ msgid "<b>Searching for Videos</b>"
-#~ msgstr "<b>À procura de videos</b>"
 
 #~ msgid ""
 #~ "<b>Would you like Democracy Player to look for video files on your "
@@ -4173,33 +4357,12 @@ msgstr "Reproduzindo Ficheiro"
 #~ "de Internet TV, todos eles são grátis. Apenas clique em 'Adicionar' para "
 #~ "visualizar o canal."
 
-#~ msgid "Bit Torrent uses ports between"
-#~ msgstr "Bit Torrent usa portas entre"
-
-#~ msgid "C_hannel:"
-#~ msgstr "C_anal:"
-
-#~ msgid "C_reate Channel"
-#~ msgstr "C_riar Canal"
-
 #~ msgid ""
 #~ "Democracy Player can find all the videos on your computer to help you "
 #~ "organize your collection."
 #~ msgstr ""
 #~ "O Democracy Player pode encontrar todos os videos no seu computador para "
 #~ "ajuda-lo a organizar a sua colecção."
-
-#~ msgid "In This:"
-#~ msgstr "Nisto:"
-
-#~ msgid "Restrict to my full _home folder"
-#~ msgstr "Restringir à pasta inteira da minha conta"
-
-#~ msgid "Search _Engine:"
-#~ msgstr "Motor de _Busca:"
-
-#~ msgid "Select custom search directory"
-#~ msgstr "Seleccionar directoria de pesquisa personalizada"
 
 #~ msgid ""
 #~ "The next few screens will help you set up democracy player so that it works "
@@ -4229,49 +4392,6 @@ msgstr "Reproduzindo Ficheiro"
 #~ "novos videos um depois do outro, transferir torrents, recomendar videos a "
 #~ "amigos, e muitos mais."
 
-#~ msgid "_Search"
-#~ msgstr "_Pesquisa"
-
-#~ msgid "_Search For:"
-#~ msgstr "_Pesquisar por:"
-
-#~ msgid "_URL"
-#~ msgstr "_URL"
-
-#~ msgid "and"
-#~ msgstr "e"
-
-#~ msgid "-00:00:00"
-#~ msgstr "-00:00:00"
-
-#~ msgid "Change..."
-#~ msgstr "Modificar..."
-
-#~ msgid "Download at most"
-#~ msgstr "Descarregar no máximo"
-
-#~ msgid "Save downloaded videos in this folder:"
-#~ msgstr "Guardar vídeos descarregados neste directório:"
-
-#~ msgid "To avoid internet slowdowns:"
-#~ msgstr "Para evitar a lentidão nas descargas da internet:"
-
-#~ msgid "videos at once."
-#~ msgstr "vídeos de uma vez."
-
-#~ msgid "Search this folder:"
-#~ msgstr "Busca neste directório"
-
-#~ msgid "Results for \"${query}\""
-#~ msgstr "Resultados para \"${query}\""
-
-#~ msgid "Empty Playlist"
-#~ msgstr "Lista a reproduzir vazia"
-
-#~ msgid "Drag downloaded videos to this playlist to add them."
-#~ msgstr ""
-#~ "Arraste os vídeos transferidos até aqui para os adicionar a esta playlist."
-
 #~ msgid "Empty Playlist Folder"
 #~ msgstr "Pasta de Playlists Vazia"
 
@@ -4281,89 +4401,11 @@ msgstr "Reproduzindo Ficheiro"
 #~ msgstr ""
 #~ "Esta pasta contém ${count} playlists, mas nenhuma contém quaisquer itens."
 
-#~ msgid "Drag playlists to this folder to add them."
-#~ msgstr "Arraste playlists até esta pasta para as adicionar."
-
-#~ msgid ""
-#~ "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
-#~ "playlists)"
-#~ msgstr ""
-#~ "${count} Pastas de Playlists Seleccionadas<br></br>(contém ${containedcount} "
-#~ "playlists)"
-
 #~ msgid "${count} Playlists Selected"
 #~ msgstr "${count} Playlists Seleccionadas"
 
-#~ msgid "STAR"
-#~ msgstr "MARCAR COMO FAVORITO"
-
-#~ msgid "SAVED"
-#~ msgstr "GUARDADO"
-
-#~ msgid "DELETE"
-#~ msgstr "APAGAR"
-
-#~ msgid "default"
-#~ msgstr "por omissão"
-
-#~ msgid "Videos expire after"
-#~ msgstr "Vídeos expiram a"
-
-#~ msgid "When turned on, Auto Download should"
-#~ msgstr "Quando activo, Auto Descarregar deve"
-
-#~ msgid ""
-#~ "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
-#~ "unwatched."
-#~ msgstr ""
-#~ "Não efectuar autodescarga quando mais do que ${maxnew} ${maxnew2} estejam à "
-#~ "espera de ser vistos"
-
-#~ msgid "<label for=\"automatic\">Auto Download</label>"
-#~ msgstr "<label for=\"automatic\">Download Automático</label>"
-
-#~ msgid ""
-#~ "Democracy can't play this file. You may be able to open it with a different "
-#~ "program.<br></br><br></br><strong>Filename:</strong> "
-#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
-#~ msgstr ""
-#~ "Democracy não pode ler este ficheiro. É possível que seja capaz de o abrir "
-#~ "com um programa diferente. <br></br><br></br><strong>Nome de "
-#~ "ficheiro:</strong> ${filename}<Br></Br><strong>Tipo de ficheiro:</strong> "
-#~ "${format}"
-
-#~ msgid "REVEAL FILE"
-#~ msgstr "MOSTRAR FICHEIRO"
-
-#~ msgid "Skip >> ${countdown}"
-#~ msgstr "Saltar >> ${countdown}"
-
-#~ msgid "SHOW FILE"
-#~ msgstr "MOSTRAR O FICHEIRO"
-
-#~ msgid "SHOW FOLDER"
-#~ msgstr "MOSTRAR A PASTA"
-
-#~ msgid "SHARE IT"
-#~ msgstr "PARTILHAR"
-
-#~ msgid "STAR IT"
-#~ msgstr "COLOCAR ESTRELA"
-
 #~ msgid "${size} disk space free"
 #~ msgstr "${size} de espaço livre em disco"
-
-#~ msgid "${size} available for downloads"
-#~ msgstr "${size} disponíveis para descargas"
-
-#~ msgid "Clear Completed Torrents"
-#~ msgstr "Limpar Torrents completas"
-
-#~ msgid "Empty Channel Folder"
-#~ msgstr "Esvaziar Directório de Canais"
-
-#~ msgid "Drag channels to this folder to add them."
-#~ msgstr "Arrastar canais para este directrório para os adicionar."
 
 #~ msgid ""
 #~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
@@ -4373,68 +4415,17 @@ msgstr "Reproduzindo Ficheiro"
 #~ "href=\"#\" onclick=\"doneWithIntro();\">Ir para o Guia de Canais "
 #~ ">></a></strong>"
 
-#~ msgid ""
-#~ "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
-#~ "channels)"
-#~ msgstr ""
-#~ "${count} Directrórios de Canais Seleccionados<br></br>(contem "
-#~ "${containedcount} canais)"
-
-#~ msgid "${count} Channels Selected"
-#~ msgstr "${count} Canais Seleccionados"
-
-#~ msgid ""
-#~ "This item is a folder.  When you remove a folder, any items inside that "
-#~ "folder will be deleted."
-#~ msgstr ""
-#~ "Este item é um directório. Quando apaga um directório quaisquer itens dentro "
-#~ "dele serão apagados."
-
-#~ msgid "Local File"
-#~ msgstr "Ficheiro Local"
-
-#~ msgid "<b>BitTorrent</b>"
-#~ msgstr "<b>BitTorrent</b>"
-
-#~ msgid "<b>General</b>"
-#~ msgstr "<b>Geral</b>"
-
-#~ msgid "Automatically run Democracy Player when I log in"
-#~ msgstr ""
-#~ "Iniciar o Democracy Player automaticamente cada vez que ligar o computador"
-
-#~ msgid "Go"
-#~ msgstr "Ir"
-
-#~ msgid "Search _custom folder:"
-#~ msgstr "Procurar na pasta _custom:"
-
 #~ msgid "Show movies in these directories in My Collection"
 #~ msgstr "Mostrar os vídeos destes directórios na Minha Colecção"
 
 #~ msgid "_Add Directory"
 #~ msgstr "_Adicionar Directório"
 
-#~ msgid "_Store downloaded videos in this folder:"
-#~ msgstr "_Guardar vídeos transferidos nesta pasta:"
-
 #~ msgid "A search channel contains"
 #~ msgstr "Um canal de procura contém"
 
 #~ msgid "items that match a search term."
 #~ msgstr "itens que correspondem aos termos da pesquisa."
-
-#~ msgid "Channel:"
-#~ msgstr "Canal:"
-
-#~ msgid "Search Engine:"
-#~ msgstr "Motor de busca:"
-
-#~ msgid "Search For:"
-#~ msgstr "Pesquisar:"
-
-#~ msgid "Cancel Search"
-#~ msgstr "Cancelar Busca"
 
 #~ msgid "Democracy First Time Setup"
 #~ msgstr "Instalação pela Primeira Vez do Democracy"
@@ -4448,18 +4439,6 @@ msgstr "Reproduzindo Ficheiro"
 #~ "descargas em tarefa de fundo. Ao deixá-lo a correr significa que terá novos "
 #~ "vídeos quando estiver pronto para os ver."
 
-#~ msgid "Don't Worry About Disk Space:"
-#~ msgstr "Não se Preocupe com Espaço em Disco:"
-
-#~ msgid "Find Videos:"
-#~ msgstr "Encontrar Vídeos:"
-
-#~ msgid "Go Big:"
-#~ msgstr "Disfrute ao máximo:"
-
-#~ msgid "Leave it On:"
-#~ msgstr "Deixe-o ligado:"
-
 #~ msgid ""
 #~ "Like a TiVo, Democracy Player features an 'expiration' system that helps "
 #~ "clean out older videos to make room for new videos.  You can always keep a "
@@ -4472,28 +4451,11 @@ msgstr "Reproduzindo Ficheiro"
 #~ "configurar cada canal para guardar os seus vídeos automaticamente."
 
 #~ msgid ""
-#~ "Now you can explore the Channel Guide\n"
-#~ "and start watching.  A few tips to get started:"
-#~ msgstr ""
-#~ "Agora já pode explorar o Guia de Canais\n"
-#~ "e visionar vídeos e filmes. Algumas dicas para começar:"
-
-#~ msgid "Reset Search"
-#~ msgstr "Apagar Procura"
-
-#~ msgid "Search custom folder:"
-#~ msgstr "Procurar numa pasta à escolha:"
-
-#~ msgid ""
 #~ "The Democracy Channel Guide has hundreds of internet TV channels, all of "
 #~ "them are free.  Just click 'ADD' to watch a channel."
 #~ msgstr ""
 #~ "O Guia de Canais do Democracy tem centenas de canais de TV na internet, "
 #~ "todos totalmente gratuitos. Basta clicar em \"ADICIONAR\" para ver um canal."
-
-#~ msgid "The button to the right of the play button shows videos fullscreen."
-#~ msgstr ""
-#~ "O botão à direita do botão \"reproduzir\" mostra os vídeos em ecrã inteiro."
 
 #~ msgid ""
 #~ "The next few screens will help you set up Democracy Player so that it works "
@@ -4518,9 +4480,6 @@ msgstr "Reproduzindo Ficheiro"
 
 #~ msgid "Would you like to run Democracy on startup?"
 #~ msgstr "Deseja que o Democracy seja executado no arranque?"
-
-#~ msgid "You're done!"
-#~ msgstr "Terminou!"
 
 #~ msgid "A"
 #~ msgstr "A"
@@ -4594,12 +4553,6 @@ msgstr "Reproduzindo Ficheiro"
 #~ msgid "New Channel"
 #~ msgstr "Novo Canal"
 
-#~ msgid "New Channel Folder"
-#~ msgstr "Novo Directório de Canais"
-
-#~ msgid "New Channel Guide"
-#~ msgstr "Novo Guia de Canais"
-
 #~ msgid "New Playlist"
 #~ msgstr "Nova Lista de Reprodução"
 
@@ -4611,9 +4564,6 @@ msgstr "Reproduzindo Ficheiro"
 
 #~ msgid "P"
 #~ msgstr "P"
-
-#~ msgid "Pause Video"
-#~ msgstr "Pausar Vídeo"
 
 #~ msgid "Playlist"
 #~ msgstr "Lista de Reprodução"
@@ -4633,9 +4583,6 @@ msgstr "Reproduzindo Ficheiro"
 #~ msgid "S"
 #~ msgstr "S"
 
-#~ msgid "Send This Channel to a Friend..."
-#~ msgstr "Enviar este Canal a um amigo..."
-
 #~ msgid "Space"
 #~ msgstr "Barra de Espaço"
 
@@ -4644,3 +4591,9 @@ msgstr "Reproduzindo Ficheiro"
 
 #~ msgid "V"
 #~ msgstr "V"
+
+#~ msgid "Expected CRLF got: %r"
+#~ msgstr "CRLF esperado: %s"
+
+#~ msgid "_Search"
+#~ msgstr "_Pesquisa"

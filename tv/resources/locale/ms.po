@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-27 02:05+0000\n"
+"PO-Revision-Date: 2009-03-10 12:38+0000\n"
 "Last-Translator: Muhammad Syafiq Zainuddin <kmkd1234@yahoo.com>\n"
 "Language-Team: Malay <ms@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -2785,17 +2785,8 @@ msgstr "Memainkan Fail"
 #~ msgid "About Democracy"
 #~ msgstr "Mengenai Demokrasi"
 
-#~ msgid "Democracy"
-#~ msgstr "Demokrasi"
-
-#~ msgid "Democracy Help"
-#~ msgstr "Bantuan Untuk Demokrasi"
-
 #~ msgid "File"
 #~ msgstr "Fail"
-
-#~ msgid "Full Screen"
-#~ msgstr "Skrin Penuh"
 
 #~ msgid "Hide Democracy"
 #~ msgstr "Sorok Demokrasi"
@@ -2823,9 +2814,6 @@ msgstr "Memainkan Fail"
 
 #~ msgid "%channel title%"
 #~ msgstr "%tajuk saluran%"
-
-#~ msgid "%donation label%"
-#~ msgstr "%tanda derma%"
 
 #~ msgid "Box"
 #~ msgstr "Kekotak"
@@ -2869,9 +2857,6 @@ msgstr "Memainkan Fail"
 #~ msgid "Copy Channel URL"
 #~ msgstr "Salin Saluran URL"
 
-#~ msgid "Donate"
-#~ msgstr "Derma"
-
 #~ msgid "New Channel Guide..."
 #~ msgstr "Panduan Saluran Baru"
 
@@ -2889,3 +2874,18 @@ msgstr "Memainkan Fail"
 
 #~ msgid "Save Video As..."
 #~ msgstr "Simpan Video Sebagai..."
+
+#~ msgid "Full Screen"
+#~ msgstr "Skrin Penuh"
+
+#~ msgid "%donation label%"
+#~ msgstr "%tanda derma%"
+
+#~ msgid "Democracy Help"
+#~ msgstr "Bantuan Untuk Demokrasi"
+
+#~ msgid "Democracy"
+#~ msgstr "Demokrasi"
+
+#~ msgid "Donate"
+#~ msgstr "Derma"

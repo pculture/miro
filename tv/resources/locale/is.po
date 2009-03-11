@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2008-12-09 14:09+0000\n"
+"PO-Revision-Date: 2009-03-10 12:16+0000\n"
 "Last-Translator: Björgvin Ragnarsson <nifgraup@gmail.com>\n"
 "Language-Team: Icelandic <is@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -2772,23 +2772,11 @@ msgstr ""
 #~ msgid "$log"
 #~ msgstr "$log"
 
-#~ msgid "OK"
-#~ msgstr "Í lagi"
-
 #~ msgid "About Democracy"
 #~ msgstr "Um Democracy"
 
 #~ msgid "Channel"
 #~ msgstr "Rás"
-
-#~ msgid "Democracy"
-#~ msgstr "Democracy"
-
-#~ msgid "Democracy Help"
-#~ msgstr "Democracy Hjálp"
-
-#~ msgid "Full Screen"
-#~ msgstr "Fullan skjá"
 
 #~ msgid "Help"
 #~ msgstr "Hjálp"
@@ -2811,3 +2799,15 @@ msgstr ""
 #~ msgstr ""
 #~ "Notendanafn:\n"
 #~ "\n"
+
+#~ msgid "OK"
+#~ msgstr "Í lagi"
+
+#~ msgid "Full Screen"
+#~ msgstr "Fullan skjá"
+
+#~ msgid "Democracy Help"
+#~ msgstr "Democracy Hjálp"
+
+#~ msgid "Democracy"
+#~ msgstr "Democracy"

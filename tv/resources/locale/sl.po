@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-07 21:37+0000\n"
+"PO-Revision-Date: 2009-03-10 12:28+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
 "n%100==4 ? 3 : 0);\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: SLOVENIA\n"
 "X-Poedit-Language: Slovenian\n"
@@ -3211,12 +3211,6 @@ msgstr "Predvajanje datoteke"
 #~ msgid "Channel"
 #~ msgstr "Kanal"
 
-#~ msgid "Democracy"
-#~ msgstr "Democracy"
-
-#~ msgid "Democracy Help"
-#~ msgstr "Democracy pomoč"
-
 #~ msgid "File"
 #~ msgstr "Datoteka"
 
@@ -3234,9 +3228,6 @@ msgstr "Predvajanje datoteke"
 
 #~ msgid "Quit Democracy"
 #~ msgstr "Izklop Democracy"
-
-#~ msgid "Remove Channel..."
-#~ msgstr "Umaknji kanal ..."
 
 #~ msgid "Password:\n"
 #~ msgstr "Geslo:\n"
@@ -3292,21 +3283,6 @@ msgstr "Predvajanje datoteke"
 
 #~ msgid "Back"
 #~ msgstr "Nazaj"
-
-#~ msgid ""
-#~ "Democracy Player can find all the videos on your computer to help you "
-#~ "organize your collection.\n"
-#~ "\n"
-#~ "\n"
-#~ "Would you like Democracy Player to look for video files on your computer?"
-#~ msgstr ""
-#~ "Demokracija lahko najde vse vedee na računalniku in jih pomaga urediti.\n"
-#~ "\n"
-#~ "\n"
-#~ "\n"
-#~ "\n"
-#~ "\n"
-#~ "Želiš, da Demokracija poišče videe na tvojem računalniku?"
 
 #~ msgid "Next"
 #~ msgstr "Naprej"
@@ -3371,22 +3347,6 @@ msgstr "Predvajanje datoteke"
 #~ msgid "Create new playlist"
 #~ msgstr "Pripravi nov seznam"
 
-#~ msgid "Create new playlist folder"
-#~ msgstr "Pripravi novo mapo za seznam"
-
-#~ msgid "Create new channel folder"
-#~ msgstr "Pripravi novo mapo za kanale"
-
-#, python-format
-#~ msgid ""
-#~ "Error importing democracy modules:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Napaka pri uvažanju modulov demokracije:\n"
-#~ "\n"
-#~ "%s"
-
-#, python-format
 #~ msgid "There was an error opening %s.  Please try again in a few seconds"
 #~ msgstr "Napaka pri odpiranju %s. Poizkusite ponovno čez nekaj sekund"
 
@@ -3402,34 +3362,69 @@ msgstr "Predvajanje datoteke"
 #~ msgid "All ${len} Videos Match This Search"
 #~ msgstr "Vseh ${len} videov se ujema s tem iskanjem"
 
+#~ msgid "Channels"
+#~ msgstr "Kanali"
+
+#~ msgid "BitTorrent ports:"
+#~ msgstr "BitTorrent vrata:"
+
+#~ msgid "%d days"
+#~ msgstr "%d dni"
+
+#~ msgid "Democracy Help"
+#~ msgstr "Democracy pomoč"
+
+#~ msgid "Democracy"
+#~ msgstr "Democracy"
+
+#~ msgid "Remove Channel..."
+#~ msgstr "Umaknji kanal ..."
+
+#~ msgid "Create new playlist folder"
+#~ msgstr "Pripravi novo mapo za seznam"
+
+#~ msgid "Create new channel folder"
+#~ msgstr "Pripravi novo mapo za kanale"
+
+#~ msgid "SAVE"
+#~ msgstr "SHRANI"
+
+#~ msgid ""
+#~ "Democracy Player can find all the videos on your computer to help you "
+#~ "organize your collection.\n"
+#~ "\n"
+#~ "\n"
+#~ "Would you like Democracy Player to look for video files on your computer?"
+#~ msgstr ""
+#~ "Demokracija lahko najde vse vedee na računalniku in jih pomaga urediti.\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "Želiš, da Demokracija poišče videe na tvojem računalniku?"
+
+#~ msgid ""
+#~ "Error importing democracy modules:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Napaka pri uvažanju modulov demokracije:\n"
+#~ "\n"
+#~ "%s"
+
 #~ msgid "${len} Videos Match This Search"
 #~ msgstr "${len} videov se ujema s tem iskanjem"
 
 #~ msgid "${count} Videos on this Channel"
 #~ msgstr "${count} videov na tem kanalu"
 
-#~ msgid "SAVE"
-#~ msgstr "SHRANI"
-
-#, python-format
-#~ msgid "%d days"
-#~ msgstr "%d dni"
-
 #~ msgid ""
 #~ "Would you like to delete this file or just remove its entry from My "
 #~ "Collection?"
 #~ msgstr "Zbrišem to datoteko ali jo samo umaknem iz Moje Zbirke?"
 
-#, python-format
 #~ msgid "%s closed connection"
 #~ msgstr "%s je zaprl povezavo"
 
-#, python-format
 #~ msgid "Could not download the Democracy channel file: %s."
 #~ msgstr "Ne morem prenesti datoteke s kanalom: %s."
-
-#~ msgid "Channels"
-#~ msgstr "Kanali"
-
-#~ msgid "BitTorrent ports:"
-#~ msgstr "BitTorrent vrata:"

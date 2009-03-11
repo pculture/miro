@@ -9,14 +9,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-08 20:59+0000\n"
+"PO-Revision-Date: 2009-03-10 12:29+0000\n"
 "Last-Translator: Odin Hørthe Omdal <odin.omdal@gmail.com>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -2888,7 +2888,6 @@ msgstr "Spelar fil"
 #~ msgid "Unknown Runtime Error"
 #~ msgstr "Ukjend køyretidsfeil"
 
-#, python-format
 #~ msgid "An unknown error has occurred %s."
 #~ msgstr "Det oppstod ein ukjend feil: %s."
 
@@ -3003,9 +3002,6 @@ msgstr "Spelar fil"
 #~ "starta $shortAppName på nytt. Dette vil redusera faren for at mistar "
 #~ "innstillingane eller kanalabonnementa dine."
 
-#~ msgid "OK"
-#~ msgstr "OK"
-
 #~ msgid "The fall of $shortAppName??"
 #~ msgstr "Slutten for $shortAppName?"
 
@@ -3032,9 +3028,6 @@ msgstr "Spelar fil"
 
 #~ msgid "%channel title%"
 #~ msgstr "%channel title%"
-
-#~ msgid "%donation label%"
-#~ msgstr "%donation label%"
 
 #~ msgid "00:00:00"
 #~ msgstr "00:00:00"
@@ -3092,9 +3085,6 @@ msgstr "Spelar fil"
 #~ msgid "Back"
 #~ msgstr "Tilbake"
 
-#~ msgid "Browse"
-#~ msgstr "Bla gjennom"
-
 #~ msgid "Welcome to Internet TV!"
 #~ msgstr "Velkommen til Internett-TV!"
 
@@ -3105,50 +3095,8 @@ msgstr "Spelar fil"
 #~ "%message%\n"
 #~ "%message%"
 
-#~ msgid "Loading window"
-#~ msgstr "Opnar vindauge"
-
 #~ msgid "onStartup called twice"
 #~ msgstr "onStartup køyrd to gongar"
-
-#, python-format
-#~ msgid "Removing %s"
-#~ msgstr "Fjernar %s"
-
-#, python-format
-#~ msgid "%d days"
-#~ msgstr "%d dagar"
-
-#, python-format
-#~ msgid "Are you sure you want to remove %s"
-#~ msgstr "Er du sikker på at du vil fjerna «%s»?"
-
-#, python-format
-#~ msgid ""
-#~ "Are you sure you want to remove %s?  Any downloads in progress will be "
-#~ "canceled."
-#~ msgstr ""
-#~ "Er du sikker på at du vil fjerna «%s»? Alle ufullførte nedlastingar vert "
-#~ "avbrotne."
-
-#~ msgid ""
-#~ "What would you like to do with the videos in this channel that you've "
-#~ "downloaded?"
-#~ msgstr ""
-#~ "Kva ønskjer du å gjera med filmane i denne kanalen som du har lasta ned?"
-
-#~ msgid ""
-#~ "What would you like to do with the videos in these channels that you've "
-#~ "downloaded?"
-#~ msgstr ""
-#~ "Kva ønskjer du å gjera med filmane i desse kanalane som du har lasta ned?"
-
-#~ msgid "Invalid Value"
-#~ msgstr "Ugyldig verdi"
-
-#, python-format
-#~ msgid "%s is invalid.  You must enter a non-negative number."
-#~ msgstr "«%s» er ugyldig. Du må skriva inn eit ikkjenegativt tal."
 
 #~ msgid "Add Channel..."
 #~ msgstr "Legg til kanal …"
@@ -3237,6 +3185,127 @@ msgstr "Spelar fil"
 #~ msgid "_Remove Channel Folders..."
 #~ msgstr "_Fjern kanalmapper …"
 
+#~ msgid "_Update Channels..."
+#~ msgstr "_Oppdater kanalar …"
+
+#~ msgid "%1.1fGB"
+#~ msgstr "%1.1f GB"
+
+#~ msgid "%1.1fMB"
+#~ msgstr "%1.1f MB"
+
+#~ msgid "-00:00:00"
+#~ msgstr "-00:00:00"
+
+#~ msgid "Change..."
+#~ msgstr "Endra …"
+
+#~ msgid "Search this folder:"
+#~ msgstr "Søk i denne mappa:"
+
+#~ msgid "DELETE"
+#~ msgstr "SLETT"
+
+#~ msgid "Videos expire after"
+#~ msgstr "Som standard utgår videoar etter"
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid "%donation label%"
+#~ msgstr "%donation label%"
+
+#~ msgid "Browse"
+#~ msgstr "Bla gjennom"
+
+#~ msgid "Removing %s"
+#~ msgstr "Fjernar %s"
+
+#~ msgid "%d days"
+#~ msgstr "%d dagar"
+
+#~ msgid "Are you sure you want to remove %s"
+#~ msgstr "Er du sikker på at du vil fjerna «%s»?"
+
+#~ msgid "Invalid Value"
+#~ msgstr "Ugyldig verdi"
+
+#~ msgid "Create Channel"
+#~ msgstr "Lag kanal"
+
+#~ msgid "TORRENT"
+#~ msgstr "TORRENT"
+
+#~ msgid "WEB PAGE"
+#~ msgstr "NETTSIDE"
+
+#~ msgid "%s remaining"
+#~ msgstr "%s att"
+
+#~ msgid "Adding %d channels to a new folder"
+#~ msgstr "Legg %d kanalar til ny mappe"
+
+#~ msgid "_Search For:"
+#~ msgstr "_Søk etter:"
+
+#~ msgid "_URL"
+#~ msgstr "_Adresse"
+
+#~ msgid "<b>BitTorrent</b>"
+#~ msgstr "<b>BitTorrent</b>"
+
+#~ msgid "Go"
+#~ msgstr "Start"
+
+#~ msgid "Channel:"
+#~ msgstr "Kanal:"
+
+#~ msgid "Search For:"
+#~ msgstr "Søk etter:"
+
+#~ msgid "Don't Worry About Disk Space:"
+#~ msgstr "Uroa deg ikkje om diskplass:"
+
+#~ msgid "Reset Search"
+#~ msgstr "Tilbakestill søk"
+
+#~ msgid "You're done!"
+#~ msgstr "Ferdig!"
+
+#~ msgid "downloading..."
+#~ msgstr "lastar ned …"
+
+#~ msgid "In This:"
+#~ msgstr "Her:"
+
+#~ msgid "Find Videos:"
+#~ msgstr "Finn filmar:"
+
+#~ msgid "Loading window"
+#~ msgstr "Opnar vindauge"
+
+#~ msgid ""
+#~ "Are you sure you want to remove %s?  Any downloads in progress will be "
+#~ "canceled."
+#~ msgstr ""
+#~ "Er du sikker på at du vil fjerna «%s»? Alle ufullførte nedlastingar vert "
+#~ "avbrotne."
+
+#~ msgid ""
+#~ "What would you like to do with the videos in this channel that you've "
+#~ "downloaded?"
+#~ msgstr ""
+#~ "Kva ønskjer du å gjera med filmane i denne kanalen som du har lasta ned?"
+
+#~ msgid ""
+#~ "What would you like to do with the videos in these channels that you've "
+#~ "downloaded?"
+#~ msgstr ""
+#~ "Kva ønskjer du å gjera med filmane i desse kanalane som du har lasta ned?"
+
+#~ msgid "%s is invalid.  You must enter a non-negative number."
+#~ msgstr "«%s» er ugyldig. Du må skriva inn eit ikkjenegativt tal."
+
 #~ msgid "_Remove Video..."
 #~ msgstr "_Fjern film …"
 
@@ -3258,38 +3327,9 @@ msgstr "Spelar fil"
 #~ msgid "_Update Channel..."
 #~ msgstr "_Oppdater kanal …"
 
-#~ msgid "_Update Channels..."
-#~ msgstr "_Oppdater kanalar …"
-
-#, python-format
-#~ msgid "%1.1fGB"
-#~ msgstr "%1.1f GB"
-
-#, python-format
-#~ msgid "%1.1fMB"
-#~ msgstr "%1.1f MB"
-
-#, python-format
 #~ msgid "%1.1fKB"
 #~ msgstr "%1.1f KB"
 
-#~ msgid "Create Channel"
-#~ msgstr "Lag kanal"
-
-#~ msgid "TORRENT"
-#~ msgstr "TORRENT"
-
-#~ msgid "WEB PAGE"
-#~ msgstr "NETTSIDE"
-
-#~ msgid "downloading..."
-#~ msgstr "lastar ned …"
-
-#, python-format
-#~ msgid "%s remaining"
-#~ msgstr "%s att"
-
-#, python-format
 #~ msgid "Removing %s items"
 #~ msgstr "Fjernar %s element"
 
@@ -3306,13 +3346,8 @@ msgstr "Spelar fil"
 #~ msgid "Revert Title to Default"
 #~ msgstr "Tilbakestill tittel"
 
-#, python-format
 #~ msgid "Create %d channels?"
 #~ msgstr "Lag %d kanalar?"
-
-#, python-format
-#~ msgid "Adding %d channels to a new folder"
-#~ msgstr "Legg %d kanalar til ny mappe"
 
 #~ msgid "<b>Searching for Videos</b>"
 #~ msgstr "<b>Søkjer etter filmar</b>"
@@ -3323,9 +3358,6 @@ msgstr "Spelar fil"
 #~ msgid "C_reate Channel"
 #~ msgstr "_Lag kanal"
 
-#~ msgid "In This:"
-#~ msgstr "Her:"
-
 #~ msgid "Restrict to my full _home folder"
 #~ msgstr "Avgrens til heile _heimemappa"
 
@@ -3335,27 +3367,6 @@ msgstr "Spelar fil"
 #~ msgid "Select custom search directory"
 #~ msgstr "Vel sjølvvald søkjemappe"
 
-#~ msgid "_Search For:"
-#~ msgstr "_Søk etter:"
-
-#~ msgid "_URL"
-#~ msgstr "_Adresse"
-
-#~ msgid "-00:00:00"
-#~ msgstr "-00:00:00"
-
-#~ msgid "Change..."
-#~ msgstr "Endra …"
-
-#~ msgid "Search this folder:"
-#~ msgstr "Søk i denne mappa:"
-
-#~ msgid "DELETE"
-#~ msgstr "SLETT"
-
-#~ msgid "Videos expire after"
-#~ msgstr "Som standard utgår videoar etter"
-
 #~ msgid ""
 #~ "This item is a folder.  When you remove a folder, any items inside that "
 #~ "folder will be deleted."
@@ -3363,26 +3374,8 @@ msgstr "Spelar fil"
 #~ "Dette er ei mappe. Når du slettar mapper, vert òg alle elementa i mappene "
 #~ "sletta."
 
-#~ msgid "<b>BitTorrent</b>"
-#~ msgstr "<b>BitTorrent</b>"
-
-#~ msgid "Go"
-#~ msgstr "Start"
-
 #~ msgid "Search _custom folder:"
 #~ msgstr "Søk i _sjølvvald mappe:"
-
-#~ msgid "Channel:"
-#~ msgstr "Kanal:"
-
-#~ msgid "Search For:"
-#~ msgstr "Søk etter:"
-
-#~ msgid "Don't Worry About Disk Space:"
-#~ msgstr "Uroa deg ikkje om diskplass:"
-
-#~ msgid "Find Videos:"
-#~ msgstr "Finn filmar:"
 
 #~ msgid "Go Big:"
 #~ msgstr "Tenk stort:"
@@ -3397,16 +3390,10 @@ msgstr "Spelar fil"
 #~ "No kan du utforska kanalgaiden og begynna\n"
 #~ "å sjå filmar. Nokre tips for å komma igang:"
 
-#~ msgid "Reset Search"
-#~ msgstr "Tilbakestill søk"
-
 #~ msgid "The button to the right of the play button shows videos fullscreen."
 #~ msgstr ""
 #~ "Trykk på knappen til høgre for avspelingsknappen for å sjå filmane over "
 #~ "heile skjermen."
-
-#~ msgid "You're done!"
-#~ msgstr "Ferdig!"
 
 #~ msgid "Add..."
 #~ msgstr "Legg til …"
@@ -3417,7 +3404,6 @@ msgstr "Spelar fil"
 #~ msgid "Show as Channel"
 #~ msgstr "Vis som kanal"
 
-#, python-format
 #~ msgid ""
 #~ "Error importing modules:\n"
 #~ "%s"
@@ -3428,7 +3414,6 @@ msgstr "Spelar fil"
 #~ msgid "Download Failed"
 #~ msgstr "Feil ved nedlasting"
 
-#, python-format
 #~ msgid "Download of video '%s' has failed."
 #~ msgstr "Feil ved nedlasting av filmen «%s»."
 
@@ -3444,7 +3429,6 @@ msgstr "Spelar fil"
 #~ msgid "Unsupported version of Quicktime"
 #~ msgstr "Ikkje-støtta versjon av QuickTime"
 
-#, python-format
 #~ msgid ""
 #~ "To run %s you need the most recent version of Quicktime, which is a free "
 #~ "update."
@@ -3455,31 +3439,24 @@ msgstr "Spelar fil"
 #~ msgid "Folder Location"
 #~ msgstr "Mappeplassering"
 
-#, python-format
 #~ msgid "%s Version Alert"
 #~ msgstr "%s-versjonsvarsling"
 
-#, python-format
 #~ msgid "%s Version Check"
 #~ msgstr "%s-versjonskontroll"
 
-#, python-format
 #~ msgid "%dGB"
 #~ msgstr "%d GB"
 
-#, python-format
 #~ msgid "%dMB"
 #~ msgstr "%d MB"
 
-#, python-format
 #~ msgid "%dKB"
 #~ msgstr "%d KB"
 
-#, python-format
 #~ msgid "%1.1fB"
 #~ msgstr "%1.1f B"
 
-#, python-format
 #~ msgid "%dB"
 #~ msgstr "%d B"
 
@@ -3492,7 +3469,6 @@ msgstr "Spelar fil"
 #~ msgid "_About"
 #~ msgstr "_Om"
 
-#, python-format
 #~ msgid "Will retry in %s"
 #~ msgstr "Prøver på nytt om %s"
 
@@ -3517,15 +3493,12 @@ msgstr "Spelar fil"
 #~ msgid "Torrent Details"
 #~ msgstr "Torrent-detaljar"
 
-#, python-format
 #~ msgid "Are you sure you want to stop watching %s?"
 #~ msgstr "Er du sikker på at du ønskjer å stoppa overvakinga av %s?"
 
-#, python-format
 #~ msgid "Stop watching %s directories"
 #~ msgstr "Stopp overvaking av %s mapper"
 
-#, python-format
 #~ msgid "Are you sure you want to stop watching these %s directories?"
 #~ msgstr ""
 #~ "Er du sikker på at du ønskjer å stoppa overvakinga av desse %s mappene?"
@@ -3674,11 +3647,9 @@ msgstr "Spelar fil"
 #~ "BitTorrent-filer, anbefala filmar til venner, og mykje anna.\n"
 #~ "\n"
 
-#, python-format
 #~ msgid "Select a Directory to store %s downloads in."
 #~ msgstr "Vel mappa du vil lagra %s-nedlastingar i."
 
-#, python-format
 #~ msgid ""
 #~ "You've selected a new folder to download movies to.  Should %s migrate your "
 #~ "existing downloads there?  (Currently dowloading movies will not be moved "
@@ -3919,7 +3890,6 @@ msgstr "Spelar fil"
 #~ msgid "Error Saving Video"
 #~ msgstr "Feil ved lagring av film"
 
-#, python-format
 #~ msgid ""
 #~ "An error occured while trying to save %s.  Please check that the file has "
 #~ "not been deleted and try again."
@@ -4099,21 +4069,17 @@ msgstr "Spelar fil"
 #~ msgid "Install iHeartMiro?"
 #~ msgstr "Vil du installera iHeartMiro?"
 
-#, python-format
 #~ msgid "parsed %(countfiles)d files - found %(countvideos)d videos"
 #~ msgstr "søkte gjennom %(countfiles)d filer, og fann %(countvideos)d videoar"
 
-#, python-format
 #~ msgid "bad parsed %(countfiles)d files - found %(countvideos)d videos"
 #~ msgstr "las %(countfiles)d ugyldige filer, og fann %(countvideos)d videoar"
 
-#, python-format
 #~ msgid "%(count)d video found"
 #~ msgid_plural "%(count)d videos found"
 #~ msgstr[0] "fann %(count)d video"
 #~ msgstr[1] "fann %(count)d videoar"
 
-#, python-format
 #~ msgid "bad %(count)d video found"
 #~ msgid_plural "bad %(count)d videos found"
 #~ msgstr[0] "fann %(count)d ugyldig video"
@@ -4122,11 +4088,9 @@ msgstr "Spelar fil"
 #~ msgid "show"
 #~ msgstr "vis"
 
-#, python-format
 #~ msgid "Restart %(appname)s?"
 #~ msgstr "Vil du starta %(appname)s på nytt?"
 
-#, python-format
 #~ msgid ""
 #~ "To enable the Flash plugin, %(appname)s needs to be restarted.  Click Yes to "
 #~ "shut %(appname)s down, or No to do it later."
@@ -4135,13 +4099,11 @@ msgstr "Spelar fil"
 #~ "Trykk «Ja» for å avslutta %(appname)s no, eller «Nei» for å venta med dette "
 #~ "til seinare."
 
-#, python-format
 #~ msgid "Create channel?"
 #~ msgid_plural "Create %(count)d channels?"
 #~ msgstr[0] "Vil du laga ein kanal?"
 #~ msgstr[1] "Vil du laga %(count)d kanalar?"
 
-#, python-format
 #~ msgid "Default (%(number)s)"
 #~ msgstr "Standard (%(number)s)"
 
@@ -4168,17 +4130,14 @@ msgstr "Spelar fil"
 #~ "\n"
 #~ "Skriv inn adressa til Miro-gaiden du vil leggja til."
 
-#, python-format
 #~ msgid "Enter a new name for the channel %(name)s"
 #~ msgstr "Skriv inn nytt namn på kanalen «%(name)s»"
 
-#, python-format
 #~ msgid "1 Downloaded Item"
 #~ msgid_plural "%(count)d Downloaded Items"
 #~ msgstr[0] "1 nedlasta element"
 #~ msgstr[1] "%(count)d nedlasta element"
 
-#, python-format
 #~ msgid "1 Downloading Item"
 #~ msgid_plural "%(count)d Downloading Items"
 #~ msgstr[0] "1 nedlasta element"
@@ -4193,7 +4152,6 @@ msgstr "Spelar fil"
 #~ msgid "off"
 #~ msgstr "av"
 
-#, python-format
 #~ msgid "%(count)d Video"
 #~ msgid_plural "%(count)d Videos"
 #~ msgstr[0] "%(count)d video"
@@ -4215,7 +4173,6 @@ msgstr "Spelar fil"
 #~ "Når du trykkjer «Installer iHeartMiro» nedanfor, vert utvidinga installert. "
 #~ "Tusen takk for hjelpa di!"
 
-#, python-format
 #~ msgid ""
 #~ "An Effortless Way to Help Miro\n"
 #~ "\n"
@@ -4243,28 +4200,23 @@ msgstr "Spelar fil"
 #~ msgid "Sample Channels"
 #~ msgstr "Eksempelkanalar"
 
-#, python-format
 #~ msgid "%(size)sGB/s"
 #~ msgstr "%(size)s GB/s"
 
-#, python-format
 #~ msgid "%(size)sMB/s"
 #~ msgstr "%(size)s MB/s"
 
-#, python-format
 #~ msgid "%(size)sKB/s"
 #~ msgstr "%(size)s KB/s"
 
 #~ msgid "New Playlist Fol_der..."
 #~ msgstr "Ny speleliste_mappe …"
 
-#, python-format
 #~ msgid "1 hour"
 #~ msgid_plural "%(count)d hours"
 #~ msgstr[0] "1 time"
 #~ msgstr[1] "%(count)d timar"
 
-#, python-format
 #~ msgid "1 minute"
 #~ msgid_plural "%(count)d minutes"
 #~ msgstr[0] "1 minutt"
@@ -4285,7 +4237,6 @@ msgstr "Spelar fil"
 #~ msgid "No watched folders"
 #~ msgstr "Ingen overvaka mapper"
 
-#, python-format
 #~ msgid "Remove channel"
 #~ msgid_plural "Remove %(count)d channels"
 #~ msgstr[0] "Fjern kanal"

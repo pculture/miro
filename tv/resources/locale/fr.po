@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: Democracy Player 0.8.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-27 01:57+0000\n"
-"Last-Translator: Vinnysud <Unknown>\n"
+"PO-Revision-Date: 2009-03-10 12:51+0000\n"
+"Last-Translator: Will Guaraldi Kahn-Greene <willg@bluesock.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Language: French\n"
 
@@ -2912,7 +2912,6 @@ msgstr "Lecture en cours"
 #~ msgid "Quit the Program"
 #~ msgstr "Quitter le programme"
 
-#, python-format
 #~ msgid "%s requires a username and password for \"%s\"."
 #~ msgstr "%s requiert un nom d'utilisateur et un mot de passe pour \"%s\"."
 
@@ -2951,11 +2950,9 @@ msgstr "Lecture en cours"
 #~ msgid "This version of DTV is up to date."
 #~ msgstr "Cette version de DTV est à jour."
 
-#, python-format
 #~ msgid "%s database save failed"
 #~ msgstr "échec de la sauvegade de la base de donnée %s"
 
-#, python-format
 #~ msgid ""
 #~ "%s was unable to save its database: %s.\n"
 #~ "Recent changes may be lost."
@@ -2966,7 +2963,6 @@ msgstr "Lecture en cours"
 #~ msgid "Remove Channel"
 #~ msgstr "Supprimer le canal"
 
-#, python-format
 #~ msgid ""
 #~ "Are you sure you want to <b>remove</b> the channel\n"
 #~ "   '<b>%s</b>'?\n"
@@ -2976,11 +2972,9 @@ msgstr "Lecture en cours"
 #~ "   '<b>%s</b>'?\n"
 #~ "<b>Cette opération est irréversible.</b>"
 
-#, python-format
 #~ msgid "You have %d download%s still in progress."
 #~ msgstr "Vous avez %d téléchargement%s encore en cours."
 
-#, python-format
 #~ msgid "An unknown error has occurred %s."
 #~ msgstr "Une erreur inconnue a eu lieu %s."
 
@@ -3044,7 +3038,6 @@ msgstr "Lecture en cours"
 #~ msgid "NEW STUFF:"
 #~ msgstr "NOUVEAUX:"
 
-#, python-format
 #~ msgid ""
 #~ "%s was unable to save its database: %s.\n"
 #~ "Recent changes may be lost.\n"

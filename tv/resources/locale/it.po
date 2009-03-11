@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: Democracy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-28 23:02+0000\n"
-"Last-Translator: Guido Iaquinti <Unknown>\n"
+"PO-Revision-Date: 2009-03-10 12:31+0000\n"
+"Last-Translator: Will Guaraldi Kahn-Greene <willg@bluesock.org>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -2935,7 +2935,6 @@ msgstr "Riproduci File"
 #~ msgid "Channel requires authentication"
 #~ msgstr "Il canale richiede l'autenticazione"
 
-#, python-format
 #~ msgid "%s requires a username and password for \"%s\"."
 #~ msgstr "%s richiede un Nome utente e password per \"%s\"."
 
@@ -2974,11 +2973,9 @@ msgstr "Riproduci File"
 #~ msgid "This version of DTV is up to date."
 #~ msgstr "Questa versione di DTV è aggiornata."
 
-#, python-format
 #~ msgid "%s database save failed"
 #~ msgstr "%s salvataggio database fallito"
 
-#, python-format
 #~ msgid ""
 #~ "%s was unable to save its database: %s.\n"
 #~ "Recent changes may be lost."
@@ -2989,7 +2986,6 @@ msgstr "Riproduci File"
 #~ msgid "Remove Channel"
 #~ msgstr "Rimuovi Canale"
 
-#, python-format
 #~ msgid ""
 #~ "Are you sure you want to <b>remove</b> the channel\n"
 #~ "   '<b>%s</b>'?\n"
@@ -2999,14 +2995,12 @@ msgstr "Riproduci File"
 #~ "   '<b>%s</b>'?\n"
 #~ "<b>Questa operazione non potrà essere annullata.</b>"
 
-#, python-format
 #~ msgid "You have %d download%s still in progress."
 #~ msgstr "Hai %d scaricamenti%s still in progress."
 
 #~ msgid "Unknown Runtime Error"
 #~ msgstr "Errore di runtime sconosciuto"
 
-#, python-format
 #~ msgid "An unknown error has occurred %s."
 #~ msgstr "Si è verificato un errore sconosciuto %s."
 
@@ -3181,7 +3175,6 @@ msgstr "Riproduci File"
 #~ "per mantenere un video per sempre, oppure impostare un canale perchè salvi i "
 #~ "tuoi video automaticamente."
 
-#, python-format
 #~ msgid ""
 #~ "%s was unable to save its database: %s.\n"
 #~ "Recent changes may be lost.\n"
@@ -3397,9 +3390,6 @@ msgstr "Riproduci File"
 #~ "$shortAppName. Questo ridurrà la possibilità di perdere le tue preferenze e "
 #~ "le sottoscrizioni ai canali."
 
-#~ msgid "OK"
-#~ msgstr "OK"
-
 #~ msgid "The fall of $shortAppName??"
 #~ msgstr "L'arresto di $shortAppName??"
 
@@ -3409,17 +3399,8 @@ msgstr "Riproduci File"
 #~ msgid "Channel"
 #~ msgstr "Canale"
 
-#~ msgid "Democracy"
-#~ msgstr "Democracy"
-
-#~ msgid "Democracy Help"
-#~ msgstr "Aiuto di Democracy"
-
 #~ msgid "File"
 #~ msgstr "File"
-
-#~ msgid "Full Screen"
-#~ msgstr "Schermo intero"
 
 #~ msgid "Help"
 #~ msgstr "Aiuto"
@@ -3448,9 +3429,6 @@ msgstr "Riproduci File"
 #~ msgid "Quit Democracy"
 #~ msgstr "Esci da Democracy"
 
-#~ msgid "Remove Channel..."
-#~ msgstr "Rimuovi canale..."
-
 #~ msgid "Rename..."
 #~ msgstr "Rinomina..."
 
@@ -3468,9 +3446,6 @@ msgstr "Riproduci File"
 
 #~ msgid "%channel title%"
 #~ msgstr "%channel title%"
-
-#~ msgid "%donation label%"
-#~ msgstr "%donation label%"
 
 #~ msgid "Box"
 #~ msgstr "Riquadro"
@@ -3547,34 +3522,14 @@ msgstr "Riproduci File"
 #~ msgid "manually"
 #~ msgstr "manualmente"
 
-#, python-format
 #~ msgid "(parsed %d files - found %d videos)"
 #~ msgstr "(elaborati %d file - trovati %d video)"
 
 #~ msgid "Back"
 #~ msgstr "Indietro"
 
-#~ msgid "Browse"
-#~ msgstr "Sfoglia"
-
-#~ msgid ""
-#~ "Democracy Player can find all the videos on your computer to help you "
-#~ "organize your collection.\n"
-#~ "\n"
-#~ "\n"
-#~ "Would you like Democracy Player to look for video files on your computer?"
-#~ msgstr ""
-#~ "Democracy Player può trovare tutti i video del tuo computer per aiutarti a "
-#~ "organizzare la tua collezione.\n"
-#~ "\n"
-#~ "\n"
-#~ "Desideri che Democracy Player cerchi video nel tuo computer?"
-
 #~ msgid "Next"
 #~ msgstr "Prossimo"
-
-#~ msgid "Searching for Videos"
-#~ msgstr "In cerca di video"
 
 #~ msgid ""
 #~ "The next few screens will help you set up Democracy Player so that it works "
@@ -3672,30 +3627,9 @@ msgstr "Riproduci File"
 #~ msgid "Create new playlist"
 #~ msgstr "Crea nuova playlist"
 
-#~ msgid "Create new playlist folder"
-#~ msgstr "Crea nuova cartella playlist"
-
-#~ msgid "Create new channel folder"
-#~ msgstr "Crea nuova cartella canale"
-
-#, python-format
-#~ msgid ""
-#~ "Error importing democracy modules:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Errore nell'importazione dei moduli di democracy:\n"
-#~ "%s"
-
-#~ msgid "Starting up"
-#~ msgstr "Avvio"
-
-#~ msgid "Loading window"
-#~ msgstr "Caricamento finestra"
-
 #~ msgid "onStartup called twice"
 #~ msgstr "onStartup è stata chiamata due volte"
 
-#, python-format
 #~ msgid "There was an error opening %s.  Please try again in a few seconds"
 #~ msgstr ""
 #~ "Si è verificato un errore nell'apertura di %s. Per favora riprova tra "
@@ -3713,186 +3647,11 @@ msgstr "Riproduci File"
 #~ msgid "All ${len} Videos Match This Search"
 #~ msgstr "Tutti i ${len} video soddisfano questa ricerca"
 
-#~ msgid "${len} Videos Match This Search"
-#~ msgstr "${len} video soddisfano questa ricerca"
-
 #~ msgid "Looking for videos at this URL"
 #~ msgstr "In cerca di video su questo URL"
 
-#~ msgid "${count} Videos on this Channel"
-#~ msgstr "${count} video su questo canale"
-
-#~ msgid "SAVE"
-#~ msgstr "SALVA"
-
-#, python-format
-#~ msgid "Removing %s"
-#~ msgstr "Rimozione %s"
-
-#, python-format
-#~ msgid "%d days"
-#~ msgstr "%d giorni"
-
-#~ msgid ""
-#~ "Would you like to delete this file or just remove its entry from My "
-#~ "Collection?"
-#~ msgstr ""
-#~ "Desideri cancellare questo file o semplicemente rimuoverlo dalla Mia "
-#~ "Collezione?"
-
-#, python-format
-#~ msgid "%s closed connection"
-#~ msgstr "%s connessione chiusa"
-
-#, python-format
 #~ msgid "%s database save succeeded"
 #~ msgstr "%s il database è stato salvato con successo"
-
-#, python-format
-#~ msgid ""
-#~ "%s was unable to save its database: Disk Full.\n"
-#~ "We suggest deleting files from the full disk or simply deleting some movies "
-#~ "from your collection.\n"
-#~ "Recent changes may be lost."
-#~ msgstr ""
-#~ "%s non è permesso di salvare il suo database: il disco è pieno\n"
-#~ "Suggeriamo di eliminare i file dal disco pieno o più semplicemente di "
-#~ "eliminare qualche video dalla tua collezione.\n"
-#~ "I cambiamenti recenti possono essere stati persi."
-
-#~ msgid "Rename Channel Folder"
-#~ msgstr "Rinomina la cartella del canale"
-
-#, python-format
-#~ msgid "Enter a new name for the channel folder %s"
-#~ msgstr "Immetti un nuovo nome per la cartella del canale %s"
-
-#, python-format
-#~ msgid "Enter a new name for the playlist folder %s"
-#~ msgstr "Immetti un nuovo nome per la cartella playlist %s"
-
-#~ msgid "Create Channel Folder"
-#~ msgstr "Crea cartella del canale"
-
-#~ msgid "Enter a name for the new channel folder"
-#~ msgstr "Immetti il nome della nuova cartella del canale"
-
-#, python-format
-#~ msgid ""
-#~ "This Democracy channel file has an invalid format: %s. Please notify the "
-#~ "publisher of this file."
-#~ msgstr ""
-#~ "Questo file di canale Democracy ha un formato non valido: %s. Per favore "
-#~ "avverti chi ha pubblicato il video."
-
-#, python-format
-#~ msgid ""
-#~ "This Democracy channel file has the wrong content type: %s. Please notify "
-#~ "the publisher of this file."
-#~ msgstr ""
-#~ "Questo file di canale Democracy ha il tipo di contenuto errato: %s. Per "
-#~ "favore avverti chi ha pubblicato il video."
-
-#, python-format
-#~ msgid "Could not download the Democracy channel file: %s."
-#~ msgstr "Impossibile scaricare il file del canale Democracy: %s."
-
-#, python-format
-#~ msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
-#~ msgstr ""
-#~ "Il file torrent %s sembra essere danneggiato e non può essere aperto. [OK]"
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files. It may take extra time to list the "
-#~ "videos, and descriptions may look funny.  Please contact the publishers of "
-#~ "$url and ask if they can supply a feed in a format that will work with "
-#~ "Democracy.\n"
-#~ "\n"
-#~ "Do you want to try to load this channel anyway?"
-#~ msgstr ""
-#~ "Ma faremo del nostro meglio per recuperare i file. È possibile che serva più "
-#~ "tempo per elencare i video e le descrizioni potrebbero sembrare strane. Per "
-#~ "favore, contatta chi ha pubblicato $url e chiedi se può fornire un feed "
-#~ "compatibile con Democracy.\n"
-#~ "\n"
-#~ "Desideri comunque provare a caricare questo canale?"
-
-#, python-format
-#~ msgid "Remove %s"
-#~ msgstr "Rimuovi %s"
-
-#, python-format
-#~ msgid "Are you sure you want to remove the guide %s?"
-#~ msgstr "Sei sicuro di voler rimuovere la guida %s?"
-
-#, python-format
-#~ msgid "Are you sure you want to remove %s"
-#~ msgstr "Sei sicuro di voler rimuovere %s"
-
-#, python-format
-#~ msgid "Remove %s channels"
-#~ msgstr "Rimuovi %s canali"
-
-#, python-format
-#~ msgid "Are you sure you want to remove these %s playlists"
-#~ msgstr "Sei sicuro di voler rimuovere queste %s playlist"
-
-#, python-format
-#~ msgid ""
-#~ "Are you sure you want to remove %s?  Any downloads in progress will be "
-#~ "canceled."
-#~ msgstr ""
-#~ "Sei sicuro di voler rimuovere %s? Gli scaricamenti in corso saranno "
-#~ "annullati."
-
-#, python-format
-#~ msgid ""
-#~ "Are you sure you want to remove these %s channels?  Any downloads in "
-#~ "progress will be canceled."
-#~ msgstr ""
-#~ "Sei sicuro di voler rimuovere questi %s canali? Gli scaricamenti in corso "
-#~ "saranno annullati."
-
-#~ msgid ""
-#~ "What would you like to do with the videos in this channel that you've "
-#~ "downloaded?"
-#~ msgstr "Cosa vuoi fare con i video che hai scaricato da questo canale?"
-
-#~ msgid ""
-#~ "What would you like to do with the videos in these channels that you've "
-#~ "downloaded?"
-#~ msgstr "Cosa vuoi fare con i video che hai scaricato da questi canali?"
-
-#~ msgid "Invalid Value"
-#~ msgstr "Valore non valido"
-
-#, python-format
-#~ msgid "%s is invalid.  You must enter a non-negative number."
-#~ msgstr "%s non è valido. Devi immettere un numero non negativo."
-
-#~ msgid " - Invalid URL"
-#~ msgstr " - URL non valido"
-
-#~ msgid ""
-#~ "The address you entered is not a valid URL.\n"
-#~ "Please double check and try again.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "L'indirizzo che hai immesso non è un URL valido.\n"
-#~ "Per favore controlla e prova ancora.\n"
-#~ "\n"
-
-#~ msgid "Democracy - Add Channel Guide"
-#~ msgstr "Democracy - Aggiungi Channel Guide"
-
-#~ msgid "Enter the URL of the channel guide to add"
-#~ msgstr "Immetti l'URL della guida del canale da aggiungere."
-
-#~ msgid ""
-#~ "You are running a version of Democracy Player with a custom set of channels."
-#~ msgstr ""
-#~ "Stai usando una versione di Democracy Player con un insieme di canali "
-#~ "personalizzati."
 
 #~ msgid "Add Channel..."
 #~ msgstr "Aggiungi canale..."
@@ -4026,47 +3785,12 @@ msgstr "Riproduci File"
 #~ msgid "_Remove Channel Folders..."
 #~ msgstr "_Rimuovi Cartelle Canale..."
 
-#~ msgid "_Remove Video..."
-#~ msgstr "_Cancella Video..."
-
-#~ msgid "_Remove Videos..."
-#~ msgstr "Cancella i Video..."
-
-#~ msgid "Re_name..."
-#~ msgstr "Ri_nomina..."
-
-#~ msgid "Re_name Playlist..."
-#~ msgstr "Ri_nomina playlist..."
-
-#~ msgid "Re_name Playlist Folder..."
-#~ msgstr "Ri_nomina cartella Playlist"
-
-#~ msgid "Re_name Channel..."
-#~ msgstr "Ri_nomina Canale..."
-
-#~ msgid "Re_name Channel Folder..."
-#~ msgstr "Ri_nomina la cartella dei canali"
-
-#~ msgid "Re_name Channel Guide..."
-#~ msgstr "Ri_nomina la guida dei canali"
-
-#~ msgid "_Update Channel..."
-#~ msgstr "_Aggiorna Canale..."
-
 #~ msgid "_Update Channels..."
 #~ msgstr "_Aggiorna Canali..."
 
-#, python-format
-#~ msgid "%d video found"
-#~ msgid_plural "%d videos found"
-#~ msgstr[0] "%d video trovato"
-#~ msgstr[1] "%d video trovati"
-
-#, python-format
 #~ msgid "Could not write to %s"
 #~ msgstr "Impossibile scrivere su %s"
 
-#, python-format
 #~ msgid "The torrent file at %s was not valid"
 #~ msgstr "Il file torrent %s non è valido"
 
@@ -4075,162 +3799,6 @@ msgstr "Riproduci File"
 
 #~ msgid "outside of democracy."
 #~ msgstr "fuori da democracy"
-
-#, python-format
-#~ msgid "Error: %s"
-#~ msgstr "Errore: %s"
-
-#, python-format
-#~ msgid "Connection Error: %s"
-#~ msgstr "Errore di Connessione: %s"
-
-#, python-format
-#~ msgid "Bad Status Line: %s"
-#~ msgstr "Errore di stato alla riga: %s"
-
-#, python-format
-#~ msgid "Bad Header Line: %s"
-#~ msgstr "Errore Header alla Linea: %s"
-
-#, python-format
-#~ msgid "Bad Chunk size: %s"
-#~ msgstr "Errore dimensione del pezzo: %s"
-
-#, python-format
-#~ msgid "Bad Status Code: %s"
-#~ msgstr "Errore di stato, codice: %s"
-
-#, python-format
-#~ msgid "Connection to %s timed out"
-#~ msgstr "Connessione a %s scaduta"
-
-#, python-format
-#~ msgid "%s is not a valid URL"
-#~ msgstr "%s non è un indirizzo valido"
-
-#~ msgid "Create Channel"
-#~ msgstr "Crea canale"
-
-#~ msgid "New Search Channel"
-#~ msgstr "Nuova ricerca canali"
-
-#~ msgid "A search channel contains items that match a search term."
-#~ msgstr ""
-#~ "Un canale di ricerca contiente gli elementi che corrispondono ad un termine "
-#~ "di ricerca."
-
-#, python-format
-#~ msgid "Deleting %s"
-#~ msgstr "Sto cancellando %s"
-
-#, python-format
-#~ msgid "%d hours"
-#~ msgstr "%d ore"
-
-#, python-format
-#~ msgid "%d minutes"
-#~ msgstr "%d minuti"
-
-#, python-format
-#~ msgid "Expires in %s"
-#~ msgstr "Scade in %s"
-
-#~ msgid "TORRENT"
-#~ msgstr "TORRENT"
-
-#~ msgid "WEB PAGE"
-#~ msgstr "PAGINA WEB"
-
-#, python-format
-#~ msgid "%s remaining"
-#~ msgstr "%s rimanenti"
-
-#~ msgid "Play Just This Video"
-#~ msgstr "Lancia solo questo Video"
-
-#~ msgid "Add to new playlist"
-#~ msgstr "Aggiungi ad una nuova playlist"
-
-#~ msgid "Mark as Unwatched"
-#~ msgstr "Marca come non visto"
-
-#~ msgid "Update Channels Now"
-#~ msgstr "Aggiorna i Canali ora"
-
-#, python-format
-#~ msgid "%d Downloaded Items"
-#~ msgstr "%d Oggetti Scaricati"
-
-#, python-format
-#~ msgid "%d Available Items"
-#~ msgstr "%d oggetti disponibli"
-
-#, python-format
-#~ msgid "%d Downloading Items"
-#~ msgstr "%d oggetti in download"
-
-#~ msgid "Update Channel Now"
-#~ msgstr "Aggiorna canali ora"
-
-#~ msgid "Rename Channel"
-#~ msgstr "Rinomina canale"
-
-#~ msgid "Revert Title to Default"
-#~ msgstr "Ripristina il Titolo al valore di default"
-
-#, python-format
-#~ msgid "Enter a new name for the channel %s"
-#~ msgstr "Inserisci un nuovo nome per il canale %s"
-
-#, python-format
-#~ msgid "Couldn't load the feed at %s (%s)."
-#~ msgstr "Imposooibile caricare il feed %s (%s)."
-
-#~ msgid "Subscribing to multiple channels"
-#~ msgstr "Sottoscrivi a più canali"
-
-#, python-format
-#~ msgid "Create %d channels?"
-#~ msgstr "Creare %d canali?"
-
-#, python-format
-#~ msgid "Adding %d channels to a new folder"
-#~ msgstr "Aggiungendo i canali %d ad una nuova cartella"
-
-#, python-format
-#~ msgid ""
-#~ "NOTE: You are already subscribed to %d of these channels.  These channels "
-#~ "will stay where they currently are."
-#~ msgstr ""
-#~ "NOTA: Hai già sottoscritto a %d di questi canali. Questi canali rimarranno "
-#~ "dove sono attualmente."
-
-#~ msgid "<b>Playback</b>"
-#~ msgstr "<b>Playback</b>"
-
-#~ msgid "<b>Searching for Videos</b>"
-#~ msgstr "<b>Cercando i Video</b>"
-
-#~ msgid "Bit Torrent uses ports between"
-#~ msgstr "Bit Torrent utilizza le porte tra"
-
-#~ msgid "In This:"
-#~ msgstr "In Questo:"
-
-#~ msgid "Restrict to my full _home folder"
-#~ msgstr "Restringi alla mia cartella piena _home"
-
-#~ msgid "Search _Engine:"
-#~ msgstr "Motore di ricerca (_E):"
-
-#~ msgid "Select custom search directory"
-#~ msgstr "Seleziona la directory della ricerca personalizzata:"
-
-#~ msgid "_URL"
-#~ msgstr "_URL"
-
-#~ msgid "and"
-#~ msgstr "e"
 
 #~ msgid "Change..."
 #~ msgstr "Modifica"
@@ -4249,25 +3817,6 @@ msgstr "Riproduci File"
 
 #~ msgid "Search this folder:"
 #~ msgstr "Cerca questa cartella"
-
-#~ msgid "Results for \"${query}\""
-#~ msgstr "Risultati per \"${query}\""
-
-#~ msgid "Empty Playlist"
-#~ msgstr "Playlist Vuota"
-
-#~ msgid "Drag downloaded videos to this playlist to add them."
-#~ msgstr "Trascina i video scaricati  in questa playlist per aggiugerli"
-
-#~ msgid "Drag playlists to this folder to add them."
-#~ msgstr "Trascina le playlist in questa cartella per aggiungerle"
-
-#~ msgid ""
-#~ "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
-#~ "playlists)"
-#~ msgstr ""
-#~ "${count} Cartella playlist selezionata<br></br>(contiene ${containedcount} "
-#~ "playlist)"
 
 #~ msgid "STAR"
 #~ msgstr "Stella"
@@ -4296,39 +3845,89 @@ msgstr "Riproduci File"
 #~ msgid "Skip >> ${countdown}"
 #~ msgstr "Salta >> ${countdown}"
 
-#~ msgid "Clear Completed Torrents"
-#~ msgstr "Elimina torrents completi"
+#~ msgid "OK"
+#~ msgstr "OK"
 
-#~ msgid "Empty Channel Folder"
-#~ msgstr "Cartella dei canali vuota"
+#~ msgid "Full Screen"
+#~ msgstr "Schermo intero"
 
-#~ msgid "Drag channels to this folder to add them."
-#~ msgstr "Trascina i canali in questa cartella per aggiungerli"
+#~ msgid "%donation label%"
+#~ msgstr "%donation label%"
 
-#~ msgid ""
-#~ "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
-#~ "channels)"
-#~ msgstr ""
-#~ "${count} Cartella canali selezionata<br></br>(contiene ${containedcount} "
-#~ "canali)"
+#~ msgid "Browse"
+#~ msgstr "Sfoglia"
 
-#~ msgid "${count} Channels Selected"
-#~ msgstr "${count} Canali selezionati"
+#~ msgid "Starting up"
+#~ msgstr "Avvio"
 
-#~ msgid "Local File"
-#~ msgstr "File locale"
+#~ msgid "Removing %s"
+#~ msgstr "Rimozione %s"
+
+#~ msgid "%d days"
+#~ msgstr "%d giorni"
+
+#~ msgid "Remove %s"
+#~ msgstr "Rimuovi %s"
+
+#~ msgid "Are you sure you want to remove the guide %s?"
+#~ msgstr "Sei sicuro di voler rimuovere la guida %s?"
+
+#~ msgid "Are you sure you want to remove %s"
+#~ msgstr "Sei sicuro di voler rimuovere %s"
+
+#~ msgid "Remove %s channels"
+#~ msgstr "Rimuovi %s canali"
+
+#~ msgid "Invalid Value"
+#~ msgstr "Valore non valido"
+
+#~ msgid "Error: %s"
+#~ msgstr "Errore: %s"
+
+#~ msgid "Bad Status Code: %s"
+#~ msgstr "Errore di stato, codice: %s"
+
+#~ msgid "Create Channel"
+#~ msgstr "Crea canale"
+
+#~ msgid "New Search Channel"
+#~ msgstr "Nuova ricerca canali"
+
+#~ msgid "%d hours"
+#~ msgstr "%d ore"
+
+#~ msgid "%d minutes"
+#~ msgstr "%d minuti"
+
+#~ msgid "TORRENT"
+#~ msgstr "TORRENT"
+
+#~ msgid "WEB PAGE"
+#~ msgstr "PAGINA WEB"
+
+#~ msgid "%s remaining"
+#~ msgstr "%s rimanenti"
+
+#~ msgid "Add to new playlist"
+#~ msgstr "Aggiungi ad una nuova playlist"
+
+#~ msgid "Update Channels Now"
+#~ msgstr "Aggiorna i Canali ora"
+
+#~ msgid "Adding %d channels to a new folder"
+#~ msgstr "Aggiungendo i canali %d ad una nuova cartella"
+
+#~ msgid "_URL"
+#~ msgstr "_URL"
+
+#~ msgid "and"
+#~ msgstr "e"
 
 #~ msgid "<b>BitTorrent</b>"
 #~ msgstr "<b>BitTorrent</b>"
 
-#~ msgid "<b>General</b>"
-#~ msgstr "<b>Generale</b>"
-
 #~ msgid "Go"
 #~ msgstr "Vai"
-
-#~ msgid "Search _custom folder:"
-#~ msgstr "Cerca in cartella personalizzata (_c):"
 
 #~ msgid "Channel:"
 #~ msgstr "Canale:"
@@ -4336,14 +3935,172 @@ msgstr "Riproduci File"
 #~ msgid "Search Engine:"
 #~ msgstr "Motore di ricerca:"
 
-#~ msgid "Cancel Search"
-#~ msgstr "Cancella Ricerca"
-
 #~ msgid "Don't Worry About Disk Space:"
 #~ msgstr "Non ti preoccupare circa sullo spazio del disco:"
 
+#~ msgid "You're done!"
+#~ msgstr "Hai finito!"
+
+#~ msgid "Democracy Help"
+#~ msgstr "Aiuto di Democracy"
+
+#~ msgid "Democracy"
+#~ msgstr "Democracy"
+
+#~ msgid "Remove Channel..."
+#~ msgstr "Rimuovi canale..."
+
+#~ msgid "Create new playlist folder"
+#~ msgstr "Crea nuova cartella playlist"
+
+#~ msgid "Create new channel folder"
+#~ msgstr "Crea nuova cartella canale"
+
+#~ msgid "Searching for Videos"
+#~ msgstr "In cerca di video"
+
+#~ msgid "SAVE"
+#~ msgstr "SALVA"
+
+#~ msgid "Expires in %s"
+#~ msgstr "Scade in %s"
+
+#~ msgid "Play Just This Video"
+#~ msgstr "Lancia solo questo Video"
+
+#~ msgid "<b>Playback</b>"
+#~ msgstr "<b>Playback</b>"
+
+#~ msgid "Bit Torrent uses ports between"
+#~ msgstr "Bit Torrent utilizza le porte tra"
+
+#~ msgid "In This:"
+#~ msgstr "In Questo:"
+
+#~ msgid "Results for \"${query}\""
+#~ msgstr "Risultati per \"${query}\""
+
+#~ msgid "Empty Playlist"
+#~ msgstr "Playlist Vuota"
+
+#~ msgid "Drag downloaded videos to this playlist to add them."
+#~ msgstr "Trascina i video scaricati  in questa playlist per aggiugerli"
+
+#~ msgid "<b>General</b>"
+#~ msgstr "<b>Generale</b>"
+
+#~ msgid "Cancel Search"
+#~ msgstr "Cancella Ricerca"
+
 #~ msgid "Find Videos:"
 #~ msgstr "Trova i Video"
+
+#~ msgid ""
+#~ "Democracy Player can find all the videos on your computer to help you "
+#~ "organize your collection.\n"
+#~ "\n"
+#~ "\n"
+#~ "Would you like Democracy Player to look for video files on your computer?"
+#~ msgstr ""
+#~ "Democracy Player può trovare tutti i video del tuo computer per aiutarti a "
+#~ "organizzare la tua collezione.\n"
+#~ "\n"
+#~ "\n"
+#~ "Desideri che Democracy Player cerchi video nel tuo computer?"
+
+#~ msgid ""
+#~ "Error importing democracy modules:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Errore nell'importazione dei moduli di democracy:\n"
+#~ "%s"
+
+#~ msgid "${len} Videos Match This Search"
+#~ msgstr "${len} video soddisfano questa ricerca"
+
+#~ msgid "${count} Videos on this Channel"
+#~ msgstr "${count} video su questo canale"
+
+#~ msgid ""
+#~ "Would you like to delete this file or just remove its entry from My "
+#~ "Collection?"
+#~ msgstr ""
+#~ "Desideri cancellare questo file o semplicemente rimuoverlo dalla Mia "
+#~ "Collezione?"
+
+#~ msgid "%s closed connection"
+#~ msgstr "%s connessione chiusa"
+
+#~ msgid "Could not download the Democracy channel file: %s."
+#~ msgstr "Impossibile scaricare il file del canale Democracy: %s."
+
+#~ msgid "Loading window"
+#~ msgstr "Caricamento finestra"
+
+#~ msgid ""
+#~ "Are you sure you want to remove %s?  Any downloads in progress will be "
+#~ "canceled."
+#~ msgstr ""
+#~ "Sei sicuro di voler rimuovere %s? Gli scaricamenti in corso saranno "
+#~ "annullati."
+
+#~ msgid ""
+#~ "What would you like to do with the videos in this channel that you've "
+#~ "downloaded?"
+#~ msgstr "Cosa vuoi fare con i video che hai scaricato da questo canale?"
+
+#~ msgid ""
+#~ "What would you like to do with the videos in these channels that you've "
+#~ "downloaded?"
+#~ msgstr "Cosa vuoi fare con i video che hai scaricato da questi canali?"
+
+#~ msgid "%s is invalid.  You must enter a non-negative number."
+#~ msgstr "%s non è valido. Devi immettere un numero non negativo."
+
+#~ msgid "_Remove Video..."
+#~ msgstr "_Cancella Video..."
+
+#~ msgid "_Remove Videos..."
+#~ msgstr "Cancella i Video..."
+
+#~ msgid "Re_name Playlist..."
+#~ msgstr "Ri_nomina playlist..."
+
+#~ msgid "Re_name Playlist Folder..."
+#~ msgstr "Ri_nomina cartella Playlist"
+
+#~ msgid "Re_name Channel..."
+#~ msgstr "Ri_nomina Canale..."
+
+#~ msgid "Re_name Channel Folder..."
+#~ msgstr "Ri_nomina la cartella dei canali"
+
+#~ msgid "_Update Channel..."
+#~ msgstr "_Aggiorna Canale..."
+
+#~ msgid "Rename Channel"
+#~ msgstr "Rinomina canale"
+
+#~ msgid "Revert Title to Default"
+#~ msgstr "Ripristina il Titolo al valore di default"
+
+#~ msgid "Create %d channels?"
+#~ msgstr "Creare %d canali?"
+
+#~ msgid "<b>Searching for Videos</b>"
+#~ msgstr "<b>Cercando i Video</b>"
+
+#~ msgid "Restrict to my full _home folder"
+#~ msgstr "Restringi alla mia cartella piena _home"
+
+#~ msgid "Search _Engine:"
+#~ msgstr "Motore di ricerca (_E):"
+
+#~ msgid "Select custom search directory"
+#~ msgstr "Seleziona la directory della ricerca personalizzata:"
+
+#~ msgid "Search _custom folder:"
+#~ msgstr "Cerca in cartella personalizzata (_c):"
 
 #~ msgid "Go Big:"
 #~ msgstr "Vai alla Grande:"
@@ -4358,31 +4115,10 @@ msgstr "Riproduci File"
 #~ "Ora puoi esplorare la Guida dei Canali\n"
 #~ "e iniziare a guardare. Alcuni suggerimenti per cominciare:"
 
-#~ msgid "Search custom folder:"
-#~ msgstr "Cerca cartella personalizzata:"
-
 #~ msgid "The button to the right of the play button shows videos fullscreen."
 #~ msgstr ""
 #~ "Sul bottone alla destra del bottoni \"Riproduci\" mostra tutti i video a "
 #~ "tutto schermo."
-
-#~ msgid "You're done!"
-#~ msgstr "Hai finito!"
-
-#~ msgid "New Channel Folder"
-#~ msgstr "Nuova Cartella Canali"
-
-#~ msgid "New Channel Guide"
-#~ msgstr "Nuova Guida Canali"
-
-#~ msgid "Pause Video"
-#~ msgstr "Pausa"
-
-#~ msgid "Send This Channel to a Friend..."
-#~ msgstr "Invia quest Canale ad un amico..."
-
-#~ msgid "Folder location"
-#~ msgstr "Percorso cartella"
 
 #~ msgid "Remember video position."
 #~ msgstr "Ricorda posizione del video"
@@ -4390,7 +4126,6 @@ msgstr "Riproduci File"
 #~ msgid "Show as Channel"
 #~ msgstr "Mostra come canale"
 
-#, python-format
 #~ msgid ""
 #~ "Error importing modules:\n"
 #~ "%s"
@@ -4401,24 +4136,11 @@ msgstr "Riproduci File"
 #~ msgid "Download Failed"
 #~ msgstr "Download fallito"
 
-#, python-format
 #~ msgid "Download of video '%s' has failed."
 #~ msgstr "Il download del video '%s' è fallito"
 
-#~ msgid "Subscribe to Channel"
-#~ msgstr "Sottoscrivi al canale"
-
 #~ msgid "Enter the URL of the channel you would like to subscribe to."
 #~ msgstr "Inserisci l' URL del canale a cui vuoi iscriverti"
-
-#~ msgid "Audio"
-#~ msgstr "Audio"
-
-#~ msgid "Disk Space"
-#~ msgstr "Spazio su disco"
-
-#~ msgid "Movies Directory"
-#~ msgstr "Cartella dei fil"
 
 #~ msgid "Select"
 #~ msgstr "Seleziona"
@@ -4429,7 +4151,6 @@ msgstr "Riproduci File"
 #~ msgid "Unsupported version of Quicktime"
 #~ msgstr "Versione di Quicktime non supportata"
 
-#, python-format
 #~ msgid ""
 #~ "To run %s you need the most recent version of Quicktime, which is a free "
 #~ "update."
@@ -4438,87 +4159,20 @@ msgstr "Riproduci File"
 #~ msgid "Folder Location"
 #~ msgstr "Percorso cartella"
 
-#, python-format
-#~ msgid "%d day"
-#~ msgstr "%d giorni"
-
-#, python-format
-#~ msgid "%d months"
-#~ msgstr "%d mesi"
-
-#~ msgid "Channel is not compatible with $shortAppName!"
-#~ msgstr "Il canale non è compatibile con $shortAppName!"
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files. It may take extra time to list the "
-#~ "videos, and descriptions may look funny.  Please contact the publishers of "
-#~ "$url and ask if they can supply a feed in a format that will work with "
-#~ "$shortAppName.\n"
-#~ "\n"
-#~ "Do you want to try to load this channel anyway?"
-#~ msgstr ""
-#~ "Ma proveremo a fare il nostro meglio per tirar giù i files. Potrebbe volerci "
-#~ "un pò di tempo extra per elencare i video, e le descrizioni potrebbero "
-#~ "sembrare buffe. Sei pregato di contattare chi ha pubblicato $url e chiedere "
-#~ "se può fornire un feed in un formato che funzioni con $shortAppName.\n"
-#~ "Vuoi provare a caricare questo canale comunque?"
-
-#, python-format
 #~ msgid "%s Version Alert"
 #~ msgstr "Segnala versione %s"
 
-#, python-format
-#~ msgid "A new version of %s is available. Would you like to download it now?"
-#~ msgstr "Una nuova versione di %s è disponibile. Vuoi scaricarla ora?"
-
-#, python-format
 #~ msgid "%s Version Check"
 #~ msgstr "Controllo Versione %s"
 
-#, python-format
-#~ msgid "%s is up to date."
-#~ msgstr "%s è aggiornato"
-
-#, python-format
 #~ msgid "%dGB"
 #~ msgstr "%dGb"
 
-#, python-format
 #~ msgid "%1.1fB"
 #~ msgstr "%1.1fB"
 
-#, python-format
 #~ msgid "%dB"
 #~ msgstr "%dB"
-
-#~ msgid ""
-#~ "This $shortAppName channel file has an invalid format: $url. Please notify "
-#~ "the publisher of this file."
-#~ msgstr ""
-#~ "Questo file $shortAppName canale ha un formato non valido: $url. Per Piacere "
-#~ "notifica chi ha pubblicato questo file."
-
-#~ msgid ""
-#~ "This $shortAppName channel file has the wrong content type: $url. Please "
-#~ "notify the publisher of this file."
-#~ msgstr ""
-#~ "Questo file $shortAppName di canale ha il tipo di contenuto errato: $url. "
-#~ "Per piacere notifica a chi ha pubblicato questo file."
-
-#~ msgid "Could not download the $shortAppName channel file: $url."
-#~ msgstr "Non è possibile scaricare il file $shortAppName di canale: $url."
-
-#~ msgid "_Remove Videos"
-#~ msgstr "_Rimuovi i Video"
-
-#~ msgid "Re_name Video"
-#~ msgstr "Ri_nomina Video"
-
-#~ msgid "Save Videos _As..."
-#~ msgstr "Salva i Video _Come..."
-
-#~ msgid "Copy Video _URL"
-#~ msgstr "Copia _URL del Video"
 
 #~ msgid "_Delete"
 #~ msgstr "_Cancella"
@@ -4526,42 +4180,17 @@ msgstr "Riproduci File"
 #~ msgid "Add _Channel"
 #~ msgstr "Aggiungi _Canale"
 
-#~ msgid "New _Folder..."
-#~ msgstr "Nuova _Cartella..."
-
-#~ msgid "Update _All Channels"
-#~ msgstr "Aggiorna _Tutti i Canali"
-
-#, python-format
 #~ msgid "Will retry in %s"
 #~ msgstr "Nuovo tentativo fra %s"
-
-#~ msgid "Paused"
-#~ msgstr "In pausa"
 
 #~ msgid "Total Down:"
 #~ msgstr "Down totale:"
 
-#~ msgid "Down Rate:"
-#~ msgstr "Tasso Down:"
-
 #~ msgid "Down Total:"
 #~ msgstr "Down totale:"
 
-#~ msgid "Up Rate:"
-#~ msgstr "Tasso Up:"
-
 #~ msgid "Up Total:"
 #~ msgstr "Up totale:"
-
-#~ msgid "Web page:"
-#~ msgstr "Pagina Web:"
-
-#~ msgid "permalink"
-#~ msgstr "permalink"
-
-#~ msgid "File link:"
-#~ msgstr "Link al file:"
 
 #~ msgid "direct link to file"
 #~ msgstr "link diretto al file"
@@ -4572,50 +4201,20 @@ msgstr "Riproduci File"
 #~ msgid "REVEAL LOCAL FILE"
 #~ msgstr "RIVELA FILE LOCALE"
 
-#~ msgid "Up Total"
-#~ msgstr "Su totale"
-
-#~ msgid "Item Details"
-#~ msgstr "Dettagli elemento"
-
 #~ msgid "Torrent Details"
 #~ msgstr "Dettagli Torrent"
 
-#~ msgid "Download Details"
-#~ msgstr "Dettagli scaricamento"
-
-#, python-format
-#~ msgid "Stop watching %s"
-#~ msgstr "Ferma la visione di %s"
-
-#, python-format
 #~ msgid "Stop watching %s directories"
 #~ msgstr "Ferma il vedere  %s directory"
 
-#, python-format
 #~ msgid "Are you sure you want to stop watching these %s directories?"
 #~ msgstr "Sei certo di non voler fermare di vedere queste %s directory ?"
 
 #~ msgid "$shortAppName - Add Channel"
 #~ msgstr "$shortAppName - Aggiungi Canale"
 
-#~ msgid "News and Tech"
-#~ msgstr "Novità e Tecnologia"
-
-#~ msgid "Entertainment"
-#~ msgstr "Intrattenimento"
-
-#~ msgid "High-Def"
-#~ msgstr "Alta definizione"
-
-#~ msgid "Mac"
-#~ msgstr "Mac"
-
 #~ msgid "_Add Folder"
 #~ msgstr "_Aggiungi Cartella"
-
-#~ msgid "videos at once"
-#~ msgstr "video alla volta"
 
 #~ msgid ""
 #~ "Please help us fix it. Copy and paste all the\n"
@@ -4688,9 +4287,6 @@ msgstr "Riproduci File"
 #~ "li scarica in background. Lascialo in esecuzione per avere sempre nuovi "
 #~ "video da vedere."
 
-#~ msgid "$shortAppName First Time Setup"
-#~ msgstr "Configurazione iniziale di $shortAppName"
-
 #~ msgid ""
 #~ "Like a TiVo, $longAppName features an 'expiration' system that helps clean "
 #~ "out older videos to make room for new videos.  You can always keep a video "
@@ -4710,33 +4306,14 @@ msgstr "Riproduci File"
 #~ "Le prossime schermate ti aiuteranno a configurare $longAppName in modo che "
 #~ "funzioni al meglio."
 
-#~ msgid ""
-#~ "We recommend that you have $longAppName launch when your computer starts up. "
-#~ " This way, videos in progress can finish downloading and new videos can be "
-#~ "downloaded in the background, ready when you want to watch."
-#~ msgstr ""
-#~ "Raccomandiamo di eseguire $longAppName all'avvio del computer. In questo "
-#~ "modo potrà essere ultimato il download di eventuali video in coda e nuovi "
-#~ "video potranno essere scaricati in background in modo che siano disponibli "
-#~ "quando vorrai guardarli."
-
 #~ msgid "Would you like $longAppName to look for video files on your computer?"
 #~ msgstr "Vuoi che $longAppName ricerchi file video nel tuo computer?"
-
-#~ msgid "Would you like to run $shortAppName on startup?"
-#~ msgstr "Vuoi eseguire $shortAppName all'avvio del computer?"
-
-#~ msgid "About Miro"
-#~ msgstr "Informazioni su Miro"
 
 #~ msgid "Miro"
 #~ msgstr "Miro"
 
 #~ msgid "Report a bug"
 #~ msgstr "Segnala un bug"
-
-#~ msgid "(You must restart Miro for this change to take effect)\n"
-#~ msgstr "(Devi riavviare Miro affinché le modifiche abbiano effetto)\n"
 
 #~ msgid ""
 #~ "The next few screens will help you set up the Miro Player so that it works "
@@ -4771,60 +4348,9 @@ msgstr "Riproduci File"
 #~ "altro.\n"
 #~ "\n"
 
-#~ msgid ""
-#~ "You're done!\n"
-#~ "\n"
-#~ "Setup is complete -- now you can find some channels and start watching.\n"
-#~ "\n"
-#~ "Don't Wait: Miro is different than watching webpage videos -- publishers can "
-#~ "offer big, high quality videos. So don't sit around waiting for videos: "
-#~ "start some downloads and check back later. \n"
-#~ "\n"
-#~ "Leave it On: Miro regularly checks channels for new videos and downloads in "
-#~ "the background. Leaving it running means you'll have new videos when you're "
-#~ "ready to watch.\n"
-#~ "\n"
-#~ "Don't Worry About Disk Space: Like a TiVo, Miro features an 'expiration' "
-#~ "system that helps clean out older videos to make room for new videos. You "
-#~ "can always keep a video permanently by clicking 'save' and you can set a "
-#~ "channel's settings to save videos automatically.\n"
-#~ "\n"
-#~ "Go Big: The button to the right of the play button shows videos fullscreen.\n"
-#~ "\n"
-#~ "Find Videos: The Miro Guide has hundreds of internet TV channels, all of "
-#~ "them are free. Just click 'ADD' to watch a channel.\n"
-#~ msgstr ""
-#~ "Fatto!\n"
-#~ "\n"
-#~ "La configurazione è terminata -- adesso puoi scegliere i canali e comnciare "
-#~ "a guardare nuovi video.\n"
-#~ "\n"
-#~ "Non attendere: la filosofia di Miro è differente da quela di vedere video "
-#~ "sul web -- chi pubblica offre video di elevate dimensioni e di qualità "
-#~ "elevata. Quindi non attendere il download di ogni video: fai partire il "
-#~ "dowload di più video e torna più tardi a guardarli. \n"
-#~ "\n"
-#~ "Lascialo attivo: Miro controlla regolarmente i canali e i download mentre è "
-#~ "attivo anche se nacosto. Lasciarlo attivo significa che avrai nuovi video "
-#~ "quando sarai pronto a guardarli.\n"
-#~ "\n"
-#~ "Non preoccuparti dello spazio sul disco: Miro, come TiVo, implementa un "
-#~ "sistema di 'scadenze' che automaticamente cancella i vecchi video in modo da "
-#~ "fare spazio per quelli nuovi. Puoi comunque tenere un video cliccando "
-#~ "'salva' ed è possibile settare i canali in modo che salvino automaticamente "
-#~ "i video.\n"
-#~ "\n"
-#~ "Espanditi: Il bottone alla destra del tasto play mostra il video a schermo "
-#~ "pieno.\n"
-#~ "\n"
-#~ "Cerca i video: La Guida di Miro contiene centinaia di canali di internet TV "
-#~ "tutti gratuiti. È sufficiente cliccare su 'AGGIUNGI' per vedere un canale.\n"
-
-#, python-format
 #~ msgid "Select a Directory to store %s downloads in."
 #~ msgstr "Selezona una cartella per memorizzare al suo interno %s download."
 
-#, python-format
 #~ msgid ""
 #~ "You've selected a new folder to download movies to.  Should %s migrate your "
 #~ "existing downloads there?  (Currently dowloading movies will not be moved "
@@ -4839,20 +4365,11 @@ msgstr "Riproduci File"
 #~ msgid "Select a Directory to view in the Library."
 #~ msgstr "Seleziona una cartella per vedere la Libreria."
 
-#~ msgid "_Remove Miro Guide..."
-#~ msgstr "_Rimuovi la Miro Guide"
-
 #~ msgid "_Remove Miro Guides..."
 #~ msgstr "_Rimuovi del Guide di Miro..."
 
 #~ msgid "Re_name Miro Guide..."
 #~ msgstr "Ri_nomina la Guida di Miro..."
-
-#~ msgid "Options"
-#~ msgstr "Opzioni"
-
-#~ msgid "Pause All Downloads ($numDownloading)"
-#~ msgstr "Metti in pausa tutti i Download ($numDownloading)"
 
 #~ msgid ""
 #~ "Would you like to delete this folder and all of its videos or just remove "
@@ -4861,21 +4378,8 @@ msgstr "Riproduci File"
 #~ "Vuoi cancellare questa cartella e tutti i suoi video o vuoi solamente "
 #~ "rimuovere i suoi elementi dalla Libreria?"
 
-#~ msgid ""
-#~ "One or more of these videos was not downloaded from a channel.  Would you "
-#~ "like to delete these items or just remove their entries from the Library?"
-#~ msgstr ""
-#~ "Uno o più di uno di questi video non sono stati scaricati da un canale. Vuoi "
-#~ "eliminare questi elementi o vuoi solamente rimuovere le loro voci dalla "
-#~ "Libreria?"
-
 #~ msgid "$shortAppName - Add Miro Guide"
 #~ msgstr "$shortAppName - Aggiungi la Guida di Miro"
-
-#~ msgid "(Changes won't go into effect until you restart Miro)"
-#~ msgstr ""
-#~ "(I cambiamenti non saranno presi in considerazione solo dopo aver riavviato "
-#~ "Miro)"
 
 #~ msgid ""
 #~ "<b>You're done!</b>\n"
@@ -4954,6 +4458,543 @@ msgstr "Riproduci File"
 #~ "automaticamente video dal tuo canale preferito, guardare nuovi video uno "
 #~ "dopo l'altro, scaricare torrents, segnalare video agli amici, e molto altro."
 
+#~ msgid "Spacebar"
+#~ msgstr "Barra spaziatrice"
+
+#~ msgid "Add Channel _Guide..."
+#~ msgstr "Aggiungi _Guida Canale"
+
+#~ msgid "Hide Window"
+#~ msgstr "Nascondi finestra"
+
+#~ msgid "Show Window"
+#~ msgstr "Mostra finestra"
+
+#~ msgid "Export Channels (OPML)..."
+#~ msgstr "Esporta Canali (OPML)..."
+
+#~ msgid "Import Channels (OPML)..."
+#~ msgstr "Importa Canali (OPML)..."
+
+#~ msgid "_Options..."
+#~ msgstr "_Opzioni..."
+
+#~ msgid "Options..."
+#~ msgstr "Opzioni..."
+
+#~ msgid ""
+#~ "Would you like to delete this file or just remove its entry from the Library?"
+#~ msgstr "Vuoi eliminare questo file o rimuoverlo appena dalla Libreria?"
+
+#~ msgid "Torrent Details <i>stopped</i>"
+#~ msgstr "I Dettagli Torrent <i>ferma</i>"
+
+#~ msgid "Video Directory Missing"
+#~ msgstr "La directory del video non è stata trovata"
+
+#~ msgid "$shortAppName - Download Video"
+#~ msgstr "$shortAppName - Scarica Video"
+
+#~ msgid "Error Changing Movies Directory"
+#~ msgstr "Errore nel cambiamento della Directory dei Film"
+
+#~ msgid "C_hannels"
+#~ msgstr "_Canali"
+
+#~ msgid "Check Channels for _new content"
+#~ msgstr "Controlla i Canali per i _nuovi contenuti"
+
+#~ msgid "Disk _Space"
+#~ msgstr "_Spazio del disco"
+
+#~ msgid "Play _videos one after another"
+#~ msgstr "Riproduci _video uno dopo l'altro"
+
+#~ msgid "S_top after each video"
+#~ msgstr "S_top dopo ogni video"
+
+#~ msgid "S_tore downloaded videos in this folder:"
+#~ msgstr "C_onserva i video scaricato in questa cartella:"
+
+#~ msgid "_Downloads"
+#~ msgstr "_Downloads"
+
+#~ msgid "_Folders"
+#~ msgstr "_Cartelle"
+
+#~ msgid "_General"
+#~ msgstr "_Generale"
+
+#~ msgid "_Playback"
+#~ msgstr "_Riproduzione"
+
+#~ msgid "_Warn me when I attempt to quit with downloads in progress"
+#~ msgstr "_Avvertimento quando io tento di uscire con il download in progresso"
+
+#~ msgid ""
+#~ "_Watch for new videos in these folders and include them in the Library"
+#~ msgstr ""
+#~ "_Controlla la presenza di nuovi video in queste cartelle ed includili nella "
+#~ "Libreria"
+
+#~ msgid "Automatically run $longAppName when I login."
+#~ msgstr "Avvia automaticamente $longAppName quando eseguo il login."
+
+#~ msgid "Check channels for new content"
+#~ msgstr "Controlla i canali per trovare i nuovi contenuti"
+
+#~ msgid "Folder"
+#~ msgstr "Cartella"
+
+#~ msgid ""
+#~ "Remember where I stopped watching a video and continue playing from that "
+#~ "point."
+#~ msgstr ""
+#~ "Ricordati a che punto ho smesso di guardare un video e continua la "
+#~ "riproduzione da quel punto."
+
+#~ msgid "Watch for new videos in these folders and include them in my Library."
+#~ msgstr ""
+#~ "Controlla queste cartelle e includi i nuovi video nella mia Libreria."
+
+#~ msgid ""
+#~ "Miro is still uploading your crash report. If you quit now the upload will "
+#~ "be canceled.  Quit Anyway?"
+#~ msgstr ""
+#~ "Miro stà ancora caricando il resonto del crash. Se esci ora l'upload sarà "
+#~ "annullato. Uscire lo stesso?"
+
+#~ msgid "Error:"
+#~ msgstr "Errore:"
+
+#~ msgid "Error Saving Video"
+#~ msgstr "Errore nel salvare il video"
+
+#~ msgid ""
+#~ "%s was unable to save its database: Disk Full.\n"
+#~ "We suggest deleting files from the full disk or simply deleting some movies "
+#~ "from your collection.\n"
+#~ "Recent changes may be lost."
+#~ msgstr ""
+#~ "%s non è permesso di salvare il suo database: il disco è pieno\n"
+#~ "Suggeriamo di eliminare i file dal disco pieno o più semplicemente di "
+#~ "eliminare qualche video dalla tua collezione.\n"
+#~ "I cambiamenti recenti possono essere stati persi."
+
+#~ msgid "Rename Channel Folder"
+#~ msgstr "Rinomina la cartella del canale"
+
+#~ msgid "Enter a new name for the channel folder %s"
+#~ msgstr "Immetti un nuovo nome per la cartella del canale %s"
+
+#~ msgid "Enter a new name for the playlist folder %s"
+#~ msgstr "Immetti un nuovo nome per la cartella playlist %s"
+
+#~ msgid "Create Channel Folder"
+#~ msgstr "Crea cartella del canale"
+
+#~ msgid "Enter a name for the new channel folder"
+#~ msgstr "Immetti il nome della nuova cartella del canale"
+
+#~ msgid ""
+#~ "This Democracy channel file has an invalid format: %s. Please notify the "
+#~ "publisher of this file."
+#~ msgstr ""
+#~ "Questo file di canale Democracy ha un formato non valido: %s. Per favore "
+#~ "avverti chi ha pubblicato il video."
+
+#~ msgid ""
+#~ "This Democracy channel file has the wrong content type: %s. Please notify "
+#~ "the publisher of this file."
+#~ msgstr ""
+#~ "Questo file di canale Democracy ha il tipo di contenuto errato: %s. Per "
+#~ "favore avverti chi ha pubblicato il video."
+
+#~ msgid "The torrent file %s appears to be corrupt and cannot be opened. [OK]"
+#~ msgstr ""
+#~ "Il file torrent %s sembra essere danneggiato e non può essere aperto. [OK]"
+
+#~ msgid ""
+#~ "But we'll try our best to grab the files. It may take extra time to list the "
+#~ "videos, and descriptions may look funny.  Please contact the publishers of "
+#~ "$url and ask if they can supply a feed in a format that will work with "
+#~ "Democracy.\n"
+#~ "\n"
+#~ "Do you want to try to load this channel anyway?"
+#~ msgstr ""
+#~ "Ma faremo del nostro meglio per recuperare i file. È possibile che serva più "
+#~ "tempo per elencare i video e le descrizioni potrebbero sembrare strane. Per "
+#~ "favore, contatta chi ha pubblicato $url e chiedi se può fornire un feed "
+#~ "compatibile con Democracy.\n"
+#~ "\n"
+#~ "Desideri comunque provare a caricare questo canale?"
+
+#~ msgid "Are you sure you want to remove these %s playlists"
+#~ msgstr "Sei sicuro di voler rimuovere queste %s playlist"
+
+#~ msgid ""
+#~ "Are you sure you want to remove these %s channels?  Any downloads in "
+#~ "progress will be canceled."
+#~ msgstr ""
+#~ "Sei sicuro di voler rimuovere questi %s canali? Gli scaricamenti in corso "
+#~ "saranno annullati."
+
+#~ msgid " - Invalid URL"
+#~ msgstr " - URL non valido"
+
+#~ msgid ""
+#~ "The address you entered is not a valid URL.\n"
+#~ "Please double check and try again.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "L'indirizzo che hai immesso non è un URL valido.\n"
+#~ "Per favore controlla e prova ancora.\n"
+#~ "\n"
+
+#~ msgid "Democracy - Add Channel Guide"
+#~ msgstr "Democracy - Aggiungi Channel Guide"
+
+#~ msgid "Enter the URL of the channel guide to add"
+#~ msgstr "Immetti l'URL della guida del canale da aggiungere."
+
+#~ msgid ""
+#~ "You are running a version of Democracy Player with a custom set of channels."
+#~ msgstr ""
+#~ "Stai usando una versione di Democracy Player con un insieme di canali "
+#~ "personalizzati."
+
+#~ msgid "Re_name..."
+#~ msgstr "Ri_nomina..."
+
+#~ msgid "Re_name Channel Guide..."
+#~ msgstr "Ri_nomina la guida dei canali"
+
+#~ msgid "%d video found"
+#~ msgid_plural "%d videos found"
+#~ msgstr[0] "%d video trovato"
+#~ msgstr[1] "%d video trovati"
+
+#~ msgid "Connection Error: %s"
+#~ msgstr "Errore di Connessione: %s"
+
+#~ msgid "Bad Status Line: %s"
+#~ msgstr "Errore di stato alla riga: %s"
+
+#~ msgid "Bad Header Line: %s"
+#~ msgstr "Errore Header alla Linea: %s"
+
+#~ msgid "Bad Chunk size: %s"
+#~ msgstr "Errore dimensione del pezzo: %s"
+
+#~ msgid "Connection to %s timed out"
+#~ msgstr "Connessione a %s scaduta"
+
+#~ msgid "%s is not a valid URL"
+#~ msgstr "%s non è un indirizzo valido"
+
+#~ msgid "A search channel contains items that match a search term."
+#~ msgstr ""
+#~ "Un canale di ricerca contiente gli elementi che corrispondono ad un termine "
+#~ "di ricerca."
+
+#~ msgid "Deleting %s"
+#~ msgstr "Sto cancellando %s"
+
+#~ msgid "Mark as Unwatched"
+#~ msgstr "Marca come non visto"
+
+#~ msgid "%d Downloaded Items"
+#~ msgstr "%d Oggetti Scaricati"
+
+#~ msgid "%d Available Items"
+#~ msgstr "%d oggetti disponibli"
+
+#~ msgid "%d Downloading Items"
+#~ msgstr "%d oggetti in download"
+
+#~ msgid "Update Channel Now"
+#~ msgstr "Aggiorna canali ora"
+
+#~ msgid "Enter a new name for the channel %s"
+#~ msgstr "Inserisci un nuovo nome per il canale %s"
+
+#~ msgid "Couldn't load the feed at %s (%s)."
+#~ msgstr "Imposooibile caricare il feed %s (%s)."
+
+#~ msgid "Subscribing to multiple channels"
+#~ msgstr "Sottoscrivi a più canali"
+
+#~ msgid ""
+#~ "NOTE: You are already subscribed to %d of these channels.  These channels "
+#~ "will stay where they currently are."
+#~ msgstr ""
+#~ "NOTA: Hai già sottoscritto a %d di questi canali. Questi canali rimarranno "
+#~ "dove sono attualmente."
+
+#~ msgid "Drag playlists to this folder to add them."
+#~ msgstr "Trascina le playlist in questa cartella per aggiungerle"
+
+#~ msgid ""
+#~ "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
+#~ "playlists)"
+#~ msgstr ""
+#~ "${count} Cartella playlist selezionata<br></br>(contiene ${containedcount} "
+#~ "playlist)"
+
+#~ msgid "Clear Completed Torrents"
+#~ msgstr "Elimina torrents completi"
+
+#~ msgid "Empty Channel Folder"
+#~ msgstr "Cartella dei canali vuota"
+
+#~ msgid "Drag channels to this folder to add them."
+#~ msgstr "Trascina i canali in questa cartella per aggiungerli"
+
+#~ msgid ""
+#~ "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
+#~ "channels)"
+#~ msgstr ""
+#~ "${count} Cartella canali selezionata<br></br>(contiene ${containedcount} "
+#~ "canali)"
+
+#~ msgid "${count} Channels Selected"
+#~ msgstr "${count} Canali selezionati"
+
+#~ msgid "Local File"
+#~ msgstr "File locale"
+
+#~ msgid "Search custom folder:"
+#~ msgstr "Cerca cartella personalizzata:"
+
+#~ msgid "New Channel Folder"
+#~ msgstr "Nuova Cartella Canali"
+
+#~ msgid "New Channel Guide"
+#~ msgstr "Nuova Guida Canali"
+
+#~ msgid "Pause Video"
+#~ msgstr "Pausa"
+
+#~ msgid "Send This Channel to a Friend..."
+#~ msgstr "Invia quest Canale ad un amico..."
+
+#~ msgid "Folder location"
+#~ msgstr "Percorso cartella"
+
+#~ msgid "Subscribe to Channel"
+#~ msgstr "Sottoscrivi al canale"
+
+#~ msgid "Audio"
+#~ msgstr "Audio"
+
+#~ msgid "Disk Space"
+#~ msgstr "Spazio su disco"
+
+#~ msgid "Movies Directory"
+#~ msgstr "Cartella dei fil"
+
+#~ msgid "%d day"
+#~ msgstr "%d giorni"
+
+#~ msgid "%d months"
+#~ msgstr "%d mesi"
+
+#~ msgid "Channel is not compatible with $shortAppName!"
+#~ msgstr "Il canale non è compatibile con $shortAppName!"
+
+#~ msgid ""
+#~ "But we'll try our best to grab the files. It may take extra time to list the "
+#~ "videos, and descriptions may look funny.  Please contact the publishers of "
+#~ "$url and ask if they can supply a feed in a format that will work with "
+#~ "$shortAppName.\n"
+#~ "\n"
+#~ "Do you want to try to load this channel anyway?"
+#~ msgstr ""
+#~ "Ma proveremo a fare il nostro meglio per tirar giù i files. Potrebbe volerci "
+#~ "un pò di tempo extra per elencare i video, e le descrizioni potrebbero "
+#~ "sembrare buffe. Sei pregato di contattare chi ha pubblicato $url e chiedere "
+#~ "se può fornire un feed in un formato che funzioni con $shortAppName.\n"
+#~ "Vuoi provare a caricare questo canale comunque?"
+
+#~ msgid "A new version of %s is available. Would you like to download it now?"
+#~ msgstr "Una nuova versione di %s è disponibile. Vuoi scaricarla ora?"
+
+#~ msgid "%s is up to date."
+#~ msgstr "%s è aggiornato"
+
+#~ msgid ""
+#~ "This $shortAppName channel file has an invalid format: $url. Please notify "
+#~ "the publisher of this file."
+#~ msgstr ""
+#~ "Questo file $shortAppName canale ha un formato non valido: $url. Per Piacere "
+#~ "notifica chi ha pubblicato questo file."
+
+#~ msgid ""
+#~ "This $shortAppName channel file has the wrong content type: $url. Please "
+#~ "notify the publisher of this file."
+#~ msgstr ""
+#~ "Questo file $shortAppName di canale ha il tipo di contenuto errato: $url. "
+#~ "Per piacere notifica a chi ha pubblicato questo file."
+
+#~ msgid "Could not download the $shortAppName channel file: $url."
+#~ msgstr "Non è possibile scaricare il file $shortAppName di canale: $url."
+
+#~ msgid "_Remove Videos"
+#~ msgstr "_Rimuovi i Video"
+
+#~ msgid "Re_name Video"
+#~ msgstr "Ri_nomina Video"
+
+#~ msgid "Save Videos _As..."
+#~ msgstr "Salva i Video _Come..."
+
+#~ msgid "Copy Video _URL"
+#~ msgstr "Copia _URL del Video"
+
+#~ msgid "New _Folder..."
+#~ msgstr "Nuova _Cartella..."
+
+#~ msgid "Update _All Channels"
+#~ msgstr "Aggiorna _Tutti i Canali"
+
+#~ msgid "Paused"
+#~ msgstr "In pausa"
+
+#~ msgid "Down Rate:"
+#~ msgstr "Tasso Down:"
+
+#~ msgid "Up Rate:"
+#~ msgstr "Tasso Up:"
+
+#~ msgid "Web page:"
+#~ msgstr "Pagina Web:"
+
+#~ msgid "permalink"
+#~ msgstr "permalink"
+
+#~ msgid "File link:"
+#~ msgstr "Link al file:"
+
+#~ msgid "Up Total"
+#~ msgstr "Su totale"
+
+#~ msgid "Item Details"
+#~ msgstr "Dettagli elemento"
+
+#~ msgid "Download Details"
+#~ msgstr "Dettagli scaricamento"
+
+#~ msgid "Stop watching %s"
+#~ msgstr "Ferma la visione di %s"
+
+#~ msgid "News and Tech"
+#~ msgstr "Novità e Tecnologia"
+
+#~ msgid "Entertainment"
+#~ msgstr "Intrattenimento"
+
+#~ msgid "High-Def"
+#~ msgstr "Alta definizione"
+
+#~ msgid "Mac"
+#~ msgstr "Mac"
+
+#~ msgid "videos at once"
+#~ msgstr "video alla volta"
+
+#~ msgid "$shortAppName First Time Setup"
+#~ msgstr "Configurazione iniziale di $shortAppName"
+
+#~ msgid ""
+#~ "We recommend that you have $longAppName launch when your computer starts up. "
+#~ " This way, videos in progress can finish downloading and new videos can be "
+#~ "downloaded in the background, ready when you want to watch."
+#~ msgstr ""
+#~ "Raccomandiamo di eseguire $longAppName all'avvio del computer. In questo "
+#~ "modo potrà essere ultimato il download di eventuali video in coda e nuovi "
+#~ "video potranno essere scaricati in background in modo che siano disponibli "
+#~ "quando vorrai guardarli."
+
+#~ msgid "Would you like to run $shortAppName on startup?"
+#~ msgstr "Vuoi eseguire $shortAppName all'avvio del computer?"
+
+#~ msgid "About Miro"
+#~ msgstr "Informazioni su Miro"
+
+#~ msgid "(You must restart Miro for this change to take effect)\n"
+#~ msgstr "(Devi riavviare Miro affinché le modifiche abbiano effetto)\n"
+
+#~ msgid ""
+#~ "You're done!\n"
+#~ "\n"
+#~ "Setup is complete -- now you can find some channels and start watching.\n"
+#~ "\n"
+#~ "Don't Wait: Miro is different than watching webpage videos -- publishers can "
+#~ "offer big, high quality videos. So don't sit around waiting for videos: "
+#~ "start some downloads and check back later. \n"
+#~ "\n"
+#~ "Leave it On: Miro regularly checks channels for new videos and downloads in "
+#~ "the background. Leaving it running means you'll have new videos when you're "
+#~ "ready to watch.\n"
+#~ "\n"
+#~ "Don't Worry About Disk Space: Like a TiVo, Miro features an 'expiration' "
+#~ "system that helps clean out older videos to make room for new videos. You "
+#~ "can always keep a video permanently by clicking 'save' and you can set a "
+#~ "channel's settings to save videos automatically.\n"
+#~ "\n"
+#~ "Go Big: The button to the right of the play button shows videos fullscreen.\n"
+#~ "\n"
+#~ "Find Videos: The Miro Guide has hundreds of internet TV channels, all of "
+#~ "them are free. Just click 'ADD' to watch a channel.\n"
+#~ msgstr ""
+#~ "Fatto!\n"
+#~ "\n"
+#~ "La configurazione è terminata -- adesso puoi scegliere i canali e comnciare "
+#~ "a guardare nuovi video.\n"
+#~ "\n"
+#~ "Non attendere: la filosofia di Miro è differente da quela di vedere video "
+#~ "sul web -- chi pubblica offre video di elevate dimensioni e di qualità "
+#~ "elevata. Quindi non attendere il download di ogni video: fai partire il "
+#~ "dowload di più video e torna più tardi a guardarli. \n"
+#~ "\n"
+#~ "Lascialo attivo: Miro controlla regolarmente i canali e i download mentre è "
+#~ "attivo anche se nacosto. Lasciarlo attivo significa che avrai nuovi video "
+#~ "quando sarai pronto a guardarli.\n"
+#~ "\n"
+#~ "Non preoccuparti dello spazio sul disco: Miro, come TiVo, implementa un "
+#~ "sistema di 'scadenze' che automaticamente cancella i vecchi video in modo da "
+#~ "fare spazio per quelli nuovi. Puoi comunque tenere un video cliccando "
+#~ "'salva' ed è possibile settare i canali in modo che salvino automaticamente "
+#~ "i video.\n"
+#~ "\n"
+#~ "Espanditi: Il bottone alla destra del tasto play mostra il video a schermo "
+#~ "pieno.\n"
+#~ "\n"
+#~ "Cerca i video: La Guida di Miro contiene centinaia di canali di internet TV "
+#~ "tutti gratuiti. È sufficiente cliccare su 'AGGIUNGI' per vedere un canale.\n"
+
+#~ msgid "_Remove Miro Guide..."
+#~ msgstr "_Rimuovi la Miro Guide"
+
+#~ msgid "Options"
+#~ msgstr "Opzioni"
+
+#~ msgid "Pause All Downloads ($numDownloading)"
+#~ msgstr "Metti in pausa tutti i Download ($numDownloading)"
+
+#~ msgid ""
+#~ "One or more of these videos was not downloaded from a channel.  Would you "
+#~ "like to delete these items or just remove their entries from the Library?"
+#~ msgstr ""
+#~ "Uno o più di uno di questi video non sono stati scaricati da un canale. Vuoi "
+#~ "eliminare questi elementi o vuoi solamente rimuovere le loro voci dalla "
+#~ "Libreria?"
+
+#~ msgid "(Changes won't go into effect until you restart Miro)"
+#~ msgstr ""
+#~ "(I cambiamenti non saranno presi in considerazione solo dopo aver riavviato "
+#~ "Miro)"
+
 #~ msgid ""
 #~ "You've selected a new folder to download movies to.  Should Miro migrate "
 #~ "your existing downloads there?  (Currently dowloading movies will not be "
@@ -4965,12 +5006,6 @@ msgstr "Riproduci File"
 
 #~ msgid "Add Guide..."
 #~ msgstr "Aggiungi Guida..."
-
-#~ msgid "Spacebar"
-#~ msgstr "Barra spaziatrice"
-
-#~ msgid "Add Channel _Guide..."
-#~ msgstr "Aggiungi _Guida Canale"
 
 #~ msgid ""
 #~ "$longAppName version $appVersion ($appRevision); copyright (c) 2005-2007 "
@@ -4984,20 +5019,8 @@ msgstr "Riproduci File"
 #~ msgid "(You must restart Miro for this change to take effect)"
 #~ msgstr "(Devi riavviare Miro perchè questa modifica abbia effetto)"
 
-#~ msgid "Hide Window"
-#~ msgstr "Nascondi finestra"
-
-#~ msgid "Show Window"
-#~ msgstr "Mostra finestra"
-
 #~ msgid "Download Video..."
 #~ msgstr "Scarica Video..."
-
-#~ msgid "Export Channels (OPML)..."
-#~ msgstr "Esporta Canali (OPML)..."
-
-#~ msgid "Import Channels (OPML)..."
-#~ msgstr "Importa Canali (OPML)..."
 
 #~ msgid ""
 #~ "Miro has encountered an internal error. You can help us track down this "
@@ -5019,27 +5042,11 @@ msgstr "Riproduci File"
 #~ msgid "_Download Video"
 #~ msgstr "_Scarica un video"
 
-#~ msgid "_Options..."
-#~ msgstr "_Opzioni..."
-
 #~ msgid "_Import Channels (OPML)..."
 #~ msgstr "_Importa Canali (OPML)..."
 
 #~ msgid "E_xport Channels (OPML)..."
 #~ msgstr "E_sporta i canali (OPML)..."
-
-#~ msgid "Options..."
-#~ msgstr "Opzioni..."
-
-#~ msgid ""
-#~ "Would you like to delete this file or just remove its entry from the Library?"
-#~ msgstr "Vuoi eliminare questo file o rimuoverlo appena dalla Libreria?"
-
-#~ msgid "Torrent Details <i>stopped</i>"
-#~ msgstr "I Dettagli Torrent <i>ferma</i>"
-
-#~ msgid "Video Directory Missing"
-#~ msgstr "La directory del video non è stata trovata"
 
 #~ msgid ""
 #~ "\n"
@@ -5059,46 +5066,28 @@ msgstr "Riproduci File"
 #~ "esterno). Puoi inoltre uscire da Miro, connettere il drive, e riavviare "
 #~ "nuovamente Miro."
 
-#, python-format
 #~ msgid "You have %d download still in progress.  Quit Anyway?"
 #~ msgid_plural "You have %d downloads still in progress.  Quit Anyway?"
 #~ msgstr[0] "Hai ancora %d download in corso. Vuoi uscire lo stesso?"
 #~ msgstr[1] "Hai ancora %d download in corso. Vuoi uscire lo stesso?"
 
-#~ msgid "$shortAppName - Download Video"
-#~ msgstr "$shortAppName - Scarica Video"
-
 #~ msgid "Enter the URL of the video to download"
 #~ msgstr "Immetti l'URL del video da scaricare"
-
-#~ msgid "Error Changing Movies Directory"
-#~ msgstr "Errore nel cambiamento della Directory dei Film"
 
 #~ msgid "The selected OPML file appears to be invalid. Import was interrupted."
 #~ msgstr ""
 #~ "Il file OPML selezionato sembra essere non valido. L'importazione è stata "
 #~ "interrotta."
 
-#, python-format
 #~ msgid "Successfully imported %d feed."
 #~ msgid_plural "Successfully imported %d feeds."
 #~ msgstr[0] "Importato %d feed con successo."
 #~ msgstr[1] "Importati %d feed con successo."
 
-#, python-format
 #~ msgid "Skipped %d feed already present."
 #~ msgid_plural "Skipped %d feeds already present."
 #~ msgstr[0] "Saltato &d feed già presente."
 #~ msgstr[1] "Saltati %d feed già presenti."
-
-#~ msgid "C_hannels"
-#~ msgstr "_Canali"
-
-#~ msgid "Check Channels for _new content"
-#~ msgstr "Controlla i Canali per i _nuovi contenuti"
-
-#~ msgid "Disk _Space"
-#~ msgstr "_Spazio del disco"
 
 #~ msgid "Don't start a download _if it leaves less than"
 #~ msgstr "Non avviare un download _se lascia meno di"
@@ -5109,15 +5098,6 @@ msgstr "Riproduci File"
 #~ msgid "G_B free"
 #~ msgstr "G_B liberi"
 
-#~ msgid "Play _videos one after another"
-#~ msgstr "Riproduci _video uno dopo l'altro"
-
-#~ msgid "S_top after each video"
-#~ msgstr "S_top dopo ogni video"
-
-#~ msgid "S_tore downloaded videos in this folder:"
-#~ msgstr "C_onserva i video scaricato in questa cartella:"
-
 #~ msgid "To a_void slowdowns, limit upstream to"
 #~ msgstr "Per e_vitare rallentamenti, limita l'upstream a"
 
@@ -5127,51 +5107,14 @@ msgstr "Riproduci File"
 #~ msgid "_Bit Torrent uses ports between"
 #~ msgstr "_Bit Torrent usa le porte tra"
 
-#~ msgid "_Downloads"
-#~ msgstr "_Downloads"
-
-#~ msgid "_Folders"
-#~ msgstr "_Cartelle"
-
-#~ msgid "_General"
-#~ msgstr "_Generale"
-
 #~ msgid "_KB/s when my computer is active"
 #~ msgstr "_KB/s quando il computer è attivo"
-
-#~ msgid "_Playback"
-#~ msgstr "_Riproduzione"
-
-#~ msgid "_Warn me when I attempt to quit with downloads in progress"
-#~ msgstr "_Avvertimento quando io tento di uscire con il download in progresso"
-
-#~ msgid ""
-#~ "_Watch for new videos in these folders and include them in the Library"
-#~ msgstr ""
-#~ "_Controlla la presenza di nuovi video in queste cartelle ed includili nella "
-#~ "Libreria"
 
 #~ msgid "_and"
 #~ msgstr "_e"
 
-#~ msgid "Automatically run $longAppName when I login."
-#~ msgstr "Avvia automaticamente $longAppName quando eseguo il login."
-
 #~ msgid "BitTorrent"
 #~ msgstr "BItTorrent"
-
-#~ msgid "Check channels for new content"
-#~ msgstr "Controlla i canali per trovare i nuovi contenuti"
-
-#~ msgid "Folder"
-#~ msgstr "Cartella"
-
-#~ msgid ""
-#~ "Remember where I stopped watching a video and continue playing from that "
-#~ "point."
-#~ msgstr ""
-#~ "Ricordati a che punto ho smesso di guardare un video e continua la "
-#~ "riproduzione da quel punto."
 
 #~ msgid "Show as a Channel"
 #~ msgstr "Mostra come un Canale"
@@ -5182,26 +5125,8 @@ msgstr "Riproduci File"
 #~ msgid "Warn me when I attempt to quit with downloads in progress."
 #~ msgstr "Avvisami quando cerco di uscire con dei download in corso."
 
-#~ msgid "Watch for new videos in these folders and include them in my Library."
-#~ msgstr ""
-#~ "Controlla queste cartelle e includi i nuovi video nella mia Libreria."
-
-#~ msgid ""
-#~ "Miro is still uploading your crash report. If you quit now the upload will "
-#~ "be canceled.  Quit Anyway?"
-#~ msgstr ""
-#~ "Miro stà ancora caricando il resonto del crash. Se esci ora l'upload sarà "
-#~ "annullato. Uscire lo stesso?"
-
-#, python-format
 #~ msgid "\"%s\" is not a valid URL"
 #~ msgstr "\"%s\" non è un URL valido"
-
-#~ msgid "Error:"
-#~ msgstr "Errore:"
-
-#~ msgid "Error Saving Video"
-#~ msgstr "Errore nel salvare il video"
 
 #~ msgid ""
 #~ "To avoid slowdowns, limit upstream bandwith when my computer is active."

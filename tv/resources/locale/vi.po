@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2008-09-29 20:46+0000\n"
+"PO-Revision-Date: 2009-03-10 12:26+0000\n"
 "Last-Translator: antony.nd <tdn_9@yahoo.com>\n"
 "Language-Team: Vietnamese <vi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -2815,9 +2815,6 @@ msgstr ""
 #~ " càng chính xác càng tốt -- cùng với những chuyện lẩm cẩm trong hộp nhận chữ "
 #~ "dưới đây\""
 
-#~ msgid "OK"
-#~ msgstr "Đồng ý"
-
 #~ msgid "About Democracy"
 #~ msgstr "Về phần mềm Democracy"
 
@@ -2827,14 +2824,8 @@ msgstr ""
 #~ msgid "Clear Menu"
 #~ msgstr "Xóa thực đơn"
 
-#~ msgid "Democracy Help"
-#~ msgstr "Trợ giúp"
-
 #~ msgid "File"
 #~ msgstr "Tệp tin"
-
-#~ msgid "Full Screen"
-#~ msgstr "Toàn màn hình"
 
 #~ msgid "Help"
 #~ msgstr "Trợ giúp"
@@ -2955,14 +2946,8 @@ msgstr ""
 #~ msgid "Back"
 #~ msgstr "Quay lại"
 
-#~ msgid "Browse"
-#~ msgstr "Duyệt"
-
 #~ msgid "Next"
 #~ msgstr "Tiếp sau"
-
-#~ msgid "Searching for Videos"
-#~ msgstr "Tìm video"
 
 #~ msgid "Add Channel..."
 #~ msgstr "Thêm kênh..."
@@ -2975,9 +2960,6 @@ msgstr ""
 
 #~ msgid "Copy Video URL"
 #~ msgstr "Chép URL Video"
-
-#~ msgid "Donate"
-#~ msgstr "Quyên góp"
 
 #~ msgid "New Channel Guide..."
 #~ msgstr "Hướng dẫn kênh mới"
@@ -3062,3 +3044,21 @@ msgstr ""
 
 #~ msgid "Search this folder:"
 #~ msgstr "Tìm trong thư mục:"
+
+#~ msgid "OK"
+#~ msgstr "Đồng ý"
+
+#~ msgid "Full Screen"
+#~ msgstr "Toàn màn hình"
+
+#~ msgid "Browse"
+#~ msgstr "Duyệt"
+
+#~ msgid "Democracy Help"
+#~ msgstr "Trợ giúp"
+
+#~ msgid "Searching for Videos"
+#~ msgstr "Tìm video"
+
+#~ msgid "Donate"
+#~ msgstr "Quyên góp"

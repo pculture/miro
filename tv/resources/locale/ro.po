@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To:  \n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-27 15:20+0000\n"
+"PO-Revision-Date: 2009-03-10 11:55+0000\n"
 "Last-Translator: Lucian Lupescu <lupescu81@yahoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1 ? 0: (((n % 100 > 19) || ((n % 100 "
 "== 0) && (n != 0))) ? 2: 1));\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -2970,7 +2970,6 @@ msgstr "Fișier redat"
 #~ msgid "Channel requires authentication"
 #~ msgstr "Canalul necesită autentificare"
 
-#, python-format
 #~ msgid "%s requires a username and password for \"%s\"."
 #~ msgstr "%s necesită un nume de utilizator şi o parolă pentru \"%s\"."
 
@@ -3009,11 +3008,9 @@ msgstr "Fișier redat"
 #~ msgid "This version of DTV is up to date."
 #~ msgstr "Ai ultima versiune DTV."
 
-#, python-format
 #~ msgid "%s database save failed"
 #~ msgstr "Salvarea bazei de date %s a eşuat."
 
-#, python-format
 #~ msgid ""
 #~ "%s was unable to save its database: %s.\n"
 #~ "Recent changes may be lost."
@@ -3024,7 +3021,6 @@ msgstr "Fișier redat"
 #~ msgid "Remove Channel"
 #~ msgstr "Şterge canalul"
 
-#, python-format
 #~ msgid ""
 #~ "Are you sure you want to <b>remove</b> the channel\n"
 #~ "   '<b>%s</b>'?\n"
@@ -3034,14 +3030,12 @@ msgstr "Fișier redat"
 #~ "   '<b>%s</b>'?\n"
 #~ "<b>Această operaţie este definitivă.</b>"
 
-#, python-format
 #~ msgid "You have %d download%s still in progress."
 #~ msgstr "Aii %d descărcări%s înca în derulare."
 
 #~ msgid "Unknown Runtime Error"
 #~ msgstr "Eroare de execuţie necunoscută"
 
-#, python-format
 #~ msgid "An unknown error has occurred %s."
 #~ msgstr "O eroare necunoscută a apărut %s."
 
@@ -3219,7 +3213,6 @@ msgstr "Fișier redat"
 #~ "celor noi. Puteţi ţine o secvenţă video permanent apăsând 'Salvează' şi "
 #~ "puteţi specifica setările canalului pentru a salva secvenţele video automat."
 
-#, python-format
 #~ msgid ""
 #~ "%s was unable to save its database: %s.\n"
 #~ "Recent changes may be lost.\n"
@@ -3401,7 +3394,6 @@ msgstr "Fișier redat"
 #~ msgid "$longAppName"
 #~ msgstr "$longAppName"
 
-#, python-format
 #~ msgid "You have %d download still in progress."
 #~ msgid_plural "You have %d downloads still in progress."
 #~ msgstr[0] "Ai %d descărcare în derulare."
@@ -3589,7 +3581,6 @@ msgstr "Fișier redat"
 #~ msgid "manually"
 #~ msgstr "manual"
 
-#, python-format
 #~ msgid "(parsed %d files - found %d videos)"
 #~ msgstr "(parsate %d fișiere - găsite %d videouri)"
 
@@ -3698,7 +3689,6 @@ msgstr "Fișier redat"
 #~ msgid "onStartup called twice"
 #~ msgstr "onStartup apelat de două ori"
 
-#, python-format
 #~ msgid "There was an error opening %s.  Please try again in a few seconds"
 #~ msgstr ""
 #~ "A apărut o eroare la deschiderea %s. Încercați din nou peste cîteva secunde"
@@ -3718,7 +3708,6 @@ msgstr "Fișier redat"
 #~ msgid "Looking for videos at this URL"
 #~ msgstr "Caută clipuri la această adresă"
 
-#, python-format
 #~ msgid "%s database save succeeded"
 #~ msgstr "%s bază de date salvată cu succes"
 
@@ -3926,15 +3915,12 @@ msgstr "Fișier redat"
 #~ msgid "Update Channels..."
 #~ msgstr "Actualizează Canalele"
 
-#, python-format
 #~ msgid "Could not write to %s"
 #~ msgstr "Nu pot scrie în %s"
 
-#, python-format
 #~ msgid "%s MB required to store this video"
 #~ msgstr "%s MB necesari pentru a stoca acest video"
 
-#, python-format
 #~ msgid "The torrent file at %s was not valid"
 #~ msgstr "Fișierul torent de la %s nu era valid"
 
@@ -3944,11 +3930,9 @@ msgstr "Fișier redat"
 #~ msgid "outside of democracy."
 #~ msgstr "la exteriorul democracy"
 
-#, python-format
 #~ msgid "%1.1fGB"
 #~ msgstr "%1.1fGB"
 
-#, python-format
 #~ msgid "%1.1fMB"
 #~ msgstr "%1.1fMB"
 

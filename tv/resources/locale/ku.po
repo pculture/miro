@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2008-03-22 21:21+0000\n"
+"PO-Revision-Date: 2009-03-10 11:57+0000\n"
 "Last-Translator: Ara Bextiyar <arastein@gmail.com>\n"
 "Language-Team: Kurdish <ku@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -2775,14 +2775,8 @@ msgstr ""
 #~ msgid "Channel"
 #~ msgstr "Kanal"
 
-#~ msgid "Democracy Help"
-#~ msgstr "Alîkariya Democracy'ê"
-
 #~ msgid "File"
 #~ msgstr "Pel"
-
-#~ msgid "Full Screen"
-#~ msgstr "Hemû Dîmender"
 
 #~ msgid "Help"
 #~ msgstr "Alîkarî"
@@ -2824,9 +2818,6 @@ msgstr ""
 #~ msgid "Back"
 #~ msgstr "Paş de"
 
-#~ msgid "Browse"
-#~ msgstr "Bigere"
-
 #~ msgid "Next"
 #~ msgstr "Pêş de"
 
@@ -2862,3 +2853,12 @@ msgstr ""
 
 #~ msgid "Change..."
 #~ msgstr "Biguherîne..."
+
+#~ msgid "Full Screen"
+#~ msgstr "Hemû Dîmender"
+
+#~ msgid "Browse"
+#~ msgstr "Bigere"
+
+#~ msgid "Democracy Help"
+#~ msgstr "Alîkariya Democracy'ê"

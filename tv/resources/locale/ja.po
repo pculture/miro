@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-14 10:31+0000\n"
-"Last-Translator: daisuke <Unknown>\n"
+"PO-Revision-Date: 2009-03-10 12:52+0000\n"
+"Last-Translator: Will Guaraldi Kahn-Greene <willg@bluesock.org>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -2786,14 +2786,12 @@ msgstr "ファイル再生中"
 #~ msgid "U_pdate All Channels"
 #~ msgstr "すべてのチャンネルを更新する(_p)"
 
-#, python-format
 #~ msgid "%s database save failed"
 #~ msgstr "%s データベースの保存に失敗しました"
 
 #~ msgid "Unknown Runtime Error"
 #~ msgstr "不明なランタイムエラー"
 
-#, python-format
 #~ msgid "An unknown error has occurred %s."
 #~ msgstr "不明なエラー %s"
 
@@ -2818,9 +2816,6 @@ msgstr "ファイル再生中"
 #~ msgid "$log"
 #~ msgstr "$log"
 
-#~ msgid "OK"
-#~ msgstr "OK"
-
 #~ msgid "About Democracy"
 #~ msgstr "Democracyについて"
 
@@ -2830,14 +2825,8 @@ msgstr "ファイル再生中"
 #~ msgid "Clear Menu"
 #~ msgstr "メニューをクリアする"
 
-#~ msgid "Democracy"
-#~ msgstr "デモクラシー"
-
 #~ msgid "File"
 #~ msgstr "ファイル"
-
-#~ msgid "Full Screen"
-#~ msgstr "全画面表示"
 
 #~ msgid "Help"
 #~ msgstr "ヘルプ"
@@ -2859,9 +2848,6 @@ msgstr "ファイル再生中"
 
 #~ msgid "Quit Democracy"
 #~ msgstr "デモクラシーを終了する"
-
-#~ msgid "Remove Channel..."
-#~ msgstr "チャンネルを削除する"
 
 #~ msgid "Stop Video"
 #~ msgstr "ビデオを止める"
@@ -2897,9 +2883,6 @@ msgstr "ファイル再生中"
 #~ msgid "Back"
 #~ msgstr "戻る"
 
-#~ msgid "Searching for Videos"
-#~ msgstr "ビデオを検索しています"
-
 #~ msgid ""
 #~ "We recommend that you allow Democracy Player to launch when your computer "
 #~ "starts up. This way, videos that haven't finished downloading can finish and "
@@ -2915,24 +2898,6 @@ msgstr "ファイル再生中"
 #~ msgid "Create new playlist"
 #~ msgstr "プレイリストを作る"
 
-#~ msgid "Create new playlist folder"
-#~ msgstr "プレイリストフォルダを作る"
-
-#~ msgid "Create new channel folder"
-#~ msgstr "チャンネルフォルダを作る"
-
-#~ msgid "Starting up"
-#~ msgstr "起動中"
-
-#, python-format
-#~ msgid "Removing %s"
-#~ msgstr "%s を削除しています"
-
-#, python-format
-#~ msgid "%d days"
-#~ msgstr "%d日"
-
-#, python-format
 #~ msgid "%s database save succeeded"
 #~ msgstr "%s データベースの保存に成功しました"
 
@@ -2944,9 +2909,6 @@ msgstr "ファイル再生中"
 
 #~ msgid "Copy Video URL"
 #~ msgstr "ビデオのURLをコピーする"
-
-#~ msgid "Donate"
-#~ msgstr "寄付する"
 
 #~ msgid "New Channel Guide..."
 #~ msgstr "チャンネルガイドを追加"
@@ -3005,52 +2967,6 @@ msgstr "ファイル再生中"
 #~ msgid "_Remove Channel Guide..."
 #~ msgstr "番組表を削除(_R)"
 
-#~ msgid "_Remove Channel Guides..."
-#~ msgstr "複数の番組表を削除(_R)"
-
-#, python-format
-#~ msgid "Error: %s"
-#~ msgstr "エラー: %s"
-
-#, python-format
-#~ msgid "Connection Error: %s"
-#~ msgstr "接続エラー: %s"
-
-#, python-format
-#~ msgid "Connection to %s timed out"
-#~ msgstr "%s への接続はタイムアウトしました"
-
-#, python-format
-#~ msgid "%s is not a valid URL"
-#~ msgstr "%sは無効なURLです"
-
-#, python-format
-#~ msgid "Deleting %s"
-#~ msgstr "%s を削除しています"
-
-#, python-format
-#~ msgid "%d hours"
-#~ msgstr "%d時間"
-
-#, python-format
-#~ msgid "%d minutes"
-#~ msgstr "%d分"
-
-#~ msgid "Remove From My Collection"
-#~ msgstr "マイコレクションから削除"
-
-#~ msgid "and"
-#~ msgstr "と"
-
-#~ msgid "Empty Playlist"
-#~ msgstr "空のプレイリスト"
-
-#~ msgid "Empty Playlist Folder"
-#~ msgstr "空のプレイリストフォルダ"
-
-#~ msgid "${count} Playlists Selected"
-#~ msgstr "${count} 個のプレイリストが選択されています"
-
 #~ msgid "Skip >> ${countdown}"
 #~ msgstr "スキップ >> ${countdown}"
 
@@ -3059,6 +2975,78 @@ msgstr "ファイル再生中"
 
 #~ msgid "SHOW FOLDER"
 #~ msgstr "フォルダを参照"
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid "Full Screen"
+#~ msgstr "全画面表示"
+
+#~ msgid "Starting up"
+#~ msgstr "起動中"
+
+#~ msgid "Removing %s"
+#~ msgstr "%s を削除しています"
+
+#~ msgid "%d days"
+#~ msgstr "%d日"
+
+#~ msgid "Error: %s"
+#~ msgstr "エラー: %s"
+
+#~ msgid "%d hours"
+#~ msgstr "%d時間"
+
+#~ msgid "%d minutes"
+#~ msgstr "%d分"
+
+#~ msgid "and"
+#~ msgstr "と"
+
+#~ msgid "Democracy"
+#~ msgstr "デモクラシー"
+
+#~ msgid "Remove Channel..."
+#~ msgstr "チャンネルを削除する"
+
+#~ msgid "Create new playlist folder"
+#~ msgstr "プレイリストフォルダを作る"
+
+#~ msgid "Create new channel folder"
+#~ msgstr "チャンネルフォルダを作る"
+
+#~ msgid "Searching for Videos"
+#~ msgstr "ビデオを検索しています"
+
+#~ msgid "Donate"
+#~ msgstr "寄付する"
+
+#~ msgid "Remove From My Collection"
+#~ msgstr "マイコレクションから削除"
+
+#~ msgid "Empty Playlist"
+#~ msgstr "空のプレイリスト"
+
+#~ msgid "Connection Error: %s"
+#~ msgstr "接続エラー: %s"
+
+#~ msgid "Connection to %s timed out"
+#~ msgstr "%s への接続はタイムアウトしました"
+
+#~ msgid "%s is not a valid URL"
+#~ msgstr "%sは無効なURLです"
+
+#~ msgid "Deleting %s"
+#~ msgstr "%s を削除しています"
+
+#~ msgid "_Remove Channel Guides..."
+#~ msgstr "複数の番組表を削除(_R)"
+
+#~ msgid "Empty Playlist Folder"
+#~ msgstr "空のプレイリストフォルダ"
+
+#~ msgid "${count} Playlists Selected"
+#~ msgstr "${count} 個のプレイリストが選択されています"
 
 #~ msgid "${size} disk space free"
 #~ msgstr "${size}の空き容量"

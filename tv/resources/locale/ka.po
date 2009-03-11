@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: Democracy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2007-06-06 22:21+0000\n"
+"PO-Revision-Date: 2009-03-10 12:11+0000\n"
 "Last-Translator: Aiet Kolkhi <aietkolkhi@gmail.com>\n"
 "Language-Team: Aiet Kolkhi <aietkolkhi@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: GEORGIA\n"
 "X-Poedit-Language: Georgian\n"
@@ -2811,7 +2811,6 @@ msgstr ""
 #~ msgid "Channel requires authentication"
 #~ msgstr "სერვერი ავთენტიფიკაციას მოითხოვს"
 
-#, python-format
 #~ msgid "%s requires a username and password for \"%s\"."
 #~ msgstr "%s მომხმარებლის სახელსა და პაროლს მოითხოვს „%s”-სთვის."
 
@@ -2850,11 +2849,9 @@ msgstr ""
 #~ msgid "This version of DTV is up to date."
 #~ msgstr "DTV-ს ეს ვერსია აქტუალურია."
 
-#, python-format
 #~ msgid "%s database save failed"
 #~ msgstr "%s მონაცემთა ბაზის შენახვა ვერ განხორციელდა"
 
-#, python-format
 #~ msgid ""
 #~ "%s was unable to save its database: %s.\n"
 #~ "Recent changes may be lost."
@@ -2865,7 +2862,6 @@ msgstr ""
 #~ msgid "Remove Channel"
 #~ msgstr "არხის წაშლა"
 
-#, python-format
 #~ msgid ""
 #~ "Are you sure you want to <b>remove</b> the channel\n"
 #~ "   '<b>%s</b>'?\n"
@@ -2875,14 +2871,12 @@ msgstr ""
 #~ "   „<b>%s</b>”?\n"
 #~ "<b>ამ ოპერაციის დაბრუნება შეუძლებელია.</b>"
 
-#, python-format
 #~ msgid "You have %d download%s still in progress."
 #~ msgstr "ამჟამად მიმდინარეობს %d ჩამოტვირთვა%s."
 
 #~ msgid "Unknown Runtime Error"
 #~ msgstr "უცნობი შეცდომა"
 
-#, python-format
 #~ msgid "An unknown error has occurred %s."
 #~ msgstr "წარმოიშვა უცნობი შეცდომა %s."
 
@@ -3057,7 +3051,6 @@ msgstr ""
 #~ "დაწკაპუნებით შეგიძლიათ. ასევე შეგიძლიათ დააყენოთ არხის პარამეტრებში, რომ "
 #~ "ავტომატურად შენახულ იქნას ვიდეოები."
 
-#, python-format
 #~ msgid ""
 #~ "%s was unable to save its database: %s.\n"
 #~ "Recent changes may be lost.\n"
@@ -3161,7 +3154,6 @@ msgstr ""
 #~ msgid " "
 #~ msgstr " "
 
-#, python-format
 #~ msgid "You have %d download still in progress."
 #~ msgid_plural "You have %d downloads still in progress."
 #~ msgstr[0] "ამჟამად მიმდინარეობს %d ჩამოტვირთვა"

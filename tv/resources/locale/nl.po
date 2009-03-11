@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-03-01 18:54+0000\n"
-"Last-Translator: Jan de Weerdt <Unknown>\n"
+"PO-Revision-Date: 2009-03-10 12:32+0000\n"
+"Last-Translator: Will Guaraldi Kahn-Greene <willg@bluesock.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -1166,7 +1166,7 @@ msgstr "Standaardinstellingen voor podcasts:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:311
 msgid "(These can be changed using the feed's settings button)"
-msgstr "(Deze kunnen met behulp dan de 'Feeds'-knop niet veranderd worden)"
+msgstr "(Wijzig dit voor individuele podcasts in de voorkeuren voor deze)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:315
 msgid "Check for new content:"
@@ -1749,7 +1749,7 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/application.py:757
 msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr "Waarschuw mij indien ik stop terwijl er downloads gaande zijn."
+msgstr "Waarschuw mij telkens ik stop terwijl er downloads gaande zijn."
 
 #: ../../portable/frontends/widgets/application.py:1011
 msgid "Message"
@@ -3109,9 +3109,6 @@ msgstr "Bestand wordt afgespeeld"
 #~ "van wat je aan het doen was -- zo nauwkeurig mogelijk -- plus de fraai "
 #~ "geformuleerde nonsens die hieronder staat:"
 
-#~ msgid "OK"
-#~ msgstr "OK"
-
 #~ msgid "The fall of $shortAppName??"
 #~ msgstr "De ondergang van $shortAppName??"
 
@@ -3120,12 +3117,6 @@ msgstr "Bestand wordt afgespeeld"
 
 #~ msgid "Channel"
 #~ msgstr "Kanaal"
-
-#~ msgid "Democracy"
-#~ msgstr "Democracy"
-
-#~ msgid "Democracy Help"
-#~ msgstr "Democracy Help"
 
 #~ msgid "Help"
 #~ msgstr "Help"
@@ -3150,9 +3141,6 @@ msgstr "Bestand wordt afgespeeld"
 
 #~ msgid "Quit Democracy"
 #~ msgstr "Democracy afsluiten"
-
-#~ msgid "Remove Channel..."
-#~ msgstr "Verwijder kanaal"
 
 #~ msgid "Stop Video"
 #~ msgstr "Stop video"
@@ -3196,19 +3184,6 @@ msgstr "Bestand wordt afgespeeld"
 
 #~ msgid "manually"
 #~ msgstr "handmatig"
-
-#~ msgid ""
-#~ "Democracy Player can find all the videos on your computer to help you "
-#~ "organize your collection.\n"
-#~ "\n"
-#~ "\n"
-#~ "Would you like Democracy Player to look for video files on your computer?"
-#~ msgstr ""
-#~ "Democracy Player kan alle video's op je computer opzoeken zodat je je "
-#~ "collectie kan ordenen.\n"
-#~ "\n"
-#~ "\n"
-#~ "Wil je dat Democracy Player alle video bestanden op je pc opzoekt?"
 
 #~ msgid "Next"
 #~ msgstr "Volgende"
@@ -3298,23 +3273,6 @@ msgstr "Bestand wordt afgespeeld"
 #~ msgid "Create new playlist"
 #~ msgstr "Nieuwe afspeellijst maken"
 
-#~ msgid "Create new playlist folder"
-#~ msgstr "Nieuwe afspeellijstmap maken"
-
-#~ msgid "Create new channel folder"
-#~ msgstr "Nieuwe kanaalmap maken"
-
-#, python-format
-#~ msgid ""
-#~ "Error importing democracy modules:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Fout bij importeren van democracy modules:\n"
-#~ "%s"
-
-#~ msgid "Starting up"
-#~ msgstr "Opstarten"
-
 #~ msgid "${count} Downloads in Progress"
 #~ msgstr "${count} downloads bezig"
 
@@ -3327,93 +3285,8 @@ msgstr "Bestand wordt afgespeeld"
 #~ msgid "All ${len} Videos Match This Search"
 #~ msgstr "Alle ${len} video's voldoen aan deze zoekopdracht"
 
-#~ msgid "${len} Videos Match This Search"
-#~ msgstr "${len} video's voldoen aan deze zoekopdracht"
-
 #~ msgid "Looking for videos at this URL"
 #~ msgstr "Zoeken naar video's op deze URL"
-
-#~ msgid "${count} Videos on this Channel"
-#~ msgstr "${count} video's in dit kanaal"
-
-#~ msgid "SAVE"
-#~ msgstr "OPSLAAN"
-
-#, python-format
-#~ msgid "%d days"
-#~ msgstr "%d dagen"
-
-#, python-format
-#~ msgid "Enter a new name for the channel folder %s"
-#~ msgstr "Geef een nieuwe naam op voor de kanaalmap %s"
-
-#, python-format
-#~ msgid "Enter a new name for the playlist folder %s"
-#~ msgstr "Geef een nieuwe naam op voor de afspeellijstmap %s"
-
-#~ msgid "Enter a name for the new channel folder"
-#~ msgstr "Geef een naam op voor de nieuwe kanaalmap"
-
-#, python-format
-#~ msgid ""
-#~ "This Democracy channel file has an invalid format: %s. Please notify the "
-#~ "publisher of this file."
-#~ msgstr ""
-#~ "Dit Democracy kanaal heeft een ongeldige indeling: %s. Waarschuw a.u.b. de "
-#~ "uitgever van dit bestand."
-
-#, python-format
-#~ msgid ""
-#~ "This Democracy channel file has the wrong content type: %s. Please notify "
-#~ "the publisher of this file."
-#~ msgstr ""
-#~ "Dit Democracy kanaal heeft het verkeerd inhouds-type: %s. Waarschuw a.u.b. "
-#~ "de uitgever van dit bestand."
-
-#, python-format
-#~ msgid "Could not download the Democracy channel file: %s."
-#~ msgstr "Kon het Democracy kanaal niet downloaden: %s."
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files. It may take extra time to list the "
-#~ "videos, and descriptions may look funny.  Please contact the publishers of "
-#~ "$url and ask if they can supply a feed in a format that will work with "
-#~ "Democracy.\n"
-#~ "\n"
-#~ "Do you want to try to load this channel anyway?"
-#~ msgstr ""
-#~ "Maar we doen ons best om de bestanden te pakken te krijgen. Het kan extra "
-#~ "tijd kosten om een lijst van de video's op te bouwen en de beschrijvingen "
-#~ "kunnen er vreemd uitzien. Neem a.u.b. contact op met de uitgever van $url en "
-#~ "vraag ze of ze een webfeed in een formaat kunnen geven die werkt met "
-#~ "Democracy.\n"
-#~ "\n"
-#~ "Wilt u toch proberen dit kanaal te laden?"
-
-#, python-format
-#~ msgid "Remove %s"
-#~ msgstr "Verwijder %s"
-
-#, python-format
-#~ msgid "Are you sure you want to remove %s"
-#~ msgstr "Weet u zeker dat u %s wilt verwijderen"
-
-#, python-format
-#~ msgid "Remove %s channels"
-#~ msgstr "Verwijder %s kanalen"
-
-#, python-format
-#~ msgid "Are you sure you want to remove these %s playlists"
-#~ msgstr "Weet u zeker dat u deze %s afspeellijsten wilt verwijderen"
-
-#~ msgid "Invalid Value"
-#~ msgstr "Ongeldige waarde"
-
-#~ msgid "Democracy - Add Channel Guide"
-#~ msgstr "Democracy - Kanalengids toevoegen"
-
-#~ msgid "Enter the URL of the channel guide to add"
-#~ msgstr "Voer het webadres van de kanalengids die u wilt toevoegen in."
 
 #~ msgid "Channels"
 #~ msgstr "Kanalen"
@@ -3514,39 +3387,6 @@ msgstr "Bestand wordt afgespeeld"
 #~ msgid "_Remove Channel Guide..."
 #~ msgstr "Ve_rwijder kanaalgids..."
 
-#~ msgid "_Remove Channel Guides..."
-#~ msgstr "Ve_rwijder kanaalgidsen..."
-
-#~ msgid "_Remove Video..."
-#~ msgstr "Ve_rwijder video..."
-
-#~ msgid "_Remove Videos..."
-#~ msgstr "Ve_rwijder video's..."
-
-#~ msgid "Re_name..."
-#~ msgstr "_Hernoem..."
-
-#~ msgid "Re_name Playlist..."
-#~ msgstr "_Hernoem afspeellijst..."
-
-#~ msgid "Re_name Playlist Folder..."
-#~ msgstr "_Hernoem afspeellijstmap..."
-
-#~ msgid "Re_name Channel..."
-#~ msgstr "_Hernoem kanaal..."
-
-#~ msgid "Re_name Channel Folder..."
-#~ msgstr "_Hernoem kanaalmap..."
-
-#~ msgid "Re_name Channel Guide..."
-#~ msgstr "_Hernoem kanaalgids..."
-
-#, python-format
-#~ msgid "%d video found"
-#~ msgid_plural "%d videos found"
-#~ msgstr[0] "%d video gevonden"
-#~ msgstr[1] "%d video's gevonden"
-
 #~ msgid "Remove Playlist..."
 #~ msgstr "Verwijder afspeellijst..."
 
@@ -3558,9 +3398,6 @@ msgstr "Bestand wordt afgespeeld"
 
 #~ msgid "Remove Playlist Folders..."
 #~ msgstr "Verwijder afspeellijstmappen..."
-
-#~ msgid "Remove Channels..."
-#~ msgstr "Verwijder kanalen..."
 
 #~ msgid "Remove Channel Folder..."
 #~ msgstr "Verwijder kanaalmap..."
@@ -3601,51 +3438,108 @@ msgstr "Bestand wordt afgespeeld"
 #~ msgid "Update Channels..."
 #~ msgstr "Vernieuw kanalen..."
 
-#, python-format
 #~ msgid "Could not write to %s"
 #~ msgstr "Kon niet schrijven naar %s"
 
 #~ msgid "outside of democracy."
 #~ msgstr "buiten Democracy om."
 
-#, python-format
 #~ msgid "%1.1fGB"
 #~ msgstr "%1.1fGB"
 
-#, python-format
 #~ msgid "%1.1fMB"
 #~ msgstr "%1.1fMB"
 
-#, python-format
-#~ msgid "%1.1fKB"
-#~ msgstr "%1.1fKB"
+#~ msgid "-00:00:00"
+#~ msgstr "-00:00:00"
 
-#, python-format
-#~ msgid "%0.0fB"
-#~ msgstr "%0.0fB"
+#~ msgid "Save downloaded videos in this folder:"
+#~ msgstr "Gedownloade video's in deze map opslaan:"
 
-#, python-format
-#~ msgid "Bad Status Line: %s"
-#~ msgstr "Slechte statusregel: %s"
+#~ msgid "To avoid internet slowdowns:"
+#~ msgstr "Om traag internet te voorkomen:"
 
-#, python-format
-#~ msgid "Bad Header Line: %s"
-#~ msgstr "Slechte headerregel: %s"
+#~ msgid "videos at once."
+#~ msgstr "video's in een keer."
+
+#~ msgid "STAR"
+#~ msgstr "STER"
+
+#~ msgid "SAVED"
+#~ msgstr "OPGESLAGEN"
+
+#~ msgid "default"
+#~ msgstr "standaard"
+
+#~ msgid "Videos expire after"
+#~ msgstr "Video's verlopen na"
+
+#~ msgid "When turned on, Auto Download should"
+#~ msgstr "Indien ingeschakeld, moet auto-download"
+
+#~ msgid ""
+#~ "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
+#~ "unwatched."
+#~ msgstr ""
+#~ "Niet automatisch downloaden wanneer meer dan ${maxnew} ${maxnew2} video's "
+#~ "onbekeken klaarstaan."
+
+#~ msgid "<label for=\"automatic\">Auto Download</label>"
+#~ msgstr "<label for=\"automatic\">Automatisch downloaden</label>"
+
+#~ msgid ""
+#~ "Democracy can't play this file. You may be able to open it with a different "
+#~ "program.<br></br><br></br><strong>Filename:</strong> "
+#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
+#~ msgstr ""
+#~ "Democracy kan dit bestand niet afspelen. Mogelijk kunt u het openen met een "
+#~ "ander programma.<br></br><br></br><strong>Bestandsnaam:</strong> "
+#~ "${filename}<Br></Br><strong>Type bestand:</strong> ${format}"
+
+#~ msgid "REVEAL FILE"
+#~ msgstr "TOON BESTAND"
+
+#~ msgid "SHOW FILE"
+#~ msgstr "TOON BESTAND"
+
+#~ msgid "SHOW FOLDER"
+#~ msgstr "TOON MAP"
+
+#~ msgid "SHARE IT"
+#~ msgstr "DELEN"
+
+#~ msgid "STAR IT"
+#~ msgstr "GEEF STER"
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid "Starting up"
+#~ msgstr "Opstarten"
+
+#~ msgid "%d days"
+#~ msgstr "%d dagen"
+
+#~ msgid "Remove %s"
+#~ msgstr "Verwijder %s"
+
+#~ msgid "Are you sure you want to remove %s"
+#~ msgstr "Weet u zeker dat u %s wilt verwijderen"
+
+#~ msgid "Remove %s channels"
+#~ msgstr "Verwijder %s kanalen"
+
+#~ msgid "Invalid Value"
+#~ msgstr "Ongeldige waarde"
 
 #~ msgid "New Search Channel"
 #~ msgstr "Nieuw zoekkanaal"
 
-#, python-format
 #~ msgid "%d hours"
 #~ msgstr "%d uren"
 
-#, python-format
 #~ msgid "%d minutes"
 #~ msgstr "%d minuten"
-
-#, python-format
-#~ msgid "Expires in %s"
-#~ msgstr "Verloopt over %s"
 
 #~ msgid "TORRENT"
 #~ msgstr "TORRENT"
@@ -3653,8 +3547,243 @@ msgstr "Bestand wordt afgespeeld"
 #~ msgid "WEB PAGE"
 #~ msgstr "WEBPAGINA"
 
+#~ msgid "Update Channels Now"
+#~ msgstr "Werk kanalen nu bij"
+
+#~ msgid "and"
+#~ msgstr "en"
+
+#~ msgid "Channel:"
+#~ msgstr "Kanaal:"
+
+#~ msgid "Search Engine:"
+#~ msgstr "Zoekmachine:"
+
+#~ msgid "You're done!"
+#~ msgstr "U bent klaar!"
+
+#~ msgid "Democracy Help"
+#~ msgstr "Democracy Help"
+
+#~ msgid "Democracy"
+#~ msgstr "Democracy"
+
+#~ msgid "Remove Channel..."
+#~ msgstr "Verwijder kanaal"
+
+#~ msgid "Create new playlist folder"
+#~ msgstr "Nieuwe afspeellijstmap maken"
+
+#~ msgid "Create new channel folder"
+#~ msgstr "Nieuwe kanaalmap maken"
+
+#~ msgid "SAVE"
+#~ msgstr "OPSLAAN"
+
+#~ msgid "Remove Channels..."
+#~ msgstr "Verwijder kanalen..."
+
+#~ msgid "Expires in %s"
+#~ msgstr "Verloopt over %s"
+
 #~ msgid "Remove From My Collection"
 #~ msgstr "Uit mijn collectie verwijderen"
+
+#~ msgid "(Changes won't go into effect until you restart Democracy Player.)"
+#~ msgstr ""
+#~ "(Wijzigingen worden pas actief als de Democracy speler opnieuw gestart is.)"
+
+#~ msgid "In This:"
+#~ msgstr "In deze:"
+
+#~ msgid "Results for \"${query}\""
+#~ msgstr "Resultaten voor \"${query}\""
+
+#~ msgid "Empty Playlist"
+#~ msgstr "Lege afspeellijst"
+
+#~ msgid "Drag downloaded videos to this playlist to add them."
+#~ msgstr ""
+#~ "Sleep gedownloade video's naar deze afspeellijst om ze toe te voegen."
+
+#~ msgid "${size} available for downloads"
+#~ msgstr "${size} beschikbaar voor downloads"
+
+#~ msgid "<b>General</b>"
+#~ msgstr "<b>Algemeen</b>"
+
+#~ msgid "Automatically run Democracy Player when I log in"
+#~ msgstr "Democracy Player automatisch starten als ik inlog"
+
+#~ msgid "Find Videos:"
+#~ msgstr "Zoek video's:"
+
+#~ msgid ""
+#~ "Democracy Player can find all the videos on your computer to help you "
+#~ "organize your collection.\n"
+#~ "\n"
+#~ "\n"
+#~ "Would you like Democracy Player to look for video files on your computer?"
+#~ msgstr ""
+#~ "Democracy Player kan alle video's op je computer opzoeken zodat je je "
+#~ "collectie kan ordenen.\n"
+#~ "\n"
+#~ "\n"
+#~ "Wil je dat Democracy Player alle video bestanden op je pc opzoekt?"
+
+#~ msgid ""
+#~ "Error importing democracy modules:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Fout bij importeren van democracy modules:\n"
+#~ "%s"
+
+#~ msgid "${len} Videos Match This Search"
+#~ msgstr "${len} video's voldoen aan deze zoekopdracht"
+
+#~ msgid "${count} Videos on this Channel"
+#~ msgstr "${count} video's in dit kanaal"
+
+#~ msgid "Could not download the Democracy channel file: %s."
+#~ msgstr "Kon het Democracy kanaal niet downloaden: %s."
+
+#~ msgid "_Remove Video..."
+#~ msgstr "Ve_rwijder video..."
+
+#~ msgid "_Remove Videos..."
+#~ msgstr "Ve_rwijder video's..."
+
+#~ msgid "Re_name Playlist..."
+#~ msgstr "_Hernoem afspeellijst..."
+
+#~ msgid "Re_name Playlist Folder..."
+#~ msgstr "_Hernoem afspeellijstmap..."
+
+#~ msgid "Re_name Channel..."
+#~ msgstr "_Hernoem kanaal..."
+
+#~ msgid "Re_name Channel Folder..."
+#~ msgstr "_Hernoem kanaalmap..."
+
+#~ msgid "%1.1fKB"
+#~ msgstr "%1.1fKB"
+
+#~ msgid "Rename Channel"
+#~ msgstr "Hernoem kanaal"
+
+#~ msgid "Create %d channels?"
+#~ msgstr "%d kanalen aanmaken?"
+
+#~ msgid "<b>Searching for Videos</b>"
+#~ msgstr "<b>Zoeken naar video's</b>"
+
+#~ msgid "Leave it On:"
+#~ msgstr "Laat het aanstaan:"
+
+#~ msgid "Enter a new name for the channel folder %s"
+#~ msgstr "Geef een nieuwe naam op voor de kanaalmap %s"
+
+#~ msgid "Enter a new name for the playlist folder %s"
+#~ msgstr "Geef een nieuwe naam op voor de afspeellijstmap %s"
+
+#~ msgid "Enter a name for the new channel folder"
+#~ msgstr "Geef een naam op voor de nieuwe kanaalmap"
+
+#~ msgid ""
+#~ "This Democracy channel file has an invalid format: %s. Please notify the "
+#~ "publisher of this file."
+#~ msgstr ""
+#~ "Dit Democracy kanaal heeft een ongeldige indeling: %s. Waarschuw a.u.b. de "
+#~ "uitgever van dit bestand."
+
+#~ msgid ""
+#~ "This Democracy channel file has the wrong content type: %s. Please notify "
+#~ "the publisher of this file."
+#~ msgstr ""
+#~ "Dit Democracy kanaal heeft het verkeerd inhouds-type: %s. Waarschuw a.u.b. "
+#~ "de uitgever van dit bestand."
+
+#~ msgid ""
+#~ "But we'll try our best to grab the files. It may take extra time to list the "
+#~ "videos, and descriptions may look funny.  Please contact the publishers of "
+#~ "$url and ask if they can supply a feed in a format that will work with "
+#~ "Democracy.\n"
+#~ "\n"
+#~ "Do you want to try to load this channel anyway?"
+#~ msgstr ""
+#~ "Maar we doen ons best om de bestanden te pakken te krijgen. Het kan extra "
+#~ "tijd kosten om een lijst van de video's op te bouwen en de beschrijvingen "
+#~ "kunnen er vreemd uitzien. Neem a.u.b. contact op met de uitgever van $url en "
+#~ "vraag ze of ze een webfeed in een formaat kunnen geven die werkt met "
+#~ "Democracy.\n"
+#~ "\n"
+#~ "Wilt u toch proberen dit kanaal te laden?"
+
+#~ msgid "Are you sure you want to remove these %s playlists"
+#~ msgstr "Weet u zeker dat u deze %s afspeellijsten wilt verwijderen"
+
+#~ msgid "Democracy - Add Channel Guide"
+#~ msgstr "Democracy - Kanalengids toevoegen"
+
+#~ msgid "Enter the URL of the channel guide to add"
+#~ msgstr "Voer het webadres van de kanalengids die u wilt toevoegen in."
+
+#~ msgid "Re_name..."
+#~ msgstr "_Hernoem..."
+
+#~ msgid "Re_name Channel Guide..."
+#~ msgstr "_Hernoem kanaalgids..."
+
+#~ msgid "%d video found"
+#~ msgid_plural "%d videos found"
+#~ msgstr[0] "%d video gevonden"
+#~ msgstr[1] "%d video's gevonden"
+
+#~ msgid "Bad Status Line: %s"
+#~ msgstr "Slechte statusregel: %s"
+
+#~ msgid "Bad Header Line: %s"
+#~ msgstr "Slechte headerregel: %s"
+
+#~ msgid "%d Available Items"
+#~ msgstr "%d beschikbare items"
+
+#~ msgid "%d Downloading Items"
+#~ msgstr "%d downloads bezig"
+
+#~ msgid "Update Channel Now"
+#~ msgstr "Werk kanaal nu bij"
+
+#~ msgid "Drag playlists to this folder to add them."
+#~ msgstr "Sleep afspeellijsten naar deze map om ze toe te voegen."
+
+#~ msgid ""
+#~ "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
+#~ "playlists)"
+#~ msgstr ""
+#~ "${count} afspeellijstmappen geselecteerd<br></br>(bevat ${containedcount} "
+#~ "afspeellijsten)"
+
+#~ msgid "Clear Completed Torrents"
+#~ msgstr "Complete torrents verwijderen"
+
+#~ msgid "${count} Channels Selected"
+#~ msgstr "${count} kanalen geselecteerd"
+
+#~ msgid "New Channel Folder"
+#~ msgstr "Nieuwe kanalenmap"
+
+#~ msgid "New Channel Guide"
+#~ msgstr "Nieuwe kanalengids"
+
+#~ msgid "Send This Channel to a Friend..."
+#~ msgstr "Stuur dit kanaal naar een vriend..."
+
+#~ msgid "_Remove Channel Guides..."
+#~ msgstr "Ve_rwijder kanaalgidsen..."
+
+#~ msgid "%0.0fB"
+#~ msgstr "%0.0fB"
 
 #~ msgid ""
 #~ "Would you like to delete this folder and all of its videos or just remove "
@@ -3676,34 +3805,6 @@ msgstr "Bestand wordt afgespeeld"
 #~ msgstr ""
 #~ "U heeft een database die met een nieuwere versie van Democracy opgeslagen "
 #~ "is. Download de laatste versie van Democracy en gebruik die versie."
-
-#~ msgid "Update Channels Now"
-#~ msgstr "Werk kanalen nu bij"
-
-#, python-format
-#~ msgid "%d Available Items"
-#~ msgstr "%d beschikbare items"
-
-#, python-format
-#~ msgid "%d Downloading Items"
-#~ msgstr "%d downloads bezig"
-
-#~ msgid "Update Channel Now"
-#~ msgstr "Werk kanaal nu bij"
-
-#~ msgid "Rename Channel"
-#~ msgstr "Hernoem kanaal"
-
-#, python-format
-#~ msgid "Create %d channels?"
-#~ msgstr "%d kanalen aanmaken?"
-
-#~ msgid "(Changes won't go into effect until you restart Democracy Player.)"
-#~ msgstr ""
-#~ "(Wijzigingen worden pas actief als de Democracy speler opnieuw gestart is.)"
-
-#~ msgid "<b>Searching for Videos</b>"
-#~ msgstr "<b>Zoeken naar video's</b>"
 
 #~ msgid ""
 #~ "<b>Would you like Democracy Player to look for video files on your "
@@ -3770,9 +3871,6 @@ msgstr "Bestand wordt afgespeeld"
 #~ "Democracy Player kan alle videobestanden op uw computer vinden om u te "
 #~ "helpen uw collectie te beheren."
 
-#~ msgid "In This:"
-#~ msgstr "In deze:"
-
 #~ msgid ""
 #~ "The next few screens will help you set up democracy player so that it works "
 #~ "best for you.  Here's the first question."
@@ -3800,31 +3898,6 @@ msgstr "Bestand wordt afgespeeld"
 #~ "bekijken, torrents downloaden, video's aanraden bij vrienden en nog veel "
 #~ "meer."
 
-#~ msgid "and"
-#~ msgstr "en"
-
-#~ msgid "-00:00:00"
-#~ msgstr "-00:00:00"
-
-#~ msgid "Save downloaded videos in this folder:"
-#~ msgstr "Gedownloade video's in deze map opslaan:"
-
-#~ msgid "To avoid internet slowdowns:"
-#~ msgstr "Om traag internet te voorkomen:"
-
-#~ msgid "videos at once."
-#~ msgstr "video's in een keer."
-
-#~ msgid "Results for \"${query}\""
-#~ msgstr "Resultaten voor \"${query}\""
-
-#~ msgid "Empty Playlist"
-#~ msgstr "Lege afspeellijst"
-
-#~ msgid "Drag downloaded videos to this playlist to add them."
-#~ msgstr ""
-#~ "Sleep gedownloade video's naar deze afspeellijst om ze toe te voegen."
-
 #~ msgid "Empty Playlist Folder"
 #~ msgstr "Lege afspeellijstmap"
 
@@ -3835,76 +3908,11 @@ msgstr "Bestand wordt afgespeeld"
 #~ "Deze map bevat ${count} afspeellijsten, maar de afspeellijsten bevatten geen "
 #~ "items."
 
-#~ msgid "Drag playlists to this folder to add them."
-#~ msgstr "Sleep afspeellijsten naar deze map om ze toe te voegen."
-
-#~ msgid ""
-#~ "${count} Playlist Folders Selected<br></br>(contains ${containedcount} "
-#~ "playlists)"
-#~ msgstr ""
-#~ "${count} afspeellijstmappen geselecteerd<br></br>(bevat ${containedcount} "
-#~ "afspeellijsten)"
-
 #~ msgid "${count} Playlists Selected"
 #~ msgstr "${count} afspeellijsten geselecteerd"
 
-#~ msgid "STAR"
-#~ msgstr "STER"
-
-#~ msgid "SAVED"
-#~ msgstr "OPGESLAGEN"
-
-#~ msgid "default"
-#~ msgstr "standaard"
-
-#~ msgid "Videos expire after"
-#~ msgstr "Video's verlopen na"
-
-#~ msgid "When turned on, Auto Download should"
-#~ msgstr "Indien ingeschakeld, moet auto-download"
-
-#~ msgid ""
-#~ "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
-#~ "unwatched."
-#~ msgstr ""
-#~ "Niet automatisch downloaden wanneer meer dan ${maxnew} ${maxnew2} video's "
-#~ "onbekeken klaarstaan."
-
-#~ msgid "<label for=\"automatic\">Auto Download</label>"
-#~ msgstr "<label for=\"automatic\">Automatisch downloaden</label>"
-
-#~ msgid ""
-#~ "Democracy can't play this file. You may be able to open it with a different "
-#~ "program.<br></br><br></br><strong>Filename:</strong> "
-#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
-#~ msgstr ""
-#~ "Democracy kan dit bestand niet afspelen. Mogelijk kunt u het openen met een "
-#~ "ander programma.<br></br><br></br><strong>Bestandsnaam:</strong> "
-#~ "${filename}<Br></Br><strong>Type bestand:</strong> ${format}"
-
-#~ msgid "REVEAL FILE"
-#~ msgstr "TOON BESTAND"
-
-#~ msgid "SHOW FILE"
-#~ msgstr "TOON BESTAND"
-
-#~ msgid "SHOW FOLDER"
-#~ msgstr "TOON MAP"
-
-#~ msgid "SHARE IT"
-#~ msgstr "DELEN"
-
-#~ msgid "STAR IT"
-#~ msgstr "GEEF STER"
-
 #~ msgid "${size} disk space free"
 #~ msgstr "${size} vrije schijfruimte"
-
-#~ msgid "${size} available for downloads"
-#~ msgstr "${size} beschikbaar voor downloads"
-
-#~ msgid "Clear Completed Torrents"
-#~ msgstr "Complete torrents verwijderen"
 
 #~ msgid ""
 #~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
@@ -3912,15 +3920,6 @@ msgstr "Bestand wordt afgespeeld"
 #~ msgstr ""
 #~ "<strong i18n:translate=\"\">SLA INTRO OVER: <a style=\"color: #090;\" "
 #~ "href=\"#\" onclick=\"doneWithIntro();\">Ga naar kanaalgids>></a></strong>"
-
-#~ msgid "${count} Channels Selected"
-#~ msgstr "${count} kanalen geselecteerd"
-
-#~ msgid "<b>General</b>"
-#~ msgstr "<b>Algemeen</b>"
-
-#~ msgid "Automatically run Democracy Player when I log in"
-#~ msgstr "Democracy Player automatisch starten als ik inlog"
 
 #~ msgid "Show movies in these directories in My Collection"
 #~ msgstr "Toon video's in deze mappen in Mijn collectie"
@@ -3934,12 +3933,6 @@ msgstr "Bestand wordt afgespeeld"
 #~ msgid "items that match a search term."
 #~ msgstr "items die overeenkomen met een zoekterm."
 
-#~ msgid "Channel:"
-#~ msgstr "Kanaal:"
-
-#~ msgid "Search Engine:"
-#~ msgstr "Zoekmachine:"
-
 #~ msgid "Democracy First Time Setup"
 #~ msgstr "Democracy initiële instellingen"
 
@@ -3951,12 +3944,6 @@ msgstr "Bestand wordt afgespeeld"
 #~ "De Democracy speler kijkt regelmatig kanalen na of er nieuwe video's zijn, "
 #~ "en download deze in de achtergrond. Als u Democracy geladen laat betekent "
 #~ "dat er altijd nieuwe video's klaar staan om te bekijken."
-
-#~ msgid "Find Videos:"
-#~ msgstr "Zoek video's:"
-
-#~ msgid "Leave it On:"
-#~ msgstr "Laat het aanstaan:"
 
 #~ msgid ""
 #~ "Like a TiVo, Democracy Player features an 'expiration' system that helps "
@@ -4000,9 +3987,6 @@ msgstr "Bestand wordt afgespeeld"
 
 #~ msgid "Would you like to run Democracy on startup?"
 #~ msgstr "Wilt u Democracy uitvoeren bij opstarten?"
-
-#~ msgid "You're done!"
-#~ msgstr "U bent klaar!"
 
 #~ msgid "A"
 #~ msgstr "A"
@@ -4076,12 +4060,6 @@ msgstr "Bestand wordt afgespeeld"
 #~ msgid "New Channel"
 #~ msgstr "Nieuw kanaal"
 
-#~ msgid "New Channel Folder"
-#~ msgstr "Nieuwe kanalenmap"
-
-#~ msgid "New Channel Guide"
-#~ msgstr "Nieuwe kanalengids"
-
 #~ msgid "New Playlist"
 #~ msgstr "Nieuwe afspeellijst"
 
@@ -4111,9 +4089,6 @@ msgstr "Bestand wordt afgespeeld"
 
 #~ msgid "S"
 #~ msgstr "S"
-
-#~ msgid "Send This Channel to a Friend..."
-#~ msgstr "Stuur dit kanaal naar een vriend..."
 
 #~ msgid "Space"
 #~ msgstr "Spatie"

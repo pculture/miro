@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-22 23:38+0000\n"
-"Last-Translator: jordij <Unknown>\n"
+"PO-Revision-Date: 2009-03-10 12:43+0000\n"
+"Last-Translator: Will Guaraldi Kahn-Greene <willg@bluesock.org>\n"
 "Language-Team: Catalan <ca@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -2812,7 +2812,6 @@ msgstr "Reproduint fitxer"
 #~ msgid "Unknown Runtime Error"
 #~ msgstr "Error de rutina desconegut."
 
-#, python-format
 #~ msgid "An unknown error has occurred %s."
 #~ msgstr "Ha ocorregut un error desconegut %s."
 
@@ -2979,12 +2978,6 @@ msgstr "Reproduint fitxer"
 #~ msgid "Clear Menu"
 #~ msgstr "Neteja el menú"
 
-#~ msgid "Democracy"
-#~ msgstr "Democracy"
-
-#~ msgid "Democracy Help"
-#~ msgstr "Ajuda Democracy"
-
 #~ msgid "Help"
 #~ msgstr "Ajuda"
 
@@ -2997,9 +2990,6 @@ msgstr "Reproduint fitxer"
 #~ msgid "Preferencesâ¦"
 #~ msgstr "Preferències"
 
-#~ msgid "Remove Channel..."
-#~ msgstr "Treure Canal..."
-
 #~ msgid "Update All Channels"
 #~ msgstr "Actualitza tots els canals"
 
@@ -3011,9 +3001,6 @@ msgstr "Reproduint fitxer"
 
 #~ msgid "%channel title%"
 #~ msgstr "%channel title%"
-
-#~ msgid "%donation label%"
-#~ msgstr "%donation label%"
 
 #~ msgid "00:00:00"
 #~ msgstr "00:00:00"
@@ -3073,9 +3060,6 @@ msgstr "Reproduint fitxer"
 #~ msgid "Next"
 #~ msgstr "Següent"
 
-#~ msgid "Searching for Videos"
-#~ msgstr "Cercant videos"
-
 #~ msgid ""
 #~ "We recommend that you allow Democracy Player to launch when your computer "
 #~ "starts up. This way, videos that haven't finished downloading can finish and "
@@ -3092,14 +3076,6 @@ msgstr "Reproduint fitxer"
 #~ "\n"
 #~ "Vols executar Democracy cuan encenguis l'ordinador?"
 
-#, python-format
-#~ msgid ""
-#~ "Error importing democracy modules:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Error important móduls de Democracy:\n"
-#~ "%s"
-
 #~ msgid "onStartup called twice"
 #~ msgstr "en iniciar crida'l 2 cops"
 
@@ -3115,83 +3091,8 @@ msgstr "Reproduint fitxer"
 #~ msgid "All ${len} Videos Match This Search"
 #~ msgstr "tots ${len} vídeos coincideixen amb aquesta cerca"
 
-#~ msgid "${len} Videos Match This Search"
-#~ msgstr "${len} Vídeos Coincideixen amb Aquesta Cerca"
-
 #~ msgid "Looking for videos at this URL"
 #~ msgstr "Buscant vídeos en aquesta URL"
-
-#~ msgid "${count} Videos on this Channel"
-#~ msgstr "${} Vídeos en aquest Canal"
-
-#~ msgid "SAVE"
-#~ msgstr "GUARDA"
-
-#, python-format
-#~ msgid "Removing %s"
-#~ msgstr "Eliminant %s"
-
-#, python-format
-#~ msgid "%d days"
-#~ msgstr "%d díes"
-
-#~ msgid ""
-#~ "Would you like to delete this file or just remove its entry from My "
-#~ "Collection?"
-#~ msgstr ""
-#~ "Bols esborrar aquest arxiu o només eliminar l'entrada de La Meva Col·lecció?"
-
-#, python-format
-#~ msgid ""
-#~ "This Democracy channel file has an invalid format: %s. Please notify the "
-#~ "publisher of this file."
-#~ msgstr ""
-#~ "Aquest arxiu de canal de Democracy té un format invàlid: %s. Si us plau "
-#~ "advertiu a qui va publicar aquest arxiu."
-
-#, python-format
-#~ msgid ""
-#~ "This Democracy channel file has the wrong content type: %s. Please notify "
-#~ "the publisher of this file."
-#~ msgstr ""
-#~ "Aquest canal de Democracy té el seguent contingut erroni: %s. Si us plau "
-#~ "advertiu a qui va publicar aquest arxiu."
-
-#, python-format
-#~ msgid "Could not download the Democracy channel file: %s."
-#~ msgstr "No es pot descarregar l'arxiu de canal Democracy %s"
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files. It may take extra time to list the "
-#~ "videos, and descriptions may look funny.  Please contact the publishers of "
-#~ "$url and ask if they can supply a feed in a format that will work with "
-#~ "Democracy.\n"
-#~ "\n"
-#~ "Do you want to try to load this channel anyway?"
-#~ msgstr ""
-#~ "Hem provat les millors configuracions per adescarregar els arxius. Potser "
-#~ "necessita un temps extra per a llistar els vídeos, i les descripcions poden "
-#~ "semblar divertides. Si us plau, contacteu amb qui han publicat el vídeo de "
-#~ "$url si poden substituir l'arxiu original en un format que funcioni amb "
-#~ "Democracy."
-
-#, python-format
-#~ msgid "Remove %s"
-#~ msgstr "Elimina %s"
-
-#~ msgid " - Invalid URL"
-#~ msgstr " - URL no vàlida"
-
-#~ msgid "Democracy - Add Channel Guide"
-#~ msgstr "Democracy - Afegeix una Guía de Canal"
-
-#~ msgid "Enter the URL of the channel guide to add"
-#~ msgstr "Introdueix la URL del canal a afegir"
-
-#~ msgid ""
-#~ "You are running a version of Democracy Player with a custom set of channels."
-#~ msgstr ""
-#~ "Estàs executant una versió de Democracy Player amb uns canals predefinits."
 
 #~ msgid "Add Channel..."
 #~ msgstr "Afegeix un canal..."
@@ -3201,9 +3102,6 @@ msgstr "Reproduint fitxer"
 
 #~ msgid "Copy Video URL"
 #~ msgstr "Còpia l'enllaç del vídeo"
-
-#~ msgid "Donate"
-#~ msgstr "Donacions"
 
 #~ msgid "Previous Video"
 #~ msgstr "Vídeo anterior"
@@ -3259,106 +3157,14 @@ msgstr "Reproduint fitxer"
 #~ msgid "Add _Channel..."
 #~ msgstr "Afegir _Canal..."
 
-#, python-format
-#~ msgid "%d video found"
-#~ msgid_plural "%d videos found"
-#~ msgstr[0] "%d vídeo trobat"
-#~ msgstr[1] "%d vídeos trobats"
-
 #~ msgid "outside of democracy."
 #~ msgstr "Fora de Democracy."
 
-#, python-format
 #~ msgid "%1.1fGB"
 #~ msgstr "%1.1fGB"
 
-#, python-format
 #~ msgid "%1.1fMB"
 #~ msgstr "%1.1fMB"
-
-#, python-format
-#~ msgid "%1.1fKB"
-#~ msgstr "%1.1fKB"
-
-#, python-format
-#~ msgid "%0.0fB"
-#~ msgstr "%0.0fB"
-
-#, python-format
-#~ msgid "Error: %s"
-#~ msgstr "Error: %s"
-
-#, python-format
-#~ msgid "Bad Status Line: %s"
-#~ msgstr "Mal estat de la línia: %s"
-
-#, python-format
-#~ msgid "Bad Header Line: %s"
-#~ msgstr "Capçalera trencada a la línia: %s"
-
-#, python-format
-#~ msgid "Bad Chunk size: %s"
-#~ msgstr "Mida d'arxiu truncada: %s"
-
-#, python-format
-#~ msgid "Expected CRLF got: %r"
-#~ msgstr "CRLF hauria de: %r"
-
-#, python-format
-#~ msgid "Bad Status Code: %s"
-#~ msgstr "Codi d'Estat Incorrecte: %s"
-
-#, python-format
-#~ msgid "%s is not a valid URL"
-#~ msgstr "%s no es una URL vàlida"
-
-#~ msgid "A search channel contains items that match a search term."
-#~ msgstr "La cerca de canal conté objectes que parteixen d'un terme de cerca."
-
-#, python-format
-#~ msgid "Deleting %s"
-#~ msgstr "Esborrant %s"
-
-#, python-format
-#~ msgid "%d hours"
-#~ msgstr "%d hores"
-
-#, python-format
-#~ msgid "%d minutes"
-#~ msgstr "%d minuts"
-
-#~ msgid "TORRENT"
-#~ msgstr "TORRENT"
-
-#~ msgid "WEB PAGE"
-#~ msgstr "PÀGINA WEB"
-
-#~ msgid "downloading..."
-#~ msgstr "descarregant..."
-
-#~ msgid "Remove From My Collection"
-#~ msgstr "Elimina de La Meva Col·lecció"
-
-#~ msgid "Play Just This Video"
-#~ msgstr "Reprodueix només aquest vídeo"
-
-#~ msgid "Update Channels Now"
-#~ msgstr "Actualitza Canals"
-
-#~ msgid "Subscribing to multiple channels"
-#~ msgstr "Subscriure's a varis canals"
-
-#~ msgid "Bit Torrent uses ports between"
-#~ msgstr "BitTorrent utilitza els canals entre"
-
-#~ msgid "C_hannel:"
-#~ msgstr "Canal:"
-
-#~ msgid "_URL"
-#~ msgstr "_URL"
-
-#~ msgid "and"
-#~ msgstr "i"
 
 #~ msgid "-00:00:00"
 #~ msgstr "-00:00:00"
@@ -3374,9 +3180,6 @@ msgstr "Reproduint fitxer"
 
 #~ msgid "Search this folder:"
 #~ msgstr "Cerca aquesta carpeta:"
-
-#~ msgid "Results for \"${query}\""
-#~ msgstr "Resultats per a \"${query}\""
 
 #~ msgid "STAR"
 #~ msgstr "PUNTUA"
@@ -3433,11 +3236,227 @@ msgstr "Reproduint fitxer"
 #~ msgid "STAR IT"
 #~ msgstr "PUNTUA'L"
 
-#~ msgid "${size} disk space free"
-#~ msgstr "${size} espai lliure al disc"
+#~ msgid "%donation label%"
+#~ msgstr "%donation label%"
+
+#~ msgid "Removing %s"
+#~ msgstr "Eliminant %s"
+
+#~ msgid "%d days"
+#~ msgstr "%d díes"
+
+#~ msgid "Remove %s"
+#~ msgstr "Elimina %s"
+
+#~ msgid "Error: %s"
+#~ msgstr "Error: %s"
+
+#~ msgid "Bad Status Code: %s"
+#~ msgstr "Codi d'Estat Incorrecte: %s"
+
+#~ msgid "%d hours"
+#~ msgstr "%d hores"
+
+#~ msgid "%d minutes"
+#~ msgstr "%d minuts"
+
+#~ msgid "TORRENT"
+#~ msgstr "TORRENT"
+
+#~ msgid "WEB PAGE"
+#~ msgstr "PÀGINA WEB"
+
+#~ msgid "Update Channels Now"
+#~ msgstr "Actualitza Canals"
+
+#~ msgid "_URL"
+#~ msgstr "_URL"
+
+#~ msgid "and"
+#~ msgstr "i"
+
+#~ msgid "<b>BitTorrent</b>"
+#~ msgstr "<b>BitTorrent</b>"
+
+#~ msgid "Go"
+#~ msgstr "Ves"
+
+#~ msgid "Channel:"
+#~ msgstr "Canal:"
+
+#~ msgid "Search Engine:"
+#~ msgstr "Cercador:"
+
+#~ msgid "Search For:"
+#~ msgstr "Cerca:"
+
+#~ msgid "Don't Worry About Disk Space:"
+#~ msgstr "No us amoïneu per l'espai al disc:"
+
+#~ msgid "Reset Search"
+#~ msgstr "Inicialitza la recerca"
+
+#~ msgid "Democracy Help"
+#~ msgstr "Ajuda Democracy"
+
+#~ msgid "Democracy"
+#~ msgstr "Democracy"
+
+#~ msgid "Remove Channel..."
+#~ msgstr "Treure Canal..."
+
+#~ msgid "Searching for Videos"
+#~ msgstr "Cercant videos"
+
+#~ msgid "SAVE"
+#~ msgstr "GUARDA"
+
+#~ msgid "Donate"
+#~ msgstr "Donacions"
+
+#~ msgid "downloading..."
+#~ msgstr "descarregant..."
+
+#~ msgid "Remove From My Collection"
+#~ msgstr "Elimina de La Meva Col·lecció"
+
+#~ msgid "Play Just This Video"
+#~ msgstr "Reprodueix només aquest vídeo"
+
+#~ msgid "Bit Torrent uses ports between"
+#~ msgstr "BitTorrent utilitza els canals entre"
+
+#~ msgid "Results for \"${query}\""
+#~ msgstr "Resultats per a \"${query}\""
 
 #~ msgid "${size} available for downloads"
 #~ msgstr "${size} mida disponible per a descàrregues"
+
+#~ msgid "<b>General</b>"
+#~ msgstr "<b>General</b>"
+
+#~ msgid "Automatically run Democracy Player when I log in"
+#~ msgstr "Executa el Democracy automaticament a l'iniciar la sessió"
+
+#~ msgid "_Store downloaded videos in this folder:"
+#~ msgstr "_Emmagatzema els vídeos descarregats en aquesta carpeta:"
+
+#~ msgid "Cancel Search"
+#~ msgstr "Cancel·la la cerca"
+
+#~ msgid "Find Videos:"
+#~ msgstr "Troba Videos:"
+
+#~ msgid ""
+#~ "Error importing democracy modules:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Error important móduls de Democracy:\n"
+#~ "%s"
+
+#~ msgid "${len} Videos Match This Search"
+#~ msgstr "${len} Vídeos Coincideixen amb Aquesta Cerca"
+
+#~ msgid "${count} Videos on this Channel"
+#~ msgstr "${} Vídeos en aquest Canal"
+
+#~ msgid ""
+#~ "Would you like to delete this file or just remove its entry from My "
+#~ "Collection?"
+#~ msgstr ""
+#~ "Bols esborrar aquest arxiu o només eliminar l'entrada de La Meva Col·lecció?"
+
+#~ msgid "Could not download the Democracy channel file: %s."
+#~ msgstr "No es pot descarregar l'arxiu de canal Democracy %s"
+
+#~ msgid "%1.1fKB"
+#~ msgstr "%1.1fKB"
+
+#~ msgid "C_hannel:"
+#~ msgstr "Canal:"
+
+#~ msgid "Search _custom folder:"
+#~ msgstr "Carpeta de recerca _personalitzada:"
+
+#~ msgid ""
+#~ "Now you can explore the Channel Guide\n"
+#~ "and start watching.  A few tips to get started:"
+#~ msgstr ""
+#~ "Ara podeu explorar la guia de canals.\n"
+#~ "Abans però, uns petits consells per a començar:"
+
+#~ msgid "The button to the right of the play button shows videos fullscreen."
+#~ msgstr ""
+#~ "El botó situat a la dreta del botó de reproducció mostra els vídeos a "
+#~ "pantalla completa."
+
+#~ msgid ""
+#~ "This Democracy channel file has an invalid format: %s. Please notify the "
+#~ "publisher of this file."
+#~ msgstr ""
+#~ "Aquest arxiu de canal de Democracy té un format invàlid: %s. Si us plau "
+#~ "advertiu a qui va publicar aquest arxiu."
+
+#~ msgid ""
+#~ "This Democracy channel file has the wrong content type: %s. Please notify "
+#~ "the publisher of this file."
+#~ msgstr ""
+#~ "Aquest canal de Democracy té el seguent contingut erroni: %s. Si us plau "
+#~ "advertiu a qui va publicar aquest arxiu."
+
+#~ msgid ""
+#~ "But we'll try our best to grab the files. It may take extra time to list the "
+#~ "videos, and descriptions may look funny.  Please contact the publishers of "
+#~ "$url and ask if they can supply a feed in a format that will work with "
+#~ "Democracy.\n"
+#~ "\n"
+#~ "Do you want to try to load this channel anyway?"
+#~ msgstr ""
+#~ "Hem provat les millors configuracions per adescarregar els arxius. Potser "
+#~ "necessita un temps extra per a llistar els vídeos, i les descripcions poden "
+#~ "semblar divertides. Si us plau, contacteu amb qui han publicat el vídeo de "
+#~ "$url si poden substituir l'arxiu original en un format que funcioni amb "
+#~ "Democracy."
+
+#~ msgid " - Invalid URL"
+#~ msgstr " - URL no vàlida"
+
+#~ msgid "Democracy - Add Channel Guide"
+#~ msgstr "Democracy - Afegeix una Guía de Canal"
+
+#~ msgid "Enter the URL of the channel guide to add"
+#~ msgstr "Introdueix la URL del canal a afegir"
+
+#~ msgid ""
+#~ "You are running a version of Democracy Player with a custom set of channels."
+#~ msgstr ""
+#~ "Estàs executant una versió de Democracy Player amb uns canals predefinits."
+
+#~ msgid "%d video found"
+#~ msgid_plural "%d videos found"
+#~ msgstr[0] "%d vídeo trobat"
+#~ msgstr[1] "%d vídeos trobats"
+
+#~ msgid "Bad Status Line: %s"
+#~ msgstr "Mal estat de la línia: %s"
+
+#~ msgid "Bad Header Line: %s"
+#~ msgstr "Capçalera trencada a la línia: %s"
+
+#~ msgid "Bad Chunk size: %s"
+#~ msgstr "Mida d'arxiu truncada: %s"
+
+#~ msgid "%s is not a valid URL"
+#~ msgstr "%s no es una URL vàlida"
+
+#~ msgid "A search channel contains items that match a search term."
+#~ msgstr "La cerca de canal conté objectes que parteixen d'un terme de cerca."
+
+#~ msgid "Deleting %s"
+#~ msgstr "Esborrant %s"
+
+#~ msgid "Subscribing to multiple channels"
+#~ msgstr "Subscriure's a varis canals"
 
 #~ msgid "Clear Completed Torrents"
 #~ msgstr "Neteja els Torrents completats"
@@ -3447,14 +3466,6 @@ msgstr "Reproduint fitxer"
 
 #~ msgid "Drag channels to this folder to add them."
 #~ msgstr "Arrossegueu canals a aquesta carpeta per a afegir-los."
-
-#~ msgid ""
-#~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
-#~ "onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>"
-#~ msgstr ""
-#~ "<strong i18n:translate=\"\">SALTAR INTRO: <a style=\"color: #090;\" "
-#~ "href=\"#\" onclick=\"doneWithIntro();\">Anar a la guia de "
-#~ "canals>></a></strong>"
 
 #~ msgid ""
 #~ "${count} Channel Folders Selected<br></br>(contains ${containedcount} "
@@ -3469,20 +3480,31 @@ msgstr "Reproduint fitxer"
 #~ msgid "Local File"
 #~ msgstr "Arxiu local"
 
-#~ msgid "<b>BitTorrent</b>"
-#~ msgstr "<b>BitTorrent</b>"
+#~ msgid "New Channel Folder"
+#~ msgstr "Nova carpeta de canals"
 
-#~ msgid "<b>General</b>"
-#~ msgstr "<b>General</b>"
+#~ msgid "New Channel Guide"
+#~ msgstr "Nova guia de canals"
 
-#~ msgid "Automatically run Democracy Player when I log in"
-#~ msgstr "Executa el Democracy automaticament a l'iniciar la sessió"
+#~ msgid "Pause Video"
+#~ msgstr "Pausa el video"
 
-#~ msgid "Go"
-#~ msgstr "Ves"
+#~ msgid "Send This Channel to a Friend..."
+#~ msgstr "Envia aquest Canal a un Amic..."
 
-#~ msgid "Search _custom folder:"
-#~ msgstr "Carpeta de recerca _personalitzada:"
+#~ msgid "%0.0fB"
+#~ msgstr "%0.0fB"
+
+#~ msgid "${size} disk space free"
+#~ msgstr "${size} espai lliure al disc"
+
+#~ msgid ""
+#~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
+#~ "onclick=\"doneWithIntro();\">Go to Channel Guide >></a></strong>"
+#~ msgstr ""
+#~ "<strong i18n:translate=\"\">SALTAR INTRO: <a style=\"color: #090;\" "
+#~ "href=\"#\" onclick=\"doneWithIntro();\">Anar a la guia de "
+#~ "canals>></a></strong>"
 
 #~ msgid "Show movies in these directories in My Collection"
 #~ msgstr "Mostra els arxius d'aquest directoris de la meva Colecció"
@@ -3490,26 +3512,11 @@ msgstr "Reproduint fitxer"
 #~ msgid "_Add Directory"
 #~ msgstr "_Afegir directori"
 
-#~ msgid "_Store downloaded videos in this folder:"
-#~ msgstr "_Emmagatzema els vídeos descarregats en aquesta carpeta:"
-
 #~ msgid "A search channel contains"
 #~ msgstr "Cerca un canal amb contingut"
 
 #~ msgid "items that match a search term."
 #~ msgstr "objectes trobats segons el criteri de recerca."
-
-#~ msgid "Channel:"
-#~ msgstr "Canal:"
-
-#~ msgid "Search Engine:"
-#~ msgstr "Cercador:"
-
-#~ msgid "Search For:"
-#~ msgstr "Cerca:"
-
-#~ msgid "Cancel Search"
-#~ msgstr "Cancel·la la cerca"
 
 #~ msgid "Democracy First Time Setup"
 #~ msgstr "Configuració inicial del Democracy"
@@ -3523,33 +3530,12 @@ msgstr "Reproduint fitxer"
 #~ "descàrregues. Això es duu en segon terme.  Si permeteu aquesta operació, "
 #~ "disposareu llavors de nous vídeos per a gaudir."
 
-#~ msgid "Don't Worry About Disk Space:"
-#~ msgstr "No us amoïneu per l'espai al disc:"
-
-#~ msgid "Find Videos:"
-#~ msgstr "Troba Videos:"
-
-#~ msgid ""
-#~ "Now you can explore the Channel Guide\n"
-#~ "and start watching.  A few tips to get started:"
-#~ msgstr ""
-#~ "Ara podeu explorar la guia de canals.\n"
-#~ "Abans però, uns petits consells per a començar:"
-
-#~ msgid "Reset Search"
-#~ msgstr "Inicialitza la recerca"
-
 #~ msgid ""
 #~ "The Democracy Channel Guide has hundreds of internet TV channels, all of "
 #~ "them are free.  Just click 'ADD' to watch a channel."
 #~ msgstr ""
 #~ "La guia de Democracy Channel de centenars de canals de Televisió per "
 #~ "Internet, tots ells gratuïts. Només premeu 'Afegir' per a gaudir del canal."
-
-#~ msgid "The button to the right of the play button shows videos fullscreen."
-#~ msgstr ""
-#~ "El botó situat a la dreta del botó de reproducció mostra els vídeos a "
-#~ "pantalla completa."
 
 #~ msgid ""
 #~ "The next few screens will help you set up Democracy Player so that it works "
@@ -3647,20 +3633,11 @@ msgstr "Reproduint fitxer"
 #~ msgid "New Channel"
 #~ msgstr "Nou canal"
 
-#~ msgid "New Channel Folder"
-#~ msgstr "Nova carpeta de canals"
-
-#~ msgid "New Channel Guide"
-#~ msgstr "Nova guia de canals"
-
 #~ msgid "O"
 #~ msgstr "O"
 
 #~ msgid "P"
 #~ msgstr "P"
-
-#~ msgid "Pause Video"
-#~ msgstr "Pausa el video"
 
 #~ msgid "Q"
 #~ msgstr "Q"
@@ -3677,9 +3654,6 @@ msgstr "Reproduint fitxer"
 #~ msgid "S"
 #~ msgstr "S"
 
-#~ msgid "Send This Channel to a Friend..."
-#~ msgstr "Envia aquest Canal a un Amic..."
-
 #~ msgid "Space"
 #~ msgstr "Espai"
 
@@ -3688,3 +3662,6 @@ msgstr "Reproduint fitxer"
 
 #~ msgid "V"
 #~ msgstr "V"
+
+#~ msgid "Expected CRLF got: %r"
+#~ msgstr "CRLF hauria de: %r"

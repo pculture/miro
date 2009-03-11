@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-17 16:38+0000\n"
-"Last-Translator: Jan Navrátil <Unknown>\n"
+"PO-Revision-Date: 2009-03-10 12:46+0000\n"
+"Last-Translator: risko <rir@seznam.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-03-11 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
@@ -122,7 +122,7 @@ msgstr "Pro provedení změn je třeba restartovat Miro."
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:72
 msgid "Video renderer:"
-msgstr ""
+msgstr "Vykreslovač videa"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:77
 msgid "You must restart playback for visualization changes to take effect."
@@ -173,7 +173,7 @@ msgstr "Vyskakovat"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:206
 msgid "Pop In"
-msgstr ""
+msgstr "Zaskočit"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
 msgid "Services"
@@ -992,11 +992,11 @@ msgstr "Název souboru:"
 
 #: ../../portable/frontends/widgets/style.py:211
 msgid "Show More"
-msgstr ""
+msgstr "více"
 
 #: ../../portable/frontends/widgets/style.py:212
 msgid "Show Less"
-msgstr ""
+msgstr "méně"
 
 #: ../../portable/frontends/widgets/style.py:213
 #: ../../portable/frontends/widgets/gtk/video.py:309
@@ -1024,7 +1024,7 @@ msgstr "URL Souboru"
 
 #: ../../portable/frontends/widgets/style.py:218
 msgid "License Page"
-msgstr ""
+msgstr "Licenční stránka"
 
 #: ../../portable/frontends/widgets/style.py:219
 msgid "File Type"
@@ -1040,7 +1040,7 @@ msgstr "Stahující"
 
 #: ../../portable/frontends/widgets/style.py:222
 msgid "Upload Rate"
-msgstr ""
+msgstr "Poměr odesílaných dat"
 
 #: ../../portable/frontends/widgets/style.py:223
 msgid "Upload Total"
@@ -1048,7 +1048,7 @@ msgstr "Posláno Celkem"
 
 #: ../../portable/frontends/widgets/style.py:224
 msgid "Down Rate"
-msgstr ""
+msgstr "Poměr stažených dat"
 
 #: ../../portable/frontends/widgets/style.py:225
 msgid "Down Total"
@@ -1069,7 +1069,7 @@ msgstr "Stáhnout torrent"
 
 #: ../../portable/frontends/widgets/style.py:229
 msgid "queued for autodownload"
-msgstr ""
+msgstr "vloženo do fronty automatického stahování"
 
 #: ../../portable/frontends/widgets/style.py:230
 #: ../../portable/frontends/widgets/style.py:1088
@@ -2870,14 +2870,12 @@ msgstr "Přehrává se soubor"
 #~ msgid "Open various files"
 #~ msgstr "Otevřít různé soubory"
 
-#, python-format
 #~ msgid "%s database save failed"
 #~ msgstr "Uložení databáze %s selhalo"
 
 #~ msgid "Unknown Runtime Error"
 #~ msgstr "Neznámá chyba za chodu"
 
-#, python-format
 #~ msgid "An unknown error has occurred %s."
 #~ msgstr "Stala se neznámá chyba %s."
 
@@ -2960,7 +2958,6 @@ msgstr "Přehrává se soubor"
 #~ msgid "Channel is not compatible with Democracy!"
 #~ msgstr "Kanál není kompatibilní s Democracy!"
 
-#, python-format
 #~ msgid "You have %d download still in progress."
 #~ msgid_plural "You have %d downloads still in progress."
 #~ msgstr[0] "Stále běží %d stahování."
@@ -2993,9 +2990,6 @@ msgstr "Přehrává se soubor"
 
 #~ msgid "Play Video"
 #~ msgstr "Přehrát video"
-
-#~ msgid "Remove Channel..."
-#~ msgstr "Odstranit kanál..."
 
 #~ msgid "Rename..."
 #~ msgstr "Přejmenovat..."
@@ -3040,31 +3034,14 @@ msgstr "Přehrává se soubor"
 #~ msgid "manually"
 #~ msgstr "ručně"
 
-#, python-format
 #~ msgid "(parsed %d files - found %d videos)"
 #~ msgstr "(pročteno souborů: %d; nalezeno videí: %d)"
 
 #~ msgid "Back"
 #~ msgstr "Zpět"
 
-#~ msgid ""
-#~ "Democracy Player can find all the videos on your computer to help you "
-#~ "organize your collection.\n"
-#~ "\n"
-#~ "\n"
-#~ "Would you like Democracy Player to look for video files on your computer?"
-#~ msgstr ""
-#~ "Přehravač Democracy může najít všechna videa na Vašem počítači a pomoci vám "
-#~ "je zorganizovat.\n"
-#~ "\n"
-#~ "\n"
-#~ "Přejete si aby přehravač Democracy prohledal váš počítač?"
-
 #~ msgid "Next"
 #~ msgstr "Další"
-
-#~ msgid "Searching for Videos"
-#~ msgstr "Hledám videa"
 
 #~ msgid ""
 #~ "The next few screens will help you set up Democracy Player so that it works "
@@ -3072,9 +3049,6 @@ msgstr "Přehrává se soubor"
 #~ msgstr ""
 #~ "Dalších pár obrazovek vám pomůže nastavit přehravač Democracy tak, aby Vám "
 #~ "fungoval co nejlépe. Tady máme první otázku."
-
-#~ msgid "Starting up"
-#~ msgstr "Začínám"
 
 #~ msgid "${count} Downloads in Progress"
 #~ msgstr "Probíhá stahování: ${count}"
@@ -3088,88 +3062,11 @@ msgstr "Přehrává se soubor"
 #~ msgid "All ${len} Videos Match This Search"
 #~ msgstr "Videí které odpovídají tomuto vyhledávání: ${len} (tj. všechna)"
 
-#~ msgid "${len} Videos Match This Search"
-#~ msgstr "Videí které odpovídají tomuto vyhledávání: ${len}"
-
 #~ msgid "Looking for videos at this URL"
 #~ msgstr "Hledám videa na tomto URL"
 
-#~ msgid "${count} Videos on this Channel"
-#~ msgstr "Videí v tomto kanálu: ${count}"
-
-#, python-format
-#~ msgid "Removing %s"
-#~ msgstr "Odstraňuji %s"
-
-#, python-format
-#~ msgid "%d days"
-#~ msgstr "%d dní"
-
-#, python-format
 #~ msgid "%s database save succeeded"
 #~ msgstr "Uspěšné uložení databáze %s"
-
-#~ msgid "Rename Channel Folder"
-#~ msgstr "Přejmenovat složku kanálů"
-
-#, python-format
-#~ msgid "Enter a new name for the channel folder %s"
-#~ msgstr "Vložte nové jméno pro složku kanálů %s"
-
-#~ msgid "Create Channel Folder"
-#~ msgstr "Vytvořit složku kanálů"
-
-#~ msgid "Enter a name for the new channel folder"
-#~ msgstr "Vložte jméno pro novou složku kanálů"
-
-#, python-format
-#~ msgid "Could not download the Democracy channel file: %s."
-#~ msgstr "Stáhnutí souboru kanálu Democracy selhalo: %s."
-
-#, python-format
-#~ msgid "Remove %s"
-#~ msgstr "Odstranit %s"
-
-#, python-format
-#~ msgid "Are you sure you want to remove %s"
-#~ msgstr "Chcete opravdu odstranit %s"
-
-#, python-format
-#~ msgid "Remove %s channels"
-#~ msgstr "Odstranit kanálů: %s"
-
-#, python-format
-#~ msgid ""
-#~ "Are you sure you want to remove %s?  Any downloads in progress will be "
-#~ "canceled."
-#~ msgstr "Chcete opravdu odstranit %s? Případné stahování bude stornováno."
-
-#, python-format
-#~ msgid ""
-#~ "Are you sure you want to remove these %s channels?  Any downloads in "
-#~ "progress will be canceled."
-#~ msgstr ""
-#~ "Chcete opravdu odstranit tyto kanály (%s)? Případné stahování bude "
-#~ "stornováno."
-
-#~ msgid "Invalid Value"
-#~ msgstr "Neplatná hodnota"
-
-#, python-format
-#~ msgid "%s is invalid.  You must enter a non-negative number."
-#~ msgstr "Hodnota %s je neplatná. Číslo nesmí být negativní."
-
-#~ msgid " - Invalid URL"
-#~ msgstr " - neplatné URL"
-
-#~ msgid ""
-#~ "The address you entered is not a valid URL.\n"
-#~ "Please double check and try again.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Vložená adresa není platnyým URL\n"
-#~ "Prosím zkontrolujte a vložte znovu\n"
-#~ "\n"
 
 #~ msgid "Add Channel..."
 #~ msgstr "Přidat kanál..."
@@ -3210,16 +3107,6 @@ msgstr "Přehrává se soubor"
 #~ msgid "URL"
 #~ msgstr "URL"
 
-#, python-format
-#~ msgid "%d video found"
-#~ msgid_plural "%d videos found"
-#~ msgstr[0] "nalezeno %d video"
-#~ msgstr[1] "nalezeny %d videa"
-#~ msgstr[2] "nalezeno %d videí"
-
-#~ msgid "Remove Channels..."
-#~ msgstr "Odstranit kanály..."
-
 #~ msgid "Remove Channel Folder..."
 #~ msgstr "Odstranit složku kanálů..."
 
@@ -3244,48 +3131,47 @@ msgstr "Přehrává se soubor"
 #~ msgid "Update Channels..."
 #~ msgstr "Aktualizovat kanály..."
 
-#, python-format
 #~ msgid "Could not write to %s"
 #~ msgstr "Nešlo psát do %s"
 
-#, python-format
 #~ msgid "%s MB required to store this video"
 #~ msgstr "Toto video potřebuje %s MB"
 
 #~ msgid "outside of democracy."
 #~ msgstr "mimo Democracy."
 
-#, python-format
 #~ msgid "%1.1fGB"
 #~ msgstr "%1.1fGB"
 
-#, python-format
 #~ msgid "%1.1fMB"
 #~ msgstr "%1.1fMB"
 
-#, python-format
-#~ msgid "%1.1fKB"
-#~ msgstr "%1.1fKB"
+#~ msgid "Starting up"
+#~ msgstr "Začínám"
 
-#, python-format
-#~ msgid "%0.0fB"
-#~ msgstr "%0.0fB"
+#~ msgid "Removing %s"
+#~ msgstr "Odstraňuji %s"
 
-#, python-format
+#~ msgid "%d days"
+#~ msgstr "%d dní"
+
+#~ msgid "Remove %s"
+#~ msgstr "Odstranit %s"
+
+#~ msgid "Are you sure you want to remove %s"
+#~ msgstr "Chcete opravdu odstranit %s"
+
+#~ msgid "Remove %s channels"
+#~ msgstr "Odstranit kanálů: %s"
+
+#~ msgid "Invalid Value"
+#~ msgstr "Neplatná hodnota"
+
 #~ msgid "Error: %s"
 #~ msgstr "Chyba: %s"
 
-#, python-format
-#~ msgid "Connection Error: %s"
-#~ msgstr "Chyba spojení: %s"
-
-#, python-format
 #~ msgid "Bad Status Code: %s"
 #~ msgstr "Špatný stavový kód: %s"
-
-#, python-format
-#~ msgid "%s is not a valid URL"
-#~ msgstr "URL %s není platné"
 
 #~ msgid "Create Channel"
 #~ msgstr "Vytvořit kanál"
@@ -3293,80 +3179,35 @@ msgstr "Přehrává se soubor"
 #~ msgid "New Search Channel"
 #~ msgstr "Nový vyhledávací kanál"
 
-#~ msgid "A search channel contains items that match a search term."
-#~ msgstr "Vyhledávací kanál obsahuje položky podle klíčového slova."
-
-#, python-format
-#~ msgid "Deleting %s"
-#~ msgstr "Mažu %s"
-
-#, python-format
 #~ msgid "%d hours"
 #~ msgstr "%d hodin"
 
-#, python-format
 #~ msgid "%d minutes"
 #~ msgstr "%d minut"
 
-#, python-format
+#~ msgid "%s remaining"
+#~ msgstr "zbývá %s"
+
+#~ msgid "Adding %d channels to a new folder"
+#~ msgstr "Do nové složky přidávám kanálů: %d"
+
+#~ msgid "and"
+#~ msgstr "a"
+
+#~ msgid "Remove Channel..."
+#~ msgstr "Odstranit kanál..."
+
+#~ msgid "Searching for Videos"
+#~ msgstr "Hledám videa"
+
+#~ msgid "Remove Channels..."
+#~ msgstr "Odstranit kanály..."
+
 #~ msgid "Expires in %s"
 #~ msgstr "Vyprší za %s"
 
 #~ msgid "downloading..."
 #~ msgstr "stahuji..."
-
-#, python-format
-#~ msgid "%s remaining"
-#~ msgstr "zbývá %s"
-
-#, python-format
-#~ msgid "Removing %s items"
-#~ msgstr "Odstraňuji položek: %s"
-
-#~ msgid ""
-#~ "You have a database that was saved with a newer version of Democracy. You "
-#~ "must download the latest version of Democracy and run that."
-#~ msgstr ""
-#~ "Tuto databázi vytvořila novější verze Democracy, než kterou máte. "
-#~ "Potřebujete tedy tu novější..."
-
-#, python-format
-#~ msgid "%d Downloaded Items"
-#~ msgstr "Staženo položek: %d"
-
-#, python-format
-#~ msgid "%d Available Items"
-#~ msgstr "Položek k dispozici: %d"
-
-#, python-format
-#~ msgid "%d Downloading Items"
-#~ msgstr "Stahováno položek: %d"
-
-#~ msgid "Rename Channel"
-#~ msgstr "Přejmenovat kanál"
-
-#~ msgid "Revert Title to Default"
-#~ msgstr "Vrátit se k implicitnímu jménu"
-
-#, python-format
-#~ msgid "Enter a new name for the channel %s"
-#~ msgstr "Vložte nové jméno pro kanál %s"
-
-#, python-format
-#~ msgid "Create %d channels?"
-#~ msgstr "Vytvořit %d kanálů?"
-
-#, python-format
-#~ msgid "Adding %d channels to a new folder"
-#~ msgstr "Do nové složky přidávám kanálů: %d"
-
-#, python-format
-#~ msgid ""
-#~ "NOTE: You are already subscribed to %d of these channels.  These channels "
-#~ "will stay where they currently are."
-#~ msgstr ""
-#~ "Upozornění: Některé z těchto kanálů (%d) už sledujete, takže je nechám tam "
-#~ "kde už jsou."
 
 #~ msgid "(Changes won't go into effect until you restart Democracy Player.)"
 #~ msgstr "(Změny se provedou při příštím startu přehrávače Democracy.)"
@@ -3375,11 +3216,131 @@ msgstr "Přehrává se soubor"
 #~ msgstr "V:"
 
 #~ msgid ""
+#~ "Democracy Player can find all the videos on your computer to help you "
+#~ "organize your collection.\n"
+#~ "\n"
+#~ "\n"
+#~ "Would you like Democracy Player to look for video files on your computer?"
+#~ msgstr ""
+#~ "Přehravač Democracy může najít všechna videa na Vašem počítači a pomoci vám "
+#~ "je zorganizovat.\n"
+#~ "\n"
+#~ "\n"
+#~ "Přejete si aby přehravač Democracy prohledal váš počítač?"
+
+#~ msgid "${len} Videos Match This Search"
+#~ msgstr "Videí které odpovídají tomuto vyhledávání: ${len}"
+
+#~ msgid "${count} Videos on this Channel"
+#~ msgstr "Videí v tomto kanálu: ${count}"
+
+#~ msgid "Could not download the Democracy channel file: %s."
+#~ msgstr "Stáhnutí souboru kanálu Democracy selhalo: %s."
+
+#~ msgid ""
+#~ "Are you sure you want to remove %s?  Any downloads in progress will be "
+#~ "canceled."
+#~ msgstr "Chcete opravdu odstranit %s? Případné stahování bude stornováno."
+
+#~ msgid "%s is invalid.  You must enter a non-negative number."
+#~ msgstr "Hodnota %s je neplatná. Číslo nesmí být negativní."
+
+#~ msgid "%1.1fKB"
+#~ msgstr "%1.1fKB"
+
+#~ msgid "Removing %s items"
+#~ msgstr "Odstraňuji položek: %s"
+
+#~ msgid "Rename Channel"
+#~ msgstr "Přejmenovat kanál"
+
+#~ msgid "Revert Title to Default"
+#~ msgstr "Vrátit se k implicitnímu jménu"
+
+#~ msgid "Create %d channels?"
+#~ msgstr "Vytvořit %d kanálů?"
+
+#~ msgid "Rename Channel Folder"
+#~ msgstr "Přejmenovat složku kanálů"
+
+#~ msgid "Enter a new name for the channel folder %s"
+#~ msgstr "Vložte nové jméno pro složku kanálů %s"
+
+#~ msgid "Create Channel Folder"
+#~ msgstr "Vytvořit složku kanálů"
+
+#~ msgid "Enter a name for the new channel folder"
+#~ msgstr "Vložte jméno pro novou složku kanálů"
+
+#~ msgid ""
+#~ "Are you sure you want to remove these %s channels?  Any downloads in "
+#~ "progress will be canceled."
+#~ msgstr ""
+#~ "Chcete opravdu odstranit tyto kanály (%s)? Případné stahování bude "
+#~ "stornováno."
+
+#~ msgid " - Invalid URL"
+#~ msgstr " - neplatné URL"
+
+#~ msgid ""
+#~ "The address you entered is not a valid URL.\n"
+#~ "Please double check and try again.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Vložená adresa není platnyým URL\n"
+#~ "Prosím zkontrolujte a vložte znovu\n"
+#~ "\n"
+
+#~ msgid "%d video found"
+#~ msgid_plural "%d videos found"
+#~ msgstr[0] "nalezeno %d video"
+#~ msgstr[1] "nalezeny %d videa"
+#~ msgstr[2] "nalezeno %d videí"
+
+#~ msgid "Connection Error: %s"
+#~ msgstr "Chyba spojení: %s"
+
+#~ msgid "%s is not a valid URL"
+#~ msgstr "URL %s není platné"
+
+#~ msgid "A search channel contains items that match a search term."
+#~ msgstr "Vyhledávací kanál obsahuje položky podle klíčového slova."
+
+#~ msgid "Deleting %s"
+#~ msgstr "Mažu %s"
+
+#~ msgid "%d Downloaded Items"
+#~ msgstr "Staženo položek: %d"
+
+#~ msgid "%d Available Items"
+#~ msgstr "Položek k dispozici: %d"
+
+#~ msgid "%d Downloading Items"
+#~ msgstr "Stahováno položek: %d"
+
+#~ msgid "Enter a new name for the channel %s"
+#~ msgstr "Vložte nové jméno pro kanál %s"
+
+#~ msgid ""
+#~ "NOTE: You are already subscribed to %d of these channels.  These channels "
+#~ "will stay where they currently are."
+#~ msgstr ""
+#~ "Upozornění: Některé z těchto kanálů (%d) už sledujete, takže je nechám tam "
+#~ "kde už jsou."
+
+#~ msgid "%0.0fB"
+#~ msgstr "%0.0fB"
+
+#~ msgid ""
+#~ "You have a database that was saved with a newer version of Democracy. You "
+#~ "must download the latest version of Democracy and run that."
+#~ msgstr ""
+#~ "Tuto databázi vytvořila novější verze Democracy, než kterou máte. "
+#~ "Potřebujete tedy tu novější..."
+
+#~ msgid ""
 #~ "The next few screens will help you set up democracy player so that it works "
 #~ "best for you.  Here's the first question."
 #~ msgstr ""
 #~ "Dalších pár obrazovek vám pomůže nastavit přehravač Democracy tak, aby Vám "
 #~ "fungoval co nejlépe. Tady máme první otázku."
-
-#~ msgid "and"
-#~ msgstr "a"
