@@ -139,11 +139,8 @@ class TabListManager(object):
             self.selected_tabs = [model[iter][0]]
 
     def get_selection(self):
-        table_view = self.__table_view
-        if table_view is not None:
-            selected_tabs = [table_view.model[i][0] for i in
-                    table_view.get_selection()]
-            return self.selected_tab_list.type, selected_tabs
+        if self.__table_view is not None:
+            return self.selected_tab_list.type, self.selected_tabs
         else:
             return None, []
 
