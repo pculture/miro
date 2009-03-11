@@ -1008,7 +1008,7 @@ class GuideList(FrontendMessage):
             # set the channel guide via the DTV_CHANNELGUIDE_URL, then there's
             # no default guide.  So we generate one here.  Bug #11027.
             from miro import guide, config, prefs
-            cg = guide.ChannelGuide(config.get(prefs.CHANNEL_GUIDE_URL))
+            cg = guide.ChannelGuide(util.toUni(config.get(prefs.CHANNEL_GUIDE_URL)))
             cg_info = GuideInfo(cg)
             self.default_guide = [cg_info]
         elif len(self.default_guide) > 1:
