@@ -310,7 +310,6 @@ class ItemSchema(DDBObjectSchema):
         ('eligibleForAutoDownload', SchemaBool()),
         ('duration', SchemaInt(noneOk=True)),
         ('screenshot', SchemaFilename(noneOk=True)),
-        ('resized_screenshots', SchemaDict(SchemaString(), SchemaFilename())),
         ('resumeTime', SchemaInt()),
         ('channelTitle', SchemaString(noneOk=True)),
     ]
@@ -516,7 +515,7 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
         ('list_view_displays', SchemaList(SchemaBinary())),
     ]
 
-VERSION = 73
+VERSION = 74
 objectSchemas = [
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,

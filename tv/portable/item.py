@@ -90,7 +90,6 @@ class Item(DDBObject):
         self.eligibleForAutoDownload = True
         self.duration = None
         self.screenshot = None
-        self.resized_screenshots = {}
         self.resumeTime = 0
         self.channelTitle = None
 

@@ -1312,6 +1312,10 @@ def upgrade73(objectList):
     """We dropped the resized_filename attribute for icon cache objects."""
     return NO_CHANGES
 
+def upgrade74(objectList):
+    """We dropped the resized_screenshots attribute for Item objects."""
+    return NO_CHANGES
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()
