@@ -89,6 +89,9 @@ class TabDisplay(Display):
     def __init__(self, tab_type, selected_tabs):
         raise NotImplementedError()
 
+    def on_activate(self):
+        app.tab_list_manager.update_menus()
+
     @staticmethod
     def should_display(tab_type, selected_tabs):
         """Test if this display should be shown.  """
@@ -234,6 +237,7 @@ class ItemListDisplay(TabDisplay):
         app.item_list_controller_manager.controller_displayed(self.controller)
         selected_items = self.controller.get_selection()
         app.menu_manager.handle_item_list_selection(selected_items)
+        TabDisplay.on_activate(self)
 
     def on_deactivate(self):
         app.item_list_controller_manager.controller_no_longer_displayed(

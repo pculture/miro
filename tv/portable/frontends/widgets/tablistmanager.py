@@ -57,6 +57,8 @@ class TabListManager(object):
     def handle_new_selection(self):
         app.display_manager.select_display_for_tabs(self.selected_tab_list,
                 self.selected_tabs)
+
+    def update_menus(self):
         if self.selected_tab_list.type in ('feed', 'audio-feed'):
             app.menu_manager.handle_feed_selection(self.selected_tabs)
         elif self.selected_tab_list.type == 'playlist':
