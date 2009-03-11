@@ -80,7 +80,7 @@ def add_video(path, single=False):
                 os.path.exists(itemFilename) and
                 samefile(itemFilename, path)):
             logging.warn("Not adding duplicate video: %s" % path.decode('ascii', 'ignore'))
-            if _command_line_videos:
+            if _command_line_videos is not None:
                 _command_line_videos.add(i)
             return
     if single:
@@ -92,7 +92,7 @@ def add_video(path, single=False):
         correctFeed = get_manual_feed()
     fileItem = item.FileItem(path, feed_id=correctFeed.getID())
     fileItem.markItemSeen()
-    if _command_line_videos:
+    if _command_line_videos is not None:
         _command_line_videos.add(fileItem)
 
 def check_url_exists(url):
