@@ -865,7 +865,7 @@ non_zip_tackon:  ; non-zip tacked on file
 no_tackon:
   ClearErrors
 
-  StrCmp $THEME_TEMP_DIR "" 0 TestRunning
+  StrCmp $THEME_TEMP_DIR "" 0 MoreAttributes
   !insertmacro locateThemes $0
   StrCmp $0 0 LocateDone 0
   ${locate::Find} $0 $1 $2 $3 $4 $5 $6
@@ -876,6 +876,10 @@ no_tackon:
   StrCpy $R1 "$THEME_TEMP_DIR\app.config"
   Call GetConfigOption
   Pop $APP_NAME
+LocateDone:
+  ${locate::Close} $0
+
+MoreAttributes:
   StrCpy $R0 "publisher"
   Call GetConfigOption
   Pop $0
@@ -888,8 +892,6 @@ find_project_url:
   Pop $0
   StrCmp $0 "" LocateDone
   StrCpy $PROJECT_URL $0
-LocateDone:
-  ${locate::Close} $0
 
 
   ; Is the app running?  Stop it if so.
