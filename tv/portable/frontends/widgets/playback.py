@@ -152,7 +152,7 @@ class PlaybackManager (signals.SignalEmitter):
             else:
                 self.prepare_attached_playback()
             self.is_playing = True
-            app.menu_manager.handle_playing_selection()
+            app.menu_manager.update_menus()
         self._play_current()
         if self.presentation_mode != 'fit-to-bounds':
             self.fullscreen()
@@ -423,7 +423,7 @@ class PlaybackManager (signals.SignalEmitter):
             self.switch_to_detached_playback()
         else:
             self.switch_to_attached_playback()
-        app.menu_manager.handle_playing_selection()
+        app.menu_manager.update_menus()
             
     def switch_to_attached_playback(self):
         self.cancel_update_timer()

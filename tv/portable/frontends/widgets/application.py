@@ -987,11 +987,11 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
     def handle_item_list(self, message):
         app.info_updater.handle_item_list(message)
-        app.item_list_controller_manager.handle_playable_items()
+        app.menu_manager.update_menus()
 
     def handle_items_changed(self, message):
         app.info_updater.handle_items_changed(message)
-        app.item_list_controller_manager.handle_playable_items()
+        app.menu_manager.update_menus()
 
     def handle_download_count_changed(self, message):
         app.widgetapp.download_count = message.count

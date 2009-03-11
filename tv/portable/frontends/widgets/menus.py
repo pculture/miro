@@ -297,6 +297,16 @@ def get_all_action_group_name(action):
     return action_group_map.get(action, ['AlwaysOn'])
 
 class MenuManager(signals.SignalEmitter):
+    """Updates the menu based on the current selection.
+
+    This includes enabling/disabling menu items, changing menu text for plural
+    selection and enabling/disabling the play button.  The play button is
+    obviously not a menu item, but it's pretty closely related
+
+    Whenever code makes a change that could possibly affect which menu items
+    should be enabled/disabled, it should call the update_menus() method.
+    """
+
     def __init__(self):
         signals.SignalEmitter.__init__(self)
         self.create_signal('enabled-changed')
@@ -321,11 +331,10 @@ class MenuManager(signals.SignalEmitter):
         self.play_pause_state = state
         self.emit('enabled-changed')
 
-    def handle_feed_selection(self, selected_feeds):
+    def _handle_feed_selection(self, selected_feeds):
         """Handle the user selecting things in the feed list.  selected_feeds
         is a list of ChannelInfo objects
         """
-        self.reset()
         self.enabled_groups.add('FeedsSelected')
         if len(selected_feeds) == 1:
             if selected_feeds[0].is_folder:
@@ -337,17 +346,14 @@ class MenuManager(signals.SignalEmitter):
             else:
                 self.states["plural"].append("RemoveFeeds")
             self.states["plural"].append("UpdateFeeds")
-        self.emit('enabled-changed')
 
-    def handle_site_selection(self, selected_sites):
+    def _handle_site_selection(self, selected_sites):
         """Handle the user selecting things in the site list.  selected_sites
         is a list of GuideInfo objects
         """
-        self.reset()
-        self.emit('enabled-changed')
+        pass # We don't change menu items for the site tab list
 
-    def handle_playlist_selection(self, selected_playlists):
-        self.reset()
+    def _handle_playlist_selection(self, selected_playlists):
         self.enabled_groups.add('PlaylistsSelected')
         if len(selected_playlists) == 1:
             if selected_playlists[0].is_folder:
@@ -358,16 +364,33 @@ class MenuManager(signals.SignalEmitter):
                 self.states["folders"].append("RemovePlaylists")
             else:
                 self.states["plural"].append("RemovePlaylists")
-        self.emit('enabled-changed')
 
-    def handle_static_tab_selection(self, selected_static_tabs):
-        self.reset()
-        self.emit('enabled-changed')
-
-    def handle_item_list_selection(self, selected_items):
-        """Handle the user selecting things in the item list.  selected_items
-        is a list of ItemInfo objects containing the current selection.
+    def _handle_static_tab_selection(self, selected_static_tabs):
+        """Handle the user selecting things in the static tab list.
+        selected_sites is a list of GuideInfo objects
         """
+        pass # We don't change menu items for the static tab list
+
+    def _update_menus_for_selected_tabs(self):
+        selection_type, selected_tabs = app.tab_list_manager.get_selection()
+        if selection_type is None:
+            pass
+        elif selection_type in ('feed', 'audio-feed'):
+            app.menu_manager._handle_feed_selection(selected_tabs)
+        elif selection_type == 'playlist':
+            app.menu_manager._handle_playlist_selection(selected_tabs)
+        elif selection_type == 'static':
+            app.menu_manager._handle_static_tab_selection(selected_tabs)
+        elif selection_type == 'site':
+            app.menu_manager._handle_site_selection(selected_tabs)
+        else:
+            raise ValueError("Unknown tab list type: %s" % selection_type)
+
+    def _update_menus_for_selected_items(self):
+        """Update the menu items based on the current item list selection.
+        """
+
+        selected_items = app.item_list_controller_manager.get_selection()
         downloaded = False
         for item in selected_items:
             if item.downloaded:
@@ -375,23 +398,19 @@ class MenuManager(signals.SignalEmitter):
                 break
         if downloaded:
             self.enabled_groups.add('PlayablesSelected')
-            self.enabled_groups.add('PlayPause')
             if len(selected_items) == 1:
                 self.enabled_groups.add('PlayableSelected')
-                self.states["plural"] = []
             else:
-                self.enabled_groups.discard('PlayableSelected')
-                self.states["plural"] = ["RemoveItems"]
+                self.states["plural"].append("RemoveItems")
+
+        if len(app.item_list_controller_manager.get_current_playlist()) > 0:
+            self.enabled_groups.add('PlayPause')
+            app.widgetapp.window.videobox.handle_new_selection(True)
         else:
-            self.enabled_groups.discard('PlayPause')
-            self.enabled_groups.discard('PlayablesSelected')
-            self.enabled_groups.discard('PlayableSelected')
-            self.states["plural"] = []
+            app.widgetapp.window.videobox.handle_new_selection(False)
 
-        self.emit('enabled-changed')
-
-    def handle_playing_selection(self):
-        """Handle the user playing an item.
-        """
+    def update_menus(self):
         self.reset()
+        self._update_menus_for_selected_tabs()
+        self._update_menus_for_selected_items()
         self.emit('enabled-changed')

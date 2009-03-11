@@ -274,8 +274,7 @@ class ItemListController(object):
                 if other_view is not item_view:
                     other_view.unselect_all()
 
-        items = self.get_selection()
-        app.menu_manager.handle_item_list_selection(items)
+        app.menu_manager.update_menus()
 
     def start_tracking(self):
         """Send the message to start tracking items."""
@@ -552,11 +551,10 @@ class ItemListControllerManager(object):
         else:
             return self.displayed.get_selection()
 
-    def handle_playable_items(self):
+    def get_current_playlist(self):
+        """Get the items that would be played if we started playback."""
         if self.displayed is not None:
             selection = self.displayed.get_selection_for_playing()
-            playable = self.displayed.filter_playable_items(selection)
-            has_playable = len(playable) > 0
+            return self.displayed.filter_playable_items(selection)
         else:
-            has_playable = False
-        app.widgetapp.window.videobox.handle_new_selection(has_playable)
+            return []

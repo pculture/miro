@@ -58,20 +58,6 @@ class TabListManager(object):
         app.display_manager.select_display_for_tabs(self.selected_tab_list,
                 self.selected_tabs)
 
-    def update_menus(self):
-        if self.selected_tab_list.type in ('feed', 'audio-feed'):
-            app.menu_manager.handle_feed_selection(self.selected_tabs)
-        elif self.selected_tab_list.type == 'playlist':
-            app.menu_manager.handle_playlist_selection(self.selected_tabs)
-        elif self.selected_tab_list.type == 'static':
-            app.menu_manager.handle_static_tab_selection(self.selected_tabs)
-        elif self.selected_tab_list.type == 'site':
-            app.menu_manager.handle_site_selection(self.selected_tabs)
-        else:
-            raise ValueError("Unknown tab list type: %s" %
-                    self.selected_tab_list.type)
-        app.item_list_controller_manager.handle_playable_items()
-
     def which_tablist_has_id(self, feed_id):
         """
         Find out whether the video feed list or the audio feed list has this id
