@@ -57,7 +57,7 @@ class PlaybackControls(widgetset.HBox):
         app.playback_manager.connect('selecting-file', self.handle_selecting)
         app.playback_manager.connect('will-play', self.handle_play)
         app.playback_manager.connect('will-pause', self.handle_pause)
-        app.playback_manager.connect('did-stop', self.handle_stop)
+        app.playback_manager.connect('will-stop', self.handle_stop)
 
     def make_button(self, name, continous):
         if continous:
@@ -109,7 +109,7 @@ class ProgressTime(widgetset.DrawingArea):
         self.current_time = None
         app.playback_manager.connect('playback-did-progress', self.handle_progress)
         app.playback_manager.connect('selecting-file', self.handle_selecting)
-        app.playback_manager.connect('did-stop', self.handle_stop)
+        app.playback_manager.connect('will-stop', self.handle_stop)
 
     def size_request(self, layout):
         layout.set_font(0.75)
@@ -149,7 +149,7 @@ class ProgressTimeRemaining(widgetset.CustomButton):
         app.playback_manager.connect('selecting-file', self.handle_selecting)
         app.playback_manager.connect('will-play', self.handle_play)
         app.playback_manager.connect('playback-did-progress', self.handle_progress)
-        app.playback_manager.connect('did-stop', self.handle_stop)
+        app.playback_manager.connect('will-stop', self.handle_stop)
 
     def size_request(self, layout):
         layout.set_font(0.75)
@@ -207,7 +207,7 @@ class ProgressSlider(widgetset.CustomSlider):
         app.playback_manager.connect('playback-did-progress', self.handle_progress)
         app.playback_manager.connect('selecting-file', self.handle_selecting)
         app.playback_manager.connect('will-play', self.handle_play)
-        app.playback_manager.connect('did-stop', self.handle_stop)
+        app.playback_manager.connect('will-stop', self.handle_stop)
         self.disable()
 
     def handle_progress(self, obj, elapsed, total):
