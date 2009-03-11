@@ -170,7 +170,7 @@ def populate_menu():
     ]
     presentMenu = Menu(_("Present Video"), "Present", *presentMenuItems)
     menubar.findMenu("Playback").menuitems.append(presentMenu)
-    menus.action_groups['PlayableSelected'].extend(['PresentActualSize', 'PresentHalfSize', 'PresentDoubleSize'])
+    menus.action_groups['PlayablesSelected'].extend(['PresentActualSize', 'PresentHalfSize', 'PresentDoubleSize'])
     menus.action_groups['Playing'].extend(['PresentActualSize', 'PresentHalfSize', 'PresentDoubleSize'])
 
     # Window menu
