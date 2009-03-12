@@ -77,8 +77,11 @@ class MiroWindow(widgetset.MainWindow):
         self.set_content_widget(vbox)
         self.connect("active-change", self.on_active_change)
 
-        left_width = config.get(prefs.LEFT_VIEW_SIZE)
-        if left_width is None:
+        try:
+            left_width = int(config.get(prefs.LEFT_VIEW_SIZE))
+            if left_width is None or left_width == "":
+                left_width = 200
+        except:
             left_width = 200
         self.splitter.set_left_width(left_width)
 

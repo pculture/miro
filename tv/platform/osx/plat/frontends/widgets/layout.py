@@ -43,7 +43,7 @@ import itertools
 
 from AppKit import *
 from Foundation import *
-from objc import YES, NO, nil, signature
+from objc import YES, NO, nil, signature, loadBundle
 import WebKit
 
 from miro.plat.frontends.widgets import tableview
@@ -54,7 +54,7 @@ from miro.plat.frontends.widgets.helpers import NotificationForwarder
 from miro.util import Matrix
 
 rbSplitViewBundlePath = '%s/RBSplitView.framework' % NSBundle.mainBundle().privateFrameworksPath()
-objc.loadBundle('RBSplitView', globals(), bundle_path=rbSplitViewBundlePath)
+loadBundle('RBSplitView', globals(), bundle_path=rbSplitViewBundlePath)
 
 def _extra_space_iter(extra_length, count):
     """Utility function to allocate extra space left over in containers."""
@@ -363,7 +363,7 @@ class SplitterDelegate(NSObject):
 
     @signature("i@:@i@@i")
     def splitView_shouldResizeWindowForDivider_betweenView_andView_willGrow_(self, sender, divider, leading, trailing, grow):
-        return (NSApp.currentEvent().modifierFlags() & NSAlternateKeyMask != 0)
+        return (NSApp().currentEvent().modifierFlags() & NSAlternateKeyMask != 0)
 
 class MiroSplitSubview(RBSplitSubview):
     def isFlipped(self):
