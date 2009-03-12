@@ -53,6 +53,9 @@ from miro.plat.frontends.widgets.base import Container, Bin, FlippedView
 from miro.plat.frontends.widgets.helpers import NotificationForwarder
 from miro.util import Matrix
 
+rbSplitViewBundlePath = '%s/RBSplitView.framework' % NSBundle.mainBundle().privateFrameworksPath()
+objc.loadBundle('RBSplitView', globals(), bundle_path=rbSplitViewBundlePath)
+
 def _extra_space_iter(extra_length, count):
     """Utility function to allocate extra space left over in containers."""
     if count == 0:
@@ -315,120 +318,85 @@ class DetachedWindowHolder(Alignment):
     def __init__(self):
         Alignment.__init__(self, bottom_pad=16, xscale=1.0, yscale=1.0)
 
-class MiroSplitView (NSSplitView):
-    """Subclass NSSplitView to control how the divider gets drawn."""
+class SplitterDelegate(NSObject):
 
-    def initWithFrame_(self, rect):
-        self = NSSplitView.initWithFrame_(self, rect)
-        self.setVertical_(YES)
-        self.setDelegate_(self)
-        self.color = NSColor.colorWithDeviceWhite_alpha_(64.0/255.0, 1.0)
-        self.color2 = NSColor.colorWithDeviceWhite_alpha_(135.0/255.0, 1.0)
-        self.min_left_width = self.min_right_width = 0
+    def initWithSplitter_(self, splitter):
+        self = NSObject.init(self)
+        self.splitter = splitter
+        self.normalColor = NSColor.colorWithDeviceWhite_alpha_(64.0/255.0, 1.0)
+        self.disabledColor = NSColor.colorWithDeviceWhite_alpha_(135.0/255.0, 1.0)
         return self
 
-    def setMinRightWidth(self, width):
-        self.min_right_width = width
+    @signature("{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:@{_NSRect={_NSPoint=ff}{_NSSize=ff}}i")
+    def splitView_cursorRect_forDivider_(self, sender, rect, divider):
+        if divider == 0:
+            rect.origin.x -= 3
+            rect.size.width += 6
+        return rect
 
-    def setMinLeftWidth(self, width):
-        self.min_left_width = width
+    @signature("i@:@{_NSPoint=ff}@")
+    def splitView_dividerForPoint_inSubview_(self, sender, point, subview):
+        left_width = self.splitter.left_view.bounds().size.width
+        if (subview.identifier() == 'left' and point.x >= left_width-3) or (subview.identifier() == 'right' and point.x-left_width <= 3):
+            return 0
+        return NSNotFound
+
+    @signature("v@:@@{_NSRect={_NSPoint=ff}{_NSSize=ff}}{_NSRect={_NSPoint=ff}{_NSSize=ff}}")
+    def splitView_changedFrameOfSubview_from_to_(self, sender, subview, before, after):
+        if subview.identifier() == 'left':
+            self.splitter.place_left_children()
+        else:
+            self.splitter.place_right_children()
+
+    @signature("v@:@ff")
+    def splitView_wasResizedFrom_to_(self, sender, before, after):
+        sender.adjustSubviewsExcepting_(self.splitter.left_view);
+
+    @signature("{_NSRect={_NSPoint=ff}{_NSSize=ff}}@:@{_NSRect={_NSPoint=ff}{_NSSize=ff}}@@{_NSRect={_NSPoint=ff}{_NSSize=ff}}")
+    def splitView_willDrawDividerInRect_betweenView_andView_withProposedRect_(self, sender, dividerRect, leading, trailing, imageRect):
+        if self.splitter.view.window().isMainWindow():
+            self.normalColor.set()
+        else:
+            self.disabledColor.set()
+        NSRectFill(dividerRect)
+        return NSZeroRect
+
+    @signature("i@:@i@@i")
+    def splitView_shouldResizeWindowForDivider_betweenView_andView_willGrow_(self, sender, divider, leading, trailing, grow):
+        return (NSApp.currentEvent().modifierFlags() & NSAlternateKeyMask != 0)
+
+class MiroSplitSubview(RBSplitSubview):
+    def isFlipped(self):
+        return YES
     
-    def dividerThickness(self):
-        return 1.0
-
-    def splitView_constrainMinCoordinate_ofSubviewAt_(self, sender, proposedMin, offset):
-        if offset == 0:
-            proposedMin = max(self.min_left_width, proposedMin)
-        return proposedMin
-
-    def splitView_constrainMaxCoordinate_ofSubviewAt_(self, sender, proposedMax, offset):
-        if offset == 0:
-            proposedMax = min(self.frame().size.width - self.min_right_width, 
-                    proposedMax)
-        return proposedMax
-
-    @signature("{_NSRect={_NSPoint=ff}{_NSSize=ff}}48@0:4@8{_NSRect={_NSPoint=ff}{_NSSize=ff}}12{_NSRect={_NSPoint=ff}{_NSSize=ff}}28i44")
-    def splitView_effectiveRect_forDrawnRect_ofDividerAtIndex_(self, sender, effective_rect, drawn_rect, index):
-        # 10.5 only delegate method, allows to widen the clickable zone of
-        # the splitview divider
-        effective_rect.origin.x -= 3
-        effective_rect.size.width += 6
-        return effective_rect
-
-    def placeViewsWithLeftWidth_(self, left_width):
-        if self.subviews().count() != 2:
-            return
-        left_view, right_view = self.subviews()
-        my_size = self.bounds().size
-        left_view.setFrame_(NSMakeRect(0, 0, left_width, my_size.height))
-        space_taken = left_width + self.dividerThickness()
-        right_view.setFrame_ (NSMakeRect(space_taken, 0,
-            my_size.width - space_taken, my_size.height))
-        left_view.display()
-        right_view.display()
-
-    def placeViewsWithRightWidth_(self, right_width):
-        if self.subviews().count() != 2:
-            return
-        left_view, right_view = self.subviews()
-        my_size = self.bounds().size
-        left_width = my_size - right_width - self.dividerThickness()
-        left_view.setFrame_(NSMakeRect(0, 0, left_width, my_size.height))
-        right_view.setFrame_ (NSMakeRect(left_width + self.dividerThickness(), 
-            0, right_width, my_size.height))
-
-    def resizeSubviewsWithOldSize_(self, oldSize):
-        if self.subviews().count() != 2:
-            # If we don't have a left and right view let Cocoa handle it
-            self.adjustSubviews()
-            return
-        left_view = self.subviews()[0]
-        right_view = self.subviews()[1]
-        difference  = self.frame().size.width - oldSize.width
-        right_x = right_view.frame().origin.x
-        right_width = right_view.frame().size.width + difference
-        if right_width < self.min_right_width:
-            left_size = left_view.frame().size
-            left_shrink = self.min_right_width - right_width
-            left_view.setFrameSize_(NSSize(left_size.width - left_shrink, 
-                    self.frame().size.height))
-            right_width = self.min_right_width
-            right_x -= left_shrink
-        else:
-            left_view.setFrameSize_(NSSize(left_view.frame().size.width,
-                    self.frame().size.height))
-        right_view.setFrame_(NSMakeRect(right_x, 0, 
-            right_width, self.frame().size.height))
-        
-    def drawDividerInRect_(self, rect):
-        p1 = rect.origin
-        p1.x += 0.5
-        p2 = NSPoint(p1.x, rect.size.height)
-        if self.window().isMainWindow():
-            self.color.set()
-        else:
-            self.color2.set()
-        NSBezierPath.strokeLineFromPoint_toPoint_(p1, p2)
-
-    def setDividerNeedsDisplay(self):
-        if self.subviews().count() != 2:
-            return # no divider needed
-        left_frame = self.subviews()[0].frame()
-        rect = NSMakeRect(left_frame.size.width, 0,
-                self.dividerThickness(), self.bounds().size.height)
-        self.setNeedsDisplayInRect_(rect)
-
 class Splitter(Container):
     """See https://develop.participatoryculture.org/trac/democracy/wiki/WidgetAPI for a description of the API for this class."""
     def __init__(self):
         Container.__init__(self)
-        self.left = self.right = None
-        self.view = MiroSplitView.alloc().init()
-        self.left_view = FlippedView.alloc().init()
-        self.right_view = FlippedView.alloc().init()
-        self.view.addSubview_(self.left_view)
-        self.view.addSubview_(self.right_view)
-        self.notifications = NotificationForwarder.create(self.view)
+
+        self.view = RBSplitView.alloc().initWithFrame_(NSRect((0,0), (800,600)))
+        self.view.setVertical_(YES)
+
+        self.delegate = SplitterDelegate.alloc().initWithSplitter_(self)
+        self.view.setDelegate_(self.delegate)
+
+        self.left = None
+        self.left_view = MiroSplitSubview.alloc().init()
+        self.left_view.setIdentifier_('left')
+        self.view.addSubview_atPosition_(self.left_view, 0)
+
+        self.right = None
+        self.right_view = MiroSplitSubview.alloc().init()
+        self.right_view.setIdentifier_('right')
+        self.view.addSubview_atPosition_(self.right_view, 1)
+        
+        divider = NSImage.alloc().initWithSize_(NSSize(1.0, 1.0))
+        divider.lockFocus()
+        NSColor.clearColor().set()
+        NSRectFill(NSRect((0.0, 0.0), (1.0, 1.0)))
+        divider.unlockFocus()
+        divider.setFlipped_(YES)
+        self.view.setDivider_(divider)
 
     def get_children(self):
         children = []
@@ -439,10 +407,7 @@ class Splitter(Container):
         return children
 
     def calc_size_request(self):
-        if self.viewport is not None:
-            width = self.view.dividerThickness()
-        else:
-            width = 1 # default divider thinkness
+        width = 1
         height = 0
         for child in self.get_children():
             child_width, child_height = child.get_size_request()
@@ -450,15 +415,17 @@ class Splitter(Container):
             height = max(height, child_height)
         return width, height
 
-    def on_views_resized(self, notification):
-        self.place_children()
-        self.view.setDividerNeedsDisplay()
+    def place_left_children(self):
+        if self.left is not None:
+            self.left.place(self.left_view.bounds(), self.left_view)
+
+    def place_right_children(self):
+        if self.right is not None:
+            self.right.place(self.right_view.bounds(), self.right_view)
 
     def place_children(self):
-        if self.left:
-            self.left.place(self.left_view.bounds(), self.left_view)
-        if self.right:
-            self.right.place(self.right_view.bounds(), self.right_view)
+        self.place_left_children()
+        self.place_right_children()
 
     def set_left(self, widget):
         """Set the left child widget."""
@@ -475,27 +442,27 @@ class Splitter(Container):
         self.child_changed(old_right, self.right)
 
     def set_left_width(self, width):
-        self.view.placeViewsWithLeftWidth_(width)
-        self.place_children()
-        self.view.setDividerNeedsDisplay()
-        self.view.setNeedsDisplay_(YES)
+        if width == 0:
+            self.left_view.setHidden_(YES)
+        else:
+            self.left_view.setHidden_(NO)
+            self.left_view.setDimension_(width)
+            self.place_children()
 
     def get_left_width(self):
-        left, right = self.view.subviews()
-        return left.frame().size[0]
+        return self.left_view.frame().size.width
 
     def set_right_width(self, width):
-        self.view.placeViewsWithRightWidth_(width)
+        self.right_view.setDimension_(width)
         self.place_children()
-        self.view.setDividerNeedsDisplay()
-
-    def set_min_right_width(self):
-        min_width = self.right.get_size_request()[0]
-        self.view.setMinRightWidth(min_width)
 
     def set_min_left_width(self):
-        min_width = self.left.get_size_request()[0]
-        self.view.setMinLeftWidth(min_width)
+        min_width, _ = self.left.get_size_request()
+        self.left_view.setMinDimension_andMaxDimension_(min_width, 600)
+
+    def set_min_right_width(self):
+        min_width, _ = self.right.get_size_request()
+        self.right_view.setMinDimension_andMaxDimension_(min_width, 4000)
 
     def remove_left(self):
         """Remove the left child widget."""
@@ -508,15 +475,6 @@ class Splitter(Container):
         old_right = self.right
         self.right = None
         self.child_removed(old_right)
-
-    def viewport_created(self):
-        Container.viewport_created(self)
-        self.notifications.connect(self.on_views_resized,
-                'NSSplitViewDidResizeSubviewsNotification')
-
-    def remove_viewport(self):
-        Container.remove_viewport(self)
-        self.notifications.disconnect()
 
 class _TablePacking(object):
     """Utility class to help with packing Table widgets."""

@@ -108,6 +108,7 @@ class OSXApplication(Application):
         if self.window is not None:
             windowFrame = self.window.nswindow.frame()
             windowFrame.size.height -= 22
+            config.set(prefs.LEFT_VIEW_SIZE, self.window.splitter.get_left_width())
             config.set(prefs.MAIN_WINDOW_FRAME, NSStringFromRect(windowFrame))
             config.save()
         Application.do_quit(self)

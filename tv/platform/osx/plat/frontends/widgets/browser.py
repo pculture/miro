@@ -48,8 +48,8 @@ class Browser(Widget):
         self.url = None
         self.create_signal('net-start')
         self.create_signal('net-stop')
-        self.view = MiroWebView.alloc().init()
         self.delegate = BrowserDelegate.alloc().initWithBrowser_(self)
+        self.view = MiroWebView.alloc().initWithFrame_(NSRect((0,0), self.calc_size_request()))
         self.view.setMaintainsBackForwardList_(YES)
         self.view.setPolicyDelegate_(self.delegate)
         self.view.setResourceLoadDelegate_(self.delegate)
@@ -82,10 +82,10 @@ class Browser(Widget):
 
     def stop(self):
         self.view.stopLoading_(nil)
-        
+
     def can_go_back(self):
         return self.view.canGoBack()
-    
+
     def can_go_forward(self):
         return self.view.canGoForward()
 
@@ -156,7 +156,7 @@ class BrowserDelegate (NSObject):
             NSHomeDirectory(),
             nil,
             nil,
-            self.view.window(),
+            webview.window(),
             self,
             'openPanelDidEnd:returnCode:contextInfo:',
             self.openPanelContextID)

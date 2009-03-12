@@ -29,6 +29,8 @@
 """Main Miro widget."""
 
 from miro import app
+from miro import prefs
+from miro import config
 
 from miro.frontends.widgets import tablist
 from miro.frontends.widgets import videobox
@@ -59,8 +61,7 @@ class MiroWindow(widgetset.MainWindow):
         self.splitter = widgetset.Splitter()
         self.splitter.set_left(tablist.TabListBox())
         self.splitter.set_right(self.main_area_holder)
-        self.splitter.set_left_width(200)
-        
+                
         hbox = widgetset.HBox()
         self.search_box = searchbox.SearchBox()
         self.videobox = videobox.VideoBox()
@@ -75,6 +76,11 @@ class MiroWindow(widgetset.MainWindow):
 
         self.set_content_widget(vbox)
         self.connect("active-change", self.on_active_change)
+
+        left_width = config.get(prefs.LEFT_VIEW_SIZE)
+        if left_width is None:
+            left_width = 200
+        self.splitter.set_left_width(left_width)
 
     def on_active_change(self, window):
         self.search_box.queue_redraw()
