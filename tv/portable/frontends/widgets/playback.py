@@ -247,14 +247,14 @@ class PlaybackManager (signals.SignalEmitter):
         self.schedule_update()
         self.is_paused = False
         self.is_suspended = False
-        app.menu_manager.set_play_pause("pause")
+        app.menu_manager.update_menus()
 
     def pause(self):
         if self.is_playing:
             self.emit('will-pause')
             self.video_display.pause()
             self.is_paused = True
-            app.menu_manager.set_play_pause("play")
+            app.menu_manager.update_menus()
 
     def fullscreen(self):
         if not self.is_playing:

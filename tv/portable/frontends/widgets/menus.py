@@ -318,7 +318,6 @@ class MenuManager(signals.SignalEmitter):
 
     def reset(self):
         self.states = {"plural": [], "folder": [], "folders": []}
-        self.play_pause_state = "play"
         self.enabled_groups = set(['AlwaysOn'])
         if app.playback_manager.is_playing:
             self.enabled_groups.add('PlayPause')
@@ -328,10 +327,12 @@ class MenuManager(signals.SignalEmitter):
         else:
             self.enabled_groups.add('NonPlaying')
 
-    def set_play_pause(self, state):
-        # don't call reset here!
-        self.play_pause_state = state
-        self.emit('enabled-changed')
+    def _set_play_pause(self):
+        if (not app.playback_manager.is_playing or
+                app.playback_manager.is_paused):
+            self.play_pause_state = 'play'
+        else:
+            self.play_pause_state = 'pause'
 
     def _handle_feed_selection(self, selected_feeds):
         """Handle the user selecting things in the feed list.  selected_feeds
@@ -417,4 +418,5 @@ class MenuManager(signals.SignalEmitter):
         self.reset()
         self._update_menus_for_selected_tabs()
         self._update_menus_for_selected_items()
+        self._set_play_pause()
         self.emit('enabled-changed')
