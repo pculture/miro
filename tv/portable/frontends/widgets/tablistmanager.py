@@ -67,10 +67,10 @@ class TabListManager(object):
             app.menu_manager.handle_static_tab_selection(self.selected_tabs)
         elif self.selected_tab_list.type == 'site':
             app.menu_manager.handle_site_selection(self.selected_tabs)
-            app.item_list_controller_manager.handle_playable_items()
         else:
             raise ValueError("Unknown tab list type: %s" %
                     self.selected_tab_list.type)
+        app.item_list_controller_manager.handle_playable_items()
 
     def which_tablist_has_id(self, feed_id):
         """
