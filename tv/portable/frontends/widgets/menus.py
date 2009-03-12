@@ -242,9 +242,11 @@ action_groups = {
             'NewPlaylistFolder'
         ],
         'FeedSelected': [
-            'RenameFeed',
             'ShareFeed',
             'CopyFeedURL'
+        ],
+        'FeedOrFolderSelected': [
+            'RenameFeed',
         ],
         'FeedsSelected': [
             'RemoveFeeds',
@@ -339,7 +341,9 @@ class MenuManager(signals.SignalEmitter):
         if len(selected_feeds) == 1:
             if selected_feeds[0].is_folder:
                 self.states["folder"].append("RemoveFeeds")
-            self.enabled_groups.add('FeedSelected')
+            else:
+                self.enabled_groups.add('FeedSelected')
+            self.enabled_groups.add('FeedOrFolderSelected')
         else:
             if len([s for s in selected_feeds if s.is_folder]) == len(selected_feeds):
                 self.states["folders"].append("RemoveFeeds")
