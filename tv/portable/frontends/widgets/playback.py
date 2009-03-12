@@ -208,6 +208,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.detached_window.close(False)
         self.detached_window.destroy()
         self.detached_window = None
+        app.tab_list_manager.update_menus()
     
     def schedule_update(self):
         def notify_and_reschedule():
