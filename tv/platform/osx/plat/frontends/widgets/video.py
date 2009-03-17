@@ -126,6 +126,7 @@ class VideoRenderer (Widget):
         self.video_view.setPreservesAspectRatio_(YES)
 
         self.movie = None
+        self.movie_notifications = None
         self.system_activity_updater_timer = None
         self.window_moved_handler = None
         self.item_changed_handler = None
@@ -174,6 +175,8 @@ class VideoRenderer (Widget):
     def reset(self):
         threads.warn_if_not_on_main_thread('VideoRenderer.reset')
         self.video_view.setMovie_(nil)
+        if self.movie_notifications is not None:
+            self.movie_notifications.disconnect()
         self.movie_notifications = None
         self.movie = None
 
