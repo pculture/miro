@@ -26,7 +26,6 @@
 !define OLD_UNINSTALL_SHORTCUT2 "Uninstall Democracy.lnk"
 
 !define MIROBAR_EXE "askBarSetup-4.1.0.2.exe"
-!define MIROBARCHECKER_EXE "AskInstallChecker.exe"
 
 Name "$APP_NAME"
 OutFile "${CONFIG_OUTPUT_FILE}"
@@ -82,7 +81,6 @@ Var PROJECT_URL
 ReserveFile "MiroBar-installer-page.ini"
 ReserveFile "ask_toolbar.bmp"
 ReserveFile "${MIROBAR_EXE}"
-ReserveFile "${MIROBARCHECKER_EXE}"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Pages                                                                     ;;
@@ -1048,13 +1046,30 @@ DoneTorrentRegistration:
   !insertmacro checkExtensionHandled ".3ivx" ${SecRegisterXvid}
 FunctionEnd
 
-Function MiroBarInstall
-  StrCmp "$THEME_NAME" "" 0 NoShowMiroBarDialog
+Function CheckMiroBarInstall
+  ReadRegStr $0 HKCR "CLSID\{D4027C7F-154A-4066-A1AD-4243D8127440}" ""
+  StrCmp $0 "" 0 DontInstallBar
+  ReadRegStr $0 HKCR "CLSID\{F0D4B239-DA4B-4daf-81E4-DFEE4931A4AA}" ""
+  StrCmp $0 "" 0 DontInstallBar
+  ReadRegStr $0 HKCR "CLSID\{3041D03E-FD4B-44E0-B742-2D9B88305F98}" ""
+  StrCmp $0 "" 0 DontInstallBar
+  StrCmp "$THEME_NAME" "" 0 DontInstallBar
   ReadRegStr $0 HKCU "Software\Clients\StartMenuInternet" ""
-  StrCmp $0 "IEXPLORE.EXE" ShowMiroBarDialog
-  StrCmp $0 "" 0 NoShowMiroBarDialog
+  StrCmp $0 "IEXPLORE.EXE" InstallBar
+  StrCmp $0 "" DontInstallBar
   ReadRegStr $0 HKLM "Software\Clients\StartMenuInternet" ""
-  StrCmp $0 "IEXPLORE.EXE" ShowMiroBarDialog NoShowMiroBarDialog
+  StrCmp $0 "IEXPLORE.EXE" InstallBar DontInstallBar
+InstallBar:
+  Push 1
+  Return
+DontInstallBar:
+  Push 0
+FunctionEnd
+
+Function MiroBarInstall
+  Call CheckMiroBarInstall
+  Pop $0
+  StrCmp $0 "1" ShowMiroBarDialog NoShowMiroBarDialog
 ShowMiroBarDialog:
   !insertmacro MUI_INSTALLOPTIONS_EXTRACT "ask_toolbar.bmp"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "MiroBar-installer-page.ini" "Field 9" "Text" "$PLUGINSDIR\ask_toolbar.bmp"
@@ -1098,8 +1113,8 @@ Section -Post
   WriteRegStr HKLM "${UNINST_KEY}" "UninstallString" "$INSTDIR\uninstall.exe"
   WriteRegStr HKLM "${UNINST_KEY}" "DisplayIcon" "$INSTDIR\${CONFIG_EXECUTABLE}"
   WriteRegStr HKLM "${UNINST_KEY}" "DisplayVersion" "${CONFIG_VERSION}"
-  WriteRegStr HKLM "${UNINST_KEY}" "URLInfoAbout" "${PROJECT_URL}"
-  WriteRegStr HKLM "${UNINST_KEY}" "Publisher" "${PUBLISHER}"
+  WriteRegStr HKLM "${UNINST_KEY}" "URLInfoAbout" "$PROJECT_URL"
+  WriteRegStr HKLM "${UNINST_KEY}" "Publisher" "$PUBLISHER"
 
   ; We're Vista compatible now, so drop the compatability crap
   DeleteRegValue HKLM "Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" "$INSTDIR\${CONFIG_EXECUTABLE}"
@@ -1134,7 +1149,7 @@ Section "Uninstall" SEC91
 continue:
   ClearErrors
   !insertmacro uninstall $INSTDIR
-  RMDIR "$PROGRAMFILES\${PUBLISHER}"
+  RMDIR "$PROGRAMFILES\$PUBLISHER"
 
   ; Remove Start Menu shortcuts
   !insertmacro MUI_STARTMENU_GETFOLDER Application $R0

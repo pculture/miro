@@ -443,7 +443,6 @@ class bdist_nsis(Command):
         self.copy_file("MiroBar-installer-page.ini", self.dist_dir)
         self.copy_file("askBarSetup-4.1.0.2.exe", self.dist_dir)
         self.copy_file("ask_toolbar.bmp", self.dist_dir)
-        self.copy_file("AskInstallChecker.exe", self.dist_dir)
 
         nsisVars = {}
         for (ourName, nsisName) in [
