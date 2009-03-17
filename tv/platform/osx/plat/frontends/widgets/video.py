@@ -336,7 +336,7 @@ class VideoRenderer (Widget):
                 'updateSystemActivity:',
                 nil,
                 YES)
-        elif self.system_activity_updater_timer is not None:
+        elif not prevent and self.system_activity_updater_timer is not None:
             logging.debug("Stopping system activity updater timer")
             self.system_activity_updater_timer.invalidate()
             self.system_activity_updater_timer = None
