@@ -43,7 +43,7 @@ def strftime_to_utf8(bytes):
     if gtcache.codeset in (None, 'utf8', 'utf-8'):
         return bytes
     else:
-        return bytes.decode(gtcache.codeset.encode('utf-8'))
+        return bytes.decode(gtcache.codeset).encode('utf-8')
 
 def download_rate(rate):
     if rate >= (1 << 30):
