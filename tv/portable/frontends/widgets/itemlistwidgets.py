@@ -213,6 +213,8 @@ class SearchListTitlebar(ItemListTitlebar):
         hbox = widgetset.HBox()
 
         self.searchbox = widgetset.VideoSearchTextEntry()
+        w, h = self.searchbox.get_size_request()
+        self.searchbox.set_size_request(w*2, h)
         self.searchbox.connect('validate', self._on_search_activate)
         hbox.pack_start(widgetutil.align_middle(self.searchbox, 0, 0, 16, 16))
 
