@@ -851,7 +851,7 @@ Function .onInit
   Call GetConfigOption
   Pop $APP_NAME
 
-  Goto no_tackon
+  Goto MoreAttributes
 
 error_in_theme:
   MessageBox MB_OK|MB_ICONEXCLAMATION "Error in theme"
@@ -890,7 +890,7 @@ find_project_url:
   StrCpy $0 "projectURL"
   Call GetConfigOption
   Pop $0
-  StrCmp $0 "" LocateDone
+  StrCmp $0 "" TestRunning
   StrCpy $PROJECT_URL $0
 
 
