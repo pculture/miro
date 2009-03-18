@@ -408,7 +408,7 @@ class FeedItemTrackTest(TrackerTest):
         self.checkInfoList(message.items, self.items)
 
     def testUpdate(self):
-        self.items[0].entry.title = u'new name'
+        self.items[0].entry_title = u'new name'
         self.items[0].signalChange()
         self.runUrgentCalls()
         self.assertEquals(len(self.test_handler.messages), 2)
@@ -431,7 +431,7 @@ class FeedItemTrackTest(TrackerTest):
     def testStop(self):
         messages.StopTrackingItems('feed', self.feed.id).send_to_backend()
         self.runUrgentCalls()
-        self.items[0].entry.title = u'new name'
+        self.items[0].entry_title = u'new name'
         self.items[0].signalChange()
         self.items[1].remove()
         self.make_item(u'http://example.com/4')
@@ -491,7 +491,7 @@ class PlaylistItemTrackTest(TrackerTest):
         self.checkInfoList(message.items, self.items)
 
     def testUpdate(self):
-        self.items[0].entry.title = u'new name'
+        self.items[0].entry_title = u'new name'
         self.items[0].signalChange()
         self.runUrgentCalls()
         self.assertEquals(len(self.test_handler.messages), 2)
@@ -514,7 +514,7 @@ class PlaylistItemTrackTest(TrackerTest):
     def testStop(self):
         messages.StopTrackingItems('playlist', self.playlist.id).send_to_backend()
         self.runUrgentCalls()
-        self.items[0].entry.title = u'new name'
+        self.items[0].entry_title = u'new name'
         self.items[0].signalChange()
         self.items[1].remove()
         self.make_item(u'http://example.com/4')

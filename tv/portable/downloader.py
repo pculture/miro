@@ -128,9 +128,8 @@ class RemoteDownloader(DDBObject):
             # files.  We try to work around that by assuming if the enclosure
             # states that something is a torrent, it's a torrent.
             # Thanks to j@v2v.cc
-            enclosureContentType = item.getFirstVideoEnclosureType()
-            if enclosureContentType == u'application/x-bittorrent':
-                contentType = enclosureContentType
+            if item.enclosure_type == u'application/x-bittorrent':
+                contentType = item.enclosure_type
         self.contentType = u""
         self.deleteFiles = True
         self.channelName = channelName

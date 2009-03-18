@@ -1199,26 +1199,6 @@ class Feed(DDBObject):
     def __str__(self):
         return "Feed - %s" % self.get_title()
 
-def _entry_equal(a, b):
-    if type(a) == list and type(b) == list:
-        if len(a) != len(b):
-            return False
-        for i in xrange (len(a)):
-            if not _entry_equal(a[i], b[i]):
-                return False
-        return True
-    try:
-        return a.equal(b)
-    except (SystemExit, KeyboardInterrupt):
-        raise
-    except:
-        try:
-            return b.equal(a)
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            return a == b
-
 class ThrottledUpdateFeedImpl(FeedImpl):
     """Feed Impl that uses the feedupdate module to schedule it's updates.
     Only a limited number of ThrottledUpdateFeedImpl objects will be updating at
@@ -1245,7 +1225,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         FeedImpl.__init__(self, url, ufeed, title, visible=visible)
         self.scheduleUpdateEvents(0)
 
-    def _handleNewEntryForItem(self, item, entry, channelTitle):
+    def _handleNewEntryForItem(self, item, entry, fp_values, channelTitle):
         """Handle when we get a different entry for an item.
 
         This happens when the feed sets the RSS GUID attribute, then changes
@@ -1254,12 +1234,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         that we don't throw away the download.
         """
 
-        videoEnc = getFirstVideoEnclosure(entry)
-        if videoEnc is not None:
-            entryURL = videoEnc.get('url')
-        else:
-            entryURL = None
-        if item.is_downloaded() and item.getURL() != entryURL:
+        if item.is_downloaded() and item.getURL() != fp_values.data['url']:
             item.removeRSSID()
             self._handleNewEntry(entry, channelTitle)
         else:
@@ -1323,48 +1298,39 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                 items_byid[item.getRSSID()] = item
             except KeyError:
                 items_nokey.append(item)
-            entry = item.get_rss_entry()
-            videoEnc = getFirstVideoEnclosure(entry)
-            if videoEnc is not None:
-                entryURL = videoEnc.get('url')
-            else:
-                entryURL = None
-            title = entry.get("title")
-            if title is not None or entryURL is not None:
-                items_byURLTitle[(entryURL, title)] = item
+            by_url_title_key = (item.url, item.entry_title)
+            if by_url_title_key != (None, None):
+                items_byURLTitle[by_url_title_key] = item
         for entry in parsed.entries:
             entry = self.addScrapedThumbnail(entry)
+            fp_values = itemmod.FeedParserValues(entry)
             new = True
             if entry.has_key("id"):
                 id_ = entry["id"]
                 if items_byid.has_key(id_):
                     item = items_byid[id_]
-                    if not _entry_equal(entry, item.get_rss_entry()):
-                        self._handleNewEntryForItem(item, entry, channelTitle)
+                    if not fp_values.compare_to_item(item):
+                        self._handleNewEntryForItem(item, entry, fp_values, channelTitle)
                     new = False
                     old_items.discard(item)
             if new:
-                videoEnc = getFirstVideoEnclosure(entry)
-                if videoEnc is not None:
-                    entryURL = videoEnc.get('url')
-                else:
-                    entryURL = None
-                title = entry.get("title")
-                if title is not None or entryURL is not None:
-                    if items_byURLTitle.has_key((entryURL, title)):
-                        item = items_byURLTitle[(entryURL, title)]
-                        if not _entry_equal(entry, item.get_rss_entry()):
-                            self._handleNewEntryForItem(item, entry, channelTitle)
+                by_url_title_key = (fp_values.data['url'],
+                        fp_values.data['entry_title'])
+                if by_url_title_key != (None, None):
+                    if items_byURLTitle.has_key(by_url_title_key):
+                        item = items_byURLTitle[by_url_title_key]
+                        if not fp_values.compare_to_item(item):
+                            self._handleNewEntryForItem(item, entry, fp_values, channelTitle)
                         new = False
                         old_items.discard(item)
             if new:
                 for item in items_nokey:
-                    if _entry_equal(entry, item.get_rss_entry()):
+                    if fp_values.compare_to_item(item):
                         new = False
                     else:
                         try:
-                            if _entry_equal(entry["enclosures"], item.get_rss_entry()["enclosures"]):
-                                self._handleNewEntryForItem(item, entry, channelTitle)
+                            if fp_values.compare_to_item_enclosures(item):
+                                self._handleNewEntryForItem(item, entry, fp_values, channelTitle)
                                 new = False
                                 old_items.discard(item)
                         except (SystemExit, KeyboardInterrupt):
@@ -2340,29 +2306,28 @@ class SearchFeedImpl(RSSMultiFeedImpl):
 
     def _handleNewEntry(self, entry, channelTitle):
         """Handle getting a new entry from a feed."""
-        videoEnc = getFirstVideoEnclosure(entry)
-        if videoEnc is not None:
-            url = videoEnc.get('url')
-            if url is not None:
-                dl = downloader.getExistingDownloaderByURL(url)
-                if dl is not None:
-                    for item in dl.itemList:
-                        if item.getFeedURL() == 'dtv:searchDownloads' and item.getURL() == url:
-                            try:
-                                if entry["id"] == item.getRSSID():
-                                    item.setFeed(self.ufeed.id)
-                                    if not _entry_equal(entry, item.get_rss_entry()):
-                                        self._handleNewEntryForItem(item, entry, channelTitle)
-                                    return
-                            except KeyError:
-                                pass
-                            title = entry.get("title")
-                            oldtitle = item.entry.get("title")
-                            if title == oldtitle:
+        fp_values = itemmod.FeedParserValues(entry)
+        url = fp_values.data['url']
+        if url is not None:
+            dl = downloader.getExistingDownloaderByURL(url)
+            if dl is not None:
+                for item in dl.itemList:
+                    if item.getFeedURL() == 'dtv:searchDownloads' and item.getURL() == url:
+                        try:
+                            if entry["id"] == item.getRSSID():
                                 item.setFeed(self.ufeed.id)
-                                if not _entry_equal(entry, item.get_rss_entry()):
-                                    self._handleNewEntryForItem(item, entry, channelTitle)
+                                if not fp_values.compare_to_item(item):
+                                    self._handleNewEntryForItem(item, entry, fp_values, channelTitle)
                                 return
+                        except KeyError:
+                            pass
+                        title = entry.get("title")
+                        oldtitle = item.entry.get("title")
+                        if title == oldtitle:
+                            item.setFeed(self.ufeed.id)
+                            if not fp_values.compare_to_item(item):
+                                self._handleNewEntryForItem(item, entry, fp_values, channelTitle)
+                            return
         RSSMultiFeedImpl._handleNewEntry(self, entry, channelTitle)
 
     def updateFinished(self, old_items):

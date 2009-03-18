@@ -295,7 +295,6 @@ class ItemSchema(DDBObjectSchema):
         ('pendingManualDL', SchemaBool()),
         ('pendingReason', SchemaString()),
         ('title', SchemaString()),
-        ('entry', SchemaSimpleContainer()),
         ('expired', SchemaBool()),
         ('keep', SchemaBool()),
         ('creationTime', SchemaDateTime()),
@@ -312,6 +311,19 @@ class ItemSchema(DDBObjectSchema):
         ('screenshot', SchemaFilename(noneOk=True)),
         ('resumeTime', SchemaInt()),
         ('channelTitle', SchemaString(noneOk=True)),
+        ('license', SchemaString(noneOk=True)),
+        ('rss_id', SchemaString(noneOk=True)),
+        ('thumbnail_url', SchemaURL(noneOk=True)),
+        ('entry_title', SchemaString(noneOk=True)),
+        ('raw_descrption', SchemaString(noneOk=False)),
+        ('link', SchemaURL(noneOk=False)),
+        ('payment_link', SchemaURL(noneOk=False)),
+        ('comments_link', SchemaURL(noneOk=False)),
+        ('url', SchemaURL(noneOk=False)),
+        ('enclosure_size', SchemaInt(noneOk=True)),
+        ('enclosure_type', SchemaString(noneOk=True)),
+        ('enclosure_format', SchemaString(noneOk=True)),
+        ('feedparser_output', SchemaSimpleContainer()),
     ]
 
 class FileItemSchema(ItemSchema):
@@ -515,7 +527,7 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
         ('list_view_displays', SchemaList(SchemaBinary())),
     ]
 
-VERSION = 74
+VERSION = 75
 objectSchemas = [
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,

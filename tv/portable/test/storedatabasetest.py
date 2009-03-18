@@ -353,7 +353,7 @@ class TestConstraintChecking(LiveStorageTest):
     def testConstraintCheck(self):
         # test creating an item with an invalid feed id
         self.assertRaises(database.DatabaseConstraintError,
-                item.Item, 123123123, {})
+                item.Item, feed_id=123123123, entry={})
 
     def testConstraintCheck2(self):
         # test changing an item to have an invalid feed id

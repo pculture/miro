@@ -1,11 +1,18 @@
+import os
 import unittest
-from tempfile import mkstemp
+from tempfile import mkstemp, gettempdir
+from datetime import datetime
 from time import sleep
 
 from miro import config
+from miro import feedparser
 from miro import prefs
 from miro import dialogs
 from miro import database
+from miro import storedatabase
+from miro import feedparserutil
+from miro.plat import resources
+from miro.item import Item
 from miro.feed import validate_feed_url, normalize_feed_url, Feed
 
 from miro.test.framework import MiroTestCase, EventLoopTest
@@ -210,10 +217,6 @@ class EnclosureFeedTestCase(FeedTestCase):
         self.assertEqual(self.everything.len(),5)
         items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
         self.assertEqual(items.len(),4)
-        for item in items:
-            #Generate an exception if we didn't get one of the enclosures
-            item.entry["enclosures"][0]
-            self.assertRaises(IndexError,lambda :item.entry["enclosures"][1])
         myFeed.remove()
 
 class OldItemExpireTest(FeedTestCase):
@@ -334,6 +337,118 @@ class OldItemExpireTest(FeedTestCase):
             sleep(0.1)
         self.assertEquals(self.items.len(), 4)
         self.checkGuids(3, 4, 5, 6)
+
+class FeedParserAttributesTestCase(FeedTestCase):
+    """Test that we save/restore attributes from feedparser correctly.
+
+    We don't store feedparser dicts in the database.  This test case is
+    checking if the values we to the database are the same as the original
+    ones from feedparser.
+    """
+
+    def setUp(self):
+        FeedTestCase.setUp(self)
+        self.write_feed()
+        self.parsed_feed = feedparser.parse(self.filename)
+        self.makeFeed()
+        self.save_then_restore_db()
+
+    def tearDown(self):
+        self.runPendingIdles()
+        self.everything.liveStorage.close()
+        self.everything.liveStorage = None
+        os.remove(self.tempdb)
+        database.resetDefaultDatabase()
+        FeedTestCase.tearDown(self)
+
+    def save_then_restore_db(self):
+        self.tempdb = os.path.join(gettempdir(), 'democracy-temp-db')
+        db = database.defaultDatabase
+        db.liveStorage = storedatabase.LiveStorage(self.tempdb, restore=False)
+        db.liveStorage.saveDatabase()
+        db.liveStorage.close()
+        db.liveStorage = storedatabase.LiveStorage(self.tempdb)
+        for obj in database.defaultDatabase:
+            if isinstance(obj, Feed):
+                self.feed = obj
+            if isinstance(obj, Item):
+                self.item = obj
+
+    def write_feed(self):
+        self.writefile("""<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>Downhill Battle Pics</title>
+        <link>http://downhillbattle.org/</link>
+        <description>Downhill Battle is a non-profit organization working to support participatory culture and build a fairer music industry.</description>
+        <pubDate>Wed, 16 Mar 2005 12:03:42 EST</pubDate>
+
+        <item>
+            <title>Bumper Sticker</title>
+            <link>http://downhillbattle.org/item</link>
+            <comments>http://downhillbattle.org/item/comments</comments>
+            <creativeCommons:license>http://www.creativecommons.org/licenses/by-nd/1.0</creativeCommons:license>
+            <guid>guid-1234</guid>
+            <enclosure url="http://downhillbattle.org/key/gallery/movie.mpg"
+                length="1234"
+                type="video/mpeg"
+                />
+            <description>I'm a musician and I support filesharing.</description>
+            <pubDate>Fri, 18 Mar 2005 12:03:42 EST</pubDate>
+            <media:thumbnail url="%(thumburl)s" />
+            <dtv:paymentlink url="http://www.example.com/payment.html" />
+        </item>
+
+    </channel>
+</rss>
+""" % {'thumburl': resources.url("testdata/democracy-now-unicode-bug.xml")})
+
+
+    def test_attributes(self):
+        entry = self.parsed_feed.entries[0]
+        self.assertEquals(self.item.getRSSID(), entry.id)
+        self.assertEquals(self.item.getThumbnailURL(), entry.thumbnail['url'])
+        self.assertEquals(self.item.get_title(), entry.title)
+        self.assertEquals(self.item.get_raw_description(), entry.description)
+        self.assertEquals(self.item.get_link(), entry.link)
+        self.assertEquals(self.item.get_payment_link(), entry.payment_url)
+        self.assertEquals(self.item.get_license(), entry.license)
+        self.assertEquals(self.item.get_comments_link(), entry.comments)
+
+        enclosure = entry.enclosures[0]
+        self.assertEquals(self.item.getURL(), enclosure.url)
+        self.assertEquals(self.item.get_size(), int(enclosure.length))
+        self.assertEquals(self.item.get_format(), '.mpeg')
+        self.assertEquals(self.item.getFirstVideoEnclosureType(),
+                enclosure.type)
+
+    def test_remove_rssid(self):
+        self.item.removeRSSID()
+        self.save_then_restore_db()
+        self.assertEquals(self.item.getRSSID(), None)
+
+    def test_change_title(self):
+        entry = self.parsed_feed.entries[0]
+        self.item.setTitle(u"new title")
+        self.save_then_restore_db()
+        self.assertEquals(self.item.get_title(), "new title")
+        self.assert_(not self.item.has_original_title())
+
+        self.item.revert_title()
+        self.save_then_restore_db()
+        self.assertEquals(self.item.get_title(), entry.title)
+        self.assert_(self.item.has_original_title())
+
+    def test_feedparser_output(self):
+        # test a couple entries from the feedparser_output attribute
+        feedparser_output = self.item.feedparser_output
+        self.assertEquals(feedparser_output['title'], 'Bumper Sticker')
+        self.assertEquals(feedparser_output['id'], 'guid-1234')
+        self.assertEquals(feedparser_output['summary'],
+            "I'm a musician and I support filesharing.")
+        self.assertEquals(feedparser_output['enclosures'],
+                [{'href': u'http://downhillbattle.org/key/gallery/movie.mpg',
+                    'type': u'video/mpeg', 'filesize': u'1234'}])
 
 if __name__ == "__main__":
     unittest.main()

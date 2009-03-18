@@ -42,6 +42,7 @@ import traceback
 
 from miro.download_utils import cleanFilename, nextFreeFilename
 from miro.feedparser import FeedParserDict
+from miro.feedparserutil import normalize_feedparser_dict
 
 from miro.database import DDBObject, ObjectNotFoundError
 from miro.database import DatabaseConstraintError
@@ -66,6 +67,212 @@ from miro import signals
 
 _charset = locale.getpreferredencoding()
 
+KNOWN_MIME_TYPES = (u'audio', u'video')
+KNOWN_MIME_SUBTYPES = (u'mov', u'wmv', u'mp4', u'mp3', u'mpg', u'mpeg', u'avi', u'x-flv', u'x-msvideo', u'm4v', u'mkv', u'm2v', u'ogg')
+MIME_SUBSITUTIONS = {
+    u'QUICKTIME': u'MOV',
+}
+
+class FeedParserValues(object):
+    """Helper class to get values from feedparser entries
+
+    FeedParserValues objects inspect the FeedParserDict for the entry
+    attribute for various attributes using in Item (entry_title, rss_id, url,
+    etc...).
+    """
+
+    def __init__(self, entry):
+        self.entry = entry
+        self.normalized_entry = normalize_feedparser_dict(entry)
+        self.first_video_enclosure = getFirstVideoEnclosure(entry)
+
+        self.data = {
+                'license': entry.get("license"),
+                'rss_id': entry.get('id'),
+                'entry_title': self._calc_title(),
+                'thumbnail_url': self._calc_thumbnail_url(),
+                'raw_descrption': self._calc_raw_description(),
+                'link': self._calc_link(),
+                'payment_link': self._calc_payment_link(),
+                'comments_link': self._calc_comments_link(),
+                'url': self._calc_url(),
+                'enclosure_size': self._calc_enclosure_size(),
+                'enclosure_type': self._calc_enclosure_type(),
+                'enclosure_format': self._calc_enclosure_format(),
+                'releaseDateObj': self._calc_release_date(),
+        }
+
+    def update_item(self, item):
+        for key, value in self.data.items():
+            setattr(item, key, value)
+        item.feedparser_output = self.normalized_entry
+
+    def compare_to_item(self, item):
+        for key, value in self.data.items():
+            if getattr(item, key) != value:
+                return False
+        return True
+
+    def compare_to_item_enclosures(self, item):
+        compare_keys = ('url', 'enclosure_size', 'enclosure_type',
+                'enclosure_format')
+        for key in compare_keys:
+            if getattr(item, key) != self.data[key]:
+                return False
+        return True
+
+    def _calc_title(self):
+        if hasattr(self.entry, "title"):
+            # The title attribute shouldn't use entities, but some in the
+            # wild do (#11413).  In that case, try to fix them.
+            return entity_replace(self.entry.title)
+        else:
+            if (self.first_video_enclosure and
+                    'url' in self.first_video_enclosure):
+                    return self.first_video_enclosure['url'].decode("ascii", "replace")
+            return None
+
+    def _calc_thumbnail_url(self):
+        """Returns a link to the thumbnail of the video.  """
+
+        # Try to get the thumbnail specific to the video enclosure
+        if self.first_video_enclosure is not None:
+            url = self._get_element_thumbnail(self.first_video_enclosure)
+            if url is not None:
+                return url
+
+        # Try to get any enclosure thumbnail
+        if hasattr(self.entry, "enclosures"):
+            for enclosure in self.entry.enclosures:
+                url = self._get_element_thumbnail(enclosure)
+                if url is not None:
+                    return url
+
+        # Try to get the thumbnail for our entry
+        return self._get_element_thumbnail(self.entry)
+
+    def _get_element_thumbnail(self, element):
+        try:
+            thumb = element["thumbnail"]
+        except KeyError:
+            return None
+        if isinstance(thumb, str):
+            return thumb
+        elif isinstance(thumb, unicode):
+            return thumb.decode('ascii', 'replace')
+        try:
+            return thumb["url"].decode('ascii', 'replace')
+        except (KeyError, AttributeError):
+            return None
+
+    def _calc_raw_description(self):
+        rv = None
+        try:
+            if hasattr(self.first_video_enclosure, "text"):
+                rv = self.first_video_enclosure["text"]
+            elif hasattr(self.entry, "description"):
+                rv = self.entry.description
+        except Exception:
+            logging.exception("_calc_raw_description threw exception:")
+        if rv is None:
+            return u''
+        else:
+            return rv
+
+    def _calc_link(self):
+        if hasattr(self.entry, "link"):
+            link = self.entry.link
+            if isinstance(link, dict):
+                try:
+                    link = link['href']
+                except KeyError:
+                    return u""
+            if isinstance(link, unicode):
+                return link
+            try:
+                return link.decode('ascii', 'replace')
+            except UnicodeDecodeError:
+                return link.decode('ascii', 'ignore')
+        return u""
+
+    def _calc_payment_link(self):
+        try:
+            return self.first_video_enclosure.payment_url.decode('ascii','replace')
+        except:
+            try:
+                return self.entry.payment_url.decode('ascii','replace')
+            except:
+                return u""
+
+    def _calc_comments_link(self):
+        return self.entry.get('comments', u"")
+
+    def _calc_url(self):
+        if (self.first_video_enclosure is not None and
+                'url' in self.first_video_enclosure):
+            url = self.first_video_enclosure['url'].replace('+', '%20')
+            return quoteUnicodeURL(url)
+        else:
+            return u''
+
+    def _calc_enclosure_size(self):
+        enc = self.first_video_enclosure
+        if enc is not None and "torrent" not in enc.get("type", ""):
+            try:
+                return int(enc['length'])
+            except (KeyError, ValueError):
+                return None
+
+    def _calc_enclosure_type(self):
+        if self.first_video_enclosure and self.first_video_enclosure.has_key('type'):
+            return self.first_video_enclosure['type']
+        else:
+            return None
+
+    def _calc_enclosure_format(self):
+        enclosure = self.first_video_enclosure
+        if enclosure:
+            try:
+                extension = enclosure['url'].split('.')[-1]
+                extension = extension.lower().encode('ascii', 'replace')
+            except (SystemExit, KeyboardInterrupt):
+                raise
+            except KeyError:
+                extension = u''
+            # Hack for mp3s, "mpeg audio" isn't clear enough
+            if extension.lower() == u'mp3':
+                return u'.mp3'
+            if enclosure.get('type'):
+                enc = enclosure['type'].decode('ascii', 'replace')
+                if "/" in enc:
+                    mtype, subtype = enc.split('/', 1)
+                    mtype = mtype.lower()
+                    if mtype in KNOWN_MIME_TYPES:
+                        format = subtype.split(';')[0].upper()
+                        if mtype == u'audio':
+                            format += u' AUDIO'
+                        if format.startswith(u'X-'):
+                            format = format[2:]
+                        return u'.%s' % MIME_SUBSITUTIONS.get(format, format).lower()
+
+            if extension in KNOWN_MIME_SUBTYPES:
+                return u'.%s' % extension
+        return None
+
+    def _calc_release_date(self):
+        try:
+            return datetime(*self.first_video_enclosure.updated_parsed[0:7])
+        except (SystemExit, KeyboardInterrupt):
+            raise
+        except:
+            try:
+                return datetime(*self.entry.updated_parsed[0:7])
+            except (SystemExit, KeyboardInterrupt):
+                raise
+            except:
+                return datetime.min
+
+
 class Item(DDBObject):
     """An item corresponds to a single entry in a feed. It has a single url
     associated with it.
@@ -83,7 +290,7 @@ class Item(DDBObject):
         self.watchedTime = None
         self.pendingReason = u""
         self.title = u""
-        self.entry = entry
+        FeedParserValues(entry).update_item(self)
         self.expired = False
         self.keep = False
         self.videoFilename = FilenameType("")
@@ -234,18 +441,8 @@ class Item(DDBObject):
             playlist.removeItem(self)
 
     def _update_release_date(self):
-        # This should be called whenever we get a new entry
-        try:
-            self.releaseDateObj = datetime(*self.getFirstVideoEnclosure().updated_parsed[0:7])
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            try:
-                self.releaseDateObj = datetime(*self.entry.updated_parsed[0:7])
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
-                self.releaseDateObj = datetime.min
+        # FeedParserValues sets up the releaseDateObj attribute
+        pass
 
     def check_constraints(self):
         from miro import feed
@@ -295,37 +492,17 @@ class Item(DDBObject):
         except AttributeError:
             return self.getFeed().lastViewed >= self.creationTime
 
-    def getFirstVideoEnclosure(self):
-        """Returns the first video enclosure in the item.
-        """
-        if hasattr(self, "_firstVidEnc") and self._firstVidEnc:
-            return self._firstVidEnc
-
-        self._calc_first_enc()
-        return self._firstVidEnc
-
-    def _calc_first_enc(self):
-        self._firstVidEnc = getFirstVideoEnclosure(self.entry)
-
     @returnsUnicode
     def getFirstVideoEnclosureType(self):
         """Returns mime-type of the first video enclosure in the item.
         """
-        enclosure = self.getFirstVideoEnclosure()
-        if enclosure and enclosure.has_key('type'):
-            return enclosure['type']
-        return None
+        return self.enclosure_type
 
     @returnsUnicode
     def getURL(self):
         """Returns the URL associated with the first enclosure in the item.
         """
-        self.confirmDBThread()
-        videoEnclosure = self.getFirstVideoEnclosure()
-        if videoEnclosure is not None and 'url' in videoEnclosure:
-            return quoteUnicodeURL(videoEnclosure['url'].replace('+', '%20'))
-        else:
-            return u''
+        return self.url
 
     def hasSharableURL(self):
         """Does this item have a URL that the user can share with others?
@@ -570,13 +747,12 @@ class Item(DDBObject):
     @returnsUnicode
     def getRSSID(self):
         self.confirmDBThread()
-        return self.entry["id"]
+        return self.rss_id
 
     def removeRSSID(self):
         self.confirmDBThread()
-        if 'id' in self.entry:
-            del self.entry['id']
-            self.signalChange()
+        self.rss_id = None
+        self.signalChange()
 
     def setAutoDownloaded(self, autodl=True):
         self.confirmDBThread()
@@ -661,40 +837,7 @@ class Item(DDBObject):
 
     @returnsUnicode
     def getThumbnailURL(self):
-        """Returns a link to the thumbnail of the video.
-        """
-        self.confirmDBThread()
-        # Try to get the thumbnail specific to the video enclosure
-        videoEnclosure = self.getFirstVideoEnclosure()
-        if videoEnclosure is not None:
-            url = self.getElementThumbnail(videoEnclosure)
-            if url is not None:
-                return url
-
-        # Try to get any enclosure thumbnail
-        if hasattr(self.entry, "enclosures"):
-            for enclosure in self.entry.enclosures:
-                url = self.getElementThumbnail(enclosure)
-                if url is not None:
-                    return url
-
-        # Try to get the thumbnail for our entry
-        return self.getElementThumbnail(self.entry)
-
-    @returnsUnicode
-    def getElementThumbnail(self, element):
-        try:
-            thumb = element["thumbnail"]
-        except KeyError:
-            return None
-        if isinstance(thumb, str):
-            return thumb
-        elif isinstance(thumb, unicode):
-            return thumb.decode('ascii', 'replace')
-        try:
-            return thumb["url"].decode('ascii', 'replace')
-        except (KeyError, AttributeError):
-            return None
+        return self.thumbnail_url
 
     @returnsFilename
     def getThumbnail(self):
@@ -724,15 +867,12 @@ class Item(DDBObject):
     def get_title(self):
         """Returns the title of the item.
         """
-        if not self.title:
-            if hasattr(self.entry, "title"):
-                # The title attribute shouldn't use entities, but some in the
-                # wild do (#11413).  In that case, try to fix them.
-                self.title = entity_replace(self.entry.title)
-            else:
-                enc = self.getFirstVideoEnclosure()
-                self.title = enc.get("url", _("no title")).decode("ascii", "replace")
-        return self.title
+        if self.title:
+            return self.title
+        else:
+            if self.entry_title is not None:
+                return self.entry_title
+            else: return _('no title')
 
     def setTitle(self, s):
         self.confirmDBThread()
@@ -743,23 +883,13 @@ class Item(DDBObject):
         """Returns True if this is the original title and False if the user
         has retitled the item.
         """
-        if hasattr(self.entry, "title"):
-            t = self.entry.title
-        else:
-            enc = self.getFirstVideoEnclosure()
-            t = enc.get("url", _("no title")).decode("ascii", "replace")
-
-        return self.title == t
+        return self.title == self.entry_title
 
     def revert_title(self):
         """Reverts the item title back to the data we got from RSS or the url.
         """
         self.confirmDBThread()
-        if hasattr(self.entry, "title"):
-            self.title = self.entry.title
-        else:
-            enc = self.getFirstVideoEnclosure()
-            self.title = enc.get("url", _("no title")).decode("ascii", "replace")
+        self.title = self.entry_title
         self.signalChange()
 
     def set_channel_title(self, title):
@@ -787,20 +917,7 @@ class Item(DDBObject):
     def get_raw_description(self):
         """Returns the raw description of the video (unicode).
         """
-        self.confirmDBThread()
-
-        try:
-            enclosure = self.getFirstVideoEnclosure()
-            if hasattr(enclosure, "text"):
-                return enclosure["text"]
-
-            if hasattr(self.entry, "description"):
-                return self.entry.description
-
-        except Exception:
-            logging.exception("get_raw_description threw exception:")
-
-        return u''
+        return self.raw_descrption
 
     @returnsUnicode
     def get_description(self):
@@ -976,12 +1093,8 @@ class Item(DDBObject):
         elif self.downloader is not None:
             return self.downloader.getTotalSize()
         else:
-            enc = self.getFirstVideoEnclosure()
-            if enc is not None and "torrent" not in enc.get("type", ""):
-                try:
-                    return int(enc['length'])
-                except (KeyError, ValueError):
-                    pass
+            if self.enclosure_size is not None:
+                return self.enclosure_size
         return 0
 
     def download_progress(self):
@@ -1026,12 +1139,6 @@ class Item(DDBObject):
             secs = self.duration / 1000
         return secs
 
-    KNOWN_MIME_TYPES = (u'audio', u'video')
-    KNOWN_MIME_SUBTYPES = (u'mov', u'wmv', u'mp4', u'mp3', u'mpg', u'mpeg', u'avi', u'x-flv', u'x-msvideo', u'm4v', u'mkv', u'm2v', u'ogg')
-    MIME_SUBSITUTIONS = {
-        u'QUICKTIME': u'MOV',
-    }
-
     @returnsUnicode
     def get_format(self, emptyForUnknown=True):
         """Returns string with the format of the video.
@@ -1043,41 +1150,16 @@ class Item(DDBObject):
             if self.downloader.contentType and "/" in self.downloader.contentType:
                 mtype, subtype = self.downloader.contentType.split('/', 1)
                 mtype = mtype.lower()
-                if mtype in self.KNOWN_MIME_TYPES:
+                if mtype in KNOWN_MIME_TYPES:
                     format = subtype.split(';')[0].upper()
                     if mtype == u'audio':
                         format += u' AUDIO'
                     if format.startswith(u'X-'):
                         format = format[2:]
-                    return u'.%s' % self.MIME_SUBSITUTIONS.get(format, format).lower()
+                    return u'.%s' % MIME_SUBSITUTIONS.get(format, format).lower()
 
-        enclosure = self.getFirstVideoEnclosure()
-        if enclosure:
-            try:
-                extension = enclosure['url'].split('.')[-1]
-                extension = extension.lower().encode('ascii', 'replace')
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except KeyError:
-                extension = u''
-            # Hack for mp3s, "mpeg audio" isn't clear enough
-            if extension.lower() == u'mp3':
-                return u'.mp3'
-            if enclosure.get('type'):
-                enc = enclosure['type'].decode('ascii', 'replace')
-                if "/" in enc:
-                    mtype, subtype = enc.split('/', 1)
-                    mtype = mtype.lower()
-                    if mtype in self.KNOWN_MIME_TYPES:
-                        format = subtype.split(';')[0].upper()
-                        if mtype == u'audio':
-                            format += u' AUDIO'
-                        if format.startswith(u'X-'):
-                            format = format[2:]
-                        return u'.%s' % self.MIME_SUBSITUTIONS.get(format, format).lower()
-
-            if extension in self.KNOWN_MIME_SUBTYPES:
-                return u'.%s' % extension
+        if self.enclosure_format is not None:
+            return self.enclosure_format
 
         if emptyForUnknown:
             return u""
@@ -1088,52 +1170,25 @@ class Item(DDBObject):
         """Return the license associated with the video.
         """
         self.confirmDBThread()
-        if hasattr(self.entry, "license"):
-            return self.entry.license
-
+        if self.license:
+            return self.license
         return self.getFeed().get_license()
 
     @returnsUnicode
     def get_comments_link(self):
         """Returns the comments link if it exists in the feed item.
         """
-        self.confirmDBThread()
-        if hasattr(self.entry, "comments"):
-            return self.entry.comments
-
-        return u""
+        return self.comments_link
 
     def get_link(self):
         """Returns the URL of the webpage associated with the item.
         """
-        self.confirmDBThread()
-        if hasattr(self.entry, "link"):
-            link = self.entry.link
-            if isinstance(link, dict):
-                try:
-                    link = link['href']
-                except KeyError:
-                    return u""
-            if isinstance(link, unicode):
-                return link
-            try:
-                return link.decode('ascii', 'replace')
-            except UnicodeDecodeError:
-                return link.decode('ascii', 'ignore')
-
-        return u""
+        return self.link
 
     def get_payment_link(self):
         """Returns the URL of the payment page associated with the item.
         """
-        self.confirmDBThread()
-        try:
-            return self.getFirstVideoEnclosure().payment_url.decode('ascii','replace')
-        except:
-            try:
-                return self.entry.payment_url.decode('ascii','replace')
-            except:
-                return u""
+        return self.payment_link
 
     def update(self, entry):
         """Updates an item with new data
@@ -1141,14 +1196,10 @@ class Item(DDBObject):
         entry - dict containing the new data
         """
         UandA = self.getUandA()
-        self.confirmDBThread()
-        try:
-            self.entry = entry
-            self.iconCache.requestUpdate()
-            self._update_release_date()
-            self._calc_first_enc()
-        finally:
-            self.signalChange()
+        FeedParserValues(entry).update_item(self)
+        self.iconCache.requestUpdate()
+        self._update_release_date()
+        self.signalChange()
 
     def on_download_finished(self):
         """Called when the download for this item finishes."""
@@ -1221,10 +1272,6 @@ class Item(DDBObject):
         by the "open" menu.
         """
         return self.getFeedURL() == 'dtv:singleFeed'
-
-    def get_rss_entry(self):
-        self.confirmDBThread()
-        return self.entry
 
     def migrate_children(self, newdir):
         if self.isContainerItem:

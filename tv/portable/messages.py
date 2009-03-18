@@ -902,13 +902,8 @@ class ItemInfo(object):
         self.file_url = item.getURL()
         self.is_container_item = item.isContainerItem
 
-        enclosure = item.getFirstVideoEnclosure()
-        if enclosure:
-            self.file_type = enclosure.get('type')
-            self.file_url = enclosure.get('url')
-        else:
-            self.file_type = None
-            self.file_url = None
+        self.file_type = item.enclosure_type
+        self.file_url = item.url
 
         if item.downloader:
             self.download_info = DownloadInfo(item.downloader)
