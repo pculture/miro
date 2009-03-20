@@ -452,7 +452,7 @@ class _MovieDirectoryHelper(object):
         if self.path != self.initial_path:
             title = _("Migrate existing movies?")
             description = _("You've selected a new folder to download movies "
-                    "to.  Should %(appname) migrate your existing downloads there? "
+                    "to.  Should %(appname)s migrate your existing downloads there? "
                     "(Currently dowloading movies will not be moved until "
                     "they finish.)", {'appname': config.get(prefs.SHORT_APP_NAME)})
             response = dialogs.show_choice_dialog(title, description, 
