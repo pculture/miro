@@ -38,10 +38,16 @@ import os
 from miro import prefs
 import gconf
 import threading
+from miro.plat import options
 from miro.plat import resources
 
 client = gconf.client_get_default()
 gconf_lock = threading.RLock()
+
+def _gconf_key(key):
+    if options.gconf_name is None:
+        raise AssertionError()
+    return '/apps/%s/%s' % (options.gconf_name, key)
 
 def _get_gconf(fullkey, default=None):
     gconf_lock.acquire()
@@ -64,13 +70,13 @@ class GconfDict:
     def get(self, key, default=None):
         if not isinstance(key, str):
             raise TypeError()
-        fullkey = '/apps/miro/' + key
+        fullkey = _gconf_key(key)
         return _get_gconf(fullkey, default)
 
     def __contains__(self, key):
         gconf_lock.acquire()
         try:
-            fullkey = '/apps/miro/' + key
+            fullkey = _gconf_key(key)
             return client.get(fullkey) is not None
         finally:
             gconf_lock.release()
@@ -88,7 +94,7 @@ class GconfDict:
             if not isinstance(key, str):
                 raise TypeError()
 
-            fullkey = '/apps/miro/' + key
+            fullkey = _gconf_key(key)
             if isinstance(value, str):
                 client.set_string(fullkey, value)
             elif isinstance(value, bool):

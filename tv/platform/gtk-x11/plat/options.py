@@ -35,6 +35,7 @@ hopefully sane defaults.
 shouldSyncX = False
 frontend = 'html'
 themeName = None
+gconf_name = None
 
 from miro.prefs import Pref
 

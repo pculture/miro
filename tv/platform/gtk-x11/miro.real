@@ -56,46 +56,6 @@ pygtk.require('2.0')
 from miro.plat import upgrade
 upgrade.upgrade()
 
-# Set up gettext before everything else
-from miro import gtcache
-gtcache.init()
-
-from miro import config
-from miro import plat
-from miro.plat import options
-from miro import prefs
-from miro import singleclick
-
-if '--unittest' in sys.argv:
-    # handle this outside optparse, because unittest has its own option set
-    sys.argv.remove('--unittest')
-    import unittest
-    from miro import test
-    unittest.main(module=test)
-
-def startup(props_to_set):
-    from miro import startup
-    startup.initialize(parsed_options.theme)
-
-    frontend = parsed_options.frontend
-    goodchars = string.letters + "."
-    for c in frontend:
-        if c not in goodchars:
-            raise ValueError("Unknown frontend: %s" % parsed_options.frontend)
-    try:
-        _temp = __import__('miro.plat.frontends.%s' % frontend, globals(), locals(), ['application'], -1)
-        application = _temp.application
-    except ImportError:
-        try:
-            _temp = __import__('miro.frontends.%s' % frontend, globals(), locals(), ['application'], -1)
-            application = _temp.application
-        except ImportError:
-            _temp = __import__(frontend, globals(), locals(), ['application'], -1)
-            application = _temp.application
-        except ImportError:
-            raise ValueError("Unknown frontend: %s" % parsed_options.frontend)
-    application.run_application(props_to_set)
-
 usage = "usage: %prog [options] [torrent files] [video files]"
 parser = optparse.OptionParser(usage=usage)
 parser.add_option('-v', '--version',
@@ -145,9 +105,56 @@ group.add_option('--sync',
                   action="store_true",
                   help='Use X synchronously.')
 parser.set_defaults(sync=False)
+group.add_option('--gconf-name',
+                  dest='gconf_name',
+                  metavar='<NAME>',
+                  help='Use a different name for gconf values than "miro"')
+parser.set_defaults(gconf_name='miro')
 parser.add_option_group(group)
 
 (parsed_options, args) = parser.parse_args()
+
+# Setup gconf_name early on so we can load config values
+from miro.plat import options
+options.gconf_name = parsed_options.gconf_name
+
+from miro import gtcache
+gtcache.init()
+
+from miro import config
+from miro import plat
+from miro import prefs
+from miro import singleclick
+
+if '--unittest' in sys.argv:
+    # handle this outside optparse, because unittest has its own option set
+    sys.argv.remove('--unittest')
+    import unittest
+    from miro import test
+    unittest.main(module=test)
+
+def startup(props_to_set):
+    from miro import startup
+    startup.initialize(parsed_options.theme)
+
+    frontend = parsed_options.frontend
+    goodchars = string.letters + "."
+    for c in frontend:
+        if c not in goodchars:
+            raise ValueError("Unknown frontend: %s" % parsed_options.frontend)
+    try:
+        _temp = __import__('miro.plat.frontends.%s' % frontend, globals(), locals(), ['application'], -1)
+        application = _temp.application
+    except ImportError:
+        try:
+            _temp = __import__('miro.frontends.%s' % frontend, globals(), locals(), ['application'], -1)
+            application = _temp.application
+        except ImportError:
+            _temp = __import__(frontend, globals(), locals(), ['application'], -1)
+            application = _temp.application
+        except ImportError:
+            raise ValueError("Unknown frontend: %s" % parsed_options.frontend)
+    application.run_application(props_to_set)
 
 def get_keyval(keyval):
     key, val = keyval.split("=")
