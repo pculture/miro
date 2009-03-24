@@ -224,7 +224,7 @@ class ItemListDisplay(TabDisplay):
         tab = selected_tabs[0]
         self.controller = self.make_controller(tab)
         self.widget = self.controller.widget
-        if app.list_view_memory.query(tab_type, tab.id):
+        if app.frontend_states_memory.query_list_view(tab_type, tab.id):
             self.widget.switch_to_list_view()
         self.type = tab_type
         self.id = tab.id
@@ -245,9 +245,9 @@ class ItemListDisplay(TabDisplay):
         self.controller.stop_tracking()
         app.item_list_controller_manager.controller_destroyed(self.controller)
         if self.widget.in_list_view:
-            app.list_view_memory.add(self.type, self.id)
+            app.frontend_states_memory.set_list_view(self.type, self.id)
         else:
-            app.list_view_memory.remove(self.type, self.id)
+            app.frontend_states_memory.set_std_view(self.type, self.id)
 
     def make_controller(self, tab):
         raise NotImplementedError()

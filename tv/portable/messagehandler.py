@@ -1354,20 +1354,19 @@ class BackendMessageHandler(messages.MessageHandler):
         app.controller.sendBugReport(message.report, message.text, message.send_report)
 
     def handle_save_frontend_state(self, message):
-        view = app.db.filterWithIndex(indexes.objectsByClass,
-                WidgetsFrontendState)
+        view = app.db.filterWithIndex(indexes.objectsByClass, WidgetsFrontendState)
         try:
             state = getSingletonDDBObject(view)
         except LookupError:
             state = WidgetsFrontendState()
         state.list_view_displays = message.list_view_displays
+        state.sort_states = message.sort_states
         state.signalChange()
 
     def handle_query_frontend_state(self, message):
-        view = app.db.filterWithIndex(indexes.objectsByClass,
-                WidgetsFrontendState)
+        view = app.db.filterWithIndex(indexes.objectsByClass, WidgetsFrontendState)
         try:
             state = getSingletonDDBObject(view)
         except LookupError:
             state = WidgetsFrontendState()
-        messages.CurrentFrontendState(state.list_view_displays).send_to_frontend()
+        messages.CurrentFrontendState(state.list_view_displays, state.sort_states).send_to_frontend()

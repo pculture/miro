@@ -1033,7 +1033,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
             app.search_manager.handle_search_complete(message)
 
     def handle_current_frontend_state(self, message):
-        app.list_view_memory = ListViewDisplayStore(message)
+        app.frontend_states_memory = FrontendStatesStore(message)
         self._saw_pre_startup_message('frontend-state')
 
     def handle_migration_progress(self, message):
@@ -1054,7 +1054,7 @@ class WidgetsMessageHandler(messages.MessageHandler):
             self.migration_progress_dialog.update(_('Migrating files'),
                     message.iteration, message.total_files)
 
-class ListViewDisplayStore(object):
+class FrontendStatesStore(object):
     """Stores which views were left in list mode by the user."""
 
     # Maybe this should get its own module, but I'm it seems small enough to
@@ -1062,19 +1062,31 @@ class ListViewDisplayStore(object):
 
     def __init__(self, message):
         self.current_displays = set(message.list_view_displays)
+        self.sort_states = message.sort_states
 
     def _key(self, type, id):
         return '%s:%s' % (type, id)
 
-    def query(self, type, id):
+    def query_list_view(self, type, id):
         return self._key(type, id) in self.current_displays
 
-    def add(self, type, id):
-        self.current_displays.add(self._key(type, id))
-        m = messages.SaveFrontendState(list(self.current_displays))
+    def query_sort_state(self, type, id):
+        key = self._key(type, id)
+        if key in self.sort_states:
+            return self.sort_states[key]
+        return None
+
+    def set_sort_state(self, type, id, sorter):
+        self.sort_states[self._key(type, id)] = sorter
+        m = messages.SaveFrontendState(list(self.current_displays), self.sort_states)
         m.send_to_backend()
 
-    def remove(self, type, id):
+    def set_list_view(self, type, id):
+        self.current_displays.add(self._key(type, id))
+        m = messages.SaveFrontendState(list(self.current_displays), self.sort_states)
+        m.send_to_backend()
+
+    def set_std_view(self, type, id):
         self.current_displays.discard(self._key(type, id))
-        m = messages.SaveFrontendState(list(self.current_displays))
+        m = messages.SaveFrontendState(list(self.current_displays), self.sort_states)
         m.send_to_backend()

@@ -745,6 +745,18 @@ class HeaderToolbar(widgetset.Background):
         self.list_button.disable()
         self.normal_button.enable()
 
+    def change_sort_indicator(self, sort_name, ascending):
+        if not sort_name in self._button_map:
+            return
+        for name, button in self._button_map.iteritems():
+            if name == sort_name:
+                if ascending:
+                    button.set_sort_state(SortBarButton.SORT_UP)
+                else:
+                    button.set_sort_state(SortBarButton.SORT_DOWN)
+            else:
+                button.set_sort_state(SortBarButton.SORT_NONE)
+
     def _make_button(self, text, sort_key):
         button = SortBarButton(text)
         button.connect('clicked', self._on_button_clicked, sort_key)
@@ -885,8 +897,7 @@ class ItemContainerWidget(widgetset.VBox):
         self.list_empty_mode_vbox = widgetset.VBox()
         self.toolbar = HeaderToolbar()
         self.toolbar.connect('list-view-clicked', self.switch_to_list_view)
-        self.toolbar.connect('normal-view-clicked',
-                self.switch_to_normal_view)
+        self.toolbar.connect('normal-view-clicked', self.switch_to_normal_view)
         self.pack_start(self.titlebar_vbox)
         self.pack_start(self.toolbar)
         self.background = ItemListBackground()

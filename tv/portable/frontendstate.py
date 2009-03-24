@@ -32,5 +32,10 @@ from miro.database import DDBObject
 
 class WidgetsFrontendState(DDBObject):
     def __init__(self):
-        self.list_view_displays = []
+        self.list_view_displays = list()
+        self.sort_states = dict()
         DDBObject.__init__(self)
+    def onRestore(self):
+        DDBObject.onRestore(self)
+        if not hasattr(self, 'sort_states'):
+            self.sort_states = dict()

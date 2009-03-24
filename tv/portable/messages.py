@@ -672,8 +672,9 @@ class ReportCrash(BackendMessage):
 
 class SaveFrontendState(BackendMessage):
     """Save data for the frontend."""
-    def __init__(self, list_view_displays):
+    def __init__(self, list_view_displays, sort_states):
         self.list_view_displays = list_view_displays
+        self.sort_states = sort_states
 
 class QueryFrontendState(BackendMessage):
     """Ask for a CurrentFrontendState message to be sent back."""
@@ -1183,8 +1184,9 @@ class SearchComplete(FrontendMessage):
 
 class CurrentFrontendState(FrontendMessage):
     """Returns the latest data saved with SaveFrontendState."""
-    def __init__(self, list_view_displays):
+    def __init__(self, list_view_displays, sort_states):
         self.list_view_displays = list_view_displays
+        self.sort_states = sort_states
 
 class OpenInExternalBrowser(FrontendMessage):
     """Opens the specified url in an external browser."""

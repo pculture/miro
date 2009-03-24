@@ -62,6 +62,9 @@ class ItemSort(object):
     def __init__(self, ascending):
         self._reverse = not ascending
 
+    def is_ascending(self):
+        return not self._reverse
+
     def sort_key(self, item):
         """Return a value that can be used to sort item.
 
@@ -89,30 +92,37 @@ class ItemSort(object):
                 reverse=self._reverse)
 
 class DateSort(ItemSort):
+    KEY = 'date'
     def sort_key(self, item):
         return item.release_date
 
 class NameSort(ItemSort):
+    KEY = 'name'
     def sort_key(self, item):
         return item.name
 
 class LengthSort(ItemSort):
+    KEY = 'length'
     def sort_key(self, item):
         return item.duration
 
 class SizeSort(ItemSort):
+    KEY = 'size'
     def sort_key(self, item):
         return item.size
 
 class DescriptionSort(ItemSort):
+    KEY = 'description'
     def sort_key(self, item):
         return item.description
 
 class FeedNameSort(ItemSort):
+    KEY = 'feed-name'
     def sort_key(self, item):
         return item.feed_name
 
 class StatusCircleSort(ItemSort):
+    KEY = 'state'
     # Weird sort, this one is for when the user clicks on the header above the
     # status bumps.  It's almost the same as StatusSort, but there isn't a
     # bump for expiring.
@@ -127,6 +137,7 @@ class StatusCircleSort(ItemSort):
             return 3 # other
 
 class StatusSort(ItemSort):
+    KEY = 'status'
     def sort_key(self, item):
         if item.state == 'downloading':
             return 2 # downloading
@@ -140,6 +151,7 @@ class StatusSort(ItemSort):
             return 1 # other
 
 class ETASort(ItemSort):
+    KEY = 'eta'
     def sort_key(self, item):
         if item.state in ('downloading', 'paused'):
             eta = item.download_info.eta
@@ -151,6 +163,7 @@ class ETASort(ItemSort):
             return -sys.maxint
 
 class DownloadRateSort(ItemSort):
+    KEY = 'rate'
     def sort_key(self, item):
         if item.state in ('downloading', 'paused'):
             return item.download_info.rate
@@ -160,6 +173,7 @@ class DownloadRateSort(ItemSort):
             return -1
 
 class ProgressSort(ItemSort):
+    KEY = 'progress'
     def sort_key(self, item):
         if item.state in ('downloading', 'paused'):
             return float(item.download_info.downloaded_size) / item.size
@@ -167,6 +181,20 @@ class ProgressSort(ItemSort):
             return sys.maxint
         else:
             return -1
+
+SORT_KEY_MAP = {
+    DateSort.KEY:         DateSort,
+    NameSort.KEY:         NameSort,
+    LengthSort.KEY:       LengthSort,
+    SizeSort.KEY:         SizeSort,
+    DescriptionSort.KEY:  DescriptionSort,
+    FeedNameSort.KEY:     FeedNameSort,
+    StatusCircleSort.KEY: StatusCircleSort,
+    StatusSort.KEY:       StatusSort,
+    ETASort.KEY:          ETASort,
+    DownloadRateSort.KEY: DownloadRateSort,
+    ProgressSort.KEY:     ProgressSort,
+}
 
 class ItemListGroup(object):
     """Manages a set of ItemLists.
@@ -179,14 +207,17 @@ class ItemListGroup(object):
     each child list.
     """
 
-    def __init__(self, item_lists):
+    def __init__(self, item_lists, sorter):
         """Construct in ItemLists.
 
         item_lists is a list of ItemList objects that should be grouped
         together.
         """
         self.item_lists = item_lists
-        self.set_sort(DateSort(False))
+        if sorter is None:
+            self.set_sort(DateSort(False))
+        else:
+            self.set_sort(sorter)
         self._throbber_timeouts = {}
         self.html_stripper = util.HTMLStripper()
 
@@ -252,6 +283,9 @@ class ItemListGroup(object):
         for sublist in self.item_lists:
             sublist.set_sort(sorter)
 
+    def get_sort(self):
+        return self._sorter
+
     def set_search_text(self, search_text):
         """Update the search for each child list."""
         for sublist in self.item_lists:
@@ -282,6 +316,9 @@ class ItemList(object):
     def set_sort(self, sorter):
         self._sorter = sorter
         self._resort_items()
+
+    def get_sort(self):
+        return self._sorter
 
     def get_count(self):
         """Get the number of items in this list that are displayed."""

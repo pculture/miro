@@ -91,9 +91,13 @@ class ItemListController(object):
         self._search_text = ''
         self._init_widget()
         item_lists = set(iv.item_list for iv in self.all_item_views())
-        self.item_list_group = itemlist.ItemListGroup(item_lists)
+        sorter = app.frontend_states_memory.query_sort_state(type, id)
+        self.item_list_group = itemlist.ItemListGroup(item_lists, sorter)
         self._init_item_views()
         self.initialize_search()
+        sorter = self.item_list_group.get_sort()
+        self.widget.toolbar.change_sort_indicator(sorter.KEY, sorter.is_ascending())
+        self.list_item_view.change_sort_indicator(sorter.KEY, sorter.is_ascending())
 
     def _init_widget(self):
         self.widget = itemlistwidgets.ItemContainerWidget()
@@ -105,6 +109,9 @@ class ItemListController(object):
         self.widget.toolbar.connect_weak('sort-changed', self.on_sort_changed)
         self.list_item_view.connect_weak('sort-changed', self.on_sort_changed)
         self.build_widget()
+        sorter = self.item_list.get_sort()
+        if sorter is not None:
+            self.widget.toolbar.change_sort_indicator(sorter.KEY, sorter.is_ascending())
 
     def build_list_item_view(self):
         return itemlistwidgets.ListItemView(self.item_list)
@@ -185,25 +192,14 @@ class ItemListController(object):
             messages.StartDownload(info.id).send_to_backend()
 
     def on_sort_changed(self, object, sort_key, ascending):
-        sort_key_map = {
-                'date': itemlist.DateSort,
-                'name': itemlist.NameSort,
-                'length': itemlist.LengthSort,
-                'size': itemlist.SizeSort,
-                'description': itemlist.DescriptionSort,
-                'feed-name': itemlist.FeedNameSort,
-                'state': itemlist.StatusCircleSort,
-                'status': itemlist.StatusSort,
-                'eta': itemlist.ETASort,
-                'rate': itemlist.DownloadRateSort,
-                'progress': itemlist.ProgressSort,
-        }
-        sorter = sort_key_map[sort_key](ascending)
+        sorter = itemlist.SORT_KEY_MAP[sort_key](ascending)
         for item_list in self.item_list_group.item_lists:
             item_list.set_sort(sorter)
         for item_view in self.all_item_views():
             item_view.model_changed()
+        self.widget.toolbar.change_sort_indicator(sort_key, ascending)
         self.list_item_view.change_sort_indicator(sort_key, ascending)
+        app.frontend_states_memory.set_sort_state(self.type, self.id, sorter)
 
     def on_key_press(self, view, key, mods):
         if key == menubar.DELETE:
