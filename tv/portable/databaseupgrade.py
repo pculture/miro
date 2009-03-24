@@ -1823,6 +1823,15 @@ def upgrade75(objectList):
             changed.add(o)
     return changed
 
+def upgrade76(objectList):
+    changed = set()
+    for o in objectList:
+        if o.classString == 'feed':
+            feed_impl = o.savedData['actualFeed']
+            o.savedData['visible'] = feed_impl.savedData.pop('visible')
+            changed.add(o)
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

@@ -357,6 +357,7 @@ class FeedSchema(DDBObjectSchema):
         ('expire', SchemaString()),
         ('expireTime', SchemaTimeDelta(noneOk=True)),
         ('section', SchemaString()),
+        ('visible', SchemaBool()),
     ]
 
 class FeedImplSchema(ObjectSchema):
@@ -367,7 +368,6 @@ class FeedImplSchema(ObjectSchema):
         ('ufeed', SchemaObject(Feed)),
         ('title', SchemaString(noneOk=True)),
         ('created', SchemaDateTime()),
-        ('visible', SchemaBool()),
         ('lastViewed', SchemaDateTime()),
         ('thumbURL', SchemaURL(noneOk=True)),
         ('updateFreq', SchemaInt()),
@@ -527,7 +527,7 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
         ('list_view_displays', SchemaList(SchemaBinary())),
     ]
 
-VERSION = 75
+VERSION = 76
 objectSchemas = [
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,

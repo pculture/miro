@@ -205,33 +205,23 @@ INITIAL_FEED_UPDATE_DELAY = 5.0
 class FeedImpl:
     """Actual implementation of a basic feed.
     """
-    def __init__(self, url, ufeed, title=None, visible=True):
+    def __init__(self, url, ufeed, title=None):
         checkU(url)
         if title:
             checkU(title)
         self.url = url
         self.ufeed = ufeed
-        self.calc_item_list()
         self.title = title
         self.created = datetime.now()
-        self.visible = visible
         self.updating = False
         self.lastViewed = datetime.min
         self.thumbURL = default_feed_icon_url()
         self.initialUpdate = True
         self.updateFreq = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)*60
 
-    def calc_item_list(self):
-        self.items = views.toplevelItems.filterWithIndex(indexes.itemsByFeed, self.ufeed.id)
-        self.downloadedItems = self.items.filter(lambda x: x.is_downloaded())
-        self.availableItems = self.items.filter(lambda x: x.get_state() == 'new')
-        self.unwatchedItems = self.items.filter(lambda x: x.get_state() == 'newly-downloaded')
-        self.downloadedItems.addAddCallback(lambda x, y: self.ufeed.signalChange(needsSignalFolder=True))
-        self.downloadedItems.addRemoveCallback(lambda x, y: self.ufeed.signalChange(needsSignalFolder=True))
-        self.availableItems.addAddCallback(lambda x, y: self.ufeed.signalChange(needsSignalFolder=True))
-        self.availableItems.addRemoveCallback(lambda x, y: self.ufeed.signalChange(needsSignalFolder=True))
-        self.unwatchedItems.addAddCallback(lambda x, y: self.ufeed.signalChange(needsSignalFolder=True))
-        self.unwatchedItems.addRemoveCallback(lambda x, y: self.ufeed.signalChange(needsSignalFolder=True))
+    def _get_items(self):
+        return self.ufeed.items
+    items = property(_get_items)
 
     def signalChange(self):
         self.ufeed.signalChange()
@@ -295,32 +285,6 @@ class FeedImpl:
         except:
             logging.info ("%s has no ufeed", self)
 
-    def num_downloaded(self):
-        """Returns the number of downloaded items in the feed.
-        """
-        return len(self.downloadedItems)
-
-    def numUnwatched(self):
-        """Returns string with number of unwatched videos in feed
-        """
-        return len(self.unwatchedItems)
-
-    def numAvailable(self):
-        """Returns string with number of available videos in feed
-        """
-        return len([item for item in self.availableItems
-                    if not item.is_pending_auto_download()])
-
-    def markAsViewed(self):
-        """Sets the last time the feed was viewed to now
-        """
-        self.lastViewed = datetime.now()
-        for item in self.items:
-            if item.get_state() == "new":
-                item.signalChange(needsSave=False)
-
-        self.ufeed.signalChange()
-
     def isLoading(self):
         """Returns true iff the feed is loading. Only makes sense in the
         context of UniversalFeeds
@@ -331,138 +295,6 @@ class FeedImpl:
         """Returns true iff this feed has a library
         """
         return False
-
-    def startManualDownload(self):
-        next = None
-        for item in self.items:
-            if item.is_pending_manual_download():
-                if next is None:
-                    next = item
-                elif item.get_pub_date_parsed() > next.get_pub_date_parsed():
-                    next = item
-        if next is not None:
-            next.download(autodl = False)
-
-    def startAutoDownload(self):
-        next = None
-        for item in self.items:
-            if item.isEligibleForAutoDownload():
-                if next is None:
-                    next = item
-                elif item.get_pub_date_parsed() > next.get_pub_date_parsed():
-                    next = item
-        if next is not None:
-            next.download(autodl = True)
-
-    def expire_items(self):
-        """Returns marks expired items as expired
-        """
-        for item in self.items:
-            expireTime = item.getExpirationTime()
-            if (item.get_state() == 'expiring' and expireTime is not None and
-                    expireTime < datetime.now()):
-                item.expire()
-
-    def isVisible(self):
-        """Returns true iff feed should be visible
-        """
-        self.ufeed.confirmDBThread()
-        return self.visible
-
-    def signalItems (self):
-        for item in self.items:
-            item.signalChange(needsSave=False)
-
-    @returnsUnicode
-    def get_expiration_type(self):
-        """Returns "feed," "system," or "never"
-        """
-        self.ufeed.confirmDBThread()
-        return self.ufeed.expire
-
-    def getMaxFallBehind(self):
-        """Returns"unlimited" or the maximum number of items this feed can fall
-        behind
-        """
-        self.ufeed.confirmDBThread()
-        if self.ufeed.fallBehind < 0:
-            return u"unlimited"
-        else:
-            return self.ufeed.fallBehind
-
-    def get_max_new(self):
-        """Returns "unlimited" or the maximum number of items this feed wants
-        """
-        self.ufeed.confirmDBThread()
-        if self.ufeed.maxNew < 0:
-            return u"unlimited"
-        else:
-            return self.ufeed.maxNew
-
-    def get_max_old_items(self):
-        """Returns the number of items to remember past the current contents of
-        the feed.  If self.ufeed.maxOldItems is None, then this returns "system"
-        indicating that the caller should look up the default in
-        prefs.MAX_OLD_ITEMS_DEFAULT.
-        """
-        self.ufeed.confirmDBThread()
-        if self.ufeed.maxOldItems is None:
-            return u"system"
-
-        return self.ufeed.maxOldItems
-
-    def get_expiration_time(self):
-        """Returns the total absolute expiration time in hours.
-        WARNING: 'system' and 'never' expiration types return 0
-        """
-        self.ufeed.confirmDBThread()
-        expireAfterSetting = config.get(prefs.EXPIRE_AFTER_X_DAYS)
-        if (self.ufeed.expireTime is None or self.ufeed.expire == 'never' or
-                (self.ufeed.expire == 'system' and expireAfterSetting <= 0)):
-            return 0
-        else:
-            return (self.ufeed.expireTime.days * 24 +
-                    self.ufeed.expireTime.seconds / 3600)
-
-    def getExpireDays(self):
-        """Returns the number of days until a video expires
-        """
-        self.ufeed.confirmDBThread()
-        try:
-            return self.ufeed.expireTime.days
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            return timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS)).days
-
-    def getExpireHours(self):
-        """Returns the number of hours until a video expires
-        """
-        self.ufeed.confirmDBThread()
-        try:
-            return int(self.ufeed.expireTime.seconds/3600)
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            return int(timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS)).seconds/3600)
-
-    def getExpires(self):
-        expireAfterSetting = config.get(prefs.EXPIRE_AFTER_X_DAYS)
-        return (self.ufeed.expireTime is None or self.ufeed.expire == 'never' or
-                (self.ufeed.expire == 'system' and expireAfterSetting <= 0))
-
-    def isAutoDownloadable(self):
-        """Returns true iff item is autodownloadable
-        """
-        self.ufeed.confirmDBThread()
-        return self.ufeed.autoDownloadable
-
-    def autoDownloadStatus(self):
-        status = self.isAutoDownloadable()
-        if status:
-            return u"ON"
-        else:
-            return u"OFF"
 
     @returnsUnicode
     def get_title(self):
@@ -530,41 +362,14 @@ class FeedImpl:
         """
         return self.thumbURL
 
-    def iconChanged(self, needsSave=True):
-        """See item.getThumbnail to figure out which items to send signals for.
-        """
-        self.ufeed.signalChange(needsSave=needsSave)
-        for item in self.items:
-            if not (item.iconCache.isValid() or
-                    item.screenshot or
-                    item.isContainerItem):
-                item.signalChange(needsSave=False)
-
     @returnsUnicode
     def get_license(self):
         """Returns URL of license assocaited with the feed
         """
         return u""
 
-    def getNewItems(self):
-        """Returns the number of new items with the feed
-        """
-        self.ufeed.confirmDBThread()
-        count = 0
-        for item in self.items:
-            try:
-                if item.get_state() == u'newly-downloaded':
-                    count += 1
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
-                pass
-        return count
-
     def onRestore(self):
         self.updating = False
-        self.calc_item_list()
-        restored_feeds.append(self.ufeed)
 
     def onRemove(self):
         """Called when the feed uses this FeedImpl is removed from the DB.
@@ -627,6 +432,7 @@ class Feed(DDBObject):
         self.folder_id = None
         self.searchTerm = None
         self.userTitle = None
+        self.visible = True
         self._init_restore()
         self.dd.addAfterCursor(self)
         self.generateFeed(True)
@@ -650,6 +456,109 @@ class Feed(DDBObject):
         self.itemSortDownloading = sorts.ItemSort()
         self.itemSortWatchable = sorts.ItemSortUnwatchedFirst()
         self.inlineSearchTerm = None
+        self.calc_item_list()
+
+    def calc_item_list(self):
+        self.items = views.toplevelItems.filterWithIndex(indexes.itemsByFeed, self.id)
+        self.downloadedItems = self.items.filter(lambda x: x.is_downloaded())
+        self.availableItems = self.items.filter(lambda x: x.get_state() == 'new')
+        self.unwatchedItems = self.items.filter(lambda x: x.get_state() == 'newly-downloaded')
+        self.downloadedItems.addAddCallback(self._item_view_callback)
+        self.downloadedItems.addRemoveCallback(self._item_view_callback)
+        self.availableItems.addAddCallback(self._item_view_callback)
+        self.availableItems.addRemoveCallback(self._item_view_callback)
+        self.unwatchedItems.addAddCallback(self._item_view_callback)
+        self.unwatchedItems.addRemoveCallback(self._item_view_callback)
+
+    def _item_view_callback(self, obj, id):
+        self.signalChange(needsSignalFolder=True)
+
+    def num_downloaded(self):
+        """Returns the number of downloaded items in the feed.
+        """
+        return len(self.downloadedItems)
+
+    def numUnwatched(self):
+        """Returns string with number of unwatched videos in feed
+        """
+        return len(self.unwatchedItems)
+
+    def numAvailable(self):
+        """Returns string with number of available videos in feed
+        """
+        return len([item for item in self.availableItems
+                    if not item.is_pending_auto_download()])
+
+    def markAsViewed(self):
+        """Sets the last time the feed was viewed to now
+        """
+        self.lastViewed = datetime.now()
+        for item in self.items:
+            if item.get_state() == "new":
+                item.signalChange(needsSave=False)
+
+        self.signalChange()
+
+    def startManualDownload(self):
+        next = None
+        for item in self.items:
+            if item.is_pending_manual_download():
+                if next is None:
+                    next = item
+                elif item.get_pub_date_parsed() > next.get_pub_date_parsed():
+                    next = item
+        if next is not None:
+            next.download(autodl = False)
+
+    def startAutoDownload(self):
+        next = None
+        for item in self.items:
+            if item.isEligibleForAutoDownload():
+                if next is None:
+                    next = item
+                elif item.get_pub_date_parsed() > next.get_pub_date_parsed():
+                    next = item
+        if next is not None:
+            next.download(autodl = True)
+
+    def expire_items(self):
+        """Returns marks expired items as expired
+        """
+        for item in self.items:
+            expireTime = item.getExpirationTime()
+            if (item.get_state() == 'expiring' and expireTime is not None and
+                    expireTime < datetime.now()):
+                item.expire()
+
+    def signalItems (self):
+        for item in self.items:
+            item.signalChange(needsSave=False)
+
+    def iconChanged(self, needsSave=True):
+        """See item.getThumbnail to figure out which items to send signals for.
+        """
+        self.signalChange(needsSave=needsSave)
+        for item in self.items:
+            if not (item.iconCache.isValid() or
+                    item.screenshot or
+                    item.isContainerItem):
+                item.signalChange(needsSave=False)
+
+    def getNewItems(self):
+        """Returns the number of new items with the feed
+        """
+        self.confirmDBThread()
+        count = 0
+        for item in self.items:
+            try:
+                if item.get_state() == u'newly-downloaded':
+                    count += 1
+            except (SystemExit, KeyboardInterrupt):
+                raise
+            except:
+                pass
+        return count
+
 
     def setInlineSearchTerm(self, term):
         self.inlineSearchTerm = term
@@ -707,6 +616,18 @@ class Feed(DDBObject):
         """Set the baseTitle.
         """
         self.baseTitle = title
+        self.signalChange()
+
+    def isVisible(self):
+        """Returns true iff feed should be visible
+        """
+        self.confirmDBThread()
+        return self.visible
+
+    def setVisible(self, visible):
+        if self.visible == visible:
+            return
+        self.visible = visible
         self.signalChange()
 
     @returnsUnicode
@@ -875,18 +796,23 @@ class Feed(DDBObject):
         newFeed = None
         if self.origURL == u"dtv:directoryfeed":
             newFeed = DirectoryFeedImpl(self)
+            self.visible = False
         elif (self.origURL.startswith(u"dtv:directoryfeed:")):
             url = self.origURL[len(u"dtv:directoryfeed:"):]
             dir_ = unmakeURLSafe(url)
             newFeed = DirectoryWatchFeedImpl(self, dir_)
         elif self.origURL == u"dtv:search":
             newFeed = SearchFeedImpl(self)
+            self.visible = False
         elif self.origURL == u"dtv:searchDownloads":
             newFeed = SearchDownloadsFeedImpl(self)
+            self.visible = False
         elif self.origURL == u"dtv:manualFeed":
             newFeed = ManualFeedImpl(self)
+            self.visible = False
         elif self.origURL == u"dtv:singleFeed":
             newFeed = SingleFeedImpl(self)
+            self.visible = False
         elif self.origURL.startswith(u"dtv:multi:"):
             newFeed = RSSMultiFeedImpl(self.origURL, self)
         elif self.origURL.startswith(u"dtv:searchTerm:"):
@@ -1098,8 +1024,110 @@ class Feed(DDBObject):
     def getActualFeed(self):
         return self.actualFeed
 
-    def __getattr__(self, attr):
-        return getattr(self.actualFeed, attr)
+    # Many attributes come from whatever FeedImpl subclass we're using.
+    def attr_from_feed_impl(name):
+        def getter(self):
+            return getattr(self.actualFeed, name)
+        return property(getter)
+
+    for name in ( 'setUpdateFrequency', 'scheduleUpdateEvents',
+            'cancelUpdateEvents', 'update', 'get_viewed', 'isLoading',
+            'hasLibrary', 'get_title', 'getURL', 'getBaseURL',
+            'getBaseHref', 'get_description', 'get_link', 'getLibraryLink',
+            'getThumbnailURL', 'get_license', 'url', 'title', 'created',
+            'lastViewed', 'thumbURL', 'lastEngine', 'lastQuery'):
+        locals()[name] = attr_from_feed_impl(name)
+
+    @returnsUnicode
+    def get_expiration_type(self):
+        """Returns "feed," "system," or "never"
+        """
+        self.confirmDBThread()
+        return self.expire
+
+    def getMaxFallBehind(self):
+        """Returns"unlimited" or the maximum number of items this feed can fall
+        behind
+        """
+        self.confirmDBThread()
+        if self.fallBehind < 0:
+            return u"unlimited"
+        else:
+            return self.fallBehind
+
+    def get_max_new(self):
+        """Returns "unlimited" or the maximum number of items this feed wants
+        """
+        self.confirmDBThread()
+        if self.maxNew < 0:
+            return u"unlimited"
+        else:
+            return self.maxNew
+
+    def get_max_old_items(self):
+        """Returns the number of items to remember past the current contents of
+        the feed.  If self.maxOldItems is None, then this returns "system"
+        indicating that the caller should look up the default in
+        prefs.MAX_OLD_ITEMS_DEFAULT.
+        """
+        self.confirmDBThread()
+        if self.maxOldItems is None:
+            return u"system"
+
+        return self.maxOldItems
+
+    def get_expiration_time(self):
+        """Returns the total absolute expiration time in hours.
+        WARNING: 'system' and 'never' expiration types return 0
+        """
+        self.confirmDBThread()
+        expireAfterSetting = config.get(prefs.EXPIRE_AFTER_X_DAYS)
+        if (self.expireTime is None or self.expire == 'never' or
+                (self.expire == 'system' and expireAfterSetting <= 0)):
+            return 0
+        else:
+            return (self.expireTime.days * 24 +
+                    self.expireTime.seconds / 3600)
+
+    def getExpireDays(self):
+        """Returns the number of days until a video expires
+        """
+        self.confirmDBThread()
+        try:
+            return self.expireTime.days
+        except (SystemExit, KeyboardInterrupt):
+            raise
+        except:
+            return timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS)).days
+
+    def getExpireHours(self):
+        """Returns the number of hours until a video expires
+        """
+        self.confirmDBThread()
+        try:
+            return int(self.expireTime.seconds/3600)
+        except (SystemExit, KeyboardInterrupt):
+            raise
+        except:
+            return int(timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS)).seconds/3600)
+
+    def getExpires(self):
+        expireAfterSetting = config.get(prefs.EXPIRE_AFTER_X_DAYS)
+        return (self.expireTime is None or self.expire == 'never' or
+                (self.expire == 'system' and expireAfterSetting <= 0))
+
+    def isAutoDownloadable(self):
+        """Returns true iff item is autodownloadable
+        """
+        self.confirmDBThread()
+        return self.autoDownloadable
+
+    def autoDownloadStatus(self):
+        status = self.isAutoDownloadable()
+        if status:
+            return u"ON"
+        else:
+            return u"OFF"
 
     def remove(self, moveItemsTo=None):
         """Remove the feed.  If moveItemsTo is None (the default), the items
@@ -1184,6 +1212,7 @@ class Feed(DDBObject):
 
     def onRestore(self):
         DDBObject.onRestore(self)
+        restored_feeds.append(self)
         if self.iconCache == None:
             self.iconCache = iconcache.IconCache(self, is_vital = True)
         else:
@@ -1221,8 +1250,8 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
     """
     firstImageRE = re.compile('\<\s*img\s+[^>]*src\s*=\s*"(.*?)"[^>]*\>', re.I | re.M)
 
-    def __init__(self, url, ufeed, title, visible):
-        FeedImpl.__init__(self, url, ufeed, title, visible=visible)
+    def __init__(self, url, ufeed, title):
+        FeedImpl.__init__(self, url, ufeed, title)
         self.scheduleUpdateEvents(0)
 
     def _handleNewEntryForItem(self, item, entry, fp_values, channelTitle):
@@ -1361,7 +1390,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                 else:
                     item.eligibleForAutoDownload = False
                 item.signalChange()
-            if self.isAutoDownloadable():
+            if self.ufeed.isAutoDownloadable():
                 self.ufeed.markAsViewed()
             self.ufeed.signalChange()
 
@@ -1377,7 +1406,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         Items are only truncated if they don't exist in the feed anymore, and
         if the user hasn't downloaded them.
         """
-        limit = self.get_max_old_items()
+        limit = self.ufeed.get_max_old_items()
         if limit == u"system":
             limit = config.get(prefs.MAX_OLD_ITEMS_DEFAULT)
 
@@ -1416,8 +1445,8 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
 
 class RSSFeedImpl(RSSFeedImplBase):
 
-    def __init__(self, url, ufeed, title=None, initialHTML=None, etag=None, modified=None, visible=True):
-        RSSFeedImplBase.__init__(self, url, ufeed, title, visible)
+    def __init__(self, url, ufeed, title=None, initialHTML=None, etag=None, modified=None):
+        RSSFeedImplBase.__init__(self, url, ufeed, title)
         self.initialHTML = initialHTML
         self.etag = etag
         self.modified = modified
@@ -1595,8 +1624,8 @@ class RSSFeedImpl(RSSFeedImplBase):
         self.update()
 
 class RSSMultiFeedImpl(RSSFeedImplBase):
-    def __init__(self, url, ufeed, title=None, visible=True):
-        RSSFeedImplBase.__init__(self, url, ufeed, title, visible)
+    def __init__(self, url, ufeed, title=None):
+        RSSFeedImplBase.__init__(self, url, ufeed, title)
         self.oldItems = []
         self.etag = {}
         self.modified = {}
@@ -1762,48 +1791,11 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         self.update()
 
 
-class Collection(FeedImpl):
-    """A DTV Collection of items -- similar to a playlist
-    """
-    def __init__(self, ufeed, title=None):
-        FeedImpl.__init__(self, ufeed, url="dtv:collection", title=title, visible=False)
-
-    def addItem(self, item):
-        """Adds an item to the collection
-        """
-        if isinstance(item, itemmod.Item):
-            self.ufeed.confirmDBThread()
-            self.removeItem(item)
-            self.items.append(item)
-            return True
-        else:
-            return False
-
-    def moveItem(self, item, pos):
-        """Moves an item to another spot in the collection
-        """
-        self.ufeed.confirmDBThread()
-        self.removeItem(item)
-        if pos < len(self.items):
-            self.items[pos:pos] = [item]
-        else:
-            self.items.append(item)
-
-    def removeItem(self, item):
-        """Removes an item from the collection
-        """
-        self.ufeed.confirmDBThread()
-        for x in range(0, len(self.items)):
-            if self.items[x] == item:
-                self.items[x:x+1] = []
-                break
-        return True
-
 class ScraperFeedImpl(ThrottledUpdateFeedImpl):
     """A feed based on un unformatted HTML or pre-enclosure RSS
     """
-    def __init__(self, url, ufeed, title=None, visible=True, initialHTML=None, etag=None, modified=None, charset=None):
-        FeedImpl.__init__(self, url, ufeed, title, visible)
+    def __init__(self, url, ufeed, title=None, initialHTML=None, etag=None, modified=None, charset=None):
+        FeedImpl.__init__(self, url, ufeed, title)
         self.initialHTML = initialHTML
         self.initialCharset = charset
         self.linkHistory = {}
@@ -2074,7 +2066,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
         self.tempHistory = {}
 
 class DirectoryWatchFeedImpl(FeedImpl):
-    def __init__(self, ufeed, directory, visible=True):
+    def __init__(self, ufeed, directory):
         self.dir = directory
         self.firstUpdate = True
         if directory is not None:
@@ -2085,7 +2077,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
         if title[-1] == '/':
             title = title[:-1]
         title = filenameToUnicode(os.path.basename(title)) + "/"
-        FeedImpl.__init__(self, url=url, ufeed=ufeed, title=title, visible=visible)
+        FeedImpl.__init__(self, url=url, ufeed=ufeed, title=title)
 
         self.setUpdateFrequency(5)
         self.scheduleUpdateEvents(0)
@@ -2100,12 +2092,6 @@ class DirectoryWatchFeedImpl(FeedImpl):
         if newFreq != self.updateFreq:
             self.updateFreq = newFreq
             self.scheduleUpdateEvents(-1)
-
-    def setVisible(self, visible):
-        if self.visible == visible:
-            return
-        self.visible = visible
-        self.signalChange()
 
     def update(self):
         self.ufeed.confirmDBThread()
@@ -2153,7 +2139,7 @@ class DirectoryFeedImpl(FeedImpl):
     will continue to remember movies in the old folder.
     """
     def __init__(self, ufeed):
-        FeedImpl.__init__(self, url=u"dtv:directoryfeed", ufeed=ufeed, title=u"Feedless Videos", visible=False)
+        FeedImpl.__init__(self, url=u"dtv:directoryfeed", ufeed=ufeed,title=u"Feedless Videos")
 
         self.setUpdateFrequency(5)
         self.scheduleUpdateEvents(0)
@@ -2223,7 +2209,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
     """Search and Search Results feeds
     """
     def __init__(self, ufeed):
-        RSSMultiFeedImpl.__init__(self, url=u'', ufeed=ufeed, title=u'dtv:search', visible=False)
+        RSSMultiFeedImpl.__init__(self, url=u'', ufeed=ufeed, title=u'dtv:search')
         self.initialUpdate = True
         self.setUpdateFrequency(-1)
         self.searching = False
@@ -2345,7 +2331,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
 class SearchDownloadsFeedImpl(FeedImpl):
     def __init__(self, ufeed):
         FeedImpl.__init__(self, url=u'dtv:searchDownloads', ufeed=ufeed,
-                title=None, visible=False)
+                title=None)
         self.setUpdateFrequency(-1)
 
     @returnsUnicode
@@ -2358,7 +2344,7 @@ class ManualFeedImpl(FeedImpl):
     """
     def __init__(self, ufeed):
         FeedImpl.__init__(self, url=u'dtv:manualFeed', ufeed=ufeed,
-                title=None, visible=False)
+                title=None)
         self.ufeed.expire = u'never'
         self.setUpdateFrequency(-1)
         self.lastViewed = datetime.max
@@ -2377,7 +2363,7 @@ class SingleFeedImpl(FeedImpl):
     """
     def __init__(self, ufeed):
         FeedImpl.__init__(self, url=u'dtv:singleFeed', ufeed=ufeed,
-                title=None, visible=False)
+                title=None)
         self.ufeed.expire = u'never'
         self.setUpdateFrequency(-1)
 
