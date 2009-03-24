@@ -49,6 +49,7 @@ from miro import config
 from miro import controller
 from miro import database
 from miro import databaseupgrade
+from miro import ddblinks
 from miro import downloader
 from miro import eventloop
 from miro import fileutil
@@ -179,6 +180,7 @@ def finish_startup():
             {"appname": config.get(prefs.SHORT_APP_NAME)},
         )
         raise StartupError(summary, description)
+    ddblinks.setup_links()
     database.defaultDatabase.recomputeFilters()
 
     searchengines.create_engines()

@@ -1832,6 +1832,29 @@ def upgrade76(objectList):
             changed.add(o)
     return changed
 
+def upgrade77(objectList):
+    """Drop ufeed and actualFeed attributes, replace them with id values."""
+    changed = set()
+    last_id = 0
+    feeds = []
+    for o in objectList:
+        last_id = max(o.savedData['id'], last_id)
+        if o.classString == 'feed':
+            feeds.append(o)
+
+    next_id = last_id + 1
+    for feed in feeds:
+        feed_impl = feed.savedData['actualFeed']
+        feed_impl.savedData['ufeed_id'] = feed.savedData['id']
+        feed.savedData['feed_impl_id'] = feed_impl.savedData['id'] = next_id
+        del feed_impl.savedData['ufeed']
+        del feed.savedData['actualFeed']
+        changed.add(feed)
+        changed.add(feed_impl)
+        objectList.append(feed_impl)
+        next_id += 1
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

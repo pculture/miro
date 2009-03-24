@@ -344,7 +344,7 @@ class FeedSchema(DDBObjectSchema):
         ('baseTitle', SchemaString(noneOk=True)),
         ('errorState', SchemaBool()),
         ('loading', SchemaBool()),
-        ('actualFeed', SchemaObject(FeedImpl)),
+        ('feed_impl_id', SchemaInt()),
         ('iconCache', SchemaObject(IconCache, noneOk=True)),
         ('folder_id', SchemaInt(noneOk=True)),
         ('searchTerm', SchemaString(noneOk=True)),
@@ -360,12 +360,12 @@ class FeedSchema(DDBObjectSchema):
         ('visible', SchemaBool()),
     ]
 
-class FeedImplSchema(ObjectSchema):
+class FeedImplSchema(DDBObjectSchema):
     klass = FeedImpl
     classString = 'field-impl'
-    fields = [
+    fields = DDBObjectSchema.fields + [
         ('url', SchemaURL()),
-        ('ufeed', SchemaObject(Feed)),
+        ('ufeed_id', SchemaInt()),
         ('title', SchemaString(noneOk=True)),
         ('created', SchemaDateTime()),
         ('lastViewed', SchemaDateTime()),
@@ -527,7 +527,7 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
         ('list_view_displays', SchemaList(SchemaBinary())),
     ]
 
-VERSION = 76
+VERSION = 77
 objectSchemas = [
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,

@@ -202,7 +202,7 @@ config.add_change_callback(_config_change)
 # Wait X seconds before updating the feeds at startup
 INITIAL_FEED_UPDATE_DELAY = 5.0
 
-class FeedImpl:
+class FeedImpl(DDBObject):
     """Actual implementation of a basic feed.
     """
     def __init__(self, url, ufeed, title=None):
@@ -211,6 +211,7 @@ class FeedImpl:
             checkU(title)
         self.url = url
         self.ufeed = ufeed
+        self.ufeed_id = ufeed.id
         self.title = title
         self.created = datetime.now()
         self.updating = False
@@ -218,6 +219,7 @@ class FeedImpl:
         self.thumbURL = default_feed_icon_url()
         self.initialUpdate = True
         self.updateFreq = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)*60
+        DDBObject.__init__(self)
 
     def _get_items(self):
         return self.ufeed.items
@@ -274,16 +276,6 @@ class FeedImpl:
         """Returns true iff this feed has been looked at
         """
         return self.lastViewed != datetime.min
-
-    def getID(self):
-        """Returns the ID of the actual feed, never that of the UniversalFeed wrapper
-        """
-        try:
-            return self.ufeed.getID()
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            logging.info ("%s has no ufeed", self)
 
     def isLoading(self):
         """Returns true iff the feed is loading. Only makes sense in the
@@ -426,7 +418,7 @@ class Feed(DDBObject):
         self.origURL = url
         self.errorState = False
         self.loading = True
-        self.actualFeed = FeedImpl(url, self)
+        self._set_feed_impl(FeedImpl(url, self))
         self.iconCache = iconcache.IconCache(self, is_vital=True)
         self.informOnError = True
         self.folder_id = None
@@ -436,6 +428,10 @@ class Feed(DDBObject):
         self._init_restore()
         self.dd.addAfterCursor(self)
         self.generateFeed(True)
+
+    def _set_feed_impl(self, feed_impl):
+        self.actualFeed = feed_impl
+        self.feed_impl_id = feed_impl.id
 
     def signalChange(self, needsSave=True, needsSignalFolder=False):
         if needsSignalFolder:
@@ -472,6 +468,14 @@ class Feed(DDBObject):
 
     def _item_view_callback(self, obj, id):
         self.signalChange(needsSignalFolder=True)
+
+    def update_after_restore(self):
+        if self.actualFeed.__class__ == FeedImpl:
+            # Our initial FeedImpl was never updated, call generateFeed again
+            self.loading = True
+            eventloop.addIdle(lambda:self.generateFeed(True), "generateFeed")
+        else:
+            self.scheduleUpdateEvents(INITIAL_FEED_UPDATE_DELAY)
 
     def num_downloaded(self):
         """Returns the number of downloaded items in the feed.
@@ -984,7 +988,7 @@ class Feed(DDBObject):
         self.confirmDBThread()
         self.loading = False
         if feedImpl is not None:
-            self.actualFeed = feedImpl
+            self._set_feed_impl(feedImpl)
             self.errorState = False
         else:
             self.errorState = True
@@ -1220,10 +1224,6 @@ class Feed(DDBObject):
             self.iconCache.requestUpdate(True)
         self.informOnError = False
         self._init_restore()
-        if self.actualFeed.__class__ == FeedImpl:
-            # Our initial FeedImpl was never updated, call generateFeed again
-            self.loading = True
-            eventloop.addIdle(lambda:self.generateFeed(True), "generateFeed")
 
     def __str__(self):
         return "Feed - %s" % self.get_title()
@@ -2544,5 +2544,5 @@ def start_updates():
         return
     for feed in restored_feeds:
         if feed.idExists():
-            feed.scheduleUpdateEvents(INITIAL_FEED_UPDATE_DELAY)
+            feed.update_after_restore()
     restored_feeds = []
