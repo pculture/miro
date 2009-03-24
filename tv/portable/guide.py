@@ -65,7 +65,6 @@ class ChannelGuide(DDBObject):
             self.history = []
 
         DDBObject.__init__(self)
-        self.download_guide()
 
     def onRestore(self):
         DDBObject.onRestore(self)
@@ -76,8 +75,6 @@ class ChannelGuide(DDBObject):
             self.iconCache = iconcache.IconCache(self, is_vital=True)
         else:
             self.iconCache.dbItem = self
-
-        self.download_guide()
 
     def __str__(self):
         return "Miro Guide <%s>" % self.url
@@ -241,3 +238,7 @@ class GuideHTMLParser(HTMLParser):
 
 def getGuideByURL(url):
     return views.guides.getItemWithIndex(indexes.guidesByURL, url)
+
+def download_guides():
+    for guide in views.guides:
+        guide.download_guide()

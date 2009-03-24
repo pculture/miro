@@ -52,6 +52,7 @@ from miro import databaseupgrade
 from miro import downloader
 from miro import eventloop
 from miro import fileutil
+from miro import guide
 from miro import iconcache
 from miro import indexes
 from miro import item
@@ -229,6 +230,7 @@ def reconnect_downloaders():
     # raise StartupError("Test Error", "Startup Failed")
     item.reconnect_downloaders()
     downloader.initController()
+    guide.download_guides()
     messages.StartupSuccess().send_to_frontend()
 
 @eventloop.idle_iterator
