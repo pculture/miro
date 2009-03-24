@@ -47,7 +47,7 @@ from miro.feedparserutil import normalize_feedparser_dict
 from miro.database import DDBObject, ObjectNotFoundError
 from miro.database import DatabaseConstraintError
 from miro.databasehelper import makeSimpleGetSet
-from miro.iconcache import IconCache
+from miro import iconcache
 from miro import downloader
 from miro import config
 from miro import eventloop
@@ -278,6 +278,8 @@ class Item(DDBObject):
     associated with it.
     """
 
+    ICON_CACHE_VITAL = False
+
     def __init__(self, entry, linkNumber=0, feed_id=None, parent_id=None):
         self.feed_id = feed_id
         self.parent_id = parent_id
@@ -300,7 +302,7 @@ class Item(DDBObject):
         self.resumeTime = 0
         self.channelTitle = None
 
-        self.iconCache = IconCache(self)
+        iconcache.setup_icon_cache(self)
 
         # linkNumber is a hack to make sure that scraped items at the
         # top of a page show up before scraped items at the bottom of
@@ -317,11 +319,6 @@ class Item(DDBObject):
         """Called by pickle during serialization.
         """
         DDBObject.onRestore(self)
-        if (self.iconCache == None):
-            self.iconCache = IconCache (self)
-        else:
-            self.iconCache.dbItem = self
-            self.iconCache.requestUpdate()
         # For unknown reason(s), some users still have databases with item
         # objects missing the isContainerItem attribute even after
         # a db upgrade (#8819).
@@ -845,8 +842,8 @@ class Item(DDBObject):
         the right set of items.
         """
         self.confirmDBThread()
-        if self.iconCache is not None and self.iconCache.isValid():
-            path = self.iconCache.get_filename()
+        if self.icon_cache is not None and self.icon_cache.isValid():
+            path = self.icon_cache.get_filename()
             return resources.path(fileutil.expand_filename(path))
         elif self.screenshot:
             path = self.screenshot
@@ -1197,7 +1194,7 @@ class Item(DDBObject):
         """
         UandA = self.getUandA()
         FeedParserValues(entry).update_item(self)
-        self.iconCache.requestUpdate()
+        self.icon_cache.requestUpdate()
         self._update_release_date()
         self.signalChange()
 
@@ -1281,9 +1278,7 @@ class Item(DDBObject):
     def remove(self):
         if self.downloader is not None:
             self.set_downloader(None)
-        if self.iconCache is not None:
-            self.iconCache.remove()
-            self.iconCache = None
+        iconcache.remove_icon_cache(self)
         if self.isContainerItem:
             for item in self.getChildren():
                 item.remove()

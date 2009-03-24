@@ -62,7 +62,7 @@ class SchemaItem(object):
     """SchemaItem represents a single attribute that gets stored on disk.
 
     SchemaItem is an abstract class.  Subclasses of SchemaItem such as
-    SchemaAttr, SchemaObject, SchemaList are used in actual object schemas.
+    SchemaAttr, SchemaList are used in actual object schemas.
 
     Member variables:
         noneOk -- specifies if None is a valid value for this attribute
@@ -273,10 +273,10 @@ class DDBObjectSchema(ObjectSchema):
         ('id', SchemaInt())
     ]
 
-class IconCacheSchema (ObjectSchema):
+class IconCacheSchema (DDBObjectSchema):
     klass = IconCache
     classString = 'icon-cache'
-    fields = [
+    fields = DDBObjectSchema.fields + [
         ('etag', SchemaString(noneOk=True)),
         ('modified', SchemaString(noneOk=True)),
         ('filename', SchemaFilename(noneOk=True)),
@@ -299,7 +299,7 @@ class ItemSchema(DDBObjectSchema):
         ('keep', SchemaBool()),
         ('creationTime', SchemaDateTime()),
         ('linkNumber', SchemaInt(noneOk=True)),
-        ('iconCache', SchemaObject(IconCache, noneOk=True)),
+        ('icon_cache_id', SchemaInt(noneOk=True)),
         ('downloadedTime', SchemaDateTime(noneOk=True)),
         ('watchedTime', SchemaDateTime(noneOk=True)),
         ('isContainerItem', SchemaBool(noneOk=True)),
@@ -345,7 +345,7 @@ class FeedSchema(DDBObjectSchema):
         ('errorState', SchemaBool()),
         ('loading', SchemaBool()),
         ('feed_impl_id', SchemaInt()),
-        ('iconCache', SchemaObject(IconCache, noneOk=True)),
+        ('icon_cache_id', SchemaInt(noneOk=True)),
         ('folder_id', SchemaInt(noneOk=True)),
         ('searchTerm', SchemaString(noneOk=True)),
         ('userTitle', SchemaString(noneOk=True)),
@@ -508,7 +508,7 @@ class ChannelGuideSchema(DDBObjectSchema):
         ('favicon', SchemaURL(noneOk=True)),
         ('title', SchemaString(noneOk=True)),
         ('userTitle', SchemaString(noneOk=True)),
-        ('iconCache', SchemaObject(IconCache, noneOk=True)),
+        ('icon_cache_id', SchemaInt(noneOk=True)),
         ('firstTime', SchemaBool()),
     ]
 
@@ -527,7 +527,7 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
         ('list_view_displays', SchemaList(SchemaBinary())),
     ]
 
-VERSION = 77
+VERSION = 78
 objectSchemas = [
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,

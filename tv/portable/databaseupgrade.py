@@ -1855,6 +1855,30 @@ def upgrade77(objectList):
         next_id += 1
     return changed
 
+def upgrade78(objectList):
+    """Drop iconCache attribute.  Replace it with icon_cache_id.  Make
+    IconCache objects into top-level entities.
+    """
+    changed = set()
+    last_id = 0
+    icon_cache_containers = []
+
+    for o in objectList:
+        last_id = max(o.savedData['id'], last_id)
+        if o.classString in ('feed', 'item', 'file-item', 'channel-guide'):
+            icon_cache_containers.append(o)
+
+    next_id = last_id + 1
+    for obj in icon_cache_containers:
+        icon_cache = obj.savedData['iconCache']
+        obj.savedData['icon_cache_id'] = icon_cache.savedData['id'] = next_id
+        del obj.savedData['iconCache']
+        changed.add(obj)
+        changed.add(icon_cache)
+        objectList.append(icon_cache)
+        next_id += 1
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

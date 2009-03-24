@@ -46,8 +46,27 @@ def setup_links():
     for obj in app.db:
         if isinstance(obj, feed.Feed):
             obj.actualFeed = om.feed_impls[obj.feed_impl_id]
+            _setup_icon_cache(obj, om)
         elif isinstance(obj, feed.FeedImpl):
             obj.ufeed = om.feeds[obj.ufeed_id]
+        elif isinstance(obj, item.Item):
+            _setup_icon_cache(obj, om)
+        elif isinstance(obj, guide.ChannelGuide):
+            _setup_icon_cache(obj, om)
+
+def _setup_icon_cache(obj, om):
+    if obj.icon_cache_id is not None:
+        try:
+            obj.icon_cache = om.icon_caches[obj.icon_cache_id]
+        except KeyError:
+            logging.warn("Icon Cache Not in database for %s (id: %s)" %
+                    (obj, obj.icon_cache_id))
+        else:
+            obj.icon_cache.dbItem = obj
+            obj.icon_cache.requestUpdate()
+            return
+
+    obj.icon_cache = iconcache.IconCache(obj)
 
 class ObjectMap:
     """Maps object ids to the associated objects.
@@ -60,9 +79,18 @@ class ObjectMap:
     def __init__(self):
         self.feeds = {}
         self.feed_impls = {}
+        self.icon_caches = {}
+        self.items = {}
+        self.guides = {}
 
         for obj in app.db:
             if isinstance(obj, feed.Feed):
                 self.feeds[obj.id] = obj
             elif isinstance(obj, feed.FeedImpl):
                 self.feed_impls[obj.id] = obj
+            elif isinstance(obj, iconcache.IconCache):
+                self.icon_caches[obj.id] = obj
+            elif isinstance(obj, item.Item):
+                self.items[obj.id] = obj
+            elif isinstance(obj, guide.ChannelGuide):
+                self.guides[obj.id] = obj

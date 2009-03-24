@@ -45,6 +45,8 @@ from miro import fileutil
 HTMLPattern = re.compile("^.*(<head.*?>.*</body\s*>)", re.S)
 
 class ChannelGuide(DDBObject):
+    ICON_CACHE_VITAL = True
+
     def __init__(self, url, allowedURLs=None):
         checkU(url)
         # FIXME - clean up the allowedURLs thing here
@@ -54,7 +56,7 @@ class ChannelGuide(DDBObject):
         self.title = None
         self.userTitle = None
         self.lastVisitedURL = None
-        self.iconCache = iconcache.IconCache(self, is_vital=True)
+        iconcache.setup_icon_cache(self)
         self.favicon = None
         self.firstTime = True
         if url:
@@ -71,18 +73,12 @@ class ChannelGuide(DDBObject):
         self.lastVisitedURL = None
         self.historyLocation = None
         self.history = []
-        if self.iconCache == None:
-            self.iconCache = iconcache.IconCache(self, is_vital=True)
-        else:
-            self.iconCache.dbItem = self
 
     def __str__(self):
         return "Miro Guide <%s>" % self.url
 
     def remove(self):
-        if self.iconCache is not None:
-            self.iconCache.remove()
-            self.iconCache = None
+        iconcache.remove_icon_cache(self)
         DDBObject.remove(self)
 
     def getURL(self):
@@ -144,12 +140,12 @@ class ChannelGuide(DDBObject):
                 self.title = unicode(parser.title)
             if parser.favicon and unicode(parser.favicon) != self.favicon:
                 self.favicon = unicode(parser.favicon)
-                self.iconCache.requestUpdate(True)
+                self.icon_cache.requestUpdate(True)
 
         if self.favicon is None:
             parsed = urlparse(self.updated_url)
             self.favicon = parsed[0] + u"://" + parsed[1] + u"/favicon.ico"
-            self.iconCache.requestUpdate(True)
+            self.icon_cache.requestUpdate(True)
 
         self.extendHistory(self.updated_url)
         self.signalChange()
@@ -165,8 +161,8 @@ class ChannelGuide(DDBObject):
         """Returns the path to the favicon file.  It's either the favicon of
         the site or the default icon image.
         """
-        if self.iconCache and self.iconCache.get_filename():
-            return fileutil.expand_filename(self.iconCache.get_filename())
+        if self.icon_cache and self.icon_cache.get_filename():
+            return fileutil.expand_filename(self.icon_cache.get_filename())
         return resources.path("images/icon-site.png")
 
     def iconChanged(self, needsSave=True):

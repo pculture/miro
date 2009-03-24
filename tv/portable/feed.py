@@ -384,6 +384,8 @@ class Feed(DDBObject):
 
     It works by passing on attributes to the actual feed.
     """
+    ICON_CACHE_VITAL = True
+
     def __init__(self, url,
                  initiallyAutoDownloadable=None, section=u'video'):
         DDBObject.__init__(self, add=False)
@@ -419,7 +421,7 @@ class Feed(DDBObject):
         self.errorState = False
         self.loading = True
         self._set_feed_impl(FeedImpl(url, self))
-        self.iconCache = iconcache.IconCache(self, is_vital=True)
+        iconcache.setup_icon_cache(self)
         self.informOnError = True
         self.folder_id = None
         self.searchTerm = None
@@ -543,7 +545,7 @@ class Feed(DDBObject):
         """
         self.signalChange(needsSave=needsSave)
         for item in self.items:
-            if not (item.iconCache.isValid() or
+            if not (item.icon_cache.isValid() or
                     item.screenshot or
                     item.isContainerItem):
                 item.signalChange(needsSave=False)
@@ -1152,24 +1154,22 @@ class Feed(DDBObject):
                 item.setFeed(moveItemsTo.getID())
             else:
                 item.remove()
-        if self.iconCache is not None:
-            self.iconCache.remove()
-            self.iconCache = None
+        iconcache.remove_icon_cache(self)
         DDBObject.remove(self)
         self.actualFeed.onRemove()
 
     def thumbnailValid(self):
-        return self.iconCache and self.iconCache.isValid()
+        return self.icon_cache and self.icon_cache.isValid()
 
     def calcThumbnail(self):
         if self.thumbnailValid():
-            return fileutil.expand_filename(self.iconCache.get_filename())
+            return fileutil.expand_filename(self.icon_cache.get_filename())
         else:
             return default_feed_icon_path()
 
     def calcTablistThumbnail(self):
         if self.thumbnailValid():
-            return fileutil.expand_filename(self.iconCache.get_filename())
+            return fileutil.expand_filename(self.icon_cache.get_filename())
         else:
             return default_tablist_feed_icon_path()
 
@@ -1210,18 +1210,13 @@ class Feed(DDBObject):
     def updateIcons(self):
         iconcache.iconCacheUpdater.clear_vital()
         for item in self.items:
-            item.iconCache.requestUpdate(True)
+            item.icon_cache.requestUpdate(True)
         for feed in views.feeds:
-            feed.iconCache.requestUpdate(True)
+            feed.icon_cache.requestUpdate(True)
 
     def onRestore(self):
         DDBObject.onRestore(self)
         restored_feeds.append(self)
-        if self.iconCache == None:
-            self.iconCache = iconcache.IconCache(self, is_vital = True)
-        else:
-            self.iconCache.dbItem = self
-            self.iconCache.requestUpdate(True)
         self.informOnError = False
         self._init_restore()
 
@@ -1315,7 +1310,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             if (parsed.feed.has_key('image') and
                     parsed.feed.image.has_key('url')):
                 self.thumbURL = parsed.feed.image.url
-                self.ufeed.iconCache.requestUpdate(is_vital=True)
+                self.ufeed.icon_cache.requestUpdate(is_vital=True)
 
         items_byid = {}
         items_byURLTitle = {}
@@ -2262,9 +2257,9 @@ class SearchFeedImpl(RSSMultiFeedImpl):
             self.etag = {}
             self.modified = {}
             self.title = self.url
-            self.ufeed.iconCache.reset()
+            self.ufeed.icon_cache.reset()
             self.thumbURL = default_feed_icon_url()
-            self.ufeed.iconCache.requestUpdate(is_vital=True)
+            self.ufeed.icon_cache.requestUpdate(is_vital=True)
         finally:
             self.ufeed.signalChange()
         if was_searching:

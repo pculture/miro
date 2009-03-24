@@ -30,6 +30,7 @@ import os
 from miro import httpclient
 from fasttypes import LinkedList
 from miro import eventloop
+from miro.database import DDBObject
 from miro.download_utils import nextFreeFilename, getFileURLPath
 from miro.util import unicodify
 from miro.plat.utils import unicodeToFilename
@@ -46,20 +47,20 @@ RUNNING_MAX = 3
 def clear_orphans():
     knownIcons = set()
     for item in views.items:
-        if item.iconCache and item.iconCache.filename:
-            knownIcons.add(os.path.normcase(fileutil.expand_filename(item.iconCache.filename)))
+        if item.icon_cache and item.icon_cache.filename:
+            knownIcons.add(os.path.normcase(fileutil.expand_filename(item.icon_cache.filename)))
 
     yield None
 
     for feed in views.feeds:
-        if feed.iconCache and feed.iconCache.filename:
-            knownIcons.add(os.path.normcase(fileutil.expand_filename(feed.iconCache.filename)))
+        if feed.icon_cache and feed.icon_cache.filename:
+            knownIcons.add(os.path.normcase(fileutil.expand_filename(feed.icon_cache.filename)))
 
     yield None
 
     for site in views.sites:
-        if site.iconCache and site.iconCache.filename:
-            knownIcons.add(os.path.normcase(fileutil.expand_filename(site.iconCache.filename)))
+        if site.icon_cache and site.icon_cache.filename:
+            knownIcons.add(os.path.normcase(fileutil.expand_filename(site.icon_cache.filename)))
 
     yield None
 
@@ -125,8 +126,8 @@ class IconCacheUpdater:
         self.inShutdown = True
 
 iconCacheUpdater = IconCacheUpdater()
-class IconCache:
-    def __init__(self, dbItem, is_vital=False):
+class IconCache(DDBObject):
+    def __init__(self, dbItem):
         self.etag = None
         self.modified = None
         self.filename = None
@@ -136,8 +137,9 @@ class IconCache:
         self.needsUpdate = False
         self.dbItem = dbItem
         self.removed = False
+        DDBObject.__init__(self)
 
-        self.requestUpdate(is_vital=is_vital)
+        self.requestUpdate(is_vital=dbItem.ICON_CACHE_VITAL)
 
     def icon_changed(self, needsSave=True):
         try:
@@ -340,3 +342,12 @@ class IconCache:
             return unicodeToFilename(self.url)
         else:
             return self.filename
+
+def setup_icon_cache(obj):
+    obj.icon_cache = IconCache(obj)
+    obj.icon_cache_id = obj.icon_cache.id
+
+def remove_icon_cache(obj):
+    if obj.icon_cache is not None:
+        obj.icon_cache.remove()
+        obj.icon_cache = obj.icon_cache_id = None
