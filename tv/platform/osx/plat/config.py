@@ -72,6 +72,7 @@ def load():
     return pydict
 
 def save(data):
+    data = data.copy()
     try:
         for k, v in data.iteritems():
             if v is None:
