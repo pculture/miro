@@ -35,15 +35,15 @@ from miro import gtcache
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 
-def strftime_to_utf8(bytes):
-    """Convert the value return by strftime() to a utf-8 bytestring.
+def strftime_to_unicode(bytes):
+    """Convert the value return by strftime() to a unicode string.
 
     By default, it's in whatever the default codeset is.
     """
-    if gtcache.codeset in (None, 'utf8', 'utf-8'):
+    if gtcache.codeset is None:
         return bytes
     else:
-        return bytes.decode(gtcache.codeset).encode('utf-8')
+        return bytes.decode(gtcache.codeset)
 
 def download_rate(rate):
     if rate >= (1 << 30):
@@ -134,13 +134,13 @@ def expiration_date_short(exp_date):
 
 def release_date(release_date):
     if release_date > datetime.datetime.min:
-        return strftime_to_utf8(release_date.strftime("%B %d, %Y"))
+        return strftime_to_unicode(release_date.strftime("%B %d, %Y"))
     else:
         return ''
 
 def release_date_slashes(release_date):
     if release_date > datetime.datetime.min:
-        return strftime_to_utf8(release_date.strftime("%x"))
+        return strftime_to_unicode(release_date.strftime("%x"))
     else:
         return ''
 
