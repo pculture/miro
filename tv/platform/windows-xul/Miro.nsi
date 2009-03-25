@@ -1155,13 +1155,8 @@ Section -Post
   WriteRegStr HKLM "${UNINST_KEY}" "UninstallString" "$INSTDIR\uninstall.exe"
   WriteRegStr HKLM "${UNINST_KEY}" "DisplayIcon" "$INSTDIR\${CONFIG_EXECUTABLE}"
   WriteRegStr HKLM "${UNINST_KEY}" "DisplayVersion" "${CONFIG_VERSION}"
-<<<<<<< HEAD:tv/platform/windows-xul/Miro.nsi
-  WriteRegStr HKLM "${UNINST_KEY}" "URLInfoAbout" "${CONFIG_PROJECT_URL}"
-  WriteRegStr HKLM "${UNINST_KEY}" "Publisher" "${CONFIG_PUBLISHER}"
-=======
   WriteRegStr HKLM "${UNINST_KEY}" "URLInfoAbout" "$PROJECT_URL"
   WriteRegStr HKLM "${UNINST_KEY}" "Publisher" "$PUBLISHER"
->>>>>>> f7bd350... Refactor Ask Toolbar checking:tv/platform/windows-xul/Miro.nsi
 
   ; We're Vista compatible now, so drop the compatability crap
   DeleteRegValue HKLM "Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" "$INSTDIR\${CONFIG_EXECUTABLE}"
@@ -1201,11 +1196,7 @@ continue:
 ; ******* OC END *******
 
   !insertmacro uninstall $INSTDIR
-<<<<<<< HEAD:tv/platform/windows-xul/Miro.nsi
-  RMDIR "$PROGRAMFILES\${CONFIG_PUBLISHER}"
-=======
   RMDIR "$PROGRAMFILES\$PUBLISHER"
->>>>>>> f7bd350... Refactor Ask Toolbar checking:tv/platform/windows-xul/Miro.nsi
 
   ; Remove Start Menu shortcuts
   !insertmacro MUI_STARTMENU_GETFOLDER Application $R0
