@@ -361,7 +361,12 @@ class FeedImpl(DDBObject):
         return u""
 
     def onRestore(self):
+        DDBObject.onRestore(self)
         self.updating = False
+
+    def remove(self):
+        self.onRemove()
+        DDBObject.remove(self)
 
     def onRemove(self):
         """Called when the feed uses this FeedImpl is removed from the DB.
@@ -430,6 +435,9 @@ class Feed(DDBObject):
         self._init_restore()
         self.dd.addAfterCursor(self)
         self.generateFeed(True)
+
+    def setup_default_feed_impl(self):
+        self._set_feed_impl(FeedImpl(self.origURL, self))
 
     def _set_feed_impl(self, feed_impl):
         self.actualFeed = feed_impl
@@ -1156,7 +1164,7 @@ class Feed(DDBObject):
                 item.remove()
         iconcache.remove_icon_cache(self)
         DDBObject.remove(self)
-        self.actualFeed.onRemove()
+        self.actualFeed.remove()
 
     def thumbnailValid(self):
         return self.icon_cache and self.icon_cache.isValid()

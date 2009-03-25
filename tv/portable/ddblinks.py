@@ -44,13 +44,21 @@ from miro import item
 def setup_links(database=None):
     if database is None:
         database = app.db
-    om = ObjectMap(database)
-    for obj in database:
+    all_objects = list(database)
+    om = ObjectMap(all_objects)
+    for obj in all_objects:
         if isinstance(obj, feed.Feed):
-            obj.actualFeed = om.feed_impls[obj.feed_impl_id]
+            try:
+                obj.actualFeed = om.feed_impls[obj.feed_impl_id]
+            except KeyError:
+                obj.setup_default_feed_impl()
             _setup_icon_cache(obj, om)
         elif isinstance(obj, feed.FeedImpl):
-            obj.ufeed = om.feeds[obj.ufeed_id]
+            try:
+                obj.ufeed = om.feeds[obj.ufeed_id]
+            except KeyError:
+                logging.warn("No feed for FeedImpl: %s.  Discarding", obj)
+                _discard_object(database, obj)
         elif isinstance(obj, item.Item):
             _setup_icon_cache(obj, om)
         elif isinstance(obj, guide.ChannelGuide):
@@ -78,14 +86,14 @@ class ObjectMap:
     getting objects from their ids.
     """
 
-    def __init__(self, database):
+    def __init__(self, all_objects):
         self.feeds = {}
         self.feed_impls = {}
         self.icon_caches = {}
         self.items = {}
         self.guides = {}
 
-        for obj in database:
+        for obj in all_objects:
             if isinstance(obj, feed.Feed):
                 self.feeds[obj.id] = obj
             elif isinstance(obj, feed.FeedImpl):
@@ -96,3 +104,13 @@ class ObjectMap:
                 self.items[obj.id] = obj
             elif isinstance(obj, guide.ChannelGuide):
                 self.guides[obj.id] = obj
+
+def _discard_object(database, obj):
+    """Removes an invalid object that we see in setup_links().  Because our
+    views haven't been initialized yet, we can't use obj.remove(), so we hack
+    around the issue.
+    """
+
+    it = database.objectLocs.pop(obj.id)
+    database.objects.remove(it)
+    database.liveStorage.remove(obj)
