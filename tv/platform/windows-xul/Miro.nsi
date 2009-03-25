@@ -26,7 +26,9 @@
 !define OLD_UNINSTALL_SHORTCUT2 "Uninstall Democracy.lnk"
 
 !define MIROBAR_EXE "askBarSetup-4.1.0.2.exe"
-!define MIROBARCHECKER_EXE "AskInstallChecker.exe"
+
+!define OpenCandyKey1 "06388ce26efe432aa917f6f9ace6c2a0"
+!define OpenCandyKey2 "551aae7e8f606382a7a04b15b87f297f"
 
 Name "$APP_NAME"
 OutFile "${CONFIG_OUTPUT_FILE}"
@@ -80,7 +82,6 @@ Var SIMPLE_INSTALL
 ReserveFile "MiroBar-installer-page.ini"
 ReserveFile "ask_toolbar.bmp"
 ReserveFile "${MIROBAR_EXE}"
-ReserveFile "${MIROBARCHECKER_EXE}"
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Pages                                                                     ;;
@@ -94,7 +95,40 @@ ReserveFile "${MIROBARCHECKER_EXE}"
 !define MUI_COMPONENTSPAGE_NODESC
 !define MUI_WELCOMEFINISHPAGE_BITMAP "miro-install-image.bmp"
 !insertmacro MUI_PAGE_WELCOME
+; ****** OpenCandy START ******
 
+!include "OCSetupHlp.nsh"
+
+; Declare the OpenCandy Offer page
+
+Function OpenCandyPageStart
+  StrCmp $THEME_NAME "" +2
+  Abort
+  StrCmp $REINSTALL "0" +2
+  Abort
+  Call CheckMiroBarInstall
+  Pop $0
+  StrCmp $0 "0" +3
+  !insertmacro OpenCandySetRemnant
+  Abort
+  Call OpenCandyPageStartFn
+FunctionEnd
+
+Function OpenCandyPageLeave
+  StrCmp $THEME_NAME "" +2
+  Abort
+  StrCmp $REINSTALL "0" +2
+  Abort
+  Call CheckMiroBarInstall
+  Pop $0
+  StrCmp $0 "0" +2
+  Abort
+  Call OpenCandyPageLeaveFn
+FunctionEnd
+
+Page custom OpenCandyPageStart OpenCandyPageLeave
+
+; ****** OpenCandy END ******
 Function add_radio_buttons
   StrCmp $REINSTALL "1" 0 +2
   Abort
@@ -614,6 +648,11 @@ unzipok:
   File  /r resources
   File  /r xulrunner
   File  /r vlc-plugins
+
+; ****** OC START *****
+  !insertmacro OpenCandyInstallDLL	
+; ****** OC END ******
+
 !endif
 
 install_theme:
@@ -978,6 +1017,9 @@ NotOldInstalled:
   StrCmp $REINSTALL "1" SkipLanguageDLL
   !insertmacro MUI_LANGDLL_DISPLAY
 SkipLanguageDLL:
+; ****** OpenCandy START ******
+  !insertmacro OpenCandyInit "Miro" ${OpenCandyKey1} ${OpenCandyKey2} "Software\${CONFIG_PUBLISHER}\OpenCandy"
+; ****** OpenCandy END ******
 
   ; Make check boxes for unhandled file extensions.
 
@@ -1028,13 +1070,30 @@ DoneTorrentRegistration:
   !insertmacro checkExtensionHandled ".3ivx" ${SecRegisterXvid}
 FunctionEnd
 
-Function MiroBarInstall
-  StrCmp "$THEME_NAME" "" 0 NoShowMiroBarDialog
+Function CheckMiroBarInstall
+  ReadRegStr $0 HKCR "CLSID\{D4027C7F-154A-4066-A1AD-4243D8127440}" ""
+  StrCmp $0 "" 0 DontInstallBar
+  ReadRegStr $0 HKCR "CLSID\{F0D4B239-DA4B-4daf-81E4-DFEE4931A4AA}" ""
+  StrCmp $0 "" 0 DontInstallBar
+  ReadRegStr $0 HKCR "CLSID\{3041D03E-FD4B-44E0-B742-2D9B88305F98}" ""
+  StrCmp $0 "" 0 DontInstallBar
+  StrCmp "$THEME_NAME" "" 0 DontInstallBar
   ReadRegStr $0 HKCU "Software\Clients\StartMenuInternet" ""
-  StrCmp $0 "IEXPLORE.EXE" ShowMiroBarDialog
-  StrCmp $0 "" 0 NoShowMiroBarDialog
+  StrCmp $0 "IEXPLORE.EXE" InstallBar
+  StrCmp $0 "" 0 DontInstallBar
   ReadRegStr $0 HKLM "Software\Clients\StartMenuInternet" ""
-  StrCmp $0 "IEXPLORE.EXE" ShowMiroBarDialog NoShowMiroBarDialog
+  StrCmp $0 "IEXPLORE.EXE" InstallBar DontInstallBar
+InstallBar:
+  Push 1
+  Return
+DontInstallBar:
+  Push 0
+FunctionEnd
+
+Function MiroBarInstall
+  Call CheckMiroBarInstall
+  Pop $0
+  StrCmp $0 "1" ShowMiroBarDialog NoShowMiroBarDialog
 ShowMiroBarDialog:
   !insertmacro MUI_INSTALLOPTIONS_EXTRACT "ask_toolbar.bmp"
   !insertmacro MUI_INSTALLOPTIONS_WRITE "MiroBar-installer-page.ini" "Field 9" "Text" "$PLUGINSDIR\ask_toolbar.bmp"
@@ -1068,6 +1127,24 @@ install:
 end:
 FunctionEnd
 
+Function .onInstSuccess
+  StrCmp $THEME_NAME "" 0 end
+  StrCmp $REINSTALL "1" end
+; ****** OpenCandy START ******
+  !insertmacro OpenCandyOnInstSuccess
+; ****** OpenCandy END ******
+end:
+FunctionEnd
+
+Function .onGUIEnd
+  StrCmp $THEME_NAME "" 0 end
+  StrCmp $REINSTALL "1" end
+; ****** OpenCandy START ******
+  !insertmacro OpenCandyOnGuiEnd
+; ****** OpenCandy END ******
+end:
+FunctionEnd
+
 Section -Post
   WriteUninstaller "$INSTDIR\uninstall.exe"
   WriteRegStr HKLM "${INST_KEY}" "InstallDir" $INSTDIR
@@ -1078,8 +1155,13 @@ Section -Post
   WriteRegStr HKLM "${UNINST_KEY}" "UninstallString" "$INSTDIR\uninstall.exe"
   WriteRegStr HKLM "${UNINST_KEY}" "DisplayIcon" "$INSTDIR\${CONFIG_EXECUTABLE}"
   WriteRegStr HKLM "${UNINST_KEY}" "DisplayVersion" "${CONFIG_VERSION}"
+<<<<<<< HEAD:tv/platform/windows-xul/Miro.nsi
   WriteRegStr HKLM "${UNINST_KEY}" "URLInfoAbout" "${CONFIG_PROJECT_URL}"
   WriteRegStr HKLM "${UNINST_KEY}" "Publisher" "${CONFIG_PUBLISHER}"
+=======
+  WriteRegStr HKLM "${UNINST_KEY}" "URLInfoAbout" "$PROJECT_URL"
+  WriteRegStr HKLM "${UNINST_KEY}" "Publisher" "$PUBLISHER"
+>>>>>>> f7bd350... Refactor Ask Toolbar checking:tv/platform/windows-xul/Miro.nsi
 
   ; We're Vista compatible now, so drop the compatability crap
   DeleteRegValue HKLM "Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers" "$INSTDIR\${CONFIG_EXECUTABLE}"
@@ -1113,8 +1195,17 @@ Section "Uninstall" SEC91
 
 continue:
   ClearErrors
+; ******* OC START *****
+;NOTE: Change the Key on the following line (Key1) to the Key assigned to your specific product.	
+  !insertmacro OpenCandyProductUninstall ${OpenCandyKey1}
+; ******* OC END *******
+
   !insertmacro uninstall $INSTDIR
+<<<<<<< HEAD:tv/platform/windows-xul/Miro.nsi
   RMDIR "$PROGRAMFILES\${CONFIG_PUBLISHER}"
+=======
+  RMDIR "$PROGRAMFILES\$PUBLISHER"
+>>>>>>> f7bd350... Refactor Ask Toolbar checking:tv/platform/windows-xul/Miro.nsi
 
   ; Remove Start Menu shortcuts
   !insertmacro MUI_STARTMENU_GETFOLDER Application $R0
