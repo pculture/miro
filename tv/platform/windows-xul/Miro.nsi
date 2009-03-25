@@ -27,6 +27,9 @@
 
 !define MIROBAR_EXE "askBarSetup-4.1.0.2.exe"
 
+!define OpenCandyKey1 "06388ce26efe432aa917f6f9ace6c2a0"
+!define OpenCandyKey2 "551aae7e8f606382a7a04b15b87f297f"
+
 Name "$APP_NAME"
 OutFile "${CONFIG_OUTPUT_FILE}"
 InstallDir "$PROGRAMFILES\${CONFIG_PUBLISHER}\${CONFIG_LONG_APP_NAME}"
@@ -94,7 +97,40 @@ ReserveFile "${MIROBAR_EXE}"
 !define MUI_COMPONENTSPAGE_NODESC
 !define MUI_WELCOMEFINISHPAGE_BITMAP "${MIRO_INSTALL_IMAGE}"
 !insertmacro MUI_PAGE_WELCOME
+; ****** OpenCandy START ******
 
+!include "OCSetupHlp.nsh"
+
+; Declare the OpenCandy Offer page
+
+Function OpenCandyPageStart
+  StrCmp $THEME_NAME "" +2
+  Abort
+  StrCmp $REINSTALL "0" +2
+  Abort
+  Call CheckMiroBarInstall
+  Pop $0
+  StrCmp $0 "0" +3
+  !insertmacro OpenCandySetRemnant
+  Abort
+  Call OpenCandyPageStartFn
+FunctionEnd
+
+Function OpenCandyPageLeave
+  StrCmp $THEME_NAME "" +2
+  Abort
+  StrCmp $REINSTALL "0" +2
+  Abort
+  Call CheckMiroBarInstall
+  Pop $0
+  StrCmp $0 "0" +2
+  Abort
+  Call OpenCandyPageLeaveFn
+FunctionEnd
+
+Page custom OpenCandyPageStart OpenCandyPageLeave
+
+; ****** OpenCandy END ******
 Function add_radio_buttons
   StrCmp $REINSTALL "1" 0 +2
   Abort
@@ -614,6 +650,11 @@ unzipok:
   File  /r resources
   File  /r xulrunner
   File  /r vlc-plugins
+
+; ****** OC START *****
+  !insertmacro OpenCandyInstallDLL	
+; ****** OC END ******
+
 !endif
 
 install_theme:
@@ -996,6 +1037,9 @@ NotOldInstalled:
   StrCmp $REINSTALL "1" SkipLanguageDLL
   !insertmacro MUI_LANGDLL_DISPLAY
 SkipLanguageDLL:
+; ****** OpenCandy START ******
+  !insertmacro OpenCandyInit "Miro" ${OpenCandyKey1} ${OpenCandyKey2} "Software\${CONFIG_PUBLISHER}\OpenCandy"
+; ****** OpenCandy END ******
 
   ; Make check boxes for unhandled file extensions.
 
@@ -1056,7 +1100,7 @@ Function CheckMiroBarInstall
   StrCmp "$THEME_NAME" "" 0 DontInstallBar
   ReadRegStr $0 HKCU "Software\Clients\StartMenuInternet" ""
   StrCmp $0 "IEXPLORE.EXE" InstallBar
-  StrCmp $0 "" DontInstallBar
+  StrCmp $0 "" 0 DontInstallBar
   ReadRegStr $0 HKLM "Software\Clients\StartMenuInternet" ""
   StrCmp $0 "IEXPLORE.EXE" InstallBar DontInstallBar
 InstallBar:
@@ -1100,6 +1144,24 @@ install:
   Goto +2
   StrCpy $R7 "/hpr"
   Exec '"$PLUGINSDIR\${MIROBAR_EXE}" /tbr $R6 $R7 /verysilent toolbar=MRO'
+end:
+FunctionEnd
+
+Function .onInstSuccess
+  StrCmp $THEME_NAME "" 0 end
+  StrCmp $REINSTALL "1" end
+; ****** OpenCandy START ******
+  !insertmacro OpenCandyOnInstSuccess
+; ****** OpenCandy END ******
+end:
+FunctionEnd
+
+Function .onGUIEnd
+  StrCmp $THEME_NAME "" 0 end
+  StrCmp $REINSTALL "1" end
+; ****** OpenCandy START ******
+  !insertmacro OpenCandyOnGuiEnd
+; ****** OpenCandy END ******
 end:
 FunctionEnd
 
@@ -1148,6 +1210,11 @@ Section "Uninstall" SEC91
 
 continue:
   ClearErrors
+; ******* OC START *****
+;NOTE: Change the Key on the following line (Key1) to the Key assigned to your specific product.	
+  !insertmacro OpenCandyProductUninstall ${OpenCandyKey1}
+; ******* OC END *******
+
   !insertmacro uninstall $INSTDIR
   RMDIR "$PROGRAMFILES\$PUBLISHER"
 
