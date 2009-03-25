@@ -1041,7 +1041,7 @@ class Feed(DDBObject):
             'hasLibrary', 'get_title', 'getURL', 'getBaseURL',
             'getBaseHref', 'get_description', 'get_link', 'getLibraryLink',
             'getThumbnailURL', 'get_license', 'url', 'title', 'created',
-            'lastViewed', 'thumbURL', 'lastEngine', 'lastQuery'):
+            'lastViewed', 'thumbURL', 'lastEngine', 'lastQuery', 'dir'):
         locals()[name] = attr_from_feed_impl(name)
 
     @returnsUnicode
