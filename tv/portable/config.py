@@ -80,7 +80,7 @@ def save():
     __lock.acquire()
     try:
         __checkValidity()
-        platformcfg.save( __data.copy() )
+        platformcfg.save( __data )
     finally:
         __lock.release()
 
