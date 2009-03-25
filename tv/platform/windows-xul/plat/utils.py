@@ -79,6 +79,7 @@ def get_available_bytes_for_movies():
 # Windows specific locale                                                   #
 #############################################################################
 _langs = {
+0x36a: "th",
 0x401: "ar",
 0x416: "pt_BR",
 0x804: "zh_CN", # Chinese simplified
@@ -86,7 +87,7 @@ _langs = {
 0x405: "cs",
 0x406: "da",
 0x413: "nl",
-#0x409: "en",  # This is the default. Don't bother with gettext in that case
+# 0x409: "en",  # This is the default. Don't bother with gettext in that case
 0x40b: "fi",
 0x40c: "fr",
 0x407: "de",
