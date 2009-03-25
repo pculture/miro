@@ -327,6 +327,7 @@ class IconCache(DDBObject):
             iconCacheUpdater.requestUpdate(self, is_vital=is_vital)
 
     def onRestore(self):
+        DDBObject.onRestore(self)
         self.removed = False
         self.updating = False
         self.needsUpdate = False
