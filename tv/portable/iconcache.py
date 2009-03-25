@@ -154,6 +154,7 @@ class IconCache(DDBObject):
         self.removed = True
         if self.filename:
             self.remove_file(self.filename)
+        DDBObject.remove(self)
 
     def reset(self):
         if self.filename:

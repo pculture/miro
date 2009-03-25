@@ -5,6 +5,7 @@ from datetime import datetime
 from time import sleep
 
 from miro import config
+from miro import ddblinks
 from miro import feedparser
 from miro import prefs
 from miro import dialogs
@@ -161,7 +162,7 @@ class SimpleFeedTestCase(FeedTestCase):
         # thus it should not cause a dialog to pop up and ask the user if they
         # want to scrape.
         self.assertEqual(dialogs.delegate.calls, 0)
-        self.assertEqual(self.everything.len(), 2) 
+        self.assertEqual(self.everything.len(), 6)
 
         # the Feed, plus the 1 item that is a video
         items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
@@ -169,7 +170,7 @@ class SimpleFeedTestCase(FeedTestCase):
 
         # make sure that re-updating doesn't re-create the items
         myFeed.update()
-        self.assertEqual(self.everything.len(), 2)
+        self.assertEqual(self.everything.len(), 6)
         items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
         self.assertEqual(items.len(), 1)
         myFeed.remove()
@@ -209,12 +210,12 @@ class EnclosureFeedTestCase(FeedTestCase):
 </rss>""")
     def testRun(self):
         myFeed = self.makeFeed()
-        self.assertEqual(self.everything.len(),5)
+        self.assertEqual(self.everything.len(),12)
         items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
         self.assertEqual(items.len(),4)
         #Make sure that re-updating doesn't re-create the items
         myFeed.update()
-        self.assertEqual(self.everything.len(),5)
+        self.assertEqual(self.everything.len(),12)
         items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
         self.assertEqual(items.len(),4)
         myFeed.remove()
@@ -301,14 +302,14 @@ class OldItemExpireTest(FeedTestCase):
         self.assertEquals(self.items.len(), 4)
         self.parseNewFeed()
         self.feed.setMaxOldItems(4)
-        self.feed.clean_old_items()
+        self.feed.actualFeed.clean_old_items()
         while self.feed.actualFeed.updating:
             self.processThreads()
             self.processIdles()
             sleep(0.1)
         self.assertEquals(self.items.len(), 6)            
         self.feed.setMaxOldItems(2)
-        self.feed.clean_old_items()
+        self.feed.actualFeed.clean_old_items()
         while self.feed.actualFeed.updating:
             self.processThreads()
             self.processIdles()
@@ -323,14 +324,14 @@ class OldItemExpireTest(FeedTestCase):
         self.assertEquals(self.items.len(), 4)
         self.parseNewFeed()
         config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 4)
-        self.feed.clean_old_items()
+        self.feed.actualFeed.clean_old_items()
         while self.feed.actualFeed.updating:
             self.processThreads()
             self.processIdles()
             sleep(0.1)
         self.assertEquals(self.items.len(), 6)
         config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 2)
-        self.feed.clean_old_items()
+        self.feed.actualFeed.clean_old_items()
         while self.feed.actualFeed.updating:
             self.processThreads()
             self.processIdles()
@@ -368,6 +369,7 @@ class FeedParserAttributesTestCase(FeedTestCase):
         db.liveStorage.saveDatabase()
         db.liveStorage.close()
         db.liveStorage = storedatabase.LiveStorage(self.tempdb)
+        ddblinks.setup_links(database.defaultDatabase)
         for obj in database.defaultDatabase:
             if isinstance(obj, Feed):
                 self.feed = obj

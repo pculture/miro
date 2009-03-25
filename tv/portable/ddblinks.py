@@ -41,9 +41,11 @@ from miro import guide
 from miro import iconcache
 from miro import item
 
-def setup_links():
-    om = ObjectMap()
-    for obj in app.db:
+def setup_links(database=None):
+    if database is None:
+        database = app.db
+    om = ObjectMap(database)
+    for obj in database:
         if isinstance(obj, feed.Feed):
             obj.actualFeed = om.feed_impls[obj.feed_impl_id]
             _setup_icon_cache(obj, om)
@@ -76,14 +78,14 @@ class ObjectMap:
     getting objects from their ids.
     """
 
-    def __init__(self):
+    def __init__(self, database):
         self.feeds = {}
         self.feed_impls = {}
         self.icon_caches = {}
         self.items = {}
         self.guides = {}
 
-        for obj in app.db:
+        for obj in database:
             if isinstance(obj, feed.Feed):
                 self.feeds[obj.id] = obj
             elif isinstance(obj, feed.FeedImpl):

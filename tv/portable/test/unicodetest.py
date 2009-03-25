@@ -69,7 +69,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         myFeed = feed.Feed(u"file://"+self.filename)
         self.forceFeedParserCallback(myFeed)
 
-        self.isProperFeedParserDict(myFeed.parsed)
+        self.isProperFeedParserDict(myFeed.actualFeed.parsed)
 
         # We need to explicitly check that the type is unicode because
         # Python automatically converts bytes strings to unicode strings
@@ -92,7 +92,8 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
     def forceFeedParserCallback(self, myFeed):
         # a hack to get the feed to update without eventloop
-        myFeed.feedparser_callback(feedparser.parse(myFeed.initialHTML))
+        feedimpl = myFeed.actualFeed
+        feedimpl.feedparser_callback(feedparser.parse(feedimpl.initialHTML))
 
     # This is a latin1 feed that claims to be UTF-8
     def testInvalidLatin1Feed(self):

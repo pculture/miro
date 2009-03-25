@@ -373,7 +373,8 @@ class TestHighLevelFunctions(LiveStorageTest):
         self.f = feed.Feed(u"http://feed.uk")
         i = item.Item({}, feed_id=self.f.id)
         i2 = item.Item({}, feed_id=self.f.id)
-        self.objects = [self.f, i, i2]
+        self.objects = [self.f, self.f.actualFeed, self.f.icon_cache,
+                i.icon_cache, i, i2.icon_cache, i2 ]
 
     def checkDatabaseIsTheSame(self):
         self.assertEquals(len(self.objects), len(self.database.objects))
@@ -383,7 +384,7 @@ class TestHighLevelFunctions(LiveStorageTest):
         # out and we did going in.
         i = 0
         for newObject, copy in self.database.objects:
-            self.assertEquals(type(newObject), type(self.objects[i]))
+            self.assertEquals(newObject.__class__, self.objects[i].__class__)
             self.assertEquals(newObject.id, self.objects[i].id)
             i += 1
 
@@ -405,6 +406,7 @@ class TestHighLevelFunctions(LiveStorageTest):
         self.saveDatabase()
         i3.remove()
         i3 = item.Item({}, feed_id=self.f.id)
+        self.objects.append(i3.icon_cache)
         self.objects.append(i3)
         self.database.liveStorage.runUpdate()
         self.restoreDatabase()

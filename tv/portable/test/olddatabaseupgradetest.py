@@ -4,6 +4,8 @@ import tempfile
 import unittest
 
 from miro import database
+from miro import feed
+from miro import ddblinks
 from miro import olddatabaseupgrade
 from miro import storedatabase
 from miro import databaseupgrade
@@ -16,6 +18,7 @@ class TestConvert(EventLoopTest):
     def setUp(self):
         storedatabase.skipOnRestore = True
         self.tmpPath = tempfile.mktemp()
+        feed.restored_feeds = []
         EventLoopTest.setUp(self)
 
     def tearDown(self):
@@ -33,6 +36,7 @@ class TestConvert(EventLoopTest):
         # let's make sure that they are there at least.  Also, make sure the
         # sanity tests can recover from any errors
         self.assert_(len(objects) > 0)
+        ddblinks.setup_links(objects)
         databasesanity.checkSanity(objects, fixIfPossible=True, quiet=True,
                 reallyQuiet=True)
 
@@ -87,18 +91,18 @@ class TestConvert(EventLoopTest):
         db = database.DynamicDatabase()
         storedatabase.skipOnRestore = False
         storedatabase.restoreDatabase(db=db, pathname=self.tmpPath)
-        # if onRestore() was called, we would have the icon cache update
-        # scheduled as an idle callback
+        # if onRestore() was called, we would have added the feed to the
+        # restored_feeds list
         self.assertEquals(len(db.objects), 0)
-        self.assert_(not self.hasIdles())
+        self.assertEquals(len(feed.restored_feeds), 0)
 
     def testBug4039part2(self):
-        # On the other hand, for database that are normal, we should call 
+        # On the other hand, for database that are normal, we should call
         # onRestore()
         shutil.copyfile(resources.path("testdata/olddatabase.bug.4039.part2"),
                 self.tmpPath)
         db = database.DynamicDatabase()
         storedatabase.skipOnRestore = False
         storedatabase.restoreDatabase(db=db, pathname=self.tmpPath)
-        self.assertEquals(len(db.objects), 2)
-        self.assert_(self.hasIdles())
+        self.assertEquals(len(db.objects), 3)
+        self.assertEquals(len(feed.restored_feeds), 1)

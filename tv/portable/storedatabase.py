@@ -541,7 +541,9 @@ def getObjects(pathname, convertOnFail):
         else:
             raise
 
+    from miro import ddblinks
     from miro import databasesanity
+    ddblinks.setup_links(objects)
     try:
         databasesanity.checkSanity(objects, quiet=True, 
                 reallyQuiet=(not util.chatter))

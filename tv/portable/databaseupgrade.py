@@ -1871,11 +1871,15 @@ def upgrade78(objectList):
     next_id = last_id + 1
     for obj in icon_cache_containers:
         icon_cache = obj.savedData['iconCache']
-        obj.savedData['icon_cache_id'] = icon_cache.savedData['id'] = next_id
+        if icon_cache is not None:
+            obj.savedData['icon_cache_id'] = icon_cache.savedData['id'] = \
+                    next_id
+            changed.add(icon_cache)
+            objectList.append(icon_cache)
+        else:
+            obj.savedData['icon_cache_id'] = None
         del obj.savedData['iconCache']
         changed.add(obj)
-        changed.add(icon_cache)
-        objectList.append(icon_cache)
         next_id += 1
     return changed
 
