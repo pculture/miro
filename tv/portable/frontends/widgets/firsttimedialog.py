@@ -40,7 +40,7 @@ from miro.frontends.widgets import dialogs
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
-from miro.plat.utils import filenameToUnicode
+from miro.plat.utils import filenameToUnicode, FilenameType
 
 import os
 
@@ -343,7 +343,8 @@ class FirstTimeDialog(widgetset.Window):
             prev_button.disable()
             finish_button.disable()
 
-            self.finder = util.gather_media_files(self.search_directory)
+            search_directory = FilenameType(self.search_directory)
+            self.finder = util.gather_media_files(search_directory)
             progress_bar.start_pulsing()
             threads.call_on_ui_thread(make_progress)
 
