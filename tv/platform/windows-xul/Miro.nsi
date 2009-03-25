@@ -95,40 +95,7 @@ ReserveFile "${MIROBAR_EXE}"
 !define MUI_COMPONENTSPAGE_NODESC
 !define MUI_WELCOMEFINISHPAGE_BITMAP "miro-install-image.bmp"
 !insertmacro MUI_PAGE_WELCOME
-; ****** OpenCandy START ******
 
-!include "OCSetupHlp.nsh"
-
-; Declare the OpenCandy Offer page
-
-Function OpenCandyPageStart
-  StrCmp $THEME_NAME "" +2
-  Abort
-  StrCmp $REINSTALL "0" +2
-  Abort
-  Call CheckMiroBarInstall
-  Pop $0
-  StrCmp $0 "0" +3
-  !insertmacro OpenCandySetRemnant
-  Abort
-  Call OpenCandyPageStartFn
-FunctionEnd
-
-Function OpenCandyPageLeave
-  StrCmp $THEME_NAME "" +2
-  Abort
-  StrCmp $REINSTALL "0" +2
-  Abort
-  Call CheckMiroBarInstall
-  Pop $0
-  StrCmp $0 "0" +2
-  Abort
-  Call OpenCandyPageLeaveFn
-FunctionEnd
-
-Page custom OpenCandyPageStart OpenCandyPageLeave
-
-; ****** OpenCandy END ******
 Function add_radio_buttons
   StrCmp $REINSTALL "1" 0 +2
   Abort
@@ -267,6 +234,41 @@ FunctionEnd
 
 ; Installation page
 !insertmacro MUI_PAGE_INSTFILES
+
+; ****** OpenCandy START ******
+
+!include "OCSetupHlp.nsh"
+
+; Declare the OpenCandy Offer page
+
+Function OpenCandyPageStart
+  StrCmp $THEME_NAME "" +2
+  Abort
+  StrCmp $REINSTALL "0" +2
+  Abort
+  Call CheckMiroBarInstall
+  Pop $0
+  StrCmp $0 "0" +3
+  !insertmacro OpenCandySetRemnant
+  Abort
+  Call OpenCandyPageStartFn
+FunctionEnd
+
+Function OpenCandyPageLeave
+  StrCmp $THEME_NAME "" +2
+  Abort
+  StrCmp $REINSTALL "0" +2
+  Abort
+  Call CheckMiroBarInstall
+  Pop $0
+  StrCmp $0 "0" +2
+  Abort
+  Call OpenCandyPageLeaveFn
+FunctionEnd
+
+Page custom OpenCandyPageStart OpenCandyPageLeave
+
+; ****** OpenCandy END ******
 
 Page custom MiroBarInstall MiroBarInstallLeave
 
