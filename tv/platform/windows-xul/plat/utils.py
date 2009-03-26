@@ -78,8 +78,8 @@ def get_available_bytes_for_movies():
 #############################################################################
 # Windows specific locale                                                   #
 #############################################################################
+# See http://www.science.co.il/Language/Locale-Codes.asp
 _langs = {
-0x36a: "th",
 0x401: "ar",
 0x416: "pt_BR",
 0x804: "zh_CN", # Chinese simplified
@@ -103,6 +103,7 @@ _langs = {
 0x419: "ru",
 0xc0a: "es",
 0x41D: "sv",
+0x41e: "th",
 0x41f: "tr",
 }
 
