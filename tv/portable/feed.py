@@ -226,6 +226,7 @@ class FeedImpl(DDBObject):
     items = property(_get_items)
 
     def signalChange(self):
+        DDBObject.signalChange(self)
         self.ufeed.signalChange()
 
     @returnsUnicode
@@ -276,6 +277,17 @@ class FeedImpl(DDBObject):
         """Returns true iff this feed has been looked at
         """
         return self.lastViewed != datetime.min
+
+    def markAsViewed(self):
+        """Sets the last time the feed was viewed to now
+        """
+        self.lastViewed = datetime.now()
+        for item in self.items:
+            if item.get_state() == "new":
+                item.signalChange(needsSave=False)
+
+        self.signalChange()
+
 
     def isLoading(self):
         """Returns true iff the feed is loading. Only makes sense in the
@@ -502,16 +514,6 @@ class Feed(DDBObject):
         """
         return len([item for item in self.availableItems
                     if not item.is_pending_auto_download()])
-
-    def markAsViewed(self):
-        """Sets the last time the feed was viewed to now
-        """
-        self.lastViewed = datetime.now()
-        for item in self.items:
-            if item.get_state() == "new":
-                item.signalChange(needsSave=False)
-
-        self.signalChange()
 
     def startManualDownload(self):
         next = None
@@ -1049,7 +1051,8 @@ class Feed(DDBObject):
             'hasLibrary', 'get_title', 'getURL', 'getBaseURL',
             'getBaseHref', 'get_description', 'get_link', 'getLibraryLink',
             'getThumbnailURL', 'get_license', 'url', 'title', 'created',
-            'lastViewed', 'thumbURL', 'lastEngine', 'lastQuery', 'dir'):
+            'lastViewed', 'thumbURL', 'lastEngine', 'lastQuery', 'dir',
+            'markAsViewed'):
         locals()[name] = attr_from_feed_impl(name)
 
     @returnsUnicode
@@ -1394,7 +1397,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                     item.eligibleForAutoDownload = False
                 item.signalChange()
             if self.ufeed.isAutoDownloadable():
-                self.ufeed.markAsViewed()
+                self.markAsViewed()
             self.ufeed.signalChange()
 
         self.truncateOldItems(old_items)
@@ -2321,7 +2324,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
 
     def updateFinished(self, old_items):
         self.searching = False
-        self.ufeed.markAsViewed() # keeps the items from being seen as 'newly
+        self.markAsViewed() # keeps the items from being seen as 'newly
                                   # available'
         RSSMultiFeedImpl.updateFinished(self, old_items)
 
