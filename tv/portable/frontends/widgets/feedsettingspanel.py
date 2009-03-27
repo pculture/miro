@@ -201,7 +201,7 @@ def _build_auto_download(channel, grid):
         ("15", _("15 unplayed items"))
     ]
 
-    max_new_values = [e[0] for e in max_new_options]
+    max_new_values = [int(e[0]) for e in max_new_options]
     max_new_combo = widgetset.OptionMenu([e[1] for e in max_new_options])
 
     if channel.max_new == u"unlimited":
@@ -216,7 +216,7 @@ def _build_auto_download(channel, grid):
         else:
             while value not in max_new_values and value > 1:
                 value = value - 1
-        max_new_combo.set_selected(value)
+        max_new_combo.set_selected(max_new_values.index(value))
 
     def max_new_changed(widget, index):
         value = max_new_options[index][0]
