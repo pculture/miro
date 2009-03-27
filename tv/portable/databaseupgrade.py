@@ -1883,6 +1883,38 @@ def upgrade78(objectList):
         next_id += 1
     return changed
 
+def upgrade79(objectList):
+    """Convert RemoteDownloader.status from SchemaSimpleContainer to
+    SchemaReprContainer.
+    """
+    changed = set()
+    def convert_to_repr(obj, key):
+        obj.savedData[key] = repr(obj.savedData[key])
+        changed.add(o)
+
+    for o in objectList:
+        if o.classString == 'remote-downloader':
+            convert_to_repr(o, 'status')
+        elif o.classString in ('item', 'file-item'):
+            convert_to_repr(o, 'feedparser_output')
+        elif o.classString == 'scraper-feed-impl':
+            convert_to_repr(o, 'linkHistory')
+        elif o.classString in ('rss-multi-feed-impl', 'search-feed-impl'):
+            convert_to_repr(o, 'etag')
+            convert_to_repr(o, 'modified')
+        elif o.classString in ('playlist', 'playlist-folder'):
+            convert_to_repr(o, 'item_ids')
+        elif o.classString == 'taborder-order':
+            convert_to_repr(o, 'tab_ids')
+        elif o.classString == 'channel-guide':
+            convert_to_repr(o, 'allowedURLs')
+        elif o.classString == 'theme-history':
+            convert_to_repr(o, 'pastThemes')
+        elif o.classString == 'widgets-frontend-state':
+            convert_to_repr(o, 'list_view_displays')
+
+    return changed
+
 #def upgradeX (objectList):
 #    """ upgrade an object list to X.  return set of changed savables. """
 #    changed = set()

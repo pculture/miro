@@ -154,17 +154,76 @@ class SchemaTimeDelta(SchemaSimpleItem):
         super(SchemaSimpleItem, self).validate(data)
         self.validateType(data, datetime.timedelta)
 
-class SchemaList(SchemaItem):
+class SchemaReprContainer(SchemaItem):
+    """SchemaItem saved using repr() to save nested lists, dicts and tuples
+    that store simple types.  The look is similar to JSON, but supports a
+    couple different things, for example unicode and str values are distinct.
+    The types that we support are bool, int, long, float, unicode, None and
+    datetime.  Dictionary keys can also be byte strings (AKA str types)
+    """
+
+    VALID_TYPES = [bool, int, long, float, unicode, NoneType,
+            datetime.datetime, time.struct_time]
+
+    VALID_KEY_TYPES = VALID_TYPES + [str]
+
+    def validate(self, data):
+        if data is None:
+            # let the super class handle the noneOkay attribute
+            super(self, SchemaReprContainer).validate(data)
+            return
+        memory = set()
+        to_validate = [data]
+
+        while to_validate:
+            obj = to_validate.pop()
+            if id(obj) in memory:
+                continue
+            else:
+                memory.add(id(obj))
+
+            if isinstance(obj, list) or isinstance(obj, tuple):
+                for item in obj:
+                    to_validate.append(item)
+            elif isinstance(obj, dict):
+                for key, value in obj.items():
+                    self.validateTypes(key, self.VALID_KEY_TYPES)
+                    to_validate.append(value)
+            else:
+                self.validateTypes(obj, self.VALID_TYPES)
+
+    def to_sql_value(self, data):
+        return repr(data)
+
+    def from_sql_value(self, bytes):
+        return eval(bytes)
+
+class SchemaList(SchemaReprContainer):
+    """Special case of SchemaReprContainer that stores a simple list
+
+    All values must have the same type
+    """
     def __init__(self, childSchema, noneOk=False):
         super(SchemaList, self).__init__(noneOk)
         self.childSchema = childSchema
 
     def validate(self, data):
-        super(SchemaList, self).validate(data)
+        if data is None:
+            super(SchemaList, self).validate(data)
+            return
         self.validateType(data, list)
+        for i, value in enumerate(data):
+            try:
+                self.childSchema.validate(value)
+            except ValidationError:
+                raise ValidationError("%r (index: %s) has the wrong type" %
+                        (value, i))
 
-class SchemaDict(SchemaItem):
-    type = dict
+class SchemaDict(SchemaReprContainer):
+    """Special case of SchemaReprContainer that stores a simple dict
+
+    All keys and values must have the same type.
+    """
 
     def __init__(self, keySchema, valueSchema, noneOk=False):
         super(SchemaDict, self).__init__(noneOk)
@@ -172,64 +231,46 @@ class SchemaDict(SchemaItem):
         self.valueSchema = valueSchema
 
     def validate(self, data):
-        super(SchemaDict, self).validate(data)
+        if data is None:
+            super(SchemaDict, self).validate(data)
+            return
         self.validateType(data, dict)
-
-class SchemaSimpleContainer(SchemaSimpleItem):
-    """Allows nested dicts, lists and tuples, however the only thing they can
-    store are simple objects.  This currently includes bools, ints, longs,
-    floats, strings, unicode, None, datetime and struct_time objects.
-    """
-
-    def validate(self, data):
-        super(SchemaSimpleContainer, self).validate(data)
-        self.validateTypes(data, (dict, list, tuple))
-        self.memory = set()
-        toValidate = LinkedList()
-        while data:
-            if id(data) in self.memory:
-                return
-            else:
-                self.memory.add(id(data))
-    
-            if isinstance(data, list) or isinstance(data, tuple):
-                for item in data:
-                    toValidate.append(item)
-            elif isinstance(data, dict):
-                for key, value in data.items():
-                    self.validateTypes(key, [bool, int, long, float, unicode,
-                        str, NoneType, datetime.datetime, time.struct_time])
-                    toValidate.append(value)
-            else:
-                self.validateTypes(data, [bool, int, long, float, unicode,
-                        NoneType, datetime.datetime, time.struct_time])
+        for key, value in data.items():
             try:
-                data = toValidate.pop()
-            except (KeyboardInterrupt, SystemExit):
-                raise
-            except:
-                data = None
+                self.keySchema.validate(key)
+            except ValidationError:
+                raise ValidationError("key %r has the wrong type" % key)
+            try:
+                self.valueSchema.validate(key)
+            except ValidationError:
+                raise ValidationError("value %r (key: %r) has the wrong type"
+                        % (value, key))
 
-class SchemaStatusContainer(SchemaSimpleContainer):
-    """Allows nested dicts, lists and tuples, however the only thing they can
-    store are simple objects.  This currently includes bools, ints, longs,
-    floats, strings, unicode, None, datetime and struct_time objects.
+class SchemaStatusContainer(SchemaReprContainer):
+    """Version of SchemaReprContainer that stores the status dict for
+    RemoteDownloaders.  It allows some values to be byte strings rather than
+    unicode objects.
     """
 
+
     def validate(self, data):
-        if FilenameType == unicode:
-            binaryFields = ['metainfo', 'fastResumeData']
-        else:
-            binaryFields = ['channelName', 'shortFilename', 'filename', 'metainfo', 'fastResumeData']
+        binary_fields = self._binary_fields()
         self.validateType(data, dict)
         for key, value in data.items():
             self.validateTypes(key, [bool, int, long, float, unicode,
                     str, NoneType, datetime.datetime, time.struct_time])
-            if key not in binaryFields:
+            if key not in binary_fields:
                 self.validateTypes(value, [bool, int, long, float, unicode,
                         NoneType, datetime.datetime, time.struct_time])
             else:
                 self.validateType(value, str)
+
+    def _binary_fields(self):
+        if FilenameType == unicode:
+            return ('metainfo', 'fastResumeData')
+        else:
+            return ('channelName', 'shortFilename', 'filename', 'metainfo',
+                    'fastResumeData')
 
 class SchemaObject(SchemaItem):
     def __init__(self, klass, noneOk=False):
@@ -323,7 +364,7 @@ class ItemSchema(DDBObjectSchema):
         ('enclosure_size', SchemaInt(noneOk=True)),
         ('enclosure_type', SchemaString(noneOk=True)),
         ('enclosure_format', SchemaString(noneOk=True)),
-        ('feedparser_output', SchemaSimpleContainer()),
+        ('feedparser_output', SchemaReprContainer()),
     ]
 
 class FileItemSchema(ItemSchema):
@@ -398,7 +439,7 @@ class ScraperFeedImplSchema(FeedImplSchema):
     fields = FeedImplSchema.fields + [
         ('initialHTML', SchemaBinary(noneOk=True)),
         ('initialCharset', SchemaString(noneOk=True)),
-        ('linkHistory', SchemaSimpleContainer()),
+        ('linkHistory', SchemaReprContainer()),
     ]
 
 class SearchFeedImplSchema(RSSMultiFeedImplSchema):
@@ -527,7 +568,7 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
         ('list_view_displays', SchemaList(SchemaBinary())),
     ]
 
-VERSION = 78
+VERSION = 79
 objectSchemas = [
     DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,

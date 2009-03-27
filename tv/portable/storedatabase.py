@@ -188,10 +188,8 @@ class ConverterBase(object):
             rv = None
         elif isinstance(schema, schema_mod.SchemaSimpleItem):
             rv = data
-        elif isinstance(schema, schema_mod.SchemaList):
-            rv = self.convertList(data, schema, path)
-        elif isinstance(schema, schema_mod.SchemaDict):
-            rv = self.convertDict(data, schema, path)
+        elif isinstance(schema, schema_mod.SchemaReprContainer):
+            rv = self.convertReprContainer(data, schema, path)
         elif isinstance(schema, schema_mod.SchemaObject):
             rv = self.convertObject(data, schema, path)
         else:
@@ -201,30 +199,6 @@ class ConverterBase(object):
             self.postValidate(rv, schema)
         except schema_mod.ValidationError, e:
             self.handleValidationError(e, data, path, schema)
-        return rv
-
-    def convertList(self, list, schema, path):
-        childSchema = schema.childSchema
-        rv = []
-        for i in xrange(len(list)):
-            child = list[i]
-            newPath = path + "\n[%d] -> %s" % (i, util.stringify(child))
-            rv.append(self.convertData(child, childSchema, newPath))
-        return rv
-
-    def convertDict(self, dict, schema, path):
-        keySchema = schema.keySchema
-        valueSchema = schema.valueSchema
-        rv = {}
-        for key, value in dict.items():
-            # convert the key
-            newPath = path + "\nkey: %s" % key
-            newKey = self.convertData(key, keySchema, newPath)
-            # convert the value
-            newPath = path + "\n{%s} -> %s" % (util.stringify(key), util.stringify(value))
-            newValue = self.convertData(value, valueSchema, newPath)
-            # put it together
-            rv[newKey] = newValue
         return rv
 
     def convertObjectList(self, objects):
@@ -338,6 +312,10 @@ Reason: %s""" % (object, path, schema, reason)
         """
         raise NotImplementError()
 
+    def convertReprContainer(self, data, schema, path):
+        """Convert/Unconvert a JSON value."""
+        raise NotImplementError()
+
 class SavableConverter(ConverterBase):
     """Used to convert a list of DDBObjects into a list with the same
     structure, but with DDBObject converted to SavableObjects.
@@ -368,6 +346,9 @@ class SavableConverter(ConverterBase):
 
     def setTargetAttr(self, savable, attrName, attrValue):
         savable.savedData[attrName] = attrValue
+
+    def convertReprContainer(self, data, schema, path):
+        return schema.to_sql_value(data)
 
 class SavableUnconverter(ConverterBase):
     """Used to reverse the work of SavableConverter."""
@@ -417,6 +398,9 @@ Reason: %s""" % (object, path, schema, reason)
             for object in self.memory.values():
                 if hasattr(object, 'onRestore'):
                     object.onRestore()
+
+    def convertReprContainer(self, data, schema, path):
+        return schema.from_sql_value(data)
 
 def objectsToSavables(objects, objectSchemas=None):
     """Transform a list of objects into something that we can save to disk.
