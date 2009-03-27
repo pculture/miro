@@ -8,7 +8,7 @@ from miro import schema
 # much easier to type this way..
 from miro.schema import SchemaString, SchemaInt, SchemaFloat, SchemaBool
 from miro.schema import SchemaDateTime, SchemaList, SchemaDict, SchemaObject
-from miro.schema import SchemaSimpleContainer, ValidationError
+from miro.schema import SchemaReprContainer, ValidationError
 from miro.test.framework import MiroTestCase
 
 class TestValidation(MiroTestCase):
@@ -58,8 +58,8 @@ class TestValidation(MiroTestCase):
         self.assertRaises(ValidationError, schemastring.validate, "10123")
         schemastring.validate(u"10123")
 
-    def testSimpleContainerValidation(self):
-        schemasimple = SchemaSimpleContainer()
+    def testReprContainerValidation(self):
+        schemasimple = SchemaReprContainer()
         schemasimple.validate({1: u"Ben", u"pie": 3.1415})
         schemasimple.validate([1, 1, u"two", u"three", 5])
         schemasimple.validate({u'y2k': datetime.datetime(2000, 1, 1),

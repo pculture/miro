@@ -48,7 +48,6 @@ from miro.test.feedparsertest import *
 from miro.test.parseurltest import *
 from miro.test.utiltest import *
 from miro.test.playlisttest import *
-from miro.test.databaseupgradetest import *
 from miro.test.signalstest import *
 from miro.test.messagetest import *
 from miro.test.strippertest import *

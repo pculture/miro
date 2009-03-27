@@ -13,7 +13,7 @@ from miro import storedatabase
 
 from miro.test.framework import MiroTestCase
 # sooo much easier to type...
-from miro.schema import SchemaString, SchemaInt, SchemaFloat, SchemaSimpleContainer
+from miro.schema import SchemaString, SchemaInt, SchemaFloat, SchemaReprContainer
 from miro.schema import SchemaList, SchemaDict, SchemaObject
 
 # create a dummy schema
@@ -23,6 +23,7 @@ class Human:
         self.age = age
         self.meters_tall = meters_tall
         self.friends = friends
+        self.friend_names = [f.name for f in friends]
         if high_scores is None:
             self.high_scores = {}
         else:
@@ -36,13 +37,25 @@ class Dog:
     def __init__(self, name, age, owner=None):
         self.name = name
         self.age = age
-        self.owner = owner
+        self._set_owner(owner)
+
+    def _get_owner(self):
+        return self._owner
+
+    def _set_owner(self, owner):
+        self._owner = owner
+        if owner is not None:
+            self.owner_name = owner.name
+        else:
+            self.owner_name = None
+    owner = property(_get_owner, _set_owner)
 
 class House:
     def __init__(self, address, color, occupants, stuff=None):
         self.address = address
         self.color = color
         self.occupants = occupants
+        self.occupant_names = [o.name for o in occupants]
         self.stuff = stuff
 
 class PCFProgramer(Human):
@@ -59,7 +72,7 @@ class HumanSchema(schema.ObjectSchema):
         ('name', SchemaString()),
         ('age', SchemaInt()),
         ('meters_tall', SchemaFloat()),
-        ('friends', SchemaList(SchemaObject(Human))),
+        ('friend_names', SchemaList(SchemaString())),
         ('high_scores', SchemaDict(SchemaString(), SchemaInt())),
     ]
 
@@ -73,7 +86,7 @@ class DogSchema(schema.ObjectSchema):
     fields = [
         ('name', SchemaString()),
         ('age', SchemaInt()),
-        ('owner', SchemaObject(Human, noneOk=True)),
+        ('owner_name', SchemaString(noneOk=True)),
     ]
 
 class HouseSchema(schema.ObjectSchema):
@@ -82,8 +95,8 @@ class HouseSchema(schema.ObjectSchema):
     fields = [
         ('address', SchemaString()),
         ('color', SchemaString()),
-        ('occupants', SchemaList(SchemaObject(Human))),
-        ('stuff', SchemaSimpleContainer(noneOk=True)),
+        ('occupant_names', SchemaList(SchemaString())),
+        ('stuff', SchemaReprContainer(noneOk=True)),
     ]
 
 class PCFProgramerSchema(HumanSchema):
@@ -162,7 +175,7 @@ class TestValidation(SchemaTest):
         self.assertDbInvalid()
 
     def testListValidation(self):
-        self.lee.friends = [u'joe']
+        self.lee.friend_names = [1234]
         self.assertDbInvalid()
 
     def testDictValidation(self):
@@ -170,15 +183,6 @@ class TestValidation(SchemaTest):
         self.assertDbInvalid()
         del self.joe.high_scores['pong']
         self.joe.high_scores[1943] = 1234123
-        self.assertDbInvalid()
-
-    def testSubclassValidation(self):
-        self.addSubclassObjects()
-        self.assertDbValid()
-        class HumanSubclassWithoutObjectSchema(Human):
-            pass
-        jimmy = HumanSubclassWithoutObjectSchema(u"Luc", 23, 3.4, [])
-        self.joe.friends.append(jimmy)
         self.assertDbInvalid()
 
 class TestSave(SchemaTest):
@@ -206,11 +210,11 @@ class TestRestore(SchemaTest):
         for attr in 'name', 'age', 'meters_tall', 'high_scores':
             self.assertEquals(getattr(self.lee, attr), getattr(lee2, attr))
             self.assertEquals(getattr(self.joe, attr), getattr(joe2, attr))
-        self.assertEquals(joe2.friends, [lee2])
+        self.assertEquals(joe2.friend_names, [lee2.name])
         # check out the house
         self.assertEquals(forbesSt2.address, u'45 Forbs St')
         self.assertEquals(forbesSt2.color, u'Blue')
-        self.assertEquals(forbesSt2.occupants, [lee2, joe2])
+        self.assertEquals(forbesSt2.occupant_names, [lee2.name, joe2.name])
         self.assertEquals(forbesSt2.stuff,
                 {'view': u'pretty', 'next-party': datetime(2005, 4, 5)})
         # check out the dogs
@@ -218,8 +222,8 @@ class TestRestore(SchemaTest):
         self.assertEquals(scruffy2.age, 3)
         self.assertEquals(spike2.name, u'Spike')
         self.assertEquals(spike2.age, 4)
-        self.assertEquals(scruffy2.owner, lee2)
-        self.assertEquals(spike2.owner, None)
+        self.assertEquals(scruffy2.owner_name, lee2.name)
+        self.assertEquals(spike2.owner_name, None)
 
     def testRestoreSubclasses(self):
         self.addSubclassObjects()
@@ -231,7 +235,7 @@ class TestRestore(SchemaTest):
             self.assertEquals(getattr(self.ben, attr), getattr(ben2, attr))
             self.assertEquals(getattr(self.holmes, attr), getattr(holmes2,
                 attr))
-        self.assertEquals(forbesSt2.occupants, [lee2, joe2, ben2, holmes2])
+        self.assertEquals(forbesSt2.occupant_names, [lee2.name, joe2.name])
 
     def testOnRestoreCalled(self):
         resto = RestorableHuman(u'resto', 23, 1.3, [])
@@ -279,7 +283,7 @@ class UpgradeTest(SchemaTest):
             fields = [
                 ('name', SchemaString()),
                 ('age', SchemaInt()),
-                ('owner', SchemaObject(Human, noneOk=True)),
+                ('owner_name', SchemaString(noneOk=True)),
                 ('color', SchemaString()),
             ]
         self.nextGenObjectSchemas = [ HumanSchema, DogSchema2, HouseSchema,

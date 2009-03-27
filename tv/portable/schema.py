@@ -235,7 +235,7 @@ class SchemaDict(SchemaReprContainer):
             except ValidationError:
                 raise ValidationError("key %r has the wrong type" % key)
             try:
-                self.valueSchema.validate(key)
+                self.valueSchema.validate(value)
             except ValidationError:
                 raise ValidationError("value %r (key: %r) has the wrong type"
                         % (value, key))
