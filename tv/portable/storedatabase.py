@@ -348,7 +348,7 @@ class SavableConverter(ConverterBase):
         savable.savedData[attrName] = attrValue
 
     def convertReprContainer(self, data, schema, path):
-        return schema.to_sql_value(data)
+        return repr(data)
 
 class SavableUnconverter(ConverterBase):
     """Used to reverse the work of SavableConverter."""
@@ -400,7 +400,7 @@ Reason: %s""" % (object, path, schema, reason)
                     object.onRestore()
 
     def convertReprContainer(self, data, schema, path):
-        return schema.from_sql_value(data)
+        return eval(data)
 
 def objectsToSavables(objects, objectSchemas=None):
     """Transform a list of objects into something that we can save to disk.

@@ -192,12 +192,6 @@ class SchemaReprContainer(SchemaItem):
             else:
                 self.validateTypes(obj, self.VALID_TYPES)
 
-    def to_sql_value(self, data):
-        return repr(data)
-
-    def from_sql_value(self, bytes):
-        return eval(bytes)
-
 class SchemaList(SchemaReprContainer):
     """Special case of SchemaReprContainer that stores a simple list
 
