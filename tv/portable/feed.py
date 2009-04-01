@@ -1048,7 +1048,7 @@ class Feed(DDBObject):
 
     for name in ( 'setUpdateFrequency', 'scheduleUpdateEvents',
             'cancelUpdateEvents', 'update', 'get_viewed', 'isLoading',
-            'hasLibrary', 'get_title', 'getURL', 'getBaseURL',
+            'hasLibrary', 'getURL', 'getBaseURL',
             'getBaseHref', 'get_description', 'get_link', 'getLibraryLink',
             'getThumbnailURL', 'get_license', 'url', 'title', 'created',
             'lastViewed', 'thumbURL', 'lastEngine', 'lastQuery', 'dir',
