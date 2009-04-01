@@ -81,11 +81,10 @@ class MessageHandler(object):
 
     def calc_message_handler_name(self, message_class):
         def replace(match):
-            return '%s_%s' % (match.group(1), match.group(2).lower())
+            return '%s_%s' % (match.group(1), match.group(2))
         underscores = re.sub(r'([a-z])([A-Z])', replace,
                 message_class.__name__)
-        return 'handle_' + underscores.lower()
-
+        return 'handle_' + util.ascii_lower(underscores)
 
 class Message(object):
     """Base class for all Messages."""
