@@ -26,7 +26,13 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""The schema module is responsible for defining what data in the database
+"""schemav79.py -- schema.py, frozen at version 79.
+
+This is the magic version where we switched the database style.  We keep this
+schema version around in order to create the tables needed to upgrade
+databases from version 2.0 (and before).
+
+The schema module is responsible for defining what data in the database
 gets stored on disk.  
 
 The goals of this modules are:
@@ -36,7 +42,7 @@ The goals of this modules are:
 * Making upgrades of the database schema as easy as possible
 
 Module-level variables:
-    object_schemas -- Schemas to use with the current database.
+    objectSchemas -- Schemas to use with the current database.
     VERSION -- Current schema version.  If you change the schema you must bump
     this number and add a function in the databaseupgrade module.
 
@@ -170,7 +176,7 @@ class SchemaReprContainer(SchemaItem):
     def validate(self, data):
         if data is None:
             # let the super class handle the noneOkay attribute
-            super(SchemaReprContainer, self).validate(data)
+            super(self, SchemaReprContainer).validate(data)
             return
         memory = set()
         to_validate = [data]
@@ -562,8 +568,8 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
         ('list_view_displays', SchemaList(SchemaBinary())),
     ]
 
-VERSION = 80
-object_schemas = [
+VERSION = 79
+objectSchemas = [
     IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,
     SearchFeedImplSchema, DirectoryFeedImplSchema, DirectoryWatchFeedImplSchema,

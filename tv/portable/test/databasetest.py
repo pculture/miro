@@ -394,56 +394,6 @@ class CallbackViewTestCase(MiroTestCase):
         self.x.change()
         self.assertEqual(self.callcount,1)
 
-class SaveRestoreTestCase(MiroTestCase):
-    def setUp(self):
-        MiroTestCase.setUp(self)
-        self.tempdb = os.path.join(tempfile.gettempdir(), 'democracy-temp-db')
-        self.everything = database.defaultDatabase
-        self.everything.liveStorage = storedatabase.LiveStorage(self.tempdb,
-                restore=False)
-        self.x = database.DDBObject()
-        self.y = database.DDBObject()
-    def tearDown(self):
-        self.everything.liveStorage.close()
-        self.everything.liveStorage = None
-        try:
-            shutil.rmtree(self.tempdb)
-        except:
-            pass
-        MiroTestCase.tearDown(self)
-
-class BasicSaveTestCase(SaveRestoreTestCase):
-    def testSaveRestore(self):
-        self.assertEqual(self.everything.len(),2)
-        self.everything.liveStorage.saveDatabase()
-        self.everything.liveStorage.close()
-        self.z = database.DDBObject()
-        self.zz = database.DDBObject()
-        self.assertEqual(self.everything.len(),4)
-        last = self.zz.getID()
-        self.x.remove()
-        self.everything.liveStorage = storedatabase.LiveStorage(self.tempdb)
-        self.assertEqual(self.everything.len(),2)
-        assert (self.everything[0].getID() == self.y.getID() or
-                self.everything[0].getID() == self.x.getID())
-        if self.everything[0].getID() == self.y.getID():
-            self.assertEqual(self.everything[1].getID(),self.x.getID())
-        if self.everything[0].getID() == self.x.getID():
-            self.assertEqual(self.everything[1].getID(),self.y.getID())
-        self.assertEqual(self.everything[2],None)
-        assert database.DDBObject().getID() >= last
-    def testLastID(self):
-        last = self.y.getID()
-        self.everything.liveStorage.saveDatabase()
-        # Simulate restarting app
-        self.y.remove()
-        self.x.remove()
-        database.DDBObject.lastID = 0 # This is implementation specific and
-                             # needs to be updated when the
-                             # implementation changes
-        self.everything.liveStorage = storedatabase.LiveStorage(self.tempdb)
-        assert database.DDBObject().getID() > last
-
 class MapFilterRemoveViewTestCase(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)

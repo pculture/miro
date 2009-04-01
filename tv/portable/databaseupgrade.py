@@ -51,6 +51,37 @@ class DatabaseTooNewError(Exception):
     """
     pass
 
+_upgrade_overide = {}
+def get_upgrade_func(version):
+    if version in _upgrade_overide:
+        return _upgrade_overide[version]
+    else:
+        return globals()['upgrade%d' % version]
+
+def new_style_upgrade(cursor, saved_version, upgrade_to):
+    """Upgrade a database using new-style upgrade functions.
+
+    This method replaces the upgrade() method.  However, we still need to keep
+    around upgrade() to upgrade old databases.  We switched upgrade styles at
+    version 80.
+
+    This method will call upgradeX for each number X between saved_version and
+    upgrade_to.  cursor should be a SQLite database cursor that will be passed
+    to each upgrade function.  For example, if save_version is 2 and
+    upgrade_to is 4, this method is equivelant to:
+
+        upgrade3(cursor)
+        upgrade4(cursor)
+    """
+
+    if saved_version > upgrade_to:
+        msg = ("Database was created by a newer version of Miro " 
+               "(db version is %s)" % saved_version)
+        raise DatabaseTooNewError(msg)
+
+    for version in xrange(saved_version + 1, upgrade_to + 1):
+        get_upgrade_func(version)(cursor)
+
 def upgrade(savedObjects, saveVersion, upgradeTo=None):
     """Upgrade a list of SavableObjects that were saved using an old version 
     of the database schema.
@@ -78,7 +109,7 @@ def upgrade(savedObjects, saveVersion, upgradeTo=None):
     while saveVersion < upgradeTo:
         if util.chatter:
             print "upgrading database to version %s" % (saveVersion + 1)
-        upgradeFunc = globals()['upgrade%d' % (saveVersion + 1)]
+        upgradeFunc = get_upgrade_func(saveVersion + 1)
         thisChanged = upgradeFunc(savedObjects)
         if thisChanged is None or changed is None:
             changed = None
@@ -1915,11 +1946,9 @@ def upgrade79(objectList):
 
     return changed
 
-#def upgradeX (objectList):
-#    """ upgrade an object list to X.  return set of changed savables. """
-#    changed = set()
-#    for o in objectList:
-#        if objectneedschange:
-#            changeObject()
-#            changed.add(o)
+# There is no upgrade80.  That version was the version we switched how the
+# database was stored.
+
+#def upgradeX (cursor):
+#    """Input a SQLite cursor.  Do whatever is necessary to upgrade the DB."""
 #    return changed

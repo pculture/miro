@@ -1452,11 +1452,11 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
 class RSSFeedImpl(RSSFeedImplBase):
 
     def __init__(self, url, ufeed, title=None, initialHTML=None, etag=None, modified=None):
-        RSSFeedImplBase.__init__(self, url, ufeed, title)
         self.initialHTML = initialHTML
         self.etag = etag
         self.modified = modified
         self.download = None
+        RSSFeedImplBase.__init__(self, url, ufeed, title)
 
     @returnsUnicode
     def getBaseHref(self):
@@ -1631,13 +1631,13 @@ class RSSFeedImpl(RSSFeedImplBase):
 
 class RSSMultiFeedImpl(RSSFeedImplBase):
     def __init__(self, url, ufeed, title=None):
-        RSSFeedImplBase.__init__(self, url, ufeed, title)
         self.oldItems = []
         self.etag = {}
         self.modified = {}
         self.download_dc = {}
         self.updating = 0
         self.query = None
+        RSSFeedImplBase.__init__(self, url, ufeed, title)
         self.splitURLs()
 
     def get_title(self):
@@ -1801,7 +1801,6 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
     """A feed based on un unformatted HTML or pre-enclosure RSS
     """
     def __init__(self, url, ufeed, title=None, initialHTML=None, etag=None, modified=None, charset=None):
-        FeedImpl.__init__(self, url, ufeed, title)
         self.initialHTML = initialHTML
         self.initialCharset = charset
         self.linkHistory = {}
@@ -1812,6 +1811,8 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
         if not modified is None:
             self.linkHistory[url]['modified'] = unicodify(modified)
         self.downloads = set()
+        FeedImpl.__init__(self, url, ufeed, title)
+
         self.setUpdateFrequency(360)
         self.scheduleUpdateEvents(0)
 
@@ -2215,15 +2216,15 @@ class SearchFeedImpl(RSSMultiFeedImpl):
     """Search and Search Results feeds
     """
     def __init__(self, ufeed):
-        RSSMultiFeedImpl.__init__(self, url=u'', ufeed=ufeed, title=u'dtv:search')
         self.initialUpdate = True
-        self.setUpdateFrequency(-1)
         self.searching = False
         self.lastEngine = searchengines.get_search_engines()[0].name
         self.lastQuery = u''
+        self.query = u''
+        RSSMultiFeedImpl.__init__(self, url=u'', ufeed=ufeed, title=u'dtv:search')
+        self.setUpdateFrequency(-1)
         self.ufeed.autoDownloadable = False
         self.ufeed.signalChange()
-        self.query = u''
 
     @returnsUnicode
     def quoteLastQuery(self):

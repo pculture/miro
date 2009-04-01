@@ -40,6 +40,7 @@ import logging
 import os
 import traceback
 import platform
+import time
 
 from miro.clock import clock
 from miro import app
@@ -168,9 +169,10 @@ def startup():
 def finish_startup():
     views.initialize()
     logging.info("Restoring database...")
+    start = time.time()
+    app.db.liveStorage = storedatabase.LiveStorage()
     try:
-        database.defaultDatabase.liveStorage = storedatabase.LiveStorage()
-
+        app.db.liveStorage.upgrade_database()
     except databaseupgrade.DatabaseTooNewError:
         summary = _("Database too new")
         description = _(
@@ -180,8 +182,13 @@ def finish_startup():
             {"appname": config.get(prefs.SHORT_APP_NAME)},
         )
         raise StartupError(summary, description)
-    ddblinks.setup_links()
-    database.defaultDatabase.recomputeFilters()
+    objects = app.db.liveStorage.load_objects()
+    end = time.time()
+    if end - start > 0.05:
+        logging.timing ("Database load slow: %.3f", end - start)
+    ddblinks.setup_links(objects)
+    app.db.restoreFromObjectList(objects)
+    app.db.recomputeFilters()
 
     searchengines.create_engines()
     setup_global_feeds()

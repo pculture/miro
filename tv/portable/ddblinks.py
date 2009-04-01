@@ -41,12 +41,10 @@ from miro import guide
 from miro import iconcache
 from miro import item
 
-def setup_links(database=None):
-    if database is None:
-        database = app.db
-    all_objects = list(database)
+def setup_links(all_objects):
     om = ObjectMap(all_objects)
-    for obj in all_objects:
+    to_remove = []
+    for i, obj in enumerate(all_objects):
         if isinstance(obj, feed.Feed):
             try:
                 obj.actualFeed = om.feed_impls[obj.feed_impl_id]
@@ -58,11 +56,15 @@ def setup_links(database=None):
                 obj.ufeed = om.feeds[obj.ufeed_id]
             except KeyError:
                 logging.warn("No feed for FeedImpl: %s.  Discarding", obj)
-                _discard_object(database, obj)
+                to_remove.append(i)
         elif isinstance(obj, item.Item):
             _setup_icon_cache(obj, om)
         elif isinstance(obj, guide.ChannelGuide):
             _setup_icon_cache(obj, om)
+    for i in reversed(to_remove):
+        if app.db.liveStorage is not None:
+            app.db.liveStorage.remove(all_objects[i])
+        del all_objects[i]
 
 def _setup_icon_cache(obj, om):
     if obj.icon_cache_id is not None:
@@ -104,13 +106,3 @@ class ObjectMap:
                 self.items[obj.id] = obj
             elif isinstance(obj, guide.ChannelGuide):
                 self.guides[obj.id] = obj
-
-def _discard_object(database, obj):
-    """Removes an invalid object that we see in setup_links().  Because our
-    views haven't been initialized yet, we can't use obj.remove(), so we hack
-    around the issue.
-    """
-
-    it = database.objectLocs.pop(obj.id)
-    database.objects.remove(it)
-    database.liveStorage.remove(obj)

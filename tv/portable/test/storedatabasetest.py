@@ -2,6 +2,7 @@ from datetime import datetime
 import os
 import tempfile
 import unittest
+from glob import glob
 
 from miro import database
 from miro import databaseupgrade
@@ -11,14 +12,16 @@ from miro import schema
 import shutil
 from miro import storedatabase
 
-from miro.test.framework import MiroTestCase
+from miro.test.framework import MiroTestCase, EventLoopTest
 # sooo much easier to type...
 from miro.schema import SchemaString, SchemaInt, SchemaFloat, SchemaReprContainer
-from miro.schema import SchemaList, SchemaDict, SchemaObject
+from miro.schema import SchemaList, SchemaDict, SchemaObject, SchemaBool
+from miro.schema import SchemaFilename
 
-# create a dummy schema
-class Human:
-    def __init__(self, name, age, meters_tall, friends, high_scores = None):
+# create a dummy object schema
+class Human(database.DDBObject):
+    def __init__(self, name, age, meters_tall, friends, high_scores=None,
+            **stuff):
         self.name = name
         self.age = age
         self.meters_tall = meters_tall
@@ -28,394 +31,251 @@ class Human:
             self.high_scores = {}
         else:
             self.high_scores = high_scores
+        self.stuff = stuff
+        database.DDBObject.__init__(self)
+
+    def add_friend(self, friend):
+        self.friends.append(friend)
+        self.friend_names.append(friend.name)
 
 class RestorableHuman(Human):
     def onRestore(self):
         self.iveBeenRestored = True
 
-class Dog:
-    def __init__(self, name, age, owner=None):
-        self.name = name
-        self.age = age
-        self._set_owner(owner)
-
-    def _get_owner(self):
-        return self._owner
-
-    def _set_owner(self, owner):
-        self._owner = owner
-        if owner is not None:
-            self.owner_name = owner.name
-        else:
-            self.owner_name = None
-    owner = property(_get_owner, _set_owner)
-
-class House:
-    def __init__(self, address, color, occupants, stuff=None):
-        self.address = address
-        self.color = color
-        self.occupants = occupants
-        self.occupant_names = [o.name for o in occupants]
-        self.stuff = stuff
-
 class PCFProgramer(Human):
-    def __init__(self, name, age, meters_tall, friends, position, superpower,
+    def __init__(self, name, age, meters_tall, friends, file, developer,
             high_scores = None):
+        self.file = file
+        self.developer = developer
         Human.__init__(self, name, age, meters_tall, friends, high_scores)
-        self.position = position
-        self.superpower = superpower
 
 class HumanSchema(schema.ObjectSchema):
     klass = Human
     classString = 'human'
     fields = [
+        ('id', SchemaInt()),
         ('name', SchemaString()),
         ('age', SchemaInt()),
         ('meters_tall', SchemaFloat()),
         ('friend_names', SchemaList(SchemaString())),
         ('high_scores', SchemaDict(SchemaString(), SchemaInt())),
+        ('stuff', SchemaReprContainer(noneOk=True)),
     ]
 
 class RestorableHumanSchema(HumanSchema):
     klass = RestorableHuman
     classString = 'restorable-human'
 
-class DogSchema(schema.ObjectSchema):
-    klass = Dog
-    classString = 'dog'
-    fields = [
-        ('name', SchemaString()),
-        ('age', SchemaInt()),
-        ('owner_name', SchemaString(noneOk=True)),
-    ]
-
-class HouseSchema(schema.ObjectSchema):
-    klass = House
-    classString = 'house'
-    fields = [
-        ('address', SchemaString()),
-        ('color', SchemaString()),
-        ('occupant_names', SchemaList(SchemaString())),
-        ('stuff', SchemaReprContainer(noneOk=True)),
-    ]
-
 class PCFProgramerSchema(HumanSchema):
     klass = PCFProgramer
     classString = 'pcf-programmer'
     fields = HumanSchema.fields + [
-        ('position', SchemaString()),
-        ('superpower', SchemaString()),
+        ('file', SchemaFilename()),
+        ('developer', SchemaBool()),
     ]
 
-testObjectSchemas = [HumanSchema, DogSchema, HouseSchema, PCFProgramerSchema,
-    RestorableHumanSchema]
+test_object_schemas = [HumanSchema, PCFProgramerSchema, RestorableHumanSchema]
 
-class SchemaTest(MiroTestCase):
+def upgrade1(cursor):
+    cursor.execute("UPDATE human set name='new name'")
+
+def upgrade2(cursor):
+    1/0
+
+class StoreDatabaseTest(EventLoopTest):
+    OBJECT_SCHEMAS = None
+
     def setUp(self):
-        MiroTestCase.setUp(self)
-        storedatabase.skipUpgrade = True
-        self.lee = Human(u"lee", 25, 1.4, [], {u'virtual bowling': 212})
-        self.joe = Human(u"joe", 14, 1.4, [self.lee])
-        self.forbesSt = House(u'45 Forbs St', u'Blue', [self.lee, self.joe],
-                {'view': u'pretty', 'next-party': datetime(2005, 4, 5)})
-        self.scruffy = Dog(u'Scruffy', 3, self.lee)
-        self.spike = Dog(u'Spike', 4, owner=None)
-        self.db = [ self.lee, self.joe, self.forbesSt, self.scruffy, 
-            self.spike]
-        self.savePath = tempfile.mktemp()
+        EventLoopTest.setUp(self)
+        self.save_path = tempfile.mktemp()
+        self.remove_database()
+        self.database = database.defaultDatabase
+        self.setup_live_storage()
 
-    def tearDown(self):
-        storedatabase.skipUpgrade = False
+    def setup_live_storage(self, version=0):
+        live_storage = storedatabase.LiveStorage(self.save_path,
+                object_schemas=self.OBJECT_SCHEMAS,
+                schema_version=version)
+        self.database.liveStorage = live_storage
+
+    def remove_database(self):
         try:
-            os.unlink(self.savePath)
+            os.unlink(self.save_path)
         except OSError:
             pass
-        MiroTestCase.tearDown(self)
 
-    def addSubclassObjects(self):
-        self.ben = PCFProgramer(u'ben', 25, 3.4, [], u'programmer',
-                u'Teleportation')
-        self.holmes = PCFProgramer(u'ben', 25, 3.4, [], u'co-director', 
-                u'Mind Control')
-        self.forbesSt.occupants.extend([self.ben, self.holmes])
-        self.db.extend([self.ben, self.holmes])
+    def tearDown(self):
+        self.remove_database()
+        corrupt_path = os.path.join(os.path.dirname(self.save_path),
+                'corrupt_database')
+        if os.path.exists(corrupt_path):
+            os.remove(corrupt_path)
+        databaseupgrade._upgrade_overide = {}
+        EventLoopTest.tearDown(self)
 
-class TestValidation(SchemaTest):
-    def assertDbValid(self):
-        storedatabase.objectsToSavables(self.db, testObjectSchemas)
+    def reload_objects(self, close_current=True, version=0):
+        if close_current:
+            self.database.liveStorage.close()
+        self.setup_live_storage(version=version)
+        self.database.liveStorage.upgrade_database()
+        objects = self.database.liveStorage.load_objects()
+        self.database.restoreFromObjectList(objects)
 
-    def assertDbInvalid(self):
-        self.assertRaises(schema.ValidationError,
-                storedatabase.objectsToSavables, self.db, testObjectSchemas)
+class EmptyDBTest(StoreDatabaseTest):
+    def test_open_empty_db(self):
+        self.reload_objects()
+        self.assertEquals(list(self.database), [])
 
-    def tesntValidDb(self):
-        self.assertDbValid()
+class FakeSchemaTest(StoreDatabaseTest):
+    OBJECT_SCHEMAS = test_object_schemas
+
+    def setUp(self):
+        StoreDatabaseTest.setUp(self)
+        self.lee = Human(u"lee", 25, 1.4, [], {u'virtual bowling': 212})
+        self.joe = RestorableHuman(u"joe", 14, 1.4, [self.lee], car=u'toyota',
+                dog=u'scruffy')
+        self.ben = PCFProgramer(u'ben', 25, 3.4, [self.joe],
+                '/home/ben/\u1234'.encode("utf-8"), True)
+        self.db = [ self.lee, self.joe, self.ben]
+        databaseupgrade._upgrade_overide[1] = upgrade1
+        databaseupgrade._upgrade_overide[2] = upgrade2
+
+class DiskTest(FakeSchemaTest):
+    def check_database(self):
+        self.assertEquals(len(self.db), len(self.database.objects))
+        for obj in self.db:
+            if isinstance(obj, PCFProgramer):
+                schema = PCFProgramerSchema
+            elif isinstance(obj, RestorableHuman):
+                schema = RestorableHumanSchema
+            elif isinstance(obj, Human):
+                schema = HumanSchema
+            else:
+                raise AssertionError("Unknown object type: %r" % obj)
+
+            db_object = self.database.getObjectByID(obj.id)
+            for name, schema_item in schema.fields:
+                db_value = getattr(db_object, name)
+                obj_value = getattr(obj, name)
+                if db_value != obj_value or type(db_value) != type(obj_value):
+                    raise AssertionError("%r != %r (attr: %s)" % (db_value,
+                        obj_value, name))
+
+    def test_create(self):
+        # Test that the database we set up in __init__ restores correctly
+        self.reload_objects()
+        self.check_database()
+
+    def test_update(self):
+        self.joe.name = u'JO MAMA'
+        self.joe.signalChange()
+        self.reload_objects()
+        self.check_database()
+
+    def test_remove(self):
+        self.joe.remove()
+        self.db = [ self.lee, self.ben]
+        self.reload_objects()
+        self.check_database()
+
+    def test_update_then_remove(self):
+        self.joe.name = u'JO MAMA'
+        self.joe.remove()
+        self.db = [ self.lee, self.ben]
+        self.reload_objects()
+        self.check_database()
+
+    def test_on_restore(self):
+        self.assert_(not hasattr(self.joe, 'iveBeenRestored'))
+        self.reload_objects()
+        restored_joe = self.database.getObjectByID(self.joe.id)
+        self.assert_(restored_joe.iveBeenRestored)
+
+    def test_commit_without_close(self):
+        # we should commit using an idle callback.
+        self.runPendingIdles()
+        # close the database connection without giving LiveStorage the
+        # oppertunity to commit when it's closed.
+        self.database.liveStorage.connection.close()
+        self.reload_objects(close_current = False)
+        self.check_database()
+
+    def test_upgrade(self):
+        self.reload_objects(version=1)
+        new_lee = self.database.getObjectByID(self.lee.id)
+        self.assertEquals(new_lee.name, 'new name')
+
+    def test_restore_with_newer_version(self):
+        self.reload_objects(version=1)
+        self.assertRaises(databaseupgrade.DatabaseTooNewError,
+                self.reload_objects, version=0)
+
+    def test_last_id(self):
+        correct_last_id = database.DDBObject.lastID
+        database.DDBObject.lastID = 0
+        self.reload_objects()
+        self.assert_(database.DDBObject.lastID > 0)
+        self.assertEquals(database.DDBObject.lastID, correct_last_id)
+
+    def check_reload_error(self, **reload_args):
+        corrupt_path = os.path.join(os.path.dirname(self.save_path),
+                'corrupt_database')
+        self.assert_(not os.path.exists(corrupt_path))
+        self.reload_objects(**reload_args)
+        self.assert_(os.path.exists(corrupt_path))
+
+    def test_upgrade_error(self):
+        self.check_reload_error(version=2)
+
+    def test_corrupt_database(self):
+        self.database.liveStorage.close()
+        open(self.save_path, 'wb').write("BOGUS DATA")
+        self.check_reload_error(close_current=False)
+
+    def test_database_data_error(self):
+        self.database.liveStorage.cursor.execute("DROP TABLE human")
+        self.check_reload_error()
+
+class ValidationTest(FakeSchemaTest):
+    def assert_object_valid(self, obj):
+        obj.signalChange()
+
+    def assert_object_invalid(self, obj):
+        self.assertRaises(schema.ValidationError, obj.signalChange)
 
     def testNoneValues(self):
         self.lee.age = None
-        self.assertDbInvalid()
+        self.assert_object_invalid(self.lee)
         self.lee.age = 25
-        self.scruffy.owner = None
-        self.assertDbValid()
+        self.lee.stuff = None
+        self.assert_object_valid(self.lee)
 
     def testIntValidation(self):
         self.lee.age = '25'
-        self.assertDbInvalid()
+        self.assert_object_invalid(self.lee)
         self.lee.age = 25L
-        self.assertDbValid()
+        self.assert_object_valid(self.lee)
 
     def testStringValidation(self):
         self.lee.name = 133
-        self.assertDbInvalid()
+        self.assert_object_invalid(self.lee)
         self.lee.name = u'lee'
-        self.assertDbValid()
+        self.assert_object_valid(self.lee)
 
     def testFloatValidation(self):
         self.lee.meters_tall = 3
-        self.assertDbInvalid()
+        self.assert_object_invalid(self.lee)
 
     def testListValidation(self):
         self.lee.friend_names = [1234]
-        self.assertDbInvalid()
+        self.assert_object_invalid(self.lee)
 
     def testDictValidation(self):
         self.joe.high_scores['pong'] = u"One Million"
-        self.assertDbInvalid()
+        self.assert_object_invalid(self.joe)
         del self.joe.high_scores['pong']
         self.joe.high_scores[1943] = 1234123
-        self.assertDbInvalid()
-
-class TestSave(SchemaTest):
-    def testSimpleCircularReference(self):
-        self.lee.friends = [self.joe]
-
-    def testSaveToDisk(self):
-        storedatabase.saveObjectList(self.db, self.savePath,
-                testObjectSchemas)
-
-    def testExtraObjectsAreIgnored(self):
-        class EpherialObject:
-            pass
-        self.db.append(EpherialObject())
-        storedatabase.objectsToSavables(self.db, testObjectSchemas)
-
-class TestRestore(SchemaTest):
-    def testSaveThenRestore(self):
-        storedatabase.saveObjectList(self.db, self.savePath,
-                testObjectSchemas)
-        db2 = storedatabase.restoreObjectList(self.savePath,
-                testObjectSchemas)
-        # check out the humans
-        lee2, joe2, forbesSt2, scruffy2, spike2 = db2
-        for attr in 'name', 'age', 'meters_tall', 'high_scores':
-            self.assertEquals(getattr(self.lee, attr), getattr(lee2, attr))
-            self.assertEquals(getattr(self.joe, attr), getattr(joe2, attr))
-        self.assertEquals(joe2.friend_names, [lee2.name])
-        # check out the house
-        self.assertEquals(forbesSt2.address, u'45 Forbs St')
-        self.assertEquals(forbesSt2.color, u'Blue')
-        self.assertEquals(forbesSt2.occupant_names, [lee2.name, joe2.name])
-        self.assertEquals(forbesSt2.stuff,
-                {'view': u'pretty', 'next-party': datetime(2005, 4, 5)})
-        # check out the dogs
-        self.assertEquals(scruffy2.name, u'Scruffy')
-        self.assertEquals(scruffy2.age, 3)
-        self.assertEquals(spike2.name, u'Spike')
-        self.assertEquals(spike2.age, 4)
-        self.assertEquals(scruffy2.owner_name, lee2.name)
-        self.assertEquals(spike2.owner_name, None)
-
-    def testRestoreSubclasses(self):
-        self.addSubclassObjects()
-        storedatabase.saveObjectList(self.db, self.savePath, testObjectSchemas)
-        db2 = storedatabase.restoreObjectList(self.savePath, testObjectSchemas)
-        lee2, joe2, forbesSt2, scruffy2, spike2, ben2, holmes2 = db2
-        for attr in ('name', 'age', 'meters_tall', 'high_scores', 'position',
-                'superpower'):
-            self.assertEquals(getattr(self.ben, attr), getattr(ben2, attr))
-            self.assertEquals(getattr(self.holmes, attr), getattr(holmes2,
-                attr))
-        self.assertEquals(forbesSt2.occupant_names, [lee2.name, joe2.name])
-
-    def testOnRestoreCalled(self):
-        resto = RestorableHuman(u'resto', 23, 1.3, [])
-        self.db.append(resto)
-        storedatabase.saveObjectList(self.db, self.savePath, testObjectSchemas)
-        db2 = storedatabase.restoreObjectList(self.savePath, testObjectSchemas)
-        lee2, joe2, forbesSt2, scruffy2, spike2, resto2, = db2
-        self.assertEquals(resto2.name, u'resto')
-        self.assert_(hasattr(resto2, 'iveBeenRestored'))
-        self.assertEquals(resto2.iveBeenRestored, True)
-
-class UpgradeTest(SchemaTest):
-    def setUp(self):
-        super(UpgradeTest, self).setUp()
-        # save the actual version and upgrade functions
-        self.realSchemaVersion = schema.VERSION
-        try:
-            self.realUpgrade2 = databaseupgrade.upgrade2
-        except AttributeError:
-            self.realUpgrade2 = None
-        try:
-            self.realUpgrade3 = databaseupgrade.upgrade3
-        except AttributeError:
-            self.realUpgrade3 = None
-        # save the database, this is our "old" version
-        schema.VERSION = 1
-        storedatabase.saveObjectList(self.db, self.savePath,
-                testObjectSchemas)
-        # install a fake upgrade path
-        schema.VERSION = 3
-        def upgrade2(objects):
-            for o in objects:
-                if o.classString == 'human':
-                    o.savedData['name'] = "Sir %s" % o.savedData['name']
-        def upgrade3(objects):
-            for o in objects:
-                if o.classString == 'dog':
-                    o.savedData['color'] = u"Unknown"
-        databaseupgrade.upgrade2 = upgrade2
-        databaseupgrade.upgrade3 = upgrade3
-        storedatabase.skipUpgrade = False
-        class DogSchema2(schema.ObjectSchema):
-            klass = Dog
-            classString = 'dog'
-            fields = [
-                ('name', SchemaString()),
-                ('age', SchemaInt()),
-                ('owner_name', SchemaString(noneOk=True)),
-                ('color', SchemaString()),
-            ]
-        self.nextGenObjectSchemas = [ HumanSchema, DogSchema2, HouseSchema,
-            PCFProgramerSchema, RestorableHumanSchema ]
-
-    def tearDown(self):
-        if self.realUpgrade3 is not None:
-            databaseupgrade.upgrade3 = self.realUpgrade3
-        else:
-            del databaseupgrade.upgrade3
-        if self.realUpgrade2 is not None:
-            databaseupgrade.upgrade2 = self.realUpgrade2
-        else:
-            del databaseupgrade.upgrade2
-        schema.VERSION = self.realSchemaVersion
-        super(UpgradeTest, self).tearDown()
-
-    def testChanges(self):
-        newDb = storedatabase.restoreObjectList(self.savePath,
-                self.nextGenObjectSchemas)
-        for object in newDb:
-            if isinstance(object, Human):
-                self.assert_(object.name.startswith("Sir "))
-            elif isinstance(object, Dog):
-                self.assert_('color' in object.__dict__)
-
-    def testRestoreWithNewerVersion(self):
-        newDb = storedatabase.restoreObjectList(self.savePath,
-                self.nextGenObjectSchemas)
-        storedatabase.saveObjectList(newDb, self.savePath,
-                testObjectSchemas)
-        # saved database is now version 3
-        schema.VERSION = 1
-        self.assertRaises(databaseupgrade.DatabaseTooNewError,
-                storedatabase.restoreObjectList, self.savePath, 
-                testObjectSchemas)
-
-    def testSavingUpgradedDb(self):
-        newDb = storedatabase.restoreObjectList(self.savePath,
-                self.nextGenObjectSchemas)
-        storedatabase.saveObjectList(newDb, self.savePath,
-                self.nextGenObjectSchemas)
-        newDb = storedatabase.restoreObjectList(self.savePath,
-                self.nextGenObjectSchemas)
-
-class LiveStorageTest(MiroTestCase):
-    def setUp(self):
-        MiroTestCase.setUp(self)
-        storedatabase.skipUpgrade = True
-        self.savePath = os.path.join(tempfile.gettempdir(),
-                'democracy-temp-db')
-        self.database = database.defaultDatabase
-        self.database.liveStorage = storedatabase.LiveStorage(self.savePath,
-                restore=False)
-
-    def tearDown(self):
-        storedatabase.skipUpgrade = False
-        try:
-            self.database.liveStorage.close()
-            self.database.liveStorage = None
-        except:
-            pass
-        try:
-            shutil.rmtree(self.savePath);
-        except:
-            pass
-        MiroTestCase.tearDown(self)
-
-
-class TestConstraintChecking(LiveStorageTest):
-    def testConstraintCheck(self):
-        # test creating an item with an invalid feed id
-        self.assertRaises(database.DatabaseConstraintError,
-                item.Item, feed_id=123123123, entry={})
-
-    def testConstraintCheck2(self):
-        # test changing an item to have an invalid feed id
-        f = feed.Feed(u"http://feed.uk")
-        i = item.Item({}, feed_id=f.id)
-        i.feed_id = 123456789
-        self.assertRaises(database.DatabaseConstraintError, i.signalChange)
-
-    def testUpdateAfterRemove(self):
-        obj = database.DDBObject()
-        obj.remove()
-        self.assertRaises(database.DatabaseConstraintError, obj.signalChange)
-
-class TestHighLevelFunctions(LiveStorageTest):
-    def setUp(self):
-        LiveStorageTest.setUp(self)
-        self.f = feed.Feed(u"http://feed.uk")
-        i = item.Item({}, feed_id=self.f.id)
-        i2 = item.Item({}, feed_id=self.f.id)
-        self.objects = [self.f, self.f.actualFeed, self.f.icon_cache,
-                i.icon_cache, i, i2.icon_cache, i2 ]
-
-    def checkDatabaseIsTheSame(self):
-        self.assertEquals(len(self.objects), len(self.database.objects))
-
-        # We can't directly compare objects, since that would compare their
-        # ids.  As a sanity test, compare that we have the same classes coming
-        # out and we did going in.
-        i = 0
-        for newObject, copy in self.database.objects:
-            self.assertEquals(newObject.__class__, self.objects[i].__class__)
-            self.assertEquals(newObject.id, self.objects[i].id)
-            i += 1
-
-    def saveDatabase(self):
-        self.database.liveStorage.saveDatabase()
-
-    def restoreDatabase(self):
-        database.resetDefaultDatabase()
-        self.database.liveStorage = storedatabase.LiveStorage(self.savePath,
-                restore=True)
-
-    def testSaveThenRestore(self):
-        self.saveDatabase()
-        self.restoreDatabase()
-        self.checkDatabaseIsTheSame()
-
-    def testUpdateThenRestore(self):
-        i3 = item.Item({}, feed_id=self.f.id)
-        self.saveDatabase()
-        i3.remove()
-        i3 = item.Item({}, feed_id=self.f.id)
-        self.objects.append(i3.icon_cache)
-        self.objects.append(i3)
-        self.database.liveStorage.runUpdate()
-        self.restoreDatabase()
-        self.checkDatabaseIsTheSame()
-
+        self.assert_object_invalid(self.joe)
 
 if __name__ == '__main__':
     unittest.main()

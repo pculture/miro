@@ -14,7 +14,7 @@ from miro.test.framework import MiroTestCase
 class TestValidation(MiroTestCase):
     def testModuleVariablesDefined(self):
         self.assert_(hasattr(schema, 'VERSION'))
-        self.assert_(hasattr(schema, 'objectSchemas'))
+        self.assert_(hasattr(schema, 'object_schemas'))
 
     def testNoneValidation(self):
         self.assertRaises(ValidationError, SchemaInt(noneOk=False).validate,
@@ -96,7 +96,7 @@ class TestValidation(MiroTestCase):
         schemadict = SchemaDict(SchemaInt(), SchemaString())
         self.assertRaises(ValidationError, schemadict.validate,
                 1234)
-        schemadict.validate({12: "Buckle my shoe"})
+        schemadict.validate({12: u"Buckle my shoe"})
 
     def testObjectValidation(self):
         class TestObject(object):

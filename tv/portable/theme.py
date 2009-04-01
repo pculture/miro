@@ -45,7 +45,6 @@ from miro import signals
 
 class ThemeHistory(DDBObject):
     def __init__(self):
-        DDBObject.__init__(self)
         self.lastTheme = None
         self.pastThemes = []
         self.theme = config.get(prefs.THEME_NAME)
@@ -53,6 +52,7 @@ class ThemeHistory(DDBObject):
             self.theme = unicode(self.theme)
         # if we don't have a theme, self.theme will be None
         self.pastThemes.append(self.theme)
+        DDBObject.__init__(self)
         self.on_first_run()
 
     # We used to do this on restore, but we need to make sure that the
