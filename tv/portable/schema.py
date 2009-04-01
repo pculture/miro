@@ -564,7 +564,7 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
 
 VERSION = 79
 objectSchemas = [
-    DDBObjectSchema, IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
+    IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,
     SearchFeedImplSchema, DirectoryFeedImplSchema, DirectoryWatchFeedImplSchema,
     SearchDownloadsFeedImplSchema, RemoteDownloaderSchema,
