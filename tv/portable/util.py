@@ -840,3 +840,15 @@ def entity_replace(text):
     for src, dest in replacements:
         text = text.replace(src, dest)
     return text
+
+_lower_translate = string.maketrans(string.ascii_uppercase,
+        string.ascii_lowercase)
+
+def ascii_lower(str):
+    """Converts a string to lower case, using a simple translations of ASCII
+    characters.
+
+    This method is not locale-dependant, which is useful in some cases.
+    Normally str.lower() should be used though.
+    """
+    return str.translate(_lower_translate)
