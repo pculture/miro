@@ -40,7 +40,6 @@ attribute was stored in a separate column.
 
 import cPickle
 from cStringIO import StringIO
-import bsddb.db
 import sys
 try:
     import sqlite3
