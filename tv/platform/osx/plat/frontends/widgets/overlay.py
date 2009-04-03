@@ -160,6 +160,7 @@ class OverlayPalette (NSWindowController):
         self.addToLibButton.setHidden_(not item_info.is_external)
         self.adjustContent(video_window, False)
         self.update_(nil)
+        self.suspendAutoHiding()
         self.reveal(video_window)
 
     def on_items_changed(self, changed):
@@ -238,6 +239,8 @@ class OverlayPalette (NSWindowController):
             self.revealing = True
             params = {NSViewAnimationTargetKey: self.window(), NSViewAnimationEffectKey: NSViewAnimationFadeInEffect}
             self.animate(params, 0.3)
+        else:
+            self.resumeAutoHiding()
     
     def hide(self):
         threads.warn_if_not_on_main_thread('OverlayPalette.hide')
@@ -262,13 +265,15 @@ class OverlayPalette (NSWindowController):
         self.holdStartTime = time.time()
     
     def suspendAutoHiding(self):
-        self.autoHidingTimer.invalidate()
-        self.autoHidingTimer = nil
+        if self.autoHidingTimer is not nil:
+            self.autoHidingTimer.invalidate()
+            self.autoHidingTimer = nil
     
     def resumeAutoHiding(self):
-        self.holdStartTime = time.time()
-        self.autoHidingTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
-            1.0, self, 'hideAfterDelay:', nil, YES)
+        self.resetAutoHiding()
+        if self.autoHidingTimer is None:
+            self.autoHidingTimer = NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
+                1.0, self, 'hideAfterDelay:', nil, YES)
     
     def animate(self, params, duration):
         self.anim = NSViewAnimation.alloc().initWithDuration_animationCurve_(duration, 0)
@@ -392,9 +397,7 @@ class OverlayPalette (NSWindowController):
 
     def remove(self):
         threads.warn_if_not_on_main_thread('OverlayPalette.remove')
-        if self.autoHidingTimer is not nil:
-            self.autoHidingTimer.invalidate()
-            self.autoHidingTimer = nil
+        self.suspendAutoHiding()
         if self.updateTimer is not nil:
             self.updateTimer.invalidate()
             self.updateTimer = nil

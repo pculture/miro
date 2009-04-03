@@ -462,7 +462,7 @@ class VideoRenderer(VBox):
     def pause(self):
         self.renderer.pause()
 
-    def stop(self):
+    def stop(self, will_play_another=False):
         self._video_details.reset()
         self.renderer.stop()
 

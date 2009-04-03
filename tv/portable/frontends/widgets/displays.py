@@ -465,8 +465,8 @@ class VideoDisplay(Display):
     def pause(self):
         self.renderer.pause()
 
-    def stop(self):
-        self.renderer.stop()
+    def stop(self, will_play_another=False):
+        self.renderer.stop(will_play_another)
 
     def set_playback_rate(self, rate):
         self.renderer.set_playback_rate(rate)

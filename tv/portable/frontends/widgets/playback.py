@@ -366,7 +366,7 @@ class PlaybackManager (signals.SignalEmitter):
         if (0 <= new_position < len(self.playlist)):
             self.position = new_position
             if self.is_playing:
-                self.video_display.stop()
+                self.video_display.stop(True)
             self._select_current()
         else:
             self.stop(save_resume_time)

@@ -293,11 +293,11 @@ class VideoRenderer (Widget):
         self.video_view.pause_(nil)
         self.prevent_system_sleep(True)
 
-    def stop(self):
+    def stop(self, will_play_another=False):
         threads.warn_if_not_on_main_thread('VideoRenderer.stop')
         self.prevent_system_sleep(True)
         self.video_view.pause_(nil)
-        if self.video_window:
+        if self.video_window and not will_play_another:
             self.video_window.palette.remove()
         self.reset()
 
