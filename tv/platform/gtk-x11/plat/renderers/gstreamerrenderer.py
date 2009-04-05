@@ -281,4 +281,5 @@ class Renderer:
                 position + (rate * gst.SECOND))
  
     def movie_data_program_info(self, movie_path, thumbnail_path):
-        return ((sys.executable, 'plat/renderers/gst_extractor.py', movie_path, thumbnail_path), None)
+        extractor_path = os.path.join(os.path.split(__file__)[0], "gst_extractor.py")
+        return ((sys.executable, extractor_path, movie_path, thumbnail_path), None)
