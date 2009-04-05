@@ -1,3 +1,10 @@
+miro (2.0.4-0pcf2) hardy; urgency=low
+
+  * tweaked the gst_extractor.py path; this fixes thumbnail extraction when using
+    gstreamer as the renderer
+
+ -- Will Kahn-Greene <will.guaraldi@pculture.org>  Sun, 05 Apr 2009 18:26:04 -0400
+
 miro (2.0.4-0pcf1) hardy; urgency=low
 
   * #11636 FIXED disabled veoh search
