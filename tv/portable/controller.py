@@ -33,6 +33,9 @@ of Miro.
 import logging
 import os
 import threading
+import tempfile
+from random import randrange
+from zipfile import ZipFile
 
 from miro import app
 from miro import config
@@ -126,8 +129,7 @@ class Controller:
         if send_database:
             try:
                 logging.info("Sending entire database")
-                from miro import database
-                backupfile = database.defaultDatabase.liveStorage.backupDatabase()
+                backupfile = self._backup_support_dir()
             except (SystemExit, KeyboardInterrupt):
                 raise
             except:
@@ -150,3 +152,28 @@ class Controller:
         logging.info("Sending crash report....")
         httpclient.grabURL("http://participatoryculture.org/bogondeflector/index.php", 
                 callback, errback, method="POST", postVariables=postVars, postFiles=postFiles)
+
+    def _backup_support_dir(self):
+        # backs up the support directories to a zip file
+        # returns the name of the zip file
+        logging.info("Attempting to back up support directory")
+        app.db.liveStorage.close()
+        try:
+            tempfilename = os.path.join(tempfile.gettempdir(),("%012ddatabasebackup.zip"%randrange(0,999999999999)))
+            zipfile = ZipFile(tempfilename,"w")
+            for root, dirs, files in os.walk(config.get(prefs.SUPPORT_DIRECTORY)):
+                if ((os.path.normpath(root) !=
+                    os.path.normpath(config.get(prefs.ICON_CACHE_DIRECTORY)))
+                    and not os.path.islink(root)):
+                    relativeroot = root[len(config.get(prefs.SUPPORT_DIRECTORY)):]
+                    while len(relativeroot)>0 and relativeroot[0] in ['/','\\']:
+                        relativeroot = relativeroot[1:]
+                    for filen in files:
+                        if not os.path.islink(os.path.join(root,filen)):
+                            zipfile.write(os.path.join(root,filen),
+                                    os.path.join(relativeroot, filen).encode('ascii','replace'))
+            zipfile.close()
+            logging.info("Support directory backed up to %s" % tempfilename)
+            return tempfilename
+        finally:
+            app.db.liveStorage.open_connection()

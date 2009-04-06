@@ -104,7 +104,7 @@ class LiveStorage:
         db_existed = os.path.exists(path)
         self._dc = None
         self.path = path
-        self._open_connection()
+        self.open_connection()
         self._object_schemas = object_schemas
         self._schema_version = schema_version
         self._schema_map = dict((os.klass, os) for os in object_schemas)
@@ -113,7 +113,7 @@ class LiveStorage:
         if not db_existed:
             self._init_database()
 
-    def _open_connection(self):
+    def open_connection(self):
         self.connection = sqlite3.connect(self.path,
                 detect_types=sqlite3.PARSE_DECLTYPES)
         self.cursor = self.connection.cursor()
@@ -258,7 +258,7 @@ class LiveStorage:
             logging.exception(message)
         self.connection.close()
         self.save_invalid_db()
-        self._open_connection()
+        self.open_connection()
         self._init_database()
 
     def save_invalid_db(self):
