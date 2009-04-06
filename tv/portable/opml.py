@@ -73,18 +73,18 @@ class Exporter(object):
     
         tabOrder = util.getSingletonDDBObject(views.channelTabOrder)
         audioTabOrder = util.getSingletonDDBObject(views.audioChannelTabOrder)
-        for tab in tabOrder.getAllTabs() + audioTabOrder.getAllTabs():
-            if tab.isChannelFolder():
-                self._open_folder_entry(tab.obj)
-            elif tab.isFeed():
-                self._write_feed_entry(tab.obj)
+        for obj in tabOrder.getAllTabs() + audioTabOrder.getAllTabs():
+            if isinstance(obj, folder.ChannelFolder):
+                self._open_folder_entry(obj)
+            elif isinstance(obj, feed.Feed):
+                self._write_feed_entry(obj)
     
         if self.currentFolder is not None:
             self._close_folder_entry()
     
         site_tab_order = util.getSingletonDDBObject(views.siteTabOrder)
-        for tab in site_tab_order.getAllTabs():
-            self._write_site_entry(tab.obj)
+        for obj in site_tab_order.getAllTabs():
+            self._write_site_entry(obj)
 
         self.io.write(u'</body>\n')
         self.io.write(u'</opml>\n')

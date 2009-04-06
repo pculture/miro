@@ -130,3 +130,20 @@ def videoFeed(feed):
 
 def audioFeed(feed):
     return feed.section == u'audio'
+
+def feedTab(obj):
+    from miro import feed
+    from miro import folder
+    return ((isinstance(obj, feed.Feed) and obj.isVisible()) or
+            isinstance(obj, folder.ChannelFolder))
+
+def videoFeedTab(obj):
+    return feedTab(obj) and videoFeed(obj)
+
+def audioFeedTab(obj):
+    return feedTab(obj) and audioFeed(obj)
+
+def playlistTab(obj):
+    from miro import playlist
+    from miro import folder
+    return obj.__class__ in (playlist.SavedPlaylist, folder.PlaylistFolder)

@@ -55,20 +55,6 @@ class FolderBase(DDBObject):
         for child in self.getChildrenView():
             child.signalChange(needsSave=False)
 
-    def getNextTab(self):
-        """Get the first tab that isn't in this folder our.  If there are no
-        items afterwards, return None.
-        """
-        seenSelf = False
-        # Find the tab directly after this folder and move the tabs above
-        # that one.
-        for tab in self.getTabOrder().getView():
-            if not seenSelf and tab.obj is self: 
-                seenSelf = True
-            elif seenSelf and tab.obj.getFolder() is not self:
-                return tab.obj
-        return None
-
     def remove(self, moveItemsTo=None):
         children = [child for child in self.getChildrenView()]
         for child in children:
@@ -84,10 +70,6 @@ class FolderBase(DDBObject):
     def setFolder(self, newFolder):
         if newFolder is not None:
             raise TypeError("Nested folders not allowed")
-
-    def getTabOrder(self):
-        """Return the TabOrder object that this folder belongs to."""
-        raise NotImplementedError()
 
     def getChildrenView(self):
         """Return the children of this folder."""
@@ -108,8 +90,6 @@ class ChannelFolder(FolderBase):
         self.itemSortDownloading = sorts.ItemSort()
         self.itemSortWatchable = sorts.ItemSortUnwatchedFirst()
 
-    def getTabOrder(self):
-        return util.getSingletonDDBObject(views.channelTabOrder)
     def getChildrenView(self):
         return views.feeds.filterWithIndex(indexes.byFolder, self)
 
@@ -163,9 +143,6 @@ class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
     def checkItemIDAdded(self, id):
         if id not in self.trackedItems:
             self.trackedItems.appendID(id)
-
-    def getTabOrder(self):
-        return util.getSingletonDDBObject(views.playlistTabOrder)
 
     def getChildrenView(self):
         return views.playlists.filterWithIndex(indexes.byFolder, self)

@@ -200,19 +200,19 @@ class TabTracker(ViewTracker):
     def send_initial_list(self):
         response = messages.TabList(self.type)
         current_folder_id = None
-        for tab in self.get_tab_view():
-            info = self._make_new_info(tab.obj)
-            if tab.obj.getFolder() is None:
+        for obj in self.get_tab_view():
+            info = self._make_new_info(obj)
+            if obj.getFolder() is None:
                 response.append(info)
-                if isinstance(tab.obj, FolderBase):
-                    current_folder_id = tab.objID()
-                    if tab.obj.getExpanded():
-                        response.expand_folder(tab.objID())
+                if isinstance(obj, FolderBase):
+                    current_folder_id = obj.id
+                    if obj.getExpanded():
+                        response.expand_folder(obj.id)
                 else:
                     current_folder_id = None
             else:
                 if (current_folder_id is None or
-                        tab.obj.getFolder().id != current_folder_id):
+                        obj.getFolder().id != current_folder_id):
                     raise AssertionError("Tab ordering is wrong")
                 response.append_child(current_folder_id, info)
         response.send_to_frontend()
@@ -747,35 +747,24 @@ class BackendMessageHandler(messages.MessageHandler):
 
         # make sure all the items are in the right places
         for info in message.toplevels['feed']:
-            item = views.allTabs.getObjectByID(info.id)
-            if item.type != u'feed' or item.obj.section != u'video':
-                item.type = u'feed'
-                item.obj.section = u'video'
-                item.signalChange()
-                item.obj.signalChange()
+            if views.audioFeedTabs.idExists(info.id):
+                obj = views.audioFeedTabs.getObjectByID(info.id)
+                obj.section = u'video'
+                obj.signalChange()
 
         for info in message.toplevels['audio-feed']:
-            item = views.allTabs.getObjectByID(info.id)
-            if item.type != u'audio-feed' or item.obj.section != u'audio':
-                item.type = u'audio-feed'
-                item.obj.section = u'audio'
-                item.signalChange()
-                item.obj.signalChange()
+            if views.videoFeedTabs.idExists(info.id):
+                obj = views.videoFeedTabs.getObjectByID(info.id)
+                obj.section = u'audio'
+                obj.signalChange()
 
         for id_, feeds in message.folder_children.iteritems():
-            feed_folder = views.allTabs.getObjectByID(id_)
+            feed_folder = views.channelFolders.getObjectByID(id_)
             for mem in feeds:
-                mem = views.allTabs.getObjectByID(mem.id)
-                if feed_folder.type == u'audio-feed' and mem.type != u'audio-feed':
-                    mem.type = u'audio-feed'
-                    mem.obj.section = u'audio'
+                mem = views.feeds.getObjectByID(mem.id)
+                if feed_folder.section != mem.section:
+                    mem.section = feed_folder.section
                     mem.signalChange()
-                    mem.obj.signalChange()
-                elif feed_folder.type == u'feed' and mem.type != u'feed':
-                    mem.type = u'feed'
-                    mem.obj.section = u'video'
-                    mem.signalChange()
-                    mem.obj.signalChange()
 
         for info_type, info_list in message.toplevels.iteritems():
             folder_view = self.folder_view_for_type(info_type)
@@ -893,14 +882,7 @@ class BackendMessageHandler(messages.MessageHandler):
                 feed_ = views.feeds.getObjectByID(id)
                 feed_.setFolder(folder)
                 if feed_.section != section:
-                    feed_tab = views.allTabs.getObjectByID(feed_.id)
-                    if section == u'video':
-                        feed_tab.type = u'feed'
-                        feed_.section = u'video'
-                    else:
-                        feed_tab.type = u'audio-feed'
-                        feed_.section = u'audio'
-                    feed_tab.signalChange()
+                    feed_.section = section
                     feed_.signalChange()
             if section == u'video':
                 tab_order = getSingletonDDBObject(views.channelTabOrder)

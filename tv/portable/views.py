@@ -32,8 +32,8 @@ initialized = False
 def initialize():
     global initialized
     initialized = True
-    global allTabs, guideTabs, siteTabs, staticTabs, feedTabs, audioFeedTabs, playlistTabs
-    global selectedTabs, tabOrders, siteTabOrder, channelTabOrder, audioChannelTabOrder, playlistTabOrder
+    global videoFeedTabs, audioFeedTabs, playlistTabs
+    global tabOrders, siteTabOrder, channelTabOrder, audioChannelTabOrder, playlistTabOrder
     global items, fileItems, toplevelItems, nonContainerItems, unwatchedItems
     global watchableItems, newWatchableItems, uniqueWatchableItems, uniqueNewWatchableItems, manualItems, searchItems, individualItems
     global feeds, remoteDownloads
@@ -58,24 +58,15 @@ def initialize():
 
     from miro import indexes
     from miro import filters
-    from miro import maps
     from miro import sorts
 
     app.db.createIndex(indexes.objectsByClass)
 
-    allTabs = app.db.filter(filters.mappableToTab).map(maps.mapToTab)
-    allTabs.createIndex(indexes.tabType)
- 
-    guideTabs = allTabs.filterWithIndex(indexes.tabType, 'guide')
-    staticTabs = allTabs.filterWithIndex(indexes.tabType, 'statictab').sort(sorts.staticTabs)
-
     # no need to sort site/channel/playlist tabs...  These get ordered by the TabOrder
     # class.
-    siteTabs = allTabs.filterWithIndex(indexes.tabType, 'site')
-    feedTabs = allTabs.filterWithIndex(indexes.tabType, 'feed')
-    audioFeedTabs = allTabs.filterWithIndex(indexes.tabType, 'audio-feed')
-    playlistTabs = allTabs.filterWithIndex(indexes.tabType, 'playlist')
-    selectedTabs = allTabs.filter(lambda x: x.selected)
+    videoFeedTabs = app.db.filter(filters.videoFeedTab)
+    audioFeedTabs = app.db.filter(filters.audioFeedTab)
+    playlistTabs = app.db.filter(filters.playlistTab)
 
     tabOrders = app.db.filterWithIndex(indexes.objectsByClass, tabs.TabOrder)
     tabOrders.createIndex(indexes.tabOrderType)

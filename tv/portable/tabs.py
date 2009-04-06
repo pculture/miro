@@ -169,7 +169,7 @@ class TabOrder(database.DDBObject):
         self.tab_ids = []
         database.DDBObject.__init__(self)
         self._init_restore()
-        decorated = [(t.obj.get_title().lower(), t) for t in self.tabView]
+        decorated = [(t.get_title().lower(), t) for t in self.tabView]
         decorated.sort()
         for sortkey, tab in decorated:
             self.trackedTabs.appendID(tab.getID())
@@ -183,13 +183,13 @@ class TabOrder(database.DDBObject):
     def _init_restore(self):
         self.create_signal('tab-added')
         if self.type == u'site':
-            self.tabView = views.siteTabs
+            self.tabView = views.sites
         elif self.type == u'channel':
-            self.tabView = views.feedTabs
-        elif self.type == u'playlist':
-            self.tabView = views.playlistTabs
+            self.tabView = views.videoFeedTabs
         elif self.type == u'audio-channel':
             self.tabView = views.audioFeedTabs
+        elif self.type == u'playlist':
+            self.tabView = views.playlistTabs
         else:
             raise ValueError("Bad type for TabOrder")
         self.trackedTabs = TrackedIDList(self.tabView, self.tab_ids)
@@ -220,7 +220,6 @@ class TabOrder(database.DDBObject):
     def onAddTab(self, obj, id):
         if id not in self.trackedTabs:
             self.trackedTabs.appendID(id, sendSignalChange=False)
-            obj.signalChange(needsSave=False)
             self.signalChange()
             self.emit('tab-added', obj)
 
