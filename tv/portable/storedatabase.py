@@ -61,6 +61,7 @@ from miro import eventloop
 from miro import schema
 from miro import prefs
 from miro import util
+from miro.download_utils import nextFreeFilename
 from miro.plat.utils import FilenameType, filenameToUnicode
 
 # _BootStrapClass is used to as the initial class when we restore an object.
@@ -269,6 +270,49 @@ class LiveStorage:
             save_name = "corrupt_database.%d" % i
 
         os.rename(self.path, os.path.join(dir, save_name))
+
+    def _calc_obj_values(self, obj):
+        schema = self._schema_map[obj.__class__]
+        retval = []
+        for name, schema_item in schema.fields:
+            column_names.append(name)
+            value = getattr(obj, name)
+            value = self._converter.to_sql(schema_item, value)
+            retval.append((name, value))
+        return retval
+
+    def dumpDatabase(self, db):
+        output = open (nextFreeFilename (os.path.join (config.get(prefs.SUPPORT_DIRECTORY), "database-dump.xml")), 'w')
+        def indent(level):
+            output.write('    ' * level)
+        def output_object(table_name, values):
+            indent(1)
+            if 'id' in values:
+                output.write('<%s id="%s">\n' % (table_name, values['id']))
+            else:
+                output.write('<%s>\n' % (table_name,))
+            for key, value in values.items():
+                if key == 'id':
+                    continue
+                indent(2)
+                output.write('<%s>' % (key,))
+                if isinstance (value, unicode):
+                    output.write (value.encode('ascii', 'xmlcharrefreplace'))
+                else:
+                    output.write (str(value))
+                output.write ('</%s>\n' % (key,))
+            indent(1)
+            output.write ('</%s>\n' % (table_name))
+        output.write ('<?xml version="1.0"?>\n')
+        output.write ('<database schema="%d">\n' % (self._schema_version,))
+        for schema in self._object_schemas:
+            table_name = schema.classString.replace('-', '_')
+            self.cursor.execute("SELECT * FROM %s" % table_name)
+            column_names = [d[0] for d in self.cursor.description]
+            for row in self.cursor:
+                output_object(table_name, dict(zip(column_names, row)))
+        output.write ('</database>\n')
+        output.close()
 
 class SQLiteConverter(object):
     def __init__(self):
