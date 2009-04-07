@@ -62,7 +62,6 @@ class BaseTextEntry(SizedControl):
         SizedControl.__init__(self)
         self.view = self.make_view()
         self.font = NSFont.systemFontOfSize_(NSFont.systemFontSize())
-        self.height = self.font.pointSize() + self.font.leading()
         self.view.setFont_(self.font)
         self.view.setEditable_(YES)
         self.view.cell().setScrollable_(YES)
