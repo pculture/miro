@@ -750,13 +750,13 @@ class BackendMessageHandler(messages.MessageHandler):
             if views.audioFeedTabs.idExists(info.id):
                 obj = views.audioFeedTabs.getObjectByID(info.id)
                 obj.section = u'video'
-                obj.signalChange()
+                obj.signal_change()
 
         for info in message.toplevels['audio-feed']:
             if views.videoFeedTabs.idExists(info.id):
                 obj = views.videoFeedTabs.getObjectByID(info.id)
                 obj.section = u'audio'
-                obj.signalChange()
+                obj.signal_change()
 
         for id_, feeds in message.folder_children.iteritems():
             feed_folder = views.channelFolders.getObjectByID(id_)
@@ -764,7 +764,7 @@ class BackendMessageHandler(messages.MessageHandler):
                 mem = views.feeds.getObjectByID(mem.id)
                 if feed_folder.section != mem.section:
                     mem.section = feed_folder.section
-                    mem.signalChange()
+                    mem.signal_change()
 
         for info_type, info_list in message.toplevels.iteritems():
             folder_view = self.folder_view_for_type(info_type)
@@ -795,7 +795,7 @@ class BackendMessageHandler(messages.MessageHandler):
                     feed = item_view.getObjectByID(info.id)
                     feed.setFolder(None)
             tab_order.reorder(order)
-            tab_order.signalChange()
+            tab_order.signal_change()
 
     def handle_playlist_reordered(self, message):
         try:
@@ -812,7 +812,7 @@ class BackendMessageHandler(messages.MessageHandler):
             logging.warn("PlaylistReordered: Not all ids present in the new order\nOriginal Ids: %s\nNew ids: %s", playlist.item_ids, message.item_ids)
             return
         playlist.reorder(message.item_ids)
-        playlist.signalChange()
+        playlist.signal_change()
 
     def handle_new_guide(self, message):
         url = message.url
@@ -883,7 +883,7 @@ class BackendMessageHandler(messages.MessageHandler):
                 feed_.setFolder(folder)
                 if feed_.section != section:
                     feed_.section = section
-                    feed_.signalChange()
+                    feed_.signal_change()
             if section == u'video':
                 tab_order = getSingletonDDBObject(views.channelTabOrder)
                 tracker = self.channel_tracker
@@ -891,7 +891,7 @@ class BackendMessageHandler(messages.MessageHandler):
                 tab_order = getSingletonDDBObject(views.audioChannelTabOrder)
                 tracker = self.audio_channel_tracker
             tab_order.move_tab_after(folder.id, message.child_feed_ids)
-            tab_order.signalChange()
+            tab_order.signal_change()
             tracker.send_whole_list = True
 
     def handle_new_watched_folder(self, message):
@@ -945,7 +945,7 @@ class BackendMessageHandler(messages.MessageHandler):
                 playlist.setFolder(folder)
             tab_order = getSingletonDDBObject(views.playlistTabOrder)
             tab_order.move_tab_after(folder.id, message.child_playlist_ids)
-            tab_order.signalChange()
+            tab_order.signal_change()
             self.playlist_tracker.send_whole_list = True
 
     def handle_add_videos_to_playlist(self, message):
@@ -1343,7 +1343,7 @@ class BackendMessageHandler(messages.MessageHandler):
             state = WidgetsFrontendState()
         state.list_view_displays = message.list_view_displays
         state.sort_states = message.sort_states
-        state.signalChange()
+        state.signal_change()
 
     def handle_query_frontend_state(self, message):
         view = app.db.filterWithIndex(indexes.objectsByClass, WidgetsFrontendState)

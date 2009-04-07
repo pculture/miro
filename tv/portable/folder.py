@@ -37,10 +37,9 @@ from miro.databasehelper import makeSimpleGetSet
 class FolderBase(DDBObject):
     """Base class for ChannelFolder and Playlist folder classes."""
 
-    def __init__(self, title):
+    def setup_new(self, title):
         self.title = title
         self.expanded = True
-        DDBObject.__init__(self)
 
     get_title, setTitle = makeSimpleGetSet('title')
 
@@ -51,9 +50,9 @@ class FolderBase(DDBObject):
     def setExpanded(self, newExpanded):
         self.confirmDBThread()
         self.expanded = newExpanded
-        self.signalChange()
+        self.signal_change()
         for child in self.getChildrenView():
-            child.signalChange(needsSave=False)
+            child.signal_change(needsSave=False)
 
     def remove(self, moveItemsTo=None):
         children = [child for child in self.getChildrenView()]
@@ -76,16 +75,15 @@ class FolderBase(DDBObject):
         raise NotImplementedError()
 
 class ChannelFolder(FolderBase):
-    def __init__(self, title, section=u'video'):
+    def setup_new(self, title, section=u'video'):
         self.section = section
-        FolderBase.__init__(self, title)
-        self._init_restore()
+        FolderBase.setup_new(self, title)
+        self.setup_common()
 
-    def onRestore(self):
-        FolderBase.onRestore(self)
-        self._init_restore()
+    def setup_restored(self):
+        self.setup_common()
 
-    def _init_restore(self):
+    def setup_common(self):
         self.itemSort = sorts.ItemSort()
         self.itemSortDownloading = sorts.ItemSort()
         self.itemSortWatchable = sorts.ItemSortUnwatchedFirst()
@@ -124,13 +122,15 @@ class ChannelFolder(FolderBase):
             child.markAsViewed()
     
 class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
-    def __init__(self, title):
+    def setup_new(self, title):
         self.item_ids = []
-        self.setupTrackedItemView()
-        FolderBase.__init__(self, title)
+        FolderBase.setup_new(self, title)
+        self.setup_common()
 
-    def onRestore(self):
-        FolderBase.onRestore(self)
+    def setup_restored(self):
+        self.setup_common()
+
+    def setup_common(self):
         self.setupTrackedItemView()
 
     def checkItemIDRemoved(self, id):

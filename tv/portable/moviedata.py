@@ -184,7 +184,7 @@ class MovieDataUpdater:
             item.duration = duration
             item.screenshot = screenshot
             item.updating_movie_info = False
-            item.signalChange()
+            item.signal_change()
 
     def requestUpdate(self, item):
         if self.inShutdown:

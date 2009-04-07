@@ -205,7 +205,7 @@ INITIAL_FEED_UPDATE_DELAY = 5.0
 class FeedImpl(DDBObject):
     """Actual implementation of a basic feed.
     """
-    def __init__(self, url, ufeed, title=None):
+    def setup_new(self, url, ufeed, title=None):
         checkU(url)
         if title:
             checkU(title)
@@ -219,15 +219,13 @@ class FeedImpl(DDBObject):
         self.thumbURL = default_feed_icon_url()
         self.initialUpdate = True
         self.updateFreq = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)*60
-        DDBObject.__init__(self)
 
     def _get_items(self):
         return self.ufeed.items
     items = property(_get_items)
 
-    def signalChange(self):
-        DDBObject.signalChange(self)
-        self.ufeed.signalChange()
+    def on_signal_change(self):
+        self.ufeed.signal_change()
 
     @returnsUnicode
     def getBaseHref(self):
@@ -253,7 +251,7 @@ class FeedImpl(DDBObject):
             if newFreq != self.updateFreq:
                 self.updateFreq = newFreq
                 self.scheduleUpdateEvents(-1)
-        self.ufeed.signalChange()
+        self.ufeed.signal_change()
 
     def scheduleUpdateEvents(self, firstTriggerDelay):
         self.cancelUpdateEvents()
@@ -284,9 +282,9 @@ class FeedImpl(DDBObject):
         self.lastViewed = datetime.now()
         for item in self.items:
             if item.get_state() == "new":
-                item.signalChange(needsSave=False)
+                item.signal_change(needsSave=False)
 
-        self.signalChange()
+        self.signal_change()
 
 
     def isLoading(self):
@@ -372,8 +370,7 @@ class FeedImpl(DDBObject):
         """
         return u""
 
-    def onRestore(self):
-        DDBObject.onRestore(self)
+    def setup_restored(self):
         self.updating = False
 
     def remove(self):
@@ -403,9 +400,8 @@ class Feed(DDBObject):
     """
     ICON_CACHE_VITAL = True
 
-    def __init__(self, url,
+    def setup_new(self, url,
                  initiallyAutoDownloadable=None, section=u'video'):
-        DDBObject.__init__(self, add=False)
         checkU(url)
         if initiallyAutoDownloadable == None:
             mode = config.get(prefs.CHANNEL_AUTO_DEFAULT)
@@ -444,8 +440,24 @@ class Feed(DDBObject):
         self.searchTerm = None
         self.userTitle = None
         self.visible = True
-        self._init_restore()
-        self.dd.addAfterCursor(self)
+        self.setup_common()
+
+    def setup_restored(self):
+        restored_feeds.append(self)
+        self.informOnError = False
+        self.setup_common()
+
+    def setup_common(self):
+        self.create_signal('update-finished')
+        self.download = None
+        self.wasUpdating = False
+        self.itemSort = sorts.ItemSort()
+        self.itemSortDownloading = sorts.ItemSort()
+        self.itemSortWatchable = sorts.ItemSortUnwatchedFirst()
+        self.inlineSearchTerm = None
+        self.calc_item_list()
+
+    def on_db_insert(self):
         self.generateFeed(True)
 
     def setup_default_feed_impl(self):
@@ -455,26 +467,18 @@ class Feed(DDBObject):
         self.actualFeed = feed_impl
         self.feed_impl_id = feed_impl.id
 
-    def signalChange(self, needsSave=True, needsSignalFolder=False):
+    def signal_change(self, needsSave=True, needsSignalFolder=False):
         if needsSignalFolder:
             folder = self.getFolder()
             if folder:
-                folder.signalChange(needsSave=False)
+                folder.signal_change(needsSave=False)
+        DDBObject.signal_change (self, needsSave=needsSave)
+
+    def on_signal_change(self):
         isUpdating = bool(self.actualFeed.updating)
         if self.wasUpdating and not isUpdating:
             self.emit('update-finished')
         self.wasUpdating = isUpdating
-        DDBObject.signalChange (self, needsSave=needsSave)
-
-    def _init_restore(self):
-        self.create_signal('update-finished')
-        self.download = None
-        self.wasUpdating = False
-        self.itemSort = sorts.ItemSort()
-        self.itemSortDownloading = sorts.ItemSort()
-        self.itemSortWatchable = sorts.ItemSortUnwatchedFirst()
-        self.inlineSearchTerm = None
-        self.calc_item_list()
 
     def calc_item_list(self):
         self.items = views.toplevelItems.filterWithIndex(indexes.itemsByFeed, self.id)
@@ -489,7 +493,7 @@ class Feed(DDBObject):
         self.unwatchedItems.addRemoveCallback(self._item_view_callback)
 
     def _item_view_callback(self, obj, id):
-        self.signalChange(needsSignalFolder=True)
+        self.signal_change(needsSignalFolder=True)
 
     def update_after_restore(self):
         if self.actualFeed.__class__ == FeedImpl:
@@ -548,17 +552,17 @@ class Feed(DDBObject):
 
     def signalItems (self):
         for item in self.items:
-            item.signalChange(needsSave=False)
+            item.signal_change(needsSave=False)
 
     def iconChanged(self, needsSave=True):
         """See item.getThumbnail to figure out which items to send signals for.
         """
-        self.signalChange(needsSave=needsSave)
+        self.signal_change(needsSave=needsSave)
         for item in self.items:
             if not (item.icon_cache.isValid() or
                     item.screenshot or
                     item.isContainerItem):
-                item.signalChange(needsSave=False)
+                item.signal_change(needsSave=False)
 
     def getNewItems(self):
         """Returns the number of new items with the feed
@@ -622,7 +626,7 @@ class Feed(DDBObject):
     def setTitle(self, title):
         self.confirmDBThread()
         self.userTitle = title
-        self.signalChange()
+        self.signal_change()
 
     def revert_title(self):
         self.setTitle(None)
@@ -632,7 +636,7 @@ class Feed(DDBObject):
         """Set the baseTitle.
         """
         self.baseTitle = title
-        self.signalChange()
+        self.signal_change()
 
     def isVisible(self):
         """Returns true iff feed should be visible
@@ -644,7 +648,7 @@ class Feed(DDBObject):
         if self.visible == visible:
             return
         self.visible = visible
-        self.signalChange()
+        self.signal_change()
 
     @returnsUnicode
     def getAutoDownloadMode(self):
@@ -658,7 +662,7 @@ class Feed(DDBObject):
             return u'off'
 
     def setAutoDownloadMode(self, mode):
-        # note that this is somewhat duplicated in __init__
+        # note that this is somewhat duplicated in setup_new
         if mode == u'all':
             self.setGetEverything(True)
             self.setAutoDownloadable(True)
@@ -691,13 +695,13 @@ class Feed(DDBObject):
             for item in self.items:
                 if item.eligibleForAutoDownload:
                     item.eligibleForAutoDownload = False
-                    item.signalChange()
+                    item.signal_change()
 
         for item in self.items:
             if item.isEligibleForAutoDownload():
-                item.signalChange(needsSave=False)
+                item.signal_change(needsSave=False)
 
-        self.signalChange()
+        self.signal_change()
 
     def setGetEverything(self, everything):
         """Sets the 'getEverything' attribute, True or False
@@ -707,7 +711,7 @@ class Feed(DDBObject):
             return
         if not self.autoDownloadable:
             self.getEverything = everything
-            self.signalChange()
+            self.signal_change()
             return
 
         updates = set()
@@ -721,16 +725,16 @@ class Feed(DDBObject):
                     updates.add(item)
 
         self.getEverything = everything
-        self.signalChange()
+        self.signal_change()
 
         if everything:
             for item in updates:
                 if item.isEligibleForAutoDownload():
-                    item.signalChange(needsSave=False)
+                    item.signal_change(needsSave=False)
         else:
             for item in updates:
                 if not item.isEligibleForAutoDownload():
-                    item.signalChange(needsSave=False)
+                    item.signal_change(needsSave=False)
 
     def setExpiration(self, type_, time):
         """Sets the expiration attributes. Valid types are 'system', 'feed' and 'never'
@@ -745,9 +749,9 @@ class Feed(DDBObject):
                 if item.is_downloaded():
                     item.save()
 
-        self.signalChange()
+        self.signal_change()
         for item in self.items:
-            item.signalChange(needsSave=False)
+            item.signal_change(needsSave=False)
 
     def set_max_new(self, max_new):
         """Sets the maxNew attributes. -1 means unlimited.
@@ -755,7 +759,7 @@ class Feed(DDBObject):
         self.confirmDBThread()
         oldMaxNew = self.maxNew
         self.maxNew = max_new
-        self.signalChange()
+        self.signal_change()
         if self.maxNew >= oldMaxNew or self.maxNew < 0:
             from miro import autodler
             autodler.auto_downloader.startDownloads()
@@ -766,7 +770,7 @@ class Feed(DDBObject):
         if maxOldItems == -1:
             maxOldItems = None
         self.maxOldItems = maxOldItems
-        self.signalChange()
+        self.signal_change()
         if (maxOldItems is not None and
                 (oldMaxOldItems is None or oldMaxOldItems > maxOldItems)):
             # the actual feed updating code takes care of expiring the old
@@ -782,7 +786,7 @@ class Feed(DDBObject):
         elif self.errorState:
             self.loading = True
             self.errorState = False
-            self.signalChange()
+            self.signal_change()
             return self.generateFeed()
         self.actualFeed.update()
 
@@ -800,13 +804,13 @@ class Feed(DDBObject):
             self.folder_id = newFolder.getID()
         else:
             self.folder_id = None
-        self.signalChange()
+        self.signal_change()
         for item in self.items:
-            item.signalChange(needsSave=False)
+            item.signal_change(needsSave=False)
         if newFolder:
-            newFolder.signalChange(needsSave=False)
+            newFolder.signal_change(needsSave=False)
         if oldFolder:
-            oldFolder.signalChange(needsSave=False)
+            oldFolder.signal_change(needsSave=False)
 
     def generateFeed(self, removeOnError=False):
         newFeed = None
@@ -862,7 +866,7 @@ class Feed(DDBObject):
         self.download = None
         self.errorState = True
         self.loading = False
-        self.signalChange()
+        self.signal_change()
         if self.informOnError:
             title = _('Error loading feed')
             description = _(
@@ -1004,7 +1008,7 @@ class Feed(DDBObject):
             self.errorState = False
         else:
             self.errorState = True
-        self.signalChange()
+        self.signal_change()
 
     def askForScrape(self, info, initialHTML, charset):
         title = _("Channel is not compatible with %(appname)s",
@@ -1226,12 +1230,6 @@ class Feed(DDBObject):
         for feed in views.feeds:
             feed.icon_cache.requestUpdate(True)
 
-    def onRestore(self):
-        DDBObject.onRestore(self)
-        restored_feeds.append(self)
-        self.informOnError = False
-        self._init_restore()
-
     def __str__(self):
         return "Feed - %s" % self.get_title()
 
@@ -1257,8 +1255,8 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
     """
     firstImageRE = re.compile('\<\s*img\s+[^>]*src\s*=\s*"(.*?)"[^>]*\>', re.I | re.M)
 
-    def __init__(self, url, ufeed, title):
-        FeedImpl.__init__(self, url, ufeed, title)
+    def setup_new(self, url, ufeed, title):
+        FeedImpl.setup_new(self, url, ufeed, title)
         self.scheduleUpdateEvents(0)
 
     def _handleNewEntryForItem(self, item, entry, fp_values, channelTitle):
@@ -1396,10 +1394,10 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                     item.eligibleForAutoDownload = True
                 else:
                     item.eligibleForAutoDownload = False
-                item.signalChange()
+                item.signal_change()
             if self.ufeed.isAutoDownloadable():
                 self.markAsViewed()
-            self.ufeed.signalChange()
+            self.ufeed.signal_change()
 
         self.truncateOldItems(old_items)
 
@@ -1452,12 +1450,12 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
 
 class RSSFeedImpl(RSSFeedImplBase):
 
-    def __init__(self, url, ufeed, title=None, initialHTML=None, etag=None, modified=None):
+    def setup_new(self, url, ufeed, title=None, initialHTML=None, etag=None, modified=None):
+        RSSFeedImplBase.setup_new(self, url, ufeed, title)
         self.initialHTML = initialHTML
         self.etag = etag
         self.modified = modified
         self.download = None
-        RSSFeedImplBase.__init__(self, url, ufeed, title)
 
     @returnsUnicode
     def getBaseHref(self):
@@ -1506,7 +1504,7 @@ class RSSFeedImpl(RSSFeedImplBase):
 
     def feedparser_finished(self):
         self.updating = False
-        self.ufeed.signalChange(needsSave=False)
+        self.ufeed.signal_change(needsSave=False)
         self.scheduleUpdateEvents(-1)
 
     def feedparser_errback(self, e):
@@ -1549,7 +1547,7 @@ class RSSFeedImpl(RSSFeedImplBase):
             return
         else:
             self.updating = True
-            self.ufeed.signalChange(needsSave=False)
+            self.ufeed.signal_change(needsSave=False)
         if hasattr(self, 'initialHTML') and self.initialHTML is not None:
             html = self.initialHTML
             self.initialHTML = None
@@ -1577,7 +1575,7 @@ class RSSFeedImpl(RSSFeedImplBase):
         logging.info("WARNING: error in Feed.update for %s -- %s", self.ufeed, error)
         self.scheduleUpdateEvents(-1)
         self.updating = False
-        self.ufeed.signalChange(needsSave=False)
+        self.ufeed.signal_change(needsSave=False)
 
     def _updateCallback(self, info):
         if not self.ufeed.idExists():
@@ -1585,7 +1583,7 @@ class RSSFeedImpl(RSSFeedImplBase):
         if info.get('status') == 304:
             self.scheduleUpdateEvents(-1)
             self.updating = False
-            self.ufeed.signalChange()
+            self.ufeed.signal_change()
             return
         html = info['body']
         if info.has_key('charset'):
@@ -1619,10 +1617,10 @@ class RSSFeedImpl(RSSFeedImplBase):
             self.download.cancel()
             self.download = None
 
-    def onRestore(self):
+    def setup_restored(self):
         """Called by pickle during deserialization
         """
-        FeedImpl.onRestore(self)
+        FeedImpl.setup_restored(self)
         self.download = None
 
     def clean_old_items(self):
@@ -1631,14 +1629,14 @@ class RSSFeedImpl(RSSFeedImplBase):
         self.update()
 
 class RSSMultiFeedImpl(RSSFeedImplBase):
-    def __init__(self, url, ufeed, title=None):
+    def setup_new(self, url, ufeed, title=None):
+        RSSFeedImplBase.setup_new(self, url, ufeed, title)
         self.oldItems = []
         self.etag = {}
         self.modified = {}
         self.download_dc = {}
         self.updating = 0
         self.query = None
-        RSSFeedImplBase.__init__(self, url, ufeed, title)
         self.splitURLs()
 
     def get_title(self):
@@ -1746,7 +1744,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         self.scheduleUpdateEvents(-1)
         self.updating -= 1
         self.checkUpdateFinished()
-        self.ufeed.signalChange(needsSave=False)
+        self.ufeed.signal_change(needsSave=False)
 
     def _updateCallback(self, info, url):
         if not self.ufeed.idExists():
@@ -1755,7 +1753,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
             self.scheduleUpdateEvents(-1)
             self.updating -= 1
             self.checkUpdateFinished()
-            self.ufeed.signalChange()
+            self.ufeed.signal_change()
             return
         html = info['body']
         if info.has_key('charset'):
@@ -1782,12 +1780,12 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
                 dc.cancel()
         self.download_dc = {}
 
-    def onRestore(self):
+    def setup_restored(self):
         """Called by pickle during deserialization
         """
         #FIXME: the update dies if all of the items aren't restored, so we
         # wait a little while before we start the update
-        FeedImpl.onRestore(self)
+        FeedImpl.setup_restored(self)
         self.download_dc = {}
         self.updating = 0
         self.splitURLs()
@@ -1801,7 +1799,8 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
 class ScraperFeedImpl(ThrottledUpdateFeedImpl):
     """A feed based on un unformatted HTML or pre-enclosure RSS
     """
-    def __init__(self, url, ufeed, title=None, initialHTML=None, etag=None, modified=None, charset=None):
+    def setup_new(self, url, ufeed, title=None, initialHTML=None, etag=None, modified=None, charset=None):
+        FeedImpl.setup_new(self, url, ufeed, title)
         self.initialHTML = initialHTML
         self.initialCharset = charset
         self.linkHistory = {}
@@ -1812,7 +1811,6 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
         if not modified is None:
             self.linkHistory[url]['modified'] = unicodify(modified)
         self.downloads = set()
-        FeedImpl.__init__(self, url, ufeed, title)
 
         self.setUpdateFrequency(360)
         self.scheduleUpdateEvents(0)
@@ -1888,7 +1886,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
         if len(self.downloads) == 0:
             self.saveCacheHistory()
             self.updating = False
-            self.ufeed.signalChange()
+            self.ufeed.signal_change()
             self.scheduleUpdateEvents(-1)
 
     def addVideoItem(self, link, dict_, linkNumber):
@@ -1980,7 +1978,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
             return
         else:
             self.updating = True
-            self.ufeed.signalChange(needsSave=False)
+            self.ufeed.signal_change(needsSave=False)
 
         if not self.initialHTML is None:
             html = self.initialHTML
@@ -2036,7 +2034,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
                 try:
                     self.title = toUni(handler.title, charset)
                 finally:
-                    self.ufeed.signalChange()
+                    self.ufeed.signal_change()
             return ([x[0] for x in links if x[0].startswith('http://') or x[0].startswith('https://')], linkDict)
         except (xml.sax.SAXException, ValueError, IOError, xml.sax.SAXNotRecognizedException):
             (links, linkDict) = self.scrapeHTMLLinks(html, baseurl, setTitle=setTitle, charset=charset)
@@ -2053,7 +2051,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
             try:
                 self.title = toUni(lg.title, charset)
             finally:
-                self.ufeed.signalChange()
+                self.ufeed.signal_change()
 
         linkDict = {}
         for link in links:
@@ -2066,15 +2064,16 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
                     linkDict[toUni(link[0], charset)]['thumbnail'] = toUni(link[2], charset)
         return ([x[0] for x in links if x[0].startswith('http://') or x[0].startswith('https://')], linkDict)
 
-    def onRestore(self):
+    def setup_restored(self):
         """Called by pickle during deserialization
         """
-        FeedImpl.onRestore(self)
+        FeedImpl.setup_restored(self)
         self.downloads = set()
         self.tempHistory = {}
 
 class DirectoryWatchFeedImpl(FeedImpl):
-    def __init__(self, ufeed, directory):
+    def setup_new(self, ufeed, directory):
+        FeedImpl.setup_new(self, url=url, ufeed=ufeed, title=title)
         self.dir = directory
         self.firstUpdate = True
         if directory is not None:
@@ -2085,7 +2084,6 @@ class DirectoryWatchFeedImpl(FeedImpl):
         if title[-1] == '/':
             title = title[:-1]
         title = filenameToUnicode(os.path.basename(title)) + "/"
-        FeedImpl.__init__(self, url=url, ufeed=ufeed, title=title)
 
         self.setUpdateFrequency(5)
         self.scheduleUpdateEvents(0)
@@ -2146,8 +2144,8 @@ class DirectoryFeedImpl(FeedImpl):
     belong to a "real" feed.  If the user changes her movies folder, this feed
     will continue to remember movies in the old folder.
     """
-    def __init__(self, ufeed):
-        FeedImpl.__init__(self, url=u"dtv:directoryfeed", ufeed=ufeed,title=u"Feedless Videos")
+    def setup_new(self, ufeed):
+        FeedImpl.setup_new(self, url=u"dtv:directoryfeed", ufeed=ufeed,title=u"Feedless Videos")
 
         self.setUpdateFrequency(5)
         self.scheduleUpdateEvents(0)
@@ -2216,16 +2214,16 @@ class DirectoryFeedImpl(FeedImpl):
 class SearchFeedImpl(RSSMultiFeedImpl):
     """Search and Search Results feeds
     """
-    def __init__(self, ufeed):
+    def setup_new(self, ufeed):
+        RSSMultiFeedImpl.setup_new(self, url=u'', ufeed=ufeed, title=u'dtv:search')
         self.initialUpdate = True
         self.searching = False
         self.lastEngine = searchengines.get_search_engines()[0].name
         self.lastQuery = u''
         self.query = u''
-        RSSMultiFeedImpl.__init__(self, url=u'', ufeed=ufeed, title=u'dtv:search')
         self.setUpdateFrequency(-1)
         self.ufeed.autoDownloadable = False
-        self.ufeed.signalChange()
+        self.ufeed.signal_change()
 
     @returnsUnicode
     def quoteLastQuery(self):
@@ -2274,7 +2272,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
             self.thumbURL = default_feed_icon_url()
             self.ufeed.icon_cache.requestUpdate(is_vital=True)
         finally:
-            self.ufeed.signalChange()
+            self.ufeed.signal_change()
         if was_searching:
             self.ufeed.emit('update-finished')
 
@@ -2296,7 +2294,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
         self.lastQuery = query
         self.lastEngine = engine
         self.update()
-        self.ufeed.signalChange()
+        self.ufeed.signal_change()
 
     def _handleNewEntry(self, entry, channelTitle):
         """Handle getting a new entry from a feed."""
@@ -2337,8 +2335,8 @@ class SearchFeedImpl(RSSMultiFeedImpl):
             self.ufeed.emit('update-finished')
 
 class SearchDownloadsFeedImpl(FeedImpl):
-    def __init__(self, ufeed):
-        FeedImpl.__init__(self, url=u'dtv:searchDownloads', ufeed=ufeed,
+    def setup_new(self, ufeed):
+        FeedImpl.setup_new(self, url=u'dtv:searchDownloads', ufeed=ufeed,
                 title=None)
         self.setUpdateFrequency(-1)
 
@@ -2350,15 +2348,15 @@ class ManualFeedImpl(FeedImpl):
     """Downloaded Videos/Torrents that have been added using by the
     user opening them with democracy.
     """
-    def __init__(self, ufeed):
-        FeedImpl.__init__(self, url=u'dtv:manualFeed', ufeed=ufeed,
+    def setup_new(self, ufeed):
+        FeedImpl.setup_new(self, url=u'dtv:manualFeed', ufeed=ufeed,
                 title=None)
         self.ufeed.expire = u'never'
         self.setUpdateFrequency(-1)
         self.lastViewed = datetime.max
 
-    def onRestore(self):
-        FeedImpl.onRestore(self)
+    def setup_restored(self):
+        FeedImpl.setup_restored(self)
         self.lastViewed = datetime.max
 
     @returnsUnicode
@@ -2369,8 +2367,8 @@ class SingleFeedImpl(FeedImpl):
     """Single Video that is playing that has been added by the user
     opening them with democracy.
     """
-    def __init__(self, ufeed):
-        FeedImpl.__init__(self, url=u'dtv:singleFeed', ufeed=ufeed,
+    def setup_new(self, ufeed):
+        FeedImpl.setup_new(self, url=u'dtv:singleFeed', ufeed=ufeed,
                 title=None)
         self.ufeed.expire = u'never'
         self.setUpdateFrequency(-1)

@@ -48,7 +48,7 @@ from miro.fasttypes import LinkedList, SortedList
 
 class DatabaseConstraintError(Exception):
     """Raised when a DDBObject fails its constraint checking during
-    signalChange().
+    signal_change().
     """
     pass
 
@@ -182,10 +182,10 @@ class IndexMap:
         try:
             oldIndexValue = self.mappings[obj.getID()]
         except KeyError:
-            # This happens when an object gets a signalChange() before the
+            # This happens when an object gets a signal_change() before the
             # addObject call.  There are two cases that cause this:  getting a
-            # signalChange call before the original addObject percolates down
-            # to the IndexMap and getting a signalChange call in a remove
+            # signal_change call before the original addObject percolates down
+            # to the IndexMap and getting a signal_change call in a remove
             # callback during the removeObject call below, but before the
             # addObject call.
             return
@@ -278,7 +278,7 @@ class MultiIndexMap(IndexMap):
         try:
             oldIndexValues = self.mappings.pop(obj.getID())
             # by poping the value, we ensure that if a callback for the
-            # addBeforeCursor or removeObj calls invokes signalChange() on
+            # addBeforeCursor or removeObj calls invokes signal_change() on
             # this object, we'll ignore it.
         except KeyError:
             return
@@ -1338,26 +1338,40 @@ class DDBObject(signals.SignalEmitter):
     #The database associated with this object
     dd = defaultDatabase
 
-    def __init__(self, dd=None, add=True):
-        """
-        @param dd optional DynamicDatabase to associate with this object
-               -- if ommitted the global database is used
-        @param add Iff true, object is added to the database
-        """
+    def __init__(self, *args, **kwargs):
+        self.in_db_init = True
         signals.SignalEmitter.__init__(self, 'removed')
-        if dd != None:
-            self.dd = dd
-        
-        #Set the ID to the next free number
-        self.confirmDBThread()
-        DDBObject.lastID = DDBObject.lastID + 1
-        self.id =  DDBObject.lastID
-        if add:
+
+        if len(args) == 0 and kwargs.keys() == ['restored_data']:
+            restoring = True
+        else:
+            restoring = False
+
+        if restoring:
+            self.__dict__.update(kwargs['restored_data'])
+            self.setup_restored()
+        else:
+            self.id = DDBObject.lastID = DDBObject.lastID + 1
+            self.setup_new(*args, **kwargs)
+
+        self.in_db_init = False
+
+        if not restoring:
             self.check_constraints()
             self.dd.addAfterCursor(self)
+            self.on_db_insert()
 
-    def onRestore(self):
-        signals.SignalEmitter.__init__(self, 'removed')
+    def setup_new(self):
+        """Initialize a newly created object."""
+        pass
+
+    def setup_restored(self):
+        """Initialize an object restored from disk."""
+        pass
+
+    def on_db_insert(self):
+        """Called after an object has been inserted into the db."""
+        pass
 
     def getID(self):
         """Returns unique integer assocaited with this object
@@ -1392,14 +1406,19 @@ class DDBObject(signals.SignalEmitter):
         """
         pass
 
-    def signalChange(self, needsSave=True):
+    def signal_change(self, needsSave=True):
         """Call this after you change the object
         """
         self.dd.confirmDBThread()
+        if self.in_db_init:
+            # signal_change called while we were setting up a object, just
+            # ignore it.
+            return
         if not self.dd.idExists(self.id):
-            msg = "signalChange() called on non-existant object (id is %s)" \
+            msg = "signal_change() called on non-existant object (id is %s)" \
                     % self.id
             raise DatabaseConstraintError, msg
+        self.on_signal_change()
         self.check_constraints()
         self.dd.saveCursor()
         try:
@@ -1407,6 +1426,9 @@ class DDBObject(signals.SignalEmitter):
             self.dd.changeObj(self, needsSave=needsSave)
         finally:
             self.dd.restoreCursor()
+
+    def on_signal_change(self):
+        pass
 
 def resetDefaultDatabase():
     """Erases the current database and replaces it with a blank slate

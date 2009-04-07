@@ -71,7 +71,7 @@ def findHTTPAuth(host, path, realm=None, scheme=None):
 
 
 class HTTPAuthPassword(DDBObject):
-    def __init__(self, username, password, host, realm, path, authScheme=u"Basic"):
+    def setup_new(self, username, password, host, realm, path, authScheme=u"Basic"):
         checkU(username)
         checkU(password)
         checkU(host)
@@ -88,7 +88,6 @@ class HTTPAuthPassword(DDBObject):
         self.realm = realm
         self.path = os.path.dirname(path)
         self.authScheme = authScheme
-        DDBObject.__init__(self)
 
     def getAuthToken(self):
         authString = u':'
@@ -115,7 +114,7 @@ def generateDownloadID():
 
 class RemoteDownloader(DDBObject):
     """Download a file using the downloader daemon."""
-    def __init__(self, url, item, contentType=None, channelName=None):
+    def setup_new(self, url, item, contentType=None, channelName=None):
         checkU(url)
         if contentType:
             checkU(contentType)
@@ -134,7 +133,6 @@ class RemoteDownloader(DDBObject):
         self.deleteFiles = True
         self.channelName = channelName
         self.manualUpload = False
-        DDBObject.__init__(self)
         if contentType is None:
             self.contentType = u""
         else:
@@ -145,11 +143,11 @@ class RemoteDownloader(DDBObject):
         else:
             self.runDownloader()
 
-    def signalChange(self, needsSave=True, needsSignalItem=True):
+    def signal_change(self, needsSave=True, needsSignalItem=True):
         if needsSignalItem:
             for item in self.itemList:
-                item.signalChange(needsSave=False)
-        DDBObject.signalChange(self, needsSave=needsSave)
+                item.signal_change(needsSave=False)
+        DDBObject.signal_change(self, needsSave=needsSave)
 
     def onContentType(self, info):
         if not self.idExists():
@@ -176,7 +174,7 @@ class RemoteDownloader(DDBObject):
         self.status['state'] = u"failed"
         self.status['shortReasonFailed'] = error.getFriendlyDescription()
         self.status['reasonFailed'] = error.getLongDescription()
-        self.signalChange()
+        self.signal_change()
 
     def getContentType(self):
         httpclient.grabHeaders(self.url, self.onContentType, self.onContentTypeError)
@@ -240,7 +238,7 @@ class RemoteDownloader(DDBObject):
             if self.get_state() == u'uploading' and not self.manualUpload and self.getUploadRatio() > 1.5:
                 self.stopUpload()
 
-            self.signalChange(needsSignalItem = not finished)
+            self.signal_change(needsSignalItem = not finished)
             if finished:
                 for item in self.itemList:
                     item.on_download_finished()
@@ -266,7 +264,7 @@ class RemoteDownloader(DDBObject):
             self.status["state"] = u'failed'
             self.status["shortReasonFailed"] = _('File not found')
             self.status["reasonFailed"] = _('Flash URL Scraping Error')
-        self.signalChange()
+        self.signal_change()
 
     def pause(self, block=False):
         """Pauses the download."""
@@ -277,7 +275,7 @@ class RemoteDownloader(DDBObject):
             self.beforeChangingStatus()
             self.status["state"] = u"paused"
             self.afterChangingStatus()
-            self.signalChange()
+            self.signal_change()
 
     def stop(self, delete):
         """Stops the download and removes the partially downloaded
@@ -293,7 +291,7 @@ class RemoteDownloader(DDBObject):
             if delete:
                 self.delete()
             self.status["state"] = u"stopped"
-            self.signalChange()
+            self.signal_change()
 
     def delete(self):
         try:
@@ -335,7 +333,7 @@ class RemoteDownloader(DDBObject):
                 self.getContentType()
             else:
                 self.runDownloader()
-            self.signalChange()
+            self.signal_change()
         elif self.get_state() in (u'stopped', u'paused', u'offline'):
             if _downloads.has_key(self.dlid):
                 c = command.StartDownloadCommand(RemoteDownloader.dldaemon,
@@ -344,7 +342,7 @@ class RemoteDownloader(DDBObject):
             else:
                 self.status['state'] = u'downloading'
                 self.restart()
-                self.signalChange()
+                self.signal_change()
 
     def migrate(self, directory):
         if _downloads.has_key(self.dlid):
@@ -383,7 +381,7 @@ URL was %s""" % self.url
                 newfilename = nextFreeFilename(newfilename)
                 def callback():
                     self.status['filename'] = newfilename
-                    self.signalChange()
+                    self.signal_change()
                 fileutil.migrate_file(filename, newfilename, callback)
         for i in self.itemList:
             i.migrate_children(directory)
@@ -504,8 +502,7 @@ URL was %s""" % self.url
         self.confirmDBThread()
         return self.status.get('filename', FilenameType(''))
 
-    def onRestore(self):
-        DDBObject.onRestore(self)
+    def setup_restored(self):
         self.deleteFiles = True
         self.itemList = []
         if self.dlid == 'noid':
@@ -556,7 +553,7 @@ URL was %s""" % self.url
             self.status['state'] = u'uploading'
             self.afterChangingStatus()
             self.restart()
-            self.signalChange()
+            self.signal_change()
 
     def stopUpload(self):
         """
@@ -570,7 +567,7 @@ URL was %s""" % self.url
         self.beforeChangingStatus()
         self.status["state"] = u"finished"
         self.afterChangingStatus()
-        self.signalChange()
+        self.signal_change()
 
     def pauseUpload(self):
         """
@@ -584,7 +581,7 @@ URL was %s""" % self.url
         self.beforeChangingStatus()
         self.status["state"] = u"uploading-paused"
         self.afterChangingStatus()
-        self.signalChange()
+        self.signal_change()
 
 
 def cleanupIncompleteDownloads():

@@ -93,7 +93,7 @@ class WeakCallback:
     def is_dead(self):
         return self.ref() is None
 
-class SignalEmitter:
+class SignalEmitter(object):
     def __init__(self, *signal_names):
         self.signal_callbacks = {}
         self.id_generator = itertools.count()

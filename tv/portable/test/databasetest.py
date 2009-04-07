@@ -16,9 +16,8 @@ from threading import Thread
 from miro.test.framework import MiroTestCase
 
 class SortableObject(database.DDBObject):
-    def __init__(self, value):
+    def setup_new(self, value):
         self.value = value
-        database.DDBObject.__init__(self)
 
 class EmptyViewTestCase(MiroTestCase):
     def setUp(self):
@@ -271,7 +270,7 @@ class SortTestCase(MiroTestCase):
         self.higher = self.y
         self.assertEqual(self.sorted[0],self.y)
         self.assertEqual(self.sorted[1],self.x)
-        self.x.signalChange()
+        self.x.signal_change()
         self.assertEqual(self.sorted[0],self.y)
         self.assertEqual(self.sorted[1],self.x)
     def testResort(self):
@@ -279,7 +278,7 @@ class SortTestCase(MiroTestCase):
         self.assertEqual(self.sorted[0],self.y)
         self.assertEqual(self.sorted[1],self.x)
         self.higher = self.y
-        self.x.signalChange()
+        self.x.signal_change()
         self.assertEqual(self.sorted[0],self.x)
         self.assertEqual(self.sorted[1],self.y)
 
@@ -344,7 +343,7 @@ class CallbackViewTestCase(MiroTestCase):
     def testChange(self):
         self.everything.add_change_callback(self.call)
         self.x = database.DDBObject()
-        self.x.signalChange()
+        self.x.signal_change()
         self.assertEqual(self.callcount,1)
     def testRemove(self):
         self.everything.addRemoveCallback(self.removeCall)
@@ -394,258 +393,6 @@ class CallbackViewTestCase(MiroTestCase):
         self.x.change()
         self.assertEqual(self.callcount,1)
 
-class MapFilterRemoveViewTestCase(MiroTestCase):
-    def setUp(self):
-        MiroTestCase.setUp(self)
-        self.everything = database.defaultDatabase
-        self.objlist = []
-        for x in range(0,10):
-            database.DDBObject()
-        self.add = 0
-        self.mapped = self.everything.map(self.mapFunc)
-        self.mapped = self.mapped.filter(lambda x:True)
-    def mapFunc(self,obj):
-        return obj.getID() % 2
-    def testBasicMap(self):
-        self.everything.resetCursor()
-        self.mapped.resetCursor()
-        for obj in self.everything:
-            self.assertEqual(self.mapFunc(obj),self.mapped.getNext())
-    def testOneOffBasicMap(self):
-        self.everything.resetCursor()
-        self.mapped.resetCursor()
-        for x in range(1,6):
-            obj = self.everything.getNext()
-        obj.remove()
-        self.everything.addBeforeCursor(database.DDBObject(add=False))
-        self.everything.getPrev()
-        self.everything.getPrev()
-        self.everything.addAfterCursor(database.DDBObject(add=False))
-        self.everything.resetCursor()
-        for obj in self.everything:
-            self.assertEqual(self.mapFunc(obj),self.mapped.getObjectByID(obj.getID()))
-
-class FilterSortMapTestCase(MiroTestCase):
-    def setUp(self):
-        MiroTestCase.setUp(self)
-        self.everything = database.defaultDatabase
-        self.callbacks = 0
-        self.objlist = []
-        for x in range(0,10):
-            self.objlist.append(database.DDBObject())
-        self.myfiltFunc = lambda x:x.getID()%2 == 0
-        self.filted = self.everything.filter(self.filterFunc)
-        self.sorted = self.filted.sort(self.sortFunc)
-        self.mapped = self.sorted.map(lambda x:x)
-    def filterFunc(self, x):
-        return self.myfiltFunc(x)
-    def sortFunc(self, x, y):
-        x = x[1].getID()
-        y = y[1].getID()
-        return x < y
-    def call(self,obj, id):
-        self.callbacks += 1
-    def test(self):
-        self.assertEqual(self.mapped.len(),5)
-        self.mapped.addAddCallback(self.call)
-        self.myfiltFunc = lambda x:x is self.objlist[1]
-        self.everything.recomputeFilters()
-        self.assertEqual(self.mapped.len(),1)
-        self.myfiltFunc = lambda x:True
-        self.everything.recomputeFilters()
-        self.assertEqual(self.mapped.len(),10)
-    def testTwoSets(self):
-        self.callbacks2 = 0
-        def call2(item,id):
-            self.callbacks2 += 1
-        filtFunc2 = lambda x:True
-        filted2 = self.everything.filter(filtFunc2)
-        sorted2 = filted2.sort(self.sortFunc)
-        mapped2 = sorted2.map(lambda x:x)
-        self.mapped.add_change_callback(self.call)
-        mapped2.add_change_callback(call2)
-        if self.myfiltFunc(self.objlist[0]):
-            self.objlist[1].signalChange()
-        else:
-            self.objlist[0].signalChange()
-        self.assertEqual(self.callbacks,0)
-        self.assertEqual(self.callbacks2,1)
-        self.everything.recomputeFilters()
-        self.assertEqual(self.callbacks,0)
-        self.assertEqual(self.callbacks2,1)
-        self.everything.recomputeFilters()
-        self.assertEqual(self.callbacks,0)
-        self.assertEqual(self.callbacks2,1)
-        if self.myfiltFunc(self.objlist[0]):
-            self.objlist[0].signalChange()
-        else:
-            self.objlist[1].signalChange()
-        self.assertEqual(self.callbacks,1)
-        self.assertEqual(self.callbacks2,2)
-        self.everything.recomputeFilters()
-        self.assertEqual(self.callbacks,1)
-        self.assertEqual(self.callbacks2,2)
-        self.everything.recomputeFilters()
-        self.assertEqual(self.callbacks,1)
-        self.assertEqual(self.callbacks2,2)
-    def testTwoSets2(self):
-        self.callbacks2 = 0
-        def call2(item, id):
-            self.callbacks2 += 1
-        filtFunc2 = lambda x:x.getID()%2 == 1
-        filted2 = self.everything.filter(filtFunc2)
-        sorted2 = filted2.sort(self.sortFunc)
-        mapped2 = sorted2.map(lambda x:x)
-        self.mapped.add_change_callback(self.call)
-        mapped2.add_change_callback(call2)
-        self.mapped.addAddCallback(self.call)
-        mapped2.addAddCallback(call2)
-        self.mapped.addRemoveCallback(self.call)
-        mapped2.addRemoveCallback(call2)
-
-        self.mapped.next()
-        self.mapped.next()
-        self.mapped.next()
-        mapped2.next()
-        self.assertEqual(self.mapped.cur(),self.mapped[2])
-        self.assertEqual(mapped2.cur(),mapped2[0])
-        if self.myfiltFunc(self.objlist[0]):
-            self.objlist[1].signalChange()
-        else:
-            self.objlist[0].signalChange()
-        self.assertEqual(self.mapped.cur(),self.mapped[2])
-        self.assertEqual(mapped2.cur(),mapped2[0])
-        self.assertEqual(self.callbacks,0)
-        self.assertEqual(self.callbacks2,1)
-        self.everything.recomputeFilters()
-        self.assertEqual(self.mapped.cur(),self.mapped[2])
-        self.assertEqual(mapped2.cur(),mapped2[0])
-        self.assertEqual(self.callbacks,0)
-        self.assertEqual(self.callbacks2,1)
-        self.everything.recomputeFilters()
-        self.assertEqual(self.mapped.cur(),self.mapped[2])
-        self.assertEqual(mapped2.cur(),mapped2[0])
-        self.assertEqual(self.callbacks,0)
-        self.assertEqual(self.callbacks2,1)
-        if self.myfiltFunc(self.objlist[0]):
-            self.objlist[0].signalChange()
-        else:
-            self.objlist[1].signalChange()
-        self.assertEqual(self.mapped.cur(),self.mapped[2])
-        self.assertEqual(mapped2.cur(),mapped2[0])
-        self.assertEqual(self.callbacks,1)
-        self.assertEqual(self.callbacks2,1)
-        self.everything.recomputeFilters()
-        self.assertEqual(self.mapped.cur(),self.mapped[2])
-        self.assertEqual(mapped2.cur(),mapped2[0])
-        self.assertEqual(self.callbacks,1)
-        self.assertEqual(self.callbacks2,1)
-        self.everything.recomputeFilters()
-        self.assertEqual(self.mapped.cur(),self.mapped[2])
-        self.assertEqual(mapped2.cur(),mapped2[0])
-        self.assertEqual(self.callbacks,1)
-        self.assertEqual(self.callbacks2,1)
-        if self.myfiltFunc(self.objlist[0]):
-            self.objlist[0].remove()
-        else:
-            self.objlist[1].remove()
-        self.assertEqual(self.mapped.cur(),self.mapped[1])
-        self.assertEqual(mapped2.cur(),mapped2[0])
-        self.assertEqual(self.callbacks,2)
-        self.assertEqual(self.callbacks2,1)
-        self.everything.recomputeFilters()
-        self.assertEqual(self.mapped.cur(),self.mapped[1])
-        self.assertEqual(mapped2.cur(),mapped2[0])
-        self.assertEqual(self.callbacks,2)
-        self.assertEqual(self.callbacks2,1)
-        self.everything.recomputeFilters()
-        self.assertEqual(self.mapped.cur(),self.mapped[1])
-        self.assertEqual(mapped2.cur(),mapped2[0])
-        self.assertEqual(self.callbacks,2)
-        self.assertEqual(self.callbacks2,1)
-        self.objlist.append(database.DDBObject(add = False))
-        self.objlist.append(database.DDBObject(add = False))
-        self.everything.resetCursor()
-        self.everything.addAfterCursor(self.objlist[10])
-        self.assertEqual(self.everything[0],self.objlist[10])
-        self.assertEqual(self.everything.cur(),None)
-        self.everything.addAfterCursor(self.objlist[11])
-        self.assertEqual(self.everything[0],self.objlist[11])
-        self.assertEqual(self.mapped.cur(),self.mapped[1])
-        self.assertEqual(mapped2.cur(),mapped2[0])
-        self.assertEqual(self.callbacks,3)
-        self.assertEqual(self.callbacks2,2)
-        self.objlist[10].signalChange()
-        self.objlist[11].signalChange()
-        self.assertEqual(self.mapped.cur(),self.mapped[1])
-        self.assertEqual(mapped2.cur(),mapped2[0])
-        self.assertEqual(self.callbacks,4)
-        self.assertEqual(self.callbacks2,3)
-        self.everything.recomputeFilters()
-        self.assertEqual(self.callbacks,4)
-        self.assertEqual(self.callbacks2,3)
-        self.myfiltFunc = lambda x:x is self.objlist[2]
-        self.everything.recomputeFilters()
-        self.assertEqual(self.callbacks2,3)
-        self.objlist[2].signalChange()
-        self.objlist[3].signalChange()
-        self.assertEqual(self.callbacks2,4)
-        
-class CursorTestCase(MiroTestCase):
-    def setUp(self):
-        MiroTestCase.setUp(self)
-        self.everything = database.defaultDatabase
-        self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
-        self.objs = self.everything.filter(lambda x: True).map(self.mapToObject).sort(self.sortOldID)
-    def sortOldID(self,x,y):
-        return x[1].oldID < y[1].oldID
-    def mapToObject(self, obj):
-        temp = database.DDBObject(add = False)
-        temp.oldID = obj.getID()
-        return temp
-    def test(self):
-        self.assertEqual(self.objs.len(),3)
-        self.assertEqual(self.objs.cur(),None)
-        self.objs.getNext()
-        self.objs.getNext()
-        self.objs.getNext()
-        self.assertEqual(self.objs.cur(),self.objs[2])
-        self.origObjs[2].remove()
-        self.assertEqual(self.objs.cur(),self.objs[1])
-        self.objs.getPrev()
-        self.assertEqual(self.objs.cur(),self.objs[0])
-    def testStack(self):
-        obj = self.everything.getNext()
-        self.assertEqual(self.everything.cur(), obj)
-        self.everything.saveCursor()
-        while self.everything.getNext() is not None:
-            pass
-        self.everything.restoreCursor()
-        self.assertEqual(self.everything.cur(), obj)
-
-class RecomputeMapTestCase(MiroTestCase):
-    def setUp(self):
-        MiroTestCase.setUp(self)
-        self.everything = database.defaultDatabase
-        self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
-        self.objs = self.everything.filter(lambda x: True).map(self.mapToObject).sort(self.sortOldID).map(self.mapToObject)
-        self.changeCalls = 0
-    def sortOldID(self,x,y):
-        return x[1].oldID < y[1].oldID
-    def mapToObject(self, obj):
-        temp = database.DDBObject(add = False)
-        temp.oldID = obj.getID()
-        return temp
-    def changeCall(self,item,id):
-        self.changeCalls +=1
-    def test(self):
-        self.objs.add_change_callback(self.changeCall)
-        self.everything.recomputeFilters()
-        self.everything.recomputeFilters()
-        temp = self.everything.getNext()
-        temp.signalChange()
-        self.assertEqual(self.changeCalls,1)
-
 class FilterUpdateOnChange(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
@@ -659,39 +406,13 @@ class FilterUpdateOnChange(MiroTestCase):
     def testLoss(self):
         self.assertEqual(self.objs.len(),1)
         self.origObjs[0].good = False
-        self.origObjs[0].signalChange()
+        self.origObjs[0].signal_change()
         self.assertEqual(self.objs.len(),0)
     def testAdd(self):
         self.assertEqual(self.objs.len(),1)
         self.origObjs[1].good = True
-        self.origObjs[1].signalChange()
+        self.origObjs[1].signal_change()
         self.assertEqual(self.objs.len(),2)
-
-# Currently, we require that the database does NOT update maps on a change
-class MapUpdateOnChange(MiroTestCase):
-    def setUp(self):
-        MiroTestCase.setUp(self)
-        self.everything = database.defaultDatabase
-        self.origObjs = [database.DDBObject(), database.DDBObject(), database.DDBObject()]
-        self.origObjs[0].good = True
-        self.origObjs[1].good = False
-        self.origObjs[2].good = False
-        self.objs = self.everything.map(self.mapToObject).filter(lambda x: x.good)
-        self.changeCalls = 0
-    def mapToObject(self, obj):
-        temp = database.DDBObject(add = False)
-        temp.good = obj.good
-        return temp
-    def testLoss(self):
-        self.assertEqual(self.objs.len(),1)
-        self.origObjs[0].good = False
-        self.origObjs[0].signalChange()
-        self.assertEqual(self.objs.len(),1)
-    def testAdd(self):
-        self.assertEqual(self.objs.len(),1)
-        self.origObjs[1].good = True
-        self.origObjs[1].signalChange()
-        self.assertEqual(self.objs.len(),1)
 
 class SortUpdateOnChange(MiroTestCase):
     def setUp(self):
@@ -706,12 +427,12 @@ class SortUpdateOnChange(MiroTestCase):
     def testLoss(self):
         self.assertEqual(self.objs.len(),1)
         self.origObjs[0].good = False
-        self.origObjs[0].signalChange()
+        self.origObjs[0].signal_change()
         self.assertEqual(self.objs.len(),0)
     def testAdd(self):
         self.assertEqual(self.objs.len(),1)
         self.origObjs[1].good = True
-        self.origObjs[1].signalChange()
+        self.origObjs[1].signal_change()
         self.assertEqual(self.objs.len(),2)
 
 class IDBaseTraversal(MiroTestCase):
@@ -823,7 +544,7 @@ class IndexFilterTest(IndexFilterTestBase):
         filtered[0].remove()
         self.assertEqual(filtered.len(),19)
         self.assertEqual(self.removeCallbacks,1)
-        filtered[0].signalChange()
+        filtered[0].signal_change()
         self.assertEqual(self.changeCallbacks,1)
 
         obj = filtered[0]
@@ -831,14 +552,13 @@ class IndexFilterTest(IndexFilterTestBase):
         for x in range(0,50):
             database.DDBObject()
         self.assertEqual(self.addCallbacks,5)
-        obj.signalChange()
+        obj.signal_change()
         self.assertEqual(self.changeCallbacks,1)
         obj.remove()
         self.assertEqual(self.removeCallbacks,1)
     def testIndexChanges(self):
         class IndexedObject(database.DDBObject):
-            def __init__(self, myValue):
-                database.DDBObject.__init__(self)
+            def setup_new(self, myValue):
                 self.myValue = myValue
         def indexFunc(obj):
             return obj.myValue
@@ -851,12 +571,12 @@ class IndexFilterTest(IndexFilterTestBase):
         self.assertEquals(blueView.len(), 1)
         self.assertEquals(redView.len(), 2)
         baz.myValue = 'blue'
-        baz.signalChange()
+        baz.signal_change()
         self.assertEquals(blueView.len(), 2)
         self.assertEquals(redView.len(), 1)
         # test changing to a new view that we've never referenced before.
         foo.myValue = 'green'
-        foo.signalChange()
+        foo.signal_change()
         greenView = self.everything.filterWithIndex(indexFunc, 'green')
         self.assertEquals(blueView.len(), 1)
         self.assertEquals(redView.len(), 1)
@@ -922,9 +642,8 @@ class IndexFilterTest(IndexFilterTestBase):
         self.assertEqual(filtered.len(),100)
     def testSortedIndex(self):
         class IndexedObject(database.DDBObject):
-            def __init__(self, myValue):
+            def setup_new(self, myValue):
                 self.myValue = myValue
-                database.DDBObject.__init__(self)
         self.everything.createIndex(self.mod10,self.sortIndexFunc, resort = True)
         self.objects = []
         for x in range(100):
@@ -953,9 +672,9 @@ class IndexFilterTest(IndexFilterTestBase):
             last = obj
         self.assert_(unordered)
 
-        # Test that things get re-ordered correctly on signalChange
-        filtered[0].signalChange()
-        filtered[1].signalChange()
+        # Test that things get re-ordered correctly on signal_change
+        filtered[0].signal_change()
+        filtered[1].signal_change()
         last = None
         filtered.resetCursor()
         for obj in filtered:
@@ -1017,9 +736,8 @@ class IndexFilterTest(IndexFilterTestBase):
         self.assertEqual(self.changeCallbacks,0)
         
 class MultiIndexed(database.DDBObject):
-    def __init__(self, indexValues):
+    def setup_new(self, indexValues):
         self.indexValues = indexValues
-        database.DDBObject.__init__(self)
 def testMultiIndex(obj):
     return obj.indexValues
 
@@ -1073,7 +791,7 @@ class MultiIndexTestCase(IndexFilterTestBase):
     def testChange(self):
         for obj in self.allObjects:
             obj.indexValues = self.genRandomValues()
-            obj.signalChange(needsSave=False)
+            obj.signal_change(needsSave=False)
             self.checkViews()
 
     def testCallbacks(self):
@@ -1092,7 +810,7 @@ class MultiIndexTestCase(IndexFilterTestBase):
             elif 0 in obj.indexValues:
                 removeCallbackGoal += 1
             obj.indexValues = newValues
-            obj.signalChange(needsSave=False)
+            obj.signal_change(needsSave=False)
             self.assertEquals(self.changeCallbacks, changeCallbackGoal)
             self.assertEquals(self.addCallbacks, addCallbackGoal)
             self.assertEquals(self.removeCallbacks, removeCallbackGoal)
@@ -1136,7 +854,7 @@ class ReSortTestCase(MiroTestCase):
             last = obj
             
         self.objlist[0].value = 100
-        self.objlist[0].signalChange()
+        self.objlist[0].signal_change()
 
         self.sorted.resetCursor()
         last = None
@@ -1185,9 +903,9 @@ class SortingFilterTestCase(MiroTestCase):
             self.assertEqual(obj,filtView.getNext())
 
         self.objs[-1].value = -10
-        self.objs[-1].signalChange()
+        self.objs[-1].signal_change()
         self.objs[-2].value = 0
-        self.objs[-2].signalChange()
+        self.objs[-2].signal_change()
         self.assertEqual(self.sortCalls, 0)
         sortView.unlink()
         filtView.unlink()
@@ -1215,9 +933,9 @@ class SortingFilterTestCase(MiroTestCase):
             last = obj
 
         self.objs[-1].value = -10
-        self.objs[-1].signalChange()
+        self.objs[-1].signal_change()
         self.objs[-2].value = -1
-        self.objs[-2].signalChange()
+        self.objs[-2].signal_change()
         self.assert_(self.sortCalls > 0)
 
         sortView.resetCursor()

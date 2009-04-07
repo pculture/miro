@@ -127,7 +127,7 @@ class IconCacheUpdater:
 
 iconCacheUpdater = IconCacheUpdater()
 class IconCache(DDBObject):
-    def __init__(self, dbItem):
+    def setup_new(self, dbItem):
         self.etag = None
         self.modified = None
         self.filename = None
@@ -137,7 +137,6 @@ class IconCache(DDBObject):
         self.needsUpdate = False
         self.dbItem = dbItem
         self.removed = False
-        DDBObject.__init__(self)
 
         self.requestUpdate(is_vital=dbItem.ICON_CACHE_VITAL)
 
@@ -148,7 +147,7 @@ class IconCache(DDBObject):
             raise
         except:
             # FIXME - bad code; what exceptions get thrown here?
-            self.dbItem.signalChange(needsSave=needsSave)
+            self.dbItem.signal_change(needsSave=needsSave)
 
     def remove(self):
         self.removed = True
@@ -326,8 +325,7 @@ class IconCache(DDBObject):
 
             iconCacheUpdater.requestUpdate(self, is_vital=is_vital)
 
-    def onRestore(self):
-        DDBObject.onRestore(self)
+    def setup_restored(self):
         self.removed = False
         self.updating = False
         self.needsUpdate = False

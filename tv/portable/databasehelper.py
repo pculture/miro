@@ -40,7 +40,7 @@ def makeSimpleGetSet(attributeName, changeNeedsSave=True):
     def setFoo(self, newFoo):
         self.confirmDBThread()
         self.foo = newFoo
-        self.signalChange()
+        self.signal_change()
     """
 
     def getter(self):
@@ -49,7 +49,7 @@ def makeSimpleGetSet(attributeName, changeNeedsSave=True):
     def setter(self, newValue):
         self.confirmDBThread()
         setattr(self, attributeName, newValue)
-        self.signalChange(needsSave=changeNeedsSave)
+        self.signal_change(needsSave=changeNeedsSave)
     return getter, setter
 
 class TrackedIDList(object):
@@ -104,7 +104,7 @@ class TrackedIDList(object):
 
     def _sendSignalChange(self, id):
         if self.db.idExists(id):
-            self.db.getObjectByID(id).signalChange(needsSave=False)
+            self.db.getObjectByID(id).signal_change(needsSave=False)
 
     def __contains__(self, id):
         return id in self.trackedIDs

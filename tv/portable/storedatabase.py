@@ -64,10 +64,6 @@ from miro import util
 from miro.download_utils import nextFreeFilename
 from miro.plat.utils import FilenameType, filenameToUnicode
 
-# _BootStrapClass is used to as the initial class when we restore an object.
-class _BootStrapClass:
-    pass
-
 # Which SQLITE type should we use to store SchemaItem subclasses?
 _sqlite_type_map = {
         schema.SchemaBool: 'integer',
@@ -169,13 +165,12 @@ class LiveStorage:
             self.cursor.execute("SELECT %s from %s" % 
                     (', '.join(column_names), table_name))
             for row in self.cursor:
-                restored = _BootStrapClass()
-                restored.__class__ = klass
+                restored_data = {}
                 for (name, schema_item), value in \
                         itertools.izip(schema.fields, row):
                     value = self._converter.from_sql(schema_item, value)
-                    setattr(restored, name, value)
-                restored.onRestore()
+                    restored_data[name] = value
+                restored = klass(restored_data=restored_data)
                 retval.append(restored)
         return retval
 

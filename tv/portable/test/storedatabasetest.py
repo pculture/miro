@@ -20,7 +20,7 @@ from miro.schema import SchemaFilename
 
 # create a dummy object schema
 class Human(database.DDBObject):
-    def __init__(self, name, age, meters_tall, friends, high_scores=None,
+    def setup_new(self, name, age, meters_tall, friends, high_scores=None,
             **stuff):
         self.name = name
         self.age = age
@@ -32,22 +32,21 @@ class Human(database.DDBObject):
         else:
             self.high_scores = high_scores
         self.stuff = stuff
-        database.DDBObject.__init__(self)
 
     def add_friend(self, friend):
         self.friends.append(friend)
         self.friend_names.append(friend.name)
 
 class RestorableHuman(Human):
-    def onRestore(self):
+    def setup_restored(self):
         self.iveBeenRestored = True
 
 class PCFProgramer(Human):
-    def __init__(self, name, age, meters_tall, friends, file, developer,
+    def setup_new(self, name, age, meters_tall, friends, file, developer,
             high_scores = None):
+        Human.setup_new(self, name, age, meters_tall, friends, high_scores)
         self.file = file
         self.developer = developer
-        Human.__init__(self, name, age, meters_tall, friends, high_scores)
 
 class HumanSchema(schema.ObjectSchema):
     klass = Human
@@ -168,7 +167,7 @@ class DiskTest(FakeSchemaTest):
 
     def test_update(self):
         self.joe.name = u'JO MAMA'
-        self.joe.signalChange()
+        self.joe.signal_change()
         self.reload_objects()
         self.check_database()
 
@@ -185,7 +184,7 @@ class DiskTest(FakeSchemaTest):
         self.reload_objects()
         self.check_database()
 
-    def test_on_restore(self):
+    def test_setup_restored(self):
         self.assert_(not hasattr(self.joe, 'iveBeenRestored'))
         self.reload_objects()
         restored_joe = self.database.getObjectByID(self.joe.id)
@@ -238,10 +237,10 @@ class DiskTest(FakeSchemaTest):
 
 class ValidationTest(FakeSchemaTest):
     def assert_object_valid(self, obj):
-        obj.signalChange()
+        obj.signal_change()
 
     def assert_object_invalid(self, obj):
-        self.assertRaises(schema.ValidationError, obj.signalChange)
+        self.assertRaises(schema.ValidationError, obj.signal_change)
 
     def testNoneValues(self):
         self.lee.age = None

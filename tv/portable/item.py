@@ -280,7 +280,7 @@ class Item(DDBObject):
 
     ICON_CACHE_VITAL = False
 
-    def __init__(self, entry, linkNumber=0, feed_id=None, parent_id=None):
+    def setup_new(self, entry, linkNumber=0, feed_id=None, parent_id=None):
         self.feed_id = feed_id
         self.parent_id = parent_id
         self.isContainerItem = None
@@ -310,24 +310,19 @@ class Item(DDBObject):
         self.linkNumber = linkNumber
         self.creationTime = datetime.now()
         self._update_release_date()
-        self._init_restore()
         self._look_for_downloader()
-        DDBObject.__init__(self)
         self.split_item()
+        self.setup_common()
 
-    def onRestore(self):
-        """Called by pickle during serialization.
-        """
-        DDBObject.onRestore(self)
+    def setup_restored(self):
         # For unknown reason(s), some users still have databases with item
         # objects missing the isContainerItem attribute even after
         # a db upgrade (#8819).
         if not hasattr(self, 'isContainerItem'):
             self.isContainerItem = None
-        self._init_restore()
+        self.setup_common()
 
-    def _init_restore(self):
-        """Common code shared between onRestore and __init__."""
+    def setup_common(self):
         self.selected = False
         self.active = False
         self.childrenSeen = None
@@ -364,7 +359,7 @@ class Item(DDBObject):
     def find_new_children(self):
         """If this feed is a container item, walk through its directory and
         find any new children.  Returns True if it found childern and ran
-        signalChange().
+        signal_change().
         """
         filename_root = self.get_filename()
         if not self.isContainerItem:
@@ -383,12 +378,12 @@ class Item(DDBObject):
                 offsetPath = offsetPath[1:]
             FileItem (video, parent_id=self.id, offsetPath=offsetPath)
         if videos:
-            self.signalChange()
+            self.signal_change()
             return True
         return False
 
     def split_item(self):
-        """returns True if it ran signalChange()"""
+        """returns True if it ran signal_change()"""
         if self.isContainerItem is not None:
             return self.find_new_children()
         if not isinstance(self, FileItem) and (self.downloader is None or not self.downloader.isFinished()):
@@ -425,7 +420,7 @@ class Item(DDBObject):
             self.isContainerItem = False
             self.videoFilename = FilenameType("")
             self.isVideo = True
-        self.signalChange()
+        self.signal_change()
         return True
 
     def _remove_from_playlists(self):
@@ -470,13 +465,12 @@ class Item(DDBObject):
         if self.parent_id is not None and self.feed_id is not None:
             raise DatabaseConstraintError ("feed_id and parent_id both not None")
 
-    def signalChange(self, needsSave=True):
+    def on_signal_change(self):
         self.expiring = None
         if hasattr(self, "_state"):
             del self._state
         if hasattr(self, "_size"):
             del self._size
-        DDBObject.signalChange(self, needsSave=needsSave)
 
     def get_viewed(self):
         """Returns True iff this item has never been viewed in the interface.
@@ -554,8 +548,8 @@ class Item(DDBObject):
         if self.isContainerItem:
             for item in self.getChildren():
                 del item._feed
-                item.signalChange()
-        self.signalChange()
+                item.signal_change()
+        self.signal_change()
 
     def expire(self):
         self.confirmDBThread()
@@ -589,8 +583,8 @@ class Item(DDBObject):
                     self.downloader.set_delete_files(False)
             self.remove()
         else:
-            self.signalChange()
-        self.getFeed().signalChange()
+            self.signal_change()
+        self.getFeed().signal_change()
 
     def stopUpload(self):
         if self.downloader:
@@ -666,7 +660,7 @@ class Item(DDBObject):
                     return None
                 if childTime > self.watchedTime:
                     self.watchedTime = childTime
-            self.signalChange()
+            self.signal_change()
         return self.watchedTime
 
     def get_expiring(self):
@@ -709,7 +703,7 @@ class Item(DDBObject):
             if self.watchedTime is None:
                 self.watchedTime = datetime.now()
             self.clearParentsChildrenSeen()
-            self.signalChange()
+            self.signal_change()
             if markOtherItems and self.downloader:
                 for item in self.downloader.itemList:
                     if item != self:
@@ -719,7 +713,7 @@ class Item(DDBObject):
         if self.parent_id:
             parent = self.getParent()
             parent.childrenSeen = None
-            parent.signalChange()
+            parent.signal_change()
 
     def markItemUnseen(self, markOtherItems=True):
         self.confirmDBThread()
@@ -727,15 +721,15 @@ class Item(DDBObject):
             self.childrenSeen = False
             for item in self.getChildren():
                 item.seen = False
-                item.signalChange()
-            self.signalChange()
+                item.signal_change()
+            self.signal_change()
         else:
             if self.seen == False:
                 return
             self.seen = False
             self.watchedTime = None
             self.clearParentsChildrenSeen()
-            self.signalChange()
+            self.signal_change()
             if markOtherItems and self.downloader:
                 for item in self.downloader.itemList:
                     if item != self:
@@ -749,13 +743,13 @@ class Item(DDBObject):
     def removeRSSID(self):
         self.confirmDBThread()
         self.rss_id = None
-        self.signalChange()
+        self.signal_change()
 
     def setAutoDownloaded(self, autodl=True):
         self.confirmDBThread()
         if autodl != self.autoDownloaded:
             self.autoDownloaded = autodl
-            self.signalChange()
+            self.signal_change()
 
     @eventloop.asIdle
     def setResumeTime(self, position):
@@ -768,7 +762,7 @@ class Item(DDBObject):
             return
         if self.resumeTime != position:
             self.resumeTime = position
-            self.signalChange()
+            self.signal_change()
 
     def getAutoDownloaded(self):
         """Returns true iff item was auto downloaded.
@@ -788,7 +782,7 @@ class Item(DDBObject):
                 manualDownloadCount >= config.get(prefs.MAX_MANUAL_DOWNLOADS)):
             self.pendingManualDL = True
             self.pendingReason = _("queued for download")
-            self.signalChange()
+            self.signal_change()
             return
         else:
             self.setAutoDownloaded(autodl)
@@ -802,8 +796,8 @@ class Item(DDBObject):
                 self.on_download_finished()
             else:
                 self.downloader.start()
-        self.signalChange()
-        self.getFeed().signalChange()
+        self.signal_change()
+        self.getFeed().signal_change()
 
     def pause(self):
         if self.downloader:
@@ -874,7 +868,7 @@ class Item(DDBObject):
     def setTitle(self, s):
         self.confirmDBThread()
         self.title = s
-        self.signalChange()
+        self.signal_change()
 
     def has_original_title(self):
         """Returns True if this is the original title and False if the user
@@ -887,7 +881,7 @@ class Item(DDBObject):
         """
         self.confirmDBThread()
         self.title = self.entry_title
-        self.signalChange()
+        self.signal_change()
 
     def set_channel_title(self, title):
         checkU(title)
@@ -1196,7 +1190,7 @@ class Item(DDBObject):
         FeedParserValues(entry).update_item(self)
         self.icon_cache.requestUpdate()
         self._update_release_date()
-        self.signalChange()
+        self.signal_change()
 
     def on_download_finished(self):
         """Called when the download for this item finishes."""
@@ -1204,7 +1198,7 @@ class Item(DDBObject):
         self.confirmDBThread()
         self.downloadedTime = datetime.now()
         if not self.split_item():
-            self.signalChange()
+            self.signal_change()
         moviedata.movieDataUpdater.requestUpdate(self)
 
         for other in views.items:
@@ -1222,13 +1216,13 @@ class Item(DDBObject):
             downloader.addItem(self)
         else:
             self.downloader_id = None
-        self.signalChange()
+        self.signal_change()
 
     def save(self):
         self.confirmDBThread()
         if self.keep != True:
             self.keep = True
-            self.signalChange()
+            self.signal_change()
 
     @returnsFilename
     def get_filename(self):
@@ -1296,7 +1290,7 @@ class Item(DDBObject):
                 self.set_downloader(dler)
             self.fix_incorrect_torrent_subdir()
             if self.downloader is not None:
-                self.signalChange(needsSave=False)
+                self.signal_change(needsSave=False)
         self.split_item()
         # This must come after reconnecting the downloader
         if self.isContainerItem is not None and not fileutil.exists(self.get_filename()):
@@ -1304,7 +1298,7 @@ class Item(DDBObject):
             return
         if self.screenshot and not fileutil.exists(self.screenshot):
             self.screenshot = None
-            self.signalChange()
+            self.signal_change()
         if self.duration is None or self.screenshot is None:
             moviedata.movieDataUpdater.requestUpdate (self)
 
@@ -1341,14 +1335,14 @@ class FileItem(Item):
     """An Item that exists as a local file
     """
 
-    def __init__(self, filename, feed_id=None, parent_id=None, offsetPath=None, deleted=False):
+    def setup_new(self, filename, feed_id=None, parent_id=None, offsetPath=None, deleted=False):
+        Item.setup_new(self, get_entry_for_file(filename), feed_id=feed_id, parent_id=parent_id)
         checkF(filename)
         filename = fileutil.abspath(filename)
         self.filename = filename
         self.deleted = deleted
         self.offsetPath = offsetPath
         self.shortFilename = cleanFilename(os.path.basename(self.filename))
-        Item.__init__(self, get_entry_for_file(filename), feed_id=feed_id, parent_id=parent_id)
         moviedata.movieDataUpdater.requestUpdate (self)
 
     @returnsUnicode
@@ -1364,7 +1358,7 @@ class FileItem(Item):
         """Adds a file to the library."""
         manualFeed = getSingletonDDBObject(views.manualFeed)
         self.setFeed(manualFeed.getID())
-        self.signalChange(needsSave=True)
+        self.signal_change(needsSave=True)
 
     def get_channel_category(self):
         """Get the category to use for the channel template.
@@ -1419,7 +1413,7 @@ class FileItem(Item):
             self.remove()
         elif self.feed_id is None:
             self.deleted = True
-            self.signalChange()
+            self.signal_change()
         else:
             # external item that the user deleted in Miro
             url = self.getFeedURL()
@@ -1427,7 +1421,7 @@ class FileItem(Item):
                 self.remove()
             else:
                 self.deleted = True
-                self.signalChange()
+                self.signal_change()
 
     def delete_files(self):
         if self.getParent():
@@ -1453,7 +1447,7 @@ class FileItem(Item):
 
     def download(self, autodl=False):
         self.deleted = False
-        self.signalChange()
+        self.signal_change()
 
     def _update_release_date(self):
         # This should be called whenever we get a new entry
@@ -1488,11 +1482,11 @@ filename was %s""", stringify(self.filename))
             newFilename = nextFreeFilename(newFilename)
             def callback():
                 self.filename = newFilename
-                self.signalChange()
+                self.signal_change()
             fileutil.migrate_file(self.filename, newFilename, callback)
         elif fileutil.exists(newFilename):
             self.filename = newFilename
-            self.signalChange()
+            self.signal_change()
         self.migrate_children(newDir)
 
     def setup_links(self):

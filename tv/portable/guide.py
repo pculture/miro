@@ -47,7 +47,7 @@ HTMLPattern = re.compile("^.*(<head.*?>.*</body\s*>)", re.S)
 class ChannelGuide(DDBObject):
     ICON_CACHE_VITAL = True
 
-    def __init__(self, url, allowedURLs=None):
+    def setup_new(self, url, allowedURLs=None):
         checkU(url)
         # FIXME - clean up the allowedURLs thing here
         self.allowedURLs = []
@@ -66,10 +66,7 @@ class ChannelGuide(DDBObject):
             self.historyLocation = None
             self.history = []
 
-        DDBObject.__init__(self)
-
-    def onRestore(self):
-        DDBObject.onRestore(self)
+    def setup_restored(self):
         self.lastVisitedURL = None
         self.historyLocation = None
         self.history = []
@@ -121,7 +118,7 @@ class ChannelGuide(DDBObject):
     def setTitle(self, title):
         self.confirmDBThread()
         self.userTitle = title
-        self.signalChange(needsSave=True)
+        self.signal_change(needsSave=True)
 
     def guide_downloaded(self, info):
         self.updated_url = unicode(info["updated-url"])
@@ -148,7 +145,7 @@ class ChannelGuide(DDBObject):
             self.icon_cache.requestUpdate(True)
 
         self.extendHistory(self.updated_url)
-        self.signalChange()
+        self.signal_change()
 
     def guide_error(self, error):
         # FIXME - this should display some kind of error page to the user
@@ -167,7 +164,7 @@ class ChannelGuide(DDBObject):
 
     def iconChanged(self, needsSave=True):
         self.confirmDBThread()
-        self.signalChange(needsSave=True)
+        self.signal_change(needsSave=True)
 
     def getThumbnailURL(self):
         return self.favicon

@@ -71,7 +71,7 @@ class PlaylistMixin:
         if (folder is not None):
             folder.addID(id)
 
-        self.signalChange()
+        self.signal_change()
 
     def removeID(self, id):
         """Remove an item from the playlist."""
@@ -83,7 +83,7 @@ class PlaylistMixin:
         if (folder is not None):
             folder.addID(id)
 
-        self.signalChange()
+        self.signal_change()
 
     def moveID(self, id, newPosition):
         """Change the position of an item in the playlist.
@@ -97,7 +97,7 @@ class PlaylistMixin:
 
         self.confirmDBThread()
         self.trackedItems.moveID(id, newPosition)
-        self.signalChange()
+        self.signal_change()
 
     def idInPlaylist(self, id):
         return id in self.trackedItems
@@ -124,18 +124,19 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
     which is a temporary playlist that holds the videos we're playing right
     now.
     """
-    def __init__(self, title, item_ids=None):
+    def setup_new(self, title, item_ids=None):
         self.title = title
         if item_ids:
             self.item_ids = item_ids
         else:
             self.item_ids = []
         self.folder_id = None
-        self.setupTrackedItemView()
-        database.DDBObject.__init__(self)
+        self.setup_common()
 
-    def onRestore(self):
-        database.DDBObject.onRestore(self)
+    def setup_restored(self):
+        self.setup_common()
+
+    def setup_common(self):
         self.setupTrackedItemView()
 
     get_title, setTitle = makeSimpleGetSet('title')
@@ -154,7 +155,7 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
             self.folder_id = newFolder.getID()
         else:
             self.folder_id = None
-        self.signalChange()
+        self.signal_change()
         if old_folder_id is not None:
             folder = views.playlistFolders.getObjectByID(old_folder_id)
             for id in self.item_ids:

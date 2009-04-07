@@ -44,7 +44,7 @@ from miro import playlist
 from miro import signals
 
 class ThemeHistory(DDBObject):
-    def __init__(self):
+    def setup_new(self):
         self.lastTheme = None
         self.pastThemes = []
         self.theme = config.get(prefs.THEME_NAME)
@@ -52,7 +52,6 @@ class ThemeHistory(DDBObject):
             self.theme = unicode(self.theme)
         # if we don't have a theme, self.theme will be None
         self.pastThemes.append(self.theme)
-        DDBObject.__init__(self)
         self.on_first_run()
 
     # We used to do this on restore, but we need to make sure that the
@@ -65,7 +64,7 @@ class ThemeHistory(DDBObject):
         if self.theme not in self.pastThemes:
             self.pastThemes.append(self.theme)
             self.on_first_run()
-            self.signalChange()
+            self.signal_change()
         if self.lastTheme != self.theme:
             self.lastTheme = self.theme
             self.on_theme_change()
@@ -84,7 +83,7 @@ class ThemeHistory(DDBObject):
                 guide.ChannelGuide(guideURL,
                                    unicode(config.get(
                             prefs.CHANNEL_GUIDE_ALLOWED_URLS)).split())
-        self.signalChange()
+        self.signal_change()
 
     def on_first_run(self):
         logging.info("Spawning Miro Guide...")
