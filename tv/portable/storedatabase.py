@@ -185,13 +185,17 @@ class LiveStorage:
     def update(self, obj):
         """Update a DDBObject on disk."""
 
-        schema, table_name = self._schema_map[obj.__class__]
+        obj_schema, table_name = self._schema_map[obj.__class__]
         column_names = []
         values = []
-        for name, schema_item in schema.fields:
+        for name, schema_item in obj_schema.fields:
             column_names.append(name)
             value = getattr(obj, name)
-            schema_item.validate(value)
+            try:
+                schema_item.validate(value)
+            except schema.ValidationError:
+                logging.warn("error validating %s for %s", name, obj)
+                raise
             values.append(self._converter.to_sql(schema_item, value))
         sql = "REPLACE INTO %s (%s) VALUES(%s)" % (table_name,
                 ', '.join(column_names),

@@ -383,7 +383,7 @@ class FeedImpl(DDBObject):
         pass
 
     def __str__(self):
-        return "FeedImpl - %s" % self.get_title()
+        return "%s - %s" % (self.__class__.__name__, self.get_title())
 
     def clean_old_items(self):
         """
