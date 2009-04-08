@@ -229,7 +229,8 @@ class LiveStorage:
             try:
                 schema_item.validate(value)
             except schema.ValidationError:
-                logging.warn("error validating %s for %s", name, obj)
+                if util.chatter:
+                    logging.warn("error validating %s for %s", name, obj)
                 raise
             values.append(self._converter.to_sql(schema_item, value))
         sql = "REPLACE INTO %s (%s) VALUES(%s)" % (table_name,
