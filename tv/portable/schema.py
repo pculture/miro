@@ -359,6 +359,7 @@ class ItemSchema(DDBObjectSchema):
         ('enclosure_type', SchemaString(noneOk=True)),
         ('enclosure_format', SchemaString(noneOk=True)),
         ('feedparser_output', SchemaReprContainer()),
+        ('was_downloaded', SchemaBool()),
     ]
 
 class FileItemSchema(ItemSchema):
@@ -484,6 +485,7 @@ class RemoteDownloaderSchema(DDBObjectSchema):
         ('channelName', SchemaFilename(noneOk=True)),
         ('status', SchemaStatusContainer()),
         ('manualUpload', SchemaBool()),
+        ('state', SchemaString()),
     ]
 
 class HTTPAuthPasswordSchema(DDBObjectSchema):
@@ -562,7 +564,7 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
         ('list_view_displays', SchemaList(SchemaBinary())),
     ]
 
-VERSION = 80
+VERSION = 82
 object_schemas = [
     IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,

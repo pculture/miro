@@ -1949,6 +1949,35 @@ def upgrade79(objectList):
 # There is no upgrade80.  That version was the version we switched how the
 # database was stored.
 
+def upgrade81(cursor):
+    """Add the was_downloaded column to downloader."""
+    cursor.execute("ALTER TABLE remote_downloader ADD state TEXT")
+    to_update = []
+    for row in cursor.execute("SELECT id, status FROM remote_downloader"):
+        id = row[0]
+        state = eval(row[1]).get('state', u'downloading')
+        to_update.append((id, state))
+    for id, state in to_update:
+        cursor.execute("UPDATE remote_downloader SET state=? WHERE id=?",
+                (state, id))
+
+def upgrade82(cursor):
+    """Add the state column to item."""
+    cursor.execute("ALTER TABLE item ADD was_downloaded INTEGER")
+    cursor.execute("ALTER TABLE file_item ADD was_downloaded INTEGER")
+    cursor.execute("UPDATE file_item SET was_downloaded=0")
+
+    downloaded = []
+    for row in cursor.execute("SELECT id, downloader_id, expired FROM item"):
+        if row[1] is not None or row[2]:
+            # item has a downloader, or was expired, either way it was
+            # downloaded at some point.
+            downloaded.append(row[0])
+    placeholders = ', '.join('?' for i in xrange(len(downloaded)))
+    cursor.execute("UPDATE item SET was_downloaded=0")
+    cursor.execute("UPDATE item SET was_downloaded=1 "
+            "WHERE id IN (%s)" % placeholders, downloaded)
+
 #def upgradeX (cursor):
 #    """Input a SQLite cursor.  Do whatever is necessary to upgrade the DB."""
 #    return changed

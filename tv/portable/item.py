@@ -301,6 +301,7 @@ class Item(DDBObject):
         self.screenshot = None
         self.resumeTime = 0
         self.channelTitle = None
+        self.was_downloaded = False
 
         iconcache.setup_icon_cache(self)
 
@@ -777,6 +778,7 @@ class Item(DDBObject):
         self.confirmDBThread()
         manualDownloadCount = views.manualDownloads.len()
         self.expired = self.keep = self.seen = False
+        self.was_downloaded = True
 
         if ((not autodl) and
                 manualDownloadCount >= config.get(prefs.MAX_MANUAL_DOWNLOADS)):
@@ -1343,6 +1345,7 @@ class FileItem(Item):
         self.deleted = deleted
         self.offsetPath = offsetPath
         self.shortFilename = cleanFilename(os.path.basename(self.filename))
+        self.was_downloaded = False
         moviedata.movieDataUpdater.requestUpdate (self)
 
     @returnsUnicode

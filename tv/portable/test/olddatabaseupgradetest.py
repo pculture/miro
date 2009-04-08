@@ -141,7 +141,8 @@ class Test20DatabaseConvert(MiroTestCase):
     def test_live_storage_converts(self):
         old_db_path = resources.path("testdata/olddatabase.v79")
         shutil.copyfile(old_db_path, self.tmp_path)
-        live_storage = storedatabase.LiveStorage(self.tmp_path)
+        live_storage = storedatabase.LiveStorage(self.tmp_path,
+                schema_version=80)
         self.cursor = live_storage.cursor
         self.old_savables = convert20database._get_old_savables(self.cursor)
         live_storage.upgrade_database()

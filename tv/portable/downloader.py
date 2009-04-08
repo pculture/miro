@@ -122,6 +122,7 @@ class RemoteDownloader(DDBObject):
         self.itemList = []
         self.dlid = generateDownloadID()
         self.status = {}
+        self.state = u'downloading'
         if contentType is None:
             # HACK:  Some servers report the wrong content-type for torrent
             # files.  We try to work around that by assuming if the enclosure
@@ -477,7 +478,7 @@ URL was %s""" % self.url
         failed, or finished
         """
         self.confirmDBThread()
-        return self.status.get('state', u'downloading')
+        return self.state
 
     def isFinished(self):
         return self.get_state() in (u'finished', u'uploading', u'uploading-paused')
@@ -511,6 +512,9 @@ URL was %s""" % self.url
         self.status['rate'] = 0
         self.status['upRate'] = 0
         self.status['eta'] = 0
+
+    def on_signal_change(self):
+        self.state = self.status.get('state', u'downloading')
 
     def getUploadRatio(self):
         size = self.get_current_size()
