@@ -44,6 +44,7 @@ not quite the same.  The hope is that it will be human readable.  We use the
 type "pythonrepr" to label these columns.
 """
 
+import cPickle
 import itertools
 import logging
 import datetime
@@ -83,6 +84,8 @@ _sqlite_type_map = {
         schema.SchemaStatusContainer: 'pythonrepr',
         schema.SchemaFilename: 'text',
 }
+
+VERSION_KEY = "Democracy Version"
 
 class LiveStorage:
     """Handles the storage of DDBObjects.
@@ -130,6 +133,7 @@ class LiveStorage:
     def upgrade_database(self):
         """Run any database upgrades that haven't been run."""
         try:
+            self._version_table_hack()
             self._upgrade_database()
         except (KeyError, SystemError,
                 databaseupgrade.DatabaseTooNewError):
@@ -137,10 +141,24 @@ class LiveStorage:
         except:
             self._handle_load_error("Error upgrading database")
 
+    def _version_table_hack(self):
+        """Fix people who have been running the nightly builds and have a
+        miro_version table instead of a dtv_variables table (see #11688).
+        Delete this function before releasing!
+        """
+        self.cursor.execute("SELECT COUNT(*) FROM sqlite_master "
+                "WHERE type='table' and name = 'miro_version'")
+        if self.cursor.fetchone()[0] > 0:
+            logging.warn("fixing dev versions table.")
+            self._create_variables_table()
+            self.cursor.execute("SELECT version FROM miro_version")
+            current_version = self.cursor.fetchone()[0]
+            self._set_variable(VERSION_KEY, current_version)
+            self.cursor.execute("DROP TABLE miro_version")
+
     def _upgrade_database(self):
         self._upgrade_20_database()
-        self.cursor.execute("SELECT version FROM miro_version")
-        current_version = self.cursor.fetchone()[0]
+        current_version = self._get_variable(VERSION_KEY)
         databaseupgrade.new_style_upgrade(self.cursor,
                 current_version, self._schema_version)
         self._set_version()
@@ -152,6 +170,23 @@ class LiveStorage:
             if util.chatter:
                 logging.info("converting pre 2.1 database")
             convert20database.convert(self.cursor)
+            self._set_version(80)
+
+    def _get_variable(self, name):
+        self.cursor.execute("SELECT serialized_value FROM dtv_variables "
+                "WHERE name=?", (name,))
+        row = self.cursor.fetchone()
+        return cPickle.loads(str(row[0]))
+
+    def _set_variable(self, name, value):
+        db_value = buffer(cPickle.dumps(value, cPickle.HIGHEST_PROTOCOL))
+        self.cursor.execute("REPLACE INTO dtv_variables "
+                "(name, serialized_value) VALUES (?,?)", (name, db_value))
+
+    def _create_variables_table(self):
+        self.cursor.execute("""CREATE TABLE dtv_variables(
+        name TEXT PRIMARY KEY NOT NULL,
+        serialized_value BLOB NOT NULL);""")
 
     def load_objects(self):
         """Get the list of DDBObjects stored on disk."""
@@ -270,15 +305,15 @@ class LiveStorage:
             table_name = schema.classString.replace('-', '_')
             self.cursor.execute("CREATE TABLE %s (%s)" %
                     (table_name, self._calc_sqlite_types(schema)))
-        self.cursor.execute("CREATE TABLE miro_version (version integer PRIMARY KEY)")
+        self._create_variables_table()
         self._set_version()
 
-    def _set_version(self):
+    def _set_version(self, version=None):
         """Set the database version to the current schema version."""
 
-        self.cursor.execute("DELETE FROM miro_version")
-        self.cursor.execute("INSERT INTO miro_version(version) values (?)",
-                (self._schema_version,))
+        if version is None:
+            version = self._schema_version
+        self._set_variable(VERSION_KEY, version)
 
     def _calc_sqlite_types(self, object_schema):
         """What datatype should we use for the attributes of an object schema?

@@ -75,10 +75,8 @@ def convert(cursor):
     savable_objects = _get_old_savables(cursor)
     _upgrate_old_savables(cursor, savable_objects)
     _create_db_schema(cursor)
-    cursor.execute("INSERT INTO miro_version (version) VALUES (80)")
     _migrate_old_data(cursor, savable_objects)
     cursor.execute("DROP TABLE dtv_objects")
-    cursor.execute("DROP TABLE dtv_variables")
 
 def _get_old_savables(cursor):
     """Get a list of SavableObjects given a cursor pointing to an old-style
@@ -99,7 +97,6 @@ def _create_db_schema(cursor):
         table_name = schema.classString.replace('-', '_')
         cursor.execute("CREATE TABLE %s (%s)" %
                 (table_name, _calc_sqlite_types(schema)))
-    cursor.execute("CREATE TABLE miro_version (version integer PRIMARY KEY)")
 
 def _calc_sqlite_types(object_schema):
     types = []

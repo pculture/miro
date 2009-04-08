@@ -1,3 +1,4 @@
+import cPickle
 import os
 import shutil
 import sqlite3
@@ -51,14 +52,9 @@ class Test20DatabaseConvert(MiroTestCase):
             columns = set(f[0] for f in os.fields)
             self.assertEquals(db_columns, columns)
 
-    def check_version(self):
-        self.cursor.execute("""SELECT version FROM miro_version""")
-        self.assertEquals(self.cursor.fetchone()[0], 80)
-
     def check_old_table_removed(self):
         self.cursor.execute("""SELECT name FROM sqlite_master
-            WHERE type='table' AND
-            (name = 'dtv_objects' or name = 'dtv_variables')""")
+            WHERE type='table' AND name = 'dtv_objects'""")
         self.assertEquals(len(self.cursor.fetchall()), 0)
 
     def _get_new_object(self, savable):
@@ -128,7 +124,6 @@ class Test20DatabaseConvert(MiroTestCase):
 
         self.check_tables_created()
         self.check_new_columns()
-        self.check_version()
         self.check_old_table_removed()
         self.check_data_migrated()
 
@@ -149,7 +144,6 @@ class Test20DatabaseConvert(MiroTestCase):
 
         self.check_tables_created()
         self.check_new_columns()
-        self.check_version()
         self.check_old_table_removed()
         self.check_data_migrated()
 
