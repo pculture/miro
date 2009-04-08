@@ -43,6 +43,7 @@ import sys
 import types
 import threading
 
+from miro import app
 from miro import signals
 from miro.fasttypes import LinkedList, SortedList
 
@@ -1329,6 +1330,126 @@ class DynamicDatabase:
 # Global default database
 defaultDatabase = DynamicDatabase()
 
+class View(object):
+    def __init__(self, klass, where, values, order_by, joins):
+        self.klass = klass
+        self.where = where
+        self.values = values
+        self.order_by = order_by
+        self.joins = joins
+
+    def __iter__(self):
+        return app.db.liveStorage.query(self.klass, self.where, self.values,
+                self.order_by, self.joins)
+
+    def count(self):
+        return app.db.liveStorage.query_count(self.klass, self.where,
+                self.values, self.joins)
+
+    def get_singleton(self):
+        results = list(self)
+        if len(results) == 1:
+            return results[0]
+        elif len(results) == 0:
+            raise LookupError("Can't find singleton")
+        else:
+            raise LookupError("Too many results returned")
+
+    def make_tracker(self):
+        return ViewTracker(self.klass, self.where, self.values, self.joins)
+
+class ViewTracker(signals.SignalEmitter):
+    table_to_tracker = {} # maps table_name to trackers
+    joined_table_to_tracker = {} # maps joined tables to trackers
+
+    @classmethod
+    def reset_trackers(cls):
+        cls.table_to_tracker = {}
+        cls.joined_table_to_tracker = {}
+
+    @classmethod
+    def _get_trackers(cls, table_name):
+        try:
+            return cls.table_to_tracker[table_name]
+        except KeyError:
+            cls.table_to_tracker[table_name] = set()
+            return cls.table_to_tracker[table_name]
+
+    @classmethod
+    def _get_related_trackers(cls, table_name):
+        try:
+            return cls.joined_table_to_tracker[table_name]
+        except KeyError:
+            cls.joined_table_to_tracker[table_name] = set()
+            return cls.joined_table_to_tracker[table_name]
+
+    @classmethod
+    def _update_view_trackers(cls, obj):
+        table_name = app.db.liveStorage.table_name(obj.__class__)
+        for tracker in cls._get_trackers(table_name):
+            tracker.object_changed(obj)
+
+    @classmethod
+    def _update_related_view_trackers(cls, obj):
+        table_name = app.db.liveStorage.table_name(obj.__class__)
+        for tracker in cls._get_related_trackers(table_name):
+            tracker.object_changed(obj)
+
+    def __init__(self, klass, where, values, joins):
+        signals.SignalEmitter.__init__(self, 'added', 'removed')
+        self.klass = klass
+        self.where = where
+        self.values = values
+        self.joins = joins
+        self.current_ids = set(app.db.liveStorage.query_ids(klass, where,
+            values, joins=joins))
+        self.table_name = app.db.liveStorage.table_name(klass)
+        ViewTracker._get_trackers(self.table_name).add(self)
+        if joins is not None:
+            for table_name in joins.keys():
+                ViewTracker._get_related_trackers(table_name).add(self)
+
+    def unlink(self):
+        ViewTracker._get_trackers(self.table_name).discard(self)
+        if self.joins is not None:
+            for table_name in self.joins.keys():
+                ViewTracker._get_related_trackers(table_name).discard(self)
+
+    def _obj_in_view(self, obj):
+        where = '%s.id = ? AND (%s)' % (self.table_name, self.where)
+        values = (obj.id,) + self.values
+        return app.db.liveStorage.query_count(self.klass, where, values, self.joins) > 0
+
+    def object_changed(self, obj):
+        if obj.__class__ is self.klass:
+            # object is the type we are tracking, just need to check if the
+            # change made that object enter/leave the view
+            self.check_object(obj)
+        else:
+            # object is the type that we are joining.  Need to check all of
+            # our objects to see what left/entered.
+            self.check_all_objects()
+
+    def check_object(self, obj):
+        before = (obj.id in self.current_ids)
+        now = self._obj_in_view(obj)
+        if before and not now:
+            self.emit('removed', obj)
+            self.current_ids.remove(obj.id)
+        elif now and not before:
+            self.emit('added', obj)
+            self.current_ids.add(obj.id)
+
+    def check_all_objects(self):
+        new_ids = set(app.db.liveStorage.query_ids(self.klass, self.where,
+            self.values,
+            joins=self.joins))
+        for id in new_ids.difference(self.current_ids):
+            self.emit('added', app.db.getObjectByID(id))
+        for id in self.current_ids.difference(new_ids):
+            self.emit('removed', app.db.getObjectByID(id))
+        self.current_ids = new_ids
+
 class DDBObject(signals.SignalEmitter):
     """Dynamic Database object
     """
@@ -1360,6 +1481,12 @@ class DDBObject(signals.SignalEmitter):
             self.check_constraints()
             self.dd.addAfterCursor(self)
             self.on_db_insert()
+
+    @classmethod
+    def make_view(cls, where, values=None, order_by=None, joins=None):
+        if values is None:
+            values = ()
+        return View(cls, where, values, order_by, joins)
 
     def setup_new(self):
         """Initialize a newly created object."""
@@ -1426,9 +1553,20 @@ class DDBObject(signals.SignalEmitter):
             self.dd.changeObj(self, needsSave=needsSave)
         finally:
             self.dd.restoreCursor()
+        ViewTracker._update_view_trackers(self)
 
     def on_signal_change(self):
         pass
+
+    def signal_related_change(self, needsSave=True):
+        """Call this after you change an object and it could affect the views
+        of related object.
+
+        For example, when feeds get their autodownload settings, it could
+        change the view of items waiting to be autodownloaded.  In that case,
+        feed should call signal_related_change
+        """
+        ViewTracker._update_related_view_trackers(self)
 
 def resetDefaultDatabase():
     """Erases the current database and replaces it with a blank slate

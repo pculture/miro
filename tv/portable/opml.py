@@ -44,6 +44,7 @@ from miro import config
 from miro import folder
 from miro import dialogs
 from miro import eventloop
+from miro import tabs
 
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
@@ -71,8 +72,8 @@ class Exporter(object):
         self.io.write(u'</head>\n')
         self.io.write(u'<body>\n')
     
-        tabOrder = util.getSingletonDDBObject(views.channelTabOrder)
-        audioTabOrder = util.getSingletonDDBObject(views.audioChannelTabOrder)
+        tabOrder = tabs.TabOrder.video_feed_order()
+        audioTabOrder = tabs.TabOrder.audio_feed_order()
         for obj in tabOrder.getAllTabs() + audioTabOrder.getAllTabs():
             if isinstance(obj, folder.ChannelFolder):
                 self._open_folder_entry(obj)
@@ -82,7 +83,7 @@ class Exporter(object):
         if self.currentFolder is not None:
             self._close_folder_entry()
     
-        site_tab_order = util.getSingletonDDBObject(views.siteTabOrder)
+        site_tab_order = tabs.TabOrder.site_tab_order()
         for obj in site_tab_order.getAllTabs():
             self._write_site_entry(obj)
 

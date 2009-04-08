@@ -42,6 +42,7 @@ class TabOrder(database.DDBObject):
 
     TabOrder objects emit the 'tab-added' signal when a new tab is added.
     """
+
     def setup_new(self, type):
         """Construct a TabOrder.  type should be either "channel", or
         "playlist".
@@ -75,6 +76,26 @@ class TabOrder(database.DDBObject):
         self.trackedTabs = TrackedIDList(self.tabView, self.tab_ids)
         self.tabView.addAddCallback(self.onAddTab)
         self.tabView.addRemoveCallback(self.onRemoveTab)
+
+    @classmethod
+    def view_for_type(cls, type):
+        return cls.make_view('type=?', (type,))
+
+    @classmethod
+    def site_order(cls):
+        return cls.view_for_type(u'site').get_singleton()
+
+    @classmethod
+    def video_feed_order(cls):
+        return cls.view_for_type(u'channel').get_singleton()
+
+    @classmethod
+    def audio_feed_order(cls):
+        return cls.view_for_type(u'audio-channel').get_singleton()
+
+    @classmethod
+    def playlist_order(cls):
+        return cls.view_for_type(u'playlist').get_singleton()
 
     def checkForNonExistentIds(self):
         changed = False

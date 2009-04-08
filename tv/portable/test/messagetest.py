@@ -173,7 +173,7 @@ class PlaylistTrackTest(TrackerTest):
         TrackerTest.setUp(self)
         self.playlist1 = SavedPlaylist(u'Playlist 1')
         self.playlist2 = SavedPlaylist(u'Playlist 2')
-        self.folder = PlaylistFolder('Playlist Folder')
+        self.folder = PlaylistFolder(u'Playlist Folder')
 #        self.folder.handleDNDAppend( set([self.playlist2.id]))
         self.runUrgentCalls()
         messages.TrackPlaylists().send_to_backend()
@@ -207,11 +207,11 @@ class PlaylistTrackTest(TrackerTest):
         self.checkChangedMessage(1, added=[p])
 
     def testAddedOrder(self):
-        p1 = SavedPlaylist('Playlist 2')
-        p2 = SavedPlaylist('Playlist 3')
-        p3 = SavedPlaylist('Playlist 4')
-        p4 = SavedPlaylist('Playlist 5')
-        p5 = SavedPlaylist('Playlist 6')
+        p1 = SavedPlaylist(u'Playlist 2')
+        p2 = SavedPlaylist(u'Playlist 3')
+        p3 = SavedPlaylist(u'Playlist 4')
+        p4 = SavedPlaylist(u'Playlist 5')
+        p5 = SavedPlaylist(u'Playlist 6')
         self.runUrgentCalls()
         # We want the PlaylistAdded messages to come in the same order the
         # feeds were added.
@@ -256,7 +256,7 @@ class FeedTrackTest(TrackerTest):
         TrackerTest.setUp(self)
         self.feed1 = Feed(u'http://example.com/')
         self.feed2 = Feed(u'http://example.com/2')
-        self.feed_folder = ChannelFolder('test channel folder')
+        self.feed_folder = ChannelFolder(u'test channel folder')
         m = messages.TabsReordered()
         m.toplevels['feed'] = [messages.ChannelInfo(self.feed1)]
         m.toplevels['audio-feed'] = [messages.ChannelInfo(self.feed_folder)]

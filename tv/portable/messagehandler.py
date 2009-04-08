@@ -46,6 +46,7 @@ from miro import messages
 from miro import prefs
 from miro import singleclick
 from miro import subscription
+from miro import tabs
 from miro import views
 from miro import opml
 from miro import searchengines
@@ -225,7 +226,7 @@ class ChannelTracker(TabTracker):
         return views.videoVisibleFeeds, views.videoChannelFolders
 
     def get_tab_view(self):
-        return getSingletonDDBObject(views.channelTabOrder).getView()
+        return tabs.TabOrder.video_feed_order().getView()
 
 class AudioChannelTracker(TabTracker):
     type = 'audio-feed'
@@ -235,7 +236,7 @@ class AudioChannelTracker(TabTracker):
         return views.audioVisibleFeeds, views.audioChannelFolders
 
     def get_tab_view(self):
-        return getSingletonDDBObject(views.audioChannelTabOrder).getView()
+        return tabs.TabOrder.audio_feed_order().getView()
 
 class PlaylistTracker(TabTracker):
     type = 'playlist'
@@ -245,7 +246,7 @@ class PlaylistTracker(TabTracker):
         return views.playlists, views.playlistFolders
 
     def get_tab_view(self):
-        return getSingletonDDBObject(views.playlistTabOrder).getView()
+        return tabs.TabOrder.playlist_order().getView()
 
 class GuideTracker(ViewTracker):
     InfoClass = messages.GuideInfo
@@ -741,9 +742,9 @@ class BackendMessageHandler(messages.MessageHandler):
                 self.audio_channel_tracker.tabs_being_reordered = False
 
     def _do_handle_tabs_reordered(self, message):
-        video_order = getSingletonDDBObject(views.channelTabOrder)
-        audio_order = getSingletonDDBObject(views.audioChannelTabOrder)
-        playlist_order = getSingletonDDBObject(views.playlistTabOrder)
+        video_order = tabs.TabOrder.video_feed_order()
+        audio_order = tabs.TabOrder.audio_feed_order()
+        playlist_order = tabs.TabOrder.playlist_order()
 
         # make sure all the items are in the right places
         for info in message.toplevels['feed']:
@@ -885,10 +886,10 @@ class BackendMessageHandler(messages.MessageHandler):
                     feed_.section = section
                     feed_.signal_change()
             if section == u'video':
-                tab_order = getSingletonDDBObject(views.channelTabOrder)
+                tab_order = tabs.TabOrder.video_feed_order()
                 tracker = self.channel_tracker
             else:
-                tab_order = getSingletonDDBObject(views.audioChannelTabOrder)
+                tab_order = tabs.TabOrder.audio_feed_order()
                 tracker = self.audio_channel_tracker
             tab_order.move_tab_after(folder.id, message.child_feed_ids)
             tab_order.signal_change()
@@ -943,7 +944,7 @@ class BackendMessageHandler(messages.MessageHandler):
             for id in message.child_playlist_ids:
                 playlist = views.playlists.getObjectByID(id)
                 playlist.setFolder(folder)
-            tab_order = getSingletonDDBObject(views.playlistTabOrder)
+            tab_order = tabs.TabOrder.playlist_order()
             tab_order.move_tab_after(folder.id, message.child_playlist_ids)
             tab_order.signal_change()
             self.playlist_tracker.send_whole_list = True

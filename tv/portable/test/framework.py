@@ -72,6 +72,9 @@ class MiroTestCase(unittest.TestCase):
     def setUp(self):
         app.db = database.defaultDatabase
         database.set_thread(threading.currentThread())
+        database.resetDefaultDatabase()
+        database.ViewTracker.reset_trackers()
+        app.db.liveStorage = storedatabase.LiveStorage(":memory:")
         views.initialize()
         # reset the event loop
         util.chatter = False
@@ -84,8 +87,10 @@ class MiroTestCase(unittest.TestCase):
         signals.system.disconnect_all()
         util.chatter = True
 
+        app.db.liveStorage.close()
         # Remove any leftover database
         database.resetDefaultDatabase()
+        database.ViewTracker.reset_trackers()
 
         # Remove anything that may have been accidentally queued up
         eventloop._eventLoop = eventloop.EventLoop()

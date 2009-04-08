@@ -26,6 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+from miro import item as itemmod
 from miro import views
 from miro import config
 from miro import prefs
@@ -43,7 +44,7 @@ def auto_pending_filter(x):
     """Returns true iff x is an automatic download item that's pending"""
     if not x.getFeed().isAutoDownloadable():
         return False
-    return x.isEligibleForAutoDownload()
+    return x.is_eligible_for_auto_download()
 
 def pending_sort(a, b):
     if a[1] < b[1]:
@@ -64,20 +65,23 @@ class Downloader:
         self.feed_time = {}
         self.is_auto = is_auto
         if is_auto:
-            self.pendingItems = views.items.filter(auto_pending_filter)
+            pending_items = itemmod.Item.auto_pending_view()
             self.runningItems = views.autoDownloads
             self.MAX = config.get(prefs.DOWNLOADS_TARGET)
         else:
-            self.pendingItems = views.items.filter(manual_pending_filter)
+            pending_items = itemmod.Item.manual_pending_view()
             self.runningItems = views.manualDownloads
             self.MAX = config.get(prefs.MAX_MANUAL_DOWNLOADS)
 
-        for item in self.pendingItems:
+        for item in pending_items:
             self.pending_on_add(item, item.id)
         for item in self.runningItems:
             self.running_on_add(item, item.id)
-        self.pendingItems.addAddCallback(self.pending_on_add)
-        self.pendingItems.addRemoveCallback(self.pending_on_remove)
+
+        self.pending_items_tracker = pending_items.make_tracker()
+        self.pending_items_tracker.connect('added', self.pending_on_add)
+        self.pending_items_tracker.connect('removed', self.pending_on_remove)
+
         self.runningItems.addAddCallback(self.running_on_add)
         self.runningItems.addRemoveCallback(self.running_on_remove)
 
@@ -129,13 +133,13 @@ class Downloader:
             return
         self.dc = eventloop.addIdle(self.start_downloads_idle, "Start Downloads")
 
-    def pending_on_add(self, obj, id):
+    def pending_on_add(self, tracker, obj):
         feed = obj.getFeed()
         self.pending_count = self.pending_count + 1
         self.feed_pending_count[feed] = self.feed_pending_count.get(feed, 0) + 1
         self.startDownloads()
     
-    def pending_on_remove(self, obj, id):
+    def pending_on_remove(self, tracker, obj):
         feed = obj.getFeed()
         self.pending_count = self.pending_count - 1
         self.feed_pending_count[feed] = self.feed_pending_count.get(feed, 0) - 1
@@ -187,25 +191,6 @@ def start_downloader():
     manual_downloader = Downloader(False)
     auto_downloader = Downloader(True)
     autodlers_started = True
-    if auto_resume_after_start:
-        auto_resume_after_start = False
-        resume_downloader()
-
-# FIXME - doesn't seem to be used
-# def pauseDownloader():
-#     manual_downloader.pause()
-#     auto_downloader.pause()
-
-def resume_downloader():
-    global manual_downloader
-    global auto_downloader
-    global autodlers_started
-    global auto_resume_after_start
-    if autodlers_started:
-        manual_downloader.resume()
-        auto_downloader.resume()
-    else:
-        auto_resume_after_start = True
 
 def _update_prefs(key, value):
     if key == prefs.DOWNLOADS_TARGET.key:

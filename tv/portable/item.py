@@ -57,7 +57,6 @@ from miro import views
 from miro import indexes
 from miro import util
 from miro import adscraper
-from miro import autodler
 from miro import moviedata
 import logging
 from miro import filetypes
@@ -331,6 +330,23 @@ class Item(DDBObject):
         self.expiring = None
         self.showMoreInfo = False
         self.updating_movie_info = False
+
+    @classmethod
+    def make_view(cls, where, values=None, order_by=None, joins=None):
+        if order_by is None:
+            order_by = 'creationTime DESC'
+        return super(Item, cls).make_view(where, values, order_by, joins)
+
+    @classmethod
+    def auto_pending_view(cls):
+        return cls.make_view('feed.autoDownloadable AND '
+                'NOT item.was_downloaded AND '
+                '(item.eligibleForAutoDownload OR feed.getEverything)',
+                joins={'feed': 'item.feed_id=feed.id'})
+
+    @classmethod
+    def manual_pending_view(cls):
+        return cls.make_view('pendingManualDL')
 
     def _look_for_downloader(self):
         self.downloader = downloader.lookupDownloader(self.getURL())
@@ -774,7 +790,6 @@ class Item(DDBObject):
     def download(self, autodl=False):
         """Starts downloading the item.
         """
-        autodler.resume_downloader()
         self.confirmDBThread()
         manualDownloadCount = views.manualDownloads.len()
         self.expired = self.keep = self.seen = False
@@ -812,12 +827,9 @@ class Item(DDBObject):
         self.confirmDBThread()
         return self.pendingManualDL
 
-    def isEligibleForAutoDownload(self):
+    def is_eligible_for_auto_download(self):
         self.confirmDBThread()
-        if self.get_state() not in (u'new', u'not-downloaded'):
-            return False
-        if self.downloader and self.downloader.get_state() in (u'failed',
-                u'stopped', u'paused'):
+        if self.was_downloaded:
             return False
         ufeed = self.getFeed()
         if ufeed.getEverything:
@@ -826,7 +838,7 @@ class Item(DDBObject):
 
     def is_pending_auto_download(self):
         return (self.getFeed().isAutoDownloadable() and
-                self.isEligibleForAutoDownload())
+                self.is_eligible_for_auto_download())
 
     @returnsUnicode
     def getThumbnailURL(self):

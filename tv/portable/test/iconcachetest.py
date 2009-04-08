@@ -9,14 +9,9 @@ from miro.test.framework import EventLoopTest
 class IconCacheTest(EventLoopTest):
     def setUp(self):
         EventLoopTest.setUp(self)
-        database.resetDefaultDatabase()
         self.feed = feed.Feed(u'http://example.com/')
         self.item = item.Item({}, feed_id=self.feed.id)
         self.guide = guide.ChannelGuide(u'http://example.com/guide/')
-
-    def tearDown(self):
-        database.resetDefaultDatabase()
-        EventLoopTest.tearDown(self)
 
     def test_ddbobject_created(self):
         """Test that we create a new DDBObject for each IconCache object."""

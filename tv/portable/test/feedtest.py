@@ -352,7 +352,6 @@ class FeedParserAttributesTestCase(FeedTestCase):
         self.tempdb = os.path.join(gettempdir(), 'democracy-temp-db')
         if os.path.exists(self.tempdb):
             os.remove(self.tempdb)
-        self.everything.liveStorage = storedatabase.LiveStorage(self.tempdb)
         self.write_feed()
         self.parsed_feed = feedparser.parse(self.filename)
         self.makeFeed()
@@ -360,10 +359,7 @@ class FeedParserAttributesTestCase(FeedTestCase):
 
     def tearDown(self):
         self.runPendingIdles()
-        self.everything.liveStorage.close()
-        self.everything.liveStorage = None
         os.remove(self.tempdb)
-        database.resetDefaultDatabase()
         FeedTestCase.tearDown(self)
 
     def save_then_restore_db(self):

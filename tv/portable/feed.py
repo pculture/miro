@@ -533,7 +533,7 @@ class Feed(DDBObject):
     def startAutoDownload(self):
         next = None
         for item in self.items:
-            if item.isEligibleForAutoDownload():
+            if item.is_eligible_for_auto_download():
                 if next is None:
                     next = item
                 elif item.get_pub_date_parsed() > next.get_pub_date_parsed():
@@ -664,15 +664,19 @@ class Feed(DDBObject):
     def setAutoDownloadMode(self, mode):
         # note that this is somewhat duplicated in setup_new
         if mode == u'all':
-            self.setGetEverything(True)
-            self.setAutoDownloadable(True)
+            self.getEverything = True
+            self.autoDownloadable = True
         elif mode == u'new':
-            self.setGetEverything(False)
-            self.setAutoDownloadable(True)
+            self.getEverything = False
+            self.autoDownloadable = True
         elif mode == u'off':
-            self.setAutoDownloadable(False)
+            self.autoDownloadable = False
         else:
             raise ValueError("Bad auto-download mode: %s" % mode)
+        self.signal_change()
+        # need to call signal_related_change() because items may have
+        # entered/left the pending autodownload view
+        self.signal_related_change()
 
     def getCurrentAutoDownloadableItems(self):
         auto = set()
@@ -680,61 +684,6 @@ class Feed(DDBObject):
             if item.is_pending_auto_download():
                 auto.add(item)
         return auto
-
-    def setAutoDownloadable(self, automatic):
-        """Switch the auto-downloadable state
-        """
-        self.confirmDBThread()
-        if self.autoDownloadable == automatic:
-            return
-        self.autoDownloadable = automatic
-
-        if self.autoDownloadable:
-            # When turning on auto-download, existing items shouldn't be
-            # considered "new"
-            for item in self.items:
-                if item.eligibleForAutoDownload:
-                    item.eligibleForAutoDownload = False
-                    item.signal_change()
-
-        for item in self.items:
-            if item.isEligibleForAutoDownload():
-                item.signal_change(needsSave=False)
-
-        self.signal_change()
-
-    def setGetEverything(self, everything):
-        """Sets the 'getEverything' attribute, True or False
-        """
-        self.confirmDBThread()
-        if everything == self.getEverything:
-            return
-        if not self.autoDownloadable:
-            self.getEverything = everything
-            self.signal_change()
-            return
-
-        updates = set()
-        if everything:
-            for item in self.items:
-                if not item.isEligibleForAutoDownload():
-                    updates.add(item)
-        else:
-            for item in self.items:
-                if item.isEligibleForAutoDownload():
-                    updates.add(item)
-
-        self.getEverything = everything
-        self.signal_change()
-
-        if everything:
-            for item in updates:
-                if item.isEligibleForAutoDownload():
-                    item.signal_change(needsSave=False)
-        else:
-            for item in updates:
-                if not item.isEligibleForAutoDownload():
-                    item.signal_change(needsSave=False)
 
     def setExpiration(self, type_, time):
         """Sets the expiration attributes. Valid types are 'system', 'feed' and 'never'

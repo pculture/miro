@@ -81,6 +81,7 @@ class LoggingStreamTest(MiroTestCase):
 
 class UtilTest(MiroTestCase):
     def setUp(self):
+        MiroTestCase.setUp(self)
         self.filesize_elements = [
             {'href': u'http://example.org/1.ogg',
              'type': u'video/ogg',

@@ -33,7 +33,7 @@ def initialize():
     global initialized
     initialized = True
     global videoFeedTabs, audioFeedTabs, playlistTabs
-    global tabOrders, siteTabOrder, channelTabOrder, audioChannelTabOrder, playlistTabOrder
+
     global items, fileItems, toplevelItems, nonContainerItems, unwatchedItems
     global watchableItems, newWatchableItems, uniqueWatchableItems, uniqueNewWatchableItems, manualItems, searchItems, individualItems
     global feeds, remoteDownloads
@@ -67,14 +67,6 @@ def initialize():
     videoFeedTabs = app.db.filter(filters.videoFeedTab)
     audioFeedTabs = app.db.filter(filters.audioFeedTab)
     playlistTabs = app.db.filter(filters.playlistTab)
-
-    tabOrders = app.db.filterWithIndex(indexes.objectsByClass, tabs.TabOrder)
-    tabOrders.createIndex(indexes.tabOrderType)
-    siteTabOrder = tabOrders.filterWithIndex(indexes.tabOrderType, u'site')
-    channelTabOrder = tabOrders.filterWithIndex(indexes.tabOrderType, u'channel')
-    audioChannelTabOrder = tabOrders.filterWithIndex(
-        indexes.tabOrderType, u'audio-channel')
-    playlistTabOrder = tabOrders.filterWithIndex(indexes.tabOrderType, u'playlist')
 
     # items includes fileItems.
     items = app.db.filterWithIndex(indexes.objectsByClass, item.Item)

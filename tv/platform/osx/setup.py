@@ -290,7 +290,6 @@ class MiroBuild (py2app):
         self.distribution.ext_modules.append(self.get_growl_ext())
         self.distribution.ext_modules.append(self.get_growl_image_ext())
         self.distribution.ext_modules.append(self.get_shading_ext())
-        self.distribution.ext_modules.append(self.get_database_ext())
         self.distribution.ext_modules.append(self.get_sorts_ext())
         self.distribution.ext_modules.append(self.get_fasttypes_ext())
         self.distribution.ext_modules.append(self.get_libtorrent_ext())
@@ -358,10 +357,6 @@ class MiroBuild (py2app):
         shading_src = glob(os.path.join(ROOT_DIR, 'platform', 'osx', 'modules', 'shading.m'))
         shading_link_args = ['-framework', 'ApplicationServices']
         return Extension("miro.plat.shading", sources=shading_src, extra_link_args=shading_link_args)
-    
-    def get_database_ext(self):
-        database_src = glob(os.path.join(ROOT_DIR, 'portable', 'database.pyx'))
-        return Extension("miro.database", sources=database_src)
     
     def get_sorts_ext(self):
         sorts_src = glob(os.path.join(ROOT_DIR, 'portable', 'sorts.pyx'))

@@ -47,13 +47,16 @@ type "pythonrepr" to label these columns.
 import itertools
 import logging
 import datetime
+import time
 import os
+from cStringIO import StringIO
 
 try:
     import sqlite3
 except ImportError:
     from pysqlite2 import dbapi2 as sqlite3
 
+from miro import app
 from miro import config
 from miro import convert20database
 from miro import databaseupgrade
@@ -103,7 +106,10 @@ class LiveStorage:
         self.open_connection()
         self._object_schemas = object_schemas
         self._schema_version = schema_version
-        self._schema_map = dict((os.klass, os) for os in object_schemas)
+        self._schema_map = {}
+        for oschema in object_schemas:
+            table_name = oschema.classString.replace('-', '_')
+            self._schema_map[oschema.klass] = (oschema, table_name)
         self._converter = SQLiteConverter()
 
         if not db_existed:
@@ -159,8 +165,7 @@ class LiveStorage:
 
     def _load_objects(self):
         retval = []
-        for klass, schema in self._schema_map.items():
-            table_name = schema.classString.replace("-", "_")
+        for klass, (schema, table_name) in self._schema_map.items():
             column_names = [f[0] for f in schema.fields]
             self.cursor.execute("SELECT %s from %s" % 
                     (', '.join(column_names), table_name))
@@ -180,8 +185,7 @@ class LiveStorage:
     def update(self, obj):
         """Update a DDBObject on disk."""
 
-        schema = self._schema_map[obj.__class__]
-        table_name = schema.classString.replace("-", "_")
+        schema, table_name = self._schema_map[obj.__class__]
         column_names = []
         values = []
         for name, schema_item in schema.fields:
@@ -198,11 +202,52 @@ class LiveStorage:
     def remove(self, obj):
         """Remove a DDBObject from disk."""
 
-        schema = self._schema_map[obj.__class__]
-        table_name = schema.classString.replace("-", "_")
+        schema, table_name = self._schema_map[obj.__class__]
         sql = "DELETE FROM %s WHERE id=?" % (table_name)
         self.cursor.execute(sql, (obj.id,))
         self._schedule_commit()
+
+    def table_name(self, klass):
+        return self._schema_map[klass][1]
+
+    def _get_query_bottom(self, table_name, where, joins):
+        sql = StringIO()
+        sql.write("FROM %s\n" % table_name)
+        if joins is not None:
+            for join_table, join_where in joins.items():
+                sql.write('LEFT JOIN %s ON %s\n' % (join_table, join_where))
+        sql.write("WHERE %s" % where)
+        return sql.getvalue()
+
+    def query(self, klass, where, values=None, order_by=None, joins=None):
+        for id in self.query_ids(klass, where, values, order_by, joins):
+            yield app.db.getObjectByID(id)
+
+    def query_ids(self, klass, where, values=None, order_by=None, joins=None):
+        schema, table_name = self._schema_map[klass]
+        sql = StringIO()
+        sql.write("SELECT %s.id " % table_name)
+        sql.write(self._get_query_bottom(table_name, where, joins))
+        if order_by is not None:
+            sql.write(" ORDER BY %s" % order_by)
+        for row in self._execute(sql.getvalue(), values):
+            yield row[0]
+
+    def query_count(self, klass, where, values=None, joins=None):
+        schema, table_name = self._schema_map[klass]
+        sql = StringIO()
+        sql.write('SELECT COUNT(*) ')
+        sql.write(self._get_query_bottom(table_name, where, joins))
+        return self._execute(sql.getvalue(), values)[0][0]
+
+    def _execute(self, sql, values):
+        self.cursor.execute(sql, values)
+        start = time.time()
+        rows = self.cursor.fetchall()
+        end = time.time()
+        if (end - start) > 0.1:
+            logging.timing("query slow (%0.3f seconds) :%s", end-start, sql)
+        return rows
 
     def _schedule_commit(self):
         """Schedule a commit to run as an idle callback sometime soon."""

@@ -155,9 +155,6 @@ from miro import util
 
 #### Extensions ####
 
-database_ext = Extension("miro.database", 
-        sources=[os.path.join(root_dir, 'portable', 'database.pyx')])
-
 sorts_ext = Extension("miro.sorts", 
         sources=[os.path.join(root_dir, 'portable', 'sorts.pyx')])
 
@@ -263,7 +260,6 @@ libtorrent_ext = Extension(
 # Private extension modules to build.
 ext_modules = [
     fasttypes_ext,
-    database_ext,
     sorts_ext,
     libtorrent_ext,
     pygtkhacks_ext,

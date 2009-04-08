@@ -281,16 +281,14 @@ def setup_global_feeds():
     setup_global_feed(u'dtv:directoryfeed')
 
 def setup_tabs():
-    def setup_tab_order(view, key):
-        try:
-            tabOrder = util.getSingletonDDBObject(view)
-        except LookupError:
-            logging.info("Creating %s tab order" % key)
-            tabs.TabOrder(key)
-    setup_tab_order(views.siteTabOrder, u'site')
-    setup_tab_order(views.channelTabOrder, u'channel')
-    setup_tab_order(views.audioChannelTabOrder, u'audio-channel')
-    setup_tab_order(views.playlistTabOrder, u'playlist')
+    def setup_tab_order(type):
+        if tabs.TabOrder.view_for_type(type).count() == 0:
+            logging.info("Creating %s tab order" % type)
+            tabs.TabOrder(type)
+    setup_tab_order(u'site')
+    setup_tab_order(u'channel')
+    setup_tab_order(u'audio-channel')
+    setup_tab_order(u'playlist')
 
 def is_first_time():
     """Checks to see if this is the first time that Miro has been run.

@@ -33,7 +33,6 @@
 # front end
 from miro.test.unicodetest import *
 
-from miro.test.databasetest import *
 from miro.test.fasttypestest import *
 from miro.test.schematest import *
 from miro.test.storedatabasetest import *
@@ -54,5 +53,6 @@ from miro.test.strippertest import *
 from miro.test.xhtmltest import *
 from miro.test.gtcachetest import *
 from miro.test.iconcachetest import *
+from miro.test.databasetest import *
 
 import miro.test.bmachinetest
