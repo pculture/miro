@@ -20,7 +20,7 @@ class DatabaseTestCase(MiroTestCase):
 class ViewTest(DatabaseTestCase):
     def test_iter(self):
         view = item.Item.make_view('feed_id=?', (self.feed.id,))
-        self.assertEquals(list(view), [self.i2, self.i1])
+        self.assertEquals(set(view), set([self.i2, self.i1]))
 
     def test_count(self):
         view = item.Item.make_view('feed_id=?', (self.feed.id,))
@@ -30,7 +30,7 @@ class ViewTest(DatabaseTestCase):
         self.feed.setTitle(u'booya')
         view = item.Item.make_view("feed.userTitle='booya'",
                 joins={'feed': 'feed.id=item.feed_id'})
-        self.assertEquals(list(view), [self.i2, self.i1])
+        self.assertEquals(set(view), set([self.i2, self.i1]))
         self.assertEquals(view.count(), 2)
 
 class ViewTrackerTest(DatabaseTestCase):
