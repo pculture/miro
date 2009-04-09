@@ -48,7 +48,6 @@ from miro import moviedata
 from miro import prefs
 from miro import signals
 from miro import util
-from miro import views
 from miro import fileutil
 from miro.plat.utils import exit
 
@@ -67,12 +66,6 @@ class Controller:
         self.librarySearchTerm = None
         self.newVideosSearchTerm = None
         self.sendingCrashReport = 0
-
-    def get_global_feed(self, url):
-        feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)
-        rv = feedView[0]
-        feedView.unlink()
-        return rv
 
     @eventloop.asUrgent
     def shutdown(self):

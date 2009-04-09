@@ -463,7 +463,7 @@ class BackendMessageHandler(messages.MessageHandler):
         self.new_count_tracker = None
         self.unwatched_count_tracker = None
         self.item_trackers = {}
-        search_feed = app.controller.get_global_feed('dtv:search')
+        search_feed = get_feed_by_url('dtv:search')
         search_feed.connect('update-finished', self._search_update_finished)
 
     def call_handler(self, method, message):
@@ -504,7 +504,7 @@ class BackendMessageHandler(messages.MessageHandler):
                 'frontend startup callback')
 
     def handle_query_search_info(self, message):
-        search_feed = app.controller.get_global_feed('dtv:search')
+        search_feed = get_feed_by_url('dtv:search')
         messages.CurrentSearchInfo(search_feed.lastEngine,
                 search_feed.lastQuery).send_to_frontend()
 
@@ -989,8 +989,8 @@ class BackendMessageHandler(messages.MessageHandler):
         searchengine_id = message.id
         terms = message.terms
 
-        search_feed = app.controller.get_global_feed('dtv:search')
-        search_downloads_feed = app.controller.get_global_feed('dtv:searchDownloads')
+        search_feed = get_feed_by_url('dtv:search')
+        search_downloads_feed = get_feed_by_url('dtv:searchDownloads')
 
         search_feed.preserveDownloads(search_downloads_feed)
         if terms:
