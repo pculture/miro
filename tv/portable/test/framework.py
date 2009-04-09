@@ -9,6 +9,7 @@ from miro import views
 from miro import indexes
 from miro import util
 from miro import databaseupgrade
+from miro import searchengines
 from miro import signals
 from miro import storedatabase
 from miro import subscription
@@ -76,6 +77,8 @@ class MiroTestCase(unittest.TestCase):
         database.ViewTracker.reset_trackers()
         app.db.liveStorage = storedatabase.LiveStorage(":memory:")
         views.initialize()
+        searchengines._engines = [ searchengines.SearchEngineInfo(u"all",
+           u"Search All", u"", -1) ]
         # reset the event loop
         util.chatter = False
         self.sawError = False

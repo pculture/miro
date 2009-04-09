@@ -59,6 +59,7 @@ class TestFrontendMessageHandler(object):
 class TrackerTest(EventLoopTest):
     def setUp(self):
         EventLoopTest.setUp(self)
+        Feed(u'dtv:search')
         self.test_handler = TestFrontendMessageHandler()
         messages.FrontendMessage.install_handler(self.test_handler)
         self.backend_message_handler = messagehandler.BackendMessageHandler(None)
