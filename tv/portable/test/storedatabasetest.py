@@ -16,7 +16,7 @@ from miro.test.framework import MiroTestCase, EventLoopTest
 # sooo much easier to type...
 from miro.schema import SchemaString, SchemaInt, SchemaFloat, SchemaReprContainer
 from miro.schema import SchemaList, SchemaDict, SchemaObject, SchemaBool
-from miro.schema import SchemaFilename
+from miro.schema import SchemaFilename, SchemaBinary
 
 # create a dummy object schema
 class Human(database.DDBObject):
@@ -32,6 +32,7 @@ class Human(database.DDBObject):
         else:
             self.high_scores = high_scores
         self.stuff = stuff
+        self.id_code = None
 
     def add_friend(self, friend):
         self.friends.append(friend)
@@ -59,6 +60,7 @@ class HumanSchema(schema.ObjectSchema):
         ('friend_names', SchemaList(SchemaString())),
         ('high_scores', SchemaDict(SchemaString(), SchemaInt())),
         ('stuff', SchemaReprContainer(noneOk=True)),
+        ('id_code', SchemaBinary(noneOk=True)),
     ]
 
 class RestorableHumanSchema(HumanSchema):
@@ -171,6 +173,12 @@ class DiskTest(FakeSchemaTest):
         self.reload_objects()
         self.check_database()
 
+    def test_binary_reload(self):
+        self.joe.id_code = 'abc'
+        self.joe.signal_change()
+        self.reload_objects()
+        self.check_database()
+
     def test_remove(self):
         self.joe.remove()
         self.db = [ self.lee, self.ben]
@@ -259,6 +267,12 @@ class ValidationTest(FakeSchemaTest):
         self.lee.name = 133
         self.assert_object_invalid(self.lee)
         self.lee.name = u'lee'
+        self.assert_object_valid(self.lee)
+
+    def testBinaryValidation(self):
+        self.lee.id_code = u'abc'
+        self.assert_object_invalid(self.lee)
+        self.lee.id_code = 'abc'
         self.assert_object_valid(self.lee)
 
     def testFloatValidation(self):
