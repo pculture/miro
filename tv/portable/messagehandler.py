@@ -35,6 +35,7 @@ import time
 from miro import app
 from miro import config
 from miro import database
+from miro import downloader
 from miro import eventloop
 from miro import feed
 from miro import filters
@@ -1304,7 +1305,7 @@ class BackendMessageHandler(messages.MessageHandler):
         util.getSingletonDDBObject(views.directoryFeed).update()
 
     def _migrate(self, old_path, new_path):
-        to_migrate = [d for d in views.remoteDownloads if d.isFinished()]
+        to_migrate = downloader.RemoteDownloader.finished_view()
         migration_count = len(to_migrate)
         last_progress_time = 0
         for i, download in enumerate(to_migrate):

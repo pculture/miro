@@ -36,9 +36,9 @@ def initialize():
 
     global items, fileItems, toplevelItems, nonContainerItems, unwatchedItems
     global watchableItems, newWatchableItems, uniqueWatchableItems, uniqueNewWatchableItems, manualItems, searchItems, individualItems
-    global feeds, remoteDownloads
+    global feeds
     global sites
-    global httpauths, autoUploads, guides, default_guide
+    global guides, default_guide
     global manualFeed, singleFeed, directoryFeed
     global downloadingItems, pausedItems, allDownloadingItems, uniqueDownloadingItems
     global playlists, playlistFolders, channelFolders
@@ -92,12 +92,7 @@ def initialize():
     visibleFeeds = feeds.filter(filters.feedIsVisible)
     videoVisibleFeeds = visibleFeeds.filter(filters.videoFeed)
     audioVisibleFeeds = visibleFeeds.filter(filters.audioFeed)
-    remoteDownloads = app.db.filterWithIndex(indexes.objectsByClass, downloader.RemoteDownloader)
-    httpauths = app.db.filterWithIndex(indexes.objectsByClass, downloader.HTTPAuthPassword)
 
-    remoteDownloads.createIndex(indexes.downloadsByDLID)
-    remoteDownloads.createIndex(indexes.downloadsByURL)
-    autoUploads = remoteDownloads.filter(filters.autoUploadingDownloaders, sortFunc=sorts.downloadersByEndTime)
     items.createIndex(indexes.itemsByFeed, sortFunc=sorts.item)
     toplevelItems.createIndex(indexes.itemsByFeed)
     items.createIndex(indexes.itemsByParent)

@@ -1544,10 +1544,10 @@ def reconnect_downloaders():
     for item in views.items:
         item.setup_links()
         reconnected.add(item.downloader)
-    for downloader in views.remoteDownloads:
-        if downloader not in reconnected:
-            logging.warn("removing orphaned downloader: %s", downloader.url)
-            downloader.remove()
+    for downloader_ in downloader.RemoteDownloader.make_view():
+        if downloader_ not in reconnected:
+            logging.warn("removing orphaned downloader: %s", downloader_.url)
+            downloader_.remove()
     manualFeed = util.getSingletonDDBObject(views.manualFeed)
     manualItems = views.items.filterWithIndex(indexes.itemsByFeed,
             manualFeed.getID())

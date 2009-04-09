@@ -40,7 +40,6 @@ from miro import httpclient
 from miro import indexes
 from miro import prefs
 import random
-from miro import views
 from miro.plat.utils import samefile, FilenameType, unicodeToFilename
 from miro import flashscraper
 import logging
@@ -62,7 +61,7 @@ def findHTTPAuth(host, path, realm=None, scheme=None):
         checkU(scheme)
     #print "Trying to find HTTPAuth with host %s, path %s, realm %s, and scheme %s" %(host,path,realm,scheme)
     defaultDatabase.confirmDBThread()
-    for obj in views.httpauths:
+    for obj in HTTPAuthPassword.make_view():
         if (obj.host == host and path.startswith(obj.path) and
                 (realm is None or obj.realm == realm) and
                 (scheme is None or obj.authScheme == scheme)):
@@ -103,7 +102,10 @@ totalUpRate = 0
 totalDownRate = 0
 
 def _getDownloader(dlid):
-    return views.remoteDownloads.getItemWithIndex(indexes.downloadsByDLID, dlid)
+    try:
+        return RemoteDownloader.get_by_dlid(dlid)
+    except ObjectNotFoundError:
+        return None
 
 @returnsUnicode
 def generateDownloadID():
@@ -143,6 +145,27 @@ class RemoteDownloader(DDBObject):
             self.getContentType()
         else:
             self.runDownloader()
+
+    @classmethod
+    def finished_view(cls):
+        return cls.make_view(
+                "state in ('finished', 'uploading', 'uploading-paused'")
+
+    @classmethod
+    def auto_uploader_view(cls):
+        return cls.make_view("state == 'uploading' AND NOT manualUpload")
+
+    @classmethod
+    def get_by_id(cls, id):
+        return cls.make_view('id=?', (id,)).get_singleton()
+
+    @classmethod
+    def get_by_dlid(cls, dlid):
+        return cls.make_view('dlid=?', (dlid,)).get_singleton()
+
+    @classmethod
+    def get_by_url(cls, url):
+        return cls.make_view('origURL=?', (url,)).get_singleton()
 
     def signal_change(self, needsSave=True, needsSignalItem=True):
         DDBObject.signal_change(self, needsSave=needsSave)
@@ -326,7 +349,6 @@ class RemoteDownloader(DDBObject):
             if _downloads.has_key (self.dlid):
                 del _downloads[self.dlid]
             self.dlid = generateDownloadID()
-            views.remoteDownloads.recomputeIndex(indexes.downloadsByDLID)
             self.beforeChangingStatus()
             self.status = {}
             self.afterChangingStatus()
@@ -595,8 +617,7 @@ def cleanupIncompleteDownloads():
         return
 
     filesInUse = set()
-    views.remoteDownloads.confirmDBThread()
-    for downloader in views.remoteDownloads:
+    for downloader in RemoteDownloader.make_view():
         if downloader.get_state() in ('downloading', 'paused',
                                      'offline', 'uploading', 'finished',
                                      'uploading-paused'):
@@ -620,24 +641,26 @@ def cleanupIncompleteDownloads():
                 # FIXME - maybe a permissions error?
                 pass
 
-def killUploaders(*args):
+def kill_uploaders(*args):
     torrent_limit = config.get(prefs.UPSTREAM_TORRENT_LIMIT)
-    while (views.autoUploads.len() > torrent_limit):
-        views.autoUploads[0].stopUpload()
+    auto_uploads = list(RemoteDownloader.auto_uploader_view())
+    for dler in auto_uploads[torrent_limit:]:
+        dler.stopUpload()
 
 def configChangeUploaders(key, value):
     if key == prefs.UPSTREAM_TORRENT_LIMIT.key:
-        killUploaders()
+        kill_uploaders()
 
 def limitUploaders():
-    views.autoUploads.addAddCallback(killUploaders)
+    tracker = RemoteDownloader.auto_uploader_view().make_tracker()
+    tracker.connect('added', kill_uploaders)
     config.add_change_callback(configChangeUploaders)
-    killUploaders()
+    kill_uploaders()
 
 class DownloadDaemonStarter(object):
     def __init__(self):
         RemoteDownloader.initializeDaemon()
-        self.downloads_at_startup = list(views.remoteDownloads)
+        self.downloads_at_startup = list(RemoteDownloader.make_view())
         self.started = False
 
     def startup(self):
@@ -683,7 +706,10 @@ def shutdownDownloader(callback=None):
         callback()
 
 def lookupDownloader(url):
-    return views.remoteDownloads.getItemWithIndex(indexes.downloadsByURL, url)
+    try:
+        return RemoteDownloader.get_by_url(url)
+    except ObjectNotFoundError:
+        return None
 
 def getExistingDownloaderByURL(url):
     downloader = lookupDownloader(url)
@@ -691,7 +717,7 @@ def getExistingDownloaderByURL(url):
 
 def getExistingDownloader(item):
     try:
-        return views.remoteDownloads.getObjectByID(item.downloader_id)
+        return RemoteDownloader.get_by_id(item.downloader_id)
     except ObjectNotFoundError:
         return None
 

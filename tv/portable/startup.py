@@ -327,7 +327,7 @@ def is_movies_directory_gone():
     # make sure that we have actually downloaded something into the movies
     # directory.
     movies_dir = config.get(prefs.MOVIES_DIRECTORY)
-    for downloader_ in views.remoteDownloads:
+    for downloader_ in downloader.RemoteDownloader.make_view():
         if (downloader_.isFinished()
                 and downloader_.get_filename().startswith(movies_dir)):
             logging.info("Directory there, but missing files.")
