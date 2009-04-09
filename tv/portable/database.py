@@ -70,7 +70,13 @@ class DatabaseVersionError(StandardError):
     pass
 
 class ObjectNotFoundError(StandardError):
-    """Raised when an attempt is made to remove an object that doesn't exist
+    """Raised when an attempt is made to lookup an object that doesn't exist
+    """
+    pass
+
+class TooManyObjects(StandardError):
+    """Raised when an attempt is made to lookup a singleton and multiple rows
+    match the query.
     """
     pass
 
@@ -1351,9 +1357,9 @@ class View(object):
         if len(results) == 1:
             return results[0]
         elif len(results) == 0:
-            raise LookupError("Can't find singleton")
+            raise ObjectNotFoundError("Can't find singleton")
         else:
-            raise LookupError("Too many results returned")
+            raise TooManyObjects("Too many results returned")
 
     def make_tracker(self):
         return ViewTracker(self.klass, self.where, self.values, self.joins)
