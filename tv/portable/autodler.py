@@ -27,24 +27,12 @@
 # statement from all source files in the program, then also delete it here.
 
 from miro import item as itemmod
-from miro import views
+from miro import feed as feedmod
 from miro import config
 from miro import prefs
 from miro import eventloop
 from datetime import datetime
 from miro.fasttypes import SortedList
-
-# filter functions we use to create views.
-
-def manual_pending_filter(x):
-    """Returns true iff x is a manual download item that's pending"""
-    return x.is_pending_manual_download()
-
-def auto_pending_filter(x):
-    """Returns true iff x is an automatic download item that's pending"""
-    if not x.getFeed().isAutoDownloadable():
-        return False
-    return x.is_eligible_for_auto_download()
 
 def pending_sort(a, b):
     if a[1] < b[1]:
@@ -66,33 +54,35 @@ class Downloader:
         self.is_auto = is_auto
         if is_auto:
             pending_items = itemmod.Item.auto_pending_view()
-            self.runningItems = views.autoDownloads
+            running_items = itemmod.Item.auto_downloads_view()
             self.MAX = config.get(prefs.DOWNLOADS_TARGET)
         else:
             pending_items = itemmod.Item.manual_pending_view()
-            self.runningItems = views.manualDownloads
+            running_items = itemmod.Item.manual_downloads_view()
             self.MAX = config.get(prefs.MAX_MANUAL_DOWNLOADS)
 
         for item in pending_items:
-            self.pending_on_add(item, item.id)
-        for item in self.runningItems:
-            self.running_on_add(item, item.id)
+            self.pending_on_add(None, item)
+        for item in running_items:
+            self.running_on_add(None, item)
 
         self.pending_items_tracker = pending_items.make_tracker()
         self.pending_items_tracker.connect('added', self.pending_on_add)
         self.pending_items_tracker.connect('removed', self.pending_on_remove)
 
-        self.runningItems.addAddCallback(self.running_on_add)
-        self.runningItems.addRemoveCallback(self.running_on_remove)
+        self.running_items_tracker = running_items.make_tracker()
+        self.running_items_tracker.connect('added', self.running_on_add)
+        self.running_items_tracker.connect('removed', self.running_on_remove)
 
         if is_auto:
             self.new_count = 0
             self.feed_new_count = {}
-            self.newItems = views.newlyDownloadedItems
-            for item in self.newItems:
-                self.new_on_add(item, item.id)
-            self.newItems.addAddCallback(self.new_on_add)
-            self.newItems.addRemoveCallback(self.new_on_remove)
+            new_items = itemmod.Item.newly_downloaded_view()
+            for item in new_items:
+                self.new_on_add(None, item)
+            self.new_items_tracker = new_items.make_tracker()
+            self.new_items_tracker.connect('added', self.new_on_add)
+            self.new_items_tracker.connect('removed', self.new_on_remove)
 
     def update_max_downloads(self):
         if self.is_auto:
@@ -110,7 +100,7 @@ class Downloader:
         while self.running_count < self.MAX and self.pending_count > 0 and self.pending_count != last_count:
             last_count = self.pending_count
             sorted = SortedList(pending_sort)
-            for feed in views.feeds:
+            for feed in feedmod.Feed.make_view():
                 if self.is_auto:
                     max_new = feed.get_max_new()
                     if max_new != "unlimited" and max_new <= self.feed_new_count.get(feed, 0) + self.feed_running_count.get(feed, 0):
@@ -144,23 +134,23 @@ class Downloader:
         self.pending_count = self.pending_count - 1
         self.feed_pending_count[feed] = self.feed_pending_count.get(feed, 0) - 1
     
-    def running_on_add(self, obj, id):
+    def running_on_add(self, tracker, obj):
         feed = obj.getFeed()
         self.running_count = self.running_count + 1
         self.feed_running_count[feed] = self.feed_running_count.get(feed, 0) + 1
     
-    def running_on_remove(self, obj, id):
+    def running_on_remove(self, tracker, obj):
         feed = obj.getFeed()
         self.running_count = self.running_count - 1
         self.feed_running_count[feed] = self.feed_running_count.get(feed, 0) - 1
         self.startDownloads()
     
-    def new_on_add(self, obj, id):
+    def new_on_add(self, tracker, obj):
         feed = obj.getFeed()
         self.new_count = self.new_count + 1
         self.feed_new_count[feed] = self.feed_new_count.get(feed, 0) + 1
     
-    def new_on_remove(self, obj, id):
+    def new_on_remove(self, tracker, obj):
         feed = obj.getFeed()
         self.new_count = self.new_count - 1
         self.feed_new_count[feed] = self.feed_new_count.get(feed, 0) - 1

@@ -256,7 +256,8 @@ class LiveStorage:
         if joins is not None:
             for join_table, join_where in joins.items():
                 sql.write('LEFT JOIN %s ON %s\n' % (join_table, join_where))
-        sql.write("WHERE %s" % where)
+        if where is not None:
+            sql.write("WHERE %s" % where)
         return sql.getvalue()
 
     def query(self, klass, where, values=None, order_by=None, joins=None):

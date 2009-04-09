@@ -39,8 +39,8 @@ def initialize():
     global feeds, remoteDownloads
     global sites
     global httpauths, autoUploads, guides, default_guide
-    global manualFeed, singleFeed, directoryFeed, newlyDownloadedItems
-    global downloadingItems, pausedItems, manualDownloads, autoDownloads, allDownloadingItems, uniqueDownloadingItems
+    global manualFeed, singleFeed, directoryFeed
+    global downloadingItems, pausedItems, allDownloadingItems, uniqueDownloadingItems
     global playlists, playlistFolders, channelFolders
     global audioChannelFolders, videoChannelFolders
     global themeHistories, visibleFeeds, watchedFolders
@@ -115,15 +115,11 @@ def initialize():
                                           'dtv:directoryfeed')
 
     items.createIndex(indexes.itemsByState)
-    newlyDownloadedItems = items.filterWithIndex(indexes.itemsByState,
-                                                 'newly-downloaded')
     downloadingItems = items.filterWithIndex(indexes.itemsByState,
                                              'downloading')
     uniqueDownloadingItems = downloadingItems.filter(filters.uniqueItems)
     pausedItems = items.filterWithIndex(indexes.itemsByState, 'paused')
     downloadingItems.createIndex(indexes.downloadsByCategory)
-    manualDownloads = items.filter(filters.manualDownloads)
-    autoDownloads = items.filter(filters.autoDownloads)
     allDownloadingItems = items.filter(filters.allDownloadingItems)
 
     playlists = app.db.filterWithIndex(indexes.objectsByClass,

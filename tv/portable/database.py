@@ -1483,7 +1483,7 @@ class DDBObject(signals.SignalEmitter):
             self.on_db_insert()
 
     @classmethod
-    def make_view(cls, where, values=None, order_by=None, joins=None):
+    def make_view(cls, where=None, values=None, order_by=None, joins=None):
         if values is None:
             values = ()
         return View(cls, where, values, order_by, joins)

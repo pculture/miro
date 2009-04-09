@@ -332,12 +332,6 @@ class Item(DDBObject):
         self.updating_movie_info = False
 
     @classmethod
-    def make_view(cls, where, values=None, order_by=None, joins=None):
-        if order_by is None:
-            order_by = 'creationTime DESC'
-        return super(Item, cls).make_view(where, values, order_by, joins)
-
-    @classmethod
     def auto_pending_view(cls):
         return cls.make_view('feed.autoDownloadable AND '
                 'NOT item.was_downloaded AND '
@@ -347,6 +341,33 @@ class Item(DDBObject):
     @classmethod
     def manual_pending_view(cls):
         return cls.make_view('pendingManualDL')
+
+    @classmethod
+    def auto_downloads_view(cls):
+        return cls.make_view("item.autoDownloaded AND "
+                "rd.state in ('downloading', 'paused')",
+                joins={'remote_downloader rd': 'item.downloader_id=rd.id'})
+
+    @classmethod
+    def manual_downloads_view(cls):
+        return cls.make_view("NOT item.autoDownloaded AND "
+                "NOT item.pendingManualDL AND "
+                "rd.state in ('downloading', 'paused')",
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
+
+    @classmethod
+    def newly_downloaded_view(cls):
+        return cls.make_view("NOT item.seen AND "
+                # next 4 lines are a bit weird, they are there to handle
+                # container items.  We want to only include the container not
+                # the children, and we consider a container seen if all of the
+                # children have been seen.
+                "item.parent_id IS NULL AND "
+                "(NOT item.isContainerItem OR "
+                "NOT EXISTS (SELECT 1 FROM item AS child WHERE "
+                "child.parent_id=item.id AND NOT child.seen)) AND "
+                "rd.state in ('finished', 'uploading', 'uploading-paused')",
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     def _look_for_downloader(self):
         self.downloader = downloader.lookupDownloader(self.getURL())
@@ -791,12 +812,12 @@ class Item(DDBObject):
         """Starts downloading the item.
         """
         self.confirmDBThread()
-        manualDownloadCount = views.manualDownloads.len()
+        manual_dl_count = Item.manual_downloads_view().count()
         self.expired = self.keep = self.seen = False
         self.was_downloaded = True
 
         if ((not autodl) and
-                manualDownloadCount >= config.get(prefs.MAX_MANUAL_DOWNLOADS)):
+                manual_dl_count >= config.get(prefs.MAX_MANUAL_DOWNLOADS)):
             self.pendingManualDL = True
             self.pendingReason = _("queued for download")
             self.signal_change()
