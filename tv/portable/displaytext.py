@@ -64,13 +64,13 @@ def download_rate(rate):
 def time_string(secs):
     if secs >= (60 * 60 * 24):
         t_dy = secs * 1.0 / (60 * 60 * 24)
-        return ngettext('%(num).1f day', '%(num).1f days', t_dy, {"num": t_dy})
+        return ngettext('%(num).0f day', '%(num).0f days', t_dy, {"num": t_dy})
     if secs >= (60 * 60):
         t_hr = secs * 1.0 / (60 * 60)
-        return ngettext('%(num).1f hr', '%(num).1f hrs', t_hr, {"num": t_hr})
+        return ngettext('%(num).0f hr', '%(num).0f hrs', t_hr, {"num": t_hr})
     if secs >= 60:
         t_min = secs * 1.0 / 60
-        return ngettext('%(num).1f min', '%(num).1f mins', t_min, {"num": t_min})
+        return ngettext('%(num).0f min', '%(num).0f mins', t_min, {"num": t_min})
 
     return ngettext('%(num)d sec', '%(num)d secs', secs, {"num": secs})
 
