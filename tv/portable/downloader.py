@@ -145,10 +145,10 @@ class RemoteDownloader(DDBObject):
             self.runDownloader()
 
     def signal_change(self, needsSave=True, needsSignalItem=True):
+        DDBObject.signal_change(self, needsSave=needsSave)
         if needsSignalItem:
             for item in self.itemList:
                 item.signal_change(needsSave=False)
-        DDBObject.signal_change(self, needsSave=needsSave)
 
     def onContentType(self, info):
         if not self.idExists():
