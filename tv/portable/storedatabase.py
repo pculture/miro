@@ -208,7 +208,13 @@ class LiveStorage:
                 restored_data = {}
                 for (name, schema_item), value in \
                         itertools.izip(schema.fields, row):
-                    value = self._converter.from_sql(schema_item, value)
+                    try:
+                        value = self._converter.from_sql(schema_item, value)
+                    except:
+                        if util.chatter:
+                            logging.warn("error converting %s (%r)", name,
+                                    value)
+                        raise
                     restored_data[name] = value
                 restored = klass(restored_data=restored_data)
                 retval.append(restored)
@@ -408,7 +414,7 @@ class SQLiteConverter(object):
                 )
         for schema_class in repr_types:
             self._to_sql_converters[schema_class] = repr
-            self._from_sql_converters[schema_class] = eval
+            self._from_sql_converters[schema_class] = self._convert_repr
         # bools get stored as integers in sqlite
         self._from_sql_converters[schema.SchemaBool] = bool
         # filenames are always stored in sqlite as unicode
@@ -417,7 +423,7 @@ class SQLiteConverter(object):
             self._from_sql_converters[schema.SchemaFilename] = \
                     self._unicode_to_filename
         # make sure SchemaBinary is always restored as a byte-string
-        self._from_sql_converters[schema.SchemaBinary] = str
+        self._from_sql_converters[schema.SchemaBinary] = self._convert_binary
 
     def to_sql(self, schema_item, value):
         if value is None:
@@ -438,3 +444,9 @@ class SQLiteConverter(object):
 
     def _null_convert(self, value):
         return value
+
+    def _convert_binary(self, value):
+        return value.encode('utf-8')
+
+    def _convert_repr(self, value):
+        return eval(value, __builtins__, {})
