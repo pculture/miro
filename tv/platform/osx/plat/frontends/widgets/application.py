@@ -43,8 +43,8 @@ from ExceptionHandling import NSExceptionHandler, NSLogAndHandleEveryExceptionMa
 
 from miro import app
 from miro import prefs
-from miro import views
 from miro import config
+from miro import downloader
 from miro import messages
 from miro import filetypes
 from miro import eventloop
@@ -357,17 +357,15 @@ class AppController(NSObject):
 
     def workspaceWillSleep_(self, notification):
         def pauseRunningDownloaders(self=self):
-            if views.initialized:
-                views.remoteDownloads.confirmDBThread()
-                self.pausedDownloaders = list()
-                for dl in views.remoteDownloads:
-                    if dl.get_state() == 'downloading':
-                        self.pausedDownloaders.append(dl)
-                dlCount = len(self.pausedDownloaders)
-                if dlCount > 0:
-                    logging.info("System is going to sleep, suspending %d download(s)." % dlCount)
-                    for dl in self.pausedDownloaders:
-                        dl.pause(block=True)
+            self.pausedDownloaders = list()
+            for dl in downloader.RemoteDownloader.make_view():
+                if dl.get_state() == 'downloading':
+                    self.pausedDownloaders.append(dl)
+            dlCount = len(self.pausedDownloaders)
+            if dlCount > 0:
+                logging.info("System is going to sleep, suspending %d download(s)." % dlCount)
+                for dl in self.pausedDownloaders:
+                    dl.pause(block=True)
         dc = eventloop.addUrgentCall(lambda:pauseRunningDownloaders(), "Suspending downloaders for sleep")
         # Until we can get proper delayed call completion notification, we're
         # just going to wait a few seconds here :)
