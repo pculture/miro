@@ -58,9 +58,10 @@ def send_new_order():
 
 
 class TabListView(widgetset.TableView):
-    def __init__(self, renderer):
-        widgetset.TableView.__init__(self, 
-                widgetset.TreeTableModel('object'))
+    def __init__(self, renderer, table_model=None):
+        if table_model is None:
+            table_model = widgetset.TreeTableModel('object')
+        widgetset.TableView.__init__(self, table_model)
         self.column = widgetset.TableColumn('tab', renderer, data=0)
         self.column.set_min_width(renderer.MIN_WIDTH)
         self.add_column(self.column)
@@ -70,48 +71,67 @@ class TabListView(widgetset.TableView):
         self.set_fixed_height(True)
         self.set_auto_resizes(True)
 
-class StaticTabList(object):
-    """Handles the static tabs (the tabs on top that are always the same)."""
+class StaticTabListBase(object):
+
     def __init__(self):
-        self.type = 'static'
-        self.view = TabListView(style.StaticTabRenderer())
-        self.view.allow_multiple_select(False)
-        self.view.set_fixed_height(False)
         self.iter_map = {}
         self.doing_change = False 
         # doing_change will be True if we are changing a bunch of tabs.  This
         # will cause us to not try to update things based on the selection
         # changing.
 
-    def build_tabs(self):
-        self.add(statictabs.ChannelGuideTab())
-        self.add(statictabs.SearchTab())
-        self.add(statictabs.LibraryTab())
-        self.add(statictabs.NewVideosTab())
-        self.add(statictabs.IndividualDownloadsTab())
-        self.add(statictabs.DownloadsTab())
-        self.view.model_changed()
-
     def add(self, tab):
         iter = self.view.model.append(tab)
         self.iter_map[tab.id] = iter
 
-    def update_download_count(self, count):
-        iter = self.iter_map['downloading']
-        tab = self.view.model[iter][0]
-        tab.downloading = count
-        self.view.model.update(iter, tab)
-        self.view.model_changed()
-
-    def update_new_count(self, count):
-        iter = self.iter_map['new']
-        tab = self.view.model[iter][0]
-        tab.unwatched = count
-        self.view.model.update(iter, tab)
-        self.view.model_changed()
-
     def get_tab(self, name):
         return self.view.model[self.iter_map[name]][0]
+
+class StaticTabList(StaticTabListBase):
+    """Handles the static tabs (the tabs on top that are always the same)."""
+    def __init__(self):
+        StaticTabListBase.__init__(self)
+        self.type = 'static'
+        self.view = TabListView(style.StaticTabRenderer(), widgetset.TableModel('object'))
+        self.view.allow_multiple_select(False)
+        self.view.set_fixed_height(False)
+
+    def build_tabs(self):
+        self.add(statictabs.ChannelGuideTab())
+        self.add(statictabs.SearchTab())
+        self.view.model_changed()
+
+class LibraryTabList(StaticTabListBase):
+    """Handles all Library related tabs - Video, Audio, Downloading..."""
+    def __init__(self):
+        StaticTabListBase.__init__(self)
+        self.type = 'library'
+        self.view = TabListView(style.StaticTabRenderer())
+        self.view.allow_multiple_select(False)
+        self.view.set_fixed_height(False)
+
+    def build_tabs(self):
+        self.add(statictabs.VideoLibraryTab())
+        self.add(statictabs.AudioLibraryTab())
+        self.add(statictabs.OtherLibraryTab())
+        self.add(statictabs.DownloadsTab())
+        self.view.model_changed()
+
+    def update_download_count(self, count):
+        self.update_count('downloading', 'downloading', count)
+
+    def update_new_video_count(self, count):
+        self.update_count('videos', 'unwatched', count)
+
+    def update_new_audio_count(self, count):
+        self.update_count('audios', 'unwatched', count)
+    
+    def update_count(self, key, attr, count):
+        iter = self.iter_map[key]
+        tab = self.view.model[iter][0]
+        setattr(tab, attr, count)
+        self.view.model.update(iter, tab)
+        self.view.model_changed()
 
 class TabListDragHandler(object):
     def allowed_actions(self):
@@ -601,9 +621,11 @@ class TabListBox(widgetset.Scroller):
 
     def build_vbox(self):
         tlm = app.tab_list_manager
-        self.header_left_pad = tlm.feed_list.view.get_left_offset()
+        self.header_left_pad = 10 #tlm.feed_list.view.get_left_offset()
         vbox = widgetset.VBox()
         vbox.pack_start(tlm.static_tab_list.view)
+        vbox.pack_start(self.build_header(_('LIBRARY')))
+        vbox.pack_start(tlm.library_tab_list.view)
         vbox.pack_start(self.build_header(_('SITES')))
         vbox.pack_start(tlm.site_list.view)
         vbox.pack_start(self.build_header(_('FEEDS')))

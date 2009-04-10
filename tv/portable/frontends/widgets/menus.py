@@ -384,7 +384,7 @@ class MenuManager(signals.SignalEmitter):
             app.menu_manager._handle_feed_selection(selected_tabs)
         elif selection_type == 'playlist':
             app.menu_manager._handle_playlist_selection(selected_tabs)
-        elif selection_type == 'static':
+        elif selection_type in ('static', 'library'):
             app.menu_manager._handle_static_tab_selection(selected_tabs)
         elif selection_type == 'site':
             app.menu_manager._handle_site_selection(selected_tabs)

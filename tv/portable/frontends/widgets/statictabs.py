@@ -88,29 +88,22 @@ class SearchTab(StaticTab):
     icon_name = 'icon-search'
     tall = True
 
-class LibraryTab(StaticTab):
-    id = 'library'
-    name = _('Library')
-    icon_name = 'icon-library'
-    tall = True
+class VideoLibraryTab(StaticTab):
+    id = 'videos'
+    name = _('Video')
+    icon_name = 'icon-video'
 
-class IndividualDownloadsTab(StaticTab):
-    id = 'individual_downloads'
-    name = _('Single Items')
-    icon_name = 'icon-individual'
-    indent = True
-    bolded = False
+class AudioLibraryTab(StaticTab):
+    id = 'audios'
+    name = _('Audio')
+    icon_name = 'icon-audio'
 
-class NewVideosTab(StaticTab):
-    id = 'new'
-    name = _('New')
-    icon_name = 'icon-new'
-    indent = True
-    bolded = False
+class OtherLibraryTab(StaticTab):
+    id = 'others'
+    name = _('Other')
+    icon_name = 'icon-other'
 
 class DownloadsTab(StaticTab):
     id = 'downloading'
     name = _('Downloading')
     icon_name = 'icon-downloading'
-    indent = True
-    bolded = False

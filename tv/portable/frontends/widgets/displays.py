@@ -113,9 +113,9 @@ class DisplayManager(object):
                 PlaylistDisplay,
                 SiteDisplay,
                 SearchDisplay,
-                LibraryDisplay,
-                IndividualDownloadsDisplay,
-                NewVideosDisplay,
+                VideoItemsDisplay,
+                AudioItemsDisplay,
+                OtherItemsDisplay,
                 DownloadingDisplay,
                 GuideDisplay,
                 MultipleSelectionDisplay,
@@ -308,22 +308,6 @@ class PlaylistDisplay(ItemListDisplay):
     def make_controller(self, playlist_info):
         return playlist.PlaylistView(playlist_info)
 
-class DownloadingDisplay(ItemListDisplay):
-    @staticmethod
-    def should_display(tab_type, selected_tabs):
-        return tab_type == 'static' and selected_tabs[0].id == 'downloading'
-
-    def make_controller(self, tab):
-        return downloadscontroller.DownloadsController()
-
-class NewVideosDisplay(ItemListDisplay):
-    @staticmethod
-    def should_display(tab_type, selected_tabs):
-        return tab_type == 'static' and selected_tabs[0].id == 'new'
-
-    def make_controller(self, tab):
-        return itemlistcontroller.NewController()
-
 class SearchDisplay(ItemListDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
@@ -332,21 +316,37 @@ class SearchDisplay(ItemListDisplay):
     def make_controller(self, tab):
         return itemlistcontroller.SearchController()
 
-class LibraryDisplay(ItemListDisplay):
+class VideoItemsDisplay(ItemListDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        return tab_type == 'static' and selected_tabs[0].id == 'library'
+        return tab_type == 'library' and selected_tabs[0].id == 'videos'
 
     def make_controller(self, tab):
-        return itemlistcontroller.LibraryController()
+        return itemlistcontroller.VideoItemsController()
 
-class IndividualDownloadsDisplay(ItemListDisplay):
+class AudioItemsDisplay(ItemListDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
-        return tab_type == 'static' and selected_tabs[0].id == 'individual_downloads'
+        return tab_type == 'library' and selected_tabs[0].id == 'audios'
 
     def make_controller(self, tab):
-        return itemlistcontroller.IndividualDownloadsController()
+        return itemlistcontroller.AudioItemsController()
+
+class OtherItemsDisplay(ItemListDisplay):
+    @staticmethod
+    def should_display(tab_type, selected_tabs):
+        return tab_type == 'library' and selected_tabs[0].id == 'others'
+
+    def make_controller(self, tab):
+        return itemlistcontroller.OtherItemsController()
+
+class DownloadingDisplay(ItemListDisplay):
+    @staticmethod
+    def should_display(tab_type, selected_tabs):
+        return tab_type == 'library' and selected_tabs[0].id == 'downloading'
+
+    def make_controller(self, tab):
+        return downloadscontroller.DownloadsController()
 
 class CantPlayWidget(widgetset.SolidBackground):
     def __init__(self):

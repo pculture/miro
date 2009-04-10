@@ -192,7 +192,8 @@ class Application:
         messages.TrackPlaylists().send_to_backend()
         messages.TrackDownloadCount().send_to_backend()
         messages.TrackPausedCount().send_to_backend()
-        messages.TrackNewCount().send_to_backend()
+        messages.TrackNewVideoCount().send_to_backend()
+        messages.TrackNewAudioCount().send_to_backend()
         messages.TrackUnwatchedCount().send_to_backend()
 
     def get_main_window_dimensions(self):
@@ -995,15 +996,19 @@ class WidgetsMessageHandler(messages.MessageHandler):
 
     def handle_download_count_changed(self, message):
         app.widgetapp.download_count = message.count
-        static_tab_list = app.tab_list_manager.static_tab_list
-        static_tab_list.update_download_count(message.count)
+        library_tab_list = app.tab_list_manager.library_tab_list
+        library_tab_list.update_download_count(message.count)
 
     def handle_paused_count_changed(self, message):
         app.widgetapp.paused_count = message.count
 
-    def handle_new_count_changed(self, message):
-        static_tab_list = app.tab_list_manager.static_tab_list
-        static_tab_list.update_new_count(message.count)
+    def handle_new_video_count_changed(self, message):
+        library_tab_list = app.tab_list_manager.library_tab_list
+        library_tab_list.update_new_video_count(message.count)
+
+    def handle_new_audio_count_changed(self, message):
+        library_tab_list = app.tab_list_manager.library_tab_list
+        library_tab_list.update_new_audio_count(message.count)
 
     def handle_unwatched_count_changed(self, message):
         app.widgetapp.unwatched_count = message.count

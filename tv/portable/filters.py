@@ -59,7 +59,7 @@ def expiringItems(obj):
     return obj.get_state() == 'expiring' and not obj.is_nonvideo_file()
 
 def watchableItems(obj):
-    return (obj.is_downloaded() and not obj.is_nonvideo_file() and
+    return (obj.is_downloaded() and (obj.is_video_file() or obj.is_audio_file()) and
             not obj.isContainerItem and not obj.getFeedURL() == 'dtv:singleFeed')
 
 def manualItems(obj):
@@ -88,7 +88,7 @@ def newItems(obj):
     return not obj.get_viewed()
 
 def newWatchableItems(obj):
-    return (obj.is_downloaded() and not obj.is_nonvideo_file()
+    return (obj.is_downloaded() and (obj.is_video_file() or obj.is_audio_file())
             and (obj.get_state() == u"newly-downloaded"))
 
 def mappableToTab(obj):
@@ -130,6 +130,12 @@ def videoFeed(feed):
 
 def audioFeed(feed):
     return feed.section == u'audio'
+
+def videoItems(obj):
+    return obj.is_video_file()
+    
+def audioItems(obj):
+    return obj.is_audio_file()
 
 def feedTab(obj):
     from miro import feed

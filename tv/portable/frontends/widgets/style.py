@@ -129,13 +129,15 @@ class TabRenderer(widgetset.CustomCellRenderer):
         if selected:
             bold = True
         elif not hasattr(self.data, "bolded") or self.data.bolded:
-            bold=self.BOLD_TITLE
+            bold = self.BOLD_TITLE
         layout.set_font(self.TITLE_FONT_SIZE, bold=bold)
         titlebox = layout.textbox(self.data.name)
 
         hbox = cellpack.HBox(spacing=4)
-        if hasattr(self.data, "indent") and self.data.indent:
-            hbox.pack_space(15)
+        if hasattr(self.data, "id") and (self.data.id == 'guide' or self.data.id == 'search'):
+            hbox.pack_space(6)
+        else:
+            hbox.pack_space(2)
         alignment = cellpack.Alignment(self.data.icon, yalign=0.5, yscale=0.0,
                 xalign=0.5, xscale=0.0, min_width=16)
         hbox.pack(alignment)

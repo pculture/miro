@@ -234,15 +234,26 @@ class StopTrackingPausedCount(BackendMessage):
     """Stop tracking the paused count."""
     pass
 
-class TrackNewCount(BackendMessage):
+class TrackNewVideoCount(BackendMessage):
     """Start tracking the number of new videos.  When this message is received
-    the backend will send a corresponding NewCountChanged message.  It will
-    also send NewCountChanged whenever the count changes.
+    the backend will send a corresponding NewVideoCountChanged message.  It will
+    also send NewVideoCountChanged whenever the count changes.
     """
     pass
 
-class StopTrackingNewCount(BackendMessage):
+class StopTrackingNewVideoCount(BackendMessage):
     """Stop tracking the new videos count."""
+    pass
+
+class TrackNewAudioCount(BackendMessage):
+    """Start tracking the number of new audio items.  When this message is received
+    the backend will send a corresponding NewAudioCountChanged message.  It will
+    also send NewAudioCountChanged whenever the count changes.
+    """
+    pass
+
+class StopTrackingNewAudioCount(BackendMessage):
+    """Stop tracking the new audio items count."""
     pass
 
 class TrackUnwatchedCount(BackendMessage):
@@ -1129,7 +1140,6 @@ class CurrentSearchInfo(FrontendMessage):
 
 class DownloadCountChanged(FrontendMessage):
     """Informs the frontend that number of downloads has changed """
-
     def __init__(self, count):
         self.count = count
 
@@ -1138,9 +1148,13 @@ class PausedCountChanged(FrontendMessage):
     def __init__(self, count):
         self.count = count
 
-class NewCountChanged(FrontendMessage):
+class NewVideoCountChanged(FrontendMessage):
     """Informs the frontend that number of new videos has changed """
+    def __init__(self, count):
+        self.count = count
 
+class NewAudioCountChanged(FrontendMessage):
+    """Informs the frontend that number of new videos has changed """
     def __init__(self, count):
         self.count = count
 

@@ -388,19 +388,6 @@ class SimpleItemListController(ItemListController):
         list_empty = (self.item_list.get_count() == 0)
         self.widget.set_list_empty_mode(list_empty)
 
-class NewController(SimpleItemListController):
-    type = 'new'
-    id = None
-    image_filename = 'icon-new_large.png'
-    title = _("New Videos")
-
-    def build_item_view(self):
-        return itemlistwidgets.ItemView(self.item_list, True)
-
-    def build_list_item_view(self):
-        return itemlistwidgets.ListItemView(self.item_list,
-                display_download_info=False)
-
 class SearchController(SimpleItemListController):
     type = 'search'
     id = None
@@ -477,11 +464,30 @@ class SearchController(SimpleItemListController):
         if search_manager.text != '' and result_count == 0:
             self.widget.set_list_empty_mode(True)
 
-class LibraryController(SimpleItemListController):
-    type = 'library'
+class AudioVideoItemsController(SimpleItemListController):
+    def build_item_view(self):
+        return itemlistwidgets.ItemView(self.item_list, True)
+    def build_list_item_view(self):
+        return itemlistwidgets.ListItemView(self.item_list,
+                display_download_info=False)
+
+class VideoItemsController(AudioVideoItemsController):
+    type = 'videos'
     id = None
     image_filename = 'icon-library_large.png'
-    title = _("Library")
+    title = _("Video")
+
+class AudioItemsController(AudioVideoItemsController):
+    type = 'audios'
+    id = None
+    image_filename = 'icon-library_large.png'
+    title = _("Audio")
+
+class OtherItemsController(SimpleItemListController):
+    type = 'others'
+    id = None
+    image_filename = 'icon-new_large.png'
+    title = _("Other")
 
     def build_item_view(self):
         return itemlistwidgets.ItemView(self.item_list, True)
@@ -489,22 +495,6 @@ class LibraryController(SimpleItemListController):
     def build_list_item_view(self):
         return itemlistwidgets.ListItemView(self.item_list,
                 display_download_info=False)
-
-class IndividualDownloadsController(SimpleItemListController):
-    type = 'individual_downloads'
-    id = None
-    image_filename = 'icon-individual_large.png'
-    title = _("Single Items")
-
-    def build_widget(self):
-        SimpleItemListController.build_widget(self)
-        text = _('No Items to Display')
-        self.widget.list_empty_mode_vbox.pack_start(
-                itemlistwidgets.EmptyListHeader(text))
-        text = _('This tab keeps track of downloads that aren\'t part of '
-                'a feed.')
-        self.widget.list_empty_mode_vbox.pack_start(
-                itemlistwidgets.EmptyListDescription(text))
 
 class ItemListControllerManager(object):
     """Manages ItemListController objects.

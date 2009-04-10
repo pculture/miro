@@ -347,25 +347,18 @@ class DownloadingItemsTracker(ItemTrackerBase):
         ItemTrackerBase.unlink(self)
         self.view.unlink()
 
-class IndividualDownloadsTracker(ItemTrackerBase):
-    type = 'individual_downloads'
+class VideoItemsTracker(ItemTrackerBase):
+    type = 'videos'
     id = None
     def __init__(self):
-        self.view = views.individualItems
+        self.view = views.watchableVideoItems
         ItemTrackerBase.__init__(self)
 
-class NewItemsTracker(ItemTrackerBase):
-    type = 'new'
+class AudioItemsTracker(ItemTrackerBase):
+    type = 'audios'
     id = None
     def __init__(self):
-        self.view = views.uniqueNewWatchableItems
-        ItemTrackerBase.__init__(self)
-
-class LibraryItemsTracker(ItemTrackerBase):
-    type = 'library'
-    id = None
-    def __init__(self):
-        self.view = views.uniqueWatchableItems
+        self.view = views.watchableAudioItems
         ItemTrackerBase.__init__(self)
 
 class SearchItemsTracker(ItemTrackerBase):
@@ -378,12 +371,10 @@ class SearchItemsTracker(ItemTrackerBase):
 def make_item_tracker(message):
     if message.type == 'downloads':
         return DownloadingItemsTracker()
-    elif message.type == 'individual_downloads':
-        return IndividualDownloadsTracker()
-    elif message.type == 'new':
-        return NewItemsTracker()
-    elif message.type == 'library':
-        return LibraryItemsTracker()
+    elif message.type == 'videos':
+        return VideoItemsTracker()
+    elif message.type == 'audios':
+        return AudioItemsTracker()
     elif message.type == 'search':
         return SearchItemsTracker()
     elif message.type == 'feed':
@@ -436,12 +427,19 @@ class PausedCountTracker(CountTracker):
     def make_message(self, count):
         return messages.PausedCountChanged(count)
 
-class NewCountTracker(CountTracker):
+class NewVideoCountTracker(CountTracker):
     def get_view(self):
-        return views.uniqueNewWatchableItems
+        return views.uniqueNewWatchableVideoItems
 
     def make_message(self, count):
-        return messages.NewCountChanged(count)
+        return messages.NewVideoCountChanged(count)
+
+class NewAudioCountTracker(CountTracker):
+    def get_view(self):
+        return views.uniqueNewWatchableAudioItems
+
+    def make_message(self, count):
+        return messages.NewAudioCountChanged(count)
 
 class UnwatchedCountTracker(CountTracker):
     def get_view(self):
@@ -461,7 +459,8 @@ class BackendMessageHandler(messages.MessageHandler):
         self.watched_folder_tracker = None
         self.download_count_tracker = None
         self.paused_count_tracker = None
-        self.new_count_tracker = None
+        self.new_video_count_tracker = None
+        self.new_audio_count_tracker = None
         self.unwatched_count_tracker = None
         self.item_trackers = {}
         search_feed = get_feed_by_url('dtv:search')
@@ -1237,15 +1236,25 @@ class BackendMessageHandler(messages.MessageHandler):
             self.paused_count_tracker.stop_tracking()
             self.paused_count_tracker = None
 
-    def handle_track_new_count(self, message):
-        if self.new_count_tracker is None:
-            self.new_count_tracker = NewCountTracker()
-        self.new_count_tracker.send_message()
+    def handle_track_new_video_count(self, message):
+        if self.new_video_count_tracker is None:
+            self.new_video_count_tracker = NewVideoCountTracker()
+        self.new_video_count_tracker.send_message()
 
-    def handle_stop_tracking_new_count(self, message):
-        if self.new_count_tracker:
-            self.new_count_tracker.stop_tracking()
-            self.new_count_tracker = None
+    def handle_stop_tracking_new_video_count(self, message):
+        if self.new_video_count_tracker:
+            self.new_video_count_tracker.stop_tracking()
+            self.new_video_count_tracker = None
+
+    def handle_track_new_audio_count(self, message):
+        if self.new_audio_count_tracker is None:
+            self.new_audio_count_tracker = NewAudioCountTracker()
+        self.new_audio_count_tracker.send_message()
+
+    def handle_stop_tracking_new_audio_count(self, message):
+        if self.new_audio_count_tracker:
+            self.new_audio_count_tracker.stop_tracking()
+            self.new_audio_count_tracker = None
 
     def handle_track_unwatched_count(self, message):
         if self.unwatched_count_tracker is None:

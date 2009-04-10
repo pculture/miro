@@ -35,6 +35,7 @@ from miro.plat.frontends.widgets import widgetset
 class TabListManager(object):
     def __init__(self):
         self.static_tab_list = tablist.StaticTabList()
+        self.library_tab_list = tablist.LibraryTabList()
         self.site_list = tablist.SiteList()
         self.feed_list = tablist.FeedList()
         self.audio_feed_list = tablist.AudioFeedList()
@@ -46,6 +47,7 @@ class TabListManager(object):
 
     def populate_tab_list(self):
         self.static_tab_list.build_tabs()
+        self.library_tab_list.build_tabs()
         self.select_guide()
         for tab_list in self.all_tab_lists():
             tab_list.view.connect('selection-changed',
@@ -69,7 +71,7 @@ class TabListManager(object):
 
     def all_tab_lists(self):
         return (
-            self.static_tab_list, self.site_list,
+            self.static_tab_list, self.library_tab_list, self.site_list,
             self.feed_list, self.audio_feed_list, self.playlist_list)
 
     def select_guide(self):

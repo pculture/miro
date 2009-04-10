@@ -36,6 +36,7 @@ def initialize():
 
     global items, fileItems, toplevelItems, nonContainerItems, unwatchedItems
     global watchableItems, newWatchableItems, uniqueWatchableItems, uniqueNewWatchableItems, manualItems, searchItems, individualItems
+    global watchableVideoItems, uniqueNewWatchableVideoItems, watchableAudioItems, uniqueNewWatchableAudioItems
     global feeds
     global sites
     global guides, default_guide
@@ -77,8 +78,12 @@ def initialize():
     #expiringItems = nonContainerItems.filter(filters.expiringItems)
     watchableItems = nonContainerItems.filter(filters.watchableItems)
     uniqueWatchableItems = watchableItems.filter(filters.uniqueItems)
+    watchableVideoItems = uniqueWatchableItems.filter(filters.videoItems)
+    watchableAudioItems = uniqueWatchableItems.filter(filters.audioItems)
     newWatchableItems = nonContainerItems.filter(filters.newWatchableItems)
     uniqueNewWatchableItems = newWatchableItems.filter(filters.uniqueItems)
+    uniqueNewWatchableVideoItems = uniqueNewWatchableItems.filter(filters.videoItems)
+    uniqueNewWatchableAudioItems = uniqueNewWatchableItems.filter(filters.audioItems)
     manualItems = items.filter(filters.manualItems)
     searchItems = items.filter(filters.searchItems)
     # for the single items tab--this has manual items and items from searches

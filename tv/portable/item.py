@@ -1283,6 +1283,12 @@ class Item(DDBObject):
         else:
             return self.get_filename()
 
+    def is_video_file(self):
+        return self.isContainerItem != True and filetypes.is_video_filename(self.get_filename())
+        
+    def is_audio_file(self):
+        return self.isContainerItem != True and filetypes.is_audio_filename(self.get_filename())
+
     def is_nonvideo_file(self):
         # isContainerItem can be False or None.
         return self.isContainerItem != True and not self.isVideo
