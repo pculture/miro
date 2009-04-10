@@ -32,14 +32,6 @@ import os
 from miro import config
 from miro import prefs
 import gtkmozembed
-import gconf
-
-def get_dpi():
-    client = gconf.client_get_default()
-    dpi = client.get("/desktop/gnome/font_rendering/dpi").get_float()
-    if dpi < 2:
-        dpi = 96.0
-    return dpi
 
 def create_profile_directory():
     """Create the mozilla profile directory, if needed."""
@@ -55,7 +47,6 @@ def create_prefs_js():
 
     prefs_content = """\
 # Mozilla User Preferences
-user_pref("layout.css.dpi", %d);
 user_pref("security.warn_entering_secure", false);
 user_pref("security.warn_entering_weak", false);
 user_pref("security.warn_viewing_mixed", false);
@@ -74,8 +65,7 @@ user_pref("general.useragent.vendorComment", %s);
 user_pref("capability.principal.codebase.p0.granted", "UniversalBrowserWrite UniversalBrowserRead"); 
 user_pref("capability.principal.codebase.p0.id", "file://"); 
 user_pref("capability.principal.codebase.p0.subjectName", "") 
-""" % (get_dpi(),
-       repr(config.get(prefs.LONG_APP_NAME)),
+""" % (repr(config.get(prefs.LONG_APP_NAME)),
        repr(config.get(prefs.APP_VERSION)),
        repr(config.get(prefs.PROJECT_URL)))
 
