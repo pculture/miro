@@ -47,6 +47,7 @@ except ImportError:
     from pysqlite2 import dbapi2 as sqlite3
 
 from miro import databaseupgrade
+from miro import feedparser
 from miro import schemav79 as schema_mod
 from miro.plat.utils import filenameToUnicode
 
@@ -60,6 +61,8 @@ def _find_global(module, name):
     """Does the work required for _loads."""
     if module == 'storedatabase' and name == 'SavableObject':
         return SavableObject
+    elif module == 'feedparser' and name == 'FeedParserDict':
+        return feedparser.FeedParserDict
     else:
         __import__(module)
         mod = sys.modules[module]
