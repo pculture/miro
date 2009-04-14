@@ -204,7 +204,7 @@ class TabTracker(ViewTracker):
         current_folder_id = None
         for obj in self.get_tab_view():
             info = self._make_new_info(obj)
-            if obj.getFolder() is None:
+            if obj.get_folder() is None:
                 response.append(info)
                 if isinstance(obj, FolderBase):
                     current_folder_id = obj.id
@@ -214,7 +214,7 @@ class TabTracker(ViewTracker):
                     current_folder_id = None
             else:
                 if (current_folder_id is None or
-                        obj.getFolder().id != current_folder_id):
+                        obj.get_folder().id != current_folder_id):
                     raise AssertionError("Tab ordering is wrong")
                 response.append_child(current_folder_id, info)
         response.send_to_frontend()
@@ -644,7 +644,7 @@ class BackendMessageHandler(messages.MessageHandler):
             logging.warn("object not found (type: %s, id: %s)" %
                     (message.type, message.id))
         else:
-            obj.setTitle(message.new_name)
+            obj.set_title(message.new_name)
 
     def handle_play_all_unwatched(self, message):
         item_infos = [messages.ItemInfo(i) for i in views.unwatchedItems]
@@ -721,7 +721,7 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_delete_site(self, message):
         site = views.guides.getObjectByID(message.id)
-        if site.getDefault():
+        if site.get_default():
             raise ValueError("Can't delete default site")
         site.remove()
 
@@ -817,7 +817,7 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_new_guide(self, message):
         url = message.url
-        if guide.getGuideByURL(url) is None:
+        if guide.get_guide_by_url(url) is None:
             guide.ChannelGuide(url, [u'*'])
 
     def handle_new_feed(self, message):
@@ -1190,7 +1190,7 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warn("RenameVideo: Item not found -- %s", message.id)
         else:
-            item.setTitle(message.new_name)
+            item.set_title(message.new_name)
 
     def handle_revert_feed_title(self, message):
         try:
@@ -1301,7 +1301,7 @@ class BackendMessageHandler(messages.MessageHandler):
                     singleclick.download_video_url(url, additional)
             elif type == 'site':
                 for url, additional in normalizedURLs:
-                    if guide.getGuideByURL (url) is None:
+                    if guide.get_guide_by_url(url) is None:
                         guide.ChannelGuide(url, [u'*'])
             else:
                 raise AssertionError("Unknown subscribe type")

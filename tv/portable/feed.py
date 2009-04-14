@@ -359,7 +359,7 @@ class FeedImpl(DDBObject):
         return u""
 
     @returnsUnicode
-    def getThumbnailURL(self):
+    def get_thumbnail_url(self):
         """Returns the URL of a thumbnail associated with the feed
         """
         return self.thumbURL
@@ -469,7 +469,7 @@ class Feed(DDBObject):
 
     def signal_change(self, needsSave=True, needsSignalFolder=False):
         if needsSignalFolder:
-            folder = self.getFolder()
+            folder = self.get_folder()
             if folder:
                 folder.signal_change(needsSave=False)
         DDBObject.signal_change (self, needsSave=needsSave)
@@ -554,7 +554,7 @@ class Feed(DDBObject):
         for item in self.items:
             item.signal_change(needsSave=False)
 
-    def iconChanged(self, needsSave=True):
+    def icon_changed(self, needsSave=True):
         """See item.getThumbnail to figure out which items to send signals for.
         """
         self.signal_change(needsSave=needsSave)
@@ -623,13 +623,13 @@ class Feed(DDBObject):
     def has_original_title(self):
         return self.userTitle == None
 
-    def setTitle(self, title):
+    def set_title(self, title):
         self.confirmDBThread()
         self.userTitle = title
         self.signal_change()
 
     def revert_title(self):
-        self.setTitle(None)
+        self.set_title(None)
 
     @returnsUnicode
     def setBaseTitle(self, title):
@@ -739,7 +739,7 @@ class Feed(DDBObject):
             return self.generateFeed()
         self.actualFeed.update()
 
-    def getFolder(self):
+    def get_folder(self):
         self.confirmDBThread()
         if self.folder_id is not None:
             return self.dd.getObjectByID(self.folder_id)
@@ -748,7 +748,7 @@ class Feed(DDBObject):
 
     def setFolder(self, newFolder):
         self.confirmDBThread()
-        oldFolder = self.getFolder()
+        oldFolder = self.get_folder()
         if newFolder is not None:
             self.folder_id = newFolder.getID()
         else:
@@ -1003,7 +1003,7 @@ class Feed(DDBObject):
             'cancelUpdateEvents', 'update', 'get_viewed', 'isLoading',
             'hasLibrary', 'getURL', 'getBaseURL',
             'getBaseHref', 'get_description', 'get_link', 'getLibraryLink',
-            'getThumbnailURL', 'get_license', 'url', 'title', 'created',
+            'get_thumbnail_url', 'get_license', 'url', 'title', 'created',
             'lastViewed', 'thumbURL', 'lastEngine', 'lastQuery', 'dir',
             'preserveDownloads', 'lookup',
             'markAsViewed'):

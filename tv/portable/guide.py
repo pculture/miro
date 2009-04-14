@@ -81,29 +81,31 @@ class ChannelGuide(DDBObject):
     def getURL(self):
         return self.url
 
-    def getFirstURL(self):
-        if self.getDefault():
+    def get_first_url(self):
+        # FIXME - this is only used by get_last_visited_url
+        if self.get_default():
             return config.get(prefs.CHANNEL_GUIDE_FIRST_TIME_URL)
         else:
             return self.url
 
-    def getLastVisitedURL(self):
+    def get_last_visited_url(self):
+        # FIXME - this doens't look used
         if self.lastVisitedURL is not None:
             logging.info("First URL is %s", self.lastVisitedURL)
             return self.lastVisitedURL
         else:
             if self.firstTime:
                 self.firstTime = False
-                logging.info("First URL is %s", self.getFirstURL())
-                return self.getFirstURL()
+                logging.info("First URL is %s", self.get_first_url())
+                return self.get_first_url()
             else:
                 logging.info("First URL is %s", self.getURL())
                 return self.getURL()
 
-    def getDefault(self):
+    def get_default(self):
         return self.url == config.get(prefs.CHANNEL_GUIDE_URL)
 
-    def getFolder(self):
+    def get_folder(self):
         return None
 
     @returnsUnicode
@@ -115,7 +117,7 @@ class ChannelGuide(DDBObject):
         else:
             return self.getURL()
 
-    def setTitle(self, title):
+    def set_title(self, title):
         self.confirmDBThread()
         self.userTitle = title
         self.signal_change(needsSave=True)
@@ -144,7 +146,7 @@ class ChannelGuide(DDBObject):
             self.favicon = parsed[0] + u"://" + parsed[1] + u"/favicon.ico"
             self.icon_cache.requestUpdate(True)
 
-        self.extendHistory(self.updated_url)
+        self.extend_history(self.updated_url)
         self.signal_change()
 
     def guide_error(self, error):
@@ -162,14 +164,14 @@ class ChannelGuide(DDBObject):
             return fileutil.expand_filename(self.icon_cache.get_filename())
         return resources.path("images/icon-site.png")
 
-    def iconChanged(self, needsSave=True):
+    def icon_changed(self, needsSave=True):
         self.confirmDBThread()
         self.signal_change(needsSave=True)
 
-    def getThumbnailURL(self):
+    def get_thumbnail_url(self):
         return self.favicon
 
-    def extendHistory(self, url):
+    def extend_history(self, url):
         if self.historyLocation is None:
             self.historyLocation = 0
             self.history = [url]
@@ -181,7 +183,8 @@ class ChannelGuide(DDBObject):
             self.history.append(url)
             self.historyLocation += 1
 
-    def getHistoryURL(self, direction):
+    def get_history_url(self, direction):
+        # FIXME - this looks unused
         if direction is not None:
             location = self.historyLocation + direction
             if location < 0:
@@ -193,8 +196,9 @@ class ChannelGuide(DDBObject):
         self.historyLocation = location
         return self.history[self.historyLocation]
 
-# Grabs the feed link from the given webpage
 class GuideHTMLParser(HTMLParser):
+    """Grabs the feed link from the given webpage
+    """
     def __init__(self, url):
         self.title = None
         self.in_title = False
@@ -229,7 +233,7 @@ class GuideHTMLParser(HTMLParser):
         if tag == 'title' and self.in_title:
             self.in_title = False
 
-def getGuideByURL(url):
+def get_guide_by_url(url):
     return views.guides.getItemWithIndex(indexes.guidesByURL, url)
 
 def download_guides():

@@ -108,7 +108,7 @@ def initialize():
     #FIXME: These should just be globals
     guides = app.db.filterWithIndex(indexes.objectsByClass, guide.ChannelGuide)
     guides.createIndex(indexes.guidesByURL)
-    default_guide = guides.filter(lambda x: x.getDefault())
+    default_guide = guides.filter(lambda x: x.get_default())
     manualFeed = feeds.filterWithIndex(indexes.feedsByURL, 'dtv:manualFeed')
     singleFeed = feeds.filterWithIndex(indexes.feedsByURL, 'dtv:singleFeed')
     directoryFeed = feeds.filterWithIndex(indexes.feedsByURL,

@@ -31,7 +31,7 @@ def itemsByFeed(x):
     return x.getFeed().getID()
 
 def itemsByChannelFolder(x):
-    return x.getFeed().getFolder()
+    return x.getFeed().get_folder()
 
 def itemsByParent(x):
     return x.parent_id
@@ -89,7 +89,7 @@ def tabOrderType(tabOrder):
     return tabOrder.type
 
 def byFolder(obj):
-    return obj.getFolder()
+    return obj.get_folder()
 
 def foldersByTitle(obj):
     return obj.title

@@ -818,7 +818,7 @@ class GuideInfo(object):
         self.name = guide.get_title()
         self.id = guide.id
         self.url = guide.getURL()
-        self.default = guide.getDefault()
+        self.default = guide.get_default()
         self.allowed_urls = guide.allowedURLs
         self.favicon = guide.get_favicon_path()
         self.faviconIsDefault = not (guide.icon_cache and
@@ -907,7 +907,7 @@ class ItemInfo(object):
         self.video_watched = item.getSeen()
         self.video_path = item.get_video_filename()
         self.thumbnail = item.getThumbnail()
-        self.thumbnail_url = item.getThumbnailURL()
+        self.thumbnail_url = item.get_thumbnail_url()
         self.file_format = item.get_format()
         self.license = item.get_license()
         self.file_url = item.getURL()

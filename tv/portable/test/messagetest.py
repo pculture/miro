@@ -129,7 +129,7 @@ class GuideTrackTest(TrackerTest):
         self.assertEquals(guideInfo.name, guide.get_title())
         self.assertEquals(guideInfo.id, guide.id)
         self.assertEquals(guideInfo.url, guide.getURL())
-        self.assertEquals(guideInfo.default, guide.getDefault())
+        self.assertEquals(guideInfo.default, guide.get_default())
 
     def testInitialList(self):
         self.assertEquals(len(self.test_handler.messages), 1)
@@ -155,7 +155,7 @@ class GuideTrackTest(TrackerTest):
         self.checkChangedMessage(1, removed=[self.guide1])
 
     def testChange(self):
-        self.guide1.setTitle(u"Booya")
+        self.guide1.set_title(u"Booya")
         self.runUrgentCalls()
         self.checkMessageCount(2)
         self.checkChangedMessage(1, changed=[self.guide1])
@@ -164,7 +164,7 @@ class GuideTrackTest(TrackerTest):
         self.checkMessageCount(1)
         messages.StopTrackingGuides().send_to_backend()
         self.runUrgentCalls()
-        self.guide.setTitle(u"Booya")
+        self.guide.set_title(u"Booya")
         g = ChannelGuide(u'http://example.com/3')
         self.guide1.remove()
         self.checkMessageCount(1)
@@ -226,7 +226,7 @@ class PlaylistTrackTest(TrackerTest):
         self.checkChangedMessage(1, removed=[self.playlist2])
 
     def testChange(self):
-        self.playlist1.setTitle(u"Booya")
+        self.playlist1.set_title(u"Booya")
         self.runUrgentCalls()
         self.checkMessageCount(2)
         self.checkChangedMessage(1, changed=[self.playlist1])
@@ -235,7 +235,7 @@ class PlaylistTrackTest(TrackerTest):
         p1 = SavedPlaylist(u'Playlist')
         p1.remove()
         p2 = SavedPlaylist(u'Playlist 2')
-        p2.setTitle(u'New Title')
+        p2.set_title(u'New Title')
         self.runUrgentCalls()
         # We don't need to see that p1 was added because it got removed
         # immediately after.  We don't need to see that p2 was changed because
@@ -247,7 +247,7 @@ class PlaylistTrackTest(TrackerTest):
         self.checkMessageCount(1)
         messages.StopTrackingPlaylists().send_to_backend()
         self.runUrgentCalls()
-        self.playlist1.setTitle(u"Booya")
+        self.playlist1.set_title(u"Booya")
         f = Feed(u'http://example.com/3')
         self.playlist2.remove()
         self.checkMessageCount(1)
@@ -317,7 +317,7 @@ class FeedTrackTest(TrackerTest):
         self.checkChangedMessage(2, removed=[self.feed2])
 
     def testChange(self):
-        self.feed1.setTitle(u"Booya")
+        self.feed1.set_title(u"Booya")
         self.runUrgentCalls()
         self.checkMessageCount(3)
         self.checkChangedMessage(2, changed=[self.feed1])
@@ -326,7 +326,7 @@ class FeedTrackTest(TrackerTest):
         f1 = Feed(u'http://example.com/3')
         f1.remove()
         f2 = Feed(u'http://example.com/4')
-        f2.setTitle(u'New Title')
+        f2.set_title(u'New Title')
         self.runUrgentCalls()
         # We don't need to see that f1 was added because it got removed
         # immediately after.  We don't need to see that f2 was changed because
@@ -338,7 +338,7 @@ class FeedTrackTest(TrackerTest):
         self.checkMessageCount(2)
         messages.StopTrackingChannels().send_to_backend()
         self.runUrgentCalls()
-        self.feed1.setTitle(u"Booya")
+        self.feed1.set_title(u"Booya")
         f = Feed(u'http://example.com/3')
         self.feed2.remove()
         self.checkMessageCount(2)

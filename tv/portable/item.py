@@ -862,12 +862,12 @@ class Item(DDBObject):
                 self.is_eligible_for_auto_download())
 
     @returnsUnicode
-    def getThumbnailURL(self):
+    def get_thumbnail_url(self):
         return self.thumbnail_url
 
     @returnsFilename
     def getThumbnail(self):
-        """NOTE: When changing this function, change feed.iconChanged to signal
+        """NOTE: When changing this function, change feed.icon_changed to signal
         the right set of items.
         """
         self.confirmDBThread()
@@ -900,7 +900,7 @@ class Item(DDBObject):
                 return self.entry_title
             else: return _('no title')
 
-    def setTitle(self, s):
+    def set_title(self, s):
         self.confirmDBThread()
         self.title = s
         self.signal_change()

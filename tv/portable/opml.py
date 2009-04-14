@@ -111,7 +111,7 @@ class Exporter(object):
         self.io.write(u'\t</outline>\n')
 
     def _write_feed_entry(self, thefeed):
-        if self.currentFolder is not None and thefeed.getFolder() is None:
+        if self.currentFolder is not None and thefeed.get_folder() is None:
             self._close_folder_entry()
             self.currentFolder = None
         if self.currentFolder is None:
@@ -225,10 +225,10 @@ class Importer(object):
     def _handle_site_entry(self, entry):
         url = entry.getAttribute("url")
         title = entry.getAttribute("text")
-        if guide.getGuideByURL(url) is None:
+        if guide.get_guide_by_url(url) is None:
             new_guide = guide.ChannelGuide(url, [u'*'])
             if title != url:
-                new_guide.setTitle(title)
+                new_guide.set_title(title)
 
     def _handle_feed_entry(self, entry):
         url = entry.getAttribute("xmlUrl")
@@ -249,7 +249,7 @@ class Importer(object):
             f = feed.Feed(url, False, section)
             title = entry.getAttribute("text")
             if title is not None and title != '':
-                f.setTitle(title)
+                f.set_title(title)
             autoDownloadMode = (
                 entry.getAttribute("miro:autoDownload")
                 or entry.getAttribute("autoDownload"))

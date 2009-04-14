@@ -177,9 +177,9 @@ itemSortPausedDownloads = ItemSort()
 def guideTabs(x, y):
     xguide = x[1].obj
     yguide = y[1].obj
-    if xguide.getDefault() and not yguide.getDefault():
+    if xguide.get_default() and not yguide.get_default():
         return True
-    if not xguide.getDefault() and yguide.getDefault():
+    if not xguide.get_default() and yguide.get_default():
         return False
     return xguide.get_title() < yguide.get_title()
 

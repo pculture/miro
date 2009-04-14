@@ -73,7 +73,7 @@ class ThemeHistory(DDBObject):
     def on_theme_change(self):
         if self.theme is None: # vanilla Miro
             guideURL = config.get(prefs.CHANNEL_GUIDE_URL)
-            if guide.getGuideByURL(guideURL) is None:
+            if guide.get_guide_by_url(guideURL) is None:
                 # This happens when the DB is initialized with a theme that
                 # doesn't have it's own set of default channels; None is
                 # artificially added to the pastThemes lists to prevent the
@@ -88,14 +88,14 @@ class ThemeHistory(DDBObject):
     def on_first_run(self):
         logging.info("Spawning Miro Guide...")
         guideURL = unicode(config.get(prefs.CHANNEL_GUIDE_URL))
-        if guide.getGuideByURL(guideURL) is None:
+        if guide.get_guide_by_url(guideURL) is None:
             guide.ChannelGuide(guideURL,
             unicode(config.get(prefs.CHANNEL_GUIDE_ALLOWED_URLS)).split())
 
         if self.theme is not None: # we have a theme
             new_guides = unicode(config.get(prefs.ADDITIONAL_CHANNEL_GUIDES)).split()
             for temp_guide in new_guides:
-                if guide.getGuideByURL(temp_guide) is None:
+                if guide.get_guide_by_url(temp_guide) is None:
                     guide.ChannelGuide(temp_guide)
             if ((config.get(prefs.DEFAULT_CHANNELS_FILE) is not None) and
                     (config.get(prefs.THEME_NAME) is not None)):
@@ -116,7 +116,7 @@ class ThemeHistory(DDBObject):
 
                 # This code would install the Miro Guide if it isn't
                 # already installed
-                # if guide.getGuideByURL(prefs.CHANNEL_GUIDE_URL.default) is None:
+                # if guide.get_guide_by_url(prefs.CHANNEL_GUIDE_URL.default) is None:
                 #     guide.ChannelGuide(prefs.CHANNEL_GUIDE_URL.default)
                 self.pastThemes.append(None)
                 self._install_default_feeds()
@@ -171,4 +171,4 @@ class ThemeHistory(DDBObject):
 
             # create default site
             cg = guide.ChannelGuide(u"http://beta.legaltorrents.com/")
-            cg.setTitle(u"LegalTorrents")
+            cg.set_title(u"LegalTorrents")

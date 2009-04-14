@@ -243,7 +243,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         myURL = myItem.getURL()
         self.assertEqual(str(myURL),myURL)
 
-        thumb = myItem.getThumbnailURL()
+        thumb = myItem.get_thumbnail_url()
         if thumb is not None:
             self.assertEqual(str(thumb),thumb)
 
@@ -265,7 +265,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         myURL = myItem.getURL()
         self.assertEqual(str(myURL),myURL)
 
-        thumb = myItem.getThumbnailURL()
+        thumb = myItem.get_thumbnail_url()
         if thumb is not None:
             self.assertEqual(str(thumb),thumb)
 
@@ -287,7 +287,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         myURL = myItem.getURL()
         self.assertEqual(str(myURL),myURL)
 
-        thumb = myItem.getThumbnailURL()
+        thumb = myItem.get_thumbnail_url()
         if thumb is not None:
             self.assertEqual(str(thumb),thumb)
 

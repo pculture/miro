@@ -27,7 +27,7 @@ class ViewTest(DatabaseTestCase):
         self.assertEquals(view.count(), 2)
 
     def test_join(self):
-        self.feed.setTitle(u'booya')
+        self.feed.set_title(u'booya')
         view = item.Item.make_view("feed.userTitle='booya'",
                 joins={'feed': 'feed.id=item.feed_id'})
         self.assertEquals(set(view), set([self.i2, self.i1]))
@@ -36,7 +36,7 @@ class ViewTest(DatabaseTestCase):
 class ViewTrackerTest(DatabaseTestCase):
     def setUp(self):
         DatabaseTestCase.setUp(self)
-        self.feed.setTitle(u"booya")
+        self.feed.set_title(u"booya")
         self.setup_view(feed.Feed.make_view("userTitle='booya'"))
 
 
@@ -56,7 +56,7 @@ class ViewTrackerTest(DatabaseTestCase):
 
     def test_track(self):
         # test new addition
-        self.feed2.setTitle(u"booya")
+        self.feed2.set_title(u"booya")
         self.assertEquals(self.add_callbacks, [self.feed2])
         self.assertEquals(self.remove_callbacks, [])
         # test removing existing objects
@@ -71,7 +71,7 @@ class ViewTrackerTest(DatabaseTestCase):
     def test_track_join(self):
         self.setup_view(item.Item.make_view("feed.userTitle='booya'",
                 joins={'feed': 'feed.id=item.feed_id'}))
-        self.feed2.setTitle(u'booya')
+        self.feed2.set_title(u'booya')
         self.feed2.signal_related_change()
         self.assertEquals(self.add_callbacks, [self.i3])
         self.assertEquals(self.remove_callbacks, [])
@@ -82,7 +82,7 @@ class ViewTrackerTest(DatabaseTestCase):
 
     def test_unlink(self):
         self.tracker.unlink()
-        self.feed2.setTitle(u"booya")
+        self.feed2.set_title(u"booya")
         self.feed.revert_title()
         self.assertEquals(self.add_callbacks, [])
         self.assertEquals(self.remove_callbacks, [])
@@ -91,7 +91,7 @@ class ViewTrackerTest(DatabaseTestCase):
         self.setup_view(item.Item.make_view("feed.userTitle='booya'",
                 joins={'feed': 'feed.id=item.feed_id'}))
         self.tracker.unlink()
-        self.feed2.setTitle(u'booya')
+        self.feed2.set_title(u'booya')
         self.feed2.signal_related_change()
         self.feed.revert_title()
         self.feed.signal_related_change()
@@ -100,7 +100,7 @@ class ViewTrackerTest(DatabaseTestCase):
 
     def test_reset(self):
         database.ViewTracker.reset_trackers()
-        self.feed2.setTitle(u"booya")
+        self.feed2.set_title(u"booya")
         self.feed.revert_title()
         self.assertEquals(self.add_callbacks, [])
         self.assertEquals(self.remove_callbacks, [])

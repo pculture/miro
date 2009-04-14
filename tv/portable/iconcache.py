@@ -91,7 +91,7 @@ class IconCacheUpdater:
         if is_vital:
             item.dbItem.confirmDBThread()
             if (item.filename and fileutil.access(item.filename, os.R_OK)
-                   and item.url == item.dbItem.getThumbnailURL()):
+                   and item.url == item.dbItem.get_thumbnail_url()):
                 is_vital = False
         if self.runningCount < RUNNING_MAX:
             eventloop.addIdle(item.request_icon, "Icon Request")
@@ -142,7 +142,7 @@ class IconCache(DDBObject):
 
     def icon_changed(self, needsSave=True):
         try:
-            self.dbItem.iconChanged(needsSave=needsSave)
+            self.dbItem.icon_changed(needsSave=needsSave)
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
@@ -296,8 +296,8 @@ class IconCache(DDBObject):
             iconCacheUpdater.update_finished()
             return
 
-        if hasattr(self.dbItem, "getThumbnailURL"):
-            url = self.dbItem.getThumbnailURL()
+        if hasattr(self.dbItem, "get_thumbnail_url"):
+            url = self.dbItem.get_thumbnail_url()
         else:
             url = self.url
 

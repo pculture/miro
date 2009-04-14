@@ -41,7 +41,7 @@ class FolderBase(DDBObject):
         self.title = title
         self.expanded = True
 
-    get_title, setTitle = makeSimpleGetSet('title')
+    get_title, set_title = makeSimpleGetSet('title')
 
     def getExpanded(self):
         self.confirmDBThread()
@@ -60,10 +60,10 @@ class FolderBase(DDBObject):
             child.remove(moveItemsTo)
         DDBObject.remove(self)
 
-    # getFolder and setFolder are here so that channels/playlists and folders
+    # get_folder and setFolder are here so that channels/playlists and folders
     # have a consistent API.  They don't do much since we don't allow nested
     # folders.
-    def getFolder(self):
+    def get_folder(self):
         return None
 
     def setFolder(self, newFolder):

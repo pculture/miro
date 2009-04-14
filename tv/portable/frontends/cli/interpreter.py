@@ -179,7 +179,7 @@ class MiroInterpreter(cmd.Cmd):
         for tab in self.channelTabs.getView():
             if isinstance(tab.obj, folder.ChannelFolder):
                 current_folder = tab.obj
-            elif tab.obj.getFolder() is not current_folder:
+            elif tab.obj.get_folder() is not current_folder:
                 current_folder = None
             if current_folder is None:
                 print tab.obj.get_title()

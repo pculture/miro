@@ -405,7 +405,7 @@ class FeedParserAttributesTestCase(FeedTestCase):
     def test_attributes(self):
         entry = self.parsed_feed.entries[0]
         self.assertEquals(self.item.getRSSID(), entry.id)
-        self.assertEquals(self.item.getThumbnailURL(), entry.thumbnail['url'])
+        self.assertEquals(self.item.get_thumbnail_url(), entry.thumbnail['url'])
         self.assertEquals(self.item.get_title(), entry.title)
         self.assertEquals(self.item.get_raw_description(), entry.description)
         self.assertEquals(self.item.get_link(), entry.link)
@@ -427,7 +427,7 @@ class FeedParserAttributesTestCase(FeedTestCase):
 
     def test_change_title(self):
         entry = self.parsed_feed.entries[0]
-        self.item.setTitle(u"new title")
+        self.item.set_title(u"new title")
         self.save_then_restore_db()
         self.assertEquals(self.item.get_title(), "new title")
         self.assert_(not self.item.has_original_title())

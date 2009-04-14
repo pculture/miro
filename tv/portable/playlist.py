@@ -56,7 +56,7 @@ class PlaylistMixin:
     def getView(self):
         return self.trackedItems.view
 
-    def getFolder(self):
+    def get_folder(self):
         return None
 
     def addID(self, id):
@@ -67,7 +67,7 @@ class PlaylistMixin:
         if id not in self.trackedItems:
             self.trackedItems.appendID(id)
 
-        folder = self.getFolder()
+        folder = self.get_folder()
         if (folder is not None):
             folder.addID(id)
 
@@ -79,7 +79,7 @@ class PlaylistMixin:
         self.confirmDBThread()
         self.trackedItems.removeID(id)
 
-        folder = self.getFolder()
+        folder = self.get_folder()
         if (folder is not None):
             folder.addID(id)
 
@@ -139,9 +139,9 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
     def setup_common(self):
         self.setupTrackedItemView()
 
-    get_title, setTitle = makeSimpleGetSet('title')
+    get_title, set_title = makeSimpleGetSet('title')
 
-    def getFolder(self):
+    def get_folder(self):
         self.confirmDBThread()
         if self.folder_id is not None:
             return self.dd.getObjectByID(self.folder_id)
@@ -171,7 +171,7 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
 
         for id in ids:
             self.removeID(id)
-        folder = self.getFolder()
+        folder = self.get_folder()
         if folder:
             for id in ids:
                 folder.checkItemIDRemoved(id)
@@ -182,7 +182,7 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
 
         def callback(dialog):
             if self.idExists() and dialog.choice == dialogs.BUTTON_OK:
-                self.setTitle(dialog.value)
+                self.set_title(dialog.value)
         dialogs.TextEntryDialog(title, description, dialogs.BUTTON_OK,
                 dialogs.BUTTON_CANCEL).run(callback)
 
