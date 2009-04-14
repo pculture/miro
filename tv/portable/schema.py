@@ -282,11 +282,28 @@ class ObjectSchema(object):
     Member variables:
 
     klass -- the python class that this schema is for
-    classString -- a human readable string that represents objectClass
+    table_name -- SQL table name to store the class in
     fields -- list of  (name, SchemaItem) pairs.  One item for each attribute
         that should be stored to disk.
     """
-    pass
+
+    @classmethod
+    def ddb_object_classes(cls):
+        return (cls.klass,)
+
+    @classmethod
+    def get_ddb_class(cls, restored_data):
+        return cls.klass
+
+class MultiClassObjectSchema(ObjectSchema):
+    """ObjectSchema where rows will be restored to different python classes.
+
+    Instead of the klass attribute, MultiClassObjectSchema should define 2
+    class methods: ddb_object_classes() returns the list of all classes that
+    this schema works with and get_ddb_class() which inputs a dictionary
+    containing db data and return which class we should use to restore that
+    row.
+    """
 
 from miro.database import DDBObject
 from miro.downloader import RemoteDownloader, HTTPAuthPassword
@@ -303,14 +320,14 @@ from miro.theme import ThemeHistory
 
 class DDBObjectSchema(ObjectSchema):
     klass = DDBObject
-    classString = 'ddb-object'
+    table_name = 'ddb_object'
     fields = [
         ('id', SchemaInt())
     ]
 
 class IconCacheSchema (DDBObjectSchema):
     klass = IconCache
-    classString = 'icon-cache'
+    table_name = 'icon_cache'
     fields = DDBObjectSchema.fields + [
         ('etag', SchemaString(noneOk=True)),
         ('modified', SchemaString(noneOk=True)),
@@ -320,7 +337,7 @@ class IconCacheSchema (DDBObjectSchema):
 
 class ItemSchema(DDBObjectSchema):
     klass = Item
-    classString = 'item'
+    table_name = 'item'
     fields = DDBObjectSchema.fields + [
         ('feed_id', SchemaInt(noneOk=True)),
         ('downloader_id', SchemaInt(noneOk=True)),
@@ -364,7 +381,7 @@ class ItemSchema(DDBObjectSchema):
 
 class FileItemSchema(ItemSchema):
     klass = FileItem
-    classString = 'file-item'
+    table_name = 'file_item'
     fields = ItemSchema.fields + [
         ('filename', SchemaFilename()),
         ('deleted', SchemaBool()),
@@ -374,7 +391,7 @@ class FileItemSchema(ItemSchema):
 
 class FeedSchema(DDBObjectSchema):
     klass = Feed
-    classString = 'feed'
+    table_name = 'feed'
     fields = DDBObjectSchema.fields + [
         ('origURL', SchemaURL()),
         ('baseTitle', SchemaString(noneOk=True)),
@@ -398,7 +415,7 @@ class FeedSchema(DDBObjectSchema):
 
 class FeedImplSchema(DDBObjectSchema):
     klass = FeedImpl
-    classString = 'field-impl'
+    table_name = 'field_impl'
     fields = DDBObjectSchema.fields + [
         ('url', SchemaURL()),
         ('ufeed_id', SchemaInt()),
@@ -412,7 +429,7 @@ class FeedImplSchema(DDBObjectSchema):
 
 class RSSFeedImplSchema(FeedImplSchema):
     klass = RSSFeedImpl
-    classString = 'rss-feed-impl'
+    table_name = 'rss_feed_impl'
     fields = FeedImplSchema.fields + [
         ('initialHTML', SchemaBinary(noneOk=True)),
         ('etag', SchemaString(noneOk=True)),
@@ -421,7 +438,7 @@ class RSSFeedImplSchema(FeedImplSchema):
 
 class RSSMultiFeedImplSchema(FeedImplSchema):
     klass = RSSMultiFeedImpl
-    classString = 'rss-multi-feed-impl'
+    table_name = 'rss_multi_feed_impl'
     fields = FeedImplSchema.fields + [
         ('etag', SchemaDict(SchemaString(),SchemaString(noneOk=True))),
         ('modified', SchemaDict(SchemaString(),SchemaString(noneOk=True))),
@@ -430,7 +447,7 @@ class RSSMultiFeedImplSchema(FeedImplSchema):
 
 class ScraperFeedImplSchema(FeedImplSchema):
     klass = ScraperFeedImpl
-    classString = 'scraper-feed-impl'
+    table_name = 'scraper_feed_impl'
     fields = FeedImplSchema.fields + [
         ('initialHTML', SchemaBinary(noneOk=True)),
         ('initialCharset', SchemaString(noneOk=True)),
@@ -439,7 +456,7 @@ class ScraperFeedImplSchema(FeedImplSchema):
 
 class SearchFeedImplSchema(RSSMultiFeedImplSchema):
     klass = SearchFeedImpl
-    classString = 'search-feed-impl'
+    table_name = 'search_feed_impl'
     fields = RSSMultiFeedImplSchema.fields + [
         ('searching', SchemaBool()),
         ('lastEngine', SchemaString()),
@@ -448,7 +465,7 @@ class SearchFeedImplSchema(RSSMultiFeedImplSchema):
 
 class DirectoryWatchFeedImplSchema(FeedImplSchema):
     klass = DirectoryWatchFeedImpl
-    classString = 'directory-watch-feed-impl'
+    table_name = 'directory_watch_feed_impl'
     fields = FeedImplSchema.fields + [
         ('firstUpdate', SchemaBool()),
         ('dir', SchemaFilename(noneOk=True)),
@@ -456,27 +473,27 @@ class DirectoryWatchFeedImplSchema(FeedImplSchema):
 
 class DirectoryFeedImplSchema(FeedImplSchema):
     klass = DirectoryFeedImpl
-    classString = 'directory-feed-impl'
+    table_name = 'directory_feed_impl'
     # DirectoryFeedImpl doesn't have any addition fields over FeedImpl
 
 class SearchDownloadsFeedImplSchema(FeedImplSchema):
     klass = SearchDownloadsFeedImpl
-    classString = 'search-downloads-feed-impl'
+    table_name = 'search_downloads_feed_impl'
     # SearchDownloadsFeedImpl doesn't have any addition fields over FeedImpl
 
 class ManualFeedImplSchema(FeedImplSchema):
     klass = ManualFeedImpl
-    classString = 'manual-feed-impl'
+    table_name = 'manual_feed_impl'
     # no addition fields over FeedImplSchema
 
 class SingleFeedImplSchema(FeedImplSchema):
     klass = SingleFeedImpl
-    classString = 'single-feed-impl'
+    table_name = 'single_feed_impl'
     # no addition fields over FeedImplSchema
 
 class RemoteDownloaderSchema(DDBObjectSchema):
     klass = RemoteDownloader
-    classString = 'remote-downloader'
+    table_name = 'remote_downloader'
     fields = DDBObjectSchema.fields + [
         ('url', SchemaURL()),
         ('origURL', SchemaURL()),
@@ -490,7 +507,7 @@ class RemoteDownloaderSchema(DDBObjectSchema):
 
 class HTTPAuthPasswordSchema(DDBObjectSchema):
     klass = HTTPAuthPassword
-    classString = 'http-auth-password'
+    table_name = 'http_auth_password'
     fields = DDBObjectSchema.fields + [
         ('username', SchemaString()),
         ('password', SchemaString()),
@@ -502,7 +519,7 @@ class HTTPAuthPasswordSchema(DDBObjectSchema):
 
 class ChannelFolderSchema(DDBObjectSchema):
     klass = ChannelFolder
-    classString = 'channel-folder'
+    table_name = 'channel_folder'
     fields = DDBObjectSchema.fields + [
         ('expanded', SchemaBool()),
         ('title', SchemaString()),
@@ -511,7 +528,7 @@ class ChannelFolderSchema(DDBObjectSchema):
 
 class PlaylistFolderSchema(DDBObjectSchema):
     klass = PlaylistFolder
-    classString = 'playlist-folder'
+    table_name = 'playlist_folder'
     fields = DDBObjectSchema.fields + [
         ('expanded', SchemaBool()),
         ('title', SchemaString()),
@@ -520,7 +537,7 @@ class PlaylistFolderSchema(DDBObjectSchema):
 
 class PlaylistSchema(DDBObjectSchema):
     klass = SavedPlaylist
-    classString = 'playlist'
+    table_name = 'playlist'
     fields = DDBObjectSchema.fields + [
         ('title', SchemaString()),
         ('item_ids', SchemaList(SchemaInt())),
@@ -529,7 +546,7 @@ class PlaylistSchema(DDBObjectSchema):
 
 class TabOrderSchema(DDBObjectSchema):
     klass = TabOrder
-    classString = 'taborder-order'
+    table_name = 'taborder_order'
     fields = DDBObjectSchema.fields + [
         ('type', SchemaString()),
         ('tab_ids', SchemaList(SchemaInt())),
@@ -537,7 +554,7 @@ class TabOrderSchema(DDBObjectSchema):
 
 class ChannelGuideSchema(DDBObjectSchema):
     klass = ChannelGuide
-    classString = 'channel-guide'
+    table_name = 'channel_guide'
     fields = DDBObjectSchema.fields + [
         ('url', SchemaURL(noneOk=True)),
         ('allowedURLs', SchemaList(SchemaURL())),
@@ -551,7 +568,7 @@ class ChannelGuideSchema(DDBObjectSchema):
 
 class ThemeHistorySchema(DDBObjectSchema):
     klass = ThemeHistory
-    classString = 'theme-history'
+    table_name = 'theme_history'
     fields = DDBObjectSchema.fields + [
         ('lastTheme', SchemaString(noneOk=True)),
         ('pastThemes', SchemaList(SchemaString(noneOk=True), noneOk=False)),
@@ -559,7 +576,7 @@ class ThemeHistorySchema(DDBObjectSchema):
 
 class WidgetsFrontendStateSchema(DDBObjectSchema):
     klass = WidgetsFrontendState
-    classString = 'widgets-frontend-state'
+    table_name = 'widgets_frontend_state'
     fields = DDBObjectSchema.fields + [
         ('list_view_displays', SchemaList(SchemaBinary())),
     ]

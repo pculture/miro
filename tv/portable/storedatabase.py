@@ -110,9 +110,11 @@ class LiveStorage:
         self._object_schemas = object_schemas
         self._schema_version = schema_version
         self._schema_map = {}
+        self._all_schemas = []
         for oschema in object_schemas:
-            table_name = oschema.classString.replace('-', '_')
-            self._schema_map[oschema.klass] = (oschema, table_name)
+            self._all_schemas.append(oschema)
+            for klass in oschema.ddb_object_classes():
+                self._schema_map[klass] = oschema
         self._converter = SQLiteConverter()
 
         if not db_existed:
@@ -200,10 +202,10 @@ class LiveStorage:
 
     def _load_objects(self):
         retval = []
-        for klass, (schema, table_name) in self._schema_map.items():
+        for schema in self._all_schemas:
             column_names = [f[0] for f in schema.fields]
             self.cursor.execute("SELECT %s from %s" % 
-                    (', '.join(column_names), table_name))
+                    (', '.join(column_names), schema.table_name))
             for row in self.cursor:
                 restored_data = {}
                 for (name, schema_item), value in \
@@ -216,6 +218,7 @@ class LiveStorage:
                                     value)
                         raise
                     restored_data[name] = value
+                klass = schema.get_ddb_class(restored_data)
                 restored = klass(restored_data=restored_data)
                 retval.append(restored)
         return retval
@@ -226,7 +229,7 @@ class LiveStorage:
     def update(self, obj):
         """Update a DDBObject on disk."""
 
-        obj_schema, table_name = self._schema_map[obj.__class__]
+        obj_schema = self._schema_map[obj.__class__]
         column_names = []
         values = []
         for name, schema_item in obj_schema.fields:
@@ -239,7 +242,7 @@ class LiveStorage:
                     logging.warn("error validating %s for %s", name, obj)
                 raise
             values.append(self._converter.to_sql(schema_item, value))
-        sql = "REPLACE INTO %s (%s) VALUES(%s)" % (table_name,
+        sql = "REPLACE INTO %s (%s) VALUES(%s)" % (obj_schema.table_name,
                 ', '.join(column_names),
                 ', '.join('?' for i in xrange(len(column_names))))
         self.cursor.execute(sql, values)
@@ -248,13 +251,13 @@ class LiveStorage:
     def remove(self, obj):
         """Remove a DDBObject from disk."""
 
-        schema, table_name = self._schema_map[obj.__class__]
-        sql = "DELETE FROM %s WHERE id=?" % (table_name)
+        schema = self._schema_map[obj.__class__]
+        sql = "DELETE FROM %s WHERE id=?" % (schema.table_name)
         self.cursor.execute(sql, (obj.id,))
         self._schedule_commit()
 
     def table_name(self, klass):
-        return self._schema_map[klass][1]
+        return self._schema_map[klass].table_name
 
     def _get_query_bottom(self, table_name, where, joins):
         sql = StringIO()
@@ -271,20 +274,20 @@ class LiveStorage:
             yield app.db.getObjectByID(id)
 
     def query_ids(self, klass, where, values=None, order_by=None, joins=None):
-        schema, table_name = self._schema_map[klass]
+        schema = self._schema_map[klass]
         sql = StringIO()
-        sql.write("SELECT %s.id " % table_name)
-        sql.write(self._get_query_bottom(table_name, where, joins))
+        sql.write("SELECT %s.id " % schema.table_name)
+        sql.write(self._get_query_bottom(schema.table_name, where, joins))
         if order_by is not None:
             sql.write(" ORDER BY %s" % order_by)
         for row in self._execute(sql.getvalue(), values):
             yield row[0]
 
     def query_count(self, klass, where, values=None, joins=None):
-        schema, table_name = self._schema_map[klass]
+        schema = self._schema_map[klass]
         sql = StringIO()
         sql.write('SELECT COUNT(*) ')
-        sql.write(self._get_query_bottom(table_name, where, joins))
+        sql.write(self._get_query_bottom(schema.table_name, where, joins))
         return self._execute(sql.getvalue(), values)[0][0]
 
     def _execute(self, sql, values):
@@ -310,9 +313,8 @@ class LiveStorage:
         """Create a new empty database."""
 
         for schema in self._object_schemas:
-            table_name = schema.classString.replace('-', '_')
             self.cursor.execute("CREATE TABLE %s (%s)" %
-                    (table_name, self._calc_sqlite_types(schema)))
+                    (schema.table_name, self._calc_sqlite_types(schema)))
         self._create_variables_table()
         self._set_version()
 
@@ -358,16 +360,6 @@ class LiveStorage:
 
         os.rename(self.path, os.path.join(dir, save_name))
 
-    def _calc_obj_values(self, obj):
-        schema = self._schema_map[obj.__class__]
-        retval = []
-        for name, schema_item in schema.fields:
-            column_names.append(name)
-            value = getattr(obj, name)
-            value = self._converter.to_sql(schema_item, value)
-            retval.append((name, value))
-        return retval
-
     def dumpDatabase(self, db):
         output = open (nextFreeFilename (os.path.join (config.get(prefs.SUPPORT_DIRECTORY), "database-dump.xml")), 'w')
         def indent(level):
@@ -393,11 +385,11 @@ class LiveStorage:
         output.write ('<?xml version="1.0"?>\n')
         output.write ('<database schema="%d">\n' % (self._schema_version,))
         for schema in self._object_schemas:
-            table_name = schema.classString.replace('-', '_')
-            self.cursor.execute("SELECT * FROM %s" % table_name)
+            self.cursor.execute("SELECT * FROM %s" % schema.table_name)
             column_names = [d[0] for d in self.cursor.description]
             for row in self.cursor:
-                output_object(table_name, dict(zip(column_names, row)))
+                output_object(schema.table_name.replace('_', '-'),
+                        dict(zip(column_names, row)))
         output.write ('</database>\n')
         output.close()
 

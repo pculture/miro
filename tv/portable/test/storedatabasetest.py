@@ -49,9 +49,14 @@ class PCFProgramer(Human):
         self.file = file
         self.developer = developer
 
+class SpecialProgrammer(PCFProgramer):
+    def setup_new(self):
+        PCFProgramer.setup_new(self, u'I.M. Special', 44, 2.1, [],
+                '/home/specialdude/\u1234'.encode("utf-8"), True)
+
 class HumanSchema(schema.ObjectSchema):
     klass = Human
-    classString = 'human'
+    table_name = 'human'
     fields = [
         ('id', SchemaInt()),
         ('name', SchemaString()),
@@ -65,15 +70,26 @@ class HumanSchema(schema.ObjectSchema):
 
 class RestorableHumanSchema(HumanSchema):
     klass = RestorableHuman
-    classString = 'restorable-human'
+    table_name = 'restorable_human'
 
-class PCFProgramerSchema(HumanSchema):
-    klass = PCFProgramer
-    classString = 'pcf-programmer'
+class PCFProgramerSchema(schema.MultiClassObjectSchema):
+
+    table_name = 'pcf_programmer'
     fields = HumanSchema.fields + [
         ('file', SchemaFilename()),
         ('developer', SchemaBool()),
     ]
+
+    @classmethod
+    def ddb_object_classes(cls):
+        return (PCFProgramer, SpecialProgrammer)
+
+    @classmethod
+    def get_ddb_class(cls, restored_data):
+        if restored_data['name'] == 'I.M. Special':
+            return SpecialProgrammer
+        else:
+            return PCFProgramer
 
 test_object_schemas = [HumanSchema, PCFProgramerSchema, RestorableHumanSchema]
 
@@ -155,6 +171,7 @@ class DiskTest(FakeSchemaTest):
                 raise AssertionError("Unknown object type: %r" % obj)
 
             db_object = self.database.getObjectByID(obj.id)
+            self.assertEquals(db_object.__class__, obj.__class__)
             for name, schema_item in schema.fields:
                 db_value = getattr(db_object, name)
                 obj_value = getattr(obj, name)
@@ -197,6 +214,18 @@ class DiskTest(FakeSchemaTest):
         self.reload_objects()
         restored_joe = self.database.getObjectByID(self.joe.id)
         self.assert_(restored_joe.iveBeenRestored)
+
+    def test_single_table_inheritance(self):
+        # test loading different classes based on the row data
+        im_special = SpecialProgrammer()
+        self.db.append(im_special)
+        self.reload_objects()
+        self.check_database()
+        # check deleting the different class
+        im_special.remove()
+        self.db.pop()
+        self.reload_objects()
+        self.check_database()
 
     def test_commit_without_close(self):
         # we should commit using an idle callback.
