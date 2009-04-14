@@ -1978,6 +1978,35 @@ def upgrade82(cursor):
     cursor.execute("UPDATE item SET was_downloaded=1 "
             "WHERE id IN (%s)" % placeholders, downloaded)
 
+def upgrade83(cursor):
+    """Merge the items and file_items tables together."""
+
+    cursor.execute("ALTER TABLE item ADD is_file_item INTEGER")
+    cursor.execute("ALTER TABLE item ADD filename TEXT")
+    cursor.execute("ALTER TABLE item ADD deleted INTEGER")
+    cursor.execute("ALTER TABLE item ADD shortFilename TEXT")
+    cursor.execute("ALTER TABLE item ADD offsetPath TEXT")
+    # Set values for existing Item objects
+    cursor.execute("UPDATE item SET is_file_item=0, filename=NULL, "
+            "deleted=NULL, shortFilename=NULL, offsetPath=NULL")
+    # Set values for FileItem objects coming from the file_items table
+    columns = ('feed_id', 'downloader_id', 'parent_id', 'seen',
+            'autoDownloaded', 'pendingManualDL', 'pendingReason', 'title',
+            'expired', 'keep', 'creationTime', 'linkNumber', 'icon_cache_id',
+            'downloadedTime', 'watchedTime', 'isContainerItem',
+            'videoFilename', 'isVideo', 'releaseDateObj',
+            'eligibleForAutoDownload', 'duration', 'screenshot', 'resumeTime',
+            'channelTitle', 'license', 'rss_id', 'thumbnail_url',
+            'entry_title', 'raw_descrption', 'link', 'payment_link',
+            'comments_link', 'url', 'enclosure_size', 'enclosure_type',
+            'enclosure_format', 'feedparser_output', 'was_downloaded',
+            'filename', 'deleted', 'shortFilename', 'offsetPath',)
+    columns_connected = ', '.join(columns)
+    cursor.execute('INSERT INTO item (is_file_item, %s) '
+            'SELECT 1, %s FROM file_item' % (columns_connected,
+                columns_connected))
+    cursor.execute("DROP TABLE file_item")
+
 #def upgradeX (cursor):
 #    """Input a SQLite cursor.  Do whatever is necessary to upgrade the DB."""
 #    return changed

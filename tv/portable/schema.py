@@ -335,10 +335,22 @@ class IconCacheSchema (DDBObjectSchema):
         ('url', SchemaURL(noneOk=True)),
         ]
 
-class ItemSchema(DDBObjectSchema):
-    klass = Item
+class ItemSchema(MultiClassObjectSchema):
     table_name = 'item'
+
+    @classmethod
+    def ddb_object_classes(cls):
+        return (Item, FileItem)
+
+    @classmethod
+    def get_ddb_class(cls, restored_data):
+        if restored_data['is_file_item']:
+            return FileItem
+        else:
+            return Item
+
     fields = DDBObjectSchema.fields + [
+        ('is_file_item', SchemaBool()),
         ('feed_id', SchemaInt(noneOk=True)),
         ('downloader_id', SchemaInt(noneOk=True)),
         ('parent_id', SchemaInt(noneOk=True)),
@@ -377,14 +389,8 @@ class ItemSchema(DDBObjectSchema):
         ('enclosure_format', SchemaString(noneOk=True)),
         ('feedparser_output', SchemaReprContainer()),
         ('was_downloaded', SchemaBool()),
-    ]
-
-class FileItemSchema(ItemSchema):
-    klass = FileItem
-    table_name = 'file_item'
-    fields = ItemSchema.fields + [
-        ('filename', SchemaFilename()),
-        ('deleted', SchemaBool()),
+        ('filename', SchemaFilename(noneOk=True)),
+        ('deleted', SchemaBool(noneOk=True)),
         ('shortFilename', SchemaFilename(noneOk=True)),
         ('offsetPath', SchemaFilename(noneOk=True)),
     ]
@@ -581,9 +587,9 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
         ('list_view_displays', SchemaList(SchemaBinary())),
     ]
 
-VERSION = 82
+VERSION = 83
 object_schemas = [
-    IconCacheSchema, ItemSchema, FileItemSchema, FeedSchema,
+    IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,
     SearchFeedImplSchema, DirectoryFeedImplSchema, DirectoryWatchFeedImplSchema,
     SearchDownloadsFeedImplSchema, RemoteDownloaderSchema,

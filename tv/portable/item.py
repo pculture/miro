@@ -280,6 +280,7 @@ class Item(DDBObject):
     ICON_CACHE_VITAL = False
 
     def setup_new(self, entry, linkNumber=0, feed_id=None, parent_id=None):
+        self.is_file_item = False
         self.feed_id = feed_id
         self.parent_id = parent_id
         self.isContainerItem = None
@@ -301,6 +302,9 @@ class Item(DDBObject):
         self.resumeTime = 0
         self.channelTitle = None
         self.was_downloaded = False
+        # Initalize FileItem attributes to None
+        self.filename = self.deleted = self.shortFilename = \
+                self.offsetPath = None
 
         iconcache.setup_icon_cache(self)
 
@@ -311,8 +315,11 @@ class Item(DDBObject):
         self.creationTime = datetime.now()
         self._update_release_date()
         self._look_for_downloader()
-        self.split_item()
+        self.split_new_item()
         self.setup_common()
+
+    def split_new_item(self):
+        self.split_item()
 
     def setup_restored(self):
         # For unknown reason(s), some users still have databases with item
@@ -1378,6 +1385,7 @@ class FileItem(Item):
 
     def setup_new(self, filename, feed_id=None, parent_id=None, offsetPath=None, deleted=False):
         Item.setup_new(self, get_entry_for_file(filename), feed_id=feed_id, parent_id=parent_id)
+        self.is_file_item = True
         checkF(filename)
         filename = fileutil.abspath(filename)
         self.filename = filename
@@ -1386,6 +1394,13 @@ class FileItem(Item):
         self.shortFilename = cleanFilename(os.path.basename(self.filename))
         self.was_downloaded = False
         moviedata.movieDataUpdater.requestUpdate (self)
+        self.split_item()
+
+    def split_new_item(self):
+        """We don't have self.filename setup yet, so we can't call split item.
+        we call split_item() later on in our overridden setup_new method.
+        """
+        pass
 
     @returnsUnicode
     def get_state(self):
