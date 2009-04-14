@@ -91,7 +91,7 @@ class Downloader:
             newmax = config.get(prefs.MAX_MANUAL_DOWNLOADS)
         if newmax != self.MAX:
             self.MAX = newmax
-            self.startDownloads()
+            self.start_downloads()
 
     def start_downloads_idle(self):
         if self.paused:
@@ -118,7 +118,7 @@ class Downloader:
                     break
         self.dc = None
 
-    def startDownloads(self):
+    def start_downloads(self):
         if self.dc or self.paused:
             return
         self.dc = eventloop.addIdle(self.start_downloads_idle, "Start Downloads")
@@ -127,7 +127,7 @@ class Downloader:
         feed = obj.getFeed()
         self.pending_count = self.pending_count + 1
         self.feed_pending_count[feed] = self.feed_pending_count.get(feed, 0) + 1
-        self.startDownloads()
+        self.start_downloads()
     
     def pending_on_remove(self, tracker, obj):
         feed = obj.getFeed()
@@ -143,7 +143,7 @@ class Downloader:
         feed = obj.getFeed()
         self.running_count = self.running_count - 1
         self.feed_running_count[feed] = self.feed_running_count.get(feed, 0) - 1
-        self.startDownloads()
+        self.start_downloads()
     
     def new_on_add(self, tracker, obj):
         feed = obj.getFeed()
@@ -154,7 +154,7 @@ class Downloader:
         feed = obj.getFeed()
         self.new_count = self.new_count - 1
         self.feed_new_count[feed] = self.feed_new_count.get(feed, 0) - 1
-        self.startDownloads()
+        self.start_downloads()
 
     def pause(self):
         if self.dc:
@@ -165,7 +165,7 @@ class Downloader:
     def resume(self):
         if self.paused:
             self.paused = False
-            eventloop.addTimeout(5, self.startDownloads, "delayed start downloads")
+            eventloop.addTimeout(5, self.start_downloads, "delayed start downloads")
 
 # These are both Downloader instances.
 manual_downloader = None

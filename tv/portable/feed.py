@@ -711,7 +711,7 @@ class Feed(DDBObject):
         self.signal_change()
         if self.maxNew >= oldMaxNew or self.maxNew < 0:
             from miro import autodler
-            autodler.auto_downloader.startDownloads()
+            autodler.auto_downloader.start_downloads()
 
     def setMaxOldItems(self, maxOldItems):
         self.confirmDBThread()
