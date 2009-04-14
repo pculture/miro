@@ -28,19 +28,17 @@
 
 import re
 
-# =============================================================================
-
-# Purify a feed item data (usually its description) from ads. Returns the data
-# untouched if no ad were found.
 def purify(data):
+    """Purify a feed item data (usually its description) from ads.
+    Returns the data untouched if no ad were found.
+    """
     return _process(data, 'purify', data)
 
-# Scrape ads from a feed item data (usually its description). Returns an empty
-# string if no ad were found.
 def scrape(data):
+    """Scrape ads from a feed item data (usually its description). Returns
+    an empty string if no ad were found.
+    """
     return _process(data, 'scrape', '')
-
-# =============================================================================
 
 def _process(data, fkey, default):
     if data is None:
@@ -55,8 +53,6 @@ def _process(data, fkey, default):
         processed = default
     return processed
 
-# =============================================================================
-
 FEEDBURNER_AD_PATTERN = re.compile("""
     &lt;p&gt;                                                               # <p>
     &lt;a\shref="http://feeds\.feedburner\.com/~a/[^"]*"&gt;                # <a href="...">
@@ -66,19 +62,18 @@ FEEDBURNER_AD_PATTERN = re.compile("""
     &lt;/p&gt;                                                              # </p>
     """, re.VERBOSE)
     
-def _tryPurifyingFeedBurner(data):
+def _try_purifying_feedburner(data):
     if FEEDBURNER_AD_PATTERN.search(data):
         return FEEDBURNER_AD_PATTERN.sub('', data)
     return None
 
-def _tryScrapingFeedBurner(data):
+def _try_scraping_feedburner(data):
     match = FEEDBURNER_AD_PATTERN.search(data)
     if match is not None:
         return match.group(0)
     return None
 
-# =============================================================================
-
 FUNCS = [
-    {'purify': _tryPurifyingFeedBurner, 'scrape': _tryScrapingFeedBurner}
+    {'purify': _try_purifying_feedburner,
+     'scrape': _try_scraping_feedburner}
 ]
