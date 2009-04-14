@@ -35,9 +35,9 @@ from miro.plat import config as platformcfg
 import urllib
 import logging
 
-__data = None
-__lock = RLock()
-__callbacks = set()
+_data = None
+_lock = RLock()
+_callbacks = set()
 
 def add_change_callback(callback):
     """Attaches change notification callback functions.
@@ -49,48 +49,48 @@ def add_change_callback(callback):
             if key == prefs.PRESERVE_X_GB_FREE:
                blah blah blah
     """
-    __callbacks.add(callback)
+    _callbacks.add(callback)
 
 def remove_change_callback(callback):
     """Removes change notification callback functions.
     """
-    __callbacks.discard(callback)
+    _callbacks.discard(callback)
 
 def load(theme=None):
     """The theme parameter is a horrible hack to load the theme before we
     can import other modules.  pybridge makes the extra, early call
     """
-    global __data
-    __lock.acquire()
+    global _data
+    _lock.acquire()
     try:
         app.configfile = AppConfig(theme)
         # Load the preferences
-        __data = platformcfg.load()
-        if __data is None:
-            __data = dict()
+        _data = platformcfg.load()
+        if _data is None:
+            _data = dict()
 
         # This is a bit of a hack to automagically get the serial
         # number for this platform
         prefs.APP_SERIAL.key = 'appSerial-%s' % get(prefs.APP_PLATFORM)
 
     finally:
-        __lock.release()
+        _lock.release()
 
 def save():
-    __lock.acquire()
+    _lock.acquire()
     try:
-        __checkValidity()
-        platformcfg.save( __data )
+        _check_validity()
+        platformcfg.save( _data )
     finally:
-        __lock.release()
+        _lock.release()
 
 def get(descriptor, useThemeData=True):
-    __lock.acquire()
+    _lock.acquire()
     try:
-        __checkValidity()
+        _check_validity()
 
-        if __data is not None and descriptor.key in __data:
-            return __data[descriptor.key]
+        if _data is not None and descriptor.key in _data:
+            return _data[descriptor.key]
         elif descriptor.platformSpecific:
             return platformcfg.get(descriptor)
         if app.configfile.contains(descriptor.key, useThemeData):
@@ -98,30 +98,32 @@ def get(descriptor, useThemeData=True):
         else:
             return descriptor.default
     finally:
-        __lock.release()
+        _lock.release()
 
-def getList(descriptor):
+def get_list(descriptor):
+    # FIXME - this doesn't look used anywhere
     return [urllib.unquote(i) for i in get(descriptor).split(",") if i]
 
 def set(descriptor, value):
-    __lock.acquire()
+    _lock.acquire()
     logging.debug("Setting %s to %s", descriptor.key, value)
     try:
-        __checkValidity()
-        if descriptor.key not in __data or __data[descriptor.key] != value:
-            __data[descriptor.key] = value
-            __notifyListeners(descriptor.key, value)
+        _check_validity()
+        if descriptor.key not in _data or _data[descriptor.key] != value:
+            _data[descriptor.key] = value
+            _notify_listeners(descriptor.key, value)
     finally:
-        __lock.release()
+        _lock.release()
 
-def setList(descriptor, value):
+def set_list(descriptor, value):
+    # FIXME - this doesn't look used anywhere
     set(descriptor, ','.join ([urllib.quote(i) for i in value]))
 
-def __checkValidity():
-    if __data == None:
+def _check_validity():
+    if _data == None:
         load()
 
-def __notifyListeners(key, value):
+def _notify_listeners(key, value):
     from miro import eventloop
-    for callback in __callbacks:
+    for callback in _callbacks:
         eventloop.addIdle(callback, 'config callback: %s' % callback, args=(key, value))
