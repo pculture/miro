@@ -78,7 +78,7 @@ class ChannelGuide(DDBObject):
         iconcache.remove_icon_cache(self)
         DDBObject.remove(self)
 
-    def getURL(self):
+    def get_url(self):
         return self.url
 
     def get_first_url(self):
@@ -99,8 +99,8 @@ class ChannelGuide(DDBObject):
                 logging.info("First URL is %s", self.get_first_url())
                 return self.get_first_url()
             else:
-                logging.info("First URL is %s", self.getURL())
-                return self.getURL()
+                logging.info("First URL is %s", self.get_url())
+                return self.get_url()
 
     def get_default(self):
         return self.url == config.get(prefs.CHANNEL_GUIDE_URL)
@@ -115,7 +115,7 @@ class ChannelGuide(DDBObject):
         elif self.title:
             return self.title
         else:
-            return self.getURL()
+            return self.get_url()
 
     def set_title(self, title):
         self.confirmDBThread()
@@ -154,7 +154,7 @@ class ChannelGuide(DDBObject):
         logging.warn("Error downloading guide: %s", error)
 
     def download_guide(self):
-        httpclient.grabURL(self.getURL(), self.guide_downloaded, self.guide_error)
+        httpclient.grabURL(self.get_url(), self.guide_downloaded, self.guide_error)
 
     def get_favicon_path(self):
         """Returns the path to the favicon file.  It's either the favicon of

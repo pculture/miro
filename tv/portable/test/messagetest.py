@@ -128,7 +128,7 @@ class GuideTrackTest(TrackerTest):
     def checkInfo(self, guideInfo, guide):
         self.assertEquals(guideInfo.name, guide.get_title())
         self.assertEquals(guideInfo.id, guide.id)
-        self.assertEquals(guideInfo.url, guide.getURL())
+        self.assertEquals(guideInfo.url, guide.get_url())
         self.assertEquals(guideInfo.default, guide.get_default())
 
     def testInitialList(self):

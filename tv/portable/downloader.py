@@ -488,7 +488,7 @@ URL was %s""" % self.url
         return self.status['shortReasonFailed']
 
     @returnsUnicode
-    def getURL(self):
+    def get_url(self):
         """Returns the URL we're downloading
         """
         self.confirmDBThread()
@@ -725,7 +725,7 @@ def getDownloader(item):
     existing = getExistingDownloader(item)
     if existing:
         return existing
-    url = item.getURL()
+    url = item.get_url()
     channelName = unicodeToFilename(item.get_channel_title(True))
     if not channelName:
         channelName = None

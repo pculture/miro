@@ -753,7 +753,7 @@ class ChannelInfo(object):
             self.has_original_title = channel_obj.has_original_title()
             self.is_updating = channel_obj.isUpdating()
             self.parent_id = channel_obj.folder_id
-            self.url = channel_obj.getURL()
+            self.url = channel_obj.get_url()
             self.thumbnail = channel_obj.getThumbnailPath()
             self.base_href = channel_obj.getBaseHref()
             self.autodownload_mode = channel_obj.getAutoDownloadMode()
@@ -817,7 +817,7 @@ class GuideInfo(object):
     def __init__(self, guide):
         self.name = guide.get_title()
         self.id = guide.id
-        self.url = guide.getURL()
+        self.url = guide.get_url()
         self.default = guide.get_default()
         self.allowed_urls = guide.allowedURLs
         self.favicon = guide.get_favicon_path()
@@ -879,7 +879,7 @@ class ItemInfo(object):
         if item.feed_id:
             feed = item.dd.getObjectByID(self.feed_id)
             self.feed_name = feed.get_title()
-            self.feed_url = feed.getURL()
+            self.feed_url = feed.get_url()
         else:
             self.feed_name = None
             self.feed_url = None
@@ -910,7 +910,7 @@ class ItemInfo(object):
         self.thumbnail_url = item.get_thumbnail_url()
         self.file_format = item.get_format()
         self.license = item.get_license()
-        self.file_url = item.getURL()
+        self.file_url = item.get_url()
         self.is_container_item = item.isContainerItem
 
         self.file_type = item.enclosure_type

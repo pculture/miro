@@ -40,7 +40,7 @@ def feedsByURL(x):
     return x.getOriginalURL()
 
 def guidesByURL(x):
-    return x.getURL()
+    return x.get_url()
 
 def downloadsByDLID(x):
     return str(x.dlid)

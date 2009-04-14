@@ -351,7 +351,7 @@ class BGDownloader:
         self.retryTime = None
         self.retryCount = -1
 
-    def getURL(self):
+    def get_url(self):
         return self.url
 
     def getStatus(self):
@@ -1081,7 +1081,7 @@ class BTDownloader(BGDownloader):
 
                 self.handleMetainfo(metainfo)
             else:
-                httpclient.grabURL(self.getURL(), self.onDescriptionDownload,
+                httpclient.grabURL(self.get_url(), self.onDescriptionDownload,
                         self.onDescriptionDownloadFailed)
         else:
             self.gotMetainfo()

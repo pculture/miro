@@ -77,7 +77,7 @@ def userAgent():
             osname)
 
 class NetworkError(Exception):
-    """Base class for all errors that will be passed to errbacks from getURL
+    """Base class for all errors that will be passed to errbacks from get_url
     and friends.  NetworkErrors can be display in 2 ways:
 
     getFriendlyDescription() -- short, newbie friendly description 

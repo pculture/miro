@@ -414,7 +414,7 @@ class FeedParserAttributesTestCase(FeedTestCase):
         self.assertEquals(self.item.get_comments_link(), entry.comments)
 
         enclosure = entry.enclosures[0]
-        self.assertEquals(self.item.getURL(), enclosure.url)
+        self.assertEquals(self.item.get_url(), enclosure.url)
         self.assertEquals(self.item.get_size(), int(enclosure.length))
         self.assertEquals(self.item.get_format(), '.mpeg')
         self.assertEquals(self.item.getFirstVideoEnclosureType(),

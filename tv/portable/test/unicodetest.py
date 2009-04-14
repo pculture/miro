@@ -176,16 +176,16 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
         self.choice = dialogs.BUTTON_YES
 
-        myFeed = feed.Feed(u"file://"+self.filename)
+        myFeed = feed.Feed(u"file://" + self.filename)
         
-        self.assertEqual(self.numDialogs,1)
+        self.assertEqual(self.numDialogs, 1)
         myFeed.update()
         # Either the item isn't added or it's added with an ascii URL
         if len(myFeed.items) > 0:
-            self.assertEqual(len(myFeed.items),1)
+            self.assertEqual(len(myFeed.items), 1)
             myItem = myFeed.items[0]
-            myURL = myItem.getURL()
-            self.assertEqual(str(myURL),myURL)
+            myURL = myItem.get_url()
+            self.assertEqual(str(myURL), myURL)
 
     def testLatin1HTMLLinks(self):
         [handle, self.filename] = mkstemp(".html")
@@ -203,7 +203,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         if len(myFeed.items) > 0:
             self.assertEqual(len(myFeed.items),1)
             myItem = myFeed.items[0]
-            myURL = myItem.getURL()
+            myURL = myItem.get_url()
             self.assertEqual(str(myURL),myURL)
 
     def testInvalidLatin1HTMLLinks(self):
@@ -214,16 +214,16 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
         self.choice = dialogs.BUTTON_YES
 
-        myFeed = feed.Feed(u"file://"+self.filename)
+        myFeed = feed.Feed(u"file://" + self.filename)
         
-        self.assertEqual(self.numDialogs,1)
+        self.assertEqual(self.numDialogs, 1)
         myFeed.update()
         # Either the item isn't added or it's added with an ascii URL
         if len(myFeed.items) > 0:
-            self.assertEqual(len(myFeed.items),1)
+            self.assertEqual(len(myFeed.items), 1)
             myItem = myFeed.items[0]
-            myURL = myItem.getURL()
-            self.assertEqual(str(myURL),myURL)
+            myURL = myItem.get_url()
+            self.assertEqual(str(myURL), myURL)
 
     def testUTF8HTMLThumbs(self):
         [handle, self.filename] = mkstemp(".html")
@@ -240,7 +240,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
         self.assertEqual(len(myFeed.items),1)
         myItem = myFeed.items[0]
-        myURL = myItem.getURL()
+        myURL = myItem.get_url()
         self.assertEqual(str(myURL),myURL)
 
         thumb = myItem.get_thumbnail_url()
@@ -262,7 +262,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
         self.assertEqual(len(myFeed.items),1)
         myItem = myFeed.items[0]
-        myURL = myItem.getURL()
+        myURL = myItem.get_url()
         self.assertEqual(str(myURL),myURL)
 
         thumb = myItem.get_thumbnail_url()
@@ -284,7 +284,7 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
 
         self.assertEqual(len(myFeed.items),1)
         myItem = myFeed.items[0]
-        myURL = myItem.getURL()
+        myURL = myItem.get_url()
         self.assertEqual(str(myURL),myURL)
 
         thumb = myItem.get_thumbnail_url()

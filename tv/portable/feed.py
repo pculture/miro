@@ -316,7 +316,7 @@ class FeedImpl(DDBObject):
             return u""
 
     @returnsUnicode
-    def getURL(self):
+    def get_url(self):
         """Returns the URL of the feed
         """
         try:
@@ -1001,7 +1001,7 @@ class Feed(DDBObject):
 
     for name in ( 'setUpdateFrequency', 'scheduleUpdateEvents',
             'cancelUpdateEvents', 'update', 'get_viewed', 'isLoading',
-            'hasLibrary', 'getURL', 'getBaseURL',
+            'hasLibrary', 'get_url', 'getBaseURL',
             'getBaseHref', 'get_description', 'get_link', 'getLibraryLink',
             'get_thumbnail_url', 'get_license', 'url', 'title', 'created',
             'lastViewed', 'thumbURL', 'lastEngine', 'lastQuery', 'dir',
@@ -1217,7 +1217,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         that we don't throw away the download.
         """
 
-        if item.is_downloaded() and item.getURL() != fp_values.data['url']:
+        if item.is_downloaded() and item.get_url() != fp_values.data['url']:
             item.removeRSSID()
             self._handleNewEntry(entry, channelTitle)
         else:
@@ -1845,7 +1845,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
         else:
             title = link
         for item in self.items:
-            if item.getURL() == link:
+            if item.get_url() == link:
                 return
         # Anywhere we call this, we need to convert the input back to unicode
         title = feedparser.sanitizeHTML(title, "utf-8").decode('utf-8')
@@ -2055,7 +2055,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
         # watch feeds)
         known_files = set()
         for item in views.toplevelItems:
-            if not item.getFeed().getURL().startswith("dtv:directoryfeed"):
+            if not item.getFeed().get_url().startswith("dtv:directoryfeed"):
                 known_files.add(item.get_filename())
 
         # Remove items that are in feeds, but we have in our list
@@ -2179,7 +2179,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
         return escape(self.lastQuery)
 
     @returnsUnicode
-    def getURL(self):
+    def get_url(self):
         return u'dtv:search'
 
     @returnsUnicode
@@ -2253,7 +2253,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
             dl = downloader.getExistingDownloaderByURL(url)
             if dl is not None:
                 for item in dl.itemList:
-                    if item.getFeedURL() == 'dtv:searchDownloads' and item.getURL() == url:
+                    if item.getFeedURL() == 'dtv:searchDownloads' and item.get_url() == url:
                         try:
                             if entry["id"] == item.getRSSID():
                                 item.setFeed(self.ufeed.id)

@@ -98,7 +98,7 @@ def add_video(path, single=False):
 def check_url_exists(url):
     manualFeed = get_manual_feed()
     for i in manualFeed.items:
-        if i.getURL() == url:
+        if i.get_url() == url:
             title = _("Download already exists")
             text1 = _("That URL is already an external download.")
             downloadState = None

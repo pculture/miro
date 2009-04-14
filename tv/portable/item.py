@@ -370,7 +370,7 @@ class Item(DDBObject):
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     def _look_for_downloader(self):
-        self.downloader = downloader.lookupDownloader(self.getURL())
+        self.downloader = downloader.lookupDownloader(self.get_url())
         if self.downloader is not None:
             self.downloader_id = self.downloader.id
             self.downloader.addItem(self)
@@ -528,7 +528,7 @@ class Item(DDBObject):
         return self.enclosure_type
 
     @returnsUnicode
-    def getURL(self):
+    def get_url(self):
         """Returns the URL associated with the first enclosure in the item.
         """
         return self.url
@@ -538,7 +538,7 @@ class Item(DDBObject):
 
         This returns True when the item has a non-file URL.
         """
-        url = self.getURL()
+        url = self.get_url()
         return url != u'' and not url.startswith(u"file:")
 
     def getFeed(self):
@@ -567,7 +567,7 @@ class Item(DDBObject):
 
     @returnsUnicode
     def getFeedURL(self):
-        return self.getFeed().getURL()
+        return self.getFeed().get_url()
 
     def feedExists(self):
         return self.feed_id and self.dd.idExists(self.feed_id)
@@ -967,7 +967,7 @@ class Item(DDBObject):
         if self.downloader is not None:
             return self.downloader.getType() == u'bittorrent'
         else:
-            return filetypes.is_torrent_filename(self.getURL())
+            return filetypes.is_torrent_filename(self.get_url())
 
     def is_transferring(self):
         return self.downloader and self.downloader.get_state() in (u'uploading', u'downloading')
@@ -1237,7 +1237,7 @@ class Item(DDBObject):
         moviedata.movieDataUpdater.requestUpdate(self)
 
         for other in views.items:
-            if other.downloader is None and other.getURL() == self.getURL():
+            if other.downloader is None and other.get_url() == self.get_url():
                 other.set_downloader(self.downloader)
 
     def set_downloader(self, downloader):
