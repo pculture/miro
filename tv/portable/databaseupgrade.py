@@ -2007,6 +2007,10 @@ def upgrade83(cursor):
                 columns_connected))
     cursor.execute("DROP TABLE file_item")
 
+def upgrade84(cursor):
+    """Fix "field_impl" typo"""
+    cursor.execute("ALTER TABLE field_impl RENAME TO feed_impl")
+
 #def upgradeX (cursor):
 #    """Input a SQLite cursor.  Do whatever is necessary to upgrade the DB."""
 #    return changed

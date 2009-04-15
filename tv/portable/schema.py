@@ -421,7 +421,7 @@ class FeedSchema(DDBObjectSchema):
 
 class FeedImplSchema(DDBObjectSchema):
     klass = FeedImpl
-    table_name = 'field_impl'
+    table_name = 'feed_impl'
     fields = DDBObjectSchema.fields + [
         ('url', SchemaURL()),
         ('ufeed_id', SchemaInt()),
@@ -587,7 +587,7 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
         ('list_view_displays', SchemaList(SchemaBinary())),
     ]
 
-VERSION = 83
+VERSION = 84
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,
