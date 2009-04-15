@@ -2022,9 +2022,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
 
 class DirectoryWatchFeedImpl(FeedImpl):
     def setup_new(self, ufeed, directory):
-        FeedImpl.setup_new(self, url=url, ufeed=ufeed, title=title)
-        self.dir = directory
-        self.firstUpdate = True
+        # calculate url and title arguments to FeedImpl's constructor
         if directory is not None:
             url = u"dtv:directoryfeed:%s" % makeURLSafe(directory)
         else:
@@ -2034,6 +2032,9 @@ class DirectoryWatchFeedImpl(FeedImpl):
             title = title[:-1]
         title = filenameToUnicode(os.path.basename(title)) + "/"
 
+        FeedImpl.setup_new(self, url=url, ufeed=ufeed, title=title)
+        self.dir = directory
+        self.firstUpdate = True
         self.setUpdateFrequency(5)
         self.scheduleUpdateEvents(0)
 
