@@ -441,4 +441,4 @@ class SQLiteConverter(object):
         return value.encode('utf-8')
 
     def _convert_repr(self, value):
-        return eval(value, __builtins__, {})
+        return eval(value, __builtins__, {'datetime': datetime, 'time': time})

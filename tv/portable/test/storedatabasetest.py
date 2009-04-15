@@ -3,6 +3,7 @@ import os
 import tempfile
 import unittest
 from glob import glob
+import time
 
 from miro import database
 from miro import databaseupgrade
@@ -206,6 +207,16 @@ class DiskTest(FakeSchemaTest):
         self.joe.name = u'JO MAMA'
         self.joe.remove()
         self.db = [ self.lee, self.ben]
+        self.reload_objects()
+        self.check_database()
+
+    def test_schema_repr(self):
+        self.joe.stuff = {
+                '1234': datetime.now(),
+                None: time.localtime(),
+                u'booya': 23.0
+                }
+        self.joe.signal_change()
         self.reload_objects()
         self.check_database()
 
