@@ -515,9 +515,9 @@ class Item(DDBObject):
         """
         try:
             # optimizing by trying the cached feed
-            return self._feed.lastViewed >= self.creationTime
+            return self._feed.last_viewed >= self.creationTime
         except AttributeError:
-            return self.getFeed().lastViewed >= self.creationTime
+            return self.getFeed().last_viewed >= self.creationTime
 
     @returnsUnicode
     def getFirstVideoEnclosureType(self):

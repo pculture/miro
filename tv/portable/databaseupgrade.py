@@ -2022,6 +2022,20 @@ def upgrade85(cursor):
             "(SELECT 1 FROM item AS child WHERE "
             "child.parent_id=item.id AND NOT child.seen)")
 
+def upgrade86(cursor):
+    """Move the lastViewed attribute from feed_impl to feed."""
+    cursor.execute("ALTER TABLE feed ADD last_viewed TIMESTAMP")
+
+    feed_impl_tables = ('feed_impl', 'rss_feed_impl', 'rss_multi_feed_impl',
+            'scraper_feed_impl', 'search_feed_impl',
+            'directory_watch_feed_impl', 'directory_feed_impl',
+            'search_downloads_feed_impl', 'manual_feed_impl',
+            'single_feed_impl',)
+    selects = ['SELECT ufeed_id, lastViewed FROM %s' % table \
+            for table in feed_impl_tables]
+    union = ' UNION '.join(selects)
+    cursor.execute("UPDATE feed SET last_viewed = "
+            "(SELECT lastViewed FROM (%s) WHERE ufeed_id = feed.id)" % union)
 
 #def upgradeX (cursor):
 #    """Input a SQLite cursor.  Do whatever is necessary to upgrade the DB."""

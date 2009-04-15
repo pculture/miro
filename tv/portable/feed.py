@@ -215,7 +215,6 @@ class FeedImpl(DDBObject):
         self.title = title
         self.created = datetime.now()
         self.updating = False
-        self.lastViewed = datetime.min
         self.thumbURL = default_feed_icon_url()
         self.initialUpdate = True
         self.updateFreq = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)*60
@@ -270,21 +269,6 @@ class FeedImpl(DDBObject):
         """Subclasses should override this
         """
         self.scheduleUpdateEvents(-1)
-
-    def get_viewed(self):
-        """Returns true iff this feed has been looked at
-        """
-        return self.lastViewed != datetime.min
-
-    def markAsViewed(self):
-        """Sets the last time the feed was viewed to now
-        """
-        self.lastViewed = datetime.now()
-        for item in self.items:
-            if item.get_state() == "new":
-                item.signal_change(needsSave=False)
-
-        self.signal_change()
 
 
     def isLoading(self):
@@ -428,6 +412,7 @@ class Feed(DDBObject):
         self.expire = u"system"
         self.expireTime = None
         self.fallBehind = -1
+        self.last_viewed = datetime.min
 
         self.baseTitle = None
         self.origURL = url
@@ -518,6 +503,20 @@ class Feed(DDBObject):
         """
         return len([item for item in self.availableItems
                     if not item.is_pending_auto_download()])
+
+    def get_viewed(self):
+        """Returns true iff this feed has been looked at
+        """
+        return self.last_viewed != datetime.min
+
+    def markAsViewed(self):
+        """Sets the last time the feed was viewed to now
+        """
+        self.last_viewed = datetime.now()
+        self.signal_change()
+        for item in self.items:
+            if item.get_state() == "new":
+                item.signal_change(needsSave=False)
 
     def startManualDownload(self):
         next = None
@@ -1000,13 +999,13 @@ class Feed(DDBObject):
         return property(getter)
 
     for name in ( 'setUpdateFrequency', 'scheduleUpdateEvents',
-            'cancelUpdateEvents', 'update', 'get_viewed', 'isLoading',
+            'cancelUpdateEvents', 'update', 'isLoading',
             'hasLibrary', 'get_url', 'getBaseURL',
             'getBaseHref', 'get_description', 'get_link', 'getLibraryLink',
             'get_thumbnail_url', 'get_license', 'url', 'title', 'created',
-            'lastViewed', 'thumbURL', 'lastEngine', 'lastQuery', 'dir',
+            'thumbURL', 'lastEngine', 'lastQuery', 'dir',
             'preserveDownloads', 'lookup',
-            'markAsViewed'):
+            ):
         locals()[name] = attr_from_feed_impl(name)
 
     @returnsUnicode
@@ -1345,7 +1344,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                     item.eligibleForAutoDownload = False
                 item.signal_change()
             if self.ufeed.isAutoDownloadable():
-                self.markAsViewed()
+                self.ufeed.markAsViewed()
             self.ufeed.signal_change()
 
         self.truncateOldItems(old_items)
@@ -2274,7 +2273,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
 
     def updateFinished(self, old_items):
         self.searching = False
-        self.markAsViewed() # keeps the items from being seen as 'newly
+        self.ufeed.markAsViewed() # keeps the items from being seen as 'newly
                                   # available'
         RSSMultiFeedImpl.updateFinished(self, old_items)
 
@@ -2303,11 +2302,10 @@ class ManualFeedImpl(FeedImpl):
                 title=None)
         self.ufeed.expire = u'never'
         self.setUpdateFrequency(-1)
-        self.lastViewed = datetime.max
 
-    def setup_restored(self):
-        FeedImpl.setup_restored(self)
-        self.lastViewed = datetime.max
+    def setup_common(self):
+        FeedImpl.setup_common()
+        self.ufeed.last_viewed = datetime.max
 
     @returnsUnicode
     def get_title(self):
