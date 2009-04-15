@@ -80,6 +80,8 @@ def new_style_upgrade(cursor, saved_version, upgrade_to):
         raise DatabaseTooNewError(msg)
 
     for version in xrange(saved_version + 1, upgrade_to + 1):
+        if util.chatter:
+            logging.info("upgrading database to version %s" % (version))
         get_upgrade_func(version)(cursor)
 
 def upgrade(savedObjects, saveVersion, upgradeTo=None):
