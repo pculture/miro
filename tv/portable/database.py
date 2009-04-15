@@ -1402,7 +1402,7 @@ class ViewTracker(signals.SignalEmitter):
             tracker.object_changed(obj)
 
     def __init__(self, klass, where, values, joins):
-        signals.SignalEmitter.__init__(self, 'added', 'removed')
+        signals.SignalEmitter.__init__(self, 'added', 'removed', 'changed')
         self.klass = klass
         self.where = where
         self.values = values
@@ -1445,6 +1445,8 @@ class ViewTracker(signals.SignalEmitter):
         elif now and not before:
             self.emit('added', obj)
             self.current_ids.add(obj.id)
+        elif before and now:
+            self.emit('changed', obj)
 
     def check_all_objects(self):
         new_ids = set(app.db.liveStorage.query_ids(self.klass, self.where,
@@ -1487,6 +1489,7 @@ class DDBObject(signals.SignalEmitter):
             self.check_constraints()
             self.dd.addAfterCursor(self)
             self.on_db_insert()
+            ViewTracker._update_view_trackers(self)
 
     @classmethod
     def make_view(cls, where=None, values=None, order_by=None, joins=None):
@@ -1521,6 +1524,7 @@ class DDBObject(signals.SignalEmitter):
         self.dd.confirmDBThread()
         self.dd.removeObj(self)
         self.emit('removed')
+        ViewTracker._update_view_trackers(self)
 
     def confirmDBThread(self):
         """Call this before you grab data from an object

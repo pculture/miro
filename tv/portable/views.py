@@ -34,7 +34,7 @@ def initialize():
     initialized = True
     global videoFeedTabs, audioFeedTabs, playlistTabs
 
-    global items, fileItems, toplevelItems, nonContainerItems, unwatchedItems
+    global items, fileItems, nonContainerItems, unwatchedItems
     global watchableItems, newWatchableItems, uniqueWatchableItems, uniqueNewWatchableItems, manualItems, searchItems, individualItems
     global watchableVideoItems, uniqueNewWatchableVideoItems, watchableAudioItems, uniqueNewWatchableAudioItems
     global feeds
@@ -72,7 +72,6 @@ def initialize():
     # items includes fileItems.
     items = app.db.filterWithIndex(indexes.objectsByClass, item.Item)
     fileItems = app.db.filter(lambda x: isinstance(x, item.FileItem))
-    toplevelItems = items.filter(lambda x: x.feed_id is not None)
     nonContainerItems = items.filter(lambda x: not x.isContainerItem)
     unwatchedItems = nonContainerItems.filter(filters.unwatchedItems)
     #expiringItems = nonContainerItems.filter(filters.expiringItems)
@@ -99,7 +98,6 @@ def initialize():
     audioVisibleFeeds = visibleFeeds.filter(filters.audioFeed)
 
     items.createIndex(indexes.itemsByFeed, sortFunc=sorts.item)
-    toplevelItems.createIndex(indexes.itemsByFeed)
     items.createIndex(indexes.itemsByParent)
     items.createIndex(indexes.itemsByChannelFolder, sortFunc=sorts.item)
     feeds.createIndex(indexes.feedsByURL)

@@ -109,8 +109,8 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         myFeed.update()
         self.processThreads()
         self.processIdles()
-        self.assertEqual(len(myFeed.items), 1)
-        myItem = myFeed.items[0]
+        self.assertEqual(myFeed.items.count(), 1)
+        myItem = list(myFeed.items)[0]
         self.assertEqual(len(myItem.get_title()), 14)
         self.assertEqual(myItem.get_title(), u"H\xe4ppy Birthday")
 
@@ -127,8 +127,8 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         
         self.assertEqual(self.numDialogs, 1)
         myFeed.update()
-        self.assertEqual(len(myFeed.items), 1)
-        myItem = myFeed.items[0]
+        self.assertEqual(myFeed.items.count(), 1)
+        myItem = list(myFeed.items)[0]
         self.assertEqual(len(myItem.get_title()), 14)
         self.assertEqual(myItem.get_title(), u"H\xe4ppy Birthday")
 
@@ -145,8 +145,8 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         
         self.assertEqual(self.numDialogs,1)
         myFeed.update()
-        self.assertEqual(len(myFeed.items),1)
-        myItem = myFeed.items[0]
+        self.assertEqual(myFeed.items.count(),1)
+        myItem = list(myFeed.items)[0]
         self.assertEqual(len(myItem.get_title()),14)
         self.assertEqual(myItem.get_title(), u"H\xe4ppy Birthday")
 
@@ -163,8 +163,8 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         
         self.assertEqual(self.numDialogs,1)
         myFeed.update()
-        self.assertEqual(len(myFeed.items),1)
-        myItem = myFeed.items[0]
+        self.assertEqual(myFeed.items.count(),1)
+        myItem = list(myFeed.items)[0]
         self.assertEqual(len(myItem.get_title()),14)
         self.assertEqual(myItem.get_title(), u"H\xe4ppy Birthday")
 
@@ -181,9 +181,9 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.assertEqual(self.numDialogs, 1)
         myFeed.update()
         # Either the item isn't added or it's added with an ascii URL
-        if len(myFeed.items) > 0:
-            self.assertEqual(len(myFeed.items), 1)
-            myItem = myFeed.items[0]
+        if myFeed.items.count() > 0:
+            self.assertEqual(myFeed.items.count(), 1)
+            myItem = list(myFeed.items)[0]
             myURL = myItem.get_url()
             self.assertEqual(str(myURL), myURL)
 
@@ -200,9 +200,9 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.assertEqual(self.numDialogs,1)
         myFeed.update()
         # Either the item isn't added or it's added with an ascii URL
-        if len(myFeed.items) > 0:
-            self.assertEqual(len(myFeed.items),1)
-            myItem = myFeed.items[0]
+        if myFeed.items.count() > 0:
+            self.assertEqual(myFeed.items.count(),1)
+            myItem = list(myFeed.items)[0]
             myURL = myItem.get_url()
             self.assertEqual(str(myURL),myURL)
 
@@ -219,9 +219,9 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.assertEqual(self.numDialogs, 1)
         myFeed.update()
         # Either the item isn't added or it's added with an ascii URL
-        if len(myFeed.items) > 0:
-            self.assertEqual(len(myFeed.items), 1)
-            myItem = myFeed.items[0]
+        if myFeed.items.count() > 0:
+            self.assertEqual(myFeed.items.count(), 1)
+            myItem = list(myFeed.items)[0]
             myURL = myItem.get_url()
             self.assertEqual(str(myURL), myURL)
 
@@ -238,8 +238,8 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.assertEqual(self.numDialogs,1)
         myFeed.update()
 
-        self.assertEqual(len(myFeed.items),1)
-        myItem = myFeed.items[0]
+        self.assertEqual(myFeed.items.count(),1)
+        myItem = list(myFeed.items)[0]
         myURL = myItem.get_url()
         self.assertEqual(str(myURL),myURL)
 
@@ -260,8 +260,8 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.assertEqual(self.numDialogs,1)
         myFeed.update()
 
-        self.assertEqual(len(myFeed.items),1)
-        myItem = myFeed.items[0]
+        self.assertEqual(myFeed.items.count(),1)
+        myItem = list(myFeed.items)[0]
         myURL = myItem.get_url()
         self.assertEqual(str(myURL),myURL)
 
@@ -282,8 +282,8 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
         self.assertEqual(self.numDialogs,1)
         myFeed.update()
 
-        self.assertEqual(len(myFeed.items),1)
-        myItem = myFeed.items[0]
+        self.assertEqual(myFeed.items.count(),1)
+        myItem = list(myFeed.items)[0]
         myURL = myItem.get_url()
         self.assertEqual(str(myURL),myURL)
 

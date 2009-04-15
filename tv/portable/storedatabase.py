@@ -206,7 +206,7 @@ class LiveStorage:
             column_names = [f[0] for f in schema.fields]
             self.cursor.execute("SELECT %s from %s" % 
                     (', '.join(column_names), schema.table_name))
-            for row in self.cursor:
+            for row in self.cursor.fetchall():
                 restored_data = {}
                 for (name, schema_item), value in \
                         itertools.izip(schema.fields, row):

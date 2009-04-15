@@ -367,6 +367,40 @@ class Item(DDBObject):
                 "rd.state in ('finished', 'uploading', 'uploading-paused')",
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
+    @classmethod
+    def toplevel_view(cls):
+        return cls.make_view('feed_id IS NOT NULL')
+
+    @classmethod
+    def feed_view(cls, feed_id):
+        return cls.make_view('feed_id=?', (feed_id,))
+
+    @classmethod
+    def visible_feed_view(cls, feed_id):
+        return cls.make_view('feed_id=? AND (deleted IS NULL or not deleted)',
+                (feed_id,))
+
+    @classmethod
+    def feed_downloaded_view(cls, feed_id):
+        return cls.make_view("feed_id=? AND "
+                "rd.state in ('finished', 'uploading', 'uploading-paused')",
+                (feed_id,),
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
+
+    @classmethod
+    def feed_available_view(cls, feed_id):
+        return cls.make_view("feed_id=? AND "
+                "feed.last_viewed >= item.creationTime",
+                (feed_id,),
+                joins={'feed': 'item.feed_id=feed.id'})
+
+    @classmethod
+    def feed_unwatched_view(cls, feed_id):
+        return cls.make_view("feed_id=? AND not seen AND "
+                "rd.state in ('finished', 'uploading', 'uploading-paused')",
+                (feed_id,),
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
+
     def _look_for_downloader(self):
         self.downloader = downloader.lookupDownloader(self.get_url())
         if self.downloader is not None:

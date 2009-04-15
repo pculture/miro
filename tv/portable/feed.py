@@ -38,7 +38,7 @@ import os
 import re
 import xml
 
-from miro.database import DDBObject
+from miro.database import DDBObject, ObjectNotFoundError
 from miro.httpclient import grabURL
 from miro import config
 from miro import iconcache
@@ -55,7 +55,6 @@ from miro import fileutil
 from miro.plat.utils import filenameToUnicode, makeURLSafe, unmakeURLSafe
 from miro import filetypes
 from miro import item as itemmod
-from miro import views
 from miro import indexes
 from miro import searchengines
 from miro import sorts
@@ -187,7 +186,7 @@ def _config_change(key, value):
     """Handle configuration changes so we can update feed update frequencies
     """
     if key is prefs.CHECK_CHANNELS_EVERY_X_MN.key:
-        for feed in views.feeds:
+        for feed in Feed.make_view():
             updateFreq = 0
             try:
                 updateFreq = feed.parsed["feed"]["ttl"]
@@ -442,6 +441,10 @@ class Feed(DDBObject):
         self.inlineSearchTerm = None
         self.calc_item_list()
 
+    @classmethod
+    def get_by_url(cls, url):
+        return cls.make_view('origURL=?', (url,)).get_singleton()
+
     def on_db_insert(self):
         self.generateFeed(True)
 
@@ -466,18 +469,22 @@ class Feed(DDBObject):
         self.wasUpdating = isUpdating
 
     def calc_item_list(self):
-        self.items = views.toplevelItems.filterWithIndex(indexes.itemsByFeed, self.id)
-        self.downloadedItems = self.items.filter(lambda x: x.is_downloaded())
-        self.availableItems = self.items.filter(lambda x: x.get_state() == 'new')
-        self.unwatchedItems = self.items.filter(lambda x: x.get_state() == 'newly-downloaded')
-        self.downloadedItems.addAddCallback(self._item_view_callback)
-        self.downloadedItems.addRemoveCallback(self._item_view_callback)
-        self.availableItems.addAddCallback(self._item_view_callback)
-        self.availableItems.addRemoveCallback(self._item_view_callback)
-        self.unwatchedItems.addAddCallback(self._item_view_callback)
-        self.unwatchedItems.addRemoveCallback(self._item_view_callback)
+        self.items = itemmod.Item.feed_view(self.id)
+        self.visible_items = itemmod.Item.visible_feed_view(self.id)
+        self.downloaded_items = itemmod.Item.feed_downloaded_view(self.id)
+        self.available_items = itemmod.Item.feed_available_view(self.id)
+        self.unwatched_items = itemmod.Item.feed_unwatched_view(self.id)
 
-    def _item_view_callback(self, obj, id):
+        self.downloaded_items_tracker = self.downloaded_items.make_tracker()
+        self.available_items_tracker = self.available_items.make_tracker()
+        self.unwatched_items_tracker = self.unwatched_items.make_tracker()
+
+        for tracker in (self.downloaded_items_tracker,
+                self.available_items_tracker, self.unwatched_items_tracker):
+            tracker.connect('added', self._item_view_callback)
+            tracker.connect('removed', self._item_view_callback)
+
+    def _item_view_callback(self, tracker, obj):
         self.signal_change(needsSignalFolder=True)
 
     def update_after_restore(self):
@@ -491,17 +498,17 @@ class Feed(DDBObject):
     def num_downloaded(self):
         """Returns the number of downloaded items in the feed.
         """
-        return len(self.downloadedItems)
+        return self.downloaded_items.count()
 
     def numUnwatched(self):
         """Returns string with number of unwatched videos in feed
         """
-        return len(self.unwatchedItems)
+        return self.unwatched_items.count()
 
     def numAvailable(self):
         """Returns string with number of available videos in feed
         """
-        return len([item for item in self.availableItems
+        return len([item for item in self.available_items
                     if not item.is_pending_auto_download()])
 
     def get_viewed(self):
@@ -1175,7 +1182,7 @@ class Feed(DDBObject):
         iconcache.iconCacheUpdater.clear_vital()
         for item in self.items:
             item.icon_cache.requestUpdate(True)
-        for feed in views.feeds:
+        for feed in Feed.make_view():
             feed.icon_cache.requestUpdate(True)
 
     def __str__(self):
@@ -1363,8 +1370,9 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         if limit == u"system":
             limit = config.get(prefs.MAX_OLD_ITEMS_DEFAULT)
 
-        if len(self.items) > config.get(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS):
-            truncate = len(self.items) - config.get(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS)
+        item_count = self.items.count()
+        if item_count > config.get(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS):
+            truncate = item_count - config.get(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS)
             if truncate > len(old_items):
                 truncate = 0
             limit = min(limit, truncate)
@@ -2054,7 +2062,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
         # Files known about by real feeds (other than other directory
         # watch feeds)
         known_files = set()
-        for item in views.toplevelItems:
+        for item in itemmod.Item.toplevel_view():
             if not item.getFeed().get_url().startswith("dtv:directoryfeed"):
                 known_files.add(item.get_filename())
 
@@ -2119,7 +2127,7 @@ class DirectoryFeedImpl(FeedImpl):
         movies_dir = config.get(prefs.MOVIES_DIRECTORY)
         # files known about by real feeds
         known_files = set()
-        for item in views.toplevelItems:
+        for item in itemmod.Item.toplevel_view():
             if item.feed_id is not self.ufeed.id:
                 known_files.add(item.get_filename())
             if item.isContainerItem:
@@ -2483,13 +2491,16 @@ class HTMLFeedURLParser(HTMLParser):
 
 def expire_items():
     try:
-        for feed in views.feeds:
+        for feed in Feed.make_view():
             feed.expire_items()
     finally:
         eventloop.addTimeout(300, expire_items, "Expire Items")
 
 def get_feed_by_url(url):
-    return views.feeds.getItemWithIndex(indexes.feedsByURL, url)
+    try:
+        return Feed.get_by_url(url)
+    except ObjectNotFoundError:
+        return None
 
 restored_feeds = []
 def start_updates():

@@ -67,6 +67,7 @@ class ViewTracker(object):
     """Handles tracking views for TrackGuides, TrackChannels, TrackPlaylist and TrackItems."""
 
     def __init__(self):
+        self.trackers = []
         self.add_callbacks()
         self.reset_changes()
         self.tabs_being_reordered = False
@@ -130,46 +131,67 @@ class ViewTracker(object):
 
     def add_callbacks(self):
         for view in self.get_object_views():
-            view.addAddCallback(self.on_object_added)
-            view.addRemoveCallback(self.on_object_removed)
-            view.add_change_callback(self.on_object_changed)
+            if isinstance(view, database.View):
+                # new style view
+                tracker = view.make_tracker()
+                tracker.connect('added', self.on_object_added)
+                tracker.connect('removed', self.on_object_removed)
+                tracker.connect('changed', self.on_object_changed)
+                self.trackers.append(tracker)
+            else:
+                view.addAddCallback(self.old_on_object_added)
+                view.addRemoveCallback(self.old_on_object_removed)
+                view.add_change_callback(self.old_on_object_changed)
 
     def remove_callbacks(self):
         for view in self.get_object_views():
-            view.removeAddCallback(self.on_object_added)
-            view.removeRemoveCallback(self.on_object_removed)
-            view.remove_change_callback(self.on_object_changed)
+            if isinstance(view, database.View):
+                # new style view
+                pass
+            else:
+                view.removeAddCallback(self.old_on_object_added)
+                view.removeRemoveCallback(self.old_on_object_removed)
+                view.remove_change_callback(self.old_on_object_changed)
 
-    def on_object_added(self, obj, id):
+    def on_object_added(self, tracker, obj):
         if self.tabs_being_reordered:
             # even though we're not sending messages, call _make_new_info() to
             # update _last_sent_info
             self._make_new_info(obj)
             return
-        if obj in self.removed:
+        if obj in self.changed:
             # object was already removed, we need to send that message out
             # before we send the add message.
             self.send_messages()
         self.added.append(obj)
         self.schedule_send_messages()
 
-    def on_object_removed(self, obj, id):
+    def on_object_removed(self, tracker, obj):
         if self.tabs_being_reordered:
             # even though we're not sending messages, update _last_sent_info
-            del self._last_sent_info[id]
+            del self._last_sent_info[obj.id]
             return
         self.removed.add(obj)
         self.schedule_send_messages()
 
-    def on_object_changed(self, obj, id):
+    def on_object_changed(self, tracker, obj):
         # Don't pay attention to tabs_being_reordered here.  This lets us
         # update the new/unwatched counts when channels are added/removed from
         # folders (#10988)
         self.changed.add(obj)
         self.schedule_send_messages()
 
+    def old_on_object_added(self, obj, id):
+        self.on_object_added(None, obj)
+    def old_on_object_changed(self, obj, id):
+        self.on_object_changed(None, obj)
+    def old_on_object_removed(self, obj, id):
+        self.on_object_removed(None, obj)
+
     def unlink(self):
         self.remove_callbacks()
+        for tracker in self.trackers:
+            tracker.unlink()
 
 class TabTracker(ViewTracker):
     def __init__(self):
@@ -186,18 +208,6 @@ class TabTracker(ViewTracker):
             self.reset_changes()
         else:
             ViewTracker.send_messages(self)
-
-    def add_callbacks(self):
-        for view in self.get_object_views():
-            view.addAddCallback(self.on_object_added)
-            view.addRemoveCallback(self.on_object_removed)
-            view.add_change_callback(self.on_object_changed)
-
-    def remove_callbacks(self):
-        for view in self.get_object_views():
-            view.removeAddCallback(self.on_object_added)
-            view.removeRemoveCallback(self.on_object_removed)
-            view.remove_change_callback(self.on_object_changed)
 
     def send_initial_list(self):
         response = messages.TabList(self.type)
@@ -292,13 +302,9 @@ class ItemTrackerBase(ViewTracker):
 class FeedItemTracker(ItemTrackerBase):
     type = 'feed'
     def __init__(self, feed):
-        self.view = feed.items.filter(filters.notDeleted)
+        self.view = feed.visible_items
         self.id = feed.id
         ItemTrackerBase.__init__(self)
-
-    def unlink(self):
-        ItemTrackerBase.unlink(self)
-        self.view.unlink()
 
 class FeedFolderItemTracker(ItemTrackerBase):
     type = 'feed'
@@ -1001,7 +1007,7 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def _search_update_finished(self, feed):
         messages.SearchComplete(feed.lastEngine, feed.lastQuery,
-                len(feed.items)).send_to_frontend()
+                feed.items.count()).send_to_frontend()
 
     def item_tracker_key(self, message):
         if message.type != 'manual':
