@@ -85,13 +85,10 @@ class MovieDataInfo:
         self.thumbnailPath = os.path.join(thumbnailDirectory(),
                 thumbnailFilename)
         self.programInfo = None
-        try:
-            commandLine, env = movie_data_program_info(
-                    fileutil.expand_filename(self.videoPath), fileutil.expand_filename(self.thumbnailPath))
-        except NotImplementedError:
-            pass
-        else:
-            self.programInfo = (commandLine, env)
+        if hasattr(app, 'in_unit_tests'):
+            return
+        commandLine, env = movie_data_program_info(
+                fileutil.expand_filename(self.videoPath), fileutil.expand_filename(self.thumbnailPath))
 
 class MovieDataUpdater:
     def __init__ (self):

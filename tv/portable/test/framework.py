@@ -71,6 +71,7 @@ class DummyController:
 
 class MiroTestCase(unittest.TestCase):
     def setUp(self):
+        app.in_unit_tests = True
         app.db = database.defaultDatabase
         database.set_thread(threading.currentThread())
         database.resetDefaultDatabase()

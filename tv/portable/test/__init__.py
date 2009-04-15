@@ -54,5 +54,6 @@ from miro.test.xhtmltest import *
 from miro.test.gtcachetest import *
 from miro.test.iconcachetest import *
 from miro.test.databasetest import *
+from miro.test.itemtest import *
 
 import miro.test.bmachinetest

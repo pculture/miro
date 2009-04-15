@@ -2013,6 +2013,16 @@ def upgrade84(cursor):
     """Fix "field_impl" typo"""
     cursor.execute("ALTER TABLE field_impl RENAME TO feed_impl")
 
+def upgrade85(cursor):
+    """Set seen attribute for container items"""
+
+    cursor.execute("UPDATE item SET seen=0 WHERE isContainerItem")
+    cursor.execute("UPDATE item SET seen=1 "
+            "WHERE isContainerItem AND NOT EXISTS "
+            "(SELECT 1 FROM item AS child WHERE "
+            "child.parent_id=item.id AND NOT child.seen)")
+
+
 #def upgradeX (cursor):
 #    """Input a SQLite cursor.  Do whatever is necessary to upgrade the DB."""
 #    return changed

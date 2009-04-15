@@ -315,11 +315,7 @@ class Item(DDBObject):
         self.creationTime = datetime.now()
         self._update_release_date()
         self._look_for_downloader()
-        self.split_new_item()
         self.setup_common()
-
-    def split_new_item(self):
-        self.split_item()
 
     def setup_restored(self):
         # For unknown reason(s), some users still have databases with item
@@ -332,11 +328,13 @@ class Item(DDBObject):
     def setup_common(self):
         self.selected = False
         self.active = False
-        self.childrenSeen = None
         self.downloader = None
         self.expiring = None
         self.showMoreInfo = False
         self.updating_movie_info = False
+
+    def on_db_insert(self):
+        self.split_item()
 
     @classmethod
     def auto_pending_view(cls):
@@ -365,14 +363,7 @@ class Item(DDBObject):
     @classmethod
     def newly_downloaded_view(cls):
         return cls.make_view("NOT item.seen AND "
-                # next 4 lines are a bit weird, they are there to handle
-                # container items.  We want to only include the container not
-                # the children, and we consider a container seen if all of the
-                # children have been seen.
                 "item.parent_id IS NULL AND "
-                "(NOT item.isContainerItem OR "
-                "NOT EXISTS (SELECT 1 FROM item AS child WHERE "
-                "child.parent_id=item.id AND NOT child.seen)) AND "
                 "rd.state in ('finished', 'uploading', 'uploading-paused')",
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
@@ -728,16 +719,7 @@ class Item(DDBObject):
         Note the difference between "viewed" and "seen".
         """
         self.confirmDBThread()
-        if self.isContainerItem:
-            if self.childrenSeen is None:
-                self.childrenSeen = True
-                for item in self.getChildren():
-                    if not item.seen:
-                        self.childrenSeen = False
-                        break
-            return self.childrenSeen
-        else:
-            return self.seen
+        return self.seen
 
     def markItemSeen(self, markOtherItems=True):
         """Marks the item as seen.
@@ -747,23 +729,22 @@ class Item(DDBObject):
             self.seen = True
             if self.watchedTime is None:
                 self.watchedTime = datetime.now()
-            self.clearParentsChildrenSeen()
             self.signal_change()
+            self.update_parent_seen()
             if markOtherItems and self.downloader:
                 for item in self.downloader.itemList:
                     if item != self:
                         item.markItemSeen(False)
 
-    def clearParentsChildrenSeen(self):
+    def update_parent_seen(self):
         if self.parent_id:
-            parent = self.getParent()
-            parent.childrenSeen = None
-            parent.signal_change()
+            unseen_children = self.make_view('parent_id=? AND NOT seen',
+                    (self.parent_id,))
+            self.getParent().seen = (unseen_children.count() == 0)
 
     def markItemUnseen(self, markOtherItems=True):
         self.confirmDBThread()
         if self.isContainerItem:
-            self.childrenSeen = False
             for item in self.getChildren():
                 item.seen = False
                 item.signal_change()
@@ -773,8 +754,8 @@ class Item(DDBObject):
                 return
             self.seen = False
             self.watchedTime = None
-            self.clearParentsChildrenSeen()
             self.signal_change()
+            self.update_parent_seen()
             if markOtherItems and self.downloader:
                 for item in self.downloader.itemList:
                     if item != self:
@@ -1394,13 +1375,6 @@ class FileItem(Item):
         self.shortFilename = cleanFilename(os.path.basename(self.filename))
         self.was_downloaded = False
         moviedata.movieDataUpdater.requestUpdate (self)
-        self.split_item()
-
-    def split_new_item(self):
-        """We don't have self.filename setup yet, so we can't call split item.
-        we call split_item() later on in our overridden setup_new method.
-        """
-        pass
 
     @returnsUnicode
     def get_state(self):
