@@ -1419,6 +1419,9 @@ class FileItem(Item):
         else:
             return u"newly-downloaded"
 
+    def is_eligible_for_auto_download(self):
+        return False
+
     def add_to_library(self):
         """Adds a file to the library."""
         manualFeed = getSingletonDDBObject(views.manualFeed)
