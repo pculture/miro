@@ -390,7 +390,7 @@ class Item(DDBObject):
     @classmethod
     def feed_available_view(cls, feed_id):
         return cls.make_view("feed_id=? AND "
-                "feed.last_viewed >= item.creationTime",
+                "feed.last_viewed <= item.creationTime",
                 (feed_id,),
                 joins={'feed': 'item.feed_id=feed.id'})
 
