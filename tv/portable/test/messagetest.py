@@ -270,8 +270,8 @@ class FeedTrackTest(TrackerTest):
     def checkInfo(self, channelInfo, feed):
         self.assertEquals(channelInfo.name, feed.get_title())
         self.assertEquals(channelInfo.id, feed.id)
-        self.assertEquals(channelInfo.unwatched, feed.numUnwatched())
-        self.assertEquals(channelInfo.available, feed.numAvailable())
+        self.assertEquals(channelInfo.unwatched, feed.num_unwatched())
+        self.assertEquals(channelInfo.available, feed.num_available())
         self.assertEquals(channelInfo.is_folder,
                 isinstance(feed, ChannelFolder))
 

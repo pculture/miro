@@ -742,8 +742,8 @@ class ChannelInfo(object):
         self.name = channel_obj.get_title()
         self.id = channel_obj.id
         self.section = channel_obj.section
-        self.unwatched = channel_obj.numUnwatched()
-        self.available = channel_obj.numAvailable()
+        self.unwatched = channel_obj.num_unwatched()
+        self.available = channel_obj.num_available()
         self.has_downloading = channel_obj.hasDownloadingItems()
         if hasattr(channel_obj, "searchTerm"):
             self.search_term = channel_obj.searchTerm

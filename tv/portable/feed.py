@@ -500,12 +500,12 @@ class Feed(DDBObject):
         """
         return self.downloaded_items.count()
 
-    def numUnwatched(self):
+    def num_unwatched(self):
         """Returns string with number of unwatched videos in feed
         """
         return self.unwatched_items.count()
 
-    def numAvailable(self):
+    def num_available(self):
         """Returns string with number of available videos in feed
         """
         return len([item for item in self.available_items
