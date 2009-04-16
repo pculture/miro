@@ -44,14 +44,14 @@ class UnicodeFeedTestCase(framework.EventLoopTest):
             for value in parsed:
                 self.isProperFeedParserDict(value, name)
         elif isinstance(parsed, types.StringType):
-            self.assert_(name in ["base","type","encoding","version","href","rel"])
+            self.assert_(name in ["base", "type", "encoding", "version", "href", "rel"])
         elif isinstance(parsed, time.struct_time):
             self.assert_(name in ["updated_parsed"])
         elif isinstance(parsed, types.IntType):
-            self.assert_(name in ["bozo"])
+            self.assert_(name in ["updated_parsed", "bozo"])
         else:
-            self.assert_((isinstance(parsed,types.UnicodeType) or
-                          isinstance(parsed,types.NoneType)))
+            self.assert_((isinstance(parsed, types.UnicodeType) or
+                          isinstance(parsed, types.NoneType)))
 
     # Returns true iff value is a python unicode string containing
     # only ascii characters
