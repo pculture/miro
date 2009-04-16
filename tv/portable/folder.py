@@ -117,9 +117,9 @@ class ChannelFolder(FolderBase):
             available += child.num_available()
         return available
 
-    def markAsViewed(self):
+    def mark_as_viewed(self):
         for child in self.getChildrenView():
-            child.markAsViewed()
+            child.mark_as_viewed()
     
 class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
     def setup_new(self, title):

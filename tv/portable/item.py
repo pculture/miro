@@ -1245,7 +1245,7 @@ class Item(DDBObject):
         """
         UandA = self.getUandA()
         FeedParserValues(entry).update_item(self)
-        self.icon_cache.requestUpdate()
+        self.icon_cache.request_update()
         self._update_release_date()
         self.signal_change()
 
@@ -1256,7 +1256,7 @@ class Item(DDBObject):
         self.downloadedTime = datetime.now()
         if not self.split_item():
             self.signal_change()
-        moviedata.movieDataUpdater.requestUpdate(self)
+        moviedata.movieDataUpdater.request_update(self)
 
         for other in views.items:
             if other.downloader is None and other.get_url() == self.get_url():
@@ -1363,7 +1363,7 @@ class Item(DDBObject):
             self.screenshot = None
             self.signal_change()
         if self.duration is None or self.screenshot is None:
-            moviedata.movieDataUpdater.requestUpdate (self)
+            moviedata.movieDataUpdater.request_update (self)
 
     def fix_incorrect_torrent_subdir(self):
         """Up to revision 6257, torrent downloads were incorrectly being created in
@@ -1408,7 +1408,7 @@ class FileItem(Item):
         self.offsetPath = offsetPath
         self.shortFilename = cleanFilename(os.path.basename(self.filename))
         self.was_downloaded = False
-        moviedata.movieDataUpdater.requestUpdate (self)
+        moviedata.movieDataUpdater.request_update (self)
 
     @returnsUnicode
     def get_state(self):

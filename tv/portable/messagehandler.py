@@ -560,7 +560,7 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_mark_feed_seen(self, message):
         try:
             feed = database.defaultDatabase.getObjectByID(message.id)
-            feed.markAsViewed()
+            feed.mark_as_viewed()
         except database.ObjectNotFoundError:
             logging.warning("handle_mark_feed_seen: can't find feed by id %s", message.id)
 

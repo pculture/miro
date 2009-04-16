@@ -75,7 +75,7 @@ def _setup_icon_cache(obj, om):
                     (obj, obj.icon_cache_id))
         else:
             obj.icon_cache.dbItem = obj
-            obj.icon_cache.requestUpdate()
+            obj.icon_cache.request_update()
             return
 
     obj.icon_cache = iconcache.IconCache(obj)

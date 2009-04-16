@@ -126,14 +126,14 @@ class MovieDataUpdater:
                     # Setting it to "" instead of None, means that we won't
                     # try to take the screenshot again.
                     screenshot = FilenameType("")
-                self.updateFinished(movieDataInfo.item, duration, screenshot)
+                self.update_finished(movieDataInfo.item, duration, screenshot)
             except (KeyboardInterrupt, SystemExit):
                 raise
             except:
                 if self.inShutdown:
                     break
                 signals.system.failed_exn("When running external movie data program")
-                self.updateFinished(movieDataInfo.item, -1, None)
+                self.update_finished(movieDataInfo.item, -1, None)
 
     def runMovieDataProgram(self, commandLine, env):
         start_time = time.time()
@@ -176,14 +176,14 @@ class MovieDataUpdater:
             return -1
 
     @asIdle
-    def updateFinished(self, item, duration, screenshot):
+    def update_finished(self, item, duration, screenshot):
         if item.idExists():
             item.duration = duration
             item.screenshot = screenshot
             item.updating_movie_info = False
             item.signal_change()
 
-    def requestUpdate(self, item):
+    def request_update(self, item):
         if self.inShutdown:
             return
         filename = item.get_video_filename()

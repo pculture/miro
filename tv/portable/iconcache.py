@@ -87,7 +87,7 @@ class IconCacheUpdater:
         self.inShutdown = False
 
     @eventloop.asIdle
-    def requestUpdate(self, item, is_vital=False):
+    def request_update(self, item, is_vital=False):
         if is_vital:
             item.dbItem.confirmDBThread()
             if (item.filename and fileutil.access(item.filename, os.R_OK)
@@ -138,7 +138,7 @@ class IconCache(DDBObject):
         self.dbItem = dbItem
         self.removed = False
 
-        self.requestUpdate(is_vital=dbItem.ICON_CACHE_VITAL)
+        self.request_update(is_vital=dbItem.ICON_CACHE_VITAL)
 
     def icon_changed(self, needsSave=True):
         try:
@@ -189,9 +189,9 @@ class IconCache(DDBObject):
         self.updating = False
         if self.needsUpdate:
             self.needsUpdate = False
-            self.requestUpdate(True)
+            self.request_update(True)
         elif error is not None:
-            eventloop.addTimeout(3600, self.requestUpdate, "Thumbnail request for %s" % url)
+            eventloop.addTimeout(3600, self.request_update, "Thumbnail request for %s" % url)
         iconCacheUpdater.update_finished()
 
     def update_icon_cache(self, url, info):
@@ -282,7 +282,7 @@ class IconCache(DDBObject):
             self.updating = False
             if self.needsUpdate:
                 self.needsUpdate = False
-                self.requestUpdate(True)
+                self.request_update(True)
             iconCacheUpdater.update_finished()
 
     def request_icon(self):
@@ -318,12 +318,12 @@ class IconCache(DDBObject):
         httpclient.grabURL(url, lambda info: self.update_icon_cache(url, info),
                 lambda error: self.error_callback(url, error))
 
-    def requestUpdate(self, is_vital=False):
+    def request_update(self, is_vital=False):
         if hasattr(self, "updating") and hasattr(self, "dbItem"):
             if self.removed:
                 return
 
-            iconCacheUpdater.requestUpdate(self, is_vital=is_vital)
+            iconCacheUpdater.request_update(self, is_vital=is_vital)
 
     def setup_restored(self):
         self.removed = False

@@ -755,7 +755,7 @@ class ChannelInfo(object):
             self.parent_id = channel_obj.folder_id
             self.url = channel_obj.get_url()
             self.thumbnail = channel_obj.getThumbnailPath()
-            self.base_href = channel_obj.getBaseHref()
+            self.base_href = channel_obj.get_base_href()
             self.autodownload_mode = channel_obj.getAutoDownloadMode()
             self.is_folder = False
             self.is_directory_feed = (self.url is not None and

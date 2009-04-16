@@ -226,7 +226,7 @@ class FeedImpl(DDBObject):
         self.ufeed.signal_change()
 
     @returnsUnicode
-    def getBaseHref(self):
+    def get_base_href(self):
         """Get a URL to use in the <base> tag for this channel.  This is used
         for relative links in this channel's items.
         """
@@ -333,7 +333,7 @@ class FeedImpl(DDBObject):
     def get_link(self):
         """Returns a link to a webpage associated with the feed
         """
-        return self.ufeed.getBaseHref()
+        return self.ufeed.get_base_href()
 
     @returnsUnicode
     def getLibraryLink(self):
@@ -516,7 +516,7 @@ class Feed(DDBObject):
         """
         return self.last_viewed != datetime.min
 
-    def markAsViewed(self):
+    def mark_as_viewed(self):
         """Sets the last time the feed was viewed to now
         """
         self.last_viewed = datetime.now()
@@ -1008,7 +1008,7 @@ class Feed(DDBObject):
     for name in ( 'setUpdateFrequency', 'scheduleUpdateEvents',
             'cancelUpdateEvents', 'update', 'isLoading',
             'hasLibrary', 'get_url', 'getBaseURL',
-            'getBaseHref', 'get_description', 'get_link', 'getLibraryLink',
+            'get_base_href', 'get_description', 'get_link', 'getLibraryLink',
             'get_thumbnail_url', 'get_license', 'url', 'title', 'created',
             'thumbURL', 'lastEngine', 'lastQuery', 'dir',
             'preserveDownloads', 'lookup',
@@ -1181,9 +1181,9 @@ class Feed(DDBObject):
     def updateIcons(self):
         iconcache.iconCacheUpdater.clear_vital()
         for item in self.items:
-            item.icon_cache.requestUpdate(True)
+            item.icon_cache.request_update(True)
         for feed in Feed.make_view():
-            feed.icon_cache.requestUpdate(True)
+            feed.icon_cache.request_update(True)
 
     def __str__(self):
         return "Feed - %s" % self.get_title()
@@ -1275,7 +1275,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             if (parsed.feed.has_key('image') and
                     parsed.feed.image.has_key('url')):
                 self.thumbURL = parsed.feed.image.url
-                self.ufeed.icon_cache.requestUpdate(is_vital=True)
+                self.ufeed.icon_cache.request_update(is_vital=True)
 
         items_byid = {}
         items_byURLTitle = {}
@@ -1331,7 +1331,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                 self._handleNewEntry(entry, channelTitle)
         return old_items
 
-    def updateFinished(self, old_items):
+    def update_finished(self, old_items):
         """
         Called by subclasses to finish the update.
         """
@@ -1351,7 +1351,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                     item.eligibleForAutoDownload = False
                 item.signal_change()
             if self.ufeed.isAutoDownloadable():
-                self.ufeed.markAsViewed()
+                self.ufeed.mark_as_viewed()
             self.ufeed.signal_change()
 
         self.truncateOldItems(old_items)
@@ -1414,13 +1414,13 @@ class RSSFeedImpl(RSSFeedImplBase):
         self.download = None
 
     @returnsUnicode
-    def getBaseHref(self):
+    def get_base_href(self):
         try:
             return escape(self.parsed.link)
         except (SystemExit, KeyboardInterrupt):
             raise
         except:
-            return FeedImpl.getBaseHref(self)
+            return FeedImpl.get_base_href(self)
 
     @returnsUnicode
     def get_description(self):
@@ -1483,7 +1483,7 @@ class RSSFeedImpl(RSSFeedImplBase):
             updateFreq = 0
         self.setUpdateFrequency(updateFreq)
 
-        self.updateFinished(old_items)
+        self.update_finished(old_items)
         self.feedparser_finished()
         end = clock()
         if end - start > 1.0:
@@ -1626,7 +1626,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
 
     def checkUpdateFinished(self):
         if self.updating == 0:
-            self.updateFinished(self.oldItems)
+            self.update_finished(self.oldItems)
             self.oldItems = None
             self.scheduleUpdateEvents(-1)
 
@@ -2227,7 +2227,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
             self.title = self.url
             self.ufeed.icon_cache.reset()
             self.thumbURL = default_feed_icon_url()
-            self.ufeed.icon_cache.requestUpdate(is_vital=True)
+            self.ufeed.icon_cache.request_update(is_vital=True)
         finally:
             self.ufeed.signal_change()
         if was_searching:
@@ -2279,11 +2279,11 @@ class SearchFeedImpl(RSSMultiFeedImpl):
                             return
         RSSMultiFeedImpl._handleNewEntry(self, entry, channelTitle)
 
-    def updateFinished(self, old_items):
+    def update_finished(self, old_items):
         self.searching = False
-        self.ufeed.markAsViewed() # keeps the items from being seen as 'newly
-                                  # available'
-        RSSMultiFeedImpl.updateFinished(self, old_items)
+        # keeps the items from being seen as 'newly available'
+        self.ufeed.mark_as_viewed()
+        RSSMultiFeedImpl.update_finished(self, old_items)
 
     def update(self):
         if self.url is not None and self.url != u'':
