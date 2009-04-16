@@ -38,10 +38,7 @@ import re
 try:
     from hashlib import sha1 as sha
 except ImportError:
-    # this throws a spurious deprecationwarning by the Python 2.6 parser even 
-    # though it never executes.  silliness.
     from sha import sha
-import sha
 import string
 import sys
 import urllib
