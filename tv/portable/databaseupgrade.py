@@ -2037,6 +2037,25 @@ def upgrade86(cursor):
     cursor.execute("UPDATE feed SET last_viewed = "
             "(SELECT lastViewed FROM (%s) WHERE ufeed_id = feed.id)" % union)
 
+def upgrade87(cursor):
+    """Make last_viewed a "timestamp" column rather than a "TIMESTAMP" one."""
+    # see 11716 for details
+    columns = []
+    columns_with_type = []
+    cursor.execute("PRAGMA table_info('feed')")
+    for column_info in cursor.fetchall():
+        column = column_info[1]
+        type = column_info[2]
+        columns.append(column)
+        if type == 'TIMESTAMP':
+            type = 'timestamp'
+        columns_with_type.append("%s %s" % (column, type))
+    cursor.execute("ALTER TABLE feed RENAME TO old_feed")
+    cursor.execute("CREATE TABLE feed (%s)" % ', '.join(columns_with_type))
+    cursor.execute("INSERT INTO feed (%s) SELECT %s FROM old_feed" % 
+            (', '.join(columns), ', '.join(columns)))
+    cursor.execute("DROP TABLE old_feed")
+
 #def upgradeX (cursor):
 #    """Input a SQLite cursor.  Do whatever is necessary to upgrade the DB."""
 #    return changed

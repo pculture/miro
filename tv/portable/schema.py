@@ -587,7 +587,7 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
         ('list_view_displays', SchemaList(SchemaBinary())),
     ]
 
-VERSION = 86
+VERSION = 87
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,
