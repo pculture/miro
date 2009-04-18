@@ -39,7 +39,6 @@ def initialize():
     global watchableVideoItems, uniqueNewWatchableVideoItems, watchableAudioItems, uniqueNewWatchableAudioItems
     global feeds
     global sites
-    global guides, default_guide
     global manualFeed, singleFeed, directoryFeed
     global downloadingItems, pausedItems, allDownloadingItems, uniqueDownloadingItems
     global playlists, playlistFolders, channelFolders
@@ -104,9 +103,6 @@ def initialize():
     feeds.createIndex(indexes.byFolder)
 
     #FIXME: These should just be globals
-    guides = app.db.filterWithIndex(indexes.objectsByClass, guide.ChannelGuide)
-    guides.createIndex(indexes.guidesByURL)
-    default_guide = guides.filter(lambda x: x.get_default())
     manualFeed = feeds.filterWithIndex(indexes.feedsByURL, 'dtv:manualFeed')
     singleFeed = feeds.filterWithIndex(indexes.feedsByURL, 'dtv:singleFeed')
     directoryFeed = feeds.filterWithIndex(indexes.feedsByURL,

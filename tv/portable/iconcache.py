@@ -37,47 +37,9 @@ from miro.plat.utils import unicodeToFilename
 from miro import config
 from miro import prefs
 from miro import fileutil
-from miro import views
 import random
 
 RUNNING_MAX = 3
-
-
-@eventloop.idle_iterator
-def clear_orphans():
-    knownIcons = set()
-    for item in views.items:
-        if item.icon_cache and item.icon_cache.filename:
-            knownIcons.add(os.path.normcase(fileutil.expand_filename(item.icon_cache.filename)))
-
-    yield None
-
-    for feed in views.feeds:
-        if feed.icon_cache and feed.icon_cache.filename:
-            knownIcons.add(os.path.normcase(fileutil.expand_filename(feed.icon_cache.filename)))
-
-    yield None
-
-    for site in views.sites:
-        if site.icon_cache and site.icon_cache.filename:
-            knownIcons.add(os.path.normcase(fileutil.expand_filename(site.icon_cache.filename)))
-
-    yield None
-
-    cachedir = fileutil.expand_filename(config.get(prefs.ICON_CACHE_DIRECTORY))
-    if os.path.isdir(cachedir):
-        existingFiles = [os.path.normcase(os.path.join(cachedir, f))
-                for f in os.listdir(cachedir)]
-        for filename in existingFiles:
-            if (os.path.exists(filename)
-                    and os.path.basename(filename)[0] != '.'
-                    and os.path.basename(filename) != 'extracted'
-                    and not filename in knownIcons):
-                try:
-                    os.remove(filename)
-                except OSError:
-                    pass
-            yield None
 
 class IconCacheUpdater:
     def __init__(self):

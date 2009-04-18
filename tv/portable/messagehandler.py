@@ -263,13 +263,13 @@ class GuideTracker(ViewTracker):
     InfoClass = messages.GuideInfo
 
     def get_object_views(self):
-        return [views.guides]
+        return [guide.ChannelGuide.make_view()]
 
     def make_changed_message(self, added, changed, removed):
         return messages.TabsChanged('guide', added, changed, removed)
 
     def send_initial_list(self):
-        info_list = self._make_added_list(views.guides)
+        info_list = self._make_added_list(guide.ChannelGuide.make_view())
         messages.GuideList(info_list).send_to_frontend()
 
 class WatchedFolderTracker(ViewTracker):

@@ -38,7 +38,6 @@ from StringIO import StringIO
 from miro import util
 from miro import feed
 from miro import guide
-from miro import views
 from miro import prefs
 from miro import config
 from miro import folder

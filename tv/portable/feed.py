@@ -446,6 +446,10 @@ class Feed(DDBObject):
     def get_by_url(cls, url):
         return cls.make_view('origURL=?', (url,)).get_singleton()
 
+    @classmethod
+    def folder_view(cls, id):
+        return cls.make_view('folder_id=?', (id,))
+
     def on_db_insert(self):
         self.generateFeed(True)
 

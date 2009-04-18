@@ -32,12 +32,11 @@ from HTMLParser import HTMLParser, HTMLParseError
 from urlparse import urlparse, urljoin
 
 from miro.plat import resources
-from miro.database import DDBObject
+from miro.database import DDBObject, ObjectNotFoundError
 from miro.util import returnsUnicode, checkU
 from miro import config
 from miro import indexes
 from miro import prefs
-from miro import views
 from miro import httpclient
 from miro import iconcache
 from miro import fileutil
@@ -70,6 +69,14 @@ class ChannelGuide(DDBObject):
         self.lastVisitedURL = None
         self.historyLocation = None
         self.history = []
+
+    @classmethod
+    def get_by_url(cls, url):
+        return cls.make_view('url=?', (url,)).get_singleton()
+
+    @classmethod
+    def get_default(cls):
+        return cls.get_by_url(config.get(prefs.CHANNEL_GUIDE_URL))
 
     def __str__(self):
         return "Miro Guide <%s>" % self.url
@@ -234,8 +241,11 @@ class GuideHTMLParser(HTMLParser):
             self.in_title = False
 
 def get_guide_by_url(url):
-    return views.guides.getItemWithIndex(indexes.guidesByURL, url)
+    try:
+        return ChannelGuide.get_by_url(url)
+    except ObjectNotFoundError:
+        return None
 
 def download_guides():
-    for guide in views.guides:
+    for guide in ChannelGuide.make_view():
         guide.download_guide()

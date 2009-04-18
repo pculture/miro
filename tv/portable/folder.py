@@ -26,11 +26,11 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+from miro import feed
 from miro import indexes
 from miro import playlist
 from miro import sorts
 from miro import util
-from miro import views
 from miro.database import DDBObject
 from miro.databasehelper import makeSimpleGetSet
 
@@ -55,7 +55,7 @@ class FolderBase(DDBObject):
             child.signal_change(needsSave=False)
 
     def remove(self, moveItemsTo=None):
-        children = [child for child in self.getChildrenView()]
+        children = list(self.getChildrenView())
         for child in children:
             child.remove(moveItemsTo)
         DDBObject.remove(self)
@@ -89,7 +89,7 @@ class ChannelFolder(FolderBase):
         self.itemSortWatchable = sorts.ItemSortUnwatchedFirst()
 
     def getChildrenView(self):
-        return views.feeds.filterWithIndex(indexes.byFolder, self)
+        return feed.Feed.folder_view(self.id)
 
     def hasDownloadedItems(self):
         for feed in self.getChildrenView():
@@ -133,16 +133,25 @@ class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
     def setup_common(self):
         self.setupTrackedItemView()
 
-    def checkItemIDRemoved(self, id):
-        index = indexes.playlistsByItemAndFolderID
-        value = (id, self.getID())
-        view = views.playlists.filterWithIndex(index, value)
-        if view.len() == 0 and id in self.trackedItems:
+    def check_for_removed_ids(self):
+        """Double check the item ids contained in this playlist folder and
+        removes ones that are no longer contained in child playlists.
+
+        This should be called when a child playlist is removed or changes it's
+        id set.
+        """
+
+        child_item_ids = set()
+        for playlist in self.getChildrenView():
+            child_item_ids.update(playlist.trackedItems.trackedIDs)
+
+        for id in self.trackedItems.trackedIDs.difference(child_item_ids):
             self.removeID(id)
+
 
     def checkItemIDAdded(self, id):
         if id not in self.trackedItems:
             self.trackedItems.appendID(id)
 
     def getChildrenView(self):
-        return views.playlists.filterWithIndex(indexes.byFolder, self)
+        return playlist.SavedPlaylist.folder_view(self.id)

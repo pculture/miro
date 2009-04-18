@@ -271,7 +271,7 @@ def on_frontend_started():
     eventloop.addTimeout(30, feed.start_updates, "start feed updates")
     # ditto for clearing stale icon cache files, except it's the very lowest
     # priority
-    eventloop.addTimeout(10, iconcache.clear_orphans, "clear orphans")
+    eventloop.addTimeout(10, clear_icon_cache_orphans, "clear orphans")
 
 def setup_global_feeds():
     setup_global_feed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
@@ -348,3 +348,39 @@ def _get_theme_history():
         return views.themeHistories[0]
     else:
         return theme.ThemeHistory()
+
+@eventloop.idle_iterator
+def clear_icon_cache_orphans():
+    knownIcons = set()
+    for item_ in item.Item.make_view():
+        if item_.icon_cache and item_.icon_cache.filename:
+            knownIcons.add(os.path.normcase(fileutil.expand_filename(item_.icon_cache.filename)))
+
+    yield None
+
+    for feed_ in feed.Feed.make_view():
+        if feed_.icon_cache and feed_.icon_cache.filename:
+            knownIcons.add(os.path.normcase(fileutil.expand_filename(feed_.icon_cache.filename)))
+
+    yield None
+
+    for site in guide.ChannelGuide.make_view():
+        if site.icon_cache and site.icon_cache.filename:
+            knownIcons.add(os.path.normcase(fileutil.expand_filename(site.icon_cache.filename)))
+
+    yield None
+
+    cachedir = fileutil.expand_filename(config.get(prefs.ICON_CACHE_DIRECTORY))
+    if os.path.isdir(cachedir):
+        existingFiles = [os.path.normcase(os.path.join(cachedir, f))
+                for f in os.listdir(cachedir)]
+        for filename in existingFiles:
+            if (os.path.exists(filename)
+                    and os.path.basename(filename)[0] != '.'
+                    and os.path.basename(filename) != 'extracted'
+                    and not filename in knownIcons):
+                try:
+                    os.remove(filename)
+                except OSError:
+                    pass
+            yield None

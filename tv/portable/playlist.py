@@ -139,6 +139,10 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
     def setup_common(self):
         self.setupTrackedItemView()
 
+    @classmethod
+    def folder_view(cls, id):
+        return cls.make_view('folder_id=?', (id,))
+
     get_title, set_title = makeSimpleGetSet('title')
 
     def get_folder(self):
@@ -158,8 +162,7 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
         self.signal_change()
         if old_folder_id is not None:
             folder = views.playlistFolders.getObjectByID(old_folder_id)
-            for id in self.item_ids:
-                folder.checkItemIDRemoved(id)
+            folder.check_for_removed_ids()
         if newFolder:
             for id in self.item_ids:
                 newFolder.checkItemIDAdded(id)
@@ -173,8 +176,7 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
             self.removeID(id)
         folder = self.get_folder()
         if folder:
-            for id in ids:
-                folder.checkItemIDRemoved(id)
+            folder.check_for_removed_ids()
 
     def rename(self):
         title = _("Rename Playlist")

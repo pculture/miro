@@ -1422,7 +1422,10 @@ class ViewTracker(signals.SignalEmitter):
                 ViewTracker._get_related_trackers(table_name).discard(self)
 
     def _obj_in_view(self, obj):
-        where = '%s.id = ? AND (%s)' % (self.table_name, self.where)
+        where = '%s.id = ?' % (self.table_name,)
+        if self.where:
+            where += ' AND (%s)' % (self.where,)
+
         values = (obj.id,) + self.values
         return app.db.liveStorage.query_count(self.klass, where, values, self.joins) > 0
 
