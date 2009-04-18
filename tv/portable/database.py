@@ -1427,7 +1427,7 @@ class ViewTracker(signals.SignalEmitter):
         return app.db.liveStorage.query_count(self.klass, where, values, self.joins) > 0
 
     def object_changed(self, obj):
-        if obj.__class__ is self.klass:
+        if isinstance(obj, self.klass):
             # object is the type we are tracking, just need to check if the
             # change made that object enter/leave the view
             self.check_object(obj)
