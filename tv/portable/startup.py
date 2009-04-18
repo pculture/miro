@@ -224,20 +224,20 @@ def check_movies_gone():
         else:
             logging.warn("Movies directory is gone -- no handler installed!")
 
-    eventloop.addUrgentCall(reconnect_downloaders, "reconnect downloaders")
+    eventloop.addUrgentCall(finish_backend_startup, "reconnect downloaders")
 
 @startup_function
 def fix_movies_gone():
     from miro.plat import config as platformcfg
     config.set(prefs.MOVIES_DIRECTORY, platformcfg.get(prefs.MOVIES_DIRECTORY))
-    eventloop.addUrgentCall(reconnect_downloaders, "reconnect downloaders")
+    eventloop.addUrgentCall(finish_backend_startup, "reconnect downloaders")
 
 @startup_function
-def reconnect_downloaders():
+def finish_backend_startup():
     """Last bit of startup required before we load the frontend.  """
     # Uncomment the next line to test startup error handling
     # raise StartupError("Test Error", "Startup Failed")
-    item.reconnect_downloaders()
+    reconnect_downloaders()
     downloader.initController()
     guide.download_guides()
     messages.StartupSuccess().send_to_frontend()
@@ -384,3 +384,18 @@ def clear_icon_cache_orphans():
                 except OSError:
                     pass
             yield None
+
+def reconnect_downloaders():
+    reconnected = set()
+    for item_ in item.Item.make_view():
+        item_.setup_links()
+        reconnected.add(item_.downloader)
+    for downloader_ in downloader.RemoteDownloader.make_view():
+        if downloader_ not in reconnected:
+            logging.warn("removing orphaned downloader: %s", downloader_.url)
+            downloader_.remove()
+    manualItems = item.Item.feed_view(feed.Feed.get_manual_feed().getID())
+    for item_ in manualItems:
+        if item_.downloader is None and item_.__class__ == item.Item:
+            logging.warn("removing cancelled external torrent: %s", item_)
+            item_.remove()

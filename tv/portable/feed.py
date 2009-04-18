@@ -447,6 +447,10 @@ class Feed(DDBObject):
         return cls.make_view('origURL=?', (url,)).get_singleton()
 
     @classmethod
+    def get_manual_feed(cls):
+        return cls.get_by_url('dtv:manualFeed')
+
+    @classmethod
     def folder_view(cls, id):
         return cls.make_view('folder_id=?', (id,))
 

@@ -43,10 +43,13 @@ class PlaylistMixin:
     def setupTrackedItemView(self):
         self.trackedItems = TrackedIDList(views.items, self.item_ids)
         views.items.addRemoveCallback(self.onItemRemoved)
+        for id in self.item_ids:
+            _playlist_id_added(self, id)
 
     def onItemRemoved(self, obj, id):
         if id in self.trackedItems:
             self.trackedItems.removeID(id)
+        self.signal_changed()
 
     def getItems(self):
         """Get the items in this playlist."""
@@ -71,6 +74,7 @@ class PlaylistMixin:
         if (folder is not None):
             folder.addID(id)
 
+        _playlist_id_added(self, id)
         self.signal_change()
 
     def removeID(self, id):
@@ -83,6 +87,7 @@ class PlaylistMixin:
         if (folder is not None):
             folder.addID(id)
 
+        _playlist_id_removed(self, id)
         self.signal_change()
 
     def moveID(self, id, newPosition):
@@ -196,3 +201,19 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
         if moveItemsTo is not None:
             raise StandardError("Cannot 'move' a playlist to %s" % repr(moveItemsTo))
         database.DDBObject.remove(self)
+
+_id_map = {} # map item ids to sets of playlists that contain them
+
+def playlist_set_for_item_id(id):
+    try:
+        return _id_map[id]
+    except KeyError:
+        playlist_set = set()
+        _id_map[id] = playlist_set
+        return playlist_set
+
+def _playlist_id_added(playlist, id):
+    playlist_set_for_item_id(id).add(playlist)
+
+def _playlist_id_removed(playlist, id):
+    playlist_set_for_item_id(id).discard(playlist)

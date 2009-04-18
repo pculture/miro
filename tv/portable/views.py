@@ -97,7 +97,6 @@ def initialize():
     audioVisibleFeeds = visibleFeeds.filter(filters.audioFeed)
 
     items.createIndex(indexes.itemsByFeed, sortFunc=sorts.item)
-    items.createIndex(indexes.itemsByParent)
     items.createIndex(indexes.itemsByChannelFolder, sortFunc=sorts.item)
     feeds.createIndex(indexes.feedsByURL)
     feeds.createIndex(indexes.byFolder)
@@ -118,12 +117,9 @@ def initialize():
 
     playlists = app.db.filterWithIndex(indexes.objectsByClass,
                                    playlist.SavedPlaylist)
-    playlists.createIndex(indexes.playlistsByItemID, multiValued=True)
-    playlists.createIndex(indexes.playlistsByItemAndFolderID, multiValued=True)
     playlists.createIndex(indexes.byFolder)
     playlistFolders = app.db.filterWithIndex(indexes.objectsByClass,
                                          folder.PlaylistFolder)
-    playlistFolders.createIndex(indexes.playlistsByItemID, multiValued=True)
 
     channelFolders = app.db.filterWithIndex(indexes.objectsByClass,
                                         folder.ChannelFolder)

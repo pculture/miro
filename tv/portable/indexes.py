@@ -33,9 +33,6 @@ def itemsByFeed(x):
 def itemsByChannelFolder(x):
     return x.getFeed().get_folder()
 
-def itemsByParent(x):
-    return x.parent_id
-
 def feedsByURL(x):
     return x.getOriginalURL()
 
@@ -72,12 +69,6 @@ def downloadsByCategory(x):
         return 'pending'
     else:
         return 'normal'
-
-def playlistsByItemID(playlist):
-    return playlist.item_ids
-
-def playlistsByItemAndFolderID(playlist):
-    return [(id, playlist.folder_id) for id in playlist.item_ids]
 
 def tabType(tab):
     return tab.type

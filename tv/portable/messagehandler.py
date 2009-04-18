@@ -42,6 +42,7 @@ from miro import filters
 from miro.frontendstate import WidgetsFrontendState
 from miro import guide
 from miro import httpclient
+from miro import item
 from miro import indexes
 from miro import messages
 from miro import prefs
@@ -1169,7 +1170,9 @@ class BackendMessageHandler(messages.MessageHandler):
             logging.warn("AddItemToLibrary: Item not found -- %s", message.id)
             return
 
-        item.add_to_library()
+        if isinstance(item, item.FileItem):
+            item.setFeed(feed.Feed.get_manual_feed().getID())
+
         manualFeed = getSingletonDDBObject(views.manualFeed)
         changed = set()
         changed.add(messages.ItemInfo(item))

@@ -63,6 +63,7 @@ from miro import filetypes
 from miro import searchengines
 from miro import fileutil
 from miro import signals
+from miro import playlist
 
 _charset = locale.getpreferredencoding()
 
@@ -401,6 +402,10 @@ class Item(DDBObject):
                 (feed_id,),
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
+    @classmethod
+    def children_view(cls, parent_id):
+        return cls.make_view('parent_id=?', (parent_id,))
+
     def _look_for_downloader(self):
         self.downloader = downloader.lookupDownloader(self.get_url())
         if self.downloader is not None:
@@ -494,13 +499,8 @@ class Item(DDBObject):
         return True
 
     def _remove_from_playlists(self):
-        itemIDIndex = indexes.playlistsByItemID
-        view = views.playlists.filterWithIndex(itemIDIndex, self.getID())
-        for playlist in view:
-            playlist.removeItem(self)
-        view = views.playlistFolders.filterWithIndex(itemIDIndex, self.getID())
-        for playlist in view:
-            playlist.removeItem(self)
+        for playlist_obj in list(playlist.playlist_set_for_item_id(self.id)):
+            playlist_obj.removeItem(self)
 
     def _update_release_date(self):
         # FeedParserValues sets up the releaseDateObj attribute
@@ -606,7 +606,7 @@ class Item(DDBObject):
 
     def getChildren(self):
         if self.isContainerItem:
-            return views.items.filterWithIndex(indexes.itemsByParent, self.id)
+            return Item.children_view(self.id)
         else:
             raise ValueError("%s is not a container item" % self)
 
@@ -1020,9 +1020,6 @@ class Item(DDBObject):
             self._calc_state()
             return self._state
 
-    def add_to_library(self):
-        pass
-
     @returnsUnicode
     def _calc_state(self):
         """Recalculate the state of an item after a change
@@ -1258,9 +1255,9 @@ class Item(DDBObject):
             self.signal_change()
         moviedata.movieDataUpdater.request_update(self)
 
-        for other in views.items:
-            if other.downloader is None and other.get_url() == self.get_url():
-                other.set_downloader(self.downloader)
+        for other in Item.make_view('downloader_id IS NULL AND url=?',
+                (self.url,)):
+            other.set_downloader(self.downloader)
 
     def set_downloader(self, downloader):
         if downloader is self.downloader:
@@ -1422,12 +1419,6 @@ class FileItem(Item):
     def is_eligible_for_auto_download(self):
         return False
 
-    def add_to_library(self):
-        """Adds a file to the library."""
-        manualFeed = getSingletonDDBObject(views.manualFeed)
-        self.setFeed(manualFeed.getID())
-        self.signal_change(needsSave=True)
-
     def get_channel_category(self):
         """Get the category to use for the channel template.
 
@@ -1570,23 +1561,6 @@ filename was %s""", stringify(self.filename))
                             self.filename, parent_file)
         self._update_release_date()
         Item.setup_links(self)
-
-def reconnect_downloaders():
-    reconnected = set()
-    for item in views.items:
-        item.setup_links()
-        reconnected.add(item.downloader)
-    for downloader_ in downloader.RemoteDownloader.make_view():
-        if downloader_ not in reconnected:
-            logging.warn("removing orphaned downloader: %s", downloader_.url)
-            downloader_.remove()
-    manualFeed = util.getSingletonDDBObject(views.manualFeed)
-    manualItems = views.items.filterWithIndex(indexes.itemsByFeed,
-            manualFeed.getID())
-    for item in manualItems:
-        if item.downloader is None and item.__class__ == Item:
-            logging.warn("removing cancelled external torrent: %s", item)
-            item.remove()
 
 def get_entry_for_file(filename):
     return FeedParserDict({'title':filenameToUnicode(os.path.basename(filename)),
