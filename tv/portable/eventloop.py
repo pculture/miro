@@ -126,6 +126,7 @@ class Scheduler(object):
 class CallQueue(object):
     def __init__(self):
         self.queue = Queue.Queue()
+        self.quit_flag = False
 
     def addIdle(self, function, name, args=None, kwargs=None):
         if args is None:
@@ -144,7 +145,7 @@ class CallQueue(object):
         return not self.queue.empty()
 
     def processIdles(self):
-        while self.hasPendingIdle():
+        while self.hasPendingIdle() and not self.quit_flag:
             self.processNextIdle()
 
 class ThreadPool(object):
@@ -315,6 +316,11 @@ class EventLoop(signals.SignalEmitter):
                         del map[fd] 
                 yield callbackEvent
 
+    def quit(self):
+        self.quitFlag = True
+        self.idleQueue.quit_flag = True
+        self.urgentQueue.quit_flag = True
+
 _eventLoop = EventLoop()
 
 def addReadCallback(socket, callback):
@@ -417,7 +423,7 @@ def join():
 
 def quit():
     threadPoolQuit()
-    _eventLoop.quitFlag = True
+    _eventLoop.quit()
     _eventLoop.wakeup()
 
 def finished():

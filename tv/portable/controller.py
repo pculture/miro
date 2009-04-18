@@ -73,11 +73,11 @@ class Controller:
         downloader.shutdownDownloader(self.downloaderShutdown)
 
     def downloaderShutdown(self):
+        logging.info("Shutting down event loop")
+        eventloop.quit()
         logging.info("Closing Database...")
         if app.db.liveStorage is not None:
             app.db.liveStorage.close()
-        logging.info("Shutting down event loop")
-        eventloop.quit()
         signals.system.shutdown()
 
     def onShutdown(self):
