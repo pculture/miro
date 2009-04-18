@@ -1979,10 +1979,15 @@ def upgrade82(cursor):
             # item has a downloader, or was expired, either way it was
             # downloaded at some point.
             downloaded.append(row[0])
-    placeholders = ', '.join('?' for i in xrange(len(downloaded)))
     cursor.execute("UPDATE item SET was_downloaded=0")
-    cursor.execute("UPDATE item SET was_downloaded=1 "
-            "WHERE id IN (%s)" % placeholders, downloaded)
+    # sqlite can only handle 999 variables at once, which can be less then the
+    # number of downloaded items (#11717).  Let's go for chunks of 500 at a
+    # time to be safe.
+    for start_pos in xrange(0, len(downloaded), 500):
+        downloaded_chunk = downloaded[start_pos:start_pos+500]
+        placeholders = ', '.join('?' for i in xrange(len(downloaded_chunk)))
+        cursor.execute("UPDATE item SET was_downloaded=1 "
+                "WHERE id IN (%s)" % placeholders, downloaded_chunk)
 
 def upgrade83(cursor):
     """Merge the items and file_items tables together."""
