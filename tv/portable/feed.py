@@ -417,6 +417,7 @@ class Feed(DDBObject):
         self.origURL = url
         self.errorState = False
         self.loading = True
+        self.actualFeed = None
         self._set_feed_impl(FeedImpl(url, self))
         iconcache.setup_icon_cache(self)
         self.informOnError = True
@@ -452,6 +453,8 @@ class Feed(DDBObject):
         self._set_feed_impl(FeedImpl(self.origURL, self))
 
     def _set_feed_impl(self, feed_impl):
+        if self.actualFeed is not None:
+            self.actualFeed.remove()
         self.actualFeed = feed_impl
         self.feed_impl_id = feed_impl.id
 
