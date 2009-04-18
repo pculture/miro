@@ -1953,11 +1953,15 @@ def upgrade79(objectList):
 
 def upgrade81(cursor):
     """Add the was_downloaded column to downloader."""
+    import datetime
+    import time
     cursor.execute("ALTER TABLE remote_downloader ADD state TEXT")
     to_update = []
     for row in cursor.execute("SELECT id, status FROM remote_downloader"):
         id = row[0]
-        state = eval(row[1]).get('state', u'downloading')
+        status = eval(row[1], __builtins__,
+                {'datetime': datetime, 'time': time})
+        state = status.get('state', u'downloading')
         to_update.append((id, state))
     for id, state in to_update:
         cursor.execute("UPDATE remote_downloader SET state=? WHERE id=?",
