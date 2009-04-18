@@ -156,10 +156,6 @@ class RemoteDownloader(DDBObject):
         return cls.make_view("state == 'uploading' AND NOT manualUpload")
 
     @classmethod
-    def get_by_id(cls, id):
-        return cls.make_view('id=?', (id,)).get_singleton()
-
-    @classmethod
     def get_by_dlid(cls, dlid):
         return cls.make_view('dlid=?', (dlid,)).get_singleton()
 

@@ -766,7 +766,10 @@ class BackendMessageHandler(messages.MessageHandler):
                 obj.signal_change()
 
         for id_, feeds in message.folder_children.iteritems():
-            feed_folder = views.channelFolders.getObjectByID(id_)
+            try:
+                feed_folder = ChannelFolder.get_by_id(id_)
+            except database.ObjectNotFoundError:
+                continue
             for mem in feeds:
                 mem = views.feeds.getObjectByID(mem.id)
                 if feed_folder.section != mem.section:

@@ -1497,6 +1497,10 @@ class DDBObject(signals.SignalEmitter):
             values = ()
         return View(cls, where, values, order_by, joins)
 
+    @classmethod
+    def get_by_id(cls, id):
+        return cls.make_view('id=?', (id,)).get_singleton()
+
     def setup_new(self):
         """Initialize a newly created object."""
         pass
