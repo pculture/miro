@@ -49,7 +49,7 @@ class PlaylistMixin:
     def onItemRemoved(self, obj, id):
         if id in self.trackedItems:
             self.trackedItems.removeID(id)
-        self.signal_changed()
+        self.signal_change()
 
     def getItems(self):
         """Get the items in this playlist."""

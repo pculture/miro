@@ -162,7 +162,7 @@ class SimpleFeedTestCase(FeedTestCase):
         # thus it should not cause a dialog to pop up and ask the user if they
         # want to scrape.
         self.assertEqual(dialogs.delegate.calls, 0)
-        self.assertEqual(self.everything.len(), 6)
+        self.assertEqual(self.everything.len(), 5)
 
         # the Feed, plus the 1 item that is a video
         items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
@@ -170,7 +170,7 @@ class SimpleFeedTestCase(FeedTestCase):
 
         # make sure that re-updating doesn't re-create the items
         myFeed.update()
-        self.assertEqual(self.everything.len(), 6)
+        self.assertEqual(self.everything.len(), 5)
         items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
         self.assertEqual(items.len(), 1)
         myFeed.remove()
@@ -210,12 +210,12 @@ class EnclosureFeedTestCase(FeedTestCase):
 </rss>""")
     def testRun(self):
         myFeed = self.makeFeed()
-        self.assertEqual(self.everything.len(),12)
+        self.assertEqual(self.everything.len(),11)
         items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
         self.assertEqual(items.len(),4)
         #Make sure that re-updating doesn't re-create the items
         myFeed.update()
-        self.assertEqual(self.everything.len(),12)
+        self.assertEqual(self.everything.len(),11)
         items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
         self.assertEqual(items.len(),4)
         myFeed.remove()
