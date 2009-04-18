@@ -1996,7 +1996,7 @@ def upgrade83(cursor):
     cursor.execute("UPDATE item SET is_file_item=0, filename=NULL, "
             "deleted=NULL, shortFilename=NULL, offsetPath=NULL")
     # Set values for FileItem objects coming from the file_items table
-    columns = ('feed_id', 'downloader_id', 'parent_id', 'seen',
+    columns = ('id', 'feed_id', 'downloader_id', 'parent_id', 'seen',
             'autoDownloaded', 'pendingManualDL', 'pendingReason', 'title',
             'expired', 'keep', 'creationTime', 'linkNumber', 'icon_cache_id',
             'downloadedTime', 'watchedTime', 'isContainerItem',
