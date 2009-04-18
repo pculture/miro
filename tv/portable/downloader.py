@@ -254,6 +254,7 @@ class RemoteDownloader(DDBObject):
                 data['activity'] = _(data['activity'])
 
             self.status = data
+            self._recalc_state()
 
             # Store the time the download finished
             finished = self.isFinished() and not wasFinished
@@ -536,6 +537,9 @@ URL was %s""" % self.url
         self.status['eta'] = 0
 
     def on_signal_change(self):
+        self._recalc_state()
+
+    def _recalc_state(self):
         self.state = self.status.get('state', u'downloading')
 
     def getUploadRatio(self):
