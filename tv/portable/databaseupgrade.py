@@ -2053,6 +2053,8 @@ def upgrade87(cursor):
         columns.append(column)
         if type == 'TIMESTAMP':
             type = 'timestamp'
+        if column == 'id':
+            type += ' PRIMARY KEY'
         columns_with_type.append("%s %s" % (column, type))
     cursor.execute("ALTER TABLE feed RENAME TO old_feed")
     cursor.execute("CREATE TABLE feed (%s)" % ', '.join(columns_with_type))
