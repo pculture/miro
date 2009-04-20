@@ -1291,7 +1291,7 @@ class BackendMessageHandler(messages.MessageHandler):
         feed.Feed.get_directory_feed().update()
 
     def _migrate(self, old_path, new_path):
-        to_migrate = downloader.RemoteDownloader.finished_view()
+        to_migrate = list(downloader.RemoteDownloader.finished_view())
         migration_count = len(to_migrate)
         last_progress_time = 0
         for i, download in enumerate(to_migrate):
