@@ -1405,6 +1405,8 @@ class ViewTracker(signals.SignalEmitter):
         signals.SignalEmitter.__init__(self, 'added', 'removed', 'changed')
         self.klass = klass
         self.where = where
+        if isinstance(values, list):
+            raise TypeError("values must be a tuple")
         self.values = values
         self.joins = joins
         self.current_ids = set(app.db.liveStorage.query_ids(klass, where,
@@ -1443,11 +1445,11 @@ class ViewTracker(signals.SignalEmitter):
         before = (obj.id in self.current_ids)
         now = self._obj_in_view(obj)
         if before and not now:
-            self.emit('removed', obj)
             self.current_ids.remove(obj.id)
+            self.emit('removed', obj)
         elif now and not before:
-            self.emit('added', obj)
             self.current_ids.add(obj.id)
+            self.emit('added', obj)
         elif before and now:
             self.emit('changed', obj)
 
@@ -1460,6 +1462,9 @@ class ViewTracker(signals.SignalEmitter):
         for id in self.current_ids.difference(new_ids):
             self.emit('removed', app.db.getObjectByID(id))
         self.current_ids = new_ids
+
+    def __len__(self):
+        return len(self.current_ids)
 
 class DDBObject(signals.SignalEmitter):
     """Dynamic Database object
@@ -1601,5 +1606,3 @@ def resetDefaultDatabase():
     """Erases the current database and replaces it with a blank slate
     """
     defaultDatabase.__init__()
-    import views
-    reload(views)

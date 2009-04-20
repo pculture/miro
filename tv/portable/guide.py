@@ -71,6 +71,11 @@ class ChannelGuide(DDBObject):
         self.history = []
 
     @classmethod
+    def site_view(cls):
+        default_url = config.get(prefs.CHANNEL_GUIDE_URL)
+        return cls.make_view('url != ?', (default_url,))
+
+    @classmethod
     def get_by_url(cls, url):
         return cls.make_view('url=?', (url,)).get_singleton()
 

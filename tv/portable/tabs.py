@@ -27,7 +27,9 @@
 # statement from all source files in the program, then also delete it here.
 
 from miro import database
-from miro import views
+from miro import guide
+from miro import feed
+from miro import folder
 from miro import eventloop
 from miro import playlist
 from miro.util import checkU
@@ -39,8 +41,6 @@ class TabOrder(database.DDBObject):
     """TabOrder objects keep track of the order of the tabs.  Miro
     creates 2 of these, one to track channels/channel folders and another to
     track playlists/playlist folders.
-
-    TabOrder objects emit the 'tab-added' signal when a new tab is added.
     """
 
     def setup_new(self, type):
@@ -50,32 +50,39 @@ class TabOrder(database.DDBObject):
         checkU(type)
         self.type = type
         self.tab_ids = []
-        self.setup_common()
-        decorated = [(t.get_title().lower(), t) for t in self.tabView]
+        self.setup_views()
+        decorated = [(t.get_title().lower(), t) for t in self.id_to_tab.values()]
         decorated.sort()
         for sortkey, tab in decorated:
-            self.trackedTabs.appendID(tab.getID())
+            self.tab_ids.append(tab.id)
 
-    def setup_restored(self):
-        self.setup_common()
-        eventloop.addIdle(self.checkForNonExistentIds, 
-                "checking for non-existent TabOrder ids")
+    def restore_tab_list(self):
+        self.setup_views()
+        self.check_for_non_existent_ids()
 
-    def setup_common(self):
-        self.create_signal('tab-added')
+    def setup_views(self):
         if self.type == u'site':
-            self.tabView = views.sites
+            tab_views = (guide.ChannelGuide.site_view(),)
         elif self.type == u'channel':
-            self.tabView = views.videoFeedTabs
+            tab_views = (feed.Feed.visible_video_view(),
+                    folder.ChannelFolder.video_view())
         elif self.type == u'audio-channel':
-            self.tabView = views.audioFeedTabs
+            tab_views = (feed.Feed.visible_audio_view(),
+                    folder.ChannelFolder.audio_view())
         elif self.type == u'playlist':
-            self.tabView = views.playlistTabs
+            tab_views = (playlist.SavedPlaylist.make_view(),
+                    folder.PlaylistFolder.make_view())
         else:
             raise ValueError("Bad type for TabOrder")
-        self.trackedTabs = TrackedIDList(self.tabView, self.tab_ids)
-        self.tabView.addAddCallback(self.onAddTab)
-        self.tabView.addRemoveCallback(self.onRemoveTab)
+
+        self.id_to_tab = {}
+        for view in tab_views:
+            for obj in view:
+                self.id_to_tab[obj.id] = obj
+        self.trackers = [view.make_tracker() for view in tab_views]
+        for tracker in self.trackers:
+            tracker.connect("added", self.on_add_tab)
+            tracker.connect("removed", self.on_remove_tab)
 
     @classmethod
     def view_for_type(cls, type):
@@ -97,54 +104,35 @@ class TabOrder(database.DDBObject):
     def playlist_order(cls):
         return cls.view_for_type(u'playlist').get_singleton()
 
-    def checkForNonExistentIds(self):
+    def check_for_non_existent_ids(self):
         changed = False
-        for id in self.tab_ids[:]:
-            if not self.tabView.idExists(id):
-                self.trackedTabs.removeID(id)
+        for i in reversed(xrange(len(self.tab_ids))):
+            id = self.tab_ids[i]
+            if not id in self.id_to_tab:
+                del self.tab_ids[i]
                 logging.warn("Throwing away non-existent TabOrder id: %s", id)
                 changed = True
         if changed:
             self.signal_change()
 
-    def getView(self):
-        """Get a database view for this tab ordering."""
-        return self.trackedTabs.view
-
-    def getAllTabs(self):
+    def get_all_tabs(self):
         """Get all the tabs in this tab ordering (in order), regardless if
         they are visible in the tab list or not.
         """
-        return [self.tabView.getObjectByID(id) for id in self.tab_ids \
-                if self.tabView.idExists(id) ]
+        return [self.id_to_tab[id] for id in self.tab_ids]
 
-    def onAddTab(self, obj, id):
-        if id not in self.trackedTabs:
-            self.trackedTabs.appendID(id, sendSignalChange=False)
-            obj.signal_change()
+    def on_add_tab(self, tracker, obj):
+        if obj.id not in self.id_to_tab:
+            self.id_to_tab[obj.id] = obj
+            self.tab_ids.append(obj.id)
             self.signal_change()
-            self.emit('tab-added', obj)
 
-    def onRemoveTab(self, obj, id):
-        if id in self.trackedTabs:
-            self.trackedTabs.removeID(id)
-        self.signal_change()
-
-    def moveTabs(self, anchorItem, toMove, sendSignalChange=True):
-        if anchorItem is not None:
-            self.trackedTabs.moveIDList(toMove, anchorItem.getID())
-        else:
-            self.trackedTabs.moveIDList(toMove, None)
-        if sendSignalChange:
+    def on_remove_tab(self, tracker, obj):
+        if obj.id in self.id_to_tab:
+            del self.id_to_tab[obj.id]
+            self.tab_ids.remove(obj.id)
             self.signal_change()
 
     def reorder(self, newOrder):
-        self.trackedTabs.reorder(newOrder)
-
-    def move_tab_after(self, anchor_id, id_list):
-        view = self.getView()
-        view.moveCursorToID(anchor_id)
-        next = view.getNext()
-        while next is not None and next.getID() in id_list:
-            next = view.getNext()
-        self.moveTabs(next, id_list)
+        self.tab_ids = newOrder
+        self.signal_change()

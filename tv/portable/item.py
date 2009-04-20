@@ -53,7 +53,6 @@ from miro import config
 from miro import eventloop
 from miro import prefs
 from miro.plat import resources
-from miro import views
 from miro import indexes
 from miro import util
 from miro import adscraper
@@ -72,6 +71,12 @@ KNOWN_MIME_SUBTYPES = (u'mov', u'wmv', u'mp4', u'mp3', u'mpg', u'mpeg', u'avi', 
 MIME_SUBSITUTIONS = {
     u'QUICKTIME': u'MOV',
 }
+
+video_filename_expr = '(%s)' % ' OR '.join("videoFilename LIKE '%%%s'" % ext
+        for ext in filetypes.VIDEO_EXTENSIONS)
+
+audio_filename_expr = '(%s)' % ' OR '.join("videoFilename LIKE '%%%s'" % ext
+        for ext in filetypes.AUDIO_EXTENSIONS)
 
 class FeedParserValues(object):
     """Helper class to get values from feedparser entries
@@ -362,9 +367,45 @@ class Item(DDBObject):
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
+    def downloading_paused_view(cls):
+        return cls.make_view("rd.state in ('downloading', 'paused', "
+                "'uploading', 'uploading-paused') AND rd.main_item_id=item.id",
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
+
+    @classmethod
+    def downloading_view(cls):
+        return cls.make_view("rd.state in ('downloading', 'uploading') AND "
+                "rd.main_item_id=item.id",
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
+
+    @classmethod
+    def paused_view(cls):
+        return cls.make_view("rd.state in ('paused', 'uploading-paused') AND "
+                "rd.main_item_id=item.id",
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
+
+    @classmethod
     def newly_downloaded_view(cls):
         return cls.make_view("NOT item.seen AND "
                 "item.parent_id IS NULL AND "
+                "rd.state in ('finished', 'uploading', 'uploading-paused')",
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
+
+    @classmethod
+    def unique_new_video_view(cls):
+        return cls.make_view("NOT item.seen AND "
+                "item.parent_id IS NULL AND "
+                "rd.main_item_id=item.id AND "
+                + video_filename_expr + " AND "
+                "rd.state in ('finished', 'uploading', 'uploading-paused')",
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
+
+    @classmethod
+    def unique_new_audio_view(cls):
+        return cls.make_view("NOT item.seen AND "
+                "item.parent_id IS NULL AND "
+                "rd.main_item_id=item.id AND "
+                + audio_filename_expr + " AND "
                 "rd.state in ('finished', 'uploading', 'uploading-paused')",
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
@@ -380,6 +421,12 @@ class Item(DDBObject):
     def visible_feed_view(cls, feed_id):
         return cls.make_view('feed_id=? AND (deleted IS NULL or not deleted)',
                 (feed_id,))
+
+    @classmethod
+    def visible_folder_view(cls, folder_id):
+        return cls.make_view('folder_id=? AND (deleted IS NULL or not deleted)',
+                (folder_id,),
+                joins={'feed': 'item.feed_id=feed.id'})
 
     @classmethod
     def feed_downloaded_view(cls, feed_id):
@@ -417,6 +464,34 @@ class Item(DDBObject):
         return cls.make_view("pim.playlist_id=?", (playlist_folder_id,),
                 joins={'playlist_folder_item_map AS pim': 'item.id=pim.item_id'},
                 order_by='pim.position')
+
+    @classmethod
+    def search_item_view(cls):
+        return cls.make_view("feed.origURL == 'dtv:search'",
+                joins={'feed': 'item.feed_id=feed.id'})
+
+    @classmethod
+    def watchable_video_view(cls):
+        return cls.make_view("not isContainerItem AND "
+                "(deleted IS NULL or not deleted) AND "
+                "rd.main_item_id=item.id AND "
+                "feed.origURL != 'dtv:singleFeed' AND "
+                + video_filename_expr,
+                joins={'feed': 'item.feed_id=feed.id',
+                    'remote_downloader as rd': 'item.downloader_id=rd.id'})
+
+    @classmethod
+    def watchable_audio_view(cls):
+        filename_expr = ' OR '.join("videoFilename LIKE '%%%s'" % ext
+                for ext in filetypes.AUDIO_EXTENSIONS)
+
+        return cls.make_view("not isContainerItem AND "
+                "(deleted IS NULL or not deleted) AND "
+                "rd.main_item_id=item.id AND "
+                "feed.origURL != 'dtv:singleFeed' AND "
+                + audio_filename_expr,
+                joins={'feed': 'item.feed_id=feed.id',
+                    'remote_downloader as rd': 'item.downloader_id=rd.id'})
 
     def _look_for_downloader(self):
         self.downloader = downloader.lookupDownloader(self.get_url())
@@ -505,7 +580,6 @@ class Item(DDBObject):
                 self.isContainerItem = False
         else:
             self.isContainerItem = False
-            self.videoFilename = FilenameType("")
             self.isVideo = True
         self.signal_change()
         return True
@@ -1264,8 +1338,9 @@ class Item(DDBObject):
 
         self.confirmDBThread()
         self.downloadedTime = datetime.now()
-        if not self.split_item():
-            self.signal_change()
+        self.videoFilename = self.downloader.get_filename()
+        self.split_item()
+        self.signal_change()
         moviedata.movieDataUpdater.request_update(self)
 
         for other in Item.make_view('downloader_id IS NULL AND url=?',
@@ -1413,7 +1488,7 @@ class FileItem(Item):
         Item.setup_new(self, get_entry_for_file(filename), feed_id=feed_id, parent_id=parent_id)
         self.is_file_item = True
         checkF(filename)
-        filename = fileutil.abspath(filename)
+        self.videoFilename = filename = fileutil.abspath(filename)
         self.filename = filename
         self.deleted = deleted
         self.offsetPath = offsetPath

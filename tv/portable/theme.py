@@ -160,7 +160,7 @@ class ThemeHistory(DDBObject):
                     c_folder = folder.ChannelFolder(defaultFolder[0])
                     for url, autodownload in defaultFolder[1]:
                         d_feed = feed.Feed(url, initiallyAutoDownloadable=autodownload)
-                        d_feed.setFolder(c_folder)
+                        d_feed.set_folder(c_folder)
 
                 # feed
                 else:

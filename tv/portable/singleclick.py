@@ -53,7 +53,6 @@ from miro import flashscraper
 from miro import folder
 from miro import guide
 from miro import httpclient
-from miro import views
 from miro import signals
 from miro import subscription
 from miro import util
@@ -66,15 +65,9 @@ _command_line_args = []
 _command_line_videos = None
 _command_line_view = None
 
-def get_manual_feed():
-    manual_feed = util.getSingletonDDBObject(views.manualFeed)
-    manual_feed.confirmDBThread()
-    return manual_feed
-
 def add_video(path, single=False):
     path = os.path.abspath(path)
-    views.items.confirmDBThread()
-    for i in views.items:
+    for i in item.Item.make_view():
         itemFilename = i.get_filename()
         if (itemFilename != '' and
                 os.path.exists(itemFilename) and
@@ -84,19 +77,19 @@ def add_video(path, single=False):
                 _command_line_videos.add(i)
             return
     if single:
-        correctFeed = util.getSingletonDDBObject(views.singleFeed)
+        correctFeed = feed.Feed.get_single_feed()
         items = list(correctFeed.items)
         for i in items:
             i.expire()
     else:
-        correctFeed = get_manual_feed()
+        correctFeed = feed.Feed.get_manual_feed()
     fileItem = item.FileItem(path, feed_id=correctFeed.getID())
     fileItem.markItemSeen()
     if _command_line_videos is not None:
         _command_line_videos.add(fileItem)
 
 def check_url_exists(url):
-    manualFeed = get_manual_feed()
+    manualFeed = feed.Feed.get_manual_feed()
     for i in manualFeed.items:
         if i.get_url() == url:
             title = _("Download already exists")
@@ -236,7 +229,7 @@ def add_download(url, additional=None, handle_unknown_callback=download_unknown_
     httpclient.grabHeaders(url, callback, errback)
 
 def download_video(entry):
-    manualFeed = get_manual_feed()
+    manualFeed = feed.Feed.get_manual_feed()
     newItem = item.Item(entry, feed_id=manualFeed.getID())
     newItem.download()
 
@@ -245,7 +238,7 @@ def download_video_url(url, additional=None):
     download_video(entry)
 
 def add_torrent(path, torrentInfohash):
-    manualFeed = get_manual_feed()
+    manualFeed = feed.Feed.get_manual_feed()
     for i in manualFeed.items:
         if (i.downloader is not None and
                 i.downloader.status.get('infohash') == torrentInfohash):
@@ -292,7 +285,7 @@ def add_feeds(urls, newFolderName=None):
         for url in filter_existing_feed_urls(urls):
             f = feed.Feed(url)
             if newFolderName is not None:
-                f.setFolder(newFolder)
+                f.set_folder(newFolder)
             lastFeed = f
 
 def ask_for_multiple_feeds(urls):

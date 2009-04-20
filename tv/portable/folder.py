@@ -60,13 +60,13 @@ class FolderBase(DDBObject):
             child.remove(moveItemsTo)
         DDBObject.remove(self)
 
-    # get_folder and setFolder are here so that channels/playlists and folders
+    # get_folder and set_folder are here so that channels/playlists and folders
     # have a consistent API.  They don't do much since we don't allow nested
     # folders.
     def get_folder(self):
         return None
 
-    def setFolder(self, newFolder):
+    def set_folder(self, newFolder):
         if newFolder is not None:
             raise TypeError("Nested folders not allowed")
 
@@ -87,6 +87,14 @@ class ChannelFolder(FolderBase):
         self.itemSort = sorts.ItemSort()
         self.itemSortDownloading = sorts.ItemSort()
         self.itemSortWatchable = sorts.ItemSortUnwatchedFirst()
+
+    @classmethod
+    def video_view(cls):
+        return cls.make_view("section='video'")
+
+    @classmethod
+    def audio_view(cls):
+        return cls.make_view("section='audio'")
 
     def getChildrenView(self):
         return feed.Feed.folder_view(self.id)

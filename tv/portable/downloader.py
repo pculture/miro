@@ -122,6 +122,7 @@ class RemoteDownloader(DDBObject):
             checkU(contentType)
         self.origURL = self.url = url
         self.itemList = []
+        self.main_item_id = None
         self.dlid = generateDownloadID()
         self.status = {}
         self.state = u'downloading'
@@ -442,11 +443,17 @@ URL was %s""" % self.url
         """
         if item not in self.itemList:
             self.itemList.append(item)
+            if self.main_item_id is None:
+                self.main_item_id = item.id
+                self.signal_change()
 
     def removeItem(self, item):
         self.itemList.remove(item)
         if len (self.itemList) == 0:
             self.remove()
+        elif item.id == self.main_item_id:
+            self.main_item_id = self.itemList[0].id
+            self.signal_change()
 
     def getRate(self):
         self.confirmDBThread()
@@ -726,6 +733,9 @@ def getDownloader(item):
     if existing:
         return existing
     url = item.get_url()
+    existing = getExistingDownloaderByURL(url)
+    if existing:
+        return existing
     channelName = unicodeToFilename(item.get_channel_title(True))
     if not channelName:
         channelName = None

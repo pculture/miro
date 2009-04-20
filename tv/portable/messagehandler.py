@@ -38,7 +38,6 @@ from miro import database
 from miro import downloader
 from miro import eventloop
 from miro import feed
-from miro import filters
 from miro.frontendstate import WidgetsFrontendState
 from miro import guide
 from miro import httpclient
@@ -49,7 +48,6 @@ from miro import prefs
 from miro import singleclick
 from miro import subscription
 from miro import tabs
-from miro import views
 from miro import opml
 from miro import searchengines
 from miro import util
@@ -132,27 +130,11 @@ class ViewTracker(object):
 
     def add_callbacks(self):
         for view in self.get_object_views():
-            if isinstance(view, database.View):
-                # new style view
-                tracker = view.make_tracker()
-                tracker.connect('added', self.on_object_added)
-                tracker.connect('removed', self.on_object_removed)
-                tracker.connect('changed', self.on_object_changed)
-                self.trackers.append(tracker)
-            else:
-                view.addAddCallback(self.old_on_object_added)
-                view.addRemoveCallback(self.old_on_object_removed)
-                view.add_change_callback(self.old_on_object_changed)
-
-    def remove_callbacks(self):
-        for view in self.get_object_views():
-            if isinstance(view, database.View):
-                # new style view
-                pass
-            else:
-                view.removeAddCallback(self.old_on_object_added)
-                view.removeRemoveCallback(self.old_on_object_removed)
-                view.remove_change_callback(self.old_on_object_changed)
+            tracker = view.make_tracker()
+            tracker.connect('added', self.on_object_added)
+            tracker.connect('removed', self.on_object_removed)
+            tracker.connect('changed', self.on_object_changed)
+            self.trackers.append(tracker)
 
     def on_object_added(self, tracker, obj):
         if self.tabs_being_reordered:
@@ -190,7 +172,6 @@ class ViewTracker(object):
         self.on_object_removed(None, obj)
 
     def unlink(self):
-        self.remove_callbacks()
         for tracker in self.trackers:
             tracker.unlink()
 
@@ -213,7 +194,7 @@ class TabTracker(ViewTracker):
     def send_initial_list(self):
         response = messages.TabList(self.type)
         current_folder_id = None
-        for obj in self.get_tab_view():
+        for obj in self.get_tab_order().get_all_tabs():
             info = self._make_new_info(obj)
             if obj.get_folder() is None:
                 response.append(info)
@@ -235,30 +216,30 @@ class ChannelTracker(TabTracker):
     InfoClass = messages.ChannelInfo
 
     def get_object_views(self):
-        return views.videoVisibleFeeds, views.videoChannelFolders
+        return feed.Feed.visible_video_view(), ChannelFolder.video_view()
 
-    def get_tab_view(self):
-        return tabs.TabOrder.video_feed_order().getView()
+    def get_tab_order(self):
+        return tabs.TabOrder.video_feed_order()
 
 class AudioChannelTracker(TabTracker):
     type = 'audio-feed'
     InfoClass = messages.ChannelInfo
 
     def get_object_views(self):
-        return views.audioVisibleFeeds, views.audioChannelFolders
+        return feed.Feed.visible_audio_view(), ChannelFolder.audio_view()
 
-    def get_tab_view(self):
-        return tabs.TabOrder.audio_feed_order().getView()
+    def get_tab_order(self):
+        return tabs.TabOrder.audio_feed_order()
 
 class PlaylistTracker(TabTracker):
     type = 'playlist'
     InfoClass = messages.PlaylistInfo
 
     def get_object_views(self):
-        return views.playlists, views.playlistFolders
+        return SavedPlaylist.make_view(), PlaylistFolder.make_view()
 
-    def get_tab_view(self):
-        return tabs.TabOrder.playlist_order().getView()
+    def get_tab_order(self):
+        return tabs.TabOrder.playlist_order()
 
 class GuideTracker(ViewTracker):
     InfoClass = messages.GuideInfo
@@ -277,13 +258,13 @@ class WatchedFolderTracker(ViewTracker):
     InfoClass = messages.WatchedFolderInfo
 
     def get_object_views(self):
-        return [views.watchedFolders]
+        return (feed.Feed.watched_folder_view(),)
 
     def make_changed_message(self, added, changed, removed):
         return messages.WatchedFoldersChanged(added, changed, removed)
 
     def send_initial_list(self):
-        info_list = self._make_added_list(views.watchedFolders)
+        info_list = self._make_added_list(feed.Feed.watched_folder_view())
         messages.WatchedFolderList(info_list).send_to_frontend()
 
 class ItemTrackerBase(ViewTracker):
@@ -310,15 +291,9 @@ class FeedItemTracker(ItemTrackerBase):
 class FeedFolderItemTracker(ItemTrackerBase):
     type = 'feed'
     def __init__(self, folder):
-        self.view = views.items.filterWithIndex(
-            indexes.itemsByChannelFolder,
-            folder).filter(filters.uniqueItemsNotDeleted)
+        self.view = item.Item.visible_folder_view(folder.id)
         self.id = folder.id
         ItemTrackerBase.__init__(self)
-
-    def unlink(self):
-        ItemTrackerBase.unlink(self)
-        self.view.unlink()
 
 class PlaylistItemTracker(ItemTrackerBase):
     type = 'playlist'
@@ -339,47 +314,37 @@ class ManualItemTracker(ItemTrackerBase):
 
     def __init__(self, id, id_list):
         self.id = id
-        self.id_set = set(id_list)
-        self.view = views.items.filter(self.filter)
+        place_holders = ', '.join('?' for i in xrange(len(id_list)))
+        self.view = item.Item.make_view('id in (%s)' % place_holders,
+                tuple(id_list))
         ItemTrackerBase.__init__(self)
-
-    def filter(self, obj):
-        return obj.id in self.id_set
-
-    def unlink(self):
-        ItemTrackerBase.unlink(self)
-        self.view.unlink()
 
 class DownloadingItemsTracker(ItemTrackerBase):
     type = 'downloads'
     id = None
     def __init__(self):
-        self.view = views.allDownloadingItems.filter(filters.uniqueItems)
+        self.view = item.Item.downloading_paused_view()
         ItemTrackerBase.__init__(self)
-
-    def unlink(self):
-        ItemTrackerBase.unlink(self)
-        self.view.unlink()
 
 class VideoItemsTracker(ItemTrackerBase):
     type = 'videos'
     id = None
     def __init__(self):
-        self.view = views.watchableVideoItems
+        self.view = item.Item.watchable_video_view()
         ItemTrackerBase.__init__(self)
 
 class AudioItemsTracker(ItemTrackerBase):
     type = 'audios'
     id = None
     def __init__(self):
-        self.view = views.watchableAudioItems
+        self.view = item.Item.watchable_audio_view()
         ItemTrackerBase.__init__(self)
 
 class SearchItemsTracker(ItemTrackerBase):
     type = 'search'
     id = None
     def __init__(self):
-        self.view = views.searchItems
+        self.view = item.Item.search_item_view()
         ItemTrackerBase.__init__(self)
 
 def make_item_tracker(message):
@@ -393,17 +358,17 @@ def make_item_tracker(message):
         return SearchItemsTracker()
     elif message.type == 'feed':
         try:
-            feed = views.feeds.getObjectByID(message.id)
-            return FeedItemTracker(feed)
+            feed_ = feed.Feed.get_by_id(message.id)
+            return FeedItemTracker(feed_)
         except database.ObjectNotFoundError:
-            folder = views.channelFolders.getObjectByID(message.id)
+            folder = ChannelFolder.get_by_id(message.id)
             return FeedFolderItemTracker(folder)
     elif message.type == 'playlist':
         try:
-            playlist = views.playlists.getObjectByID(message.id)
+            playlist = SavedPlaylist.get_by_id(message.id)
             return PlaylistItemTracker(playlist)
         except database.ObjectNotFoundError:
-            playlist = views.playlistFolders.getObjectByID(message.id)
+            playlist = PlaylistFolder.get_by_id(message.id)
             return PlaylistFolderItemTracker(playlist)
     elif message.type == 'manual':
         return ManualItemTracker(message.id, message.ids_to_track)
@@ -413,51 +378,50 @@ def make_item_tracker(message):
 class CountTracker(object):
     """Tracks downloads count or new videos count"""
     def __init__(self):
-        self.view = self.get_view()
-        self.view.addAddCallback(self.on_count_changed)
-        self.view.addRemoveCallback(self.on_count_changed)
+        self.tracker = self.get_view().make_tracker()
+        self.tracker.connect('added', self.on_count_changed)
+        self.tracker.connect('removed', self.on_count_changed)
 
-    def on_count_changed(self, obj, id):
+    def on_count_changed(self, tracker, obj):
         self.send_message()
 
     def send_message(self):
-        self.make_message(len(self.view)).send_to_frontend()
+        self.make_message(len(self.tracker)).send_to_frontend()
 
     def stop_tracking(self):
-        self.view.removeAddCallback(self.on_count_changed)
-        self.view.removeRemoveCallback(self.on_count_changed)
+        self.tracker.unlink()
 
 class DownloadCountTracker(CountTracker):
     def get_view(self):
-        return views.uniqueDownloadingItems
+        return item.Item.downloading_view()
 
     def make_message(self, count):
         return messages.DownloadCountChanged(count)
 
 class PausedCountTracker(CountTracker):
     def get_view(self):
-        return views.pausedItems
+        return item.Item.paused_view()
 
     def make_message(self, count):
         return messages.PausedCountChanged(count)
 
 class NewVideoCountTracker(CountTracker):
     def get_view(self):
-        return views.uniqueNewWatchableVideoItems
+        return item.Item.unique_new_video_view()
 
     def make_message(self, count):
         return messages.NewVideoCountChanged(count)
 
 class NewAudioCountTracker(CountTracker):
     def get_view(self):
-        return views.uniqueNewWatchableAudioItems
+        return item.Item.unique_new_audio_view()
 
     def make_message(self, count):
         return messages.NewAudioCountChanged(count)
 
 class UnwatchedCountTracker(CountTracker):
     def get_view(self):
-        return views.unwatchedItems
+        return item.Item.newly_downloaded_view()
 
     def make_message(self, count):
         return messages.UnwatchedCountChanged(count)
@@ -485,29 +449,27 @@ class BackendMessageHandler(messages.MessageHandler):
         logging.debug("handling backend %s", message)
         eventloop.addUrgentCall(method, name, args=(message,))
 
-    def folder_view_for_type(self, type):
-        if type == 'feed':
-            return views.videoChannelFolders
-        elif type == 'audio-feed':
-            return views.audioChannelFolders
+    def folder_class_for_type(self, type):
+        if type in ('feed', 'audio-feed'):
+            return ChannelFolder
         elif type == 'playlist':
-            return views.playlistFolders
+            return PlaylistFolder
         else:
             raise ValueError("Unknown Type: %s" % type)
 
-    def view_for_type(self, type):
+    def ddb_object_class_for_type(self, type):
         if type == 'feed':
-            return views.videoVisibleFeeds
+            return feed.Feed
         elif type == 'audio-feed':
-            return views.audioVisibleFeeds
+            return feed.Feed
         elif type == 'playlist':
-            return views.playlists
+            return SavedPlaylist
         elif type == 'feed-folder':
-            return views.channelFolders
+            return ChannelFolder
         elif type == 'playlist-folder':
-            return views.playlistFolders
+            return PlaylistFolder
         elif type == 'site':
-            return views.guides
+            return guide.ChannelGuide
         else:
             raise ValueError("Unknown Type: %s" % type)
 
@@ -567,29 +529,29 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_mark_feed_seen(self, message):
         try:
-            feed = database.defaultDatabase.getObjectByID(message.id)
-            feed.mark_as_viewed()
+            feed_ = feed.Feed.get_by_id(message.id)
+            feed_.mark_as_viewed()
         except database.ObjectNotFoundError:
             logging.warning("handle_mark_feed_seen: can't find feed by id %s", message.id)
 
     def handle_mark_item_watched(self, message):
         try:
-            item = views.items.getObjectByID(message.id)
-            item.markItemSeen()
+            item_ = item.Item.get_by_id(message.id)
+            item_.markItemSeen()
         except database.ObjectNotFoundError:
             logging.warning("handle_mark_item_seen: can't find item by id %s", message.id)
 
     def handle_mark_item_unwatched(self, message):
         try:
-            item = views.items.getObjectByID(message.id)
-            item.markItemUnseen()
+            item_ = item.Item.get_by_id(message.id)
+            item_.markItemUnseen()
         except database.ObjectNotFoundError:
             logging.warning("handle_mark_item_unwatched: can't find item by id %s", message.id)
 
     def handle_set_item_resume_time(self, message):
         try:
-            item = views.items.getObjectByID(message.id)
-            item.setResumeTime(message.resume_time)
+            item_ = item.Item.get_by_id(message.id)
+            item_.setResumeTime(message.resume_time)
         except database.ObjectNotFoundError:
             logging.warning("handle_set_item_resume_time: can't find item by id %s", message.id)
 
@@ -599,7 +561,7 @@ class BackendMessageHandler(messages.MessageHandler):
         expire_time = message.expire_time
 
         try:
-            channel = views.feeds.getObjectByID(channel_info.id)
+            channel = feed.Feed.get_by_id(channel_info.id)
             if expire_type == "never":
                 channel.setExpiration(u"never", 0)
             elif expire_type == "system":
@@ -615,7 +577,7 @@ class BackendMessageHandler(messages.MessageHandler):
         value = message.max_new
 
         try:
-            channel = views.feeds.getObjectByID(channel_info.id)
+            channel = feed.Feed.get_by_id(channel_info.id)
             if value == u"unlimited":
                 channel.set_max_new(-1)
             else:
@@ -629,7 +591,7 @@ class BackendMessageHandler(messages.MessageHandler):
         max_old_items = message.max_old_items
 
         try:
-            channel = views.feeds.getObjectByID(channel_info.id)
+            channel = feed.Feed.get_by_id(channel_info.id)
             channel.setMaxOldItems(max_old_items)
 
         except database.ObjectNotFoundError:
@@ -638,7 +600,7 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_clean_feed(self, message):
         channel_id = message.channel_id
         try:
-            obj = views.feeds.getObjectByID(channel_id)
+            obj = feed.Feed.get_by_id(channel_id)
         except database.ObjectNotFoundError:
             logging.warn("handle_clean_feed: object not found id: %s" % channel_id)
         else:
@@ -651,9 +613,9 @@ class BackendMessageHandler(messages.MessageHandler):
         opml.Exporter().export_subscriptions(message.filename)
 
     def handle_rename_object(self, message):
-        view = self.view_for_type(message.type)
+        klass = self.ddb_object_class_for_type(message.type)
         try:
-            obj = view.getObjectByID(message.id)
+            obj = klass.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("object not found (type: %s, id: %s)" %
                     (message.type, message.id))
@@ -661,80 +623,81 @@ class BackendMessageHandler(messages.MessageHandler):
             obj.set_title(message.new_name)
 
     def handle_play_all_unwatched(self, message):
-        item_infos = [messages.ItemInfo(i) for i in views.unwatchedItems]
+        item_infos = [messages.ItemInfo(i) for i in
+                item.Item.newly_downloaded_view()]
         messages.PlayMovie(item_infos).send_to_frontend()
 
     def handle_folder_expanded_change(self, message):
-        folder_view = self.folder_view_for_type(message.type)
+        klass = self.folder_class_for_type(message.type)
         try:
-            folder = folder_view.getObjectByID(message.id)
+            folder = klass.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("feed folder not found")
         else:
             folder.setExpanded(message.expanded)
 
     def handle_update_feed(self, message):
-        view = views.visibleFeeds
         try:
-            feed = view.getObjectByID(message.id)
+            feed_ = feed.Feed.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("feed not found: %s" % id)
         else:
-            feed.update()
+            feed_.update()
 
     def handle_update_feed_folder(self, message):
-        view = views.channelFolders
         try:
-            f = view.getObjectByID(message.id)
+            f = ChannelFolder.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("folder not found: %s" % id)
         else:
-            view = f.getChildrenView()
-            for feed in view:
+            for feed in f.getChildrenView():
                 feed.update()
 
     def handle_update_all_feeds(self, message):
-        for f in views.feeds:
+        for f in feed.Feed.make_view():
             f.scheduleUpdateEvents(0)
 
     def handle_delete_feed(self, message):
         if message.is_folder:
-            view = views.channelFolders
+            klass = ChannelFolder
         else:
-            view = views.visibleFeeds
+            klass = feed.Feed
         try:
-            channel = view.getObjectByID(message.id)
+            channel = klass.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("feed not found: %s" % message.id)
         else:
             if message.keep_items:
-                move_to = getSingletonDDBObject(views.manualFeed)
+                move_to = feed.Feed.get_manual_feed()
             else:
                 move_to = None
             channel.remove(move_to)
 
     def handle_delete_watched_folder(self, message):
         try:
-            channel = views.watchedFolders.getObjectByID(message.id)
+            channel = feed.Feed.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("watched folder not found: %s" % message.id)
         else:
-            channel.remove()
+            if channel.is_watched_folder():
+                channel.remove()
+            else:
+                logging.warn("%s is not a watched folder" % feed)
 
     def handle_delete_playlist(self, message):
         if message.is_folder:
-            view = views.playlistFolders
+            klass = PlaylistFolder
         else:
-            view = views.playlists
+            klass = SavedPlaylist
         try:
-            playlist = view.getObjectByID(message.id)
+            playlist = klass.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("playlist not found: %s" % message.id)
         else:
             playlist.remove()
 
     def handle_delete_site(self, message):
-        site = views.guides.getObjectByID(message.id)
+        site = guide.ChannelGuide.get_by_id(message.id)
         if site.get_default():
             raise ValueError("Can't delete default site")
         site.remove()
@@ -761,16 +724,16 @@ class BackendMessageHandler(messages.MessageHandler):
         playlist_order = tabs.TabOrder.playlist_order()
 
         # make sure all the items are in the right places
-        for info in message.toplevels['feed']:
-            if views.audioFeedTabs.idExists(info.id):
-                obj = views.audioFeedTabs.getObjectByID(info.id)
-                obj.section = u'video'
-                obj.signal_change()
+        video_ids = set(info.id for info in message.toplevels['feed'])
+        audio_ids = set(info.id for info in message.toplevels['audio-feed'])
 
-        for info in message.toplevels['audio-feed']:
-            if views.videoFeedTabs.idExists(info.id):
-                obj = views.videoFeedTabs.getObjectByID(info.id)
+        for obj in tabs.TabOrder.video_feed_order().get_all_tabs():
+            if obj.id in audio_ids:
                 obj.section = u'audio'
+                obj.signal_change()
+        for obj in tabs.TabOrder.audio_feed_order().get_all_tabs():
+            if obj.id in video_ids:
+                obj.section = u'video'
                 obj.signal_change()
 
         for id_, feeds in message.folder_children.iteritems():
@@ -779,22 +742,22 @@ class BackendMessageHandler(messages.MessageHandler):
             except database.ObjectNotFoundError:
                 continue
             for mem in feeds:
-                mem = views.feeds.getObjectByID(mem.id)
+                mem = feed.Feed.get_by_id(mem.id)
                 if feed_folder.section != mem.section:
                     mem.section = feed_folder.section
                     mem.signal_change()
 
         for info_type, info_list in message.toplevels.iteritems():
-            folder_view = self.folder_view_for_type(info_type)
+            folder_class = self.folder_class_for_type(info_type)
 
             if info_type == 'feed':
-                item_view = views.visibleFeeds
+                child_class = feed.Feed
                 tab_order = video_order
             elif info_type == 'audio-feed':
-                item_view = views.visibleFeeds
+                child_class = feed.Feed
                 tab_order = audio_order
             elif info_type == 'playlist':
-                item_view = views.playlists
+                child_class = SavedPlaylist
                 tab_order = playlist_order
             else:
                 raise ValueError("Unknown Type: %s" % message.type)
@@ -803,24 +766,24 @@ class BackendMessageHandler(messages.MessageHandler):
             for info in info_list:
                 order.append(info.id)
                 if info.is_folder:
-                    folder = folder_view.getObjectByID(info.id)
+                    folder = folder_class.get_by_id(info.id)
                     for child_info in message.folder_children[info.id]:
                         child_id = child_info.id
                         order.append(child_id)
-                        feed = item_view.getObjectByID(child_id)
-                        feed.setFolder(folder)
+                        child = child_class.get_by_id(child_id)
+                        child.set_folder(folder)
                 else:
-                    feed = item_view.getObjectByID(info.id)
-                    feed.setFolder(None)
+                    child = child_class.get_by_id(info.id)
+                    child.set_folder(None)
             tab_order.reorder(order)
             tab_order.signal_change()
 
     def handle_playlist_reordered(self, message):
         try:
-            playlist = views.playlists.getObjectByID(message.id)
+            playlist = SavedPlaylist.get_by_id(message.id)
         except database.ObjectNotFoundError:
             try:
-                playlist = views.playlistFolders.getObjectByID(message.id)
+                playlist = PlaylistFolder.get_by_id(message.id)
             except database.ObjectNotFoundError:
                 logging.warn("PlaylistReordered: Playlist not found -- %s",
                         message.id)
@@ -902,8 +865,8 @@ class BackendMessageHandler(messages.MessageHandler):
         if message.child_feed_ids is not None:
             section = message.section
             for id in message.child_feed_ids:
-                feed_ = views.feeds.getObjectByID(id)
-                feed_.setFolder(folder)
+                feed_ = feed.Feed.get_by_id(id)
+                feed_.set_folder(folder)
                 if feed_.section != section:
                     feed_.section = section
                     feed_.signal_change()
@@ -926,10 +889,10 @@ class BackendMessageHandler(messages.MessageHandler):
                     message.path)
 
     def handle_set_watched_folder_visible(self, message):
-        feed = views.feeds.getObjectByID(message.id)
-        if not feed.url.startswith("dtv:directoryfeed:"):
-            raise ValueError("%s is not a watched folder" % feed)
-        feed.setVisible(message.visible)
+        feed_ = feed.Feed.get_by_id(message.id)
+        if not feed_.url.startswith("dtv:directoryfeed:"):
+            raise ValueError("%s is not a watched folder" % feed_)
+        feed_.setVisible(message.visible)
 
     def handle_new_playlist(self, message):
         name = message.name
@@ -964,8 +927,8 @@ class BackendMessageHandler(messages.MessageHandler):
         folder = PlaylistFolder(message.name)
         if message.child_playlist_ids is not None:
             for id in message.child_playlist_ids:
-                playlist = views.playlists.getObjectByID(id)
-                playlist.setFolder(folder)
+                playlist = SavedPlaylist.get_by_id(id)
+                playlist.set_folder(folder)
             tab_order = tabs.TabOrder.playlist_order()
             tab_order.move_tab_after(folder.id, message.child_playlist_ids)
             tab_order.signal_change()
@@ -973,26 +936,26 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_add_videos_to_playlist(self, message):
         try:
-            playlist = views.playlists.getObjectByID(message.playlist_id)
+            playlist = SavedPlaylist.get_by_id(message.playlist_id)
         except database.ObjectNotFoundError:
             logging.warn("AddVideosToPlaylist: Playlist not found -- %s",
                     message.playlist_id)
             return
         for id in message.video_ids:
             try:
-                item = views.items.getObjectByID(id)
+                item_ = item.Item.get_by_id(id)
             except database.ObjectNotFoundError:
                 logging.warn("AddVideosToPlaylist: Item not found -- %s", id)
                 continue
-            if not item.is_downloaded():
+            if not item_.is_downloaded():
                 logging.warn("AddVideosToPlaylist: Item not downloaded (%s)",
-                        item)
+                        item_)
             else:
-                playlist.add_item(item)
+                playlist.add_item(item_)
 
     def handle_remove_videos_from_playlist(self, message):
         try:
-            playlist = views.playlists.getObjectByID(message.playlist_id)
+            playlist = SavedPlaylist.get_by_id(message.playlist_id)
         except database.ObjectNotFoundError:
             logging.warn("RemoveVideosFromPlaylist: Playlist not found -- %s",
                     message.playlist_id)
@@ -1064,161 +1027,152 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_start_download(self, message):
         try:
-            item = views.items.getObjectByID(message.id)
+            item_ = item.Item.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("StartDownload: Item not found -- %s", message.id)
         else:
-            item.download()
+            item_.download()
 
     def handle_cancel_download(self, message):
         try:
-            item = views.items.getObjectByID(message.id)
+            item_ = item.Item.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("CancelDownload: Item not found -- %s", message.id)
         else:
-            item.expire()
+            item_.expire()
 
     def handle_pause_all_downloads(self, message):
         """Pauses all downloading and uploading items"""
-        for item in views.downloadingItems:
-            item.pause()
-
-        for item in views.allDownloadingItems:
-            if item.is_uploading():
-                item.pauseUpload()
+        for item_ in item.Item.downloading_view():
+            if item_.is_uploading():
+                item_.pauseUpload()
+            else:
+                item_.pause()
 
     def handle_pause_download(self, message):
         try:
-            item = views.items.getObjectByID(message.id)
+            item_ = item.Item.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("PauseDownload: Item not found -- %s", message.id)
         else:
-            item.pause()
+            item_.pause()
 
     def handle_resume_all_downloads(self, message):
         """Resumes downloading and uploading items"""
-        for item in views.pausedItems:
-            item.resume()
-
-        for item in views.allDownloadingItems:
-            if item.is_uploading_paused():
-                item.startUpload()
+        for item_ in item.Item.paused_view():
+            if item_.is_uploading_paused():
+                item_.startUpload()
+            else:
+                item_.resume()
 
     def handle_resume_download(self, message):
         try:
-            item = views.items.getObjectByID(message.id)
+            item_ = item.Item.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("ResumeDownload: Item not found -- %s", message.id)
         else:
-            item.resume()
+            item_.resume()
 
     def handle_cancel_all_downloads(self, message):
-        for item in views.pausedItems:
-            if item.is_uploading() or item.is_uploading_paused():
-                item.stopUpload()
+        for item_ in item.Item.downloading_paused_view():
+            if item_.is_uploading() or item_.is_uploading_paused():
+                item_.stopUpload()
             else:
-                item.expire()
-
-        for item in views.downloadingItems:
-            item.expire()
-
-        for item in views.allDownloadingItems:
-            if item.is_uploading() or item.is_uploading_paused():
-                item.stopUpload()
+                item_.expire()
 
     def handle_start_upload(self, message):
         try:
-            item = views.items.getObjectByID(message.id)
+            item_ = item.Item.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("handle_start_upload: Item not found -- %s", message.id)
         else:
-            if item.downloader.getType() != 'bittorrent':
-                logging.warn("%s is not a torrent", item)
-            elif item.is_uploading():
-                logging.warn("%s is already uploading", item)
+            if item_.downloader.getType() != 'bittorrent':
+                logging.warn("%s is not a torrent", item_)
+            elif item_.is_uploading():
+                logging.warn("%s is already uploading", item_)
             else:
-                item.startUpload()
+                item_.startUpload()
 
     def handle_stop_upload(self, message):
         try:
-            item = views.items.getObjectByID(message.id)
+            item_ = item.Item.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("handle_stop_upload: Item not found -- %s", message.id)
         else:
-            if item.downloader.getType() != 'bittorrent':
-                logging.warn("%s is not a torrent", item)
-            elif not item.is_uploading():
-                logging.warn("%s is already stopped", item)
+            if item_.downloader.getType() != 'bittorrent':
+                logging.warn("%s is not a torrent", item_)
+            elif not item_.is_uploading():
+                logging.warn("%s is already stopped", item_)
             else:
-                item.stopUpload()
+                item_.stopUpload()
 
     def handle_keep_video(self, message):
         try:
-            item = views.items.getObjectByID(message.id)
+            item_ = item.Item.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("KeepVideo: Item not found -- %s", message.id)
         else:
-            item.save()
+            item_.save()
 
     def handle_save_item_as(self, message):
         try:
-            item = views.items.getObjectByID(message.id)
+            item_ = item.Item.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("SaveVideoAs: Item not found -- %s", message.id)
             return
 
-        logging.info("saving video %s to %s" % (item.get_video_filename(),
+        logging.info("saving video %s to %s" % (item_.get_video_filename(),
                                                 message.filename))
         try:
-            shutil.copyfile(item.get_video_filename(), message.filename)
+            shutil.copyfile(item_.get_video_filename(), message.filename)
         except IOError:
             # FIXME - we should pass the error back to the frontend
             pass
 
     def handle_add_item_to_library(self, message):
         try:
-            item = views.items.getObjectByID(message.id)
+            item_ = item.Item.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("AddItemToLibrary: Item not found -- %s", message.id)
             return
 
-        if isinstance(item, item.FileItem):
-            item.setFeed(feed.Feed.get_manual_feed().getID())
+        if isinstance(item_, item.FileItem):
+            item_.setFeed(feed.Feed.get_manual_feed().getID())
 
-        manualFeed = getSingletonDDBObject(views.manualFeed)
+        manualFeed = feed.Feed.get_manual_feed()
         changed = set()
-        changed.add(messages.ItemInfo(item))
+        changed.add(messages.ItemInfo(item_))
         # I think we have to do this manually because it's in the manualFeed.
         messages.ItemsChanged('feed', manualFeed.getID(), [], changed, set()).send_to_frontend()
 
     def handle_remove_video_entry(self, message):
         try:
-            item = views.items.getObjectByID(message.id)
+            item_ = item.Item.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("RemoveVideoEntry: Item not found -- %s", message.id)
         else:
-            item.expire()
+            item_.expire()
 
     def handle_delete_video(self, message):
         try:
-            item = views.items.getObjectByID(message.id)
+            item_ = item.Item.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("DeleteVideo: Item not found -- %s", message.id)
         else:
-            item.delete_files()
-            item.expire()
+            item_.delete_files()
+            item_.expire()
 
     def handle_rename_video(self, message):
         try:
-            item = views.items.getObjectByID(message.id)
+            item_ = item.Item.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("RenameVideo: Item not found -- %s", message.id)
         else:
-            item.set_title(message.new_name)
+            item_.set_title(message.new_name)
 
     def handle_revert_feed_title(self, message):
         try:
-            feed = views.feeds.getObjectByID(message.id)
+            feed = feed.Feed.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("RevertFeedTitle: Feed not found -- %s", message.id)
         else:
@@ -1226,19 +1180,19 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_revert_item_title(self, message):
         try:
-            item = views.items.getObjectByID(message.id)
+            item_ = item.Item.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("RevertItemTitle: Item not found -- %s", message.id)
         else:
-            item.revert_title()
+            item_.revert_title()
 
     def handle_autodownload_change(self, message):
         try:
-            feed = views.feeds.getObjectByID(message.id)
+            feed_ = feed.Feed.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("AutodownloadChange: Feed not found -- %s", message.id)
         else:
-            feed.setAutoDownloadMode(message.setting)
+            feed_.setAutoDownloadMode(message.setting)
 
     def handle_track_download_count(self, message):
         if self.download_count_tracker is None:
@@ -1335,7 +1289,7 @@ class BackendMessageHandler(messages.MessageHandler):
         config.set(prefs.MOVIES_DIRECTORY, message.path)
         if message.migrate:
             self._migrate(old_path, message.path)
-        util.getSingletonDDBObject(views.directoryFeed).update()
+        feed.Feed.get_directory_feed().update()
 
     def _migrate(self, old_path, new_path):
         to_migrate = downloader.RemoteDownloader.finished_view()
@@ -1370,20 +1324,18 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_report_crash(self, message):
         app.controller.sendBugReport(message.report, message.text, message.send_report)
 
-    def handle_save_frontend_state(self, message):
-        view = app.db.filterWithIndex(indexes.objectsByClass, WidgetsFrontendState)
+    def _get_widgets_frontend_state(self):
         try:
-            state = getSingletonDDBObject(view)
-        except LookupError:
-            state = WidgetsFrontendState()
+            return WidgetsFrontendState.make_view().get_singleton()
+        except database.ObjectNotFoundError:
+            return WidgetsFrontendState()
+
+    def handle_save_frontend_state(self, message):
+        state = self._get_widgets_frontend_state()
         state.list_view_displays = message.list_view_displays
         state.sort_states = message.sort_states
         state.signal_change()
 
     def handle_query_frontend_state(self, message):
-        view = app.db.filterWithIndex(indexes.objectsByClass, WidgetsFrontendState)
-        try:
-            state = getSingletonDDBObject(view)
-        except LookupError:
-            state = WidgetsFrontendState()
+        state = self._get_widgets_frontend_state()
         messages.CurrentFrontendState(state.list_view_displays, state.sort_states).send_to_frontend()

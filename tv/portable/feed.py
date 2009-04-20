@@ -451,8 +451,28 @@ class Feed(DDBObject):
         return cls.get_by_url('dtv:manualFeed')
 
     @classmethod
+    def get_single_feed(cls):
+        return cls.get_by_url('dtv:singleFeed')
+
+    @classmethod
+    def get_directory_feed(cls):
+        return cls.get_by_url('dtv:directoryfeed')
+
+    @classmethod
     def folder_view(cls, id):
         return cls.make_view('folder_id=?', (id,))
+
+    @classmethod
+    def visible_video_view(cls):
+        return cls.make_view("visible AND section='video'")
+
+    @classmethod
+    def watched_folder_view(cls):
+        return cls.make_view("origURL LIKE 'dtv:directoryfeed:%'")
+
+    @classmethod
+    def visible_audio_view(cls):
+        return cls.make_view("visible AND section='audio'")
 
     def on_db_insert(self):
         self.generateFeed(True)
@@ -763,7 +783,7 @@ class Feed(DDBObject):
         else:
             return None
 
-    def setFolder(self, newFolder):
+    def set_folder(self, newFolder):
         self.confirmDBThread()
         oldFolder = self.get_folder()
         if newFolder is not None:
@@ -827,6 +847,9 @@ class Feed(DDBObject):
             logging.debug ("added async callback to create feed %s", self.origURL)
         if newFeed:
             self.finishGenerateFeed(newFeed)
+
+    def is_watched_folder(self):
+        return self.origURL.startswitg("dtv:directoryfeed:")
 
     def _handleFeedLoadingError(self, errorDescription):
         self.download = None

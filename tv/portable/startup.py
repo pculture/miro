@@ -69,7 +69,6 @@ from miro import theme
 from miro import util
 from miro import searchengines
 from miro import storedatabase
-from miro import views
 from miro.singleclick import parse_command_line_args
 
 class StartupError(Exception):
@@ -113,19 +112,17 @@ def install_first_time_handler(callback):
     _first_time_handler = callback
 
 def setup_global_feed(url, *args, **kwargs):
-    feedView = views.feeds.filterWithIndex(indexes.feedsByURL, url)
-    try:
-        if feedView.len() == 0:
-            logging.info("Spawning global feed %s", url)
-            feed.Feed(url, *args, **kwargs)
-        elif feedView.len() > 1:
-            allFeeds = [f for f in feedView]
-            for extra in allFeeds[1:]:
-                extra.remove()
-            raise StartupError("Database inconsistent",
-                    "Too many db objects for %s" % url)
-    finally:
-        feedView.unlink()
+    view = feed.Feed.make_view('origURL=?', (url,))
+    view_count = view.count()
+    if view_count == 0:
+        logging.info("Spawning global feed %s", url)
+        feed.Feed(url, *args, **kwargs)
+    elif view_count > 1:
+        allFeeds = [f for f in view]
+        for extra in allFeeds[1:]:
+            extra.remove()
+        raise StartupError("Database inconsistent",
+                "Too many db objects for %s" % url)
 
 def initialize(themeName):
     """Initialize Miro.  This sets up things like logging and the config
@@ -167,7 +164,6 @@ def startup():
 
 @startup_function
 def finish_startup():
-    views.initialize()
     logging.info("Restoring database...")
     start = time.time()
     app.db.liveStorage = storedatabase.LiveStorage()
@@ -282,9 +278,12 @@ def setup_global_feeds():
 
 def setup_tabs():
     def setup_tab_order(type):
-        if tabs.TabOrder.view_for_type(type).count() == 0:
+        current_tab_orders = list(tabs.TabOrder.view_for_type(type))
+        if len(current_tab_orders) == 0:
             logging.info("Creating %s tab order" % type)
-            tabs.TabOrder(type)
+            tab_order = tabs.TabOrder(type)
+        else:
+            current_tab_orders[0].restore_tab_list()
     setup_tab_order(u'site')
     setup_tab_order(u'channel')
     setup_tab_order(u'audio-channel')
@@ -344,8 +343,9 @@ def install_message_handler():
     messages.BackendMessage.install_handler(handler)
 
 def _get_theme_history():
-    if len(views.themeHistories) > 0:
-        return views.themeHistories[0]
+    current_themes = list(theme.ThemeHistory.make_view())
+    if len(current_themes) > 0:
+        return current_themes[0]
     else:
         return theme.ThemeHistory()
 

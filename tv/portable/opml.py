@@ -73,7 +73,7 @@ class Exporter(object):
     
         tabOrder = tabs.TabOrder.video_feed_order()
         audioTabOrder = tabs.TabOrder.audio_feed_order()
-        for obj in tabOrder.getAllTabs() + audioTabOrder.getAllTabs():
+        for obj in tabOrder.get_all_tabs() + audioTabOrder.get_all_tabs():
             if isinstance(obj, folder.ChannelFolder):
                 self._open_folder_entry(obj)
             elif isinstance(obj, feed.Feed):
@@ -83,7 +83,7 @@ class Exporter(object):
             self._close_folder_entry()
     
         site_tab_order = tabs.TabOrder.site_tab_order()
-        for obj in site_tab_order.getAllTabs():
+        for obj in site_tab_order.get_all_tabs():
             self._write_site_entry(obj)
 
         self.io.write(u'</body>\n')
@@ -271,7 +271,7 @@ class Importer(object):
                     else:
                         f.setExpiration(u'feed', expiryTime)
             if self.currentFolder is not None:
-                f.setFolder(self.currentFolder)
+                f.set_folder(self.currentFolder)
             self.importedFeeds += 1
         else:
             self.ignoredFeeds += 1

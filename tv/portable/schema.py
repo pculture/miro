@@ -509,6 +509,7 @@ class RemoteDownloaderSchema(DDBObjectSchema):
         ('status', SchemaStatusContainer()),
         ('manualUpload', SchemaBool()),
         ('state', SchemaString()),
+        ('main_item_id', SchemaInt(noneOk=True)),
     ]
 
 class HTTPAuthPasswordSchema(DDBObjectSchema):
@@ -604,7 +605,7 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
         ('list_view_displays', SchemaList(SchemaBinary())),
     ]
 
-VERSION = 88
+VERSION = 90
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,

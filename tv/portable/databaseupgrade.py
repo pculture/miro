@@ -2145,6 +2145,42 @@ def upgrade88(cursor):
     for table in ('playlist_folder', 'playlist'):
         remove_column(cursor, table, 'item_id')
 
+def upgrade89(cursor):
+    """Set videoFilename column for downloaded items."""
+    import datetime
+    from miro.plat.utils import FilenameType
+
+    # for Items, calculate from the downloader
+    for row in cursor.execute("SELECT id, downloader_id FROM item "
+            "WHERE NOT is_file_item AND videoFilename = ''").fetchall():
+        item_id, downloader_id = row
+        if downloader_id is None:
+            continue
+        cursor.execute("SELECT status FROM remote_downloader " "WHERE id=?",
+                (downloader_id,))
+        status = cursor.fetchall()[0][0]
+        status = eval(status, __builtins__, {'datetime': datetime})
+        filename = status.get('filename')
+        if filename:
+            if FilenameType is not unicode:
+                filename = filename.decode('utf-8')
+            cursor.execute("UPDATE item SET videoFilename=? WHERE id=?",
+                (filename, item_id))
+    # for FileItems, just copy from filename
+    cursor.execute("UPDATE item set videoFilename=filename "
+            "WHERE is_file_item")
+
+def upgrade90(cursor):
+    """Add the was_downloaded column to downloader."""
+    cursor.execute("ALTER TABLE remote_downloader ADD main_item_id integer")
+    for row in cursor.execute("SELECT id FROM remote_downloader").fetchall():
+        downloader_id = row[0]
+        cursor.execute("SELECT id FROM item WHERE downloader_id=? LIMIT 1",
+                (downloader_id,))
+        item_id = cursor.fetchone()[0]
+        cursor.execute("UPDATE remote_downloader SET main_item_id=? "
+                "WHERE id=?", (item_id, downloader_id))
+
 #def upgradeX (cursor):
 #    """Input a SQLite cursor.  Do whatever is necessary to upgrade the DB."""
 #    return changed
