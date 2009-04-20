@@ -252,6 +252,7 @@ def on_frontend_started():
     starttime = clock()
     logging.timing("Icon clear: %.3f", clock() - starttime)
     logging.info("Starting movie data updates")
+    item.update_incomplete_movie_data()
     yield None
     moviedata.movieDataUpdater.startThread()
     yield None

@@ -392,6 +392,12 @@ class Item(DDBObject):
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
+    def downloaded_view(cls):
+        return cls.make_view("rd.state in ('finished', 'uploading', "
+                "'uploading-paused')",
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
+
+    @classmethod
     def unique_new_video_view(cls):
         return cls.make_view("NOT item.seen AND "
                 "item.parent_id IS NULL AND "
@@ -1448,8 +1454,6 @@ class Item(DDBObject):
         if self.screenshot and not fileutil.exists(self.screenshot):
             self.screenshot = None
             self.signal_change()
-        if self.duration is None or self.screenshot is None:
-            moviedata.movieDataUpdater.request_update (self)
 
     def fix_incorrect_torrent_subdir(self):
         """Up to revision 6257, torrent downloads were incorrectly being created in
@@ -1666,3 +1670,8 @@ def get_entry_for_url(url, contentType=None):
 
     return FeedParserDict({'title' : title,
             'enclosures':[{'url' : url, 'type' : contentType}]})
+
+def update_incomplete_movie_data():
+    for item in Item.downloaded_view():
+        if item.duration is None or item.screenshot is None:
+            moviedata.movieDataUpdater.request_update(item)
