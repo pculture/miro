@@ -53,7 +53,6 @@ from miro import config
 from miro import eventloop
 from miro import prefs
 from miro.plat import resources
-from miro import indexes
 from miro import util
 from miro import adscraper
 from miro import moviedata
@@ -589,6 +588,21 @@ class Item(DDBObject):
             self.isVideo = True
         self.signal_change()
         return True
+
+    def matches_search(self, searchString):
+        if searchString is None:
+            return True
+        searchString = searchString.lower()
+        title = self.get_title() or u''
+        desc = self.get_raw_description() or u''
+        filename = filenameToUnicode(self.get_filename()) or u''
+        if search.match(searchString, [title.lower(), desc.lower(), filename.lower()]):
+            return True
+        if not self.isContainerItem:
+            parent = self.getParent()
+        if parent != self:
+            return matchingItems(parent, searchString)
+        return False
 
     def _remove_from_playlists(self):
         from miro import folder

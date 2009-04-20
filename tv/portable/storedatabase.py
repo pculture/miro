@@ -463,7 +463,12 @@ class SQLiteConverter(object):
         return value
 
     def _convert_binary(self, value):
-        return str(value).encode('utf-8')
+        if isinstance(value, unicode):
+            return value.encode('utf-8')
+        elif isinstance(value, buffer):
+            return str(value)
+        else:
+            raise TypeError("Unknown type in _convert_binary")
 
     def _convert_repr(self, value):
         return eval(value, __builtins__, {'datetime': datetime, 'time': time})

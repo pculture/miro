@@ -42,7 +42,6 @@ from miro.frontendstate import WidgetsFrontendState
 from miro import guide
 from miro import httpclient
 from miro import item
-from miro import indexes
 from miro import messages
 from miro import prefs
 from miro import singleclick

@@ -43,7 +43,6 @@ from miro import downloader
 from miro import eventloop
 from miro import httpclient
 from miro import iconcache
-from miro import indexes
 from miro import moviedata
 from miro import prefs
 from miro import signals

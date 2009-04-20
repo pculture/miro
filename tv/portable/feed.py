@@ -45,7 +45,6 @@ from miro import iconcache
 from miro import dialogs
 from miro import eventloop
 from miro import feedupdate
-from miro import filters
 from miro import flashscraper
 from miro import prefs
 from miro.plat import resources
@@ -55,7 +54,7 @@ from miro import fileutil
 from miro.plat.utils import filenameToUnicode, makeURLSafe, unmakeURLSafe
 from miro import filetypes
 from miro import item as itemmod
-from miro import indexes
+from miro import search
 from miro import searchengines
 from miro import sorts
 import logging
@@ -1266,7 +1265,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
     def _handleNewEntry(self, entry, channelTitle):
         """Handle getting a new entry from a feed."""
         item = itemmod.Item(entry, feed_id=self.ufeed.id)
-        if not filters.matchingItems(item, self.ufeed.searchTerm):
+        if not item.matches_search(self.ufeed.searchTerm):
             item.remove()
         item.set_channel_title(channelTitle)
 
@@ -1903,7 +1902,8 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
                                              'enclosures': [FeedParserDict({'url': link})]
                                            }),
                              linkNumber=linkNumber, feed_id=self.ufeed.id)
-        if self.ufeed.searchTerm is not None and not filters.matchingItems(i, self.ufeed.searchTerm):
+        if (self.ufeed.searchTerm is not None and 
+                not i.matches_search(self.ufeed.searchTerm)):
             i.remove()
             return
 

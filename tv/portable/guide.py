@@ -35,7 +35,6 @@ from miro.plat import resources
 from miro.database import DDBObject, ObjectNotFoundError
 from miro.util import returnsUnicode, checkU
 from miro import config
-from miro import indexes
 from miro import prefs
 from miro import httpclient
 from miro import iconcache

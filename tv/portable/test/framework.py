@@ -5,8 +5,6 @@ from miro import database
 from miro import eventloop
 from miro import app
 from miro import downloader
-from miro import views
-from miro import indexes
 from miro import util
 from miro import databaseupgrade
 from miro import searchengines
@@ -77,7 +75,6 @@ class MiroTestCase(unittest.TestCase):
         database.resetDefaultDatabase()
         database.ViewTracker.reset_trackers()
         app.db.liveStorage = storedatabase.LiveStorage(":memory:")
-        views.initialize()
         searchengines._engines = [ searchengines.SearchEngineInfo(u"all",
            u"Search All", u"", -1) ]
         # reset the event loop

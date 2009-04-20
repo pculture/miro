@@ -27,7 +27,6 @@
 # statement from all source files in the program, then also delete it here.
 
 from miro import feed
-from miro import indexes
 from miro import playlist
 from miro import sorts
 from miro import util

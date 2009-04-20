@@ -37,7 +37,6 @@ from miro.util import get_torrent_info_hash, returnsUnicode, checkU, returnsFile
 # from miro import app
 from miro import config
 from miro import httpclient
-from miro import indexes
 from miro import prefs
 import random
 from miro.plat.utils import samefile, FilenameType, unicodeToFilename

@@ -56,7 +56,6 @@ from miro import eventloop
 from miro import fileutil
 from miro import guide
 from miro import iconcache
-from miro import indexes
 from miro import item
 from miro import feed
 from miro import messages

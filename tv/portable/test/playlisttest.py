@@ -8,7 +8,6 @@ from miro.playlist import SavedPlaylist, PlaylistItemMap
 from miro.folder import PlaylistFolder, PlaylistFolderItemMap
 from miro import app
 from miro import storedatabase
-from miro import views
 from miro import tabs
 from miro.test.framework import EventLoopTest, MiroTestCase
 from miro.plat import resources
@@ -173,8 +172,7 @@ class Upgrade88TestCase(MiroTestCase):
         # run upgrade 88
         old_db_path = resources.path("testdata/olddatabase.predbupgrade88")
         shutil.copyfile(old_db_path, self.tmp_path)
-        live_storage = storedatabase.LiveStorage(self.tmp_path,
-                schema_version=88)
+        live_storage = storedatabase.LiveStorage(self.tmp_path)
         live_storage.upgrade_database()
         # figure out which maps were created
         folder_maps = set()
