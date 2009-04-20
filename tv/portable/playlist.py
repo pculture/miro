@@ -33,94 +33,87 @@ from miro.gtcache import gettext as _
 from miro import dialogs
 from miro import database
 from miro import views
-from miro.databasehelper import makeSimpleGetSet, TrackedIDList
+from miro.databasehelper import makeSimpleGetSet
+
+class PlaylistItemMap(database.DDBObject):
+    """Single row in the map that associates playlists with their child items.
+    """
+
+    def setup_new(self, playlist_id, item_id):
+        self.playlist_id = playlist_id
+        self.item_id = item_id
+        rows = self.select('MAX(position+1)', 'playlist_id=?', (playlist_id,))
+        self.position = rows[0][0]
+        if self.position is None:
+            self.position = 0
+
+    @classmethod
+    def playlist_view(cls, playlist_id):
+        return cls.make_view("playlist_id=?", (playlist_id,))
+
+    @classmethod
+    def remove_item_from_playlists(cls, item):
+        cls.delete('item_id=?', (item.id,))
+
+    @classmethod
+    def add_item_id(cls, playlist_id, item_id):
+        cls(playlist_id, item_id)
+
+    @classmethod
+    def remove_item_id(cls, playlist_id, item_id):
+        cls.delete('playlist_id=? AND item_id=?', (playlist_id, item_id))
 
 class PlaylistMixin:
     """Class that handles basic playlist functionality.  PlaylistMixin is used
     by both SavedPlaylist and folder.PlaylistFolder.
     """
 
-    def setupTrackedItemView(self):
-        self.trackedItems = TrackedIDList(views.items, self.item_ids)
-        views.items.addRemoveCallback(self.onItemRemoved)
-        for id in self.item_ids:
-            _playlist_id_added(self, id)
-
-    def onItemRemoved(self, obj, id):
-        if id in self.trackedItems:
-            self.trackedItems.removeID(id)
-        self.signal_change()
-
-    def getItems(self):
-        """Get the items in this playlist."""
-        self.confirmDBThread()
-        return [i for i in self.getView()]
-
-    def getView(self):
-        return self.trackedItems.view
+    MapClass = None # subclasses must override this
 
     def get_folder(self):
         return None
 
-    def addID(self, id):
+    def add_id(self, item_id):
         """Add a new item to end of the playlist.  """
-        self.confirmDBThread()
-        item = views.items.getObjectByID(id)
+
+        self.MapClass.add_item_id(self.id, item_id)
+        item = self.dd.getObjectByID(item_id)
         item.save()
-        if id not in self.trackedItems:
-            self.trackedItems.appendID(id)
 
         folder = self.get_folder()
-        if (folder is not None):
-            folder.addID(id)
+        if folder is not None:
+            folder.add_id(item_id)
 
-        _playlist_id_added(self, id)
-        self.signal_change()
-
-    def removeID(self, id):
+    def remove_id(self, item_id, signal_change=True):
         """Remove an item from the playlist."""
 
-        self.confirmDBThread()
-        self.trackedItems.removeID(id)
-
+        self.MapClass.remove_item_id(self.id, item_id)
         folder = self.get_folder()
-        if (folder is not None):
-            folder.addID(id)
+        if folder is not None:
+            folder.remove_id(item_id)
+        if signal_change:
+            item = self.dd.getObjectByID(item_id)
+            item.signal_change(needsSave=False)
 
-        _playlist_id_removed(self, id)
-        self.signal_change()
+    def add_item(self, item):
+        """Add an item to the end of the playlist"""
+        return self.add_id(item.id)
 
-    def moveID(self, id, newPosition):
-        """Change the position of an item in the playlist.
+    def remove_item(self, item, signal_change=True):
+        """remove an item from the playlist"""
+        return self.remove_id(item.id, signal_change)
 
-        This method works the same as list.insert().  The item will be
-        inserted at the index newPosition, items that are currently at that
-        index or after it will be moved back one position.  If new position is
-        after the end of the list, the item will be added at the end, if it's
-        less than 0 it will be added at the beginning.
+    def contains_id(self, item_id):
+        view = self.MapClass.make_view('playlist_id=? AND item_id=?',
+                (self.id, item_id))
+        return view.count() > 0
+
+    def reorder(self, new_order):
+        """reorder items in the playlist.  new_order should contain a list of
+        ids one for each item in the playlist.
         """
-
-        self.confirmDBThread()
-        self.trackedItems.moveID(id, newPosition)
-        self.signal_change()
-
-    def idInPlaylist(self, id):
-        return id in self.trackedItems
-
-    def addItem(self, item):
-        return self.addID(item.getID())
-
-    def removeItem(self, item):
-        return self.removeID(item.getID())
-
-    def moveItem(self, item, newPosition):
-        return self.moveID(item.getID(), newPosition)
-
-    def reorder(self, newOrder):
-        self.trackedItems.reorder(newOrder)
-
-    def recomputeSort(self):
-        self.trackedItems.recomputeSort()
+        for i, item_id in enumerate(new_order):
+            self.MapClass.update('position=?', 'item_id=?', (i, item_id))
 
 class SavedPlaylist(database.DDBObject, PlaylistMixin):
     """An ordered list of videos that the user has saved.
@@ -129,24 +122,26 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
     which is a temporary playlist that holds the videos we're playing right
     now.
     """
+
+    MapClass = PlaylistItemMap
+
     def setup_new(self, title, item_ids=None):
         self.title = title
-        if item_ids:
-            self.item_ids = item_ids
-        else:
-            self.item_ids = []
         self.folder_id = None
-        self.setup_common()
-
-    def setup_restored(self):
-        self.setup_common()
-
-    def setup_common(self):
-        self.setupTrackedItemView()
+        if item_ids is not None:
+            for id in item_ids:
+                self.add_id(id)
 
     @classmethod
     def folder_view(cls, id):
         return cls.make_view('folder_id=?', (id,))
+
+    def add_id(self, item_id):
+        # Don't allow items to be added more than once.
+        view = PlaylistItemMap.make_view('playlist_id=? AND item_id=?',
+                (self.id, item_id))
+        if view.count() == 0:
+            PlaylistMixin.add_id(self, item_id)
 
     get_title, set_title = makeSimpleGetSet('title')
 
@@ -157,31 +152,27 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
         else:
             return None
 
-    def setFolder(self, newFolder):
+    def _remove_ids_from_folder(self):
+        folder = self.get_folder()
+        if folder is not None:
+            for map in PlaylistItemMap.playlist_view(self.id):
+                folder.remove_id(map.item_id)
+
+    def _add_ids_to_folder(self):
+        folder = self.get_folder()
+        if folder is not None:
+            for map in PlaylistItemMap.playlist_view(self.id):
+                folder.add_id(map.item_id)
+
+    def set_folder(self, new_folder):
         self.confirmDBThread()
-        old_folder_id = self.folder_id
-        if newFolder is not None:
-            self.folder_id = newFolder.getID()
+        self._remove_ids_from_folder()
+        if new_folder is not None:
+            self.folder_id = new_folder.getID()
         else:
             self.folder_id = None
         self.signal_change()
-        if old_folder_id is not None:
-            folder = views.playlistFolders.getObjectByID(old_folder_id)
-            folder.check_for_removed_ids()
-        if newFolder:
-            for id in self.item_ids:
-                newFolder.checkItemIDAdded(id)
-
-    def handleRemove(self, ids):
-        """Handle the user removing a set of IDs.  This method will also check
-        the playlist folder we're in and remove the ID from there.
-        """
-
-        for id in ids:
-            self.removeID(id)
-        folder = self.get_folder()
-        if folder:
-            folder.check_for_removed_ids()
+        self._add_ids_to_folder()
 
     def rename(self):
         title = _("Rename Playlist")
@@ -193,27 +184,12 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
         dialogs.TextEntryDialog(title, description, dialogs.BUTTON_OK,
                 dialogs.BUTTON_CANCEL).run(callback)
 
-    # This allows playlists to be used in the same context as folders
-    # in certain places, but still catches logic problem. Maybe
-    # eventually, playlists and folders should derive from the same
-    # parent --NN
+    # Accepting moveItemsTo, but forcing it to be false allows playlists to be
+    # used in the same context as folders in certain places, but still catches
+    # logic problem. Maybe eventually, playlists and folders should derive
+    # from the same parent --NN
     def remove(self, moveItemsTo=None):
         if moveItemsTo is not None:
             raise StandardError("Cannot 'move' a playlist to %s" % repr(moveItemsTo))
+        self._remove_ids_from_folder()
         database.DDBObject.remove(self)
-
-_id_map = {} # map item ids to sets of playlists that contain them
-
-def playlist_set_for_item_id(id):
-    try:
-        return _id_map[id]
-    except KeyError:
-        playlist_set = set()
-        _id_map[id] = playlist_set
-        return playlist_set
-
-def _playlist_id_added(playlist, id):
-    playlist_set_for_item_id(id).add(playlist)
-
-def _playlist_id_removed(playlist, id):
-    playlist_set_for_item_id(id).discard(playlist)

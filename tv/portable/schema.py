@@ -310,11 +310,11 @@ from miro.downloader import RemoteDownloader, HTTPAuthPassword
 from miro.feed import Feed, FeedImpl, RSSFeedImpl, RSSMultiFeedImpl, ScraperFeedImpl
 from miro.feed import SearchFeedImpl, DirectoryWatchFeedImpl, DirectoryFeedImpl, SearchDownloadsFeedImpl
 from miro.feed import ManualFeedImpl, SingleFeedImpl
-from miro.folder import ChannelFolder, PlaylistFolder
+from miro.folder import ChannelFolder, PlaylistFolder, PlaylistFolderItemMap
 from miro.guide import ChannelGuide
 from miro.item import Item, FileItem
 from miro.iconcache import IconCache
-from miro.playlist import SavedPlaylist
+from miro.playlist import SavedPlaylist, PlaylistItemMap
 from miro.tabs import TabOrder
 from miro.theme import ThemeHistory
 
@@ -538,7 +538,6 @@ class PlaylistFolderSchema(DDBObjectSchema):
     fields = DDBObjectSchema.fields + [
         ('expanded', SchemaBool()),
         ('title', SchemaString()),
-        ('item_ids', SchemaList(SchemaInt())),
     ]
 
 class PlaylistSchema(DDBObjectSchema):
@@ -546,8 +545,26 @@ class PlaylistSchema(DDBObjectSchema):
     table_name = 'playlist'
     fields = DDBObjectSchema.fields + [
         ('title', SchemaString()),
-        ('item_ids', SchemaList(SchemaInt())),
         ('folder_id', SchemaInt(noneOk=True)),
+    ]
+
+class PlaylistItemMapSchema(DDBObjectSchema):
+    klass = PlaylistItemMap
+    table_name = 'playlist_item_map'
+    fields = DDBObjectSchema.fields + [
+        ('playlist_id', SchemaInt()),
+        ('item_id', SchemaInt()),
+        ('position', SchemaInt()),
+    ]
+
+class PlaylistFolderItemMapSchema(DDBObjectSchema):
+    klass = PlaylistFolderItemMap
+    table_name = 'playlist_folder_item_map'
+    fields = DDBObjectSchema.fields + [
+        ('playlist_id', SchemaInt()),
+        ('item_id', SchemaInt()),
+        ('position', SchemaInt()),
+        ('count', SchemaInt()),
     ]
 
 class TabOrderSchema(DDBObjectSchema):
@@ -587,7 +604,7 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
         ('list_view_displays', SchemaList(SchemaBinary())),
     ]
 
-VERSION = 87
+VERSION = 88
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,
@@ -595,5 +612,6 @@ object_schemas = [
     SearchDownloadsFeedImplSchema, RemoteDownloaderSchema,
     HTTPAuthPasswordSchema, ChannelGuideSchema, ManualFeedImplSchema, SingleFeedImplSchema,
     PlaylistSchema, ChannelFolderSchema, PlaylistFolderSchema,
+    PlaylistItemMapSchema, PlaylistFolderItemMapSchema,
     TabOrderSchema, ThemeHistorySchema, WidgetsFrontendStateSchema
 ]

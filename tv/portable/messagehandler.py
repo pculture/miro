@@ -323,7 +323,14 @@ class FeedFolderItemTracker(ItemTrackerBase):
 class PlaylistItemTracker(ItemTrackerBase):
     type = 'playlist'
     def __init__(self, playlist):
-        self.view = playlist.trackedItems.view
+        self.view = item.Item.playlist_view(playlist.id)
+        self.id = playlist.id
+        ItemTrackerBase.__init__(self)
+
+class PlaylistFolderItemTracker(ItemTrackerBase):
+    type = 'playlist'
+    def __init__(self, playlist):
+        self.view = item.Item.playlist_folder_view(playlist.id)
         self.id = playlist.id
         ItemTrackerBase.__init__(self)
 
@@ -397,7 +404,7 @@ def make_item_tracker(message):
             return PlaylistItemTracker(playlist)
         except database.ObjectNotFoundError:
             playlist = views.playlistFolders.getObjectByID(message.id)
-            return PlaylistItemTracker(playlist)
+            return PlaylistFolderItemTracker(playlist)
     elif message.type == 'manual':
         return ManualItemTracker(message.id, message.ids_to_track)
     else:
@@ -819,8 +826,13 @@ class BackendMessageHandler(messages.MessageHandler):
                         message.id)
                 return
 
-        if set(playlist.item_ids) != set(message.item_ids):
-            logging.warn("PlaylistReordered: Not all ids present in the new order\nOriginal Ids: %s\nNew ids: %s", playlist.item_ids, message.item_ids)
+        if isinstance(playlist, PlaylistFolder):
+            item_view = item.Item.playlist_folder_view(playlist.id)
+        else:
+            item_view = item.Item.playlist_view(playlist.id)
+        playlist_item_ids = [i.id for i in item_view]
+        if set(playlist_item_ids) != set(message.item_ids):
+            logging.warn("PlaylistReordered: Not all ids present in the new order\nOriginal Ids: %s\nNew ids: %s", playlist_item_ids, message.item_ids)
             return
         playlist.reorder(message.item_ids)
         playlist.signal_change()
@@ -976,7 +988,7 @@ class BackendMessageHandler(messages.MessageHandler):
                 logging.warn("AddVideosToPlaylist: Item not downloaded (%s)",
                         item)
             else:
-                playlist.addItem(item)
+                playlist.add_item(item)
 
     def handle_remove_videos_from_playlist(self, message):
         try:
@@ -987,13 +999,13 @@ class BackendMessageHandler(messages.MessageHandler):
             return
         to_remove = []
         for id in message.video_ids:
-            if not playlist.idInPlaylist(id):
+            if not playlist.contains_id(id):
                 logging.warn("RemoveVideosFromPlaylist: Id not found -- %s",
                         id)
             else:
                 to_remove.append(id)
-        if to_remove:
-            playlist.handleRemove(to_remove)
+        if id in to_remove:
+            playlist.remove_id(id)
 
     def handle_search(self, message):
         searchengine_id = message.id

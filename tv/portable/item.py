@@ -406,6 +406,18 @@ class Item(DDBObject):
     def children_view(cls, parent_id):
         return cls.make_view('parent_id=?', (parent_id,))
 
+    @classmethod
+    def playlist_view(cls, playlist_id):
+        return cls.make_view("pim.playlist_id=?", (playlist_id,),
+                joins={'playlist_item_map AS pim': 'item.id=pim.item_id'},
+                order_by='pim.position')
+
+    @classmethod
+    def playlist_folder_view(cls, playlist_folder_id):
+        return cls.make_view("pim.playlist_id=?", (playlist_folder_id,),
+                joins={'playlist_folder_item_map AS pim': 'item.id=pim.item_id'},
+                order_by='pim.position')
+
     def _look_for_downloader(self):
         self.downloader = downloader.lookupDownloader(self.get_url())
         if self.downloader is not None:
@@ -499,8 +511,9 @@ class Item(DDBObject):
         return True
 
     def _remove_from_playlists(self):
-        for playlist_obj in list(playlist.playlist_set_for_item_id(self.id)):
-            playlist_obj.removeItem(self)
+        from miro import folder
+        playlist.PlaylistItemMap.remove_item_from_playlists(self)
+        folder.PlaylistFolderItemMap.remove_item_from_playlists(self)
 
     def _update_release_date(self):
         # FeedParserValues sets up the releaseDateObj attribute
@@ -1336,6 +1349,7 @@ class Item(DDBObject):
         if self.isContainerItem:
             for item in self.getChildren():
                 item.remove()
+        self._remove_from_playlists()
         DDBObject.remove(self)
 
     def setup_links(self):

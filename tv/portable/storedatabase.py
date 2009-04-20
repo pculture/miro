@@ -226,7 +226,7 @@ class LiveStorage:
     def commit_transaction(self):
         self.connection.commit()
 
-    def update(self, obj):
+    def update_obj(self, obj):
         """Update a DDBObject on disk."""
 
         obj_schema = self._schema_map[obj.__class__]
@@ -248,7 +248,7 @@ class LiveStorage:
         self.cursor.execute(sql, values)
         self._schedule_commit()
 
-    def remove(self, obj):
+    def remove_obj(self, obj):
         """Remove a DDBObject from disk."""
 
         schema = self._schema_map[obj.__class__]
@@ -290,7 +290,32 @@ class LiveStorage:
         sql.write(self._get_query_bottom(schema.table_name, where, joins))
         return self._execute(sql.getvalue(), values)[0][0]
 
+    def delete(self, klass, where, values):
+        schema = self._schema_map[klass]
+        sql = StringIO()
+        sql.write('DELETE FROM %s' % schema.table_name)
+        if where is not None:
+            sql.write('\nWHERE %s' % where)
+        self._execute(sql.getvalue(), values)
+
+    def update(self, klass, set_clause, where, values):
+        schema = self._schema_map[klass]
+        sql = StringIO()
+        sql.write('UPDATE %s\nSET %s' % (schema.table_name, set_clause))
+        if where is not None:
+            sql.write('\nWHERE %s' % where)
+        self._execute(sql.getvalue(), values)
+
+    def select(self, klass, columns, where, values):
+        schema = self._schema_map[klass]
+        sql = StringIO()
+        sql.write('SELECT %s ' % columns)
+        sql.write(self._get_query_bottom(schema.table_name, where, None))
+        return self._execute(sql.getvalue(), values)
+
     def _execute(self, sql, values):
+        if values is None:
+            values = ()
         self.cursor.execute(sql, values)
         start = time.time()
         rows = self.cursor.fetchall()

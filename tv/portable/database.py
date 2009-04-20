@@ -822,7 +822,7 @@ class DynamicDatabase:
             indexMap.addObject(newobject, value)
 
         if self.liveStorage:
-            self.liveStorage.update(newobject)
+            self.liveStorage.update_obj(newobject)
         for callback in self.addCallbacks:
             callback(value, newobject.id)
         #self.checkObjLocs()
@@ -912,7 +912,7 @@ class DynamicDatabase:
             callback(tempmapped, tempid)
 
         if self.liveStorage:
-            self.liveStorage.remove(tempobj)
+            self.liveStorage.remove_obj(tempobj)
 
         #Pass the remove on to subViews
         for view, f in self.subMaps:
@@ -945,7 +945,7 @@ class DynamicDatabase:
         tempmapped = temp[1]
         
         if needsSave and self.liveStorage:
-            self.liveStorage.update (tempobj)
+            self.liveStorage.update_obj(tempobj)
 
         if self.resort:
             before = it.copy()
@@ -1503,6 +1503,18 @@ class DDBObject(signals.SignalEmitter):
     @classmethod
     def get_by_id(cls, id):
         return cls.make_view('id=?', (id,)).get_singleton()
+
+    @classmethod
+    def delete(cls, where, values=None):
+        return app.db.liveStorage.delete(cls, where, values)
+
+    @classmethod
+    def update(cls, set_clause, where, values=None):
+        return app.db.liveStorage.update(cls, set_clause, where, values)
+
+    @classmethod
+    def select(cls, columns, where=None, values=None):
+        return app.db.liveStorage.select(cls, columns, where, values)
 
     def setup_new(self):
         """Initialize a newly created object."""

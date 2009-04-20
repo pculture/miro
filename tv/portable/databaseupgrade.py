@@ -33,6 +33,7 @@ olddatabaseupgrade.py)
 """
 
 from urlparse import urlparse
+import itertools
 import re
 import logging
 import urllib
@@ -2066,6 +2067,83 @@ def upgrade87(cursor):
     cursor.execute("INSERT INTO feed (%s) SELECT %s FROM old_feed" % 
             (', '.join(columns), ', '.join(columns)))
     cursor.execute("DROP TABLE old_feed")
+
+def remove_column(cursor, table, *column_names):
+    """Remove a column from an SQLITE table.  This was added for upgrade88,
+    but it's probably useful for other ones as well.
+    """
+    cursor.execute("PRAGMA table_info('%s')" % table)
+    columns = []
+    columns_with_type = []
+    for column_info in cursor.fetchall():
+        column = column_info[1]
+        type = column_info[2]
+        if column in column_names:
+            continue
+        columns.append(column)
+        if column == 'id':
+            type += ' PRIMARY KEY'
+        columns_with_type.append("%s %s" % (column, type))
+
+    cursor.execute("ALTER TABLE %s RENAME TO old_%s" % (table, table))
+    cursor.execute("CREATE TABLE %s (%s)" %
+        (table, ', '.join(columns_with_type)))
+    cursor.execute("INSERT INTO %s SELECT %s FROM old_%s" %
+            (table, ', '.join(columns), table))
+    cursor.execute("DROP TABLE old_%s" % table)
+
+def upgrade88(cursor):
+    """Replace playlist.item_ids, with PlaylistItemMap objects."""
+
+    # get the last id in the database
+    max_id = 0
+    for table in ('channel_folder', 'playlist_folder', 'channel_guide',
+            'directory_feed_impl', 'directory_watch_feed_impl',
+            'remote_downloader', 'rss_feed_impl', 'feed',
+            'rss_multi_feed_impl', 'feed_impl', 'scraper_feed_impl',
+            'http_auth_password', 'search_downloads_feed_impl icon_cache',
+            'item', 'single_feed_impl', 'manual_feed_impl', 'taborder_order',
+            'theme_history', 'widgets_frontend_state', 'playlist'):
+        cursor.execute("SELECT MAX(id) from %s" % table)
+        max_id = max(max_id, cursor.fetchone()[0])
+
+    id_counter = itertools.count(max_id + 1)
+
+    folder_count = {}
+    cursor.execute("CREATE TABLE playlist_item_map (id integer PRIMARY KEY, "
+            "playlist_id integer, item_id integer, position integer)")
+    cursor.execute("CREATE TABLE playlist_folder_item_map "
+            "(id integer PRIMARY KEY, playlist_id integer, item_id integer, "
+            " position integer, count integer)")
+
+    sql = "SELECT id, folder_id, item_ids FROM playlist"
+    for row in list(cursor.execute(sql)):
+        id, folder_id, item_ids = row
+        item_ids = eval(item_ids, {}, {})
+        for i, item_id in enumerate(item_ids):
+            cursor.execute("INSERT INTO playlist_item_map "
+                    "(id, item_id, playlist_id, position) VALUES (?, ?, ?, ?)",
+                    (id_counter.next(), item_id, id, i))
+            if folder_id is not None:
+                if folder_id not in folder_count:
+                    folder_count[folder_id] = {}
+                try:
+                    folder_count[folder_id][item_id] += 1
+                except KeyError:
+                    folder_count[folder_id][item_id] = 1
+
+    sql = "SELECT id, item_ids FROM playlist_folder"
+    for row in list(cursor.execute(sql)):
+        id, item_ids = row
+        item_ids = eval(item_ids, {}, {})
+        for i, item_id in enumerate(item_ids):
+            count = folder_count[id][item_id]
+            cursor.execute("INSERT INTO playlist_folder_item_map "
+                    "(id, item_id, playlist_id, position, count) "
+                    "VALUES (?, ?, ?, ?, ?)",
+                    (id_counter.next(), item_id, id, i, count))
+    for table in ('playlist_folder', 'playlist'):
+        remove_column(cursor, table, 'item_id')
 
 #def upgradeX (cursor):
 #    """Input a SQLite cursor.  Do whatever is necessary to upgrade the DB."""

@@ -31,7 +31,7 @@ from miro import indexes
 from miro import playlist
 from miro import sorts
 from miro import util
-from miro.database import DDBObject
+from miro.database import DDBObject, ObjectNotFoundError
 from miro.databasehelper import makeSimpleGetSet
 
 class FolderBase(DDBObject):
@@ -120,38 +120,45 @@ class ChannelFolder(FolderBase):
     def mark_as_viewed(self):
         for child in self.getChildrenView():
             child.mark_as_viewed()
-    
+
+class PlaylistFolderItemMap(playlist.PlaylistItemMap):
+    """Single row in the map that associates playlist folders with their 
+    child items.
+    """
+    def setup_new(self, playlist_id, item_id):
+        playlist.PlaylistItemMap.setup_new(self, playlist_id, item_id)
+        self.count = 1
+
+    def inc_count(self):
+        self.count += 1
+        self.signal_change()
+
+    def dec_count(self):
+        if self.count > 1:
+            self.count -= 1
+            self.signal_change()
+        else:
+            self.remove()
+
+    @classmethod
+    def add_item_id(cls, playlist_id, item_id):
+        view = cls.make_view('playlist_id=? AND item_id=?',
+                (playlist_id, item_id))
+        try:
+            map = view.get_singleton()
+            map.inc_count()
+        except ObjectNotFoundError:
+            cls(playlist_id, item_id)
+
+    @classmethod
+    def remove_item_id(cls, playlist_id, item_id):
+        view = cls.make_view('playlist_id=? AND item_id=?',
+                (playlist_id, item_id))
+        map = view.get_singleton()
+        map.dec_count()
+
 class PlaylistFolder(FolderBase, playlist.PlaylistMixin):
-    def setup_new(self, title):
-        self.item_ids = []
-        FolderBase.setup_new(self, title)
-        self.setup_common()
-
-    def setup_restored(self):
-        self.setup_common()
-
-    def setup_common(self):
-        self.setupTrackedItemView()
-
-    def check_for_removed_ids(self):
-        """Double check the item ids contained in this playlist folder and
-        removes ones that are no longer contained in child playlists.
-
-        This should be called when a child playlist is removed or changes it's
-        id set.
-        """
-
-        child_item_ids = set()
-        for playlist in self.getChildrenView():
-            child_item_ids.update(playlist.trackedItems.trackedIDs)
-
-        for id in self.trackedItems.trackedIDs.difference(child_item_ids):
-            self.removeID(id)
-
-
-    def checkItemIDAdded(self, id):
-        if id not in self.trackedItems:
-            self.trackedItems.appendID(id)
+    MapClass = PlaylistFolderItemMap
 
     def getChildrenView(self):
         return playlist.SavedPlaylist.folder_view(self.id)

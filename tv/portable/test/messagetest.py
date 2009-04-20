@@ -454,7 +454,7 @@ class PlaylistItemTrackTest(TrackerTest):
     def make_item(self, url):
         item = Item(entry=get_entry_for_url(url), feed_id=self.feed.id)
         self.items.append(item)
-        self.playlist.addItem(item)
+        self.playlist.add_item(item)
 
     def checkDownloadInfo(self, info, item):
         downloader = item.downloader
