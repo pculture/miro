@@ -1389,6 +1389,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             self.ufeed.signal_change()
 
         self.truncateOldItems(old_items)
+        self.signal_change()
 
     def truncateOldItems(self, old_items):
         """Truncate items so that the number of items in this feed doesn't
