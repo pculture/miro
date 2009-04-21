@@ -204,10 +204,19 @@ class ThreeImageSurface(object):
     then the center image will be tiled to compensate.
     """
 
-    def __init__(self, basename):
-        self.left = make_surface(basename + '_left')
-        self.center = make_surface(basename + '_center')
-        self.right = make_surface(basename + '_right')
+    def __init__(self, basename=None):
+        self.left = self.center = self.right = None
+        self.height = 0
+        if basename is not None:
+            left = make_surface(basename + '_left')
+            center = make_surface(basename + '_center')
+            right = make_surface(basename + '_right')
+            self.set_images(left, center, right)
+
+    def set_images(self, left, center, right):
+        self.left = left
+        self.center = center
+        self.right = right
         if not (self.left.height == self.center.height == self.right.height):
             raise ValueError("Images aren't the same height")
         self.height = self.left.height

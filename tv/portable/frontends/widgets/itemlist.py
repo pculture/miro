@@ -309,6 +309,7 @@ class ItemList(object):
         self._sorter = None
         self._search_text = ''
         self.new_only = False
+        self.unwatched_only = False
         self._hidden_items = {}
         # maps ids -> items that should be in this list, but are filtered out
         # for some reason
@@ -359,6 +360,7 @@ class ItemList(object):
         if not self.filter(item_info):
             return False
         return (not (self.new_only and item_info.item_viewed) and
+                not (self.unwatched_only and item_info.video_watched) and
                 item_matches_search(item_info, self._search_text))
 
     def set_show_details(self, item_id, value):
@@ -446,6 +448,11 @@ class ItemList(object):
     def set_new_only(self, new_only):
         """Set if only new items are to be displayed (default False)."""
         self.new_only = new_only
+        self._recalulate_hidden_items()
+
+    def set_unwatched_only(self, unwatched_only):
+        """Set if only unplayed items are to be displayed (default False)."""
+        self.unwatched_only = unwatched_only
         self._recalulate_hidden_items()
 
     def set_search_text(self, search_text):

@@ -100,7 +100,7 @@ class ItemListController(object):
         self.list_item_view.change_sort_indicator(sorter.KEY, sorter.is_ascending())
 
     def _init_widget(self):
-        self.widget = itemlistwidgets.ItemContainerWidget()
+        self.widget = itemlistwidgets.ItemContainerWidget(self)
         self.item_list = itemlist.ItemList()
         self.list_item_view = self.build_list_item_view()
         scroller = widgetset.Scroller(True, True)
@@ -108,6 +108,9 @@ class ItemListController(object):
         self.widget.list_view_vbox.pack_start(scroller, expand=True)
         self.widget.toolbar.connect_weak('sort-changed', self.on_sort_changed)
         self.list_item_view.connect_weak('sort-changed', self.on_sort_changed)
+        if self.type in ('videos', 'audios'):
+            self.widget.toolbar.connect_weak('view-all-clicked', self.on_view_all)
+            self.widget.toolbar.connect_weak('view-unwatched-clicked', self.on_view_unwatched)
         self.build_widget()
         sorter = self.item_list.get_sort()
         if sorter is not None:
@@ -190,6 +193,18 @@ class ItemListController(object):
             messages.ResumeDownload(info.id).send_to_backend()
         elif info.download_info is None:
             messages.StartDownload(info.id).send_to_backend()
+
+    def on_view_all(self, button):
+        self.widget.toolbar.switch_to_view_all()
+        self.item_list.set_unwatched_only(False)
+        for item_view in self.all_item_views():
+            item_view.model_changed()
+
+    def on_view_unwatched(self, button):
+        self.widget.toolbar.switch_to_view_unwatched()
+        self.item_list.set_unwatched_only(True)
+        for item_view in self.all_item_views():
+            item_view.model_changed()
 
     def on_sort_changed(self, object, sort_key, ascending):
         sorter = itemlist.SORT_KEY_MAP[sort_key](ascending)

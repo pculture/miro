@@ -49,6 +49,7 @@ from miro.frontends.widgets import imagebutton
 from miro.frontends.widgets import style
 from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import widgetutil
+from miro.frontends.widgets import segmented
 from miro.plat.frontends.widgets import widgetset
 from miro.plat.frontends.widgets.threads import call_on_ui_thread
 from miro.plat.utils import get_available_bytes_for_movies
@@ -680,13 +681,6 @@ class FeedToolbar(widgetset.Background):
     def _on_autodownload_changed(self, widget, option):
         self.emit('auto-download-changed', self.autodownload_options[option][0])
 
-class ViewSwitchButton(imagebutton.ImageButton):
-    def __init__(self, image_name):
-        imagebutton.ImageButton.__init__(self, image_name)
-        # Slight hack here, when the view is active, we disable the button and
-        # make it look like it's pressed.
-        self.disabled_image = self.pressed_image
-
 class HeaderToolbar(widgetset.Background):
     """Toolbar used to sort items and switch views.
 
@@ -696,30 +690,46 @@ class HeaderToolbar(widgetset.Background):
        sort_key will be one of 'name', 'date', 'size' or 'length'
     list-view-clicked (widget) -- User requested to switch to list view
     normal-view-clicked (widget) -- User requested to switch to normal view
+    view-all-clicked (widget) -- User requested to view all items
+    view-unwatched-clicked (widget) -- User requested to only view unwatched items
     """
 
-    def __init__(self):
+    def __init__(self, controller=None):
         widgetset.Background.__init__(self)
         self.create_signal('sort-changed')
         self.create_signal('list-view-clicked')
         self.create_signal('normal-view-clicked')
-        self._hbox = widgetset.HBox()
+        
         self._button_hbox = widgetset.HBox()
-        self._button_hbox_container = widgetutil.HideableWidget(
-                self._button_hbox)
+        self._button_hbox_container = widgetutil.HideableWidget(self._button_hbox)
         self._button_hbox_container.show()
-        self.normal_button = ViewSwitchButton('normal-view-button')
-        self.normal_button.set_squish_width(True)
-        self.normal_button.connect('clicked', self._on_normal_clicked)
-        self.normal_button.disable()
-        self.list_button = ViewSwitchButton('list-view-button')
-        self.list_button.set_squish_width(True)
-        self.list_button.connect('clicked', self._on_list_clicked)
-        self._hbox.pack_start(widgetutil.align_middle(self.normal_button,
-            left_pad=12))
-        self._hbox.pack_start(widgetutil.align_middle(self.list_button))
+
+        self._hbox = widgetset.HBox()
+ 
+        self.view_switch = segmented.SegmentedButtonsRow()
+        self.view_switch.add_image_button('normal-view', 'normal-view-button-icon', self._on_normal_clicked)
+        self.view_switch.add_image_button('list-view', 'list-view-button-icon', self._on_list_clicked)
+        self.view_switch.set_active('normal-view')
+        self._hbox.pack_start(widgetutil.align_middle(self.view_switch.make_widget(), left_pad=12))
+
+        if controller is not None and controller.type in ('videos', 'audios'):
+            if controller.type == 'videos':
+                unwatched_label =  _('Unwatched')
+            elif controller.type == 'audios':
+                unwatched_label = _('Unplayed')
+            else:
+                raise ValueError("Unsupported controller type")
+            self.create_signal('view-all-clicked')
+            self.create_signal('view-unwatched-clicked')
+            self.filter_switch = segmented.SegmentedButtonsRow()
+            self.filter_switch.add_text_button('view-all', _('All'), self._on_view_all_clicked)
+            self.filter_switch.add_text_button('view-unwatched', unwatched_label, self._on_view_unwatched_clicked)
+            self.filter_switch.set_active('view-all')
+            self._hbox.pack_start(widgetutil.align_middle(self.filter_switch.make_widget(), left_pad=12))
+
         self._hbox.pack_end(widgetutil.align_middle(self._button_hbox_container))
         self.add(self._hbox)
+
         self._current_sort_key = 'date'
         self._ascending = False
         self._button_map = {}
@@ -737,13 +747,23 @@ class HeaderToolbar(widgetset.Background):
 
     def switch_to_normal_view(self):
         self._button_hbox_container.show()
-        self.normal_button.disable()
-        self.list_button.enable()
+        self.view_switch.set_active('normal-view')
 
     def switch_to_list_view(self):
         self._button_hbox_container.hide()
-        self.list_button.disable()
-        self.normal_button.enable()
+        self.view_switch.set_active('list-view')
+
+    def _on_view_all_clicked(self, button):
+        self.emit('view-all-clicked')
+
+    def _on_view_unwatched_clicked(self, button):
+        self.emit('view-unwatched-clicked')
+
+    def switch_to_view_all(self):
+        self.filter_switch.set_active('view-all')
+        
+    def switch_to_view_unwatched(self):
+        self.filter_switch.set_active('view-unwatched')
 
     def change_sort_indicator(self, sort_name, ascending):
         if not sort_name in self._button_map:
@@ -888,14 +908,14 @@ class ItemContainerWidget(widgetset.VBox):
        toolbar -- HeaderToolbar for the widget
     """
 
-    def __init__(self):
+    def __init__(self, controller=None):
         widgetset.VBox.__init__(self)
         self._list_view_displayed = False
         self.normal_view_vbox = widgetset.VBox()
         self.list_view_vbox = widgetset.VBox()
         self.titlebar_vbox = widgetset.VBox()
         self.list_empty_mode_vbox = widgetset.VBox()
-        self.toolbar = HeaderToolbar()
+        self.toolbar = HeaderToolbar(controller)
         self.toolbar.connect('list-view-clicked', self.switch_to_list_view)
         self.toolbar.connect('normal-view-clicked', self.switch_to_normal_view)
         self.pack_start(self.titlebar_vbox)
