@@ -114,6 +114,7 @@ class LiveStorage:
         self._schema_map = {}
         self._all_schemas = []
         self._object_map = {} # maps object id -> DDBObjects in memory
+        self._ids_loaded = set()
         for oschema in object_schemas:
             self._all_schemas.append(oschema)
             for klass in oschema.ddb_object_classes():
@@ -218,6 +219,7 @@ class LiveStorage:
         self.cursor.execute(sql, values)
         self._schedule_commit()
         self._object_map[obj.id] = obj
+        self._ids_loaded.add(obj.id)
 
     def remove_obj(self, obj):
         """Remove a DDBObject from disk."""
@@ -227,6 +229,7 @@ class LiveStorage:
         self.cursor.execute(sql, (obj.id,))
         self._schedule_commit()
         del self._object_map[obj.id]
+        self._ids_loaded.remove(obj.id)
 
     def get_last_id(self):
         try:
@@ -266,28 +269,48 @@ class LiveStorage:
         return sql.getvalue()
 
     def query(self, klass, where, values=None, order_by=None, joins=None):
+        for id in self.query_ids(klass, where, values, order_by, joins):
+            yield self._object_map[id]
+
+    def query_ids(self, klass, where, values=None, order_by=None, joins=None):
         schema = self._schema_map[klass]
-        column_names = ['%s.%s' % (schema.table_name, f[0])
-                for f in schema.fields]
         sql = StringIO()
-        sql.write("SELECT %s " % (', '.join(column_names),))
+        sql.write("SELECT %s.id " % schema.table_name)
         sql.write(self._get_query_bottom(schema.table_name, where, joins))
         if order_by is not None:
             sql.write(" ORDER BY %s" % order_by)
 
         self.cursor.execute(sql.getvalue(), values)
-        for row in self.cursor.fetchall():
-            # try to grab the object from memory before loading it from DB
-            # data.
-            try:
-                yield self.get_obj_by_id(row[0])
-                continue
-            except KeyError:
-                pass
-            restored = self._restore_object(schema, row)
-            yield restored
+        rv = [row[0] for row in self.cursor.fetchall()]
+        unrestored_ids = set(rv).difference(self._ids_loaded)
+        if unrestored_ids:
+            # restore any objects that we don't already have in memory.
+            # query() calls query_ids() and expects that for all the object
+            # ids returned, it can look them up in self._object_map
+            self._restore_objects(schema, unrestored_ids)
+        return rv
 
-    def _restore_object(self, schema, db_row):
+    def _restore_objects(self, schema, id_set):
+        column_names = ['%s.%s' % (schema.table_name, f[0])
+                for f in schema.fields]
+
+        # we can only feed sqlite so many variables at once, send it chunks of
+        # 900 ids at once
+        id_list = tuple(id_set)
+        for start in xrange(0, len(id_list), 900):
+            id_list_chunk = id_list[start:start+900]
+
+            sql = StringIO()
+            sql.write("SELECT %s " % (', '.join(column_names),))
+            sql.write("FROM %s WHERE id IN (%s)" % (schema.table_name, 
+                ', '.join('?' for i in xrange(len(id_list_chunk)))))
+
+            self.cursor.execute(sql.getvalue(), id_list_chunk)
+            for row in self.cursor.fetchall():
+                restored = self._restore_object_from_row(schema, row)
+                self._object_map[restored.id] = restored
+
+    def _restore_object_from_row(self, schema, db_row):
         restored_data = {}
         for (name, schema_item), value in \
                 itertools.izip(schema.fields, db_row):
@@ -301,10 +324,6 @@ class LiveStorage:
             restored_data[name] = value
         klass = schema.get_ddb_class(restored_data)
         return klass(restored_data=restored_data)
-
-    def query_ids(self, klass, where, values=None, order_by=None, joins=None):
-        for obj in self.query(klass, where, values, order_by, joins):
-            yield obj.id
 
     def query_count(self, klass, where, values=None, joins=None):
         schema = self._schema_map[klass]
