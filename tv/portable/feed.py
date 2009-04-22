@@ -40,6 +40,7 @@ import xml
 
 from miro.database import DDBObject, ObjectNotFoundError
 from miro.httpclient import grabURL
+from miro import app
 from miro import config
 from miro import iconcache
 from miro import dialogs
@@ -217,6 +218,12 @@ class FeedImpl(DDBObject):
         self.initialUpdate = True
         self.updateFreq = config.get(prefs.CHECK_CHANNELS_EVERY_X_MN)*60
 
+    @classmethod
+    def orphaned_view(cls):
+        table_name = app.db.table_name(cls)
+        return cls.make_view("feed.id is NULL", 
+                joins={'feed': 'feed.feed_impl_id=%s.id' % table_name})
+
     def _get_items(self):
         return self.ufeed.items
     items = property(_get_items)
@@ -375,7 +382,7 @@ class FeedImpl(DDBObject):
         """
         pass
 
-class Feed(DDBObject):
+class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     """This class is a magic class that can become any type of feed it wants
 
     It works by passing on attributes to the actual feed.
@@ -416,9 +423,9 @@ class Feed(DDBObject):
         self.origURL = url
         self.errorState = False
         self.loading = True
-        self.actualFeed = None
+        self._actualFeed = None
         self._set_feed_impl(FeedImpl(url, self))
-        iconcache.setup_icon_cache(self)
+        self.setup_new_icon_cache()
         self.informOnError = True
         self.folder_id = None
         self.searchTerm = None
@@ -428,6 +435,7 @@ class Feed(DDBObject):
 
     def setup_restored(self):
         restored_feeds.append(self)
+        self._actualFeed = None
         self.informOnError = False
         self.setup_common()
 
@@ -440,6 +448,26 @@ class Feed(DDBObject):
         self.itemSortWatchable = sorts.ItemSortUnwatchedFirst()
         self.inlineSearchTerm = None
         self.calc_item_list()
+
+    def _get_actual_feed(self):
+        # first try to load from actualFeed from the DB
+        if self._actualFeed is None:
+            for klass in (FeedImpl, RSSFeedImpl, RSSMultiFeedImpl,
+                    ScraperFeedImpl, SearchFeedImpl, DirectoryFeedImpl,
+                    DirectoryWatchFeedImpl, SearchDownloadsFeedImpl,):
+                try:
+                    self._actualFeed = klass.get_by_id(self.feed_impl_id)
+                    self._actualFeed.ufeed = self
+                    break
+                except ObjectNotFoundError:
+                    pass
+        # otherwise, make a new FeedImpl
+        if self._actualFeed is None:
+            self._set_feed_impl(FeedImpl(self.origURL, self))
+            self.signal_change()
+        return self._actualFeed
+
+    actualFeed = property(_get_actual_feed)
 
     @classmethod
     def get_by_url(cls, url):
@@ -476,13 +504,10 @@ class Feed(DDBObject):
     def on_db_insert(self):
         self.generateFeed(True)
 
-    def setup_default_feed_impl(self):
-        self._set_feed_impl(FeedImpl(self.origURL, self))
-
     def _set_feed_impl(self, feed_impl):
-        if self.actualFeed is not None:
-            self.actualFeed.remove()
-        self.actualFeed = feed_impl
+        if self._actualFeed is not None:
+            self._actualFeed.remove()
+        self._actualFeed = feed_impl
         self.feed_impl_id = feed_impl.id
 
     def signal_change(self, needsSave=True, needsSignalFolder=False):
@@ -502,20 +527,10 @@ class Feed(DDBObject):
         self.items = itemmod.Item.feed_view(self.id)
         self.visible_items = itemmod.Item.visible_feed_view(self.id)
         self.downloaded_items = itemmod.Item.feed_downloaded_view(self.id)
+        self.downloading_items = itemmod.Item.feed_downloading_view(self.id)
         self.available_items = itemmod.Item.feed_available_view(self.id)
+        self.auto_pending_items = itemmod.Item.feed_auto_pending_view(self.id)
         self.unwatched_items = itemmod.Item.feed_unwatched_view(self.id)
-
-        self.downloaded_items_tracker = self.downloaded_items.make_tracker()
-        self.available_items_tracker = self.available_items.make_tracker()
-        self.unwatched_items_tracker = self.unwatched_items.make_tracker()
-
-        for tracker in (self.downloaded_items_tracker,
-                self.available_items_tracker, self.unwatched_items_tracker):
-            tracker.connect('added', self._item_view_callback)
-            tracker.connect('removed', self._item_view_callback)
-
-    def _item_view_callback(self, tracker, obj):
-        self.signal_change(needsSignalFolder=True)
 
     def update_after_restore(self):
         if self.actualFeed.__class__ == FeedImpl:
@@ -525,21 +540,49 @@ class Feed(DDBObject):
         else:
             self.scheduleUpdateEvents(INITIAL_FEED_UPDATE_DELAY)
 
+    def on_item_changed(self):
+        for cached_count_attr in ('_num_available', '_num_unwatched',
+                '_num_downloaded', '_num_downloading'):
+            if cached_count_attr in self.__dict__:
+                del self.__dict__[cached_count_attr]
+        self.signal_change(needsSave=False)
+
     def num_downloaded(self):
         """Returns the number of downloaded items in the feed.
         """
-        return self.downloaded_items.count()
+        try:
+            return self._num_downloaded
+        except AttributeError:
+            self._num_downloaded = self.downloaded_items.count()
+            return self._num_downloaded
+
+    def num_downloading(self):
+        """Returns the number of downloading items in the feed.
+        """
+        try:
+            return self._num_downloading
+        except AttributeError:
+            self._num_downloading = self.downloading_items.count()
+            return self._num_downloading
 
     def num_unwatched(self):
         """Returns string with number of unwatched videos in feed
         """
-        return self.unwatched_items.count()
+        try:
+            return self._num_unwatched
+        except AttributeError:
+            self._num_unwatched = self.unwatched_items.count()
+            return self._num_unwatched
 
     def num_available(self):
         """Returns string with number of available videos in feed
         """
-        return len([item for item in self.available_items
-                    if not item.is_pending_auto_download()])
+        try:
+            return self._num_available
+        except AttributeError:
+            self._num_available = (self.available_items.count() -
+                    self.auto_pending_items.count())
+            return self._num_available
 
     def get_viewed(self):
         """Returns true iff this feed has been looked at
@@ -577,14 +620,20 @@ class Feed(DDBObject):
         if next is not None:
             next.download(autodl = True)
 
+    def expiring_items(self):
+        if self.expire == u'never':
+            return []
+        elif self.expire == u'system':
+            delta = timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS))
+        else:
+            delta = self.expireTime
+        return itemmod.Item.feed_expiring_view(self.id, datetime.now() - delta)
+
     def expire_items(self):
         """Returns marks expired items as expired
         """
-        for item in self.items:
-            expireTime = item.getExpirationTime()
-            if (item.get_state() == 'expiring' and expireTime is not None and
-                    expireTime < datetime.now()):
-                item.expire()
+        for item in self.expiring_items():
+            item.expire()
 
     def signalItems (self):
         for item in self.items:
@@ -776,9 +825,10 @@ class Feed(DDBObject):
         self.actualFeed.update()
 
     def get_folder(self):
+        from folder import ChannelFolder
         self.confirmDBThread()
         if self.folder_id is not None:
-            return self.dd.getObjectByID(self.folder_id)
+            return ChannelFolder.get_by_id(self.folder_id)
         else:
             return None
 
@@ -1158,7 +1208,7 @@ class Feed(DDBObject):
                 item.setFeed(moveItemsTo.getID())
             else:
                 item.remove()
-        iconcache.remove_icon_cache(self)
+        self.remove_icon_cache()
         DDBObject.remove(self)
         self.actualFeed.remove()
 
@@ -1198,18 +1248,10 @@ class Feed(DDBObject):
         return resources.path(self.calcTablistThumbnail())
 
     def hasDownloadedItems(self):
-        self.confirmDBThread()
-        for item in self.items:
-            if item.is_downloaded():
-                return True
-        return False
+        return self.num_downloaded() > 0
 
     def hasDownloadingItems(self):
-        self.confirmDBThread()
-        for item in self.items:
-            if item.get_state() in (u'downloading', u'paused'):
-                return True
-        return False
+        return self.num_downloading() > 0
 
     def updateIcons(self):
         iconcache.iconCacheUpdater.clear_vital()
@@ -2536,6 +2578,14 @@ def get_feed_by_url(url):
         return Feed.get_by_url(url)
     except ObjectNotFoundError:
         return None
+
+def remove_orphaned_feed_impls():
+    for klass in (FeedImpl, RSSFeedImpl, RSSMultiFeedImpl,
+            ScraperFeedImpl, SearchFeedImpl, DirectoryFeedImpl,
+            DirectoryWatchFeedImpl, SearchDownloadsFeedImpl,):
+        for feed_impl in klass.orphaned_view():
+            logging.warn("No feed for FeedImpl: %s.  Discarding", feed_impl)
+            feed_impl.remove()
 
 restored_feeds = []
 def start_updates():

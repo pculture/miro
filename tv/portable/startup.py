@@ -50,7 +50,6 @@ from miro import config
 from miro import controller
 from miro import database
 from miro import databaseupgrade
-from miro import ddblinks
 from miro import downloader
 from miro import eventloop
 from miro import fileutil
@@ -132,7 +131,6 @@ def initialize(themeName):
     setup_logging()
     # this is portable general
     util.setup_logging()
-    app.db = database.defaultDatabase
     app.controller = controller.Controller()
     config.load(themeName)
 
@@ -166,9 +164,9 @@ def startup():
 def finish_startup():
     logging.info("Restoring database...")
     start = time.time()
-    app.db.liveStorage = storedatabase.LiveStorage()
+    app.db = storedatabase.LiveStorage()
     try:
-        app.db.liveStorage.upgrade_database()
+        app.db.upgrade_database()
     except databaseupgrade.DatabaseTooNewError:
         summary = _("Database too new")
         description = _(
@@ -178,17 +176,15 @@ def finish_startup():
             {"appname": config.get(prefs.SHORT_APP_NAME)},
         )
         raise StartupError(summary, description)
-    objects = app.db.liveStorage.load_objects()
+    database.update_last_id()
     end = time.time()
-    if end - start > 0.05:
-        logging.timing ("Database load slow: %.3f", end - start)
-    ddblinks.setup_links(objects)
-    app.db.restoreFromObjectList(objects)
-    app.db.recomputeFilters()
+    logging.timing ("Database upgrade time: %.3f", end - start)
 
     searchengines.create_engines()
     setup_global_feeds()
+    logging.info("setup tabs")
     setup_tabs()
+    logging.info(" theme")
     setup_theme()
     install_message_handler()
 
@@ -235,6 +231,7 @@ def finish_backend_startup():
     reconnect_downloaders()
     downloader.initController()
     guide.download_guides()
+    feed.remove_orphaned_feed_impls()
     messages.StartupSuccess().send_to_frontend()
 
 @eventloop.idle_iterator
@@ -386,14 +383,9 @@ def clear_icon_cache_orphans():
             yield None
 
 def reconnect_downloaders():
-    reconnected = set()
-    for item_ in item.Item.make_view():
-        item_.setup_links()
-        reconnected.add(item_.downloader)
-    for downloader_ in downloader.RemoteDownloader.make_view():
-        if downloader_ not in reconnected:
-            logging.warn("removing orphaned downloader: %s", downloader_.url)
-            downloader_.remove()
+    for downloader_ in downloader.RemoteDownloader.orphaned_view():
+        logging.warn("removing orphaned downloader: %s", downloader_.url)
+        downloader_.remove()
     manualItems = item.Item.feed_view(feed.Feed.get_manual_feed().getID())
     for item_ in manualItems:
         if item_.downloader is None and item_.__class__ == item.Item:

@@ -277,7 +277,7 @@ class FeedParserValues(object):
                 return datetime.min
 
 
-class Item(DDBObject):
+class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     """An item corresponds to a single entry in a feed. It has a single url
     associated with it.
     """
@@ -307,11 +307,10 @@ class Item(DDBObject):
         self.resumeTime = 0
         self.channelTitle = None
         self.was_downloaded = False
+        self.setup_new_icon_cache()
         # Initalize FileItem attributes to None
         self.filename = self.deleted = self.shortFilename = \
                 self.offsetPath = None
-
-        iconcache.setup_icon_cache(self)
 
         # linkNumber is a hack to make sure that scraped items at the
         # top of a page show up before scraped items at the bottom of
@@ -326,14 +325,15 @@ class Item(DDBObject):
         # For unknown reason(s), some users still have databases with item
         # objects missing the isContainerItem attribute even after
         # a db upgrade (#8819).
+
         if not hasattr(self, 'isContainerItem'):
             self.isContainerItem = None
         self.setup_common()
+        self.setup_links()
 
     def setup_common(self):
         self.selected = False
         self.active = False
-        self.downloader = None
         self.expiring = None
         self.showMoreInfo = False
         self.updating_movie_info = False
@@ -441,9 +441,25 @@ class Item(DDBObject):
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
+    def feed_downloading_view(cls, feed_id):
+        return cls.make_view("feed_id=? AND "
+                "rd.state in ('downloading', 'uploading') AND "
+                "rd.main_item_id=item.id",
+                (feed_id,),
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
+
+    @classmethod
     def feed_available_view(cls, feed_id):
         return cls.make_view("feed_id=? AND "
                 "feed.last_viewed <= item.creationTime",
+                (feed_id,),
+                joins={'feed': 'item.feed_id=feed.id'})
+
+    @classmethod
+    def feed_auto_pending_view(cls, feed_id):
+        return cls.make_view('feed_id=? AND feed.autoDownloadable AND '
+                'NOT item.was_downloaded AND '
+                '(item.eligibleForAutoDownload OR feed.getEverything)',
                 (feed_id,),
                 joins={'feed': 'item.feed_id=feed.id'})
 
@@ -498,13 +514,29 @@ class Item(DDBObject):
                 joins={'feed': 'item.feed_id=feed.id',
                     'remote_downloader as rd': 'item.downloader_id=rd.id'})
 
+    @classmethod
+    def feed_expiring_view(cls, feed_id, watched_before):
+        return cls.make_view("watchedTime is not NULL AND "
+                "watchedTime < ? AND feed_id = ?",
+                (watched_before, feed_id),
+                joins={'feed': 'item.feed_id=feed.id'})
+
+    def get_expiring(self):
+        if self.expiring is None:
+            if not self.getSeen():
+                self.expiring = False
+            else:
+                ufeed = self.getFeed()
+                if (self.keep or ufeed.expire == u'never' or
+                        (ufeed.expire == u'system' and
+                            config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0)):
+                    self.expiring = False
+                else:
+                    self.expiring = True
+        return self.expiring
+
     def _look_for_downloader(self):
-        self.downloader = downloader.lookupDownloader(self.get_url())
-        if self.downloader is not None:
-            self.downloader_id = self.downloader.id
-            self.downloader.addItem(self)
-        else:
-            self.downloader_id = None
+        self.set_downloader(downloader.lookupDownloader(self.get_url()))
 
     getSelected, setSelected = makeSimpleGetSet(u'selected',
             changeNeedsSave=False)
@@ -617,7 +649,7 @@ class Item(DDBObject):
         from miro import feed
         if self.feed_id is not None:
             try:
-                obj = self.dd.getObjectByID(self.feed_id)
+                obj = feed.Feed.get_by_id(self.feed_id)
             except ObjectNotFoundError:
                 raise DatabaseConstraintError("my feed (%s) is not in database" % self.feed_id)
             else:
@@ -626,7 +658,7 @@ class Item(DDBObject):
                     raise DatabaseConstraintError(msg)
         if self.parent_id is not None:
             try:
-                obj = self.dd.getObjectByID(self.parent_id)
+                obj = Item.get_by_id(self.parent_id)
             except ObjectNotFoundError:
                 raise DatabaseConstraintError("my parent (%s) is not in database" % self.parent_id)
             else:
@@ -648,6 +680,7 @@ class Item(DDBObject):
             del self._state
         if hasattr(self, "_size"):
             del self._size
+        self.getFeed().on_item_changed()
 
     def get_viewed(self):
         """Returns True iff this item has never been viewed in the interface.
@@ -685,9 +718,10 @@ class Item(DDBObject):
         """
         if hasattr(self, "_feed"):
             return self._feed
+        from miro import feed
 
         if self.feed_id is not None:
-            self._feed = self.dd.getObjectByID(self.feed_id)
+            self._feed = feed.Feed.get_by_id(self.feed_id)
         elif self.parent_id is not None:
             self._feed = self.getParent().getFeed()
         else:
@@ -699,7 +733,7 @@ class Item(DDBObject):
             return self._parent
 
         if self.parent_id is not None:
-            self._parent = self.dd.getObjectByID(self.parent_id)
+            self._parent = Item.get_by_id(self.parent_id)
         else:
             self._parent = self
         return self._parent
@@ -1368,11 +1402,12 @@ class Item(DDBObject):
             other.set_downloader(self.downloader)
 
     def set_downloader(self, downloader):
-        if downloader is self.downloader:
-            return
-        if self.downloader is not None:
-            self.downloader.removeItem(self)
-        self.downloader = downloader
+        if hasattr('self', '_downloader'):
+            if downloader is self._downloader:
+                return
+            if self._downloader is not None:
+                self._downloader.removeItem(self)
+        self._downloader = downloader
         if downloader is not None:
             self.downloader_id = downloader.id
             downloader.addItem(self)
@@ -1440,7 +1475,7 @@ class Item(DDBObject):
     def remove(self):
         if self.downloader is not None:
             self.set_downloader(None)
-        iconcache.remove_icon_cache(self)
+        self.remove_icon_cache()
         if self.isContainerItem:
             for item in self.getChildren():
                 item.remove()
@@ -1448,26 +1483,25 @@ class Item(DDBObject):
         DDBObject.remove(self)
 
     def setup_links(self):
-        """This is called after we restore the database.  Since we don't store
-        references between objects, we need a way to reconnect downloaders to
-        the items after the restore.
-        """
-
-        if not isinstance (self, FileItem) and self.downloader is None:
-            dler = downloader.getExistingDownloader(self)
-            if dler is not None:
-                self.set_downloader(dler)
-            self.fix_incorrect_torrent_subdir()
-            if self.downloader is not None:
-                self.signal_change(needsSave=False)
         self.split_item()
-        # This must come after reconnecting the downloader
-        if self.isContainerItem is not None and not fileutil.exists(self.get_filename()):
+        if (self.isContainerItem is not None and 
+                not fileutil.exists(self.get_filename())):
             self.expire()
             return
         if self.screenshot and not fileutil.exists(self.screenshot):
             self.screenshot = None
             self.signal_change()
+
+    def _get_downloader(self):
+        try:
+            return self._downloader
+        except AttributeError:
+            dler = downloader.getExistingDownloader(self)
+            if dler is not None:
+                dler.addItem(self)
+            self._downloader = dler
+            return dler
+    downloader = property(_get_downloader)
 
     def fix_incorrect_torrent_subdir(self):
         """Up to revision 6257, torrent downloads were incorrectly being created in
@@ -1513,6 +1547,9 @@ class FileItem(Item):
         self.shortFilename = cleanFilename(os.path.basename(self.filename))
         self.was_downloaded = False
         moviedata.movieDataUpdater.request_update (self)
+
+    # FileItem downloaders are always None
+    downloader = property(lambda self: None)
 
     @returnsUnicode
     def get_state(self):

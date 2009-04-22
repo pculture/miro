@@ -5,6 +5,7 @@ import unittest
 from glob import glob
 import time
 
+from miro import app
 from miro import database
 from miro import databaseupgrade
 from miro import item
@@ -12,6 +13,7 @@ from miro import feed
 from miro import schema
 import shutil
 from miro import storedatabase
+from miro.plat import resources
 
 from miro.test.framework import MiroTestCase, EventLoopTest
 # sooo much easier to type...
@@ -107,14 +109,11 @@ class StoreDatabaseTest(EventLoopTest):
         EventLoopTest.setUp(self)
         self.save_path = tempfile.mktemp()
         self.remove_database()
-        self.database = database.defaultDatabase
-        self.setup_live_storage()
+        self.reload_test_database()
 
-    def setup_live_storage(self, version=0):
-        live_storage = storedatabase.LiveStorage(self.save_path,
-                object_schemas=self.OBJECT_SCHEMAS,
-                schema_version=version)
-        self.database.liveStorage = live_storage
+    def reload_test_database(self, version=0):
+        self.reload_database(self.save_path, schema_version=version,
+                object_schemas=self.OBJECT_SCHEMAS)
 
     def remove_database(self):
         try:
@@ -131,18 +130,71 @@ class StoreDatabaseTest(EventLoopTest):
         databaseupgrade._upgrade_overide = {}
         EventLoopTest.tearDown(self)
 
-    def reload_objects(self, close_current=True, version=0):
-        if close_current:
-            self.database.liveStorage.close()
-        self.setup_live_storage(version=version)
-        self.database.liveStorage.upgrade_database()
-        objects = self.database.liveStorage.load_objects()
-        self.database.restoreFromObjectList(objects)
-
 class EmptyDBTest(StoreDatabaseTest):
     def test_open_empty_db(self):
-        self.reload_objects()
-        self.assertEquals(list(self.database), [])
+        self.reload_test_database()
+        app.db.cursor.execute("SELECT name FROM sqlite_master "
+                "WHERE type='table'")
+        for row in app.db.cursor.fetchall():
+            table = row[0]
+            if table == 'dtv_variables':
+                correct_count = 1
+            else:
+                correct_count = 0
+            app.db.cursor.execute("SELECT count(*) FROM %s" % table)
+            self.assertEquals(app.db.cursor.fetchone()[0], correct_count)
+
+class DBUpgradeTest(StoreDatabaseTest):
+    def setUp(self):
+        StoreDatabaseTest.setUp(self)
+        self.save_path2 = tempfile.mktemp()
+
+    def tearDown(self):
+        try:
+            os.unlink(self.save_path2)
+        except:
+            pass
+        StoreDatabaseTest.tearDown(self)
+
+    def test_indexes_same(self):
+        self.remove_database()
+        self.reload_database()
+        app.db.cursor.execute("SELECT name FROM sqlite_master "
+                "WHERE type='index'")
+        blank_db_indexes = set(app.db.cursor)
+        shutil.copy(resources.path("testdata/olddatabase.v79"),
+                self.save_path2)
+        self.reload_database(self.save_path2)
+        app.db.cursor.execute("SELECT name FROM sqlite_master "
+                "WHERE type='index'")
+        upgraded_db_indexes = set(app.db.cursor)
+        self.assertEquals(upgraded_db_indexes, blank_db_indexes)
+
+    def test_schema_same(self):
+        self.remove_database()
+        self.reload_database()
+        blank_column_types = self._get_column_types()
+        shutil.copy(resources.path("testdata/olddatabase.v79"),
+                self.save_path2)
+        self.reload_database(self.save_path2)
+        upgraded_column_types = self._get_column_types()
+        self.assertEquals(set(blank_column_types.keys()),
+                set(upgraded_column_types.keys()))
+        for table_name in blank_column_types:
+            diff = blank_column_types[table_name].symmetric_difference(
+                    upgraded_column_types[table_name])
+            if diff:
+                raise AssertionError("different column types for %s (%s)" %
+                        (table_name, diff))
+
+    def _get_column_types(self):
+        app.db.cursor.execute("SELECT name FROM sqlite_master "
+                "WHERE type='table'")
+        rv = {}
+        for table_name in app.db.cursor.fetchall():
+            app.db.cursor.execute('pragma table_info(%s)' % table_name)
+            rv[table_name] = set((r[1], r[2].lower()) for r in app.db.cursor)
+        return rv
 
 class FakeSchemaTest(StoreDatabaseTest):
     OBJECT_SCHEMAS = test_object_schemas
@@ -160,7 +212,10 @@ class FakeSchemaTest(StoreDatabaseTest):
 
 class DiskTest(FakeSchemaTest):
     def check_database(self):
-        self.assertEquals(len(self.db), len(self.database.objects))
+        obj_map = {}
+        for klass in (PCFProgramer, RestorableHuman, Human):
+            obj_map.update(dict((obj.id, obj) for obj in klass.make_view()))
+        self.assertEquals(len(self.db), len(obj_map))
         for obj in self.db:
             if isinstance(obj, PCFProgramer):
                 schema = PCFProgramerSchema
@@ -171,7 +226,7 @@ class DiskTest(FakeSchemaTest):
             else:
                 raise AssertionError("Unknown object type: %r" % obj)
 
-            db_object = self.database.getObjectByID(obj.id)
+            db_object = obj_map[obj.id]
             self.assertEquals(db_object.__class__, obj.__class__)
             for name, schema_item in schema.fields:
                 db_value = getattr(db_object, name)
@@ -182,32 +237,32 @@ class DiskTest(FakeSchemaTest):
 
     def test_create(self):
         # Test that the database we set up in __init__ restores correctly
-        self.reload_objects()
+        self.reload_test_database()
         self.check_database()
 
     def test_update(self):
         self.joe.name = u'JO MAMA'
         self.joe.signal_change()
-        self.reload_objects()
+        self.reload_test_database()
         self.check_database()
 
     def test_binary_reload(self):
         self.joe.id_code = 'abc'
         self.joe.signal_change()
-        self.reload_objects()
+        self.reload_test_database()
         self.check_database()
 
     def test_remove(self):
         self.joe.remove()
         self.db = [ self.lee, self.ben]
-        self.reload_objects()
+        self.reload_test_database()
         self.check_database()
 
     def test_update_then_remove(self):
         self.joe.name = u'JO MAMA'
         self.joe.remove()
         self.db = [ self.lee, self.ben]
-        self.reload_objects()
+        self.reload_test_database()
         self.check_database()
 
     def test_schema_repr(self):
@@ -217,25 +272,25 @@ class DiskTest(FakeSchemaTest):
                 u'booya': 23.0
                 }
         self.joe.signal_change()
-        self.reload_objects()
+        self.reload_test_database()
         self.check_database()
 
     def test_setup_restored(self):
         self.assert_(not hasattr(self.joe, 'iveBeenRestored'))
-        self.reload_objects()
-        restored_joe = self.database.getObjectByID(self.joe.id)
+        self.reload_test_database()
+        restored_joe = RestorableHuman.get_by_id(self.joe.id)
         self.assert_(restored_joe.iveBeenRestored)
 
     def test_single_table_inheritance(self):
         # test loading different classes based on the row data
         im_special = SpecialProgrammer()
         self.db.append(im_special)
-        self.reload_objects()
+        self.reload_test_database()
         self.check_database()
         # check deleting the different class
         im_special.remove()
         self.db.pop()
-        self.reload_objects()
+        self.reload_test_database()
         self.check_database()
 
     def test_commit_without_close(self):
@@ -243,24 +298,26 @@ class DiskTest(FakeSchemaTest):
         self.runPendingIdles()
         # close the database connection without giving LiveStorage the
         # oppertunity to commit when it's closed.
-        self.database.liveStorage.connection.close()
-        self.reload_objects(close_current = False)
+        app.db.connection.close()
+        app.db = storedatabase.LiveStorage(self.save_path,
+                schema_version=0, object_schemas=self.OBJECT_SCHEMAS)
+        app.db.upgrade_database()
         self.check_database()
 
     def test_upgrade(self):
-        self.reload_objects(version=1)
-        new_lee = self.database.getObjectByID(self.lee.id)
+        self.reload_test_database(version=1)
+        new_lee = Human.get_by_id(self.lee.id)
         self.assertEquals(new_lee.name, 'new name')
 
     def test_restore_with_newer_version(self):
-        self.reload_objects(version=1)
+        self.reload_test_database(version=1)
         self.assertRaises(databaseupgrade.DatabaseTooNewError,
-                self.reload_objects, version=0)
+                self.reload_test_database, version=0)
 
     def test_last_id(self):
         correct_last_id = database.DDBObject.lastID
         database.DDBObject.lastID = 0
-        self.reload_objects()
+        self.reload_test_database()
         self.assert_(database.DDBObject.lastID > 0)
         self.assertEquals(database.DDBObject.lastID, correct_last_id)
 
@@ -268,20 +325,36 @@ class DiskTest(FakeSchemaTest):
         corrupt_path = os.path.join(os.path.dirname(self.save_path),
                 'corrupt_database')
         self.assert_(not os.path.exists(corrupt_path))
-        self.reload_objects(**reload_args)
+        self.reload_test_database(**reload_args)
         self.assert_(os.path.exists(corrupt_path))
 
     def test_upgrade_error(self):
         self.check_reload_error(version=2)
 
     def test_corrupt_database(self):
-        self.database.liveStorage.close()
+        app.db.close()
         open(self.save_path, 'wb').write("BOGUS DATA")
-        self.check_reload_error(close_current=False)
+        self.check_reload_error()
 
     def test_database_data_error(self):
-        self.database.liveStorage.cursor.execute("DROP TABLE human")
+        app.db.cursor.execute("DROP TABLE human")
         self.check_reload_error()
+
+class ObjectMemoryTest(FakeSchemaTest):
+    def test_remove_remove_object_map(self):
+        self.reload_test_database()
+        # no objects should be loaded yet
+        self.assertEquals(0, len(app.db._object_map))
+        # test object loading
+        lee = Human.make_view().get_singleton()
+        self.assertEquals(1, len(app.db._object_map))
+        joe = RestorableHuman.make_view().get_singleton()
+        self.assertEquals(2, len(app.db._object_map))
+        # test object removal
+        joe.remove()
+        self.assertEquals(1, len(app.db._object_map))
+        lee.remove()
+        self.assertEquals(0, len(app.db._object_map))
 
 class ValidationTest(FakeSchemaTest):
     def assert_object_valid(self, obj):

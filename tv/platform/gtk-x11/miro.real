@@ -234,10 +234,15 @@ elif parsed_options.list_options:
         print "   %s\n      %s\n" % (p.alias, p.help)
 
 elif parsed_options.profile:
-    import profile
-    import eventloop
+    import sys
+    try:
+        import cProfile as profile
+        sys.modules['profile'] = profile
+    except ImportError:
+        import profile
+    from miro import eventloop
     def main():
-        startup()
+        startapp()
     if (parsed_options.bias):
         profile.Profile.bias = parsed_options.bias
     eventloop.profile_file = parsed_options.profile

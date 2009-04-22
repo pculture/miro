@@ -42,7 +42,7 @@ from miro import fileutil
 
 HTMLPattern = re.compile("^.*(<head.*?>.*</body\s*>)", re.S)
 
-class ChannelGuide(DDBObject):
+class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
     ICON_CACHE_VITAL = True
 
     def setup_new(self, url, allowedURLs=None):
@@ -54,7 +54,7 @@ class ChannelGuide(DDBObject):
         self.title = None
         self.userTitle = None
         self.lastVisitedURL = None
-        iconcache.setup_icon_cache(self)
+        self.setup_new_icon_cache()
         self.favicon = None
         self.firstTime = True
         if url:
@@ -86,7 +86,7 @@ class ChannelGuide(DDBObject):
         return "Miro Guide <%s>" % self.url
 
     def remove(self):
-        iconcache.remove_icon_cache(self)
+        self.remove_icon_cache()
         DDBObject.remove(self)
 
     def get_url(self):

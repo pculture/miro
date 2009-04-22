@@ -74,9 +74,10 @@ class PlaylistMixin:
 
     def add_id(self, item_id):
         """Add a new item to end of the playlist.  """
+        from miro import item
 
         self.MapClass.add_item_id(self.id, item_id)
-        item = self.dd.getObjectByID(item_id)
+        item = item.Item.get_by_id(item_id)
         item.save()
 
         folder = self.get_folder()
@@ -85,13 +86,14 @@ class PlaylistMixin:
 
     def remove_id(self, item_id, signal_change=True):
         """Remove an item from the playlist."""
+        from miro import item
 
         self.MapClass.remove_item_id(self.id, item_id)
         folder = self.get_folder()
         if folder is not None:
             folder.remove_id(item_id)
         if signal_change:
-            item = self.dd.getObjectByID(item_id)
+            item = item.Item.get_by_id(item_id)
             item.signal_change(needsSave=False)
 
     def add_item(self, item):
@@ -112,7 +114,10 @@ class PlaylistMixin:
         ids one for each item in the playlist.
         """
         for i, item_id in enumerate(new_order):
-            self.MapClass.update('position=?', 'item_id=?', (i, item_id))
+            map = self.MapClass.make_view('playlist_id=? AND item_id=?',
+                    (self.id, item_id)).get_singleton()
+            map.position = i
+            map.signal_change()
 
 class SavedPlaylist(database.DDBObject, PlaylistMixin):
     """An ordered list of videos that the user has saved.
@@ -145,9 +150,10 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
     get_title, set_title = makeSimpleGetSet('title')
 
     def get_folder(self):
+        from miro import folder
         self.confirmDBThread()
         if self.folder_id is not None:
-            return self.dd.getObjectByID(self.folder_id)
+            return folder.PlaylistFolder.get_by_id(self.folder_id)
         else:
             return None
 

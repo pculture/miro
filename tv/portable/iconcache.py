@@ -305,11 +305,41 @@ class IconCache(DDBObject):
         else:
             return self.filename
 
-def setup_icon_cache(obj):
-    obj.icon_cache = IconCache(obj)
-    obj.icon_cache_id = obj.icon_cache.id
+def make_icon_cache(obj):
+    if obj.icon_cache_id is not None:
+        try:
+            icon_cache = IconCache.get_by_id(obj.icon_cache_id)
+        except KeyError:
+            logging.warn("Icon Cache Not in database for %s (id: %s)" %
+                    (obj, obj.icon_cache_id))
+        else:
+            icon_cache.dbItem = obj
+            icon_cache.request_update()
+            return icon_cache
+    return IconCache(obj)
 
-def remove_icon_cache(obj):
-    if obj.icon_cache is not None:
-        obj.icon_cache.remove()
-        obj.icon_cache = obj.icon_cache_id = None
+class IconCacheOwnerMixin(object):
+    """Mixin class for objects that own IconCache instances (currently, Feed,
+    Item and ChannelGuide).
+    """
+
+    def setup_new_icon_cache(self):
+        self._icon_cache = IconCache(self)
+        self.icon_cache_id = self._icon_cache.id
+
+    # the icon_cache attribute is fetched lazily
+    def _icon_cache_getter(self):
+        try:
+            return self._icon_cache
+        except AttributeError:
+            self._icon_cache = make_icon_cache(self)
+            if self.icon_cache_id != self._icon_cache.id:
+                self.icon_cache_id = self._icon_cache.id
+                self.signal_change()
+            return self._icon_cache
+    icon_cache = property(_icon_cache_getter)
+
+    def remove_icon_cache(self):
+        if self._icon_cache is not None:
+            self._icon_cache.remove()
+            self._icon_cache = self.icon_cache_id = None

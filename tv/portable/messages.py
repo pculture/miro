@@ -46,6 +46,7 @@ from miro.gtcache import gettext as _
 from miro.folder import ChannelFolder, PlaylistFolder
 from miro.plat import resources
 from miro import config
+from miro import feed
 from miro import guide
 from miro import prefs
 from miro import util
@@ -741,7 +742,10 @@ class ChannelInfo(object):
     max_new -- maximum number of items this feed wants
     max_old_items -- maximum number of old items to remember
     """
+
     def __init__(self, channel_obj):
+        import time
+        start = time.time()
         self.name = channel_obj.get_title()
         self.id = channel_obj.id
         self.section = channel_obj.section
@@ -880,9 +884,9 @@ class ItemInfo(object):
         self.id = item.id
         self.feed_id = item.feed_id
         if item.feed_id:
-            feed = item.dd.getObjectByID(self.feed_id)
-            self.feed_name = feed.get_title()
-            self.feed_url = feed.get_url()
+            feed_ = feed.Feed.get_by_id(self.feed_id)
+            self.feed_name = feed_.get_title()
+            self.feed_url = feed_.get_url()
         else:
             self.feed_name = None
             self.feed_url = None

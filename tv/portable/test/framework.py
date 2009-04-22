@@ -70,11 +70,10 @@ class DummyController:
 class MiroTestCase(unittest.TestCase):
     def setUp(self):
         app.in_unit_tests = True
-        app.db = database.defaultDatabase
         database.set_thread(threading.currentThread())
-        database.resetDefaultDatabase()
         database.ViewTracker.reset_trackers()
-        app.db.liveStorage = storedatabase.LiveStorage(":memory:")
+        app.db = None
+        self.reload_database()
         searchengines._engines = [ searchengines.SearchEngineInfo(u"all",
            u"Search All", u"", -1) ]
         # reset the event loop
@@ -87,14 +86,25 @@ class MiroTestCase(unittest.TestCase):
     def tearDown(self):
         signals.system.disconnect_all()
         util.chatter = True
-
-        app.db.liveStorage.close()
         # Remove any leftover database
-        database.resetDefaultDatabase()
+        app.db.close()
+        app.db = None
         database.ViewTracker.reset_trackers()
-
         # Remove anything that may have been accidentally queued up
         eventloop._eventLoop = eventloop.EventLoop()
+
+    def reload_database(self, path=':memory:', schema_version=None,
+            object_schemas=None, upgrade=True):
+        if app.db:
+            try:
+                app.db.close()
+            except:
+                pass
+        app.db = storedatabase.LiveStorage(path,
+                schema_version=schema_version, object_schemas=object_schemas)
+        if upgrade:
+            app.db.upgrade_database()
+            database.update_last_id()
 
     def handle_error(self, obj, report):
         if self.errorSignalOkay:

@@ -30,7 +30,7 @@ from base64 import b64encode
 from miro.gtcache import gettext as _
 import os
 
-from miro.database import DDBObject, defaultDatabase, ObjectNotFoundError
+from miro.database import DDBObject, ObjectNotFoundError
 from miro.dl_daemon import daemon, command
 from miro.download_utils import nextFreeFilename, getFileURLPath, filterDirectoryName
 from miro.util import get_torrent_info_hash, returnsUnicode, checkU, returnsFilename, unicodify, checkF, toUni
@@ -59,7 +59,6 @@ def findHTTPAuth(host, path, realm=None, scheme=None):
     if scheme:
         checkU(scheme)
     #print "Trying to find HTTPAuth with host %s, path %s, realm %s, and scheme %s" %(host,path,realm,scheme)
-    defaultDatabase.confirmDBThread()
     for obj in HTTPAuthPassword.make_view():
         if (obj.host == host and path.startswith(obj.path) and
                 (realm is None or obj.realm == realm) and
@@ -162,6 +161,11 @@ class RemoteDownloader(DDBObject):
     @classmethod
     def get_by_url(cls, url):
         return cls.make_view('origURL=?', (url,)).get_singleton()
+
+    @classmethod
+    def orphaned_view(cls):
+        """Downloaders with no items associated with them."""
+        return cls.make_view('id NOT IN (SELECT downloader_id from item)')
 
     def signal_change(self, needsSave=True, needsSignalItem=True):
         DDBObject.signal_change(self, needsSave=needsSave)

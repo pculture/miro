@@ -295,6 +295,8 @@ class ObjectSchema(object):
     def get_ddb_class(cls, restored_data):
         return cls.klass
 
+    indexes = ()
+
 class MultiClassObjectSchema(ObjectSchema):
     """ObjectSchema where rows will be restored to different python classes.
 
@@ -394,6 +396,12 @@ class ItemSchema(MultiClassObjectSchema):
         ('shortFilename', SchemaFilename(noneOk=True)),
         ('offsetPath', SchemaFilename(noneOk=True)),
     ]
+
+    indexes = (
+            ('item_feed', ('feed_id',)),
+            ('item_downloader', ('downloader_id',)),
+            ('item_feed_downloader', ('feed_id', 'downloader_id',)),
+    )
 
 class FeedSchema(DDBObjectSchema):
     klass = Feed
@@ -512,6 +520,10 @@ class RemoteDownloaderSchema(DDBObjectSchema):
         ('main_item_id', SchemaInt(noneOk=True)),
     ]
 
+    indexes = (
+            ('downloader_state', ('state',)),
+    )
+
 class HTTPAuthPasswordSchema(DDBObjectSchema):
     klass = HTTPAuthPassword
     table_name = 'http_auth_password'
@@ -605,7 +617,7 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
         ('list_view_displays', SchemaList(SchemaBinary())),
     ]
 
-VERSION = 90
+VERSION = 92
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,

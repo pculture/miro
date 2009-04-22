@@ -6,10 +6,10 @@ import tempfile
 import unittest
 from datetime import datetime, timedelta
 
+from miro import app
 from miro import convert20database
 from miro import database
 from miro import feed
-from miro import ddblinks
 from miro import olddatabaseupgrade
 from miro import schemav79
 from miro import storedatabase
@@ -136,11 +136,10 @@ class Test20DatabaseConvert(MiroTestCase):
     def test_live_storage_converts(self):
         old_db_path = resources.path("testdata/olddatabase.v79")
         shutil.copyfile(old_db_path, self.tmp_path)
-        live_storage = storedatabase.LiveStorage(self.tmp_path,
-                schema_version=80)
-        self.cursor = live_storage.cursor
+        self.reload_database(self.tmp_path, schema_version=80, upgrade=False)
+        self.cursor = app.db.cursor
         self.old_savables = convert20database._get_old_savables(self.cursor)
-        live_storage.upgrade_database()
+        app.db.upgrade_database()
 
         self.check_tables_created()
         self.check_new_columns()

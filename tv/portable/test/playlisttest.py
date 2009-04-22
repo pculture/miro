@@ -96,6 +96,7 @@ class PlaylistTestCase(PlaylistTestBase):
     def testRemovalRemovesItem(self):
         checkList = [self.i1, self.i2, self.i3, self.i4]
         playlist = SavedPlaylist(u"rocketboom", [i.id for i in checkList])
+        self.checkList(playlist, checkList)
         for i in [self.i1, self.i3, self.i4, self.i2]:
             i.remove()
             checkList.remove(i)
@@ -172,40 +173,35 @@ class Upgrade88TestCase(MiroTestCase):
         # run upgrade 88
         old_db_path = resources.path("testdata/olddatabase.predbupgrade88")
         shutil.copyfile(old_db_path, self.tmp_path)
-        live_storage = storedatabase.LiveStorage(self.tmp_path)
-        live_storage.upgrade_database()
+        self.reload_database(self.tmp_path)
+        app.db.upgrade_database()
         # figure out which maps were created
         folder_maps = set()
         playlist_maps = set()
-        playlists = {}
-        items = {}
-        for obj in live_storage.load_objects():
-            if isinstance(obj, PlaylistFolderItemMap):
-                folder_maps.add((obj.playlist_id, obj.item_id, obj.position,
-                    obj.count))
-                self.assert_(obj.id is not None)
-            elif isinstance(obj, PlaylistItemMap):
-                playlist_maps.add((obj.playlist_id, obj.item_id,
-                    obj.position))
-                self.assert_(obj.id is not None)
-            elif (isinstance(obj, SavedPlaylist) or
-                    isinstance(obj, PlaylistFolder)):
-                playlists[obj.title] = obj
-            elif isinstance(obj, Item):
-                    items[obj.id] = obj
+        for map in PlaylistFolderItemMap.make_view():
+            folder_maps.add((map.playlist_id, map.item_id, map.position,
+                map.count))
+            self.assert_(map.id is not None)
+
+        for map in PlaylistItemMap.make_view():
+            playlist_maps.add((map.playlist_id, map.item_id, map.position))
+            self.assert_(map.id is not None)
+
+        playlist1 = SavedPlaylist.make_view("title='playlist1'").get_singleton()
+        playlist2 = SavedPlaylist.make_view("title='playlist2'").get_singleton()
+        folder = PlaylistFolder.make_view().get_singleton()
+
         # Double check that we have the right item ids
-        self.assertEquals(items[242].get_title(),
+        self.assertEquals(Item.get_by_id(242).get_title(),
                 u"Berliner Brats n' Kraut")
-        self.assertEquals(items[240].get_title(),
+        self.assertEquals(Item.get_by_id(240).get_title(),
                 u"White Bean & Basil Bruschetta")
-        self.assertEquals(items[79].get_title(), u"Meet the GIMP!")
-        self.assertEquals(items[69].get_title(),
+        self.assertEquals(Item.get_by_id(79).get_title(), u"Meet the GIMP!")
+        self.assertEquals(Item.get_by_id(69).get_title(),
                 u"Delicious TV Vegetarian (video)")
         # check that folder contains playlist 1
-        self.assertEquals(playlists['playlist1'].folder_id,
-                playlists['folder1'].id)
-        self.assertEquals(playlists['playlist2'].folder_id,
-                playlists['folder1'].id)
+        self.assertEquals(playlist1.folder_id, folder.id)
+        self.assertEquals(playlist2.folder_id, folder.id)
         # Check that the playlist maps follow the following structure:
         #
         # folder1:
@@ -221,15 +217,15 @@ class Upgrade88TestCase(MiroTestCase):
         #    - Delicious TV Vegetarian (video) (id: 69)
         #    - White Bean & Basil Bruschetta (id: 240)
         self.assertEquals(folder_maps, set([
-            (playlists['folder1'].id, 242, 0, 1),
-            (playlists['folder1'].id, 240, 1, 2),
-            (playlists['folder1'].id, 79, 2, 1),
-            (playlists['folder1'].id, 69, 3, 1),
+            (folder.id, 242, 0, 1),
+            (folder.id, 240, 1, 2),
+            (folder.id, 79, 2, 1),
+            (folder.id, 69, 3, 1),
         ]))
         self.assertEquals(playlist_maps, set([
-            (playlists['playlist1'].id, 240, 0),
-            (playlists['playlist1'].id, 242, 1),
-            (playlists['playlist2'].id, 79, 0),
-            (playlists['playlist2'].id, 69, 1),
-            (playlists['playlist2'].id, 240, 2),
+            (playlist1.id, 240, 0),
+            (playlist1.id, 242, 1),
+            (playlist2.id, 79, 0),
+            (playlist2.id, 69, 1),
+            (playlist2.id, 240, 2),
         ]))

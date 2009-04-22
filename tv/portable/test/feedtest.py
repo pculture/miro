@@ -5,7 +5,6 @@ from datetime import datetime
 from time import sleep
 
 from miro import config
-from miro import ddblinks
 from miro import feedparser
 from miro import prefs
 from miro import dialogs
@@ -84,7 +83,6 @@ class FeedURLNormalizationTest(MiroTestCase):
 class FeedTestCase(EventLoopTest):
     def setUp(self):
         EventLoopTest.setUp(self)
-        self.everything = database.defaultDatabase
         [handle, self.filename] = mkstemp(".xml")
 
     def writefile(self, content):
@@ -162,17 +160,14 @@ class SimpleFeedTestCase(FeedTestCase):
         # thus it should not cause a dialog to pop up and ask the user if they
         # want to scrape.
         self.assertEqual(dialogs.delegate.calls, 0)
-        self.assertEqual(self.everything.len(), 5)
-
         # the Feed, plus the 1 item that is a video
-        items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
-        self.assertEqual(items.len(), 1)
+        items = list(Item.make_view())
+        self.assertEqual(len(items), 1)
 
         # make sure that re-updating doesn't re-create the items
         myFeed.update()
-        self.assertEqual(self.everything.len(), 5)
-        items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
-        self.assertEqual(items.len(), 1)
+        items = list(Item.make_view())
+        self.assertEqual(len(items), 1)
         myFeed.remove()
 
 class EnclosureFeedTestCase(FeedTestCase):
@@ -210,14 +205,12 @@ class EnclosureFeedTestCase(FeedTestCase):
 </rss>""")
     def testRun(self):
         myFeed = self.makeFeed()
-        self.assertEqual(self.everything.len(),11)
-        items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
-        self.assertEqual(items.len(),4)
+        items = list(Item.make_view())
+        self.assertEqual(len(items),4)
         #Make sure that re-updating doesn't re-create the items
         myFeed.update()
-        self.assertEqual(self.everything.len(),11)
-        items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
-        self.assertEqual(items.len(),4)
+        items = list(Item.make_view())
+        self.assertEqual(len(items),4)
         myFeed.remove()
 
 class OldItemExpireTest(FeedTestCase):
@@ -227,7 +220,6 @@ class OldItemExpireTest(FeedTestCase):
         self.counter = 0
         self.writeNewFeed()
         self.feed = self.makeFeed()
-        self.items = self.everything.filter(lambda x:x.__class__.__name__ == 'Item')
         config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 4)
         config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 20)
 
@@ -258,7 +250,7 @@ class OldItemExpireTest(FeedTestCase):
 
     def checkGuids(self, *ids):
         actual = set()
-        for i in self.items:
+        for i in Item.make_view():
             actual.add(i.getRSSID())
         correct = set(['guid-%d' % i for i in ids])
         self.assertEquals(actual, correct)
@@ -268,17 +260,18 @@ class OldItemExpireTest(FeedTestCase):
         self.updateFeed(self.feed)
 
     def testSimpleOverflow(self):
-        self.assertEqual(self.items.len(), 2)
+        self.assertEqual(Item.make_view().count(), 2)
         self.parseNewFeed()
-        self.assertEqual(self.items.len(), 4)
+        self.assertEqual(Item.make_view().count(), 4)
         self.parseNewFeed()
-        self.assertEqual(self.items.len(), 4)
+        self.assertEqual(Item.make_view().count(), 4)
         self.checkGuids(3, 4, 5, 6)
 
     def testOverflowWithDownloads(self):
-        self.items[0].downloader = FakeDownloader()
-        self.items[1].downloader = FakeDownloader()
-        self.assertEqual(self.items.len(), 2)
+        items = list(Item.make_view())
+        items[0]._downloader = FakeDownloader()
+        items[1]._downloader = FakeDownloader()
+        self.assertEqual(len(items), 2)
         self.parseNewFeed()
         self.parseNewFeed()
         self.checkGuids(1, 2, 5, 6)
@@ -297,9 +290,9 @@ class OldItemExpireTest(FeedTestCase):
 
     def testOverflowWithMaxOldItems(self):
         config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 1000) # don't bother
-        self.assertEqual(self.items.len(), 2)
+        self.assertEqual(Item.make_view().count(), 2)
         self.parseNewFeed()
-        self.assertEquals(self.items.len(), 4)
+        self.assertEquals(Item.make_view().count(), 4)
         self.parseNewFeed()
         self.feed.setMaxOldItems(4)
         self.feed.actualFeed.clean_old_items()
@@ -307,21 +300,21 @@ class OldItemExpireTest(FeedTestCase):
             self.processThreads()
             self.processIdles()
             sleep(0.1)
-        self.assertEquals(self.items.len(), 6)            
+        self.assertEquals(Item.make_view().count(), 6)            
         self.feed.setMaxOldItems(2)
         self.feed.actualFeed.clean_old_items()
         while self.feed.actualFeed.updating:
             self.processThreads()
             self.processIdles()
             sleep(0.1)
-        self.assertEquals(self.items.len(), 4)
+        self.assertEquals(Item.make_view().count(), 4)
         self.checkGuids(3, 4, 5, 6)
 
     def testOverflowWithGlobalMaxOldItems(self):
         config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 1000) # don't bother
-        self.assertEqual(self.items.len(), 2)
+        self.assertEqual(Item.make_view().count(), 2)
         self.parseNewFeed()
-        self.assertEquals(self.items.len(), 4)
+        self.assertEquals(Item.make_view().count(), 4)
         self.parseNewFeed()
         config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 4)
         self.feed.actualFeed.clean_old_items()
@@ -329,14 +322,14 @@ class OldItemExpireTest(FeedTestCase):
             self.processThreads()
             self.processIdles()
             sleep(0.1)
-        self.assertEquals(self.items.len(), 6)
+        self.assertEquals(Item.make_view().count(), 6)
         config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 2)
         self.feed.actualFeed.clean_old_items()
         while self.feed.actualFeed.updating:
             self.processThreads()
             self.processIdles()
             sleep(0.1)
-        self.assertEquals(self.items.len(), 4)
+        self.assertEquals(Item.make_view().count(), 4)
         self.checkGuids(3, 4, 5, 6)
 
 class FeedParserAttributesTestCase(FeedTestCase):
@@ -352,6 +345,7 @@ class FeedParserAttributesTestCase(FeedTestCase):
         self.tempdb = os.path.join(gettempdir(), 'democracy-temp-db')
         if os.path.exists(self.tempdb):
             os.remove(self.tempdb)
+        self.reload_database(self.tempdb)
         self.write_feed()
         self.parsed_feed = feedparser.parse(self.filename)
         self.makeFeed()
@@ -363,14 +357,9 @@ class FeedParserAttributesTestCase(FeedTestCase):
         FeedTestCase.tearDown(self)
 
     def save_then_restore_db(self):
-        self.everything.liveStorage.close()
-        self.everything.liveStorage = storedatabase.LiveStorage(self.tempdb)
-        ddblinks.setup_links(self.everything)
-        for obj in self.everything:
-            if isinstance(obj, Feed):
-                self.feed = obj
-            if isinstance(obj, Item):
-                self.item = obj
+        self.reload_database(self.tempdb)
+        self.feed = Feed.make_view().get_singleton()
+        self.item = Item.make_view().get_singleton()
 
     def write_feed(self):
         self.writefile("""<?xml version="1.0"?>

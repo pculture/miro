@@ -75,8 +75,8 @@ class Controller:
         logging.info("Shutting down event loop")
         eventloop.quit()
         logging.info("Closing Database...")
-        if app.db.liveStorage is not None:
-            app.db.liveStorage.close()
+        if app.db is not None:
+            app.db.close()
         signals.system.shutdown()
 
     def onShutdown(self):
@@ -149,7 +149,7 @@ class Controller:
         # backs up the support directories to a zip file
         # returns the name of the zip file
         logging.info("Attempting to back up support directory")
-        app.db.liveStorage.close()
+        app.db.close()
         try:
             tempfilename = os.path.join(tempfile.gettempdir(),("%012ddatabasebackup.zip"%randrange(0,999999999999)))
             zipfile = ZipFile(tempfilename,"w")
@@ -168,4 +168,4 @@ class Controller:
             logging.info("Support directory backed up to %s" % tempfilename)
             return tempfilename
         finally:
-            app.db.liveStorage.open_connection()
+            app.db.open_connection()

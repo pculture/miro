@@ -2181,6 +2181,21 @@ def upgrade90(cursor):
         cursor.execute("UPDATE remote_downloader SET main_item_id=? "
                 "WHERE id=?", (item_id, downloader_id))
 
-#def upgradeX (cursor):
-#    """Input a SQLite cursor.  Do whatever is necessary to upgrade the DB."""
-#    return changed
+def upgrade91(cursor):
+    """Add lots of indexes."""
+    cursor.execute("CREATE INDEX item_feed ON item (feed_id)")
+    cursor.execute("CREATE INDEX item_downloader ON item (downloader_id)")
+    cursor.execute("CREATE INDEX item_feed_downloader ON item "
+            "(feed_id, downloader_id)")
+    cursor.execute("CREATE INDEX downloader_state ON remote_downloader (state)")
+
+def upgrade92(cursor):
+    feed_impl_tables = ('feed_impl', 'rss_feed_impl', 'rss_multi_feed_impl',
+            'scraper_feed_impl', 'search_feed_impl',
+            'directory_watch_feed_impl', 'directory_feed_impl',
+            'search_downloads_feed_impl', 'manual_feed_impl',
+            'single_feed_impl',)
+    for table in feed_impl_tables:
+        remove_column(cursor, table, 'lastViewed')
+    remove_column(cursor, 'playlist', 'item_ids')
+    remove_column(cursor, 'playlist_folder', 'item_ids')

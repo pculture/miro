@@ -33,7 +33,6 @@ from miro import folder
 from miro import eventloop
 from miro import playlist
 from miro.util import checkU
-from miro.databasehelper import TrackedIDList
 
 import logging
 
