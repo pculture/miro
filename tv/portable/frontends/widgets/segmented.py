@@ -62,9 +62,9 @@ class SegmentedButtonsRow(object):
             elif index == count-1:
                 segment_type =  'right'
             else:
-                segment_type =  'middle'
-            button = self.buttons[index].make_widget(segment_type)
-            self.buttons[index] = button
+                segment_type =  'middle'            
+            button = self.buttons[index]
+            button.set_segment_type(segment_type)
             hbox.pack_start(button)
         return hbox
     
@@ -76,45 +76,7 @@ class SegmentedButtonsRow(object):
                 button.set_active(False)
 
 
-class ButtonSegment(object):
-
-    def __init__(self, key, callback):
-        self.key = key
-        self.callback = callback
-        self.active = False
-        
-    def set_active(self, active):
-        self.active = active
-
-    def make_widget(self, segment_type):
-        button = self.make_button_widget(segment_type)
-        button.set_squish_width(True)
-        button.connect('clicked', self.callback)
-        button.set_active(self.active)
-        return button
-
-
-class TextButtonSegment(ButtonSegment):
-
-    def __init__(self, key, title, callback):
-        ButtonSegment.__init__(self, key, callback)
-        self.title = title
-    
-    def make_button_widget(self, segment_type):
-        return TextButtonSegmentWidget(self.key, self.title, segment_type)
-
-
-class ImageButtonSegment(ButtonSegment):
-
-    def __init__(self, key, image_name, callback):
-        ButtonSegment.__init__(self, key, callback)
-        self.image_name = image_name
-
-    def make_button_widget(self, segment_type):
-        return ImageButtonSegmentWidget(self.key, self.image_name, segment_type)
-
-
-class ButtonSegmentWidget(widgetset.CustomButton):
+class ButtonSegment(widgetset.CustomButton):
     
     PARTS = {
         'off-far-left':     _get_image('segmented-off-far-left'),
@@ -129,11 +91,16 @@ class ButtonSegmentWidget(widgetset.CustomButton):
         'on-far-right':     _get_image('segmented-on-far-right')
     }
 
-    def __init__(self, key, segment_type):
+    def __init__(self, key, callback):
         widgetset.CustomButton.__init__(self)
         self.key = key
-        self.segment_type = segment_type
+        self.segment_type = None
         self.active = False
+        self.set_squish_width(True)
+        self.connect('clicked', callback)
+
+    def set_segment_type(self, segment_type):
+        self.segment_type = segment_type
 
     def set_active(self, active):
         self.active = active
@@ -158,13 +125,13 @@ class ButtonSegmentWidget(widgetset.CustomButton):
         surface.draw(context, 0, 0, context.width)
 
 
-class TextButtonSegmentWidget(ButtonSegmentWidget):
+class TextButtonSegment(ButtonSegment):
     
     MARGIN = 12
     TEXT_COLOR = { True: (0.86, 0.86, 0.86), False: (0.4, 0.4, 0.4) }
     
-    def __init__(self, key, title, segment_type):
-        ButtonSegmentWidget.__init__(self, key, segment_type)
+    def __init__(self, key, title, callback):
+        ButtonSegment.__init__(self, key, callback)
         self.title = title
 
     def size_request(self, layout):
@@ -172,7 +139,7 @@ class TextButtonSegmentWidget(ButtonSegmentWidget):
         return math.ceil(width) + (2 * self.MARGIN), 20
 
     def draw(self, context, layout):
-        ButtonSegmentWidget.draw(self, context, layout)
+        ButtonSegment.draw(self, context, layout)
         layout.set_text_color(self.TEXT_COLOR[self.active])
         textbox = self._get_textbox(layout)
         _, height = textbox.get_size()
@@ -184,20 +151,20 @@ class TextButtonSegmentWidget(ButtonSegmentWidget):
         return layout.textbox(self.title)
 
 
-class ImageButtonSegmentWidget(ButtonSegmentWidget):
+class ImageButtonSegment(ButtonSegment):
 
     MARGIN = 7
     IMAGE_ALPHA = { True: 1.0, False: 0.4 }
 
-    def __init__(self, key, image_name, segment_type):
-        ButtonSegmentWidget.__init__(self, key, segment_type)
+    def __init__(self, key, image_name, callback):
+        ButtonSegment.__init__(self, key, callback)
         self.image = _get_image(image_name)
 
     def size_request(self, layout):
         return self.image.width + (2 * self.MARGIN), 20
 
     def draw(self, context, layout):
-        ButtonSegmentWidget.draw(self, context, layout)
+        ButtonSegment.draw(self, context, layout)
         alpha = self.IMAGE_ALPHA[self.active]
         y = int((context.height - self.image.height) / 2.0)
         self.image.draw(context, self.MARGIN, y, self.image.width, self.image.height, alpha)
