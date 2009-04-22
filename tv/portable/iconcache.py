@@ -102,6 +102,17 @@ class IconCache(DDBObject):
 
         self.request_update(is_vital=dbItem.ICON_CACHE_VITAL)
 
+    @classmethod
+    def orphaned_view(cls):
+        """Downloaders with no items associated with them."""
+        return cls.make_view("id NOT IN (SELECT icon_cache_id from item "
+                "UNION select icon_cache_id from channel_guide "
+                "UNION select icon_cache_id from feed)")
+
+    @classmethod
+    def all_filenames(cls):
+        return [r[0] for r in cls.select("filename", 'filename IS NOT NULL')]
+
     def icon_changed(self, needsSave=True):
         try:
             self.dbItem.icon_changed(needsSave=needsSave)

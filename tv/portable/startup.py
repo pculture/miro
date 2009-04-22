@@ -245,8 +245,6 @@ def on_frontend_started():
     yield None
     feed.expire_items()
     yield None
-    starttime = clock()
-    logging.timing("Icon clear: %.3f", clock() - starttime)
     logging.info("Starting movie data updates")
     item.update_incomplete_movie_data()
     yield None
@@ -348,39 +346,41 @@ def _get_theme_history():
 
 @eventloop.idle_iterator
 def clear_icon_cache_orphans():
-    knownIcons = set()
-    for item_ in item.Item.make_view():
-        if item_.icon_cache and item_.icon_cache.filename:
-            knownIcons.add(os.path.normcase(fileutil.expand_filename(item_.icon_cache.filename)))
-
+    # delete icon_cache rows from the database with no associated
+    # item/feed/guide.
+    for ic in iconcache.IconCache.orphaned_view():
+        logging.warn("No object for IconCache: %s.  Discarding", ic)
+        ic.remove()
     yield None
 
-    for feed_ in feed.Feed.make_view():
-        if feed_.icon_cache and feed_.icon_cache.filename:
-            knownIcons.add(os.path.normcase(fileutil.expand_filename(feed_.icon_cache.filename)))
-
-    yield None
-
-    for site in guide.ChannelGuide.make_view():
-        if site.icon_cache and site.icon_cache.filename:
-            knownIcons.add(os.path.normcase(fileutil.expand_filename(site.icon_cache.filename)))
-
-    yield None
+    # delete files in the icon cache directory that don't belong to IconCache
+    # objects.
 
     cachedir = fileutil.expand_filename(config.get(prefs.ICON_CACHE_DIRECTORY))
-    if os.path.isdir(cachedir):
-        existingFiles = [os.path.normcase(os.path.join(cachedir, f))
-                for f in os.listdir(cachedir)]
-        for filename in existingFiles:
-            if (os.path.exists(filename)
-                    and os.path.basename(filename)[0] != '.'
-                    and os.path.basename(filename) != 'extracted'
-                    and not filename in knownIcons):
-                try:
-                    os.remove(filename)
-                except OSError:
-                    pass
-            yield None
+    if not os.path.isdir(cachedir):
+        return
+
+    existingFiles = [os.path.normcase(os.path.join(cachedir, f))
+            for f in os.listdir(cachedir)]
+    yield None
+
+    knownIcons = iconcache.IconCache.all_filenames()
+    yield None
+
+    knownIcons = [ os.path.normcase(fileutil.expand_filename(path)) for path in
+            knownIcons]
+    yield None
+
+    for filename in existingFiles:
+        if (os.path.exists(filename)
+                and os.path.basename(filename)[0] != '.'
+                and os.path.basename(filename) != 'extracted'
+                and not filename in knownIcons):
+            try:
+                os.remove(filename)
+            except OSError:
+                pass
+        yield None
 
 def reconnect_downloaders():
     for downloader_ in downloader.RemoteDownloader.orphaned_view():
