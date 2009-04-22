@@ -35,6 +35,7 @@ from miro import config
 from miro import prefs
 import logging
 from miro.gtcache import gettext as _
+from miro import database
 
 class SearchEngineInfo:
     def __init__(self, name, title, url, sort_order=0, filename=None):
@@ -177,7 +178,6 @@ def get_request_url(engine_name, query, filter_adult_contents=True, limit=50):
         return u""
 
     if query == "LET'S DEBUG DTV: DUMP DATABASE":
-        from miro import database
         database.defaultDatabase.liveStorage.dumpDatabase(database.defaultDatabase)
         return u""
 

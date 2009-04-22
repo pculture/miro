@@ -63,6 +63,7 @@ from miro import messagehandler
 from miro import moviedata
 from miro import prefs
 from miro.plat.utils import setup_logging
+from miro.plat import config as platformcfg
 from miro import tabs
 from miro import theme
 from miro import util
@@ -223,7 +224,6 @@ def check_movies_gone():
 
 @startup_function
 def fix_movies_gone():
-    from miro.plat import config as platformcfg
     config.set(prefs.MOVIES_DIRECTORY, platformcfg.get(prefs.MOVIES_DIRECTORY))
     eventloop.addUrgentCall(finish_backend_startup, "reconnect downloaders")
 

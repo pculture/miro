@@ -33,6 +33,7 @@ import logging
 import time
 
 from miro import app
+from miro import autoupdate
 from miro import config
 from miro import database
 from miro import downloader
@@ -919,7 +920,6 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_check_version(self, message):
         up_to_date_callback = message.up_to_date_callback
-        from miro import autoupdate
         autoupdate.check_for_updates(up_to_date_callback)
 
     def handle_new_playlist_folder(self, message):
