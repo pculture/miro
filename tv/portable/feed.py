@@ -898,7 +898,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             self.finishGenerateFeed(newFeed)
 
     def is_watched_folder(self):
-        return self.origURL.startswitg("dtv:directoryfeed:")
+        return self.origURL.startswith("dtv:directoryfeed:")
 
     def _handleFeedLoadingError(self, errorDescription):
         self.download = None
