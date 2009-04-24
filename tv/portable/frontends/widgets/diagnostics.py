@@ -70,8 +70,7 @@ def get_database_object_count():
     # FIXME - this might not be thread-safe given that we're calling it
     # from the frontend and it's doing things in the db.  But....  it
     # should be a read-only endeavor, so it should be ok.
-    from miro import database
-    return database.defaultDatabase.count_objects()
+    return app.db.persistent_object_count()
 
 SEPARATOR = None
 SHOW = _("Show")
@@ -108,7 +107,7 @@ ITEMS = [
       "data": lambda : util.formatSizeForUser(get_available_bytes_for_movies(), "0B", False) },
     { "label": _("Database size:"),
       "data": lambda : util.formatSizeForUser(get_database_size(), "0B", False) },
-    { "label": _("Total number of db objects:"),
+    { "label": _("Total db objects in memory:"),
       "data": lambda : "%d" % get_database_object_count() }
 ]
 

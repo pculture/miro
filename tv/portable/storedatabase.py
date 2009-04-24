@@ -328,6 +328,9 @@ class LiveStorage:
         klass = schema.get_ddb_class(restored_data)
         return klass(restored_data=restored_data)
 
+    def persistent_object_count(self):
+        return len(self._object_map)
+
     def query_count(self, klass, where, values=None, joins=None):
         schema = self._schema_map[klass]
         sql = StringIO()
