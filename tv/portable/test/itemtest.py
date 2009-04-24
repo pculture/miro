@@ -77,6 +77,7 @@ class ExpiredViewTest(MiroTestCase):
         self.assertEquals(list(f2.expiring_items()), [i3])
         self.assertEquals(list(f3.expiring_items()), [i5])
 
+class ItemRemoveTest(MiroTestCase):
     def test_watched_time_reset(self):
         feed = Feed(u'http://example.com/1')
         item = Item(entry=get_entry_for_url(u'http://example.com/1/item1'),
@@ -97,6 +98,7 @@ class ExpiredViewTest(MiroTestCase):
         downloader = item.downloader
 
         feed = self.reload_object(feed)
+        downloader = self.reload_object(downloader)
         item = self.reload_object(item)
 
         item.remove()

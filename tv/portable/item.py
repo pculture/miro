@@ -306,6 +306,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.screenshot = None
         self.resumeTime = 0
         self.channelTitle = None
+        self.downloader_id = None
         self.was_downloaded = False
         self.setup_new_icon_cache()
         # Initalize FileItem attributes to None
@@ -1402,11 +1403,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             other.set_downloader(self.downloader)
 
     def set_downloader(self, downloader):
-        if hasattr('self', '_downloader'):
+        if self.downloader_id is not None:
             if downloader is self._downloader:
                 return
-            if self._downloader is not None:
-                self._downloader.removeItem(self)
+            self.downloader.removeItem(self)
         self._downloader = downloader
         if downloader is not None:
             self.downloader_id = downloader.id
