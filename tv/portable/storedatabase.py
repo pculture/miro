@@ -258,6 +258,9 @@ class LiveStorage:
     def table_name(self, klass):
         return self._schema_map[klass].table_name
 
+    def object_from_class_table(self, obj, klass):
+        return self._schema_map[klass] is self._schema_map[obj.__class__]
+
     def _get_query_bottom(self, table_name, where, joins):
         sql = StringIO()
         sql.write("FROM %s\n" % table_name)

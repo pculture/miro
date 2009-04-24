@@ -275,7 +275,11 @@ class DDBObject(signals.SignalEmitter):
     def get_by_id(cls, id):
         try:
             # try memory first before going to sqlite.
-            return app.db.get_obj_by_id(id)
+            obj = app.db.get_obj_by_id(id)
+            if app.db.object_from_class_table(obj, cls):
+                return obj
+            else:
+                raise ObjectNotFoundError(id)
         except KeyError:
             return cls.make_view('id=?', (id,)).get_singleton()
 

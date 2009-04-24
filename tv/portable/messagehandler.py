@@ -529,7 +529,10 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_mark_feed_seen(self, message):
         try:
-            feed_ = feed.Feed.get_by_id(message.id)
+            try:
+                feed_ = feed.Feed.get_by_id(message.id)
+            except database.ObjectNotFoundError:
+                feed_ = ChannelFolder.get_by_id(message.id)
             feed_.mark_as_viewed()
         except database.ObjectNotFoundError:
             logging.warning("handle_mark_feed_seen: can't find feed by id %s", message.id)
