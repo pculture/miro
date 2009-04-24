@@ -495,7 +495,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def watchable_video_view(cls):
         return cls.make_view("not isContainerItem AND "
                 "(deleted IS NULL or not deleted) AND "
-                "rd.main_item_id=item.id AND "
+                "(is_file_item OR rd.main_item_id=item.id) AND "
                 "feed.origURL != 'dtv:singleFeed' AND "
                 + video_filename_expr,
                 joins={'feed': 'item.feed_id=feed.id',
@@ -508,7 +508,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
         return cls.make_view("not isContainerItem AND "
                 "(deleted IS NULL or not deleted) AND "
-                "rd.main_item_id=item.id AND "
+                "(is_file_item OR rd.main_item_id=item.id) AND "
                 "feed.origURL != 'dtv:singleFeed' AND "
                 + audio_filename_expr,
                 joins={'feed': 'item.feed_id=feed.id',
