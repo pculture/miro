@@ -106,6 +106,12 @@ class MiroTestCase(unittest.TestCase):
             app.db.upgrade_database()
             database.update_last_id()
 
+    def reload_object(self, obj):
+        # force an object to be reloaded from the databas.
+        del app.db._object_map[obj.id]
+        app.db._ids_loaded.remove(obj.id)
+        return obj.__class__.get_by_id(obj.id)
+
     def handle_error(self, obj, report):
         if self.errorSignalOkay:
             self.sawError = True

@@ -5,6 +5,7 @@ import shutil
 
 from miro.feed import Feed
 from miro.item import Item, FileItem, get_entry_for_url
+from miro.downloader import RemoteDownloader
 from miro.test.framework import MiroTestCase
 
 class ItemSeenTest(MiroTestCase):
@@ -83,3 +84,20 @@ class ExpiredViewTest(MiroTestCase):
         item.watchedTime = datetime.now()
         item.expire()
         self.assertEquals(item.watchedTime, None)
+
+    def test_remove_before_downloader_referenced(self):
+        # when items are restored from the DB, the downloader attribute is
+        # loaded lazily.  Make sure that if we remove the item, the downloader
+        # is still removed.
+        feed = Feed(u'http://example.com/1')
+        item = Item(entry=get_entry_for_url(u'http://example.com/1/item1'),
+                feed_id=feed.id)
+        item.set_downloader(RemoteDownloader(
+            u'http://example.com/1/item1/movie.mpeg', item))
+        downloader = item.downloader
+
+        feed = self.reload_object(feed)
+        item = self.reload_object(item)
+
+        item.remove()
+        self.assert_(not downloader.idExists())

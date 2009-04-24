@@ -35,12 +35,9 @@ class IconCacheTest(EventLoopTest):
         # Make sure that removing an item before it's created is okay.
 
         # trick LiveStorage into restoring our feed, item and guide
-        app.db._object_map = {}
-        app.db._ids_loaded = set()
-        app.db.commit_transaction()
-        self.feed = feed.Feed.get_by_id(self.feed.id)
-        self.item = item.Item.get_by_id(self.item.id)
-        self.guide = guide.ChannelGuide.get_by_id(self.guide.id)
+        self.feed = self.reload_object(self.feed)
+        self.item = self.reload_object(self.item)
+        self.guide = self.reload_object(self.guide)
 
         feed_icon_cache_id = self.feed.icon_cache_id
         item_icon_cache_id = self.item.icon_cache_id
