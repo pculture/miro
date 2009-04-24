@@ -1,4 +1,6 @@
 from miro import database
+
+from miro import app
 from miro import iconcache
 from miro import item
 from miro import feed
@@ -27,3 +29,29 @@ class IconCacheTest(EventLoopTest):
         self.assert_(not feed_icon_cache.idExists())
         self.assert_(not item_icon_cache.idExists())
         self.assert_(not guide_icon_cache.idExists())
+
+    def test_remove_before_icon_cache_referenced(self):
+        # Items create the icon_cache attribute lazily when restored from db.
+        # Make sure that removing an item before it's created is okay.
+
+        # trick LiveStorage into restoring our feed, item and guide
+        app.db._object_map = {}
+        app.db._ids_loaded = set()
+        app.db.commit_transaction()
+        self.feed = feed.Feed.get_by_id(self.feed.id)
+        self.item = item.Item.get_by_id(self.item.id)
+        self.guide = guide.ChannelGuide.get_by_id(self.guide.id)
+
+        feed_icon_cache_id = self.feed.icon_cache_id
+        item_icon_cache_id = self.item.icon_cache_id
+        guide_icon_cache_id = self.guide.icon_cache_id
+        self.item.remove()
+        self.feed.remove()
+        self.guide.remove()
+
+        self.assertRaises(database.ObjectNotFoundError,
+                iconcache.IconCache.get_by_id, feed_icon_cache_id)
+        self.assertRaises(database.ObjectNotFoundError,
+                iconcache.IconCache.get_by_id, item_icon_cache_id)
+        self.assertRaises(database.ObjectNotFoundError,
+                iconcache.IconCache.get_by_id, guide_icon_cache_id)

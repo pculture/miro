@@ -351,6 +351,6 @@ class IconCacheOwnerMixin(object):
     icon_cache = property(_icon_cache_getter)
 
     def remove_icon_cache(self):
-        if self._icon_cache is not None:
-            self._icon_cache.remove()
+        if self.icon_cache_id is not None:
+            self.icon_cache.remove()
             self._icon_cache = self.icon_cache_id = None
