@@ -154,7 +154,7 @@ class ButtonSegment(widgetset.CustomButton):
 class TextButtonSegment(ButtonSegment):
     
     MARGIN = 12
-    TEXT_COLOR = { True: (0.86, 0.86, 0.86), False: (0.4, 0.4, 0.4) }
+    TEXT_COLOR = { True: (0.86, 0.86, 0.86), False: (0.5, 0.5, 0.5) }
     
     def __init__(self, key, title, callback):
         ButtonSegment.__init__(self, key, callback)
