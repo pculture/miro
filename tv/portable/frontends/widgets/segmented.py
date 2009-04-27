@@ -41,18 +41,30 @@ def _get_image(name):
 
 class SegmentedButtonsRow(object):
 
-    def __init__(self):
-        self.buttons = list()
+    def __init__(self, label=None, behavior='radio'):
+        self.buttons_list = list()
+        self.buttons_map = dict()
+        self.label = label
+        self.behavior = behavior
     
     def add_text_button(self, key, title, callback):
-        self.buttons.append(TextButtonSegment(key, title, callback))
+        self.add_button(key, TextButtonSegment(key, title, callback))
     
     def add_image_button(self, key, image_name, callback):
-        self.buttons.append(ImageButtonSegment(key, image_name, callback))
+        self.add_button(key, ImageButtonSegment(key, image_name, callback))
+
+    def add_button(self, key, button):
+        self.buttons_list.append(button)
+        self.buttons_map[key] = button
     
     def make_widget(self):
         hbox = widgetset.HBox()
-        count = len(self.buttons)
+        if self.label is not None:
+            label = widgetset.Label(self.label)
+            label.set_size(-2)
+            label.set_color((0.9, 0.9, 0.9))
+            hbox.pack_start(widgetutil.align_middle(label, right_pad=0.5))
+        count = len(self.buttons_list)
         for index in range(count):
             if index == 0:
                 if count == 1:
@@ -63,18 +75,32 @@ class SegmentedButtonsRow(object):
                 segment_type =  'right'
             else:
                 segment_type =  'middle'            
-            button = self.buttons[index]
+            button = self.buttons_list[index]
             button.set_segment_type(segment_type)
             hbox.pack_start(button)
         return hbox
     
-    def set_active(self, key):
-        for button in self.buttons:
-            if button.key == key:
-                button.set_active(True)
-            else:
-                button.set_active(False)
+    def get_button(self, key):
+        return self.buttons_map[key]
+    
+    def is_active(self, key):
+        return self.buttons_map[key].active
+    
+    def set_active(self, key, active=True):
+        # When using the radio behavior the passed active state is ignored and
+        # considered True.
+        if self.behavior == 'radio':
+            for button in self.buttons_list:
+                if button.key == key:
+                    button.set_active(True)
+                else:
+                    button.set_active(False)
+        else:
+            self.buttons_map[key].set_active(active)
 
+    def toggle(self, key):
+        button = self.buttons_map[key]
+        button.set_active(not button.active)
 
 class ButtonSegment(widgetset.CustomButton):
     

@@ -690,8 +690,9 @@ class HeaderToolbar(widgetset.Background):
        sort_key will be one of 'name', 'date', 'size' or 'length'
     list-view-clicked (widget) -- User requested to switch to list view
     normal-view-clicked (widget) -- User requested to switch to normal view
-    view-all-clicked (widget) -- User requested to view all items
-    view-unwatched-clicked (widget) -- User requested to only view unwatched items
+    view-all-clicked -- User requested to view all items
+    toggle-unwatched-clicked -- User toggled the unwatched/unplayed items only view
+    toggle-non-feed-clicked -- User toggled the non feed items only view
     """
 
     def __init__(self, controller=None):
@@ -720,10 +721,12 @@ class HeaderToolbar(widgetset.Background):
             else:
                 raise ValueError("Unsupported controller type")
             self.create_signal('view-all-clicked')
-            self.create_signal('view-unwatched-clicked')
-            self.filter_switch = segmented.SegmentedButtonsRow()
+            self.create_signal('toggle-unwatched-clicked')
+            self.create_signal('toggle-non-feed-clicked')
+            self.filter_switch = segmented.SegmentedButtonsRow(_("View:"), 'custom')
             self.filter_switch.add_text_button('view-all', _('All'), self._on_view_all_clicked)
-            self.filter_switch.add_text_button('view-unwatched', unwatched_label, self._on_view_unwatched_clicked)
+            self.filter_switch.add_text_button('view-unwatched', unwatched_label, self._on_toggle_unwatched_clicked)
+            self.filter_switch.add_text_button('view-non-feed', _('Non Feed'), self._on_toggle_non_feed_clicked)
             self.filter_switch.set_active('view-all')
             self._hbox.pack_start(widgetutil.align_middle(self.filter_switch.make_widget(), left_pad=12))
 
@@ -756,14 +759,28 @@ class HeaderToolbar(widgetset.Background):
     def _on_view_all_clicked(self, button):
         self.emit('view-all-clicked')
 
-    def _on_view_unwatched_clicked(self, button):
-        self.emit('view-unwatched-clicked')
-
     def switch_to_view_all(self):
         self.filter_switch.set_active('view-all')
+        self.filter_switch.set_active('view-unwatched', False)
+        self.filter_switch.set_active('view-non-feed', False)
+
+    def switch_to_view_all_if_necessary(self):
+        view_all = not self.filter_switch.is_active('view-unwatched') and not self.filter_switch.is_active('view-non-feed')
+        self.filter_switch.set_active('view-all', view_all)
+
+    def _on_toggle_unwatched_clicked(self, button):
+        self.emit('toggle-unwatched-clicked')
+
+    def toggle_unwatched_only(self):
+        self.filter_switch.toggle('view-unwatched')
+        self.switch_to_view_all_if_necessary()
+
+    def _on_toggle_non_feed_clicked(self, button):
+        self.emit('toggle-non-feed-clicked')
         
-    def switch_to_view_unwatched(self):
-        self.filter_switch.set_active('view-unwatched')
+    def toggle_non_feed_only(self):
+        self.filter_switch.toggle('view-non-feed')
+        self.switch_to_view_all_if_necessary()
 
     def change_sort_indicator(self, sort_name, ascending):
         if not sort_name in self._button_map:
