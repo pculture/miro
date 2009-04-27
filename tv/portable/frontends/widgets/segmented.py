@@ -63,7 +63,7 @@ class SegmentedButtonsRow(object):
             label = widgetset.Label(self.label)
             label.set_size(-2)
             label.set_color((0.9, 0.9, 0.9))
-            hbox.pack_start(widgetutil.align_middle(label, right_pad=0.5))
+            hbox.pack_start(widgetutil.align_middle(label))
         count = len(self.buttons_list)
         for index in range(count):
             if index == 0:

@@ -26,6 +26,8 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import math
+
 from AppKit import *
 from Foundation import *
 from objc import YES, NO, nil
@@ -148,7 +150,7 @@ class Label(Widget):
                 wrap_width, 10000))
         else:
             size = self.sizer_cell.cellSize()
-        return size.width, size.height
+        return math.ceil(size.width), math.ceil(size.height)
 
     def baseline(self):
         return -self.view.font().descender()
