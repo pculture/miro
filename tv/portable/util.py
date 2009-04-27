@@ -335,6 +335,39 @@ def print_mem_usage(message):
 #    print message
 #    os.system("ps huwwwp %d" % (os.getpid(),))
 
+def db_mem_usage_test():
+    from miro import models
+    from miro.database import DDBObject
+    last_usage = get_mem_usage()
+    logging.info("baseline memory usage: %s", last_usage)
+    for name in dir(models):
+        ddb_object_class = getattr(models, name)
+        try:
+            if not issubclass(ddb_object_class, DDBObject):
+                continue
+        except TypeError:
+            continue
+        if name == 'FileItem':
+            # Item and FileItem share a db table, so we only need to load one
+            continue
+
+        # make sure each object is loaded in memory and count the total
+        count = len(list(ddb_object_class.make_view()))
+        current_usage = get_mem_usage()
+        class_usage = current_usage-last_usage
+        if count == 0:
+            count = 1 # prevent zero division errors
+        logging.info("memory usage for %s: %s (%d bytes per object)",
+                ddb_object_class.__name__, class_usage,
+                class_usage * 1024 / count)
+        last_usage = current_usage
+    logging.info("total memory usage: %s", last_usage)
+    logging.info("feed count: %s", models.Feed.make_view().count())
+    logging.info("item count: %s", models.Item.make_view().count())
+
+def get_mem_usage():
+    return int(call_command('ps', '-o', 'rss', 'hp', str(os.getpid())))
+
 class TooManySingletonsError(Exception):
     pass
 

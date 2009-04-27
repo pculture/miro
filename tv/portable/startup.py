@@ -39,6 +39,7 @@ from miro.gtcache import gettext as _
 import logging
 import os
 import traceback
+import threading
 import platform
 import time
 
@@ -70,6 +71,9 @@ from miro import util
 from miro import searchengines
 from miro import storedatabase
 from miro.singleclick import parse_command_line_args
+
+DEBUG_DB_MEM_USAGE = False
+mem_usage_test_event = threading.Event()
 
 class StartupError(Exception):
     def __init__(self, summary, description):
@@ -160,6 +164,8 @@ def startup():
     logging.info("Starting event loop thread")
     eventloop.startup()
     eventloop.addIdle(finish_startup, "finish startup")
+    if DEBUG_DB_MEM_USAGE:
+        mem_usage_test_event.wait()
 
 @startup_function
 def finish_startup():
@@ -178,9 +184,13 @@ def finish_startup():
         )
         raise StartupError(summary, description)
     database.update_last_id()
-    models.initialize()
     end = time.time()
     logging.timing ("Database upgrade time: %.3f", end - start)
+
+    models.initialize()
+    if DEBUG_DB_MEM_USAGE:
+        util.db_mem_usage_test()
+        mem_usage_test_event.set()
 
     searchengines.create_engines()
     setup_global_feeds()
