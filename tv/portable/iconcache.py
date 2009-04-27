@@ -27,10 +27,12 @@
 # statement from all source files in the program, then also delete it here.
 
 import os
+import logging
+
 from miro import httpclient
 from fasttypes import LinkedList
 from miro import eventloop
-from miro.database import DDBObject
+from miro.database import DDBObject, ObjectNotFoundError
 from miro.download_utils import nextFreeFilename, getFileURLPath
 from miro.util import unicodify
 from miro.plat.utils import unicodeToFilename
@@ -320,7 +322,7 @@ def make_icon_cache(obj):
     if obj.icon_cache_id is not None:
         try:
             icon_cache = IconCache.get_by_id(obj.icon_cache_id)
-        except KeyError:
+        except ObjectNotFoundError:
             logging.warn("Icon Cache Not in database for %s (id: %s)" %
                     (obj, obj.icon_cache_id))
         else:

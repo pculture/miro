@@ -197,6 +197,14 @@ class LiveStorage:
     def commit_transaction(self):
         self.connection.commit()
 
+    def remember_object(self, obj):
+        self._object_map[obj.id] = obj
+        self._ids_loaded.add(obj.id)
+
+    def forget_object(self, obj):
+        del self._object_map[obj.id]
+        self._ids_loaded.remove(obj.id)
+
     def update_obj(self, obj):
         """Update a DDBObject on disk."""
 
@@ -218,8 +226,7 @@ class LiveStorage:
                 ', '.join('?' for i in xrange(len(column_names))))
         self.cursor.execute(sql, values)
         self._schedule_commit()
-        self._object_map[obj.id] = obj
-        self._ids_loaded.add(obj.id)
+        self.remember_object(obj)
 
     def remove_obj(self, obj):
         """Remove a DDBObject from disk."""
@@ -228,8 +235,7 @@ class LiveStorage:
         sql = "DELETE FROM %s WHERE id=?" % (schema.table_name)
         self.cursor.execute(sql, (obj.id,))
         self._schedule_commit()
-        del self._object_map[obj.id]
-        self._ids_loaded.remove(obj.id)
+        self.forget_object(obj)
 
     def get_last_id(self):
         try:
