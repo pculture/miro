@@ -47,6 +47,7 @@ from miro.feedparserutil import normalize_feedparser_dict
 from miro.database import DDBObject, ObjectNotFoundError
 from miro.database import DatabaseConstraintError
 from miro.databasehelper import makeSimpleGetSet
+from miro import app
 from miro import iconcache
 from miro import downloader
 from miro import config
@@ -1481,8 +1482,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def setup_links(self):
         self.split_item()
-        if (self.isContainerItem is not None and 
-                not fileutil.exists(self.get_filename())):
+        if (self.isContainerItem is not None and
+                not fileutil.exists(self.get_filename()) and
+                not hasattr(app, 'in_unit_tests')):
             self.expire()
             return
         if self.screenshot and not fileutil.exists(self.screenshot):
