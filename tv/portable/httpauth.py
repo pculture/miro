@@ -29,6 +29,7 @@
 from miro.download_utils import parseURL
 from miro import dialogs
 from miro import eventloop
+from miro import models
 
 def formatAuthString(auth):
     return "%s %s" % (auth.getAuthScheme(), auth.getAuthToken())
@@ -53,9 +54,8 @@ def askForHTTPAuth(callback, url, realm, authScheme):
 
     scheme, host, port, path = parseURL(url)
     def handleLoginResponse(dialog):
-        from miro import downloader
         if dialog.choice == dialogs.BUTTON_OK:
-            auth = downloader.HTTPAuthPassword(dialog.username,
+            auth = models.HTTPAuthPassword(dialog.username,
                     dialog.password, host, realm, path, authScheme)
             callback(formatAuthString(auth))
         else:

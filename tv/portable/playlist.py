@@ -32,6 +32,7 @@ from miro.gtcache import gettext as _
 
 from miro import dialogs
 from miro import database
+from miro import models
 from miro.databasehelper import makeSimpleGetSet
 
 class PlaylistItemMap(database.DDBObject):
@@ -74,10 +75,8 @@ class PlaylistMixin:
 
     def add_id(self, item_id):
         """Add a new item to end of the playlist.  """
-        from miro import item
-
         self.MapClass.add_item_id(self.id, item_id)
-        item = item.Item.get_by_id(item_id)
+        item = models.Item.get_by_id(item_id)
         item.save()
 
         folder = self.get_folder()
@@ -86,14 +85,12 @@ class PlaylistMixin:
 
     def remove_id(self, item_id, signal_change=True):
         """Remove an item from the playlist."""
-        from miro import item
-
         self.MapClass.remove_item_id(self.id, item_id)
         folder = self.get_folder()
         if folder is not None:
             folder.remove_id(item_id)
         if signal_change:
-            item = item.Item.get_by_id(item_id)
+            item = models.Item.get_by_id(item_id)
             item.signal_change(needsSave=False)
 
     def add_item(self, item):
@@ -150,10 +147,9 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
     get_title, set_title = makeSimpleGetSet('title')
 
     def get_folder(self):
-        from miro import folder
         self.confirmDBThread()
         if self.folder_id is not None:
-            return folder.PlaylistFolder.get_by_id(self.folder_id)
+            return models.PlaylistFolder.get_by_id(self.folder_id)
         else:
             return None
 

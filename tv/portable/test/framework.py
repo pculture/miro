@@ -12,6 +12,7 @@ from miro import signals
 from miro import storedatabase
 from miro import subscription
 from time import sleep
+from miro import models
 
 util.setup_logging()
 
@@ -69,6 +70,7 @@ class DummyController:
 
 class MiroTestCase(unittest.TestCase):
     def setUp(self):
+        models.initialize()
         app.in_unit_tests = True
         database.set_thread(threading.currentThread())
         database.ViewTracker.reset_trackers()

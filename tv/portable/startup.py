@@ -59,6 +59,7 @@ from miro import item
 from miro import feed
 from miro import messages
 from miro import messagehandler
+from miro import models
 from miro import moviedata
 from miro import prefs
 from miro.plat.utils import setup_logging
@@ -177,6 +178,7 @@ def finish_startup():
         )
         raise StartupError(summary, description)
     database.update_last_id()
+    models.initialize()
     end = time.time()
     logging.timing ("Database upgrade time: %.3f", end - start)
 

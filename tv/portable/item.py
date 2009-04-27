@@ -62,6 +62,7 @@ from miro import searchengines
 from miro import fileutil
 from miro import signals
 from miro import playlist
+from miro import models
 
 _charset = locale.getpreferredencoding()
 
@@ -638,23 +639,21 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         return False
 
     def _remove_from_playlists(self):
-        from miro import folder
-        playlist.PlaylistItemMap.remove_item_from_playlists(self)
-        folder.PlaylistFolderItemMap.remove_item_from_playlists(self)
+        models.PlaylistItemMap.remove_item_from_playlists(self)
+        models.PlaylistFolderItemMap.remove_item_from_playlists(self)
 
     def _update_release_date(self):
         # FeedParserValues sets up the releaseDateObj attribute
         pass
 
     def check_constraints(self):
-        from miro import feed
         if self.feed_id is not None:
             try:
-                obj = feed.Feed.get_by_id(self.feed_id)
+                obj = models.Feed.get_by_id(self.feed_id)
             except ObjectNotFoundError:
                 raise DatabaseConstraintError("my feed (%s) is not in database" % self.feed_id)
             else:
-                if not isinstance(obj, feed.Feed):
+                if not isinstance(obj, models.Feed):
                     msg = "feed_id points to a %s instance" % obj.__class__
                     raise DatabaseConstraintError(msg)
         if self.parent_id is not None:
@@ -719,10 +718,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """
         if hasattr(self, "_feed"):
             return self._feed
-        from miro import feed
 
         if self.feed_id is not None:
-            self._feed = feed.Feed.get_by_id(self.feed_id)
+            self._feed = models.Feed.get_by_id(self.feed_id)
         elif self.parent_id is not None:
             self._feed = self.getParent().getFeed()
         else:
@@ -1088,11 +1086,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @returnsUnicode
     def get_channel_title(self, allowSearchFeedTitle=False):
-        from miro import feed
         implClass = self.getFeed().actualFeed.__class__
-        if implClass in (feed.RSSFeedImpl, feed.ScraperFeedImpl):
+        if implClass in (models.RSSFeedImpl, models.ScraperFeedImpl):
             return self.getFeed().get_title()
-        elif implClass == feed.SearchFeedImpl and allowSearchFeedTitle:
+        elif implClass == models.SearchFeedImpl and allowSearchFeedTitle:
             e = searchengines.get_last_engine()
             if e:
                 return e.title

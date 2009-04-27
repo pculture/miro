@@ -47,6 +47,7 @@ from miro import dialogs
 from miro import eventloop
 from miro import feedupdate
 from miro import flashscraper
+from miro import models
 from miro import prefs
 from miro.plat import resources
 from miro import downloader
@@ -825,10 +826,9 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.actualFeed.update()
 
     def get_folder(self):
-        from folder import ChannelFolder
         self.confirmDBThread()
         if self.folder_id is not None:
-            return ChannelFolder.get_by_id(self.folder_id)
+            return models.ChannelFolder.get_by_id(self.folder_id)
         else:
             return None
 
