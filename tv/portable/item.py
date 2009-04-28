@@ -61,6 +61,7 @@ import logging
 from miro import filetypes
 from miro import searchengines
 from miro import fileutil
+from miro import search
 from miro import signals
 from miro import playlist
 from miro import models
