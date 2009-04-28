@@ -297,6 +297,10 @@ class LiveStorage:
             # query() calls query_ids() and expects that for all the object
             # ids returned, it can look them up in self._object_map
             self._restore_objects(schema, unrestored_ids)
+
+            # sometimes objects will call remove() in setup_restored().
+            # We need to filter those out.
+            rv = [id for id in rv if id in self._object_map]
         return rv
 
     def _restore_objects(self, schema, id_set):
@@ -316,8 +320,7 @@ class LiveStorage:
 
             self.cursor.execute(sql.getvalue(), id_list_chunk)
             for row in self.cursor.fetchall():
-                restored = self._restore_object_from_row(schema, row)
-                self._object_map[restored.id] = restored
+                self._restore_object_from_row(schema, row)
 
     def _restore_object_from_row(self, schema, db_row):
         restored_data = {}
