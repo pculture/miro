@@ -1,0 +1,85 @@
+Index: platform/gtk-x11/setup.py
+===================================================================
+--- platform/gtk-x11/setup.py	(revision 9421)
++++ platform/gtk-x11/setup.py	(working copy)
+@@ -116,7 +116,7 @@
+ XULRUNNER_19 = None
+ 
+ # The name of the boost library.  Used for building extensions.
+-BOOST_LIB = 'boost_python'
++BOOST_LIB = 'boost_python-mt'
+ 
+ 
+ ###############################################################################
+Index: platform/gtk-x11/miro.real
+===================================================================
+--- platform/gtk-x11/miro.real	(revision 9421)
++++ platform/gtk-x11/miro.real	(working copy)
+@@ -39,15 +39,6 @@
+ import sys
+ import string
+ 
+-# This fixes some/all problems with Python 2.6 support but should be
+-# re-addressed when we have a system with Python 2.6 to test with.
+-# (bug 11262)
+-if sys.version_info[0] == 2 and sys.version_info[1] > 5:
+-    import miro.feedparser
+-    import miro.storedatabase
+-    sys.modules['feedparser'] = miro.feedparser
+-    sys.modules['storedatabase'] = miro.storedatabase
+-
+ import optparse
+ 
+ import pygtk
+@@ -60,6 +51,13 @@
+ from miro import gtcache
+ gtcache.init()
+ 
++# fixes problems with Python 2.6
++if sys.version_info[0] == 2 and sys.version_info[1] > 5:
++    import miro.feedparser
++    import miro.storedatabase
++    sys.modules['feedparser'] = miro.feedparser
++    sys.modules['storedatabase'] = miro.storedatabase
++
+ from miro import config
+ from miro import plat
+ from miro.plat import options
+Index: portable/util.py
+===================================================================
+--- portable/util.py	(revision 9421)
++++ portable/util.py	(working copy)
+@@ -35,7 +35,10 @@
+ import os
+ import random
+ import re
+-import sha
++try:
++    from hashlib import sha1 as sha
++except ImportError:
++    from sha import sha as sha
+ import string
+ import sys
+ import urllib
+@@ -241,7 +244,7 @@
+     try:
+         data = f.read()
+         metainfo = lt.bdecode(data)
+-        infohash = sha.sha(lt.bencode(metainfo['info'])).digest()
++        infohash = sha(lt.bencode(metainfo['info'])).digest()
+         return infohash
+     finally:
+         f.close()
+Index: portable/feedparser.py
+===================================================================
+--- portable/feedparser.py	(revision 9421)
++++ portable/feedparser.py	(working copy)
+@@ -2455,7 +2455,7 @@
+                 if _debug: sys.stderr.write('date handler function must return 9-tuple\n')
+                 raise ValueError
+             map(int, date9tuple)
+-            return date9tuple
++            return tuple(date9tuple)
+         except Exception, e:
+             if _debug: sys.stderr.write('%s raised %s\n' % (handler.__name__, repr(e)))
+             pass

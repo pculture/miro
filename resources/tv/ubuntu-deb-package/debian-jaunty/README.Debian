@@ -1,0 +1,10 @@
+Miro for Ubuntu Intrepid
+------------------------
+
+ * The default movies directory in Ubuntu Intrepid is 
+   ~/.miro/Movies instead of ~/Movies/Miro .
+
+ * The the non-video directory in Ubuntu Intrepid is 
+   ~/.miro/Nonvideo instead of ~/Desktop .
+
+ -- Will Kahn-Greene <will.guaraldi@pculture.org>, Sun, 30 Mar 2008 15:42:06 -0400
