@@ -256,8 +256,8 @@ class DDBObject(signals.SignalEmitter):
             self.setup_restored()
         else:
             self.id = DDBObject.lastID = DDBObject.lastID + 1
-            app.db.remember_object(self)
             self.setup_new(*args, **kwargs)
+            app.db.update_obj(self)
 
         self.in_db_init = False
 
