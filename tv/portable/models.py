@@ -41,7 +41,7 @@ around this, this module waits to import things until initialize() is called.
 
 def initialize():
     global RemoteDownloader, HTTPAuthPassword, Feed, FeedImpl, RSSFeedImpl
-    global RSSMultiFeedImpl, ScraperFeedImpl, SearchFeedImp
+    global RSSMultiFeedImpl, ScraperFeedImpl, SearchFeedImpl
     global DirectoryWatchFeedImpl, DirectoryFeedImpl, SearchDownloadsFeedImpl
     global ManualFeedImpl, SingleFeedImpl, ChannelFolder, PlaylistFolder
     global PlaylistFolderItemMap, ChannelGuide, Item, FileItem, IconCache
