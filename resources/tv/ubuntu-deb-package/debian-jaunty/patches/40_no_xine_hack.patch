@@ -1,0 +1,13 @@
+Index: platform/gtk-x11/setup.py
+===================================================================
+--- platform/gtk-x11/setup.py    (revision 9466)
++++ platform/gtk-x11/setup.py    (working copy)
+@@ -38,7 +38,7 @@
+ # It's probably best to leave this as True allowing the hack to be compiled
+ # in, and tell users to enable/disable at the command line with the xine-xvhack
+ # setting.
+-USE_XINE_HACK = True
++USE_XINE_HACK = False
+ 
+ 
+ # The following properties allow you to explicitly set xulrunner paths and

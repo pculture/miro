@@ -1,0 +1,50 @@
+#!/usr/bin/make -f
+
+DEB_PYTHON_SYSTEM=pysupport
+DEB_PYTHON_COMPILE_VERSION = $(shell pyversions -vd 2>/dev/null)
+
+# Must be included before python-distutils.mk to use dh_python / dh_pysupport.
+include /usr/share/cdbs/1/rules/debhelper.mk
+
+# Use Python distutils to install the package.
+include /usr/share/cdbs/1/class/python-distutils.mk
+
+# Must come after python-distutils.mk.
+DEB_PYTHON_SETUP_CMD := platform/gtk-x11/setup.py
+
+# Override dh_python invokation.
+# binary-install/miro::
+# 	dh_python -pmiro 
+# binary-install/miro-data::
+# 	dh_python -pmiro-data
+
+include /usr/share/cdbs/1/rules/simple-patchsys.mk
+
+# Install everything into debian/tmp, as we have a multi-binary package.
+DEB_DH_INSTALL_SOURCEDIR := debian/tmp
+
+# Remove unneeded files from the deb.
+binary-post-install/miro::
+	rm -rf debian/miro/usr/share/python-support/miro/miro/compiled_templates/unittest
+	rm -rf debian/miro/usr/share/python-support/miro/miro/test
+	cp debian/miro/usr/share/man/man1/miro.1.gz debian/miro/usr/share/man/man1/miro.real.1.gz
+
+# Remove unneeded files from the deb.
+binary-post-install/miro-data::
+	rm -rf debian/miro-data/usr/share/miro/resources/testdata
+	rm -rf debian/miro-data/usr/share/miro/resources/templates/unittest
+
+# TODO: This should probably be done in the upstream source.
+clean::
+	rm -rf portable/compiled_templates/*
+	rm -f portable/database.c
+	rm -f portable/sorts.c
+	rm -f platform/gtk-x11/xine/xine.c
+	rm -f platform/gtk-x11/xine/xine_extractor
+	rm -f platform/gtk-x11/frontend_implementation/MozillaBrowser.c
+	rm -f platform/gtk-x11/frontend_implementation/MozillaBrowser.h
+	rm -f platform/gtk-x11/frontend_implementation/MozillaBrowser.pxi
+	rm -f platform/gtk-x11/frontend_implementation/xlibhelper.c
+	rm -f platform/gtk-x11/miro.1.gz
+	rm -f platform/gtk-x11/miro
+	rm -f portable/*.pyc

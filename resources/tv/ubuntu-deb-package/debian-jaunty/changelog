@@ -1,0 +1,8 @@
+miro (2.0.4-0pcf1) jaunty; urgency=low
+
+  * initial jaunty release
+  * 30_jaunty.patch fixes miro.real, nixes sha deprecation warning, and 
+    fixes the setup.py file
+  * 40_no_xine_hack.patch disables the xine hack
+
+ -- Will Kahn-Greene <will.guaraldi@pculture.org>  Tue, 28 Apr 2009 10:50:18 -0400
