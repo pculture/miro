@@ -306,7 +306,7 @@ def ask_for_multiple_feeds(urls):
 def ask_for_new_folder_name(urls):
     newURLCount = len(filter_existing_feed_urls(urls))
     existingURLCount = len(urls) - newURLCount
-    title = ngettext("Adding feed to a new folder"
+    title = ngettext("Adding feed to a new folder",
                      "Adding %(count)d feeds to a new folder",
                      newURLCount,
                      {"count": newURLCount})
