@@ -725,7 +725,8 @@ class Application:
     def remove_current_site(self):
         t, infos = app.tab_list_manager.get_selection()
         if t == 'site':
-            info = infos[0] # Multiple guide selection is not allowed
+            # multiple guide selection is not allowed
+            info = infos[0]
             title = _('Remove %(name)s', {"name": info.name})
             description = _('Are you sure you want to remove %(name)s?',
                             {"name": info.name})
@@ -791,10 +792,10 @@ class Application:
         call_on_ui_thread(rundialog.run, dialog)
 
     def handle_update_available(self, obj, item):
-        print "FIXME - update available!"
+        print "Update available! -- not implemented"
 
     def handle_up_to_date(self):
-        print "FIXME - up to date!"
+        print "Up to date! -- not implemented"
 
     def handle_error(self, obj, report):
         call_on_ui_thread(self._handle_error, obj, report)
@@ -817,20 +818,20 @@ class InfoUpdaterCallbackList(object):
     def __init__(self):
         self._callbacks = {}
 
-    def add(self, type, id, callback):
-        key = (type, id)
+    def add(self, type_, id_, callback):
+        key = (type_, id_)
         self._callbacks.setdefault(key, set()).add(callback)
 
-    def remove(self, type, id, callback):
-        key = (type, id)
+    def remove(self, type_, id_, callback):
+        key = (type_, id_)
         callback_set = self._callbacks[key]
         callback_set.remove(callback)
         if len(callback_set) == 0:
             del self._callbacks[key]
 
-    def get(self, type, id):
-        """Get the list of callbacks for type, id."""
-        key = (type, id)
+    def get(self, type_, id_):
+        """Get the list of callbacks for type_, id_."""
+        key = (type_, id_)
         if key not in self._callbacks:
             return []
         else:
