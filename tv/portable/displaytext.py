@@ -134,12 +134,17 @@ def expiration_date_short(exp_date):
 
 def release_date(release_date):
     if release_date > datetime.datetime.min:
-        return strftime_to_unicode(release_date.strftime("%B %d, %Y"))
+        # figure out the date pieces, convert to unicode, then split it on "::" so
+        # we can run gettext on it allowing translators to reorder it.
+        # see bug 11662.
+        m, d, y = strftime_to_unicode(release_date.strftime("%B::%d::%Y")).split("::")
+        return _("%(month)s %(dayofmonth)s, %(year)s", {"month": m, "dayofmonth": d, "year": y})
     else:
         return ''
 
 def release_date_slashes(release_date):
     if release_date > datetime.datetime.min:
+        # note: %x is locale-appropriate
         return strftime_to_unicode(release_date.strftime("%x"))
     else:
         return ''
