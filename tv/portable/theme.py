@@ -28,7 +28,6 @@
 
 from miro.gtcache import gettext as _
 import logging
-import platform
 from miro import config
 from miro import prefs
 from miro import app
