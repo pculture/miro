@@ -139,28 +139,12 @@ class LiveStorage:
     def upgrade_database(self):
         """Run any database upgrades that haven't been run."""
         try:
-            self._version_table_hack()
             self._upgrade_database()
         except (KeyError, SystemError,
                 databaseupgrade.DatabaseTooNewError):
             raise
         except:
             self._handle_load_error("Error upgrading database")
-
-    def _version_table_hack(self):
-        """Fix people who have been running the nightly builds and have a
-        miro_version table instead of a dtv_variables table (see #11688).
-        Delete this function before releasing!
-        """
-        self.cursor.execute("SELECT COUNT(*) FROM sqlite_master "
-                "WHERE type='table' and name = 'miro_version'")
-        if self.cursor.fetchone()[0] > 0:
-            logging.warn("fixing dev versions table.")
-            self._create_variables_table()
-            self.cursor.execute("SELECT version FROM miro_version")
-            current_version = self.cursor.fetchone()[0]
-            self._set_variable(VERSION_KEY, current_version)
-            self.cursor.execute("DROP TABLE miro_version")
 
     def _upgrade_database(self):
         self._upgrade_20_database()
