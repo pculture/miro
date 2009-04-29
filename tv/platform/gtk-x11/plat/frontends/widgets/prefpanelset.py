@@ -40,7 +40,7 @@ from miro.frontends.widgets.prefpanel import attach_boolean, attach_radio, attac
 
 from miro.plat import options 
 
-from miro import config
+from miro import config, prefs
 
 def _general_panel():
     extras = []
@@ -58,7 +58,9 @@ def _playback_panel():
 
     grid = dialogwidgets.ControlGrid()
 
-    note = dialogwidgets.note(_("You must restart Miro for renderer changes to take effect."))
+    note = dialogwidgets.note(_("You must restart %(appname)s for renderer "
+                                "changes to take effect.",
+                                {"appname": config.get(prefs.SHORT_APP_NAME)}))
     grid.pack(align_left(note, bottom_pad=12), grid.ALIGN_LEFT, span=2)
 
     grid.end_line(spacing=12)

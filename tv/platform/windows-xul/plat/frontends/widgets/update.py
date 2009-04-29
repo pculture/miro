@@ -149,8 +149,8 @@ class UpdateAvailableDialog(dialogs.MainDialog):
         self.browser = UpdateAvailableBrowser(url)
         label = widgetset.Label()
         label.set_text(
-            _('A new version of %s is available for download.') % (
-                config.get(prefs.SHORT_APP_NAME),))
+            _('A new version of %(appname)s is available for download.',
+              {"appname": config.get(prefs.SHORT_APP_NAME)}))
         label2 = widgetset.Label()
         label2.set_text(
             _('Do you want to download it now?'))

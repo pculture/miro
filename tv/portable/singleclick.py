@@ -99,7 +99,8 @@ def check_url_exists(url):
                 downloadState = i.downloader.get_state()
             if downloadState in ('paused', 'stopped'):
                 i.download()
-                text2 = _("Miro will begin downloading it now.")
+                text2 = _("%(appname)s will begin downloading it now.",
+                          {"appname": config.get(prefs.SHORT_APP_NAME)})
             elif downloadState == 'downloading':
                 text2 = _("It is downloading now.")
             else:
@@ -160,10 +161,10 @@ def add_download(url, additional=None, handle_unknown_callback=download_unknown_
     def errback(error):
         title = _("Download Error")
         text = _(
-            "Miro is not able to download a file at this URL:\n"
+            "%(appname)s is not able to download a file at this URL:\n"
             "\n"
             "URL: %(url)s",
-            {"url": url}
+            {"url": url, "appname": config.get(prefs.SHORT_APP_NAME)}
         )
         logging.info("can't download '%s'", url)
         dialogs.MessageBoxDialog(title, text).run()

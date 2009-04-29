@@ -35,7 +35,7 @@ from objc import nil
 from AppKit import *
 from Foundation import *
 
-from miro import app
+from miro import app, config, prefs
 from miro.menubar import menubar, Menu, MenuItem, Separator, Key
 from miro.menubar import MOD, CTRL, ALT, SHIFT, CMD, RIGHT_ARROW, LEFT_ARROW, UP_ARROW, DOWN_ARROW, SPACE, ENTER, DELETE, BKSPACE, ESCAPE
 from miro.gtcache import gettext as _
@@ -135,7 +135,8 @@ def populate_menu():
         Separator(),
         MenuItem(_("Services"), "ServicesMenu", ()),
         Separator(),
-        MenuItem(_("Hide Miro"), "HideMiro", (Key("h", MOD),)),
+        MenuItem(_("Hide %(appname)s", {"appname": config.get(prefs.SHORT_APP_NAME)}),
+                 "HideMiro", (Key("h", MOD),)),
         MenuItem(_("Hide Others"), "HideOthers", (Key("h", MOD, ALT),)),
         MenuItem(_("Show All"), "ShowAll", ()),
         Separator(),
@@ -144,7 +145,8 @@ def populate_menu():
     miroMenu = Menu("Miro", "Miro", *miroMenuItems)
     miroMenu.findItem("EditPreferences").label = _("Preferences...")
     miroMenu.findItem("EditPreferences").shortcuts = (Key(",", MOD),)
-    miroMenu.findItem("Quit").label = _("Quit Miro")
+    miroMenu.findItem("Quit").label = _("Quit %(appname)s",
+                                        {"appname": config.get(prefs.SHORT_APP_NAME)})
 
     # File menu
     closeWinItem = MenuItem(_("Close Window"), "CloseWindow", (Key("w", MOD),))
@@ -187,7 +189,7 @@ def populate_menu():
 
     # Help Menu
     helpItem = menubar.findMenu("Help").findItem("Help")
-    helpItem.label = _("Miro Help")
+    helpItem.label = _("%(appname)s Help", {"appname": config.get(prefs.SHORT_APP_NAME)})
     helpItem.shortcuts = (Key("?", MOD),)
 
     # Now populate the main menu bar

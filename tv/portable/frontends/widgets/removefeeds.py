@@ -82,7 +82,8 @@ def run_dialog(channel_infos, downloaded_items, downloading_items, has_watched_f
                 lab = widgetset.Label(_(
                     "Watched folders will be removed from the sidebar but their contents will "
                     "still appear in your library.  You can stop watching watched folders completely "
-                    "in the Miro preference panel."
+                    "in the %(appname)s preference panel.",
+                    {"appname": config.get(prefs.SHORT_APP_NAME)}
                 ))
                 lab.set_wrap(True)
                 lab.set_size_request(390, -1)

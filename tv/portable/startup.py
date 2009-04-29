@@ -96,9 +96,10 @@ def startup_function(func):
             logging.warn("Unknown startup error: %s", traceback.format_exc())
             m = messages.StartupFailure(_("Unknown Error"),
                     _(
-                        "An unknown error prevented Miro from startup.  Please "
+                        "An unknown error prevented %(appname)s from startup.  Please "
                         "file a bug report at %(url)s.",
-                        {"url": config.get(prefs.BUG_REPORT_URL)}
+                        {"appname": config.get(prefs.SHORT_APP_NAME),
+                         "url": config.get(prefs.BUG_REPORT_URL)}
                     ))
             m.send_to_frontend()
     return wrapped

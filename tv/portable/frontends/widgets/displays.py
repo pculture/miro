@@ -36,6 +36,8 @@ import os
 from miro import app
 from miro import messages
 from miro import signals
+from miro import config
+from miro import prefs
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.frontends.widgets import browser
@@ -352,8 +354,11 @@ class CantPlayWidget(widgetset.SolidBackground):
     def __init__(self):
         widgetset.SolidBackground.__init__(self, (0, 0, 0))
         vbox = widgetset.VBox()
-        label = widgetset.Label(_("Miro can't play this file.  You may "
-            "be able to open it with a different program"))
+        label = widgetset.Label(_(
+            "%(appname)s can't play this file.  You may "
+            "be able to open it with a different program",
+            {"appname": config.get(prefs.SHORT_APP_NAME)}
+            ))
         label.set_color((1, 1, 1))
         vbox.pack_start(label)
         table = widgetset.Table(2, 2)

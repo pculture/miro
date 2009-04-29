@@ -122,9 +122,10 @@ class WindowsApplication(Application):
         if config.get(prefs.MINIMIZE_TO_TRAY_ASK_ON_CLOSE):
             ret = dialogs.show_choice_dialog(
                 _("Close to tray?"),
-                _("When you click the red close button, would you like Miro to "
+                _("When you click the red close button, would you like %(appname)s to "
                   "close to the system tray or quit?  You can change this "
-                  "setting later in the Options."),
+                  "setting later in the Options.",
+                  {"appname": config.get(prefs.SHORT_APP_NAME)}),
                 (dialogs.BUTTON_QUIT, dialogs.BUTTON_CLOSE_TO_TRAY))
             config.set(prefs.MINIMIZE_TO_TRAY_ASK_ON_CLOSE, False)
             if ret == dialogs.BUTTON_CLOSE_TO_TRAY:

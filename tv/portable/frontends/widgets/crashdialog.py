@@ -32,6 +32,8 @@ crash dialog.
 
 import logging
 from miro import messages
+from miro import config
+from miro import prefs
 
 from miro.gtcache import gettext as _
 
@@ -49,9 +51,11 @@ def run_dialog(obj, report):
             vbox = widgetset.VBox(spacing=5)
 
             lab = widgetset.Label(_(
-                "Miro has encountered an internal error.  You can help us track "
-                "down this problem and fix it by submitting an error report."
-            ))
+                "%(appname)s has encountered an internal error.  You can help us track "
+                "down this problem and fix it by submitting an error report.",
+                {"appname": config.get(prefs.SHORT_APP_NAME)}
+                ))
+
             lab.set_wrap(True)
             vbox.pack_start(widgetutil.align_left(lab))
 

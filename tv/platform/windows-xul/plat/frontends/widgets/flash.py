@@ -71,8 +71,9 @@ def check_flash_install():
             "Your browser will load the web-site where you can download and install "
             "Adobe Flash.\n"
             "\n"
-            "You should quit Miro now and start it up again after Adobe Flash has "
-            "been installed."
+            "You should quit %(appname)s now and start it up again after Adobe Flash has "
+            "been installed.",
+            {"appname": config.get(prefs.SHORT_APP_NAME)}
         )
         dialogs.show_message(title, description)
 

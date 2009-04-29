@@ -27,10 +27,11 @@
 # statement from all source files in the program, then also delete it here.
 
 import os
-from miro.gtcache import gettext as _
 import re
 from threading import RLock
 from copy import copy
+
+from miro.gtcache import gettext as _
 
 try:
     import miro.libtorrent as lt
@@ -1099,7 +1100,9 @@ class BTDownloader(BGDownloader):
                 except IOError:
                     self.handleError(_("Torrent file deleted"),
                                      _("The torrent file for this item was deleted "
-                                       "outside of Miro."))
+                                       "outside of %(appname)s.",
+                                       {"appname": config.get(prefs.SHORT_APP_NAME)}
+                                       ))
 
                     return
                 try:
