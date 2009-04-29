@@ -725,16 +725,20 @@ class Application:
     def remove_current_site(self):
         t, infos = app.tab_list_manager.get_selection()
         if t == 'site':
-            # multiple guide selection is not allowed
-            info = infos[0]
-            title = _('Remove %(name)s', {"name": info.name})
-            description = _('Are you sure you want to remove %(name)s?',
-                            {"name": info.name})
+            title = ngettext('Remove site', 'Remove sites', len(infos))
+            description = ngettext(
+                'Are you sure you want to remove this site?',
+                'Are you sure you want to remove these %(count)s sites?',
+                len(infos),
+                {"count": len(infos)}
+                )
+
             ret = dialogs.show_choice_dialog(title, description,
                     [dialogs.BUTTON_REMOVE, dialogs.BUTTON_CANCEL])
 
             if ret == dialogs.BUTTON_REMOVE:
-                messages.DeleteSite(info.id).send_to_backend()
+                for si in infos:
+                    messages.DeleteSite(si.id).send_to_backend()
 
     def quit_ui(self):
         """Quit  out of the UI event loop."""

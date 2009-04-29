@@ -475,7 +475,7 @@ class TabList(signals.SignalEmitter):
 class SiteList(TabList):
     type = 'site'
 
-    ALLOW_MULTIPLE = False
+    ALLOW_MULTIPLE = True
 
     def on_delete_key_pressed(self):
         app.widgetapp.remove_current_site()
@@ -493,11 +493,18 @@ class SiteList(TabList):
         info.unwatched = info.available = 0
 
     def on_context_menu(self, table_view):
-        return [
-            (_('Copy URL to clipboard'), app.widgetapp.copy_site_url),
-            (_('Rename Site'), app.widgetapp.rename_something),
-            (_('Remove Site'), app.widgetapp.remove_current_site),
-        ]
+        selected_rows = [table_view.model[iter][0] for iter in \
+                table_view.get_selection()]
+        if len(selected_rows) == 1:
+            return [
+                (_('Copy URL to clipboard'), app.widgetapp.copy_site_url),
+                (_('Rename Site'), app.widgetapp.rename_something),
+                (_('Remove Site'), app.widgetapp.remove_current_site),
+            ]
+        else:
+            return [
+                (_('Remove Sites'), app.widgetapp.remove_current_site),
+            ]
 
 class NestedTabList(TabList):
     """Tablist for tabs that can be put into folders (playlists and feeds)."""

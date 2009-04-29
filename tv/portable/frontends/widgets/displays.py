@@ -523,10 +523,12 @@ class MultipleSelectionDisplay(TabDisplay):
             tab_list = app.tab_list_manager.feed_list
         elif tab_type == 'audio-feed':
             tab_list = app.tab_list_manager.audio_feed_list
+        elif tab_type == 'site':
+            tab_list = app.tab_list_manager.site_list
         else:
             tab_list = app.tab_list_manager.playlist_list
         for tab in selected_tabs:
-            if tab.is_folder:
+            if hasattr(tab, "is_folder") and tab.is_folder:
                 self.folder_count += 1
                 self.folder_child_count += tab_list.get_child_count(tab.id)
             else:
@@ -537,7 +539,7 @@ class MultipleSelectionDisplay(TabDisplay):
         label.set_color((0.3, 0.3, 0.3))
         vbox.pack_start(widgetutil.align_center(label))
         vbox.pack_start(widgetutil.align_center(
-            self._make_buttons()))
+            self._make_buttons(tab_type)))
         self.widget = widgetutil.align_middle(vbox)
 
     def _make_label(self, tab_type, selected_tabs):
@@ -577,6 +579,12 @@ class MultipleSelectionDisplay(TabDisplay):
                         '%(count)d Feeds Selected',
                         self.child_count,
                         {"count": self.child_count}))
+            elif tab_type == "site":
+                label_parts.append(ngettext(
+                        '%(count)d Site Selected',
+                        '%(count)d Sites Selected',
+                        self.child_count,
+                        {"count": self.child_count}))
             else:
                 label_parts.append(ngettext(
                         '%(count)d Playlist Selected',
@@ -585,10 +593,10 @@ class MultipleSelectionDisplay(TabDisplay):
                         {"count": self.child_count}))
         return widgetset.Label('\n'.join(label_parts))
 
-    def _make_buttons(self):
+    def _make_buttons(self, tab_type):
         delete_button = widgetset.Button(_('Delete All'))
         delete_button.connect('clicked', self._on_delete_clicked)
-        if self.folder_count > 0:
+        if self.folder_count > 0 or tab_type == "site":
             return delete_button
         create_folder_button = widgetset.Button(_('Put Into a New Folder'))
         create_folder_button.connect('clicked', self._on_new_folder_clicked)
@@ -600,6 +608,8 @@ class MultipleSelectionDisplay(TabDisplay):
     def _on_delete_clicked(self, button):
         if self.type in ('feed', 'audio-feed'):
             app.widgetapp.remove_current_feed()
+        elif self.type == 'site':
+            app.widgetapp.remove_current_site()
         else:
             app.widgetapp.remove_current_playlist()
 
