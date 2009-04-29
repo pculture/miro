@@ -244,7 +244,7 @@ class Renderer:
         self.playbin.set_state(gst.STATE_NULL)
 
     def set_volume(self, level):
-        self.playbin.set_property("volume", level * 4.0)
+        self.playbin.set_property("volume", level)
 
     def play(self):
         self.playbin.set_state(gst.STATE_PLAYING)
