@@ -46,8 +46,6 @@ from miro import iconcache
 from miro import moviedata
 from miro import prefs
 from miro import signals
-from miro import util
-from miro import fileutil
 from miro.plat.utils import exit
 
 ###############################################################################
