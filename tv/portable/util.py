@@ -748,8 +748,11 @@ class HTMLStripper(sgmllib.SGMLParser):
         s = s.replace("\r\n", "\n")
         s = self.__unaryre.sub("<\\1 />", s)
 
-        self.feed(s)
-        self.close()
+        try:
+            self.feed(s)
+            self.close()
+        except:
+            pass
 
         try:
             self.__flush()
