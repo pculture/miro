@@ -92,7 +92,7 @@ class ItemContextMenuHandler(object):
 
             menu = [
                 (_('Play'), app.widgetapp.play_selection),
-                (_('Play Just this Item'), play_and_stop),
+                (_('Play Just This Item'), play_and_stop),
                 (_('Add to Playlist'), app.widgetapp.add_to_playlist),
             ]
             self._add_remove_context_menu_item(menu, [item])
@@ -110,9 +110,9 @@ class ItemContextMenuHandler(object):
                     messages.KeepVideo(item.id).send_to_backend))
             if item.download_info and item.download_info.torrent:
                 if item.download_info.state == 'uploading':
-                    menu.append((_('Stop seeding'), messages.StopUpload(item.id).send_to_backend))
+                    menu.append((_('Stop Seeding'), messages.StopUpload(item.id).send_to_backend))
                 else:
-                    menu.append((_('Start seeding'), messages.StartUpload(item.id).send_to_backend))
+                    menu.append((_('Start Seeding'), messages.StartUpload(item.id).send_to_backend))
         elif item.download_info is not None and item.download_info.state != 'failed':
             menu = [
                     (_('Cancel Download'),
@@ -132,7 +132,7 @@ class ItemContextMenuHandler(object):
 
         view_menu = []
         if not item.is_external:
-            view_menu.append((_('Web page'), lambda: app.widgetapp.open_url(item.permalink)))
+            view_menu.append((_('Web Page'), lambda: app.widgetapp.open_url(item.permalink)))
         if item.commentslink and item.commentslink != item.permalink:
             view_menu.append((_('Comments'), lambda: app.widgetapp.open_url(item.commentslink)))
         if item.license and item.license != item.permalink:
