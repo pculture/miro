@@ -206,7 +206,8 @@ class MessageHandler(object):
             args = commandline.parse_command_line_string(cmd_line)
             eventloop.addIdle(singleclick.parse_command_line_args, 
                     'parse command line', args=(args[1:],))
-            gobject.idle_add(app.widgetapp.window._window.present)
+            if hasattr(app, "widgetapp") and app.widgetapp is not None:
+                gobject.idle_add(app.widgetapp.window._window.present)
 
 def send_command_line_args():
     message = pickle.dumps(commandline.get_command_line_string())
