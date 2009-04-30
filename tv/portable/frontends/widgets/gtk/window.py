@@ -525,10 +525,10 @@ class AboutDialog(DialogBase):
         ab.set_website(config.get(prefs.PROJECT_URL))
         ab.set_copyright(_(
             '%(copyright)s.  See license.txt file for details.\n'
-            'Miro and Miro logo are trademarks of the Participatory '
-            'Culture Foundation.',
-            {"copyright": config.get(prefs.COPYRIGHT)}
-        ))
+            '%(trademark)s') %
+            {"copyright": config.get(prefs.COPYRIGHT),
+             "trademark": config.get(prefs.TRADEMARK)}
+        )
         self._window = ab
 
     def _run(self):

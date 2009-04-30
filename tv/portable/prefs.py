@@ -194,6 +194,8 @@ PUBLISHER = \
     Pref(key='publisher',         default=None, platformSpecific=False)
 COPYRIGHT = \
     Pref(key='copyright',         default=None, platformSpecific=False)
+TRADEMARK = \
+    Pref(key='trademark',         default=None, platformSpecific=False)
 APP_VERSION = \
     Pref(key='appVersion',        default=None, platformSpecific=False)
 APP_REVISION = \
