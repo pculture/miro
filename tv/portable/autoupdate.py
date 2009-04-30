@@ -50,6 +50,11 @@ def check_for_updates(up_to_date_callback=None):
     The ``up_to_date_callback`` is a function that should take no
     arguments and return nothing.
     """
+    import miro.plat
+    if miro.plat.AUTOUPDATE == False:
+        logging.info("This platform has autoupdate disabled.")
+        return
+
     global check_in_progress
     if not check_in_progress:
         check_in_progress = True
