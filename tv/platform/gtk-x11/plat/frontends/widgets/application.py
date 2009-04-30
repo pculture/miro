@@ -130,7 +130,7 @@ class GtkX11Application(Application):
             if hasattr(app, "renderer") and app.renderer:
                 app.renderer.change_visualization(value)
 
-    def build_window(self):
+    def _set_default_icon(self):
         # we set the icon first (if available) so that it doesn't flash
         # on when the window is realized in Application.build_window()
         icopath = resources.sharePath("pixmaps/miro-24x24.png")
@@ -139,11 +139,14 @@ class GtkX11Application(Application):
                                                 config.get(options.WINDOWS_ICON))
             if os.path.exists(themeIcoPath):
                 icopath = themeIcoPath
-                self.window._window.set_icon_from_file(icopath)
+                gtk.window_set_default_icon_from_file(icopath)
         else:
-            self.window._window.set_icon_from_file(
+            gtk.window_set_default_icon_from_file(
                 resources.sharePath('pixmaps/miro-128x128.png'))
+        return icopath
 
+    def build_window(self):
+        icopath = self._set_default_icon()
         Application.build_window(self)
         self.window.connect('save-dimensions', self.set_main_window_dimensions)
         self.window.connect('save-maximized', self.set_main_window_maximized)
@@ -251,3 +254,7 @@ class GtkX11Application(Application):
         if timeout:
             notification.set_timeout(timeout)
         notification.show()
+
+    def handle_first_time(self, callback):
+        self._set_default_icon()
+        Application.handle_first_time(self, callback)

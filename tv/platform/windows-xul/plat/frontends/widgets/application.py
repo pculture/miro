@@ -85,7 +85,7 @@ class WindowsApplication(Application):
         elif key == prefs.RUN_AT_STARTUP.key:
             self.set_run_at_startup(value)
 
-    def build_window(self):
+    def _set_default_icon(self):
         # we set the icon first (if available) so that it doesn't flash
         # on when the window is realized in Application.build_window()
         icopath = os.path.join(resources.appRoot(), "Miro.ico")
@@ -94,8 +94,10 @@ class WindowsApplication(Application):
                                                 config.get(options.WINDOWS_ICON))
             if os.path.exists(themeIcoPath):
                 icopath = themeIcoPath
-                self.window._window.set_icon_from_file(icopath)
+                gtk.window_set_default_icon_from_file(icopath)
 
+    def build_window(self):
+        self._set_default_icon()
         Application.build_window(self)
         self.window.connect('save-dimensions', self.set_main_window_dimensions)
         self.window.connect('save-maximized', self.set_main_window_maximized)
@@ -257,6 +259,10 @@ class WindowsApplication(Application):
                 else:
                     raise
 
+    def handle_first_time(self, callback):
+        self._set_default_icon()
+        Application.handle_first_time(self, callback)
+        
     def handle_update_available(self, obj, item):
         call_on_ui_thread(self.show_update_available, item)
 
