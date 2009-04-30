@@ -927,6 +927,10 @@ class WidgetsMessageHandler(messages.MessageHandler):
         app.widgetapp.startup_ui()
 
     def _saw_pre_startup_message(self, name):
+        if name not in self._pre_startup_messages:
+            # we get here with the (audio-)?feed-tab-list messages when
+            # OPEN_(CHANNEL|FOLDER)_ON_STARTUP isn't defined
+            return
         self._pre_startup_messages.remove(name)
         if len(self._pre_startup_messages) == 0:
             app.widgetapp.build_window()
