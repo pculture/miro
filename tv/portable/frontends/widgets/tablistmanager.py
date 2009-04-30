@@ -29,6 +29,9 @@
 """Manages the tab lists from a high level perspective."""
 
 from miro import app
+from miro import config
+from miro import prefs
+
 from miro.frontends.widgets import tablist
 from miro.plat.frontends.widgets import widgetset
 
@@ -48,10 +51,26 @@ class TabListManager(object):
     def populate_tab_list(self):
         self.static_tab_list.build_tabs()
         self.library_tab_list.build_tabs()
-        self.select_guide()
+        self.select_startup_default()
         for tab_list in self.all_tab_lists():
             tab_list.view.connect('selection-changed',
                     self.on_selection_changed)
+
+    def _select_from_tab_list(self, tab_list, iter):
+        view = tab_list.view
+        previous_selection = view.get_selection()
+        for previously_selected in previous_selection:
+            if (view.model[previously_selected][0] == view.model[iter][0]):
+                return # The tab is already selected
+        view.select(iter)
+        for previously_selected in previous_selection:
+            # We unselect *after* having made the new selection because if we
+            # unselect first and the selection is empty, the on_selection_changed
+            # callback forces the guide to be selected.
+            view.unselect(previously_selected)
+        self.selected_tab_list = tab_list
+        self.selected_tabs = [view.model[iter][0]]
+        self.handle_new_selection()
 
     def handle_startup_selection(self):
         self.handle_new_selection()
@@ -76,26 +95,37 @@ class TabListManager(object):
 
     def select_guide(self):
         self.select_static_tab(0)
-        
+
     def select_search(self):
         self.select_static_tab(1)
 
+
+    def select_startup_default(self):
+        if config.get(prefs.OPEN_CHANNEL_ON_STARTUP) is not None:
+            # try regular feeds first, followed by audio feeds
+            for tab_list in self.feed_list, self.audio_feed_list:
+                info = tab_list.find_feed_with_url(
+                    config.get(prefs.OPEN_CHANNEL_ON_STARTUP))
+                if info is not None:
+                    self._select_from_tab_list(
+                        tab_list,
+                        tab_list.iter_map[info.id])
+                    return
+
+        if config.get(prefs.OPEN_FOLDER_ON_STARTUP) is not None:
+            for tab_list in self.feed_list, self.audio_feed_list:
+                for iter in tab_list.iter_map.values():
+                    info = tab_list.view.model[iter][0]
+                    if info.is_folder and info.name == config.get(
+                        prefs.OPEN_FOLDER_ON_STARTUP):
+                        self._select_from_tab_list(tab_list, iter)
+                        return
+        # if we get here, the fallback default is the Guide
+        self.select_guide()
+
     def select_static_tab(self, index):
-        view = self.static_tab_list.view
-        previously_selected = view.get_selected()
-        iter = view.model.nth_iter(index)
-        if (previously_selected is not None and
-                view.model[previously_selected][0] == view.model[iter][0]):
-            return # The tab is already selected
-        view.select(iter)
-        if previously_selected is not None:
-            # We unselect *after* having made the new selection because if we
-            # unselect first and the selection is empty, the on_selection_changed
-            # callback forces the guide to be selected.
-            view.unselect(previously_selected)
-        self.selected_tab_list = self.static_tab_list
-        self.selected_tabs = [view.model[iter][0]]
-        self.handle_new_selection()
+        iter = self.static_tab_list.view.model.nth_iter(index)
+        self._select_from_tab_list(self.static_tab_list, iter)
 
     def handle_tablist_change(self, new_tablist):
         self.selected_tab_list = new_tablist

@@ -95,6 +95,7 @@ class Application:
         messages.QuerySearchInfo().send_to_backend()
         messages.TrackWatchedFolders().send_to_backend()
         messages.QueryFrontendState().send_to_backend()
+        messages.TrackChannels().send_to_backend()
 
         app.item_list_controller_manager = \
                 itemlistcontroller.ItemListControllerManager()
@@ -188,7 +189,6 @@ class Application:
         videobox.controls.previous.connect('released', self.on_stop_fast_playback)
         videobox.controls.fullscreen.connect('clicked', self.on_fullscreen_clicked)
         self.window.show()
-        messages.TrackChannels().send_to_backend()
         messages.TrackPlaylists().send_to_backend()
         messages.TrackDownloadCount().send_to_backend()
         messages.TrackPausedCount().send_to_backend()
@@ -912,6 +912,10 @@ class WidgetsMessageHandler(messages.MessageHandler):
             'search-info',
             'frontend-state',
         ])
+        if config.get(prefs.OPEN_CHANNEL_ON_STARTUP) is not None or \
+                config.get(prefs.OPEN_FOLDER_ON_STARTUP) is not None:
+            self._pre_startup_messages.add('feed-tab-list')
+            self._pre_startup_messages.add('audio-feed-tab-list')
         self.migration_progress_dialog = None
 
     def handle_startup_failure(self, message):
@@ -951,6 +955,9 @@ class WidgetsMessageHandler(messages.MessageHandler):
     def handle_tab_list(self, message):
         tablist = self.tablist_for_message(message)
         tablist.reset_list(message)
+        if 'feed' in message.type:
+            pre_startup_message = message.type + '-tab-list'
+            self._saw_pre_startup_message(pre_startup_message)
 
     def handle_guide_list(self, message):
         app.widgetapp.default_guide_info = message.default_guide
