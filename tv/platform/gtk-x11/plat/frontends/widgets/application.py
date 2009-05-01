@@ -114,7 +114,7 @@ class GtkX11Application(Application):
         logging.info("Language:          %s", langs)
         renderers.init_renderer()
         gtk.main()
-        app.controller.onShutdown()
+        app.controller.on_shutdown()
 
     def on_pref_changed(self, key, value):
         """Any time a preference changes, this gets notified so that we

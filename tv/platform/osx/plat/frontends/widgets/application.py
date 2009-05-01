@@ -310,7 +310,7 @@ class AppController(NSObject):
         NSApplication.sharedApplication().setApplicationIconImage_(defaultAppIcon)
 
         ensureDownloadDaemonIsTerminated()    
-        app.controller.onShutdown()
+        app.controller.on_shutdown()
 
     def exceptionHandler_shouldLogException_mask_(self, handler, exception, mask):
         logging.warn("Unhandled exception: %s", exception.name())

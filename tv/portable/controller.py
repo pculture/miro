@@ -67,9 +67,9 @@ class Controller:
     @eventloop.asUrgent
     def shutdown(self):
         logging.info("Shutting down Downloader...")
-        downloader.shutdownDownloader(self.downloaderShutdown)
+        downloader.shutdownDownloader(self.downloader_shutdown)
 
-    def downloaderShutdown(self):
+    def downloader_shutdown(self):
         logging.info("Shutting down event loop")
         eventloop.quit()
         logging.info("Closing Database...")
@@ -77,7 +77,7 @@ class Controller:
             app.db.close()
         signals.system.shutdown()
 
-    def onShutdown(self):
+    def on_shutdown(self):
         try:
             eventloop.join()        
             logging.info("Saving preferences...")
@@ -103,7 +103,7 @@ class Controller:
             signals.system.failed_exn("while shutting down")
             exit(1)
 
-    def sendBugReport(self, report, description, send_database):
+    def send_bug_report(self, report, description, send_database):
         def callback(result):
             self.sendingCrashReport -= 1
             if result['status'] != 200 or result['body'] != 'OK':
@@ -131,17 +131,18 @@ class Controller:
                     "app_name": config.get(prefs.LONG_APP_NAME),
                     "log": report}
         if backupfile:
-            postFiles = {"databasebackup": {
-                            "filename": "databasebackup.zip", 
-                            "mimetype": "application/octet-stream", 
-                            "handle": open(backupfile, "rb")
-                        }}
+            postFiles = {"databasebackup":
+                         {"filename": "databasebackup.zip",
+                          "mimetype": "application/octet-stream",
+                          "handle": open(backupfile, "rb")
+                          }}
         else:
             postFiles = None
         self.sendingCrashReport += 1
         logging.info("Sending crash report....")
         httpclient.grabURL("http://participatoryculture.org/bogondeflector/index.php", 
-                callback, errback, method="POST", postVariables=postVars, postFiles=postFiles)
+                           callback, errback, method="POST",
+                           postVariables=postVars, postFiles=postFiles)
 
     def _backup_support_dir(self):
         # backs up the support directories to a zip file
@@ -149,19 +150,21 @@ class Controller:
         logging.info("Attempting to back up support directory")
         app.db.close()
         try:
-            tempfilename = os.path.join(tempfile.gettempdir(),("%012ddatabasebackup.zip"%randrange(0,999999999999)))
-            zipfile = ZipFile(tempfilename,"w")
+            tempfilename = os.path.join(tempfile.gettempdir(),
+                                        ("%012ddatabasebackup.zip" % randrange(0, 999999999999)))
+            zipfile = ZipFile(tempfilename, "w")
             for root, dirs, files in os.walk(config.get(prefs.SUPPORT_DIRECTORY)):
                 if ((os.path.normpath(root) !=
-                    os.path.normpath(config.get(prefs.ICON_CACHE_DIRECTORY)))
+                     os.path.normpath(config.get(prefs.ICON_CACHE_DIRECTORY)))
                     and not os.path.islink(root)):
+
                     relativeroot = root[len(config.get(prefs.SUPPORT_DIRECTORY)):]
-                    while len(relativeroot)>0 and relativeroot[0] in ['/','\\']:
+                    while len(relativeroot) > 0 and relativeroot[0] in ['/', '\\']:
                         relativeroot = relativeroot[1:]
                     for filen in files:
-                        if not os.path.islink(os.path.join(root,filen)):
-                            zipfile.write(os.path.join(root,filen),
-                                    os.path.join(relativeroot, filen).encode('ascii','replace'))
+                        if not os.path.islink(os.path.join(root, filen)):
+                            zipfile.write(os.path.join(root, filen),
+                                    os.path.join(relativeroot, filen).encode('ascii', 'replace'))
             zipfile.close()
             logging.info("Support directory backed up to %s" % tempfilename)
             return tempfilename

@@ -1324,7 +1324,8 @@ class BackendMessageHandler(messages.MessageHandler):
 
 
     def handle_report_crash(self, message):
-        app.controller.sendBugReport(message.report, message.text, message.send_report)
+        app.controller.send_bug_report(message.report, message.text,
+                                       message.send_report)
 
     def _get_widgets_frontend_state(self):
         try:

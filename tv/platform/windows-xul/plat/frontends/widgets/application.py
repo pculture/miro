@@ -73,7 +73,7 @@ class WindowsApplication(Application):
         finally:
             gtk.gdk.threads_leave()
         xulrunnerbrowser.shutdown()
-        app.controller.onShutdown()
+        app.controller.on_shutdown()
 
     def on_pref_changed(self, key, value):
         """Any time a preference changes, this gets notified so that we
