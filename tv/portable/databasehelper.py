@@ -26,7 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-def makeSimpleGetSet(attributeName, changeNeedsSave=True):
+def make_simple_get_set(attributeName, changeNeedsSave=True):
     """Creates a simple DDBObject getter and setter for an attribute.
 
     This exists because for many DDBOBject attributes we have methods like the

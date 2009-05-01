@@ -46,7 +46,7 @@ from miro.feedparserutil import normalize_feedparser_dict
 
 from miro.database import DDBObject, ObjectNotFoundError
 from miro.database import DatabaseConstraintError
-from miro.databasehelper import makeSimpleGetSet
+from miro.databasehelper import make_simple_get_set
 from miro import app
 from miro import iconcache
 from miro import downloader
@@ -542,9 +542,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def _look_for_downloader(self):
         self.set_downloader(downloader.lookupDownloader(self.get_url()))
 
-    getSelected, setSelected = makeSimpleGetSet(u'selected',
+    getSelected, setSelected = make_simple_get_set(u'selected',
             changeNeedsSave=False)
-    getActive, setActive = makeSimpleGetSet(u'active', changeNeedsSave=False)
+    getActive, setActive = make_simple_get_set(u'active', changeNeedsSave=False)
 
     def _find_child_videos(self):
         """If this item points to a directory, return the set all video files

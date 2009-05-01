@@ -33,7 +33,7 @@ from miro.gtcache import gettext as _
 from miro import dialogs
 from miro import database
 from miro import models
-from miro.databasehelper import makeSimpleGetSet
+from miro.databasehelper import make_simple_get_set
 
 class PlaylistItemMap(database.DDBObject):
     """Single row in the map that associates playlists with their child items.
@@ -144,7 +144,7 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
         if view.count() == 0:
             PlaylistMixin.add_id(self, item_id)
 
-    get_title, set_title = makeSimpleGetSet('title')
+    get_title, set_title = make_simple_get_set('title')
 
     def get_folder(self):
         self.confirmDBThread()

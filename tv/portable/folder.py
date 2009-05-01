@@ -31,7 +31,7 @@ from miro import playlist
 from miro import sorts
 from miro import util
 from miro.database import DDBObject, ObjectNotFoundError
-from miro.databasehelper import makeSimpleGetSet
+from miro.databasehelper import make_simple_get_set
 
 class FolderBase(DDBObject):
     """Base class for ChannelFolder and Playlist folder classes."""
@@ -40,7 +40,7 @@ class FolderBase(DDBObject):
         self.title = title
         self.expanded = True
 
-    get_title, set_title = makeSimpleGetSet('title')
+    get_title, set_title = make_simple_get_set('title')
 
     def getExpanded(self):
         self.confirmDBThread()
