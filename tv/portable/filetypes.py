@@ -28,6 +28,9 @@
 
 import os
 
+# NOTE: if you change VIDEO_EXTENSIONS or AUDIO_EXTENSIONS, consider writing a
+# database update so that the file_type attribute of the item table gets fixed
+
 VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.ogv', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid', '.rmvb', '.mkv', '.m2v', '.ogm']
 AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka']
 FEED_EXTENSIONS = ['.xml', '.rss', '.atom']

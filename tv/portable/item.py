@@ -74,12 +74,6 @@ MIME_SUBSITUTIONS = {
     u'QUICKTIME': u'MOV',
 }
 
-video_filename_expr = '(%s)' % ' OR '.join("videoFilename LIKE '%%%s'" % ext
-        for ext in filetypes.VIDEO_EXTENSIONS)
-
-audio_filename_expr = '(%s)' % ' OR '.join("videoFilename LIKE '%%%s'" % ext
-        for ext in filetypes.AUDIO_EXTENSIONS)
-
 class FeedParserValues(object):
     """Helper class to get values from feedparser entries
 
@@ -303,7 +297,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         FeedParserValues(entry).update_item(self)
         self.expired = False
         self.keep = False
-        self.videoFilename = FilenameType("")
+        self.set_video_filename(None)
         self.eligibleForAutoDownload = True
         self.duration = None
         self.screenshot = None
@@ -405,7 +399,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         return cls.make_view("NOT item.seen AND "
                 "item.parent_id IS NULL AND "
                 "rd.main_item_id=item.id AND "
-                + video_filename_expr + " AND "
+                "item.file_type='video' AND "
                 "rd.state in ('finished', 'uploading', 'uploading-paused')",
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
@@ -414,7 +408,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         return cls.make_view("NOT item.seen AND "
                 "item.parent_id IS NULL AND "
                 "rd.main_item_id=item.id AND "
-                + audio_filename_expr + " AND "
+                "item.file_type='audio' AND "
                 "rd.state in ('finished', 'uploading', 'uploading-paused')",
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
@@ -501,20 +495,17 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 "(deleted IS NULL or not deleted) AND "
                 "(is_file_item OR rd.main_item_id=item.id) AND "
                 "feed.origURL != 'dtv:singleFeed' AND "
-                + video_filename_expr,
+                "item.file_type='video'",
                 joins={'feed': 'item.feed_id=feed.id',
                     'remote_downloader as rd': 'item.downloader_id=rd.id'})
 
     @classmethod
     def watchable_audio_view(cls):
-        filename_expr = ' OR '.join("videoFilename LIKE '%%%s'" % ext
-                for ext in filetypes.AUDIO_EXTENSIONS)
-
         return cls.make_view("not isContainerItem AND "
                 "(deleted IS NULL or not deleted) AND "
                 "(is_file_item OR rd.main_item_id=item.id) AND "
                 "feed.origURL != 'dtv:singleFeed' AND "
-                + audio_filename_expr,
+                "item.file_type='audio'",
                 joins={'feed': 'item.feed_id=feed.id',
                     'remote_downloader as rd': 'item.downloader_id=rd.id'})
 
@@ -606,9 +597,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 self.isContainerItem = False
                 for video in videos:
                     assert video.startswith(filename_root)
-                    self.videoFilename = video[len(filename_root):]
-                    while self.videoFilename[0] in ('/', '\\'):
-                        self.videoFilename = self.videoFilename[1:]
+                    new_video_filename = video[len(filename_root):]
+                    while new_video_filename[0] in ('/', '\\'):
+                        new_video_filename = new_video_filename[1:]
+                    self.set_video_filename(new_video_filename)
                     self.isVideo = True
             else:
                 if not self.getFeedURL().startswith ("dtv:directoryfeed"):
@@ -624,6 +616,26 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             self.isVideo = True
         self.signal_change()
         return True
+
+    def set_video_filename(self, filename):
+        if filename is None:
+            self.videoFilename = FilenameType("")
+            self.file_type = None
+        else:
+            self.videoFilename = filename
+            self.file_type = self._file_type_for_filename(filename)
+
+    def _file_type_for_filename(self, filename):
+        for ext in filetypes.VIDEO_EXTENSIONS:
+            if filename.endswith(ext):
+                return u'video'
+        for ext in filetypes.AUDIO_EXTENSIONS:
+            if filename.endswith(ext):
+                return u'audio'
+        return u'other'
+
+    def _check_file_type(self):
+        current_type = self._file_type_for_filename
 
     def matches_search(self, searchString):
         if searchString is None:
@@ -775,7 +787,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 item.remove()
         self.isContainerItem = None
         self.isVideo = False
-        self.videoFilename = FilenameType("")
+        self.set_video_filename(None)
         self.seen = self.keep = self.pendingManualDL = False
         self.watchedTime = None
         self.duration = None
@@ -1392,7 +1404,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
         self.confirm_db_thread()
         self.downloadedTime = datetime.now()
-        self.videoFilename = self.downloader.get_filename()
+        self.set_video_filename(self.downloader.get_filename())
         self.split_item()
         self.signal_change()
         moviedata.movieDataUpdater.request_update(self)
@@ -1527,7 +1539,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                     raise
                 except:
                     logging.warn("fix_incorrect_torrent_subdir error:\n%s", traceback.format_exc())
-                self.videoFilename = FilenameType("")
+                self.set_video_filename(none)
 
     def __str__(self):
         return "Item - %s" % self.get_title()
@@ -1540,8 +1552,9 @@ class FileItem(Item):
         Item.setup_new(self, get_entry_for_file(filename), feed_id=feed_id, parent_id=parent_id)
         self.is_file_item = True
         checkF(filename)
-        self.videoFilename = filename = fileutil.abspath(filename)
+        filename = fileutil.abspath(filename)
         self.filename = filename
+        self.set_video_filename(filename)
         self.deleted = deleted
         self.offsetPath = offsetPath
         self.shortFilename = cleanFilename(os.path.basename(self.filename))

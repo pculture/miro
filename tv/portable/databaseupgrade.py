@@ -2199,3 +2199,22 @@ def upgrade92(cursor):
         remove_column(cursor, table, 'lastViewed')
     remove_column(cursor, 'playlist', 'item_ids')
     remove_column(cursor, 'playlist_folder', 'item_ids')
+
+def upgrade93(cursor):
+    VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.ogv', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid', '.rmvb', '.mkv', '.m2v', '.ogm']
+    AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka']
+
+    video_filename_expr = '(%s)' % ' OR '.join("videoFilename LIKE '%%%s'" % ext
+            for ext in VIDEO_EXTENSIONS)
+
+    audio_filename_expr = '(%s)' % ' OR '.join("videoFilename LIKE '%%%s'" % ext
+            for ext in AUDIO_EXTENSIONS)
+
+    cursor.execute("ALTER TABLE item ADD file_type text")
+    cursor.execute("CREATE INDEX item_file_type ON item (file_type)")
+    cursor.execute("UPDATE item SET file_type = 'video' "
+            "WHERE " + video_filename_expr)
+    cursor.execute("UPDATE item SET file_type = 'audio' "
+            "WHERE " + audio_filename_expr)
+    cursor.execute("UPDATE item SET file_type = 'other' "
+            "WHERE file_type IS NULL and videoFilename is not NULL")
