@@ -51,7 +51,7 @@ _downloads = {}
 
 # Returns an HTTP auth object corresponding to the given host, path or
 # None if it doesn't exist
-def findHTTPAuth(host, path, realm=None, scheme=None):
+def find_http_auth(host, path, realm=None, scheme=None):
     checkU(host)
     checkU(path)
     if realm:
@@ -75,10 +75,10 @@ class HTTPAuthPassword(DDBObject):
         checkU(realm)
         checkU(path)
         checkU(authScheme)
-        oldAuth = findHTTPAuth(host, path, realm, authScheme)
+        oldAuth = find_http_auth(host, path, realm, authScheme)
         while not oldAuth is None:
             oldAuth.remove()
-            oldAuth = findHTTPAuth(host, path, realm, authScheme)
+            oldAuth = find_http_auth(host, path, realm, authScheme)
         self.username = username
         self.password = password
         self.host = host
@@ -86,29 +86,29 @@ class HTTPAuthPassword(DDBObject):
         self.path = os.path.dirname(path)
         self.authScheme = authScheme
 
-    def getAuthToken(self):
+    def get_auth_token(self):
         authString = u':'
         self.confirm_db_thread()
         authString = self.username+u':'+self.password
         return b64encode(authString)
 
-    def getAuthScheme(self):
+    def get_auth_scheme(self):
         self.confirm_db_thread()
         return self.authScheme
 
 totalUpRate = 0
 totalDownRate = 0
 
-def _getDownloader(dlid):
+def get_downloader_by_dlid(dlid):
     try:
         return RemoteDownloader.get_by_dlid(dlid)
     except ObjectNotFoundError:
         return None
 
 @returnsUnicode
-def generateDownloadID():
+def generate_dlid():
     dlid = u"download%08d" % random.randint(0, 99999999)
-    while _getDownloader (dlid=dlid):
+    while get_downloader_by_dlid(dlid=dlid):
         dlid = u"download%08d" % random.randint(0, 99999999)
     return dlid
 
@@ -121,7 +121,7 @@ class RemoteDownloader(DDBObject):
         self.origURL = self.url = url
         self.itemList = []
         self.main_item_id = None
-        self.dlid = generateDownloadID()
+        self.dlid = generate_dlid()
         self.status = {}
         self.state = u'downloading'
         if contentType is None:
@@ -141,9 +141,9 @@ class RemoteDownloader(DDBObject):
             self.contentType = contentType
 
         if self.contentType == u'':
-            self.getContentType()
+            self.get_content_type()
         else:
-            self.runDownloader()
+            self.run_downloader()
 
     @classmethod
     def finished_view(cls):
@@ -173,7 +173,7 @@ class RemoteDownloader(DDBObject):
             for item in self.itemList:
                 item.signal_change(needsSave=False)
 
-    def onContentType(self, info):
+    def on_content_type(self, info):
         if not self.idExists():
             return
 
@@ -186,12 +186,12 @@ class RemoteDownloader(DDBObject):
                 raise
             except:
                 self.contentType = None
-            self.runDownloader()
+            self.run_downloader()
         else:
             error = httpclient.UnexpectedStatusCode(info['status'])
-            self.onContentTypeError(error)
+            self.on_content_type_error(error)
 
-    def onContentTypeError(self, error):
+    def on_content_type_error(self, error):
         if not self.idExists():
             return
 
@@ -200,14 +200,15 @@ class RemoteDownloader(DDBObject):
         self.status['reasonFailed'] = error.getLongDescription()
         self.signal_change()
 
-    def getContentType(self):
-        httpclient.grabHeaders(self.url, self.onContentType, self.onContentTypeError)
+    def get_content_type(self):
+        httpclient.grabHeaders(self.url,
+                               self.on_content_type, self.on_content_type_error)
  
     @classmethod
-    def initializeDaemon(cls):
+    def initialize_daemon(cls):
         RemoteDownloader.dldaemon = daemon.ControllerDaemon()
 
-    def _getRates(self):
+    def _get_rates(self):
         state = self.get_state()
         if state == u'downloading':
             return (self.status.get('rate', 0), self.status.get('upRate', 0))
@@ -215,26 +216,26 @@ class RemoteDownloader(DDBObject):
             return (0, self.status.get('upRate', 0))
         return (0, 0)
 
-    def beforeChangingStatus(self):
+    def before_changing_status(self):
         global totalDownRate
         global totalUpRate
-        rates = self._getRates()
+        rates = self._get_rates()
         totalDownRate -= rates[0]
         totalUpRate -= rates[1]
 
-    def afterChangingStatus(self):
+    def after_changing_status(self):
         global totalDownRate
         global totalUpRate
-        rates = self._getRates()
+        rates = self._get_rates()
         totalDownRate += rates[0]
         totalUpRate += rates[1]
 
     @classmethod
-    def updateStatus(cls, data):
+    def update_status(cls, data):
         for field in data:
             if field not in ['filename', 'shortFilename', 'channelName', 'metainfo', 'fastResumeData']:
                 data[field] = unicodify(data[field])
-        self = _getDownloader(dlid=data['dlid'])
+        self = get_downloader_by_dlid(dlid=data['dlid'])
         # print data
         if self is not None:
             try:
@@ -246,7 +247,7 @@ class RemoteDownloader(DDBObject):
                 print "WARNING exception when comparing status: %s" % e
 
             wasFinished = self.isFinished()
-            self.beforeChangingStatus()
+            self.before_changing_status()
 
             # FIXME: how do we get all of the possible bit torrent
             # activity strings into gettext? --NN
@@ -258,7 +259,7 @@ class RemoteDownloader(DDBObject):
 
             # Store the time the download finished
             finished = self.isFinished() and not wasFinished
-            self.afterChangingStatus()
+            self.after_changing_status()
 
             if self.get_state() == u'uploading' and not self.manualUpload and self.getUploadRatio() > 1.5:
                 self.stopUpload()
@@ -268,12 +269,12 @@ class RemoteDownloader(DDBObject):
                 for item in self.itemList:
                     item.on_download_finished()
 
-    def runDownloader(self):
+    def run_downloader(self):
         """This is the actual download thread.
         """
-        flashscraper.try_scraping_url(self.url, self._runDownloader)
+        flashscraper.try_scraping_url(self.url, self._run_downloader)
 
-    def _runDownloader(self, url, contentType = None):
+    def _run_downloader(self, url, contentType = None):
         if not self.idExists():
             return # we got deleted while we were doing the flash scraping
         if contentType is not None:
@@ -297,9 +298,9 @@ class RemoteDownloader(DDBObject):
             c = command.PauseDownloadCommand(RemoteDownloader.dldaemon, self.dlid)
             c.send()
         else:
-            self.beforeChangingStatus()
+            self.before_changing_status()
             self.status["state"] = u"paused"
-            self.afterChangingStatus()
+            self.after_changing_status()
             self.signal_change()
 
     def stop(self, delete):
@@ -349,14 +350,14 @@ class RemoteDownloader(DDBObject):
         if self.get_state() == u'failed':
             if _downloads.has_key (self.dlid):
                 del _downloads[self.dlid]
-            self.dlid = generateDownloadID()
-            self.beforeChangingStatus()
+            self.dlid = generate_dlid()
+            self.before_changing_status()
             self.status = {}
-            self.afterChangingStatus()
+            self.after_changing_status()
             if self.contentType == u"":
-                self.getContentType()
+                self.get_content_type()
             else:
-                self.runDownloader()
+                self.run_downloader()
             self.signal_change()
         elif self.get_state() in (u'stopped', u'paused', u'offline'):
             if _downloads.has_key(self.dlid):
@@ -413,7 +414,7 @@ URL was %s""" % self.url
     def set_delete_files(self, deleteFiles):
         self.deleteFiles = deleteFiles
 
-    def setChannelName(self, channelName):
+    def set_channel_name(self, channelName):
         if self.channelName is None:
             if channelName:
                 checkF(channelName)
@@ -424,13 +425,13 @@ URL was %s""" % self.url
         """
         global totalDownRate
         global totalUpRate
-        rates = self._getRates()
+        rates = self._get_rates()
         totalDownRate -= rates[0]
         totalUpRate -= rates[1]
         self.stop(self.deleteFiles)
         DDBObject.remove(self)
 
-    def getType(self):
+    def get_type(self):
         """Get the type of download.  Will return either "http" or
         "bittorrent".
         """
@@ -537,7 +538,7 @@ URL was %s""" % self.url
         self.itemList = []
         if self.dlid == 'noid':
             # this won't happen nowadays, but it can for old databases
-            self.dlid = generateDownloadID()
+            self.dlid = generate_dlid()
         self.status['rate'] = 0
         self.status['upRate'] = 0
         self.status['eta'] = 0
@@ -566,9 +567,9 @@ URL was %s""" % self.url
     def restart(self):
         if len(self.status) == 0 or self.status.get('dlerType') is None:
             if self.contentType == u"":
-                self.getContentType()
+                self.get_content_type()
             else:
-                self.runDownloader()
+                self.run_downloader()
         else:
             _downloads[self.dlid] = self
             c = command.RestoreDownloaderCommand(RemoteDownloader.dldaemon, 
@@ -585,9 +586,9 @@ URL was %s""" % self.url
                                              self.dlid)
             c.send()
         else:
-            self.beforeChangingStatus()
+            self.before_changing_status()
             self.status['state'] = u'uploading'
-            self.afterChangingStatus()
+            self.after_changing_status()
             self.restart()
             self.signal_change()
 
@@ -600,9 +601,9 @@ URL was %s""" % self.url
                                           self.dlid)
             c.send()
             del _downloads[self.dlid]
-        self.beforeChangingStatus()
+        self.before_changing_status()
         self.status["state"] = u"finished"
-        self.afterChangingStatus()
+        self.after_changing_status()
         self.signal_change()
 
     def pauseUpload(self):
@@ -614,13 +615,13 @@ URL was %s""" % self.url
                                            self.dlid)
             c.send()
             del _downloads[self.dlid]
-        self.beforeChangingStatus()
+        self.before_changing_status()
         self.status["state"] = u"uploading-paused"
-        self.afterChangingStatus()
+        self.after_changing_status()
         self.signal_change()
 
 
-def cleanupIncompleteDownloads():
+def cleanup_incomplete_downloads():
     downloadDir = os.path.join(config.get(prefs.MOVIES_DIRECTORY),
                                           'Incomplete Downloads')
     if not fileutil.exists(downloadDir):
@@ -657,26 +658,26 @@ def kill_uploaders(*args):
     for dler in auto_uploads[torrent_limit:]:
         dler.stopUpload()
 
-def configChangeUploaders(key, value):
+def config_change_uploaders(key, value):
     if key == prefs.UPSTREAM_TORRENT_LIMIT.key:
         kill_uploaders()
 
-def limitUploaders():
+def limit_uploaders():
     tracker = RemoteDownloader.auto_uploader_view().make_tracker()
     tracker.connect('added', kill_uploaders)
-    config.add_change_callback(configChangeUploaders)
+    config.add_change_callback(config_change_uploaders)
     kill_uploaders()
 
 class DownloadDaemonStarter(object):
     def __init__(self):
-        RemoteDownloader.initializeDaemon()
+        RemoteDownloader.initialize_daemon()
         self.downloads_at_startup = list(RemoteDownloader.make_view())
         self.started = False
 
     def startup(self):
-        cleanupIncompleteDownloads()
+        cleanup_incomplete_downloads()
         RemoteDownloader.dldaemon.start_downloader_daemon()
-        limitUploaders()
+        limit_uploaders()
         self.restart_downloads()
         self.started = True
 
@@ -688,18 +689,18 @@ class DownloadDaemonStarter(object):
         if not self.started:
             callback()
         else:
-            RemoteDownloader.dldaemon.shutdownDownloaderDaemon(callback=callback)
+            RemoteDownloader.dldaemon.shutdown_downloader_daemon(callback=callback)
 
-def initController():
+def init_controller():
     """Intializes the download daemon controller.
 
     This doesn't actually start up the downloader daemon, that's done in
-    startupDownloader.  Commands will be queued until then.
+    startup_downloader.  Commands will be queued until then.
     """
     global daemon_starter
     daemon_starter = DownloadDaemonStarter()
 
-def startupDownloader():
+def startup_downloader():
     """Initialize the downloaders.
 
     This method currently does 2 things.  It deletes any stale files self in
@@ -709,34 +710,34 @@ def startupDownloader():
     """
     daemon_starter.startup()
 
-def shutdownDownloader(callback=None):
+def shutdown_downloader(callback=None):
     if daemon_starter:
         daemon_starter.shutdown(callback)
     elif callback:
         callback()
 
-def lookupDownloader(url):
+def lookup_downloader(url):
     try:
         return RemoteDownloader.get_by_url(url)
     except ObjectNotFoundError:
         return None
 
-def getExistingDownloaderByURL(url):
-    downloader = lookupDownloader(url)
+def get_existing_downloader_by_url(url):
+    downloader = lookup_downloader(url)
     return downloader
 
-def getExistingDownloader(item):
+def get_existing_downloader(item):
     try:
         return RemoteDownloader.get_by_id(item.downloader_id)
     except ObjectNotFoundError:
         return None
 
-def getDownloader(item):
-    existing = getExistingDownloader(item)
+def get_downloader_for_item(item):
+    existing = get_existing_downloader(item)
     if existing:
         return existing
     url = item.get_url()
-    existing = getExistingDownloaderByURL(url)
+    existing = get_existing_downloader_by_url(url)
     if existing:
         return existing
     channelName = unicodeToFilename(item.get_channel_title(True))

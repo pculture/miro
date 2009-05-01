@@ -191,9 +191,9 @@ class EventLoopTest(MiroTestCase):
 class DownloaderTestCase(EventLoopTest):
     def setUp(self):
         EventLoopTest.setUp(self)
-        downloader.startupDownloader()
+        downloader.startup_downloader()
 
     def tearDown(self):
-        downloader.shutdownDownloader(eventloop.quit)
+        downloader.shutdown_downloader(eventloop.quit)
         self.runEventLoop()
         EventLoopTest.tearDown(self)

@@ -282,7 +282,7 @@ class ControllerDaemon(Daemon):
             self.shutdown_callback()
         self.shutdown_timeout_dc.cancel()
 
-    def shutdownDownloaderDaemon(self, timeout=5, callback = None):
+    def shutdown_downloader_daemon(self, timeout=5, callback = None):
         """Send the downloader daemon the shutdown command.  If it doesn't
         reply before timeout expires, kill it.  (The reply is not sent until
         the downloader daemon has one remaining thread and that thread will

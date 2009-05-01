@@ -67,7 +67,7 @@ class Controller:
     @eventloop.asUrgent
     def shutdown(self):
         logging.info("Shutting down Downloader...")
-        downloader.shutdownDownloader(self.downloader_shutdown)
+        downloader.shutdown_downloader(self.downloader_shutdown)
 
     def downloader_shutdown(self):
         logging.info("Shutting down event loop")

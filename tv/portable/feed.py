@@ -2335,7 +2335,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
         fp_values = itemmod.FeedParserValues(entry)
         url = fp_values.data['url']
         if url is not None:
-            dl = downloader.getExistingDownloaderByURL(url)
+            dl = downloader.get_existing_downloader_by_url(url)
             if dl is not None:
                 for item in dl.itemList:
                     if item.getFeedURL() == 'dtv:searchDownloads' and item.get_url() == url:

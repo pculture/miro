@@ -1088,7 +1088,7 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warn("handle_start_upload: Item not found -- %s", message.id)
         else:
-            if item_.downloader.getType() != 'bittorrent':
+            if item_.downloader.get_type() != 'bittorrent':
                 logging.warn("%s is not a torrent", item_)
             elif item_.is_uploading():
                 logging.warn("%s is already uploading", item_)
@@ -1101,7 +1101,7 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warn("handle_stop_upload: Item not found -- %s", message.id)
         else:
-            if item_.downloader.getType() != 'bittorrent':
+            if item_.downloader.get_type() != 'bittorrent':
                 logging.warn("%s is not a torrent", item_)
             elif not item_.is_uploading():
                 logging.warn("%s is already stopped", item_)

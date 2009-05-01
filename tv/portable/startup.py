@@ -242,7 +242,7 @@ def finish_backend_startup():
     # Uncomment the next line to test startup error handling
     # raise StartupError("Test Error", "Startup Failed")
     reconnect_downloaders()
-    downloader.initController()
+    downloader.init_controller()
     guide.download_guides()
     feed.remove_orphaned_feed_impls()
     messages.StartupSuccess().send_to_frontend()
@@ -269,7 +269,7 @@ def on_frontend_started():
     yield None
     # Wait a bit before starting the downloader daemon.  It can cause a bunch
     # of disk/CPU load, so try to avoid it slowing other stuff down.
-    eventloop.addTimeout(5, downloader.startupDownloader,
+    eventloop.addTimeout(5, downloader.startup_downloader,
             "start downloader daemon")
     # ditto for feed updates
     eventloop.addTimeout(30, feed.start_updates, "start feed updates")

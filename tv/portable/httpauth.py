@@ -32,16 +32,16 @@ from miro import eventloop
 from miro import models
 
 def formatAuthString(auth):
-    return "%s %s" % (auth.getAuthScheme(), auth.getAuthToken())
+    return "%s %s" % (auth.get_auth_scheme(), auth.get_auth_token())
 
-def findHTTPAuth(callback, host, path):
+def find_http_auth(callback, host, path):
     """Find an HTTPAuthPassword object stored in the database.  Callback will
     be called with a string to use for the Authorization header or None if we
     can't find anything in the DB.
     """
     from miro import downloader
 
-    auth = downloader.findHTTPAuth(host, path)
+    auth = downloader.find_http_auth(host, path)
     if auth is not None:
         auth = formatAuthString(auth)
     eventloop.addIdle(callback, "http auth callback", args=(auth,))

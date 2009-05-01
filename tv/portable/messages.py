@@ -967,7 +967,7 @@ class DownloadInfo(object):
         self.state = downloader.get_state()
         self.startup_activity = downloader.get_startup_activity()
         self.finished = downloader.isFinished()
-        self.torrent = (downloader.getType() == 'bittorrent')
+        self.torrent = (downloader.get_type() == 'bittorrent')
         if self.state == 'failed':
             self.reason_failed = downloader.getReasonFailed()
             self.short_reason_failed = downloader.getShortReasonFailed()

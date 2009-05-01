@@ -302,8 +302,7 @@ class TorrentSession:
     def updateTorrents(self):
         # Copy this set into a list in case any of the torrents gets removed during the iteration.
         for torrent in [x for x in self.torrents]:
-            torrent.updateStatus()
-        
+            torrent.update_status()
 
 torrentSession = TorrentSession()
 
@@ -850,7 +849,7 @@ class BTDownloader(BGDownloader):
         else:
             self.firstTime = True
             BGDownloader.__init__(self,url,item)
-            self.runDownloader()
+            self.run_downloader()
 
     def _startTorrent(self):
         try:
@@ -923,7 +922,7 @@ class BTDownloader(BGDownloader):
         else:
             self._startTorrent()
 
-    def updateStatus(self):
+    def update_status(self):
         """
         activity -- string specifying what's currently happening or None for
                 normal operations.  
@@ -991,7 +990,7 @@ class BTDownloader(BGDownloader):
         self.upRate = 0
         self.uploadedStart = self.uploaded
         if self.state in ('downloading', 'uploading'):
-            self.runDownloader(done=True)
+            self.run_downloader(done=True)
         elif self.state == 'offline':
             self.start()
 
@@ -1117,7 +1116,7 @@ class BTDownloader(BGDownloader):
         else:
             self.gotMetainfo()
                 
-    def runDownloader(self,done=False):
+    def run_downloader(self, done=False):
         self.restarting = done
         self.updateClient()
         self.getMetainfo()

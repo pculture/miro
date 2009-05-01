@@ -540,7 +540,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         return self.expiring
 
     def _look_for_downloader(self):
-        self.set_downloader(downloader.lookupDownloader(self.get_url()))
+        self.set_downloader(downloader.lookup_downloader(self.get_url()))
 
     getSelected, setSelected = make_simple_get_set(u'selected',
             changeNeedsSave=False)
@@ -990,10 +990,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             self.setAutoDownloaded(autodl)
             self.pendingManualDL = False
 
-        dler = downloader.getDownloader(self)
+        dler = downloader.get_downloader_for_item(self)
         if dler is not None:
             self.set_downloader(dler)
-            self.downloader.setChannelName(unicodeToFilename(self.get_channel_title(True)))
+            self.downloader.set_channel_name(unicodeToFilename(self.get_channel_title(True)))
             if self.downloader.isFinished():
                 self.on_download_finished()
             else:
@@ -1128,7 +1128,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """
 
         if self.downloader is not None:
-            return self.downloader.getType() == u'bittorrent'
+            return self.downloader.get_type() == u'bittorrent'
         else:
             return filetypes.is_torrent_filename(self.get_url())
 
@@ -1496,7 +1496,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         try:
             return self._downloader
         except AttributeError:
-            dler = downloader.getExistingDownloader(self)
+            dler = downloader.get_existing_downloader(self)
             if dler is not None:
                 dler.addItem(self)
             self._downloader = dler

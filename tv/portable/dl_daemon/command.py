@@ -92,7 +92,7 @@ class FindHTTPAuthCommand(Command):
         def callback(authHeader):
             c = GotHTTPAuthCommand(self.daemon, id, authHeader)
             c.send()
-        httpauth.findHTTPAuth(callback, *args)
+        httpauth.find_http_auth(callback, *args)
 
 class AskForHTTPAuthCommand(Command):
     def action(self):
@@ -106,13 +106,13 @@ class AskForHTTPAuthCommand(Command):
 class UpdateDownloadStatus(Command):
     def action(self):
         from miro.downloader import RemoteDownloader
-        return RemoteDownloader.updateStatus(*self.args, **self.kws)
+        return RemoteDownloader.update_status(*self.args, **self.kws)
 
 class BatchUpdateDownloadStatus(Command):
     def action(self):
         from miro.downloader import RemoteDownloader
         for status in self.args[0]:
-            RemoteDownloader.updateStatus(status)
+            RemoteDownloader.update_status(status)
 
 class DownloaderErrorCommand(Command):
     def action(self):
@@ -125,8 +125,8 @@ class DuplicateTorrent(Command):
     def action(self):
         original_id, duplicate_id = self.args[0], self.args[1]
         from miro import downloader
-        duplicate = downloader._getDownloader(duplicate_id)
-        original = downloader._getDownloader(original_id)
+        duplicate = downloader.get_downloader_by_dlid(duplicate_id)
+        original = downloader.get_downloader_by_dlid(original_id)
         if duplicate is None:
             logging.warn("duplicate torrent doesn't exist anymore, "
                     "ignoring (dlid %s)", duplicate_id)

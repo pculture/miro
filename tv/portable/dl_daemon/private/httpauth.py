@@ -38,7 +38,7 @@ def handleHTTPAuthResponse(id, authHeader):
     callback = waitingHTTPAuthCallbacks.pop(id)
     callback(authHeader)
 
-def findHTTPAuth(callback, host, path):
+def find_http_auth(callback, host, path):
     id = requestIdGenerator.next()
     waitingHTTPAuthCallbacks[id] = callback
     from miro.dl_daemon import daemon
