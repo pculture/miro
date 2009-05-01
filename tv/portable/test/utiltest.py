@@ -14,7 +14,7 @@ util.PREFERRED_TYPES = [
     'video/quicktime', 'video/mpeg']
 
 class FakeStream:
-    """Fake streams are used for the AutoflushingStream test.  They don't
+    """Fake streams are used for the AutoFlushingStream test.  They don't
     really do much, except check that write is always called with a string
     object (unicode won't always work when writing to stdout).
     """
@@ -26,11 +26,11 @@ class FakeStream:
     def flush(self):
         pass
 
-class AutoflushingStreamTest(MiroTestCase):
+class AutoFlushingStreamTest(MiroTestCase):
     def setUp(self):
         MiroTestCase.setUp(self)
         self.stream = FakeStream()
-        self.afs = util.AutoflushingStream(self.stream)
+        self.afs = util.AutoFlushingStream(self.stream)
 
     def testBasicWrite(self):
         self.afs.write("Hello World\n")

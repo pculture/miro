@@ -55,8 +55,8 @@ def launch():
         log = open(logPath, logMode)
         sys.stdout = sys.stderr = log
 
-    sys.stdout = util.AutoflushingStream(sys.stdout)
-    sys.stderr = util.AutoflushingStream(sys.stderr)
+    sys.stdout = util.AutoFlushingStream(sys.stdout)
+    sys.stderr = util.AutoFlushingStream(sys.stderr)
 
     override_modules()
 

@@ -27,14 +27,14 @@
 # statement from all source files in the program, then also delete it here.
 
 #import sys
-#class AutoflushingStream:
+#class AutoFlushingStream:
 #    def __init__(self, stream):
 #        self.stream = stream
 #    def write(self, *args):
 #        self.stream.write(*args)
 #        self.stream.flush()
 #mylog = open("\\sitelog","wt")
-#sys.stdout = sys.stderr = AutoflushingStream(mylog)
+#sys.stdout = sys.stderr = AutoFlushingStream(mylog)
 #print "this is sitelog; path now %s" % sys.path
 
 """Customized site-setup script that leaves sys.path alone.

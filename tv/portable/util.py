@@ -166,7 +166,7 @@ def query_revision(fn):
     except Exception, e:
         print "Exception thrown when querying revision: %s" % e
 
-class AutoflushingStream:
+class AutoFlushingStream:
     """Converts a stream to an auto-flushing one.  It behaves in exactly the
     same way, except all write() calls are automatically followed by a
     flush().
