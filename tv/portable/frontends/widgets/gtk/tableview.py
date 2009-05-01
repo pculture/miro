@@ -509,6 +509,7 @@ class TableView(Widget):
         self.hotspot_tracker = None
         self.hover_info = None
         self.handled_last_button_press = False
+        self.delaying_press = False
         self.ignore_selection_changed = False
         self.set_columns_draggable(False)
         self.create_signal('row-expanded')
@@ -799,6 +800,23 @@ class TableView(Widget):
             self.drag_button_down = True
             self.drag_start_x = int(event.x)
             self.drag_start_y = int(event.y)
+
+            # handle multiple selection.  If the current row is already
+            # selected and neither the control nor shift key is pressed,
+            # stop propagating the signal.  We will only change the selection
+            # if the user doesn't start a DnD operation.  This makes it more
+            # natural for the user to drag a block of selected items.
+            if not (event.state & (gtk.gdk.CONTROL_MASK|gtk.gdk.SHIFT_MASK)):
+                path_info = treeview.get_path_at_pos(int(event.x),
+                        int(event.y))
+                if path_info is not None:
+                    path, column, x, y = path_info
+                    selection = self._widget.get_selection()
+                    if selection.path_is_selected(path) :
+                        self.handled_last_button_press = True
+                        self.delaying_press = True
+                        return True
+
         elif event.button == 3 and self.context_menu_callback:
             path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
             if path_info is not None:
@@ -865,6 +883,19 @@ class TableView(Widget):
         if event.button == 1:
             self.drag_button_down = False
 
+            if self.delaying_press:
+                # if dragging did not happen, unselect other rows and
+                # select current row
+                path_info = treeview.get_path_at_pos(int(event.x), int(event.y))
+                if path_info is not None:
+                    path, column, x, y = path_info
+                    selection = self._widget.get_selection()
+                    self.ignore_selection_changed = True
+                    selection.unselect_all()
+                    self.ignore_selection_changed = False
+                    selection.select_path(path)
+        self.delaying_press = False
+
     def on_unrealize(self, treeview):
         self.hotspot_tracker = None
         self.drag_button_down = False
@@ -907,6 +938,7 @@ class TableView(Widget):
             if drag_data is None:
                 return True
             self.drag_data = drag_data
+            self.delaying_press = False
             treeview.drag_begin(gtk_target_list(self.drag_data.keys()),
                     self.drag_source.allowed_actions(), 1, event)
 
