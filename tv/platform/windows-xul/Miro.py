@@ -63,8 +63,8 @@ def startup():
     from miro.plat import migrateappname
     migrateappname.migrateSupport('Democracy', 'Miro')
 
-    from miro import singleclick
-    singleclick.set_command_line_args(args)
+    from miro import commandline
+    commandline.set_command_line_args(args)
 
     # Kick off the application
     from miro.plat.frontends.widgets.application import WindowsApplication

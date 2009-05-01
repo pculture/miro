@@ -31,6 +31,7 @@
 from copy import copy
 import logging
 import time
+import os
 
 from miro import app
 from miro import autoupdate
@@ -41,7 +42,8 @@ from miro import eventloop
 from miro import feed
 from miro.frontendstate import WidgetsFrontendState
 from miro import guide
-from miro import httpclient
+from miro import fileutil
+from miro import commandline
 from miro import item
 from miro import messages
 from miro import prefs
@@ -50,15 +52,13 @@ from miro import subscription
 from miro import tabs
 from miro import opml
 from miro import searchengines
-from miro import util
 from miro.feed import Feed, get_feed_by_url
 from miro.gtcache import gettext as _
 from miro.playlist import SavedPlaylist
 from miro.folder import FolderBase, ChannelFolder, PlaylistFolder
-from miro.util import getSingletonDDBObject
 from miro.xhtmltools import urlencode
 
-from miro.plat.utils import osFilenameToFilenameType, makeURLSafe
+from miro.plat.utils import makeURLSafe
 
 import shutil
 
@@ -911,15 +911,15 @@ class BackendMessageHandler(messages.MessageHandler):
             singleclick.add_download(message.url)
 
     def handle_open_individual_file(self, message):
-        singleclick.parse_command_line_args([message.filename])
+        commandline.parse_command_line_args([message.filename])
 
     def handle_open_individual_files(self, message):
-        singleclick.parse_command_line_args(message.filenames)
+        commandline.parse_command_line_args(message.filenames)
 
     def handle_add_files(self, message):
         # add all files to Miro in the manualFeed
         for mem in message.filenames:
-            singleclick.add_video(mem, False)
+            commandline.add_video(mem, False)
 
     def handle_check_version(self, message):
         up_to_date_callback = message.up_to_date_callback
@@ -1174,11 +1174,11 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_revert_feed_title(self, message):
         try:
-            feed = feed.Feed.get_by_id(message.id)
+            feed_object = feed.Feed.get_by_id(message.id)
         except database.ObjectNotFoundError:
             logging.warn("RevertFeedTitle: Feed not found -- %s", message.id)
         else:
-            feed.revert_title()
+            feed_object.revert_title()
 
     def handle_revert_item_title(self, message):
         try:
@@ -1248,43 +1248,22 @@ class BackendMessageHandler(messages.MessageHandler):
 
     def handle_subscription_link_clicked(self, message):
         url = message.url
-        type, subscribeURLs = subscription.find_subscribe_links(url)
-        normalizedURLs = []
-        for url, additional in subscribeURLs:
-            normalized = feed.normalize_feed_url(url)
-            if feed.validate_feed_url(normalized) and not feed.get_feed_by_url(normalized):
-                normalizedURLs.append((normalized, additional))
-        if normalizedURLs:
-            if type == 'feed':
-                feed_names = []
-                for url, additional in normalizedURLs:
-                    new_feed = feed.Feed(url, section=additional.get("section", u"video"))
-                    feed_names.append(new_feed.get_title())
-                    if 'trackback' in additional:
-                        httpclient.grabURL(additional['trackback'],
-                                           lambda x: None,
-                                           lambda x: None)
-
-                # send a notification to the user
-                if len(feed_names) == 1:
-                    title = _("Subscribed to new feed:")
-                    body = feed_names[0]
-                else:
-                    title = _('Subscribed to new feeds:')
-                    body = '\n'.join(
-                        [' - %s' % feed_name for feed_name in feed_names])
-
-                messages.NotifyUser(
-                    title, body, 'feed-subscribe').send_to_frontend()
-            elif type == 'download':
-                for url, additional in normalizedURLs:
-                    singleclick.download_video_url(url, additional)
-            elif type == 'site':
-                for url, additional in normalizedURLs:
-                    if guide.get_guide_by_url(url) is None:
-                        guide.ChannelGuide(url, [u'*'])
-            else:
-                raise AssertionError("Unknown subscribe type")
+        subscriptions = subscription.find_subscribe_links(url)
+        added, ignored = subscription.Subscriber().add_subscriptions(
+            subscriptions)
+        feeds = added.get('feed')
+        # send a notification to the user
+        if feeds:
+            print feeds
+            if len(feeds) == 1:
+                title = _("Subscribed to new feed:")
+                body = feeds[0].get('title', feeds[0]['url'])
+            elif len(feeds) > 1:
+                title = _('Subscribed to new feeds:')
+                body = '\n'.join(
+                    [' - %s' % feed.get('title', feed['url']) for feed in feeds])
+            messages.NotifyUser(
+                title, body, 'feed-subscribe').send_to_frontend()
 
     def handle_change_movies_directory(self, message):
         old_path = config.get(prefs.MOVIES_DIRECTORY)

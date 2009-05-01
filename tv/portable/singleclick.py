@@ -28,65 +28,23 @@
 
 """Helper functions for implement single click playback and single click
 torrent downloading.
-
-Frontends should call setCommandLineArgs() passing it a list of arguments that
-the users gives.  This should just be suspected torrents/videos, not things
-like '--help', '--version', etc.
-
-Frontends should trap when a user opens a torrent/video with Miro while
-Miro is already running.  They should arrange for add_video or add_torrent
-to be called in the existing Miro process.
 """
 
 from miro.gtcache import gettext as _
-from miro.gtcache import ngettext
-import os
 import logging
+import urlparse
+import os.path
 
-from miro.util import get_torrent_info_hash
 from miro import dialogs
-from miro import download_utils
 from miro import item
 from miro import feed
 from miro import filetypes
 from miro import flashscraper
 from miro import folder
-from miro import guide
 from miro import httpclient
-from miro import signals
-from miro import subscription
-from miro import util
 from miro import config
 from miro import prefs
-from miro.plat.utils import samefile, filenameToUnicode, unicodeToFilename
 from miro import messages
-
-_command_line_args = []
-_command_line_videos = None
-_command_line_view = None
-
-def add_video(path, single=False):
-    path = os.path.abspath(path)
-    for i in item.Item.make_view():
-        itemFilename = i.get_filename()
-        if (itemFilename != '' and
-                os.path.exists(itemFilename) and
-                samefile(itemFilename, path)):
-            logging.warn("Not adding duplicate video: %s" % path.decode('ascii', 'ignore'))
-            if _command_line_videos is not None:
-                _command_line_videos.add(i)
-            return
-    if single:
-        correctFeed = feed.Feed.get_single_feed()
-        items = list(correctFeed.items)
-        for i in items:
-            i.expire()
-    else:
-        correctFeed = feed.Feed.get_manual_feed()
-    fileItem = item.FileItem(path, feed_id=correctFeed.getID())
-    fileItem.markItemSeen()
-    if _command_line_videos is not None:
-        _command_line_videos.add(fileItem)
 
 def check_url_exists(url):
     manualFeed = feed.Feed.get_manual_feed()
@@ -112,8 +70,9 @@ def check_url_exists(url):
         return True
     return False
 
-def _build_entry(url, contentType, additional):
-    entry = item.get_entry_for_url(url, contentType)
+def _build_entry(url, contentType, additional=None):
+    entry = {'enclosures':[{'url' : url, 'type' : unicode(contentType)}]}
+
     if additional is not None:
         for key in 'title', 'link', 'feed':
             if key in additional:
@@ -125,8 +84,10 @@ def _build_entry(url, contentType, additional):
             entry['thumbnail'] = {'href': additional['thumbnail']}
         if 'length' in additional:
             entry['enclosures'][0]['length'] = additional['length']
-        if 'type' in additional:
-            entry['enclosures'][0]['type'] = additional['type']
+
+    if 'title' not in entry:
+        _, _, urlpath, _, _, _ = urlparse.urlparse(url)
+        entry['title'] = os.path.basename(urlpath)
 
     return entry
 
@@ -141,20 +102,25 @@ def download_unknown_mime_type(url):
             return
         if dialog.choice == dialogs.BUTTON_DOWNLOAD_ANYWAY:
             # Fake a video mime type, so we will download the item.
-            download_video(item.get_entry_for_url(url, 'video/x-unknown'))
+            download_video(_build_entry(url, 'video/x-unknown'))
         elif dialog.choice == dialogs.BUTTON_OPEN_IN_EXTERNAL_BROWSER:
             messages.OpenInExternalBrowser(url).send_to_frontend()
     dialog.run(callback)
 
-def add_download(url, additional=None, handle_unknown_callback=download_unknown_mime_type):
+def add_download(url, handle_unknown_callback=download_unknown_mime_type):
     """Given a url, this tries to figure out what it is (video, audio, torrent, rss feed,
     flash file that Miro can scrape) and handles it accordingly.
 
     If it can't figure out what it is, then it calls handle_unknown_callback with the url of
     the thing it can't identify and thus doesn't know what to do with.
-
-    The additional parameter is a dict of metadata to toss in the entry Miro builds.
     """
+    if url.startswith('feed:'):
+        # hack so feed: acts as http:
+        url = "http:" + url[5:]
+    elif url.startswith('feeds:'):
+        # hack so feeds: acts as https:
+        url = "https:" + url[6:]
+
     if check_url_exists(url):
         return
 
@@ -183,12 +149,10 @@ def add_download(url, additional=None, handle_unknown_callback=download_unknown_
 
         handle_unknown_callback(url)
 
-    def callback_flash(old_url, additional=additional):
-        def _callback(url, contentType="video/flv", additional=additional):
+    def callback_flash(old_url):
+        def _callback(url, contentType="video/flv"):
             if url:
-                if additional == None:
-                    additional = {"title": url}
-                entry = _build_entry(url, contentType, additional)
+                entry = _build_entry(url, contentType)
                 download_video(entry)
                 return
 
@@ -199,7 +163,7 @@ def add_download(url, additional=None, handle_unknown_callback=download_unknown_
 
         flashscraper.try_scraping_url(url, _callback)
 
-    def callback(headers, additional=additional):
+    def callback(headers):
         """We need to figure out if the URL is a external video link, or a link to
         a feed.
         """
@@ -220,7 +184,7 @@ def add_download(url, additional=None, handle_unknown_callback=download_unknown_
             httpclient.grabURL(url, callback_peek, errback)
             return
 
-        entry = _build_entry(url, contentType, additional)
+        entry = _build_entry(url, contentType)
 
         if filetypes.is_video_enclosure(entry['enclosures'][0]):
             download_video(entry)
@@ -233,46 +197,6 @@ def download_video(entry):
     manualFeed = feed.Feed.get_manual_feed()
     newItem = item.Item(entry, feed_id=manualFeed.getID())
     newItem.download()
-
-def download_video_url(url, additional=None):
-    entry = _build_entry(url, None, additional)
-    download_video(entry)
-
-def add_torrent(path, torrentInfohash):
-    manualFeed = feed.Feed.get_manual_feed()
-    for i in manualFeed.items:
-        if (i.downloader is not None and
-                i.downloader.status.get('infohash') == torrentInfohash):
-            logging.info("not downloading %s, it's already a download for %s", path, i)
-            if i.downloader.get_state() in ('paused', 'stopped'):
-                i.download()
-            return
-    newItem = item.Item(item.get_entry_for_file(path), feed_id=manualFeed.getID())
-    newItem.download()
-
-def reset_command_line_view():
-    global _command_line_view, _command_line_videos
-    if _command_line_view is not None:
-        _command_line_view.unlink()
-        _command_line_view = None
-    _command_line_videos = set()
-
-def add_feed(path):
-    feed.add_feed_from_file(path)
-
-def add_subscriptions(type_, urls):
-    if urls is not None:
-        if type_ == 'rss':
-            if len(urls) > 1:
-                ask_for_multiple_feeds(urls)
-            else:
-                add_feeds(urls)
-        elif type_ == 'download':
-            [add_download(url, additional) for url, additional in urls]
-        elif type_ in ('guide', 'site'):
-            for url in urls:
-                if guide.get_guide_by_url(url) is None:
-                    guide.ChannelGuide(url, [u'*'])
 
 def filter_existing_feed_urls(urls):
     return [u for u in urls if feed.get_feed_by_url(u) is None]
@@ -288,157 +212,3 @@ def add_feeds(urls, newFolderName=None):
             if newFolderName is not None:
                 f.set_folder(newFolder)
             lastFeed = f
-
-def ask_for_multiple_feeds(urls):
-    title = _("Subscribing to multiple feeds")
-    description = ngettext("Create feed?",
-                           "Create %(count)d feeds?",
-                           len(urls),
-                           {"count": len(urls)})
-    d = dialogs.ThreeChoiceDialog(title, description, dialogs.BUTTON_ADD,
-            dialogs.BUTTON_ADD_INTO_NEW_FOLDER, dialogs.BUTTON_CANCEL)
-    def callback(d):
-        if d.choice == dialogs.BUTTON_ADD:
-            add_feeds(urls)
-        elif d.choice == dialogs.BUTTON_ADD_INTO_NEW_FOLDER:
-            ask_for_new_folder_name(urls)
-    d.run(callback)
-
-def ask_for_new_folder_name(urls):
-    newURLCount = len(filter_existing_feed_urls(urls))
-    existingURLCount = len(urls) - newURLCount
-    title = ngettext("Adding feed to a new folder",
-                     "Adding %(count)d feeds to a new folder",
-                     newURLCount,
-                     {"count": newURLCount})
-    description = _("Enter a name for the new feed folder")
-    if existingURLCount > 0:
-        description += "\n\n"
-        description += ngettext(
-            "NOTE: You are already subscribed to one of these feeds.  These "
-            "feeds will stay where they currently are.",
-            "NOTE: You are already subscribed to %(count)d of these feeds.  These "
-            "feeds will stay where they currently are.",
-            existingURLCount,
-            {"count": existingURLCount}
-        )
-
-    def callback(d):
-        if d.choice == dialogs.BUTTON_CREATE:
-            add_feeds(urls, d.value)
-    dialogs.TextEntryDialog(title, description, dialogs.BUTTON_CREATE,
-            dialogs.BUTTON_CANCEL).run(callback)
-
-def complain_about_subscription_url(messageText):
-    title = _("Subscription error")
-    dialogs.MessageBoxDialog(title, messageText).run()
-
-def add_subscription_url(prefix, expectedContentType, url):
-    realURL = url[len(prefix):]
-    def callback(info):
-        if info.get('content-type') == expectedContentType:
-            type_, urls = subscription.parse_content(info['body'])
-            if urls is None:
-                text = _(
-                    "This %(appname)s feed file has an invalid format: "
-                    "%(url)s.  Please notify the publisher of this file.",
-                    {"appname": config.get(prefs.SHORT_APP_NAME), "url": realURL}
-                )
-                complain_about_subscription_url(text)
-            else:
-                add_subscriptions(type_, urls)
-        else:
-            text = _(
-                "This %(appname)s feed file has the wrong content type: "
-                "%(url)s. Please notify the publisher of this file.",
-                {"appname": config.get(prefs.SHORT_APP_NAME), "url": realURL}
-            )
-            complain_about_subscription_url(text)
-
-    def errback(error):
-        text = _(
-            "Could not download the %(appname)s feed file: %(url)s",
-            {"appname": config.get(prefs.SHORT_APP_NAME), "url": realURL}
-        )
-        complain_about_subscription_url(text)
-
-    httpclient.grabURL(realURL, callback, errback)
-
-def set_command_line_args(args):
-    _command_line_args.extend(args)
-
-def download_url(url):
-    if url.startswith('http:') or url.startswith('https:'):
-        add_download(url)
-    elif url.startswith('feed:'):
-        # hack so feed: acts as http:
-        url = "http:" + url[5:]
-        add_download(url)
-    elif url.startswith('feeds:'):
-        # hack so feeds: acts as https:
-        url = "https:" + url[6:]
-        add_download(url)
-    else:
-        parse_command_line_args([unicodeToFilename(url)])
-
-def parse_command_line_args(args=None):
-    """
-    This goes through a list of files which could be arguments passed
-    in on the command line or a list of files from other source.
-
-    If the args list is None, then this pulls from the internal
-    _command_line_args list which is populated by set_command_line_args.
-    """
-    if args is None:
-        global _command_line_args
-        args = _command_line_args
-        _command_line_args = []
-
-    reset_command_line_view()
-
-    added_videos = False
-    added_downloads = False
-
-    for arg in args:
-        if arg.startswith('file://'):
-            arg = download_utils.getFileURLPath(arg)
-        elif arg.startswith('miro:'):
-            add_subscription_url('miro:', 'application/x-miro', arg)
-        elif arg.startswith('democracy:'):
-            add_subscription_url('democracy:', 'application/x-democracy', arg)
-        elif arg.startswith('http:') or arg.startswith('https:') or arg.startswith('feed:') or arg.startswith('feeds:'):
-            download_url(filenameToUnicode(arg))
-        elif os.path.exists(arg):
-            ext = os.path.splitext(arg)[1].lower()
-            if ext in ('.torrent', '.tor'):
-                try:
-                    torrentInfohash = get_torrent_info_hash(arg)
-                except ValueError:
-                    title = _("Invalid Torrent")
-                    msg = _(
-                        "The torrent file %(filename)s appears to be corrupt and cannot be opened. [OK]",
-                        {"filename": os.path.basename(arg)}
-                    )
-                    dialogs.MessageBoxDialog(title, msg).run()
-                    continue
-                add_torrent(arg, torrentInfohash)
-                added_downloads = True
-            elif ext in ('.rss', '.rdf', '.atom', '.ato'):
-                add_feed(arg)
-            elif ext in ('.miro', '.democracy', '.dem', '.opml'):
-                ret = subscription.parse_file(arg)
-                if ret is not None:
-                    add_subscriptions(ret[0], ret[1])
-            else:
-                add_video(arg, len(args) == 1)
-                added_videos = True
-        else:
-            logging.warning("parse_command_line_args: %s doesn't exist", arg)
-
-    if added_videos:
-        item_infos = [messages.ItemInfo(i) for i in _command_line_videos]
-        messages.PlayMovie(item_infos).send_to_frontend()
-
-    if added_downloads:
-        # FIXME - switch to downloads tab?
-        pass

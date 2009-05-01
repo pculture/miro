@@ -70,7 +70,7 @@ from miro import theme
 from miro import util
 from miro import searchengines
 from miro import storedatabase
-from miro.singleclick import parse_command_line_args
+from miro.commandline import parse_command_line_args
 
 DEBUG_DB_MEM_USAGE = False
 mem_usage_test_event = threading.Event()

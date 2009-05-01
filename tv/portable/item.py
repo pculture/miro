@@ -1710,18 +1710,6 @@ def get_entry_for_file(filename):
     return FeedParserDict({'title':filenameToUnicode(os.path.basename(filename)),
             'enclosures':[{'url': resources.url(filename)}]})
 
-def get_entry_for_url(url, contentType=None):
-    if contentType is None:
-        contentType = u'video/x-unknown'
-    else:
-        contentType = unicode(contentType)
-
-    _, _, urlpath, _, _, _ = urlparse.urlparse(url)
-    title = os.path.basename(urlpath)
-
-    return FeedParserDict({'title' : title,
-            'enclosures':[{'url' : url, 'type' : contentType}]})
-
 def update_incomplete_movie_data():
     for item in Item.downloaded_view():
         if item.duration is None or item.screenshot is None:

@@ -4,9 +4,13 @@ import tempfile
 import shutil
 
 from miro.feed import Feed
-from miro.item import Item, FileItem, get_entry_for_url
+from miro.item import Item, FileItem
 from miro.downloader import RemoteDownloader
 from miro.test.framework import MiroTestCase
+from miro.singleclick import _build_entry
+
+def get_entry_for_url(url):
+    return _build_entry(url, 'video/x-unknown')
 
 class ItemSeenTest(MiroTestCase):
     def setUp(self):

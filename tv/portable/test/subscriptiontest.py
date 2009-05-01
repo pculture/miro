@@ -2,6 +2,7 @@ import os
 import unittest
 
 from miro import subscription
+from miro import autodiscover
 
 from miro.test.framework import MiroTestCase
 
@@ -178,87 +179,90 @@ OPML_NESTED = u"""\
 
 class TestSubscription (MiroTestCase):
 
-    subscription.reflexiveAutoDiscoveryOpener = open
+    autodiscover.reflexiveAutoDiscoveryOpener = open
 
     def testInvalidSubscriptions(self):
-        retval = subscription.parse_file("this-file-does-not-exist.xml")
+        retval = autodiscover.parse_file("this-file-does-not-exist.xml")
         self.assertEquals(retval, None)
-        retval = subscription.parse_content(INVALID_CONTENT_1)
+        retval = autodiscover.parse_content(INVALID_CONTENT_1)
         self.assertEquals(retval, None)
-        retval = subscription.parse_content(INVALID_CONTENT_2)
+        retval = autodiscover.parse_content(INVALID_CONTENT_2)
         self.assertEquals(retval, None)
+
+    def assertDiscovered(self, subscriptions, url):
+        self.assertEquals(len(subscriptions), 1)
+        self.assertEquals(subscriptions[0]['type'], 'feed')
+        self.assertEquals(subscriptions[0]['url'], url)
 
     def testAtomLinkConstructInRSS(self):
-        type, urls = subscription.parse_content(ATOM_LINK_CONSTRUCT_IN_RSS)
-        self.assertEquals(type, 'rss')
-        self.assert_(len(urls) == 1)
-        self.assert_(urls[0] == SAMPLE_RSS_SUBSCRIPTION_URL_1)
+        subscriptions = autodiscover.parse_content(ATOM_LINK_CONSTRUCT_IN_RSS)
+        self.assertDiscovered(subscriptions, SAMPLE_RSS_SUBSCRIPTION_URL_1)
 
     def testAtomLinkConstructInAtom(self):
-        type, urls = subscription.parse_content(ATOM_LINK_CONSTRUCT_IN_ATOM)
-        self.assertEquals(type, 'rss')
-        self.assert_(len(urls) == 1)
-        self.assert_(urls[0] == SAMPLE_ATOM_SUBSCRIPTION_URL_1)
+        subscriptions = autodiscover.parse_content(ATOM_LINK_CONSTRUCT_IN_ATOM)
+        self.assertDiscovered(subscriptions, SAMPLE_ATOM_SUBSCRIPTION_URL_1)
 
     def testReflexiveAutoDiscoveryInRSS(self):
         pageFile = file(REFLEXIVE_AUTO_DISCOVERY_PAGE_RSS_FILENAME, "w")
         pageFile.write(REFLEXIVE_AUTO_DISCOVERY_PAGE_RSS)
         pageFile.close()
-        type, urls = subscription.parse_content(REFLEXIVE_AUTO_DISCOVERY_IN_RSS)
-        self.assertEquals(type, 'rss')
-        self.assert_(len(urls) == 1)
-        self.assert_(urls[0] == SAMPLE_RSS_SUBSCRIPTION_URL_1)
-        os.remove(REFLEXIVE_AUTO_DISCOVERY_PAGE_RSS_FILENAME)
+        subscriptions = autodiscover.parse_content(REFLEXIVE_AUTO_DISCOVERY_IN_RSS)
+        try:
+            self.assertDiscovered(subscriptions, SAMPLE_RSS_SUBSCRIPTION_URL_1)
+        finally:
+            os.remove(REFLEXIVE_AUTO_DISCOVERY_PAGE_RSS_FILENAME)
 
     def testReflexiveAutoDiscoveryInAtom(self):
         pageFile = file(REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM_FILENAME, "w")
         pageFile.write(REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM)
         pageFile.close()
-        type, urls = subscription.parse_content(REFLEXIVE_AUTO_DISCOVERY_IN_ATOM)
-        self.assertEquals(type, 'rss')
-        self.assert_(len(urls) == 1)
-        self.assert_(urls[0] == SAMPLE_ATOM_SUBSCRIPTION_URL_1)
-        os.remove(REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM_FILENAME)
+        subscriptions = autodiscover.parse_content(REFLEXIVE_AUTO_DISCOVERY_IN_ATOM)
+        try:
+            self.assertDiscovered(subscriptions, SAMPLE_ATOM_SUBSCRIPTION_URL_1)
+        finally:
+            os.remove(REFLEXIVE_AUTO_DISCOVERY_PAGE_ATOM_FILENAME)
 
     def testFlatOPMLSubscriptions(self):
-        type, urls = subscription.parse_content(OPML_FLAT)
-        self.assertEquals(type, 'rss')
-        self.assert_(len(urls) == 4)
-        self.assert_(urls[0] == SAMPLE_RSS_SUBSCRIPTION_URL_1)
-        self.assert_(urls[1] == SAMPLE_ATOM_SUBSCRIPTION_URL_1)
-        self.assert_(urls[2] == SAMPLE_RSS_SUBSCRIPTION_URL_2)
-        self.assert_(urls[3] == SAMPLE_ATOM_SUBSCRIPTION_URL_2)
+        subscriptions = autodiscover.parse_content(OPML_FLAT)
+        self.assertEquals(len(subscriptions), 4)
+        for feed in subscriptions:
+            self.assertEquals(feed['type'], 'feed')
+        self.assert_(subscriptions[0]['url'] == SAMPLE_RSS_SUBSCRIPTION_URL_1)
+        self.assert_(subscriptions[1]['url'] == SAMPLE_ATOM_SUBSCRIPTION_URL_1)
+        self.assert_(subscriptions[2]['url'] == SAMPLE_RSS_SUBSCRIPTION_URL_2)
+        self.assert_(subscriptions[3]['url'] == SAMPLE_ATOM_SUBSCRIPTION_URL_2)
 
     def testNestedOPMLSubscriptions(self):
-        type, urls = subscription.parse_content(OPML_NESTED)
-        self.assertEquals(type, 'rss')
-        self.assert_(len(urls) == 4)
-        self.assert_(urls[0] == SAMPLE_RSS_SUBSCRIPTION_URL_1)
-        self.assert_(urls[1] == SAMPLE_ATOM_SUBSCRIPTION_URL_1)
-        self.assert_(urls[2] == SAMPLE_RSS_SUBSCRIPTION_URL_2)
-        self.assert_(urls[3] == SAMPLE_ATOM_SUBSCRIPTION_URL_2)
+        subscriptions = autodiscover.parse_content(OPML_NESTED)
+        self.assertEquals(len(subscriptions), 4)
+        for feed in subscriptions:
+            self.assertEquals(feed['type'], 'feed')
+        self.assert_(subscriptions[0]['url'] == SAMPLE_RSS_SUBSCRIPTION_URL_1)
+        self.assert_(subscriptions[1]['url'] == SAMPLE_ATOM_SUBSCRIPTION_URL_1)
+        self.assert_(subscriptions[2]['url'] == SAMPLE_RSS_SUBSCRIPTION_URL_2)
+        self.assert_(subscriptions[3]['url'] == SAMPLE_ATOM_SUBSCRIPTION_URL_2)
 
 class Testfind_subscribe_links (MiroTestCase):
     def testDifferstHost(self):
         url = 'http://youtoob.com'
         self.assertEquals(subscription.find_subscribe_links(url),
-                ('none', []))
+                [])
 
     def testNoLinks(self):
         url = 'http://subscribe.getdemocracy.com/'
         self.assertEquals(subscription.find_subscribe_links(url),
-                ('feed', []))
+                [])
 
     def testLinkInPath(self):
         url = 'http://subscribe.getdemocracy.com/http%3A//www.myblog.com/rss'
         self.assertEquals(subscription.find_subscribe_links(url),
-                ('feed', [ ('http://www.myblog.com/rss', {}) ]))
+                [{'type': 'feed', 'url': 'http://www.myblog.com/rss'}])
 
     def testLinkInQuery(self):
         url = ('http://subscribe.getdemocracy.com/' + \
                '?url1=http%3A//www.myblog.com/rss')
         self.assertEquals(subscription.find_subscribe_links(url),
-                ('feed', [ ('http://www.myblog.com/rss', {}) ]))
+                [{'type': 'feed', 'url':'http://www.myblog.com/rss'}])
 
     def testMultipleLinksInQuery(self):
         url = ('http://subscribe.getdemocracy.com/' + \
@@ -266,13 +270,15 @@ class Testfind_subscribe_links (MiroTestCase):
                '&url2=http%3A//www.yourblog.com/atom' + \
                '&url3=http%3A//www.herblog.com/scoobydoo')
 
-        contenttype, links = subscription.find_subscribe_links(url)
-        self.assertEquals(contenttype, 'feed')
+        feeds = subscription.find_subscribe_links(url)
+        for feed in feeds:
+            self.assertEquals(feed['type'], 'feed')
         # have to sort them because they could be in any order
+        links = [feed['url'] for feed in feeds]
         links.sort()
-        self.assertEquals(links, [ ('http://www.herblog.com/scoobydoo', {}),
-                                   ('http://www.myblog.com/rss', {}),
-                                   ('http://www.yourblog.com/atom', {}) ])
+        self.assertEquals(links, ['http://www.herblog.com/scoobydoo',
+                                  'http://www.myblog.com/rss',
+                                  'http://www.yourblog.com/atom'])
 
     def testQueryGarbage(self):
         url = ('http://subscribe.getdemocracy.com/' + \
@@ -282,25 +288,27 @@ class Testfind_subscribe_links (MiroTestCase):
                '&foo=bar' + \
                '&extra=garbage')
 
-        contenttype, links = subscription.find_subscribe_links(url)
-        self.assertEquals(contenttype, 'feed')
+        feeds = subscription.find_subscribe_links(url)
+        for feed in feeds:
+            self.assertEquals(feed['type'], 'feed')
         # have to sort them because they could be in any order
+        links = [feed['url'] for feed in feeds]
         links.sort()
-        self.assertEquals(links, [ ('http://www.herblog.com/scoobydoo', {}),
-                                   ('http://www.myblog.com/rss', {}),
-                                   ('http://www.yourblog.com/atom', {}) ])
+        self.assertEquals(links, ['http://www.herblog.com/scoobydoo',
+                                  'http://www.myblog.com/rss',
+                                  'http://www.yourblog.com/atom'])
 
     def testSiteLinks(self):
         url = ('http://subscribe.getdemocracy.com/site.php' +
                '?url1=http%3A//www.mychannelguide.com/')
         self.assertEquals(subscription.find_subscribe_links(url),
-                ('site', [ ('http://www.mychannelguide.com/', {}) ]))
+                [{'type': 'site', 'url': 'http://www.mychannelguide.com/'}])
 
     def testDownloadLinks(self):
         url = ('http://subscribe.getdemocracy.com/download.php' +
                '?url1=http%3A//www.myblog.com/videos/cats.ogm')
         self.assertEquals(subscription.find_subscribe_links(url),
-                ('download', [ ('http://www.myblog.com/videos/cats.ogm', {}) ]))
+                [{'type': 'download', 'url': 'http://www.myblog.com/videos/cats.ogm'}])
 
     def testSubscribeLinks(self):
         is_s_l = subscription.is_subscribe_link

@@ -30,7 +30,6 @@ from miro.gtcache import gettext as _
 import logging
 from miro import config
 from miro import prefs
-from miro import app
 import os
 from miro.eventloop import asUrgent
 from miro.database import DDBObject
@@ -125,49 +124,34 @@ class ThemeHistory(DDBObject):
 
     @asUrgent
     def _install_default_feeds(self):
-        initialFeeds = resources.path("initial-feeds.democracy")
-        if os.path.exists(initialFeeds):
-            type, urls = subscription.parse_file(initialFeeds)
-            if urls is not None and type == 'rss':
-                for url in urls:
-                    feed.Feed(url, initiallyAutoDownloadable=False)
-            dialog = dialogs.MessageBoxDialog(_("Custom Channels"),
-                    text = _(
-                        "You are running a version of %(appname)s with a "
-                        "custom set of channels.",
-                        {"appname": config.get(prefs.LONG_APP_NAME)}
-                    ))
-            dialog.run()
-            app.controller.initial_feeds = True
-        else:
-            logging.info("Adding default feeds")
+        logging.info("Adding default feeds")
 
-            defaultFeedURLs = []
+        defaultFeedURLs = []
 
-            defaultFeedURLs.extend([
-                (u'http://feeds.miroguide.com/miroguide/new', False),
-                (u'http://feeds.miroguide.com/miroguide/featured', False),
-                (u'http://feeds.feedburner.com/earth-touch_podcast_720p', False),
-                (u'http://www.linktv.org/rss/hq/globalpulse.xml', False),
+        defaultFeedURLs.extend([
+            (u'http://feeds.miroguide.com/miroguide/new', False),
+            (u'http://feeds.miroguide.com/miroguide/featured', False),
+            (u'http://feeds.feedburner.com/earth-touch_podcast_720p', False),
+            (u'http://www.linktv.org/rss/hq/globalpulse.xml', False),
 
-            ])
+        ])
 
-            for default in defaultFeedURLs:
-                # folder
-                if isinstance(default, tuple) and isinstance(default[1], list):
-                    defaultFolder = default
-                    c_folder = folder.ChannelFolder(defaultFolder[0])
-                    for url, autodownload in defaultFolder[1]:
-                        d_feed = feed.Feed(url, initiallyAutoDownloadable=autodownload)
-                        d_feed.set_folder(c_folder)
+        for default in defaultFeedURLs:
+            # folder
+            if isinstance(default, tuple) and isinstance(default[1], list):
+                defaultFolder = default
+                c_folder = folder.ChannelFolder(defaultFolder[0])
+                for url, autodownload in defaultFolder[1]:
+                    d_feed = feed.Feed(url, initiallyAutoDownloadable=autodownload)
+                    d_feed.set_folder(c_folder)
 
-                # feed
-                else:
-                    d_feed = feed.Feed(default[0], initiallyAutoDownloadable=default[1])
+            # feed
+            else:
+                d_feed = feed.Feed(default[0], initiallyAutoDownloadable=default[1])
 
-            # create example playlist
-            playlist.SavedPlaylist(_(u"Example Playlist"))
+        # create example playlist
+        playlist.SavedPlaylist(_(u"Example Playlist"))
 
-            # create default site
-            cg = guide.ChannelGuide(u"http://beta.legaltorrents.com/")
-            cg.set_title(u"LegalTorrents")
+        # create default site
+        cg = guide.ChannelGuide(u"http://beta.legaltorrents.com/")
+        cg.set_title(u"LegalTorrents")

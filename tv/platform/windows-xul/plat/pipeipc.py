@@ -32,7 +32,7 @@ Miro processes.
 The first proccess to start creates a named pipe, then a thread that listens
 to that pipe.  Subsequent processes send a message over that pipe containing
 command line arguments.  When the first process receives a message from the
-pipe, we try to open them using the singleclick module.
+pipe, we try to open them using the commandline module.
 """
 
 import cPickle as pickle
@@ -196,7 +196,7 @@ class MessageHandler(object):
         # mess with other code, which is part of the startup process
         from miro import app
         from miro import eventloop
-        from miro import singleclick
+        from miro.commandline import parse_command_line_args
         import gobject
         try:
             cmd_line = pickle.loads(data)
@@ -204,7 +204,7 @@ class MessageHandler(object):
             logging.warn("Error unpickling message (%r)" % data)
         else:
             args = commandline.parse_command_line_string(cmd_line)
-            eventloop.addIdle(singleclick.parse_command_line_args, 
+            eventloop.addIdle(parse_command_line_args, 
                     'parse command line', args=(args[1:],))
             if hasattr(app, "widgetapp") and app.widgetapp is not None:
                 gobject.idle_add(app.widgetapp.window._window.present)

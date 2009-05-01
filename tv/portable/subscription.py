@@ -32,9 +32,13 @@ import traceback
 import logging
 import urllib2
 import urlparse
-import xml.dom.minidom
 
-from miro import util
+from miro.xhtmltools import urlencode
+from miro import httpclient
+from miro import singleclick
+from miro import feed
+from miro import folder
+from miro import guide
 
 """
 This file handles checking URLs that the user clicks on to see if they are
@@ -56,45 +60,8 @@ ADDITIONAL_KEYS =  ('title', 'description', 'length', 'type', 'thumbnail',
                     'feed', 'link', 'trackback', 'section')
 # =========================================================================
 
-reflexiveAutoDiscoveryOpener = urllib2.urlopen
-
-def parse_file(path):
-    try:
-        subscriptionFile = open(path, "r")
-        content = subscriptionFile.read()
-        subscriptionFile.close()
-        return parse_content(content)
-    except (KeyboardInterrupt, SystemExit):
-        raise
-    except:
-        pass
-
-def parse_content(content):
-    try:
-        dom = xml.dom.minidom.parseString(content)
-        try:
-            root = dom.documentElement
-            urlsType = 'rss'
-            if root.nodeName == "rss":
-                urls = _getSubscriptionsFromRSSChannel(root)
-            elif root.nodeName == "feed":
-                urls = _getSubscriptionsFromAtomFeed(root)
-            elif root.nodeName == "opml":
-                urlsType, urls = _getSubscriptionsFromOPMLOutline(root)
-            else:
-                return None
-            return urlsType, urls
-        finally:
-            dom.unlink()
-    except (KeyboardInterrupt, SystemExit):
-        raise
-    except:
-        if util.chatter:
-            logging.warn("Error parsing OPML content...\n%s",
-                    traceback.format_exc())
-
-def get_urls_from_query(query):
-    urls = []
+def get_subscriptions_from_query(subscription_type, query):
+    subscriptions = []
     # the query string shouldn't be a unicode.  if we pass it in as a unicode
     # then parse_qs returns unicode values which aren't properly converted
     # and then we end up with boxes instead of ' and " characters.
@@ -103,13 +70,17 @@ def get_urls_from_query(query):
     for key, value in parsedQuery.items():
         match = re.match(r'^url(\d+)$', key)
         if match:
+            subscription = {'type': subscription_type, 'url': unicode(value[0], 'utf8')}
+            subscriptions.append(subscription)
             urlId = match.group(1)
-            additional = {}
             for key2 in ADDITIONAL_KEYS:
                 if '%s%s' % (key2, urlId) in parsedQuery:
-                    additional[key2] = unicode(parsedQuery['%s%s' % (key2, urlId)][0], "utf-8")
-            urls.append((unicode(value[0]), additional))
-    return urls
+                    value = unicode(parsedQuery['%s%s' % (key2, urlId)][0], "utf-8")
+                    if key2 == 'type':
+                        subscription['mime_type'] = value
+                    else:
+                        subscription[key2] = value
+    return subscriptions
 
 def is_subscribe_link(url):
     """Returns whether this is a subscribe url or not.
@@ -139,134 +110,183 @@ def find_subscribe_links(url):
     except:
         logging.warn("find_subscribe_links: Error parsing '%s'\n%s", url,
                 traceback.format_exc())
-        return 'none', []
+        return []
 
     if host not in SUBSCRIBE_HOSTS:
-        return 'none', []
+        return []
     if path in ('/', '/opml.php'):
-        return 'feed', get_urls_from_query(query)
+        return get_subscriptions_from_query('feed', query)
     elif path in ('/download.php','/download','/download/'):
-        return 'download', get_urls_from_query(query)
+        return get_subscriptions_from_query('download', query)
     elif path in ('/site.php', '/site', '/site/'):
-        return 'site', get_urls_from_query(query)
+        return get_subscriptions_from_query('site', query)
     else:
-        return 'feed', [(urllib2.unquote(path[1:]), {})]
+        return [{'type': 'feed', 'url': urllib2.unquote(path[1:])}]
 
-# =========================================================================
 
-def _getSubscriptionsFromRSSChannel(root):
-    try:
-        channel = root.getElementsByTagName("channel").pop()
-        urls = _getSubscriptionsFromAtomLinkConstruct(channel)
-        if urls is not None:
-            return urls
-        else:
-            link = channel.getElementsByTagName("link").pop()
-            href = link.firstChild.data
-            return _getSubscriptionsFromReflexiveAutoDiscovery(href, "application/rss+xml")
-    except (KeyboardInterrupt, SystemExit):
-        raise
-    except:
-        pass
+class Subscriber(object):
+    """
+    This class represents the common functionality of the subscription handlers
+    (OPML import, one-click links in the Guide, and command-line additions).
+    """
 
-def _getSubscriptionsFromAtomFeed(root):
-    try:
-        urls = _getSubscriptionsFromAtomLinkConstruct(root)
-        if urls is not None:
-            return urls
-        else:
-            link = _getAtomLink(root)
-            rel = link.getAttribute("rel")
-            if rel == "alternate":
-                href = link.getAttribute("href")
-                return _getSubscriptionsFromReflexiveAutoDiscovery(href, "application/atom+xml")
-    except (KeyboardInterrupt, SystemExit):
-        raise
-    except:
-        pass
+    def _get_section(self, subscription):
+        section = subscription.get('section', None)
+        if section not in (u'audio', u'video'):
+            section = u'video'
+        return section
 
-def _getSubscriptionsFromAtomLinkConstruct(node):
-    try:
-        link = _getAtomLink(node)
-        if link.getAttribute("rel") in ("self", "start"):
-            href = link.getAttribute("href")
-            return [href]
-    except (KeyboardInterrupt, SystemExit):
-        raise
-    except:
-        pass
+    def add_subscriptions(self, subscriptions_list, parent_folder=None):
+        """
+        We loop through the list of subscriptions, creating things as we go (if
+        needed).  We also keep track of what we've added.
 
-def _getSubscriptionsFromReflexiveAutoDiscovery(url, ltype):
-    try:
-        urls = list()
-        html = reflexiveAutoDiscoveryOpener(url).read()
-        for match in re.findall("<link[^>]+>", html):
-            altMatch = re.search("rel=\"alternate\"", match)
-            typeMatch = re.search("type=\"%s\"" % re.escape(ltype), match)
-            hrefMatch = re.search("href=\"([^\"]*)\"", match)
-            if None not in (altMatch, typeMatch, hrefMatch):
-                href = hrefMatch.group(1)
-                urls.append(href)
-    except (KeyboardInterrupt, SystemExit):
-        raise
-    except:
-        urls = None
-    else:
-        if len(urls) == 0:
-            urls = None
-    return urls
+        Each type (folder, feed, site, download) gets dispatched to one of our
+        methods.  Each dispatcher returns True if it's added the subscription,
+        anything else if it's been ignored for some reason (generally because
+        it's already present in the DB).
 
-def _getAtomLink(node):
-    return node.getElementsByTagNameNS("http://www.w3.org/2005/Atom", "link").pop()
+        The only exception to this is the 'folder' type, which has the same
+        return signature as this method.
 
-# =========================================================================
-
-def _getSubscriptionsFromOPMLOutline(root):
-    try:
-        urls = list()
-        body = root.getElementsByTagName("body").pop()
-        urlsType = _searchOPMLNodeRecursively(body, urls)
-    except (KeyboardInterrupt, SystemExit):
-        raise
-    except:
-        urls = None
-    else:
-        if len(urls) == 0:
-            urls = None
-    return urlsType, urls
-
-def _searchOPMLNodeRecursively(node, urls, urlsType=None):
-    try:
-        children = node.childNodes
-        for child in children:
-            if hasattr(child, 'getAttribute'):
-                if child.hasAttribute("xmlUrl"):
-                    newType, newURL = _handleOPMLChild(child)
-                    if urlsType is None:
-                        urlsType = newType
-                        urls.append(newURL)
-                    elif urlsType == newType:
-                        urls.append(newURL)
+        Returns a tuple of dictionaries (added, ignored).  Each dictionary maps
+        a subscription type (feed, site, download) to the number of
+        added/ignored items in this subscription.
+        """
+        added = {}
+        ignored = {}
+        for subscription in subscriptions_list:
+            subscription_type = subscription['type']
+            handler = getattr(self, 'handle_%s' % subscription_type, None)
+            if handler:
+                trackback = subscription.get('trackback')
+                if trackback:
+                    httpclient.grabURL(trackback, lambda x: None, lambda x: None)
+                ret = handler(subscription, parent_folder)
+                if ret:
+                    if subscription_type == 'folder':
+                        for key, value in ret[0].items():
+                            added.setdefault(key, [])
+                            added[key].extend(value)
+                        for key, value in ret[1].items():
+                            ignored.setdefault(key, [])
+                            ignored[key].extend(value)
                     else:
-                        logging.debug('%s != %s, ignoring' % (urlsType, newType))
+                        added.setdefault(subscription_type, [])
+                        added[subscription_type].append(subscription)
                 else:
-                    urlsType = _searchOPMLNodeRecursively(child, urls, urlsType)
-    except (KeyboardInterrupt, SystemExit):
-        raise
-    except Exception:
-        logging.exception('error searching OPML')
-    return urlsType
+                    ignored.setdefault(subscription_type, [])
+                    ignored[subscription_type].append(subscription)
+            else:
+                raise ValueError('unknown subscription type: %s' % subscription_type)
+        return added, ignored
 
-def _handleOPMLChild(node):
-    type = node.getAttribute('type')
-    url = node.getAttribute('xmlUrl')
-    if type == 'download':
-        additional = {}
-        for key in ADDITIONAL_KEYS:
-            attribute = 'additional%s' % key.capitalize()
-            if node.hasAttribute(attribute):
-                additional[key] = node.getAttribute(attribute)
-        return type, (url, additional)
-    else:
-        return type, url
-# =========================================================================
+    def handle_folder(self, folder_dict, parent_folder):
+        """
+        Folder subscriptions look like:
+
+        {
+            'type': 'folder',
+            'title': name of the folder,
+            'section': one of ['audio', 'video'],
+            'children': a list of sub-feeds
+        }
+        """
+        assert parent_folder is None, "no nested folders"
+        title = folder_dict['title']
+        section = self._get_section(folder_dict)
+        obj = folder.ChannelFolder(title, section)
+        return self.add_subscriptions(folder_dict['children'], obj)
+
+    def handle_feed(self, feed_dict, parent_folder):
+        """
+        Feed subscriptions look like:
+
+        {
+            'type': 'feed',
+            'url': URL of the RSS/Atom feed
+            'title': name of the feed (optional),
+            'section': one of ['audio', 'video'] (ignored if it's in a folder),
+            'search_term': terms for which this feed is a search (optional),
+            'auto_download': one of 'all', 'new', 'off' (optional),
+            'expiry_time': one of 'system', 'never', an integer of hours (optional),
+        }
+        """
+        url = feed_dict['url']
+
+        search_term = feed_dict.get('search_term')
+        if search_term:
+            url = u"dtv:searchTerm:%s?%s" % (urlencode(url), urlencode(search_term))
+
+        f = feed.get_feed_by_url(url)
+        if f is None:
+            if parent_folder:
+                section = parent_folder.section
+            else:
+                section = self._get_section(feed_dict)
+
+            f = feed.Feed(url, False, section)
+            title = feed_dict.get('title')
+            if title is not None and title != '':
+                f.set_title(title)
+            auto_download_mode = feed_dict.get('auto_download')
+            if auto_download_mode is not None and auto_download_mode in ['all',
+                    'new', 'off']:
+                f.setAutoDownloadMode(auto_download_mode)
+            expiry_time = feed_dict.get('expiry_time')
+            if expiry_time is not None and expiry_time != '':
+                if expiry_time == 'system':
+                    f.setExpiration(u'system', 0)
+                elif expiry_time == 'never':
+                    f.setExpiration(u'never', 0)
+                else:
+                    f.setExpiration(u'feed', expiry_time)
+            if parent_folder is not None:
+                f.set_folder(parent_folder)
+            return True
+        else:
+            return False
+
+    def handle_site(self, site_dict, parent_folder):
+        """
+        Site subscriptions look like:
+
+        {
+            'type': 'site',
+            'url': URL of the site
+            'title': name of the site (optional),
+        }
+        """
+        assert parent_folder is None, "no folders in site section"
+        url = site_dict['url']
+        if guide.get_guide_by_url(url) is None:
+            new_guide = guide.ChannelGuide(url, [u'*'])
+            title = site_dict.get('title')
+            if title is not None and title != url:
+                new_guide.set_title(title)
+            return True
+        else:
+            return False
+
+    def handle_download(self, download_dict, parent_folder):
+        """
+        Download subscriptions look like:
+
+        {
+            'type': 'download',
+            'url': URL of the file to download
+            'title': name of the download (optional),
+            'link': page representing this download (optional),
+            'feed': RSS feed containing this item (optional),
+            'mime_type': the MIME type of the item (optional),
+            'description': a description of the item (optional),
+            'thumbnail': a thumbnail image for the item (optional),
+            'length': the length in seconds of the item (optional)
+        }
+        """
+        assert parent_folder is None, "no folders in downloads"
+        url = download_dict['url']
+        mime_type = download_dict.get('mime_type', 'video/x-unknown')
+        entry = singleclick._build_entry(url, mime_type, download_dict)
+        singleclick.download_video(entry)
+        return False # it's all async, so we don't know right away

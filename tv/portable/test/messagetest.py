@@ -3,9 +3,10 @@ from miro import prefs
 
 from miro.feed import Feed
 from miro.guide import ChannelGuide
-from miro.item import Item, get_entry_for_url
+from miro.item import Item
 from miro.playlist import SavedPlaylist
 from miro.folder import PlaylistFolder, ChannelFolder
+from miro.singleclick import _build_entry
 from miro.tabs import TabOrder
 from miro import messages
 from miro import messagehandler
@@ -370,14 +371,14 @@ class FeedItemTrackTest(TrackerTest):
         self.runUrgentCalls()
 
     def make_item(self, url):
-        self.items.append(Item(entry=get_entry_for_url(url),
+        self.items.append(Item(entry=_build_entry(url, 'video/x-unknown'),
             feed_id=self.feed.id))
 
     def checkDownloadInfo(self, info, item):
         downloader = item.downloader
         self.assertEquals(info.current_size, downloader.get_current_size())
         self.assertEquals(info.rate, downloader.getRate())
-        self.assertEquals(info.state, downlader.get_state())
+        self.assertEquals(info.state, downloader.get_state())
 
     def checkInfo(self, itemInfo, item):
         self.assertEquals(itemInfo.name, item.get_title())
@@ -452,7 +453,8 @@ class PlaylistItemTrackTest(TrackerTest):
         self.runUrgentCalls()
 
     def make_item(self, url):
-        item = Item(entry=get_entry_for_url(url), feed_id=self.feed.id)
+        item = Item(entry=_build_entry(url, 'video/x-unknown'),
+                    feed_id=self.feed.id)
         self.items.append(item)
         self.playlist.add_item(item)
 
@@ -460,7 +462,7 @@ class PlaylistItemTrackTest(TrackerTest):
         downloader = item.downloader
         self.assertEquals(info.current_size, downloader.get_current_size())
         self.assertEquals(info.rate, downloader.getRate())
-        self.assertEquals(info.state, downlader.get_state())
+        self.assertEquals(info.state, downloader.get_state())
 
     def checkInfo(self, itemInfo, item):
         self.assertEquals(itemInfo.name, item.get_title())

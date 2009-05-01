@@ -125,7 +125,7 @@ if sys.version_info[0] == 2 and sys.version_info[1] > 5:
 from miro import config
 from miro import plat
 from miro import prefs
-from miro import singleclick
+from miro import commandline
 
 if '--unittest' in sys.argv:
     # handle this outside optparse, because unittest has its own option set
@@ -210,7 +210,7 @@ def startapp():
         if args[i].startswith('file://'):
             args[i] = args[i][len('file://'):]
 
-    singleclick.set_command_line_args(args)
+    commandline.set_command_line_args(args)
     startup(props_to_set)
 
 def print_version():

@@ -389,27 +389,7 @@ class AppController(NSObject):
         keyDirectObject = struct.unpack(">i", "----")[0]
         url = event.paramDescriptorForKeyword_(keyDirectObject).stringValue().decode('utf8')
 
-        urlPattern = re.compile(r"^(.*?)://(.*)$")
-        match = urlPattern.match(url)
-        if match and match.group(1) == 'feed':
-            url = match.group(2)
-            match = urlPattern.match(url)
-            if not match:
-                url = u'http://%s' % url
-
-        if url.startswith('http'):
-            components = urlparse.urlparse(url)
-            path = components[2]
-            if filetypes.is_video_filename(path):
-                messages.DownloadURL(url).send_to_backend()
-            elif filetypes.is_audio_filename(path):
-                messages.DownloadURL(url).send_to_backend()
-            else:
-                messages.NewFeed(url).send_to_backend()
-        elif url.startswith('miro:'):
-            eventloop.addIdle(lambda:singleclick.add_subscription_url('miro:', 'application/x-miro', url), "Open Miro URL")
-        elif url.startswith('democracy:'):
-            eventloop.addIdle(lambda:singleclick.add_subscription_url('democracy:', 'application/x-democracy', url), "Open Democracy URL")
+        eventloop.addIdle(lambda: commandline.parse_command_line_args([url]), "Open URL")
 
     def validateUserInterfaceItem_(self, menuitem):
         action = menuitem.representedObject()
