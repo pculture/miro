@@ -33,19 +33,19 @@ def make_simple_get_set(attributeName, changeNeedsSave=True):
     following:
 
     def getFoo(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.foo
     def setFoo(self, newFoo):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         self.foo = newFoo
         self.signal_change()
     """
 
     def getter(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return getattr(self, attributeName)
     def setter(self, newValue):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         setattr(self, attributeName, newValue)
         self.signal_change(needsSave=changeNeedsSave)
     return getter, setter

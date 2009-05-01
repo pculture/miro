@@ -147,7 +147,7 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
     get_title, set_title = make_simple_get_set('title')
 
     def get_folder(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if self.folder_id is not None:
             return models.PlaylistFolder.get_by_id(self.folder_id)
         else:
@@ -166,7 +166,7 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
                 folder.add_id(map.item_id)
 
     def set_folder(self, new_folder):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         self._remove_ids_from_folder()
         if new_folder is not None:
             self.folder_id = new_folder.getID()

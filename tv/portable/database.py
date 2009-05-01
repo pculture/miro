@@ -85,7 +85,7 @@ class NoValue:
     pass
 
 # begin* and end* no longer actually lock the database.  Instead
-# confirmDBThread prints a warning if it's run from any thread that
+# confirm_db_thread prints a warning if it's run from any thread that
 # isn't the main thread.  This can be removed from releases for speed
 # purposes.
 
@@ -96,7 +96,7 @@ def set_thread(thread):
         event_thread = thread
     
 import traceback
-def confirmDBThread():
+def confirm_db_thread():
     global event_thread
     if event_thread is None or event_thread != threading.currentThread():
         if event_thread is None:
@@ -324,15 +324,15 @@ class DDBObject(signals.SignalEmitter):
         self.emit('removed')
         ViewTracker._update_view_trackers(self)
 
-    def confirmDBThread(self):
+    def confirm_db_thread(self):
         """Call this before you grab data from an object
 
         Usage:
 
-            view.confirmDBThread()
+            view.confirm_db_thread()
             ...
         """
-        confirmDBThread()
+        confirm_db_thread()
 
     def check_constraints(self):
         """Subclasses can override this method to do constraint checking

@@ -129,7 +129,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
             return self.get_url()
 
     def set_title(self, title):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         self.userTitle = title
         self.signal_change(needsSave=True)
 
@@ -176,7 +176,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
         return resources.path("images/icon-site.png")
 
     def icon_changed(self, needsSave=True):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         self.signal_change(needsSave=True)
 
     def get_thumbnail_url(self):

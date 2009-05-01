@@ -372,7 +372,7 @@ class TooManySingletonsError(Exception):
     pass
 
 def getSingletonDDBObject(view):
-    view.confirmDBThread()
+    view.confirm_db_thread()
     viewLength = view.len()
     if viewLength == 1:
         view.resetCursor()

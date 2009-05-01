@@ -43,11 +43,11 @@ class FolderBase(DDBObject):
     get_title, set_title = make_simple_get_set('title')
 
     def getExpanded(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.expanded
 
     def setExpanded(self, newExpanded):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         self.expanded = newExpanded
         self.signal_change()
         for child in self.getChildrenView():

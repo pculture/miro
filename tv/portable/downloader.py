@@ -88,12 +88,12 @@ class HTTPAuthPassword(DDBObject):
 
     def getAuthToken(self):
         authString = u':'
-        self.confirmDBThread()
+        self.confirm_db_thread()
         authString = self.username+u':'+self.password
         return b64encode(authString)
 
     def getAuthScheme(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.authScheme
 
 totalUpRate = 0
@@ -434,7 +434,7 @@ URL was %s""" % self.url
         """Get the type of download.  Will return either "http" or
         "bittorrent".
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if self.contentType == u'application/x-bittorrent':
             return u"bittorrent"
         else:
@@ -459,16 +459,16 @@ URL was %s""" % self.url
             self.signal_change()
 
     def getRate(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.status.get('rate', 0)
 
     def getETA(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.status.get('eta', 0)
 
     @returnsUnicode
     def get_startup_activity(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         activity = self.status.get('activity')
         if activity is None:
             return _("starting up")
@@ -483,7 +483,7 @@ URL was %s""" % self.url
         if not self.get_state() == u'failed':
             msg = u"getReasonFailed() called on a non-failed downloader"
             raise ValueError(msg)
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.status['reasonFailed']
 
     @returnsUnicode
@@ -491,14 +491,14 @@ URL was %s""" % self.url
         if not self.get_state() == u'failed':
             msg = u"getShortReasonFailed() called on a non-failed downloader"
             raise ValueError(msg)
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.status['shortReasonFailed']
 
     @returnsUnicode
     def get_url(self):
         """Returns the URL we're downloading
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.url
 
     @returnsUnicode    
@@ -506,7 +506,7 @@ URL was %s""" % self.url
         """Returns the state of the download: downloading, paused, stopped,
         failed, or finished
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.state
 
     def isFinished(self):
@@ -515,13 +515,13 @@ URL was %s""" % self.url
     def getTotalSize(self):
         """Returns the total size of the download in bytes
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.status.get(u'totalSize', -1)
 
     def get_current_size(self):
         """Returns the current amount downloaded in bytes
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.status.get(u'currentSize', 0)
 
     @returnsFilename
@@ -529,7 +529,7 @@ URL was %s""" % self.url
         """Returns the filename that we're downloading to. Should not be
         called until state is "finished."
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.status.get('filename', FilenameType(''))
 
     def setup_restored(self):

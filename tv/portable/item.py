@@ -764,7 +764,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.signal_change()
 
     def expire(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         self._remove_from_playlists()
         UandA = self.getUandA()
         if not self.is_external():
@@ -846,7 +846,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         Returns a datetime object,  or None if it doesn't expire.
         """
 
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if self.getWatchedTime() is None or not self.is_downloaded():
             return None
         ufeed = self.getFeed()
@@ -894,13 +894,13 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
         Note the difference between "viewed" and "seen".
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.seen
 
     def markItemSeen(self, markOtherItems=True):
         """Marks the item as seen.
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if self.seen == False:
             self.seen = True
             if self.watchedTime is None:
@@ -919,7 +919,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             self.getParent().seen = (unseen_children.count() == 0)
 
     def markItemUnseen(self, markOtherItems=True):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if self.isContainerItem:
             for item in self.getChildren():
                 item.seen = False
@@ -939,16 +939,16 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @returnsUnicode
     def getRSSID(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.rss_id
 
     def removeRSSID(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         self.rss_id = None
         self.signal_change()
 
     def setAutoDownloaded(self, autodl=True):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if autodl != self.autoDownloaded:
             self.autoDownloaded = autodl
             self.signal_change()
@@ -969,13 +969,13 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def getAutoDownloaded(self):
         """Returns true iff item was auto downloaded.
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.autoDownloaded
 
     def download(self, autodl=False):
         """Starts downloading the item.
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         manual_dl_count = Item.manual_downloads_view().count()
         self.expired = self.keep = self.seen = False
         self.was_downloaded = True
@@ -1009,11 +1009,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.download(self.getAutoDownloaded())
 
     def is_pending_manual_download(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.pendingManualDL
 
     def is_eligible_for_auto_download(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if self.was_downloaded:
             return False
         ufeed = self.getFeed()
@@ -1034,7 +1034,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """NOTE: When changing this function, change feed.icon_changed to signal
         the right set of items.
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if self.icon_cache is not None and self.icon_cache.isValid():
             path = self.icon_cache.get_filename()
             return resources.path(fileutil.expand_filename(path))
@@ -1065,7 +1065,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             else: return _('no title')
 
     def set_title(self, s):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         self.title = s
         self.signal_change()
 
@@ -1078,7 +1078,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def revert_title(self):
         """Reverts the item title back to the data we got from RSS or the url.
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         self.title = self.entry_title
         self.signal_change()
 
@@ -1138,7 +1138,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def delete_files(self):
         """Stops downloading the item.
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if self.downloader is not None:
             self.set_downloader(None)
 
@@ -1165,7 +1165,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def _calc_state(self):
         """Recalculate the state of an item after a change
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         # FIXME, 'failed', and 'paused' should get download icons.  The user
         # should be able to restart or cancel them (put them into the stopped
         # state).
@@ -1214,7 +1214,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
           Once they start watching them, then it reorders itself.
         """
 
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if self.downloader is None or not self.downloader.isFinished():
             if not self.get_viewed():
                 return u'new'
@@ -1287,7 +1287,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """Returns the download progress in absolute percentage [0.0 - 100.0].
         """
         progress = 0
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if self.downloader is None:
             return 0
         else:
@@ -1355,7 +1355,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def get_license(self):
         """Return the license associated with the video.
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if self.license:
             return self.license
         return self.getFeed().get_license()
@@ -1390,7 +1390,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def on_download_finished(self):
         """Called when the download for this item finishes."""
 
-        self.confirmDBThread()
+        self.confirm_db_thread()
         self.downloadedTime = datetime.now()
         self.videoFilename = self.downloader.get_filename()
         self.split_item()
@@ -1415,7 +1415,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.signal_change()
 
     def save(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if self.keep != True:
             self.keep = True
             self.signal_change()
@@ -1426,7 +1426,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
         NOTE: this will always return the absolute path to the file.
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if self.downloader and hasattr(self.downloader, "get_filename"):
             return self.downloader.get_filename()
 
@@ -1438,7 +1438,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
         NOTE: this will always return the absolute path to the file.
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if self.videoFilename:
             return os.path.join(self.get_filename(), self.videoFilename)
         else:
@@ -1582,7 +1582,7 @@ class FileItem(Item):
           get_state, they always act as not expiring.
         """
 
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if self.deleted:
             return u'expired'
         elif not self.getSeen():
@@ -1606,7 +1606,7 @@ class FileItem(Item):
         return self.parent_id is None
 
     def expire(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         self._remove_from_playlists()
         if self.isContainerItem:
             for item in self.getChildren():
@@ -1668,7 +1668,7 @@ class FileItem(Item):
             return self.releaseDateObj
 
     def migrate(self, newDir):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if self.parent_id:
             parent = self.getParent()
             self.filename = os.path.join (parent.get_filename(), self.offsetPath)

@@ -53,7 +53,7 @@ class IconCacheUpdater:
     @eventloop.asIdle
     def request_update(self, item, is_vital=False):
         if is_vital:
-            item.dbItem.confirmDBThread()
+            item.dbItem.confirm_db_thread()
             if (item.filename and fileutil.access(item.filename, os.R_OK)
                    and item.url == item.dbItem.get_thumbnail_url()):
                 is_vital = False
@@ -149,7 +149,7 @@ class IconCache(DDBObject):
             pass
 
     def error_callback(self, url, error=None):
-        self.dbItem.confirmDBThread()
+        self.dbItem.confirm_db_thread()
 
         if self.removed:
             iconCacheUpdater.update_finished()
@@ -170,7 +170,7 @@ class IconCache(DDBObject):
         iconCacheUpdater.update_finished()
 
     def update_icon_cache(self, url, info):
-        self.dbItem.confirmDBThread()
+        self.dbItem.confirm_db_thread()
 
         if self.removed:
             iconCacheUpdater.update_finished()
@@ -265,7 +265,7 @@ class IconCache(DDBObject):
             iconCacheUpdater.update_finished()
             return
 
-        self.dbItem.confirmDBThread()
+        self.dbItem.confirm_db_thread()
         if self.updating:
             self.needsUpdate = True
             iconCacheUpdater.update_finished()
@@ -306,11 +306,11 @@ class IconCache(DDBObject):
         self.needsUpdate = False
 
     def isValid(self):
-        self.dbItem.confirmDBThread()
+        self.dbItem.confirm_db_thread()
         return self.filename and fileutil.exists(self.filename)
 
     def get_filename(self):
-        self.dbItem.confirmDBThread()
+        self.dbItem.confirm_db_thread()
         if self.url and self.url.startswith(u"file://"):
             return getFileURLPath(self.url)
         elif self.url and self.url.startswith(u"/"):

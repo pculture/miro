@@ -653,7 +653,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     def getNewItems(self):
         """Returns the number of new items with the feed
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         count = 0
         for item in self.items:
             try:
@@ -673,17 +673,17 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         return DDBObject.getID(self)
 
     def hasError(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.errorState
 
     @returnsUnicode
     def getOriginalURL(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.origURL
 
     @returnsUnicode
     def getSearchTerm(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.searchTerm
 
     @returnsUnicode
@@ -710,7 +710,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         return self.userTitle == None
 
     def set_title(self, title):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         self.userTitle = title
         self.signal_change()
 
@@ -727,7 +727,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     def isVisible(self):
         """Returns true iff feed should be visible
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.visible
 
     def setVisible(self, visible):
@@ -738,7 +738,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @returnsUnicode
     def getAutoDownloadMode(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if self.autoDownloadable:
             if self.getEverything:
                 return u'all'
@@ -775,7 +775,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         """Sets the expiration attributes. Valid types are 'system', 'feed' and 'never'
         Expiration time is in hour(s).
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         self.expire = type_
         self.expireTime = timedelta(hours=time)
 
@@ -791,7 +791,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     def set_max_new(self, max_new):
         """Sets the maxNew attributes. -1 means unlimited.
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         oldMaxNew = self.maxNew
         self.maxNew = max_new
         self.signal_change()
@@ -800,7 +800,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             autodler.auto_downloader.start_downloads()
 
     def setMaxOldItems(self, maxOldItems):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         oldMaxOldItems = self.maxOldItems
         if maxOldItems == -1:
             maxOldItems = None
@@ -813,7 +813,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             self.actualFeed.clean_old_items()
 
     def update(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if not self.idExists():
             return
         if self.loading:
@@ -826,14 +826,14 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.actualFeed.update()
 
     def get_folder(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if self.folder_id is not None:
             return models.ChannelFolder.get_by_id(self.folder_id)
         else:
             return None
 
     def set_folder(self, newFolder):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         oldFolder = self.get_folder()
         if newFolder is not None:
             self.folder_id = newFolder.getID()
@@ -1039,7 +1039,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             self._handleFeedLoadingError(_("Bad content-type"))
 
     def finishGenerateFeed(self, feedImpl):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         self.loading = False
         if feedImpl is not None:
             self._set_feed_impl(feedImpl)
@@ -1102,14 +1102,14 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     def get_expiration_type(self):
         """Returns "feed," "system," or "never"
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.expire
 
     def getMaxFallBehind(self):
         """Returns"unlimited" or the maximum number of items this feed can fall
         behind
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if self.fallBehind < 0:
             return u"unlimited"
         else:
@@ -1118,7 +1118,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     def get_max_new(self):
         """Returns "unlimited" or the maximum number of items this feed wants
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if self.maxNew < 0:
             return u"unlimited"
         else:
@@ -1130,7 +1130,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         indicating that the caller should look up the default in
         prefs.MAX_OLD_ITEMS_DEFAULT.
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         if self.maxOldItems is None:
             return u"system"
 
@@ -1140,7 +1140,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         """Returns the total absolute expiration time in hours.
         WARNING: 'system' and 'never' expiration types return 0
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         expireAfterSetting = config.get(prefs.EXPIRE_AFTER_X_DAYS)
         if (self.expireTime is None or self.expire == 'never' or
                 (self.expire == 'system' and expireAfterSetting <= 0)):
@@ -1152,7 +1152,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     def getExpireDays(self):
         """Returns the number of days until a video expires
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         try:
             return self.expireTime.days
         except (SystemExit, KeyboardInterrupt):
@@ -1163,7 +1163,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     def getExpireHours(self):
         """Returns the number of hours until a video expires
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         try:
             return int(self.expireTime.seconds/3600)
         except (SystemExit, KeyboardInterrupt):
@@ -1179,7 +1179,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     def isAutoDownloadable(self):
         """Returns true iff item is autodownloadable
         """
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return self.autoDownloadable
 
     def autoDownloadStatus(self):
@@ -1195,7 +1195,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         in this feed will be moved to that feed.
         """
 
-        self.confirmDBThread()
+        self.confirm_db_thread()
 
         if isinstance(self.actualFeed, DirectoryWatchFeedImpl):
             moveItemsTo = None
@@ -1229,22 +1229,22 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @returnsUnicode
     def getThumbnail(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return resources.absoluteUrl(self.calcThumbnail())
 
     @returnsFilename
     def getThumbnailPath(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return resources.path(self.calcThumbnail())
 
     @returnsUnicode
     def getTablistThumbnail(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return resources.absoluteUrl(self.calcTablistThumbnail())
 
     @returnsFilename
     def getTablistThumbnailPath(self):
-        self.confirmDBThread()
+        self.confirm_db_thread()
         return resources.path(self.calcTablistThumbnail())
 
     def hasDownloadedItems(self):
@@ -1502,7 +1502,7 @@ class RSSFeedImpl(RSSFeedImplBase):
     def get_description(self):
         """Returns the description of the feed
         """
-        self.ufeed.confirmDBThread()
+        self.ufeed.confirm_db_thread()
         try:
             return xhtmlify(u'<span>'+unescape(self.parsed.feed.description)+u'</span>')
         except (SystemExit, KeyboardInterrupt):
@@ -1514,7 +1514,7 @@ class RSSFeedImpl(RSSFeedImplBase):
     def get_link(self):
         """Returns a link to a webpage associated with the feed
         """
-        self.ufeed.confirmDBThread()
+        self.ufeed.confirm_db_thread()
         try:
             return self.parsed.link
         except (SystemExit, KeyboardInterrupt):
@@ -1526,7 +1526,7 @@ class RSSFeedImpl(RSSFeedImplBase):
     def getLibraryLink(self):
         """Returns the URL of the library associated with the feed
         """
-        self.ufeed.confirmDBThread()
+        self.ufeed.confirm_db_thread()
         try:
             return self.parsed.libraryLink
         except (SystemExit, KeyboardInterrupt):
@@ -1546,7 +1546,7 @@ class RSSFeedImpl(RSSFeedImplBase):
         self.feedparser_finished()
 
     def feedparser_callback(self, parsed):
-        self.ufeed.confirmDBThread()
+        self.ufeed.confirm_db_thread()
         if not self.ufeed.idExists():
             return
         start = clock()
@@ -1566,13 +1566,13 @@ class RSSFeedImpl(RSSFeedImplBase):
             logging.timing("feed update for: %s too slow (%.3f secs)", self.url, end - start)
 
     def call_feedparser(self, html):
-        self.ufeed.confirmDBThread()
+        self.ufeed.confirm_db_thread()
         eventloop.callInThread(self.feedparser_callback, self.feedparser_errback, feedparser.parse, "Feedparser callback - %s" % self.url, html)
 
     def update(self):
         """Updates a feed
         """
-        self.ufeed.confirmDBThread()
+        self.ufeed.confirm_db_thread()
         if not self.ufeed.idExists():
             return
         if self.updating:
@@ -1692,7 +1692,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
     def get_description(self):
         """Returns the description of the feed
         """
-        self.ufeed.confirmDBThread()
+        self.ufeed.confirm_db_thread()
         try:
             return u'<span>Search All</span>'
         except (SystemExit, KeyboardInterrupt):
@@ -1723,7 +1723,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         self.feedparser_finished(url, True)
 
     def feedparser_callback(self, parsed, url):
-        self.ufeed.confirmDBThread()
+        self.ufeed.confirm_db_thread()
         if not self.ufeed.idExists() or url not in self.download_dc:
             return
         start = clock()
@@ -1736,7 +1736,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
             logging.timing("feed update for: %s too slow (%.3f secs)", self.url, end - start)
 
     def call_feedparser(self, html, url):
-        self.ufeed.confirmDBThread()
+        self.ufeed.confirm_db_thread()
         in_thread = False
         if in_thread:
             try:
@@ -1753,7 +1753,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
                                    feedparser.parse, "Feedparser callback - %s" % url, html)
 
     def update(self):
-        self.ufeed.confirmDBThread()
+        self.ufeed.confirm_db_thread()
         if not self.ufeed.idExists():
             return
         if self.updating:
@@ -1856,7 +1856,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
         linkHistory. This should be called at the end of an updated so that
         the next time we update we don't unnecessarily follow old links
         """
-        self.ufeed.confirmDBThread()
+        self.ufeed.confirm_db_thread()
         for url in self.tempHistory.keys():
             self.linkHistory[url] = self.tempHistory[url]
         self.tempHistory = {}
@@ -1892,7 +1892,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
         self.downloads.add(download)
 
     def processDownloadedHTML(self, info, urlList, depth, linkNumber, top=False):
-        self.ufeed.confirmDBThread()
+        self.ufeed.confirm_db_thread()
         #print "Done grabbing %s" % info['updated-url']
 
         if not self.tempHistory.has_key(info['updated-url']):
@@ -2004,7 +2004,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
 
     def update(self):
         # FIXME: go through and add error handling
-        self.ufeed.confirmDBThread()
+        self.ufeed.confirm_db_thread()
         if not self.ufeed.idExists():
             return
         if self.updating:
@@ -2063,7 +2063,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
                     if not link[2] is None:
                         linkDict[toUni(link[0], charset)]['thumbnail'] = toUni(link[2], charset)
             if setTitle and not handler.title is None:
-                self.ufeed.confirmDBThread()
+                self.ufeed.confirm_db_thread()
                 try:
                     self.title = toUni(handler.title, charset)
                 finally:
@@ -2080,7 +2080,7 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
         lg = HTMLLinkGrabber()
         links = lg.get_links(html, baseurl)
         if setTitle and not lg.title is None:
-            self.ufeed.confirmDBThread()
+            self.ufeed.confirm_db_thread()
             try:
                 self.title = toUni(lg.title, charset)
             finally:
@@ -2134,7 +2134,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
             self.scheduleUpdateEvents(-1)
 
     def update(self):
-        self.ufeed.confirmDBThread()
+        self.ufeed.confirm_db_thread()
 
         # Files known about by real feeds (other than other directory
         # watch feeds)
@@ -2200,7 +2200,7 @@ class DirectoryFeedImpl(FeedImpl):
         # should be re-written to better handle U3/PortableApps-style 
         # pathnames, case-insensitive file-systems, and file-systems 
         # that do 8.3 paths.  what we have here is a veritable mess.
-        self.ufeed.confirmDBThread()
+        self.ufeed.confirm_db_thread()
         movies_dir = config.get(prefs.MOVIES_DIRECTORY)
         # files known about by real feeds
         known_files = set()
@@ -2289,7 +2289,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
         self.updating = 0
 
     def reset(self, url=u'', searchState=False):
-        self.ufeed.confirmDBThread()
+        self.ufeed.confirm_db_thread()
         was_searching = self.searching
         try:
             self._reset_downloads()
@@ -2311,7 +2311,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
             self.ufeed.emit('update-finished')
 
     def preserveDownloads(self, downloadsFeed):
-        self.ufeed.confirmDBThread()
+        self.ufeed.confirm_db_thread()
         for item in self.items:
             if item.get_state() not in ('new', 'not-downloaded'):
                 item.setFeed(downloadsFeed.id)
