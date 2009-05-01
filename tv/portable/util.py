@@ -390,6 +390,7 @@ class ThreadSafeCounter:
         self.lock = threading.Lock()
 
     def inc(self):
+        """Increments the value by 1."""
         self.lock.acquire()
         try:
             self.value += 1
@@ -397,6 +398,7 @@ class ThreadSafeCounter:
             self.lock.release()
 
     def dec(self):
+        """Decrements the value by 1."""
         self.lock.acquire()
         try:
             self.value -= 1
@@ -404,6 +406,7 @@ class ThreadSafeCounter:
             self.lock.release()
 
     def getvalue(self):
+        """Returns the current value."""
         self.lock.acquire()
         try:
             return self.value
@@ -411,6 +414,8 @@ class ThreadSafeCounter:
             self.lock.release()
 
 def setup_logging():
+    """Adds TIMING and JSALERT logging levels.
+    """
     logging.addLevelName(25, "TIMING")
     logging.timing = lambda msg, *args, **kargs: logging.log(25, msg, *args, **kargs)
     logging.addLevelName(26, "JSALERT")
@@ -511,13 +516,16 @@ def stringify(u, handleerror="xmlcharrefreplace"):
     This is required for some logging especially where the things being
     logged are filenames which can be Unicode in the Windows platform.
 
-    Note that this is not the inverse of unicodify.
+    You can pass in a handleerror argument which defaults to
+    ``"xmlcharrefreplace"``.  This will increase the string size as it
+    converts unicode characters that don't have ascii equivalents into
+    escape sequences.  If you don't want to increase the string length, use
+    ``"replace"`` which will use ? for unicode characters that don't have
+    ascii equivalents.
 
-    You can pass in a handleerror argument which defaults to "xmlcharrefreplace".
-    This will increase the string size as it converts unicode characters that
-    don't have ascii equivalents into escape sequences.  If you don't want to
-    increase the string length, use "replace" which will use ? for unicode
-    characters that don't have ascii equivalents.
+    .. note::
+
+       This is not the inverse of unicodify!
     """
     if isinstance(u, unicode):
         return u.encode("ascii", handleerror)
@@ -722,8 +730,11 @@ def toUni(orig, encoding=None):
 import sgmllib
 
 class HTMLStripper(sgmllib.SGMLParser):
-    """
-    Strips html from text while maintaining links and newline-like HTML bits.
+    """Strips html from text while maintaining links and newline-like HTML
+    bits.
+
+    This class resets itself after every ``strip`` call, so you can re-use
+    the class if you want.  However, this class is not threadsafe.
     """
     def __init__(self):
         sgmllib.SGMLParser.__init__(self)
@@ -742,6 +753,8 @@ class HTMLStripper(sgmllib.SGMLParser):
         self.__unaryre = re.compile("\\<[ ]*([A-Za-z]+)[ ]*[/]?\\>", re.M)
 
     def strip(self, s):
+        """Takes a string ``s`` and returns the stripped version.
+        """
         if "<" not in s:
             return (s.strip(), [])
 
@@ -826,7 +839,16 @@ class Matrix(object):
     """2 Dimensional matrix.
     
     Matrix objects are accessed like a list, except tuples are used as
-    indices, for example matrix[3,4] = foo
+    indices, for example:
+
+    >>> m = Matrix(5, 5)
+    >>> m[3, 4] = "foo"
+    >>> m
+    None, None, None, None, None
+    None, None, None, None, None
+    None, None, None, None, None
+    None, None, None, None, None
+    None, None, None, 'foo', None
     """
 
     def __init__(self, columns, rows, initial_value=None):
