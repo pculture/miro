@@ -89,6 +89,7 @@ class MovieDataInfo:
             return
         commandLine, env = movie_data_program_info(
                 fileutil.expand_filename(self.videoPath), fileutil.expand_filename(self.thumbnailPath))
+        self.programInfo = (commandLine, env)
 
 class MovieDataUpdater:
     def __init__ (self):
