@@ -2,6 +2,7 @@ from miro.test.framework import MiroTestCase
 from miro import database
 from miro import item
 from miro import feed
+from miro import schema
 
 class DatabaseTestCase(MiroTestCase):
     def setUp(self):
@@ -145,3 +146,32 @@ class ViewTrackerTest(DatabaseTestCase):
         self.assertEquals(self.add_callbacks, [])
         self.assertEquals(self.remove_callbacks, [])
         self.assertEquals(self.change_callbacks, [])
+
+
+class TestDDBObject(database.DDBObject):
+    def setup_new(self, testcase, remove=False):
+        testcase.id_exists_retval = self.idExists()
+        if remove:
+            self.remove()
+
+class TestDDBObjectSchema(schema.ObjectSchema):
+    klass = TestDDBObject
+    table_name = 'test'
+    fields = [
+        ('id', schema.SchemaInt()),
+    ]
+
+class DDBObjectTestCase(MiroTestCase):
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self.reload_database(schema_version=0,
+                object_schemas=[TestDDBObjectSchema])
+
+    def test_id_exists_in_setup_new(self):
+        TestDDBObject(self)
+        self.assertEquals(self.id_exists_retval, True)
+
+    def test_remove_in_setup_new(self):
+        self.assertEquals(TestDDBObject.make_view().count(), 0)
+        TestDDBObject(self, remove=True)
+        self.assertEquals(TestDDBObject.make_view().count(), 0)

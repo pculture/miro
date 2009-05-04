@@ -254,9 +254,16 @@ class DDBObject(signals.SignalEmitter):
             self.__dict__.update(kwargs['restored_data'])
             app.db.remember_object(self)
             self.setup_restored()
+            if not self.idExists(): # handle setup_restored() calling remove()
+                return
         else:
             self.id = DDBObject.lastID = DDBObject.lastID + 1
+            # call remember_object so that idExists will return True when
+            # setup_new() is being run
+            app.db.remember_object(self)
             self.setup_new(*args, **kwargs)
+            if not self.idExists(): # handle setup_new() calling remove()
+                return
             app.db.update_obj(self)
 
         self.in_db_init = False
