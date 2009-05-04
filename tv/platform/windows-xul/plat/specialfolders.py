@@ -26,7 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Contains the locations of special windows folders like "My Documents."""
+"""Contains the locations of special windows folders like "My Documents"."""
 
 import ctypes
 import os
@@ -43,15 +43,13 @@ _specialFolderCSIDLs = {
     "System": 0x0025
 }
 
-def getSpecialFolder(name):
+def get_special_folder(name):
     """Get the location of a special folder.  name should be one of the
     following: 'AppData', 'My Music', 'My Pictures', 'My Videos', 
     'My Documents', 'Desktop'.
 
     The path to the folder will be returned, or None if the lookup fails
-
     """
-
     buf = ctypes.create_unicode_buffer(260)
     buf2 = ctypes.create_unicode_buffer(1024) 
     SHGetSpecialFolderPath = ctypes.windll.shell32.SHGetSpecialFolderPathW
@@ -65,16 +63,15 @@ def getSpecialFolder(name):
     else:
         return None
 
-commonAppDataDirectory = getSpecialFolder("Common AppData")
-appDataDirectory = getSpecialFolder('AppData')
+commonAppDataDirectory = get_special_folder("Common AppData")
+appDataDirectory = get_special_folder("AppData")
 if u3info.u3_active:
     baseMoviesDirectory = u3info.DEVICE_DOCUMENT_PREFIX + '\\' + "Videos"
     nonVideoDirectory = u3info.DEVICE_DOCUMENT_PREFIX
 else:
-    baseMoviesDirectory = getSpecialFolder('My Videos')
-    nonVideoDirectory = getSpecialFolder('Desktop')
+    baseMoviesDirectory = get_special_folder('My Videos')
+    nonVideoDirectory = get_special_folder('Desktop')
     # The "My Videos" folder isn't guaranteed to be listed. If it isn't
     # there, we do this hack.
     if baseMoviesDirectory is None:
-        baseMoviesDirectory = os.path.join(getSpecialFolder('My Documents'),'My Videos')
-
+        baseMoviesDirectory = os.path.join(get_special_folder('My Documents'), 'My Videos')

@@ -40,10 +40,10 @@ FLASH_URL = "http://get.adobe.com/flashplayer/"
 
 def _is_flash_installed():
     logging.info("checking %s", os.path.join(
-            specialfolders.getSpecialFolder('System'),
+            specialfolders.get_special_folder('System'),
             'Macromed', 'Flash', 'flashplayer.xpt'))
     return os.path.exists(os.path.join(
-            specialfolders.getSpecialFolder('System'),
+            specialfolders.get_special_folder('System'),
             'Macromed', 'Flash', 'flashplayer.xpt'))
 
 def check_flash_install():
