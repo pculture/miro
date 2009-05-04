@@ -188,7 +188,7 @@ def parse_command_line_args(args=None):
                     )
                     dialogs.MessageBoxDialog(title, msg).run()
                     continue
-                singleclick.add_torrent(arg, torrentInfohash)
+                add_torrent(arg, torrentInfohash)
                 added_downloads = True
             elif ext in ('.rss', '.rdf', '.atom', '.ato'):
                 feed.add_feed_from_file(arg)
