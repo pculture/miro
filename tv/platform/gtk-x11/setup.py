@@ -463,6 +463,10 @@ def get_mozilla_stuff():
             xpcom_lib = 'xulrunner-xpcom'
             gtkmozembed_lib = 'xulrunner-gtkmozembed'
 
+        elif re.search("^seamonkey-xpcom", packages, re.MULTILINE):
+            xpcom_lib = 'seamonkey-xpcom'
+            gtkmozembed_lib = 'seamonkey-gtkmozembed'
+
         elif re.search("^mozilla-xpcom", packages, re.MULTILINE):
             xpcom_lib = 'mozilla-xpcom'
             gtkmozembed_lib = 'mozilla-gtkmozembed'
@@ -472,7 +476,7 @@ def get_mozilla_stuff():
             gtkmozembed_lib = 'firefox-gtkmozembed'
 
         else:
-            sys.exit("Can't find libxul, xulrunner-xpcom, mozilla-xpcom or firefox-xpcom")
+            sys.exit("Can't find libxul, xulrunner-xpcom, seamonkey-xpcom, mozilla-xpcom or firefox-xpcom")
 
     print "using xpcom_lib: ", repr(xpcom_lib)
     print "using gtkmozembed_lib: ", repr(gtkmozembed_lib)
