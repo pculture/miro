@@ -32,13 +32,14 @@
 ## Paths and configuration                                                   ##
 ###############################################################################
 
-# The xine hack helps some systems.  See bug #7132.
+# The xine hack helps older systems.  See bug #7132.
 #
-# As of Miro 2.0, there is a command-line option to enable/disable the hack.
-# It's probably best to leave this as True allowing the hack to be compiled
-# in, and tell users to enable/disable at the command line with the xine-xvhack
-# setting.
-USE_XINE_HACK = True
+# If this hack is enabled and Miro crashes at the end of playback when
+# the xine renderer is used, then try disabling the hack.
+#
+# As of Miro 2.0, there is a command-line option to enable/disable the 
+# hack.
+USE_XINE_HACK = False
 
 
 # The following properties allow you to explicitly set xulrunner paths and
