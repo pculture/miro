@@ -170,9 +170,9 @@ def parse_command_line_args(args=None):
         if arg.startswith('file://'):
             arg = download_utils.getFileURLPath(arg)
         elif arg.startswith('miro:'):
-            singleclick.add_subscription_url('miro:', 'application/x-miro', arg)
+            add_subscription_url('miro:', 'application/x-miro', arg)
         elif arg.startswith('democracy:'):
-            singleclick.add_subscription_url('democracy:', 'application/x-democracy', arg)
+            add_subscription_url('democracy:', 'application/x-democracy', arg)
         elif arg.startswith('http:') or arg.startswith('https:') or arg.startswith('feed:') or arg.startswith('feeds:'):
             singleclick.add_download(filenameToUnicode(arg))
         elif os.path.exists(arg):

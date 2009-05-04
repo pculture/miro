@@ -221,6 +221,8 @@ class Importer(object):
                 if hasattr(child, 'getAttribute'):
                     if child.getAttribute('type') == 'link':
                         subscriptions.append(self._handle_site_entry(child))
+                    elif child.getAttribute('type') == 'guide':
+                        subscriptions.append(self._handle_guide_entry(child))
                     elif child.hasAttribute("xmlUrl"):
                         subscriptions.append(self._handle_feed_entry(child))
                     else:
@@ -233,6 +235,11 @@ class Importer(object):
     def _handle_site_entry(self, entry):
         url = entry.getAttribute("url")
         title = entry.getAttribute("text")
+        return {'type': 'site', 'url': url, 'title': title}
+
+    def _handle_guide_entry(self, entry):
+        url = entry.getAttribute("xmlUrl")
+        title = entry.getAttribute('text')
         return {'type': 'site', 'url': url, 'title': title}
 
     def _handle_feed_entry(self, entry):

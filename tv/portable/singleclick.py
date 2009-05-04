@@ -34,6 +34,7 @@ from miro.gtcache import gettext as _
 import logging
 import urlparse
 import os.path
+from feedparser import FeedParserDict
 
 from miro import dialogs
 from miro import item
@@ -89,7 +90,7 @@ def _build_entry(url, contentType, additional=None):
         _, _, urlpath, _, _, _ = urlparse.urlparse(url)
         entry['title'] = os.path.basename(urlpath)
 
-    return entry
+    return FeedParserDict(entry)
 
 def download_unknown_mime_type(url):
     title = _('File Download')
