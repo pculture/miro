@@ -48,7 +48,7 @@ from miro import downloader
 from miro import messages
 from miro import filetypes
 from miro import eventloop
-from miro import singleclick
+from miro import commandline
 from miro.frontends.widgets import menus
 from miro.frontends.widgets.application import Application
 from miro.plat import utils
