@@ -640,10 +640,10 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         for item in self.items:
             item.signal_change(needsSave=False)
 
-    def icon_changed(self, needsSave=True):
+    def icon_changed(self):
         """See item.getThumbnail to figure out which items to send signals for.
         """
-        self.signal_change(needsSave=needsSave)
+        self.signal_change(needsSave=False)
         for item in self.items:
             if not (item.icon_cache.isValid() or
                     item.screenshot or

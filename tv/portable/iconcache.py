@@ -116,13 +116,11 @@ class IconCache(DDBObject):
         return [r[0] for r in cls.select("filename", 'filename IS NOT NULL')]
 
     def icon_changed(self, needsSave=True):
-        try:
-            self.dbItem.icon_changed(needsSave=needsSave)
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
-            # FIXME - bad code; what exceptions get thrown here?
-            self.dbItem.signal_change(needsSave=needsSave)
+        self.signal_change(needsSave=needsSave)
+        if hasattr(self.dbItem, 'icon_changed'):
+            self.dbItem.icon_changed()
+        else:
+            self.dbItem.signal_change(needsSave=False)
 
     def remove(self):
         self.removed = True

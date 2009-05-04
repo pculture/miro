@@ -175,9 +175,9 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
             return fileutil.expand_filename(self.icon_cache.get_filename())
         return resources.path("images/icon-site.png")
 
-    def icon_changed(self, needsSave=True):
+    def icon_changed(self):
         self.confirm_db_thread()
-        self.signal_change(needsSave=True)
+        self.signal_change(needsSave=False)
 
     def get_thumbnail_url(self):
         return self.favicon
