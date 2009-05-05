@@ -387,7 +387,7 @@ class AppController(NSObject):
     @signature('v@:@@')
     def openURL_withReplyEvent_(self, event, replyEvent):
         keyDirectObject = struct.unpack(">i", "----")[0]
-        url = event.paramDescriptorForKeyword_(keyDirectObject).stringValue().decode('utf8')
+        url = event.paramDescriptorForKeyword_(keyDirectObject).stringValue().encode('utf8')
 
         eventloop.addIdle(lambda: commandline.parse_command_line_args([url]), "Open URL")
 
