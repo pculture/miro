@@ -879,7 +879,7 @@ class BackendMessageHandler(messages.MessageHandler):
             else:
                 tab_order = tabs.TabOrder.audio_feed_order()
                 tracker = self.audio_channel_tracker
-            tab_order.move_tab_after(folder.id, message.child_feed_ids)
+            tab_order.move_tabs_after(folder.id, message.child_feed_ids)
             tab_order.signal_change()
             tracker.send_whole_list = True
 
@@ -932,7 +932,7 @@ class BackendMessageHandler(messages.MessageHandler):
                 playlist = SavedPlaylist.get_by_id(id)
                 playlist.set_folder(folder)
             tab_order = tabs.TabOrder.playlist_order()
-            tab_order.move_tab_after(folder.id, message.child_playlist_ids)
+            tab_order.move_tabs_after(folder.id, message.child_playlist_ids)
             tab_order.signal_change()
             self.playlist_tracker.send_whole_list = True
 

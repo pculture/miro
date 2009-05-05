@@ -135,3 +135,12 @@ class TabOrder(database.DDBObject):
     def reorder(self, newOrder):
         self.tab_ids = newOrder
         self.signal_change()
+
+    def move_tabs_after(self, anchor_id, tab_ids):
+        """Move a sequence of tabs so that they are after another tab."""
+        anchor_pos = self.tab_ids.index(anchor_id)
+        move_set = set(tab_ids)
+        before = [id for id in self.tab_ids[:anchor_pos] if id not in move_set]
+        after = [id for id in self.tab_ids[anchor_pos+1:] if id not in
+                move_set]
+        self.reorder(before + [anchor_id] + list(tab_ids) + after)
