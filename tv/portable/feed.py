@@ -1283,7 +1283,6 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
     """
     Base class from which RSSFeedImpl and RSSMultiFeedImpl derive.
     """
-    firstImageRE = re.compile('\<\s*img\s+[^>]*src\s*=\s*"(.*?)"[^>]*\>', re.I | re.M)
 
     def setup_new(self, url, ufeed, title):
         FeedImpl.setup_new(self, url, ufeed, title)
@@ -1457,12 +1456,6 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
             for enc in entry['enclosures']:
                 if enc.has_key('thumbnail'):
                     return entry
-        # try to scape the thumbnail from the description.
-        if not entry.has_key('description'):
-            return entry
-        desc = RSSFeedImpl.firstImageRE.search(unescape(entry['description']))
-        if not desc is None:
-            entry['thumbnail'] = FeedParserDict({'url': desc.expand("\\1")})
         return entry
 
 class RSSFeedImpl(RSSFeedImplBase):
