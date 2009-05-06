@@ -115,8 +115,10 @@ XPCOM_LIB = None
 GTKMOZEMBED_LIB = None
 XULRUNNER_19 = None
 
-# The name of the boost library.  Used for building extensions.
-BOOST_LIB = 'boost_python'
+# The name of the boost python library.  Used for building extensions.
+# If this is set to None, setup.py will divine the right lib to use.
+# It should probably be either "boost_python" or "boost_python-mt".
+BOOST_LIB = None
 
 
 ###############################################################################
@@ -291,6 +293,26 @@ def parse_pkg_config(command, components, options_dict = None):
 
     return options_dict
 
+all_libs = []
+if os.path.exists(os.path.join(sysconfig.PREFIX, "lib")):
+    all_libs.extend(os.listdir(os.path.join(sysconfig.PREFIX, "lib")))
+if os.path.exists(os.path.join(sysconfig.PREFIX, "lib64")):
+    all_libs.extend(os.listdir(os.path.join(sysconfig.PREFIX, "lib64")))
+all_libs = [mem for mem in all_libs if mem.startswith("libboost")]
+
+def mt_or_not(s, all_libs=all_libs):
+    for mem in all_libs:
+        if mem.startswith("lib%s-mt" % s):
+            print "Using %s-mt" % s
+            return "%s-mt" % s
+    print "using %s" % s
+    return s
+
+if BOOST_LIB is None:
+    BOOST_LIB = mt_or_not("boost_python")
+else:
+    print "Using %s" % BOOST_LIB
+
 def compile_xine_extractor():
     rv = os.system("gcc %s -o %s `pkg-config --libs --cflags gdk-pixbuf-2.0 glib-2.0 libxine`" %
                    (os.path.join(platform_dir, "xine/xine_extractor.c"), os.path.join(platform_dir, "xine/xine_extractor")))
@@ -304,7 +326,7 @@ def generate_miro(xpcom_path):
 
     f = open(os.path.join(platform_dir, "miro"), "w")
     if xpcom_path:
-        runtimelib = "LD_LIBRARY_PATH=%s " % xpcom_path
+        runtimelib = "MOZILLA_FIVE_HOME=%s LD_LIBRARY_PATH=%s " % (xpcom_path, xpcom_path)
 
     f.write( \
 """#!/bin/sh
@@ -384,31 +406,13 @@ def get_libtorrent_extension(portable_dir):
     if is_x64():
         extra_compile_args.append("-DAMD64")
 
-    # check for mt
     libraries = ['z', 'pthread', 'ssl']
-    all_libs = []
-    if os.path.exists(os.path.join(sysconfig.PREFIX, "lib")):
-        all_libs.extend(os.listdir(os.path.join(sysconfig.PREFIX, "lib")))
-    if os.path.exists(os.path.join(sysconfig.PREFIX, "lib64")):
-        all_libs.extend(os.listdir(os.path.join(sysconfig.PREFIX, "lib64")))
-    all_libs = [mem for mem in all_libs if mem.startswith("libboost")]
 
-    def mt_or_not(s, all_libs=all_libs, libraries=libraries):
-        for mem in all_libs:
-            if mem.startswith("lib%s-mt" % s):
-                print "using %s-mt" % s
-                libraries += ["%s-mt" % s]
-                break
-        else:
-            print "using %s" % s
-            libraries += [s]
-
-    mt_or_not("boost_python")
-    mt_or_not("boost_filesystem")
-    mt_or_not("boost_date_time")
-    mt_or_not("boost_thread")
-    # mt_or_not("boost_regex")
-    # mt_or_not("boost_serialization")
+    # get mt or non-mt versions of the boost libraries
+    libraries += [mt_or_not("boost_python"),
+                  mt_or_not("boost_filesystem"),
+                  mt_or_not("boost_date_time"),
+                  mt_or_not("boost_thread")]
 
     config_vars = sysconfig.get_config_vars()
     if "CFLAGS" in config_vars and "-Wstrict-prototypes" in config_vars["CFLAGS"]:
@@ -458,6 +462,10 @@ def get_mozilla_stuff():
             xpcom_lib = 'xulrunner-xpcom'
             gtkmozembed_lib = 'xulrunner-gtkmozembed'
 
+        elif re.search("^seamonkey-xpcom", packages, re.MULTILINE):
+            xpcom_lib = 'seamonkey-xpcom'
+            gtkmozembed_lib = 'seamonkey-gtkmozembed'
+
         elif re.search("^mozilla-xpcom", packages, re.MULTILINE):
             xpcom_lib = 'mozilla-xpcom'
             gtkmozembed_lib = 'mozilla-gtkmozembed'
@@ -467,7 +475,7 @@ def get_mozilla_stuff():
             gtkmozembed_lib = 'firefox-gtkmozembed'
 
         else:
-            sys.exit("Can't find libxul, xulrunner-xpcom, mozilla-xpcom or firefox-xpcom")
+            sys.exit("Can't find libxul, xulrunner-xpcom, seamonkey-xpcom, mozilla-xpcom or firefox-xpcom")
 
     print "using xpcom_lib: ", repr(xpcom_lib)
     print "using gtkmozembed_lib: ", repr(gtkmozembed_lib)
