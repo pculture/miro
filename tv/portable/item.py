@@ -1394,8 +1394,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
         entry - dict containing the new data
         """
-        UandA = self.getUandA()
-        FeedParserValues(entry).update_item(self)
+        self.update_from_feed_parser_values(FeedParserValues(entry))
+
+    def update_from_feed_parser_values(self, fp_values):
+        fp_values.update_item(self)
+        print 'updated: ', self.link
+        print fp_values.data
         self.icon_cache.request_update()
         self._update_release_date()
         self.signal_change()

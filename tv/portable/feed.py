@@ -1289,21 +1289,6 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
         FeedImpl.setup_new(self, url, ufeed, title)
         self.scheduleUpdateEvents(0)
 
-    def _handleNewEntryForItem(self, item, entry, fp_values, channelTitle):
-        """Handle when we get a different entry for an item.
-
-        This happens when the feed sets the RSS GUID attribute, then changes
-        the entry for it.  Most of the time we will just update the item, but
-        if the user has already downloaded the item then we need to make sure
-        that we don't throw away the download.
-        """
-
-        if item.is_downloaded() and item.get_url() != fp_values.data['url']:
-            item.removeRSSID()
-            self._handleNewEntry(entry, channelTitle)
-        else:
-            item.update(entry)
-
     def _handleNewEntry(self, entry, channelTitle):
         """Handle getting a new entry from a feed."""
         item = itemmod.Item(entry, feed_id=self.ufeed.id)
@@ -1374,7 +1359,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                 if items_byid.has_key(id_):
                     item = items_byid[id_]
                     if not fp_values.compare_to_item(item):
-                        self._handleNewEntryForItem(item, entry, fp_values, channelTitle)
+                        item.update_from_feed_parser_values(fp_values)
                     new = False
                     old_items.discard(item)
             if new:
@@ -1384,7 +1369,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                     if items_byURLTitle.has_key(by_url_title_key):
                         item = items_byURLTitle[by_url_title_key]
                         if not fp_values.compare_to_item(item):
-                            self._handleNewEntryForItem(item, entry, fp_values, channelTitle)
+                            item.update_from_feed_parser_values(fp_values)
                         new = False
                         old_items.discard(item)
             if new:
@@ -1394,7 +1379,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                     else:
                         try:
                             if fp_values.compare_to_item_enclosures(item):
-                                self._handleNewEntryForItem(item, entry, fp_values, channelTitle)
+                                item.update_from_feed_parser_values(fp_values)
                                 new = False
                                 old_items.discard(item)
                         except (SystemExit, KeyboardInterrupt):
@@ -2343,7 +2328,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
                             if entry["id"] == item.getRSSID():
                                 item.setFeed(self.ufeed.id)
                                 if not fp_values.compare_to_item(item):
-                                    self._handleNewEntryForItem(item, entry, fp_values, channelTitle)
+                                    item.update_from_feed_parser_values(fp_values)
                                 return
                         except KeyError:
                             pass
@@ -2352,7 +2337,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
                         if title == oldtitle:
                             item.setFeed(self.ufeed.id)
                             if not fp_values.compare_to_item(item):
-                                self._handleNewEntryForItem(item, entry, fp_values, channelTitle)
+                                item.update_from_feed_parser_values(fp_values)
                             return
         RSSMultiFeedImpl._handleNewEntry(self, entry, channelTitle)
 
