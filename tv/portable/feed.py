@@ -625,7 +625,10 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.expire == u'never':
             return []
         elif self.expire == u'system':
-            delta = timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS))
+            expire_after_x_days = config.get(prefs.EXPIRE_AFTER_X_DAYS)
+            if expire_after_x_days == -1:
+                return []
+            delta = timedelta(days=expire_after_x_days)
         else:
             delta = self.expireTime
         return itemmod.Item.feed_expiring_view(self.id, datetime.now() - delta)
@@ -771,15 +774,17 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
                 auto.add(item)
         return auto
 
-    def setExpiration(self, type_, time):
-        """Sets the expiration attributes. Valid types are 'system', 'feed' and 'never'
+    def setExpiration(self, type_, time_):
+        """Sets the expiration attributes. Valid types are u'system', u'feed' and
+        u'never'.
+
         Expiration time is in hour(s).
         """
         self.confirm_db_thread()
         self.expire = type_
-        self.expireTime = timedelta(hours=time)
+        self.expireTime = timedelta(hours=time_)
 
-        if self.expire == "never":
+        if self.expire == u"never":
             for item in self.items:
                 if item.is_downloaded():
                     item.save()
