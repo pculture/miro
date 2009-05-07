@@ -854,13 +854,13 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             return (0, 0)
 
-    def getExpirationTime(self):
-        """Get the time when this item will expire.
-        Returns a datetime object,  or None if it doesn't expire.
-        """
+    def get_expiration_time(self):
+        """Returns the time when this item should expire.
 
+        Returns a datetime.datetime object,  or None if it doesn't expire.
+        """
         self.confirm_db_thread()
-        if self.getWatchedTime() is None or not self.is_downloaded():
+        if self.get_watched_time() is None or not self.is_downloaded():
             return None
         ufeed = self.getFeed()
         if ufeed.expire == u'never' or (ufeed.expire == u'system'
@@ -871,15 +871,21 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 expireTime = ufeed.expireTime
             elif ufeed.expire == u"system":
                 expireTime = timedelta(days=config.get(prefs.EXPIRE_AFTER_X_DAYS))
-            return self.getWatchedTime() + expireTime
+            return self.get_watched_time() + expireTime
 
-    def getWatchedTime(self):
+    def get_watched_time(self):
+        """Returns the most recent watched time of this item or any
+        of its child items.
+
+        Returns a datetime.datetime instance or None if the item and none
+        of its children have been watched.
+        """
         if not self.getSeen():
             return None
         if self.isContainerItem and self.watchedTime == None:
             self.watchedTime = datetime.min
             for item in self.getChildren():
-                childTime = item.getWatchedTime()
+                childTime = item.get_watched_time()
                 if childTime is None:
                     self.watchedTime = None
                     return None

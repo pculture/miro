@@ -387,7 +387,7 @@ class FeedItemTrackTest(TrackerTest):
         self.assertEquals(itemInfo.size, item.get_size())
         self.assertEquals(itemInfo.permalink, item.get_link())
         self.assertEquals(itemInfo.id, item.id)
-        self.assertEquals(itemInfo.expiration_date, item.getExpirationTime())
+        self.assertEquals(itemInfo.expiration_date, item.get_expiration_time())
         self.assertEquals(itemInfo.thumbnail, item.getThumbnail())
         if item.downloader:
             self.checkDownloadInfo(itemInfo.download_info)
@@ -471,7 +471,7 @@ class PlaylistItemTrackTest(TrackerTest):
         self.assertEquals(itemInfo.size, item.get_size())
         self.assertEquals(itemInfo.permalink, item.get_link())
         self.assertEquals(itemInfo.id, item.id)
-        self.assertEquals(itemInfo.expiration_date, item.getExpirationTime())
+        self.assertEquals(itemInfo.expiration_date, item.get_expiration_time())
         self.assertEquals(itemInfo.thumbnail, item.getThumbnail())
         if item.downloader:
             self.checkDownloadInfo(itemInfo.download_info)

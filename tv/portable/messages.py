@@ -904,7 +904,7 @@ class ItemInfo(object):
         self.pending_manual_dl = item.is_pending_manual_download()
         self.pending_auto_dl = item.is_pending_auto_download()
         if not item.keep and not item.is_external():
-            self.expiration_date = item.getExpirationTime()
+            self.expiration_date = item.get_expiration_time()
         else:
             self.expiration_date = None
         self.item_viewed = item.get_viewed()
