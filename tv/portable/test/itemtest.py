@@ -3,6 +3,7 @@ import os
 import tempfile
 import shutil
 
+from miro import config, prefs
 from miro.feed import Feed
 from miro.item import Item, FileItem
 from miro.downloader import RemoteDownloader
@@ -47,38 +48,65 @@ class ItemSeenTest(MiroTestCase):
         self.assert_(self.container_item.seen)
 
 class ExpiredViewTest(MiroTestCase):
-    def test_expired_view(self):
+    def setUp(self):
+        MiroTestCase.setUp(self)
+        self._expire_after_x_days_value = config.get(prefs.EXPIRE_AFTER_X_DAYS)
+        config.set(prefs.EXPIRE_AFTER_X_DAYS, 6)
+
+    def tearDown(self):
+        MiroTestCase.tearDown(self)
+        config.set(prefs.EXPIRE_AFTER_X_DAYS, self._expire_after_x_days_value)
+
+    def test_expired_view_1(self):
         f1 = Feed(u'http://example.com/1')
-        f2 = Feed(u'http://example.com/2')
-        f3 = Feed(u'http://example.com/3')
-        f1.setExpiration(u'never', 0)
-        f2.setExpiration(u'system', 0)
-        f3.setExpiration(u'feed', 24)
 
         i1 = Item(entry=get_entry_for_url(u'http://example.com/1/item1'),
                 feed_id=f1.id)
         i2 = Item(entry=get_entry_for_url(u'http://example.com/1/item2'),
                 feed_id=f1.id)
+
+        f1.setExpiration(u'never', 0)
+        i1.watchedTime = i2.watchedTime = datetime.now()
+
+        for obj in (f1, i1, i2):
+            obj.signal_change()
+
+        self.assertEquals(list(f1.expiring_items()), [])
+
+    def test_expired_view_2(self):
+        f2 = Feed(u'http://example.com/2')
+
         i3 = Item(entry=get_entry_for_url(u'http://example.com/2/item1'),
                 feed_id=f2.id)
         i4 = Item(entry=get_entry_for_url(u'http://example.com/2/item2'),
                 feed_id=f2.id)
+
+        f2.setExpiration(u'system', 0)
+        # system default is 6 days as set in setUp, so i3 should expire,
+        # but i4 should not.
+        i3.watchedTime = datetime.now() - timedelta(days=12)
+        i4.watchedTime = datetime.now() - timedelta(days=3)
+
+        for obj in (f2, i3, i4):
+            obj.signal_change()
+
+        self.assertEquals(list(f2.expiring_items()), [i3])
+
+    def test_expired_view_3(self):
+        f3 = Feed(u'http://example.com/3')
+
         i5 = Item(entry=get_entry_for_url(u'http://example.com/3/item1'),
                 feed_id=f3.id)
         i6 = Item(entry=get_entry_for_url(u'http://example.com/3/item2'),
                 feed_id=f3.id)
 
-        i1.watchedTime = i2.watchedTime = datetime.now()
-        i3.watchedTime = datetime.now() - timedelta(days=12)
-        i4.watchedTime = datetime.now() - timedelta(days=3)
+        f3.setExpiration(u'feed', 24)
         i5.watchedTime = datetime.now() - timedelta(days=3)
         i6.watchedTime = datetime.now() - timedelta(hours=12)
 
-        for obj in (f1, f2, f3, i1, i2, i3, i4, i5, i6):
+        for obj in (f3, i5, i6):
             obj.signal_change()
 
-        self.assertEquals(list(f1.expiring_items()), [])
-        self.assertEquals(list(f2.expiring_items()), [i3])
         self.assertEquals(list(f3.expiring_items()), [i5])
 
 class ItemRemoveTest(MiroTestCase):
