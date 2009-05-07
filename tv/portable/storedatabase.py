@@ -499,6 +499,7 @@ class SQLiteConverter(object):
             self._from_sql_converters[schema.SchemaFilename] = \
                     self._unicode_to_filename
         # make sure SchemaBinary is always restored as a byte-string
+        self._to_sql_converters[schema.SchemaBinary] = buffer
         self._from_sql_converters[schema.SchemaBinary] = self._convert_binary
 
     def to_sql(self, schema_item, value):
