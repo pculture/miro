@@ -124,34 +124,34 @@ class Downloader:
         self.dc = eventloop.addIdle(self.start_downloads_idle, "Start Downloads")
 
     def pending_on_add(self, tracker, obj):
-        feed = obj.getFeed()
+        feed = obj.get_feed()
         self.pending_count = self.pending_count + 1
         self.feed_pending_count[feed] = self.feed_pending_count.get(feed, 0) + 1
         self.start_downloads()
     
     def pending_on_remove(self, tracker, obj):
-        feed = obj.getFeed()
+        feed = obj.get_feed()
         self.pending_count = self.pending_count - 1
         self.feed_pending_count[feed] = self.feed_pending_count.get(feed, 0) - 1
     
     def running_on_add(self, tracker, obj):
-        feed = obj.getFeed()
+        feed = obj.get_feed()
         self.running_count = self.running_count + 1
         self.feed_running_count[feed] = self.feed_running_count.get(feed, 0) + 1
     
     def running_on_remove(self, tracker, obj):
-        feed = obj.getFeed()
+        feed = obj.get_feed()
         self.running_count = self.running_count - 1
         self.feed_running_count[feed] = self.feed_running_count.get(feed, 0) - 1
         self.start_downloads()
     
     def new_on_add(self, tracker, obj):
-        feed = obj.getFeed()
+        feed = obj.get_feed()
         self.new_count = self.new_count + 1
         self.feed_new_count[feed] = self.feed_new_count.get(feed, 0) + 1
     
     def new_on_remove(self, tracker, obj):
-        feed = obj.getFeed()
+        feed = obj.get_feed()
         self.new_count = self.new_count - 1
         self.feed_new_count[feed] = self.feed_new_count.get(feed, 0) - 1
         self.start_downloads()

@@ -406,8 +406,6 @@ class FeedParserAttributesTestCase(FeedTestCase):
         self.assertEquals(self.item.get_url(), enclosure.url)
         self.assertEquals(self.item.get_size(), int(enclosure.length))
         self.assertEquals(self.item.get_format(), '.mpeg')
-        self.assertEquals(self.item.getFirstVideoEnclosureType(),
-                enclosure.type)
 
     def test_remove_rssid(self):
         self.item.removeRSSID()

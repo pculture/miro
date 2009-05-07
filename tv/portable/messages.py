@@ -899,7 +899,7 @@ class ItemInfo(object):
         self.permalink = item.get_link()
         self.commentslink = item.get_comments_link()
         self.payment_link = item.get_payment_link()
-        self.has_sharable_url = item.hasSharableURL()
+        self.has_sharable_url = item.has_shareable_url()
         self.can_be_saved = item.show_save_button()
         self.pending_manual_dl = item.is_pending_manual_download()
         self.pending_auto_dl = item.is_pending_auto_download()

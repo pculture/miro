@@ -72,8 +72,8 @@ def item(x,y):
             return True
         else:
             # x and y are not children of the same item, so sort by the parent (which might be the self for one of them.)
-            xParent = x.getParent()
-            yParent = y.getParent()
+            xParent = x.get_parent()
+            yParent = y.get_parent()
             return item((xParent, xParent), (yParent, yParent))
 
 def downloadersByEndTime (x, y):

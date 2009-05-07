@@ -69,7 +69,11 @@ from miro import models
 _charset = locale.getpreferredencoding()
 
 KNOWN_MIME_TYPES = (u'audio', u'video')
-KNOWN_MIME_SUBTYPES = (u'mov', u'wmv', u'mp4', u'mp3', u'mpg', u'mpeg', u'avi', u'x-flv', u'x-msvideo', u'm4v', u'mkv', u'm2v', u'ogg')
+KNOWN_MIME_SUBTYPES = (
+    u'mov', u'wmv', u'mp4', u'mp3',
+    u'mpg', u'mpeg', u'avi', u'x-flv',
+    u'x-msvideo', u'm4v', u'mkv', u'm2v', u'ogg'
+    )
 MIME_SUBSITUTIONS = {
     u'QUICKTIME': u'MOV',
 }
@@ -81,26 +85,25 @@ class FeedParserValues(object):
     attribute for various attributes using in Item (entry_title, rss_id, url,
     etc...).
     """
-
     def __init__(self, entry):
         self.entry = entry
         self.normalized_entry = normalize_feedparser_dict(entry)
         self.first_video_enclosure = getFirstVideoEnclosure(entry)
 
         self.data = {
-                'license': entry.get("license"),
-                'rss_id': entry.get('id'),
-                'entry_title': self._calc_title(),
-                'thumbnail_url': self._calc_thumbnail_url(),
-                'raw_descrption': self._calc_raw_description(),
-                'link': self._calc_link(),
-                'payment_link': self._calc_payment_link(),
-                'comments_link': self._calc_comments_link(),
-                'url': self._calc_url(),
-                'enclosure_size': self._calc_enclosure_size(),
-                'enclosure_type': self._calc_enclosure_type(),
-                'enclosure_format': self._calc_enclosure_format(),
-                'releaseDateObj': self._calc_release_date(),
+            'license': entry.get("license"),
+            'rss_id': entry.get('id'),
+            'entry_title': self._calc_title(),
+            'thumbnail_url': self._calc_thumbnail_url(),
+            'raw_descrption': self._calc_raw_description(),
+            'link': self._calc_link(),
+            'payment_link': self._calc_payment_link(),
+            'comments_link': self._calc_comments_link(),
+            'url': self._calc_url(),
+            'enclosure_size': self._calc_enclosure_size(),
+            'enclosure_type': self._calc_enclosure_type(),
+            'enclosure_format': self._calc_enclosure_format(),
+            'releaseDateObj': self._calc_release_date(),
         }
 
     def update_item(self, item):
@@ -115,8 +118,10 @@ class FeedParserValues(object):
         return True
 
     def compare_to_item_enclosures(self, item):
-        compare_keys = ('url', 'enclosure_size', 'enclosure_type',
-                'enclosure_format')
+        compare_keys = (
+            'url', 'enclosure_size', 'enclosure_type',
+            'enclosure_format'
+            )
         for key in compare_keys:
             if getattr(item, key) != self.data[key]:
                 return False
@@ -522,7 +527,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             if not self.getSeen():
                 self.expiring = False
             else:
-                ufeed = self.getFeed()
+                ufeed = self.get_feed()
                 if (self.keep or ufeed.expire == u'never' or
                         (ufeed.expire == u'system' and
                             config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0)):
@@ -604,7 +609,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                     self.set_video_filename(new_video_filename)
                     self.isVideo = True
             else:
-                if not self.getFeedURL().startswith ("dtv:directoryfeed"):
+                if not self.get_feed_url().startswith ("dtv:directoryfeed"):
                     target_dir = config.get(prefs.NON_VIDEO_DIRECTORY)
                     if not filename_root.startswith(target_dir):
                         if isinstance(self, FileItem):
@@ -648,7 +653,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if search.match(searchString, [title.lower(), desc.lower(), filename.lower()]):
             return True
         if not self.isContainerItem:
-            parent = self.getParent()
+            parent = self.get_parent()
         if parent != self:
             return matchingItems(parent, searchString)
         return False
@@ -695,7 +700,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             del self._state
         if hasattr(self, "_size"):
             del self._size
-        self.getFeed().on_item_changed()
+        self.get_feed().on_item_changed()
 
     def get_viewed(self):
         """Returns True iff this item has never been viewed in the interface.
@@ -706,13 +711,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             # optimizing by trying the cached feed
             return self._feed.last_viewed >= self.creationTime
         except AttributeError:
-            return self.getFeed().last_viewed >= self.creationTime
-
-    @returnsUnicode
-    def getFirstVideoEnclosureType(self):
-        """Returns mime-type of the first video enclosure in the item.
-        """
-        return self.enclosure_type
+            return self.get_feed().last_viewed >= self.creationTime
 
     @returnsUnicode
     def get_url(self):
@@ -720,7 +719,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """
         return self.url
 
-    def hasSharableURL(self):
+    def has_shareable_url(self):
         """Does this item have a URL that the user can share with others?
 
         This returns True when the item has a non-file URL.
@@ -728,7 +727,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         url = self.get_url()
         return url != u'' and not url.startswith(u"file:")
 
-    def getFeed(self):
+    def get_feed(self):
         """Returns the feed this item came from.
         """
         if hasattr(self, "_feed"):
@@ -737,12 +736,12 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.feed_id is not None:
             self._feed = models.Feed.get_by_id(self.feed_id)
         elif self.parent_id is not None:
-            self._feed = self.getParent().getFeed()
+            self._feed = self.get_parent().get_feed()
         else:
             self._feed = None
         return self._feed
 
-    def getParent(self):
+    def get_parent(self):
         if hasattr(self, "_parent"):
             return self._parent
 
@@ -753,11 +752,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         return self._parent
 
     @returnsUnicode
-    def getFeedURL(self):
-        return self.getFeed().get_url()
-
-    def feedExists(self):
-        return self.feed_id and self.dd.idExists(self.feed_id)
+    def get_feed_url(self):
+        return self.get_feed().get_url()
 
     def getChildren(self):
         if self.isContainerItem:
@@ -809,7 +805,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             self.remove()
         else:
             self.signal_change()
-        self.getFeed().signal_change()
+        self.get_feed().signal_change()
 
     def stopUpload(self):
         if self.downloader:
@@ -862,7 +858,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.confirm_db_thread()
         if self.get_watched_time() is None or not self.is_downloaded():
             return None
-        ufeed = self.getFeed()
+        ufeed = self.get_feed()
         if ufeed.expire == u'never' or (ufeed.expire == u'system'
                 and config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0):
             return None
@@ -899,7 +895,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             if not self.getSeen():
                 self.expiring = False
             else:
-                ufeed = self.getFeed()
+                ufeed = self.get_feed()
                 if (self.keep or ufeed.expire == u'never' or
                         (ufeed.expire == u'system' and
                             config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0)):
@@ -935,7 +931,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.parent_id:
             unseen_children = self.make_view('parent_id=? AND NOT seen',
                     (self.parent_id,))
-            self.getParent().seen = (unseen_children.count() == 0)
+            self.get_parent().seen = (unseen_children.count() == 0)
 
     def markItemUnseen(self, markOtherItems=True):
         self.confirm_db_thread()
@@ -1018,7 +1014,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             else:
                 self.downloader.start()
         self.signal_change()
-        self.getFeed().signal_change()
+        self.get_feed().signal_change()
 
     def pause(self):
         if self.downloader:
@@ -1035,13 +1031,13 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.confirm_db_thread()
         if self.was_downloaded:
             return False
-        ufeed = self.getFeed()
+        ufeed = self.get_feed()
         if ufeed.getEverything:
             return True
         return self.eligibleForAutoDownload
 
     def is_pending_auto_download(self):
-        return (self.getFeed().isAutoDownloadable() and
+        return (self.get_feed().isAutoDownloadable() and
                 self.is_eligible_for_auto_download())
 
     @returnsUnicode
@@ -1063,7 +1059,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         elif self.isContainerItem:
             return resources.path("images/container-icon.png")
         else:
-            feed = self.getFeed()
+            feed = self.get_feed()
             if feed.thumbnailValid():
                 return feed.getThumbnailPath()
             elif (self.get_video_filename()
@@ -1107,9 +1103,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @returnsUnicode
     def get_channel_title(self, allowSearchFeedTitle=False):
-        implClass = self.getFeed().actualFeed.__class__
+        implClass = self.get_feed().actualFeed.__class__
         if implClass in (models.RSSFeedImpl, models.ScraperFeedImpl):
-            return self.getFeed().get_title()
+            return self.get-feed().get_title()
         elif implClass == models.SearchFeedImpl and allowSearchFeedTitle:
             e = searchengines.get_last_engine()
             if e:
@@ -1377,7 +1373,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.confirm_db_thread()
         if self.license:
             return self.license
-        return self.getFeed().get_license()
+        return self.get_feed().get_license()
 
     @returnsUnicode
     def get_comments_link(self):
@@ -1481,13 +1477,13 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """Returns True iff this item was not downloaded from a Democracy
         channel.
         """
-        return self.feed_id is not None and self.getFeedURL() == 'dtv:manualFeed'
+        return self.feed_id is not None and self.get_feed_url() == 'dtv:manualFeed'
 
     def is_single(self):
         """Returns True iff the item is in the singleFeed and thus was created
         by the "open" menu.
         """
-        return self.getFeedURL() == 'dtv:singleFeed'
+        return self.get_feed_url() == 'dtv:singleFeed'
 
     def migrate_children(self, newdir):
         if self.isContainerItem:
@@ -1612,7 +1608,7 @@ class FileItem(Item):
         elif not self.getSeen():
             return u'newly-downloaded'
 
-        if self.parent_id and self.getParent().get_expiring():
+        if self.parent_id and self.get_parent().get_expiring():
             return u'expiring'
         else:
             return u'saved'
@@ -1643,7 +1639,7 @@ class FileItem(Item):
             self.signal_change()
         else:
             # external item that the user deleted in Miro
-            url = self.getFeedURL()
+            url = self.get_feed_url()
             if url.startswith("dtv:manualFeed") or url.startswith("dtv:singleFeed"):
                 self.remove()
             else:
@@ -1651,8 +1647,8 @@ class FileItem(Item):
                 self.signal_change()
 
     def delete_files(self):
-        if self.getParent():
-            dler = self.getParent().downloader
+        if self.get_parent():
+            dler = self.get_parent().downloader
             if dler:
                 dler.stop(False)
         try:
@@ -1687,14 +1683,14 @@ class FileItem(Item):
 
     def get_release_date_obj(self):
         if self.parent_id:
-            return self.getParent().releaseDateObj
+            return self.get_parent().releaseDateObj
         else:
             return self.releaseDateObj
 
     def migrate(self, newDir):
         self.confirm_db_thread()
         if self.parent_id:
-            parent = self.getParent()
+            parent = self.get_parent()
             self.filename = os.path.join (parent.get_filename(), self.offsetPath)
             return
         if self.shortFilename is None:
@@ -1721,7 +1717,7 @@ filename was %s""", stringify(self.filename))
             if self.parent_id is None:
                 self.shortFilename = cleanFilename(os.path.basename(self.filename))
             else:
-                parent_file = self.getParent().get_filename()
+                parent_file = self.get_parent().get_filename()
                 if self.filename.startswith(parent_file):
                     self.shortFilename = cleanFilename(self.filename[len(parent_file):])
                 else:
