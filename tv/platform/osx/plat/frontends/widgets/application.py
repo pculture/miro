@@ -365,7 +365,7 @@ class AppController(NSObject):
             if dlCount > 0:
                 logging.info("System is going to sleep, suspending %d download(s)." % dlCount)
                 for dl in self.pausedDownloaders:
-                    dl.pause(block=True)
+                    dl.pause()
         dc = eventloop.addUrgentCall(lambda:pauseRunningDownloaders(), "Suspending downloaders for sleep")
         # Until we can get proper delayed call completion notification, we're
         # just going to wait a few seconds here :)

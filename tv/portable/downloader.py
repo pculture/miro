@@ -292,7 +292,7 @@ class RemoteDownloader(DDBObject):
             self.status["reasonFailed"] = _('Flash URL Scraping Error')
         self.signal_change()
 
-    def pause(self, block=False):
+    def pause(self):
         """Pauses the download."""
         if _downloads.has_key(self.dlid):
             c = command.PauseDownloadCommand(RemoteDownloader.dldaemon, self.dlid)
