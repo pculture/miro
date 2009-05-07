@@ -395,7 +395,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         checkU(url)
         if initiallyAutoDownloadable == None:
             mode = config.get(prefs.CHANNEL_AUTO_DEFAULT)
-            # note that this is somewhat duplicated in setAutoDownloadMode
+            # note that this is somewhat duplicated in set_auto_download_mode
             if mode == u'all':
                 self.getEverything = True
                 self.autoDownloadable = True
@@ -644,7 +644,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             item.signal_change(needsSave=False)
 
     def icon_changed(self):
-        """See item.getThumbnail to figure out which items to send signals for.
+        """See item.get_thumbnail to figure out which items to send signals for.
         """
         self.signal_change(needsSave=False)
         for item in self.items:
@@ -750,7 +750,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             return u'off'
 
-    def setAutoDownloadMode(self, mode):
+    def set_auto_download_mode(self, mode):
         # note that this is somewhat duplicated in setup_new
         if mode == u'all':
             self.getEverything = True
@@ -1233,12 +1233,13 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             return default_tablist_feed_icon_path()
 
     @returnsUnicode
-    def getThumbnail(self):
+    def get_thumbnail(self):
+        # FIXME - it looks like this never gets called
         self.confirm_db_thread()
         return resources.absoluteUrl(self.calcThumbnail())
 
     @returnsFilename
-    def getThumbnailPath(self):
+    def get_thumbnail_path(self):
         self.confirm_db_thread()
         return resources.path(self.calcThumbnail())
 
@@ -2151,7 +2152,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
                 item.remove()
         if self.firstUpdate:
             for item in self.items:
-                item.markItemSeen()
+                item.mark_item_seen()
             self.firstUpdate = False
 
         self.scheduleUpdateEvents(-1)

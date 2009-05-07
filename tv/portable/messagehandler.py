@@ -540,21 +540,21 @@ class BackendMessageHandler(messages.MessageHandler):
     def handle_mark_item_watched(self, message):
         try:
             item_ = item.Item.get_by_id(message.id)
-            item_.markItemSeen()
+            item_.mark_item_seen()
         except database.ObjectNotFoundError:
             logging.warning("handle_mark_item_seen: can't find item by id %s", message.id)
 
     def handle_mark_item_unwatched(self, message):
         try:
             item_ = item.Item.get_by_id(message.id)
-            item_.markItemUnseen()
+            item_.mark_item_unseen()
         except database.ObjectNotFoundError:
             logging.warning("handle_mark_item_unwatched: can't find item by id %s", message.id)
 
     def handle_set_item_resume_time(self, message):
         try:
             item_ = item.Item.get_by_id(message.id)
-            item_.setResumeTime(message.resume_time)
+            item_.set_resume_time(message.resume_time)
         except database.ObjectNotFoundError:
             logging.warning("handle_set_item_resume_time: can't find item by id %s", message.id)
 
@@ -1194,7 +1194,7 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warn("AutodownloadChange: Feed not found -- %s", message.id)
         else:
-            feed_.setAutoDownloadMode(message.setting)
+            feed_.set_auto_download_mode(message.setting)
 
     def handle_track_download_count(self, message):
         if self.download_count_tracker is None:

@@ -524,7 +524,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def get_expiring(self):
         if self.expiring is None:
-            if not self.getSeen():
+            if not self.get_seen():
                 self.expiring = False
             else:
                 ufeed = self.get_feed()
@@ -876,7 +876,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         Returns a datetime.datetime instance or None if the item and none
         of its children have been watched.
         """
-        if not self.getSeen():
+        if not self.get_seen():
             return None
         if self.isContainerItem and self.watchedTime == None:
             self.watchedTime = datetime.min
@@ -892,7 +892,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def get_expiring(self):
         if self.expiring is None:
-            if not self.getSeen():
+            if not self.get_seen():
                 self.expiring = False
             else:
                 ufeed = self.get_feed()
@@ -904,7 +904,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                     self.expiring = True
         return self.expiring
 
-    def getSeen(self):
+    def get_seen(self):
         """Returns true iff video has been seen.
 
         Note the difference between "viewed" and "seen".
@@ -912,7 +912,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.confirm_db_thread()
         return self.seen
 
-    def markItemSeen(self, markOtherItems=True):
+    def mark_item_seen(self, markOtherItems=True):
         """Marks the item as seen.
         """
         self.confirm_db_thread()
@@ -925,7 +925,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             if markOtherItems and self.downloader:
                 for item in self.downloader.itemList:
                     if item != self:
-                        item.markItemSeen(False)
+                        item.mark_item_seen(False)
 
     def update_parent_seen(self):
         if self.parent_id:
@@ -933,7 +933,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                     (self.parent_id,))
             self.get_parent().seen = (unseen_children.count() == 0)
 
-    def markItemUnseen(self, markOtherItems=True):
+    def mark_item_unseen(self, markOtherItems=True):
         self.confirm_db_thread()
         if self.isContainerItem:
             for item in self.getChildren():
@@ -950,7 +950,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             if markOtherItems and self.downloader:
                 for item in self.downloader.itemList:
                     if item != self:
-                        item.markItemUnseen(False)
+                        item.mark_item_unseen(False)
 
     @returnsUnicode
     def getRSSID(self):
@@ -962,26 +962,26 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.rss_id = None
         self.signal_change()
 
-    def setAutoDownloaded(self, autodl=True):
+    def set_auto_downloaded(self, autodl=True):
         self.confirm_db_thread()
         if autodl != self.autoDownloaded:
             self.autoDownloaded = autodl
             self.signal_change()
 
     @eventloop.asIdle
-    def setResumeTime(self, position):
+    def set_resume_time(self, position):
         if not self.idExists():
             return
         try:
             position = int(position)
         except TypeError:
-            logging.exception("setResumeTime: not-saving!  given non-int %s", position)
+            logging.exception("set_resume_time: not-saving!  given non-int %s", position)
             return
         if self.resumeTime != position:
             self.resumeTime = position
             self.signal_change()
 
-    def getAutoDownloaded(self):
+    def get_auto_downloaded(self):
         """Returns true iff item was auto downloaded.
         """
         self.confirm_db_thread()
@@ -1002,7 +1002,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             self.signal_change()
             return
         else:
-            self.setAutoDownloaded(autodl)
+            self.set_auto_downloaded(autodl)
             self.pendingManualDL = False
 
         dler = downloader.get_downloader_for_item(self)
@@ -1021,7 +1021,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             self.downloader.pause()
 
     def resume(self):
-        self.download(self.getAutoDownloaded())
+        self.download(self.get_auto_downloaded())
 
     def is_pending_manual_download(self):
         self.confirm_db_thread()
@@ -1045,7 +1045,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         return self.thumbnail_url
 
     @returnsFilename
-    def getThumbnail(self):
+    def get_thumbnail(self):
         """NOTE: When changing this function, change feed.icon_changed to signal
         the right set of items.
         """
@@ -1061,7 +1061,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             feed = self.get_feed()
             if feed.thumbnailValid():
-                return feed.getThumbnailPath()
+                return feed.get_thumbnail_path()
             elif (self.get_video_filename()
                      and filetypes.is_audio_filename(self.get_video_filename())):
                 return resources.path("images/thumb-default-audio.png")
@@ -1203,7 +1203,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 self._state = u'paused'
         elif not self.downloader.isFinished():
             self._state = u'downloading'
-        elif not self.getSeen():
+        elif not self.get_seen():
             self._state = u'newly-downloaded'
         elif self.get_expiring():
             self._state = u'expiring'
@@ -1237,7 +1237,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 return u'expired'
             else:
                 return u'not-downloaded'
-        elif not self.getSeen():
+        elif not self.get_seen():
             if not self.get_viewed():
                 return u'new'
             return u'newly-downloaded'
@@ -1575,7 +1575,7 @@ class FileItem(Item):
     def get_state(self):
         if self.deleted:
             return u"expired"
-        elif self.getSeen():
+        elif self.get_seen():
             return u"saved"
         else:
             return u"newly-downloaded"
@@ -1605,7 +1605,7 @@ class FileItem(Item):
         self.confirm_db_thread()
         if self.deleted:
             return u'expired'
-        elif not self.getSeen():
+        elif not self.get_seen():
             return u'newly-downloaded'
 
         if self.parent_id and self.get_parent().get_expiring():

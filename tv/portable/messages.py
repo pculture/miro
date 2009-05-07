@@ -761,13 +761,13 @@ class ChannelInfo(object):
             self.is_updating = channel_obj.isUpdating()
             self.parent_id = channel_obj.folder_id
             self.url = channel_obj.get_url()
-            self.thumbnail = channel_obj.getThumbnailPath()
+            self.thumbnail = channel_obj.get_thumbnail_path()
             self.base_href = channel_obj.get_base_href()
             self.autodownload_mode = channel_obj.getAutoDownloadMode()
             self.is_folder = False
             self.is_directory_feed = (self.url is not None and
                     self.url.startswith('dtv:directoryfeed'))
-            self.tab_icon = channel_obj.getThumbnailPath()
+            self.tab_icon = channel_obj.get_thumbnail_path()
             self.expire = channel_obj.get_expiration_type()
             self.expire_time = channel_obj.get_expiration_time()
             self.max_new = channel_obj.get_max_new()
@@ -911,9 +911,9 @@ class ItemInfo(object):
         self.downloaded = item.is_downloaded()
         self.is_external = item.is_external()
         self.is_single = item.is_single()
-        self.video_watched = item.getSeen()
+        self.video_watched = item.get_seen()
         self.video_path = item.get_video_filename()
-        self.thumbnail = item.getThumbnail()
+        self.thumbnail = item.get_thumbnail()
         self.thumbnail_url = item.get_thumbnail_url()
         self.file_format = item.get_format()
         self.license = item.get_license()

@@ -82,7 +82,7 @@ def add_video(path, single=False):
     else:
         correctFeed = feed.Feed.get_manual_feed()
     fileItem = item.FileItem(path, feed_id=correctFeed.getID())
-    fileItem.markItemSeen()
+    fileItem.mark_item_seen()
     if _command_line_videos is not None:
         _command_line_videos.add(fileItem)
 

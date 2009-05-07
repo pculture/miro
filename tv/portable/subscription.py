@@ -232,7 +232,7 @@ class Subscriber(object):
             auto_download_mode = feed_dict.get('auto_download')
             if auto_download_mode is not None and auto_download_mode in ['all',
                     'new', 'off']:
-                f.setAutoDownloadMode(auto_download_mode)
+                f.set_auto_download_mode(auto_download_mode)
             expiry_time = feed_dict.get('expiry_time')
             if expiry_time is not None and expiry_time != '':
                 if expiry_time == 'system':
