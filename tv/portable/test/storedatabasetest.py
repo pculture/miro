@@ -206,7 +206,7 @@ class FakeSchemaTest(StoreDatabaseTest):
                 dog=u'scruffy')
         self.ben = PCFProgramer(u'ben', 25, 3.4, [self.joe],
                 '/home/ben/\u1234'.encode("utf-8"), True)
-        self.db = [ self.lee, self.joe, self.ben]
+        self.db = [self.lee, self.joe, self.ben]
         databaseupgrade._upgrade_overide[1] = upgrade1
         databaseupgrade._upgrade_overide[2] = upgrade2
 
@@ -267,10 +267,12 @@ class DiskTest(FakeSchemaTest):
 
     def test_schema_repr(self):
         self.joe.stuff = {
-                '1234': datetime.now(),
-                None: time.localtime(),
-                u'booya': 23.0
-                }
+            '1234': datetime.now(),
+            # matches the fix in feedparser which explicitly converts
+            # time.struct_time to a 9-tuple because of Python 2.6.
+            None: tuple(time.localtime()),
+            u'booya': 23.0
+            }
         self.joe.signal_change()
         self.reload_test_database()
         self.check_database()
