@@ -95,9 +95,10 @@ class WindowsApplication(Application):
             if os.path.exists(themeIcoPath):
                 icopath = themeIcoPath
                 gtk.window_set_default_icon_from_file(icopath)
+        return icopath
 
     def build_window(self):
-        self._set_default_icon()
+        icopath = self._set_default_icon()
         Application.build_window(self)
         self.window.connect('save-dimensions', self.set_main_window_dimensions)
         self.window.connect('save-maximized', self.set_main_window_maximized)
