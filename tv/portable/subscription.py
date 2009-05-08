@@ -26,6 +26,18 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+"""
+This file handles checking URLs that the user clicks on to see if they are
+subscribe links.  Subscribe links are specially formatted URLs that signal
+that we should subscribe the user to a feed, add a new channel guide, start a
+new video download, or something similar.
+
+Our basic strategy is to have have links with the host subscribe.getmiro.com.
+That way we can parse them in miro and have an actual page on
+subscribe.getmiro.com that the user will see if they click it in an actual web
+browser.
+"""
+
 import cgi
 import re
 import traceback
@@ -40,17 +52,6 @@ from miro import feed
 from miro import folder
 from miro import guide
 
-"""
-This file handles checking URLs that the user clicks on to see if they are
-subscribe links.  Subscribe links are specially formatted URLs that signal
-that we should subscribe the user to a feed, add a new channel guide, start a
-new video download, or something similar.
-
-Our basic strategy is to have have links with the host subscribe.getmiro.com.
-That way we can parse them in miro and have an actual page on
-subscribe.getmiro.com that the user will see if they click it in an actual web
-browser.
-"""
 
 SUBSCRIBE_HOSTS = ('subscribe.getdemocracy.com', 'subscribe.getmiro.com')
 
@@ -183,14 +184,14 @@ class Subscriber(object):
 
     def handle_folder(self, folder_dict, parent_folder):
         """
-        Folder subscriptions look like:
+        Folder subscriptions look like::
 
-        {
-            'type': 'folder',
-            'title': name of the folder,
-            'section': one of ['audio', 'video'],
-            'children': a list of sub-feeds
-        }
+            {
+                'type': 'folder',
+                'title': name of the folder,
+                'section': one of ['audio', 'video'],
+                'children': a list of sub-feeds
+            }
         """
         assert parent_folder is None, "no nested folders"
         title = folder_dict['title']
@@ -200,17 +201,17 @@ class Subscriber(object):
 
     def handle_feed(self, feed_dict, parent_folder):
         """
-        Feed subscriptions look like:
+        Feed subscriptions look like::
 
-        {
-            'type': 'feed',
-            'url': URL of the RSS/Atom feed
-            'title': name of the feed (optional),
-            'section': one of ['audio', 'video'] (ignored if it's in a folder),
-            'search_term': terms for which this feed is a search (optional),
-            'auto_download': one of 'all', 'new', 'off' (optional),
-            'expiry_time': one of 'system', 'never', an integer of hours (optional),
-        }
+            {
+                'type': 'feed',
+                'url': URL of the RSS/Atom feed
+                'title': name of the feed (optional),
+                'section': one of ['audio', 'video'] (ignored if it's in a folder),
+                'search_term': terms for which this feed is a search (optional),
+                'auto_download': one of 'all', 'new', 'off' (optional),
+                'expiry_time': one of 'system', 'never', an integer of hours (optional),
+            }
         """
         url = feed_dict['url']
 
@@ -249,13 +250,13 @@ class Subscriber(object):
 
     def handle_site(self, site_dict, parent_folder):
         """
-        Site subscriptions look like:
+        Site subscriptions look like::
 
-        {
-            'type': 'site',
-            'url': URL of the site
-            'title': name of the site (optional),
-        }
+            {
+                'type': 'site',
+                'url': URL of the site
+                'title': name of the site (optional),
+            }
         """
         assert parent_folder is None, "no folders in site section"
         url = site_dict['url']
@@ -270,19 +271,19 @@ class Subscriber(object):
 
     def handle_download(self, download_dict, parent_folder):
         """
-        Download subscriptions look like:
+        Download subscriptions look like::
 
-        {
-            'type': 'download',
-            'url': URL of the file to download
-            'title': name of the download (optional),
-            'link': page representing this download (optional),
-            'feed': RSS feed containing this item (optional),
-            'mime_type': the MIME type of the item (optional),
-            'description': a description of the item (optional),
-            'thumbnail': a thumbnail image for the item (optional),
-            'length': the length in seconds of the item (optional)
-        }
+            {
+                'type': 'download',
+                'url': URL of the file to download
+                'title': name of the download (optional),
+                'link': page representing this download (optional),
+                'feed': RSS feed containing this item (optional),
+                'mime_type': the MIME type of the item (optional),
+                'description': a description of the item (optional),
+                'thumbnail': a thumbnail image for the item (optional),
+                'length': the length in seconds of the item (optional)
+            }
         """
         assert parent_folder is None, "no folders in downloads"
         url = download_dict['url']

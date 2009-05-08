@@ -26,7 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""util.py -- Utility functions.
+"""Utility functions.
 
 This module contains self-contained utility functions.  It shouldn't import
 any other Miro modules.

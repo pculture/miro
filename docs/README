@@ -1,0 +1,27 @@
+======
+README
+======
+
+Requirements
+============
+
+You must build the documentation on a valid gtk-x11 platform.  This
+means that platform-specific documentation is of gtk-x11.
+
+You must have the Sphinx documentation tools installed.
+
+
+Building the docs
+=================
+
+To build the docs, run::
+
+    ./builddocs.sh
+
+
+If documentation building is successful, then it will be in the ./_build/html/
+directory.
+
+To clean out the directory::
+
+    make clean

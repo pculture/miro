@@ -26,7 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""trapcall.py -- Execute a callback and trap exceptions.
+"""Execute a callback and trap exceptions.
 """
 
 from miro.clock import clock

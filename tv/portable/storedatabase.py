@@ -26,7 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""storedatabase.py -- Handle database storage.
+"""Handle database storage.
 
 This module does the reading/writing of our database to/from disk.  It works
 with the schema module to validate the data that we read/write and with the
@@ -36,12 +36,13 @@ Datastorage is handled through SQLite.  Each DDBObject class is stored in a
 separate table.  Each attribute for that class is saved using a separate
 column.
 
-Most columns are stored using SQLite datatypes (INTEGER, REAL, TEXT, DATETIME,
-etc.).  However some of our python values, don't have an equivalent (lists,
-dicts and timedelta objects).  For those, we store the python representation
-of the object.  This makes the column look similar to a JSON value, although
-not quite the same.  The hope is that it will be human readable.  We use the
-type "pythonrepr" to label these columns.
+Most columns are stored using SQLite datatypes (``INTEGER``, ``REAL``,
+``TEXT``, ``DATETIME``, etc.).  However some of our python values,
+don't have an equivalent (lists, dicts and timedelta objects).  For
+those, we store the python representation of the object.  This makes
+the column look similar to a JSON value, although not quite the same.
+The hope is that it will be human readable.  We use the type
+``pythonrepr`` to label these columns.
 """
 
 import cPickle
@@ -91,10 +92,10 @@ class LiveStorage:
     """Handles the storage of DDBObjects.
 
     This class does basically two things:
-      1) Loads the initial object list (and runs database upgrades)
-      2) Handles updating the database based on changes to DDBObjects.
-    """
 
+    1. Loads the initial object list (and runs database upgrades)
+    2. Handles updating the database based on changes to DDBObjects.
+    """
     def __init__(self, path=None, object_schemas=None, schema_version=None):
         if path is None:
             path = config.get(prefs.SQLITE_PATHNAME)

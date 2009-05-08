@@ -26,7 +26,9 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-# Caching gettext functions
+"""
+Caching gettext functions
+"""
 
 import gettext as _gt
 import locale
@@ -70,15 +72,19 @@ def gettext(text, values=None):
     This reduces the likelihood that Miro will throw an error and stop
     functioning with bad translated strings.
 
-    For example, if the string is:
+    For example, if the string is::
 
-        %(countfiles) fichiers analyses ...
+        "%(countfiles) fichiers analyses"
+                     ^^^
 
     the d is missing.
 
-    Note that this converts unicode strings to strings in utf-8 encoding
-    before translating.  This definitely slows things down, so if you
-    don't need unicode characters, use a string and not a unicode.
+    .. Note::
+
+       This converts unicode strings to strings in utf-8 encoding
+       before translating.  This definitely slows things down, so if
+       you don't need unicode characters, use a string and not a
+       unicode.
 
     Returns a unicode string.
     """
@@ -92,8 +98,8 @@ def gettext(text, values=None):
 
     except TypeError:
         print "gtcache.gettext: not initialized for string \"%s\"" % text
-        import traceback
-        traceback.print_stack()
+        # import traceback
+        # traceback.print_stack()
         return text
 
     try:
@@ -110,10 +116,14 @@ def gettext(text, values=None):
 def ngettext(text1, text2, count, values=None):
     """Given two strings and a count.
 
-    text1 - the singular form of the string to be translated
-    text2 - the plural form of the string to be translated
-    count - the number of things involved
-    values - the dict of values to expand the string with
+    text1
+        the singular form of the string to be translated
+    text2
+        the plural form of the string to be translated
+    count
+        the number of things involved
+    values
+        the dict of values to expand the string with
 
     See Python ``gettext.ngettext`` documentation and the GNU gettext
     documentation for more details.

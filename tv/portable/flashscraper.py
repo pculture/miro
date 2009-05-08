@@ -36,6 +36,14 @@ from urllib import unquote_plus
 from miro.util import checkU
 
 def is_maybe_flashscrapable(url):
+    """Returns whether or not the given url is possibly handled by one of
+    the flash url converters we have.
+
+    Example:
+
+    >>> is_maybe_flashscrapable("http://www.youtube.com/watch?v=qRuNxHqwazs")
+    True
+    """
     return _get_scrape_function_for(url) is not None
 
 def try_scraping_url(url, callback):

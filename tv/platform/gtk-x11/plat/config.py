@@ -46,7 +46,7 @@ gconf_lock = threading.RLock()
 
 def _gconf_key(key):
     if options.gconf_name is None:
-        raise AssertionError()
+        options.gconf_name = "miro"
     return '/apps/%s/%s' % (options.gconf_name, key)
 
 def _get_gconf(fullkey, default=None):

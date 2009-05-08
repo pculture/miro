@@ -38,6 +38,9 @@ class XHTMLifier(HTMLParser):
     """Very simple parser to convert HTML to XHTML
     """
     def convert(self, data, addTopTags=False, filterFontTags=False):
+        """Converts an HTML data unicode string to an XHTML data
+        unicode string.
+        """
         try:
             if addTopTags:
                 self.output = u'<html><head></head><body>'

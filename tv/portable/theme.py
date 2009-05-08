@@ -26,6 +26,9 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+"""Holds the ThemeHistory object.
+"""
+
 from miro.gtcache import gettext as _
 import logging
 from miro import config
@@ -42,6 +45,9 @@ from miro import playlist
 from miro import signals
 
 class ThemeHistory(DDBObject):
+    """DDBObject that keeps track of the themes used in regards
+    to setting up new themes and changing themes.
+    """
     def setup_new(self):
         self.lastTheme = None
         self.pastThemes = []

@@ -26,6 +26,20 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+"""
+This modules handles the parsing of files/URLs passed to Miro on the command
+line.
+
+Frontends should call ``set_ommand_line_args()`` passing it a list of
+arguments that the users gives.  This should just be suspected
+torrents/videos, not things like ``--help``, ``--version``, etc.
+
+Frontends should trap when a user opens a torrent/video with Miro
+while Miro is already running.  They should arrange for ``add_video``
+or ``add_torrent`` to be called in the existing Miro process.
+"""
+
+
 from miro.gtcache import gettext as _
 
 import os.path
@@ -45,18 +59,6 @@ from miro.plat.utils import samefile, filenameToUnicode
 from miro import singleclick
 from miro import opml
 
-"""
-This modules handles the parsing of files/URLs passed to Miro on the command line.
-
-Frontends should call set_ommand_line_args() passing it a list of arguments that
-the users gives.  This should just be suspected torrents/videos, not things
-like '--help', '--version', etc.
-
-Frontends should trap when a user opens a torrent/video with Miro while
-Miro is already running.  They should arrange for add_video or add_torrent
-to be called in the existing Miro process.
-
-"""
 
 _command_line_args = []
 _command_line_videos = None
@@ -100,7 +102,7 @@ def add_torrent(path, torrentInfohash):
     newItem.download()
 
 
-def complain_about_subscription_url(messageText):
+def _complain_about_subscription_url(messageText):
     title = _("Subscription error")
     dialogs.MessageBoxDialog(title, messageText).run()
 
@@ -115,7 +117,7 @@ def add_subscription_url(prefix, expectedContentType, url):
                     "%(url)s.  Please notify the publisher of this file.",
                     {"appname": config.get(prefs.SHORT_APP_NAME), "url": realURL}
                 )
-                complain_about_subscription_url(text)
+                _complain_about_subscription_url(text)
             else:
                 subscription.SubscriptionHandler().add_subscriptions(
                     subscription_list)
@@ -125,14 +127,14 @@ def add_subscription_url(prefix, expectedContentType, url):
                 "%(url)s. Please notify the publisher of this file.",
                 {"appname": config.get(prefs.SHORT_APP_NAME), "url": realURL}
             )
-            complain_about_subscription_url(text)
+            _complain_about_subscription_url(text)
 
     def errback(error):
         text = _(
             "Could not download the %(appname)s feed file: %(url)s",
             {"appname": config.get(prefs.SHORT_APP_NAME), "url": realURL}
         )
-        complain_about_subscription_url(text)
+        _complain_about_subscription_url(text)
 
     httpclient.grabURL(realURL, callback, errback)
 

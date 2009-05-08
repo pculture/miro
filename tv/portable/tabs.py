@@ -26,6 +26,9 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+"""Holds the TabOrder DDBObject.
+"""
+
 from miro import database
 from miro import guide
 from miro import feed
@@ -43,23 +46,27 @@ class TabOrder(database.DDBObject):
     """
 
     def setup_new(self, type):
-        """Construct a TabOrder.  type should be either "channel", or
-        "playlist".
+        """Construct a TabOrder.  type should be either ``channel`` or
+        ``playlist``.
         """
         checkU(type)
         self.type = type
         self.tab_ids = []
-        self.setup_views()
+        self._setup_views()
         decorated = [(t.get_title().lower(), t) for t in self.id_to_tab.values()]
         decorated.sort()
         for sortkey, tab in decorated:
             self.tab_ids.append(tab.id)
 
     def restore_tab_list(self):
-        self.setup_views()
-        self.check_for_non_existent_ids()
+        """Restores the tablist.
+        """
+        self._setup_views()
+        self._check_for_non_existent_ids()
 
-    def setup_views(self):
+    def _setup_views(self):
+        """Sets up all the tab-related views.
+        """
         if self.type == u'site':
             tab_views = (guide.ChannelGuide.site_view(),)
         elif self.type == u'channel':
@@ -80,30 +87,40 @@ class TabOrder(database.DDBObject):
                 self.id_to_tab[obj.id] = obj
         self.trackers = [view.make_tracker() for view in tab_views]
         for tracker in self.trackers:
-            tracker.connect("added", self.on_add_tab)
-            tracker.connect("removed", self.on_remove_tab)
+            tracker.connect("added", self._on_add_tab)
+            tracker.connect("removed", self._on_remove_tab)
 
     @classmethod
     def view_for_type(cls, type):
+        """View based on tab type.
+        """
         return cls.make_view('type=?', (type,))
 
     @classmethod
     def site_order(cls):
+        """View of sites based on order.
+        """
         return cls.view_for_type(u'site').get_singleton()
 
     @classmethod
     def video_feed_order(cls):
+        """View of feeds based on order.
+        """
         return cls.view_for_type(u'channel').get_singleton()
 
     @classmethod
     def audio_feed_order(cls):
+        """View of audio feeds based on order.
+        """
         return cls.view_for_type(u'audio-channel').get_singleton()
 
     @classmethod
     def playlist_order(cls):
+        """View of playlists based on order.
+        """
         return cls.view_for_type(u'playlist').get_singleton()
 
-    def check_for_non_existent_ids(self):
+    def _check_for_non_existent_ids(self):
         changed = False
         for i in reversed(xrange(len(self.tab_ids))):
             id = self.tab_ids[i]
@@ -120,19 +137,21 @@ class TabOrder(database.DDBObject):
         """
         return [self.id_to_tab[id] for id in self.tab_ids]
 
-    def on_add_tab(self, tracker, obj):
+    def _on_add_tab(self, tracker, obj):
         if obj.id not in self.id_to_tab:
             self.id_to_tab[obj.id] = obj
             self.tab_ids.append(obj.id)
             self.signal_change()
 
-    def on_remove_tab(self, tracker, obj):
+    def _on_remove_tab(self, tracker, obj):
         if obj.id in self.id_to_tab:
             del self.id_to_tab[obj.id]
             self.tab_ids.remove(obj.id)
             self.signal_change()
 
     def reorder(self, newOrder):
+        """Saves the new tab order.
+        """
         self.tab_ids = newOrder
         self.signal_change()
 
