@@ -1105,7 +1105,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def get_channel_title(self, allowSearchFeedTitle=False):
         implClass = self.get_feed().actualFeed.__class__
         if implClass in (models.RSSFeedImpl, models.ScraperFeedImpl):
-            return self.get-feed().get_title()
+            return self.get_feed().get_title()
         elif implClass == models.SearchFeedImpl and allowSearchFeedTitle:
             e = searchengines.get_last_engine()
             if e:
