@@ -2,7 +2,7 @@
 miro.util
 =========
 
-.. automodule:: util
+.. automodule:: miro.util
 
 .. autofunction:: read_simple_config_file
 

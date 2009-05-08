@@ -3,20 +3,20 @@
 
 # You can set these variables from the command line.
 SPHINXOPTS    =
-SPHINXBUILD   = PYTHONPATH=${PYTHONPATH}:../tv/portable/ sphinx-build
+SPHINXBUILD   = sphinx-build
 PAPER         =
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
-ALLSPHINXOPTS   = -d _build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
+ALLSPHINXOPTS   = -d _build/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) source
 
 .PHONY: help clean html dirhtml pickle json htmlhelp qthelp latex changes linkcheck doctest
 
-builddirs:
+setup:
 	-mkdir _build
-	-mkdir _static
-	-mkdir _templates
+	-mkdir source/_static
+	-mkdir source/_templates
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
@@ -32,36 +32,38 @@ help:
 	@echo "  doctest   to run all doctests embedded in the documentation (if enabled)"
 
 clean:
+	-rm -rf dist
 	-rm -rf _build/*
+	-rm -rf build
 	-rm -f *~
 
-html: builddirs
+html: setup
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) _build/html
 	@echo
 	@echo "Build finished. The HTML pages are in _build/html."
 
-dirhtml: builddirs
+dirhtml: setup
 	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) _build/dirhtml
 	@echo
 	@echo "Build finished. The HTML pages are in _build/dirhtml."
 
-pickle: builddirs
+pickle: setup
 	$(SPHINXBUILD) -b pickle $(ALLSPHINXOPTS) _build/pickle
 	@echo
 	@echo "Build finished; now you can process the pickle files."
 
-json: builddirs
+json: setup
 	$(SPHINXBUILD) -b json $(ALLSPHINXOPTS) _build/json
 	@echo
 	@echo "Build finished; now you can process the JSON files."
 
-htmlhelp: builddirs
+htmlhelp: setup
 	$(SPHINXBUILD) -b htmlhelp $(ALLSPHINXOPTS) _build/htmlhelp
 	@echo
 	@echo "Build finished; now you can run HTML Help Workshop with the" \
 	      ".hhp project file in _build/htmlhelp."
 
-qthelp: builddirs
+qthelp: setup
 	$(SPHINXBUILD) -b qthelp $(ALLSPHINXOPTS) _build/qthelp
 	@echo
 	@echo "Build finished; now you can run "qcollectiongenerator" with the" \
@@ -70,25 +72,25 @@ qthelp: builddirs
 	@echo "To view the help file:"
 	@echo "# assistant -collectionFile _build/qthelp/Miro.qhc"
 
-latex: builddirs
+latex: setup
 	$(SPHINXBUILD) -b latex $(ALLSPHINXOPTS) _build/latex
 	@echo
 	@echo "Build finished; the LaTeX files are in _build/latex."
 	@echo "Run \`make all-pdf' or \`make all-ps' in that directory to" \
 	      "run these through (pdf)latex."
 
-changes: builddirs
+changes: setup
 	$(SPHINXBUILD) -b changes $(ALLSPHINXOPTS) _build/changes
 	@echo
 	@echo "The overview file is in _build/changes."
 
-linkcheck: builddirs
+linkcheck: setup
 	$(SPHINXBUILD) -b linkcheck $(ALLSPHINXOPTS) _build/linkcheck
 	@echo
 	@echo "Link check complete; look for any errors in the above output " \
 	      "or in _build/linkcheck/output.txt."
 
-doctest: builddirs
+doctest: setup
 	$(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) _build/doctest
 	@echo "Testing of doctests in the sources finished, look at the " \
 	      "results in _build/doctest/output.txt."

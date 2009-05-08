@@ -12,7 +12,12 @@ Contents:
    :maxdepth: 2
 
    project
+   module_commandline
+   module_filetypes
+   module_gtcache
+   module_subscription
    module_util
+   module_xhtmltools
 
 Indices and tables
 ==================
