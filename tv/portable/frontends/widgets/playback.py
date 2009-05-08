@@ -344,9 +344,9 @@ class PlaybackManager (signals.SignalEmitter):
         return None
 
     def _select_current(self):
-        self.emit('selecting-file')
         volume = config.get(prefs.VOLUME_LEVEL)
         item_info = self.playlist[self.position]
+        self.emit('selecting-file', item_info)
         self.open_successful = False
         self.video_display.setup(item_info, volume)
         if self.detached_window is not None:

@@ -31,9 +31,11 @@ video controls).
 """
 
 from miro import app
+from miro import filetypes
 from miro.frontends.widgets import style
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
+from miro.frontends.widgets import widgetconst
 from miro.frontends.widgets import imagebutton
 from miro.plat.frontends.widgets import widgetset
 from miro.plat import resources
@@ -81,7 +83,7 @@ class PlaybackControls(widgetset.HBox):
         self.fullscreen.enable()
         self.queue_redraw()
 
-    def handle_selecting(self, obj):
+    def handle_selecting(self, obj, item_info):
         self.previous.enable()
         self.stop.enable()
         self.play.disable()
@@ -103,6 +105,60 @@ class PlaybackControls(widgetset.HBox):
         self.fullscreen.disable()
         self.queue_redraw()
 
+class PlaybackInfo(widgetset.DrawingArea):
+    def __init__(self):
+        widgetset.DrawingArea.__init__(self)
+        self.video_icon = imagepool.get_surface(resources.path('images/mini-icon-video.png'))
+        self.audio_icon = imagepool.get_surface(resources.path('images/mini-icon-audio.png'))
+        self.reset()
+        app.playback_manager.connect('selecting-file', self.handle_selecting)
+        app.playback_manager.connect('will-stop', self.handle_stop)
+
+    def handle_selecting(self, obj, item_info):
+        self.item_name = item_info.name
+        self.feed_name = item_info.feed_name
+        self.is_audio = filetypes.is_audio_filename(item_info.video_path)
+        self.queue_redraw()
+
+    def handle_stop(self, obj):
+        self.reset()
+        self.queue_redraw()
+    
+    def reset(self):
+        self.item_name = ""
+        self.feed_name = ""
+        self.is_audio = False
+    
+    def get_full_text(self):
+        return "%s - %s" % (self.item_name, self.feed_name)
+    
+    def size_request(self, layout):
+        layout.set_font(0.8)
+        sizer_text = layout.textbox(self.get_full_text())
+        width, height = sizer_text.get_size()
+        if self.is_audio:
+            width = width + 16
+        return width, height
+
+    def draw(self, context, layout):
+        if not app.playback_manager.is_playing:
+            return
+        width, height = self.size_request(layout)
+        if self.is_audio:
+            icon = self.audio_icon
+        x = int((context.width - width) / 2.0)
+        if self.is_audio:        
+            icon.draw(context, x, 0, 12, 12, 1.0)
+            x = x + 16
+        layout.set_text_color((0.9, 0.9, 0.9))
+        text = layout.textbox(self.item_name)
+        width1, height1 = text.get_size()
+        text.draw(context, x, 0, width1, height1)
+        layout.set_text_color((0.7, 0.7, 0.7))
+        text = layout.textbox(" - %s" % self.feed_name)
+        width2, height2 = text.get_size()
+        text.draw(context, x + width1, 0, width2, height2)
+
 class ProgressTime(widgetset.DrawingArea):
     def __init__(self):
         widgetset.DrawingArea.__init__(self)
@@ -122,7 +178,7 @@ class ProgressTime(widgetset.DrawingArea):
     def handle_stop(self, obj):
         self.set_current_time(None)
 
-    def handle_selecting(self, obj):
+    def handle_selecting(self, obj, item_info):
         self.set_current_time(None)
     
     def set_current_time(self, current_time):
@@ -159,7 +215,7 @@ class ProgressTimeRemaining(widgetset.CustomButton):
     def handle_play(self, obj, duration):
         self.set_duration(duration)
 
-    def handle_selecting(self, obj):
+    def handle_selecting(self, obj, item_info):
         self.set_current_time(None)
 
     def handle_progress(self, obj, elapsed, total):
@@ -221,7 +277,7 @@ class ProgressSlider(widgetset.CustomSlider):
     def handle_play(self, obj, duration):
         self.enable()
 
-    def handle_selecting(self, obj):
+    def handle_selecting(self, obj, item_info):
         self.disable()
 
     def handle_stop(self, obj):
@@ -235,7 +291,7 @@ class ProgressSlider(widgetset.CustomSlider):
         return False
 
     def size_request(self, layout):
-        return (60, 13)
+        return (60, 11)
 
     def slider_size(self):
         return 1
@@ -260,6 +316,7 @@ class ProgressTimeline(widgetset.Background):
         widgetset.Background.__init__(self)
         self.background = widgetutil.ThreeImageSurface('display')
         self.duration = self.current_time = None
+        self.info = PlaybackInfo()
         self.slider = ProgressSlider()
         self.slider.set_range(0, 1)
         self.time = ProgressTime()
@@ -268,11 +325,14 @@ class ProgressTimeline(widgetset.Background):
         self.slider.connect('released', self.on_slider_released)
         self.remaining_time = ProgressTimeRemaining()
         self.remaining_time.connect('clicked', self.on_remaining_clicked)
-        hbox = widgetset.HBox()
-        hbox.pack_start(widgetutil.align_middle(self.time), expand=False, padding=5)
-        hbox.pack_start(widgetutil.align_middle(self.slider), expand=True)
-        hbox.pack_start(widgetutil.align_middle(self.remaining_time, left_pad=20, right_pad=5))
-        self.add(widgetutil.align_middle(hbox))
+        vbox = widgetset.VBox()
+        vbox.pack_start(widgetutil.align_middle(self.info, top_pad=6))
+        slider_box = widgetset.HBox()
+        slider_box.pack_start(widgetutil.align_middle(self.time), expand=False, padding=5)
+        slider_box.pack_start(widgetutil.align_middle(self.slider), expand=True)
+        slider_box.pack_start(widgetutil.align_middle(self.remaining_time, left_pad=20, right_pad=5))
+        vbox.pack_end(widgetutil.align_middle(slider_box, bottom_pad=5))
+        self.add(vbox)
 
     def on_remaining_clicked(self, widget):
         self.remaining_time.toggle_display()
