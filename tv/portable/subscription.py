@@ -225,7 +225,7 @@ class Subscriber(object):
             else:
                 section = self._get_section(feed_dict)
 
-            f = feed.Feed(url, False, section)
+            f = feed.Feed(url, section=section)
             title = feed_dict.get('title')
             if title is not None and title != '':
                 f.set_title(title)
