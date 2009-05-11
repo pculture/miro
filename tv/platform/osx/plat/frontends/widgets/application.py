@@ -57,7 +57,7 @@ from miro.plat import bundle
 from miro.plat import _growlImage
 from miro.plat import migrateappname
 from miro.plat.utils import ensureDownloadDaemonIsTerminated, filenameTypeToOSFilename, osFilenamesToFilenameTypes
-from miro.plat.frontends.widgets import video, osxmenus, sparkleupdater, threads
+from miro.plat.frontends.widgets import quicktime, osxmenus, sparkleupdater, threads
 from miro.plat.frontends.widgets.rect import Rect
 from miro.gtcache import gettext as _
 
@@ -85,7 +85,7 @@ class OSXApplication(Application):
         migrateappname.migrateVideos('Democracy', 'Miro')
         osxmenus.populate_menu()
         Application.startup_ui(self)
-        video.register_quicktime_components()
+        quicktime.register_components()
 
     # This callback should only be called once, after startup is done.
     # (see superclass implementation)

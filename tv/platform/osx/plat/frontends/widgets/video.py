@@ -26,8 +26,6 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-import os
-import glob
 import logging
 
 from objc import YES, NO, nil, pathForFramework, loadBundleFunctions
@@ -36,8 +34,6 @@ from AppKit import *
 from QTKit import *
 
 from miro import app
-from miro.plat import bundle
-from miro.plat import qtcomp
 from miro.plat.frontends.widgets import threads
 from miro.plat.frontends.widgets import overlay
 from miro.plat.frontends.widgets import quicktime
@@ -61,20 +57,6 @@ OverallActivity = 0
 coreServicesPath = pathForFramework('/System/Library/Frameworks/CoreServices.framework')
 coreServicesBundle = NSBundle.bundleWithPath_(coreServicesPath)
 loadBundleFunctions(coreServicesBundle, globals(), ((u'UpdateSystemActivity', 'IC'),))
-
-###############################################################################
-
-def register_quicktime_components():
-    bundlePath = bundle.getBundlePath()
-    componentsDirectoryPath = os.path.join(bundlePath, 'Contents', 'Components')
-    components = glob.glob(os.path.join(componentsDirectoryPath, '*.component'))
-    for component in components:
-        cmpName = os.path.basename(component)
-        ok = qtcomp.register(component.encode('utf-8'))
-        if ok:
-            logging.info('Successfully registered embedded component: %s' % cmpName)
-        else:
-            logging.warn('Error while registering embedded component: %s' % cmpName)
 
 ###############################################################################
 
