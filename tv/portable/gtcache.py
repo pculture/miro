@@ -55,7 +55,15 @@ def init():
         logging.warn("gtcache.init: setlocale failed.  setting locale to 'C'")
         locale.setlocale(locale.LC_ALL, 'C')
 
-    codeset = locale.getlocale()[1]
+    # try to get the locale which might fail despite the above.  see bug #11783.
+    try:
+        codeset = locale.getlocale()[1]
+    except ValueError:
+        import logging
+        logging.warn("gtcache.init: getlocale failed.  setting locale to 'C'")
+        locale.setlocale(locale.LC_ALL, "C")
+        codeset = locale.getlocale()[1]
+
     if codeset is not None:
         codeset = codeset.lower()
 
