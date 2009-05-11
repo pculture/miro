@@ -67,6 +67,8 @@ BOOST_INCLUDE_PATH = os.path.join(BOOST_ROOT, 'include')
 BOOST_LIBRARIES = [os.path.splitext(os.path.basename(f))[0] for f in
         glob(os.path.join(BOOST_LIB_PATH, '*.lib'))]
 
+print BOOST_LIBRARIES
+
 ZLIB_INCLUDE_PATH = os.path.join(BINARY_KIT_ROOT, 'zlib', 'include')
 ZLIB_LIB_PATH = os.path.join(BINARY_KIT_ROOT, 'zlib', 'lib')
 ZLIB_RUNTIME_LIBRARY_PATH = os.path.join(BINARY_KIT_ROOT, 'zlib')
@@ -241,7 +243,8 @@ libtorrent_ext = Extension(
         libraries=OPENSSL_LIBRARIES + BOOST_LIBRARIES + [
             'wsock32', 'gdi32', 'ws2_32', 'zdll'
         ],
-        extra_compile_args=['-DBOOST_WINDOWS',
+        extra_compile_args=[
+            '-DBOOST_WINDOWS',
             '-DWIN32',
             '-DWIN32_LEAN_AND_MEAN',
             '-D_WIN32_WINNT=0x0500',
@@ -299,6 +302,9 @@ for dir in ('searchengines', 'images'):
 data_files.append(('resources', [os.path.join(root_dir, 'ADOPTERS')]))
 app_config = os.path.join(resources_dir, 'app.config.template')
 template_vars = util.read_simple_config_file(app_config)
+
+# pixmap for the about dialog
+data_files.append(('resources/pixmaps', [os.path.join(platform_dir, "miro-128x128.png")]))
 
 ###############################################################################
 

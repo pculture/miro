@@ -43,6 +43,9 @@ def appRoot():
 def root():
     return os.path.join(appRoot(), 'resources')
 
+def sharePath(path):
+    return os.path.join(root(), path)
+
 # Note: some of these functions are probably not absolutely correct in
 # the face of funny characters in the input paths. In particular,
 # url() doesn't DTRT when the path contains spaces. But they should be
