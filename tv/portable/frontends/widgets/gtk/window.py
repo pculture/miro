@@ -509,30 +509,56 @@ class DirectorySelectDialog(FileDialogBase):
     def get_directory(self):
         return utils.FilenameType(self._files[0])
 
-class AboutDialog(DialogBase):
+class AboutDialog(Dialog):
     def __init__(self):
-        DialogBase.__init__(self)
-        self._text = None
-
-        ab = gtk.AboutDialog()
-        ab.set_name(config.get(prefs.SHORT_APP_NAME))
+        Dialog.__init__(self,
+                        _("About %(appname)s") % {
+                'appname': config.get(prefs.SHORT_APP_NAME)})
+        icon_pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(
+                resources.sharePath('pixmaps/miro-128x128.png'),
+                48, 48)
+        self.packing_vbox.pack_start(gtk.image_new_from_pixbuf(icon_pixbuf))
         if config.get(prefs.APP_REVISION_NUM):
-            ab.set_version("%s (r%s)" %
-                           (config.get(prefs.APP_VERSION),
-                            config.get(prefs.APP_REVISION_NUM)))
+            version = "%s (r%s)" % (
+                    config.get(prefs.APP_VERSION),
+                    config.get(prefs.APP_REVISION_NUM))
         else:
-            ab.set_version("%s" % config.get(prefs.APP_VERSION))
-        ab.set_website(config.get(prefs.PROJECT_URL))
-        ab.set_copyright(_(
-            '%(copyright)s.  See license.txt file for details.\n'
-            '%(trademark)s') %
+            version = "%s" % config.get(prefs.APP_VERSION)
+        name_label = gtk.Label('<span size="xx-large" weight="bold">%s %s</span>' % (
+                config.get(prefs.SHORT_APP_NAME), version))
+        name_label.set_use_markup(True)
+        self.packing_vbox.pack_start(name_label)
+        copyright_text = _('%(copyright)s.  See license.txt file for details.\n'
+                           '%(trademark)s') % (
             {"copyright": config.get(prefs.COPYRIGHT),
-             "trademark": config.get(prefs.TRADEMARK)}
-        )
-        self._window = ab
+             "trademark": config.get(prefs.TRADEMARK)})
+        copyright_label = gtk.Label('<small>%s</small>' % copyright_text)
+        copyright_label.set_use_markup(True)
+        copyright_label.set_justify(gtk.JUSTIFY_CENTER)
+        self.packing_vbox.pack_start(copyright_label)
+        self.packing_vbox.pack_start(gtk.Label(config.get(prefs.PROJECT_URL)))
 
-    def _run(self):
-        self._window.run()
+        # this removes the newlines in the description so it wraps correctly
+        adopters_data = file(resources.path('ADOPTERS'), 'r').read()
+        first_double_newline = adopters_data.find('\n\n')
+        adopters_data = adopters_data[:first_double_newline].replace('\n', ' ') + \
+            adopters_data[first_double_newline:-1]
+
+        # show the adopters
+        adopters_buffer = gtk.TextBuffer()
+        adopters_buffer.set_text(adopters_data)
+        adopters_view = gtk.TextView(adopters_buffer)
+        adopters_view.set_editable(False)
+        adopters_view.set_cursor_visible(False)
+        adopters_view.set_wrap_mode(gtk.WRAP_WORD)
+        adopters_window = gtk.ScrolledWindow()
+        adopters_window.set_policy(gtk.POLICY_NEVER, gtk.POLICY_ALWAYS)
+        adopters_window.add(adopters_view)
+        adopters_window.set_size_request(-1, 100)
+        self.packing_vbox.pack_start(adopters_window)
+
+        self.add_button(_("Close"))
+        self._window.set_has_separator(False)
 
 type_map = {
     0: gtk.MESSAGE_WARNING,
