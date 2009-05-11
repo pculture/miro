@@ -63,9 +63,7 @@ class MiroWindow(widgetset.MainWindow):
         self.splitter.set_right(self.main_area_holder)
                 
         hbox = widgetset.HBox()
-        self.search_box = searchbox.SearchBox()
         self.videobox = videobox.VideoBox()
-        hbox.pack_start(self.search_box)
         hbox.pack_end(self.videobox, expand=True)
         self.controls_hbox = hbox
 
@@ -86,7 +84,6 @@ class MiroWindow(widgetset.MainWindow):
         self.splitter.set_left_width(left_width)
 
     def on_active_change(self, window):
-        self.search_box.queue_redraw()
         self.videobox.queue_redraw()
 
     def set_main_area(self, widget):
