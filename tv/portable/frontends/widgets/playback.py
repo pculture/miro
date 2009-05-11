@@ -38,8 +38,6 @@ from miro import messages
 from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets.displays import VideoDisplay
-#from miro.frontends.widgets.displays import AudioDisplay
-#from miro.frontends.widgets.displays import ExternalVideoDisplay
 
 class PlaybackManager (signals.SignalEmitter):
     

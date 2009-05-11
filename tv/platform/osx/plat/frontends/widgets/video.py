@@ -36,15 +36,13 @@ from AppKit import *
 from QTKit import *
 
 from miro import app
-from miro.plat import utils
 from miro.plat import bundle
 from miro.plat import qtcomp
-from miro.plat.utils import filenameTypeToOSFilename
 from miro.plat.frontends.widgets import threads
 from miro.plat.frontends.widgets import overlay
+from miro.plat.frontends.widgets import quicktime
 from miro.plat.frontends.widgets import wrappermap
 from miro.plat.frontends.widgets.base import Widget
-from miro.plat.frontends.widgets.helpers import NotificationForwarder
 
 ###############################################################################
 #### Dynamically link some specific Carbon functions which we need but     ####
@@ -80,9 +78,7 @@ def register_quicktime_components():
 
 ###############################################################################
 
-SUPPORTED_VIDEO_MEDIA_TYPES = (QTMediaTypeVideo, QTMediaTypeMPEG, QTMediaTypeMovie, QTMediaTypeFlash)
-SUPPORTED_AUDIO_MEDIA_TYPES = (QTMediaTypeSound, QTMediaTypeMusic)
-ALL_SUPPORTED_MEDIA_TYPES   = SUPPORTED_VIDEO_MEDIA_TYPES + SUPPORTED_AUDIO_MEDIA_TYPES
+SUPPORTED_MEDIA_TYPES = (QTMediaTypeVideo, QTMediaTypeMPEG, QTMediaTypeMovie, QTMediaTypeFlash)
 
 ###############################################################################
 
@@ -111,10 +107,12 @@ class MiroMovieView (QTMovieView):
 
 ###############################################################################
 
-class VideoRenderer (Widget):
+class VideoRenderer (Widget, quicktime.Player):
 
     def __init__(self):
         Widget.__init__(self)
+        quicktime.Player.__init__(self, SUPPORTED_MEDIA_TYPES)
+
         frame = ((0,0),(200,200))
 
         self.view = NSView.alloc().initWithFrame_(frame)
@@ -173,12 +171,8 @@ class VideoRenderer (Widget):
         self.window_moved_handler = None
 
     def reset(self):
-        threads.warn_if_not_on_main_thread('VideoRenderer.reset')
         self.video_view.setMovie_(nil)
-        if self.movie_notifications is not None:
-            self.movie_notifications.disconnect()
-        self.movie_notifications = None
-        self.movie = None
+        quicktime.Player.reset(self)
 
     def get_video_frame(self):
         frame = self.view.frame()
@@ -197,84 +191,16 @@ class VideoRenderer (Widget):
         self.video_view.setFrame_(NSOffsetRect(frame, 1, 1))
         self.video_view.setFrame_(frame)
 
-    def can_open_file(self, qtmovie):
-        threads.warn_if_not_on_main_thread('VideoRenderer.can_open_file')
-        can_open = False
-
-        # Purely referential movies have a no duration, no track and need to be
-        # streamed first. Since we don't support this yet, we delegate the
-        # streaming to the standalone QT player to avoid any problem (like the
-        # crash in #944) by simply declaring that we can't play the corresponding item.
-        # Note that once the movie is fully streamed and cached by QT, DTV will
-        # be able to play it internally just fine -- luc
-
-        # [UPDATE - 26 Feb, 2006]
-        # Actually, streaming movies *can* have tracks as shown in #1124. We
-        # therefore need to drill down and find out if we have a zero length
-        # video track/media.
-
-        if qtmovie is not nil and qtmovie.duration().timeValue > 0:
-            allTracks = qtmovie.tracks()
-            if len(qtmovie.tracks()) > 0:
-                # First make sure we have at least one video track with a non zero length
-                allMedia = [track.media() for track in allTracks]
-                for media in allMedia:
-                    mediaType = media.attributeForKey_(QTMediaTypeAttribute)
-                    mediaDuration = media.attributeForKey_(QTMediaDurationAttribute).QTTimeValue().timeValue
-                    if mediaType in ALL_SUPPORTED_MEDIA_TYPES and mediaDuration > 0:
-                        can_open = True
-                        break
-
-        return can_open
-
-    def get_movie_from_file(self, path):
-        osfilename = filenameTypeToOSFilename(path)
-        url = NSURL.fileURLWithPath_(osfilename)
-        if utils.get_pyobjc_major_version() == 2:
-            qtmovie, error = QTMovie.movieWithURL_error_(url, None)
-        else:
-            qtmovie, error = QTMovie.movieWithURL_error_(url)
-        if not self.can_open_file(qtmovie):
-            return nil
-        return qtmovie
-
     def set_movie_item(self, item_info, callback, errback):
-        threads.warn_if_not_on_main_thread('VideoRenderer.set_movie_item')
-        qtmovie = self.get_movie_from_file(item_info.video_path)
-        self.reset()
-        if qtmovie is not nil:
-            self.movie = qtmovie
+        def callback2():
             self.video_view.setMovie_(self.movie)
             self.video_view.setNeedsDisplay_(YES)
-            self.movie_notifications = NotificationForwarder.create(self.movie)
-            self.movie_notifications.connect(self.handle_movie_notification, QTMovieDidEndNotification)
             self.video_window.setup(item_info, self)
             callback()
-        else:
-            errback()
-
-    def get_elapsed_playback_time(self):
-        qttime = self.movie.currentTime()
-        return _qttime2secs(qttime)
-
-    def get_total_playback_time(self):
-        return movieDuration(self.movie)
-
-    def skip_forward(self):
-        current = self.get_elapsed_playback_time()
-        duration = self.get_total_playback_time()
-        pos = min(duration, current + 30.0)
-        self.seek_to(pos / duration)
-
-    def skip_backward(self):
-        current = self.get_elapsed_playback_time()
-        duration = self.get_total_playback_time()
-        pos = max(0, current - 15.0)
-        self.seek_to(pos / duration)
+        quicktime.Player.set_movie_item(self, item_info, callback2, errback)
 
     def set_volume(self, volume):
-        if self.movie:
-            self.movie.setVolume_(volume)
+        quicktime.Player.set_volume(self, volume)
         if self.video_window:
             self.video_window.palette.set_volume(volume)
 
@@ -283,10 +209,6 @@ class VideoRenderer (Widget):
         self.video_view.play_(nil)
         self.video_view.setNeedsDisplay_(YES)
         self.prevent_system_sleep(True)
-
-    def play_from_time(self, resume_time=0):
-        self.seek_to(resume_time / movieDuration(self.movie))
-        self.play()
 
     def pause(self):
         threads.warn_if_not_on_main_thread('VideoRenderer.pause')
@@ -301,14 +223,6 @@ class VideoRenderer (Widget):
             self.video_window.palette.remove()
         self.reset()
 
-    def set_playback_rate(self, rate):
-        self.movie.setRate_(rate)
-
-    def seek_to(self, position):
-        qttime = self.movie.duration()
-        qttime.timeValue = qttime.timeValue * position
-        self.movie.setCurrentTime_(qttime)
-
     def enter_fullscreen(self):
         self.video_window.enter_fullscreen()
 
@@ -322,10 +236,6 @@ class VideoRenderer (Widget):
 
     def prepare_switch_to_detached_playback(self):
         self.video_window.palette.remove()
-
-    def handle_movie_notification(self, notification):
-        if notification.name() == QTMovieDidEndNotification and not app.playback_manager.is_suspended:
-            app.playback_manager.on_movie_finished()
 
     def prevent_system_sleep(self, prevent):
         if prevent and self.system_activity_updater_timer is None:
@@ -420,14 +330,3 @@ class VideoWindow (NSWindow):
             self.parentWindow().sendEvent_(event)
 
 ###############################################################################
-
-def _qttime2secs(qttime):
-    if qttime.timeScale == 0:
-        return 0.0
-    return qttime.timeValue / float(qttime.timeScale)
-
-def movieDuration(qtmovie):
-    if qtmovie is nil:
-        return 0
-    qttime = qtmovie.duration()
-    return _qttime2secs(qttime)
