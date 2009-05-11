@@ -245,7 +245,6 @@ class VideoDetailsWidget(Background):
         info = self.item_info
 
         outer_hbox = HBox(5)
-        outer_hbox.pack_start(VBox(), expand=True)
 
         if info.is_external:
             if info.is_single:
@@ -253,6 +252,7 @@ class VideoDetailsWidget(Background):
             else:
                 self._delete_link = make_label(_("Delete"), self.handle_delete, True)
                 outer_hbox.pack_start(_align_middle(self._delete_link))
+
         else:
             # keep / delete
             v = VBox()
@@ -298,13 +298,20 @@ class VideoDetailsWidget(Background):
         outer_hbox.pack_start(_align_middle(Divider(), top_pad=3, bottom_pad=3, left_pad=5, right_pad=5))
 
         if app.playback_manager.detached_window is not None:
+            popin_link = make_label(_("Pop-in"), self.handle_popin_popout)
+            outer_hbox.pack_start(_align_middle(popin_link))
             popin_image = make_image_button(resources.path('images/popin.png'), self.handle_popin_popout)
-            outer_hbox.pack_start(_align_middle(popin_image, right_pad=15))
+            outer_hbox.pack_start(_align_middle(popin_image))
         else:
+            popout_link = make_label(_("Pop-out"), self.handle_popin_popout)
+            outer_hbox.pack_start(_align_middle(popout_link))
             popout_image = make_image_button(resources.path('images/popout.png'), self.handle_popin_popout)
             outer_hbox.pack_start(_align_middle(popout_image, right_pad=15))
 
-        self.add(outer_hbox)
+        alignment = Alignment(0, 0, 0, 1)
+        alignment.set_padding(0, 0, 15, 15)
+        alignment.add(outer_hbox)
+        self.add(alignment)
 
     def hide(self):
         self._widget.hide()
