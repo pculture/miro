@@ -296,6 +296,7 @@ for dir in ('searchengines', 'images'):
     source_dir = os.path.join(resources_dir, dir)
     data_files.extend(find_data_files(dest_dir, source_dir))
 
+data_files.append(('resources', [os.path.join(root_dir, 'ADOPTERS')]))
 app_config = os.path.join(resources_dir, 'app.config.template')
 template_vars = util.read_simple_config_file(app_config)
 

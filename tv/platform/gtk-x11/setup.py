@@ -653,7 +653,7 @@ for dir in ('searchengines', 'images', 'testdata',
     dest_dir = os.path.join('/usr/share/miro/resources/', dir)
     data_files.append((dest_dir, listfiles(source_dir)))
 
-
+data_files.append(('/usr/share/miro/resources', [os.path.join(root_dir, 'ADOPTERS')]))
 # add the desktop file, icons, mime data, and man page.
 data_files += [
     ('/usr/share/pixmaps',
