@@ -245,27 +245,7 @@ class VideoDetailsWidget(Background):
         info = self.item_info
 
         outer_hbox = HBox(5)
-
-        # left side
-        v = VBox()
-        self._item_name = Label(util.clampText(info.name, 100))
-        self._item_name.set_bold(True)
-        self._item_name.set_size(1.0)
-        self._item_name.set_color(WHITE)
-        v.pack_start(_align_left(self._item_name, left_pad=5, top_pad=3))
-
-        self._channel_name = Label("")
-        if not info.is_external:
-            channels = app.tab_list_manager.feed_list.get_feeds()
-            channels = [ci for ci in channels if ci.id == info.feed_id]
-            if len(channels) == 0:
-                self._channel_name.set_text("")
-            else:
-                self._channel_name.set_text(util.clampText(channels[0].name, 100))
-        self._channel_name.set_color(WHITE)
-        v.pack_start(_align_left(self._channel_name, left_pad=5, bottom_pad=3))
-
-        outer_hbox.pack_start(_align_middle(v), expand=True)
+        outer_hbox.pack_start(VBox(), expand=True)
 
         if info.is_external:
             if info.is_single:
