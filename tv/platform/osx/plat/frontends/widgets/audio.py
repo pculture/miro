@@ -36,6 +36,9 @@ SUPPORTED_MEDIA_TYPES = (QTMediaTypeSound, QTMediaTypeMusic)
 
 class AudioPlayer(quicktime.Player):
 
+    def __init__(self):
+        quicktime.Player.__init__(self, SUPPORTED_MEDIA_TYPES)
+
     def play(self):
         threads.warn_if_not_on_main_thread('AudioPlayer.play')
         self.movie.play()
