@@ -62,19 +62,18 @@ import time
 import urllib
 from miro import signals
 from miro import trapcall
+from miro.plat.resources import get_osname
 
 PIPELINING_ENABLED = True
 SOCKET_READ_TIMEOUT = 60
 SOCKET_INITIAL_READ_TIMEOUT = 30
 SOCKET_CONNECT_TIMEOUT = 15
 
-def userAgent():
-    osname = '%s %s %s' % (platform.system(), platform.release(),
-            platform.machine())
+def user_agent():
     return "%s/%s (%s; %s)" % (config.get(prefs.SHORT_APP_NAME),
             config.get(prefs.APP_VERSION),
             config.get(prefs.PROJECT_URL),
-            osname)
+            get_osname())
 
 class NetworkError(Exception):
     """Base class for all errors that will be passed to errbacks from get_url
@@ -618,7 +617,7 @@ class ProxiedAsyncSSLStream(AsyncSSLStream):
             eventloop.callInThread(onSSLOpen, handleSSLError, lambda: openProxyConnection(self),
                                    "ProxiedAsyncSSL openProxyConnection()")
         def openProxyConnection(self):
-            headers = {'User-Agent': userAgent(), "Host": host}
+            headers = {'User-Agent': user_agent(), "Host": host}
             if config.get(prefs.HTTP_PROXY_AUTHORIZATION_ACTIVE):
                 username = config.get(prefs.HTTP_PROXY_AUTHORIZATION_USERNAME)
                 password = config.get(prefs.HTTP_PROXY_AUTHORIZATION_PASSWORD)
@@ -1483,7 +1482,7 @@ class HTTPClient(object):
         self.authAttempts = 0
         self.updateURLOk = True
         self.originalURL = self.updatedURL = self.redirectedURL = url
-        self.userAgent = userAgent()
+        self.user_agent = user_agent()
         self.connection = None
         self.cancelled = False
         self.initHeaders()
@@ -1540,7 +1539,7 @@ class HTTPClient(object):
             self.headers["If-None-Match"] = self.etag
         if not self.modified is None:
             self.headers["If-Modified-Since"] = self.modified
-        self.headers['User-Agent'] = self.userAgent
+        self.headers['User-Agent'] = self.user_agent
         self.setCookieHeader()
 
     def setCookieHeader(self):

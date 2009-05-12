@@ -41,6 +41,7 @@ functions.
 
 import os
 import urllib
+import platform
 
 resource_root = os.path.abspath(os.environ.get('MIRO_RESOURCE_ROOT', '/usr/share/miro/resources/'))
 share_root = os.path.abspath(os.environ.get('MIRO_SHARE_ROOT', '/usr/share/'))
@@ -101,3 +102,27 @@ def get_autostart_dir():
 
     autostart_dir = os.path.expanduser(autostart_dir)
     return autostart_dir
+
+def _clean_piece(s):
+    return s.replace(";", " ")
+
+def get_osname():
+    """Composes and returns the osname section of the user agent.
+
+    The osname currently looks something like this::
+
+        Linux i686; Ubuntu 9.04
+          1     2        3
+
+    **1** - comes from ``platform.uname()[0]``
+
+    **2** - comes from ``platform.machine()``
+
+    **3** - comes from the first two parts of ``platform.dist``
+
+    This function also removes any stray ``;``.
+    """
+    osname = ["%s %s" % (platform.uname()[0], platform.machine())]
+    osname.append(" ".join(platform.dist("Unknown", "Unknown", "Unknown")[0:2]))
+    osname = "; ".join([_clean_piece(s) for s in osname])
+    return osname

@@ -30,6 +30,7 @@ import os
 import re
 import sys
 import urllib
+import platform
 
 from miro.plat import specialfolders
 
@@ -83,3 +84,8 @@ def _getThemeDirectory():
 
 def theme_path(theme, relative_path):
     return os.path.join(_getThemeDirectory(), theme, relative_path)
+
+def get_osname():
+    osname = '%s %s %s' % (platform.system(), platform.release(),
+            platform.machine())
+    return osname

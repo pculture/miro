@@ -27,7 +27,7 @@
 # statement from all source files in the program, then also delete it here.
 
 import os
-
+import platform
 import urllib
 from miro.plat import bundle
 
@@ -53,3 +53,8 @@ def absoluteUrl(absolute_path):
 def theme_path(theme, relative_path):
     return os.path.join(bundle.getBundlePath(), "Contents", "Theme", theme,
             relative_path)
+
+def get_osname():
+    osname = '%s %s %s' % (platform.system(), platform.release(),
+            platform.machine())
+    return osname
