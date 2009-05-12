@@ -306,12 +306,9 @@ class VideoDetailsWidget(Background):
             popout_link = make_label(_("Pop-out"), self.handle_popin_popout)
             outer_hbox.pack_start(_align_middle(popout_link))
             popout_image = make_image_button(resources.path('images/popout.png'), self.handle_popin_popout)
-            outer_hbox.pack_start(_align_middle(popout_image, right_pad=15))
+            outer_hbox.pack_start(_align_middle(popout_image))
 
-        alignment = Alignment(0, 0, 0, 1)
-        alignment.set_padding(0, 0, 15, 15)
-        alignment.add(outer_hbox)
-        self.add(alignment)
+        self.add(_align_right(outer_hbox, left_pad=15, right_pad=15))
 
     def hide(self):
         self._widget.hide()
