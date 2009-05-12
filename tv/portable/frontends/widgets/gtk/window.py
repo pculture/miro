@@ -30,6 +30,7 @@
 
 import StringIO
 
+import pango
 import gobject
 import gtk
 
@@ -541,12 +542,22 @@ class AboutDialog(Dialog):
         # this removes the newlines in the description so it wraps correctly
         adopters_data = file(resources.path('ADOPTERS'), 'r').read()
         first_double_newline = adopters_data.find('\n\n')
-        adopters_data = adopters_data[:first_double_newline].replace('\n', ' ') + \
-            adopters_data[first_double_newline:-1]
+        adopters_data = adopters_data[first_double_newline+2:-1].replace('\n', ', ')
 
         # show the adopters
         adopters_buffer = gtk.TextBuffer()
         adopters_buffer.set_text(adopters_data)
+        iter = adopters_buffer.get_start_iter()
+        adopters_buffer.insert(iter,
+                               'Thanks to the following people who have adopted '
+                               'lines of Miro code to help support development! '
+                               'To adopt a line, visit the ')
+        adopt_link_tag = adopters_buffer.create_tag(
+            foreground='blue', underline=pango.UNDERLINE_SINGLE)
+        adopt_link_tag.connect('event', self.on_adopt_link_event)
+        adopters_buffer.insert_with_tags(iter, 'Miro Adoption Center',
+                                         adopt_link_tag)
+        adopters_buffer.insert(iter, '.\n\n')
         adopters_view = gtk.TextView(adopters_buffer)
         adopters_view.set_editable(False)
         adopters_view.set_cursor_visible(False)
@@ -559,6 +570,10 @@ class AboutDialog(Dialog):
 
         self.add_button(_("Close"))
         self._window.set_has_separator(False)
+
+    def on_adopt_link_event(self, texttag, widget, event, iter):
+        if event.type == gtk.gdk.BUTTON_PRESS:
+            resources.open_url('https://www.getmiro.com/adopt/')
 
 type_map = {
     0: gtk.MESSAGE_WARNING,
