@@ -97,7 +97,7 @@ class Player(object):
         else:
             qtmovie, error = QTMovie.movieWithURL_error_(url)
         if not self.can_open_file(qtmovie):
-            return nil
+            return None
         return qtmovie
 
     def can_open_file(self, qtmovie):
