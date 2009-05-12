@@ -164,8 +164,17 @@ namespace libtorrent
 #ifndef TORRENT_DISABLE_ENCRYPTION
 			url += "&supportcrypto=1";
 #endif
-			url += "&ipv6=";
-			url += tracker_req().ipv6;
+			if (!tracker_req().ipv6.empty())
+			{
+				url += "&ipv6=";
+				url += tracker_req().ipv6;
+			}
+
+			if (!tracker_req().ipv4.empty())
+			{
+				url += "&ipv4=";
+				url += tracker_req().ipv4;
+			}
 
 			// extension that tells the tracker that
 			// we don't need any peer_id's in the response
@@ -361,13 +370,7 @@ namespace libtorrent
 		}
 
 		entry const* peers_ent = e.find_key("peers");
-		if (peers_ent == 0)
-		{
-			fail(-1, "missing 'peers' entry in tracker response");
-			return;
-		}
-
-		if (peers_ent->type() == entry::string_t)
+		if (peers_ent && peers_ent->type() == entry::string_t)
 		{
 			std::string const& peers = peers_ent->string();
 			for (std::string::const_iterator i = peers.begin();
@@ -384,7 +387,7 @@ namespace libtorrent
 				peer_list.push_back(p);
 			}
 		}
-		else if (peers_ent->type() == entry::list_t)
+		else if (peers_ent && peers_ent->type() == entry::list_t)
 		{
 			entry::list_type const& l = peers_ent->list();
 			for(entry::list_type::const_iterator i = l.begin(); i != l.end(); ++i)
@@ -396,8 +399,7 @@ namespace libtorrent
 		}
 		else
 		{
-			fail(-1, "invalid 'peers' entry in tracker response");
-			return;
+			peers_ent = 0;
 		}
 
 		entry const* ipv6_peers = e.find_key("peers6");
@@ -418,6 +420,17 @@ namespace libtorrent
 				peer_list.push_back(p);
 			}
 		}
+		else
+		{
+			ipv6_peers = 0;
+		}
+
+		if (peers_ent == 0 && ipv6_peers == 0)
+		{
+			fail(-1, "missing 'peers' and 'peers6' entry in tracker response");
+			return;
+		}
+
 
 		// look for optional scrape info
 		int complete = -1;

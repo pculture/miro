@@ -99,6 +99,9 @@ namespace libtorrent
 		// the number of times the request
 		// has been skipped by out of order blocks
 		piece_block block;
+
+		bool operator==(pending_block const& b)
+		{ return b.skipped == skipped && b.block == block; }
 	};
 
 	struct has_block
@@ -584,6 +587,10 @@ namespace libtorrent
 		void on_disk_read_complete(int ret, disk_io_job const& j, peer_request r);
 		void on_disk_write_complete(int ret, disk_io_job const& j
 			, peer_request r, boost::shared_ptr<torrent> t);
+
+		// keep the io_service running as long as we
+		// have peer connections
+		io_service::work m_work;
 
 		// the time when we last got a part of a
 		// piece packet from this peer

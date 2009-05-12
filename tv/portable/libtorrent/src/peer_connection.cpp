@@ -76,6 +76,7 @@ namespace libtorrent
 #endif
 		  m_ses(ses)
 		, m_max_out_request_queue(m_ses.settings().max_out_request_queue)
+		, m_work(ses.m_io_service)
 		, m_last_piece(time_now())
 		, m_last_request(time_now())
 		, m_last_incoming_request(min_time())
@@ -184,6 +185,7 @@ namespace libtorrent
 #endif
 		  m_ses(ses)
 		, m_max_out_request_queue(m_ses.settings().max_out_request_queue)
+		, m_work(ses.m_io_service)
 		, m_last_piece(time_now())
 		, m_last_request(time_now())
 		, m_last_incoming_request(min_time())
@@ -808,8 +810,8 @@ namespace libtorrent
 					&& p.piece == ti.num_pieces()-1
 					&& p.start + p.length == ti.piece_size(p.piece))
 				|| (m_request_large_blocks
-					&& p.length <= ti.piece_length() * m_prefer_whole_pieces == 0 ?
-					1 : m_prefer_whole_pieces))
+					&& p.length <= ti.piece_length() * (m_prefer_whole_pieces == 0 ?
+					1 : m_prefer_whole_pieces)))
 			&& p.piece * size_type(ti.piece_length()) + p.start + p.length
 				<= ti.total_size()
 			&& (p.start % t->block_size() == 0);
@@ -1713,7 +1715,7 @@ namespace libtorrent
 			if (t->alerts().should_post<unwanted_block_alert>())
 			{
 				t->alerts().post_alert(unwanted_block_alert(t->get_handle(), m_remote
-						, m_peer_id, block_finished.block_index, block_finished.piece_index));
+					, m_peer_id, block_finished.block_index, block_finished.piece_index));
 			}
 #if defined TORRENT_VERBOSE_LOGGING || defined TORRENT_ERROR_LOGGING
 			(*m_logger) << " *** The block we just got was not in the "
@@ -1749,7 +1751,7 @@ namespace libtorrent
 					m_ses.m_alerts.post_alert(request_dropped_alert(t->get_handle()
 						, remote(), pid(), qe.block.block_index, qe.block.piece_index));
 				picker.abort_download(qe.block);
-				TORRENT_ASSERT(m_download_queue.begin() + i != b);
+				TORRENT_ASSERT(m_download_queue[block_index] == pending_b);
 				m_download_queue.erase(m_download_queue.begin() + i);
 				--i;
 				--block_index;
@@ -2410,18 +2412,15 @@ namespace libtorrent
 			for (extension_list_t::iterator i = m_extensions.begin()
 				, end(m_extensions.end()); i != end; ++i)
 			{
-				if (handled = (*i)->write_request(r)) break;
+				if ((handled = (*i)->write_request(r))) break;
 			}
 			if (is_disconnecting()) return;
 			if (!handled)
+#endif
 			{
 				write_request(r);
 				m_last_request = time_now();
 			}
-#else
-			write_request(r);
-			m_last_request = time_now();
-#endif
 
 #ifdef TORRENT_VERBOSE_LOGGING
 			(*m_logger) << time_now_string()
@@ -2752,6 +2751,8 @@ namespace libtorrent
 		return m_disk_recv_buffer.release();
 	}
 	
+	// size = the packet size to remove from the receive buffer
+	// packet_size = the next packet size to receive in the buffer
 	void peer_connection::cut_receive_buffer(int size, int packet_size)
 	{
 		INVARIANT_CHECK;
@@ -3243,7 +3244,7 @@ namespace libtorrent
 		{
 #ifdef TORRENT_VERBOSE_LOGGING
 			(*m_logger) << time_now_string() << " *** CANNOT WRITE ["
-				" quota: " << m_bandwidth_limit[download_channel].quota_left() <<
+				" quota: " << m_bandwidth_limit[upload_channel].quota_left() <<
 				" ignore: " << (m_ignore_bandwidth_limits?"yes":"no") <<
 				" buf: " << m_send_buffer.size() <<
 				" connecting: " << (m_connecting?"yes":"no") <<
@@ -3667,7 +3668,7 @@ namespace libtorrent
 			return;
 		}
 
-		m_socket->open(t->get_interface().protocol(), ec);
+		m_socket->open(m_remote.protocol(), ec);
 		if (ec)
 		{
 			disconnect(ec.message().c_str());
@@ -3696,6 +3697,16 @@ namespace libtorrent
 				return;
 			}
 			bind_interface.port(m_ses.next_port());
+		}
+
+		// if we're not binding to a specific interface, bind
+		// to the same protocol family as the target endpoint
+		if (is_any(bind_interface.address()))
+		{
+			if (m_remote.address().is_v4())
+				bind_interface.address(address_v4::any());
+			else
+				bind_interface.address(address_v6::any());
 		}
 
 		m_socket->bind(bind_interface, ec);

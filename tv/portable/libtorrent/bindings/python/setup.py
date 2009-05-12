@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from distutils import sysconfig
 from distutils.core import setup, Extension
 import os
 import platform
@@ -29,7 +30,7 @@ def arch():
 if platform.system() == 'Windows':
 # on windows, build using bjam and build an installer
 	import shutil
-	if os.system('bjam boost=source link=static boost-link=static release msvc-7.1 optimization=space') != 0:
+	if os.system('bjam boost=source link=static geoip=static boost-link=static release msvc-7.1 optimization=space') != 0:
 		print 'build failed'
 		sys.exit(1)
 	try: os.mkdir(r'build')
@@ -38,11 +39,11 @@ if platform.system() == 'Windows':
 	except: pass
 	try: os.mkdir(r'libtorrent')
 	except: pass
-	shutil.copyfile(r'bin\msvc-7.1\release\boost-source\link-static\optimization-space\threading-multi\libtorrent.pyd', r'.\build\lib\libtorrent.pyd')
+	shutil.copyfile(r'bin\msvc-7.1\release\boost-source\geoip-static\link-static\optimization-space\threading-multi\libtorrent.pyd', r'.\build\lib\libtorrent.pyd')
 	setup( name='python-libtorrent',
-		version='0.14.2',
+		version='0.14.3',
 		author = 'Arvid Norberg',
-		author_email='arvid@rasterbar.com',
+		author_email='arvid@cs.umu.se',
 		description = 'Python bindings for libtorrent-rasterbar',
 		long_description = 'Python bindings for libtorrent-rasterbar',
 		url = 'http://www.rasterbar.com/products/libtorrent/index.html',
@@ -52,15 +53,21 @@ if platform.system() == 'Windows':
 	)
 	sys.exit(0)
 
+config_vars = sysconfig.get_config_vars()
+if "CFLAGS" in config_vars and "-Wstrict-prototypes" in config_vars["CFLAGS"]:
+	config_vars["CFLAGS"] = config_vars["CFLAGS"].replace("-Wstrict-prototypes", " ")
+if "OPT" in config_vars and "-Wstrict-prototypes" in config_vars["OPT"]:
+	config_vars["OPT"] = config_vars["OPT"].replace("-Wstrict-prototypes", " ")
+
 source_list = os.listdir(os.path.join(os.path.dirname(__file__), "src"))
 source_list = [os.path.join("src", s) for s in source_list if s.endswith(".cpp")]
 
-extra_cmd = '-DTORRENT_USE_OPENSSL -DTORRENT_LINKING_SHARED   -D_THREAD_SAFE  -pthread -I/opt/local/include   -lboost_filesystem-mt-1_35 -lboost_thread-mt-1_35    -lssl -lcrypto -lboost_system-mt-1_35 -L/opt/local/lib -L/opt/local/lib -L/usr/lib -I/opt/local/include/boost-1_35 -I/usr/include/python2.5 -I/usr/include/openssl -DHAVE_SSL'
+extra_cmd = '-DTORRENT_USE_OPENSSL -DTORRENT_LINKING_SHARED   -pthread -I/opt/local/include  -lboost_filesystem-mt-1_35 -lboost_thread-mt-1_35  -lssl -lcrypto -lboost_system-mt-1_35 -L/usr/lib -I/usr/include/openssl -DHAVE_SSL'
 
 setup( name='python-libtorrent',
-	version='0.14.2',
+	version='0.14.3',
 	author = 'Arvid Norberg',
-	author_email='arvid@rasterbar.com',
+	author_email='arvid@cs.umu.se',
 	description = 'Python bindings for libtorrent-rasterbar',
 	long_description = 'Python bindings for libtorrent-rasterbar',
 	url = 'http://www.rasterbar.com/products/libtorrent/index.html',

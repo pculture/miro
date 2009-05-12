@@ -303,7 +303,7 @@ namespace libtorrent
 
 		if (name) m_name.reset(new std::string(name));
 
-		if (tracker_url)
+		if (tracker_url && std::strlen(tracker_url) > 0)
 		{
 			m_trackers.push_back(announce_entry(tracker_url));
 			m_torrent_file->add_tracker(tracker_url);
@@ -692,10 +692,6 @@ namespace libtorrent
 		disconnect_all();
 
 		m_owning_storage->async_release_files();
-		m_owning_storage = new piece_manager(shared_from_this(), m_torrent_file
-			, m_save_path, m_ses.m_files, m_ses.m_disk_thread, m_storage_constructor
-			, m_storage_mode);
-		m_storage = m_owning_storage.get();
 		if (!m_picker) m_picker.reset(new piece_picker());
 		m_picker->init(m_torrent_file->piece_length() / m_block_size
 			, int((m_torrent_file->total_size()+m_block_size-1)/m_block_size));
@@ -733,9 +729,17 @@ namespace libtorrent
 			pause();
 			return;
 		}
-		set_state(torrent_status::queued_for_checking);
-		if (should_check_files())
-			queue_torrent_check();
+		if (ret == 0)
+		{
+			// if there are no files, just start
+			files_checked();
+		}
+		else
+		{
+			set_state(torrent_status::queued_for_checking);
+			if (should_check_files())
+				queue_torrent_check();
+		}
 	}
 
 	void torrent::start_checking()
@@ -755,7 +759,7 @@ namespace libtorrent
 
 		if (ret == piece_manager::disk_check_aborted)
 		{
-			set_error("aborted");
+			pause();
 			return;
 		}
 		if (ret == piece_manager::fatal_disk_error)
@@ -895,6 +899,8 @@ namespace libtorrent
 
 		if (m_trackers.empty()) return;
 
+		if (m_currently_trying_tracker < 0) m_currently_trying_tracker = 0;
+
 		restart_tracker_timer(time_now() + seconds(tracker_retry_delay_max));
 
 		if (m_abort) e = tracker_request::stopped;
@@ -913,10 +919,12 @@ namespace libtorrent
 		req.left = bytes_left();
 		if (req.left == -1) req.left = 16*1024;
 		req.event = e;
-		tcp::endpoint ep = m_ses.get_ipv6_interface();
 		error_code ec;
-		if (ep != tcp::endpoint())
-			req.ipv6 = ep.address().to_string(ec);
+		tcp::endpoint ep;
+		ep = m_ses.get_ipv6_interface();
+		if (ep != tcp::endpoint()) req.ipv6 = ep.address().to_string(ec);
+		ep = m_ses.get_ipv4_interface();
+		if (ep != tcp::endpoint()) req.ipv4 = ep.address().to_string(ec);
 
 		req.url = m_trackers[m_currently_trying_tracker].url;
 		// if we are aborting. we don't want any new peers
@@ -2033,7 +2041,10 @@ namespace libtorrent
 
 	void torrent::replace_trackers(std::vector<announce_entry> const& urls)
 	{
-		m_trackers = urls;
+		m_trackers.clear();
+		std::remove_copy_if(urls.begin(), urls.end(), back_inserter(m_trackers)
+			, boost::bind(&std::string::empty, boost::bind(&announce_entry::url, _1)));
+
 		if (m_currently_trying_tracker >= (int)m_trackers.size())
 			m_currently_trying_tracker = (int)m_trackers.size()-1;
 		m_last_working_tracker = -1;
@@ -2405,7 +2416,7 @@ namespace libtorrent
 	{
 		unsigned long swap_bytes(unsigned long a)
 		{
-			return (a >> 24) | ((a & 0xff0000) >> 8) | ((a & 0xff00) << 8) | (a << 24);
+			return (a >> 24) | ((a & 0xff0000) >> 8) | ((a & 0xff00) << 8) | ((a & 0xff) << 24);
 		}
 	}
 	
@@ -2744,6 +2755,17 @@ namespace libtorrent
 		{
 			for (int i = 0, end(pieces.size()); i < end; ++i)
 				pieces[i] = m_picker->have_piece(i) ? 1 : 0;
+		}
+
+		// write renamed files
+		if (&m_torrent_file->files() != &m_torrent_file->orig_files())
+		{
+			entry::list_type& fl = ret["mapped_files"].list();
+			for (torrent_info::file_iterator i = m_torrent_file->begin_files()
+				, end(m_torrent_file->end_files()); i != end; ++i)
+			{
+				fl.push_back(i->path.string());
+			}
 		}
 
 		// write local peers
@@ -3997,10 +4019,12 @@ namespace libtorrent
 				|| m_state == torrent_status::checking_files
 				|| m_state == torrent_status::checking_resume_data)
 			{
-				if (alerts().should_post<save_resume_data_failed_alert>())
+				if (alerts().should_post<save_resume_data_alert>())
 				{
-					alerts().post_alert(save_resume_data_failed_alert(get_handle()
-						, "won't save resume data, torrent does not have a complete resume state yet"));
+					boost::shared_ptr<entry> rd(new entry);
+					write_resume_data(*rd);
+					alerts().post_alert(save_resume_data_alert(rd
+						, get_handle()));
 				}
 			}
 			else
@@ -4234,7 +4258,7 @@ namespace libtorrent
 		}
 
 		// if we have everything we want we don't need to connect to any web-seed
-		if (!is_finished() && !m_web_seeds.empty())
+		if (!is_finished() && !m_web_seeds.empty() && m_files_checked)
 		{
 			// keep trying web-seeds if there are any
 			// first find out which web seeds we are connected to
@@ -4530,7 +4554,18 @@ namespace libtorrent
 #ifdef TORRENT_DEBUG
 		if (s != torrent_status::checking_files
 			&& s != torrent_status::queued_for_checking)
-			TORRENT_ASSERT(!m_queued_for_checking);
+		{
+			// the only valid transition away from queued_for_checking
+			// is to checking_files. One exception is to finished
+			// in case all the files are marked with priority 0
+			if (m_queued_for_checking)
+			{
+				std::vector<int> pieces;
+				m_picker->piece_priorities(pieces);
+				// make sure all pieces have priority 0
+				TORRENT_ASSERT(std::count(pieces.begin(), pieces.end(), 0) == pieces.size());
+			}
+		}
 		if (s == torrent_status::seeding)
 			TORRENT_ASSERT(is_seed());
 		if (s == torrent_status::finished)

@@ -210,7 +210,7 @@ void upnp::delete_mapping(int mapping)
 {
 	mutex_t::scoped_lock l(m_mutex);
 
-	if (mapping <= int(m_mappings.size())) return;
+	if (mapping >= int(m_mappings.size())) return;
 
 	global_mapping_t& m = m_mappings[mapping];
 
@@ -513,14 +513,8 @@ void upnp::on_reply(udp::endpoint const& from, char* buffer
 		boost::tie(i, boost::tuples::ignore) = m_devices.insert(d);
 	}
 
-
-	// since we're using udp, send the query 4 times
-	// just to make sure we find all devices
-	if (m_retry_count >= 4 && !m_devices.empty())
+	if (!m_devices.empty())
 	{
-		error_code ec;
-		m_broadcast_timer.cancel(ec);
-
 		for (std::set<rootdevice>::iterator i = m_devices.begin()
 			, end(m_devices.end()); i != end; ++i)
 		{
@@ -912,7 +906,7 @@ void upnp::on_upnp_xml(error_code const& e
 		}
 	}
 	
-	if (!s.url_base.empty())
+	if (!s.url_base.empty() && s.control_url.substr(7) != "http://")
 	{
 		// avoid double slashes in path
 		if (s.url_base[s.url_base.size()-1] == '/'
@@ -969,7 +963,7 @@ void upnp::disable(char const* msg)
 		m_callback(i - m_mappings.begin(), 0, msg);
 	}
 	
-	m_devices.clear();
+//	m_devices.clear();
 	error_code ec;
 	m_broadcast_timer.cancel(ec);
 	m_refresh_timer.cancel(ec);

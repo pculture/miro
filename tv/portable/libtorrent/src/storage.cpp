@@ -184,8 +184,19 @@ namespace libtorrent
 			copy_file(old_path, new_path);
 		}
 #ifndef BOOST_NO_EXCEPTIONS
-		} catch (std::exception& e) { ec = error_code(errno, get_posix_category()); }
-#endif
+		}
+#if BOOST_VERSION >= 103500
+		catch (boost::system::system_error& e)
+		{
+			ec = e.code();
+		}
+#else
+		catch (boost::filesystem::filesystem_error& e)
+		{
+			ec = error_code(e.system_error(), get_system_category());
+		}
+#endif // BOOST_VERSION
+#endif // BOOST_NO_EXCEPTIONS
 	}
 
 	template <class Path>
@@ -300,7 +311,7 @@ namespace libtorrent
 			// in sparse mode, allow the files to be more recent
 			// than the resume data, but only by 5 minutes
 			if ((compact_mode && (time > s->second + 1 || time < s->second - 1)) ||
-				(!compact_mode && (time > s->second + 5 * 60) || time < s->second - 1))
+				(!compact_mode && (time > s->second + 5 * 60 || time < s->second - 1)))
 			{
 				if (error) *error = "timestamp mismatch for file '"
 					+ i->path.external_file_string()
@@ -325,6 +336,7 @@ namespace libtorrent
 			TORRENT_ASSERT(m_save_path.is_complete());
 		}
 
+		bool has_any_file();
 		bool rename_file(int index, std::string const& new_filename);
 		bool release_files();
 		bool delete_files();
@@ -339,6 +351,7 @@ namespace libtorrent
 		bool write_resume_data(entry& rd) const;
 		sha1_hash hash_for_slot(int slot, partial_hash& ph, int piece_size);
 
+		void delete_one_file(std::string const& p);
 		int read_impl(char* buf, int slot, int offset, int size, bool fill_zero);
 
 		~storage()
@@ -445,17 +458,66 @@ namespace libtorrent
 			}
 #ifndef BOOST_NO_EXCEPTIONS
 			}
-			catch (std::exception& e)
+#if BOOST_VERSION >= 103500
+			catch (boost::system::system_error& e)
 			{
-				set_error(m_save_path / file_iter->path
-					, error_code(errno, get_posix_category()));
+				set_error(m_save_path / file_iter->path, e.code());
 				return true;
 			}
-#endif
+#else
+			catch (boost::filesystem::filesystem_error& e)
+			{
+				set_error(m_save_path / file_iter->path
+					, error_code(e.system_error(), get_system_category()));
+				return true;
+			}
+#endif // BOOST_VERSION
+#endif // BOOST_NO_EXCEPTIONS
 		}
 		std::vector<boost::uint8_t>().swap(m_file_priority);
 		// close files that were opened in write mode
 		m_pool.release(this);
+		return false;
+	}
+
+	bool storage::has_any_file()
+	{
+		file_storage::iterator i = m_files.begin();
+		file_storage::iterator end = m_files.end();
+
+		for (; i != end; ++i)
+		{
+			bool file_exists = false;
+			fs::path f = m_save_path / i->path;
+#ifndef BOOST_NO_EXCEPTIONS
+			try
+			{
+#endif
+#if TORRENT_USE_WPATH
+				fs::wpath wf = safe_convert(f.string());
+				file_exists = exists(wf);
+#else
+				file_exists = exists(f);
+#endif
+#ifndef BOOST_NO_EXCEPTIONS
+			}
+#if BOOST_VERSION >= 103500
+			catch (boost::system::system_error& e)
+			{
+				set_error(f, e.code());
+				return false;
+			}
+#else
+			catch (boost::filesystem::filesystem_error& e)
+			{
+				set_error(f, error_code(e.system_error(), get_system_category()));
+				return false;
+			}
+#endif // BOOST_VERSION
+#endif // BOOST_NO_EXCEPTIONS
+			if (file_exists && i->size > 0)
+				return true;
+		}
 		return false;
 	}
 
@@ -502,12 +564,14 @@ namespace libtorrent
 			set_error(old_name, e.code());
 			return true;
 		}
-#endif
-		catch (std::exception& e)
+#else
+		catch (boost::filesystem::filesystem_error& e)
 		{
-			set_error(old_name, error_code(errno, get_posix_category()));
+			set_error(old_name, error_code(e.system_error()
+				, get_system_category()));
 			return true;
 		}
+#endif // BOOST_VERSION
 #endif
 		return false;
 	}
@@ -519,14 +583,39 @@ namespace libtorrent
 		return false;
 	}
 
+	void storage::delete_one_file(std::string const& p)
+	{
+#if TORRENT_USE_WPATH
+#ifndef BOOST_NO_EXCEPTIONS
+		try
+#endif
+		{ fs::remove(safe_convert(p)); }
+#ifndef BOOST_NO_EXCEPTIONS
+#if BOOST_VERSION >= 103500
+		catch (boost::system::system_error& e)
+		{
+			set_error(p, e.code());
+		}
+#else
+		catch (boost::filesystem::filesystem_error& e)
+		{
+			set_error(p, error_code(e.system_error(), get_system_category()));
+		}
+#endif // BOOST_VERSION
+#endif // BOOST_NO_EXCEPTIONS
+#else // TORRENT_USE_WPATH
+		if (std::remove(p.c_str()) != 0 && errno != ENOENT)
+		{
+			set_error(p, error_code(errno, get_posix_category()));
+		}
+#endif
+	}
+
 	bool storage::delete_files()
 	{
 		// make sure we don't have the files open
 		m_pool.release(this);
 		buffer().swap(m_scratch_buffer);
-
-		int error = 0;
-		std::string error_file;
 
 		// delete the files from disk
 		std::set<std::string> directories;
@@ -543,21 +632,7 @@ namespace libtorrent
 				std::pair<iter_t, bool> ret = directories.insert((m_save_path / bp).string());
 				bp = bp.branch_path();
 			}
-#if TORRENT_USE_WPATH
-			try
-			{ fs::remove(safe_convert(p)); }
-			catch (std::exception& e)
-			{
-				error = errno;
-				error_file = p;
-			}
-#else
-			if (std::remove(p.c_str()) != 0 && errno != ENOENT)
-			{
-				error = errno;
-				error_file = p;
-			}
-#endif
+			delete_one_file(p);
 		}
 
 		// remove the directories. Reverse order to delete
@@ -566,29 +641,10 @@ namespace libtorrent
 		for (std::set<std::string>::reverse_iterator i = directories.rbegin()
 			, end(directories.rend()); i != end; ++i)
 		{
-#if TORRENT_USE_WPATH
-			try
-			{ fs::remove(safe_convert(*i)); }
-			catch (std::exception& e)
-			{
-				error = errno;
-				error_file = *i;
-			}
-#else
-			if (std::remove(i->c_str()) != 0 && errno != ENOENT)
-			{
-				error = errno;
-				error_file = *i;
-			}
-#endif
+			delete_one_file(*i);
 		}
 
-		if (error)
-		{
-			m_error = error_code(error, get_posix_category());
-			m_error_file.swap(error_file);
-			return true;
-		}
+		if (error()) return true;
 		return false;
 	}
 
@@ -609,16 +665,6 @@ namespace libtorrent
 			fl.push_back(entry(p));
 		}
 		
-		if (m_mapped_files)
-		{
-			entry::list_type& fl = rd["mapped_files"].list();
-			for (file_storage::iterator i = m_mapped_files->begin()
-				, end(m_mapped_files->end()); i != end; ++i)
-			{
-				fl.push_back(i->path.string());
-			}
-		}
-
 		return false;
 	}
 
@@ -758,37 +804,55 @@ namespace libtorrent
 
 		m_pool.release(this);
 
+		bool ret = true;
+		std::set<std::string> to_move;
+		file_storage const& f = files();
+
+		for (file_storage::iterator i = f.begin()
+			, end(f.end()); i != end; ++i)
+		{
+			to_move.insert(to_move.begin(), *i->path.begin());
+		}
+
+		for (std::set<std::string>::const_iterator i = to_move.begin()
+			, end(to_move.end()); i != end; ++i)
+		{
+			
 #if TORRENT_USE_WPATH
-		old_path = safe_convert((m_save_path / files().name()).string());
-		new_path = safe_convert((save_path / files().name()).string());
+			old_path = safe_convert((m_save_path / *i).string());
+			new_path = safe_convert((save_path / *i).string());
 #else
-		old_path = m_save_path / files().name();
-		new_path = save_path / files().name();
+			old_path = m_save_path / *i;
+			new_path = save_path / *i;
 #endif
 
 #ifndef BOOST_NO_EXCEPTIONS
-		try
-		{
-#endif
-			rename(old_path, new_path);
-			m_save_path = save_path;
-			return true;
-#ifndef BOOST_NO_EXCEPTIONS
-		}
-		catch (std::exception& e)
-		{
-			error_code ec;
-			recursive_copy(old_path, new_path, ec);
-			if (ec)
+			try
 			{
-				set_error(m_save_path / files().name(), ec);
-				return true;
-			}
-			m_save_path = save_path;
-			recursive_remove(old_path);
-		}
 #endif
-		return false;
+				rename(old_path, new_path);
+#ifndef BOOST_NO_EXCEPTIONS
+			}
+			catch (std::exception& e)
+			{
+				error_code ec;
+				recursive_copy(old_path, new_path, ec);
+				if (ec)
+				{
+					set_error(m_save_path / files().name(), ec);
+					ret = false;
+				}
+				else
+				{
+					recursive_remove(old_path);
+				}
+			}
+#endif
+		}
+
+		if (ret) m_save_path = save_path;
+
+		return ret;
 	}
 
 #ifdef TORRENT_DEBUG
@@ -1663,51 +1727,27 @@ namespace libtorrent
 
 	int piece_manager::check_no_fastresume(std::string& error)
 	{
-		file_storage::iterator i = m_files.begin();
-		file_storage::iterator end = m_files.end();
+		bool has_files = m_storage->has_any_file();
 
-		for (; i != end; ++i)
+		if (m_storage->error())
+			return fatal_disk_error;
+
+		if (has_files)
 		{
-			bool file_exists = false;
-			fs::path f = m_save_path / i->path;
-#ifndef BOOST_NO_EXCEPTIONS
-			try
+			m_state = state_full_check;
+			m_piece_to_slot.clear();
+			m_piece_to_slot.resize(m_files.num_pieces(), has_no_slot);
+			m_slot_to_piece.clear();
+			m_slot_to_piece.resize(m_files.num_pieces(), unallocated);
+			if (m_storage_mode == storage_mode_compact)
 			{
-#endif
-#if TORRENT_USE_WPATH
-				fs::wpath wf = safe_convert(f.string());
-				file_exists = exists(wf);
-#else
-				file_exists = exists(f);
-#endif
-#ifndef BOOST_NO_EXCEPTIONS
+				m_unallocated_slots.clear();
+				m_free_slots.clear();
 			}
-			catch (std::exception& e)
-			{
-				error = f.string();
-				error += ": ";
-				error += e.what();
-				TORRENT_ASSERT(!error.empty());
-				return fatal_disk_error;
-			}
-#endif
-			if (file_exists && i->size > 0)
-			{
-				m_state = state_full_check;
-				m_piece_to_slot.clear();
-				m_piece_to_slot.resize(m_files.num_pieces(), has_no_slot);
-				m_slot_to_piece.clear();
-				m_slot_to_piece.resize(m_files.num_pieces(), unallocated);
-				if (m_storage_mode == storage_mode_compact)
-				{
-					m_unallocated_slots.clear();
-					m_free_slots.clear();
-				}
-				TORRENT_ASSERT(int(m_piece_to_slot.size()) == m_files.num_pieces());
-				return need_full_check;
-			}
+			TORRENT_ASSERT(int(m_piece_to_slot.size()) == m_files.num_pieces());
+			return need_full_check;
 		}
-	
+
 		if (m_storage_mode == storage_mode_compact)
 		{
 			// in compact mode without checking, we need to
