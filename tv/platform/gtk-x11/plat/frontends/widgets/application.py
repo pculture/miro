@@ -133,7 +133,7 @@ class GtkX11Application(Application):
     def _set_default_icon(self):
         # we set the icon first (if available) so that it doesn't flash
         # on when the window is realized in Application.build_window()
-        icopath = resources.sharePath("pixmaps/miro-24x24.png")
+        icopath = resources.share_path("pixmaps/miro-24x24.png")
         if config.get(prefs.THEME_NAME) and config.get(options.WINDOWS_ICON):
             themeIcoPath = resources.theme_path(config.get(prefs.THEME_NAME),
                                                 config.get(options.WINDOWS_ICON))
@@ -142,7 +142,7 @@ class GtkX11Application(Application):
                 gtk.window_set_default_icon_from_file(icopath)
         else:
             gtk.window_set_default_icon_from_file(
-                resources.sharePath('pixmaps/miro-128x128.png'))
+                resources.share_path('pixmaps/miro-128x128.png'))
         return icopath
 
     def build_window(self):
@@ -179,7 +179,7 @@ class GtkX11Application(Application):
             try:
                 if not os.path.exists(autostart_dir):
                     os.makedirs(autostart_dir)
-                shutil.copy(resources.sharePath('applications/miro.desktop'),
+                shutil.copy(resources.share_path('applications/miro.desktop'),
                             destination)
             except OSError:
                 logging.exception("Problems creating or populating autostart dir.")

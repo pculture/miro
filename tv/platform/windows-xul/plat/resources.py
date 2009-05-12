@@ -43,7 +43,7 @@ def appRoot():
 def root():
     return os.path.join(appRoot(), 'resources')
 
-def sharePath(path):
+def share_path(path):
     return os.path.join(root(), path)
 
 # Note: some of these functions are probably not absolutely correct in

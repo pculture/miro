@@ -26,35 +26,41 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+"""
+Holds functions that return import directories and other platform-oriented
+functions.
+
+.. note::
+
+   Some of these functions are probably not absolutely correct in the
+   face of funny characters in the input paths. In particular,
+   :fun:`url` doesn't DTRT when the path contains spaces. But they
+   should be sufficient for resolving resources, since we have control
+   over the filenames.
+"""
+
 import os
 import urllib
 
-resource_root = os.environ.get('MIRO_RESOURCE_ROOT', '/usr/share/miro/resources/')
-resource_root = os.path.abspath(resource_root)
-
-share_root = os.environ.get('MIRO_SHARE_ROOT', '/usr/share/')
-share_root = os.path.abspath(share_root)
-
-# Note: some of these functions are probably not absolutely correct in
-# the face of funny characters in the input paths. In particular,
-# url() doesn't DTRT when the path contains spaces. But they should be
-# sufficient for resolving resources, since we have control over the
-# filenames.
+resource_root = os.path.abspath(os.environ.get('MIRO_RESOURCE_ROOT', '/usr/share/miro/resources/'))
+share_root = os.path.abspath(os.environ.get('MIRO_SHARE_ROOT', '/usr/share/'))
 
 def root():
     return resource_root
 
-# Find the full path to a resource data file. 'relative_path' is
-# expected to be supplied in Unix format, with forward-slashes as
-# separators.
 def path(relative_path):
+    """Find the full path to a resource data file. 'relative_path' is
+    expected to be supplied in Unix format, with forward-slashes as
+    separators.
+    """
     return os.path.join(resource_root, relative_path)
 
-def sharePath(relative_path):
+def share_path(relative_path):
     return os.path.join(share_root, relative_path)
 
-# As path(), but return a file: URL instead.
 def url(relative_path):
+    """As path(), but return a file: URL instead.
+    """
     return u'file://%s' % urllib.quote(path(relative_path))
 
 def absoluteUrl(absolute_path):

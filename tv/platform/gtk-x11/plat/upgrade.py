@@ -58,7 +58,7 @@ def upgrade():
             try:
                 if not os.path.exists(autostart_dir):
                     os.makedirs(autostart_dir)
-                shutil.copy(resources.sharePath('applications/miro.desktop'), destination)
+                shutil.copy(resources.share_path('applications/miro.desktop'), destination)
                 os.remove(old_file)
             except OSError:
                 pass
