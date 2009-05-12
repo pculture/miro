@@ -496,19 +496,19 @@ class AudioVideoItemsController(SimpleItemListController):
 class VideoItemsController(AudioVideoItemsController):
     type = 'videos'
     id = None
-    image_filename = 'icon-library_large.png'
+    image_filename = 'icon-video_large.png'
     title = _("Video")
 
 class AudioItemsController(AudioVideoItemsController):
     type = 'audios'
     id = None
-    image_filename = 'icon-library_large.png'
+    image_filename = 'icon-audio_large.png'
     title = _("Audio")
 
 class OtherItemsController(SimpleItemListController):
     type = 'others'
     id = None
-    image_filename = 'icon-new_large.png'
+    image_filename = 'icon-other_large.png'
     title = _("Other")
 
     def build_item_view(self):
