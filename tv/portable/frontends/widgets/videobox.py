@@ -106,6 +106,10 @@ class PlaybackControls(widgetset.HBox):
         self.queue_redraw()
 
 class PlaybackInfo(widgetset.DrawingArea):
+    LEFT_MARGIN = 8
+    RIGHT_MARGIN = 8
+    TOTAL_MARGIN = LEFT_MARGIN + RIGHT_MARGIN
+    
     def __init__(self):
         widgetset.DrawingArea.__init__(self)
         self.video_icon = imagepool.get_surface(resources.path('images/mini-icon-video.png'))
@@ -143,20 +147,31 @@ class PlaybackInfo(widgetset.DrawingArea):
     def draw(self, context, layout):
         if not app.playback_manager.is_playing:
             return
+
         width, height = self.size_request(layout)
-        if self.is_audio:
-            icon = self.audio_icon
-        x = int((context.width - width) / 2.0)
+        x = int((context.width - width - self.TOTAL_MARGIN) / 2.0)
+        if x < self.LEFT_MARGIN:
+            width = context.width - self.TOTAL_MARGIN + x
+            x = self.LEFT_MARGIN
+
         if self.is_audio:        
-            icon.draw(context, x, 0, 12, 12, 1.0)
+            self.audio_icon.draw(context, x, 0, 12, 12, 1.0)
             x = x + 16
+
         layout.set_text_color((0.9, 0.9, 0.9))
         text = layout.textbox(self.item_name)
         width1, height1 = text.get_size()
+        width1 = min(width1, context.width - self.TOTAL_MARGIN - x)
+        text.set_wrap_style('truncated-char')
+        text.set_width(width1)
         text.draw(context, x, 0, width1, height1)
+
         layout.set_text_color((0.7, 0.7, 0.7))
         text = layout.textbox(" - %s" % self.feed_name)
         width2, height2 = text.get_size()
+        width2 = min(width2, context.width - self.TOTAL_MARGIN - width1 - x)
+        text.set_wrap_style('truncated-char')
+        text.set_width(width2)
         text.draw(context, x + width1, 0, width2, height2)
 
 class ProgressTime(widgetset.DrawingArea):
