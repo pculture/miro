@@ -303,7 +303,7 @@ class Application:
             basename = os.path.basename(filename)
             dialogs.show_message(
                 _("Error Revealing File"),
-                _("The file \"%(filename)s\" was deleted from outside %s(appname.",
+                _("The file %(filename)s was deleted from outside %(appname)s.",
                   {"filename": basename,
                    "appname": config.get(prefs.SHORT_APP_NAME)}),
                 dialogs.WARNING_MESSAGE)
