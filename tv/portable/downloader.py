@@ -326,9 +326,7 @@ class RemoteDownloader(DDBObject):
             return
         try:
             fileutil.delete(filename)
-        except (SystemExit, KeyboardInterrupt):
-            raise
-        except:
+        except OSError:
             logging.exception("Error deleting downloaded file: %s", toUni(filename))
 
         parent = os.path.join(fileutil.expand_filename(filename), os.path.pardir)
@@ -339,9 +337,7 @@ class RemoteDownloader(DDBObject):
                 len(os.listdir(parent)) == 0):
             try:
                 os.rmdir(parent)
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
+            except OSError:
                 logging.exception("Error deleting empty download directory: %s", toUni(parent))
 
     def start(self):
@@ -396,9 +392,7 @@ URL was %s""" % self.url
                     directory = os.path.join (directory, channelName)
                 try:
                     fileutil.makedirs(directory)
-                except (SystemExit, KeyboardInterrupt):
-                    raise
-                except:
+                except OSError:
                     pass
                 newfilename = os.path.join(directory, shortFilename)
                 if newfilename == filename:
@@ -646,9 +640,7 @@ def cleanup_incomplete_downloads():
                     fileutil.remove (f)
                 elif fileutil.isdir(f):
                     fileutil.rmtree (f)
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
+            except OSError:
                 # FIXME - maybe a permissions error?
                 pass
 
