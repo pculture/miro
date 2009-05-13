@@ -83,7 +83,7 @@ class FeedURLNormalizationTest(MiroTestCase):
 class FeedTestCase(EventLoopTest):
     def setUp(self):
         EventLoopTest.setUp(self)
-        [handle, self.filename] = mkstemp(".xml")
+        self.filename = self.make_temp_path()
 
     def writefile(self, content):
         self.url = u'file://%s' % self.filename

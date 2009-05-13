@@ -1,4 +1,6 @@
+import os
 import unittest
+import tempfile
 import threading
 
 from miro import database
@@ -84,6 +86,7 @@ class MiroTestCase(unittest.TestCase):
         self.errorSignalOkay = False
         signals.system.connect('error', self.handle_error)
         app.controller = DummyController()
+        self.temp_files = []
 
     def tearDown(self):
         signals.system.disconnect_all()
@@ -94,6 +97,16 @@ class MiroTestCase(unittest.TestCase):
         database.ViewTracker.reset_trackers()
         # Remove anything that may have been accidentally queued up
         eventloop._eventLoop = eventloop.EventLoop()
+        for filename in self.temp_files:
+            try:
+                os.remove(filename)
+            except OSError:
+                pass
+
+    def make_temp_path(self):
+        [handle, filename] = tempfile.mkstemp(".xml")
+        self.temp_files.append(filename)
+        return filename
 
     def reload_database(self, path=':memory:', schema_version=None,
             object_schemas=None, upgrade=True):
