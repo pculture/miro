@@ -247,6 +247,7 @@ class RemoteDownloader(DDBObject):
                 print "WARNING exception when comparing status: %s" % e
 
             wasFinished = self.isFinished()
+            old_filename = self.get_filename()
             self.before_changing_status()
 
             # FIXME: how do we get all of the possible bit torrent
@@ -259,15 +260,20 @@ class RemoteDownloader(DDBObject):
 
             # Store the time the download finished
             finished = self.isFinished() and not wasFinished
+            file_migrated = (self.isFinished() and
+                    self.get_filename() != old_filename)
+            needsSignalItem = not (finished or file_migrated)
             self.after_changing_status()
 
             if self.get_state() == u'uploading' and not self.manualUpload and self.getUploadRatio() > 1.5:
                 self.stopUpload()
 
-            self.signal_change(needsSignalItem = not finished)
+            self.signal_change(needsSignalItem = needsSignalItem)
             if finished:
                 for item in self.itemList:
                     item.on_download_finished()
+            elif file_migrated:
+                self._file_migrated(old_filename)
 
     def run_downloader(self):
         """This is the actual download thread.
@@ -400,10 +406,15 @@ URL was %s""" % self.url
                 newfilename = nextFreeFilename(newfilename)
                 def callback():
                     self.status['filename'] = newfilename
-                    self.signal_change()
+                    self.signal_change(needsSignalItem=False)
+                    self._file_migrated(filename)
                 fileutil.migrate_file(filename, newfilename, callback)
         for i in self.itemList:
             i.migrate_children(directory)
+
+    def _file_migrated(self, old_filename):
+        for item in self.itemList:
+            item.on_downloader_migrated(old_filename, self.get_filename())
 
     def set_delete_files(self, deleteFiles):
         self.deleteFiles = deleteFiles
