@@ -1550,7 +1550,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                     raise
                 except:
                     logging.warn("fix_incorrect_torrent_subdir error:\n%s", traceback.format_exc())
-                self.set_video_filename(none)
+                self.set_video_filename(None)
 
     def __str__(self):
         return "Item - %s" % self.get_title()
