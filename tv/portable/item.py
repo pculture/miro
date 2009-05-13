@@ -453,7 +453,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def feed_available_view(cls, feed_id):
-        return cls.make_view("feed_id=? AND "
+        return cls.make_view("feed_id=? AND NOT autoDownloaded "
+                "AND NOT downloadedTime AND "
                 "feed.last_viewed <= item.creationTime",
                 (feed_id,),
                 joins={'feed': 'item.feed_id=feed.id'})
@@ -1628,6 +1629,7 @@ class FileItem(Item):
     def expire(self):
         self.confirm_db_thread()
         self._remove_from_playlists()
+        self.downloadedTime = None
         if self.isContainerItem:
             for item in self.getChildren():
                 item.remove()

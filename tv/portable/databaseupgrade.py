@@ -2218,3 +2218,7 @@ def upgrade93(cursor):
             "WHERE " + audio_filename_expr)
     cursor.execute("UPDATE item SET file_type = 'other' "
             "WHERE file_type IS NULL and videoFilename is not NULL")
+
+def upgrade94(cursor):
+    cursor.execute("UPDATE item SET downloadedTime=NULL "
+        "WHERE deleted OR downloader_id IS NULL")

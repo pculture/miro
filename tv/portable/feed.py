@@ -594,10 +594,11 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         """Sets the last time the feed was viewed to now
         """
         self.last_viewed = datetime.now()
+        try:
+            del self._num_available
+        except AttributeError:
+            pass
         self.signal_change()
-        for item in self.items:
-            if item.get_state() == "new":
-                item.signal_change(needsSave=False)
 
     def startManualDownload(self):
         next = None
