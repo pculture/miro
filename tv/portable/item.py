@@ -1405,8 +1405,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def update_from_feed_parser_values(self, fp_values):
         fp_values.update_item(self)
-        print 'updated: ', self.link
-        print fp_values.data
         self.icon_cache.request_update()
         self._update_release_date()
         self.signal_change()
