@@ -454,7 +454,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     @classmethod
     def feed_available_view(cls, feed_id):
         return cls.make_view("feed_id=? AND NOT autoDownloaded "
-                "AND NOT downloadedTime AND "
+                "AND downloadedTime IS NULL AND "
                 "feed.last_viewed <= item.creationTime",
                 (feed_id,),
                 joins={'feed': 'item.feed_id=feed.id'})
