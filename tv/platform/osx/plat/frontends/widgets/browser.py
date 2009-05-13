@@ -71,6 +71,10 @@ class Browser(Widget):
     def get_current_url(self):
         return self.view.mainFrameURL()
 
+    def get_current_title(self):
+        # FIXME - needs to be implemented
+        return self.view.mainFrameURL()
+
     def forward(self):
         self.view.goForward()
 

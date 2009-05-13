@@ -108,13 +108,19 @@ def download_unknown_mime_type(url):
             messages.OpenInExternalBrowser(url).send_to_frontend()
     dialog.run(callback)
 
-def add_download(url, handle_unknown_callback=download_unknown_mime_type):
+def add_download(url, handle_unknown_callback=None, metadata=None):
     """Given a url, this tries to figure out what it is (video, audio, torrent, rss feed,
     flash file that Miro can scrape) and handles it accordingly.
 
     If it can't figure out what it is, then it calls handle_unknown_callback with the url of
     the thing it can't identify and thus doesn't know what to do with.
+
+    If ``handle_unknown_callback`` is None, then it uses the default handler which is
+    ``download_unknown_mime_type``.
     """
+    if handle_unknown_callback == None:
+        handle_unknown_callback = download_unknown_mime_type
+
     if url.startswith('feed:'):
         # hack so feed: acts as http:
         url = "http:" + url[5:]
@@ -153,7 +159,7 @@ def add_download(url, handle_unknown_callback=download_unknown_mime_type):
     def callback_flash(old_url):
         def _callback(url, contentType="video/flv"):
             if url:
-                entry = _build_entry(url, contentType)
+                entry = _build_entry(url, contentType, additional=metadata)
                 download_video(entry)
                 return
 

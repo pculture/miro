@@ -322,7 +322,7 @@ def _scrape_vimeo_errback(err, callback):
 # =============================================================================
 
 scraperInfoMap = [
-    {'pattern': re.compile(r'http://([^/]+\.)?youtube.com/(?!get_video(\.php)?)'), 'func': _scrape_youtube_url},
+    {'pattern': re.compile(r'http://([^/]+\.)?youtube.com/watch'), 'func': _scrape_youtube_url},
     {'pattern': re.compile(r'http://video.google.com/googleplayer.swf'), 'func': _scrape_google_video_url},
     {'pattern': re.compile(r'http://([^/]+\.)?lulu.tv/wp-content/flash_play/flvplayer'), 'func': _scrape_lulu_video_url},
     {'pattern': re.compile(r'http://([^/]+\.)?vmix.com/flash/super_player.swf'), 'func': _scrape_vmix_video_url},

@@ -34,6 +34,7 @@ import logging
 from urlparse import urlparse
 
 from miro import app
+from miro import flashscraper
 from miro import filetypes
 from miro import guide
 from miro import messages
@@ -64,6 +65,7 @@ class BrowserToolbar(widgetset.HBox):
         self.create_signal('browser-stop')
         self.create_signal('browser-home')
         self.create_signal('address-entered')
+        self.create_signal('browser-download')
         self.create_signal('browser-open')
 
         self.back_button = imagebutton.ImageButton('navback')
@@ -97,6 +99,12 @@ class BrowserToolbar(widgetset.HBox):
             'clicked', self._on_browser_open_activate)
         self.pack_end(widgetutil.align_middle(self.browser_open_button, right_pad=4))
 
+        self.download_button = widgetset.Button(_("Download this video"), style="smooth")
+        self.download_button.set_size(widgetconst.SIZE_SMALL)
+        self.download_button.connect('clicked', self._on_download_button_clicked)
+        self.download_button = widgetutil.HideableWidget(self.download_button)
+        self.pack_end(widgetutil.align_middle(self.download_button, right_pad=4))
+
         self.loading_icon = widgetutil.HideableWidget(
                 widgetset.AnimatedImageDisplay(
                     resources.path('images/load-indicator.gif')))
@@ -116,6 +124,9 @@ class BrowserToolbar(widgetset.HBox):
 
     def _on_home_button_clicked(self, button):
         self.emit('browser-home')
+
+    def _on_download_button_clicked(self, button):
+        self.emit('browser-download')
 
     def _on_browser_open_activate(self, button):
         self.emit('browser-open')
@@ -183,6 +194,7 @@ class BrowserNav(widgetset.VBox):
         self.toolbar.connect('browser-reload', self._on_browser_reload)
         self.toolbar.connect('browser-stop', self._on_browser_stop)
         self.toolbar.connect('browser-home', self._on_browser_home)
+        self.toolbar.connect('browser-download', self._on_browser_download)
         self.toolbar.connect('browser-open', self._on_browser_open)
 
         self.browser.connect('net-start', self._on_net_start)
@@ -203,11 +215,15 @@ class BrowserNav(widgetset.VBox):
         self.toolbar.stop_button.enable()
         self.enable_disable_navigation()
         self.toolbar.loading_icon.show()
+        self.toolbar.download_button.hide()
 
     def _on_net_stop(self, widget):
         self.toolbar.stop_button.disable()
         self.enable_disable_navigation()
         self.toolbar.loading_icon.hide()
+        logging.info("checking %s", self.browser.get_current_url())
+        if flashscraper.is_maybe_flashscrapable(unicode(self.browser.get_current_url())):
+            self.toolbar.download_button.show()
 
     def _on_browser_back(self, widget):
         self.browser.back()
@@ -223,6 +239,10 @@ class BrowserNav(widgetset.VBox):
 
     def _on_browser_home(self, widget):
         self.browser.navigate(self.home_url)
+
+    def _on_browser_download(self, widget):
+        metadata = {"title": unicode(self.browser.get_current_title())}
+        messages.DownloadURL(self.browser.get_current_url(), metadata=metadata).send_to_backend()
 
     def _on_browser_open(self, widget):
         app.widgetapp.open_url(self.browser.get_current_url())

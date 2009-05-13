@@ -89,6 +89,9 @@ class Browser(Widget):
 
     url = property(get_current_url)
 
+    def get_current_title(self):
+        return self._widget.get_title()
+
     def forward(self):
         if self._widget.can_go_forward():
             self._widget.go_forward()

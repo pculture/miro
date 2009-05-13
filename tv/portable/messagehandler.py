@@ -905,10 +905,7 @@ class BackendMessageHandler(messages.MessageHandler):
         SavedPlaylist(name, ids)
 
     def handle_download_url(self, message):
-        if message.handle_unknown_callback:
-            singleclick.add_download(message.url, handle_unknown_callback=message.handle_unknown_callback)
-        else:
-            singleclick.add_download(message.url)
+        singleclick.add_download(message.url, message.handle_unknown_callback, message.metadata)
 
     def handle_open_individual_file(self, message):
         commandline.parse_command_line_args([message.filename])

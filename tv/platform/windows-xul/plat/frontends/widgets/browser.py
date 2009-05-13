@@ -119,6 +119,10 @@ class Browser(Widget):
     def get_current_url(self):
         return self.url
 
+    def get_current_title(self):
+        # FIXME - needs to be implemented
+        return self.url
+
     def can_go_back(self):
         return self._widget.browser.can_go_back()
 
