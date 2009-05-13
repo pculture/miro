@@ -541,7 +541,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             self.scheduleUpdateEvents(INITIAL_FEED_UPDATE_DELAY)
 
-    def on_item_changed(self):
+    def recalc_counts(self):
         for cached_count_attr in ('_num_available', '_num_unwatched',
                 '_num_downloaded', '_num_downloading'):
             if cached_count_attr in self.__dict__:

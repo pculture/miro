@@ -701,7 +701,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             del self._state
         if hasattr(self, "_size"):
             del self._size
-        self.get_feed().on_item_changed()
+
+    def recalc_feed_counts(self):
+        self.get_feed().recalc_counts()
 
     def get_viewed(self):
         """Returns True iff this item has never been viewed in the interface.
@@ -806,7 +808,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             self.remove()
         else:
             self.signal_change()
-        self.get_feed().signal_change()
+        self.recalc_feed_counts()
 
     def stopUpload(self):
         if self.downloader:
@@ -927,6 +929,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 for item in self.downloader.itemList:
                     if item != self:
                         item.mark_item_seen(False)
+            self.recalc_feed_counts()
 
     def update_parent_seen(self):
         if self.parent_id:
@@ -952,6 +955,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 for item in self.downloader.itemList:
                     if item != self:
                         item.mark_item_unseen(False)
+        self.recalc_feed_counts()
 
     @returnsUnicode
     def getRSSID(self):
@@ -1015,7 +1019,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             else:
                 self.downloader.start()
         self.signal_change()
-        self.get_feed().signal_change()
+        self.recalc_feed_counts()
 
     def pause(self):
         if self.downloader:
@@ -1420,6 +1424,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         for other in Item.make_view('downloader_id IS NULL AND url=?',
                 (self.url,)):
             other.set_downloader(self.downloader)
+        self.recalc_feed_counts()
 
     def set_downloader(self, downloader):
         if self.downloader_id is not None:
