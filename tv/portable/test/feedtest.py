@@ -170,6 +170,61 @@ class SimpleFeedTestCase(FeedTestCase):
         self.assertEqual(len(items), 1)
         myFeed.remove()
 
+class MultiFeedExpireTest(FeedTestCase):
+    def write_files(self, subfeed_count, feed_item_count):
+        all_urls = []
+        self.filenames = []
+
+        content = self.make_feed_content(feed_item_count)
+        for i in xrange(subfeed_count):
+            filename = self.make_temp_path()
+            open(filename, 'wb').write(content)
+            all_urls.append(u"file://%s" % filename)
+            self.filenames.append(filename)
+
+        self.url = u'dtv:multi:' + ','.join(all_urls) + "," + 'testquery'
+
+    def rewrite_files(self, feed_item_count):
+        content = self.make_feed_content(feed_item_count)
+        for filename in self.filenames:
+            open(filename, 'wb').write(content)
+
+    def make_feed_content(self, entry_count):
+        # make a feed with a new item and parse it
+        items = []
+        counter = 0
+        for x in range(entry_count):
+            counter += 1
+            items.append("""\
+<item>
+ <title>Bumper Sticker</title>
+ <guid>guid-%s</guid>
+ <enclosure url="http://downhillbattle.org/key/gallery/%s.mpg" />
+ <description>I'm a musician and I support filesharing.</description>
+</item>
+""" % (counter, counter))
+        return """<?xml version="1.0"?>
+<rss version="2.0">
+   <channel>
+      <title>Downhill Battle Pics</title>
+      <link>http://downhillbattle.org/</link>
+      <description>Downhill Battle is a non-profit organization working to support participatory culture and build a fairer music industry.</description>
+      <pubDate>Wed, 16 Mar 2005 12:03:42 EST</pubDate>
+      %s
+   </channel>
+</rss>""" % '\n'.join(items)
+
+    def test_multi_feed_expire(self):
+        # test what happens when a RSSMultiFeed has feeds that reference the
+        # same item, and they are truncated at the same time (#11756)
+
+        self.write_files(5, 10) # 5 feeds containing 10 identical items
+        self.feed = self.makeFeed()
+        config.set(prefs.TRUNCATE_CHANNEL_AFTER_X_ITEMS, 4)
+        config.set(prefs.MAX_OLD_ITEMS_DEFAULT, 5)
+        self.rewrite_files(1) # now only 5 items in each feed
+        self.updateFeed(self.feed)
+
 class EnclosureFeedTestCase(FeedTestCase):
     def setUp(self):
         FeedTestCase.setUp(self)
@@ -236,7 +291,6 @@ class OldItemExpireTest(FeedTestCase):
  <description>I'm a musician and I support filesharing.</description>
 </item>
 """ % (self.counter, self.counter))
-
         self.writefile("""<?xml version="1.0"?>
 <rss version="2.0">
    <channel>

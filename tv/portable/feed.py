@@ -1648,7 +1648,7 @@ class RSSFeedImpl(RSSFeedImplBase):
 class RSSMultiFeedImpl(RSSFeedImplBase):
     def setup_new(self, url, ufeed, title=None):
         RSSFeedImplBase.setup_new(self, url, ufeed, title)
-        self.oldItems = []
+        self.oldItems = None
         self.etag = {}
         self.modified = {}
         self.download_dc = {}
@@ -1714,7 +1714,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
         start = clock()
         parsed = unicodify(parsed)
         old_items = self.createItemsForParsed(parsed)
-        self.oldItems.extend(old_items)
+        self.oldItems.update(old_items)
         self.feedparser_finished(url)
         end = clock()
         if end - start > 1.0:
@@ -1743,7 +1743,7 @@ class RSSMultiFeedImpl(RSSFeedImplBase):
             return
         if self.updating:
             return
-        self.oldItems = []
+        self.oldItems = set()
         for url in self.urls:
             etag = self.etag.get(url)
             modified = self.modified.get(url)
