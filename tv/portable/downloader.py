@@ -583,7 +583,7 @@ URL was %s""" % self.url
 
     def startUpload(self):
         if (self.get_state() not in (u'finished', u'uploading-paused')
-                or self.getType() != u'bittorrent'):
+                or self.get_type() != u'bittorrent'):
             return
         self.manualUpload = True
         if _downloads.has_key(self.dlid):
