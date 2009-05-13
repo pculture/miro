@@ -813,7 +813,6 @@ class TableView(Widget):
                     path, column, x, y = path_info
                     selection = self._widget.get_selection()
                     if selection.path_is_selected(path) :
-                        self.handled_last_button_press = True
                         self.delaying_press = True
                         return True
 
