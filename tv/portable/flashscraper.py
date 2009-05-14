@@ -41,7 +41,7 @@ def is_maybe_flashscrapable(url):
 
     Example:
 
-    >>> is_maybe_flashscrapable("http://www.youtube.com/watch?v=qRuNxHqwazs")
+    >>> is_maybe_flashscrapable(u"http://www.youtube.com/watch?v=qRuNxHqwazs")
     True
     """
     return _get_scrape_function_for(url) is not None
