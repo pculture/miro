@@ -128,8 +128,16 @@ def get(descriptor):
         # of Windows have a chance
         # http://support.microsoft.com/?kbid=270035
 
-        folder = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER,
-                                 "Software\Microsoft\Windows\CurrentVersion\Run")
+        try:
+            folder = _winreg.OpenKey(_winreg.HKEY_CURRENT_USER,
+                                     "Software\Microsoft\Windows\CurrentVersion\Run")
+        except WindowsError, e:
+            # 2 indicates that the key doesn't exist yet, so
+            # RUN_AT_STARTUP is clearly False
+            if e.errno == 2:
+                logging.exception("=== windowserror kicked up at open key ===")
+                return False
+            raise
         long_app_name = app.configfile['longAppName']
         count = 0
         while True:
