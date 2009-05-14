@@ -2125,7 +2125,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
         # watch feeds)
         known_files = set()
         for item in itemmod.Item.toplevel_view():
-            if not item.getFeed().get_url().startswith("dtv:directoryfeed"):
+            if not item.get_feed().get_url().startswith("dtv:directoryfeed"):
                 known_files.add(item.get_filename())
 
         # Remove items that are in feeds, but we have in our list
