@@ -12,8 +12,9 @@ Contents:
    :maxdepth: 2
 
    project
-   package_miro
-
+   utility_modules
+   database_modules
+   frontend_widgets_modules
 
 Indices and tables
 ==================

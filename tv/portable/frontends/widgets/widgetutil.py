@@ -41,6 +41,8 @@ WHITE = (1, 1, 1)
 PI = math.pi
 
 def round_rect(context, x, y, width, height, edge_radius):
+    """Specifies path of a rectangle with rounded corners.
+    """
     edge_radius = min(edge_radius, min(width, height)/2.0)
     inner_width = width - edge_radius*2
     inner_height = height - edge_radius*2
@@ -51,7 +53,6 @@ def round_rect(context, x, y, width, height, edge_radius):
 
     context.move_to(x+edge_radius, y)
     context.rel_line_to(inner_width, 0)
-
     context.arc(x_inner2, y_inner1, edge_radius, -PI/2, 0)
     context.rel_line_to(0, inner_height)
     context.arc(x_inner2, y_inner2, edge_radius, 0, PI/2)
@@ -61,6 +62,10 @@ def round_rect(context, x, y, width, height, edge_radius):
     context.arc(x_inner1, y_inner1, edge_radius, PI, PI*3/2)
 
 def round_rect_reverse(context, x, y, width, height, edge_radius):
+    """Specifies path of a rectangle with rounded corners.
+
+    This specifies the rectangle in a counter-clockwise fashion.
+    """
     edge_radius = min(edge_radius, min(width, height)/2.0)
     inner_width = width - edge_radius*2
     inner_height = height - edge_radius*2
@@ -80,8 +85,8 @@ def round_rect_reverse(context, x, y, width, height, edge_radius):
     context.rel_line_to(-inner_width, 0)
 
 def circular_rect(context, x, y, width, height):
-    """Make a path for a rectangle with the left/right side being circles."""
-
+    """Make a path for a rectangle with the left/right side being circles.
+    """
     radius = height / 2.0
     inner_width = width - height
     inner_y = y + radius
@@ -95,8 +100,8 @@ def circular_rect(context, x, y, width, height):
     context.arc(inner_x1, inner_y, radius, PI/2, -PI/2)
 
 def circular_rect_negative(context, x, y, width, height):
-    """The same path as circular_rect(), but going counter clockwise.  """
-
+    """The same path as ``circular_rect()``, but going counter clockwise.
+    """
     radius = height / 2.0
     inner_width = width - height
     inner_y = y + radius
@@ -134,40 +139,48 @@ def draw_rounded_icon(context, icon, x, y, width, height, inset=0):
 
 def align(widget, xalign=0, yalign=0, xscale=0, yscale=0, 
         top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
-    """Create an alignment, then add widget to it and return the alignment."""
+    """Create an alignment, then add widget to it and return the alignment.
+    """
     alignment = widgetset.Alignment(xalign, yalign, xscale, yscale)
     alignment.set_padding(top_pad, bottom_pad, left_pad, right_pad)
     alignment.add(widget)
     return alignment
 
 def align_center(widget, top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
-    """Wrap a widget in an Alignment that will center it horizontally."""
+    """Wrap a widget in an Alignment that will center it horizontally.
+    """
     return align(widget, 0.5, 0, 0, 1,
             top_pad, bottom_pad, left_pad, right_pad)
 
 def align_right(widget, top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
-    """Wrap a widget in an Alignment that will align it left."""
+    """Wrap a widget in an Alignment that will align it left.
+    """
     return align(widget, 1, 0, 0, 1, top_pad, bottom_pad, left_pad, right_pad)
 
 def align_left(widget, top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
-    """Wrap a widget in an Alignment that will align it right."""
+    """Wrap a widget in an Alignment that will align it right.
+    """
     return align(widget, 0, 0, 0, 1, top_pad, bottom_pad, left_pad, right_pad)
 
 def align_middle(widget, top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
-    """Wrap a widget in an Alignment that will center it vertically."""
+    """Wrap a widget in an Alignment that will center it vertically.
+    """
     return align(widget, 0, 0.5, 1, 0,
             top_pad, bottom_pad, left_pad, right_pad)
 
 def align_top(widget, top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
-    """Wrap a widget in an Alignment that will align to the top."""
+    """Wrap a widget in an Alignment that will align to the top.
+    """
     return align(widget, 0, 0, 1, 0, top_pad, bottom_pad, left_pad, right_pad)
 
 def align_bottom(widget, top_pad=0, bottom_pad=0, left_pad=0, right_pad=0):
-    """Wrap a widget in an Alignment that will align to the bottom."""
+    """Wrap a widget in an Alignment that will align to the bottom.
+    """
     return align(widget, 0, 1, 1, 0, top_pad, bottom_pad, left_pad, right_pad)
 
 def pad(widget, top=0, bottom=0, left=0, right=0):
-    """Wrap a widget in an Alignment that will pad it."""
+    """Wrap a widget in an Alignment that will pad it.
+    """
     alignment = widgetset.Alignment(xscale=1, yscale=1)
     alignment.set_padding(top, bottom, left, right)
     alignment.add(widget)
@@ -178,7 +191,7 @@ def build_hbox(items, padding=5):
     5 pixels.
     """
     h = widgetset.HBox()
-    [h.pack_start(item, padding=padding) for item in items]
+    map(lambda item: h.pack_start(item, padding=padding), items)
     return h
 
 def build_control_line(items, padding=5):
@@ -202,8 +215,26 @@ class ThreeImageSurface(object):
     """Takes a left, center and right image and draws them to an arbitrary
     width.  If the width is greater than the combined width of the 3 images,
     then the center image will be tiled to compensate.
-    """
 
+    Example:
+
+    >>> timelinebar = ThreeImageSurface("timelinebar")
+
+    This creates a ``ThreeImageSurface`` using the images 
+    ``images/timelinebar_left.png``, ``images/timelinebar_center.png``, and
+    ``images/timelinebar_right.png``.
+
+    Example:
+
+    >>> timelinebar = ThreeImageSurface()
+    >>> img_left = make_surface("timelinebar_left")
+    >>> img_center = make_surface("timelinebar_center")
+    >>> img_right = make_surface("timelinebar_right")
+    >>> timelinebar.set_images(img_left, img_center, img_right)
+
+    This does the same thing, but allows you to explicitly set which images
+    get used.
+    """
     def __init__(self, basename=None):
         self.left = self.center = self.right = None
         self.height = 0
@@ -214,6 +245,8 @@ class ThreeImageSurface(object):
             self.set_images(left, center, right)
 
     def set_images(self, left, center, right):
+        """Sets the left, center and right images to use.
+        """
         self.left = left
         self.center = center
         self.right = right
@@ -227,7 +260,7 @@ class ThreeImageSurface(object):
         self.draw_right(context, x + left_width, y, width - left_width, fraction)
 
     def draw_right(self, context, x, y, width, fraction=1.0):
-        """Draw only the right 2 images."""
+        # draws only the right two images
 
         right_width = min(self.right.width, width)
         center_width = int(width - right_width)
@@ -236,28 +269,48 @@ class ThreeImageSurface(object):
         self.right.draw(context, x + center_width, y, right_width, self.height, fraction)
 
 class HideableWidget(widgetset.VBox):
-    """Widget that can be hidden and shown."""
+    """Creates a widget that can be hidden and shown.
 
+    Example:
+
+    >>> lab = Label(_("Error!"))
+    >>> hidden_lab = HideableWidget(lab)
+
+    Then when we want to hide it, we do:
+
+    >>> hidden_lab.hide()
+
+    and when we want to show it again, we do:
+
+    >>> hidden_lab.show()
+    """
     def __init__(self, child):
         widgetset.VBox.__init__(self)
         self._child = child
         self.shown = False
 
     def child(self):
+        """Returns the child widget.
+        """
         return self._child
 
     def show(self):
+        """Shows the child widget.
+        """
         if not self.shown:
             self.pack_start(self._child)
             self.shown = True
 
     def hide(self):
+        """Hides the child widget.
+        """
         if self.shown:
             self.remove(self._child)
             self.shown = False
 
 class Shadow(object):
-    """Encapsulates all parameters required to draw shadows"""
+    """Encapsulates all parameters required to draw shadows.
+    """
     def __init__(self, color, opacity, offset, blur_radius):
         self.color = color
         self.opacity = opacity
@@ -265,10 +318,16 @@ class Shadow(object):
         self.blur_radius = blur_radius
 
 def get_feed_info(feed_id):
+    """Returns the :class:`FeedInfo` object for a given ``feed_id`` 
+    regardless of whether it's an audio or video feed.
+    """
     tablist = app.tab_list_manager.which_tablist_has_id(feed_id)
     return tablist.get_info(feed_id)
 
 def feed_exists(feed_id):
+    """Returns true or false as to whether a :class:`Feed` with id ``feed_id`` 
+    exists.
+    """
     try:
         get_feed_info(feed_id)
         return True

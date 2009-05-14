@@ -38,22 +38,29 @@ from miro.frontends.widgets import searchbox
 from miro.plat.frontends.widgets import widgetset
 
 class WidgetHolder(widgetset.VBox):
-    """Widget used to hold a single child widget."""
+    """Widget used to hold a single child widget.
+    """
     def __init__(self):
         widgetset.VBox.__init__(self)
         self.child = None
 
     def set(self, widget):
+        """Sets the child to the specified widget.
+        """
         if self.child:
             self.remove(self.child)
         self.pack_start(widget, expand=True)
         self.child = widget
 
     def unset(self):
+        """Removes the child widget from the widgetholder.
+        """
         self.remove(self.child)
         self.child = None
 
 class MiroWindow(widgetset.MainWindow):
+    """The main Miro Window.
+    """
     def __init__(self, title, rect):
         widgetset.MainWindow.__init__(self, title, rect)
         
@@ -87,4 +94,6 @@ class MiroWindow(widgetset.MainWindow):
         self.videobox.queue_redraw()
 
     def set_main_area(self, widget):
+        """Sets the main area to specified widget.
+        """
         self.main_area_holder.set(widget)

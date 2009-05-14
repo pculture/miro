@@ -1,10 +1,9 @@
-====
-miro
-====
+======================
+miro - utility modules
+======================
 
-This is the documentation for the miro package which contains portable
-modules and a bunch of sub-packages.
-
+Modules in the ``miro`` package namespace located in ``portable/`` in
+the source tarball that contain utility functions and classes.
 
 
 commandline
@@ -31,28 +30,10 @@ gtcache
 .. automodule:: miro.gtcache
    :members:
 
-storedatabase
-=============
-
-.. automodule:: miro.storedatabase
-   :members:
-
 subscription
 ============
 
 .. automodule:: miro.subscription
-   :members:
-
-tabs
-====
-
-.. automodule:: miro.tabs
-   :members:
-
-theme
-=====
-
-.. automodule:: miro.theme
    :members:
 
 util
