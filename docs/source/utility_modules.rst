@@ -1,49 +1,49 @@
-======================
-miro - utility modules
-======================
+===============
+utility modules
+===============
 
 Modules in the ``miro`` package namespace located in ``portable/`` in
 the source tarball that contain utility functions and classes.
 
 
-commandline
-===========
+``miro.commandline`` - commandline handling
+===========================================
 
 .. automodule:: miro.commandline
    :members:
 
-filetypes
-=========
+``miro.filetypes`` - filetype handling
+======================================
 
 .. automodule:: miro.filetypes
    :members:
 
-flashscraper
-============
+``miro.flashscraper`` - url converters for flash movie sites
+============================================================
 
 .. automodule:: miro.flashscraper
    :members:
 
-gtcache
-=======
+``miro.gtcache`` - string localization functions
+================================================
 
 .. automodule:: miro.gtcache
    :members:
 
-subscription
-============
+``miro.subscription`` - subscribe url handlers
+==============================================
 
 .. automodule:: miro.subscription
    :members:
 
-util
-====
+``miro.util`` - utility functions
+=================================
 
 .. automodule:: miro.util
    :members:
 
-xhtmltools
-==========
+``miro.xhtmltools`` - xml related utility functions
+===================================================
 
 .. automodule:: miro.xhtmltools
    :members:

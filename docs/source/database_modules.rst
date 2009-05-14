@@ -1,38 +1,38 @@
-===============================
-miro - database related modules
-===============================
+========================
+database related modules
+========================
 
 Modules in the ``miro`` package namespace located in ``portable/``
 in the source tarball that contain database or database object
 code.
 
 
-item
-====
+``miro.item`` - Item and friends
+================================
 
 .. automodule:: miro.item
    :members:
 
-feed
-====
+``miro.feed`` - Feed and friends
+================================
 
 .. automodule:: miro.feed
    :members:
 
-storedatabase
-=============
+``miro.storedatabase`` - crux of the database code
+==================================================
 
 .. automodule:: miro.storedatabase
    :members:
 
-tabs
-====
+``miro.tabs`` - tabs, tab order and friends
+===========================================
 
 .. automodule:: miro.tabs
    :members:
 
-theme
-=====
+``miro.theme`` - ThemeHistory
+=============================
 
 .. automodule:: miro.theme
    :members:
