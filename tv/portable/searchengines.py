@@ -26,6 +26,10 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+"""This module holds :class:`SearchEngineInfo` and related helper
+functions.
+"""
+
 from miro.util import checkU, returnsUnicode
 from miro.xhtmltools import urlencode
 from xml.dom.minidom import parse
@@ -38,6 +42,13 @@ import logging
 from miro.gtcache import gettext as _
 
 class SearchEngineInfo:
+    """Defines a search engine in Miro.
+
+    .. note::
+
+       Don't instantiate this yourself--search engines are defined by
+       ``.xml`` files in the ``resources/searchengines/`` directory.
+    """
     def __init__(self, name, title, url, sort_order=0, filename=None):
         checkU(name)
         checkU(title)
@@ -53,6 +64,9 @@ class SearchEngineInfo:
             self.filename = None
 
     def get_request_url(self, query, filterAdultContents, limit):
+        """Returns the request url expanding the query, filter adult content,
+        and results limit place holders.
+        """
         requestURL = self.url.replace(u"%s", urlencode(query))
         requestURL = requestURL.replace(u"%a", unicode(int(not filterAdultContents)))
         requestURL = requestURL.replace(u"%l", unicode(int(limit)))
@@ -63,11 +77,14 @@ class SearchEngineInfo:
 
 _engines = []
 
-def delete_engines():
+def _delete_engines():
     global _engines
     _engines = []
 
-def search_for_search_engines(dir_):
+def _search_for_search_engines(dir_):
+    """Returns a dict of search engine -> search engine xml file for
+    all search engines in the specified directory ``dir_``.
+    """
     engines = {}
     try:
         for f in os.listdir(dir_):
@@ -80,7 +97,7 @@ def search_for_search_engines(dir_):
 def warn(filename, message):
     logging.warn("Error parsing searchengine: %s: %s", filename, message)
 
-def load_search_engine(filename):
+def _load_search_engine(filename):
     try:
         dom = parse(filename)
         id_ = displayname = url = sort = None
@@ -135,17 +152,22 @@ def load_search_engine(filename):
         warn(filename, "Exception parsing file")
 
 def create_engines():
+    """Creates all the search engines specified in the
+    ``resources/searchengines/`` directory and the theme searchengines
+    directory.  After doing that, it adds an additional "Search All"
+    engine.
+    """
     global _engines
-    delete_engines()
-    engines = search_for_search_engines(resources.path("searchengines"))
+    _delete_engines()
+    engines = _search_for_search_engines(resources.path("searchengines"))
     engines_dir = os.path.join(config.get(prefs.SUPPORT_DIRECTORY), "searchengines")
-    engines.update(search_for_search_engines(engines_dir))
+    engines.update(_search_for_search_engines(engines_dir))
     if config.get(prefs.THEME_NAME):
         theme_engines_dir = resources.theme_path(config.get(prefs.THEME_NAME),
                                                  'searchengines')
-        engines.update(search_for_search_engines(theme_engines_dir))
+        engines.update(_search_for_search_engines(theme_engines_dir))
     for fn in engines.itervalues():
-        load_search_engine(fn)
+        _load_search_engine(fn)
 
     _engines.append(SearchEngineInfo(u"all", _("Search All"), u"", -1))
     _engines.sort(lambda a, b: cmp((a.sort_order, a.name, a.title), 
@@ -172,6 +194,17 @@ def create_engines():
 
 @returnsUnicode
 def get_request_url(engine_name, query, filter_adult_contents=True, limit=50):
+    """Returns the url for the given search engine, query,
+    filter_adult_contents, and limit.
+
+    There are two "magic" queries:
+
+    * ``LET'S TEST DTV'S CRASH REPORTER TODAY`` which rases a NameError thus
+      allowing us to test the crash reporter
+
+    * ``LET'S DEBUT DTV: DUMP DATABASE`` which causes Miro to dump the
+       database to xml and place it in the Miro configuration directory
+    """
     if query == "LET'S TEST DTV'S CRASH REPORTER TODAY":
         # FIXME - should change this to a real exception rather than a NameError
         someVariable = intentionallyUndefinedVariableToTestCrashReporter
@@ -192,9 +225,14 @@ def get_request_url(engine_name, query, filter_adult_contents=True, limit=50):
     return u""
 
 def get_search_engines():
+    """Returns the list of :class:`SearchEngineInfo` instances.
+    """
     return list(_engines)
 
 def get_engine_for_name(name):
+    """Returns the :class:`SearchEngineInfo` instance for the given
+    id.  If no such search engine exists, returns ``None``.
+    """
     for mem in get_search_engines():
         if mem.name == name:
             return mem
@@ -202,7 +240,7 @@ def get_engine_for_name(name):
 
 def get_last_engine():
     """Checks the preferences and returns the SearchEngine object of that
-    name or None.
+    name or ``None``.
     """
     e = config.get(prefs.LAST_SEARCH_ENGINE)
     engine = get_engine_for_name(e)
@@ -211,7 +249,9 @@ def get_last_engine():
     return get_search_engines()[0]
 
 def set_last_engine(engine):
-    """Takes a SearchEngine and persists it to preferences."""
+    """Takes a :class:`SearchEngineInfo` or search engine id and
+    persists it to preferences.
+    """
     if not isinstance(engine, basestring):
         engine = engine.name
     engine = str(engine)
