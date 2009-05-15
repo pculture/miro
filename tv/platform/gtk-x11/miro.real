@@ -134,6 +134,14 @@ if '--unittest' in sys.argv:
     from miro import test
     unittest.main(module=test)
 
+def load_frontend(globals_, locals_, frontend):
+    try:
+        _temp = __import__(frontend, globals_, locals_, ['application'], -1)
+        return _temp.application
+    except ImportError, ie:
+        print "ImportError on %s: %s" % (frontend, ie)
+        return None
+    
 def startup(props_to_set):
     from miro import startup
     startup.initialize(parsed_options.theme)
@@ -143,18 +151,21 @@ def startup(props_to_set):
     for c in frontend:
         if c not in goodchars:
             raise ValueError("Unknown frontend: %s" % parsed_options.frontend)
-    try:
-        _temp = __import__('miro.plat.frontends.%s' % frontend, globals(), locals(), ['application'], -1)
-        application = _temp.application
-    except ImportError:
-        try:
-            _temp = __import__('miro.frontends.%s' % frontend, globals(), locals(), ['application'], -1)
-            application = _temp.application
-        except ImportError:
-            _temp = __import__(frontend, globals(), locals(), ['application'], -1)
-            application = _temp.application
-        except ImportError:
-            raise ValueError("Unknown frontend: %s" % parsed_options.frontend)
+
+    application = None
+    attempts = [
+        "miro.plat.frontends.%s" % frontend,
+        "miro.frontends.%s" % frontend,
+        "%s" % frontend
+        ]
+
+    for att in attempts:
+        application = load_frontend(globals(), locals(), att)
+        if application is not None:
+            break
+    else:
+        raise ValueError("Cannot load frontend: %s" % frontend)
+
     application.run_application(props_to_set)
 
 def get_keyval(keyval):
