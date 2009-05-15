@@ -812,7 +812,9 @@ class TableView(Widget):
                 if path_info is not None:
                     path, column, x, y = path_info
                     selection = self._widget.get_selection()
-                    if selection.path_is_selected(path) :
+                    triangle_size = treeview.style_get_property("expander_size")
+                    if selection.path_is_selected(path) and treeview.get_show_expanders() \
+                           and x > triangle_size:
                         self.delaying_press = True
                         return True
 
