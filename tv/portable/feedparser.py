@@ -1386,11 +1386,6 @@ class _FeedParserMixin:
         self.inenclosure += 1
         attrsD = self._itsAnHrefDamnIt(attrsD)
         self._getContext().setdefault('enclosures', []).append(FeedParserDict(attrsD))
-        href = attrsD.get('href')
-        if href:
-            context = self._getContext()
-            if not context.get('id'):
-                context['id'] = href
     _start_media_content = _start_enclosure
 
     def _end_enclosure(self):
