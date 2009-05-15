@@ -35,6 +35,7 @@ from miro import config
 from miro import signals
 from miro import messages
 
+from miro.plat.frontends.widgets import audio
 from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets.displays import VideoDisplay
@@ -43,12 +44,15 @@ class PlaybackManager (signals.SignalEmitter):
     
     def __init__(self):
         signals.SignalEmitter.__init__(self)
+        self.player = None
         self.video_display = None
+        self.removing_video_display = False
         self.detached_window = None
         self.previous_left_width = 0
         self.previous_left_widget = None
         self.is_fullscreen = False
         self.is_playing = False
+        self.is_playing_audio = False
         self.is_paused = False
         self.is_suspended = False
         self.open_successful = False
@@ -118,8 +122,8 @@ class PlaybackManager (signals.SignalEmitter):
 
     def set_volume(self, volume):
         self.volume = volume
-        if self.video_display is not None:
-            self.video_display.set_volume(volume)
+        if self.player is not None:
+            self.player.set_volume(volume)
     
     def set_presentation_mode(self, mode):
         self.presentation_mode = mode
@@ -135,22 +139,16 @@ class PlaybackManager (signals.SignalEmitter):
             self.pause()
     
     def start_with_items(self, item_infos, presentation_mode='fit-to-bounds'):
+        if self.is_playing:
+            # If we get here and we are already playing something it most
+            # certainly means that the currently playing item is an audio one
+            # which leaves the UI free to start another item, so stop first.
+            self.stop()
         self.playlist = item_infos
         self.position = 0
         self._calc_id_to_position()
         self.presentation_mode = presentation_mode
         self._start_tracking_items()
-        if not self.is_playing:
-            self.video_display = VideoDisplay()
-            self.video_display.connect('removed', self.on_display_removed)
-            self.video_display.connect('cant-play', self._on_cant_play)
-            self.video_display.connect('ready-to-play', self._on_ready_to_play)
-            if config.get(prefs.PLAY_DETACHED):
-                self.prepare_detached_playback()
-            else:
-                self.prepare_attached_playback()
-            self.is_playing = True
-            app.menu_manager.update_menus()
         self._play_current()
         if self.presentation_mode != 'fit-to-bounds':
             self.fullscreen()
@@ -223,24 +221,25 @@ class PlaybackManager (signals.SignalEmitter):
             self.update_timeout = None
 
     def notify_update(self):
-        if self.video_display is not None:
-            elapsed = self.video_display.get_elapsed_playback_time()
-            total = self.video_display.get_total_playback_time()
+        if self.player is not None:
+            elapsed = self.player.get_elapsed_playback_time()
+            total = self.player.get_total_playback_time()
             self.emit('playback-did-progress', elapsed, total)
 
     def on_display_removed(self, display):
-        self.stop()
+        if not self.removing_video_display:
+            self.stop()
 
     def play(self):
-        duration = self.video_display.get_total_playback_time()
+        duration = self.player.get_total_playback_time()
         self.emit('will-play', duration)
         resume_time = self.playlist[self.position].resume_time
         if (config.get(prefs.RESUME_VIDEOS_MODE)
                and resume_time > 10
                and not self.is_paused):
-            self.video_display.play_from_time(resume_time)
+            self.player.play_from_time(resume_time)
         else:
-            self.video_display.play()
+            self.player.play()
         self.notify_update()
         self.schedule_update()
         self.is_paused = False
@@ -250,7 +249,7 @@ class PlaybackManager (signals.SignalEmitter):
     def pause(self):
         if self.is_playing:
             self.emit('will-pause')
-            self.video_display.pause()
+            self.player.pause()
             self.is_paused = True
             app.menu_manager.update_menus()
 
@@ -269,28 +268,36 @@ class PlaybackManager (signals.SignalEmitter):
         self.cancel_update_timer()
         self.cancel_mark_as_watched()
         self.is_playing = False
+        self.is_playing_audio = False
         self.is_paused = False
         self.emit('will-stop')
+        if self.player is not None:
+            self.player.stop()
+            self.player = None
         if self.video_display is not None:
-            self.video_display.stop()
-            if self.detached_window is not None:
-                self.video_display.cleanup()
-                self.finish_detached_playback()
-            else:
-                self.finish_attached_playback()
+            self.remove_video_display()
+            self.video_display = None
         self.is_fullscreen = False
         self.previous_left_widget = None
-        self.video_display = None
         self.position = 0
         self.playlist = None
         self.emit('did-stop')
+
+    def remove_video_display(self):
+        self.removing_video_display = True
+        if self.detached_window is not None:
+            self.video_display.cleanup()
+            self.finish_detached_playback()
+        else:
+            self.finish_attached_playback()
+        self.removing_video_display = False
 
     def update_current_resume_time(self, resume_time=-1):
         if not self.open_successful:
             return
         if config.get(prefs.RESUME_VIDEOS_MODE):
             if resume_time == -1:
-                resume_time = self.video_display.get_elapsed_playback_time()
+                resume_time = self.player.get_elapsed_playback_time()
         else:
             resume_time = 0
         id = self.playlist[self.position].id
@@ -298,21 +305,21 @@ class PlaybackManager (signals.SignalEmitter):
 
     def set_playback_rate(self, rate):
         if self.is_playing:
-            self.video_display.set_playback_rate(rate)
+            self.player.set_playback_rate(rate)
 
     def suspend(self):
         if self.is_playing and not self.is_paused:
-            self.video_display.pause()
+            self.player.pause()
         self.is_suspended = True
     
     def resume(self):
         if self.is_playing and not self.is_paused:
-            self.video_display.play()
+            self.player.play()
         self.is_suspended = False
 
     def seek_to(self, progress):
-        self.video_display.seek_to(progress)
-        total = self.video_display.get_total_playback_time()
+        self.player.seek_to(progress)
+        total = self.player.get_total_playback_time()
         self.emit('playback-did-progress', progress * total, total)
 
     def on_movie_finished(self):
@@ -341,14 +348,56 @@ class PlaybackManager (signals.SignalEmitter):
             return self.playlist[self.position]
         return None
 
+    def _setup_player(self, item_info, volume):
+        if item_info.is_audio:
+            if self.is_playing and self.video_display is not None:
+                # if we were previously playing a video get rid of the video
+                # display first
+                self.player.stop()
+                self.player = None
+                self.remove_video_display()
+                self.video_display = None
+            if self.player is None or not self.is_playing:
+                self._build_audio_player(item_info, volume)
+            self.is_playing = True
+            self.player.setup(item_info, volume)
+        else:
+            if self.is_playing and self.video_display is None:
+                # if we were previously playing an audio file, stop.
+                self.stop()
+                return
+            if self.video_display is None or not self.is_playing:
+                self._build_video_player(item_info, volume)
+            self.is_playing = True
+            self.video_display.setup(item_info, volume)
+            if self.detached_window is not None:
+                self.detached_window.set_title(item_info.name)
+        app.menu_manager.update_menus()
+
+    def _build_video_player(self, item_info, volume):
+        self.player = widgetset.VideoPlayer()
+        self.video_display = VideoDisplay(self.player)
+        self.video_display.connect('removed', self.on_display_removed)
+        self.video_display.connect('cant-play', self._on_cant_play)
+        self.video_display.connect('ready-to-play', self._on_ready_to_play)
+        if config.get(prefs.PLAY_DETACHED):
+            self.prepare_detached_playback()
+        else:
+            self.prepare_attached_playback()
+        self.is_playing_audio = False
+
+    def _build_audio_player(self, item_info, volume):
+        self.player = audio.AudioPlayer()
+        self.player.connect('cant-play', self._on_cant_play)
+        self.player.connect('ready-to-play', self._on_ready_to_play)
+        self.is_playing_audio = True
+
     def _select_current(self):
         volume = config.get(prefs.VOLUME_LEVEL)
         item_info = self.playlist[self.position]
         self.emit('selecting-file', item_info)
         self.open_successful = False
-        self.video_display.setup(item_info, volume)
-        if self.detached_window is not None:
-            self.detached_window.set_title(item_info.name)
+        self._setup_player(item_info, volume)
 
     def _play_current(self, new_position=None, save_resume_time=True):
         """If you pass in new_position, then this will attempt to play
@@ -364,18 +413,20 @@ class PlaybackManager (signals.SignalEmitter):
         if (0 <= new_position < len(self.playlist)):
             self.position = new_position
             if self.is_playing:
-                self.video_display.stop(True)
+                self.player.stop(True)
             self._select_current()
         else:
             self.stop(save_resume_time)
 
-    def _on_ready_to_play(self, video_display):
+    def _on_ready_to_play(self, obj):
         self.open_successful = True
         self.schedule_mark_as_watched(self.playlist[self.position].id)
         self.play()
 
-    def _on_cant_play(self, video_display):
+    def _on_cant_play(self, obj):
         self.emit('cant-play-file')
+        if isinstance(obj, audio.AudioPlayer):
+            self.play_next_movie(False)
 
     def play_next_movie(self, save_resume_time=True):
         self.play_from_position(self.position + 1, save_resume_time)
@@ -394,10 +445,10 @@ class PlaybackManager (signals.SignalEmitter):
             self._play_current(new_position, save_resume_time)
 
     def skip_forward(self):
-        self.video_display.skip_forward()
+        self.player.skip_forward()
 
     def skip_backward(self):
-        self.video_display.skip_backward()
+        self.player.skip_backward()
 
     def toggle_fullscreen(self):
         if self.is_fullscreen:

@@ -370,7 +370,7 @@ class VideoDetailsWidget(Background):
         if self._delete_link:
             self._delete_link.on_leave_notify(None, None)
 
-class VideoRenderer(VBox):
+class VideoPlayer(VBox):
     """Video renderer widget.
 
     Note: app.renderer must be initialized before instantiating this class.
@@ -420,7 +420,7 @@ class VideoRenderer(VBox):
     def update_for_presentation_mode(self, mode):
         pass
 
-    def set_movie_item(self, item_info, callback, errback):
+    def set_item(self, item_info, callback, errback):
         self._video_details.set_video_details(item_info)
         self.renderer.select_file(item_info.video_path, callback, errback)
         self._item_id = item_info.id

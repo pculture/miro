@@ -31,7 +31,6 @@ video controls).
 """
 
 from miro import app
-from miro import filetypes
 from miro.frontends.widgets import style
 from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import widgetutil
@@ -71,17 +70,10 @@ class PlaybackControls(widgetset.HBox):
         return button
     
     def handle_new_selection(self, has_playable):
-        if not app.playback_manager.is_playing:
+        if app.playback_manager.is_playing:
+            self.play.enable()
+        else:
             self.play.set_disabled(not has_playable)
-
-    def handle_play(self, obj, duration):
-        self.previous.enable()
-        self.stop.enable()
-        self.play.enable()
-        self.play.set_image('pause')
-        self.forward.enable()
-        self.fullscreen.enable()
-        self.queue_redraw()
 
     def handle_selecting(self, obj, item_info):
         self.previous.enable()
@@ -89,9 +81,20 @@ class PlaybackControls(widgetset.HBox):
         self.play.disable()
         self.play.set_image('pause')
         self.forward.enable()
-        self.fullscreen.enable()
+        if not item_info.is_audio:
+            self.fullscreen.enable()
         self.queue_redraw()
     
+    def handle_play(self, obj, duration):
+        self.previous.enable()
+        self.stop.enable()
+        self.play.set_image('pause')
+        self.play.enable()
+        self.forward.enable()
+        if not obj.is_playing_audio:
+            self.fullscreen.enable()
+        self.queue_redraw()
+
     def handle_pause(self, obj):
         self.play.set_image('play')
         self.play.queue_redraw()
@@ -121,7 +124,7 @@ class PlaybackInfo(widgetset.DrawingArea):
     def handle_selecting(self, obj, item_info):
         self.item_name = item_info.name
         self.feed_name = item_info.feed_name
-        self.is_audio = filetypes.is_audio_filename(item_info.video_path)
+        self.is_audio = item_info.is_audio
         self.queue_redraw()
 
     def handle_stop(self, obj):
@@ -141,7 +144,7 @@ class PlaybackInfo(widgetset.DrawingArea):
         sizer_text = layout.textbox(self.get_full_text())
         width, height = sizer_text.get_size()
         if self.is_audio:
-            width = width + 16
+            width = width + 20
         return width, height
 
     def draw(self, context, layout):
@@ -155,8 +158,8 @@ class PlaybackInfo(widgetset.DrawingArea):
             x = self.LEFT_MARGIN
 
         if self.is_audio:        
-            self.audio_icon.draw(context, x, 0, 12, 12, 1.0)
-            x = x + 16
+            self.audio_icon.draw(context, x, 0, 15, 12, 1.0)
+            x = x + 20
 
         layout.set_text_color((0.9, 0.9, 0.9))
         text = layout.textbox(self.item_name)

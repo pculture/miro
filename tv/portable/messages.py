@@ -50,6 +50,7 @@ from miro import feed
 from miro import guide
 from miro import prefs
 from miro import util
+from miro import filetypes
 
 class MessageHandler(object):
     def __init__(self):
@@ -857,6 +858,7 @@ class ItemInfo(object):
     downloaded -- has the item been downloaded?
     is_external -- is this item external (true) or from a channel (false)?
     is_single -- is this item a single (true) or not (false)?
+    is_audio -- is this item an audio item ?
     expiration_date -- datetime object for when the item will expire (or None)
     item_viewed -- has the user ever seen the item?
     video_watched -- has the user watched the video for the item?
@@ -920,6 +922,7 @@ class ItemInfo(object):
         self.license = item.get_license()
         self.file_url = item.get_url()
         self.is_container_item = item.isContainerItem
+        self.is_audio = filetypes.is_audio_filename(self.video_path)
 
         self.file_type = item.enclosure_type
         self.file_url = item.url

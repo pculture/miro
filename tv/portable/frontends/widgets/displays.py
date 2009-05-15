@@ -412,11 +412,11 @@ class CantPlayWidget(widgetset.SolidBackground):
         self.filetype_label.set_text(os.path.splitext(video_path)[1])
 
 class VideoDisplay(Display):
-    def __init__(self):
+    def __init__(self, renderer):
         Display.__init__(self)
         self.create_signal('cant-play')
         self.create_signal('ready-to-play')
-        self.renderer = widgetset.VideoRenderer()
+        self.renderer = renderer
         self.widget = widgetset.VBox()
         self.widget.pack_start(self.renderer, expand=True)
         self.cant_play_widget = CantPlayWidget()
@@ -448,42 +448,8 @@ class VideoDisplay(Display):
         self.show_renderer()
         self.cant_play_widget.set_video_path(item_info.video_path)
         self.item_info_id = item_info.id
-        self.renderer.set_movie_item(item_info, self._open_success,
-                self._open_error)
-        self.set_volume(volume)
-
-    def set_volume(self, volume):
+        self.renderer.set_item(item_info, self._open_success, self._open_error)
         self.renderer.set_volume(volume)
-
-    def get_elapsed_playback_time(self):
-        return self.renderer.get_elapsed_playback_time()
-
-    def get_total_playback_time(self):
-        return self.renderer.get_total_playback_time()
-
-    def play(self):
-        self.renderer.play()
-
-    def play_from_time(self, resume_time=0):
-        self.renderer.play_from_time(resume_time)
-
-    def pause(self):
-        self.renderer.pause()
-
-    def stop(self, will_play_another=False):
-        self.renderer.stop(will_play_another)
-
-    def set_playback_rate(self, rate):
-        self.renderer.set_playback_rate(rate)
-
-    def skip_forward(self):
-        self.renderer.skip_forward()
-
-    def skip_backward(self):
-        self.renderer.skip_backward()
-
-    def seek_to(self, position):
-        self.renderer.seek_to(position)
 
     def enter_fullscreen(self):
         self.renderer.enter_fullscreen()

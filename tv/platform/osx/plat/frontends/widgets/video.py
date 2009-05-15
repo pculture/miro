@@ -89,11 +89,11 @@ class MiroMovieView (QTMovieView):
 
 ###############################################################################
 
-class VideoRenderer (Widget, quicktime.Player):
+class VideoPlayer (Widget, quicktime.Player):
 
     def __init__(self):
-        Widget.__init__(self)
         quicktime.Player.__init__(self, SUPPORTED_MEDIA_TYPES)
+        Widget.__init__(self)
 
         frame = ((0,0),(200,200))
 
@@ -173,13 +173,13 @@ class VideoRenderer (Widget, quicktime.Player):
         self.video_view.setFrame_(NSOffsetRect(frame, 1, 1))
         self.video_view.setFrame_(frame)
 
-    def set_movie_item(self, item_info, callback, errback):
+    def set_item(self, item_info, callback, errback):
         def callback2():
             self.video_view.setMovie_(self.movie)
             self.video_view.setNeedsDisplay_(YES)
             self.video_window.setup(item_info, self)
             callback()
-        quicktime.Player.set_movie_item(self, item_info, callback2, errback)
+        quicktime.Player.set_item(self, item_info, callback2, errback)
 
     def set_volume(self, volume):
         quicktime.Player.set_volume(self, volume)
@@ -187,18 +187,18 @@ class VideoRenderer (Widget, quicktime.Player):
             self.video_window.palette.set_volume(volume)
 
     def play(self):
-        threads.warn_if_not_on_main_thread('VideoRenderer.play')
+        threads.warn_if_not_on_main_thread('VideoPlayer.play')
         self.video_view.play_(nil)
         self.video_view.setNeedsDisplay_(YES)
         self.prevent_system_sleep(True)
 
     def pause(self):
-        threads.warn_if_not_on_main_thread('VideoRenderer.pause')
+        threads.warn_if_not_on_main_thread('VideoPlayer.pause')
         self.video_view.pause_(nil)
         self.prevent_system_sleep(True)
 
     def stop(self, will_play_another=False):
-        threads.warn_if_not_on_main_thread('VideoRenderer.stop')
+        threads.warn_if_not_on_main_thread('VideoPlayer.stop')
         self.prevent_system_sleep(True)
         self.video_view.pause_(nil)
         if self.video_window and not will_play_another:

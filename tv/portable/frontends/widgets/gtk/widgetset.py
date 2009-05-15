@@ -50,5 +50,5 @@ from miro.frontends.widgets.gtk.tableview import TableView, TableModel, \
 from miro.frontends.widgets.gtk.simple import Image, ImageDisplay, \
         AnimatedImageDisplay, Label, Scroller, Expander, SolidBackground, \
         ProgressBar
-from miro.frontends.widgets.gtk.video import VideoRenderer, can_play_file
+from miro.frontends.widgets.gtk.video import VideoPlayer, can_play_file
 from miro.frontends.widgets.gtk.widgets import Rect

@@ -34,6 +34,7 @@ from Foundation import *
 from QTKit import *
 
 from miro import app
+from miro import player
 from miro.plat import utils
 from miro.plat import bundle
 from miro.plat import qtcomp
@@ -63,9 +64,10 @@ def qttime2secs(qttime):
 
 ###############################################################################
 
-class Player(object):
+class Player(player.Player):
 
     def __init__(self, supported_media_types):
+        player.Player.__init__(self)
         self.supported_media_types = supported_media_types
         self.movie_notifications = None
         self.movie = None
@@ -77,8 +79,8 @@ class Player(object):
         self.movie_notifications = None
         self.movie = None
 
-    def set_movie_item(self, item_info, callback, errback):
-        threads.warn_if_not_on_main_thread('quicktime.Player.set_movie_item')
+    def set_item(self, item_info, callback, errback):
+        threads.warn_if_not_on_main_thread('quicktime.Player.set_item')
         qtmovie = self.get_movie_from_file(item_info.video_path)
         self.reset()
         if qtmovie is not None:

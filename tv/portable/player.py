@@ -26,38 +26,42 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-from QTKit import *
-
 from miro import signals
 from miro import messages
 
-from miro.plat.frontends.widgets import threads
-from miro.plat.frontends.widgets import quicktime
-
 ###############################################################################
 
-SUPPORTED_MEDIA_TYPES = (QTMediaTypeSound, QTMediaTypeMusic)
-
-###############################################################################
-
-class AudioPlayer(quicktime.Player):
+class Player(signals.SignalEmitter):
 
     def __init__(self):
-        quicktime.Player.__init__(self, SUPPORTED_MEDIA_TYPES)
+        signals.SignalEmitter.__init__(self, 'cant-play', 'ready-to-play')
 
-    def play(self):
-        threads.warn_if_not_on_main_thread('AudioPlayer.play')
-        if self.movie is not None:
-            self.movie.play()
+    def setup(self, item_info, volume):
+        self.item_info_id = item_info.id
+        self.set_item(item_info, self._open_success, self._open_error)
+        self.set_volume(volume)
 
-    def pause(self):
-        threads.warn_if_not_on_main_thread('AudioPlayer.pause')
-        if self.movie is not None:
-            self.movie.stop()
+    def _open_success(self):
+        self.emit('ready-to-play')
 
-    def stop(self, will_play_another=False):
-        if self.movie is not None:
-            self.movie.stop()
-        self.reset()
+    def _open_error(self):
+        messages.MarkItemWatched(self.item_info_id).send_to_backend()
+        self.emit('cant-play')
+
+    def skip_forward(self):
+        current = self.get_elapsed_playback_time()
+        duration = self.get_total_playback_time()
+        pos = min(duration, current + 30.0)
+        self.seek_to(pos / duration)
+
+    def skip_backward(self):
+        current = self.get_elapsed_playback_time()
+        duration = self.get_total_playback_time()
+        pos = max(0, current - 15.0)
+        self.seek_to(pos / duration)
+
+    def play_from_time(self, resume_time=0):
+        self.seek_to(resume_time / self.get_total_playback_time())
+        self.play()
 
 ###############################################################################
