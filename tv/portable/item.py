@@ -370,8 +370,9 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def downloading_paused_view(cls):
-        return cls.make_view("rd.state in ('downloading', 'paused', "
-                "'uploading', 'uploading-paused') AND rd.main_item_id=item.id",
+        return cls.make_view("item.pendingManualDL OR "
+                "(rd.state in ('downloading', 'paused', 'uploading', "
+                "'uploading-paused') AND rd.main_item_id=item.id)",
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
