@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 2
 
    project
+   howto
    searchengine_modules
    utility_modules
    backend_modules

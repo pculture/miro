@@ -2,6 +2,8 @@
 searchengine modules
 ====================
 
+.. _howto-searchengine:
+
 Miro allows users to do searches against sites that return RSS data
 for search queries.
 
