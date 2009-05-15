@@ -35,7 +35,6 @@ from miro import config
 from miro import signals
 from miro import messages
 
-from miro.plat.frontends.widgets import audio
 from miro.plat.frontends.widgets import timer
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets.displays import VideoDisplay
@@ -387,7 +386,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.is_playing_audio = False
 
     def _build_audio_player(self, item_info, volume):
-        self.player = audio.AudioPlayer()
+        self.player = widgetset.audio.AudioPlayer()
         self.player.connect('cant-play', self._on_cant_play)
         self.player.connect('ready-to-play', self._on_ready_to_play)
         self.is_playing_audio = True
@@ -425,7 +424,7 @@ class PlaybackManager (signals.SignalEmitter):
 
     def _on_cant_play(self, obj):
         self.emit('cant-play-file')
-        if isinstance(obj, audio.AudioPlayer):
+        if isinstance(obj, widgetset.audio.AudioPlayer):
             self.play_next_movie(False)
 
     def play_next_movie(self, save_resume_time=True):
