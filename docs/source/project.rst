@@ -14,7 +14,11 @@ Communication
 
 IRC
 
-    ``#miro`` and ``#miro-hackers`` on freenode.net
+    We have two channels on ``freenode.net``:
+
+    * ``#miro`` - for user-oriented discussion, support, etc
+    * ``#miro-hackers`` - for developer oriented discussion, packaging,
+      debugging, testing, translation issues, etc
 
 Mailing list
 
@@ -38,14 +42,14 @@ release.
 The branches are stable and where we do development for minor point
 releases.
 
-Trunk::
+Trunk (unstable!)::
 
     svn co https://svn.participatoryculture.org/svn/dtv/trunk/
 
-Miro 2.0 branch::
+Miro 2.0 branch (stable)::
 
     svn co https://svn.participatoryculture.org/svn/dtv/branches/Miro-2.0
 
-Miro 1.2 branch::
+Miro 1.2 branch (stable, but old)::
 
     svn co https://svn.participatoryculture.org/svn/dtv/branches/Miro-1.2

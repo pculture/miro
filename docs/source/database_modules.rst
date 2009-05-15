@@ -19,6 +19,30 @@ code.
 .. automodule:: miro.feed
    :members:
 
+``miro.folder`` - Folders
+=========================
+
+.. automodule:: miro.folder
+   :members:
+
+``miro.frontendstate`` - Frontend state
+=======================================
+
+.. automodule:: miro.frontendstate
+   :members:
+
+``miro.guide`` - Guide and sites
+================================
+
+.. automodule:: miro.guide
+   :members:
+
+``miro.playlist`` - Playlists
+=============================
+
+.. automodule:: miro.playlist
+   :members:
+
 ``miro.storedatabase`` - crux of the database code
 ==================================================
 

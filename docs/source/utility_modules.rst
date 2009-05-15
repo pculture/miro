@@ -12,6 +12,12 @@ the source tarball that contain utility functions and classes.
 .. automodule:: miro.commandline
    :members:
 
+``miro.displaytext`` - text display functions
+=============================================
+
+.. automodule:: miro.displaytext
+   :members:
+
 ``miro.filetypes`` - filetype handling
 ======================================
 
