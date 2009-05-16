@@ -45,4 +45,5 @@ from miro.plat.frontends.widgets.browser import Browser
 from miro.plat.frontends.widgets.simple import Image, ImageDisplay, Label, SolidBackground, AnimatedImageDisplay, ProgressBar
 from miro.plat.frontends.widgets.tableview import TableView, TableColumn, CellRenderer, CustomCellRenderer, ImageCellRenderer, CheckboxCellRenderer
 from miro.plat.frontends.widgets.tablemodel import TableModel, TreeTableModel
+from miro.plat.frontends.widgets.audio import AudioPlayer
 from miro.plat.frontends.widgets.video import VideoPlayer

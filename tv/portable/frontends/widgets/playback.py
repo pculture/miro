@@ -386,7 +386,7 @@ class PlaybackManager (signals.SignalEmitter):
         self.is_playing_audio = False
 
     def _build_audio_player(self, item_info, volume):
-        self.player = widgetset.audio.AudioPlayer()
+        self.player = widgetset.AudioPlayer()
         self.player.connect('cant-play', self._on_cant_play)
         self.player.connect('ready-to-play', self._on_ready_to_play)
         self.is_playing_audio = True
@@ -424,7 +424,7 @@ class PlaybackManager (signals.SignalEmitter):
 
     def _on_cant_play(self, obj):
         self.emit('cant-play-file')
-        if isinstance(obj, widgetset.audio.AudioPlayer):
+        if isinstance(obj, widgetset.AudioPlayer):
             self.play_next_movie(False)
 
     def play_next_movie(self, save_resume_time=True):
