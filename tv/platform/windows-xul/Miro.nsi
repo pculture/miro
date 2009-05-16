@@ -359,6 +359,7 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
   Delete   "${directory}\w9xpopen.exe"
   Delete   "${directory}\uninstall.exe"
   Delete   "${directory}\library.zip"
+  Delete   "${directory}\moviedata_util.py"
 
   RMDir /r "${directory}\etc"
   RMDir /r "${directory}\lib"
@@ -366,6 +367,7 @@ UninstPage custom un.pickThemesPage un.pickThemesPageAfter
   RMDir /r "${directory}\resources"
   RMDir /r "${directory}\xulrunner"
   RMDir /r "${directory}\vlc-plugins"
+  RMDir /r "${directory}\imagemagick"
 
   RMDIR ${directory}
 !macroend
