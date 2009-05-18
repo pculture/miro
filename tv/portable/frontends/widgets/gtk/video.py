@@ -35,6 +35,7 @@ import gtk
 import logging
 
 from miro import app
+from miro import player
 from miro.gtcache import gettext as _
 from miro import signals
 from miro import util
@@ -370,11 +371,11 @@ class VideoDetailsWidget(Background):
         if self._delete_link:
             self._delete_link.on_leave_notify(None, None)
 
-class VideoPlayer(VBox):
+class VideoPlayer(player.Player, VBox):
     """Video renderer widget.
 
-    Note: app.renderer must be initialized before instantiating this class.
-    If no renderers can be found, set app.renderer to None.
+    Note: ``app.renderer`` must be initialized before instantiating this
+    class.  If no renderers can be found, set ``app.renderer`` to ``None``.
     """
 
     HIDE_CONTROLS_TIMEOUT = 2000
@@ -420,9 +421,9 @@ class VideoPlayer(VBox):
     def update_for_presentation_mode(self, mode):
         pass
 
-    def set_item(self, item_info, callback, errback):
+    def set_item(self, item_info, success_callback, error_callback):
         self._video_details.set_video_details(item_info)
-        self.renderer.select_file(item_info.video_path, callback, errback)
+        self.renderer.select_file(item_info.video_path, success_callback, error_callback)
         self._item_id = item_info.id
 
     def get_elapsed_playback_time(self):
@@ -440,6 +441,9 @@ class VideoPlayer(VBox):
         self.on_mouse_motion(None, None)
 
     def play_from_time(self, resume_time=0):
+        # Note: This overrides player.Player's version of play_from_time, but
+        # this one seeks directly rather than fiddling with
+        # total_playback_time.
         self.seek_to_time(resume_time)
         self.play()
 
@@ -459,20 +463,6 @@ class VideoPlayer(VBox):
 
     def seek_to_time(self, time_pos):
         self.renderer.set_current_time(time_pos)
-
-    def skip_forward(self):
-        current = self.get_elapsed_playback_time()
-        duration = self.get_total_playback_time()
-        if duration <= 0.0:
-            pos = current + 30.0
-        else:
-            pos = min(duration, current + 30.0)
-        self.seek_to_time(pos)
-
-    def skip_backward(self):
-        current = self.get_elapsed_playback_time()
-        pos = max(0, current - 15.0)
-        self.seek_to_time(pos)
 
     def enter_fullscreen(self):
         self.screensaver_manager = screensaver.create_manager()
