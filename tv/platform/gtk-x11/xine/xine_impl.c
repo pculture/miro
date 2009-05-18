@@ -219,6 +219,16 @@ void _xineSwitchToNormal(_Xine* xine)
   xine->viz = NULL;
 }
 
+/**
+ * If you want to attach for a video player, pass in the display name,
+ * drawable, driver, sync and use_xv_hack.
+ *
+ * If you want to attach for an audio player with no video stuff,
+ * pass in an empty display name, 0 for the drawable, "none" for
+ * the driver, and 0 for sync and use_xv_hack.
+ *
+ * The xineAttach code only sets up the video portions if d != 0.
+ */
 void xineAttach(_Xine* xine, const char* displayName, Drawable d,
 		const char *driver, int sync, int use_xv_hack)
 {
