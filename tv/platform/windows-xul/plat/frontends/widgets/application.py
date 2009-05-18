@@ -58,6 +58,11 @@ from miro.plat.frontends.widgets.threads import call_on_ui_thread
 
 class WindowsApplication(Application):
     def run(self):
+        logging.info("Python version:    %s", sys.version)
+        logging.info("Gtk+ version:      %s", gtk.gtk_version)
+        logging.info("PyGObject version: %s", gtk.ver)
+        logging.info("PyGtk version:     %s", gtk.pygtk_version)
+
         app.renderer = VLCRenderer()
         app.video_renderer = app.audio_renderer = app.renderer
         self.initXULRunner()
