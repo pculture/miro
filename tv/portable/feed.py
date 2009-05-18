@@ -2333,7 +2333,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
                         except KeyError:
                             pass
                         title = entry.get("title")
-                        oldtitle = item.entry.get("title")
+                        oldtitle = item.entry_title
                         if title == oldtitle:
                             item.setFeed(self.ufeed.id)
                             if not fp_values.compare_to_item(item):
