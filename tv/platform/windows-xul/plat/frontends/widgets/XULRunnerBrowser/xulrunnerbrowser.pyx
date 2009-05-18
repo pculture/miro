@@ -39,6 +39,7 @@ cdef extern from "Python.h":
     int PyObject_IsTrue(PyObject *o)
     void Py_DECREF(PyObject*)
     void Py_INCREF(PyObject*)
+    object PyString_FromString(char *)
 
 cdef extern from "nscore.h":
     ctypedef unsigned int nsresult
@@ -57,6 +58,7 @@ cdef extern from "MiroBrowserEmbed.h":
         nsresult (*enable)()
         nsresult (*destroy)()
         nsresult (*loadURI)(char* uri)
+        nsresult (*getCurrentURI)(char **uri)
         nsresult (*resize)(int x, int y, int width, int height)
         nsresult (*focus)()
         int (*canGoBack)()
@@ -198,7 +200,7 @@ cdef class XULRunnerBrowser:
         self.browser.destroy()
 
     def set_callback_object(self, handler):
-        self.browser.SetFocusCallback(focusCallbackGlue, <void *>(handler))
+        self.browser.SetFocusCallback(focusCallbackGlue, <void *>handler)
         self.browser.SetURICallback(uriCallbackGlue, <void *>handler)
         self.browser.SetNetworkCallback(networkCallbackGlue, <void *>handler)
 
@@ -215,6 +217,13 @@ cdef class XULRunnerBrowser:
         cdef nsresult rv
         rv = self.browser.loadURI(uri)
         self._check_result('MiroBrowserEmbed.loadURI', rv)
+
+    def get_current_uri(self):
+        cdef nsresult rv
+        cdef char *uri
+        rv = self.browser.getCurrentURI(&uri);
+        self._check_result('MiroBrowserEmbed.get_current_uri', rv)
+        return PyString_FromString(uri)
 
     def focus(self):
         cdef nsresult rv

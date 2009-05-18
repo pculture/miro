@@ -147,6 +147,22 @@ nsresult MiroBrowserEmbed::loadURI(const char* uri)
     return NS_OK;
 }
 
+nsresult MiroBrowserEmbed::getCurrentURI(char ** uri)
+{
+    nsresult rv;
+    nsCAutoString specString;
+    nsIURI *aURI;
+
+    rv = mWebNavigation->GetCurrentURI(&aURI);
+    NS_ENSURE_SUCCESS(rv, rv);
+
+    rv = aURI->GetSpec(specString);
+    NS_ENSURE_SUCCESS(rv, rv);
+
+    *uri = (char *) specString.get();
+    return NS_OK;
+}
+
 // Called when the parent window changes size
 nsresult MiroBrowserEmbed::resize(int x, int y, int width, int height)
 {

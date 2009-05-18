@@ -97,6 +97,8 @@ public:
     nsresult enable();
     // Load a URI into the browser
     nsresult loadURI(const char* uri);
+    // Gets the current uri from mWebNavigator
+    nsresult getCurrentURI(char ** uri);
     // Call when the parent window changes size
     nsresult resize(int x, int y, int width, int height);
     // Give the browser keyboard focus
