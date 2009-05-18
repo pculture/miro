@@ -207,7 +207,7 @@ class Renderer:
             logging.warn("get_current_time: caught exception: %s" % e)
             return None
 
-    def __seek(self, seconds):
+    def _seek(self, seconds):
         # FIXME - switch to self.playbin.seek_simple ?
         #              self.player.seek_simple(self.time_format, gst.SEEK_FLAG_FLUSH, seek_ns)
         event = gst.event_new_seek(1.0,
@@ -219,18 +219,18 @@ class Renderer:
         if not result:
             logging.error("seek failed")
 
-    def __on_state_changed(self, bus, message, seconds):
+    def _on_state_changed(self, bus, message, seconds):
         if self.playbin.get_state(0)[1] in (gst.STATE_PAUSED, gst.STATE_PLAYING):
-            self.__seek(seconds)
-            self.bus.disconnect(self.__on_state_changed_id)
+            self._seek(seconds)
+            self.bus.disconnect(self._on_state_changed_id)
 
     def set_current_time(self, seconds):
         # only want to kick these off when PAUSED or PLAYING
         if self.playbin.get_state(0)[1] not in (gst.STATE_PAUSED, gst.STATE_PLAYING):
-            self.__on_state_changed_id = self.bus.connect("message::state-changed", self.__on_state_changed, seconds)
+            self._on_state_changed_id = self.bus.connect("message::state-changed", self._on_state_changed, seconds)
             return
 
-        self.__seek(seconds)
+        self._seek(seconds)
 
     def get_duration(self):
         try:
