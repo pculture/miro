@@ -287,6 +287,6 @@ def set_properties(props):
         logging.info("Setting preference: %s -> %s", p.alias, val)
         config.set(p, val)
 
-def movie_data_program_info(moviePath, thumbnailPath):
+def movie_data_program_info(movie_path, thumbnail_path):
     from miro import app
-    return app.renderer.movie_data_program_info(moviePath, thumbnailPath)
+    return app.movie_data_program_info(movie_path, thumbnail_path)

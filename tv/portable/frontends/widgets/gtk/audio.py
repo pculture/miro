@@ -26,39 +26,65 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+from miro import app
 from miro import player
 from miro import signals
 from miro import messages
 
-###############################################################################
+class NullRenderer:
+    def __init__(self):
+        pass
+
+    def reset(self):
+        pass
 
 class AudioPlayer(player.Player):
+    """Audio renderer widget.
 
-    def set_item(self, item_info, callback, errback):
-        errback()
+    Note: ``app.renderer`` must be inititalized before instantiating this
+    class.  If no renderers can be found, set ``app.renderer`` to ``None``.
+    """
+    def __init__(self):
+        player.Player.__init__(self)
+        if app.audio_renderer is not None:
+            self.renderer = app.audio_renderer
+        else:
+            self.renderer = NullRenderer()
+
+    def teardown(self):
+        self.renderer.reset()
+
+    def set_item(self, item_info, success_callback, error_callback):
+        self.renderer.select_file(item_info.video_path, success_callback, error_callback)
 
     def play(self):
-        pass
+        self.renderer.play()
+
+    def play_from_time(self, resume_time=0):
+        self.seek_to_time(resume_time)
+        self.play()
 
     def pause(self):
-        pass
+        self.renderer.pause()
 
     def stop(self, will_play_another=False):
-        pass
+        self.renderer.stop()
 
     def set_volume(self, volume):
-        pass
+        self.renderer.set_volume(volume)
 
     def get_elapsed_playback_time(self):
-        return 0
+        return self.renderer.get_current_time()
 
     def get_total_playback_time(self):
-        return 0
+        return self.renderer.get_duration()
 
     def seek_to(self, position):
-        pass
+        time = self.get_total_playback_time() * position
+        self.seek_to_time(time)
+
+    def seek_to_time(self, position):
+        self.renderer.set_current_time(position)
 
     def set_playback_rate(self, rate):
-        pass
-
-###############################################################################
+        self.renderer.set_rate(rate)

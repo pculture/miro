@@ -68,25 +68,6 @@ class Renderer:
         self.bus.connect("message::eos", self.on_bus_message)
         self.bus.connect("message::state-changed", self.on_bus_message)
         self.bus.connect("message::error", self.on_bus_message)
-        self.bus.connect('sync-message::element', self.on_sync_message)
-
-        videosink = config.get(options.GSTREAMER_IMAGESINK)
-        try:
-            self.sink = gst.element_factory_make(videosink, "sink")
-
-        except gst.ElementNotFoundError:
-            logging.info("gstreamerrenderer: ElementNotFoundError '%s'" % videosink)
-            videosink = "ximagesink"
-            self.sink = gst.element_factory_make(videosink, "sink")
-
-        except Exception, e:
-            logging.info("gstreamerrenderer: Exception thrown '%s'" % e)
-            logging.exception("sink exception")
-            videosink = "ximagesink"
-            self.sink = gst.element_factory_make(videosink, "sink")
-
-        logging.info("GStreamer videosink: %s", videosink)
-        self.playbin.set_property("video-sink", self.sink)
 
         audiosink = config.get(options.GSTREAMER_AUDIOSINK)
         try:
@@ -105,30 +86,6 @@ class Renderer:
 
         logging.info("GStreamer audiosink: %s", audiosink)
         self.playbin.set_property("audio-sink", self.audiosink)
-        self.set_visualization()
-
-    def set_visualization(self):
-        value = config.get(options.VIZ_PLUGIN)
-
-        if value == "goom":
-            vis = gst.element_factory_make("goom", "goom")
-        else:
-            vis = None
-
-        self.playbin.set_property("vis-plugin", vis)
-
-    def change_visualization(self, value):
-        # FIXME - this should switch between none and goom, but it doesn't work.
-        pass
-
-    def on_sync_message(self, bus, message):
-        if message.structure is None:
-            return
-        message_name = message.structure.get_name()
-        if message_name == 'prepare-xwindow-id':
-            imagesink = message.src
-            imagesink.set_property('force-aspect-ratio', True)
-            imagesink.set_xwindow_id(self.widget.persistent_window.xid)
 
     def on_bus_message(self, bus, message):
         """receives message posted on the GstBus"""
@@ -148,56 +105,12 @@ class Renderer:
         elif message.type == gst.MESSAGE_EOS:
             app.playback_manager.on_movie_finished()
 
-    def set_widget(self, widget):
-        widget.connect("destroy", self.on_destroy)
-        widget.connect("expose-event", self.on_expose)
-        self.widget = widget
-        self.gc = widget.persistent_window.new_gc()
-        self.gc.foreground = gtk.gdk.color_parse("black")
-
-    def on_destroy(self, widget):
-        self.playbin.set_state(gst.STATE_NULL)
-
-    def on_expose(self, widget, event):
-        if self.sink and hasattr(self.sink, "expose"):
-            self.sink.expose()
-        else:
-            # if we had an image to show, we could do so here...  that image
-            # would show for audio-only items.
-            widget.window.draw_rectangle(self.gc,
-                                         True,
-                                         0, 0,
-                                         widget.allocation.width,
-                                         widget.allocation.height)
-        return True
-
-    def fill_movie_data(self, filename, movie_data, callback):
-        d = os.path.join(config.get(prefs.ICON_CACHE_DIRECTORY), "extracted")
-        try:
-            os.makedirs(d)
-        except:
-            pass
-        screenshot = os.path.join(d, os.path.basename(filename) + ".png")
-        movie_data["screenshot"] = nextFreeFilename(screenshot)
-
-    def go_fullscreen(self):
-        """Handle when the video window goes fullscreen."""
-        logging.debug("haven't implemented go_fullscreen method yet!")
-
-    def exit_fullscreen(self):
-        """Handle when the video window exits fullscreen mode."""
-        logging.debug("haven't implemented exit_fullscreen method yet!")
-
     def select_file(self, filename, callback, errback):
         """starts playing the specified file"""
         self.stop()
-        self.set_visualization()
         self.select_callbacks = (callback, errback)
         self.playbin.set_property("uri", "file://%s" % filename)
         self.playbin.set_state(gst.STATE_PAUSED)
-
-    def get_progress(self):
-        logging.info("get_progress: what does this do?")
 
     def get_current_time(self):
         try:
@@ -227,7 +140,8 @@ class Renderer:
     def set_current_time(self, seconds):
         # only want to kick these off when PAUSED or PLAYING
         if self.playbin.get_state(0)[1] not in (gst.STATE_PAUSED, gst.STATE_PLAYING):
-            self._on_state_changed_id = self.bus.connect("message::state-changed", self._on_state_changed, seconds)
+            self._on_state_changed_id = self.bus.connect("message::state-changed",
+                                                         self._on_state_changed, seconds)
             return
 
         self._seek(seconds)
@@ -279,7 +193,75 @@ class Renderer:
                 0,
                 gst.SEEK_TYPE_SET,
                 position + (rate * gst.SECOND))
+
+class VideoRenderer(Renderer):
+    def __init__(self):
+        Renderer.__init__(self)
+        logging.info("GStreamer version: %s", gst.version_string())
+
+        self.bus.connect('sync-message::element', self.on_sync_message)
+
+        videosink = config.get(options.GSTREAMER_IMAGESINK)
+        try:
+            self.sink = gst.element_factory_make(videosink, "sink")
+
+        except gst.ElementNotFoundError:
+            logging.info("gstreamerrenderer: ElementNotFoundError '%s'" % videosink)
+            videosink = "ximagesink"
+            self.sink = gst.element_factory_make(videosink, "sink")
+
+        except Exception, e:
+            logging.info("gstreamerrenderer: Exception thrown '%s'" % e)
+            logging.exception("sink exception")
+            videosink = "ximagesink"
+            self.sink = gst.element_factory_make(videosink, "sink")
+
+        logging.info("GStreamer videosink: %s", videosink)
+        self.playbin.set_property("video-sink", self.sink)
+
+    def on_sync_message(self, bus, message):
+        if message.structure is None:
+            return
+        message_name = message.structure.get_name()
+        if message_name == 'prepare-xwindow-id':
+            imagesink = message.src
+            imagesink.set_property('force-aspect-ratio', True)
+            imagesink.set_xwindow_id(self.widget.persistent_window.xid)
+
+    def set_widget(self, widget):
+        widget.connect("destroy", self.on_destroy)
+        widget.connect("expose-event", self.on_expose)
+        self.widget = widget
+        self.gc = widget.persistent_window.new_gc()
+        self.gc.foreground = gtk.gdk.color_parse("black")
+
+    def on_destroy(self, widget):
+        self.playbin.set_state(gst.STATE_NULL)
+
+    def on_expose(self, widget, event):
+        if self.sink and hasattr(self.sink, "expose"):
+            self.sink.expose()
+        else:
+            # if we had an image to show, we could do so here...  that image
+            # would show for audio-only items.
+            widget.window.draw_rectangle(self.gc,
+                                         True,
+                                         0, 0,
+                                         widget.allocation.width,
+                                         widget.allocation.height)
+        return True
+
+    def go_fullscreen(self):
+        """Handle when the video window goes fullscreen."""
+        logging.debug("haven't implemented go_fullscreen method yet!")
+
+    def exit_fullscreen(self):
+        """Handle when the video window exits fullscreen mode."""
+        logging.debug("haven't implemented exit_fullscreen method yet!")
+
+class AudioRenderer(Renderer):
+    pass
  
-    def movie_data_program_info(self, movie_path, thumbnail_path):
-        extractor_path = os.path.join(os.path.split(__file__)[0], "gst_extractor.py")
-        return ((sys.executable, extractor_path, movie_path, thumbnail_path), None)
+def movie_data_program_info(movie_path, thumbnail_path):
+    extractor_path = os.path.join(os.path.split(__file__)[0], "gst_extractor.py")
+    return ((sys.executable, extractor_path, movie_path, thumbnail_path), None)

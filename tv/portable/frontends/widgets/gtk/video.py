@@ -110,9 +110,9 @@ class ClickableImageButton(CustomButton):
     def draw(self, context, layout):
         self.image.draw(context, 0, 0, self.image.width, self.image.height)
 
-class NullRenderer(signals.SignalEmitter):
+class NullRenderer:
     def __init__(self):
-        signals.SignalEmitter.__init__(self, 'cant-play', 'ready-to-play')
+        pass
 
     def reset(self):
         pass
@@ -178,13 +178,6 @@ def _window():
     if app.playback_manager.detached_window:
         return app.playback_manager.detached_window._window
     return app.widgetapp.window._window
-
-def can_play_file(path, yes_callback, no_callback):
-    if app.renderer is not None:
-        app.renderer.can_play_file(path, yes_callback, no_callback)
-        return
-    logging.warn("can_play_file: app.renderer is None")
-    no_callback()
 
 class VideoOverlay(Window):
     def __init__(self):
@@ -374,16 +367,16 @@ class VideoDetailsWidget(Background):
 class VideoPlayer(player.Player, VBox):
     """Video renderer widget.
 
-    Note: ``app.renderer`` must be initialized before instantiating this
-    class.  If no renderers can be found, set ``app.renderer`` to ``None``.
+    Note: ``app.video_renderer`` must be initialized before instantiating this
+    class.  If no renderers can be found, set ``app.video_renderer`` to ``None``.
     """
-
     HIDE_CONTROLS_TIMEOUT = 2000
 
     def __init__(self):
+        player.Player.__init__(self)
         VBox.__init__(self)
-        if app.renderer is not None:
-            self.renderer = app.renderer
+        if app.video_renderer is not None:
+            self.renderer = app.video_renderer
         else:
             self.renderer = NullRenderer()
 

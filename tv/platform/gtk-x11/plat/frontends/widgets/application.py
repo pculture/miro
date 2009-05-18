@@ -126,10 +126,6 @@ class GtkX11Application(Application):
         elif key == prefs.RUN_AT_STARTUP.key:
             self.update_autostart(value)
 
-        elif key == options.VIZ_PLUGIN.key:
-            if hasattr(app, "renderer") and app.renderer:
-                app.renderer.change_visualization(value)
-
     def _set_default_icon(self):
         # we set the icon first (if available) so that it doesn't flash
         # on when the window is realized in Application.build_window()

@@ -76,19 +76,6 @@ def _playback_panel():
 
     grid.end_line(spacing=12)
 
-    note = dialogwidgets.note(_("You must restart playback for visualization changes to take effect."))
-    grid.pack(align_left(note, bottom_pad=12), grid.ALIGN_LEFT, span=2)
-
-    viz_options = [("none", _("None")),
-                   ("goom", "goom")]
-    viz_option_menu = widgetset.OptionMenu([op[1] for op in viz_options])
-    attach_combo(viz_option_menu, options.VIZ_PLUGIN, [op[0] for op in viz_options])
-    grid.end_line(spacing=12)
-
-    grid.pack_label(_("Use this for video when playing audio:"),
-            grid.ALIGN_RIGHT)
-    grid.pack(viz_option_menu)
-
     extras.append(align_left(grid.make_table()))
 
     return extras

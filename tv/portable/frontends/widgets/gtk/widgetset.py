@@ -51,5 +51,5 @@ from miro.frontends.widgets.gtk.simple import Image, ImageDisplay, \
         AnimatedImageDisplay, Label, Scroller, Expander, SolidBackground, \
         ProgressBar
 from miro.frontends.widgets.gtk.audio import AudioPlayer
-from miro.frontends.widgets.gtk.video import VideoPlayer, can_play_file
+from miro.frontends.widgets.gtk.video import VideoPlayer
 from miro.frontends.widgets.gtk.widgets import Rect

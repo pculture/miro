@@ -43,51 +43,13 @@ class Renderer:
     def __init__(self):
         logging.info("Xine version:      %s", xine.getXineVersion())
         self.xine = xine.Xine()
-        self.xine.set_eos_callback(self.on_eos)
-        self.driver = config.get(options.XINE_DRIVER)
-        logging.info("Xine video driver: %s", self.driver)
         self._playing = False
         self._volume = 0
-
-    def set_widget(self, widget):
-        widget.connect("destroy", self.on_destroy)
-        widget.connect("configure-event", self.on_configure_event)
-        widget.connect("expose-event", self.on_expose_event)
-        self.widget = widget
-
-        # flush gdk output to ensure that the window we're passing to xine has
-        # been created
-        gtk.gdk.flush()
-        displayName = gtk.gdk.display_get_default().get_name()
-        self.xine.attach(displayName,
-                         widget.persistent_window.xid,
-                         self.driver,
-                         int(options.shouldSyncX),
-                         int(config.get(options.USE_XINE_XV_HACK)))
-        self.gc = widget.persistent_window.new_gc()
-        self.gc.foreground = gtk.gdk.color_parse("black")
 
     def on_eos(self):
         # on_eos gets called by one of the xine threads, so we want to switch
         # to the ui thread to do things.
         threads.call_on_ui_thread(app.playback_manager.on_movie_finished)
-
-    def on_destroy(self, widget):
-        self.xine.detach()
-
-    def on_configure_event(self, widget, event):
-        self.xine.set_area(event.x, event.y, event.width, event.height)
-
-    def on_expose_event(self, widget, event):
-        # if we wanted to draw an image for audio-only items, this is where
-        # we'd do it.
-        widget.window.draw_rectangle(self.gc,
-                                     True,
-                                     0, 0,
-                                     widget.allocation.width,
-                                     widget.allocation.height)
-        self.xine.got_expose_event(event.area.x, event.area.y, event.area.width,
-                event.area.height)
 
     def can_play_file(self, filename, yes_callback, no_callback):
         if self.xine.can_play_file(filename):
@@ -95,54 +57,8 @@ class Renderer:
         else:
             no_callback()
 
-    def go_fullscreen(self):
-        """Handle when the video window goes fullscreen."""
-        # Sometimes xine doesn't seem to handle the expose events properly and
-        # only thinks part of the window is exposed.  To work around this we
-        # send it a couple of fake expose events for the entire window, after
-        # a short time delay.
-
-        def fullscreen_expose_workaround():
-            try:
-                _, _, width, height, _ = self.widget.window.get_geometry()
-                self.xine.got_expose_event(0, 0, width, height)
-            except (SystemExit, KeyboardInterrupt):
-                raise
-            except:
-                return True
-            return False
-
-        gobject.timeout_add(500, fullscreen_expose_workaround)
-        gobject.timeout_add(1000, fullscreen_expose_workaround)
-
-    def exit_fullscreen(self):
-        """Handle when the video window exits fullscreen mode."""
-        # nothing to do here
-        pass
-
-    def change_visualization(self, value):
-        pass
-
     def select_file(self, filename, callback, errback):
-        self._filename = filename
-        viz = config.get(options.VIZ_PLUGIN)
-        self.xine.set_viz(viz)
-        if self.xine.select_file(filename):
-            gobject.idle_add(callback)
-            def expose_workaround():
-                try:
-                    _, _, width, height, _ = self.widget.window.get_geometry()
-                    self.xine.got_expose_event(0, 0, width, height)
-                except (SystemExit, KeyboardInterrupt):
-                    raise
-                except:
-                    return True
-                return False
-
-            gobject.timeout_add(500, expose_workaround)
-            self.seek(0)
-        else:
-            gobject.idle_add(errback)
+        logging.error("Not implemented.")
 
     def get_progress(self):
         try:
@@ -213,10 +129,110 @@ class Renderer:
     def set_rate(self, rate):
         logging.warn("set_rate not implemented for xine")
 
-    def movie_data_program_info(self, movie_path, thumbnail_path):
-        if os.path.exists(resources.path('../../../lib/miro/xine_extractor')):
-            path = resources.path('../../../lib/miro/xine_extractor')
-            return ((path, movie_path, thumbnail_path), None)
+class VideoRenderer(Renderer):
+    def __init__(self):
+        Renderer.__init__(self)
+        self.xine.set_eos_callback(self.on_eos)
+        self.driver = config.get(options.XINE_DRIVER)
+        logging.info("Xine video driver: %s", self.driver)
+
+    def set_widget(self, widget):
+        widget.connect("destroy", self.on_destroy)
+        widget.connect("configure-event", self.on_configure_event)
+        widget.connect("expose-event", self.on_expose_event)
+        self.widget = widget
+
+        # flush gdk output to ensure that the window we're passing to xine has
+        # been created
+        gtk.gdk.flush()
+        displayName = gtk.gdk.display_get_default().get_name()
+        self.xine.attach(displayName,
+                         widget.persistent_window.xid,
+                         self.driver,
+                         int(options.shouldSyncX),
+                         int(config.get(options.USE_XINE_XV_HACK)))
+        self.gc = widget.persistent_window.new_gc()
+        self.gc.foreground = gtk.gdk.color_parse("black")
+
+    def on_destroy(self, widget):
+        self.xine.detach()
+
+    def on_configure_event(self, widget, event):
+        self.xine.set_area(event.x, event.y, event.width, event.height)
+
+    def on_expose_event(self, widget, event):
+        # if we wanted to draw an image for audio-only items, this is where
+        # we'd do it.
+        widget.window.draw_rectangle(self.gc,
+                                     True,
+                                     0, 0,
+                                     widget.allocation.width,
+                                     widget.allocation.height)
+        self.xine.got_expose_event(event.area.x, event.area.y, event.area.width,
+                event.area.height)
+
+    def go_fullscreen(self):
+        """Handle when the video window goes fullscreen."""
+        # Sometimes xine doesn't seem to handle the expose events properly and
+        # only thinks part of the window is exposed.  To work around this we
+        # send it a couple of fake expose events for the entire window, after
+        # a short time delay.
+
+        def fullscreen_expose_workaround():
+            try:
+                _, _, width, height, _ = self.widget.window.get_geometry()
+                self.xine.got_expose_event(0, 0, width, height)
+            except (SystemExit, KeyboardInterrupt):
+                raise
+            except:
+                return True
+            return False
+
+        gobject.timeout_add(500, fullscreen_expose_workaround)
+        gobject.timeout_add(1000, fullscreen_expose_workaround)
+
+    def exit_fullscreen(self):
+        """Handle when the video window exits fullscreen mode."""
+        # nothing to do here
+        pass
+
+    def select_file(self, filename, callback, errback):
+        self._filename = filename
+        if self.xine.select_file(filename):
+            gobject.idle_add(callback)
+            def expose_workaround():
+                try:
+                    _, _, width, height, _ = self.widget.window.get_geometry()
+                    self.xine.got_expose_event(0, 0, width, height)
+                except (SystemExit, KeyboardInterrupt):
+                    raise
+                except:
+                    return True
+                return False
+
+            gobject.timeout_add(500, expose_workaround)
+            self.seek(0)
         else:
-            logging.error("xine_extractor cannot be found.")
-            raise NotImplementedError()
+            gobject.idle_add(errback)
+
+class AudioRenderer(Renderer):
+    def select_file(self, filename, callback, errback):
+        logging.info("audio select_file")
+        self._filename = filename
+        if self.xine.select_file(filename):
+            gobject.idle_add(callback)
+            self.seek(0)
+        else:
+            gobject.idle_add(errback)
+
+    def on_eos(self):
+        Renderer.on_eos(self)
+        logging.info("audio on_eos")
+
+def movie_data_program_info(movie_path, thumbnail_path):
+    if os.path.exists(resources.path('../../../lib/miro/xine_extractor')):
+        path = resources.path('../../../lib/miro/xine_extractor')
+        return ((path, movie_path, thumbnail_path), None)
+    else:
+        logging.error("xine_extractor cannot be found.")
+        raise NotImplementedError()

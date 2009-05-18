@@ -58,7 +58,9 @@ from miro.plat.frontends.widgets.threads import call_on_ui_thread
 
 class WindowsApplication(Application):
     def run(self):
-        app.renderer = VLCRenderer()
+        app.video_renderer = VLCRenderer()
+        # FIXME - implement audio renderer
+        app.audio_renderer = None
         self.initXULRunner()
         gtk.gdk.threads_init()
         self.startup()

@@ -42,7 +42,9 @@ def set_renderer(modname):
     try:
         pkg = __import__('miro.plat.renderers.' + modname)
         module = getattr(pkg.plat.renderers, modname)
-        app.renderer = module.Renderer()
+        app.video_renderer = module.VideoRenderer()
+        app.audio_renderer = module.AudioRenderer()
+        app.movie_data_program_info = module.movie_data_program_info
         logging.info("set_renderer: successfully loaded %s", modname)
     except:
         logging.info("set_renderer: couldn't load %s: %s", modname,
@@ -60,12 +62,14 @@ def init_renderer():
     r = config.get(options.USE_RENDERER)
     try:
         set_renderer("%srenderer" % r)
+        return
     except:
-        try:
-            logging.error("init_renderer: error detected...  trying to add gstreamerrenderer")
+        logging.exception("init_renderer: error detected...  trying to use gstreamerrenderer")
 
-            # try to add the gstreamer renderer if the preferences aren't right
-            set_renderer("gstreamerrenderer")
-        except:
-            logging.error("init_renderer: no valid renderer has been loaded")
-        app.renderer = None
+    try:
+        # try to add the gstreamer renderer if the preferences aren't right
+        set_renderer("gstreamerrenderer")
+        return
+    except:
+        logging.exception("init_renderer: no valid renderer has been loaded")
+    app.renderer = None

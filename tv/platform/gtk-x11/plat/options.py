@@ -45,12 +45,6 @@ USE_RENDERER = Pref(key="useRenderer",
                     alias="renderer",
                     help="Which renderer to use.  (gstreamer, xine)" )
 
-VIZ_PLUGIN = Pref(key="vizPlugin",
-                  default=u"goom",
-                  platformSpecific=False,
-                  alias="viz-plugin",
-                  help="Which visualization plugin to use for audio files.  (goom or none)" )
-
 USE_XINE_XV_HACK = Pref(key="UseXineXVHack",
                         default=True,
                         platformSpecific=False,
