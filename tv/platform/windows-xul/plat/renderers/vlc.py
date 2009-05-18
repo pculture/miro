@@ -171,7 +171,10 @@ class VLCRenderer:
             gobject.timeout_add(500, self._length_check, attempt+1)
 
     def _open_success(self):
-        self.callback_info[0]()
+        # FIXME - sometimes _open_success is called, but callback_info
+        # is None.  not sure why this happens.
+        if self.callback_info:
+            self.callback_info[0]()
         self.callback_info = None
 
     def _open_failure(self):
