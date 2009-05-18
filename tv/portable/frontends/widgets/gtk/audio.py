@@ -38,6 +38,15 @@ class NullRenderer:
     def reset(self):
         pass
 
+    def select_file(self, item_info, success_callback, error_callback):
+        error_callback()
+
+    def stop(self):
+        pass
+
+    def set_volume(self, v):
+        pass
+
 class AudioPlayer(player.Player):
     """Audio renderer widget.
 
