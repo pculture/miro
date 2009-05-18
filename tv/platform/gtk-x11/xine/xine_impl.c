@@ -229,35 +229,38 @@ void xineAttach(_Xine* xine, const char* displayName, Drawable d,
         xineDetach(xine);
     }
 
-    /* Store drawable info in the */
     xine->drawable = d;
+    if (d != 0) {
+      /* Store drawable info in the */
 
-    xine->display = XOpenDisplay(displayName);
-    XSynchronize(xine->display, sync);
+      xine->display = XOpenDisplay(displayName);
+      XSynchronize(xine->display, sync);
 
-    xine->screen = XDefaultScreen(xine->display);
-    screenWidth = (DisplayWidth(xine->display, xine->screen) * 1000 /
-            DisplayWidthMM(xine->display, xine->screen));
-    screenHeight = (DisplayHeight(xine->display, xine->screen) * 1000 /
-            DisplayHeightMM(xine->display, xine->screen));
-    xine->screenPixelAspect = screenHeight / screenWidth;
+      xine->screen = XDefaultScreen(xine->display);
+      screenWidth = (DisplayWidth(xine->display, xine->screen) * 1000 /
+                     DisplayWidthMM(xine->display, xine->screen));
+      screenHeight = (DisplayHeight(xine->display, xine->screen) * 1000 /
+                      DisplayHeightMM(xine->display, xine->screen));
+      xine->screenPixelAspect = screenHeight / screenWidth;
 
-    /* filling in the xine visual struct */
-    vis.display = xine->display;
-    vis.screen = xine->screen;
-    vis.d = d;
-    vis.dest_size_cb = destSizeCallback;
-    vis.frame_output_cb = frameOutputCallback;
-    vis.user_data = xine;
-  
+      /* filling in the xine visual struct */
+      vis.display = xine->display;
+      vis.screen = xine->screen;
+      vis.d = d;
+      vis.dest_size_cb = destSizeCallback;
+      vis.frame_output_cb = frameOutputCallback;
+      vis.user_data = xine;
+    }
+
     /* opening xine output ports */
     // try to use char *driver for video, default to "auto" if NULL
     if (!driver) {
       driver = "auto";
     }
 
-    xine->videoPort = xine_open_video_driver(xine->xine, driver,
-         XINE_VISUAL_TYPE_X11, (void *)&vis);
+    if (d != 0) {
+      xine->videoPort = xine_open_video_driver(xine->xine, driver,
+                                               XINE_VISUAL_TYPE_X11, (void *)&vis);
 
 #ifdef INCLUDE_XINE_DRIVER_HACK
     // by default, don't use the hack
@@ -270,6 +273,10 @@ void xineAttach(_Xine* xine, const char* displayName, Drawable d,
       }
     }
 #endif
+    } else {
+      xine->videoPort = xine_open_video_driver(xine->xine, driver,
+                                               XINE_VISUAL_TYPE_NONE, NULL);
+    }
 
     xine->audioPort = xine_open_audio_driver(xine->xine, "auto", NULL);
 
@@ -281,10 +288,12 @@ void xineAttach(_Xine* xine, const char* displayName, Drawable d,
     xine_event_create_listener_thread(xine->eventQueue,
             xine->event_callback, xine->event_callback_data);
 
-    xine_port_send_gui_data(xine->videoPort, XINE_GUI_SEND_DRAWABLE_CHANGED, 
-            (void *)d);
-    xine_port_send_gui_data(xine->videoPort, XINE_GUI_SEND_VIDEOWIN_VISIBLE, 
-            (void *) 1);
+    if (d != 0) {
+      xine_port_send_gui_data(xine->videoPort, XINE_GUI_SEND_DRAWABLE_CHANGED,
+                              (void *)d);
+      xine_port_send_gui_data(xine->videoPort, XINE_GUI_SEND_VIDEOWIN_VISIBLE,
+                              (void *) 1);
+    }
 
     xine->attached = 1;
     _xineSwitchToNormal (xine);
@@ -300,6 +309,7 @@ void xineDetach(_Xine* xine)
 
     if(!xine->attached) return;
 
+    if (xine->drawable != 0) {
 #ifdef INCLUDE_XINE_DRIVER_HACK
     // HACK ALERT!  For some reason, setting the XV port attributes
     //causes problems with certain xine-lib/X11 combinations this
@@ -314,12 +324,14 @@ void xineDetach(_Xine* xine)
       }
     }
 #endif
-
+    }
     xine_close(xine->stream);
     xine_dispose(xine->stream);
     xine_close_audio_driver(xine->xine, xine->audioPort);
     xine_close_video_driver(xine->xine, xine->videoPort);
-    XCloseDisplay(xine->display);
+    if (xine->drawable != 0) {
+      XCloseDisplay(xine->display);
+    }
     xine->attached = 0;
 
     /* Save this so that no one accesses xine twice at once. */

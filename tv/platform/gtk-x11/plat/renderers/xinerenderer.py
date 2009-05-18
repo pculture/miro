@@ -216,8 +216,24 @@ class VideoRenderer(Renderer):
             gobject.idle_add(errback)
 
 class AudioRenderer(Renderer):
+    def __init__(self):
+        Renderer.__init__(self)
+        self._attached = False
+
+    def attach(self):
+        if self._attached:
+            self.detach()
+        self.xine.attach("", 0, "none", 0, 0)
+        self._attached = True
+
+    def detach(self):
+        self.xine.detach()
+        self._attached = False
+
     def select_file(self, filename, callback, errback):
-        logging.info("audio select_file")
+        if not self._attached:
+            self.attach()
+
         self._filename = filename
         if self.xine.select_file(filename):
             gobject.idle_add(callback)
@@ -227,7 +243,6 @@ class AudioRenderer(Renderer):
 
     def on_eos(self):
         Renderer.on_eos(self)
-        logging.info("audio on_eos")
 
 def movie_data_program_info(movie_path, thumbnail_path):
     if os.path.exists(resources.path('../../../lib/miro/xine_extractor')):
