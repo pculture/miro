@@ -31,6 +31,7 @@ list and the item list (AKA almost all of the miro).
 """
 import itertools
 
+import logging
 import gobject
 import gtk
 import pango
@@ -813,8 +814,7 @@ class TableView(Widget):
                     path, column, x, y = path_info
                     selection = self._widget.get_selection()
                     triangle_size = treeview.style_get_property("expander_size")
-                    if selection.path_is_selected(path) and treeview.get_show_expanders() \
-                           and x > triangle_size:
+                    if selection.path_is_selected(path) and x > triangle_size:
                         self.delaying_press = True
                         return True
 
