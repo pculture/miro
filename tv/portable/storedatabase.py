@@ -135,6 +135,12 @@ class LiveStorage:
         if self._dc:
             self._dc.cancel()
             self._dc = None
+
+        logging.info("Vacuuming the db before shutting down.")
+        try:
+            self.cursor.execute("vacuum")
+        except sqlite3.DatabaseError:
+            logging.info("... Vacuuming failed with DatabaseError")
         self.connection.close()
 
     def upgrade_database(self):
