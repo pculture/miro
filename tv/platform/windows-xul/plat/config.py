@@ -67,10 +67,17 @@ def _getConfigFile():
     return fileutil.expand_filename(os.path.join(_getSupportDirectory(), "preferences.bin"))
 
 def load():
-    filename = _getConfigFile()
-    if os.path.exists(filename):
+    save_file = _getConfigFile()
+
+    # if Miro died while saving the config file, then it's likely there's
+    # a save_file.new floating around and that's the one we want to use.
+    new_save_file = save_file + ".new"
+    if os.path.exists(new_save_file):
+        save_file = new_save_file
+
+    if os.path.exists(save_file):
         try:
-            return cPickle.load(open(filename))
+            return cPickle.load(open(save_file))
         except:
             logging.warn("Error loading config: %s", traceback.format_exc())
     return {}
@@ -79,13 +86,19 @@ def save(data):
     # save to a new file and if that's successful then rename it.  this
     # reduces the chance that the user ends up with a hosed preferences
     # file.
-    file = _getConfigFile()
-    temp_file = file + ".tmp"
+    save_file = _getConfigFile()
+    new_file = save_file + ".new"
     try:
-        f = open(temp_file, 'w')
+        f = open(new_file, 'w')
         cPickle.dump(data, f)
         f.close()
-        shutil.move(temp_file, file)
+
+        if not os.path.exists(save_file):
+            shutil.move(temp_file, save_file)
+            return
+
+        os.remove(save_file)
+        shutil.move(new_file, save_file)
     except:
         raise
 
