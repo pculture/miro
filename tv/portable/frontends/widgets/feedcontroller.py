@@ -215,9 +215,11 @@ class FeedController(itemlistcontroller.ItemListController):
         watchable = self.downloaded_view.item_list.get_count()
         full_count = (self.full_view.item_list.get_count() +
                 self._show_more_count)
+        autoqueued_count = len([i for i in self.full_view.item_list.get_items()
+                                if i.pending_auto_dl])
         self._update_downloading_section(downloads)
         self._update_downloaded_section(watchable)
-        self._update_full_section(downloads, full_count)
+        self._update_full_section(downloads, full_count, autoqueued_count)
 
     def _update_downloading_section(self, downloads):
         if downloads > 0:
@@ -242,7 +244,7 @@ class FeedController(itemlistcontroller.ItemListController):
         else:
             self.downloaded_section.hide()
 
-    def _update_full_section(self, downloads, items):
+    def _update_full_section(self, downloads, items, autoqueued_count):
         if self._search_text == '':
             itemtext = ngettext("%(count)d Item",
                                 "%(count)d Items",
@@ -252,7 +254,17 @@ class FeedController(itemlistcontroller.ItemListController):
                                        "%(count)d Downloading",
                                        downloads,
                                        {"count": downloads})
-            text = u"|  %s  |  %s" % (itemtext, downloadingtext)
+            if autoqueued_count:
+                queuedtext = ngettext("%(count)d Download Queued Due To Unplayed Items (See Settings)",
+                                      "%(count)d Downloads Queued Due To Unplayed Items (See Settings)",
+                                      autoqueued_count,
+                                      {"count": autoqueued_count})
+
+            text = u"|  %s" % itemtext
+            if downloads:
+                text = text + u"  |  %s" % downloadingtext
+            if autoqueued_count:
+                text = text + u"  |  %s" % queuedtext
         elif self.full_view.item_list.get_hidden_count() > 0:
             text = ngettext("%(count)d Item Matches Search",
                     "%(count)d Items Match Search",
