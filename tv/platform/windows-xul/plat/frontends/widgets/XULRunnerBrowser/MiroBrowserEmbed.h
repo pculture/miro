@@ -51,6 +51,8 @@
 #include "uriloader/nsIURIContentListener.h"
 #include "uriloader/nsIWebProgressListener.h"
 #include "xpcom/nsWeakReference.h"
+#include "shistory/nsIHistoryEntry.h"
+#include "shistory/nsISHistory.h"
 
 typedef void(*focusCallback)(PRBool forward, void* data);
 typedef int(*uriCallback)(char* uri, void* data);
@@ -99,6 +101,8 @@ public:
     nsresult loadURI(const char* uri);
     // Gets the current uri from mWebNavigator
     nsresult getCurrentURI(char ** uri);
+    // Gets the current title from a long chain of things
+    nsresult getCurrentTitle(wchar_t ** aTitle);
     // Call when the parent window changes size
     nsresult resize(int x, int y, int width, int height);
     // Give the browser keyboard focus

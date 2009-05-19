@@ -163,6 +163,30 @@ nsresult MiroBrowserEmbed::getCurrentURI(char ** uri)
     return NS_OK;
 }
 
+nsresult MiroBrowserEmbed::getCurrentTitle(wchar_t ** aTitle)
+{
+    nsresult rv;
+    nsISHistory *history;
+    nsIHistoryEntry *historyentry;
+    wchar_t *title;
+    PRInt32 index;
+
+    rv = mWebNavigation->GetSessionHistory(&history);
+    NS_ENSURE_SUCCESS(rv, rv);
+
+    rv = history->GetIndex(&index);
+    NS_ENSURE_SUCCESS(rv, rv);
+
+    rv = history->GetEntryAtIndex(index, PR_FALSE, &historyentry);
+    NS_ENSURE_SUCCESS(rv, rv);
+
+    rv = historyentry->GetTitle(&title);
+    NS_ENSURE_SUCCESS(rv, rv);
+
+    *aTitle = title;
+    return NS_OK;
+}
+
 // Called when the parent window changes size
 nsresult MiroBrowserEmbed::resize(int x, int y, int width, int height)
 {

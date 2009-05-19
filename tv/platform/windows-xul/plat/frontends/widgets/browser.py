@@ -32,6 +32,7 @@ from miro.frontends.widgets.gtk import wrappermap
 from miro.frontends.widgets.gtk.persistentwindow import PersistentWindow
 from miro.frontends.widgets.gtk.widgetset import Widget
 
+import logging
 import gtk
 import gobject
 
@@ -120,8 +121,11 @@ class Browser(Widget):
         return self._widget.browser.get_current_uri()
 
     def get_current_title(self):
-        # FIXME - needs to be implemented
-        return self.get_current_url()
+        title = self._widget.browser.get_current_title()
+        # browser returns the title in a utf-16 encoded string,
+        # so we decode it into a unicode and pass it along.
+        title = title.decode("utf-16")
+        return title
 
     def can_go_back(self):
         return self._widget.browser.can_go_back()
