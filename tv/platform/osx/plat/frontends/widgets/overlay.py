@@ -213,6 +213,19 @@ class OverlayPalette (NSWindowController):
             self.fsButton.setImage_(NSImage.imageNamed_('fs-button-enterfullscreen'))
             self.fsButton.setAlternateImage_(NSImage.imageNamed_('fs-button-enterfullscreen-alt'))
 
+        newFrame = self.window().frame() 
+        if videoWindow.is_fullscreen or app.playback_manager.detached_window is not None: 
+            self.titleLabel.setHidden_(NO)
+            self.feedLabel.setHidden_(NO)
+            newFrame.size.height = 198 
+        else: 
+            self.titleLabel.setHidden_(YES)
+            self.feedLabel.setHidden_(YES)
+            newFrame.size.height = 144
+        newFrame.origin.x = self.getHorizontalPosition(videoWindow, newFrame.size.width)
+        self.window().setFrame_display_animate_(newFrame, YES, animate)
+        self.playbackControls.setNeedsDisplay_(YES)
+
     def fit_in_video_window(self, video_window):
         return self.window().frame().size.width <= video_window.frame().size.width
 
@@ -446,11 +459,12 @@ class OverlayPaletteControlsView (NSView):
         path.setLineWidth_(2)
         path.stroke()
 
-        path = NSBezierPath.bezierPath()
-        path.moveToPoint_(NSPoint(0.5, bounds.size.height-1.5))
-        path.relativeLineToPoint_(NSPoint(bounds.size.width, 0))
-        path.setLineWidth_(2)
-        path.stroke()
+        if app.playback_manager.is_fullscreen or app.playback_manager.detached_window is not None:
+            path = NSBezierPath.bezierPath()
+            path.moveToPoint_(NSPoint(0.5, bounds.size.height-1.5))
+            path.relativeLineToPoint_(NSPoint(bounds.size.width, 0))
+            path.setLineWidth_(2)
+            path.stroke()
         
     def hitTest_(self, point):
         # Our buttons have transparent parts, but we still want mouse clicks
