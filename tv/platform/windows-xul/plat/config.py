@@ -33,6 +33,7 @@ import logging
 import string
 import tempfile
 import traceback
+import shutil
 
 from miro import app
 from miro import prefs
@@ -75,8 +76,18 @@ def load():
     return {}
 
 def save(data):
+    # save to a new file and if that's successful then rename it.  this
+    # reduces the chance that the user ends up with a hosed preferences
+    # file.
     file = _getConfigFile()
-    cPickle.dump(data, open(file, 'w'))
+    temp_file = file + ".tmp"
+    try:
+        f = open(temp_file, 'w')
+        cPickle.dump(data, f)
+        f.close()
+        shutil.move(temp_file, file)
+    except:
+        raise
 
 def get(descriptor):
     if descriptor == prefs.MOVIES_DIRECTORY:
