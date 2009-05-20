@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To:  \n"
-"POT-Creation-Date: 2009-02-02 13:38-0500\n"
+"POT-Creation-Date: 2009-05-14 15:16-0400\n"
 "PO-Revision-Date: 2009-02-27 15:20+0000\n"
 "Last-Translator: Lucian Lupescu <lupescu81@yahoo.com>\n"
 "Language-Team: \n"
@@ -11,853 +11,324 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n == 1 ? 0: (((n % 100 > 19) || ((n % 100 "
 "== 0) && (n != 0))) ? 2: 1));\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-05-20 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
-msgid "Enable tray icon"
-msgstr "Activează pictograma în zona de notificare"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:42
-msgid "When I click the red close button:"
-msgstr "Când apăs butonul roșu de închidere:"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:45
-msgid "Close to tray so that downloads can continue."
-msgstr "Închide către zona de notificare, ca descărcările să continue."
-
-#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
-msgid "Quit Miro completely."
-msgstr "Închide Miro de tot."
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:124
-msgid "Close to tray?"
-msgstr "Ascunde în zona de notificare?"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:125
-msgid ""
-"When you click the red close button, would you like Miro to close to the "
-"system tray or quit?  You can change this setting later in the Options."
-msgstr ""
-"Când apăsați butonul roșu de închidere, doriți să trimiteți Miro în zona de "
-"notificare sau să-l închideți? Puteți schimba preferința mai târziu în "
-"Opțiuni."
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:182
-msgid "Error Bombing Item"
-msgstr "Eroare la bombardarea elementului"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:184
-msgid "Error Recommending Item"
-msgstr "Eroare la recomandarea elementului"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:186
-msgid "Error Opening Website"
-msgstr "Eroare la deschiderea sitului"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:191
+#: ../../portable/httpclient.py:89
 #, python-format
-msgid ""
-"There was an error opening %(url)s.  Please try again in a few seconds"
-msgstr ""
-"S-a întâlnit o eroare la deschiderea %(url)s. Încercați din nou peste câteva "
-"secunde"
+msgid "Error: %(msg)s"
+msgstr "Eroare: %(msg)s"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
-msgid "Update Available"
-msgstr "Actualizări disponibile"
+#: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
+msgid "Can't connect"
+msgstr "Nu mă pot conecta"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
+#: ../../portable/httpclient.py:105
 #, python-format
-msgid "A new version of %s is available for download."
-msgstr "O nouă versiune a %s este disponibilă pentru descărcare."
+msgid "Connection Error: %(msg)s"
+msgstr "Eroare la conectare: %(msg)s"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
-msgid "Do you want to download it now?"
-msgstr "Vreți să o descărcați acum?"
+#: ../../portable/httpclient.py:111
+msgid "SSL connection error"
+msgstr "Eroare SSL la conectare"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
-msgid "Install Adobe Flash?"
-msgstr "Instalați Adobe Flash?"
+#: ../../portable/httpclient.py:115
+msgid "HTTP error"
+msgstr "eroare HTTP"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
+#: ../../portable/httpclient.py:119
 #, python-format
-msgid ""
-"For the best %(appname)s experience, we suggest you install Adobe Flash.  "
-"Would you like to do this now?"
-msgstr ""
-"Pentru cea mai bună experienţă %(appname)s, e sugerat să instalați Adobe "
-"Flash. Doriți să-o faceți acum?"
+msgid "Bad Status Line: %(msg)s"
+msgstr "Linie de stare invalidă: %(msg)s"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
-msgid "Install Adobe Flash"
-msgstr "Instalare Adobe Flash"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
-msgid ""
-"Your browser will load the web-site where you can download and install Adobe "
-"Flash.\n"
-"\n"
-"You should quit Miro now and start it up again after Adobe Flash has been "
-"installed."
-msgstr ""
-"Navigatorul dumneavoastră va încărca situl web unde puteți descărca și "
-"instala Abode Flash.\n"
-"\n"
-"Închideți acum Miro, și porniți-l din nou după ce s-a instalat Adobe Flash."
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
-msgid "Renderer options:"
-msgstr "Opțiuni de afișare"
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
-msgid "You must restart Miro for renderer changes to take effect."
-msgstr ""
-"Trebuie să reporniți Miro pentru ca schimbările de afișare să ia efect."
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:72
-msgid "Video renderer:"
-msgstr "Redare video:"
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:77
-msgid "You must restart playback for visualization changes to take effect."
-msgstr "Trebuie să reporniți redarea înainte ca schimbările să ia efect."
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:80
-msgid "None"
-msgstr "Niciunul"
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:86
-msgid "Use this for video when playing audio:"
-msgstr "Utilizați asta ca video când redați audio:"
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:120
-#: ../../portable/frontends/widgets/gtk/video.py:300
-#: ../../portable/frontends/widgets/itemcontextmenu.py:152
-msgid "Share"
-msgstr "Partajează"
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:124
-#: ../../portable/frontends/widgets/style.py:232
-#: ../../portable/frontends/widgets/style.py:970
-#: ../../portable/frontends/widgets/style.py:1134
-#: ../../portable/frontends/widgets/gtk/video.py:279
-#: ../../portable/frontends/widgets/itemcontextmenu.py:109
-#: ../../portable/frontends/widgets/itemcontextmenu.py:211
-#: ../../portable/dialogs.py:106
-msgid "Keep"
-msgstr "Păstrează"
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:128
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
-#: ../../portable/frontends/widgets/gtk/video.py:274
-#: ../../portable/frontends/widgets/gtk/video.py:282
-#: ../../portable/frontends/widgets/itemcontextmenu.py:65
-#: ../../portable/dialogs.py:107
-msgid "Delete"
-msgstr "Șterge"
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:132
-msgid "Add to Library"
-msgstr "Adaugă la bibliotecă"
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:203
-msgid "Pop Out"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:206
-msgid "Pop In"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
-msgid "Services"
-msgstr "Servicii"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
-msgid "Hide Miro"
-msgstr "Ascunde Miro"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
-msgid "Hide Others"
-msgstr "Ascunde-le pe celelalte"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
-msgid "Show All"
-msgstr "Afișează tot"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
-msgid "Preferences..."
-msgstr "Preferințe..."
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
-msgid "Quit Miro"
-msgstr "Închide Miro"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:150
-msgid "Close Window"
-msgstr "Închide fereastra"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
-msgid "Cut"
-msgstr "Decupează"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:156
-msgid "Copy"
-msgstr "Copiază"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
-msgid "Paste"
-msgstr "Lipește"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
-msgid "Select All"
-msgstr "Selectează tot"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
-msgid "Edit"
-msgstr "Modifică"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
-msgid "Present Half Size"
-msgstr "Prezent Jumătate de Dimensiune"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:168
-msgid "Present Actual Size"
-msgstr "Prezent Dimensiune Întreagă"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:169
-msgid "Present Double Size"
-msgstr "Prezent Dimensiune Dublă"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:171
-msgid "Present Video"
-msgstr "Video Actual"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
-msgid "Zoom"
-msgstr "Scalare"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:179
-msgid "Minimize"
-msgstr "Micşorează"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
-msgid "Main Window"
-msgstr "Fereastra principală"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
-msgid "Bring All to Front"
-msgstr "Adu tot în prim-plan"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
-msgid "Window"
-msgstr "Fereastră"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
-msgid "Miro Help"
-msgstr "Ajutor"
-
-#: ../../platform/osx/plat/frontends/widgets/application.py:166
-msgid "Download Completed"
-msgstr "Descărcare terminată"
-
-#: ../../platform/osx/plat/frontends/widgets/application.py:167
+#: ../../portable/httpclient.py:124
 #, python-format
-msgid "Download of video '%s' is finished."
-msgstr "S-a terminat descărcarea fișierului video '%s'."
+msgid "Bad Header Line: %(msg)s"
+msgstr "Linie de antet invalidă: %(msg)s"
 
-#: ../../portable/theme.py:136
-msgid "Custom Channels"
-msgstr "Canale personale"
-
-#: ../../portable/theme.py:138
+#: ../../portable/httpclient.py:129
 #, python-format
-msgid ""
-"You are running a version of %(appname)s with a custom set of channels."
-msgstr "Rulați o versiune %(appname)s cu un set personalizat de canale."
+msgid "Bad Chunk size: %(msg)s"
+msgstr "Dimensiune greșită de bucăți: %(msg)s"
 
-#: ../../portable/theme.py:171
-msgid "Example Playlist"
-msgstr "Exemplu de listă de redare"
-
-#: ../../portable/theme.py:175
-msgid "Miro - Report a Problem"
-msgstr "Miro - Raportează o problemă"
-
-#: ../../portable/searchengines.py:146
-msgid "Search All"
-msgstr "Caută în toate"
-
-#: ../../portable/util.py:279 ../../portable/util.py:281
+#: ../../portable/httpclient.py:134
 #, python-format
-msgid "%(size)sGB"
-msgstr "%(size)sGB"
+msgid "Expected CRLF got: %(character)r"
+msgstr "Se aștepta CRLF dar s-a găsit: %(character)r"
 
-#: ../../portable/util.py:285 ../../portable/util.py:287
+#: ../../portable/httpclient.py:139
 #, python-format
-msgid "%(size)sMB"
-msgstr "%(size)sMB"
+msgid "%(host)s closed connection"
+msgstr "%(host)s a închis conexiunea"
 
-#: ../../portable/util.py:291 ../../portable/util.py:293
-#, python-format
-msgid "%(size)sKB"
-msgstr "%(size)skB"
-
-#: ../../portable/util.py:297 ../../portable/util.py:299
-#, python-format
-msgid "%(size)sB"
-msgstr "%(size)sB"
-
-#: ../../portable/opml.py:185
-msgid "OPML Import failed"
-msgstr "Import OPML eșuat"
-
-#: ../../portable/opml.py:186
-msgid ""
-"The selected OPML file appears to be invalid.  Import was interrupted."
-msgstr "Fișierul OPML pare să fie invalid. Importarea a fost întreruptă."
-
-#: ../../portable/opml.py:191
-msgid "OPML Import summary"
-msgstr "Sumar importare OPML"
-
-#: ../../portable/opml.py:192
-#, python-format
-msgid "Successfully imported %(count)d feed."
-msgid_plural "Successfully imported %(count)d feeds."
-msgstr[0] "S-a reușit a importa %(count)d flux."
-msgstr[1] "S-a reușit importarea a %(count)d fluxuri."
-msgstr[2] "S-a reușit importarea a %(count)d de fluxuri."
-
-#: ../../portable/opml.py:198
-#, python-format
-msgid "Skipped %(count)d feed already present."
-msgid_plural "Skipped %(count)d feeds already present."
-msgstr[0] "%(count)d flux deja existent a fost sărit."
-msgstr[1] "%(count)d fluxuri deja existente au fost sărite."
-msgstr[2] "%(count)d de fluxuri deja existente au fost sărite."
-
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
-#, python-format
-msgid "%(appname)s database save succeeded"
-msgstr "Salvarea bazei de date %(appname)s a avut succes"
-
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
-msgid ""
-"The database has been successfully saved. It is now safe to quit without "
-"losing any data."
-msgstr ""
-"Baza de date a fost salvată cu succes. Acum puteți închide programul în "
-"siguranță."
-
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
-#, python-format
-msgid "%(appname)s database save failed"
-msgstr "Salvarea bazei de date %(appname)s a eșuat"
-
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
-#, python-format
-msgid ""
-"%(appname)s was unable to save its database: Disk Full.\n"
-"We suggest deleting files from the full disk or simply deleting some movies "
-"from your collection.\n"
-"Recent changes may be lost."
-msgstr ""
-"%(appname)s nu a putut să-și salveze baza de date: Discul este plin.\n"
-"Puteți să ștergeți fișiere de pe discul plin, sau pur și simplu să ștergerți "
-"câteva filme din colecția dumneavoastră.\n"
-"Schimbări recente pot fi pierdute."
-
-#: ../../portable/messagehandler.py:1266
-msgid "Subscribed to new feed:"
-msgstr "Abonat la un nou flux:"
-
-#: ../../portable/messagehandler.py:1269
-msgid "Subscribed to new feeds:"
-msgstr "Abonat la noi fluxuri:"
-
-#: ../../portable/messages.py:965 ../../portable/item.py:618
-msgid "queued for download"
-msgstr "în coada pentru descărcare"
-
-#: ../../portable/startup.py:91
-msgid "Unknown Error"
-msgstr "Eroare necunoscută"
-
-#: ../../portable/startup.py:93
-#, python-format
-msgid ""
-"An unknown error prevented Miro from startup.  Please file a bug report at "
-"%(url)s."
-msgstr ""
-"O eroare necunoscuta a împiedicat pornirea Miro. Vă rugăm să raportați "
-"eroarea la %(url)s."
-
-#: ../../portable/startup.py:173
-msgid "Database too new"
-msgstr "Bază de date prea nouă"
-
-#: ../../portable/startup.py:175
-#, python-format
-msgid ""
-"You have a database that was saved with a newer version of %(appname)s. You "
-"must download the latest version of %(appname)s and run that."
-msgstr ""
-"Aveți o bază de date salvată cu o versiune mai nouă a %(appname)s. Trebuie "
-"să descărcați și folosiți cea mai nouă versiune a %(appname)s."
-
-#: ../../portable/displaytext.py:40
-#, python-format
-msgid "%(size)s gb/s"
-msgstr "%(size)s Gb/s"
-
-#: ../../portable/displaytext.py:43
-#, python-format
-msgid "%(size)s mb/s"
-msgstr "%(size)s Mb/s"
-
-#: ../../portable/displaytext.py:46
-#, python-format
-msgid "%(size)s kb/s"
-msgstr "%(size)s kb/s"
-
-#: ../../portable/displaytext.py:49
-#, python-format
-msgid "%(size)s b/s"
-msgstr "%(size)s b/s"
-
-#: ../../portable/displaytext.py:56
-#, python-format
-msgid "%(num).1f day"
-msgid_plural "%(num).1f days"
-msgstr[0] "%(num).1f zi"
-msgstr[1] "%(num).1f zile"
-msgstr[2] "%(num).1f de zile"
-
-#: ../../portable/displaytext.py:59
-#, python-format
-msgid "%(num).1f hr"
-msgid_plural "%(num).1f hrs"
-msgstr[0] "%(num).1f oră"
-msgstr[1] "%(num).1f ore"
-msgstr[2] "%(num).1f de ore"
-
-#: ../../portable/displaytext.py:62
-#, python-format
-msgid "%(num).1f min"
-msgid_plural "%(num).1f mins"
-msgstr[0] "%(num).1f minut"
-msgstr[1] "%(num).1f minute"
-msgstr[2] "%(num).1f de minute"
-
-#: ../../portable/displaytext.py:64
-#, python-format
-msgid "%(num)d sec"
-msgid_plural "%(num)d secs"
-msgstr[0] "%(num)d secundă"
-msgstr[1] "%(num)d secunde"
-msgstr[2] "%(num)d de secunde"
-
-#: ../../portable/displaytext.py:78
-#, python-format
-msgid "%(size)s gb"
-msgstr "%(size)s Gb"
-
-#: ../../portable/displaytext.py:81
-#, python-format
-msgid "%(size)s mb"
-msgstr "%(size)s Mb"
-
-#: ../../portable/displaytext.py:84
-#, python-format
-msgid "%(size)s kb"
-msgstr "%(size)s kb"
-
-#: ../../portable/displaytext.py:86
-#, python-format
-msgid "%(size)s b"
-msgstr "%(size)s b"
-
-#: ../../portable/displaytext.py:91
-#, python-format
-msgid "Expires in %(count)d day"
-msgid_plural "Expires in %(count)d days"
-msgstr[0] "Expiră după %(count)d zi"
-msgstr[1] "Expiră în %(count)d zile"
-msgstr[2] "Expiră în %(count)d de zile"
-
-#: ../../portable/displaytext.py:96
-#, python-format
-msgid "Expires in %(count)d hour"
-msgid_plural "Expires in %(count)d hours"
-msgstr[0] "Expiră după %(count)d oră"
-msgstr[1] "Expiră în %(count)d ore"
-msgstr[2] "Expiră în %(count)d de ore"
-
-#: ../../portable/displaytext.py:101
-#, python-format
-msgid "Expires in %(count)d minute"
-msgid_plural "Expires in %(count)d minutes"
-msgstr[0] "Expiră după %(count)d minut"
-msgstr[1] "Expiră în %(count)d minute"
-msgstr[2] "Expiră în %(count)d de minute"
-
-#: ../../portable/displaytext.py:109
-#, python-format
-msgid "Expires: %(count)d day"
-msgid_plural "Expires: %(count)d days"
-msgstr[0] "Expiră: %(count)d zi"
-msgstr[1] "Expiră: %(count)d zile"
-msgstr[2] "Expiră: %(count)d de zile"
-
-#: ../../portable/displaytext.py:114
-#, python-format
-msgid "Expires: %(count)d hour"
-msgid_plural "Expires: %(count)d hours"
-msgstr[0] "Expiră: %(count)d oră"
-msgstr[1] "Expiră: %(count)d ore"
-msgstr[2] "Expiră: %(count)d de ore"
-
-#: ../../portable/displaytext.py:119
-#, python-format
-msgid "Expires: %(count)d minute"
-msgid_plural "Expires: %(count)d minutes"
-msgstr[0] "Expiră: %(count)d minut"
-msgstr[1] "Expiră: %(count)d minute"
-msgstr[2] "Expiră: %(count)d de minute"
-
-#: ../../portable/downloader.py:233
-msgid "activity"
-msgstr "activitate"
-
-#: ../../portable/downloader.py:268 ../../portable/httpclient.py:145
-#: ../../portable/httpclient.py:174
+#: ../../portable/httpclient.py:144 ../../portable/httpclient.py:173
+#: ../../portable/downloader.py:297
 msgid "File not found"
 msgstr "Fișier absent"
 
-#: ../../portable/downloader.py:269
-msgid "Flash URL Scraping Error"
-msgstr "Eroare la descifrarea URL-ului Flash"
+#: ../../portable/httpclient.py:145
+msgid "Got 404 status code"
+msgstr "S-a primit codul de stare 404"
 
-#: ../../portable/downloader.py:447
-msgid "starting up"
-msgstr "pornire"
-
-#: ../../portable/dl_daemon/download.py:507
-#: ../../portable/frontends/widgets/style.py:228
-msgid "Error"
-msgstr "Eroare"
-
-#: ../../portable/dl_daemon/download.py:596
+#: ../../portable/httpclient.py:147
 #, python-format
-msgid "Could not write to %(filename)s"
-msgstr "Nu s-a putut scriere în %(filename)s"
-
-#: ../../portable/dl_daemon/download.py:621
-#: ../../portable/dl_daemon/download.py:838
-msgid "Not enough disk space"
-msgstr "Spațiul de pe disc e insuficient"
-
-#: ../../portable/dl_daemon/download.py:622
-#: ../../portable/dl_daemon/download.py:839
-#, python-format
-msgid "%(amount)s MB required to store this video"
-msgstr "%(amount)s MB necesari pentru salvarea acestui fișier video"
-
-#: ../../portable/dl_daemon/download.py:637
-#, python-format
-msgid "Couldn't open %(filename)s for writing"
-msgstr "Nu s-a putut deschide %(filename)s pentru scriere"
-
-#: ../../portable/dl_daemon/download.py:852
-msgid "BitTorrent failure"
-msgstr "Eroare BitTorrent"
-
-#: ../../portable/dl_daemon/download.py:853
-msgid "BitTorrent failed to startup"
-msgstr "BitTorrent nu a pornit"
-
-#: ../../portable/dl_daemon/download.py:1041
-msgid "Corrupt Torrent"
-msgstr "Torrent deteriorat"
-
-#: ../../portable/dl_daemon/download.py:1042
-#, python-format
-msgid "The torrent file at %(url)s was not valid"
-msgstr "Fișierul torrent de la %(url)s nu a fost valid"
-
-#: ../../portable/dl_daemon/download.py:1067
-msgid "Torrent file deleted"
-msgstr "Fișierul torrent șters"
-
-#: ../../portable/dl_daemon/download.py:1068
-msgid "The torrent file for this item was deleted outside of Miro."
-msgstr ""
-"Fișierul torrent pentru acest element a fost șters din afara lui Miro."
-
-#: ../../portable/menubar.py:184
-msgid "_Open"
-msgstr "Deschid_e"
-
-#: ../../portable/menubar.py:185
-msgid "_Download Item"
-msgstr "_Descarcă _element"
-
-#: ../../portable/menubar.py:186
-msgid "Check _Version"
-msgstr "Verifică _versiunea"
-
-#: ../../portable/menubar.py:188
-msgid "_Remove Item"
-msgstr "Ște_rge elementul"
-
-#: ../../portable/menubar.py:189
-msgid "_Remove Items"
-msgstr "Ște_rge elementele"
-
-#: ../../portable/menubar.py:190
-msgid "Re_name Item"
-msgstr "Rede_numește elementul"
-
-#: ../../portable/menubar.py:191
-msgid "Save Item _As"
-msgstr "Salvează elementul c_a"
-
-#: ../../portable/menubar.py:192
-msgid "Save Items _As"
-msgstr "Salvează elementele c_a"
-
-#: ../../portable/menubar.py:193
-msgid "Copy Item _URL"
-msgstr "Copiază _URL-ul elementului"
-
-#: ../../portable/menubar.py:195
-msgid "_Options"
-msgstr "_Opțiuni"
-
-#: ../../portable/menubar.py:196
-msgid "_Quit"
-msgstr "_Ieșire"
-
-#: ../../portable/menubar.py:205
-msgid "Cu_t"
-msgstr "_Taie"
-
-#: ../../portable/menubar.py:206
-msgid "_Copy"
-msgstr "_Copiază"
-
-#: ../../portable/menubar.py:207
-msgid "_Paste"
-msgstr "Li_pește"
-
-#: ../../portable/menubar.py:208
-msgid "Select _All"
-msgstr "Selectează _tot"
-
-#: ../../portable/menubar.py:212
-msgid "Add _Feed"
-msgstr "Adaugă _flux"
-
-#: ../../portable/menubar.py:213
-#: ../../portable/frontends/widgets/application.py:526
-msgid "Add Site"
-msgstr "Adaugă sit"
-
-#: ../../portable/menubar.py:214
-msgid "New Searc_h Feed"
-msgstr "Nou flux de că_utare"
-
-#: ../../portable/menubar.py:215
-msgid "New _Folder"
-msgstr "_Dosar nou"
-
-#: ../../portable/menubar.py:217
-msgid "Re_name"
-msgstr "Rede_numește"
-
-#: ../../portable/menubar.py:218
-msgid "_Remove"
-msgstr "Ște_rge"
-
-#: ../../portable/menubar.py:219
-msgid "_Remove Folder"
-msgstr "Ște_rge dosar"
-
-#: ../../portable/menubar.py:221
-msgid "_Update Feed"
-msgstr "Act_ualizează fluxul"
-
-#: ../../portable/menubar.py:222
-msgid "_Update Feeds"
-msgstr "Act_ualizează fluxurile"
-
-#: ../../portable/menubar.py:223
-msgid "Update _All Feeds"
-msgstr "Actualizează to_ate fluxurile"
-
-#: ../../portable/menubar.py:225
-msgid "_Import Feeds (OPML)"
-msgstr "_Importă fluxuri (OPML)"
-
-#: ../../portable/menubar.py:226
-msgid "E_xport Feeds (OPML)"
-msgstr "E_xportă fluxuri (OPML)"
-
-#: ../../portable/menubar.py:228
-msgid "_Share with a Friend"
-msgstr "Partajează cu un prieten"
-
-#: ../../portable/menubar.py:229
-msgid "Copy URL"
-msgstr "Copiază _URL"
-
-#: ../../portable/menubar.py:233
-msgid "New _Playlist"
-msgstr "Nouă _listă de redare"
-
-#: ../../portable/menubar.py:234
-msgid "New Playlist Fol_der"
-msgstr "Nou _dosar de liste"
-
-#: ../../portable/menubar.py:236
-msgid "Re_name Playlist"
-msgstr "Rede_numește lista de redare"
-
-#: ../../portable/menubar.py:237
-msgid "_Remove Playlist"
-msgstr "Ște_rge lista de redare"
-
-#: ../../portable/menubar.py:238
-msgid "_Remove Playlists"
-msgstr "Ște_rge listele de redare"
-
-#: ../../portable/menubar.py:239
-msgid "_Remove Playlist Folders"
-msgstr "Ște_rge dosarele cu liste de redare"
-
-#: ../../portable/menubar.py:240
-msgid "_Remove Playlist Folder"
-msgstr "Ște_rge dosarul de liste"
-
-#: ../../portable/menubar.py:251 ../../portable/menubar.py:252
-msgid "_Play"
-msgstr "_Redă"
-
-#: ../../portable/menubar.py:253
-msgid "_Pause"
-msgstr "_Pauză"
-
-#: ../../portable/menubar.py:254
-msgid "_Stop"
-msgstr "_Stop"
-
-#: ../../portable/menubar.py:256
-msgid "_Next Video"
-msgstr "_Următorul video"
-
-#: ../../portable/menubar.py:257
-msgid "_Previous Video"
-msgstr "Videoul _precedent"
-
-#: ../../portable/menubar.py:259
-msgid "Skip _Forward"
-msgstr "Derulează îna_inte"
-
-#: ../../portable/menubar.py:260
-msgid "Skip _Back"
-msgstr "Derulează îna_poi"
-
-#: ../../portable/menubar.py:262
-msgid "Volume _Up"
-msgstr "Mă_reşte volumul"
-
-#: ../../portable/menubar.py:263
-msgid "Volume _Down"
-msgstr "Mi_cșorează volumul"
-
-#: ../../portable/menubar.py:265
-msgid "_Fullscreen"
-msgstr "_Tot ecranul"
-
-#: ../../portable/menubar.py:266
-msgid "_Toggle Detached/Attached"
-msgstr "_Activează dezatașare/atașare"
-
-#: ../../portable/menubar.py:270
-msgid "_About Miro"
-msgstr "_Despre Miro"
-
-#: ../../portable/menubar.py:271
-msgid "_Donate"
-msgstr "_Donați"
-
-#: ../../portable/menubar.py:272 ../../portable/menubar.py:293
-msgid "_Help"
-msgstr "A_jutor"
-
-#: ../../portable/menubar.py:274
-#: ../../portable/frontends/widgets/diagnostics.py:119
-msgid "Diagnostics"
-msgstr "Diagnostice"
-
-#: ../../portable/menubar.py:275
-msgid "Report a _Bug"
-msgstr "Raportea_ză un defect"
-
-#: ../../portable/menubar.py:276
-msgid "_Translate"
-msgstr "_Traduceţi"
-
-#: ../../portable/menubar.py:277
-msgid "_Planet Miro"
-msgstr "_Planeta Miro"
-
-#: ../../portable/menubar.py:282
-msgid "_Video"
-msgstr "_Video"
-
-#: ../../portable/menubar.py:284
-msgid "_File"
-msgstr "_Fișier"
-
-#: ../../portable/menubar.py:290
-msgid "_Sidebar"
-msgstr "Bară _laterală"
-
-#: ../../portable/menubar.py:291
-msgid "_Playlists"
-msgstr "_Liste de redare"
-
-#: ../../portable/menubar.py:292
-msgid "P_layback"
-msgstr "R_edare"
-
-#: ../../portable/frontends/widgets/crashdialog.py:46
-#: ../../portable/httpclient.py:158
+msgid "Bad Status Code: %(code)s"
+msgstr "Cod de stare invalid: %(code)s"
+
+#: ../../portable/httpclient.py:152
+msgid "Authorization failed"
+msgstr "Nu a reușit autorizarea"
+
+#: ../../portable/httpclient.py:157
+#: ../../portable/frontends/widgets/crashdialog.py:48
 msgid "Internal Error"
 msgstr "Eroare internă"
 
-#: ../../portable/frontends/widgets/crashdialog.py:52
-msgid ""
-"Miro has encountered an internal error.  You can help us track down this "
-"problem and fix it by submitting an error report."
-msgstr ""
-"Miro a întâlnit o eroare internă. Ne puteți ajuta să găsim eroarea și s-o "
-"rectificăm trimițând un raport de eroare."
+#: ../../portable/httpclient.py:158
+msgid "Pipeline request never started"
+msgstr "Cererea „pipeline” nu a pornit"
 
-#: ../../portable/frontends/widgets/crashdialog.py:59
-msgid ""
-"Include entire program database including all video and feed metadata with "
-"crash report"
-msgstr ""
-"Include în raportul de avarie toată baza de date a programului, inclusiv "
-"metadatele pentru video și fluxuri."
+#: ../../portable/httpclient.py:162
+msgid "Timeout"
+msgstr "Timpul alocat a expirat"
 
-#: ../../portable/frontends/widgets/crashdialog.py:64
-msgid "Describe what you were doing when you got this error:"
-msgstr "Descrieți ce făceați când ați primit această eroare:"
+#: ../../portable/httpclient.py:163
+#, python-format
+msgid "Connection to %(host)s timed out"
+msgstr "Conectarea la %(host)s a durat prea mult"
+
+#: ../../portable/httpclient.py:167
+msgid "Invalid URL"
+msgstr "URL incorect"
+
+#: ../../portable/httpclient.py:168
+#, python-format
+msgid "\"%(url)s\" is not a valid URL"
+msgstr "\"%(url)s\" nu este un URL corect"
+
+#: ../../portable/httpclient.py:174
+#, python-format
+msgid "The file \"%(path)s\" doesn't exist"
+msgstr "Fișierul \"%(path)s\" nu există"
+
+#: ../../portable/httpclient.py:178
+msgid "Read error"
+msgstr "Eroare la citire"
+
+#: ../../portable/httpclient.py:179
+#, python-format
+msgid "Error while reading from \"%(path)s\""
+msgstr "Eroare la citirea din \"%(path)s\""
+
+#: ../../portable/httpclient.py:376
+msgid "Unknown Error code"
+msgstr "Code de eroare necunoscut"
+
+#: ../../portable/httpclient.py:408
+msgid "Connection closed"
+msgstr "Conexiune închisă"
+
+#: ../../portable/httpclient.py:829
+msgid "Unknown"
+msgstr "Necunoscut"
+
+#: ../../portable/httpclient.py:830
+msgid "Internal Error: Not ready to send"
+msgstr "Eroare internă: Nu e gata de trimitere"
+
+#: ../../portable/frontends/widgets/statictabs.py:44
+msgid "Miro Guide"
+msgstr "Ghidul Miro"
+
+#: ../../portable/frontends/widgets/statictabs.py:87
+#: ../../portable/frontends/widgets/itemlistcontroller.py:417
+msgid "Video Search"
+msgstr "Căutare clipuri video"
+
+#: ../../portable/frontends/widgets/statictabs.py:93
+#: ../../portable/frontends/widgets/itemlistcontroller.py:500
+msgid "Video"
+msgstr "Video"
+
+#: ../../portable/frontends/widgets/statictabs.py:98
+#: ../../portable/frontends/widgets/itemlistcontroller.py:506
+msgid "Audio"
+msgstr "Audio"
+
+#: ../../portable/frontends/widgets/statictabs.py:108
+msgid "Downloading"
+msgstr "Descărcare"
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
+msgid "Add a Playlist"
+msgstr "Adaugă o listă de redare"
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
+msgid "Add items to an existing playlist or a new one."
+msgstr "Adaugă elemente într-o listă de redare nouă sau existentă"
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
+msgid "Existing playlist:"
+msgstr "Listă de redare existentă:"
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
+msgid "New playlist:"
+msgstr "Listă de redare nouă:"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:63
+msgid "Remove From the Library"
+msgstr "Șterge din librărie"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:65
+#: ../../portable/frontends/widgets/gtk/video.py:253
+#: ../../portable/frontends/widgets/gtk/video.py:262
+#: ../../portable/dialogs.py:107
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:128
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
+msgid "Delete"
+msgstr "Șterge"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:94
+#: ../../portable/frontends/widgets/itemcontextmenu.py:192
+msgid "Play"
+msgstr "Redă"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:96
+#: ../../portable/frontends/widgets/itemcontextmenu.py:193
+msgid "Add to Playlist"
+msgstr "Adaugă în lista de redare"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:99
+#: ../../portable/frontends/widgets/application.py:453
+msgid "Rename Item"
+msgstr "Redenumește elementul"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:101
+msgid "Revert Item Name"
+msgstr "Revino la numele anterior"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:103
+#: ../../portable/frontends/widgets/itemcontextmenu.py:200
+msgid "Mark as Unplayed"
+msgstr "Marchează ca ne-redat"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:106
+#: ../../portable/frontends/widgets/itemcontextmenu.py:205
+msgid "Mark as Played"
+msgstr "Marchează ca redat"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:109
+#: ../../portable/frontends/widgets/itemcontextmenu.py:211
+#: ../../portable/frontends/widgets/style.py:244
+#: ../../portable/frontends/widgets/style.py:984
+#: ../../portable/frontends/widgets/style.py:1148
+#: ../../portable/frontends/widgets/gtk/video.py:259
+#: ../../portable/dialogs.py:106
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:124
+msgid "Keep"
+msgstr "Păstrează"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:118
+#: ../../portable/frontends/widgets/itemcontextmenu.py:240
+#: ../../portable/frontends/widgets/itemcontextmenu.py:258
+msgid "Cancel Download"
+msgstr "Anulează descărcarea"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:122
+#: ../../portable/frontends/widgets/itemcontextmenu.py:241
+msgid "Pause Download"
+msgstr "Suspendă descărcarea"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:125
+#: ../../portable/frontends/widgets/itemcontextmenu.py:254
+msgid "Resume Download"
+msgstr "Reia descărcarea"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:129
+#: ../../portable/frontends/widgets/itemcontextmenu.py:224
+#: ../../portable/frontends/widgets/style.py:238
+#: ../../portable/frontends/widgets/style.py:1054
+#: ../../portable/frontends/widgets/style.py:1065 ../../portable/dialogs.py:95
+msgid "Download"
+msgstr "Descarcă"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:135
+#: ../../portable/frontends/widgets/style.py:228
+msgid "Web Page"
+msgstr "Pagină web"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:137
+#: ../../portable/frontends/widgets/style.py:225
+#: ../../portable/frontends/widgets/gtk/video.py:289
+msgid "Comments"
+msgstr "Comentarii"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:139
+msgid "License"
+msgstr "Licență"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:142
+msgid "File in Browser"
+msgstr "Fişier în browser"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:144
+#, python-format
+msgid "File in %(progname)s"
+msgstr "Fișier în %(progname)s"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:146
+msgid "File on Disk"
+msgstr "Fișier pe disc"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:149
+msgid "View"
+msgstr "Afișare"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:152
+#: ../../portable/frontends/widgets/gtk/video.py:280
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:120
+msgid "Share"
+msgstr "Partajează"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:187
+#, python-format
+msgid "%(count)d Downloaded Item"
+msgid_plural "%(count)d Downloaded Items"
+msgstr[0] "%(count)d element descărcat"
+msgstr[1] "%(count)d elemente descărcate"
+msgstr[2] "%(count)d de elemente descărcate"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:216
+#, python-format
+msgid "%(count)d Available Item"
+msgid_plural "%(count)d Available Items"
+msgstr[0] "%(count)d element disponibil"
+msgstr[1] "%(count)d elemente disponibile"
+msgstr[2] "%(count)d de elemente disponibile"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:229
+#, python-format
+msgid "%(count)d Downloading Item"
+msgid_plural "%(count)d Downloading Items"
+msgstr[0] "%(count)d element se descarcă"
+msgstr[1] "%(count)d elemente se descarcă"
+msgstr[2] "%(count)d de elemente se descarcă"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:246
+#, python-format
+msgid "%(count)d Paused Item"
+msgid_plural "%(count)d Paused Items"
+msgstr[0] "%(count)d element suspendat"
+msgstr[1] "%(count)d elemente suspendate"
+msgstr[2] "%(count)d de elemente suspendate"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:264
+msgid "Restart Upload"
+msgstr "Repornește transmiterea"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:278
+msgid "Remove From Playlist"
+msgstr "Înlătură din lista de redare"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:55
 #: ../../portable/frontends/widgets/feedsettingspanel.py:102
@@ -984,134 +455,577 @@ msgstr "15 elemente neredate"
 msgid "Feed Settings"
 msgstr "Opțiuni pentru fluxuri"
 
-#: ../../portable/frontends/widgets/style.py:209
+#: ../../portable/frontends/widgets/firsttimedialog.py:144
+#: ../../portable/frontends/widgets/firsttimedialog.py:178
+#: ../../portable/dialogs.py:87
+msgid "Yes"
+msgstr "Da"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:145
+#: ../../portable/frontends/widgets/firsttimedialog.py:177
+#: ../../portable/dialogs.py:88
+msgid "No"
+msgstr "Nu"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:153
+msgid "Next >"
+msgstr "Urmare >"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:185
+msgid "Restrict to all my personal files."
+msgstr "Restricționază la toate fișierele mele personale."
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:186
+msgid "Search custom folders:"
+msgstr "Caută în dosare anume:"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:192
+#: ../../portable/frontends/widgets/prefpanel.py:435
+msgid "Change"
+msgstr "Schimbă"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:197
+msgid "Choose directory to search for media files"
+msgstr "Alegeți dosarul pentru căutare fișiere media"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:211
+#: ../../portable/frontends/widgets/firsttimedialog.py:290
+msgid "< Previous"
+msgstr "< Înapoi"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:223
+#: ../../portable/frontends/widgets/firsttimedialog.py:225
+#: ../../portable/frontends/widgets/firsttimedialog.py:282
+#: ../../portable/feed.py:2257 ../../portable/feed.py:2364
+msgid "Search"
+msgstr "Caută"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:225
+#: ../../portable/frontends/widgets/firsttimedialog.py:293
+msgid "Finish"
+msgstr "Termină"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:273
+msgid "Searching for media files"
+msgstr "Cautare de fișiere media în curs"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:283
+#: ../../portable/dialogs.py:85
+msgid "Cancel"
+msgstr "Renunță"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:321
+#, python-format
+msgid "parsed %(count)s file"
+msgid_plural "parsed %(count)s files"
+msgstr[0] "%(count)s fișier analizat"
+msgstr[1] "%(count)s fișiere analizate"
+msgstr[2] "%(count)s de fișiere analizate"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:326
+#, python-format
+msgid "found %(count)s media file"
+msgid_plural "found %(count)s media files"
+msgstr[0] "%(count)s fișier media găsit"
+msgstr[1] "%(count)s fișiere media găsite"
+msgstr[2] "%(count)s de fișiere media găsite"
+
+#: ../../portable/frontends/widgets/crashdialog.py:63
+msgid ""
+"Include entire program database including all video and feed metadata with "
+"crash report"
+msgstr ""
+"Include în raportul de avarie toată baza de date a programului, inclusiv "
+"metadatele pentru video și fluxuri."
+
+#: ../../portable/frontends/widgets/crashdialog.py:68
+msgid "Describe what you were doing when you got this error:"
+msgstr "Descrieți ce făceați când ați primit această eroare:"
+
+#: ../../portable/frontends/widgets/style.py:221
 msgid "From"
 msgstr "De la"
 
-#: ../../portable/frontends/widgets/style.py:210
+#: ../../portable/frontends/widgets/style.py:222
 msgid "File name:"
 msgstr "Numele fișierului:"
 
-#: ../../portable/frontends/widgets/style.py:211
+#: ../../portable/frontends/widgets/style.py:223
 msgid "Show More"
 msgstr "Afișează mai multe"
 
-#: ../../portable/frontends/widgets/style.py:212
+#: ../../portable/frontends/widgets/style.py:224
 msgid "Show Less"
 msgstr "Afișează mai puține"
 
-#: ../../portable/frontends/widgets/style.py:213
-#: ../../portable/frontends/widgets/gtk/video.py:309
-#: ../../portable/frontends/widgets/itemcontextmenu.py:137
-msgid "Comments"
-msgstr "Comentarii"
-
-#: ../../portable/frontends/widgets/style.py:215
+#: ../../portable/frontends/widgets/style.py:227
 #, python-format
 msgid "Reveal in %(progname)s"
 msgstr "Arată în %(progname)s"
 
-#: ../../portable/frontends/widgets/style.py:215
-#: ../../portable/frontends/widgets/displays.py:369
+#: ../../portable/frontends/widgets/style.py:227
+#: ../../portable/frontends/widgets/displays.py:376
 msgid "Reveal File"
 msgstr "Arată fișierul"
 
-#: ../../portable/frontends/widgets/style.py:216
-msgid "Web Page"
-msgstr "Pagină web"
-
-#: ../../portable/frontends/widgets/style.py:217
+#: ../../portable/frontends/widgets/style.py:229
 msgid "File URL"
 msgstr "URL fișier"
 
-#: ../../portable/frontends/widgets/style.py:218
+#: ../../portable/frontends/widgets/style.py:230
 msgid "License Page"
 msgstr "Pagină licență"
 
-#: ../../portable/frontends/widgets/style.py:219
+#: ../../portable/frontends/widgets/style.py:231
 msgid "File Type"
 msgstr "Tip de fișier"
 
-#: ../../portable/frontends/widgets/style.py:220
+#: ../../portable/frontends/widgets/style.py:232
 msgid "Seeders"
 msgstr "Donori"
 
-#: ../../portable/frontends/widgets/style.py:221
+#: ../../portable/frontends/widgets/style.py:233
 msgid "Leechers"
 msgstr "Trăgători"
 
-#: ../../portable/frontends/widgets/style.py:222
+#: ../../portable/frontends/widgets/style.py:234
 msgid "Upload Rate"
 msgstr "Viteză de transmitere"
 
-#: ../../portable/frontends/widgets/style.py:223
+#: ../../portable/frontends/widgets/style.py:235
 msgid "Upload Total"
 msgstr "Total transmis"
 
-#: ../../portable/frontends/widgets/style.py:224
+#: ../../portable/frontends/widgets/style.py:236
 msgid "Down Rate"
 msgstr "Viteză de descărcare"
 
-#: ../../portable/frontends/widgets/style.py:225
+#: ../../portable/frontends/widgets/style.py:237
 msgid "Down Total"
 msgstr "Total descărcat"
 
-#: ../../portable/frontends/widgets/style.py:226
-#: ../../portable/frontends/widgets/style.py:1040
-#: ../../portable/frontends/widgets/style.py:1051
-#: ../../portable/frontends/widgets/itemcontextmenu.py:129
-#: ../../portable/frontends/widgets/itemcontextmenu.py:224
-#: ../../portable/dialogs.py:95
-msgid "Download"
-msgstr "Descarcă"
-
-#: ../../portable/frontends/widgets/style.py:227
+#: ../../portable/frontends/widgets/style.py:239
 msgid "Download Torrent"
 msgstr "Descarcă Torrent-ul"
 
-#: ../../portable/frontends/widgets/style.py:229
+#: ../../portable/frontends/widgets/style.py:240
+#: ../../portable/dl_daemon/download.py:535
+msgid "Error"
+msgstr "Eroare"
+
+#: ../../portable/frontends/widgets/style.py:241
 msgid "queued for autodownload"
 msgstr "în așteptare pentru auto-descărcare"
 
-#: ../../portable/frontends/widgets/style.py:230
-#: ../../portable/frontends/widgets/style.py:1088
+#: ../../portable/frontends/widgets/style.py:242
+#: ../../portable/frontends/widgets/style.py:1102
+#: ../../portable/frontends/widgets/itemlistwidgets.py:720
 msgid "Unplayed"
 msgstr "Ne-redate"
 
-#: ../../portable/frontends/widgets/style.py:231
-#: ../../portable/frontends/widgets/style.py:1106
+#: ../../portable/frontends/widgets/style.py:243
+#: ../../portable/frontends/widgets/style.py:1120
 msgid "Newly Available"
 msgstr "Nou disponibile"
 
-#: ../../portable/frontends/widgets/style.py:233
+#: ../../portable/frontends/widgets/style.py:245
 #: ../../portable/frontends/widgets/prefpanel.py:485
-#: ../../portable/frontends/widgets/tablist.py:523
-#: ../../portable/frontends/widgets/tablist.py:535
-#: ../../portable/frontends/widgets/tablist.py:541
-#: ../../portable/frontends/widgets/tablist.py:578
-#: ../../portable/frontends/widgets/tablist.py:584
-#: ../../portable/frontends/widgets/tablist.py:589
+#: ../../portable/frontends/widgets/tablist.py:552
+#: ../../portable/frontends/widgets/tablist.py:564
+#: ../../portable/frontends/widgets/tablist.py:570
+#: ../../portable/frontends/widgets/tablist.py:607
+#: ../../portable/frontends/widgets/tablist.py:613
+#: ../../portable/frontends/widgets/tablist.py:618
 #: ../../portable/dialogs.py:108
 msgid "Remove"
 msgstr "Înlătură"
 
-#: ../../portable/frontends/widgets/style.py:234
-#: ../../portable/frontends/widgets/itemcontextmenu.py:113
+#: ../../portable/frontends/widgets/style.py:246
 msgid "Stop seeding"
 msgstr "Oprește trimiterea"
 
-#: ../../portable/frontends/widgets/style.py:544
-#: ../../portable/frontends/widgets/style.py:1099
+#: ../../portable/frontends/widgets/style.py:558
+#: ../../portable/frontends/widgets/style.py:1113
 msgid "paused"
 msgstr "pauză"
 
-#: ../../portable/frontends/widgets/style.py:972
+#: ../../portable/frontends/widgets/style.py:986
 msgid "Remove from playlist"
 msgstr "Elimină din lista de redare"
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
-msgid "Automatically run Miro when I log in."
-msgstr "Pornește automat Miro când pornesc calculatorul."
+#: ../../portable/frontends/widgets/displays.py:368
+msgid "Filename:"
+msgstr "Nume fișier:"
+
+#: ../../portable/frontends/widgets/displays.py:371
+msgid "File type:"
+msgstr "Tip fișier:"
+
+#: ../../portable/frontends/widgets/displays.py:377
+msgid "Play Externally"
+msgstr "Redă extern"
+
+#: ../../portable/frontends/widgets/displays.py:378
+msgid "Skip"
+msgstr "Sari peste"
+
+#: ../../portable/frontends/widgets/displays.py:552
+#, python-format
+msgid "%(count)d Feed Folder Selected"
+msgid_plural "%(count)d Feed Folders Selected"
+msgstr[0] "%(count)d dosar de fluxuri selectat"
+msgstr[1] "%(count)d dosare de fluxuri selectate"
+msgstr[2] "%(count)d de dosare de fluxuri selectate"
+
+#: ../../portable/frontends/widgets/displays.py:557
+#, python-format
+msgid "(contains %(count)d feed)"
+msgid_plural "(contains %(count)d feeds)"
+msgstr[0] "(conține %(count)d flux)"
+msgstr[1] "(conține %(count)d fluxuri)"
+msgstr[2] "(conține %(count)d de fluxuri)"
+
+#: ../../portable/frontends/widgets/displays.py:563
+#, python-format
+msgid "%(count)d Playlist Folder Selected"
+msgid_plural "%(count)d Playlist Folders Selected"
+msgstr[0] "%(count)d dosar de liste de redare selectat"
+msgstr[1] "%(count)d dosare de liste de redare selectate"
+msgstr[2] "%(count)d de dosare de liste de redare selectate"
+
+#: ../../portable/frontends/widgets/displays.py:568
+#, python-format
+msgid "(contains %(count)d playlist)"
+msgid_plural "(contains %(count)d playlist)"
+msgstr[0] "(conține %(count)d listă de redare)"
+msgstr[1] "(conține %(count)d liste de redare)"
+msgstr[2] "(conține %(count)d de liste de redare)"
+
+#: ../../portable/frontends/widgets/displays.py:578
+#, python-format
+msgid "%(count)d Feed Selected"
+msgid_plural "%(count)d Feeds Selected"
+msgstr[0] "%(count)d flux selectat"
+msgstr[1] "%(count)d fluxuri selectate"
+msgstr[2] "%(count)d de fluxuri selectate"
+
+#: ../../portable/frontends/widgets/displays.py:590
+#, python-format
+msgid "%(count)d Playlist Selected"
+msgid_plural "%(count)d Playlists Selected"
+msgstr[0] "%(count)d listă de redare selectată"
+msgstr[1] "%(count)d liste de redare selectate"
+msgstr[2] "%(count)d de liste de redare selectate"
+
+#: ../../portable/frontends/widgets/displays.py:597
+msgid "Delete All"
+msgstr "Șterge tot"
+
+#: ../../portable/frontends/widgets/displays.py:601
+msgid "Put Into a New Folder"
+msgstr "Pune într-un dosar nou"
+
+#: ../../portable/frontends/widgets/rundialog.py:82
+msgid "Username:"
+msgstr "Nume utilizator:"
+
+#: ../../portable/frontends/widgets/rundialog.py:86
+msgid "Password:"
+msgstr "Parolă:"
+
+#: ../../portable/frontends/widgets/browser.py:96
+msgid "Open in browser"
+msgstr "Deschide în navigator"
+
+#: ../../portable/frontends/widgets/application.py:135
+msgid "Movies directory gone"
+msgstr "Dosarul cu filme a dispărut"
+
+#: ../../portable/frontends/widgets/application.py:137
+#, python-format
+msgid ""
+"%(shortappname)s can't find the primary video directory located at:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"This may be because it is located on an external drive that is not "
+"connected.\n"
+"\n"
+"If you continue, the primary video directory will be reset to a location on "
+"this drive.  If you had videos downloaded this will cause %(shortappname)s "
+"to lose details about those videos.\n"
+"\n"
+"If you quit, then you can connect the drive or otherwise fix the problem and "
+"relaunch %(shortappname)s."
+msgstr ""
+"%(shortappname)s nu poate găsi filmul principal la:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"Se poate să fie din cauză că acesta este pe un disc extern care nu e "
+"conectat.\n"
+"\n"
+"Dacă continuați, dosarul principal pentru video va fi re-inițializat la o "
+"locație pe acest disc. Dacă aveați fișiere video descărcate, "
+"%(shortappname)s va pierde detaliile despre acestea.\n"
+"\n"
+"Dacă închideți, puteți conecta discul extern sau rezolva altfel problema și "
+"apoi puteți relansa %(shortappname)s."
+
+#: ../../portable/frontends/widgets/application.py:305
+msgid "Error Revealing File"
+msgstr "Eroare la prezentarea fișierului"
+
+#: ../../portable/frontends/widgets/application.py:314
+msgid "Open Files..."
+msgstr "Deschide fișiere..."
+
+#: ../../portable/frontends/widgets/application.py:325
+#: ../../portable/frontends/widgets/application.py:330
+msgid "Open Files - Error"
+msgstr "Deschidere fișiere - eroare"
+
+#: ../../portable/frontends/widgets/application.py:326
+#: ../../portable/frontends/widgets/application.py:592
+#, python-format
+msgid "File %(filename)s does not exist."
+msgstr "Fișierul %(filename)s nu există."
+
+#: ../../portable/frontends/widgets/application.py:331
+msgid "The following files do not exist:"
+msgstr "Următoarele fișiere nu există:"
+
+#: ../../portable/frontends/widgets/application.py:368
+msgid "New Download"
+msgstr "Nou transfer"
+
+#: ../../portable/frontends/widgets/application.py:369
+msgid "Enter the URL of the item to download"
+msgstr "Introduceți URL-ul elementului de descărcat"
+
+#: ../../portable/frontends/widgets/application.py:370
+msgid "New Download - Invalid URL"
+msgstr "Nou transfer - URL eronat"
+
+#: ../../portable/frontends/widgets/application.py:371
+msgid ""
+"The address you entered is not a valid url.\n"
+"Please check the URL and try again.\n"
+"\n"
+"Enter the URL of the item to download"
+msgstr ""
+"Adresa pe care ați introdus-o nu este un URL valid.\n"
+"Verificați URL-ul și încercați din nou.\n"
+"\n"
+"Introduceți URL-ul elementului de descărcat"
+
+#: ../../portable/frontends/widgets/application.py:404
+msgid "Remove item"
+msgid_plural "Remove items"
+msgstr[0] "Elimină elementul"
+msgstr[1] "Elimină elementele"
+msgstr[2] "Elimină elementele"
+
+#: ../../portable/frontends/widgets/application.py:408
+msgid ""
+"One of these items was not downloaded from a feed. Would you like to delete "
+"it or just remove it from the Library?"
+msgid_plural ""
+"Some of these items were not downloaded from a feed. Would you like to "
+"delete them or just remove them from the Library?"
+msgstr[0] ""
+"Unul din aceste elemente nu a fost descărcat dintr-un flux. Doriți să-l "
+"ștergeți sau doar să-l eliminați din bibliotecă?"
+msgstr[1] ""
+"Unele din aceste elemente nu au fost descărcate dintr-un flux. Doriți să le "
+"ștergeți sau doar să le eliminați din bibliotecă?"
+msgstr[2] ""
+"Unele din aceste elemente nu au fost descărcate dintr-un flux. Doriți să le "
+"ștergeți sau doar să le eliminați din bibliotecă?"
+
+#: ../../portable/frontends/widgets/application.py:423
+#, python-format
+msgid "Are you sure you want to delete the item?"
+msgid_plural "Are you sure you want to delete all %(count)d items?"
+msgstr[0] "Sigur doriți să ștergeți elementul?"
+msgstr[1] "Sigur doriți să ștergeți toate cele %(count)d elemente?"
+msgstr[2] "Sigur doriți să ștergeți toate cele %(count)d de elemente?"
+
+#: ../../portable/frontends/widgets/application.py:454
+msgid "Enter the new name for the item"
+msgstr "Alegeți noul nume al elementului:"
+
+#: ../../portable/frontends/widgets/application.py:477
+msgid "Save Item As..."
+msgstr "Salvează elementul ca..."
+
+#: ../../portable/frontends/widgets/application.py:530
+#: ../../portable/menubar.py:213
+msgid "Add Site"
+msgstr "Adaugă sit"
+
+#: ../../portable/frontends/widgets/application.py:531
+msgid "Enter the URL of the site to add"
+msgstr "Introduceți URL-ul sitului de adăugat"
+
+#: ../../portable/frontends/widgets/application.py:532
+msgid "Add Site - Invalid URL"
+msgstr "Adăugare sit - URL eronat"
+
+#: ../../portable/frontends/widgets/application.py:533
+msgid ""
+"The address you entered is not a valid url.\n"
+"Please check the URL and try again.\n"
+"\n"
+"Enter the URL of the site to add"
+msgstr ""
+"Adresa pe care ați introdus-o nu este un URL corect.\n"
+"Verificați URL-ul și încercați din nou.\n"
+"\n"
+"Introduceți URL-ul sitului de adăugat"
+
+#: ../../portable/frontends/widgets/application.py:582
+msgid "Import OPML File"
+msgstr "Importă fișier OPML"
+
+#: ../../portable/frontends/widgets/application.py:584
+msgid "OPML Files"
+msgstr "Fișiere OPML"
+
+#: ../../portable/frontends/widgets/application.py:591
+msgid "Import OPML File - Error"
+msgstr "Importare fișier OPML - Eroare"
+
+#: ../../portable/frontends/widgets/application.py:597
+msgid "Export OPML File"
+msgstr "Exportă fișier OPML"
+
+#: ../../portable/frontends/widgets/application.py:621
+msgid "Create Playlist"
+msgstr "Creează listă de redare"
+
+#: ../../portable/frontends/widgets/application.py:622
+msgid "Enter a name for the new playlist"
+msgstr "Alegeți un nume pentru noua listă de redare"
+
+#: ../../portable/frontends/widgets/application.py:643
+msgid "Create Playlist Folder"
+msgstr "Crează dosar de liste de redare"
+
+#: ../../portable/frontends/widgets/application.py:644
+msgid "Enter a name for the new playlist folder"
+msgstr "Alegeți un nume pentur noul dosar de liste de redare"
+
+#: ../../portable/frontends/widgets/application.py:665
+#: ../../portable/frontends/widgets/tablist.py:551
+msgid "Rename Feed Folder"
+msgstr "Redenumește dosarul de fluxuri"
+
+#: ../../portable/frontends/widgets/application.py:666
+#, python-format
+msgid "Enter a new name for the feed folder %(name)s"
+msgstr "Alegeți un nou nume pentru dosarul de fluxuri %(name)s"
+
+#: ../../portable/frontends/widgets/application.py:670
+msgid "Rename Feed"
+msgstr "Redenumește fluxul"
+
+#: ../../portable/frontends/widgets/application.py:671
+#, python-format
+msgid "Enter a new name for the feed %(name)s"
+msgstr "Alegeți un nou nume pentru fluxul %(name)s"
+
+#: ../../portable/frontends/widgets/application.py:675
+#: ../../portable/frontends/widgets/tablist.py:612
+#: ../../portable/playlist.py:179
+msgid "Rename Playlist"
+msgstr "Redenumește lista de redare"
+
+#: ../../portable/frontends/widgets/application.py:676
+#, python-format
+msgid "Enter a new name for the playlist %(name)s"
+msgstr "Alegeți un nume nou pentru lista de redare %(name)s"
+
+#: ../../portable/frontends/widgets/application.py:680
+#: ../../portable/frontends/widgets/tablist.py:606
+msgid "Rename Playlist Folder"
+msgstr "Redenumește dosarul de liste de redare"
+
+#: ../../portable/frontends/widgets/application.py:681
+#, python-format
+msgid "Enter a new name for the playlist folder %(name)s"
+msgstr "Alegeți un nume nou pentru dosarul de liste de redare %(name)s"
+
+#: ../../portable/frontends/widgets/application.py:684
+#: ../../portable/frontends/widgets/tablist.py:501
+msgid "Rename Site"
+msgstr "Redenumește situl"
+
+#: ../../portable/frontends/widgets/application.py:685
+#, python-format
+msgid "Enter a new name for the site %(name)s"
+msgstr "Alegeți numele nou pentru situl %(name)s"
+
+#: ../../portable/frontends/widgets/application.py:709
+msgid "Remove playlist"
+msgid_plural "Remove playlists"
+msgstr[0] "Șterge lista de redare"
+msgstr[1] "Șterge listele de redare"
+msgstr[2] "Șterge listele de redare"
+
+#: ../../portable/frontends/widgets/application.py:711
+#, python-format
+msgid "Are you sure you want to remove this playlist?"
+msgid_plural "Are you sure you want to remove these %(count)s playlists?"
+msgstr[0] "Sigur doriți să ștergeți această listă de redare?"
+msgstr[1] "Sigur doriți să ștergeți aceste %(count)s liste de redare?"
+msgstr[2] "Sigur doriți să ștergeți aceste %(count)s de liste de redare?"
+
+#: ../../portable/frontends/widgets/application.py:760
+msgid "Are you sure you want to quit?"
+msgstr "Sigur doriți să ieșiți?"
+
+#: ../../portable/frontends/widgets/application.py:762
+#, python-format
+msgid "You have %(count)d download in progress.  Quit anyway?"
+msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
+msgstr[0] "Aveți %(count)d descărcare în curs. Ieșiți oricum?"
+msgstr[1] "Aveți %(count)d descărcări în curs. Ieșiți oricum?"
+msgstr[2] "Aveți %(count)d de descărcări în curs. Ieșiți oricum?"
+
+#: ../../portable/frontends/widgets/application.py:767
+msgid "Warn me when I attempt to quit with downloads in progress"
+msgstr ""
+"Avertizează-mă când încerc să închid programul în timp ce descarc ceva"
+
+#: ../../portable/frontends/widgets/application.py:1040
+msgid "Message"
+msgstr "Mesaj"
+
+#: ../../portable/frontends/widgets/application.py:1065
+msgid "Migrating Files"
+msgstr "Migrare fișiere"
+
+#: ../../portable/frontends/widgets/application.py:1075
+msgid "Migrating files"
+msgstr "Migrare fișiere"
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:81
+#: ../../portable/frontends/widgets/prefpanel.py:622
+msgid "Downloads"
+msgstr "Transferuri"
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:90
+msgid "Single and external downloads"
+msgstr "Descărcări separate și externe"
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:93
+msgid "Feed downloads"
+msgstr "Descărcări de fluxuri"
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:96
+msgid "Seeding"
+msgstr "Transmitere"
 
 #: ../../portable/frontends/widgets/prefpanel.py:271
 msgid "Warn me if I attempt to quit with downloads in progress."
@@ -1134,18 +1048,18 @@ msgid "Manually"
 msgstr "Manual"
 
 #: ../../portable/frontends/widgets/prefpanel.py:289
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
-#: ../../portable/frontends/widgets/statictabs.py:103
+#: ../../portable/frontends/widgets/itemlistwidgets.py:623
 msgid "New"
 msgstr "Noi"
 
 #: ../../portable/frontends/widgets/prefpanel.py:290
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
+#: ../../portable/frontends/widgets/itemlistwidgets.py:623
+#: ../../portable/frontends/widgets/itemlistwidgets.py:727
 msgid "All"
 msgstr "Toate"
 
 #: ../../portable/frontends/widgets/prefpanel.py:291
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
+#: ../../portable/frontends/widgets/itemlistwidgets.py:623
 msgid "Off"
 msgstr "Oprit"
 
@@ -1242,11 +1156,6 @@ msgstr "Ignoră conexiunile necriptate."
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr "Oprește transmisiile torrent-elor când se ajunge la acest raport:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:435
-#: ../../portable/frontends/widgets/firsttimedialog.py:184
-msgid "Change"
-msgstr "Schimbă"
-
 #: ../../portable/frontends/widgets/prefpanel.py:440
 msgid "Choose Movies Directory"
 msgstr "Alegeți dosarul pentru filme"
@@ -1254,16 +1163,6 @@ msgstr "Alegeți dosarul pentru filme"
 #: ../../portable/frontends/widgets/prefpanel.py:453
 msgid "Migrate existing movies?"
 msgstr "Să migrez filmele existente?"
-
-#: ../../portable/frontends/widgets/prefpanel.py:454
-msgid ""
-"You've selected a new folder to download movies to.  Should Miro migrate "
-"your existing downloads there? (Currently dowloading movies will not be "
-"moved until they finish.)"
-msgstr ""
-"Ați ales un nou dosar pentru descărcarea filmelor. Vreți ca Miro să mute "
-"elementele deja descărcate acolo? (Filmele care se descarcă acum nu vor fi "
-"mutate până nu se termină.)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:482
 #: ../../portable/dialogs.py:104
@@ -1341,11 +1240,6 @@ msgstr "Generale"
 msgid "Feeds"
 msgstr "Fluxuri"
 
-#: ../../portable/frontends/widgets/prefpanel.py:622
-#: ../../portable/frontends/widgets/downloadscontroller.py:81
-msgid "Downloads"
-msgstr "Transferuri"
-
 #: ../../portable/frontends/widgets/prefpanel.py:623
 msgid "Folders"
 msgstr "Dosare"
@@ -1362,85 +1256,180 @@ msgstr "Redare"
 msgid "Preferences"
 msgstr "Preferințe"
 
-#: ../../portable/frontends/widgets/browser.py:94
-msgid "Open in browser"
-msgstr "Deschide în navigator"
+#: ../../portable/frontends/widgets/newsearchfeed.py:58
+msgid "New Search Feed"
+msgstr "Nou flux de căutare"
 
-#: ../../portable/frontends/widgets/rundialog.py:82
-msgid "Username:"
-msgstr "Nume utilizator:"
+#: ../../portable/frontends/widgets/newsearchfeed.py:59
+msgid "A search feed contains items that match a search term."
+msgstr ""
+"Un flux de căutare conține elemente care se potrivesc unui termen căutat."
 
-#: ../../portable/frontends/widgets/rundialog.py:86
-msgid "Password:"
-msgstr "Parolă:"
+#: ../../portable/frontends/widgets/newsearchfeed.py:74
+msgid "Search for:"
+msgstr "Caută asta:"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
-msgid "New Videos"
-msgstr "Clipuri noi"
+#: ../../portable/frontends/widgets/newsearchfeed.py:80
+msgid "In this:"
+msgstr "În asta:"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:413
-#: ../../portable/frontends/widgets/statictabs.py:86
-msgid "Video Search"
-msgstr "Căutare clipuri video"
+#: ../../portable/frontends/widgets/newsearchfeed.py:87
+msgid "Feed:"
+msgstr "Flux:"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:427
-msgid "No Results Found"
-msgstr "Nici un rezultat găsit"
+#: ../../portable/frontends/widgets/newsearchfeed.py:92
+msgid "Search engine:"
+msgstr "Motor de căutare:"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
-msgid "Library"
-msgstr "Bibliotecă"
+#: ../../portable/frontends/widgets/newsearchfeed.py:98
+#: ../../portable/frontends/widgets/newfeed.py:60
+msgid "URL:"
+msgstr "URL:"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
-msgid "Single Items"
-msgstr "Elemente separate"
+#: ../../portable/frontends/widgets/newsearchfeed.py:132
+msgid "Add new feed to this section:"
+msgstr "Adaugă noul flux în această secțiune:"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
-msgid "No Items to Display"
-msgstr "Nimic de afișat"
+#: ../../portable/frontends/widgets/newsearchfeed.py:135
+#: ../../portable/frontends/widgets/newfolder.py:70
+#: ../../portable/frontends/widgets/newfeed.py:71
+msgid "video"
+msgstr "video"
 
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
-msgid "This tab keeps track of downloads that aren't part of a feed."
-msgstr "Această filă reține descărcările care nu fac parte din nici un flux."
+#: ../../portable/frontends/widgets/newsearchfeed.py:136
+#: ../../portable/frontends/widgets/newfolder.py:71
+#: ../../portable/frontends/widgets/newfeed.py:72
+msgid "audio"
+msgstr "audio"
 
-#: ../../portable/frontends/widgets/diagnostics.py:77
+#: ../../portable/frontends/widgets/linkhandler.py:54
+msgid "Subscribe to Feed"
+msgstr "Abonează la flux"
+
+#: ../../portable/frontends/widgets/linkhandler.py:56
+#, python-format
+msgid ""
+"This link appears to be a feed.  Do you want to add it to your "
+"subscriptions?\n"
+"\n"
+"%(url)s"
+msgstr ""
+"Această legătură pare să fie un flux. Doriți să-l adăugați la abonamente?\n"
+"\n"
+"%(url)s"
+
+#: ../../portable/frontends/widgets/newfolder.py:60
+msgid "Folder name:"
+msgstr "Numele dosarului:"
+
+#: ../../portable/frontends/widgets/newfolder.py:68
+msgid "Folder should go in this section:"
+msgstr "Dosarul ar trebui să intre în această secțiune:"
+
+#: ../../portable/frontends/widgets/newfolder.py:107
+#: ../../portable/frontends/widgets/newfolder.py:109
+msgid "Create Feed Folder"
+msgstr "Crează dosar de fluxuri"
+
+#: ../../portable/frontends/widgets/newfolder.py:110
+msgid "Enter the name of the folder to add"
+msgstr "Introduceți numele dosarului de adăugat"
+
+#: ../../portable/frontends/widgets/playlist.py:146
+msgid "This Playlist is Empty"
+msgstr "Această listă de redare e goală"
+
+#: ../../portable/frontends/widgets/playlist.py:149
+msgid ""
+"To add an item, drag it onto the name of this playlist in the sidebar."
+msgstr ""
+"Pentru a adăuga un element, trageți-l pe numele acestei liste în bara "
+"laterală."
+
+#: ../../portable/frontends/widgets/removefeeds.py:49
+msgid "Remove Feed"
+msgid_plural "Remove Feeds"
+msgstr[0] "Șterge flux"
+msgstr[1] "Șterge fluxuri"
+msgstr[2] "Șterge fluxuri"
+
+#: ../../portable/frontends/widgets/removefeeds.py:57
+msgid "Are you sure you want to remove this feed:"
+msgid_plural "Are you sure you want to remove these feeds:"
+msgstr[0] "Sigur doriți să ștergeți acest flux:"
+msgstr[1] "Sigur doriți să ștergeți aceste fluxuri:"
+msgstr[2] "Sigur doriți să ștergeți aceste fluxuri:"
+
+#: ../../portable/frontends/widgets/removefeeds.py:77
+msgid "Keep items that have been downloaded in my library."
+msgstr "Păstrează elementele descărcate în librărie."
+
+#: ../../portable/frontends/widgets/removefeeds.py:94
+msgid ""
+"Are you sure you want to remove this feed?  The downloads currently in "
+"progress will be canceled."
+msgid_plural ""
+"Are you sure you want to remove these feeds?  The downloads currently in "
+"progress will be canceled."
+msgstr[0] ""
+"Sigur doriți să ștergeți acest flux? Descărcările în curs de desfășurare vor "
+"fi anulate."
+msgstr[1] ""
+"Sigur doriți să ștergeți aceste fluxuri? Descărcările în curs de desfășurare "
+"vor fi anulate."
+msgstr[2] ""
+"Sigur doriți să ștergeți aceste fluxuri? Descărcările în curs de desfășurare "
+"vor fi anulate."
+
+#: ../../portable/frontends/widgets/gtk/video.py:251
+msgid "Add to library"
+msgstr "Adaugă în librărie"
+
+#: ../../portable/frontends/widgets/gtk/video.py:291
+msgid "Permalink"
+msgstr "Permalink"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:63
+#, python-format
+msgid "Play Next Unplayed (%(unplayed)d)"
+msgstr "Redă următorul ne-redat (%(unplayed)d)"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:67
+#, python-format
+msgid "Play All Unplayed (%(unplayed)d)"
+msgstr "Redă toate neredate (%(unplayed)d)"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:70
+#, python-format
+msgid "Pause All Downloads (%(downloading)d)"
+msgstr "Suspendă toate transferurile (%(downloading)d)"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:73
+#, python-format
+msgid "Resume All Downloads (%(paused)d)"
+msgstr "Reia toate transferurile (%(paused)d)"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:81
+msgid "Hide"
+msgstr "Ascunde"
+
 #: ../../portable/frontends/widgets/gtk/trayicon.py:83
+#: ../../portable/frontends/widgets/diagnostics.py:76
 msgid "Show"
 msgstr "Arată"
 
-#: ../../portable/frontends/widgets/diagnostics.py:84
-msgid "Movies location:"
-msgstr "Locație filme:"
+#: ../../portable/frontends/widgets/gtk/window.py:472
+msgid "All files"
+msgstr "Toate fișierele"
 
-#: ../../portable/frontends/widgets/diagnostics.py:88
-msgid "Icon cache location:"
-msgstr "Locație cache pentru pictograme:"
+#: ../../portable/frontends/widgets/gtk/window.py:501
+msgid "Choose"
+msgstr "Alege"
 
-#: ../../portable/frontends/widgets/diagnostics.py:92
-msgid "Log file location:"
-msgstr "Locație jurnal:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:96
-msgid "Downloader log file location:"
-msgstr "Locația jurnalului de descărcări:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:100
-msgid "Database file location:"
-msgstr "Locația bazei de date:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:107
-msgid "Space free on disk:"
-msgstr "Spațiu liber pe disc:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:109
-msgid "Database size:"
-msgstr "Dimensiunea bazei de date:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:111
-msgid "Total number of db objects:"
-msgstr "Număr total de obiecte în b.d.:"
+#: ../../portable/frontends/widgets/gtk/window.py:570
+#: ../../portable/dialogs.py:84
+msgid "Close"
+msgstr "Închide"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -1488,617 +1477,9 @@ msgstr[2] "%(count)d de elemente se potrivesc căutării"
 msgid "All Items Match Search"
 msgstr "Toate elementele se potrivesc căutării"
 
-#: ../../portable/frontends/widgets/application.py:134
-msgid "Movies directory gone"
-msgstr "Dosarul cu filme a dispărut"
-
-#: ../../portable/frontends/widgets/application.py:136
-#, python-format
-msgid ""
-"%(shortappname)s can't find the primary video directory located at:\n"
-"\n"
-"%(moviedirectory)s\n"
-"\n"
-"This may be because it is located on an external drive that is not "
-"connected.\n"
-"\n"
-"If you continue, the primary video directory will be reset to a location on "
-"this drive.  If you had videos downloaded this will cause %(shortappname)s "
-"to lose details about those videos.\n"
-"\n"
-"If you quit, then you can connect the drive or otherwise fix the problem and "
-"relaunch %(shortappname)s."
-msgstr ""
-"%(shortappname)s nu poate găsi filmul principal la:\n"
-"\n"
-"%(moviedirectory)s\n"
-"\n"
-"Se poate să fie din cauză că acesta este pe un disc extern care nu e "
-"conectat.\n"
-"\n"
-"Dacă continuați, dosarul principal pentru video va fi re-inițializat la o "
-"locație pe acest disc. Dacă aveați fișiere video descărcate, "
-"%(shortappname)s va pierde detaliile despre acestea.\n"
-"\n"
-"Dacă închideți, puteți conecta discul extern sau rezolva altfel problema și "
-"apoi puteți relansa %(shortappname)s."
-
-#: ../../portable/frontends/widgets/application.py:304
-msgid "Error Revealing File"
-msgstr "Eroare la prezentarea fișierului"
-
-#: ../../portable/frontends/widgets/application.py:305
-#, python-format
-msgid "The file \"%(filename)s\" was deleted from outside Miro."
-msgstr "Fișierul \"%(filename)s\" a fost șters din afara lui Miro."
-
-#: ../../portable/frontends/widgets/application.py:312
-msgid "Open Files..."
-msgstr "Deschide fișiere..."
-
-#: ../../portable/frontends/widgets/application.py:323
-#: ../../portable/frontends/widgets/application.py:328
-msgid "Open Files - Error"
-msgstr "Deschidere fișiere - eroare"
-
-#: ../../portable/frontends/widgets/application.py:324
-#: ../../portable/frontends/widgets/application.py:588
-#, python-format
-msgid "File %(filename)s does not exist."
-msgstr "Fișierul %(filename)s nu există."
-
-#: ../../portable/frontends/widgets/application.py:329
-msgid "The following files do not exist:"
-msgstr "Următoarele fișiere nu există:"
-
-#: ../../portable/frontends/widgets/application.py:366
-msgid "New Download"
-msgstr "Nou transfer"
-
-#: ../../portable/frontends/widgets/application.py:367
-msgid "Enter the URL of the item to download"
-msgstr "Introduceți URL-ul elementului de descărcat"
-
-#: ../../portable/frontends/widgets/application.py:368
-msgid "New Download - Invalid URL"
-msgstr "Nou transfer - URL eronat"
-
-#: ../../portable/frontends/widgets/application.py:369
-msgid ""
-"The address you entered is not a valid url.\n"
-"Please check the URL and try again.\n"
-"\n"
-"Enter the URL of the item to download"
-msgstr ""
-"Adresa pe care ați introdus-o nu este un URL valid.\n"
-"Verificați URL-ul și încercați din nou.\n"
-"\n"
-"Introduceți URL-ul elementului de descărcat"
-
-#: ../../portable/frontends/widgets/application.py:377
-msgid "Miro is up to date"
-msgstr "Miro este actualizat"
-
-#: ../../portable/frontends/widgets/application.py:378
-msgid "Miro is up to date!"
-msgstr "Miro este actualizat!"
-
-#: ../../portable/frontends/widgets/application.py:400
-msgid "Remove item"
-msgid_plural "Remove items"
-msgstr[0] "Elimină elementul"
-msgstr[1] "Elimină elementele"
-msgstr[2] "Elimină elementele"
-
-#: ../../portable/frontends/widgets/application.py:404
-msgid ""
-"One of these items was not downloaded from a feed. Would you like to delete "
-"it or just remove it from the Library?"
-msgid_plural ""
-"Some of these items were not downloaded from a feed. Would you like to "
-"delete them or just remove them from the Library?"
-msgstr[0] ""
-"Unul din aceste elemente nu a fost descărcat dintr-un flux. Doriți să-l "
-"ștergeți sau doar să-l eliminați din bibliotecă?"
-msgstr[1] ""
-"Unele din aceste elemente nu au fost descărcate dintr-un flux. Doriți să le "
-"ștergeți sau doar să le eliminați din bibliotecă?"
-msgstr[2] ""
-"Unele din aceste elemente nu au fost descărcate dintr-un flux. Doriți să le "
-"ștergeți sau doar să le eliminați din bibliotecă?"
-
-#: ../../portable/frontends/widgets/application.py:419
-#, python-format
-msgid "Are you sure you want to delete the item?"
-msgid_plural "Are you sure you want to delete all %(count)d items?"
-msgstr[0] "Sigur doriți să ștergeți elementul?"
-msgstr[1] "Sigur doriți să ștergeți toate cele %(count)d elemente?"
-msgstr[2] "Sigur doriți să ștergeți toate cele %(count)d de elemente?"
-
-#: ../../portable/frontends/widgets/application.py:449
-#: ../../portable/frontends/widgets/itemcontextmenu.py:99
-msgid "Rename Item"
-msgstr "Redenumește elementul"
-
-#: ../../portable/frontends/widgets/application.py:450
-msgid "Enter the new name for the item"
-msgstr "Alegeți noul nume al elementului:"
-
-#: ../../portable/frontends/widgets/application.py:473
-msgid "Save Item As..."
-msgstr "Salvează elementul ca..."
-
-#: ../../portable/frontends/widgets/application.py:527
-msgid "Enter the URL of the site to add"
-msgstr "Introduceți URL-ul sitului de adăugat"
-
-#: ../../portable/frontends/widgets/application.py:528
-msgid "Add Site - Invalid URL"
-msgstr "Adăugare sit - URL eronat"
-
-#: ../../portable/frontends/widgets/application.py:529
-msgid ""
-"The address you entered is not a valid url.\n"
-"Please check the URL and try again.\n"
-"\n"
-"Enter the URL of the site to add"
-msgstr ""
-"Adresa pe care ați introdus-o nu este un URL corect.\n"
-"Verificați URL-ul și încercați din nou.\n"
-"\n"
-"Introduceți URL-ul sitului de adăugat"
-
-#: ../../portable/frontends/widgets/application.py:578
-msgid "Import OPML File"
-msgstr "Importă fișier OPML"
-
-#: ../../portable/frontends/widgets/application.py:580
-msgid "OPML Files"
-msgstr "Fișiere OPML"
-
-#: ../../portable/frontends/widgets/application.py:587
-msgid "Import OPML File - Error"
-msgstr "Importare fișier OPML - Eroare"
-
-#: ../../portable/frontends/widgets/application.py:593
-msgid "Export OPML File"
-msgstr "Exportă fișier OPML"
-
-#: ../../portable/frontends/widgets/application.py:616
-msgid "Create Playlist"
-msgstr "Creează listă de redare"
-
-#: ../../portable/frontends/widgets/application.py:617
-msgid "Enter a name for the new playlist"
-msgstr "Alegeți un nume pentru noua listă de redare"
-
-#: ../../portable/frontends/widgets/application.py:638
-msgid "Create Playlist Folder"
-msgstr "Crează dosar de liste de redare"
-
-#: ../../portable/frontends/widgets/application.py:639
-msgid "Enter a name for the new playlist folder"
-msgstr "Alegeți un nume pentur noul dosar de liste de redare"
-
-#: ../../portable/frontends/widgets/application.py:660
-#: ../../portable/frontends/widgets/tablist.py:522
-msgid "Rename Feed Folder"
-msgstr "Redenumește dosarul de fluxuri"
-
-#: ../../portable/frontends/widgets/application.py:661
-#, python-format
-msgid "Enter a new name for the feed folder %(name)s"
-msgstr "Alegeți un nou nume pentru dosarul de fluxuri %(name)s"
-
-#: ../../portable/frontends/widgets/application.py:665
-msgid "Rename Feed"
-msgstr "Redenumește fluxul"
-
-#: ../../portable/frontends/widgets/application.py:666
-#, python-format
-msgid "Enter a new name for the feed %(name)s"
-msgstr "Alegeți un nou nume pentru fluxul %(name)s"
-
-#: ../../portable/frontends/widgets/application.py:670
-#: ../../portable/frontends/widgets/tablist.py:583
-#: ../../portable/playlist.py:179
-msgid "Rename Playlist"
-msgstr "Redenumește lista de redare"
-
-#: ../../portable/frontends/widgets/application.py:671
-#, python-format
-msgid "Enter a new name for the playlist %(name)s"
-msgstr "Alegeți un nume nou pentru lista de redare %(name)s"
-
-#: ../../portable/frontends/widgets/application.py:675
-#: ../../portable/frontends/widgets/tablist.py:577
-msgid "Rename Playlist Folder"
-msgstr "Redenumește dosarul de liste de redare"
-
-#: ../../portable/frontends/widgets/application.py:676
-#, python-format
-msgid "Enter a new name for the playlist folder %(name)s"
-msgstr "Alegeți un nume nou pentru dosarul de liste de redare %(name)s"
-
-#: ../../portable/frontends/widgets/application.py:679
-#: ../../portable/frontends/widgets/tablist.py:476
-msgid "Rename Site"
-msgstr "Redenumește situl"
-
-#: ../../portable/frontends/widgets/application.py:680
-#, python-format
-msgid "Enter a new name for the site %(name)s"
-msgstr "Alegeți numele nou pentru situl %(name)s"
-
-#: ../../portable/frontends/widgets/application.py:704
-msgid "Remove playlist"
-msgid_plural "Remove playlists"
-msgstr[0] "Șterge lista de redare"
-msgstr[1] "Șterge listele de redare"
-msgstr[2] "Șterge listele de redare"
-
-#: ../../portable/frontends/widgets/application.py:706
-#, python-format
-msgid "Are you sure you want to remove this playlist?"
-msgid_plural "Are you sure you want to remove these %(count)s playlists?"
-msgstr[0] "Sigur doriți să ștergeți această listă de redare?"
-msgstr[1] "Sigur doriți să ștergeți aceste %(count)s liste de redare?"
-msgstr[2] "Sigur doriți să ștergeți aceste %(count)s de liste de redare?"
-
-#: ../../portable/frontends/widgets/application.py:724
-#, python-format
-msgid "Remove %(name)s"
-msgstr "Șterge %(name)s"
-
-#: ../../portable/frontends/widgets/application.py:725
-#, python-format
-msgid "Are you sure you want to remove %(name)s?"
-msgstr "Sigur doriți să ștergeți %(name)s?"
-
-#: ../../portable/frontends/widgets/application.py:750
-msgid "Are you sure you want to quit?"
-msgstr "Sigur doriți să ieșiți?"
-
-#: ../../portable/frontends/widgets/application.py:752
-#, python-format
-msgid "You have %(count)d download in progress.  Quit anyway?"
-msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
-msgstr[0] "Aveți %(count)d descărcare în curs. Ieșiți oricum?"
-msgstr[1] "Aveți %(count)d descărcări în curs. Ieșiți oricum?"
-msgstr[2] "Aveți %(count)d de descărcări în curs. Ieșiți oricum?"
-
-#: ../../portable/frontends/widgets/application.py:757
-msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr ""
-"Avertizează-mă când încerc să închid programul în timp ce descarc ceva"
-
-#: ../../portable/frontends/widgets/application.py:1011
-msgid "Message"
-msgstr "Mesaj"
-
-#: ../../portable/frontends/widgets/application.py:1036
-msgid "Migrating Files"
-msgstr "Migrare fișiere"
-
-#: ../../portable/frontends/widgets/application.py:1046
-msgid "Migrating files"
-msgstr "Migrare fișiere"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:177
-msgid "Save Search"
-msgstr "Salvează căutarea"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:282
-msgid "Title"
-msgstr "Titlu"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:284
-msgid "Feed"
-msgstr "Flux"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:286
-#: ../../portable/frontends/widgets/itemlistwidgets.py:725
-msgid "Date"
-msgstr "Dată"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:287
-msgid "Length"
-msgstr "Durată"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:288
-msgid "Status"
-msgstr "Stare"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:289
-#: ../../portable/frontends/widgets/itemlistwidgets.py:726
-msgid "Size"
-msgstr "Dimensiune"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:291
-msgid "ETA"
-msgstr "Timp estimat"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:292
-msgid "Speed"
-msgstr "Viteză"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:428
-msgid "Save as a Feed"
-msgstr "Salvează ca flux"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:482
-msgid "Pause All"
-msgstr "Suspendă tot"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:489
-msgid "Resume All"
-msgstr "Reia tot"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:496
-msgid "Cancel All"
-msgstr "Anulează tot"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:503
-msgid "Download Settings"
-msgstr "Opțiuni de descărcare"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:549
-#, python-format
-msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
-msgstr ""
-"%(available)s sub limita de spațiu pentru descărcări (%(amount)s liber pe "
-"disc)"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:555
-#, python-format
-msgid "%(available)s free for downloads (%(amount)s free on disk)"
-msgstr "%(available)s liber pentru descărcări (%(amount)s liber pe disc)"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:560
-#, python-format
-msgid "%(amount)s free on disk"
-msgstr "%(amount)s liber pe disc"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:579
-#, python-format
-msgid "%(rate)s uploading"
-msgstr "%(rate)s trimitere"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:581
-#, python-format
-msgid "%(rate)s downloading"
-msgstr "%(rate)s descărcare"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:615
-msgid "Auto Download"
-msgstr "Descărcare automată"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:627
-msgid "Share feed"
-msgstr "Partajează flux"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:633
-msgid "Settings"
-msgstr "Setări"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:639
-msgid "Remove feed"
-msgstr "Șterge flux"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:724
-msgid "Name"
-msgstr "Nume"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:727
-msgid "Time"
-msgstr "Timp"
-
-#: ../../portable/frontends/widgets/displays.py:353
-msgid ""
-"Miro can't play this file.  You may be able to open it with a different "
-"program"
-msgstr ""
-"Miro nu poate reda acest fișier. S-ar putea să puteți să-l deschideți cu un "
-"alt program"
-
-#: ../../portable/frontends/widgets/displays.py:361
-msgid "Filename:"
-msgstr "Nume fișier:"
-
-#: ../../portable/frontends/widgets/displays.py:364
-msgid "File type:"
-msgstr "Tip fișier:"
-
-#: ../../portable/frontends/widgets/displays.py:370
-msgid "Play Externally"
-msgstr "Redă extern"
-
-#: ../../portable/frontends/widgets/displays.py:371
-msgid "Skip"
-msgstr "Sari peste"
-
-#: ../../portable/frontends/widgets/displays.py:543
-#, python-format
-msgid "%(count)d Feed Folder Selected"
-msgid_plural "%(count)d Feed Folders Selected"
-msgstr[0] "%(count)d dosar de fluxuri selectat"
-msgstr[1] "%(count)d dosare de fluxuri selectate"
-msgstr[2] "%(count)d de dosare de fluxuri selectate"
-
-#: ../../portable/frontends/widgets/displays.py:548
-#, python-format
-msgid "(contains %(count)d feed)"
-msgid_plural "(contains %(count)d feeds)"
-msgstr[0] "(conține %(count)d flux)"
-msgstr[1] "(conține %(count)d fluxuri)"
-msgstr[2] "(conține %(count)d de fluxuri)"
-
-#: ../../portable/frontends/widgets/displays.py:554
-#, python-format
-msgid "%(count)d Playlist Folder Selected"
-msgid_plural "%(count)d Playlist Folders Selected"
-msgstr[0] "%(count)d dosar de liste de redare selectat"
-msgstr[1] "%(count)d dosare de liste de redare selectate"
-msgstr[2] "%(count)d de dosare de liste de redare selectate"
-
-#: ../../portable/frontends/widgets/displays.py:559
-#, python-format
-msgid "(contains %(count)d playlist)"
-msgid_plural "(contains %(count)d playlist)"
-msgstr[0] "(conține %(count)d listă de redare)"
-msgstr[1] "(conține %(count)d liste de redare)"
-msgstr[2] "(conține %(count)d de liste de redare)"
-
-#: ../../portable/frontends/widgets/displays.py:569
-#, python-format
-msgid "%(count)d Feed Selected"
-msgid_plural "%(count)d Feeds Selected"
-msgstr[0] "%(count)d flux selectat"
-msgstr[1] "%(count)d fluxuri selectate"
-msgstr[2] "%(count)d de fluxuri selectate"
-
-#: ../../portable/frontends/widgets/displays.py:575
-#, python-format
-msgid "%(count)d Playlist Selected"
-msgid_plural "%(count)d Playlists Selected"
-msgstr[0] "%(count)d listă de redare selectată"
-msgstr[1] "%(count)d liste de redare selectate"
-msgstr[2] "%(count)d de liste de redare selectate"
-
-#: ../../portable/frontends/widgets/displays.py:582
-msgid "Delete All"
-msgstr "Șterge tot"
-
-#: ../../portable/frontends/widgets/displays.py:586
-msgid "Put Into a New Folder"
-msgstr "Pune într-un dosar nou"
-
-#: ../../portable/frontends/widgets/playlist.py:146
-msgid "This Playlist is Empty"
-msgstr "Această listă de redare e goală"
-
-#: ../../portable/frontends/widgets/playlist.py:149
-msgid ""
-"To add an item, drag it onto the name of this playlist in the sidebar."
-msgstr ""
-"Pentru a adăuga un element, trageți-l pe numele acestei liste în bara "
-"laterală."
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:63
-#, python-format
-msgid "Play Next Unplayed (%(unplayed)d)"
-msgstr "Redă următorul ne-redat (%(unplayed)d)"
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:67
-#, python-format
-msgid "Play All Unplayed (%(unplayed)d)"
-msgstr "Redă toate neredate (%(unplayed)d)"
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:70
-#, python-format
-msgid "Pause All Downloads (%(downloading)d)"
-msgstr "Suspendă toate transferurile (%(downloading)d)"
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:73
-#, python-format
-msgid "Resume All Downloads (%(paused)d)"
-msgstr "Reia toate transferurile (%(paused)d)"
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:81
-msgid "Hide"
-msgstr "Ascunde"
-
-#: ../../portable/frontends/widgets/gtk/video.py:272
-msgid "Add to library"
-msgstr "Adaugă în librărie"
-
-#: ../../portable/frontends/widgets/gtk/video.py:311
-msgid "Permalink"
-msgstr "Permalink"
-
-#: ../../portable/frontends/widgets/gtk/window.py:470
-msgid "All files"
-msgstr "Toate fișierele"
-
-#: ../../portable/frontends/widgets/gtk/window.py:499
-msgid "Choose"
-msgstr "Alege"
-
-#: ../../portable/frontends/widgets/gtk/window.py:526
-#, python-format
-msgid ""
-"%(copyright)s.  See LICENSE file for details.\n"
-"Miro and Miro logo are trademarks of the Participatory Culture Foundation."
-msgstr ""
-"%(copyright)s.  Vedeți fișierul LICENSE pentru detalii.\n"
-"Miro și logo-ul Miro sunt mărci comerciale ale Fundației Participatory "
-"Culture."
-
-#: ../../portable/frontends/widgets/removefeeds.py:49
-msgid "Remove Feed"
-msgid_plural "Remove Feeds"
-msgstr[0] "Șterge flux"
-msgstr[1] "Șterge fluxuri"
-msgstr[2] "Șterge fluxuri"
-
-#: ../../portable/frontends/widgets/removefeeds.py:57
-msgid "Are you sure you want to remove this feed:"
-msgid_plural "Are you sure you want to remove these feeds:"
-msgstr[0] "Sigur doriți să ștergeți acest flux:"
-msgstr[1] "Sigur doriți să ștergeți aceste fluxuri:"
-msgstr[2] "Sigur doriți să ștergeți aceste fluxuri:"
-
-#: ../../portable/frontends/widgets/removefeeds.py:77
-msgid "Keep items that have been downloaded in my library."
-msgstr "Păstrează elementele descărcate în librărie."
-
-#: ../../portable/frontends/widgets/removefeeds.py:83
-msgid ""
-"Watched folders will be removed from the sidebar but their contents will "
-"still appear in your library.  You can stop watching watched folders "
-"completely in the Miro preference panel."
-msgstr ""
-"Dosarele urmărite vor fi eliminate din bara laterale, dar conținutul lor va "
-"apare în continuare în librărie. Puteți să opriți urmărirea dosarelor de tot "
-"în panoul de preferințe Miro."
-
-#: ../../portable/frontends/widgets/removefeeds.py:93
-msgid ""
-"Are you sure you want to remove this feed?  The downloads currently in "
-"progress will be canceled."
-msgid_plural ""
-"Are you sure you want to remove these feeds?  The downloads currently in "
-"progress will be canceled."
-msgstr[0] ""
-"Sigur doriți să ștergeți acest flux? Descărcările în curs de desfășurare vor "
-"fi anulate."
-msgstr[1] ""
-"Sigur doriți să ștergeți aceste fluxuri? Descărcările în curs de desfășurare "
-"vor fi anulate."
-msgstr[2] ""
-"Sigur doriți să ștergeți aceste fluxuri? Descărcările în curs de desfășurare "
-"vor fi anulate."
-
-#: ../../portable/frontends/widgets/newfeed.py:60
-#: ../../portable/frontends/widgets/newsearchfeed.py:98
-msgid "URL:"
-msgstr "URL:"
-
 #: ../../portable/frontends/widgets/newfeed.py:69
 msgid "Feed should go in this section:"
 msgstr "Fluxul ar trebui să intre în această secțiune:"
-
-#: ../../portable/frontends/widgets/newfeed.py:71
-#: ../../portable/frontends/widgets/newfolder.py:70
-#: ../../portable/frontends/widgets/newsearchfeed.py:135
-msgid "video"
-msgstr "video"
-
-#: ../../portable/frontends/widgets/newfeed.py:72
-#: ../../portable/frontends/widgets/newfolder.py:71
-#: ../../portable/frontends/widgets/newsearchfeed.py:136
-msgid "audio"
-msgstr "audio"
 
 #: ../../portable/frontends/widgets/newfeed.py:110
 msgid "Add Feed"
@@ -2124,387 +1505,345 @@ msgstr ""
 "\n"
 "Introduceți URL-ul fluxului de adăugat"
 
-#: ../../portable/frontends/widgets/tablist.py:475
-#: ../../portable/frontends/widgets/tablist.py:534
+#: ../../portable/frontends/widgets/tablist.py:500
+#: ../../portable/frontends/widgets/tablist.py:563
 msgid "Copy URL to clipboard"
 msgstr "Copiază URL-ul"
 
-#: ../../portable/frontends/widgets/tablist.py:477
+#: ../../portable/frontends/widgets/tablist.py:502
 msgid "Remove Site"
 msgstr "Șterge situl"
 
-#: ../../portable/frontends/widgets/tablist.py:521
+#: ../../portable/frontends/widgets/tablist.py:550
 msgid "Update Feeds In Folder"
 msgstr "Actualizează fluxurile din dosar"
 
-#: ../../portable/frontends/widgets/tablist.py:528
+#: ../../portable/frontends/widgets/tablist.py:557
 msgid "Update Feed Now"
 msgstr "Actualizează fluxul acum"
 
-#: ../../portable/frontends/widgets/tablist.py:531
+#: ../../portable/frontends/widgets/tablist.py:560
 msgid "Rename"
 msgstr "Redenumește"
 
-#: ../../portable/frontends/widgets/tablist.py:533
+#: ../../portable/frontends/widgets/tablist.py:562
 msgid "Revert Feed Name"
 msgstr "Revino la numele anterior al fluxului"
 
-#: ../../portable/frontends/widgets/tablist.py:540
+#: ../../portable/frontends/widgets/tablist.py:569
 msgid "Update Feeds Now"
 msgstr "Actualizează fluxurile acum"
 
-#: ../../portable/frontends/widgets/tablist.py:605
+#: ../../portable/frontends/widgets/tablist.py:636
 msgid "SITES"
 msgstr "SITURI"
 
-#: ../../portable/frontends/widgets/tablist.py:607
+#: ../../portable/frontends/widgets/tablist.py:638
 msgid "FEEDS"
 msgstr "FLUXURI"
 
-#: ../../portable/frontends/widgets/tablist.py:609
+#: ../../portable/frontends/widgets/tablist.py:640
 msgid "AUDIO FEEDS"
 msgstr "FLUXURI AUDIO"
 
-#: ../../portable/frontends/widgets/tablist.py:611
+#: ../../portable/frontends/widgets/tablist.py:642
 msgid "PLAYLISTS"
 msgstr "LISTE DE REDARE"
 
-#: ../../portable/frontends/widgets/newfolder.py:60
-msgid "Folder name:"
-msgstr "Numele dosarului:"
+#: ../../portable/frontends/widgets/itemlistcontroller.py:431
+msgid "No Results Found"
+msgstr "Nici un rezultat găsit"
 
-#: ../../portable/frontends/widgets/newfolder.py:68
-msgid "Folder should go in this section:"
-msgstr "Dosarul ar trebui să intre în această secțiune:"
+#: ../../portable/frontends/widgets/itemlistwidgets.py:178
+msgid "Save Search"
+msgstr "Salvează căutarea"
 
-#: ../../portable/frontends/widgets/newfolder.py:107
-#: ../../portable/frontends/widgets/newfolder.py:109
-msgid "Create Feed Folder"
-msgstr "Crează dosar de fluxuri"
+#: ../../portable/frontends/widgets/itemlistwidgets.py:285
+msgid "Title"
+msgstr "Titlu"
 
-#: ../../portable/frontends/widgets/newfolder.py:110
-msgid "Enter the name of the folder to add"
-msgstr "Introduceți numele dosarului de adăugat"
+#: ../../portable/frontends/widgets/itemlistwidgets.py:287
+msgid "Feed"
+msgstr "Flux"
 
-#: ../../portable/frontends/widgets/linkhandler.py:54
-msgid "Subscribe to Feed"
-msgstr "Abonează la flux"
+#: ../../portable/frontends/widgets/itemlistwidgets.py:289
+#: ../../portable/frontends/widgets/itemlistwidgets.py:740
+msgid "Date"
+msgstr "Dată"
 
-#: ../../portable/frontends/widgets/linkhandler.py:56
+#: ../../portable/frontends/widgets/itemlistwidgets.py:290
+msgid "Length"
+msgstr "Durată"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:291
+msgid "Status"
+msgstr "Stare"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:292
+#: ../../portable/frontends/widgets/itemlistwidgets.py:741
+msgid "Size"
+msgstr "Dimensiune"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:294
+msgid "ETA"
+msgstr "Timp estimat"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:295
+msgid "Speed"
+msgstr "Viteză"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:431
+msgid "Save as a Feed"
+msgstr "Salvează ca flux"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:485
+msgid "Pause All"
+msgstr "Suspendă tot"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:492
+msgid "Resume All"
+msgstr "Reia tot"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:499
+msgid "Cancel All"
+msgstr "Anulează tot"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:506
+msgid "Download Settings"
+msgstr "Opțiuni de descărcare"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:552
+#, python-format
+msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
+msgstr ""
+"%(available)s sub limita de spațiu pentru descărcări (%(amount)s liber pe "
+"disc)"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:558
+#, python-format
+msgid "%(available)s free for downloads (%(amount)s free on disk)"
+msgstr "%(available)s liber pentru descărcări (%(amount)s liber pe disc)"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:563
+#, python-format
+msgid "%(amount)s free on disk"
+msgstr "%(amount)s liber pe disc"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:582
+#, python-format
+msgid "%(rate)s uploading"
+msgstr "%(rate)s trimitere"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:584
+#, python-format
+msgid "%(rate)s downloading"
+msgstr "%(rate)s descărcare"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:618
+msgid "Auto Download"
+msgstr "Descărcare automată"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:630
+msgid "Share feed"
+msgstr "Partajează flux"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:636
+msgid "Settings"
+msgstr "Setări"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:642
+msgid "Remove feed"
+msgstr "Șterge flux"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:718
+msgid "Unwatched"
+msgstr "Nevizionat"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:739
+msgid "Name"
+msgstr "Nume"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:742
+msgid "Time"
+msgstr "Timp"
+
+#: ../../portable/frontends/widgets/diagnostics.py:83
+msgid "Movies location:"
+msgstr "Locație filme:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:87
+msgid "Icon cache location:"
+msgstr "Locație cache pentru pictograme:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:91
+msgid "Log file location:"
+msgstr "Locație jurnal:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:95
+msgid "Downloader log file location:"
+msgstr "Locația jurnalului de descărcări:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:99
+msgid "Database file location:"
+msgstr "Locația bazei de date:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:106
+msgid "Space free on disk:"
+msgstr "Spațiu liber pe disc:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:108
+msgid "Database size:"
+msgstr "Dimensiunea bazei de date:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:118
+#: ../../portable/menubar.py:276
+msgid "Diagnostics"
+msgstr "Diagnostice"
+
+#: ../../portable/searchengines.py:150
+msgid "Search All"
+msgstr "Caută în toate"
+
+#: ../../portable/messages.py:988 ../../portable/item.py:1006
+msgid "queued for download"
+msgstr "în coada pentru descărcare"
+
+#: ../../portable/messagehandler.py:1256
+msgid "Subscribed to new feed:"
+msgstr "Abonat la un nou flux:"
+
+#: ../../portable/messagehandler.py:1259
+msgid "Subscribed to new feeds:"
+msgstr "Abonat la noi fluxuri:"
+
+#: ../../portable/startup.py:97
+msgid "Unknown Error"
+msgstr "Eroare necunoscută"
+
+#: ../../portable/startup.py:179
+msgid "Database too new"
+msgstr "Bază de date prea nouă"
+
+#: ../../portable/startup.py:181
 #, python-format
 msgid ""
-"This link appears to be a feed.  Do you want to add it to your "
-"subscriptions?\n"
-"\n"
-"%(url)s"
+"You have a database that was saved with a newer version of %(appname)s. You "
+"must download the latest version of %(appname)s and run that."
 msgstr ""
-"Această legătură pare să fie un flux. Doriți să-l adăugați la abonamente?\n"
-"\n"
-"%(url)s"
+"Aveți o bază de date salvată cu o versiune mai nouă a %(appname)s. Trebuie "
+"să descărcați și folosiți cea mai nouă versiune a %(appname)s."
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:58
-msgid "New Search Feed"
-msgstr "Nou flux de căutare"
+#: ../../portable/commandline.py:106
+msgid "Subscription error"
+msgstr "Eroare la abonare"
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:59
-msgid "A search feed contains items that match a search term."
-msgstr ""
-"Un flux de căutare conține elemente care se potrivesc unui termen căutat."
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:74
-msgid "Search for:"
-msgstr "Caută asta:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:80
-msgid "In this:"
-msgstr "În asta:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:87
-msgid "Feed:"
-msgstr "Flux:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:92
-msgid "Search engine:"
-msgstr "Motor de căutare:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:132
-msgid "Add new feed to this section:"
-msgstr "Adaugă noul flux în această secțiune:"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:60
-msgid "Miro First Time Setup"
-msgstr "Reglare inițială Miro"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:117
-msgid "Welcome to the Miro First Time Setup"
-msgstr "Bine ați venit la reglare inițială a Miro"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:120
+#: ../../portable/commandline.py:116
+#, python-format
 msgid ""
-"The next few screens will help you set up Miro so that it works best for "
-"you.\n"
-"\n"
-"We recommend that you have Miro launch when your computer starts up.  This "
-"way, downloads in progress can finish downloading and new media files can be "
-"downloaded in the background, ready when you want to watch."
+"This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
+"the publisher of this file."
 msgstr ""
-"Următoarele câteva ecrane vă vor ajuta să reglați Miro cum vi se potrivește "
-"mai bine.\n"
-"\n"
-"Vă recomandăm să reglați Miro să se pornească când pornește calculatorul. "
-"Astfel, descărcările în curs se pot termina și noi fișiere se pot transfera "
-"în fundal, pentru a fi gata când doriți să le priviți"
+"Acest fișier de flux %(appname)s nu are un format valid: %(url)s. Vă rugăm "
+"anunțați pe cel care l-a publicat."
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:132
-msgid "Would you like to run Miro on startup?"
-msgstr "Doriți să lansați Miro la pornirea calculatorului?"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:137
-#: ../../portable/frontends/widgets/firsttimedialog.py:170
-#: ../../portable/dialogs.py:87
-msgid "Yes"
-msgstr "Da"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:138
-#: ../../portable/frontends/widgets/firsttimedialog.py:169
-#: ../../portable/dialogs.py:88
-msgid "No"
-msgstr "Nu"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:146
-msgid "Next >"
-msgstr "Urmare >"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:156
-msgid "Completing the Miro First Time Setup"
-msgstr "Terminarea reglării inițiale a Miro"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:159
+#: ../../portable/commandline.py:126
+#, python-format
 msgid ""
-"Miro can find all the media files on your computer to help you organize your "
-"collection.\n"
-"\n"
-"Would you like Miro to look for media files on your computer?"
+"This %(appname)s feed file has the wrong content type: %(url)s. Please "
+"notify the publisher of this file."
 msgstr ""
-"Miro poate să găsească fișierele media de pe calculator pentru a vă ajuta la "
-"organizarea colecției dumneavoastră.\n"
+"Acest fișier de flux %(appname)s are tipul de conținut greșit: %(url)s. Vă "
+"rugăm anunțați pe cel care l-a publicat."
+
+#: ../../portable/commandline.py:134
+#, python-format
+msgid "Could not download the %(appname)s feed file: %(url)s"
+msgstr "Nu s-a putut descărca fluxul %(appname)s: %(url)s"
+
+#: ../../portable/commandline.py:186
+msgid "Invalid Torrent"
+msgstr "Formatul torrentului este necorespunzător"
+
+#: ../../portable/commandline.py:188
+#, python-format
+msgid ""
+"The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+"[OK]"
+msgstr ""
+"Fișierul torrent %(filename)s pare să fie corupt și nu poate fi deschis.  "
+"[OK]"
+
+#: ../../portable/downloader.py:256
+msgid "activity"
+msgstr "activitate"
+
+#: ../../portable/downloader.py:298
+msgid "Flash URL Scraping Error"
+msgstr "Eroare la descifrarea URL-ului Flash"
+
+#: ../../portable/downloader.py:480
+msgid "starting up"
+msgstr "pornire"
+
+#: ../../portable/feed.py:915
+msgid "Error loading feed"
+msgstr "Eroare la încărcarea fluxului"
+
+#: ../../portable/feed.py:917
+#, python-format
+msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
+msgstr "Nu s-a putut încărca fluxul de la %(url)s (%(errordescription)s)."
+
+#: ../../portable/feed.py:920
+msgid "Would you like to keep the feed?"
+msgstr "Doriți să păstrați fluxul?"
+
+#: ../../portable/feed.py:1045
+msgid "Bad content-type"
+msgstr "Tip de conținut greșit"
+
+#: ../../portable/feed.py:1058
+#, python-format
+msgid "Channel is not compatible with %(appname)s"
+msgstr "Canalul nu este compatibil cu %(appname)s"
+
+#: ../../portable/feed.py:1061
+#, python-format
+msgid ""
+"This channel is not compatible with %(appname)s but we'll try our best to "
+"grab the files.  It may take extra time to list the videos, and descriptions "
+"may look funny.\n"
 "\n"
-"Doriți ca Miro să caute fișiere media de pe calculator?"
+"Please contact the publishers of %(url)s and ask if they can supply a feed "
+"in a format that will work with %(appname)s.\n"
+"\n"
+"Do you want to try to load this channel anyway?"
+msgstr ""
+"Acest canal nu este compatibil cu %(appname)s dar se poate încerca "
+"extragerea fișierelor. E posibil ca afișarea video-urilor să dureze mai "
+"mult, și descrierile ar putea arăta ciudat.\n"
+"\n"
+"Contactați pe cei ce publică %(url)s și întrebați dacă pot să ofere un flux "
+"care să funcționeze cu %(appname)s.\n"
+"\n"
+"Doriți totuși a încerca încărcarea acestui canal?"
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:177
-msgid "Restrict to all my personal files."
-msgstr "Restricționază la toate fișierele mele personale."
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:178
-msgid "Search custom folders:"
-msgstr "Caută în dosare anume:"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:189
-msgid "Choose directory to search for media files"
-msgstr "Alegeți dosarul pentru căutare fișiere media"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:200
-#: ../../portable/frontends/widgets/firsttimedialog.py:280
-msgid "< Previous"
-msgstr "< Înapoi"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:213
-#: ../../portable/frontends/widgets/firsttimedialog.py:215
-#: ../../portable/frontends/widgets/firsttimedialog.py:272
-#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
-msgid "Search"
-msgstr "Caută"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:215
-#: ../../portable/frontends/widgets/firsttimedialog.py:283
-msgid "Finish"
-msgstr "Termină"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:263
-msgid "Searching for media files"
-msgstr "Cautare de fișiere media în curs"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:273
-#: ../../portable/dialogs.py:85
-msgid "Cancel"
-msgstr "Renunță"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:311
+#: ../../portable/feed.py:1661
 #, python-format
-msgid "parsed %(count)s file"
-msgid_plural "parsed %(count)s files"
-msgstr[0] "%(count)s fișier analizat"
-msgstr[1] "%(count)s fișiere analizate"
-msgstr[2] "%(count)s de fișiere analizate"
+msgid "Search All: %(text)s"
+msgstr "Caută tot: %(text)s"
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:316
-#, python-format
-msgid "found %(count)s media file"
-msgid_plural "found %(count)s media files"
-msgstr[0] "%(count)s fișier media găsit"
-msgstr[1] "%(count)s fișiere media găsite"
-msgstr[2] "%(count)s de fișiere media găsite"
+#: ../../portable/feed.py:2382
+msgid "Local Files"
+msgstr "Fișiere locale"
 
-#: ../../portable/frontends/widgets/statictabs.py:44
-msgid "Miro Guide"
-msgstr "Ghidul Miro"
-
-#: ../../portable/frontends/widgets/statictabs.py:110
-msgid "Downloading"
-msgstr "Descărcare"
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:90
-msgid "Single and external downloads"
-msgstr "Descărcări separate și externe"
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:93
-msgid "Feed downloads"
-msgstr "Descărcări de fluxuri"
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:96
-msgid "Seeding"
-msgstr "Transmitere"
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
-msgid "Add a Playlist"
-msgstr "Adaugă o listă de redare"
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
-msgid "Add items to an existing playlist or a new one."
-msgstr "Adaugă elemente într-o listă de redare nouă sau existentă"
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
-msgid "Existing playlist:"
-msgstr "Listă de redare existentă:"
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
-msgid "New playlist:"
-msgstr "Listă de redare nouă:"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:63
-msgid "Remove From the Library"
-msgstr "Șterge din librărie"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:94
-#: ../../portable/frontends/widgets/itemcontextmenu.py:192
-msgid "Play"
-msgstr "Redă"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:95
-msgid "Play Just this Item"
-msgstr "Redă doar acest element"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:96
-#: ../../portable/frontends/widgets/itemcontextmenu.py:193
-msgid "Add to Playlist"
-msgstr "Adaugă în lista de redare"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:101
-msgid "Revert Item Name"
-msgstr "Revino la numele anterior"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:103
-#: ../../portable/frontends/widgets/itemcontextmenu.py:200
-msgid "Mark as Unplayed"
-msgstr "Marchează ca ne-redat"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:106
-#: ../../portable/frontends/widgets/itemcontextmenu.py:205
-msgid "Mark as Played"
-msgstr "Marchează ca redat"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
-msgid "Start seeding"
-msgstr "Pornește transmiterea"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:118
-#: ../../portable/frontends/widgets/itemcontextmenu.py:240
-#: ../../portable/frontends/widgets/itemcontextmenu.py:258
-msgid "Cancel Download"
-msgstr "Anulează descărcarea"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:122
-#: ../../portable/frontends/widgets/itemcontextmenu.py:241
-msgid "Pause Download"
-msgstr "Suspendă descărcarea"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:125
-#: ../../portable/frontends/widgets/itemcontextmenu.py:254
-msgid "Resume Download"
-msgstr "Reia descărcarea"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
-msgid "Web page"
-msgstr "Pagină web"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:139
-msgid "License"
-msgstr "Licență"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:142
-msgid "File in Browser"
-msgstr "Fişier în browser"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:144
-#, python-format
-msgid "File in %(progname)s"
-msgstr "Fișier în %(progname)s"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:146
-msgid "File on Disk"
-msgstr "Fișier pe disc"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:149
-msgid "View"
-msgstr "Afișare"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:187
-#, python-format
-msgid "%(count)d Downloaded Item"
-msgid_plural "%(count)d Downloaded Items"
-msgstr[0] "%(count)d element descărcat"
-msgstr[1] "%(count)d elemente descărcate"
-msgstr[2] "%(count)d de elemente descărcate"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:216
-#, python-format
-msgid "%(count)d Available Item"
-msgid_plural "%(count)d Available Items"
-msgstr[0] "%(count)d element disponibil"
-msgstr[1] "%(count)d elemente disponibile"
-msgstr[2] "%(count)d de elemente disponibile"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:229
-#, python-format
-msgid "%(count)d Downloading Item"
-msgid_plural "%(count)d Downloading Items"
-msgstr[0] "%(count)d element se descarcă"
-msgstr[1] "%(count)d elemente se descarcă"
-msgstr[2] "%(count)d de elemente se descarcă"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:246
-#, python-format
-msgid "%(count)d Paused Item"
-msgid_plural "%(count)d Paused Items"
-msgstr[0] "%(count)d element suspendat"
-msgstr[1] "%(count)d elemente suspendate"
-msgstr[2] "%(count)d de elemente suspendate"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:264
-msgid "Restart Upload"
-msgstr "Repornește transmiterea"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:278
-msgid "Remove From Playlist"
-msgstr "Înlătură din lista de redare"
+#: ../../portable/feed.py:2396
+msgid "Playing File"
+msgstr "Fișier redat"
 
 #: ../../portable/dialogs.py:83
 msgid "Ok"
 msgstr "În regulă"
-
-#: ../../portable/dialogs.py:84
-msgid "Close"
-msgstr "Închide"
 
 #: ../../portable/dialogs.py:86
 msgid "Done"
@@ -2602,132 +1941,329 @@ msgstr "Abonează"
 msgid "Stop Watching"
 msgstr "Nu mai urmări"
 
-#: ../../portable/playlist.py:180
-#, python-format
-msgid "Enter a new name for the playlist %s"
-msgstr "Introduceţi un nume nou pentru lista de redare %s"
-
-#: ../../portable/singleclick.py:100
+#: ../../portable/singleclick.py:54
 msgid "Download already exists"
 msgstr "Fișierul de descărcat există deja"
 
-#: ../../portable/singleclick.py:101
+#: ../../portable/singleclick.py:55
 msgid "That URL is already an external download."
 msgstr "Aceast URL este deja în descărcare externă."
 
-#: ../../portable/singleclick.py:107
-msgid "Miro will begin downloading it now."
-msgstr "Miro va începe acum să-l descarce"
-
-#: ../../portable/singleclick.py:109
+#: ../../portable/singleclick.py:64
 msgid "It is downloading now."
 msgstr "Se descarcă acum."
 
-#: ../../portable/singleclick.py:111
+#: ../../portable/singleclick.py:66
 msgid "It has already been downloaded."
 msgstr "A fost descărcat deja."
 
-#: ../../portable/singleclick.py:138
+#: ../../portable/singleclick.py:96
 msgid "File Download"
 msgstr "Descărcare fișier"
 
-#: ../../portable/singleclick.py:139
+#: ../../portable/singleclick.py:97
 #, python-format
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or an RSS feed."
 msgstr ""
 "Acest fișier la %(url)s nu pare să fie audio sau video, nici un flux RSS."
 
-#: ../../portable/singleclick.py:166
+#: ../../portable/singleclick.py:135
 msgid "Download Error"
 msgstr "Eroare la descărcare"
 
-#: ../../portable/singleclick.py:168
+#: ../../portable/dl_daemon/download.py:624
 #, python-format
-msgid ""
-"Miro is not able to download a file at this URL:\n"
-"\n"
-"URL: %(url)s"
-msgstr ""
-"Miro nu poate să descarce un fișier la acest URL:\n"
-"\n"
-"URL: %(url)s"
+msgid "Could not write to %(filename)s"
+msgstr "Nu s-a putut scriere în %(filename)s"
 
-#: ../../portable/singleclick.py:297
-msgid "Subscribing to multiple feeds"
-msgstr "Abonare la mai multe fluxuri"
+#: ../../portable/dl_daemon/download.py:649
+#: ../../portable/dl_daemon/download.py:866
+msgid "Not enough disk space"
+msgstr "Spațiul de pe disc e insuficient"
 
-#: ../../portable/singleclick.py:298
+#: ../../portable/dl_daemon/download.py:650
+#: ../../portable/dl_daemon/download.py:867
 #, python-format
-msgid "Create feed?"
-msgid_plural "Create %(count)d feeds?"
-msgstr[0] "Creare flux?"
-msgstr[1] "Creare %(count)d fluxuri?"
-msgstr[2] "Creare %(count)d de fluxuri?"
+msgid "%(amount)s MB required to store this video"
+msgstr "%(amount)s MB necesari pentru salvarea acestui fișier video"
 
-#: ../../portable/singleclick.py:318
-msgid "Enter a name for the new feed folder"
-msgstr "Alegeți un nume pentru noul dosar de fluxuri"
-
-#: ../../portable/singleclick.py:322
+#: ../../portable/dl_daemon/download.py:665
 #, python-format
-msgid ""
-"NOTE: You are already subscribed to one of these feeds.  These feeds will "
-"stay where they currently are."
-msgid_plural ""
-"NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-"will stay where they currently are."
-msgstr[0] ""
-"ATENȚIE: Sunteți deja abonat la unul din aceste fluxuri. Acesta va rămâne "
-"unde este acum."
-msgstr[1] ""
-"ATENȚIE: Sunteți deja abonat la %(count)d din aceste fluxuri. Acestea vor "
-"rămâne unde sunt acum."
-msgstr[2] ""
-"ATENȚIE: Sunteți deja abonat la %(count)d din aceste fluxuri. Acestea vor "
-"rămâne unde sunt acum."
+msgid "Couldn't open %(filename)s for writing"
+msgstr "Nu s-a putut deschide %(filename)s pentru scriere"
 
-#: ../../portable/singleclick.py:337
-msgid "Subscription error"
-msgstr "Eroare la abonare"
+#: ../../portable/dl_daemon/download.py:885
+msgid "BitTorrent failure"
+msgstr "Eroare BitTorrent"
 
-#: ../../portable/singleclick.py:347
+#: ../../portable/dl_daemon/download.py:885
+msgid "BitTorrent failed to startup"
+msgstr "BitTorrent nu a pornit"
+
+#: ../../portable/dl_daemon/download.py:1074
+msgid "Corrupt Torrent"
+msgstr "Torrent deteriorat"
+
+#: ../../portable/dl_daemon/download.py:1075
 #, python-format
-msgid ""
-"This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
-"the publisher of this file."
-msgstr ""
-"Acest fișier de flux %(appname)s nu are un format valid: %(url)s. Vă rugăm "
-"anunțați pe cel care l-a publicat."
+msgid "The torrent file at %(url)s was not valid"
+msgstr "Fișierul torrent de la %(url)s nu a fost valid"
 
-#: ../../portable/singleclick.py:356
+#: ../../portable/dl_daemon/download.py:1100
+msgid "Torrent file deleted"
+msgstr "Fișierul torrent șters"
+
+#: ../../portable/menubar.py:184
+msgid "_Open"
+msgstr "Deschid_e"
+
+#: ../../portable/menubar.py:185
+msgid "_Download Item"
+msgstr "_Descarcă _element"
+
+#: ../../portable/menubar.py:186
+msgid "Check _Version"
+msgstr "Verifică _versiunea"
+
+#: ../../portable/menubar.py:188
+msgid "_Remove Item"
+msgstr "Ște_rge elementul"
+
+#: ../../portable/menubar.py:189
+msgid "_Remove Items"
+msgstr "Ște_rge elementele"
+
+#: ../../portable/menubar.py:190
+msgid "Re_name Item"
+msgstr "Rede_numește elementul"
+
+#: ../../portable/menubar.py:191
+msgid "Save Item _As"
+msgstr "Salvează elementul c_a"
+
+#: ../../portable/menubar.py:192
+msgid "Save Items _As"
+msgstr "Salvează elementele c_a"
+
+#: ../../portable/menubar.py:193
+msgid "Copy Item _URL"
+msgstr "Copiază _URL-ul elementului"
+
+#: ../../portable/menubar.py:195
+msgid "_Options"
+msgstr "_Opțiuni"
+
+#: ../../portable/menubar.py:196
+msgid "_Quit"
+msgstr "_Ieșire"
+
+#: ../../portable/menubar.py:205
+msgid "Cu_t"
+msgstr "_Taie"
+
+#: ../../portable/menubar.py:206
+msgid "_Copy"
+msgstr "_Copiază"
+
+#: ../../portable/menubar.py:207
+msgid "_Paste"
+msgstr "Li_pește"
+
+#: ../../portable/menubar.py:208
+msgid "Select _All"
+msgstr "Selectează _tot"
+
+#: ../../portable/menubar.py:212
+msgid "Add _Feed"
+msgstr "Adaugă _flux"
+
+#: ../../portable/menubar.py:214
+msgid "New Searc_h Feed"
+msgstr "Nou flux de că_utare"
+
+#: ../../portable/menubar.py:215
+msgid "New _Folder"
+msgstr "_Dosar nou"
+
+#: ../../portable/menubar.py:217
+msgid "Re_name"
+msgstr "Rede_numește"
+
+#: ../../portable/menubar.py:218
+msgid "_Remove"
+msgstr "Ște_rge"
+
+#: ../../portable/menubar.py:219
+msgid "_Remove Folder"
+msgstr "Ște_rge dosar"
+
+#: ../../portable/menubar.py:221
+msgid "_Update Feed"
+msgstr "Act_ualizează fluxul"
+
+#: ../../portable/menubar.py:222
+msgid "_Update Feeds"
+msgstr "Act_ualizează fluxurile"
+
+#: ../../portable/menubar.py:223
+msgid "Update _All Feeds"
+msgstr "Actualizează to_ate fluxurile"
+
+#: ../../portable/menubar.py:225
+msgid "_Import Feeds (OPML)"
+msgstr "_Importă fluxuri (OPML)"
+
+#: ../../portable/menubar.py:226
+msgid "E_xport Feeds (OPML)"
+msgstr "E_xportă fluxuri (OPML)"
+
+#: ../../portable/menubar.py:228
+msgid "_Share with a Friend"
+msgstr "Partajează cu un prieten"
+
+#: ../../portable/menubar.py:229
+msgid "Copy URL"
+msgstr "Copiază _URL"
+
+#: ../../portable/menubar.py:233
+msgid "New _Playlist"
+msgstr "Nouă _listă de redare"
+
+#: ../../portable/menubar.py:234
+msgid "New Playlist Fol_der"
+msgstr "Nou _dosar de liste"
+
+#: ../../portable/menubar.py:236
+msgid "Re_name Playlist"
+msgstr "Rede_numește lista de redare"
+
+#: ../../portable/menubar.py:237
+msgid "_Remove Playlist"
+msgstr "Ște_rge lista de redare"
+
+#: ../../portable/menubar.py:238
+msgid "_Remove Playlists"
+msgstr "Ște_rge listele de redare"
+
+#: ../../portable/menubar.py:239
+msgid "_Remove Playlist Folders"
+msgstr "Ște_rge dosarele cu liste de redare"
+
+#: ../../portable/menubar.py:240
+msgid "_Remove Playlist Folder"
+msgstr "Ște_rge dosarul de liste"
+
+#: ../../portable/menubar.py:251 ../../portable/menubar.py:252
+msgid "_Play"
+msgstr "_Redă"
+
+#: ../../portable/menubar.py:253
+msgid "_Pause"
+msgstr "_Pauză"
+
+#: ../../portable/menubar.py:254
+msgid "_Stop"
+msgstr "_Stop"
+
+#: ../../portable/menubar.py:256
+msgid "_Next Video"
+msgstr "_Următorul video"
+
+#: ../../portable/menubar.py:257
+msgid "_Previous Video"
+msgstr "Videoul _precedent"
+
+#: ../../portable/menubar.py:259
+msgid "Skip _Forward"
+msgstr "Derulează îna_inte"
+
+#: ../../portable/menubar.py:260
+msgid "Skip _Back"
+msgstr "Derulează îna_poi"
+
+#: ../../portable/menubar.py:262
+msgid "Volume _Up"
+msgstr "Mă_reşte volumul"
+
+#: ../../portable/menubar.py:263
+msgid "Volume _Down"
+msgstr "Mi_cșorează volumul"
+
+#: ../../portable/menubar.py:265
+msgid "_Fullscreen"
+msgstr "_Tot ecranul"
+
+#: ../../portable/menubar.py:266
+msgid "_Toggle Detached/Attached"
+msgstr "_Activează dezatașare/atașare"
+
+#: ../../portable/menubar.py:272
+msgid "_Donate"
+msgstr "_Donați"
+
+#: ../../portable/menubar.py:274 ../../portable/menubar.py:297
+msgid "_Help"
+msgstr "A_jutor"
+
+#: ../../portable/menubar.py:278
+msgid "Report a _Bug"
+msgstr "Raportea_ză un defect"
+
+#: ../../portable/menubar.py:280
+msgid "_Translate"
+msgstr "_Traduceţi"
+
+#: ../../portable/menubar.py:282
+msgid "_Planet Miro"
+msgstr "_Planeta Miro"
+
+#: ../../portable/menubar.py:286
+msgid "_Video"
+msgstr "_Video"
+
+#: ../../portable/menubar.py:288
+msgid "_File"
+msgstr "_Fișier"
+
+#: ../../portable/menubar.py:294
+msgid "_Sidebar"
+msgstr "Bară _laterală"
+
+#: ../../portable/menubar.py:295
+msgid "_Playlists"
+msgstr "_Liste de redare"
+
+#: ../../portable/menubar.py:296
+msgid "P_layback"
+msgstr "R_edare"
+
+#: ../../portable/util.py:302 ../../portable/util.py:304
 #, python-format
-msgid ""
-"This %(appname)s feed file has the wrong content type: %(url)s. Please "
-"notify the publisher of this file."
-msgstr ""
-"Acest fișier de flux %(appname)s are tipul de conținut greșit: %(url)s. Vă "
-"rugăm anunțați pe cel care l-a publicat."
+msgid "%(size)sGB"
+msgstr "%(size)sGB"
 
-#: ../../portable/singleclick.py:364
+#: ../../portable/util.py:308 ../../portable/util.py:310
 #, python-format
-msgid "Could not download the %(appname)s feed file: %(url)s"
-msgstr "Nu s-a putut descărca fluxul %(appname)s: %(url)s"
+msgid "%(size)sMB"
+msgstr "%(size)sMB"
 
-#: ../../portable/singleclick.py:414
-msgid "Invalid Torrent"
-msgstr "Formatul torrentului este necorespunzător"
-
-#: ../../portable/singleclick.py:416
+#: ../../portable/util.py:314 ../../portable/util.py:316
 #, python-format
-msgid ""
-"The torrent file %(filename)s appears to be corrupt and cannot be opened. "
-"[OK]"
-msgstr ""
-"Fișierul torrent %(filename)s pare să fie corupt și nu poate fi deschis.  "
-"[OK]"
+msgid "%(size)sKB"
+msgstr "%(size)skB"
 
-#: ../../portable/item.py:439
+#: ../../portable/util.py:320 ../../portable/util.py:322
+#, python-format
+msgid "%(size)sB"
+msgstr "%(size)sB"
+
+#: ../../portable/playlist.py:180
+#, python-format
+msgid "Enter a new name for the playlist %s"
+msgstr "Introduceţi un nume nou pentru lista de redare %s"
+
+#: ../../portable/item.py:830
 #, python-format
 msgid "%(count)d day"
 msgid_plural "%(count)d days"
@@ -2735,7 +2271,7 @@ msgstr[0] "%(count)d zi"
 msgstr[1] "%(count)d zile"
 msgstr[2] "%(count)d de zile"
 
-#: ../../portable/item.py:444
+#: ../../portable/item.py:835
 #, python-format
 msgid "%(count)d hour"
 msgid_plural "%(count)d hours"
@@ -2743,7 +2279,7 @@ msgstr[0] "%(count)d oră"
 msgstr[1] "%(count)d ore"
 msgstr[2] "%(count)d de ore"
 
-#: ../../portable/item.py:449
+#: ../../portable/item.py:840
 #, python-format
 msgid "%(count)d minute"
 msgid_plural "%(count)d minutes"
@@ -2751,1279 +2287,592 @@ msgstr[0] "%(count)d minut"
 msgstr[1] "%(count)d minute"
 msgstr[2] "%(count)d de minute"
 
-#: ../../portable/item.py:733 ../../portable/item.py:749
-#: ../../portable/item.py:761
+#: ../../portable/item.py:1085
 msgid "no title"
 msgstr "fără titlu"
 
-#: ../../portable/item.py:1008
+#: ../../portable/item.py:1328
 msgid "starting up..."
 msgstr "pornire..."
 
-#: ../../portable/httpclient.py:90
+#: ../../portable/opml.py:193
+msgid "OPML Import failed"
+msgstr "Import OPML eșuat"
+
+#: ../../portable/opml.py:194
+msgid ""
+"The selected OPML file appears to be invalid.  Import was interrupted."
+msgstr "Fișierul OPML pare să fie invalid. Importarea a fost întreruptă."
+
+#: ../../portable/opml.py:201
+msgid "OPML Import summary"
+msgstr "Sumar importare OPML"
+
+#: ../../portable/opml.py:202
 #, python-format
-msgid "Error: %(msg)s"
-msgstr "Eroare: %(msg)s"
+msgid "Successfully imported %(count)d feed."
+msgid_plural "Successfully imported %(count)d feeds."
+msgstr[0] "S-a reușit a importa %(count)d flux."
+msgstr[1] "S-a reușit importarea a %(count)d fluxuri."
+msgstr[2] "S-a reușit importarea a %(count)d de fluxuri."
 
-#: ../../portable/httpclient.py:105 ../../portable/httpclient.py:111
-msgid "Can't connect"
-msgstr "Nu mă pot conecta"
-
-#: ../../portable/httpclient.py:106
+#: ../../portable/opml.py:208
 #, python-format
-msgid "Connection Error: %(msg)s"
-msgstr "Eroare la conectare: %(msg)s"
+msgid "Skipped %(count)d feed already present."
+msgid_plural "Skipped %(count)d feeds already present."
+msgstr[0] "%(count)d flux deja existent a fost sărit."
+msgstr[1] "%(count)d fluxuri deja existente au fost sărite."
+msgstr[2] "%(count)d de fluxuri deja existente au fost sărite."
 
-#: ../../portable/httpclient.py:112
-msgid "SSL connection error"
-msgstr "Eroare SSL la conectare"
+#: ../../portable/theme.py:159
+msgid "Example Playlist"
+msgstr "Exemplu de listă de redare"
 
-#: ../../portable/httpclient.py:116
-msgid "HTTP error"
-msgstr "eroare HTTP"
-
-#: ../../portable/httpclient.py:120
+#: ../../portable/displaytext.py:51
 #, python-format
-msgid "Bad Status Line: %(msg)s"
-msgstr "Linie de stare invalidă: %(msg)s"
+msgid "%(size)s gb/s"
+msgstr "%(size)s Gb/s"
 
-#: ../../portable/httpclient.py:125
+#: ../../portable/displaytext.py:54
 #, python-format
-msgid "Bad Header Line: %(msg)s"
-msgstr "Linie de antet invalidă: %(msg)s"
+msgid "%(size)s mb/s"
+msgstr "%(size)s Mb/s"
 
-#: ../../portable/httpclient.py:130
+#: ../../portable/displaytext.py:57
 #, python-format
-msgid "Bad Chunk size: %(msg)s"
-msgstr "Dimensiune greșită de bucăți: %(msg)s"
+msgid "%(size)s kb/s"
+msgstr "%(size)s kb/s"
 
-#: ../../portable/httpclient.py:135
+#: ../../portable/displaytext.py:60
 #, python-format
-msgid "Expected CRLF got: %(character)r"
-msgstr "Se aștepta CRLF dar s-a găsit: %(character)r"
+msgid "%(size)s b/s"
+msgstr "%(size)s b/s"
 
-#: ../../portable/httpclient.py:140
+#: ../../portable/displaytext.py:75
 #, python-format
-msgid "%(host)s closed connection"
-msgstr "%(host)s a închis conexiunea"
+msgid "%(num)d sec"
+msgid_plural "%(num)d secs"
+msgstr[0] "%(num)d secundă"
+msgstr[1] "%(num)d secunde"
+msgstr[2] "%(num)d de secunde"
 
-#: ../../portable/httpclient.py:146
-msgid "Got 404 status code"
-msgstr "S-a primit codul de stare 404"
-
-#: ../../portable/httpclient.py:148
+#: ../../portable/displaytext.py:89
 #, python-format
-msgid "Bad Status Code: %(code)s"
-msgstr "Cod de stare invalid: %(code)s"
+msgid "%(size)s gb"
+msgstr "%(size)s Gb"
 
-#: ../../portable/httpclient.py:153
-msgid "Authorization failed"
-msgstr "Nu a reușit autorizarea"
-
-#: ../../portable/httpclient.py:159
-msgid "Pipeline request never started"
-msgstr "Cererea „pipeline” nu a pornit"
-
-#: ../../portable/httpclient.py:163
-msgid "Timeout"
-msgstr "Timpul alocat a expirat"
-
-#: ../../portable/httpclient.py:164
+#: ../../portable/displaytext.py:92
 #, python-format
-msgid "Connection to %(host)s timed out"
-msgstr "Conectarea la %(host)s a durat prea mult"
+msgid "%(size)s mb"
+msgstr "%(size)s Mb"
 
-#: ../../portable/httpclient.py:168
-msgid "Invalid URL"
-msgstr "URL incorect"
-
-#: ../../portable/httpclient.py:169
+#: ../../portable/displaytext.py:95
 #, python-format
-msgid "\"%(url)s\" is not a valid URL"
-msgstr "\"%(url)s\" nu este un URL corect"
+msgid "%(size)s kb"
+msgstr "%(size)s kb"
 
-#: ../../portable/httpclient.py:175
+#: ../../portable/displaytext.py:97
 #, python-format
-msgid "The file \"%(path)s\" doesn't exist"
-msgstr "Fișierul \"%(path)s\" nu există"
+msgid "%(size)s b"
+msgstr "%(size)s b"
 
-#: ../../portable/httpclient.py:179
-msgid "Read error"
-msgstr "Eroare la citire"
-
-#: ../../portable/httpclient.py:180
+#: ../../portable/displaytext.py:102
 #, python-format
-msgid "Error while reading from \"%(path)s\""
-msgstr "Eroare la citirea din \"%(path)s\""
+msgid "Expires in %(count)d day"
+msgid_plural "Expires in %(count)d days"
+msgstr[0] "Expiră după %(count)d zi"
+msgstr[1] "Expiră în %(count)d zile"
+msgstr[2] "Expiră în %(count)d de zile"
 
-#: ../../portable/httpclient.py:376
-msgid "Unknown Error code"
-msgstr "Code de eroare necunoscut"
-
-#: ../../portable/httpclient.py:408
-msgid "Connection closed"
-msgstr "Conexiune închisă"
-
-#: ../../portable/httpclient.py:829
-msgid "Unknown"
-msgstr "Necunoscut"
-
-#: ../../portable/httpclient.py:830
-msgid "Internal Error: Not ready to send"
-msgstr "Eroare internă: Nu e gata de trimitere"
-
-#: ../../portable/feed.py:925
-msgid "Error loading feed"
-msgstr "Eroare la încărcarea fluxului"
-
-#: ../../portable/feed.py:927
+#: ../../portable/displaytext.py:107
 #, python-format
-msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
-msgstr "Nu s-a putut încărca fluxul de la %(url)s (%(errordescription)s)."
+msgid "Expires in %(count)d hour"
+msgid_plural "Expires in %(count)d hours"
+msgstr[0] "Expiră după %(count)d oră"
+msgstr[1] "Expiră în %(count)d ore"
+msgstr[2] "Expiră în %(count)d de ore"
 
-#: ../../portable/feed.py:930
-msgid "Would you like to keep the feed?"
-msgstr "Doriți să păstrați fluxul?"
-
-#: ../../portable/feed.py:1055
-msgid "Bad content-type"
-msgstr "Tip de conținut greșit"
-
-#: ../../portable/feed.py:1068
+#: ../../portable/displaytext.py:112
 #, python-format
-msgid "Channel is not compatible with %(appname)s"
-msgstr "Canalul nu este compatibil cu %(appname)s"
+msgid "Expires in %(count)d minute"
+msgid_plural "Expires in %(count)d minutes"
+msgstr[0] "Expiră după %(count)d minut"
+msgstr[1] "Expiră în %(count)d minute"
+msgstr[2] "Expiră în %(count)d de minute"
 
-#: ../../portable/feed.py:1071
+#: ../../portable/displaytext.py:120
+#, python-format
+msgid "Expires: %(count)d day"
+msgid_plural "Expires: %(count)d days"
+msgstr[0] "Expiră: %(count)d zi"
+msgstr[1] "Expiră: %(count)d zile"
+msgstr[2] "Expiră: %(count)d de zile"
+
+#: ../../portable/displaytext.py:125
+#, python-format
+msgid "Expires: %(count)d hour"
+msgid_plural "Expires: %(count)d hours"
+msgstr[0] "Expiră: %(count)d oră"
+msgstr[1] "Expiră: %(count)d ore"
+msgstr[2] "Expiră: %(count)d de ore"
+
+#: ../../portable/displaytext.py:130
+#, python-format
+msgid "Expires: %(count)d minute"
+msgid_plural "Expires: %(count)d minutes"
+msgstr[0] "Expiră: %(count)d minut"
+msgstr[1] "Expiră: %(count)d minute"
+msgstr[2] "Expiră: %(count)d de minute"
+
+#: ../../platform/osx/plat/frontends/widgets/application.py:168
+msgid "Download Completed"
+msgstr "Descărcare terminată"
+
+#: ../../platform/osx/plat/frontends/widgets/application.py:169
+#, python-format
+msgid "Download of video '%s' is finished."
+msgstr "S-a terminat descărcarea fișierului video '%s'."
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:132
+msgid "Add to Library"
+msgstr "Adaugă la bibliotecă"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
+msgid "Services"
+msgstr "Servicii"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
+msgid "Hide Others"
+msgstr "Ascunde-le pe celelalte"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:141
+msgid "Show All"
+msgstr "Afișează tot"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:146
+msgid "Preferences..."
+msgstr "Preferințe..."
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:152
+msgid "Close Window"
+msgstr "Închide fereastra"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
+msgid "Cut"
+msgstr "Decupează"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
+msgid "Copy"
+msgstr "Copiază"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:159
+msgid "Paste"
+msgstr "Lipește"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
+msgid "Select All"
+msgstr "Selectează tot"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:164
+msgid "Edit"
+msgstr "Modifică"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:169
+msgid "Present Half Size"
+msgstr "Prezent Jumătate de Dimensiune"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:170
+msgid "Present Actual Size"
+msgstr "Prezent Dimensiune Întreagă"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:171
+msgid "Present Double Size"
+msgstr "Prezent Dimensiune Dublă"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:173
+msgid "Present Video"
+msgstr "Video Actual"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:180
+msgid "Zoom"
+msgstr "Scalare"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
+msgid "Minimize"
+msgstr "Micşorează"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
+msgid "Main Window"
+msgstr "Fereastra principală"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
+msgid "Bring All to Front"
+msgstr "Adu tot în prim-plan"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:187
+msgid "Window"
+msgstr "Fereastră"
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
+#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:39
+msgid "Enable tray icon"
+msgstr "Activează pictograma în zona de notificare"
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
+msgid "Renderer options:"
+msgstr "Opțiuni de afișare"
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:74
+msgid "Video renderer:"
+msgstr "Redare video:"
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:79
+msgid "You must restart playback for visualization changes to take effect."
+msgstr "Trebuie să reporniți redarea înainte ca schimbările să ia efect."
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:82
+msgid "None"
+msgstr "Niciunul"
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:88
+msgid "Use this for video when playing audio:"
+msgstr "Utilizați asta ca video când redați audio:"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
+msgid "Update Available"
+msgstr "Actualizări disponibile"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
+msgid "Do you want to download it now?"
+msgstr "Vreți să o descărcați acum?"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
+msgid "Install Adobe Flash?"
+msgstr "Instalați Adobe Flash?"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
 #, python-format
 msgid ""
-"This channel is not compatible with %(appname)s but we'll try our best to "
-"grab the files.  It may take extra time to list the videos, and descriptions "
-"may look funny.\n"
-"\n"
-"Please contact the publishers of %(url)s and ask if they can supply a feed "
-"in a format that will work with %(appname)s.\n"
-"\n"
-"Do you want to try to load this channel anyway?"
+"For the best %(appname)s experience, we suggest you install Adobe Flash.  "
+"Would you like to do this now?"
 msgstr ""
-"Acest canal nu este compatibil cu %(appname)s dar se poate încerca "
-"extragerea fișierelor. E posibil ca afișarea video-urilor să dureze mai "
-"mult, și descrierile ar putea arăta ciudat.\n"
+"Pentru cea mai bună experienţă %(appname)s, e sugerat să instalați Adobe "
+"Flash. Doriți să-o faceți acum?"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
+msgid "Install Adobe Flash"
+msgstr "Instalare Adobe Flash"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:43
+msgid "When I click the red close button:"
+msgstr "Când apăs butonul roșu de închidere:"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
+msgid "Close to tray so that downloads can continue."
+msgstr "Închide către zona de notificare, ca descărcările să continue."
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:127
+msgid "Close to tray?"
+msgstr "Ascunde în zona de notificare?"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:186
+msgid "Error Bombing Item"
+msgstr "Eroare la bombardarea elementului"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:188
+msgid "Error Recommending Item"
+msgstr "Eroare la recomandarea elementului"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:190
+msgid "Error Opening Website"
+msgstr "Eroare la deschiderea sitului"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:195
+#, python-format
+msgid ""
+"There was an error opening %(url)s.  Please try again in a few seconds"
+msgstr ""
+"S-a întâlnit o eroare la deschiderea %(url)s. Încercați din nou peste câteva "
+"secunde"
+
+#: ../../portable/frontends/widgets/statictabs.py:103
+#: ../../portable/frontends/widgets/itemlistcontroller.py:512
+msgid "Other"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:95
+msgid "Play Just This Item"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:113
+msgid "Stop Seeding"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:115
+msgid "Start Seeding"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:63
+#, python-format
+msgid "%(name)s First Time Setup"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:122
+#, python-format
+msgid "Welcome to the %(name)s First Time Setup"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:126
+#, python-format
+msgid ""
+"The next few screens will help you set up %(name)s so that it works best for "
+"you.\n"
 "\n"
-"Contactați pe cei ce publică %(url)s și întrebați dacă pot să ofere un flux "
-"care să funcționeze cu %(appname)s.\n"
+"We recommend that you have %(name)s launch when your computer starts up.  "
+"This way, downloads in progress can finish downloading and new media files "
+"can be downloaded in the background, ready when you want to watch."
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:138
+#, python-format
+msgid "Would you like to run %(name)s on startup?"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:163
+#, python-format
+msgid "Completing the %(name)s First Time Setup"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:167
+#, python-format
+msgid ""
+"%(name)s can find all the media files on your computer to help you organize "
+"your collection.\n"
 "\n"
-"Doriți totuși a încerca încărcarea acestui canal?"
+"Would you like %(name)s to look for media files on your computer?"
+msgstr ""
 
-#: ../../portable/feed.py:1644
+#: ../../portable/frontends/widgets/crashdialog.py:54
 #, python-format
-msgid "Search All: %(text)s"
-msgstr "Caută tot: %(text)s"
+msgid ""
+"%(appname)s has encountered an internal error.  You can help us track down "
+"this problem and fix it by submitting an error report."
+msgstr ""
 
-#: ../../portable/feed.py:2407
-msgid "Local Files"
-msgstr "Fișiere locale"
-
-#: ../../portable/feed.py:2421
-msgid "Playing File"
-msgstr "Fișier redat"
-
-#~ msgid "_Save Video..."
-#~ msgstr "_Salvează secvenţa video"
-
-#~ msgid "Save this video"
-#~ msgstr "Salvează acest fişier"
-
-#~ msgid "_Play / Pause"
-#~ msgstr "_Porneşte / Pauză"
-
-#~ msgid "_Remove Channel"
-#~ msgstr "Şter_ge canalul"
-
-#~ msgid "_Update Channel"
-#~ msgstr "_Actualizează canalul"
-
-#~ msgid "Copy Channel _Link"
-#~ msgstr "Copiaza a_dresa canalului"
-
-#~ msgid "_Open..."
-#~ msgstr "_Deschide"
-
-#~ msgid "Open various files"
-#~ msgstr "Deschide diferite fişiere"
-
-#~ msgid "P_references"
-#~ msgstr "_Preferinţe"
-
-#~ msgid "Quit the Program"
-#~ msgstr "Închide programul"
-
-#~ msgid "_Channel"
-#~ msgstr "_Canal"
-
-#~ msgid "_Add Channel..."
-#~ msgstr "_Adauga canal..."
-
-#~ msgid "U_pdate All Channels"
-#~ msgstr "Actuali_zează toate canalele"
-
-#~ msgid "Channel requires authentication"
-#~ msgstr "Canalul necesită autentificare"
-
+#: ../../portable/frontends/widgets/displays.py:358
 #, python-format
-#~ msgid "%s requires a username and password for \"%s\"."
-#~ msgstr "%s necesită un nume de utilizator şi o parolă pentru \"%s\"."
+msgid ""
+"%(appname)s can't play this file.  You may be able to open it with a "
+"different program"
+msgstr ""
 
-#~ msgid "Not a DTV-style channel"
-#~ msgstr "Nu este un canal de tipul DTV"
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files.\n"
-#~ "- It may take time to list the videos\n"
-#~ "- Descriptions may look funny\n"
-#~ "\n"
-#~ "Please contact the publishers of %s and ask if they have a DTV-style channel."
-#~ msgstr ""
-#~ "Dar vom încerca tot ceea ce e posibil pentru a prelua fişierele\n"
-#~ "- S-ar putea sa ia timp pentru a lista secvenţele video\n"
-#~ "- Descrierile pot arata ciudat\n"
-#~ "\n"
-#~ "Vă rugăm contactaţi editorii lui %s şi întrebaţi-i dacă au un canal de tipul "
-#~ "DTV."
-
-#~ msgid "DTV Version Alert"
-#~ msgstr "Alertă - versiunea DTV"
-
-#~ msgid ""
-#~ "A new version of DTV is available.\n"
-#~ "\n"
-#~ "Would you like to download it now?"
-#~ msgstr ""
-#~ "O nouă versiune DTV este disponibilă.\n"
-#~ "\n"
-#~ "Vrei să o descarc acum ?"
-
-#~ msgid "DTV Version Check"
-#~ msgstr "Verificare versiune DTV"
-
-#~ msgid "This version of DTV is up to date."
-#~ msgstr "Ai ultima versiune DTV."
-
+#: ../../portable/frontends/widgets/displays.py:584
 #, python-format
-#~ msgid "%s database save failed"
-#~ msgstr "Salvarea bazei de date %s a eşuat."
+msgid "%(count)d Site Selected"
+msgid_plural "%(count)d Sites Selected"
+msgstr[0] ""
+msgstr[1] ""
 
+#: ../../portable/frontends/widgets/browser.py:102
+msgid "Download this video"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:306
 #, python-format
-#~ msgid ""
-#~ "%s was unable to save its database: %s.\n"
-#~ "Recent changes may be lost."
-#~ msgstr ""
-#~ "%s nu a putut să-şi salveze baza de date: %s.\n"
-#~ "Schimbările recente pot fi pierdute."
+msgid "The file %(filename)s was deleted from outside %(appname)s."
+msgstr ""
 
-#~ msgid "Remove Channel"
-#~ msgstr "Şterge canalul"
-
+#: ../../portable/frontends/widgets/application.py:379
 #, python-format
-#~ msgid ""
-#~ "Are you sure you want to <b>remove</b> the channel\n"
-#~ "   '<b>%s</b>'?\n"
-#~ "<b>This operation cannot be undone.</b>"
-#~ msgstr ""
-#~ "Eşti sigur ca vrei să <b>ştergi</b> canalul\n"
-#~ "   '<b>%s</b>'?\n"
-#~ "<b>Această operaţie este definitivă.</b>"
+msgid "%(appname)s is up to date"
+msgstr ""
 
+#: ../../portable/frontends/widgets/application.py:381
 #, python-format
-#~ msgid "You have %d download%s still in progress."
-#~ msgstr "Aii %d descărcări%s înca în derulare."
+msgid "%(appname)s is up to date!"
+msgstr ""
 
-#~ msgid "Unknown Runtime Error"
-#~ msgstr "Eroare de execuţie necunoscută"
+#: ../../portable/frontends/widgets/application.py:728
+msgid "Remove site"
+msgid_plural "Remove sites"
+msgstr[0] ""
+msgstr[1] ""
 
+#: ../../portable/frontends/widgets/application.py:730
 #, python-format
-#~ msgid "An unknown error has occurred %s."
-#~ msgstr "O eroare necunoscută a apărut %s."
+msgid "Are you sure you want to remove this site?"
+msgid_plural "Are you sure you want to remove these %(count)s sites?"
+msgstr[0] ""
+msgstr[1] ""
 
-#~ msgid "Pending Auto Download"
-#~ msgstr "Aştept descărcarea automată"
-
-#~ msgid "Pending Manual Download"
-#~ msgstr "Aştept descărcarea manuală"
-
-#~ msgid "Unwatched"
-#~ msgstr "Nevizionat"
-
-#~ msgid "Save"
-#~ msgstr "Salvează"
-
-#~ msgid "Expires"
-#~ msgstr "Expiră"
-
-#~ msgid "Nothing to display.<br></br> Enter a query in the search field above."
-#~ msgstr ""
-#~ "Nu este nimic de afişat.<br></br> Introdu un criteriu în câmpul de căutare "
-#~ "de mai sus."
-
-#~ msgid "Searching..."
-#~ msgstr "Caut..."
-
-#~ msgid "Channel Guide"
-#~ msgstr "Ghid canale"
-
-#~ msgid "My Collection"
-#~ msgstr "Colecţia mea"
-
-#~ msgid "Democracy - External Playback Template"
-#~ msgstr "Democracy - Şablonul extern de redare"
-
-#~ msgid "Continue To Next Video"
-#~ msgstr "Continuă cu următoarea secvenţă video"
-
-#~ msgid "Recommend"
-#~ msgstr "Recomandă"
-
-#~ msgid "Back to Channel"
-#~ msgstr "Înapoi la canal"
-
-#~ msgid "Channel Settings"
-#~ msgstr "Setările canalului"
-
-#~ msgid "Videos expire after:"
-#~ msgstr "Secvenţa video expiră după:"
-
-#~ msgid "Default"
-#~ msgstr "Standard"
-
-#~ msgid "Auto download should:"
-#~ msgstr "Descărcarea auto ar trebui:"
-
-#~ msgid ""
-#~ "If I have ${maxnew} ${maxnew2} videos waiting, don't auto download more."
-#~ msgstr ""
-#~ "Daca am ${maxnew} ${maxnew2} secvenţe video ce aşteaptă, nu mai descarc "
-#~ "automat."
-
-#~ msgid "(Keeps channel from hogging disk space)"
-#~ msgstr "(Menţine canalul să nu ocupe prea mult spaţiu pe disc)"
-
-#~ msgid "Channel URL"
-#~ msgstr "URL-ul canalului"
-
-#~ msgid "Videos on this Channel"
-#~ msgstr "Secvenţe video în acest canal"
-
-#~ msgid "Watched"
-#~ msgstr "Vizionat"
-
-#~ msgid "Saved"
-#~ msgstr "Salvat"
-
-#~ msgid "Feed Title"
-#~ msgstr "Titlul fluxului"
-
-#~ msgid ""
-#~ "This file type (${format}) can't be played in the main Democracy window."
-#~ msgstr ""
-#~ "Acest tip de fişier (${format}) nu poate fi rulat în fereastra principală a "
-#~ "aplicaţiei Democracy."
-
-#~ msgid "Skip Video ${countdown}"
-#~ msgstr "Sări peste secvenţa video ${countdown}"
-
-#~ msgid "Simple translation"
-#~ msgstr "Traducere simplă"
-
-#~ msgid "truck stop in a ${can}"
-#~ msgstr "opreşte camionul într-o ${can}"
-
-#~ msgid ""
-#~ "This is a ${car} and this is a ${truck} <span> This text is <b>raw</b> "
-#~ "text</span>"
-#~ msgstr ""
-#~ "Aceasta este o ${car} şi acesta este un ${truck} <span> Acest text este test "
-#~ "<b>neprelucrat</b></span>"
-
-#~ msgid "Active Downloads"
-#~ msgstr "Descarcări active"
-
-#~ msgid "Expiring"
-#~ msgstr "Expiră"
-
-#~ msgid "Democracy Internet TV: How to Get Started"
-#~ msgstr "Democracy Internet TV: Cum să începem"
-
-#~ msgid "GO BIG:"
-#~ msgstr "ÎN MARE:"
-
-#~ msgid "This is your fullscreen button. Click it and lean back."
-#~ msgstr "Acesta este butonul pentru tot ecranul. Apasă-l şi lasă-te pe spate."
-
-#~ msgid "NEW STUFF:"
-#~ msgstr "CE MAI E NOU PRIN ZONĂ:"
-
-#~ msgid ""
-#~ "Blue circles mean the channel has new videos available, green circles mean "
-#~ "you have downloaded videos ready to watch."
-#~ msgstr ""
-#~ "Cercurile albastre înseamnă că avem secvenţe video noi în canal iar cele "
-#~ "verzi că secvenţele video descărcate sunt gata pentru vizionare."
-
-#~ msgid ""
-#~ "<strong i18n:translate=\"\">SKIP INTRO: <a style=\"color: #090;\" href=\"#\" "
-#~ "onclick=\"eventURL('action:doneWithIntro');\">Go to Channel Guide "
-#~ ">></a></strong>"
-#~ msgstr ""
-#~ "<strong i18n:translate=\"\">Sari peste introducere: <a style=\"color: "
-#~ "#090;\" href=\"#\" onclick=\"eventURL('action:doneWithIntro');\">Du-te la "
-#~ "Ghidul canalului>></a></strong>"
-
-#~ msgid ""
-#~ "<strong>Add Channels:</strong> The Channel Guide is your home base for "
-#~ "internet TV channels. Click 'ADD' to subscribe to a channel-- <strong>the "
-#~ "channels in the guide are free.</strong>"
-#~ msgstr ""
-#~ "<strong>Adaugă canale:</strong> Ghidul canalului este locaţia de bază pentru "
-#~ "canalele de internet TV. Apasă 'Adaugă' ca să te abonezi la un canal-- "
-#~ "<strong>canalele din ghid sunt gratuite.</strong>"
-
-#~ msgid ""
-#~ "<strong>Don't Wait:</strong> Democracy is different than watching webpage "
-#~ "videos-- publishers can offer big, high quality videos. So don't sit around "
-#~ "waiting for videos: start some downloads and check back later."
-#~ msgstr ""
-#~ "<strong>Nu aştepta:</strong> Democracy este diferit faţă de o pagină web ce "
-#~ "conţine secvenţe video-- editorii pot oferi secvenţe video mari la o "
-#~ "calitate foarte bună. Aşa că nu aştepta secvenţele video: porneşte câteva "
-#~ "descărcări şi verifică mai târziu."
-
-#~ msgid ""
-#~ "<strong>Leave it On:</strong> Democracy Player regularly checks channels for "
-#~ "new videos and downloads in the background. Leaving it running means you'll "
-#~ "have new videos when you're ready to watch."
-#~ msgstr ""
-#~ "<strong>Lasă-l pornit:</strong> În mod regulat Democracy Player  verifică "
-#~ "dacă au mai apărut secvenţe video noi în canale şi le descarcă în "
-#~ "background. Lăsându-l pornit înseamnă că vei avea secvenţe video noi când "
-#~ "eşti pregătit pentru vizionare."
-
-#~ msgid ""
-#~ "<strong>Don't Worry About Disk Space:</strong> Like a TiVo, Democracy Player "
-#~ "features an 'expiration' system that helps clean out older videos to make "
-#~ "room for new videos. You can always keep a video permanently by clicking "
-#~ "'save' and you can set a channel's settings to save videos automatically."
-#~ msgstr ""
-#~ "<strong>Nu vă îngrijoraţi de spaţiul de pe disc:</strong> Ca şi un TiVo, "
-#~ "funcţionalităţile aplicaţiei Democracy Player au un sistem de 'expirare' "
-#~ "care ajută la înlăturarea secvenţelor video mai vechi pentru a face loc "
-#~ "celor noi. Puteţi ţine o secvenţă video permanent apăsând 'Salvează' şi "
-#~ "puteţi specifica setările canalului pentru a salva secvenţele video automat."
-
+#: ../../portable/frontends/widgets/prefpanel.py:267
 #, python-format
-#~ msgid ""
-#~ "%s was unable to save its database: %s.\n"
-#~ "Recent changes may be lost.\n"
-#~ "Quit Anyway?"
-#~ msgstr ""
-#~ "%s nu a reuşit să-şi salveze baza de date: %s.\n"
-#~ "Schimbările recente pot fi pierdute.\n"
-#~ "Renunţi oricum?"
+msgid "Automatically run %(appname)s when I log in."
+msgstr ""
 
-#~ msgid ""
-#~ "1 day\n"
-#~ "3 days\n"
-#~ "6 days\n"
-#~ "10 days\n"
-#~ "1 month\n"
-#~ "Never"
-#~ msgstr ""
-#~ "1 zi\n"
-#~ "3 zile\n"
-#~ "6 zile\n"
-#~ "10 zile\n"
-#~ "1 luna\n"
-#~ "Niciodată"
-
-#~ msgid "<b>Channels</b>"
-#~ msgstr "<b>Canale</b>"
-
-#~ msgid "<b>Disk Space</b>"
-#~ msgstr "<b>Spaţiu pe disc</b>"
-
-#~ msgid "<b>Downloads</b>"
-#~ msgstr "<b>Descărcări</b>"
-
-#~ msgid "<b>Movies Directory</b>"
-#~ msgstr "<b>Directorul cu filme</b>"
-
-#~ msgid "Add Channel"
-#~ msgstr "Adaugă canal"
-
-#~ msgid "By default, videos expire after"
-#~ msgstr "În mod standard secvenţele video expiră după"
-
-#~ msgid "Check Channels for new content"
-#~ msgstr "Verfic canalul daca are conţinut nou"
-
-#~ msgid "Democracy - Add Channel"
-#~ msgstr "Democracy - Adaugă canal"
-
-#~ msgid "Democracy Player"
-#~ msgstr "Democracy Player"
-
-#~ msgid "Don't start a download if it leaves less than"
-#~ msgstr "Nu porni o descărcare dacă rămîne mai puțin de"
-
-#~ msgid "Enter the URL of the channel to add"
-#~ msgstr "Introdu URL-ul canalului de adăugat"
-
-#~ msgid ""
-#~ "Every 30 minutes\n"
-#~ "Every hour\n"
-#~ "Manually"
-#~ msgstr ""
-#~ "Fiecare 30 minute\n"
-#~ "Fiecare oră\n"
-#~ "Manual"
-
-#~ msgid "GB free"
-#~ msgstr "GB liberi"
-
-#~ msgid "KB/s when my computer is active"
-#~ msgstr "KB/s când calculatorul meu este activ"
-
-#~ msgid "Select Movies Directory"
-#~ msgstr "Selectează directorul cu filme"
-
-#~ msgid "Store downloaded movies in"
-#~ msgstr "Pastrează filmele descărcate în"
-
-#~ msgid "To avoid slowdowns, limit upstream to"
-#~ msgstr "Pentru a evita descărcările lente, mareşte stream-ul la"
-
-#~ msgid "Volume:"
-#~ msgstr "Volum:"
-
-#~ msgid ""
-#~ "You've selected a new folder to download movies to.  Should Democracy "
-#~ "migrate your existing downloads there?  (Currently dowloading movies will "
-#~ "not be moved until they finish.)"
-#~ msgstr ""
-#~ "Ai selectat un director nou în care să descarci filmele. Ar trebui ca "
-#~ "Democracy să mute fişierele descărcate deja în această nouă locaţie? "
-#~ "(Filmele care se descarcă în prezent nu vor fi mutate până ce nu se termină "
-#~ "de descărcat.)"
-
-#~ msgid ""
-#~ "This is a ${car} and this is a ${truck} <span>This text is <b "
-#~ "style=\"color:red\">raw</b> text</span>"
-#~ msgstr ""
-#~ "Aceasta este o ${maşină} şi acesta este un ${camion} <span> Acest text este "
-#~ "test <b>neprelucrat</b></span>"
-
-#~ msgid " "
-#~ msgstr " "
-
-#~ msgid "'"
-#~ msgstr "'"
-
-#~ msgid "Please enter the URL of the channel you'd like to add."
-#~ msgstr "Te rog să introduci URL-ul canalului pe care ai vrea să-l adaugi."
-
-#~ msgid ""
-#~ "But we'll try our best to grab the files. It may take extra time to list the "
-#~ "videos, and descriptions may look funny."
-#~ msgstr ""
-#~ "Dar noi vom face tot ceea ce e posibil ca să preluam fişierele. E posibil să "
-#~ "necesite timp suplimentar pentru a afişa secvenţele video iar descrierile "
-#~ "pot parea distractive."
-
-#~ msgid "Channel is not compatible with Democracy!"
-#~ msgstr "Canalul nu este compatibil cu Democracy!"
-
-#~ msgid "Please contact the publishers of"
-#~ msgstr "Te rog contactează editorul lui"
-
-#~ msgid ""
-#~ "and ask if they can supply a feed in a format that will work with Democracy."
-#~ msgstr ""
-#~ "şi întreabă dacă ei pot furniza o sursă într-un format care este suportat de "
-#~ "Democracy."
-
-#~ msgid ""
-#~ "Please enter the username and password given to you by this channel's "
-#~ "publisher."
-#~ msgstr ""
-#~ "Te rog specifică numele de utilizator şi parola ce ti-au fost furnizate de "
-#~ "către editorul canalului."
-
-#~ msgid "Question"
-#~ msgstr "Întrebare"
-
-#~ msgid ""
-#~ "$longAppName version $appVersion ($appRevision); copyright (c) 2005, 2006 "
-#~ "$publisher."
-#~ msgstr ""
-#~ "$longAppName versiunea $appVersion ($appRevision); drepturi de autor (c) "
-#~ "2005, 2006 $publisher."
-
-#~ msgid "About $longAppName"
-#~ msgstr "Despre $longAppName"
-
-#~ msgid "Copy log to clipboard"
-#~ msgstr "Copiază log-ul în memorie"
-
-#~ msgid "Open up the bug tracker"
-#~ msgstr "Deschide catalogul cu erori"
-
-#~ msgid "Please help us fix it. Copy and paste all the"
-#~ msgstr "Te rog ajută-ne să-l reparăm. Copiază şi reproduce toate"
-
-#~ msgid ""
-#~ "information into our bug tracker and tell us what you were doing when the"
-#~ msgstr "informaţiile în catalogul nostru cu erori şi spune-ne ce făceai când"
-
-#~ msgid "problem occurred."
-#~ msgstr "a apărut problema."
-
-#~ msgid ""
-#~ "Then, please restart Democracy Player (or you may keep getting related "
-#~ "errors). Sorry for the inconvenience. Democracy Player is still in beta, but "
-#~ "with your help we're fixing problems fast!"
-#~ msgstr ""
-#~ "Apoi, te rog, restartează Democracy Player-ul (sau tu poţi obţine erori "
-#~ "asemănătoare). Scuze pentru neplăceri. Democracy Player este încă în fază "
-#~ "beta dar cu ajutorul tău putem rezolva problemele repede !"
-
-#~ msgid "You found a bug in Democracy!"
-#~ msgstr "Ai găsit o eroare în Democracy!"
-
-#~ msgid "$longAppName"
-#~ msgstr "$longAppName"
-
+#: ../../portable/frontends/widgets/prefpanel.py:454
 #, python-format
-#~ msgid "You have %d download still in progress."
-#~ msgid_plural "You have %d downloads still in progress."
-#~ msgstr[0] "Ai %d descărcare în derulare."
-#~ msgstr[1] "Ai %d descărcări în derulare."
-#~ msgstr[2] "Ai %d descărcări în derulare."
+msgid ""
+"You've selected a new folder to download movies to.  Should %(appname)s "
+"migrate your existing downloads there? (Currently downloading movies will "
+"not be moved until they finish.)"
+msgstr ""
 
-#~ msgid "$log"
-#~ msgstr "$log"
-
-#~ msgid ""
-#~ "<font face=\"Lucida Grande\" size=\"-1\">Our bug-tracker's at <a "
-#~ "href=\"$bugTrackerURL\">$bugTrackerURL</a>. Just tell us what you were "
-#~ "doing, paste in the log message from the box above, and answer a few "
-#~ "questions, and we'll get right to work.</font>"
-#~ msgstr ""
-#~ "<font face=\"Lucida Grande\" size=\"-1\">Trackerul de buguri este la <a "
-#~ "href=\"$bugTrackerURL\">$bugTrackerURL</a>. Spuneți-ne ce făceați, lipiți "
-#~ "mesajul logului din caseta de mai sus, răspundeți la cîteva întrebări și ne "
-#~ "vom pune pe treabă</font>"
-
-#~ msgid ""
-#~ "Actually, if you have a minute, would you be willing to submit a crash "
-#~ "report to our bug-tracking system? At a minimum, what we'd need is "
-#~ "description of what you were doing at the time -- as precise as possible -- "
-#~ "plus the artfully-phrased nonsense in the box below:"
-#~ msgstr ""
-#~ "De fapt dacă aveți un pic de timp puteți trimite un raport despre prăbușire "
-#~ "la sistemul nostru de urmărire a bugurilor. Avem nevoie cel puțin de o "
-#~ "descriere a ceea ce făceați în momentul respectiv -- cît de precisă posibil -"
-#~ "- la care trebuie atașat nonsensul bine articulat din caseta de mai jos :"
-
-#~ msgid ""
-#~ "Misfortune! $longAppName fell prey to some sort of internal confusion or "
-#~ "wrong-headedness $when. We apologize and suggest that you exit and restart "
-#~ "$shortAppName. That'll teach it, and it'll also reduce your chance of losing "
-#~ "your preferences or channel subscriptions."
-#~ msgstr ""
-#~ "Nenorocire! $longAppName a căzut pradă unui oarecare tip de confuzie internă "
-#~ "sau de încăpățînare în greșeală $when. Ne cerem scuze și vă sugerăm să "
-#~ "părăsiți și apoi să reporniți $shortAppName. Asta îl va învăța minte și de "
-#~ "asemenea va reduce șansele de a vă pierde preferințele sau abonamentele la "
-#~ "canale."
-
-#~ msgid "The fall of $shortAppName??"
-#~ msgstr "Prăbușirea lui $shortAppName??"
-
-#~ msgid "About Democracy"
-#~ msgstr "Despre Democracy"
-
-#~ msgid "Channel"
-#~ msgstr "Canal"
-
-#~ msgid "Clear Menu"
-#~ msgstr "Șterge meniul"
-
-#~ msgid "File"
-#~ msgstr "Fișier"
-
-#~ msgid "Help"
-#~ msgstr "Ajutor"
-
-#~ msgid "Hide Democracy"
-#~ msgstr "Ascunde Democracy"
-
-#~ msgid "MainMenu"
-#~ msgstr "Meniul Principal"
-
-#~ msgid "New Channel Folder..."
-#~ msgstr "Dosar de Canale Nou..."
-
-#~ msgid "New Playlist Folder..."
-#~ msgstr "Dosar cu Liste de Redare Nou..."
-
-#~ msgid "New Playlist..."
-#~ msgstr "Listă de Redare Nouă"
-
-#~ msgid "Open Recent"
-#~ msgstr "Deschide Unul Recent"
-
-#~ msgid "Open..."
-#~ msgstr "Deschide..."
-
-#~ msgid "Play Video"
-#~ msgstr "Redă Videoul"
-
-#~ msgid "Preferencesâ¦"
-#~ msgstr "Preferințe"
-
-#~ msgid "Quit Democracy"
-#~ msgstr "Închide Democracy"
-
-#~ msgid "Rename..."
-#~ msgstr "Redenumește"
-
-#~ msgid "Stop Video"
-#~ msgstr "Oprește Video"
-
-#~ msgid "Update All Channels"
-#~ msgstr "Actualizează toate Canalele"
-
-#~ msgid "Update Channel"
-#~ msgstr "Actualizează Canalul"
-
-#~ msgid "%channel feed%"
-#~ msgstr "%fluxul canalului%"
-
-#~ msgid "%channel title%"
-#~ msgstr "%titlul canalului%"
-
-#~ msgid "00:00:00"
-#~ msgstr "00:00:00"
-
-#~ msgid "Box"
-#~ msgstr "Casetă"
-
-#~ msgid "FullScreen Controls"
-#~ msgstr "Controale în modul Ecran Complet"
-
-#~ msgid "VideoWindow"
-#~ msgstr "Fereastra Videoului"
-
-#~ msgid ""
-#~ "Location http://foo.bar.com/baz requires a username and password for \"text "
-#~ "supplied by server\". (Do not localize -- test data)\n"
-#~ msgstr ""
-#~ "Locația http://foo.bar.com/baz necesită un nume de utilizator și o parolă "
-#~ "pentru \"text supplied by server\".\n"
-
-#~ msgid "Password:\n"
-#~ msgstr "Parola:\n"
-
-#~ msgid "Username and password required"
-#~ msgstr "Sînt necesare Numele de Utilizator și Parola"
-
-#~ msgid ""
-#~ "Username:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Nume de Utilizator\n"
-#~ "\n"
-
-#~ msgid " limit upstream to"
-#~ msgstr " limitează traficul ascendent la"
-
-#~ msgid "(You must restart Democracy for this change to take effect)\n"
-#~ msgstr ""
-#~ "(Trebuie să reporniți Democracy pentru ca schimbarea să aibă efect)\n"
-
-#~ msgid "(movies directory path goes here)"
-#~ msgstr "(calea dosarului cu filme se trece aici)"
-
-#~ msgid "3 hours"
-#~ msgstr "3 ore"
-
-#~ msgid "4"
-#~ msgstr "4"
-
-#~ msgid "5"
-#~ msgstr "5"
-
-#~ msgid "Check channels for new content:"
-#~ msgstr "Controlează dacă e conținut nou în canale:"
-
-#~ msgid "GB free."
-#~ msgstr "GB gratuit"
-
-#~ msgid "KB/s when my computer is active."
-#~ msgstr "KB/s cînd calculatorul meu este activ."
-
-#~ msgid "Never"
-#~ msgstr "Niciodată"
-
-#~ msgid "OtherViews"
-#~ msgstr "Alte Vizualizări"
-
-#~ msgid "Run Democracy at startup"
-#~ msgstr "Lansează Democracy la pornirea SO"
-
-#~ msgid "every 30 minutes"
-#~ msgstr "la fiecare 30 de minute"
-
-#~ msgid "every hour"
-#~ msgstr "la fiecare oră"
-
-#~ msgid "manually"
-#~ msgstr "manual"
-
+#: ../../portable/frontends/widgets/removefeeds.py:83
 #, python-format
-#~ msgid "(parsed %d files - found %d videos)"
-#~ msgstr "(parsate %d fișiere - găsite %d videouri)"
+msgid ""
+"Watched folders will be removed from the sidebar but their contents will "
+"still appear in your library.  You can stop watching watched folders "
+"completely in the %(appname)s preference panel."
+msgstr ""
 
-#~ msgid "Back"
-#~ msgstr "Înapoi"
+#: ../../portable/frontends/widgets/gtk/video.py:301
+msgid "Pop-in"
+msgstr ""
 
-#~ msgid "Next"
-#~ msgstr "Următorul"
+#: ../../portable/frontends/widgets/gtk/video.py:306
+msgid "Pop-out"
+msgstr ""
 
-#~ msgid ""
-#~ "The next few screens will help you set up Democracy Player so that it works "
-#~ "best for you. Here's the first question."
-#~ msgstr ""
-#~ "Următoarele cîteva ecrane vă vor ajuta să setați Democracy Player în așa fel "
-#~ "încît să meargă optim pentru dv. Iată prima întrebare."
-
-#~ msgid ""
-#~ "We recommend that you allow Democracy Player to launch when your computer "
-#~ "starts up. This way, videos that haven't finished downloading can finish and "
-#~ "new videos on your channels will be ready when you want to watch.\n"
-#~ "\n"
-#~ "\n"
-#~ "Would you like to run Democracy when your computer starts up?"
-#~ msgstr ""
-#~ "Vă recomandăm să permiteți ca Democracy Player să fie lansat la pornirea "
-#~ "sistemului. În acest fel videourile la care nu s-a terminat descărcarea pot "
-#~ "fi terminate, iar noile videouri din canalele dv. vor fi gata cînd veți dori "
-#~ "să le vizionați.\n"
-#~ "\n"
-#~ "Doriți ca Democracy să fie lansat la pornirea sistemului?"
-
-#~ msgid "Welcome to Internet TV!"
-#~ msgstr "Bine ați venit la TV prin internet!"
-
-#~ msgid ""
-#~ "Welcome to Internet TV. There's a lot you can do with Democracy Player: "
-#~ "automatically download videos from your favorite channels, watch new videos "
-#~ "one after the other, download torrents, recommend videos to friends, and "
-#~ "lots more.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Bine ați venit la TV prin internet. Puteți face multe cu Democracy Player: "
-#~ "descărcare de videouri de pe canalele preferate, vizionare de videouri noi "
-#~ "unul după altul, descărcare de torente, recomandare de videouri către "
-#~ "prieteni și multe altele.\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "You're done!\n"
-#~ "\n"
-#~ "Setup is complete -- now you can find some channels and start watching.\n"
-#~ "\n"
-#~ "Don't Wait: Democracy is different than watching webpage videos -- "
-#~ "publishers can offer big, high quality videos. So don't sit around waiting "
-#~ "for videos: start some downloads and check back later. \n"
-#~ "\n"
-#~ "Leave it On: Democracy Player regularly checks channels for new videos and "
-#~ "downloads in the background. Leaving it running means you'll have new videos "
-#~ "when you're ready to watch.\n"
-#~ "\n"
-#~ "Don't Worry About Disk Space: Like a TiVo, Democracy Player features an "
-#~ "'expiration' system that helps clean out older videos to make room for new "
-#~ "videos. You can always keep a video permanently by clicking 'save' and you "
-#~ "can set a channel's settings to save videos automatically.\n"
-#~ "\n"
-#~ "Go Big: The button to the right of the play button shows videos fullscreen.\n"
-#~ "\n"
-#~ "Find Videos: The Democracy Channel Guide has hundreds of internet TV "
-#~ "channels, all of them are free. Just click 'ADD' to watch a channel.\n"
-#~ msgstr ""
-#~ "Sînteți gata!\n"
-#~ "\n"
-#~ "Setarea e completă -- acum puteți găsi niște canale pentru a le viziona\n"
-#~ "\n"
-#~ "Nu mai așteptați: Democracy e diferit de vizionarea videourilor din paginile "
-#~ "web -- producătorii pot oferi videouri de calitate superioară. Deci nu stați "
-#~ "degeaba așteptînd videouri: porniți cîteva descărcări și reveniți mai "
-#~ "tîrziu. \n"
-#~ "\n"
-#~ "Lăsați-l pornit: Democracy Player controlează cu regularitate canalele "
-#~ "pentru videouri noi și le descarcă în fundal. Dacă îl lăsați pornit înseamnă "
-#~ "că veți avea videouri noi la dispoziție cînd veți fi pregătit de vizionare.\n"
-#~ "\n"
-#~ "Nu vă îngrijorați pentru spațiul de pe disc: Ca și TiVo, Democracy Player "
-#~ "posedă un sistem de 'expirare' care ajută la eliminarea videourilor vechi ca "
-#~ "să facă loc pentru cele noi. Puteți totuși păstra un video în mod permanent "
-#~ "făcînd clic pe 'salvează' și puteți seta un canal ca să autosalveze "
-#~ "videourile .\n"
-#~ "\n"
-#~ "Faceți-l Mare: Butonul de la dreapta celui de redare maximizează "
-#~ "videourile.\n"
-#~ "\n"
-#~ "Găsiți Videouri: Ghidul de Canale Democracy are sute de canale de TV prin "
-#~ "internet, toate gratuite. Faceți clic pe 'ADAUGĂ' pentru a vedea un canal.\n"
-
-#~ msgid ""
-#~ "%message%\n"
-#~ "%message%"
-#~ msgstr ""
-#~ "%message%\n"
-#~ "%message%"
-
-#~ msgid "Create new playlist"
-#~ msgstr "Creează listă de redare nouă"
-
-#~ msgid "onStartup called twice"
-#~ msgstr "onStartup apelat de două ori"
-
+#: ../../portable/frontends/widgets/gtk/window.py:516
 #, python-format
-#~ msgid "There was an error opening %s.  Please try again in a few seconds"
-#~ msgstr ""
-#~ "A apărut o eroare la deschiderea %s. Încercați din nou peste cîteva secunde"
+msgid "About %(appname)s"
+msgstr ""
 
-#~ msgid "${count} Downloads in Progress"
-#~ msgstr "${count} Descărcări Aflate în Curs"
-
-#~ msgid "1 Download in Progress"
-#~ msgstr "1 Descărcare Aflată în Curs"
-
-#~ msgid "${len} Videos On This Channel"
-#~ msgstr "${len} Videouri În Acest Canal"
-
-#~ msgid "All ${len} Videos Match This Search"
-#~ msgstr "Toate Cele ${len} Videouri Se Potrivesc Cu Această Căutare"
-
-#~ msgid "Looking for videos at this URL"
-#~ msgstr "Caută clipuri la această adresă"
-
+#: ../../portable/frontends/widgets/gtk/window.py:531
 #, python-format
-#~ msgid "%s database save succeeded"
-#~ msgstr "%s bază de date salvată cu succes"
-
-#~ msgid "Add Channel..."
-#~ msgstr "Adaugă Canal"
-
-#~ msgid "Channels"
-#~ msgstr "Canale"
-
-#~ msgid "Check for New Version"
-#~ msgstr "Caută Versiune Nouă"
-
-#~ msgid "Copy Channel URL"
-#~ msgstr "Copiază URL-ul Canalului"
-
-#~ msgid "Copy Video URL"
-#~ msgstr "Copiază URL-ul Videoului"
-
-#~ msgid "New Channel Guide..."
-#~ msgstr "Ghid de Canale Nou..."
-
-#~ msgid "New Search Channel..."
-#~ msgstr "Canal de Căutare Nou"
-
-#~ msgid "Next Video"
-#~ msgstr "Următorul Video"
-
-#~ msgid "Playlists"
-#~ msgstr "Liste de Redare"
-
-#~ msgid "Previous Video"
-#~ msgstr "Precedentul Video"
-
-#~ msgid "Remove..."
-#~ msgstr "Șterge"
-
-#~ msgid "Save Video As..."
-#~ msgstr "Salvează Video ca..."
-
-#~ msgid "Send This Channel to a Friend"
-#~ msgstr "Trimite Acest Canal unui Prieten"
-
-#~ msgid "99999"
-#~ msgstr "99999"
-
-#~ msgid "BitTorrent ports:"
-#~ msgstr "Porturi BitTorrent:"
-
-#~ msgid "Maximum:"
-#~ msgstr "Maximum:"
-
-#~ msgid "Minimum:"
-#~ msgstr "Minimum:"
-
-#~ msgid "Play videos one after another."
-#~ msgstr "Redă videourile unul după altul."
-
-#~ msgid "Stop after each video."
-#~ msgstr "Oprire după fiecare video."
-
-#~ msgid "$label$"
-#~ msgstr "$etichetă$"
-
-#~ msgid "$title$"
-#~ msgstr "$titlu$"
-
-#~ msgid "Item1"
-#~ msgstr "Item1"
-
-#~ msgid "Search Engine"
-#~ msgstr "Motor de Căutare"
-
-#~ msgid "URL"
-#~ msgstr "URL"
-
-#~ msgid "Only search my Movies folder."
-#~ msgstr "Caută numai în dosarul Movies"
-
-#~ msgid "Search my entire Home folder."
-#~ msgstr "Caută în tot dosarul meu Home."
-
-#~ msgid "Save Video _As..."
-#~ msgstr "Salvează Videoul _ca..."
-
-#~ msgid "_Copy Video URL"
-#~ msgstr "_Copiază URL-ul Videoului"
-
-#~ msgid "_Remove Video"
-#~ msgstr "_Înlătură Video"
-
-#~ msgid "_Stop Video"
-#~ msgstr "_Oprește Video"
-
-#~ msgid "_Send this channel to a friend"
-#~ msgstr "_Trimite acest canal unui prieten"
-
-#~ msgid "Re_name Channel"
-#~ msgstr "Re_denumește Canalul"
-
-#~ msgid "_Channels"
-#~ msgstr "_Canale"
-
-#~ msgid "New _Playlist..."
-#~ msgstr "_Listă de Redare Nouă"
-
-#~ msgid "New Playlist _Folder..."
-#~ msgstr "_Dosar Nou cu Liste de redare..."
-
-#~ msgid "New Channel _Folder..."
-#~ msgstr "_Dosar Nou cu Canale..."
-
-#~ msgid "Add _Channel..."
-#~ msgstr "Adaugă _Canal..."
-
-#~ msgid "New Searc_h Channel..."
-#~ msgstr "Canal de Căutar_e Nou ..."
-
-#~ msgid "New Channel _Guide..."
-#~ msgstr "Ghid de Canale Nou ..."
-
-#~ msgid "Delete selection"
-#~ msgstr "Șterge selecția"
-
-#~ msgid "_Remove..."
-#~ msgstr "_Înlătură"
-
-#~ msgid "_Remove Playlist..."
-#~ msgstr "_Înlătură Lista de Redare..."
-
-#~ msgid "_Remove Playlists..."
-#~ msgstr "_Înlătură Listele de Redare..."
-
-#~ msgid "_Remove Playlist Folder..."
-#~ msgstr "_Înlătură Dosarul Listei de Redare..."
-
-#~ msgid "_Remove Playlist Folders..."
-#~ msgstr "_Înlătură Dosarele Listelor de Redare..."
-
-#~ msgid "_Remove Channel..."
-#~ msgstr "_Înlătură Canalul..."
-
-#~ msgid "_Remove Channels..."
-#~ msgstr "_Înlătură Canalele..."
-
-#~ msgid "_Remove Channel Folder..."
-#~ msgstr "_Înlătură Dosarul Canalului..."
-
-#~ msgid "_Remove Channel Folders..."
-#~ msgstr "_Înlătură Dosarele Canalelor..."
-
-#~ msgid "_Remove Channel Guide..."
-#~ msgstr "_Înlătură Ghidul Canalelor..."
-
-#~ msgid "_Update Channels..."
-#~ msgstr "_Actualizează Canalele..."
-
-#~ msgid "Remove Playlist..."
-#~ msgstr "Înlătură Lista de Redare"
-
-#~ msgid "Remove Playlists..."
-#~ msgstr "Înlătură Listele de Redare"
-
-#~ msgid "Remove Playlist Folder..."
-#~ msgstr "Înlătură Dosarul Listei de Redare"
-
-#~ msgid "Remove Playlist Folders..."
-#~ msgstr "Înlătură Dosarele Listei de Redare"
-
-#~ msgid "Remove Channel Folder..."
-#~ msgstr "Înlătură Dosarul de Canale..."
-
-#~ msgid "Remove Channel Folders..."
-#~ msgstr "Înlătură Dosarele de Canale..."
-
-#~ msgid "Remove Channel Guide..."
-#~ msgstr "Înlătură Ghidul de Canale..."
-
-#~ msgid "Remove Channel Guides..."
-#~ msgstr "Înlătură Ghidurile de Canale..."
-
-#~ msgid "Remove Video..."
-#~ msgstr "Înlătură Videoul..."
-
-#~ msgid "Remove Videos..."
-#~ msgstr "Înlătură Videourile..."
-
-#~ msgid "Rename Playlist..."
-#~ msgstr "Redenumește Lista de Redare..."
-
-#~ msgid "Rename Playlist Folder..."
-#~ msgstr "Redenumește Dosarul cu Liste de Redare..."
-
-#~ msgid "Rename Channel..."
-#~ msgstr "Redenumește Canalul..."
-
-#~ msgid "Rename Channel Folder..."
-#~ msgstr "Redenumește Dosarul Canalului..."
-
-#~ msgid "Rename Channel Guide..."
-#~ msgstr "Redenumește Ghidul Canalelor..."
-
-#~ msgid "Update Channel..."
-#~ msgstr "Actualizează Canalul..."
-
-#~ msgid "Update Channels..."
-#~ msgstr "Actualizează Canalele"
-
+msgid ""
+"%(copyright)s.  See license.txt file for details.\n"
+"%(trademark)s"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:506
+msgid "Remove Sites"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:634
+msgid "LIBRARY"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:726
+msgid "View:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:729
+msgid "Non Feed"
+msgstr ""
+
+#: ../../portable/frontends/widgets/diagnostics.py:110
+msgid "Total db objects in memory:"
+msgstr ""
+
+#: ../../portable/startup.py:99
 #, python-format
-#~ msgid "Could not write to %s"
-#~ msgstr "Nu pot scrie în %s"
+msgid ""
+"An unknown error prevented %(appname)s from startup.  Please file a bug "
+"report at %(url)s."
+msgstr ""
 
+#: ../../portable/singleclick.py:61
 #, python-format
-#~ msgid "%s MB required to store this video"
-#~ msgstr "%s MB necesari pentru a stoca acest video"
+msgid "%(appname)s will begin downloading it now."
+msgstr ""
 
+#: ../../portable/singleclick.py:137
 #, python-format
-#~ msgid "The torrent file at %s was not valid"
-#~ msgstr "Fișierul torent de la %s nu era valid"
+msgid ""
+"%(appname)s is not able to download a file at this URL:\n"
+"\n"
+"URL: %(url)s"
+msgstr ""
 
-#~ msgid "The torrent file for this item was deleted "
-#~ msgstr "Fișierul torent pentru acest item a fost șters "
-
-#~ msgid "outside of democracy."
-#~ msgstr "la exteriorul democracy"
-
+#: ../../portable/dl_daemon/download.py:1101
 #, python-format
-#~ msgid "%1.1fGB"
-#~ msgstr "%1.1fGB"
+msgid "The torrent file for this item was deleted outside of %(appname)s."
+msgstr ""
 
+#: ../../portable/menubar.py:270
 #, python-format
-#~ msgid "%1.1fMB"
-#~ msgstr "%1.1fMB"
+msgid "_About %(name)s"
+msgstr ""
 
-#~ msgid "-00:00:00"
-#~ msgstr "-00:00:00"
+#: ../../portable/displaytext.py:67
+#, python-format
+msgid "%(num).0f day"
+msgid_plural "%(num).0f days"
+msgstr[0] ""
+msgstr[1] ""
 
-#~ msgid "Change..."
-#~ msgstr "Modifică:"
+#: ../../portable/displaytext.py:70
+#, python-format
+msgid "%(num).0f hr"
+msgid_plural "%(num).0f hrs"
+msgstr[0] ""
+msgstr[1] ""
 
-#~ msgid "Download at most"
-#~ msgstr "Descarcă cel mult"
+#: ../../portable/displaytext.py:73
+#, python-format
+msgid "%(num).0f min"
+msgid_plural "%(num).0f mins"
+msgstr[0] ""
+msgstr[1] ""
 
-#~ msgid "Save downloaded videos in this folder:"
-#~ msgstr "Salvează videourile descărcate în acest dosar:"
+#: ../../portable/displaytext.py:141
+#, python-format
+msgid "%(month)s %(dayofmonth)s, %(year)s"
+msgstr ""
 
-#~ msgid "To avoid internet slowdowns:"
-#~ msgstr "Pentru a evita încetinirea internetului:"
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:205
+msgid "Pop Out"
+msgstr ""
 
-#~ msgid "videos at once."
-#~ msgstr "videouri odată."
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:208
+msgid "Pop In"
+msgstr ""
 
-#~ msgid "Search this folder:"
-#~ msgstr "Caută în acest dosar:"
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
+#, python-format
+msgid "Hide %(appname)s"
+msgstr ""
 
-#~ msgid "STAR"
-#~ msgstr "MARCAJ"
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:148
+#, python-format
+msgid "Quit %(appname)s"
+msgstr ""
 
-#~ msgid "SAVED"
-#~ msgstr "SALVAT"
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:192
+#, python-format
+msgid "%(appname)s Help"
+msgstr ""
 
-#~ msgid "DELETE"
-#~ msgstr "ȘTERGE"
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
+#, python-format
+msgid "You must restart %(appname)s for renderer changes to take effect."
+msgstr ""
 
-#~ msgid "default"
-#~ msgstr "implicit"
+#: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
+#, python-format
+msgid "A new version of %(appname)s is available for download."
+msgstr ""
 
-#~ msgid "Videos expire after"
-#~ msgstr "Videourile expiră după"
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
+#, python-format
+msgid ""
+"Your browser will load the web-site where you can download and install Adobe "
+"Flash.\n"
+"\n"
+"You should quit %(appname)s now and start it up again after Adobe Flash has "
+"been installed."
+msgstr ""
 
-#~ msgid "When turned on, Auto Download should"
-#~ msgstr "Cînd e activată, Auto-Descărcarea trebuie"
+#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
+#, python-format
+msgid "Quit %(appname)s completely."
+msgstr ""
 
-#~ msgid ""
-#~ "Don't Auto Download when more than ${maxnew} ${maxnew2} videos are waiting "
-#~ "unwatched."
-#~ msgstr ""
-#~ "Nu Auto-Descărca atunci cînd mai mult de ${maxnew} ${maxnew2} videouri "
-#~ "așteaptă să fie vizionate."
-
-#~ msgid "<label for=\"automatic\">Auto Download</label>"
-#~ msgstr "label for=\"automatic\">Descarcă Automat</label>"
-
-#~ msgid ""
-#~ "Democracy can't play this file. You may be able to open it with a different "
-#~ "program.<br></br><br></br><strong>Filename:</strong> "
-#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
-#~ msgstr ""
-#~ "Democracy nu poate reda acest fișier. E posibil să reușiți să-l deschideți "
-#~ "cu un alt program.<br></br><br></br><strong>Numele Fișierului:</strong> "
-#~ "${filename}<Br></Br><strong>File type:</strong> ${format}"
-
-#~ msgid "REVEAL FILE"
-#~ msgstr "REVELEAZĂ FIȘIERUL"
-
-#~ msgid "Skip >> ${countdown}"
-#~ msgstr "Sari >> ${countdown}"
-
-#~ msgid "SHOW FILE"
-#~ msgstr "ARATĂ FIȘIERUL"
-
-#~ msgid "SHOW FOLDER"
-#~ msgstr "ARATĂ DOSARUL"
-
-#~ msgid "SHARE IT"
-#~ msgstr "PARTAJEAZĂ-L"
-
-#~ msgid "STAR IT"
-#~ msgstr "MARCHEAZĂ-L"
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:128
+#, python-format
+msgid ""
+"When you click the red close button, would you like %(appname)s to close to "
+"the system tray or quit?  You can change this setting later in the Options."
+msgstr ""

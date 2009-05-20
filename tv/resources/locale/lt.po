@@ -7,859 +7,315 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-02-02 13:38-0500\n"
-"PO-Revision-Date: 2009-02-05 21:12+0000\n"
-"Last-Translator: Vytax <Unknown>\n"
+"POT-Creation-Date: 2009-05-14 15:16-0400\n"
+"PO-Revision-Date: 2009-05-07 21:43+0000\n"
+"Last-Translator: phoenixs17 <Unknown>\n"
 "Language-Team: Lithuanian <lt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "(n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-03-05 00:28+0000\n"
+"X-Launchpad-Export-Date: 2009-05-20 15:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:38
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
-msgid "Enable tray icon"
-msgstr "Įjungti sisteminę ikoną"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:42
-msgid "When I click the red close button:"
-msgstr "Paspaudus raudoną užvėrimo mygtuką:"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:45
-msgid "Close to tray so that downloads can continue."
-msgstr "Užverti į sisteminį skydelį, kad atsiuntimai būtų tęsiami."
-
-#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
-msgid "Quit Miro completely."
-msgstr "Visiškai išjungti „Miro“."
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:124
-msgid "Close to tray?"
-msgstr "Užverti į sisteminį skydelį?"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:125
-msgid ""
-"When you click the red close button, would you like Miro to close to the "
-"system tray or quit?  You can change this setting later in the Options."
-msgstr ""
-"Paspaudus raudoną užvėrimo mygtuką nukelti „Miro“ į sisteminį skydelį ar "
-"išjungti? Galėsite vėliau tai pakeisti nustatymuose."
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:182
-msgid "Error Bombing Item"
-msgstr "Klaida bombarduojant elementą"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:184
-msgid "Error Recommending Item"
-msgstr "Klaida rekomenduojant elementą"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:186
-msgid "Error Opening Website"
-msgstr "Klaida atveriant internetinį tinklalapį"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/application.py:191
+#: ../../portable/httpclient.py:89
 #, python-format
-msgid ""
-"There was an error opening %(url)s.  Please try again in a few seconds"
-msgstr "Įvyko klaida atveriant %(url)s. Prašom pabandyti vėliau."
+msgid "Error: %(msg)s"
+msgstr "Klaida: %(msg)s"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
-msgid "Update Available"
-msgstr "Yra Atnaujinimų"
+#: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
+msgid "Can't connect"
+msgstr "Prisijungti nepavyko"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
+#: ../../portable/httpclient.py:105
 #, python-format
-msgid "A new version of %s is available for download."
-msgstr "Nauja %s versija yra prieinama atsisiuntimui."
+msgid "Connection Error: %(msg)s"
+msgstr "Susijungimo klaida: %(msg)s"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
-msgid "Do you want to download it now?"
-msgstr "Ar norite atsisiųsti?"
+#: ../../portable/httpclient.py:111
+msgid "SSL connection error"
+msgstr "SSL prisijungimo klaida"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
-msgid "Install Adobe Flash?"
-msgstr "Įdiegti Adobe Flash?"
+#: ../../portable/httpclient.py:115
+msgid "HTTP error"
+msgstr "HTTP klaida"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
+#: ../../portable/httpclient.py:119
 #, python-format
-msgid ""
-"For the best %(appname)s experience, we suggest you install Adobe Flash.  "
-"Would you like to do this now?"
-msgstr ""
-"Geresniam %(appname)s darbui, mes rekomenduojame suinstaliuoti Adobe Flash. "
-"Ar norite tai padaryti dabar?"
+msgid "Bad Status Line: %(msg)s"
+msgstr "Bloga būsenos eilutė: %(msg)s"
 
-#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
-msgid "Install Adobe Flash"
-msgstr "Įdiegti Adobe Flash"
-
-#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
-msgid ""
-"Your browser will load the web-site where you can download and install Adobe "
-"Flash.\n"
-"\n"
-"You should quit Miro now and start it up again after Adobe Flash has been "
-"installed."
-msgstr ""
-"Jūsų naršyklėje atsivers puslapis iš kurio galėsite parsisiųsti ir "
-"suinstaliuoti Adobe Flash."
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
-msgid "Renderer options:"
-msgstr "Multimedia įrenginių nuostatos:"
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
-msgid "You must restart Miro for renderer changes to take effect."
-msgstr ""
-"Jūs turi iš naujo paleisti Miro tam, kad multimedia įrenginių nuostatos "
-"įsigaliotų."
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:72
-msgid "Video renderer:"
-msgstr "Video įrenginys:"
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:77
-msgid "You must restart playback for visualization changes to take effect."
-msgstr ""
-"Jūs turite iš naujo paleisti failą, kad garso vizualizacija pasikeistų."
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:80
-msgid "None"
-msgstr "Jokia"
-
-#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:86
-msgid "Use this for video when playing audio:"
-msgstr "Rodyti šį filmuką grojant muziką:"
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:120
-#: ../../portable/frontends/widgets/gtk/video.py:300
-#: ../../portable/frontends/widgets/itemcontextmenu.py:152
-msgid "Share"
-msgstr "Pasidalinti"
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:124
-#: ../../portable/frontends/widgets/style.py:232
-#: ../../portable/frontends/widgets/style.py:970
-#: ../../portable/frontends/widgets/style.py:1134
-#: ../../portable/frontends/widgets/gtk/video.py:279
-#: ../../portable/frontends/widgets/itemcontextmenu.py:109
-#: ../../portable/frontends/widgets/itemcontextmenu.py:211
-#: ../../portable/dialogs.py:106
-msgid "Keep"
-msgstr "Palikti"
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:128
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
-#: ../../portable/frontends/widgets/gtk/video.py:274
-#: ../../portable/frontends/widgets/gtk/video.py:282
-#: ../../portable/frontends/widgets/itemcontextmenu.py:65
-#: ../../portable/dialogs.py:107
-msgid "Delete"
-msgstr "Pašalinti"
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:132
-msgid "Add to Library"
-msgstr "Įtraukti į archyvą"
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:203
-msgid "Pop Out"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:206
-msgid "Pop In"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
-msgid "Services"
-msgstr "Paslaugos"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
-msgid "Hide Miro"
-msgstr "Paslėpti „Miro“"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:139
-msgid "Hide Others"
-msgstr "Paslėpti kitus"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
-msgid "Show All"
-msgstr "Rodyti visus"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:145
-msgid "Preferences..."
-msgstr "Nustatymai..."
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:147
-msgid "Quit Miro"
-msgstr "Išjungti „Miro“"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:150
-msgid "Close Window"
-msgstr "Užverti langą"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:155
-msgid "Cut"
-msgstr "Iškirpti"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:156
-msgid "Copy"
-msgstr "Kopijuoti"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
-msgid "Paste"
-msgstr "Įdėti"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
-msgid "Select All"
-msgstr "Pasirinkti viską"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
-msgid "Edit"
-msgstr "Keisti"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:167
-msgid "Present Half Size"
-msgstr "Sumažinti iki pusės"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:168
-msgid "Present Actual Size"
-msgstr "Originalus dydis"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:169
-msgid "Present Double Size"
-msgstr "Išdidinti du kart"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:171
-msgid "Present Video"
-msgstr ""
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:178
-msgid "Zoom"
-msgstr "Mastelis"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:179
-msgid "Minimize"
-msgstr "Sumažinti"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
-msgid "Main Window"
-msgstr "Pagrindinis langas"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
-msgid "Bring All to Front"
-msgstr "Perkelti viską į priekį"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
-msgid "Window"
-msgstr "Langas"
-
-#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:190
-msgid "Miro Help"
-msgstr "„Miro“ žinynas"
-
-#: ../../platform/osx/plat/frontends/widgets/application.py:166
-msgid "Download Completed"
-msgstr "Atsiuntimas baigtas"
-
-#: ../../platform/osx/plat/frontends/widgets/application.py:167
+#: ../../portable/httpclient.py:124
 #, python-format
-msgid "Download of video '%s' is finished."
-msgstr "Video failo „%s“ atsiuntimas baigtas."
+msgid "Bad Header Line: %(msg)s"
+msgstr "Bloga antraštės eilutė: %(msg)s"
 
-#: ../../portable/theme.py:136
-msgid "Custom Channels"
-msgstr "Pasirinkti kanalai"
-
-#: ../../portable/theme.py:138
+#: ../../portable/httpclient.py:129
 #, python-format
-msgid ""
-"You are running a version of %(appname)s with a custom set of channels."
-msgstr ""
-"Jūs esate paleidę %(appname)s modifikuotą versiją su savitais kanalais."
+msgid "Bad Chunk size: %(msg)s"
+msgstr "Blogas dalies dydis: %(msg)s"
 
-#: ../../portable/theme.py:171
-msgid "Example Playlist"
-msgstr "Grojaraščio pavyzdys"
-
-#: ../../portable/theme.py:175
-msgid "Miro - Report a Problem"
-msgstr "Miro - Pranešti apie problemą"
-
-#: ../../portable/searchengines.py:146
-msgid "Search All"
-msgstr "Ieškoti visur"
-
-#: ../../portable/util.py:279 ../../portable/util.py:281
+#: ../../portable/httpclient.py:139
 #, python-format
-msgid "%(size)sGB"
-msgstr "%(size)sGB"
+msgid "%(host)s closed connection"
+msgstr "%(host)s susijungimą išjungė"
 
-#: ../../portable/util.py:285 ../../portable/util.py:287
-#, python-format
-msgid "%(size)sMB"
-msgstr "%(size)sMB"
-
-#: ../../portable/util.py:291 ../../portable/util.py:293
-#, python-format
-msgid "%(size)sKB"
-msgstr "%(size)sKB"
-
-#: ../../portable/util.py:297 ../../portable/util.py:299
-#, python-format
-msgid "%(size)sB"
-msgstr "%(size)sB"
-
-#: ../../portable/opml.py:185
-msgid "OPML Import failed"
-msgstr "OPML importavimas nepavyko"
-
-#: ../../portable/opml.py:186
-msgid ""
-"The selected OPML file appears to be invalid.  Import was interrupted."
-msgstr "Parinktas OPML failas yra netinkamas. Importavimas nutrauktas."
-
-#: ../../portable/opml.py:191
-msgid "OPML Import summary"
-msgstr "OPML perkėlimo ataskaita"
-
-#: ../../portable/opml.py:192
-#, python-format
-msgid "Successfully imported %(count)d feed."
-msgid_plural "Successfully imported %(count)d feeds."
-msgstr[0] "Pavyko perkelti %(count)d kanalo."
-msgstr[1] "Pavyko perkelti %(count)d kanalų."
-msgstr[2] "Pavyko perkelti %(count)d kanalų."
-
-#: ../../portable/opml.py:198
-#, python-format
-msgid "Skipped %(count)d feed already present."
-msgid_plural "Skipped %(count)d feeds already present."
-msgstr[0] "Atšauktas %(count)d kanala jau įkeltas"
-msgstr[1] "Atšaukti %(count)d kanalai jau įkelti."
-msgstr[2] "Atšaukti %(count)d kanalai jau įkelti."
-
-#: ../../portable/storedatabase.py:862 ../../portable/storedatabase.py:1288
-#, python-format
-msgid "%(appname)s database save succeeded"
-msgstr "%(appname)s duomenų bazė sėkmingai išsaugota"
-
-#: ../../portable/storedatabase.py:865 ../../portable/storedatabase.py:1291
-msgid ""
-"The database has been successfully saved. It is now safe to quit without "
-"losing any data."
-msgstr ""
-"Duomenų bazė buvo sėkmingai išsaugota. Dabar saugu išjungti „Miro“ "
-"neprarandant jokių duomenų."
-
-#: ../../portable/storedatabase.py:872 ../../portable/storedatabase.py:1299
-#, python-format
-msgid "%(appname)s database save failed"
-msgstr "%(appname)s duomenų bazės išsaugoti nepavyko"
-
-#: ../../portable/storedatabase.py:875 ../../portable/storedatabase.py:1302
-#, python-format
-msgid ""
-"%(appname)s was unable to save its database: Disk Full.\n"
-"We suggest deleting files from the full disk or simply deleting some movies "
-"from your collection.\n"
-"Recent changes may be lost."
-msgstr ""
-"%(appname)s negali išsaugoti savo duomenų bazės. Diskas Pilnas.\n"
-"Mes patariame ištrinti keletą failų iš jūsų disko, ar paprasčiausiai "
-"ištrinti ar perkelti kelis filmus iš jūsų archyvo.\n"
-"Paskutiniai veiksmai bus prarasti."
-
-#: ../../portable/messagehandler.py:1266
-msgid "Subscribed to new feed:"
-msgstr "Užsiprenumeruokite naują kanalą:"
-
-#: ../../portable/messagehandler.py:1269
-msgid "Subscribed to new feeds:"
-msgstr "Užsiprenumeruokite naujus kanalus:"
-
-#: ../../portable/messages.py:965 ../../portable/item.py:618
-msgid "queued for download"
-msgstr "laukiama siuntimui"
-
-#: ../../portable/startup.py:91
-msgid "Unknown Error"
-msgstr "Nežinoma klaida"
-
-#: ../../portable/startup.py:93
-#, python-format
-msgid ""
-"An unknown error prevented Miro from startup.  Please file a bug report at "
-"%(url)s."
-msgstr ""
-"Nežinoma klaida sutrukdė paleisti Miro. Prašom pranešti apie šią klaidą "
-"adresu %(url)s."
-
-#: ../../portable/startup.py:173
-msgid "Database too new"
-msgstr "Duomenų bazė per nauja"
-
-#: ../../portable/startup.py:175
-#, python-format
-msgid ""
-"You have a database that was saved with a newer version of %(appname)s. You "
-"must download the latest version of %(appname)s and run that."
-msgstr ""
-"Jūsų turima duomenų bazė buvo išsaugota su naujesne %(appname)s verija. "
-"Todėl turite parsisiųsti naujausią %(appname)s versiją ir naudoti ją."
-
-#: ../../portable/displaytext.py:40
-#, python-format
-msgid "%(size)s gb/s"
-msgstr "%(size)s gb/s"
-
-#: ../../portable/displaytext.py:43
-#, python-format
-msgid "%(size)s mb/s"
-msgstr "%(size)s mb/s"
-
-#: ../../portable/displaytext.py:46
-#, python-format
-msgid "%(size)s kb/s"
-msgstr "%(size)s kb/s"
-
-#: ../../portable/displaytext.py:49
-#, python-format
-msgid "%(size)s b/s"
-msgstr "%(size)s b/s"
-
-#: ../../portable/displaytext.py:56
-#, python-format
-msgid "%(num).1f day"
-msgid_plural "%(num).1f days"
-msgstr[0] "%(num).1f diena"
-msgstr[1] "%(num).1f dienos"
-msgstr[2] "%(num).1f dienos"
-
-#: ../../portable/displaytext.py:59
-#, python-format
-msgid "%(num).1f hr"
-msgid_plural "%(num).1f hrs"
-msgstr[0] "%(num).1f val"
-msgstr[1] "%(num).1f val"
-msgstr[2] "%(num).1f val"
-
-#: ../../portable/displaytext.py:62
-#, python-format
-msgid "%(num).1f min"
-msgid_plural "%(num).1f mins"
-msgstr[0] "%(num).1f min"
-msgstr[1] "%(num).1f min"
-msgstr[2] "%(num).1f min"
-
-#: ../../portable/displaytext.py:64
-#, python-format
-msgid "%(num)d sec"
-msgid_plural "%(num)d secs"
-msgstr[0] "%(num)d s"
-msgstr[1] "%(num)d s"
-msgstr[2] "%(num)d s"
-
-#: ../../portable/displaytext.py:78
-#, python-format
-msgid "%(size)s gb"
-msgstr "%(size)s gb"
-
-#: ../../portable/displaytext.py:81
-#, python-format
-msgid "%(size)s mb"
-msgstr "%(size)s mb"
-
-#: ../../portable/displaytext.py:84
-#, python-format
-msgid "%(size)s kb"
-msgstr "%(size)s kb"
-
-#: ../../portable/displaytext.py:86
-#, python-format
-msgid "%(size)s b"
-msgstr "%(size)s b"
-
-#: ../../portable/displaytext.py:91
-#, python-format
-msgid "Expires in %(count)d day"
-msgid_plural "Expires in %(count)d days"
-msgstr[0] "Pasibaigs saugojimo laikas po %(count)d dienos"
-msgstr[1] "Pasibaigs saugojimo laikas po %(count)d dienų"
-msgstr[2] "Pasibaigs saugojimo laikas po %(count)d dienų"
-
-#: ../../portable/displaytext.py:96
-#, python-format
-msgid "Expires in %(count)d hour"
-msgid_plural "Expires in %(count)d hours"
-msgstr[0] "Expires in %(count)d hour"
-msgstr[1] "Pasibaigs saugojimo laikas po %(count)d valandų"
-msgstr[2] "Pasibaigs saugojimo laikas po %(count)d valandų"
-
-#: ../../portable/displaytext.py:101
-#, python-format
-msgid "Expires in %(count)d minute"
-msgid_plural "Expires in %(count)d minutes"
-msgstr[0] "Pasibaigs saugojimo laikas po %(count)d minutės"
-msgstr[1] "Pasibaigs saugojimo laikas po %(count)d minučių"
-msgstr[2] "Pasibaigs saugojimo laikas po %(count)d minučių"
-
-#: ../../portable/displaytext.py:109
-#, python-format
-msgid "Expires: %(count)d day"
-msgid_plural "Expires: %(count)d days"
-msgstr[0] "Pasibaigs saugojimo laikas: %(count)d dienos"
-msgstr[1] "Pasibaigs saugojimo laikas: %(count)d dienų"
-msgstr[2] "Pasibaigs saugojimo laikas: %(count)d dienų"
-
-#: ../../portable/displaytext.py:114
-#, python-format
-msgid "Expires: %(count)d hour"
-msgid_plural "Expires: %(count)d hours"
-msgstr[0] "Pasibaigs saugojimo laikas: %(count)d valandos"
-msgstr[1] "Pasibaigs saugojimo laikas: %(count)d valandų"
-msgstr[2] "Pasibaigs saugojimo laikas: %(count)d valandų"
-
-#: ../../portable/displaytext.py:119
-#, python-format
-msgid "Expires: %(count)d minute"
-msgid_plural "Expires: %(count)d minutes"
-msgstr[0] "Pasibaigs saugojimo laikas: %(count)d minutės"
-msgstr[1] "Pasibaigs saugojimo laikas: %(count)d minučių"
-msgstr[2] "Pasibaigs saugojimo laikas: %(count)d minučių"
-
-#: ../../portable/downloader.py:233
-msgid "activity"
-msgstr "veikla"
-
-#: ../../portable/downloader.py:268 ../../portable/httpclient.py:145
-#: ../../portable/httpclient.py:174
+#: ../../portable/httpclient.py:144 ../../portable/httpclient.py:173
+#: ../../portable/downloader.py:297
 msgid "File not found"
 msgstr "Failas nerastas"
 
-#: ../../portable/downloader.py:269
-msgid "Flash URL Scraping Error"
-msgstr "Klaida nagrinėjant Flash URL"
+#: ../../portable/httpclient.py:145
+msgid "Got 404 status code"
+msgstr "Gautas 404 būsenos kodas"
 
-#: ../../portable/downloader.py:447
-msgid "starting up"
-msgstr "paleidžiama"
-
-#: ../../portable/dl_daemon/download.py:507
-#: ../../portable/frontends/widgets/style.py:228
-msgid "Error"
-msgstr "Klaida"
-
-#: ../../portable/dl_daemon/download.py:596
+#: ../../portable/httpclient.py:147
 #, python-format
-msgid "Could not write to %(filename)s"
-msgstr "Nepavyko įrašyti į %(filename)s"
-
-#: ../../portable/dl_daemon/download.py:621
-#: ../../portable/dl_daemon/download.py:838
-msgid "Not enough disk space"
-msgstr "Nepakanka vietos diske"
-
-#: ../../portable/dl_daemon/download.py:622
-#: ../../portable/dl_daemon/download.py:839
-#, python-format
-msgid "%(amount)s MB required to store this video"
-msgstr "Trūksta %(amount)s MB vietos šiam filmui"
-
-#: ../../portable/dl_daemon/download.py:637
-#, python-format
-msgid "Couldn't open %(filename)s for writing"
-msgstr "Nepavyko atverti %(filename)s rašymui"
-
-#: ../../portable/dl_daemon/download.py:852
-msgid "BitTorrent failure"
-msgstr "BitTorrent klaida"
-
-#: ../../portable/dl_daemon/download.py:853
-msgid "BitTorrent failed to startup"
-msgstr "Nepavyko paleisti BitTorrent"
-
-#: ../../portable/dl_daemon/download.py:1041
-msgid "Corrupt Torrent"
-msgstr "Sugadintas „.torrent“ failas"
-
-#: ../../portable/dl_daemon/download.py:1042
-#, python-format
-msgid "The torrent file at %(url)s was not valid"
-msgstr "Torrent failas adresu %(url)s buvo netinkamas"
-
-#: ../../portable/dl_daemon/download.py:1067
-msgid "Torrent file deleted"
-msgstr "Torrent failas ištrintas"
-
-#: ../../portable/dl_daemon/download.py:1068
-msgid "The torrent file for this item was deleted outside of Miro."
-msgstr "Šio elemento torrent failas buvo ištrintas nenaudojant Miro."
-
-#: ../../portable/menubar.py:184
-msgid "_Open"
-msgstr "_Atverti"
-
-#: ../../portable/menubar.py:185
-msgid "_Download Item"
-msgstr "Par_siųsti įrašą"
-
-#: ../../portable/menubar.py:186
-msgid "Check _Version"
-msgstr "Patikrinti _versiją"
-
-#: ../../portable/menubar.py:188
-msgid "_Remove Item"
-msgstr "Išt_rinti įrašą"
-
-#: ../../portable/menubar.py:189
-msgid "_Remove Items"
-msgstr "Iš_trinti elementus..."
-
-#: ../../portable/menubar.py:190
-msgid "Re_name Item"
-msgstr "Pe_rvadinti elementą"
-
-#: ../../portable/menubar.py:191
-msgid "Save Item _As"
-msgstr "Išs_augoti įrašą kaip..."
-
-#: ../../portable/menubar.py:192
-msgid "Save Items _As"
-msgstr "Išs_augoti įrašus kaip..."
-
-#: ../../portable/menubar.py:193
-msgid "Copy Item _URL"
-msgstr "Kopijuoti įrašo _URL"
-
-#: ../../portable/menubar.py:195
-msgid "_Options"
-msgstr "_Nustatymai"
-
-#: ../../portable/menubar.py:196
-msgid "_Quit"
-msgstr "Iš_eiti"
-
-#: ../../portable/menubar.py:205
-msgid "Cu_t"
-msgstr "_Iškirpti"
-
-#: ../../portable/menubar.py:206
-msgid "_Copy"
-msgstr "_Kopijuoti"
-
-#: ../../portable/menubar.py:207
-msgid "_Paste"
-msgstr "Į_dėti"
-
-#: ../../portable/menubar.py:208
-msgid "Select _All"
-msgstr "Pasirinkti _viską"
-
-#: ../../portable/menubar.py:212
-msgid "Add _Feed"
-msgstr "Įtraukti _kanalą"
-
-#: ../../portable/menubar.py:213
-#: ../../portable/frontends/widgets/application.py:526
-msgid "Add Site"
-msgstr "Įtraukti _puslapį"
-
-#: ../../portable/menubar.py:214
-msgid "New Searc_h Feed"
-msgstr "Naujas paieškos puslapis"
-
-#: ../../portable/menubar.py:215
-msgid "New _Folder"
-msgstr "Naujas _aplankas"
-
-#: ../../portable/menubar.py:217
-msgid "Re_name"
-msgstr "Per_vadinti"
-
-#: ../../portable/menubar.py:218
-msgid "_Remove"
-msgstr "_Pašalinti"
-
-#: ../../portable/menubar.py:219
-msgid "_Remove Folder"
-msgstr "Pašalinti katalogą"
-
-#: ../../portable/menubar.py:221
-msgid "_Update Feed"
-msgstr "Atnaujinti kanalą"
-
-#: ../../portable/menubar.py:222
-msgid "_Update Feeds"
-msgstr "Atnaujinti kanalus"
-
-#: ../../portable/menubar.py:223
-msgid "Update _All Feeds"
-msgstr "Atnaujinti visus kanalus"
-
-#: ../../portable/menubar.py:225
-msgid "_Import Feeds (OPML)"
-msgstr "Importuoti kanalus (OPML)"
-
-#: ../../portable/menubar.py:226
-msgid "E_xport Feeds (OPML)"
-msgstr "E_xportuoti kanalus (OPML)"
-
-#: ../../portable/menubar.py:228
-msgid "_Share with a Friend"
-msgstr "Pasidalinti su draugais"
-
-#: ../../portable/menubar.py:229
-msgid "Copy URL"
-msgstr "Kopijuoti URL"
-
-#: ../../portable/menubar.py:233
-msgid "New _Playlist"
-msgstr "Naujas _grojaraštis"
-
-#: ../../portable/menubar.py:234
-msgid "New Playlist Fol_der"
-msgstr "Naujas grojaraščio ap_lankas"
-
-#: ../../portable/menubar.py:236
-msgid "Re_name Playlist"
-msgstr "Pe_rvadinti grojaraštį"
-
-#: ../../portable/menubar.py:237
-msgid "_Remove Playlist"
-msgstr "Paša_linti grojaraštį"
-
-#: ../../portable/menubar.py:238
-msgid "_Remove Playlists"
-msgstr "Paša_linti grojaraščius"
-
-#: ../../portable/menubar.py:239
-msgid "_Remove Playlist Folders"
-msgstr "Paša_linti grojaraščių aplankus"
-
-#: ../../portable/menubar.py:240
-msgid "_Remove Playlist Folder"
-msgstr "Paša_linti grojaraščių aplanką"
-
-#: ../../portable/menubar.py:251 ../../portable/menubar.py:252
-msgid "_Play"
-msgstr "_Rodyti"
-
-#: ../../portable/menubar.py:253
-msgid "_Pause"
-msgstr "_Pauzė"
-
-#: ../../portable/menubar.py:254
-msgid "_Stop"
-msgstr "_Sustabdyti"
-
-#: ../../portable/menubar.py:256
-msgid "_Next Video"
-msgstr "_Kitas video"
-
-#: ../../portable/menubar.py:257
-msgid "_Previous Video"
-msgstr "_Ankstesnis video"
-
-#: ../../portable/menubar.py:259
-msgid "Skip _Forward"
-msgstr "Persukti į _priekį"
-
-#: ../../portable/menubar.py:260
-msgid "Skip _Back"
-msgstr "Grįžti _Atgal"
-
-#: ../../portable/menubar.py:262
-msgid "Volume _Up"
-msgstr "_Didinti garsumą"
-
-#: ../../portable/menubar.py:263
-msgid "Volume _Down"
-msgstr "_Mažinti garsumą"
-
-#: ../../portable/menubar.py:265
-msgid "_Fullscreen"
-msgstr "_Visame ekrane"
-
-#: ../../portable/menubar.py:266
-msgid "_Toggle Detached/Attached"
-msgstr ""
-
-#: ../../portable/menubar.py:270
-msgid "_About Miro"
-msgstr "_Apie Miro"
-
-#: ../../portable/menubar.py:271
-msgid "_Donate"
-msgstr "Pa_aukoti"
-
-#: ../../portable/menubar.py:272 ../../portable/menubar.py:293
-msgid "_Help"
-msgstr "Ži_nynas"
-
-#: ../../portable/menubar.py:274
-#: ../../portable/frontends/widgets/diagnostics.py:119
-msgid "Diagnostics"
-msgstr "Diagnostika"
-
-#: ../../portable/menubar.py:275
-msgid "Report a _Bug"
-msgstr "Pranešti apie _klaidą"
-
-#: ../../portable/menubar.py:276
-msgid "_Translate"
-msgstr "_Išversti"
-
-#: ../../portable/menubar.py:277
-msgid "_Planet Miro"
-msgstr "Miro pasaulis"
-
-#: ../../portable/menubar.py:282
-msgid "_Video"
-msgstr "_Video"
-
-#: ../../portable/menubar.py:284
-msgid "_File"
-msgstr "_Failas"
-
-#: ../../portable/menubar.py:290
-msgid "_Sidebar"
-msgstr "Šoninė _juosta"
-
-#: ../../portable/menubar.py:291
-msgid "_Playlists"
-msgstr "Groja_raščiai"
-
-#: ../../portable/menubar.py:292
-msgid "P_layback"
-msgstr "_Grojimas"
-
-#: ../../portable/frontends/widgets/crashdialog.py:46
-#: ../../portable/httpclient.py:158
+msgid "Bad Status Code: %(code)s"
+msgstr "Blogas būsenos kodas: %(code)s"
+
+#: ../../portable/httpclient.py:152
+msgid "Authorization failed"
+msgstr "Patvirtinimas nepavyko"
+
+#: ../../portable/httpclient.py:157
+#: ../../portable/frontends/widgets/crashdialog.py:48
 msgid "Internal Error"
 msgstr "Vidinė klaida"
 
-#: ../../portable/frontends/widgets/crashdialog.py:52
-msgid ""
-"Miro has encountered an internal error.  You can help us track down this "
-"problem and fix it by submitting an error report."
-msgstr ""
-"Miro darbą sustabdė klaida. Jūs galite mums padėti išspręsti šią problemą "
-"atsiųsdami mums klaidos suvestinę"
+#: ../../portable/httpclient.py:162
+msgid "Timeout"
+msgstr "Baigėsi laiko limitas"
 
-#: ../../portable/frontends/widgets/crashdialog.py:59
-msgid ""
-"Include entire program database including all video and feed metadata with "
-"crash report"
-msgstr ""
-"Įtraukite visą programos duomenų bazę su visais video failų ir kanalų "
-"duomenimis kartu su klaidos suvestine."
+#: ../../portable/httpclient.py:163
+#, python-format
+msgid "Connection to %(host)s timed out"
+msgstr "Susijungimo su %(host)s išseko."
 
-#: ../../portable/frontends/widgets/crashdialog.py:64
-msgid "Describe what you were doing when you got this error:"
-msgstr "Aprašykite ką jūs darėte prieš patirtą klaidą."
+#: ../../portable/httpclient.py:167
+msgid "Invalid URL"
+msgstr "Netinkamas URL"
+
+#: ../../portable/httpclient.py:168
+#, python-format
+msgid "\"%(url)s\" is not a valid URL"
+msgstr "\"%(url)s\" yra neteisinga nuoroda"
+
+#: ../../portable/httpclient.py:174
+#, python-format
+msgid "The file \"%(path)s\" doesn't exist"
+msgstr "Failas \"%(path)s\" neegzistuoja"
+
+#: ../../portable/httpclient.py:178
+msgid "Read error"
+msgstr "Skaitymo klaida"
+
+#: ../../portable/httpclient.py:179
+#, python-format
+msgid "Error while reading from \"%(path)s\""
+msgstr "Klaida nuskaitant iš \"%(path)s\""
+
+#: ../../portable/httpclient.py:376
+msgid "Unknown Error code"
+msgstr "Nežinomas klaidos kodas"
+
+#: ../../portable/httpclient.py:408
+msgid "Connection closed"
+msgstr "Prisijungimas baigtas"
+
+#: ../../portable/httpclient.py:829
+msgid "Unknown"
+msgstr "Nežinoma"
+
+#: ../../portable/httpclient.py:830
+msgid "Internal Error: Not ready to send"
+msgstr "Vidinė klaida: nepasiruošta išsiųsti"
+
+#: ../../portable/frontends/widgets/statictabs.py:44
+msgid "Miro Guide"
+msgstr "„Miro“ gidas"
+
+#: ../../portable/frontends/widgets/statictabs.py:87
+#: ../../portable/frontends/widgets/itemlistcontroller.py:417
+msgid "Video Search"
+msgstr "Video paieška"
+
+#: ../../portable/frontends/widgets/statictabs.py:98
+#: ../../portable/frontends/widgets/itemlistcontroller.py:506
+msgid "Audio"
+msgstr "Garsas"
+
+#: ../../portable/frontends/widgets/statictabs.py:108
+msgid "Downloading"
+msgstr "Atsiunčiama"
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
+msgid "Add a Playlist"
+msgstr "Įterpti į grojaraštį"
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
+msgid "Add items to an existing playlist or a new one."
+msgstr "Įterpti įrašą į esantį grojaraštį ar į naują."
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
+msgid "Existing playlist:"
+msgstr "Jau sukurtas grojaraštis:"
+
+#: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
+msgid "New playlist:"
+msgstr "Naujas grojaraštis:"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:63
+msgid "Remove From the Library"
+msgstr "Pašalinti iš bibliotekos"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:65
+#: ../../portable/frontends/widgets/gtk/video.py:253
+#: ../../portable/frontends/widgets/gtk/video.py:262
+#: ../../portable/dialogs.py:107
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:128
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
+msgid "Delete"
+msgstr "Pašalinti"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:94
+#: ../../portable/frontends/widgets/itemcontextmenu.py:192
+msgid "Play"
+msgstr "Groti"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:96
+#: ../../portable/frontends/widgets/itemcontextmenu.py:193
+msgid "Add to Playlist"
+msgstr "Įdėti į grojaraštį"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:99
+#: ../../portable/frontends/widgets/application.py:453
+msgid "Rename Item"
+msgstr "Pervadinti įrašą"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:103
+#: ../../portable/frontends/widgets/itemcontextmenu.py:200
+msgid "Mark as Unplayed"
+msgstr "Pažymėti kaip nežiūrėtą"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:106
+#: ../../portable/frontends/widgets/itemcontextmenu.py:205
+msgid "Mark as Played"
+msgstr "Pažymėti kaip žiūrėtą"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:109
+#: ../../portable/frontends/widgets/itemcontextmenu.py:211
+#: ../../portable/frontends/widgets/style.py:244
+#: ../../portable/frontends/widgets/style.py:984
+#: ../../portable/frontends/widgets/style.py:1148
+#: ../../portable/frontends/widgets/gtk/video.py:259
+#: ../../portable/dialogs.py:106
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:124
+msgid "Keep"
+msgstr "Palikti"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:118
+#: ../../portable/frontends/widgets/itemcontextmenu.py:240
+#: ../../portable/frontends/widgets/itemcontextmenu.py:258
+msgid "Cancel Download"
+msgstr "Nutraukti siuntimą"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:122
+#: ../../portable/frontends/widgets/itemcontextmenu.py:241
+msgid "Pause Download"
+msgstr "Pristabdyti siuntimą"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:125
+#: ../../portable/frontends/widgets/itemcontextmenu.py:254
+msgid "Resume Download"
+msgstr "Pratęsti siuntimą"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:129
+#: ../../portable/frontends/widgets/itemcontextmenu.py:224
+#: ../../portable/frontends/widgets/style.py:238
+#: ../../portable/frontends/widgets/style.py:1054
+#: ../../portable/frontends/widgets/style.py:1065 ../../portable/dialogs.py:95
+msgid "Download"
+msgstr "Atsisiųsti"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:135
+#: ../../portable/frontends/widgets/style.py:228
+msgid "Web Page"
+msgstr "Tinklalapis"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:137
+#: ../../portable/frontends/widgets/style.py:225
+#: ../../portable/frontends/widgets/gtk/video.py:289
+msgid "Comments"
+msgstr "Komentarai"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:139
+msgid "License"
+msgstr "Licenzija"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:142
+msgid "File in Browser"
+msgstr "Išoriniame grotuve"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:144
+#, python-format
+msgid "File in %(progname)s"
+msgstr "Failas %(progname)s"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:146
+msgid "File on Disk"
+msgstr "Parodyti failą"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:149
+msgid "View"
+msgstr "Rodyti"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:152
+#: ../../portable/frontends/widgets/gtk/video.py:280
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:120
+msgid "Share"
+msgstr "Pasidalinti"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:187
+#, python-format
+msgid "%(count)d Downloaded Item"
+msgid_plural "%(count)d Downloaded Items"
+msgstr[0] "%(count)d Parsiųsta įrašo"
+msgstr[1] "%(count)d Parsiųsta įrašų"
+msgstr[2] "%(count)d Parsiųsta įrašų"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:216
+#, python-format
+msgid "%(count)d Available Item"
+msgid_plural "%(count)d Available Items"
+msgstr[0] "%(count)d galimas įrašas"
+msgstr[1] "%(count)d galimi įrašai"
+msgstr[2] "%(count)d galimi įrašai"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:229
+#, python-format
+msgid "%(count)d Downloading Item"
+msgid_plural "%(count)d Downloading Items"
+msgstr[0] "%(count)d Siunčiamas įrašas"
+msgstr[1] "%(count)d Siunčiami įrašai"
+msgstr[2] "%(count)d Siunčiami įrašai"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:246
+#, python-format
+msgid "%(count)d Paused Item"
+msgid_plural "%(count)d Paused Items"
+msgstr[0] "%(count)d Sustabdytas įrašas"
+msgstr[1] "%(count)d Sustabdyti įrašai"
+msgstr[2] "%(count)d Sustabdyti įrašai"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:264
+msgid "Restart Upload"
+msgstr "Iš naujo pradėti išsiuntimą"
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:278
+msgid "Remove From Playlist"
+msgstr "Pašalinti iš grojaraščio"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:55
 #: ../../portable/frontends/widgets/feedsettingspanel.py:102
@@ -893,12 +349,12 @@ msgstr[2] "prieš %(count)d mėnesius"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Videos:"
-msgstr "Automatiškai trinti failus pasibaigus laikui:"
+msgstr "Automatiškai trinti failus:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:95
 #, python-format
 msgid "Watched %(expiration)s (Default)"
-msgstr ""
+msgstr "Peržiūrėta %(expiration)s (Standartiškai)"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
@@ -906,7 +362,7 @@ msgstr "Peržiūrėta prieš 1 dieną"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr "Peržiūrėta prieš 2 dienas"
+msgstr "Peržiūrėta prieš 3 dienas"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
@@ -922,32 +378,32 @@ msgstr "Peržiūrėta prieš 1 mėnesį"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
-msgstr ""
+msgstr "Pasenę kanalo įrašai:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:139
 #, python-format
 msgid "Keep %(number)s (Default)"
-msgstr ""
+msgstr "Palikti %(number)s (Standartiškai)"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:141
 msgid "Keep 0"
-msgstr ""
+msgstr "Palikti 0"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:142
 msgid "Keep 20"
-msgstr ""
+msgstr "Palikti 20"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:143
 msgid "Keep 50"
-msgstr ""
+msgstr "Palikti 50"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:144
 msgid "Keep 100"
-msgstr ""
+msgstr "Palikti 100"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:145
 msgid "Keep 1000"
-msgstr ""
+msgstr "Palikti 1000"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
@@ -985,134 +441,567 @@ msgstr "15 neperžiūrėtų įrašų"
 msgid "Feed Settings"
 msgstr "Kanalo nuostatos"
 
-#: ../../portable/frontends/widgets/style.py:209
+#: ../../portable/frontends/widgets/firsttimedialog.py:144
+#: ../../portable/frontends/widgets/firsttimedialog.py:178
+#: ../../portable/dialogs.py:87
+msgid "Yes"
+msgstr "Taip"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:145
+#: ../../portable/frontends/widgets/firsttimedialog.py:177
+#: ../../portable/dialogs.py:88
+msgid "No"
+msgstr "Ne"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:153
+msgid "Next >"
+msgstr "Kitas >"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:185
+msgid "Restrict to all my personal files."
+msgstr "Apriboti iki visų mano asmeninių failų."
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:186
+msgid "Search custom folders:"
+msgstr "Ieškoti kitame kataloge:"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:192
+#: ../../portable/frontends/widgets/prefpanel.py:435
+msgid "Change"
+msgstr "Pakeisti"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:197
+msgid "Choose directory to search for media files"
+msgstr "Pasirinkite katalogą kur ieškosite media failų"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:211
+#: ../../portable/frontends/widgets/firsttimedialog.py:290
+msgid "< Previous"
+msgstr "< Ankstesnis"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:223
+#: ../../portable/frontends/widgets/firsttimedialog.py:225
+#: ../../portable/frontends/widgets/firsttimedialog.py:282
+#: ../../portable/feed.py:2257 ../../portable/feed.py:2364
+msgid "Search"
+msgstr "Paieška"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:225
+#: ../../portable/frontends/widgets/firsttimedialog.py:293
+msgid "Finish"
+msgstr "Baigti"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:273
+msgid "Searching for media files"
+msgstr "Ieškoma media failų"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:283
+#: ../../portable/dialogs.py:85
+msgid "Cancel"
+msgstr "Atšaukti"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:321
+#, python-format
+msgid "parsed %(count)s file"
+msgid_plural "parsed %(count)s files"
+msgstr[0] "Išanalizuota %(count)s failo"
+msgstr[1] "Išanalizuota %(count)s failų"
+msgstr[2] "Išanalizuota %(count)s failų"
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:326
+#, python-format
+msgid "found %(count)s media file"
+msgid_plural "found %(count)s media files"
+msgstr[0] "Rastas %(count)s media failas"
+msgstr[1] "Rasta %(count)s media failų"
+msgstr[2] "Rasta %(count)s media failų"
+
+#: ../../portable/frontends/widgets/crashdialog.py:63
+msgid ""
+"Include entire program database including all video and feed metadata with "
+"crash report"
+msgstr ""
+"Įtraukite visą programos duomenų bazę su visais video failų ir kanalų "
+"duomenimis kartu su klaidos suvestine."
+
+#: ../../portable/frontends/widgets/crashdialog.py:68
+msgid "Describe what you were doing when you got this error:"
+msgstr "Aprašykite ką jūs darėte prieš patirtą klaidą."
+
+#: ../../portable/frontends/widgets/style.py:221
 msgid "From"
 msgstr "Iš"
 
-#: ../../portable/frontends/widgets/style.py:210
+#: ../../portable/frontends/widgets/style.py:222
 msgid "File name:"
 msgstr "Failo pavadinimas:"
 
-#: ../../portable/frontends/widgets/style.py:211
+#: ../../portable/frontends/widgets/style.py:223
 msgid "Show More"
 msgstr "Rodyti daugiau"
 
-#: ../../portable/frontends/widgets/style.py:212
+#: ../../portable/frontends/widgets/style.py:224
 msgid "Show Less"
 msgstr "Rodyti mažiau"
 
-#: ../../portable/frontends/widgets/style.py:213
-#: ../../portable/frontends/widgets/gtk/video.py:309
-#: ../../portable/frontends/widgets/itemcontextmenu.py:137
-msgid "Comments"
-msgstr "Komentarai"
-
-#: ../../portable/frontends/widgets/style.py:215
+#: ../../portable/frontends/widgets/style.py:227
 #, python-format
 msgid "Reveal in %(progname)s"
-msgstr ""
+msgstr "Parodyti naudojant %(progname)s"
 
-#: ../../portable/frontends/widgets/style.py:215
-#: ../../portable/frontends/widgets/displays.py:369
+#: ../../portable/frontends/widgets/style.py:227
+#: ../../portable/frontends/widgets/displays.py:376
 msgid "Reveal File"
-msgstr ""
+msgstr "Parodyti failą"
 
-#: ../../portable/frontends/widgets/style.py:216
-msgid "Web Page"
-msgstr "Tinklalapis"
-
-#: ../../portable/frontends/widgets/style.py:217
+#: ../../portable/frontends/widgets/style.py:229
 msgid "File URL"
 msgstr "Failo nuoroda"
 
-#: ../../portable/frontends/widgets/style.py:218
+#: ../../portable/frontends/widgets/style.py:230
 msgid "License Page"
 msgstr "Licenzijos puslapis"
 
-#: ../../portable/frontends/widgets/style.py:219
+#: ../../portable/frontends/widgets/style.py:231
 msgid "File Type"
 msgstr "Failo tipas"
 
-#: ../../portable/frontends/widgets/style.py:220
+#: ../../portable/frontends/widgets/style.py:232
 msgid "Seeders"
 msgstr "Skleidėjai"
 
-#: ../../portable/frontends/widgets/style.py:221
+#: ../../portable/frontends/widgets/style.py:233
 msgid "Leechers"
 msgstr "Siuntėjai"
 
-#: ../../portable/frontends/widgets/style.py:222
+#: ../../portable/frontends/widgets/style.py:234
 msgid "Upload Rate"
 msgstr "Platinimo reitingas"
 
-#: ../../portable/frontends/widgets/style.py:223
+#: ../../portable/frontends/widgets/style.py:235
 msgid "Upload Total"
 msgstr "Išsiųsta iš viso"
 
-#: ../../portable/frontends/widgets/style.py:224
+#: ../../portable/frontends/widgets/style.py:236
 msgid "Down Rate"
 msgstr "Siuntimo sparta"
 
-#: ../../portable/frontends/widgets/style.py:225
+#: ../../portable/frontends/widgets/style.py:237
 msgid "Down Total"
 msgstr "Iš viso atsiųsta"
 
-#: ../../portable/frontends/widgets/style.py:226
-#: ../../portable/frontends/widgets/style.py:1040
-#: ../../portable/frontends/widgets/style.py:1051
-#: ../../portable/frontends/widgets/itemcontextmenu.py:129
-#: ../../portable/frontends/widgets/itemcontextmenu.py:224
-#: ../../portable/dialogs.py:95
-msgid "Download"
-msgstr "Atsisiųsti"
-
-#: ../../portable/frontends/widgets/style.py:227
+#: ../../portable/frontends/widgets/style.py:239
 msgid "Download Torrent"
 msgstr "Atsisiųsti Torentą"
 
-#: ../../portable/frontends/widgets/style.py:229
+#: ../../portable/frontends/widgets/style.py:240
+#: ../../portable/dl_daemon/download.py:535
+msgid "Error"
+msgstr "Klaida"
+
+#: ../../portable/frontends/widgets/style.py:241
 msgid "queued for autodownload"
 msgstr "Laukiama parsiunčiant"
 
-#: ../../portable/frontends/widgets/style.py:230
-#: ../../portable/frontends/widgets/style.py:1088
+#: ../../portable/frontends/widgets/style.py:242
+#: ../../portable/frontends/widgets/style.py:1102
+#: ../../portable/frontends/widgets/itemlistwidgets.py:720
 msgid "Unplayed"
 msgstr "Neperžiūrėti"
 
-#: ../../portable/frontends/widgets/style.py:231
-#: ../../portable/frontends/widgets/style.py:1106
+#: ../../portable/frontends/widgets/style.py:243
+#: ../../portable/frontends/widgets/style.py:1120
 msgid "Newly Available"
-msgstr "Naujai galimi"
+msgstr "Naujas"
 
-#: ../../portable/frontends/widgets/style.py:233
+#: ../../portable/frontends/widgets/style.py:245
 #: ../../portable/frontends/widgets/prefpanel.py:485
-#: ../../portable/frontends/widgets/tablist.py:523
-#: ../../portable/frontends/widgets/tablist.py:535
-#: ../../portable/frontends/widgets/tablist.py:541
-#: ../../portable/frontends/widgets/tablist.py:578
-#: ../../portable/frontends/widgets/tablist.py:584
-#: ../../portable/frontends/widgets/tablist.py:589
+#: ../../portable/frontends/widgets/tablist.py:552
+#: ../../portable/frontends/widgets/tablist.py:564
+#: ../../portable/frontends/widgets/tablist.py:570
+#: ../../portable/frontends/widgets/tablist.py:607
+#: ../../portable/frontends/widgets/tablist.py:613
+#: ../../portable/frontends/widgets/tablist.py:618
 #: ../../portable/dialogs.py:108
 msgid "Remove"
 msgstr "Pašalinti"
 
-#: ../../portable/frontends/widgets/style.py:234
-#: ../../portable/frontends/widgets/itemcontextmenu.py:113
+#: ../../portable/frontends/widgets/style.py:246
 msgid "Stop seeding"
 msgstr "Stabdyti platinimą"
 
-#: ../../portable/frontends/widgets/style.py:544
-#: ../../portable/frontends/widgets/style.py:1099
+#: ../../portable/frontends/widgets/style.py:558
+#: ../../portable/frontends/widgets/style.py:1113
 msgid "paused"
 msgstr "pristabdyta"
 
-#: ../../portable/frontends/widgets/style.py:972
+#: ../../portable/frontends/widgets/style.py:986
 msgid "Remove from playlist"
 msgstr "Ištrinti iš grojaraščio"
 
-#: ../../portable/frontends/widgets/prefpanel.py:267
-msgid "Automatically run Miro when I log in."
-msgstr "Automatiškai paleisti Miro kai aš prisijungiu."
+#: ../../portable/frontends/widgets/displays.py:368
+msgid "Filename:"
+msgstr "Failo vardas:"
+
+#: ../../portable/frontends/widgets/displays.py:371
+msgid "File type:"
+msgstr "Failo tipas:"
+
+#: ../../portable/frontends/widgets/displays.py:377
+msgid "Play Externally"
+msgstr "Groti su kitu grotuvu"
+
+#: ../../portable/frontends/widgets/displays.py:378
+msgid "Skip"
+msgstr "Praleisti"
+
+#: ../../portable/frontends/widgets/displays.py:552
+#, python-format
+msgid "%(count)d Feed Folder Selected"
+msgid_plural "%(count)d Feed Folders Selected"
+msgstr[0] "%(count)d pažymėtas kanalų katalogas"
+msgstr[1] "%(count)d pažymėta kanalų katalogų"
+msgstr[2] "%(count)d pažymėta kanalų katalogų"
+
+#: ../../portable/frontends/widgets/displays.py:557
+#, python-format
+msgid "(contains %(count)d feed)"
+msgid_plural "(contains %(count)d feeds)"
+msgstr[0] "(talpina %(count)d kanalą)"
+msgstr[1] "(talpina %(count)d kanalų)"
+msgstr[2] "(talpina %(count)d kanalų)"
+
+#: ../../portable/frontends/widgets/displays.py:563
+#, python-format
+msgid "%(count)d Playlist Folder Selected"
+msgid_plural "%(count)d Playlist Folders Selected"
+msgstr[0] "%(count)d pažymėtas grojaraščių kanalas"
+msgstr[1] "%(count)d pažymėta grojaraščių kanalų"
+msgstr[2] "%(count)d pažymėta grojaraščių kanalų"
+
+#: ../../portable/frontends/widgets/displays.py:568
+#, python-format
+msgid "(contains %(count)d playlist)"
+msgid_plural "(contains %(count)d playlist)"
+msgstr[0] "(talpina %(count)d grojaraštį)"
+msgstr[1] "(talpina %(count)d grojaraščių)"
+msgstr[2] "(talpina %(count)d grojaraščių)"
+
+#: ../../portable/frontends/widgets/displays.py:578
+#, python-format
+msgid "%(count)d Feed Selected"
+msgid_plural "%(count)d Feeds Selected"
+msgstr[0] "%(count)d kanalas pažymėtas"
+msgstr[1] "%(count)d kanalų pažymėta"
+msgstr[2] "%(count)d kanalų pažymėta"
+
+#: ../../portable/frontends/widgets/displays.py:590
+#, python-format
+msgid "%(count)d Playlist Selected"
+msgid_plural "%(count)d Playlists Selected"
+msgstr[0] "%(count)d grojaraštis pažymėtas"
+msgstr[1] "%(count)d grojaščių pažymėta"
+msgstr[2] "%(count)d grojaščių pažymėta"
+
+#: ../../portable/frontends/widgets/displays.py:597
+msgid "Delete All"
+msgstr "Pašalinti visus"
+
+#: ../../portable/frontends/widgets/displays.py:601
+msgid "Put Into a New Folder"
+msgstr "Perkelti į naują katalogą"
+
+#: ../../portable/frontends/widgets/rundialog.py:82
+msgid "Username:"
+msgstr "Vartotojo vardas:"
+
+#: ../../portable/frontends/widgets/rundialog.py:86
+msgid "Password:"
+msgstr "Slaptažodis:"
+
+#: ../../portable/frontends/widgets/browser.py:96
+msgid "Open in browser"
+msgstr "Atverti naršyklėje"
+
+#: ../../portable/frontends/widgets/application.py:135
+msgid "Movies directory gone"
+msgstr "Filmų katalogas dingo"
+
+#: ../../portable/frontends/widgets/application.py:137
+#, python-format
+msgid ""
+"%(shortappname)s can't find the primary video directory located at:\n"
+"\n"
+"%(moviedirectory)s\n"
+"\n"
+"This may be because it is located on an external drive that is not "
+"connected.\n"
+"\n"
+"If you continue, the primary video directory will be reset to a location on "
+"this drive.  If you had videos downloaded this will cause %(shortappname)s "
+"to lose details about those videos.\n"
+"\n"
+"If you quit, then you can connect the drive or otherwise fix the problem and "
+"relaunch %(shortappname)s."
+msgstr ""
+"%(shortappname)s negali surasti pirminio video failų katalogo:\n"
+"%(moviedirectory)s\n"
+"Gal būt jis patalpintas išoriniame diske kuris nėra prijungtas prie "
+"kompiuterio.\n"
+"Jeigu jūs tesite, naujas pirminis video failų katalogas bus sukurtas "
+"komiuterio kietajame diske. Ir jūs prarasite %(shortappname)s parsiųstų "
+"failų informaciją.\n"
+"Jeigu dabar išeisite, jūs galėsite prijungti išorinį duomenų kaupiklį ar "
+"kitaip ištaisyti šią problemą ir poto vėl galėsite paleisti %(shortappname)s."
+
+#: ../../portable/frontends/widgets/application.py:305
+msgid "Error Revealing File"
+msgstr "Klaida parodant failą"
+
+#: ../../portable/frontends/widgets/application.py:314
+msgid "Open Files..."
+msgstr "Atverti failus..."
+
+#: ../../portable/frontends/widgets/application.py:325
+#: ../../portable/frontends/widgets/application.py:330
+msgid "Open Files - Error"
+msgstr "Atverti failus - Klaida"
+
+#: ../../portable/frontends/widgets/application.py:326
+#: ../../portable/frontends/widgets/application.py:592
+#, python-format
+msgid "File %(filename)s does not exist."
+msgstr "Failas %(filename)s neegzistuoja."
+
+#: ../../portable/frontends/widgets/application.py:331
+msgid "The following files do not exist:"
+msgstr "Šitie failai neegzistuoja:"
+
+#: ../../portable/frontends/widgets/application.py:368
+msgid "New Download"
+msgstr "Naujas atsiuntimas"
+
+#: ../../portable/frontends/widgets/application.py:369
+msgid "Enter the URL of the item to download"
+msgstr "Įveskite nuorodą, kad galėtumėte atsisiųsti"
+
+#: ../../portable/frontends/widgets/application.py:370
+msgid "New Download - Invalid URL"
+msgstr "Naujas  siuntinys - Neteisinga nuoroda"
+
+#: ../../portable/frontends/widgets/application.py:371
+msgid ""
+"The address you entered is not a valid url.\n"
+"Please check the URL and try again.\n"
+"\n"
+"Enter the URL of the item to download"
+msgstr ""
+"Jūsų įvesta nuododa nėra teisinga.\n"
+"Patikrinkite jūsų turimą URL ir banykite iš naujo. \n"
+"Įveskite nuoroda įrašo siuntimui"
+
+#: ../../portable/frontends/widgets/application.py:404
+msgid "Remove item"
+msgid_plural "Remove items"
+msgstr[0] "Pašalinti įrašą"
+msgstr[1] "Pašalinti įrašus"
+msgstr[2] "Pašalinti įrašus"
+
+#: ../../portable/frontends/widgets/application.py:408
+msgid ""
+"One of these items was not downloaded from a feed. Would you like to delete "
+"it or just remove it from the Library?"
+msgid_plural ""
+"Some of these items were not downloaded from a feed. Would you like to "
+"delete them or just remove them from the Library?"
+msgstr[0] ""
+"Vienas iš failų nėra parsiųstas iš kanalo. Ar jūs norite jį ištrinti iš "
+"archyvo?"
+msgstr[1] ""
+"Keletas failų nėra parsiųsti iš archyvo. Ar norite juos ištrinti iš archyvo?"
+msgstr[2] ""
+"Keletas failų nėra parsiųsti iš archyvo. Ar norite juos ištrinti iš archyvo?"
+
+#: ../../portable/frontends/widgets/application.py:423
+#, python-format
+msgid "Are you sure you want to delete the item?"
+msgid_plural "Are you sure you want to delete all %(count)d items?"
+msgstr[0] "Ar jūs tikrai norite ištrinti įrašą?"
+msgstr[1] "Ar jūs tikrai norite ištrinti visus iš %(count)d įrašus?"
+msgstr[2] "Ar jūs tikrai norite ištrinti visus iš %(count)d įrašus?"
+
+#: ../../portable/frontends/widgets/application.py:454
+msgid "Enter the new name for the item"
+msgstr "Įveskite įrašo pavadinimą"
+
+#: ../../portable/frontends/widgets/application.py:477
+msgid "Save Item As..."
+msgstr "Išsaugoti įrašą kaip..."
+
+#: ../../portable/frontends/widgets/application.py:530
+#: ../../portable/menubar.py:213
+msgid "Add Site"
+msgstr "Įtraukti _puslapį"
+
+#: ../../portable/frontends/widgets/application.py:531
+msgid "Enter the URL of the site to add"
+msgstr "Įveskite įtraukiamo puslapio nuorodą"
+
+#: ../../portable/frontends/widgets/application.py:532
+msgid "Add Site - Invalid URL"
+msgstr "Įtraukti puslapį - klaida"
+
+#: ../../portable/frontends/widgets/application.py:533
+msgid ""
+"The address you entered is not a valid url.\n"
+"Please check the URL and try again.\n"
+"\n"
+"Enter the URL of the site to add"
+msgstr ""
+"Jūsų įvesta nuoroda yra neteisinga.\n"
+"Prašome patikrinti nuorodą ir pamėginti iš naujo\n"
+"\n"
+"Įveskite įtraukiamo puslapio nuorodą"
+
+#: ../../portable/frontends/widgets/application.py:582
+msgid "Import OPML File"
+msgstr "Importuoti OPML failą"
+
+#: ../../portable/frontends/widgets/application.py:584
+msgid "OPML Files"
+msgstr "OPML failai"
+
+#: ../../portable/frontends/widgets/application.py:591
+msgid "Import OPML File - Error"
+msgstr "Importuoti OPML failą - Klaida"
+
+#: ../../portable/frontends/widgets/application.py:597
+msgid "Export OPML File"
+msgstr "Eksportuoti OPML failą"
+
+#: ../../portable/frontends/widgets/application.py:621
+msgid "Create Playlist"
+msgstr "Sukurti grojaraštį"
+
+#: ../../portable/frontends/widgets/application.py:622
+msgid "Enter a name for the new playlist"
+msgstr "Įveskite naujo grojaraščio vardą"
+
+#: ../../portable/frontends/widgets/application.py:643
+msgid "Create Playlist Folder"
+msgstr "Sukurti grojaraščio aplanką"
+
+#: ../../portable/frontends/widgets/application.py:644
+msgid "Enter a name for the new playlist folder"
+msgstr "Įveskite naujo grojaraščio aplanko vardą"
+
+#: ../../portable/frontends/widgets/application.py:665
+#: ../../portable/frontends/widgets/tablist.py:551
+msgid "Rename Feed Folder"
+msgstr "Pervadinti kanalų katalogą"
+
+#: ../../portable/frontends/widgets/application.py:666
+#, python-format
+msgid "Enter a new name for the feed folder %(name)s"
+msgstr "Įveskite naują kanlų katalogo %(name)s pavadinimą"
+
+#: ../../portable/frontends/widgets/application.py:670
+msgid "Rename Feed"
+msgstr "Pervadinti kanalą"
+
+#: ../../portable/frontends/widgets/application.py:671
+#, python-format
+msgid "Enter a new name for the feed %(name)s"
+msgstr "Įveskite naują kanalo %(name)s pavadinimą"
+
+#: ../../portable/frontends/widgets/application.py:675
+#: ../../portable/frontends/widgets/tablist.py:612
+#: ../../portable/playlist.py:179
+msgid "Rename Playlist"
+msgstr "Pervadinti grojaraštį"
+
+#: ../../portable/frontends/widgets/application.py:676
+#, python-format
+msgid "Enter a new name for the playlist %(name)s"
+msgstr "Įveskite naują grojaraščio %(name)s pavadinimą"
+
+#: ../../portable/frontends/widgets/application.py:680
+#: ../../portable/frontends/widgets/tablist.py:606
+msgid "Rename Playlist Folder"
+msgstr "Pervadinti grojaraščio aplanką"
+
+#: ../../portable/frontends/widgets/application.py:681
+#, python-format
+msgid "Enter a new name for the playlist folder %(name)s"
+msgstr "Įveskite naują grojaraščių katalogo %(name)s pavadinimą"
+
+#: ../../portable/frontends/widgets/application.py:684
+#: ../../portable/frontends/widgets/tablist.py:501
+msgid "Rename Site"
+msgstr "Pervadinti puslapį"
+
+#: ../../portable/frontends/widgets/application.py:685
+#, python-format
+msgid "Enter a new name for the site %(name)s"
+msgstr "Įveskite naują puslapio %(name)s pavadinimą"
+
+#: ../../portable/frontends/widgets/application.py:709
+msgid "Remove playlist"
+msgid_plural "Remove playlists"
+msgstr[0] "Pašalinti grojaraštį"
+msgstr[1] "Pašalinti grojaraščius"
+msgstr[2] "Pašalinti grojaraščius"
+
+#: ../../portable/frontends/widgets/application.py:711
+#, python-format
+msgid "Are you sure you want to remove this playlist?"
+msgid_plural "Are you sure you want to remove these %(count)s playlists?"
+msgstr[0] "Ar jūs tikrai norite pašalinti grojaraštį?"
+msgstr[1] ""
+"Ar jūs tikrai norite pašalinti šiuos visus %(count)s grojaraščius?"
+msgstr[2] ""
+"Ar jūs tikrai norite pašalinti šiuos visus %(count)s grojaraščius?"
+
+#: ../../portable/frontends/widgets/application.py:760
+msgid "Are you sure you want to quit?"
+msgstr "Ar tikrai norite išeiti?"
+
+#: ../../portable/frontends/widgets/application.py:762
+#, python-format
+msgid "You have %(count)d download in progress.  Quit anyway?"
+msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
+msgstr[0] "Šiuo metu siunčiamas %(count)d failas. Ar tikrai norite išeiti?"
+msgstr[1] "Šiuo metu siunčiami %(count)d failai. Ar tikrai norite išeiti?"
+msgstr[2] "Šiuo metu siunčiami %(count)d failai. Ar tikrai norite išeiti?"
+
+#: ../../portable/frontends/widgets/application.py:767
+msgid "Warn me when I attempt to quit with downloads in progress"
+msgstr "Įspėti mane bandant išjungti programą esant aktyviems siuntimams"
+
+#: ../../portable/frontends/widgets/application.py:1040
+msgid "Message"
+msgstr "Žinutė"
+
+#: ../../portable/frontends/widgets/application.py:1065
+msgid "Migrating Files"
+msgstr "Perkeliami failai"
+
+#: ../../portable/frontends/widgets/application.py:1075
+msgid "Migrating files"
+msgstr "Perkeliami failai"
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:81
+#: ../../portable/frontends/widgets/prefpanel.py:622
+msgid "Downloads"
+msgstr "Parsiuntimai"
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:93
+msgid "Feed downloads"
+msgstr "Kanalo siuntiniai"
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:96
+msgid "Seeding"
+msgstr "Platinama"
 
 #: ../../portable/frontends/widgets/prefpanel.py:271
 msgid "Warn me if I attempt to quit with downloads in progress."
@@ -1135,18 +1024,18 @@ msgid "Manually"
 msgstr "Rankiniu būdu"
 
 #: ../../portable/frontends/widgets/prefpanel.py:289
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
-#: ../../portable/frontends/widgets/statictabs.py:103
+#: ../../portable/frontends/widgets/itemlistwidgets.py:623
 msgid "New"
-msgstr "Naujas"
+msgstr "Nauji"
 
 #: ../../portable/frontends/widgets/prefpanel.py:290
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
+#: ../../portable/frontends/widgets/itemlistwidgets.py:623
+#: ../../portable/frontends/widgets/itemlistwidgets.py:727
 msgid "All"
 msgstr "Visi"
 
 #: ../../portable/frontends/widgets/prefpanel.py:291
-#: ../../portable/frontends/widgets/itemlistwidgets.py:620
+#: ../../portable/frontends/widgets/itemlistwidgets.py:623
 msgid "Off"
 msgstr "Išjungta"
 
@@ -1188,11 +1077,11 @@ msgstr "Automatinio siuntimo nuostatos:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:326
 msgid "Remember this many old items:"
-msgstr "Atsiminti labai senus įrašus:"
+msgstr "Atsiminti senų įrašų:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:327
 msgid "(in addition to the current contents)"
-msgstr ""
+msgstr "(dabartiniai įrašai nesiskaičiuoja)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:340
 msgid "Maximum number of manual downloads at a time:"
@@ -1243,11 +1132,6 @@ msgstr "Ignoruoti nešifruotus susijungimus."
 msgid "Stop torrent uploads when this ratio is reached:"
 msgstr "Stabdyti torrento platinimą kai bus pasiektas reitingas:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:435
-#: ../../portable/frontends/widgets/firsttimedialog.py:184
-msgid "Change"
-msgstr "Pakeisti"
-
 #: ../../portable/frontends/widgets/prefpanel.py:440
 msgid "Choose Movies Directory"
 msgstr "Pasirinkite filmų katalogą"
@@ -1255,16 +1139,6 @@ msgstr "Pasirinkite filmų katalogą"
 #: ../../portable/frontends/widgets/prefpanel.py:453
 msgid "Migrate existing movies?"
 msgstr "Ar migruoti turimus filmus?"
-
-#: ../../portable/frontends/widgets/prefpanel.py:454
-msgid ""
-"You've selected a new folder to download movies to.  Should Miro migrate "
-"your existing downloads there? (Currently dowloading movies will not be "
-"moved until they finish.)"
-msgstr ""
-"Jūs pasirinkote naują filmų katalogą. Ar leidžiate Miro perkelti anksčiau "
-"parsiųstus failus? (Dabar siunčiami failai nebus perkelti, tol kol tai "
-"nepadarysite.)"
 
 #: ../../portable/frontends/widgets/prefpanel.py:482
 #: ../../portable/dialogs.py:104
@@ -1314,11 +1188,11 @@ msgstr "1 mėnuo"
 
 #: ../../portable/frontends/widgets/prefpanel.py:590
 msgid "By default, videos expire after:"
-msgstr "Pagal nutylėjimą, video nustoja galioti po:"
+msgstr "Pagal nutylėjimą, vaizdo įrašas nustoja galioti po:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:599
 msgid "Always play videos in a separate window."
-msgstr "Visda leisti video atskirame lange."
+msgstr "Visada leisti vaizdo įrašus atskirame lange."
 
 #: ../../portable/frontends/widgets/prefpanel.py:603
 msgid "Resume playing a video from the point it was last stopped."
@@ -1340,11 +1214,6 @@ msgstr "Bendra"
 msgid "Feeds"
 msgstr "Kanalai"
 
-#: ../../portable/frontends/widgets/prefpanel.py:622
-#: ../../portable/frontends/widgets/downloadscontroller.py:81
-msgid "Downloads"
-msgstr "Parsiuntimai"
-
 #: ../../portable/frontends/widgets/prefpanel.py:623
 msgid "Folders"
 msgstr "Aplankai"
@@ -1355,91 +1224,183 @@ msgstr "Disko vieta"
 
 #: ../../portable/frontends/widgets/prefpanel.py:625
 msgid "Playback"
-msgstr "Grojimas"
+msgstr "Peržiūra"
 
 #: ../../portable/frontends/widgets/prefpanel.py:629
 msgid "Preferences"
 msgstr "Nustatymai"
 
-#: ../../portable/frontends/widgets/browser.py:94
-msgid "Open in browser"
-msgstr "Atverti naršyklėje"
+#: ../../portable/frontends/widgets/newsearchfeed.py:58
+msgid "New Search Feed"
+msgstr "Nauja kanalo paieška"
 
-#: ../../portable/frontends/widgets/rundialog.py:82
-msgid "Username:"
-msgstr "Vartotojo vardas:"
-
-#: ../../portable/frontends/widgets/rundialog.py:86
-msgid "Password:"
-msgstr "Slaptažodis:"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:400
-msgid "New Videos"
-msgstr "Nauji video įrašai"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:413
-#: ../../portable/frontends/widgets/statictabs.py:86
-msgid "Video Search"
-msgstr "Video paieška"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:427
-msgid "No Results Found"
-msgstr "Nerasta jokių rezultatų"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:489
-#: ../../portable/frontends/widgets/statictabs.py:91
-msgid "Library"
-msgstr "Biblioteka"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:502
-#: ../../portable/frontends/widgets/statictabs.py:96
-msgid "Single Items"
-msgstr "Vienas įrašas"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:506
-msgid "No Items to Display"
-msgstr "Negalima parodyti jokių įrašų"
-
-#: ../../portable/frontends/widgets/itemlistcontroller.py:509
-msgid "This tab keeps track of downloads that aren't part of a feed."
+#: ../../portable/frontends/widgets/newsearchfeed.py:59
+msgid "A search feed contains items that match a search term."
 msgstr ""
+"Kanalo paieškoje rodomi tik tie įrašai kurie atitinka paieškos kriterijus."
 
-#: ../../portable/frontends/widgets/diagnostics.py:77
+#: ../../portable/frontends/widgets/newsearchfeed.py:74
+msgid "Search for:"
+msgstr "Ieškoti:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:80
+msgid "In this:"
+msgstr "Šiame:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:87
+msgid "Feed:"
+msgstr "Kanalas:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:92
+msgid "Search engine:"
+msgstr "Paieškos variklis:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:98
+#: ../../portable/frontends/widgets/newfeed.py:60
+msgid "URL:"
+msgstr "URL:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:132
+msgid "Add new feed to this section:"
+msgstr "Įtraukti naują kanalą į šią skiltį:"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:135
+#: ../../portable/frontends/widgets/newfolder.py:70
+#: ../../portable/frontends/widgets/newfeed.py:71
+msgid "video"
+msgstr "video"
+
+#: ../../portable/frontends/widgets/newsearchfeed.py:136
+#: ../../portable/frontends/widgets/newfolder.py:71
+#: ../../portable/frontends/widgets/newfeed.py:72
+msgid "audio"
+msgstr "audio"
+
+#: ../../portable/frontends/widgets/linkhandler.py:54
+msgid "Subscribe to Feed"
+msgstr "Užsisakykite kanalą"
+
+#: ../../portable/frontends/widgets/linkhandler.py:56
+#, python-format
+msgid ""
+"This link appears to be a feed.  Do you want to add it to your "
+"subscriptions?\n"
+"\n"
+"%(url)s"
+msgstr ""
+"Ši nuoroda gali būti kanalas. Ar norite jį užsisakyti?\n"
+"%(url)s"
+
+#: ../../portable/frontends/widgets/newfolder.py:60
+msgid "Folder name:"
+msgstr "Katalogo pavadinimas:"
+
+#: ../../portable/frontends/widgets/newfolder.py:68
+msgid "Folder should go in this section:"
+msgstr "Kataloge bus laikoma:"
+
+#: ../../portable/frontends/widgets/newfolder.py:107
+#: ../../portable/frontends/widgets/newfolder.py:109
+msgid "Create Feed Folder"
+msgstr "Sukurti kanalų katalogą"
+
+#: ../../portable/frontends/widgets/newfolder.py:110
+msgid "Enter the name of the folder to add"
+msgstr "Įveskite naujo kanalų katalogo pavadinimą"
+
+#: ../../portable/frontends/widgets/playlist.py:146
+msgid "This Playlist is Empty"
+msgstr "Šis grojaraštis yra tuščias"
+
+#: ../../portable/frontends/widgets/playlist.py:149
+msgid ""
+"To add an item, drag it onto the name of this playlist in the sidebar."
+msgstr "Norėdami įtraukti įrašą, pertempkite pavadinimą į šoninę juostą"
+
+#: ../../portable/frontends/widgets/removefeeds.py:49
+msgid "Remove Feed"
+msgid_plural "Remove Feeds"
+msgstr[0] "Pašalinti kanalą"
+msgstr[1] "Pašalinti kanalus"
+msgstr[2] "Pašalinti kanalus"
+
+#: ../../portable/frontends/widgets/removefeeds.py:57
+msgid "Are you sure you want to remove this feed:"
+msgid_plural "Are you sure you want to remove these feeds:"
+msgstr[0] "Ar jūs esate tikri norėdamas pašalinti šį kanalą:"
+msgstr[1] "Ar jūs esate tikri norėdami pašalinti šiuos kanalus:"
+msgstr[2] "Ar jūs esate tikri norėdami pašalinti šiuos kanalus:"
+
+#: ../../portable/frontends/widgets/removefeeds.py:77
+msgid "Keep items that have been downloaded in my library."
+msgstr "Palikti parsiųstus irašus archyve"
+
+#: ../../portable/frontends/widgets/removefeeds.py:94
+msgid ""
+"Are you sure you want to remove this feed?  The downloads currently in "
+"progress will be canceled."
+msgid_plural ""
+"Are you sure you want to remove these feeds?  The downloads currently in "
+"progress will be canceled."
+msgstr[0] ""
+"Ar jūs tikrai norite pašalinti kanalą? Vykstantys siutimai iš šio kanalo bus "
+"nutraukti."
+msgstr[1] ""
+"Ar jūs tikrai norite pašalinti kanalus? Vykstantys siutimai iš šių kanalų "
+"bus nutraukti."
+msgstr[2] ""
+"Ar jūs tikrai norite pašalinti kanalus? Vykstantys siutimai iš šių kanalų "
+"bus nutraukti."
+
+#: ../../portable/frontends/widgets/gtk/video.py:251
+msgid "Add to library"
+msgstr "Įtraukti į archyvą"
+
+#: ../../portable/frontends/widgets/gtk/video.py:291
+msgid "Permalink"
+msgstr "Originalus šaltinis"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:63
+#, python-format
+msgid "Play Next Unplayed (%(unplayed)d)"
+msgstr "Groti kitą neperžiūrėtą (%(unplayed)d)"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:67
+#, python-format
+msgid "Play All Unplayed (%(unplayed)d)"
+msgstr "Groti visus neperžiūrėtus (%(unplayed)d)"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:70
+#, python-format
+msgid "Pause All Downloads (%(downloading)d)"
+msgstr "Sustabdyti visus siuntimus (%(downloading)d)"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:73
+#, python-format
+msgid "Resume All Downloads (%(paused)d)"
+msgstr "paleisti visus siuntimus (%(paused)d)"
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:81
+msgid "Hide"
+msgstr "Paslėpti"
+
 #: ../../portable/frontends/widgets/gtk/trayicon.py:83
+#: ../../portable/frontends/widgets/diagnostics.py:76
 msgid "Show"
 msgstr "Parodyti"
 
-#: ../../portable/frontends/widgets/diagnostics.py:84
-msgid "Movies location:"
-msgstr "Filų talpinimo vieta:"
+#: ../../portable/frontends/widgets/gtk/window.py:472
+msgid "All files"
+msgstr "Visi failai"
 
-#: ../../portable/frontends/widgets/diagnostics.py:88
-msgid "Icon cache location:"
-msgstr "Paveiksliukų laikymo vieta:"
+#: ../../portable/frontends/widgets/gtk/window.py:501
+msgid "Choose"
+msgstr "Pasirinkti"
 
-#: ../../portable/frontends/widgets/diagnostics.py:92
-msgid "Log file location:"
-msgstr "Log failų laikymo vieta:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:96
-msgid "Downloader log file location:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/diagnostics.py:100
-msgid "Database file location:"
-msgstr "Duomenų bazės laikymo vieta:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:107
-msgid "Space free on disk:"
-msgstr "Laisva disko vieta:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:109
-msgid "Database size:"
-msgstr "Duomenų bazės dydis:"
-
-#: ../../portable/frontends/widgets/diagnostics.py:111
-msgid "Total number of db objects:"
-msgstr "Duomenų bazės objektų skaičius:"
+#: ../../portable/frontends/widgets/gtk/window.py:570
+#: ../../portable/dialogs.py:84
+msgid "Close"
+msgstr "Užverti"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:127
 msgid "Downloaded"
@@ -1487,609 +1448,9 @@ msgstr[2] "%(count)d įrašų  atitiko paieška"
 msgid "All Items Match Search"
 msgstr "Visi kanalai atitiko paiešką"
 
-#: ../../portable/frontends/widgets/application.py:134
-msgid "Movies directory gone"
-msgstr "Filmų katalogas dingo"
-
-#: ../../portable/frontends/widgets/application.py:136
-#, python-format
-msgid ""
-"%(shortappname)s can't find the primary video directory located at:\n"
-"\n"
-"%(moviedirectory)s\n"
-"\n"
-"This may be because it is located on an external drive that is not "
-"connected.\n"
-"\n"
-"If you continue, the primary video directory will be reset to a location on "
-"this drive.  If you had videos downloaded this will cause %(shortappname)s "
-"to lose details about those videos.\n"
-"\n"
-"If you quit, then you can connect the drive or otherwise fix the problem and "
-"relaunch %(shortappname)s."
-msgstr ""
-"%(shortappname)s negali surasti pirminio video failų katalogo:\n"
-"%(moviedirectory)s\n"
-"Gal būt jis patalpintas išoriniame diske kuris nėra prijungtas prie "
-"kompiuterio.\n"
-"Jeigu jūs tesite, naujas pirminis video failų katalogas bus sukurtas "
-"komiuterio kietajame diske. Ir jūs prarasite %(shortappname)s parsiųstų "
-"failų informaciją.\n"
-"Jeigu dabar išeisite, jūs galėsite prijungti išorinį duomenų kaupiklį ar "
-"kitaip ištaisyti šią problemą ir poto vėl galėsite paleisti %(shortappname)s."
-
-#: ../../portable/frontends/widgets/application.py:304
-msgid "Error Revealing File"
-msgstr "Klaida parodant failą"
-
-#: ../../portable/frontends/widgets/application.py:305
-#, python-format
-msgid "The file \"%(filename)s\" was deleted from outside Miro."
-msgstr "Šis failas \"%(filename)s\" ištrintas ne Miro programos."
-
-#: ../../portable/frontends/widgets/application.py:312
-msgid "Open Files..."
-msgstr "Atverti failus..."
-
-#: ../../portable/frontends/widgets/application.py:323
-#: ../../portable/frontends/widgets/application.py:328
-msgid "Open Files - Error"
-msgstr "Atverti failus - Klaida"
-
-#: ../../portable/frontends/widgets/application.py:324
-#: ../../portable/frontends/widgets/application.py:588
-#, python-format
-msgid "File %(filename)s does not exist."
-msgstr "Failas %(filename)s neegzistuoja."
-
-#: ../../portable/frontends/widgets/application.py:329
-msgid "The following files do not exist:"
-msgstr "Šitie failai neegzistuoja:"
-
-#: ../../portable/frontends/widgets/application.py:366
-msgid "New Download"
-msgstr "Naujas atsiuntimas"
-
-#: ../../portable/frontends/widgets/application.py:367
-msgid "Enter the URL of the item to download"
-msgstr "Įveskite nuorodą, kad galėtumėte atsisiųsti"
-
-#: ../../portable/frontends/widgets/application.py:368
-msgid "New Download - Invalid URL"
-msgstr "Naujas  siuntinys - Neteisinga nuoroda"
-
-#: ../../portable/frontends/widgets/application.py:369
-msgid ""
-"The address you entered is not a valid url.\n"
-"Please check the URL and try again.\n"
-"\n"
-"Enter the URL of the item to download"
-msgstr ""
-"Jūsų įvesta nuododa nėra teisinga.\n"
-"Patikrinkite jūsų turimą URL ir banykite iš naujo. \n"
-"Įveskite nuoroda įrašo siuntimui"
-
-#: ../../portable/frontends/widgets/application.py:377
-msgid "Miro is up to date"
-msgstr "Miro yra atnaujinta"
-
-#: ../../portable/frontends/widgets/application.py:378
-msgid "Miro is up to date!"
-msgstr "Miro yra atnaujinta!"
-
-#: ../../portable/frontends/widgets/application.py:400
-msgid "Remove item"
-msgid_plural "Remove items"
-msgstr[0] "Pašalinti įrašą"
-msgstr[1] "Pašalinti įrašus"
-msgstr[2] "Pašalinti įrašus"
-
-#: ../../portable/frontends/widgets/application.py:404
-msgid ""
-"One of these items was not downloaded from a feed. Would you like to delete "
-"it or just remove it from the Library?"
-msgid_plural ""
-"Some of these items were not downloaded from a feed. Would you like to "
-"delete them or just remove them from the Library?"
-msgstr[0] ""
-"Vienas iš failų nėra parsiųstas iš kanalo. Ar jūs norite jį ištrinti iš "
-"archyvo?"
-msgstr[1] ""
-"Keletas failų nėra parsiųsti iš archyvo. Ar norite juos ištrinti iš archyvo?"
-msgstr[2] ""
-"Keletas failų nėra parsiųsti iš archyvo. Ar norite juos ištrinti iš archyvo?"
-
-#: ../../portable/frontends/widgets/application.py:419
-#, python-format
-msgid "Are you sure you want to delete the item?"
-msgid_plural "Are you sure you want to delete all %(count)d items?"
-msgstr[0] "Ar jūs tikrai norite ištrinti įrašą?"
-msgstr[1] "Ar jūs tikrai norite ištrinti visus iš %(count)d įrašus?"
-msgstr[2] "Ar jūs tikrai norite ištrinti visus iš %(count)d įrašus?"
-
-#: ../../portable/frontends/widgets/application.py:449
-#: ../../portable/frontends/widgets/itemcontextmenu.py:99
-msgid "Rename Item"
-msgstr "Pervadinti įrašą"
-
-#: ../../portable/frontends/widgets/application.py:450
-msgid "Enter the new name for the item"
-msgstr "Įveskite įrašo pavadinimą"
-
-#: ../../portable/frontends/widgets/application.py:473
-msgid "Save Item As..."
-msgstr "Išsaugoti įrašą kaip..."
-
-#: ../../portable/frontends/widgets/application.py:527
-msgid "Enter the URL of the site to add"
-msgstr "Įveskite įtraukiamo puslapio nuorodą"
-
-#: ../../portable/frontends/widgets/application.py:528
-msgid "Add Site - Invalid URL"
-msgstr "Įtraukti puslapį - klaida"
-
-#: ../../portable/frontends/widgets/application.py:529
-msgid ""
-"The address you entered is not a valid url.\n"
-"Please check the URL and try again.\n"
-"\n"
-"Enter the URL of the site to add"
-msgstr ""
-"Jūsų įvesta nuoroda yra neteisinga.\n"
-"Prašome patikrinti nuorodą ir pamėginti iš naujo\n"
-"\n"
-"Įveskite įtraukiamo puslapio nuorodą"
-
-#: ../../portable/frontends/widgets/application.py:578
-msgid "Import OPML File"
-msgstr "Importuoti OPML failą"
-
-#: ../../portable/frontends/widgets/application.py:580
-msgid "OPML Files"
-msgstr "OPML failai"
-
-#: ../../portable/frontends/widgets/application.py:587
-msgid "Import OPML File - Error"
-msgstr "Importuoti OPML failą - Klaida"
-
-#: ../../portable/frontends/widgets/application.py:593
-msgid "Export OPML File"
-msgstr "Eksportuoti OPML failą"
-
-#: ../../portable/frontends/widgets/application.py:616
-msgid "Create Playlist"
-msgstr "Sukurti grojaraštį"
-
-#: ../../portable/frontends/widgets/application.py:617
-msgid "Enter a name for the new playlist"
-msgstr "Įveskite naujo grojaraščio vardą"
-
-#: ../../portable/frontends/widgets/application.py:638
-msgid "Create Playlist Folder"
-msgstr "Sukurti grojaraščio aplanką"
-
-#: ../../portable/frontends/widgets/application.py:639
-msgid "Enter a name for the new playlist folder"
-msgstr "Įveskite naujo grojaraščio aplanko vardą"
-
-#: ../../portable/frontends/widgets/application.py:660
-#: ../../portable/frontends/widgets/tablist.py:522
-msgid "Rename Feed Folder"
-msgstr "Pervadinti kanalų katalogą"
-
-#: ../../portable/frontends/widgets/application.py:661
-#, python-format
-msgid "Enter a new name for the feed folder %(name)s"
-msgstr "Įveskite naują kanlų katalogo %(name)s pavadinimą"
-
-#: ../../portable/frontends/widgets/application.py:665
-msgid "Rename Feed"
-msgstr "Pervadinti kanalą"
-
-#: ../../portable/frontends/widgets/application.py:666
-#, python-format
-msgid "Enter a new name for the feed %(name)s"
-msgstr "Įveskite naują kanalo %(name)s pavadinimą"
-
-#: ../../portable/frontends/widgets/application.py:670
-#: ../../portable/frontends/widgets/tablist.py:583
-#: ../../portable/playlist.py:179
-msgid "Rename Playlist"
-msgstr "Pervadinti grojaraštį"
-
-#: ../../portable/frontends/widgets/application.py:671
-#, python-format
-msgid "Enter a new name for the playlist %(name)s"
-msgstr "Įveskite naują grojaraščio %(name)s pavadinimą"
-
-#: ../../portable/frontends/widgets/application.py:675
-#: ../../portable/frontends/widgets/tablist.py:577
-msgid "Rename Playlist Folder"
-msgstr "Pervadinti grojaraščio aplanką"
-
-#: ../../portable/frontends/widgets/application.py:676
-#, python-format
-msgid "Enter a new name for the playlist folder %(name)s"
-msgstr "Įveskite naują grojaraščių katalogo %(name)s pavadinimą"
-
-#: ../../portable/frontends/widgets/application.py:679
-#: ../../portable/frontends/widgets/tablist.py:476
-msgid "Rename Site"
-msgstr "Pervadinti puslapį"
-
-#: ../../portable/frontends/widgets/application.py:680
-#, python-format
-msgid "Enter a new name for the site %(name)s"
-msgstr "Įveskite naują puslapio %(name)s pavadinimą"
-
-#: ../../portable/frontends/widgets/application.py:704
-msgid "Remove playlist"
-msgid_plural "Remove playlists"
-msgstr[0] "Pašalinti grojaraštį"
-msgstr[1] "Pašalinti grojaraščius"
-msgstr[2] "Pašalinti grojaraščius"
-
-#: ../../portable/frontends/widgets/application.py:706
-#, python-format
-msgid "Are you sure you want to remove this playlist?"
-msgid_plural "Are you sure you want to remove these %(count)s playlists?"
-msgstr[0] "Ar jūs tikrai norite pašalinti grojaraštį?"
-msgstr[1] ""
-"Ar jūs tikrai norite pašalinti šiuos visus %(count)s grojaraščius?"
-msgstr[2] ""
-"Ar jūs tikrai norite pašalinti šiuos visus %(count)s grojaraščius?"
-
-#: ../../portable/frontends/widgets/application.py:724
-#, python-format
-msgid "Remove %(name)s"
-msgstr "Pašalinti %(name)s"
-
-#: ../../portable/frontends/widgets/application.py:725
-#, python-format
-msgid "Are you sure you want to remove %(name)s?"
-msgstr "Ar jūs tikrai norite pašalinti %(name)s?"
-
-#: ../../portable/frontends/widgets/application.py:750
-msgid "Are you sure you want to quit?"
-msgstr "Ar tikrai norite išeiti?"
-
-#: ../../portable/frontends/widgets/application.py:752
-#, python-format
-msgid "You have %(count)d download in progress.  Quit anyway?"
-msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
-msgstr[0] "Šiuo metu siunčiamas %(count)d failas. Ar tikrai norite išeiti?"
-msgstr[1] "Šiuo metu siunčiami %(count)d failai. Ar tikrai norite išeiti?"
-msgstr[2] "Šiuo metu siunčiami %(count)d failai. Ar tikrai norite išeiti?"
-
-#: ../../portable/frontends/widgets/application.py:757
-msgid "Warn me when I attempt to quit with downloads in progress"
-msgstr "Įspėti mane bandant išjungti programą esant aktyviems siuntimams"
-
-#: ../../portable/frontends/widgets/application.py:1011
-msgid "Message"
-msgstr "Žinutė"
-
-#: ../../portable/frontends/widgets/application.py:1036
-msgid "Migrating Files"
-msgstr "Perkeliami failai"
-
-#: ../../portable/frontends/widgets/application.py:1046
-msgid "Migrating files"
-msgstr "Perkeliami failai"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:177
-msgid "Save Search"
-msgstr "Išsaugoti paiešką"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:282
-msgid "Title"
-msgstr "Antraštė"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:284
-msgid "Feed"
-msgstr "Kanalas"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:286
-#: ../../portable/frontends/widgets/itemlistwidgets.py:725
-msgid "Date"
-msgstr "Data"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:287
-msgid "Length"
-msgstr "Trukmė"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:288
-msgid "Status"
-msgstr "Būsena"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:289
-#: ../../portable/frontends/widgets/itemlistwidgets.py:726
-msgid "Size"
-msgstr "Dydis"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:291
-msgid "ETA"
-msgstr "Likęs laikas"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:292
-msgid "Speed"
-msgstr "Sparta"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:428
-msgid "Save as a Feed"
-msgstr "Išsaugoti kaip kanalą"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:482
-msgid "Pause All"
-msgstr "Sustabdyti visus"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:489
-msgid "Resume All"
-msgstr "Paleisti visus"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:496
-msgid "Cancel All"
-msgstr "Atšaukti visus"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:503
-msgid "Download Settings"
-msgstr "Siuntimo nuostatos"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:549
-#, python-format
-msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
-msgstr ""
-"Diske negali būti užimta mažiau kaip %(available)s vietos (%(amount)s yra "
-"laisvos vietos diske)"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:555
-#, python-format
-msgid "%(available)s free for downloads (%(amount)s free on disk)"
-msgstr ""
-"%(available)s laisva siuntiniams (%(amount)s yra laisvos vietos diske)"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:560
-#, python-format
-msgid "%(amount)s free on disk"
-msgstr "%(amount)s yra laisvo vietos diske"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:579
-#, python-format
-msgid "%(rate)s uploading"
-msgstr "%(rate)s išsiunčiama"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:581
-#, python-format
-msgid "%(rate)s downloading"
-msgstr "%(rate)s parsiunčiama"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:615
-msgid "Auto Download"
-msgstr "Automatinis siuntimas"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:627
-msgid "Share feed"
-msgstr "Dalintis kanalu"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:633
-msgid "Settings"
-msgstr "Nustatymai"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:639
-msgid "Remove feed"
-msgstr "Pašalinti kanalą"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:724
-msgid "Name"
-msgstr "Pavadinimas"
-
-#: ../../portable/frontends/widgets/itemlistwidgets.py:727
-msgid "Time"
-msgstr "Laikas"
-
-#: ../../portable/frontends/widgets/displays.py:353
-msgid ""
-"Miro can't play this file.  You may be able to open it with a different "
-"program"
-msgstr ""
-"Miro negali groti šio failo. Bet jūs galite pamėginti jį atidaryti su kita "
-"programa."
-
-#: ../../portable/frontends/widgets/displays.py:361
-msgid "Filename:"
-msgstr "Failo vardas:"
-
-#: ../../portable/frontends/widgets/displays.py:364
-msgid "File type:"
-msgstr "Failo tipas:"
-
-#: ../../portable/frontends/widgets/displays.py:370
-msgid "Play Externally"
-msgstr "Groti su kitu grotuvu"
-
-#: ../../portable/frontends/widgets/displays.py:371
-msgid "Skip"
-msgstr "Praleisti"
-
-#: ../../portable/frontends/widgets/displays.py:543
-#, python-format
-msgid "%(count)d Feed Folder Selected"
-msgid_plural "%(count)d Feed Folders Selected"
-msgstr[0] "%(count)d pažymėtas kanalų katalogas"
-msgstr[1] "%(count)d pažymėta kanalų katalogų"
-msgstr[2] "%(count)d pažymėta kanalų katalogų"
-
-#: ../../portable/frontends/widgets/displays.py:548
-#, python-format
-msgid "(contains %(count)d feed)"
-msgid_plural "(contains %(count)d feeds)"
-msgstr[0] "(talpina %(count)d kanalą)"
-msgstr[1] "(talpina %(count)d kanalų)"
-msgstr[2] "(talpina %(count)d kanalų)"
-
-#: ../../portable/frontends/widgets/displays.py:554
-#, python-format
-msgid "%(count)d Playlist Folder Selected"
-msgid_plural "%(count)d Playlist Folders Selected"
-msgstr[0] "%(count)d pažymėtas grojaraščių kanalas"
-msgstr[1] "%(count)d pažymėta grojaraščių kanalų"
-msgstr[2] "%(count)d pažymėta grojaraščių kanalų"
-
-#: ../../portable/frontends/widgets/displays.py:559
-#, python-format
-msgid "(contains %(count)d playlist)"
-msgid_plural "(contains %(count)d playlist)"
-msgstr[0] "(talpina %(count)d grojaraštį)"
-msgstr[1] "(talpina %(count)d grojaraščių)"
-msgstr[2] "(talpina %(count)d grojaraščių)"
-
-#: ../../portable/frontends/widgets/displays.py:569
-#, python-format
-msgid "%(count)d Feed Selected"
-msgid_plural "%(count)d Feeds Selected"
-msgstr[0] "%(count)d kanalas pažymėtas"
-msgstr[1] "%(count)d kanalų pažymėta"
-msgstr[2] "%(count)d kanalų pažymėta"
-
-#: ../../portable/frontends/widgets/displays.py:575
-#, python-format
-msgid "%(count)d Playlist Selected"
-msgid_plural "%(count)d Playlists Selected"
-msgstr[0] "%(count)d grojaraštis pažymėtas"
-msgstr[1] "%(count)d grojaščių pažymėta"
-msgstr[2] "%(count)d grojaščių pažymėta"
-
-#: ../../portable/frontends/widgets/displays.py:582
-msgid "Delete All"
-msgstr "Pašalinti visus"
-
-#: ../../portable/frontends/widgets/displays.py:586
-msgid "Put Into a New Folder"
-msgstr "Perkelti į naują katalogą"
-
-#: ../../portable/frontends/widgets/playlist.py:146
-msgid "This Playlist is Empty"
-msgstr "Šis grojaraštis yra tuščias"
-
-#: ../../portable/frontends/widgets/playlist.py:149
-msgid ""
-"To add an item, drag it onto the name of this playlist in the sidebar."
-msgstr "Norėdami įtraukti įrašą, pertempkite pavadinimą į šoninę juostą"
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:63
-#, python-format
-msgid "Play Next Unplayed (%(unplayed)d)"
-msgstr "Groti kitą neperžiūrėtą (%(unplayed)d)"
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:67
-#, python-format
-msgid "Play All Unplayed (%(unplayed)d)"
-msgstr "Groti visus neperžiūrėtus (%(unplayed)d)"
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:70
-#, python-format
-msgid "Pause All Downloads (%(downloading)d)"
-msgstr "Sustabdyti visus siuntimus (%(downloading)d)"
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:73
-#, python-format
-msgid "Resume All Downloads (%(paused)d)"
-msgstr "paleisti visus siuntimus (%(paused)d)"
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:81
-msgid "Hide"
-msgstr "Paslėpti"
-
-#: ../../portable/frontends/widgets/gtk/video.py:272
-msgid "Add to library"
-msgstr "Įtraukti į archyvą"
-
-#: ../../portable/frontends/widgets/gtk/video.py:311
-msgid "Permalink"
-msgstr "Originalus šaltinis"
-
-#: ../../portable/frontends/widgets/gtk/window.py:470
-msgid "All files"
-msgstr "Visi failai"
-
-#: ../../portable/frontends/widgets/gtk/window.py:499
-msgid "Choose"
-msgstr "Pasirinkti"
-
-#: ../../portable/frontends/widgets/gtk/window.py:526
-#, python-format
-msgid ""
-"%(copyright)s.  See LICENSE file for details.\n"
-"Miro and Miro logo are trademarks of the Participatory Culture Foundation."
-msgstr ""
-"%(copyright)s. Norėdami sužinoti daugiau perskaitykite licenzijos failą. \n"
-"Miro ir Miro logotipas priklauso Participatory kultūros fondui."
-
-#: ../../portable/frontends/widgets/removefeeds.py:49
-msgid "Remove Feed"
-msgid_plural "Remove Feeds"
-msgstr[0] "Pašalinti kanalą"
-msgstr[1] "Pašalinti kanalus"
-msgstr[2] "Pašalinti kanalus"
-
-#: ../../portable/frontends/widgets/removefeeds.py:57
-msgid "Are you sure you want to remove this feed:"
-msgid_plural "Are you sure you want to remove these feeds:"
-msgstr[0] "Ar jūs esate tikri norėdamas pašalinti šį kanalą:"
-msgstr[1] "Ar jūs esate tikri norėdami pašalinti šiuos kanalus:"
-msgstr[2] "Ar jūs esate tikri norėdami pašalinti šiuos kanalus:"
-
-#: ../../portable/frontends/widgets/removefeeds.py:77
-msgid "Keep items that have been downloaded in my library."
-msgstr "Palikti parsiųstus irašus archyve"
-
-#: ../../portable/frontends/widgets/removefeeds.py:83
-msgid ""
-"Watched folders will be removed from the sidebar but their contents will "
-"still appear in your library.  You can stop watching watched folders "
-"completely in the Miro preference panel."
-msgstr ""
-"Peržiūrėtas kanalas bus pašalintas iš šoninės juostos, bet visas jo turinys "
-"vis dar liks jūsų archyve. Jūs galite sustabdyti peržiūrėtų kanalų žiūrėjimą "
-"Miro nuostatų lange."
-
-#: ../../portable/frontends/widgets/removefeeds.py:93
-msgid ""
-"Are you sure you want to remove this feed?  The downloads currently in "
-"progress will be canceled."
-msgid_plural ""
-"Are you sure you want to remove these feeds?  The downloads currently in "
-"progress will be canceled."
-msgstr[0] ""
-"Ar jūs tikrai norite pašalinti kanalą? Vykstantys siutimai iš šio kanalo bus "
-"nutraukti."
-msgstr[1] ""
-"Ar jūs tikrai norite pašalinti kanalus? Vykstantys siutimai iš šių kanalų "
-"bus nutraukti."
-msgstr[2] ""
-"Ar jūs tikrai norite pašalinti kanalus? Vykstantys siutimai iš šių kanalų "
-"bus nutraukti."
-
-#: ../../portable/frontends/widgets/newfeed.py:60
-#: ../../portable/frontends/widgets/newsearchfeed.py:98
-msgid "URL:"
-msgstr "URL:"
-
 #: ../../portable/frontends/widgets/newfeed.py:69
 msgid "Feed should go in this section:"
-msgstr ""
-
-#: ../../portable/frontends/widgets/newfeed.py:71
-#: ../../portable/frontends/widgets/newfolder.py:70
-#: ../../portable/frontends/widgets/newsearchfeed.py:135
-msgid "video"
-msgstr "video"
-
-#: ../../portable/frontends/widgets/newfeed.py:72
-#: ../../portable/frontends/widgets/newfolder.py:71
-#: ../../portable/frontends/widgets/newsearchfeed.py:136
-msgid "audio"
-msgstr "audio"
+msgstr "Kanalo tipas yra:"
 
 #: ../../portable/frontends/widgets/newfeed.py:110
 msgid "Add Feed"
@@ -2115,383 +1476,336 @@ msgstr ""
 "\n"
 "Norėdami įtraukti kanalą įveskite nuorodą"
 
-#: ../../portable/frontends/widgets/tablist.py:475
-#: ../../portable/frontends/widgets/tablist.py:534
+#: ../../portable/frontends/widgets/tablist.py:500
+#: ../../portable/frontends/widgets/tablist.py:563
 msgid "Copy URL to clipboard"
 msgstr "Kopijuoti URL į laikinąją saugyklą"
 
-#: ../../portable/frontends/widgets/tablist.py:477
+#: ../../portable/frontends/widgets/tablist.py:502
 msgid "Remove Site"
 msgstr "Pašalinti puslapį"
 
-#: ../../portable/frontends/widgets/tablist.py:521
+#: ../../portable/frontends/widgets/tablist.py:550
 msgid "Update Feeds In Folder"
 msgstr "Atnaujinti katalogo kanalus"
 
-#: ../../portable/frontends/widgets/tablist.py:528
+#: ../../portable/frontends/widgets/tablist.py:557
 msgid "Update Feed Now"
 msgstr "Atnaujinti kanalą"
 
-#: ../../portable/frontends/widgets/tablist.py:531
+#: ../../portable/frontends/widgets/tablist.py:560
 msgid "Rename"
 msgstr "Pervadinti"
 
-#: ../../portable/frontends/widgets/tablist.py:533
-msgid "Revert Feed Name"
-msgstr ""
-
-#: ../../portable/frontends/widgets/tablist.py:540
+#: ../../portable/frontends/widgets/tablist.py:569
 msgid "Update Feeds Now"
 msgstr "Atnaujinti kanalą"
 
-#: ../../portable/frontends/widgets/tablist.py:605
+#: ../../portable/frontends/widgets/tablist.py:636
 msgid "SITES"
 msgstr "PUSLAPIAI"
 
-#: ../../portable/frontends/widgets/tablist.py:607
+#: ../../portable/frontends/widgets/tablist.py:638
 msgid "FEEDS"
 msgstr "KANALAI"
 
-#: ../../portable/frontends/widgets/tablist.py:609
+#: ../../portable/frontends/widgets/tablist.py:640
 msgid "AUDIO FEEDS"
 msgstr "AUDIO KANALAI"
 
-#: ../../portable/frontends/widgets/tablist.py:611
+#: ../../portable/frontends/widgets/tablist.py:642
 msgid "PLAYLISTS"
 msgstr "GROJARAŠČIAI"
 
-#: ../../portable/frontends/widgets/newfolder.py:60
-msgid "Folder name:"
-msgstr "Katalogo pavadinimas:"
+#: ../../portable/frontends/widgets/itemlistcontroller.py:431
+msgid "No Results Found"
+msgstr "Nerasta jokių rezultatų"
 
-#: ../../portable/frontends/widgets/newfolder.py:68
-msgid "Folder should go in this section:"
+#: ../../portable/frontends/widgets/itemlistwidgets.py:178
+msgid "Save Search"
+msgstr "Išsaugoti paiešką"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:285
+msgid "Title"
+msgstr "Antraštė"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:287
+msgid "Feed"
+msgstr "Kanalas"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:289
+#: ../../portable/frontends/widgets/itemlistwidgets.py:740
+msgid "Date"
+msgstr "Data"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:290
+msgid "Length"
+msgstr "Trukmė"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:291
+msgid "Status"
+msgstr "Būsena"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:292
+#: ../../portable/frontends/widgets/itemlistwidgets.py:741
+msgid "Size"
+msgstr "Dydis"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:294
+msgid "ETA"
+msgstr "Likęs siuntimo laikas"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:295
+msgid "Speed"
+msgstr "Sparta"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:431
+msgid "Save as a Feed"
+msgstr "Išsaugoti kaip kanalą"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:485
+msgid "Pause All"
+msgstr "Sustabdyti visus"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:492
+msgid "Resume All"
+msgstr "Paleisti visus"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:499
+msgid "Cancel All"
+msgstr "Atšaukti visus"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:506
+msgid "Download Settings"
+msgstr "Siuntimo nuostatos"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:552
+#, python-format
+msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
 msgstr ""
+"Diske negali būti užimta mažiau kaip %(available)s vietos (%(amount)s yra "
+"laisvos vietos diske)"
 
-#: ../../portable/frontends/widgets/newfolder.py:107
-#: ../../portable/frontends/widgets/newfolder.py:109
-msgid "Create Feed Folder"
-msgstr "Sukurti kanalų katalogą"
+#: ../../portable/frontends/widgets/itemlistwidgets.py:558
+#, python-format
+msgid "%(available)s free for downloads (%(amount)s free on disk)"
+msgstr ""
+"%(available)s laisva siuntiniams (%(amount)s yra laisvos vietos diske)"
 
-#: ../../portable/frontends/widgets/newfolder.py:110
-msgid "Enter the name of the folder to add"
-msgstr "Įveskite naujo kanalų katalogo pavadinimą"
+#: ../../portable/frontends/widgets/itemlistwidgets.py:563
+#, python-format
+msgid "%(amount)s free on disk"
+msgstr "%(amount)s yra laisvo vietos diske"
 
-#: ../../portable/frontends/widgets/linkhandler.py:54
-msgid "Subscribe to Feed"
-msgstr "Užsisakykite kanalą"
+#: ../../portable/frontends/widgets/itemlistwidgets.py:582
+#, python-format
+msgid "%(rate)s uploading"
+msgstr "%(rate)s išsiunčiama"
 
-#: ../../portable/frontends/widgets/linkhandler.py:56
+#: ../../portable/frontends/widgets/itemlistwidgets.py:584
+#, python-format
+msgid "%(rate)s downloading"
+msgstr "%(rate)s parsiunčiama"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:618
+msgid "Auto Download"
+msgstr "Automatinis siuntimas"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:630
+msgid "Share feed"
+msgstr "Dalintis kanalu"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:636
+msgid "Settings"
+msgstr "Nustatymai"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:642
+msgid "Remove feed"
+msgstr "Pašalinti kanalą"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:739
+msgid "Name"
+msgstr "Pavadinimas"
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:742
+msgid "Time"
+msgstr "Laikas"
+
+#: ../../portable/frontends/widgets/diagnostics.py:83
+msgid "Movies location:"
+msgstr "Failų talpinimo vieta:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:87
+msgid "Icon cache location:"
+msgstr "Paveiksliukų laikymo vieta:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:91
+msgid "Log file location:"
+msgstr "Log failų laikymo vieta:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:95
+msgid "Downloader log file location:"
+msgstr "Siuntimo programos Log failų laikymo vieta:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:99
+msgid "Database file location:"
+msgstr "Duomenų bazės laikymo vieta:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:106
+msgid "Space free on disk:"
+msgstr "Laisva disko vieta:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:108
+msgid "Database size:"
+msgstr "Duomenų bazės dydis:"
+
+#: ../../portable/frontends/widgets/diagnostics.py:118
+#: ../../portable/menubar.py:276
+msgid "Diagnostics"
+msgstr "Diagnostika"
+
+#: ../../portable/searchengines.py:150
+msgid "Search All"
+msgstr "Ieškoti visur"
+
+#: ../../portable/messages.py:988 ../../portable/item.py:1006
+msgid "queued for download"
+msgstr "laukiama siuntimui"
+
+#: ../../portable/messagehandler.py:1256
+msgid "Subscribed to new feed:"
+msgstr "Užsiprenumeruokite naują kanalą:"
+
+#: ../../portable/messagehandler.py:1259
+msgid "Subscribed to new feeds:"
+msgstr "Užsiprenumeruokite naujus kanalus:"
+
+#: ../../portable/startup.py:97
+msgid "Unknown Error"
+msgstr "Nežinoma klaida"
+
+#: ../../portable/startup.py:179
+msgid "Database too new"
+msgstr "Duomenų bazė per nauja"
+
+#: ../../portable/startup.py:181
 #, python-format
 msgid ""
-"This link appears to be a feed.  Do you want to add it to your "
-"subscriptions?\n"
-"\n"
-"%(url)s"
+"You have a database that was saved with a newer version of %(appname)s. You "
+"must download the latest version of %(appname)s and run that."
 msgstr ""
-"Ši nuoroda gali būti kanalas. Ar norite jį užsisakyti?\n"
-"%(url)s"
+"Jūsų turima duomenų bazė buvo išsaugota su naujesne %(appname)s verija. "
+"Todėl turite parsisiųsti naujausią %(appname)s versiją ir naudoti ją."
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:58
-msgid "New Search Feed"
-msgstr "Nauja kanalo paieška"
+#: ../../portable/commandline.py:106
+msgid "Subscription error"
+msgstr "Prenumeratos klaida"
 
-#: ../../portable/frontends/widgets/newsearchfeed.py:59
-msgid "A search feed contains items that match a search term."
-msgstr ""
-"Kanalo paieškoje rodomi tik tie įrašai kurie atitinka paieškos kriterijus."
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:74
-msgid "Search for:"
-msgstr "Ieškoti:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:80
-msgid "In this:"
-msgstr "Šiame:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:87
-msgid "Feed:"
-msgstr "Kanalas:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:92
-msgid "Search engine:"
-msgstr "Paieškos variklis:"
-
-#: ../../portable/frontends/widgets/newsearchfeed.py:132
-msgid "Add new feed to this section:"
-msgstr "Įtraukti naują kanalą į šią skiltį:"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:60
-msgid "Miro First Time Setup"
-msgstr "Miro pirmo paleidimo konfigūravimo langas"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:117
-msgid "Welcome to the Miro First Time Setup"
-msgstr "Sveiki paleidę Miro pirmo laeidimo konfigūravimo langą"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:120
+#: ../../portable/commandline.py:116
+#, python-format
 msgid ""
-"The next few screens will help you set up Miro so that it works best for "
-"you.\n"
-"\n"
-"We recommend that you have Miro launch when your computer starts up.  This "
-"way, downloads in progress can finish downloading and new media files can be "
-"downloaded in the background, ready when you want to watch."
+"This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
+"the publisher of this file."
 msgstr ""
-"Keli kiti langai jums padės nustatyti Miro taip, kad ji jums geriausiai "
-"veiktų.\n"
-"Mes rekomenduojame Miro paleidinėti iškart kai jūsų kompiuteris įsijungs. "
-"Šiuo būdu, jūsų siuntiniai bus siunčiami neakivaizdžiai ir bus visada "
-"paruošti žiūrėjimui."
+"Šis %(appname)s kanalas yra neteisingo formato: %(url)s. Prašome pranešti "
+"šio kanalo savininkui."
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:132
-msgid "Would you like to run Miro on startup?"
-msgstr "Ar norite paleidinėti Miro kompiuteriui įsijungiant?"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:137
-#: ../../portable/frontends/widgets/firsttimedialog.py:170
-#: ../../portable/dialogs.py:87
-msgid "Yes"
-msgstr "Taip"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:138
-#: ../../portable/frontends/widgets/firsttimedialog.py:169
-#: ../../portable/dialogs.py:88
-msgid "No"
-msgstr "Ne"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:146
-msgid "Next >"
-msgstr "Kitas >"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:156
-msgid "Completing the Miro First Time Setup"
-msgstr "Užbaigiamas Miro pirmo paleidimo konfigūravimas"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:159
+#: ../../portable/commandline.py:126
+#, python-format
 msgid ""
-"Miro can find all the media files on your computer to help you organize your "
-"collection.\n"
+"This %(appname)s feed file has the wrong content type: %(url)s. Please "
+"notify the publisher of this file."
+msgstr ""
+"Šio %(appname)s kanalo failas yra neteisingo tipo: %(url)s. Prašome pranešti "
+"šio kanalo savininkui."
+
+#: ../../portable/commandline.py:134
+#, python-format
+msgid "Could not download the %(appname)s feed file: %(url)s"
+msgstr "Negalima parsiųsti %(appname)s kanalo įrašo: %(url)s"
+
+#: ../../portable/commandline.py:186
+msgid "Invalid Torrent"
+msgstr "Netinkamas „Torrent“ failas"
+
+#: ../../portable/commandline.py:188
+#, python-format
+msgid ""
+"The torrent file %(filename)s appears to be corrupt and cannot be opened. "
+"[OK]"
+msgstr ""
+"Torrent failas %(filename)s gali būti pažeistas ir jo negalima atidaryti. "
+"[OK]"
+
+#: ../../portable/downloader.py:256
+msgid "activity"
+msgstr "veikla"
+
+#: ../../portable/downloader.py:298
+msgid "Flash URL Scraping Error"
+msgstr "Klaida nagrinėjant Flash URL"
+
+#: ../../portable/downloader.py:480
+msgid "starting up"
+msgstr "paleidžiama"
+
+#: ../../portable/feed.py:915
+msgid "Error loading feed"
+msgstr "Klaida įkeliant srautą"
+
+#: ../../portable/feed.py:917
+#, python-format
+msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
+msgstr "Negalima paleisti kanalo %(url)s: (%(errordescription)s)."
+
+#: ../../portable/feed.py:920
+msgid "Would you like to keep the feed?"
+msgstr "Ar norėtumėte palikti šį srautą?"
+
+#: ../../portable/feed.py:1045
+msgid "Bad content-type"
+msgstr "Blogas turinio tipas"
+
+#: ../../portable/feed.py:1058
+#, python-format
+msgid "Channel is not compatible with %(appname)s"
+msgstr "Šis kanalas nėra suderinamas su %(appname)s"
+
+#: ../../portable/feed.py:1061
+#, python-format
+msgid ""
+"This channel is not compatible with %(appname)s but we'll try our best to "
+"grab the files.  It may take extra time to list the videos, and descriptions "
+"may look funny.\n"
 "\n"
-"Would you like Miro to look for media files on your computer?"
+"Please contact the publishers of %(url)s and ask if they can supply a feed "
+"in a format that will work with %(appname)s.\n"
+"\n"
+"Do you want to try to load this channel anyway?"
 msgstr ""
-"Miro gali surasti visus media failus jūsų kompiuteryje ir padėti sutvarkyti "
-"jūsų archyvą.\n"
-"Ar leidžiate Miro peržiūrėti jūsų visus media failus?"
+"Šis kanalas nėra suderinamas su %(appname)s, bet mes galime pabandyti "
+"įtraukti failus. Tai gali užtrukti šiek tiek laiko ir aprašymai gali būti "
+"netikslūs.\n"
+"Prašome pranešti %(url)s administratoriams ir gal būt jie jums padės "
+"pritaikydami kanalo formatą %(appname)s.\n"
+"Ar vis dėlto norite pamėginti šį kanalą paleisti?"
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:177
-msgid "Restrict to all my personal files."
-msgstr "Apriboti iki visų mano asmeninių failų."
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:178
-msgid "Search custom folders:"
-msgstr "Ieškoti kitame kataloge:"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:189
-msgid "Choose directory to search for media files"
-msgstr "Pasirinkite katalogą kur ieškosite media failų"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:200
-#: ../../portable/frontends/widgets/firsttimedialog.py:280
-msgid "< Previous"
-msgstr "< Ankstesnis"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:213
-#: ../../portable/frontends/widgets/firsttimedialog.py:215
-#: ../../portable/frontends/widgets/firsttimedialog.py:272
-#: ../../portable/feed.py:2280 ../../portable/feed.py:2388
-msgid "Search"
-msgstr "Paieška"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:215
-#: ../../portable/frontends/widgets/firsttimedialog.py:283
-msgid "Finish"
-msgstr "Baigti"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:263
-msgid "Searching for media files"
-msgstr "Ieškoma media failų"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:273
-#: ../../portable/dialogs.py:85
-msgid "Cancel"
-msgstr "Atšaukti"
-
-#: ../../portable/frontends/widgets/firsttimedialog.py:311
+#: ../../portable/feed.py:1661
 #, python-format
-msgid "parsed %(count)s file"
-msgid_plural "parsed %(count)s files"
-msgstr[0] ""
-msgstr[1] ""
+msgid "Search All: %(text)s"
+msgstr "Ieškoti visur: %(text)s"
 
-#: ../../portable/frontends/widgets/firsttimedialog.py:316
-#, python-format
-msgid "found %(count)s media file"
-msgid_plural "found %(count)s media files"
-msgstr[0] "Rastas %(count)s media failas"
-msgstr[1] "Rasta %(count)s media failų"
-msgstr[2] "Rasta %(count)s media failų"
+#: ../../portable/feed.py:2382
+msgid "Local Files"
+msgstr "Vietiniai failai"
 
-#: ../../portable/frontends/widgets/statictabs.py:44
-msgid "Miro Guide"
-msgstr "„Miro“ gidas"
-
-#: ../../portable/frontends/widgets/statictabs.py:110
-msgid "Downloading"
-msgstr "Atsiunčiama"
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:90
-msgid "Single and external downloads"
-msgstr ""
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:93
-msgid "Feed downloads"
-msgstr "Kanalo siuntiniai"
-
-#: ../../portable/frontends/widgets/downloadscontroller.py:96
-msgid "Seeding"
-msgstr "Platinama"
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
-msgid "Add a Playlist"
-msgstr "Įterpti į grojaraštį"
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
-msgid "Add items to an existing playlist or a new one."
-msgstr "Įterpti įrašą į esantį grojaraštį ar į naują."
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
-msgid "Existing playlist:"
-msgstr "Jau sukurtas grojaraštis:"
-
-#: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
-msgid "New playlist:"
-msgstr "Naujas grojaraštis:"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:63
-msgid "Remove From the Library"
-msgstr "Pašalinti iš bibliotekos"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:94
-#: ../../portable/frontends/widgets/itemcontextmenu.py:192
-msgid "Play"
-msgstr "Groti"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:95
-msgid "Play Just this Item"
-msgstr "Leisti vien tik šį įrašą"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:96
-#: ../../portable/frontends/widgets/itemcontextmenu.py:193
-msgid "Add to Playlist"
-msgstr "Įdėti į grojaraštį"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:101
-msgid "Revert Item Name"
-msgstr ""
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:103
-#: ../../portable/frontends/widgets/itemcontextmenu.py:200
-msgid "Mark as Unplayed"
-msgstr "Pažymėti kaip nežiūrėtą"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:106
-#: ../../portable/frontends/widgets/itemcontextmenu.py:205
-msgid "Mark as Played"
-msgstr "Pažymėti kaip žiūrėtą"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:115
-msgid "Start seeding"
-msgstr "Pradėti platinimą"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:118
-#: ../../portable/frontends/widgets/itemcontextmenu.py:240
-#: ../../portable/frontends/widgets/itemcontextmenu.py:258
-msgid "Cancel Download"
-msgstr "Nutraukti siuntimą"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:122
-#: ../../portable/frontends/widgets/itemcontextmenu.py:241
-msgid "Pause Download"
-msgstr "Pristabdyti siuntimą"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:125
-#: ../../portable/frontends/widgets/itemcontextmenu.py:254
-msgid "Resume Download"
-msgstr "Pratęsti siuntimą"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:135
-msgid "Web page"
-msgstr "Interneto puslapis"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:139
-msgid "License"
-msgstr "Licenzija"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:142
-msgid "File in Browser"
-msgstr "Failas naršyklėje"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:144
-#, python-format
-msgid "File in %(progname)s"
-msgstr "Failas %(progname)s"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:146
-msgid "File on Disk"
-msgstr "Failas diske"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:149
-msgid "View"
-msgstr "Rodyti"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:187
-#, python-format
-msgid "%(count)d Downloaded Item"
-msgid_plural "%(count)d Downloaded Items"
-msgstr[0] "%(count)d Parsiųsta įrašo"
-msgstr[1] "%(count)d Parsiųsta įrašų"
-msgstr[2] "%(count)d Parsiųsta įrašų"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:216
-#, python-format
-msgid "%(count)d Available Item"
-msgid_plural "%(count)d Available Items"
-msgstr[0] "%(count)d galimas įrašas"
-msgstr[1] "%(count)d galimi įrašai"
-msgstr[2] "%(count)d galimi įrašai"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:229
-#, python-format
-msgid "%(count)d Downloading Item"
-msgid_plural "%(count)d Downloading Items"
-msgstr[0] "%(count)d Siunčiamas įrašas"
-msgstr[1] "%(count)d Siunčiami įrašai"
-msgstr[2] "%(count)d Siunčiami įrašai"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:246
-#, python-format
-msgid "%(count)d Paused Item"
-msgid_plural "%(count)d Paused Items"
-msgstr[0] "%(count)d Sustabdytas įrašas"
-msgstr[1] "%(count)d Sustabdyti įrašai"
-msgstr[2] "%(count)d Sustabdyti įrašai"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:264
-msgid "Restart Upload"
-msgstr "Iš naujo pradėti išsiuntimą"
-
-#: ../../portable/frontends/widgets/itemcontextmenu.py:278
-msgid "Remove From Playlist"
-msgstr "Pašalinti iš grojaraščio"
+#: ../../portable/feed.py:2396
+msgid "Playing File"
+msgstr "Grojantysis failas"
 
 #: ../../portable/dialogs.py:83
 msgid "Ok"
 msgstr "Gerai"
-
-#: ../../portable/dialogs.py:84
-msgid "Close"
-msgstr "Užverti"
 
 #: ../../portable/dialogs.py:86
 msgid "Done"
@@ -2589,130 +1903,328 @@ msgstr "Prenumeruoti"
 msgid "Stop Watching"
 msgstr "Sustabdyti peržiūrą"
 
-#: ../../portable/playlist.py:180
-#, python-format
-msgid "Enter a new name for the playlist %s"
-msgstr "Įveskite naujo grojaraščio %s vardą"
-
-#: ../../portable/singleclick.py:100
+#: ../../portable/singleclick.py:54
 msgid "Download already exists"
 msgstr "Atsiuntimas jau egzistuoja"
 
-#: ../../portable/singleclick.py:101
+#: ../../portable/singleclick.py:55
 msgid "That URL is already an external download."
 msgstr "Šis URL jau yra išorinis atsiuntimas."
 
-#: ../../portable/singleclick.py:107
-msgid "Miro will begin downloading it now."
-msgstr "„Miro“ pradės jo atsiuntimą."
-
-#: ../../portable/singleclick.py:109
+#: ../../portable/singleclick.py:64
 msgid "It is downloading now."
 msgstr "Jis yra siunčiamas."
 
-#: ../../portable/singleclick.py:111
+#: ../../portable/singleclick.py:66
 msgid "It has already been downloaded."
 msgstr "Jis jau atsiųstas."
 
-#: ../../portable/singleclick.py:138
+#: ../../portable/singleclick.py:96
 msgid "File Download"
 msgstr "Failo atsiuntimas"
 
-#: ../../portable/singleclick.py:139
+#: ../../portable/singleclick.py:97
 #, python-format
 msgid ""
 "This file at %(url)s does not appear to be audio, video, or an RSS feed."
 msgstr "Šis failas %(url)s nėra video ar audio failas, ar RSS kanalas."
 
-#: ../../portable/singleclick.py:166
+#: ../../portable/singleclick.py:135
 msgid "Download Error"
 msgstr "Klaida besisiunčiant"
 
-#: ../../portable/singleclick.py:168
+#: ../../portable/dl_daemon/download.py:624
 #, python-format
-msgid ""
-"Miro is not able to download a file at this URL:\n"
-"\n"
-"URL: %(url)s"
-msgstr ""
-"Miro negali parsiųsti šio failo turinčio tokį URL:\n"
-"URL: %(url)s"
+msgid "Could not write to %(filename)s"
+msgstr "Nepavyko įrašyti į %(filename)s"
 
-#: ../../portable/singleclick.py:297
-msgid "Subscribing to multiple feeds"
-msgstr "Daugelio kanalų užsisakymas"
+#: ../../portable/dl_daemon/download.py:649
+#: ../../portable/dl_daemon/download.py:866
+msgid "Not enough disk space"
+msgstr "Nepakanka vietos diske"
 
-#: ../../portable/singleclick.py:298
+#: ../../portable/dl_daemon/download.py:650
+#: ../../portable/dl_daemon/download.py:867
 #, python-format
-msgid "Create feed?"
-msgid_plural "Create %(count)d feeds?"
-msgstr[0] "Sukurti kanalą?"
-msgstr[1] "Sukurti %(count)d kanalų?"
-msgstr[2] "Sukurti %(count)d kanalų?"
+msgid "%(amount)s MB required to store this video"
+msgstr "Trūksta %(amount)s MB vietos šiam filmui"
 
-#: ../../portable/singleclick.py:318
-msgid "Enter a name for the new feed folder"
-msgstr "Įveskite naujo kanalų katalogo pavadinimą"
-
-#: ../../portable/singleclick.py:322
+#: ../../portable/dl_daemon/download.py:665
 #, python-format
-msgid ""
-"NOTE: You are already subscribed to one of these feeds.  These feeds will "
-"stay where they currently are."
-msgid_plural ""
-"NOTE: You are already subscribed to %(count)d of these feeds.  These feeds "
-"will stay where they currently are."
-msgstr[0] ""
-"PASTABA: Jūs jau prenumeruojate vieną iš šių kanalų. Šitie kanalai bus ten "
-"pat kur jie ir dabar yra."
-msgstr[1] ""
-"PASTABA: Jūs jau esate užsiprenumeravę %(count)d iš šių kanalų. Šitie "
-"kanalai bus ten pat kur jie ir dabar yra."
-msgstr[2] ""
-"PASTABA: Jūs jau esate užsiprenumeravę %(count)d iš šių kanalų. Šitie "
-"kanalai bus ten pat kur jie ir dabar yra."
+msgid "Couldn't open %(filename)s for writing"
+msgstr "Nepavyko atverti %(filename)s rašymui"
 
-#: ../../portable/singleclick.py:337
-msgid "Subscription error"
-msgstr "Prenumeratos klaida"
+#: ../../portable/dl_daemon/download.py:885
+msgid "BitTorrent failure"
+msgstr "BitTorrent klaida"
 
-#: ../../portable/singleclick.py:347
+#: ../../portable/dl_daemon/download.py:885
+msgid "BitTorrent failed to startup"
+msgstr "Nepavyko paleisti BitTorrent"
+
+#: ../../portable/dl_daemon/download.py:1074
+msgid "Corrupt Torrent"
+msgstr "Sugadintas „.torrent“ failas"
+
+#: ../../portable/dl_daemon/download.py:1075
 #, python-format
-msgid ""
-"This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
-"the publisher of this file."
-msgstr ""
-"Šis %(appname)s kanalas yra neteisingo formato: %(url)s. Prašome pranešti "
-"šio kanalo savininkui."
+msgid "The torrent file at %(url)s was not valid"
+msgstr "Torrent failas adresu %(url)s buvo netinkamas"
 
-#: ../../portable/singleclick.py:356
+#: ../../portable/dl_daemon/download.py:1100
+msgid "Torrent file deleted"
+msgstr "Torrent failas ištrintas"
+
+#: ../../portable/menubar.py:184
+msgid "_Open"
+msgstr "_Atverti"
+
+#: ../../portable/menubar.py:185
+msgid "_Download Item"
+msgstr "Par_siųsti įrašą"
+
+#: ../../portable/menubar.py:186
+msgid "Check _Version"
+msgstr "Patikrinti _versiją"
+
+#: ../../portable/menubar.py:188
+msgid "_Remove Item"
+msgstr "Išt_rinti įrašą"
+
+#: ../../portable/menubar.py:189
+msgid "_Remove Items"
+msgstr "Iš_trinti elementus..."
+
+#: ../../portable/menubar.py:190
+msgid "Re_name Item"
+msgstr "Pe_rvadinti elementą"
+
+#: ../../portable/menubar.py:191
+msgid "Save Item _As"
+msgstr "Išs_augoti įrašą kaip..."
+
+#: ../../portable/menubar.py:192
+msgid "Save Items _As"
+msgstr "Išs_augoti įrašus kaip..."
+
+#: ../../portable/menubar.py:193
+msgid "Copy Item _URL"
+msgstr "Kopijuoti įrašo _URL"
+
+#: ../../portable/menubar.py:195
+msgid "_Options"
+msgstr "_Nustatymai"
+
+#: ../../portable/menubar.py:196
+msgid "_Quit"
+msgstr "Iš_eiti"
+
+#: ../../portable/menubar.py:205
+msgid "Cu_t"
+msgstr "_Iškirpti"
+
+#: ../../portable/menubar.py:206
+msgid "_Copy"
+msgstr "_Kopijuoti"
+
+#: ../../portable/menubar.py:207
+msgid "_Paste"
+msgstr "Į_dėti"
+
+#: ../../portable/menubar.py:208
+msgid "Select _All"
+msgstr "Pasirinkti _viską"
+
+#: ../../portable/menubar.py:212
+msgid "Add _Feed"
+msgstr "Įtraukti _kanalą"
+
+#: ../../portable/menubar.py:214
+msgid "New Searc_h Feed"
+msgstr "Naujas paieškos puslapis"
+
+#: ../../portable/menubar.py:215
+msgid "New _Folder"
+msgstr "Naujas _aplankas"
+
+#: ../../portable/menubar.py:217
+msgid "Re_name"
+msgstr "Per_vadinti"
+
+#: ../../portable/menubar.py:218
+msgid "_Remove"
+msgstr "_Pašalinti"
+
+#: ../../portable/menubar.py:219
+msgid "_Remove Folder"
+msgstr "Pašalinti katalogą"
+
+#: ../../portable/menubar.py:221
+msgid "_Update Feed"
+msgstr "Atnaujinti kanalą"
+
+#: ../../portable/menubar.py:222
+msgid "_Update Feeds"
+msgstr "Atnaujinti kanalus"
+
+#: ../../portable/menubar.py:223
+msgid "Update _All Feeds"
+msgstr "Atnaujinti visus kanalus"
+
+#: ../../portable/menubar.py:225
+msgid "_Import Feeds (OPML)"
+msgstr "Importuoti kanalus (OPML)"
+
+#: ../../portable/menubar.py:226
+msgid "E_xport Feeds (OPML)"
+msgstr "E_xportuoti kanalus (OPML)"
+
+#: ../../portable/menubar.py:228
+msgid "_Share with a Friend"
+msgstr "Pasidalinti su draugais"
+
+#: ../../portable/menubar.py:229
+msgid "Copy URL"
+msgstr "Kopijuoti nuorodą"
+
+#: ../../portable/menubar.py:233
+msgid "New _Playlist"
+msgstr "Naujas _grojaraštis"
+
+#: ../../portable/menubar.py:234
+msgid "New Playlist Fol_der"
+msgstr "Naujas grojaraščio ap_lankas"
+
+#: ../../portable/menubar.py:236
+msgid "Re_name Playlist"
+msgstr "Pe_rvadinti grojaraštį"
+
+#: ../../portable/menubar.py:237
+msgid "_Remove Playlist"
+msgstr "Paša_linti grojaraštį"
+
+#: ../../portable/menubar.py:238
+msgid "_Remove Playlists"
+msgstr "Paša_linti grojaraščius"
+
+#: ../../portable/menubar.py:239
+msgid "_Remove Playlist Folders"
+msgstr "Paša_linti grojaraščių aplankus"
+
+#: ../../portable/menubar.py:240
+msgid "_Remove Playlist Folder"
+msgstr "Paša_linti grojaraščių aplanką"
+
+#: ../../portable/menubar.py:251 ../../portable/menubar.py:252
+msgid "_Play"
+msgstr "_Rodyti"
+
+#: ../../portable/menubar.py:253
+msgid "_Pause"
+msgstr "_Pauzė"
+
+#: ../../portable/menubar.py:254
+msgid "_Stop"
+msgstr "_Sustabdyti"
+
+#: ../../portable/menubar.py:256
+msgid "_Next Video"
+msgstr "_Kitas video"
+
+#: ../../portable/menubar.py:257
+msgid "_Previous Video"
+msgstr "_Ankstesnis video"
+
+#: ../../portable/menubar.py:259
+msgid "Skip _Forward"
+msgstr "Persukti į _priekį"
+
+#: ../../portable/menubar.py:260
+msgid "Skip _Back"
+msgstr "Grįžti _Atgal"
+
+#: ../../portable/menubar.py:262
+msgid "Volume _Up"
+msgstr "_Pagarsinti"
+
+#: ../../portable/menubar.py:263
+msgid "Volume _Down"
+msgstr "Pri_tildyti"
+
+#: ../../portable/menubar.py:265
+msgid "_Fullscreen"
+msgstr "_Visame ekrane"
+
+#: ../../portable/menubar.py:266
+msgid "_Toggle Detached/Attached"
+msgstr "Rodyti atskirame _lange"
+
+#: ../../portable/menubar.py:272
+msgid "_Donate"
+msgstr "Pa_aukoti"
+
+#: ../../portable/menubar.py:274 ../../portable/menubar.py:297
+msgid "_Help"
+msgstr "Ži_nynas"
+
+#: ../../portable/menubar.py:278
+msgid "Report a _Bug"
+msgstr "Pranešti apie _klaidą"
+
+#: ../../portable/menubar.py:280
+msgid "_Translate"
+msgstr "_Išversti"
+
+#: ../../portable/menubar.py:282
+msgid "_Planet Miro"
+msgstr "Miro pasaulis"
+
+#: ../../portable/menubar.py:286
+msgid "_Video"
+msgstr "_Video"
+
+#: ../../portable/menubar.py:288
+msgid "_File"
+msgstr "_Failas"
+
+#: ../../portable/menubar.py:294
+msgid "_Sidebar"
+msgstr "Šoninė _juosta"
+
+#: ../../portable/menubar.py:295
+msgid "_Playlists"
+msgstr "Groja_raščiai"
+
+#: ../../portable/menubar.py:296
+msgid "P_layback"
+msgstr "P_eržiūra"
+
+#: ../../portable/util.py:302 ../../portable/util.py:304
 #, python-format
-msgid ""
-"This %(appname)s feed file has the wrong content type: %(url)s. Please "
-"notify the publisher of this file."
-msgstr ""
-"Šio %(appname)s kanalo failas yra neteisingo tipo: %(url)s. Prašome pranešti "
-"šio kanalo savininkui."
+msgid "%(size)sGB"
+msgstr "%(size)sGB"
 
-#: ../../portable/singleclick.py:364
+#: ../../portable/util.py:308 ../../portable/util.py:310
 #, python-format
-msgid "Could not download the %(appname)s feed file: %(url)s"
-msgstr "Negalima parsiųsti %(appname)s kanalo įrašo: %(url)s"
+msgid "%(size)sMB"
+msgstr "%(size)sMB"
 
-#: ../../portable/singleclick.py:414
-msgid "Invalid Torrent"
-msgstr "Netinkamas „Torrent“ failas"
-
-#: ../../portable/singleclick.py:416
+#: ../../portable/util.py:314 ../../portable/util.py:316
 #, python-format
-msgid ""
-"The torrent file %(filename)s appears to be corrupt and cannot be opened. "
-"[OK]"
-msgstr ""
-"Torrent failas %(filename)s gali būti pažeistas ir jo negalima atidaryti. "
-"[OK]"
+msgid "%(size)sKB"
+msgstr "%(size)sKB"
 
-#: ../../portable/item.py:439
+#: ../../portable/util.py:320 ../../portable/util.py:322
+#, python-format
+msgid "%(size)sB"
+msgstr "%(size)sB"
+
+#: ../../portable/playlist.py:180
+#, python-format
+msgid "Enter a new name for the playlist %s"
+msgstr "Įveskite naujo grojaraščio %s vardą"
+
+#: ../../portable/item.py:830
 #, python-format
 msgid "%(count)d day"
 msgid_plural "%(count)d days"
@@ -2720,7 +2232,7 @@ msgstr[0] "%(count)d diena"
 msgstr[1] "%(count)d dienos"
 msgstr[2] "%(count)d dienos"
 
-#: ../../portable/item.py:444
+#: ../../portable/item.py:835
 #, python-format
 msgid "%(count)d hour"
 msgid_plural "%(count)d hours"
@@ -2728,7 +2240,7 @@ msgstr[0] "%(count)d valanda"
 msgstr[1] "%(count)d valandos"
 msgstr[2] "landos"
 
-#: ../../portable/item.py:449
+#: ../../portable/item.py:840
 #, python-format
 msgid "%(count)d minute"
 msgid_plural "%(count)d minutes"
@@ -2736,177 +2248,621 @@ msgstr[0] "%(count)d minutė"
 msgstr[1] "%(count)d minutės"
 msgstr[2] "%(count)d minutės"
 
-#: ../../portable/item.py:733 ../../portable/item.py:749
-#: ../../portable/item.py:761
+#: ../../portable/item.py:1085
 msgid "no title"
 msgstr "nėra antraštės"
 
-#: ../../portable/item.py:1008
+#: ../../portable/item.py:1328
 msgid "starting up..."
 msgstr "pradedama..."
 
-#: ../../portable/httpclient.py:90
+#: ../../portable/opml.py:193
+msgid "OPML Import failed"
+msgstr "OPML importavimas nepavyko"
+
+#: ../../portable/opml.py:194
+msgid ""
+"The selected OPML file appears to be invalid.  Import was interrupted."
+msgstr "Parinktas OPML failas yra netinkamas. Importavimas nutrauktas."
+
+#: ../../portable/opml.py:201
+msgid "OPML Import summary"
+msgstr "OPML perkėlimo ataskaita"
+
+#: ../../portable/opml.py:202
 #, python-format
-msgid "Error: %(msg)s"
-msgstr "Klaida: %(msg)s"
+msgid "Successfully imported %(count)d feed."
+msgid_plural "Successfully imported %(count)d feeds."
+msgstr[0] "Pavyko perkelti %(count)d kanalo."
+msgstr[1] "Pavyko perkelti %(count)d kanalų."
+msgstr[2] "Pavyko perkelti %(count)d kanalų."
 
-#: ../../portable/httpclient.py:105 ../../portable/httpclient.py:111
-msgid "Can't connect"
-msgstr "Prisijungti nepavyko"
-
-#: ../../portable/httpclient.py:106
+#: ../../portable/opml.py:208
 #, python-format
-msgid "Connection Error: %(msg)s"
-msgstr "Susijungimo klaida: %(msg)s"
+msgid "Skipped %(count)d feed already present."
+msgid_plural "Skipped %(count)d feeds already present."
+msgstr[0] "Atšauktas %(count)d kanala jau įkeltas"
+msgstr[1] "Atšaukti %(count)d kanalai jau įkelti."
+msgstr[2] "Atšaukti %(count)d kanalai jau įkelti."
 
-#: ../../portable/httpclient.py:112
-msgid "SSL connection error"
-msgstr "SSL prisijungimo klaida"
+#: ../../portable/theme.py:159
+msgid "Example Playlist"
+msgstr "Grojaraščio pavyzdys"
 
-#: ../../portable/httpclient.py:116
-msgid "HTTP error"
-msgstr "HTTP klaida"
-
-#: ../../portable/httpclient.py:120
+#: ../../portable/displaytext.py:51
 #, python-format
-msgid "Bad Status Line: %(msg)s"
-msgstr "Bloga būsenos eilutė: %(msg)s"
+msgid "%(size)s gb/s"
+msgstr "%(size)s gb/s"
 
-#: ../../portable/httpclient.py:125
+#: ../../portable/displaytext.py:54
 #, python-format
-msgid "Bad Header Line: %(msg)s"
-msgstr "Bloga antraštės eilutė: %(msg)s"
+msgid "%(size)s mb/s"
+msgstr "%(size)s mb/s"
 
-#: ../../portable/httpclient.py:130
+#: ../../portable/displaytext.py:57
 #, python-format
-msgid "Bad Chunk size: %(msg)s"
-msgstr "Blogas dalies dydis: %(msg)s"
+msgid "%(size)s kb/s"
+msgstr "%(size)s kb/s"
 
-#: ../../portable/httpclient.py:135
+#: ../../portable/displaytext.py:60
+#, python-format
+msgid "%(size)s b/s"
+msgstr "%(size)s b/s"
+
+#: ../../portable/displaytext.py:75
+#, python-format
+msgid "%(num)d sec"
+msgid_plural "%(num)d secs"
+msgstr[0] "%(num)d s"
+msgstr[1] "%(num)d s"
+msgstr[2] "%(num)d s"
+
+#: ../../portable/displaytext.py:89
+#, python-format
+msgid "%(size)s gb"
+msgstr "%(size)s gb"
+
+#: ../../portable/displaytext.py:92
+#, python-format
+msgid "%(size)s mb"
+msgstr "%(size)s mb"
+
+#: ../../portable/displaytext.py:95
+#, python-format
+msgid "%(size)s kb"
+msgstr "%(size)s kb"
+
+#: ../../portable/displaytext.py:97
+#, python-format
+msgid "%(size)s b"
+msgstr "%(size)s b"
+
+#: ../../portable/displaytext.py:102
+#, python-format
+msgid "Expires in %(count)d day"
+msgid_plural "Expires in %(count)d days"
+msgstr[0] "Pasibaigs saugojimo laikas po %(count)d dienos"
+msgstr[1] "Pasibaigs saugojimo laikas po %(count)d dienų"
+msgstr[2] "Pasibaigs saugojimo laikas po %(count)d dienų"
+
+#: ../../portable/displaytext.py:107
+#, python-format
+msgid "Expires in %(count)d hour"
+msgid_plural "Expires in %(count)d hours"
+msgstr[0] "Expires in %(count)d hour"
+msgstr[1] "Pasibaigs saugojimo laikas po %(count)d valandų"
+msgstr[2] "Pasibaigs saugojimo laikas po %(count)d valandų"
+
+#: ../../portable/displaytext.py:112
+#, python-format
+msgid "Expires in %(count)d minute"
+msgid_plural "Expires in %(count)d minutes"
+msgstr[0] "Pasibaigs saugojimo laikas po %(count)d minutės"
+msgstr[1] "Pasibaigs saugojimo laikas po %(count)d minučių"
+msgstr[2] "Pasibaigs saugojimo laikas po %(count)d minučių"
+
+#: ../../portable/displaytext.py:120
+#, python-format
+msgid "Expires: %(count)d day"
+msgid_plural "Expires: %(count)d days"
+msgstr[0] "Pasibaigs saugojimo laikas: %(count)d dienos"
+msgstr[1] "Pasibaigs saugojimo laikas: %(count)d dienų"
+msgstr[2] "Pasibaigs saugojimo laikas: %(count)d dienų"
+
+#: ../../portable/displaytext.py:125
+#, python-format
+msgid "Expires: %(count)d hour"
+msgid_plural "Expires: %(count)d hours"
+msgstr[0] "Pasibaigs saugojimo laikas: %(count)d valandos"
+msgstr[1] "Pasibaigs saugojimo laikas: %(count)d valandų"
+msgstr[2] "Pasibaigs saugojimo laikas: %(count)d valandų"
+
+#: ../../portable/displaytext.py:130
+#, python-format
+msgid "Expires: %(count)d minute"
+msgid_plural "Expires: %(count)d minutes"
+msgstr[0] "Pasibaigs saugojimo laikas: %(count)d minutės"
+msgstr[1] "Pasibaigs saugojimo laikas: %(count)d minučių"
+msgstr[2] "Pasibaigs saugojimo laikas: %(count)d minučių"
+
+#: ../../platform/osx/plat/frontends/widgets/application.py:168
+msgid "Download Completed"
+msgstr "Atsiuntimas baigtas"
+
+#: ../../platform/osx/plat/frontends/widgets/application.py:169
+#, python-format
+msgid "Download of video '%s' is finished."
+msgstr "Video failo „%s“ atsiuntimas baigtas."
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:132
+msgid "Add to Library"
+msgstr "Įtraukti į archyvą"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:136
+msgid "Services"
+msgstr "Paslaugos"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
+msgid "Hide Others"
+msgstr "Paslėpti kitus"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:141
+msgid "Show All"
+msgstr "Rodyti visus"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:146
+msgid "Preferences..."
+msgstr "Nustatymai..."
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:152
+msgid "Close Window"
+msgstr "Užverti langą"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
+msgid "Cut"
+msgstr "Iškirpti"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
+msgid "Copy"
+msgstr "Kopijuoti"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:159
+msgid "Paste"
+msgstr "Įdėti"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
+msgid "Select All"
+msgstr "Pasirinkti viską"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:164
+msgid "Edit"
+msgstr "Keisti"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:169
+msgid "Present Half Size"
+msgstr "Sumažinti iki pusės"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:170
+msgid "Present Actual Size"
+msgstr "Originalus dydis"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:171
+msgid "Present Double Size"
+msgstr "Išdidinti du kart"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:180
+msgid "Zoom"
+msgstr "Mastelis"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:181
+msgid "Minimize"
+msgstr "Sumažinti"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:183
+msgid "Main Window"
+msgstr "Pagrindinis langas"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:185
+msgid "Bring All to Front"
+msgstr "Perkelti viską į priekį"
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:187
+msgid "Window"
+msgstr "Langas"
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
+#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:39
+msgid "Enable tray icon"
+msgstr "Įjungti sisteminę ikoną"
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
+msgid "Renderer options:"
+msgstr "Multimedia įrenginių nuostatos:"
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:74
+msgid "Video renderer:"
+msgstr "Video įrenginys:"
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:79
+msgid "You must restart playback for visualization changes to take effect."
+msgstr ""
+"Jūs turėsite iš naujo paleisti failą, kad garso vizualizacija pasikeistų."
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:82
+msgid "None"
+msgstr "Jokia"
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:88
+msgid "Use this for video when playing audio:"
+msgstr "Rodyti šį filmuką grojant muziką:"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/update.py:148
+msgid "Update Available"
+msgstr "Yra Atnaujinimų"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/update.py:156
+msgid "Do you want to download it now?"
+msgstr "Ar norite atsisiųsti?"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:54
+msgid "Install Adobe Flash?"
+msgstr "Įdiegti Adobe Flash?"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:56
+#, python-format
+msgid ""
+"For the best %(appname)s experience, we suggest you install Adobe Flash.  "
+"Would you like to do this now?"
+msgstr ""
+"Geresniam %(appname)s darbui, mes rekomenduojame suinstaliuoti Adobe Flash. "
+"Ar norite tai padaryti dabar?"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:69
+msgid "Install Adobe Flash"
+msgstr "Įdiegti Adobe Flash"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:43
+msgid "When I click the red close button:"
+msgstr "Paspaudus raudoną užvėrimo mygtuką:"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:46
+msgid "Close to tray so that downloads can continue."
+msgstr "Užverti į sisteminį skydelį, kad atsiuntimai būtų tęsiami."
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:127
+msgid "Close to tray?"
+msgstr "Užverti į sisteminį skydelį?"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:186
+msgid "Error Bombing Item"
+msgstr "Klaida bombarduojant elementą"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:188
+msgid "Error Recommending Item"
+msgstr "Klaida rekomenduojant elementą"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:190
+msgid "Error Opening Website"
+msgstr "Klaida atveriant internetinį tinklalapį"
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:195
+#, python-format
+msgid ""
+"There was an error opening %(url)s.  Please try again in a few seconds"
+msgstr "Įvyko klaida atveriant %(url)s. Prašom pabandyti vėliau."
+
+#: ../../portable/httpclient.py:134
 #, python-format
 msgid "Expected CRLF got: %(character)r"
 msgstr ""
 
-#: ../../portable/httpclient.py:140
-#, python-format
-msgid "%(host)s closed connection"
-msgstr "%(host)s susijungimą išjungė"
-
-#: ../../portable/httpclient.py:146
-msgid "Got 404 status code"
-msgstr "Gautas 404 būsenos kodas"
-
-#: ../../portable/httpclient.py:148
-#, python-format
-msgid "Bad Status Code: %(code)s"
-msgstr "Blogas būsenos kodas: %(code)s"
-
-#: ../../portable/httpclient.py:153
-msgid "Authorization failed"
-msgstr "Patvirtinimas nepavyko"
-
-#: ../../portable/httpclient.py:159
+#: ../../portable/httpclient.py:158
 msgid "Pipeline request never started"
 msgstr ""
 
-#: ../../portable/httpclient.py:163
-msgid "Timeout"
-msgstr "Baigėsi laiko limitas"
+#: ../../portable/frontends/widgets/statictabs.py:93
+#: ../../portable/frontends/widgets/itemlistcontroller.py:500
+msgid "Video"
+msgstr ""
 
-#: ../../portable/httpclient.py:164
+#: ../../portable/frontends/widgets/statictabs.py:103
+#: ../../portable/frontends/widgets/itemlistcontroller.py:512
+msgid "Other"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:95
+msgid "Play Just This Item"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:101
+msgid "Revert Item Name"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:113
+msgid "Stop Seeding"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemcontextmenu.py:115
+msgid "Start Seeding"
+msgstr ""
+
+#: ../../portable/frontends/widgets/firsttimedialog.py:63
 #, python-format
-msgid "Connection to %(host)s timed out"
-msgstr "Susijungimo su %(host)s išseko."
+msgid "%(name)s First Time Setup"
+msgstr ""
 
-#: ../../portable/httpclient.py:168
-msgid "Invalid URL"
-msgstr "Netinkamas URL"
-
-#: ../../portable/httpclient.py:169
+#: ../../portable/frontends/widgets/firsttimedialog.py:122
 #, python-format
-msgid "\"%(url)s\" is not a valid URL"
-msgstr "\"%(url)s\" yra neteisinga nuoroda"
+msgid "Welcome to the %(name)s First Time Setup"
+msgstr ""
 
-#: ../../portable/httpclient.py:175
-#, python-format
-msgid "The file \"%(path)s\" doesn't exist"
-msgstr "Failas \"%(path)s\" neegzistuoja"
-
-#: ../../portable/httpclient.py:179
-msgid "Read error"
-msgstr "Skaitymo klaida"
-
-#: ../../portable/httpclient.py:180
-#, python-format
-msgid "Error while reading from \"%(path)s\""
-msgstr "Klaida nuskaitant iš \"%(path)s\""
-
-#: ../../portable/httpclient.py:376
-msgid "Unknown Error code"
-msgstr "Nežinomas klaidos kodas"
-
-#: ../../portable/httpclient.py:408
-msgid "Connection closed"
-msgstr "Prisijungimas baigtas"
-
-#: ../../portable/httpclient.py:829
-msgid "Unknown"
-msgstr "Nežinoma"
-
-#: ../../portable/httpclient.py:830
-msgid "Internal Error: Not ready to send"
-msgstr "Vidinė klaida: nepasiruošta išsiųsti"
-
-#: ../../portable/feed.py:925
-msgid "Error loading feed"
-msgstr "Klaida įkeliant srautą"
-
-#: ../../portable/feed.py:927
-#, python-format
-msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
-msgstr "Negalima paleisti kanalo %(url)s: (%(errordescription)s)."
-
-#: ../../portable/feed.py:930
-msgid "Would you like to keep the feed?"
-msgstr "Ar norėtumėte palikti šį srautą?"
-
-#: ../../portable/feed.py:1055
-msgid "Bad content-type"
-msgstr "Blogas turinio tipas"
-
-#: ../../portable/feed.py:1068
-#, python-format
-msgid "Channel is not compatible with %(appname)s"
-msgstr "Šis kanalas nėra suderinamas su %(appname)s"
-
-#: ../../portable/feed.py:1071
+#: ../../portable/frontends/widgets/firsttimedialog.py:126
 #, python-format
 msgid ""
-"This channel is not compatible with %(appname)s but we'll try our best to "
-"grab the files.  It may take extra time to list the videos, and descriptions "
-"may look funny.\n"
+"The next few screens will help you set up %(name)s so that it works best for "
+"you.\n"
 "\n"
-"Please contact the publishers of %(url)s and ask if they can supply a feed "
-"in a format that will work with %(appname)s.\n"
-"\n"
-"Do you want to try to load this channel anyway?"
+"We recommend that you have %(name)s launch when your computer starts up.  "
+"This way, downloads in progress can finish downloading and new media files "
+"can be downloaded in the background, ready when you want to watch."
 msgstr ""
-"Šis kanalas nėra suderinamas su %(appname)s, bet mes galime pabandyti "
-"įtraukti failus. Tai gali užtrukti šiek tiek laiko ir aprašymai gali būti "
-"netikslūs.\n"
-"Prašome pranešti %(url)s administratoriams ir gal būt jie jums padės "
-"pritaikydami kanalo formatą %(appname)s.\n"
-"Ar vis dėlto norite pamėginti šį kanalą paleisti?"
 
-#: ../../portable/feed.py:1644
+#: ../../portable/frontends/widgets/firsttimedialog.py:138
 #, python-format
-msgid "Search All: %(text)s"
-msgstr "Ieškoti visur: %(text)s"
+msgid "Would you like to run %(name)s on startup?"
+msgstr ""
 
-#: ../../portable/feed.py:2407
-msgid "Local Files"
-msgstr "Vietiniai failai"
+#: ../../portable/frontends/widgets/firsttimedialog.py:163
+#, python-format
+msgid "Completing the %(name)s First Time Setup"
+msgstr ""
 
-#: ../../portable/feed.py:2421
-msgid "Playing File"
-msgstr "Grojantysis failas"
+#: ../../portable/frontends/widgets/firsttimedialog.py:167
+#, python-format
+msgid ""
+"%(name)s can find all the media files on your computer to help you organize "
+"your collection.\n"
+"\n"
+"Would you like %(name)s to look for media files on your computer?"
+msgstr ""
+
+#: ../../portable/frontends/widgets/crashdialog.py:54
+#, python-format
+msgid ""
+"%(appname)s has encountered an internal error.  You can help us track down "
+"this problem and fix it by submitting an error report."
+msgstr ""
+
+#: ../../portable/frontends/widgets/displays.py:358
+#, python-format
+msgid ""
+"%(appname)s can't play this file.  You may be able to open it with a "
+"different program"
+msgstr ""
+
+#: ../../portable/frontends/widgets/displays.py:584
+#, python-format
+msgid "%(count)d Site Selected"
+msgid_plural "%(count)d Sites Selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/browser.py:102
+msgid "Download this video"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:306
+#, python-format
+msgid "The file %(filename)s was deleted from outside %(appname)s."
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:379
+#, python-format
+msgid "%(appname)s is up to date"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:381
+#, python-format
+msgid "%(appname)s is up to date!"
+msgstr ""
+
+#: ../../portable/frontends/widgets/application.py:728
+msgid "Remove site"
+msgid_plural "Remove sites"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/application.py:730
+#, python-format
+msgid "Are you sure you want to remove this site?"
+msgid_plural "Are you sure you want to remove these %(count)s sites?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/frontends/widgets/downloadscontroller.py:90
+msgid "Single and external downloads"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:267
+#, python-format
+msgid "Automatically run %(appname)s when I log in."
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:454
+#, python-format
+msgid ""
+"You've selected a new folder to download movies to.  Should %(appname)s "
+"migrate your existing downloads there? (Currently downloading movies will "
+"not be moved until they finish.)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/removefeeds.py:83
+#, python-format
+msgid ""
+"Watched folders will be removed from the sidebar but their contents will "
+"still appear in your library.  You can stop watching watched folders "
+"completely in the %(appname)s preference panel."
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/video.py:301
+msgid "Pop-in"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/video.py:306
+msgid "Pop-out"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/window.py:516
+#, python-format
+msgid "About %(appname)s"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/window.py:531
+#, python-format
+msgid ""
+"%(copyright)s.  See license.txt file for details.\n"
+"%(trademark)s"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:506
+msgid "Remove Sites"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:562
+msgid "Revert Feed Name"
+msgstr ""
+
+#: ../../portable/frontends/widgets/tablist.py:634
+msgid "LIBRARY"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:718
+msgid "Unwatched"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:726
+msgid "View:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/itemlistwidgets.py:729
+msgid "Non Feed"
+msgstr ""
+
+#: ../../portable/frontends/widgets/diagnostics.py:110
+msgid "Total db objects in memory:"
+msgstr ""
+
+#: ../../portable/startup.py:99
+#, python-format
+msgid ""
+"An unknown error prevented %(appname)s from startup.  Please file a bug "
+"report at %(url)s."
+msgstr ""
+
+#: ../../portable/singleclick.py:61
+#, python-format
+msgid "%(appname)s will begin downloading it now."
+msgstr ""
+
+#: ../../portable/singleclick.py:137
+#, python-format
+msgid ""
+"%(appname)s is not able to download a file at this URL:\n"
+"\n"
+"URL: %(url)s"
+msgstr ""
+
+#: ../../portable/dl_daemon/download.py:1101
+#, python-format
+msgid "The torrent file for this item was deleted outside of %(appname)s."
+msgstr ""
+
+#: ../../portable/menubar.py:270
+#, python-format
+msgid "_About %(name)s"
+msgstr ""
+
+#: ../../portable/displaytext.py:67
+#, python-format
+msgid "%(num).0f day"
+msgid_plural "%(num).0f days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/displaytext.py:70
+#, python-format
+msgid "%(num).0f hr"
+msgid_plural "%(num).0f hrs"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/displaytext.py:73
+#, python-format
+msgid "%(num).0f min"
+msgid_plural "%(num).0f mins"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../../portable/displaytext.py:141
+#, python-format
+msgid "%(month)s %(dayofmonth)s, %(year)s"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:205
+msgid "Pop Out"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:208
+msgid "Pop In"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
+#, python-format
+msgid "Hide %(appname)s"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:148
+#, python-format
+msgid "Quit %(appname)s"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:173
+msgid "Present Video"
+msgstr ""
+
+#: ../../platform/osx/plat/frontends/widgets/osxmenus.py:192
+#, python-format
+msgid "%(appname)s Help"
+msgstr ""
+
+#: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
+#, python-format
+msgid "You must restart %(appname)s for renderer changes to take effect."
+msgstr ""
+
+#: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
+#, python-format
+msgid "A new version of %(appname)s is available for download."
+msgstr ""
+
+#: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
+#, python-format
+msgid ""
+"Your browser will load the web-site where you can download and install Adobe "
+"Flash.\n"
+"\n"
+"You should quit %(appname)s now and start it up again after Adobe Flash has "
+"been installed."
+msgstr ""
+
+#: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
+#, python-format
+msgid "Quit %(appname)s completely."
+msgstr ""
+
+#: ../../platform/windows-xul/plat/frontends/widgets/application.py:128
+#, python-format
+msgid ""
+"When you click the red close button, would you like %(appname)s to close to "
+"the system tray or quit?  You can change this setting later in the Options."
+msgstr ""
