@@ -45,6 +45,7 @@ The hope is that it will be human readable.  We use the type
 ``pythonrepr`` to label these columns.
 """
 
+import shutil
 import cPickle
 import itertools
 import logging
@@ -153,9 +154,32 @@ class LiveStorage:
         except:
             self._handle_load_error("Error upgrading database")
 
+    def _backup_database(self, ver):
+        """Backs up the database file.
+
+        :param ver: the current version (as string)
+        """
+        logging.info("path of database: %s", self.path)
+        # close database
+        self.close()
+
+        # copy file over
+        try:
+            shutil.copyfile(self.path, "%s_backup_%s" % (self.path, ver))
+        except IOError:
+            # FIXME - if we error out when backing up the database,
+            # we should probably report the error to the user and
+            # shutdown the application.
+            logging.exception("Error trying to backup database.")
+
+        # open database
+        self.open_connection()
+
     def _upgrade_database(self):
         self._upgrade_20_database()
         current_version = self._get_variable(VERSION_KEY)
+        if current_version < self._schema_version:
+            self._backup_database(current_version)
         databaseupgrade.new_style_upgrade(self.cursor,
                 current_version, self._schema_version)
         self._set_version()
@@ -164,6 +188,8 @@ class LiveStorage:
         self.cursor.execute("SELECT COUNT(*) FROM sqlite_master "
                 "WHERE type='table' and name = 'dtv_objects'")
         if self.cursor.fetchone()[0] > 0:
+            self._backup_database("pre80")
+
             if util.chatter:
                 logging.info("converting pre 2.1 database")
             convert20database.convert(self.cursor)
