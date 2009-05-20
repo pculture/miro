@@ -1420,6 +1420,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                 self.ufeed.mark_as_viewed()
             self.ufeed.signal_change()
 
+        self.ufeed.recalc_counts()
         self.truncateOldItems(old_items)
         self.signal_change()
 
