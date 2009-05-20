@@ -769,10 +769,13 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """Moves this item to another feed.
         """
         self.feed_id = feed_id
-        del self._feed
+        # _feed is created by get_feed which caches the result
+        if hasattr(self, "_feed"):
+            del self._feed
         if self.isContainerItem:
             for item in self.getChildren():
-                del item._feed
+                if hasaatr(item, "_feed"):
+                    del item._feed
                 item.signal_change()
         self.signal_change()
 
