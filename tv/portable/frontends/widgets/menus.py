@@ -266,6 +266,8 @@ action_groups = {
         'PlayablesSelected': [
             'RemoveItems',
         ],
+        'PlayableVideosSelected': [
+        ],
         'PlayPause': [
             'PlayPauseVideo',
         ],
@@ -273,9 +275,11 @@ action_groups = {
             'StopVideo',
             'NextVideo',
             'PreviousVideo',
-            'Fullscreen',
             'Rewind',
             'FastForward',
+        ],
+        'PlayingVideo': [
+            'Fullscreen',
             'ToggleDetach',
         ],
 }
@@ -322,6 +326,8 @@ class MenuManager(signals.SignalEmitter):
         if app.playback_manager.is_playing:
             self.enabled_groups.add('PlayPause')
             self.enabled_groups.add('Playing')
+            if not app.playback_manager.is_playing_audio:
+                self.enabled_groups.add('PlayingVideo')
             if app.playback_manager.detached_window is not None:
                 self.enabled_groups.add('NonPlaying')
         else:
@@ -397,12 +403,16 @@ class MenuManager(signals.SignalEmitter):
 
         selected_items = app.item_list_controller_manager.get_selection()
         downloaded = False
+        has_audio = False
         for item in selected_items:
             if item.downloaded:
                 downloaded = True
-                break
+            if item.is_audio:
+                has_audio = True
         if downloaded:
             self.enabled_groups.add('PlayablesSelected')
+            if not has_audio:
+                self.enabled_groups.add('PlayableVideosSelected')
             if len(selected_items) == 1:
                 self.enabled_groups.add('PlayableSelected')
             else:
