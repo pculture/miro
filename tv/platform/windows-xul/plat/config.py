@@ -94,7 +94,7 @@ def save(data):
         f.close()
 
         if not os.path.exists(save_file):
-            shutil.move(temp_file, save_file)
+            shutil.move(new_file, save_file)
             return
 
         os.remove(save_file)
