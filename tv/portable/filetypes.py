@@ -32,7 +32,7 @@ import os
 # database update so that the file_type attribute of the item table gets fixed
 
 VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.ogv', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid', '.rmvb', '.mkv', '.m2v', '.ogm']
-AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka']
+AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka', '.flac']
 FEED_EXTENSIONS = ['.xml', '.rss', '.atom']
 
 UNSUPPORTED_MIMETYPES = ("video/3gpp", "video/vnd.rn-realvideo", "video/x-ms-asf")
@@ -50,6 +50,7 @@ MIMETYPES_EXT_MAP = {
     'application/ogg':  ['.ogg'],
     'video/ogg':        ['.ogv'],
 
+    'audio/flac':       ['.flac'],
     'audio/mpeg':       ['.mp3'],
     'audio/mp4':        ['.m4a'],
     'audio/x-ms-wma':   ['.wma'],
