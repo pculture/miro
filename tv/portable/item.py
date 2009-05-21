@@ -518,6 +518,16 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                     'remote_downloader as rd': 'item.downloader_id=rd.id'})
 
     @classmethod
+    def watchable_other_view(cls):
+        return cls.make_view("not isContainerItem AND "
+                "(deleted IS NULL or not deleted) AND "
+                "(is_file_item OR rd.main_item_id=item.id) AND "
+                "feed.origURL != 'dtv:singleFeed' AND "
+                "item.file_type='other'",
+                joins={'feed': 'item.feed_id=feed.id',
+                    'remote_downloader as rd': 'item.downloader_id=rd.id'})
+
+    @classmethod
     def feed_expiring_view(cls, feed_id, watched_before):
         return cls.make_view("watchedTime is not NULL AND "
                 "watchedTime < ? AND feed_id = ?",
