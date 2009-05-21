@@ -87,7 +87,7 @@ class OverlayPalette (NSWindowController):
     timeIndicator       = IBOutlet('timeIndicator')
     volumeSlider        = IBOutlet('volumeSlider')
     
-    HOLD_TIME = 4
+    HOLD_TIME = 2
 
     @classmethod
     def get_instance(cls):
