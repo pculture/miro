@@ -141,6 +141,7 @@ class Test20DatabaseConvert(MiroTestCase):
         self.old_savables = convert20database._get_old_savables(self.cursor)
         app.db.upgrade_database()
 
+        self.cursor = app.db.cursor
         self.check_tables_created()
         self.check_new_columns()
         self.check_old_table_removed()

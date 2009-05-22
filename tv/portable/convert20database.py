@@ -40,15 +40,19 @@ attribute was stored in a separate column.
 
 import cPickle
 from cStringIO import StringIO
+import logging
 import sys
+
 try:
     import sqlite3
 except ImportError:
     from pysqlite2 import dbapi2 as sqlite3
 
 from miro import databaseupgrade
+from miro import databasesanity
 from miro import feedparser
 from miro import schemav79 as schema_mod
+from miro import util
 from miro.plat.utils import filenameToUnicode
 
 def _loads(str):
@@ -77,6 +81,7 @@ def convert(cursor):
 
     savable_objects = _get_old_savables(cursor)
     _upgrate_old_savables(cursor, savable_objects)
+    _run_databasesanity(savable_objects)
     _create_db_schema(cursor)
     _migrate_old_data(cursor, savable_objects)
     cursor.execute("DROP TABLE dtv_objects")
@@ -94,6 +99,14 @@ def _upgrate_old_savables(cursor, savables):
     row = cursor.fetchone()
     version = cPickle.loads(str(row[0]))
     databaseupgrade.upgrade(savables, version, schema_mod.VERSION)
+
+def _run_databasesanity(objects):
+    try:
+        databasesanity.checkSanity(objects, quiet=True,
+                reallyQuiet=(not util.chatter))
+    except databasesanity.DatabaseInsaneError, e:
+        logging.warn("Old database fails sanity test: %s", e)
+        objects[:] = []
 
 def _create_db_schema(cursor):
     for schema in schema_mod.objectSchemas:

@@ -2088,12 +2088,24 @@ def remove_column(cursor, table, *column_names):
             type += ' PRIMARY KEY'
         columns_with_type.append("%s %s" % (column, type))
 
+    cursor.execute("PRAGMA index_list('%s')" % table)
+    index_sql = []
+    for index_info in cursor.fetchall():
+        name = index_info[1]
+        if name in column_names:
+            continue
+        cursor.execute("SELECT sql FROM sqlite_master "
+                "WHERE name=? and type='index'", (name,))
+        index_sql.append(cursor.fetchone()[0])
+
     cursor.execute("ALTER TABLE %s RENAME TO old_%s" % (table, table))
     cursor.execute("CREATE TABLE %s (%s)" %
         (table, ', '.join(columns_with_type)))
     cursor.execute("INSERT INTO %s SELECT %s FROM old_%s" %
             (table, ', '.join(columns), table))
     cursor.execute("DROP TABLE old_%s" % table)
+    for sql in index_sql:
+        cursor.execute(sql)
 
 def upgrade88(cursor):
     """Replace playlist.item_ids, with PlaylistItemMap objects."""
