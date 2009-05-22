@@ -81,7 +81,7 @@ class PlaybackControls(widgetset.HBox):
         self.play.disable()
         self.play.set_image('pause')
         self.forward.enable()
-        if not item_info.is_audio:
+        if item_info.file_type == 'video':
             self.fullscreen.enable()
         self.queue_redraw()
     
@@ -124,7 +124,7 @@ class PlaybackInfo(widgetset.DrawingArea):
     def handle_selecting(self, obj, item_info):
         self.item_name = item_info.name
         self.feed_name = item_info.feed_name
-        self.is_audio = item_info.is_audio
+        self.is_audio = (item_info.file_type == 'audio')
         self.queue_redraw()
 
     def handle_stop(self, obj):

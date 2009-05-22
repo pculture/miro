@@ -348,7 +348,7 @@ class PlaybackManager (signals.SignalEmitter):
         return None
 
     def _setup_player(self, item_info, volume):
-        if item_info.is_audio:
+        if item_info.file_type == 'audio':
             if self.is_playing and self.video_display is not None:
                 # if we were previously playing a video get rid of the video
                 # display first
@@ -360,7 +360,7 @@ class PlaybackManager (signals.SignalEmitter):
                 self._build_audio_player(item_info, volume)
             self.is_playing = True
             self.player.setup(item_info, volume)
-        else:
+        elif item_info.file_type == 'video':
             if self.is_playing and self.video_display is None:
                 # if we were previously playing an audio file, stop.
                 self.stop()
@@ -371,6 +371,9 @@ class PlaybackManager (signals.SignalEmitter):
             self.video_display.setup(item_info, volume)
             if self.detached_window is not None:
                 self.detached_window.set_title(item_info.name)
+        else:
+            logging.warn("Trying to play a item with file_type 'other' (%s)",
+                    item_info.name)
         app.menu_manager.update_menus()
 
     def _build_video_player(self, item_info, volume):

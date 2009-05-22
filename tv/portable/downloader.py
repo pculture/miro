@@ -36,6 +36,7 @@ from miro.download_utils import nextFreeFilename, getFileURLPath, filterDirector
 from miro.util import get_torrent_info_hash, returnsUnicode, checkU, returnsFilename, unicodify, checkF, toUni
 # from miro import app
 from miro import config
+from miro import dialogs
 from miro import httpclient
 from miro import prefs
 import random
@@ -516,7 +517,7 @@ URL was %s""" % self.url
         return self.state
 
     def isFinished(self):
-        return self.get_state() in (u'finished', u'uploading', u'uploading-paused')
+        return self.get_state() in (u'stopped', u'finished', u'uploading', u'uploading-paused')
 
     def getTotalSize(self):
         """Returns the total size of the download in bytes
@@ -582,8 +583,18 @@ URL was %s""" % self.url
             c.send()
 
     def startUpload(self):
-        if (self.get_state() not in (u'finished', u'uploading-paused')
-                or self.get_type() != u'bittorrent'):
+        if self.get_type() != u'bittorrent':
+            logging.warn("called startUpload for non-bittorrent downloader")
+            return
+        if self.get_state() not in (u'finished', u'uploading-paused'):
+            if self.get_state() == 'stopped':
+                title = "Can't Resume Seeding"
+                msg = ("Seeding cannot resume because part of this torrent "
+                        "has been deleted.")
+                dialogs.MessageBoxDialog(title, msg).run()
+            else:
+                logging.warn("called startUpload when downloader state "
+                        "is: %s", self.get_state())
             return
         self.manualUpload = True
         if _downloads.has_key(self.dlid):

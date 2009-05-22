@@ -395,9 +395,10 @@ class Application:
                 return
 
         external_count = len([s for s in selection if s.is_external])
+        folder_count = len([s for s in selection if s.is_container_item])
         total_count = len(selection)
 
-        if total_count == 1 and external_count == 0:
+        if total_count == 1 and external_count == folder_count == 0:
             messages.DeleteVideo(selection[0].id).send_to_backend()
             return
 
@@ -413,6 +414,16 @@ class Application:
 
                 external_count
             )
+            if folder_count > 0:
+                description += '\n\n' + ngettext(
+                    'One of these items is a folder.  Delete/Removeing a '
+                    "folder will delete/remove it's contents",
+
+                    'Some of these items are folders.  Delete/Removeing a '
+                    "folder will delete/remove it's contents",
+
+                    folder_count
+                )
             ret = dialogs.show_choice_dialog(title, description,
                                              [dialogs.BUTTON_REMOVE_ENTRY,
                                               dialogs.BUTTON_DELETE_FILE,
@@ -425,6 +436,16 @@ class Application:
                 total_count,
                 {"count": total_count}
             )
+            if folder_count > 0:
+                description += '\n\n' + ngettext(
+                    'One of these items is a folder.  Deleting a '
+                    "folder will delete it's contents",
+
+                    'Some of these items are folders.  Deleting a '
+                    "folder will delete it's contents",
+
+                    folder_count
+                )
             ret = dialogs.show_choice_dialog(title, description,
                                              [dialogs.BUTTON_DELETE,
                                               dialogs.BUTTON_CANCEL])

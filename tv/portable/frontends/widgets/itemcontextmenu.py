@@ -108,11 +108,10 @@ class ItemContextMenuHandler(object):
             if item.expiration_date:
                 menu.append((_('Keep'),
                     messages.KeepVideo(item.id).send_to_backend))
-            if item.download_info and item.download_info.torrent:
-                if item.download_info.state == 'uploading':
-                    menu.append((_('Stop Seeding'), messages.StopUpload(item.id).send_to_backend))
-                else:
-                    menu.append((_('Start Seeding'), messages.StartUpload(item.id).send_to_backend))
+            if item.seeding_status == 'seeding':
+                menu.append((_('Stop Seeding'), messages.StopUpload(item.id).send_to_backend))
+            elif item.seeding_status == 'stopped':
+                menu.append((_('Resume Seeding'), messages.StartUpload(item.id).send_to_backend))
         elif item.download_info is not None and item.download_info.state != 'failed':
             menu = [
                     (_('Cancel Download'),

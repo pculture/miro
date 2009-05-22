@@ -1094,6 +1094,9 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warn("handle_start_upload: Item not found -- %s", message.id)
         else:
+            if item_.parent_id is not None:
+                # use the parent torrent file
+                item_ = item_.get_parent()
             if item_.downloader.get_type() != 'bittorrent':
                 logging.warn("%s is not a torrent", item_)
             elif item_.is_uploading():
@@ -1107,6 +1110,9 @@ class BackendMessageHandler(messages.MessageHandler):
         except database.ObjectNotFoundError:
             logging.warn("handle_stop_upload: Item not found -- %s", message.id)
         else:
+            if item_.parent_id is not None:
+                # use the parent torrent file
+                item_ = item_.get_parent()
             if item_.downloader.get_type() != 'bittorrent':
                 logging.warn("%s is not a torrent", item_)
             elif not item_.is_uploading():
@@ -1129,10 +1135,10 @@ class BackendMessageHandler(messages.MessageHandler):
             logging.warn("SaveVideoAs: Item not found -- %s", message.id)
             return
 
-        logging.info("saving video %s to %s" % (item_.get_video_filename(),
+        logging.info("saving video %s to %s" % (item_.get_filename(),
                                                 message.filename))
         try:
-            shutil.copyfile(item_.get_video_filename(), message.filename)
+            shutil.copyfile(item_.get_filename(), message.filename)
         except IOError:
             # FIXME - we should pass the error back to the frontend
             pass

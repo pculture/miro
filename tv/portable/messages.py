@@ -858,17 +858,18 @@ class ItemInfo(object):
     downloaded -- has the item been downloaded?
     is_external -- is this item external (true) or from a channel (false)?
     is_single -- is this item a single (true) or not (false)?
-    is_audio -- is this item an audio item ?
     expiration_date -- datetime object for when the item will expire (or None)
     item_viewed -- has the user ever seen the item?
     video_watched -- has the user watched the video for the item?
     video_path -- the file path to the video for this item (or None)
+    file_type -- type of the downloaded file (video/audio/other)
+    seeding_status -- Torrent seeding status ('seeding', 'stopped', or None)
     thumbnail -- path to the thumbnail for this file
     thumbnail_url -- URL for the item's thumbnail (or None)
     file_format -- User-facing format description.  Possibly the file type,
         pulled from the mime_type, or more generic, like "audio"
     license -- this file's license, if known.
-    file_type -- filetype of the enclosure that would be downloaded
+    mime_type -- mime-type of the enclosure that would be downloaded
     file_url -- URL of the enclosure that would be downloaded
     download_info -- DownloadInfo object containing info about the download
         (or None)
@@ -886,13 +887,8 @@ class ItemInfo(object):
         self.has_original_name = item.has_original_title()
         self.id = item.id
         self.feed_id = item.feed_id
-        if item.feed_id:
-            feed_ = feed.Feed.get_by_id(self.feed_id)
-            self.feed_name = feed_.get_title()
-            self.feed_url = feed_.get_url()
-        else:
-            self.feed_name = None
-            self.feed_url = None
+        self.feed_name = item.get_source()
+        self.feed_url = item.get_feed_url()
         self.description = item.get_description()
         self.state = item.get_state()
         self.release_date = item.get_release_date_obj()
@@ -915,16 +911,16 @@ class ItemInfo(object):
         self.is_external = item.is_external()
         self.is_single = item.is_single()
         self.video_watched = item.get_seen()
-        self.video_path = item.get_video_filename()
+        self.video_path = item.get_filename()
         self.thumbnail = item.get_thumbnail()
         self.thumbnail_url = item.get_thumbnail_url()
         self.file_format = item.get_format()
         self.license = item.get_license()
         self.file_url = item.get_url()
         self.is_container_item = item.isContainerItem
-        self.is_audio = filetypes.is_audio_filename(self.video_path)
-
-        self.file_type = item.enclosure_type
+        self.file_type = item.file_type
+        self.seeding_status = item.torrent_seeding_status()
+        self.mime_type = item.enclosure_type
         self.file_url = item.url
 
         if item.downloader:

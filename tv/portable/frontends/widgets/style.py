@@ -375,7 +375,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             title.set_width(main_width)
             vbox.pack(title)
 
-        if self.display_channel:
+        if self.display_channel and self.data.feed_name is not None:
             vbox.pack_space(1)
             hbox = cellpack.HBox()
             hbox.pack(cellpack.align_middle(self.channel_title_icon))
@@ -679,9 +679,14 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         hbox = cellpack.HBox(spacing=10)
         layout.set_font(0.85)
         if self.data.downloaded:
-            hbox.pack(cellpack.align_middle(cellpack.Hotspot('play', self.play_button)))
+            if self.data.file_type != 'other':
+                button = cellpack.Hotspot('play', self.play_button)
+            else:
+                button = self._make_button(layout, self.REVEAL_IN_TEXT,
+                        'show_local_file')
+            hbox.pack(cellpack.align_middle(button))
         else:
-            if self.data.file_type == 'application/x-bittorrent':
+            if self.data.mime_type == 'application/x-bittorrent':
                 text = self.DOWNLOAD_TORRENT_TEXT
             else:
                 text = self.DOWNLOAD_TEXT
@@ -711,7 +716,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             layout.set_font(0.80, bold=True)
             hbox.pack(cellpack.align_middle(layout.textbox(self.QUEUED_TEXT)))
 
-        elif self.data.downloaded and not self.data.video_watched:
+        elif (self.data.downloaded and not self.data.video_watched and
+                self.data.file_type != 'other'):
             layout.set_font(0.80, bold=True)
             layout.set_text_color((1, 1, 1))
             inner_hbox = hbox
@@ -725,7 +731,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             hbox = cellpack.HBox(spacing=5)
             hbox.pack(cellpack.pad(emblem))
 
-        elif self.data.expiration_date:
+        elif self.data.expiration_date and self.data.file_type != 'other':
             layout.set_font(0.80, bold=True)
             layout.set_text_color((154.0 / 255.0, 174.0 / 255.0, 181.0 / 255.0))
             text = displaytext.expiration_date(self.data.expiration_date)

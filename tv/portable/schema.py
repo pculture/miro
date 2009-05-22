@@ -369,8 +369,6 @@ class ItemSchema(MultiClassObjectSchema):
         ('downloadedTime', SchemaDateTime(noneOk=True)),
         ('watchedTime', SchemaDateTime(noneOk=True)),
         ('isContainerItem', SchemaBool(noneOk=True)),
-        ('videoFilename', SchemaFilename()),
-        ('isVideo', SchemaBool()),
         ('releaseDateObj', SchemaDateTime()),
         ('eligibleForAutoDownload', SchemaBool()),
         ('duration', SchemaInt(noneOk=True)),
@@ -619,7 +617,7 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
         ('list_view_displays', SchemaList(SchemaBinary())),
     ]
 
-VERSION = 94
+VERSION = 96
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,

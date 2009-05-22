@@ -33,9 +33,12 @@ olddatabaseupgrade.py)
 """
 
 from urlparse import urlparse
+import datetime
 import itertools
+import os
 import re
 import logging
+import time
 import urllib
 
 from miro import schema
@@ -2222,3 +2225,34 @@ def upgrade93(cursor):
 def upgrade94(cursor):
     cursor.execute("UPDATE item SET downloadedTime=NULL "
         "WHERE deleted OR downloader_id IS NULL")
+
+def upgrade95(cursor):
+    """Delete FileItem objects that are duplicates of torrent files. (#11818)
+    """
+    cursor.execute("SELECT item.id, item.videoFilename, rd.status "
+            "FROM item "
+            "JOIN remote_downloader rd ON item.downloader_id=rd.id "
+            "WHERE rd.state in ('stopped', 'finished', 'uploading', "
+            "'uploading-paused')")
+    for row in cursor.fetchall():
+        id, videoFilename, status = row
+        status = eval(status, __builtins__,
+                {'datetime': datetime, 'time': time})
+        if (videoFilename and videoFilename != status.get('filename')):
+            pathname = os.path.join(status.get('filename'), videoFilename)
+            # Here's the situation: We downloaded a torrent and that torrent
+            # had a single video as it's child.  We then made the torrent's
+            # videoFilename be the path to that video instead of creating a
+            # new FileItem.  This is broken for a bunch of reasons, so we're
+            # getting rid of it.  Undo the trickyness that we did and delete
+            # any duplicate items that may have been created.  The next update
+            # will remove the videoFilename column.
+            cursor.execute("DELETE FROM item "
+                    "WHERE is_file_item AND videoFilename =?", (pathname,))
+            cursor.execute("UPDATE item "
+                    "SET file_type='other', isContainerItem=1 "
+                    "WHERE id=?", (id,))
+
+def upgrade96(cursor):
+    """Delete the videoFilename and isVideo column."""
+    remove_column(cursor, 'item', 'videoFilename', 'isVideo')
