@@ -407,7 +407,7 @@ class MenuManager(signals.SignalEmitter):
         for item in selected_items:
             if item.downloaded:
                 downloaded = True
-            if item.is_audio:
+            if item.file_type == 'audio':
                 has_audio = True
         if downloaded:
             self.enabled_groups.add('PlayablesSelected')
