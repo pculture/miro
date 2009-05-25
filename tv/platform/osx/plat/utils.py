@@ -104,8 +104,10 @@ def initializeLocale():
 def setup_logging (inDownloader=False):
     if inDownloader:
         logging.basicConfig(level=logging.INFO,
-                            format='%(levelname)-8s %(message)s',
-                            stream=sys.stdout)
+                            format='%(levelname)-8s %(message)s')
+        handler = logging.StreamHandler(sys.stdout)
+        logging.getLogger('').addHandler(handler)
+        logging.getLogger('').setLevel(logging.INFO)
     else:
         if config.get(prefs.APP_VERSION).endswith("svn"):
             level = logging.DEBUG
@@ -117,6 +119,7 @@ def setup_logging (inDownloader=False):
         formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
         rotater.setFormatter(formatter)
         logging.getLogger('').addHandler(rotater)
+        logging.getLogger('').setLevel(level)
         rotater.doRollover()
 
 # Takes in a unicode string representation of a filename and creates a
