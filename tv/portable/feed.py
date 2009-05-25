@@ -505,6 +505,9 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
     def on_db_insert(self):
         self.generateFeed(True)
 
+    def in_folder(self):
+        return self.folder_id is not None
+
     def _set_feed_impl(self, feed_impl):
         if self._actualFeed is not None:
             self._actualFeed.remove()
@@ -551,6 +554,8 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             if cached_count_attr in self.__dict__:
                 del self.__dict__[cached_count_attr]
         self.signal_change(needsSave=False)
+        if self.in_folder():
+            self.get_folder().signal_change(needsSave=False)
 
     def num_downloaded(self):
         """Returns the number of downloaded items in the feed.
@@ -837,7 +842,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def get_folder(self):
         self.confirm_db_thread()
-        if self.folder_id is not None:
+        if self.in_folder():
             return models.ChannelFolder.get_by_id(self.folder_id)
         else:
             return None
