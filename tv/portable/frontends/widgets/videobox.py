@@ -137,6 +137,8 @@ class PlaybackInfo(widgetset.DrawingArea):
         self.is_audio = False
     
     def get_full_text(self):
+        if self.feed_name is None:
+            return self.item_name
         return "%s - %s" % (self.item_name, self.feed_name)
     
     def size_request(self, layout):
@@ -169,13 +171,14 @@ class PlaybackInfo(widgetset.DrawingArea):
         text.set_width(width1)
         text.draw(context, x, 0, width1, height1)
 
-        layout.set_text_color((0.7, 0.7, 0.7))
-        text = layout.textbox(" - %s" % self.feed_name)
-        width2, height2 = text.get_size()
-        width2 = min(width2, context.width - self.TOTAL_MARGIN - width1 - x)
-        text.set_wrap_style('truncated-char')
-        text.set_width(width2)
-        text.draw(context, x + width1, 0, width2, height2)
+        if self.feed_name is not None:
+            layout.set_text_color((0.7, 0.7, 0.7))
+            text = layout.textbox(" - %s" % self.feed_name)
+            width2, height2 = text.get_size()
+            width2 = min(width2, context.width - self.TOTAL_MARGIN - width1 - x)
+            text.set_wrap_style('truncated-char')
+            text.set_width(width2)
+            text.draw(context, x + width1, 0, width2, height2)
 
 class ProgressTime(widgetset.DrawingArea):
     def __init__(self):
