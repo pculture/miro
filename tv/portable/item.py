@@ -387,10 +387,17 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
-    def newly_downloaded_view(cls):
+    def unwatched_downloaded_items(cls):
         return cls.make_view("NOT item.seen AND "
                 "item.parent_id IS NULL AND "
                 "rd.state in ('finished', 'uploading', 'uploading-paused')",
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
+
+    @classmethod
+    def newly_downloaded_view(cls):
+        return cls.make_view("NOT item.seen AND "
+                "(is_file_item OR "
+                "rd.state in ('finished', 'uploading', 'uploading-paused'))",
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
@@ -402,19 +409,19 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     @classmethod
     def unique_new_video_view(cls):
         return cls.make_view("NOT item.seen AND "
-                "item.parent_id IS NULL AND "
-                "rd.main_item_id=item.id AND "
                 "item.file_type='video' AND "
-                "rd.state in ('finished', 'uploading', 'uploading-paused')",
+                "(is_file_item OR "
+                "(rd.main_item_id=item.id AND "
+                "rd.state in ('finished', 'uploading', 'uploading-paused')))",
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod
     def unique_new_audio_view(cls):
         return cls.make_view("NOT item.seen AND "
-                "item.parent_id IS NULL AND "
-                "rd.main_item_id=item.id AND "
                 "item.file_type='audio' AND "
-                "rd.state in ('finished', 'uploading', 'uploading-paused')",
+                "(is_file_item OR "
+                "(rd.main_item_id=item.id AND "
+                "rd.state in ('finished', 'uploading', 'uploading-paused')))",
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'})
 
     @classmethod

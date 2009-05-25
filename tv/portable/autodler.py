@@ -77,7 +77,7 @@ class Downloader:
         if is_auto:
             self.new_count = 0
             self.feed_new_count = {}
-            new_items = itemmod.Item.newly_downloaded_view()
+            new_items = itemmod.Item.unwatched_downloaded_items()
             for item in new_items:
                 self.new_on_add(None, item)
             self.new_items_tracker = new_items.make_tracker()
