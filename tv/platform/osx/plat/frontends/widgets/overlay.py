@@ -397,7 +397,9 @@ class OverlayPalette (NSWindowController):
             self.renderer.play()
 
     def volumeSliderWasDragged(self, slider):
-        app.playback_manager.set_volume(slider.floatValue())
+        volume = slider.floatValue()
+        app.playback_manager.set_volume(volume)
+        app.widgetapp.window.videobox.volume_slider.set_value(volume)
         self.resetAutoHiding()
 
     def video_will_play(self, obj, duration):
