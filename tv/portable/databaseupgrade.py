@@ -2269,3 +2269,8 @@ def upgrade95(cursor):
 def upgrade96(cursor):
     """Delete the videoFilename and isVideo column."""
     remove_column(cursor, 'item', 'videoFilename', 'isVideo')
+
+def upgrade97(cursor):
+    """Add another indexes, this is make tab switching faster.
+    """
+    cursor.execute("CREATE INDEX item_feed_visible ON item (feed_id, deleted)")
