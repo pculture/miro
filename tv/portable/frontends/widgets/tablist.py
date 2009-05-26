@@ -40,7 +40,7 @@ from miro.frontends.widgets import imagepool
 from miro.frontends.widgets import statictabs
 from miro.frontends.widgets import widgetutil
 from miro.plat.frontends.widgets import widgetset
-
+from miro.plat.frontends.widgets import timer
 
 def send_new_order():
     def append_items(sequence, type):
@@ -58,11 +58,13 @@ def send_new_order():
 
 
 class TabListView(widgetset.TableView):
-    def __init__(self, renderer, table_model=None):
-        if table_model is None:
-            table_model = widgetset.TreeTableModel('object')
+    def __init__(self, renderer, table_model_class=None):
+        if table_model_class is None:
+            table_model_class = widgetset.TreeTableModel
+        table_model = table_model_class('object', 'boolean')
+        # columns are the tab_info object and if the tab should be blinking
         widgetset.TableView.__init__(self, table_model)
-        self.column = widgetset.TableColumn('tab', renderer, data=0)
+        self.column = widgetset.TableColumn('tab', renderer, data=0, blink=1)
         self.column.set_min_width(renderer.MIN_WIDTH)
         self.add_column(self.column)
         self.set_show_headers(False)
@@ -71,7 +73,32 @@ class TabListView(widgetset.TableView):
         self.set_fixed_height(True)
         self.set_auto_resizes(True)
 
-class StaticTabListBase(object):
+    def append_tab(self, tab_info):
+        return self.model.append(tab_info, False)
+
+    def append_child(self, parent_iter, tab_info):
+        return self.model.append_child(parent_iter, tab_info, False)
+
+    def update_tab(self, iter, tab_info):
+        return self.model.update_value(iter, 0, tab_info)
+
+    def blink_tab(self, iter):
+        self.model.update_value(iter, 1, True)
+
+    def unblink_tab(self, iter):
+        self.model.update_value(iter, 1, False)
+
+class TabBlinkerMixin(object):
+    def blink_tab(self, id):
+        self.view.blink_tab(self.iter_map[id])
+        timer.add(1, self._unblink_tab, id)
+
+    def _unblink_tab(self, id):
+        # double check that the tab still exists
+        if id in self.iter_map:
+            self.view.unblink_tab(self.iter_map[id])
+
+class StaticTabListBase(TabBlinkerMixin):
 
     def __init__(self):
         self.iter_map = {}
@@ -81,7 +108,7 @@ class StaticTabListBase(object):
         # changing.
 
     def add(self, tab):
-        iter = self.view.model.append(tab)
+        iter = self.view.append_tab(tab)
         self.iter_map[tab.id] = iter
 
     def get_tab(self, name):
@@ -92,7 +119,8 @@ class StaticTabList(StaticTabListBase):
     def __init__(self):
         StaticTabListBase.__init__(self)
         self.type = 'static'
-        self.view = TabListView(style.StaticTabRenderer(), widgetset.TableModel('object'))
+        self.view = TabListView(style.StaticTabRenderer(),
+                widgetset.TableModel)
         self.view.allow_multiple_select(False)
         self.view.set_fixed_height(False)
 
@@ -130,7 +158,7 @@ class LibraryTabList(StaticTabListBase):
         iter = self.iter_map[key]
         tab = self.view.model[iter][0]
         setattr(tab, attr, count)
-        self.view.model.update(iter, tab)
+        self.view.update_tab(iter, tab)
         self.view.model_changed()
 
 class TabListDragHandler(object):
@@ -355,7 +383,7 @@ class PlaylistListDragHandler(TabListDragHandler):
     item_type = 'playlist'
     folder_type = 'playlist-with-folder'
 
-class TabList(signals.SignalEmitter):
+class TabList(signals.SignalEmitter, TabBlinkerMixin):
     """Handles a list of tabs on the left-side of Miro.
 
     signals:
@@ -414,9 +442,9 @@ class TabList(signals.SignalEmitter):
         self.init_info(info)
         if parent_id:
             parent_iter = self.iter_map[parent_id]
-            iter = self.view.model.append_child(parent_iter, info)
+            iter = self.view.append_child_tab(parent_iter, info)
         else:
-            iter = self.view.model.append(info)
+            iter = self.view.append_tab(info)
         self.iter_map[info.id] = iter
 
     def set_folder_expanded(self, id, expanded):
@@ -425,7 +453,7 @@ class TabList(signals.SignalEmitter):
     def update(self, info):
         self.init_info(info)
         old_name = self.view.model[self.iter_map[info.id]][0].name
-        self.view.model.update(self.iter_map[info.id], info)
+        self.view.update_tab(self.iter_map[info.id], info)
         if old_name != info.name:
             self.emit('tab-name-changed', old_name, info.name)
 

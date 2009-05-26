@@ -62,6 +62,7 @@ TAB_LIST_HEADER_COLOR = (100/255.0, 109/255.0, 125/255.0)
 TAB_LIST_SEPARATOR_COLOR = (209/255.0, 216/255.0, 220/255.0)
 
 ERROR_COLOR = (0.90, 0.0, 0.0)
+BLINK_COLOR = css_to_color('#fffb83')
 
 class LowerBox(widgetset.Background):
 
@@ -147,7 +148,12 @@ class TabRenderer(widgetset.CustomCellRenderer):
         self.pack_bubbles(hbox, layout)
         hbox.pack_space(2)
         alignment = cellpack.Alignment(hbox, yscale=0.0, yalign=0.5)
-        alignment.render_layout(context)
+        if self.blink:
+            renderer = cellpack.Background(alignment)
+            renderer.set_callback(self.draw_blink_background)
+        else:
+            renderer = alignment
+        renderer.render_layout(context)
 
     def pack_bubbles(self, hbox, layout):
         if getattr(self.data, 'is_updating', None):
@@ -181,6 +187,11 @@ class TabRenderer(widgetset.CustomCellRenderer):
         context.rel_line_to(-inner_width, 0)
         context.arc(x + radius, mid, radius, PI/2, -PI/2)
         context.set_color(color)
+        context.fill()
+
+    def draw_blink_background(self, context, x, y, width, height):
+        context.rectangle(x, y, width, height)
+        context.set_color(BLINK_COLOR)
         context.fill()
 
 class StaticTabRenderer(TabRenderer):

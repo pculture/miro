@@ -1276,6 +1276,8 @@ class BackendMessageHandler(messages.MessageHandler):
                     [' - %s' % feed.get('title', feed['url']) for feed in feeds])
             messages.NotifyUser(
                 title, body, 'feed-subscribe').send_to_frontend()
+        if 'download' in added or 'download' in ignored:
+            messages.FeedlessDownloadStarted().send_to_frontend()
 
     def handle_change_movies_directory(self, message):
         old_path = config.get(prefs.MOVIES_DIRECTORY)

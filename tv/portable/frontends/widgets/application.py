@@ -1096,6 +1096,10 @@ class WidgetsMessageHandler(messages.MessageHandler):
             self.migration_progress_dialog.update(_('Migrating files'),
                     message.iteration, message.total_files)
 
+    def handle_feedless_download_started(self, message):
+        library_tab_list = app.tab_list_manager.library_tab_list
+        library_tab_list.blink_tab("downloading")
+
 class FrontendStatesStore(object):
     """Stores which views were left in list mode by the user."""
 

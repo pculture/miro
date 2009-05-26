@@ -1218,3 +1218,8 @@ class MigrationProgress(FrontendMessage):
         self.iteration = iteration
         self.total_files = total_files
         self.finished = finished
+
+class FeedlessDownloadStarted(FrontendMessage):
+    """Inform the frontend that a new video started downloading because a
+    subscribe link was clicked.
+    """
