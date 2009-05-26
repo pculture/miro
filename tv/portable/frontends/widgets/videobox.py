@@ -209,14 +209,12 @@ class ProgressTime(widgetset.DrawingArea):
     def draw(self, context, layout):
         if not app.playback_manager.is_playing:
             return
-        layout.set_font(0.75)
-        layout.set_text_color(widgetutil.WHITE)
         if self.current_time is not None:
+            layout.set_font(0.75)
+            layout.set_text_color(widgetutil.WHITE)
             text = layout.textbox(format_time(self.current_time))
-        else:
-            text = layout.textbox("?")
-        width, height = text.get_size()
-        text.draw(context, context.width-width, 0, width, height)
+            width, height = text.get_size()
+            text.draw(context, context.width-width, 0, width, height)
 
 class ProgressTimeRemaining(widgetset.CustomButton):
     def __init__(self):
@@ -264,7 +262,7 @@ class ProgressTimeRemaining(widgetset.CustomButton):
         if not app.playback_manager.is_playing:
             return
         if self.current_time is None or self.duration is None:
-            text = "?"
+            return
         elif self.display_remaining:
             text = '-' + format_time(self.duration - self.current_time)
         else:
@@ -286,6 +284,7 @@ class ProgressSlider(widgetset.CustomSlider):
         app.playback_manager.connect('will-play', self.handle_play)
         app.playback_manager.connect('will-stop', self.handle_stop)
         self.disable()
+        self.duration = 0
 
     def handle_progress(self, obj, elapsed, total):
         if elapsed is None or total is None:
@@ -296,12 +295,14 @@ class ProgressSlider(widgetset.CustomSlider):
             self.set_value(0)
 
     def handle_play(self, obj, duration):
+        self.duration = duration
         self.enable()
 
     def handle_selecting(self, obj, item_info):
         self.disable()
 
     def handle_stop(self, obj):
+        self.duration = 0
         self.set_value(0)
         self.disable()
 
@@ -327,10 +328,11 @@ class ProgressSlider(widgetset.CustomSlider):
             self.background_surface.draw(context, 0, 0, context.width)
         else:
             self.background_surface.draw_right(context, progress_width, 0, context.width - progress_width)
-        if progress_width <= 3:
-            self.progress_cursor.draw(context, 0, 0, self.progress_cursor.width, self.progress_cursor.height)
-        else:
-            self.progress_cursor.draw(context, progress_width-3, 0, self.progress_cursor.width, self.progress_cursor.height)
+        if self.duration > 0:
+            if progress_width <= 3:
+                self.progress_cursor.draw(context, 0, 0, self.progress_cursor.width, self.progress_cursor.height)
+            else:
+                self.progress_cursor.draw(context, progress_width-3, 0, self.progress_cursor.width, self.progress_cursor.height)
 
 class ProgressTimeline(widgetset.Background):
     def __init__(self):

@@ -38,6 +38,7 @@ from miro import messages
 from miro import signals
 from miro import config
 from miro import prefs
+from miro import filetypes
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from miro.frontends.widgets import browser
@@ -374,13 +375,13 @@ class CantPlayWidget(widgetset.SolidBackground):
         vbox.pack_start(widgetutil.align_left(table, top_pad=12))
         hbox = widgetset.HBox(spacing=12)
         reveal_button = widgetset.Button(_('Reveal File'))
-        play_externally_button = widgetset.Button(_('Play Externally'))
+        self.play_externally_button = widgetset.Button(_('Play Externally'))
+        self.play_externally_button.connect('clicked', self._on_play_externally)
         skip_button = widgetset.Button(_('Skip'))
         reveal_button.connect('clicked', self._on_reveal)
-        play_externally_button.connect('clicked', self._on_play_externally)
         skip_button.connect('clicked', self._on_skip)
         hbox.pack_start(reveal_button)
-        hbox.pack_start(play_externally_button)
+        hbox.pack_start(self.play_externally_button)
         hbox.pack_start(skip_button)
         vbox.pack_start(widgetutil.align_center(hbox, top_pad=24))
         alignment = widgetset.Alignment(xalign=0.5, yalign=0.5)
@@ -410,6 +411,10 @@ class CantPlayWidget(widgetset.SolidBackground):
         self.video_path = video_path
         self.filename_label.set_text(os.path.split(video_path)[-1])
         self.filetype_label.set_text(os.path.splitext(video_path)[1])
+        if filetypes.is_playable_filename(video_path):
+            self.play_externally_button.set_text(_('Play Externally'))
+        else:
+            self.play_externally_button.set_text(_('Open Externally'))
 
 class VideoDisplay(Display):
     def __init__(self, renderer):
@@ -448,7 +453,13 @@ class VideoDisplay(Display):
         self.show_renderer()
         self.cant_play_widget.set_video_path(item_info.video_path)
         self.item_info_id = item_info.id
-        self.renderer.set_item(item_info, self._open_success, self._open_error)
+        # Even though the video renderer would call _open_error if it can't
+        # open an item, doing a first pass here allow to filter out items with
+        # a file_type of 'other' more easily and more reliably - luc.
+        if filetypes.is_video_filename(item_info.video_path):
+            self.renderer.set_item(item_info, self._open_success, self._open_error)
+        else:
+            self._open_error()
         self.renderer.set_volume(volume)
 
     def enter_fullscreen(self):

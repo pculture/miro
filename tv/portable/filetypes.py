@@ -73,6 +73,13 @@ def is_allowed_filename(filename):
     """
     return is_video_filename(filename) or is_audio_filename(filename) or is_torrent_filename(filename)
 
+def is_playable_filename(filename):
+    """
+    Pass a filename to this method and it will return a boolean
+    saying if the filename represents video or audio.
+    """
+    return is_video_filename(filename) or is_audio_filename(filename)
+
 def is_video_filename(filename):
     """
     Pass a filename to this method and it will return a boolean
