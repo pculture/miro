@@ -1109,7 +1109,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             'get_base_href', 'get_description', 'get_link', 'getLibraryLink',
             'get_thumbnail_url', 'get_license', 'url', 'title', 'created',
             'thumbURL', 'lastEngine', 'lastQuery', 'dir',
-            'preserveDownloads', 'lookup',
+            'preserveDownloads', 'lookup', 'set_info', 'reset',
             ):
         locals()[name] = attr_from_feed_impl(name)
 
