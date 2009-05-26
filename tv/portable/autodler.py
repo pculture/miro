@@ -104,8 +104,12 @@ class Downloader:
                 key = self._key_for_feed(feed)
                 if self.is_auto:
                     max_new = feed.get_max_new()
-                    if max_new != "unlimited" and max_new <= self.feed_new_count.get(feed, 0) + self.feed_running_count.get(key, 0):
-                        continue
+                    if max_new != "unlimited":
+                        count = (self.feed_new_count.get(feed, 0) +
+                                self.feed_running_count.get(key, 0) +
+                                feed.num_unwatched())
+                        if count >= max_new:
+                            continue
                 if self.feed_pending_count.get(key, 0) <= 0:
                     continue
                 sorted.append((feed, self.feed_running_count.get(key, 0), self.feed_time.get(feed, datetime.min)))
