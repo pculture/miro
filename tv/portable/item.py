@@ -761,7 +761,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         if self.feed_id is not None:
             feed_ = self.get_feed()
             if feed_.origURL != 'dtv:manualFeed':
-                feed_.get_title()
+                return feed_.get_title()
         if self.parent_id is not None:
             return self.get_parent().get_title()
         return None
