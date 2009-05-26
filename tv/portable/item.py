@@ -1156,7 +1156,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 return self.raw_descrption
         elif self.is_external() and self.is_downloaded_torrent():
             lines = [_('Contents:')]
-            lines.extend(child.offsetPath for child in self.getChildren())
+            lines.extend(filenameToUnicode(child.offsetPath) for child in self.getChildren())
             return u'<BR>\n'.join(lines)
         else:
             return None
