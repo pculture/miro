@@ -2232,7 +2232,7 @@ def upgrade93(cursor):
     cursor.execute("UPDATE item SET file_type = 'audio' "
             "WHERE " + audio_filename_expr)
     cursor.execute("UPDATE item SET file_type = 'other' "
-            "WHERE file_type IS NULL AND videoFilename IS NOT NULL AND"
+            "WHERE file_type IS NULL AND videoFilename IS NOT NULL AND "
             "videoFilename != ''")
 
 def upgrade94(cursor):
