@@ -132,6 +132,7 @@ class WindowBase(signals.SignalEmitter):
         self.create_signal('key-press')
         self.create_signal('show')
         self.create_signal('hide')
+        self._setup_ui_manager()
 
     def set_window(self, window):
         self._window = window
@@ -152,6 +153,56 @@ class WindowBase(signals.SignalEmitter):
         # #f0f0f0).
         self.use_custom_style = ((base.red == base.green == base.blue) and
                 base.red >= 61680)
+
+    def connect_menu_keyboard_shortcuts(self):
+        self._window.add_accel_group(self.ui_manager.get_accel_group())
+
+    def _setup_ui_manager(self):
+        self.ui_manager = gtk.UIManager()
+        self.make_actions()
+        uistring = StringIO.StringIO()
+        uistring.write('<ui><menubar name="MiroMenu">')
+        for menu in menubar.menubar:
+            uistring.write('<menu action="Menu%s">' % menu.action)
+            for menuitem in menu.menuitems:
+                if isinstance(menuitem, menubar.Separator):
+                    uistring.write("<separator />")
+                else:
+                    uistring.write('<menuitem action="%s" />' % menuitem.action)
+            uistring.write('</menu>')
+        uistring.write('</menubar></ui>')
+        self.ui_manager.add_ui_from_string(uistring.getvalue())
+
+    def make_action(self, action, label, shortcuts=None):
+        gtk_action = gtk.Action(action, label, None, get_stock_id(action))
+        callback = menus.lookup_handler(action)
+        if callback is not None:
+            gtk_action.connect("activate", self.on_activate, callback)
+        action_group_name = menus.get_action_group_name(action)
+        action_group = self.action_groups[action_group_name]
+        if shortcuts is None or len(shortcuts) == 0:
+            action_group.add_action(gtk_action)
+        else:
+            action_group.add_action_with_accel(gtk_action,
+                    get_accel_string(shortcuts[0]))
+
+    def make_actions(self):
+        self.action_groups = {}
+        for name in menus.action_group_names():
+            self.action_groups[name] = gtk.ActionGroup(name)
+
+        for menu in menubar.menubar:
+            self.make_action('Menu' + menu.action, menu.label)
+            for menuitem in menu.menuitems:
+                if isinstance(menuitem, menubar.Separator):
+                    continue
+                self.make_action(menuitem.action, menuitem.label,
+                        menuitem.shortcuts)
+        for action_group in self.action_groups.values():
+            self.ui_manager.insert_action_group(action_group, -1)
+
+    def on_activate(self, action, callback):
+        callback()
 
 class Window(WindowBase):
     """The main Miro window.  """
@@ -234,7 +285,8 @@ class MainWindow(Window):
         self.vbox = gtk.VBox()
         self._window.add(self.vbox)
         self.vbox.show()
-        self.add_menus()
+        self._add_menubar()
+        self.connect_menu_keyboard_shortcuts()
         self.create_signal('save-dimensions')
         self.create_signal('save-maximized')
         app.menu_manager.connect('enabled-changed', self.on_menu_change)
@@ -264,53 +316,10 @@ class MainWindow(Window):
             if gtk.gdk.keyval_name(event.keyval) in ('Right', 'Left', 'Up', 'Down'):
                 return True
 
-    def add_menus(self):
-        self.ui_manager = gtk.UIManager()
-        self.make_actions()
-        uistring = StringIO.StringIO()
-        uistring.write('<ui><menubar name="MiroMenu">')
-        for menu in menubar.menubar:
-            uistring.write('<menu action="Menu%s">' % menu.action)
-            for menuitem in menu.menuitems:
-                if isinstance(menuitem, menubar.Separator):
-                    uistring.write("<separator />")
-                else:
-                    uistring.write('<menuitem action="%s" />' % menuitem.action)
-            uistring.write('</menu>')
-        uistring.write('</menubar></ui>')
-        self.ui_manager.add_ui_from_string(uistring.getvalue())
+    def _add_menubar(self):
         self.menubar = self.ui_manager.get_widget("/MiroMenu")
         self.vbox.pack_start(self.menubar, expand=False)
         self.menubar.show_all()
-        self._window.add_accel_group(self.ui_manager.get_accel_group())
-
-    def make_action(self, action, label, shortcuts=None):
-        gtk_action = gtk.Action(action, label, None, get_stock_id(action))
-        callback = menus.lookup_handler(action)
-        if callback is not None:
-            gtk_action.connect("activate", self.on_activate, callback)
-        action_group_name = menus.get_action_group_name(action)
-        action_group = self.action_groups[action_group_name]
-        if shortcuts is None or len(shortcuts) == 0:
-            action_group.add_action(gtk_action)
-        else:
-            action_group.add_action_with_accel(gtk_action,
-                    get_accel_string(shortcuts[0]))
-
-    def make_actions(self):
-        self.action_groups = {}
-        for name in menus.action_group_names():
-            self.action_groups[name] = gtk.ActionGroup(name)
-
-        for menu in menubar.menubar:
-            self.make_action('Menu' + menu.action, menu.label)
-            for menuitem in menu.menuitems:
-                if isinstance(menuitem, menubar.Separator):
-                    continue
-                self.make_action(menuitem.action, menuitem.label,
-                        menuitem.shortcuts)
-        for action_group in self.action_groups.values():
-            self.ui_manager.insert_action_group(action_group, -1)
 
     def on_menu_change(self, menu_manager):
         for name, action_group in self.action_groups.items():
@@ -341,9 +350,6 @@ class MainWindow(Window):
 
         play_pause = menubar.menubar.getLabel("PlayPauseVideo", menu_manager.play_pause_state)
         self.action_groups["PlayPause"].get_action("PlayPauseVideo").set_property("label", play_pause)
-
-    def on_activate(self, action, callback):
-        callback()
 
     def _add_content_widget(self, widget):
         self.vbox.pack_start(widget._widget, expand=True)

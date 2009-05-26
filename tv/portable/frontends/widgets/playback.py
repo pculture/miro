@@ -495,6 +495,7 @@ class DetachedWindow(widgetset.Window):
         widgetset.Window.__init__(self, title, rect)
         self.closing = False
         self.stop_on_close = True
+        self.connect_menu_keyboard_shortcuts()
 
     def close(self, stop_playback=True):
         if not self.closing:
@@ -509,9 +510,6 @@ class DetachedWindow(widgetset.Window):
 
     def do_key_press(self, key, mods):
         if handle_key_press(key, mods):
-            return True
-        if menubar.MOD in mods and key == 't':
-            app.playback_manager.toggle_detached_mode()
             return True
         return False
 

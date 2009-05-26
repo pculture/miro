@@ -177,6 +177,10 @@ class Window(signals.SignalEmitter):
         frame.size.height -= 22
         return NSRectWrapper(frame)
 
+    def connect_menu_keyboard_shortcuts(self):
+        # All OS X windows are connected to the menu shortcuts
+        pass
+
 class MainWindow(Window):
     def __init__(self, title, rect):
         Window.__init__(self, title, rect)
