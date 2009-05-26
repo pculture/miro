@@ -143,6 +143,7 @@ class OverlayPalette (NSWindowController):
         self.progressSlider.setShowCursor_(True)
 
         self.volumeSlider.cursor = NSImage.imageNamed_(u'fs-volume-slider')
+        self.volumeSlider.sliderWasClicked = self.volumeSliderWasClicked
         self.volumeSlider.sliderWasDragged = self.volumeSliderWasDragged
         self.volumeSlider.setShowCursor_(True)
 
@@ -401,6 +402,9 @@ class OverlayPalette (NSWindowController):
         app.playback_manager.set_volume(volume)
         app.widgetapp.window.videobox.volume_slider.set_value(volume)
         self.resetAutoHiding()
+
+    def volumeSliderWasClicked(self, slider):
+        self.volumeSliderWasDragged(slider)
 
     def video_will_play(self, obj, duration):
         self.playPauseButton.setImage_(NSImage.imageNamed_(u'fs-button-pause'))
