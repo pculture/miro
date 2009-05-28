@@ -76,11 +76,11 @@ class TabListView(widgetset.TableView):
     def append_tab(self, tab_info):
         return self.model.append(tab_info, False)
 
-    def append_child(self, parent_iter, tab_info):
+    def append_child_tab(self, parent_iter, tab_info):
         return self.model.append_child(parent_iter, tab_info, False)
 
     def update_tab(self, iter, tab_info):
-        return self.model.update_value(iter, 0, tab_info)
+        self.model.update_value(iter, 0, tab_info)
 
     def blink_tab(self, iter):
         self.model.update_value(iter, 1, True)
