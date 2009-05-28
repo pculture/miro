@@ -2216,8 +2216,8 @@ def upgrade92(cursor):
     remove_column(cursor, 'playlist_folder', 'item_ids')
 
 def upgrade93(cursor):
-    VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogg', '.ogv', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid', '.rmvb', '.mkv', '.m2v', '.ogm']
-    AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka', '.flac']
+    VIDEO_EXTENSIONS = ['.mov', '.wmv', '.mp4', '.m4v', '.ogv', '.anx', '.mpg', '.avi', '.flv', '.mpeg', '.divx', '.xvid', '.rmvb', '.mkv', '.m2v', '.ogm']
+    AUDIO_EXTENSIONS = ['.mp3', '.m4a', '.wma', '.mka', '.ogg', '.flac']
 
     video_filename_expr = '(%s)' % ' OR '.join("videoFilename LIKE '%%%s'" % ext
             for ext in VIDEO_EXTENSIONS)
