@@ -688,7 +688,10 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         if self.show_progress_bar:
             return cellpack.align_bottom(self.pack_download_status(layout))
 
-        hbox = cellpack.HBox(spacing=10)
+        stack = cellpack.Stack()
+
+        main_hbox = cellpack.HBox(spacing=10)
+
         layout.set_font(0.85)
         if self.data.downloaded:
             if self.data.is_playable:
@@ -696,7 +699,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             else:
                 button = self._make_button(layout, self.REVEAL_IN_TEXT,
                         'show_local_file')
-            hbox.pack(cellpack.align_middle(button))
+            main_hbox.pack(cellpack.align_middle(button))
         else:
             if self.data.mime_type == 'application/x-bittorrent':
                 text = self.DOWNLOAD_TORRENT_TEXT
@@ -704,78 +707,82 @@ class ItemRenderer(widgetset.CustomCellRenderer):
                 text = self.DOWNLOAD_TEXT
             hotspot = self._make_button(layout, text, 'download',
                     icon=self.download_arrow)
-            hbox.pack(cellpack.align_middle(cellpack.align_middle(hotspot)))
+            main_hbox.pack(cellpack.align_middle(cellpack.align_middle(hotspot)))
+
+        # If we are going to display an emblem (unwatched, expiring, etc).
+        # Then pack it now on to the stack, so the buttons and other things
+        # get packed on top.
+
+        emblem_hbox = cellpack.HBox()
+        main_width = main_hbox.get_current_size()[0]
+        emblem_hbox.pack_space(main_width)
 
         if self.data.download_info and self.data.download_info.state == 'failed':
             layout.set_font(0.80, bold=True)
 
-            inner_hbox = hbox
-
-            inner_hbox.pack(cellpack.align_middle(self.alert_image))
-            inner_hbox.pack(cellpack.align_middle(layout.textbox(self.ERROR_TEXT)))
-            inner_hbox.pack(cellpack.align_middle(layout.textbox(u"-")))
-            inner_hbox.pack(cellpack.align_middle(layout.textbox(self.data.download_info.short_reason_failed)))
+            emblem_hbox.pack(cellpack.align_middle(self.alert_image))
+            emblem_hbox.pack(cellpack.align_middle(layout.textbox(self.ERROR_TEXT)))
+            emblem_hbox.pack(cellpack.align_middle(layout.textbox(u"-")))
+            emblem_hbox.pack(cellpack.align_middle(layout.textbox(self.data.download_info.short_reason_failed)))
 
             emblem_color = (1.0, 252.0 / 255.0, 183.0 / 255.0)
-            emblem = cellpack.Background(inner_hbox, margin=(4, 20, 4, 4))
+            emblem = cellpack.Background(emblem_hbox, margin=(4, 20, 4, 4))
             emblem.set_callback(self.draw_emblem, emblem_color)
 
-            hbox = cellpack.HBox(spacing=5)
-            hbox.pack(cellpack.pad(emblem))
+            stack.pack(cellpack.align_left(emblem))
 
         elif self.data.pending_auto_dl:
-            hbox.pack_space(2)
+            emblem_hbox.pack_space(2)
             layout.set_font(0.80, bold=True)
-            hbox.pack(cellpack.align_middle(layout.textbox(self.QUEUED_TEXT)))
+            emblem_hbox.pack(cellpack.align_middle(layout.textbox(self.QUEUED_TEXT)))
+
+            stack.pack(cellpack.align_left(emblem_hbox))
 
         elif (self.data.downloaded and not self.data.video_watched and
                 self.data.is_playable):
             layout.set_font(0.80, bold=True)
             layout.set_text_color((1, 1, 1))
-            inner_hbox = hbox
-            inner_hbox.pack(cellpack.align_middle(layout.textbox(self.UNPLAYED_TEXT)))
-            inner_hbox.pack_space(2)
+
+            emblem_hbox.pack(cellpack.align_middle(layout.textbox(self.UNPLAYED_TEXT)))
+            emblem_hbox.pack_space(2)
 
             emblem_color = UNPLAYED_COLOR
-            emblem = cellpack.Background(inner_hbox, margin=(5, 20, 4, 4))
+            emblem = cellpack.Background(emblem_hbox, margin=(5, 20, 4, 4))
             emblem.set_callback(self.draw_emblem, emblem_color)
 
-            hbox = cellpack.HBox(spacing=5)
-            hbox.pack(cellpack.pad(emblem))
-
+            stack.pack(cellpack.align_left(emblem))
         elif self.data.expiration_date and self.data.is_playable:
             layout.set_font(0.80, bold=True)
             layout.set_text_color((154.0 / 255.0, 174.0 / 255.0, 181.0 / 255.0))
+
             text = displaytext.expiration_date(self.data.expiration_date)
-            inner_hbox = hbox
-            inner_hbox.pack(cellpack.align_middle(layout.textbox(text)))
+            emblem_hbox.pack(cellpack.align_middle(layout.textbox(text)))
             emblem_color = (232.0 / 255.0, 240.0 / 255.0, 242.0 / 255.0)
-            emblem = cellpack.Background(inner_hbox, margin=(4, 4, 4, 4))
+            emblem = cellpack.Background(emblem_hbox, margin=(4, 4, 4, 4))
             emblem.set_callback(self.draw_emblem, emblem_color)
 
-            hbox = cellpack.HBox(spacing=5)
-            hbox.pack(cellpack.pad(emblem))
-
+            stack.pack(cellpack.align_left(emblem))
         elif not self.data.item_viewed and self.data.state == "new":
             layout.set_font(0.80, bold=True)
             layout.set_text_color((1, 1, 1))
-            inner_hbox = hbox
-            inner_hbox.pack(cellpack.align_middle(layout.textbox(self.NEWLY_AVAILABLE_TEXT)))
-            inner_hbox.pack_space(2)
+
+            emblem_hbox.pack(cellpack.align_middle(layout.textbox(self.NEWLY_AVAILABLE_TEXT)))
+            emblem_hbox.pack_space(2)
 
             emblem_color = AVAILABLE_COLOR
-            emblem = cellpack.Background(inner_hbox, margin=(4, 4, 4, 4))
+            emblem = cellpack.Background(emblem_hbox, margin=(4, 4, 4, 4))
             emblem.set_callback(self.draw_emblem, emblem_color)
 
-            hbox = cellpack.HBox(spacing=5)
-            hbox.pack(cellpack.pad(emblem))
+            stack.pack(cellpack.align_left(emblem))
 
-        hbox.pack_space(2, expand=True)
+        main_hbox.pack_space(2, expand=True)
 
         if self.data.is_external or self.data.is_single or self.data.downloaded:
-            hbox.pack(self.pack_video_buttons(layout))
+            main_hbox.pack(self.pack_video_buttons(layout))
 
-        return cellpack.align_bottom(cellpack.pad(hbox, top=5, bottom=6))
+        stack.pack(main_hbox)
+
+        return cellpack.align_bottom(cellpack.pad(stack, top=5, bottom=6))
 
     def pack_video_buttons(self, layout):
         hbox = cellpack.HBox(spacing=5)

@@ -102,12 +102,21 @@ class Packer(object):
         self._layout(context, x, y, width, height)
 
     def get_size(self):
-        """Get the minimum size required to hold the Box.  """
+        """Get the minimum size required to hold the Packer.  """
         try:
             return self._size
         except AttributeError:
             self._size = self._calc_size()
             return self._size
+
+    def get_current_size(self):
+        """Get the minimum size required to hold the Packer at this point
+
+        Call this method if you are going to change the packer after the call,
+        for example if you have more children to pack into a box.  get_size()
+        saves caches it's result which is can mess things up.
+        """
+        return self._calc_size()
 
     def find_hotspot(self, x, y, width, height):
         """Find the hotspot at (x, y).  width and height are the size of the
@@ -130,7 +139,7 @@ class Packer(object):
                 pass # child is a TextBox, Button or something like that
         return None
 
-    def _layout(self):
+    def _layout(self, context, x, y, width, height):
         """Layout our children and call draw() on them.  """
         raise NotImplementedError()
 
@@ -541,6 +550,42 @@ class Hotspot(Packer):
 
     def find_hotspot(self, x, y, width, height):
         return self.name, x, y, width, height
+
+class Stack(Packer):
+    """Packer that stacks other packers on top of each other."""
+    def __init__(self):
+        self.children = []
+
+    def pack(self, packer):
+        self.children.append(packer)
+
+    def pack_below(self, packer):
+        self.children.insert(0, packer)
+
+    def _layout(self, context, x, y, width, height):
+        print 'layout: ', width
+        for packer in self.children:
+            packer._layout(context, x, y, width, height)
+
+    def _calc_size(self):
+        """Calculate the size needed to hold the box.  The return value gets
+        cached and return in get_size().
+        """
+        width = height = 0
+        for packer in self.children:
+            child_width, child_height = packer.get_size()
+            width = max(width, child_width)
+            height = max(height, child_height)
+        return width, height
+
+    def _find_child_at(self, x, y, width, height):
+        # Return the topmost packer
+        try:
+            top = self.children[-1]
+        except IndexError:
+            return None
+        else:
+            return top._find_child_at(x, y, width, height)
 
 def align_left(packer):
     """Align a packer to the left side of it's allocated space."""
