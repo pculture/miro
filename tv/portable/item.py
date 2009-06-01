@@ -781,6 +781,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             raise ValueError("%s is not a container item" % self)
 
+    def children_signal_change(self):
+        for child in self.getChildren():
+            child.signal_change(needsSave=False)
+
     def is_playable(self):
         """Is this a playable item?"""
 
@@ -838,20 +842,20 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def stopUpload(self):
         if self.downloader:
             self.downloader.stopUpload()
-            for child in self.getChildren():
-                child.signal_change(needsSave=False)
+            if self.isContainerItem:
+                self.children_signal_change()
 
     def pauseUpload(self):
         if self.downloader:
             self.downloader.pauseUpload()
-            for child in self.getChildren():
-                child.signal_change(needsSave=False)
+            if self.isContainerItem:
+                self.children_signal_change()
 
     def startUpload(self):
         if self.downloader:
             self.downloader.startUpload()
-            for child in self.getChildren():
-                child.signal_change(needsSave=False)
+            if self.isContainerItem:
+                self.children_signal_change()
 
     @returnsUnicode
     def getString(self, when):
