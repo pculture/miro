@@ -18,33 +18,36 @@ class ItemSeenTest(MiroTestCase):
         MiroTestCase.setUp(self)
         self.feed = Feed(u'dtv:manualFeed', initiallyAutoDownloadable=False)
         self.tempdir = tempfile.mkdtemp()
-        self._make_fake_video("pcf.mpeg")
-        self._make_fake_video("dean.avi")
-        self._make_fake_video("npr.mkv")
+        self._make_fake_item("pcf.mpeg")
+        self._make_fake_item("dean.avi")
+        self._make_fake_item("npr.txt")
         self.container_item = FileItem(self.tempdir, self.feed.id)
 
     def tearDown(self):
         shutil.rmtree(self.tempdir, ignore_errors=True)
         MiroTestCase.tearDown(self)
 
-    def _make_fake_video(self, filename):
+    def _make_fake_item(self, filename):
         f = open(os.path.join(self.tempdir, filename), 'wb')
         f.write("FAKE DATA")
         f.close()
 
     def test_seen_attribute(self):
+        # parents should be consider "seen" when all of their audio/video
+        # children are marked seen.
         children = list(self.container_item.getChildren())
-        self.assertEquals(len(children), 3)
+        media_children = [i for i in children if i.is_playable()]
+        other_children = [i for i in children if not i.is_playable()]
+        self.assertEquals(len(media_children), 2)
+        self.assertEquals(len(other_children), 1)
         self.assert_(not self.container_item.seen)
-        children[0].mark_item_seen()
+        media_children[0].mark_item_seen()
         self.assert_(not self.container_item.seen)
-        children[1].mark_item_seen()
-        self.assert_(not self.container_item.seen)
-        children[2].mark_item_seen()
+        media_children[1].mark_item_seen()
         self.assert_(self.container_item.seen)
-        children[1].mark_item_unseen()
+        media_children[1].mark_item_unseen()
         self.assert_(not self.container_item.seen)
-        children[1].mark_item_seen()
+        media_children[1].mark_item_seen()
         self.assert_(self.container_item.seen)
 
 class ExpiredViewTest(MiroTestCase):

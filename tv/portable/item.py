@@ -964,8 +964,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def update_parent_seen(self):
         if self.parent_id:
-            unseen_children = self.make_view('parent_id=? AND NOT seen',
-                    (self.parent_id,))
+            unseen_children = self.make_view('parent_id=? AND NOT seen AND '
+                    "file_type in ('audio', 'video')", (self.parent_id,))
             self.get_parent().seen = (unseen_children.count() == 0)
 
     def mark_item_unseen(self, markOtherItems=True):
