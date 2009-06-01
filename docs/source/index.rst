@@ -13,6 +13,7 @@ Contents:
 
    project
    howto
+   translating
    searchengine_modules
    utility_modules
    backend_modules
