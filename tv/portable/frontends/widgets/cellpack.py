@@ -563,7 +563,6 @@ class Stack(Packer):
         self.children.insert(0, packer)
 
     def _layout(self, context, x, y, width, height):
-        print 'layout: ', width
         for packer in self.children:
             packer._layout(context, x, y, width, height)
 
