@@ -236,6 +236,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     COMMENTS_TEXT = _("Comments")
     REVEAL_IN_TEXT = (file_navigator_name and
             _("Reveal in %(progname)s", {"progname": file_navigator_name}) or _("Reveal File"))
+    SHOW_CONTENTS_TEXT = _("Display Contents")
     WEB_PAGE_TEXT = _("Web Page")
     FILE_URL_TEXT = _("File URL")
     LICENSE_PAGE_TEXT = _("License Page")
@@ -693,8 +694,8 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             if self.data.file_type != 'other':
                 button = cellpack.Hotspot('play', self.play_button)
             else:
-                button = self._make_button(layout, self.REVEAL_IN_TEXT,
-                        'show_local_file')
+                button = self._make_button(layout, self.SHOW_CONTENTS_TEXT,
+                        'show_contents')
             hbox.pack(cellpack.align_middle(button))
         else:
             if self.data.mime_type == 'application/x-bittorrent':

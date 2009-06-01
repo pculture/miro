@@ -354,6 +354,13 @@ class SearchItemsTracker(ItemTrackerBase):
         self.view = item.Item.search_item_view()
         ItemTrackerBase.__init__(self)
 
+class FolderItemsTracker(ItemTrackerBase):
+    type = 'folder-contents'
+    def __init__(self, folder_id):
+        self.view = item.Item.folder_contents_view(folder_id)
+        self.id = folder_id
+        ItemTrackerBase.__init__(self)
+
 def make_item_tracker(message):
     if message.type == 'downloads':
         return DownloadingItemsTracker()
@@ -365,6 +372,8 @@ def make_item_tracker(message):
         return OtherItemsTracker()
     elif message.type == 'search':
         return SearchItemsTracker()
+    elif message.type == 'folder-contents':
+        return FolderItemsTracker(message.id)
     elif message.type == 'feed':
         try:
             feed_ = feed.Feed.get_by_id(message.id)

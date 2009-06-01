@@ -268,6 +268,8 @@ class ItemListController(object):
             app.widgetapp.open_url(item_info.license)
         elif name == 'show_local_file':
             app.widgetapp.check_then_reveal_file(item_info.video_path)
+        elif name == 'show_contents':
+            app.display_manager.push_folder_contents_display(item_info)
         elif name.startswith('description-link:'):
             url = name.split(':', 1)[1]
             base_href = widgetutil.get_feed_info(item_info.feed_id).base_href
@@ -517,6 +519,30 @@ class OtherItemsController(SimpleItemListController):
     def build_list_item_view(self):
         return itemlistwidgets.ListItemView(self.item_list,
                 display_download_info=False)
+
+class FolderContentsController(SimpleItemListController):
+    """Controller object for feeds."""
+
+    def __init__(self, folder_info):
+        self.type = 'folder-contents'
+        self.id = folder_info.id
+        self.title = folder_info.name
+        self.info = folder_info
+        SimpleItemListController.__init__(self)
+
+    def _make_icon(self):
+        return imagepool.get(resources.path('images/folder-icon.png'))
+
+    def build_widget(self):
+        SimpleItemListController.build_widget(self)
+
+        button = widgetset.Button(_('Back to feed'))
+        button.connect('clicked', self._on_clicked)
+        self.widget.titlebar_vbox.pack_start(widgetutil.align_left(button,
+            left_pad=10, top_pad=6, bottom_pad=4))
+
+    def _on_clicked(self, button):
+        app.display_manager.pop_display()
 
 class ItemListControllerManager(object):
     """Manages ItemListController objects.

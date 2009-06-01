@@ -444,6 +444,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 joins={'feed': 'item.feed_id=feed.id'})
 
     @classmethod
+    def folder_contents_view(cls, folder_id):
+        return cls.make_view('parent_id=?', (folder_id,))
+
+    @classmethod
     def feed_downloaded_view(cls, feed_id):
         return cls.make_view("feed_id=? AND "
                 "rd.state in ('finished', 'uploading', 'uploading-paused')",

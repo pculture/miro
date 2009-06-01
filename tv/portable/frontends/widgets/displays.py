@@ -190,6 +190,9 @@ class DisplayManager(object):
         display.cleanup()
         display.emit("removed")
 
+    def push_folder_contents_display(self, folder_info):
+        self.push_display(FolderContentsDisplay(folder_info))
+
 class GuideDisplay(TabDisplay):
     @staticmethod
     def should_display(tab_type, selected_tabs):
@@ -221,24 +224,14 @@ class SiteDisplay(TabDisplay):
             self._open_sites[guide_info.id] = browser.BrowserNav(guide_info)
         self.widget = self._open_sites[guide_info.id]
 
-class ItemListDisplay(TabDisplay):
-    def __init__(self, tab_type, selected_tabs):
-        Display.__init__(self)
-        tab = selected_tabs[0]
-        self.controller = self.make_controller(tab)
-        self.widget = self.controller.widget
-        if app.frontend_states_memory.query_list_view(tab_type, tab.id):
-            self.widget.switch_to_list_view()
-        self.type = tab_type
-        self.id = tab.id
-
+class ItemListDisplayMixin(object):
     def on_selected(self):
         app.item_list_controller_manager.controller_created(self.controller)
         self.controller.start_tracking()
 
     def on_activate(self):
         app.item_list_controller_manager.controller_displayed(self.controller)
-        TabDisplay.on_activate(self)
+        super(ItemListDisplayMixin, self).on_activate()
 
     def on_deactivate(self):
         app.item_list_controller_manager.controller_no_longer_displayed(
@@ -251,6 +244,18 @@ class ItemListDisplay(TabDisplay):
             app.frontend_states_memory.set_list_view(self.type, self.id)
         else:
             app.frontend_states_memory.set_std_view(self.type, self.id)
+
+
+class ItemListDisplay(ItemListDisplayMixin, TabDisplay):
+    def __init__(self, tab_type, selected_tabs):
+        Display.__init__(self)
+        tab = selected_tabs[0]
+        self.controller = self.make_controller(tab)
+        self.widget = self.controller.widget
+        if app.frontend_states_memory.query_list_view(tab_type, tab.id):
+            self.widget.switch_to_list_view()
+        self.type = tab_type
+        self.id = tab.id
 
     def make_controller(self, tab):
         raise NotImplementedError()
@@ -350,6 +355,14 @@ class DownloadingDisplay(ItemListDisplay):
 
     def make_controller(self, tab):
         return downloadscontroller.DownloadsController()
+
+class FolderContentsDisplay(ItemListDisplayMixin, Display):
+    def __init__(self, info):
+        self.type = 'folder-contents'
+        self.id = info.id
+        self.controller = itemlistcontroller.FolderContentsController(info)
+        self.widget = self.controller.widget
+        Display.__init__(self)
 
 class CantPlayWidget(widgetset.SolidBackground):
     def __init__(self):
