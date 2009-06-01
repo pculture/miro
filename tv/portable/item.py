@@ -950,6 +950,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """Marks the item as seen.
         """
         self.confirm_db_thread()
+        if self.isContainerItem:
+            for child in self.getChildren():
+                child.seen = True
+                child.signal_change()
         if self.seen == False:
             self.seen = True
             if self.watchedTime is None:
@@ -978,10 +982,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             for item in self.getChildren():
                 item.seen = False
                 item.signal_change()
-            self.signal_change()
-        else:
-            if self.seen == False:
-                return
+        if self.seen:
             self.seen = False
             self.watchedTime = None
             self.signal_change()
@@ -990,7 +991,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 for item in self.downloader.itemList:
                     if item != self:
                         item.mark_item_unseen(False)
-        self.recalc_feed_counts()
+            self.recalc_feed_counts()
 
     @returnsUnicode
     def getRSSID(self):
