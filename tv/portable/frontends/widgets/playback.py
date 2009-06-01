@@ -144,7 +144,13 @@ class PlaybackManager (signals.SignalEmitter):
             # certainly means that the currently playing item is an audio one
             # which leaves the UI free to start another item, so stop first.
             self.stop()
-        self.playlist = item_infos
+        self.playlist = []
+        for info in item_infos:
+            if not info.is_container_item:
+                self.playlist.append(info)
+            else:
+                playlables = [i for i in info.children if i.is_playable]
+                self.playlist.extend(playlables)
         self.position = 0
         self._calc_id_to_position()
         self.presentation_mode = presentation_mode

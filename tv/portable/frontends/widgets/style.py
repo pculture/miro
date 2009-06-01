@@ -691,11 +691,11 @@ class ItemRenderer(widgetset.CustomCellRenderer):
         hbox = cellpack.HBox(spacing=10)
         layout.set_font(0.85)
         if self.data.downloaded:
-            if self.data.file_type != 'other':
+            if self.data.is_playable:
                 button = cellpack.Hotspot('play', self.play_button)
             else:
-                button = self._make_button(layout, self.SHOW_CONTENTS_TEXT,
-                        'show_contents')
+                button = self._make_button(layout, self.REVEAL_IN_TEXT,
+                        'show_local_file')
             hbox.pack(cellpack.align_middle(button))
         else:
             if self.data.mime_type == 'application/x-bittorrent':
@@ -729,7 +729,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             hbox.pack(cellpack.align_middle(layout.textbox(self.QUEUED_TEXT)))
 
         elif (self.data.downloaded and not self.data.video_watched and
-                self.data.file_type != 'other'):
+                self.data.is_playable):
             layout.set_font(0.80, bold=True)
             layout.set_text_color((1, 1, 1))
             inner_hbox = hbox
@@ -743,7 +743,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             hbox = cellpack.HBox(spacing=5)
             hbox.pack(cellpack.pad(emblem))
 
-        elif self.data.expiration_date and self.data.file_type != 'other':
+        elif self.data.expiration_date and self.data.is_playable:
             layout.set_font(0.80, bold=True)
             layout.set_text_color((154.0 / 255.0, 174.0 / 255.0, 181.0 / 255.0))
             text = displaytext.expiration_date(self.data.expiration_date)
@@ -780,6 +780,10 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     def pack_video_buttons(self, layout):
         hbox = cellpack.HBox(spacing=5)
         layout.set_font(0.85)
+        if self.data.is_container_item:
+            hotspot = self._make_button(layout, self.SHOW_CONTENTS_TEXT,
+                    'show_contents')
+            hbox.pack(cellpack.align_middle(hotspot))
         if self.data.expiration_date:
             hotspot = self._make_button(layout, self.KEEP_TEXT, 'keep')
             hbox.pack(cellpack.align_middle(hotspot))
@@ -998,6 +1002,10 @@ class PlaylistItemRenderer(ItemRenderer):
     def pack_video_buttons(self, layout):
         hbox = cellpack.HBox(spacing=5)
         layout.set_font(0.85)
+        if self.data.is_container_item:
+            hotspot = self._make_button(layout, self.SHOW_CONTENTS_TEXT,
+                    'show_contents')
+            hbox.pack(cellpack.align_middle(hotspot))
         if self.data.expiration_date:
             hotspot = self._make_button(layout, _('Keep'), 'keep')
             hbox.pack(cellpack.align_middle(hotspot))

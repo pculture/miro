@@ -399,6 +399,7 @@ class ItemSchema(MultiClassObjectSchema):
     indexes = (
             ('item_feed', ('feed_id',)),
             ('item_feed_visible', ('feed_id', 'deleted')),
+            ('item_parent', ('parent_id',)),
             ('item_downloader', ('downloader_id',)),
             ('item_feed_downloader', ('feed_id', 'downloader_id',)),
             ('item_file_type', ('file_type',)),
@@ -618,7 +619,7 @@ class WidgetsFrontendStateSchema(DDBObjectSchema):
         ('list_view_displays', SchemaList(SchemaBinary())),
     ]
 
-VERSION = 97
+VERSION = 98
 object_schemas = [
     IconCacheSchema, ItemSchema, FeedSchema,
     FeedImplSchema, RSSFeedImplSchema, RSSMultiFeedImplSchema, ScraperFeedImplSchema,

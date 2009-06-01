@@ -875,6 +875,9 @@ class ItemInfo(object):
         (or None)
     is_container_item -- whether or not this item is actually a
         collection of files as opposed to an individual item
+    children -- for container items the children of the item.
+    is_playable -- is this item a audio/video file, or a container that
+        contains audio/video files inside.
     self.leechers -- (Torrent only) number of leeching clients
     self.seeders -- (Torrent only) number of seeding clients
     self.up_rate -- (Torrent only) how fast we're uploading data
@@ -918,6 +921,11 @@ class ItemInfo(object):
         self.license = item.get_license()
         self.file_url = item.get_url()
         self.is_container_item = item.isContainerItem
+        self.is_playable = item.is_playable()
+        if item.isContainerItem:
+            self.children = [ItemInfo(i) for i in item.getChildren()]
+        else:
+            self.children = []
         self.file_type = item.file_type
         self.seeding_status = item.torrent_seeding_status()
         self.mime_type = item.enclosure_type

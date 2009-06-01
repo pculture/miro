@@ -543,6 +543,11 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 (watched_before, feed_id),
                 joins={'feed': 'item.feed_id=feed.id'})
 
+    @classmethod
+    def media_children_view(cls, parent_id):
+        return cls.make_view("parent_id=? AND "
+                "file_type IN ('video', 'audio')", (parent_id,))
+
     def get_expiring(self):
         if self.expiring is None:
             if not self.get_seen():
@@ -775,6 +780,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return Item.children_view(self.id)
         else:
             raise ValueError("%s is not a container item" % self)
+
+    def is_playable(self):
+        """Is this a playable item?"""
+
+        if self.isContainerItem:
+            return Item.media_children_view(self.id).count() > 0
+        else:
+            return self.file_type in ('audio', 'video')
 
     def setFeed(self, feed_id):
         """Moves this item to another feed.

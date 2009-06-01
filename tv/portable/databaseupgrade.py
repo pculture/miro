@@ -2274,3 +2274,8 @@ def upgrade97(cursor):
     """Add another indexes, this is make tab switching faster.
     """
     cursor.execute("CREATE INDEX item_feed_visible ON item (feed_id, deleted)")
+
+def upgrade98(cursor):
+    """Add an index for item parents
+    """
+    cursor.execute("CREATE INDEX item_parent ON item (parent_id)")
