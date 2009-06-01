@@ -1730,7 +1730,7 @@ class FileItem(Item):
                 self.signal_change()
 
     def delete_files(self):
-        if self.get_parent():
+        if self.parent_id is not None:
             dler = self.get_parent().downloader
             if dler:
                 dler.stop(False)
