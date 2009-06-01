@@ -75,7 +75,6 @@ def run_dialog(channel_infos, downloaded_items, downloading_items, has_watched_f
             cbx_downloaded = None
             if downloaded_items:
                 cbx_downloaded = widgetset.Checkbox(_("Keep items that have been downloaded in my library."))
-                cbx_downloaded.set_checked(True)
                 v.pack_start(widgetutil.align_left(cbx_downloaded, bottom_pad=5))
 
             if has_watched_feeds:
