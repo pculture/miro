@@ -3,7 +3,7 @@ README
 ======
 
 :Author: Will Kahn-Greene <will.guaraldi at pculture dot org>
-:Date: May 4th, 2008
+:Date: June 1st, 2009
 
 
 Summary
@@ -13,6 +13,9 @@ This is the GTK/X11 port of Miro.
 
 Instructions and build requirements are documented at
 https://develop.participatoryculture.org/trac/democracy/wiki/GTKX11BuildDocs
+
+If you have problems, visit us on ``#miro-hackers`` on
+``irc.freenode.net``.
 
 
 Build and run
@@ -53,7 +56,7 @@ Wiping out preferences
 
 Miro stores preferences in gconf.  To wipe out all preferences, do::
 
-     gconftool-2 --recursive-unset /apps/miro
+   gconftool-2 --recursive-unset /apps/miro
 
 
 Unittest instructions
@@ -84,3 +87,28 @@ Note that if you have xulrunner 1.8 and 1.9 installed on your system, you
 must use the same xulrunner that the gtkmozembed Python module is compiled
 against.  If you don't, when you go to run Miro, you'll get Symbol Undefined
 type errors.
+
+
+Problems with xine
+==================
+
+A while back, we had problems with xine and wrote "xine xv hack" code.
+This code helps some platforms and segfaults on others.  Depending on
+your platform, you will want to enable/disable the hack.  This can be
+done in two places.  First, it can be done in setup.py with the
+``USE_XINE_HACK`` option.  Second, if ``USE_XINE_HACK`` was True when
+Miro was compiled, then you can enable/disable the hack through the
+command line with::
+
+   miro --set=xine-xvhack=true
+
+or::
+
+   miro --set=xine-xvhack=False
+
+Problems with gstreamer
+=======================
+
+Make sure you have gstreamer plugins installed.  That solves most
+problems.
+
