@@ -44,7 +44,7 @@ class GtkSearchTextEntry(gtk.EventBox):
     def __init__(self):
         gtk.EventBox.__init__(self)
         self.add_events(gtk.gdk.EXPOSURE_MASK)
-        self.alignment = gtk.Alignment(yalign=0.5)
+        self.alignment = gtk.Alignment(yalign=0.5, xscale=1.0)
         self.entry = gtk.Entry()
         self.entry.set_has_frame(False)
         self.alignment.add(self.entry)
@@ -61,9 +61,9 @@ class GtkSearchTextEntry(gtk.EventBox):
     def _align_entry(self):
         # Make it so we handle the inner border of the entry ourselves.
         #
-        # By default entries have 2px padding on all sides.  Change that to 0,
+        # By default entries have 3px padding on all sides.  Change that to 0,
         # and make our Alignment widget handle it.
-        # NOTE we use has 3px padding on the right side to compensate for the
+        # NOTE we use has 4px padding on the right side to compensate for the
         # fact that GTKEntry draws itself 1 extra pixel on the right
         #
         # We also want 6 px padding on the top, bottom and left sides of the
@@ -71,7 +71,7 @@ class GtkSearchTextEntry(gtk.EventBox):
         # Since icons are 16x16, this gives us 26px padding on the left
         # and a minimum height of 28px
         pygtkhacks.set_entry_border(self.entry, 0, 0, 0, 0)
-        self.alignment.set_padding(2, 2, 26, 3)
+        self.alignment.set_padding(3, 3, 26, 4)
         self.min_height = 24
 
     def do_size_request(self, requesition):
