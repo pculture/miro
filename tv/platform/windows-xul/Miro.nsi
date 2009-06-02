@@ -1038,6 +1038,22 @@ UninstallOld:
   DeleteRegKey HKCR "Democracy.Player.1"
 
 NotOldInstalled:
+  ; Check if an old version is present, but no registry key exists
+  ; Check for uninstall.exe.  That filename should be constant for all
+  ; versions and themes.
+
+  IfFileExists "$INSTDIR\uninstall.exe" RegLessVersionInstalled StartInstall
+
+RegLessVersionInstalled:
+  MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
+  "It looks like you already have a copy of $APP_NAME $\n\
+installed.  Do you want to continue and overwrite it?" \
+       /SD IDOK IDOK UninstallNoReg
+  Quit
+UninstallNoReg:
+  !insertmacro uninstall $INSTDIR
+
+StartInstall:
   StrCmp $REINSTALL "1" SkipLanguageDLL
   !insertmacro MUI_LANGDLL_DISPLAY
 SkipLanguageDLL:
