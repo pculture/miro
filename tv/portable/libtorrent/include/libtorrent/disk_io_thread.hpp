@@ -234,7 +234,7 @@ namespace libtorrent
 		void flush_expired_pieces();
 		void flush_and_remove(cache_t::iterator i, mutex_t::scoped_lock& l);
 		void flush(cache_t::iterator i, mutex_t::scoped_lock& l);
-		void cache_block(disk_io_job& j, mutex_t::scoped_lock& l);
+		int cache_block(disk_io_job& j, mutex_t::scoped_lock& l);
 
 		// read cache operations
 		bool clear_oldest_read_piece(cache_t::iterator ignore
@@ -310,8 +310,23 @@ namespace libtorrent
 
 		io_service& m_ios;
 
+		// this keeps the io_service::run() call blocked from
+		// returning. When shutting down, it's possible that
+		// the event queue is drained before the disk_io_thread
+		// has posted its last callback. When this happens, the
+		// io_service will have a pending callback from the
+		// disk_io_thread, but the event loop is not running.
+		// this means that the event is destructed after the
+		// disk_io_thread. If the event refers to a disk buffer
+		// it will try to free it, but the buffer pool won't
+		// exist anymore, and crash. This prevents that.
+		boost::optional<asio::io_service::work> m_work;
+
 		// thread for performing blocking disk io operations
 		boost::thread m_disk_io_thread;
+#ifdef TORRENT_DEBUG
+		int m_magic;
+#endif
 	};
 
 }

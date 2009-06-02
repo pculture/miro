@@ -41,7 +41,7 @@ if platform.system() == 'Windows':
 	except: pass
 	shutil.copyfile(r'bin\msvc-7.1\release\boost-source\geoip-static\link-static\optimization-space\threading-multi\libtorrent.pyd', r'.\build\lib\libtorrent.pyd')
 	setup( name='python-libtorrent',
-		version='0.14.3',
+		version='0.14.4',
 		author = 'Arvid Norberg',
 		author_email='arvid@cs.umu.se',
 		description = 'Python bindings for libtorrent-rasterbar',
@@ -65,7 +65,7 @@ source_list = [os.path.join("src", s) for s in source_list if s.endswith(".cpp")
 extra_cmd = '-DTORRENT_USE_OPENSSL -DTORRENT_LINKING_SHARED   -pthread -I/opt/local/include  -lboost_filesystem-mt-1_35 -lboost_thread-mt-1_35  -lssl -lcrypto -lboost_system-mt-1_35 -L/usr/lib -I/usr/include/openssl -DHAVE_SSL'
 
 setup( name='python-libtorrent',
-	version='0.14.3',
+	version='0.14.4',
 	author = 'Arvid Norberg',
 	author_email='arvid@cs.umu.se',
 	description = 'Python bindings for libtorrent-rasterbar',
@@ -79,6 +79,6 @@ setup( name='python-libtorrent',
 		include_dirs = ['../../include','../../include/libtorrent'] + parse_cmd(extra_cmd, '-I'),
 		library_dirs = ['../../src/.libs'] + parse_cmd(extra_cmd, '-L'),
 		extra_link_args = '-L/opt/local/lib -L/opt/local/lib'.split() + arch(),
-		extra_compile_args = parse_cmd(extra_cmd, '-D', True) + arch(),
+		extra_compile_args = parse_cmd(extra_cmd, '-D', True) + arch() + ['-DBOOST_MULTI_INDEX_DISABLE_SERIALIZATION'],
 		libraries = ['torrent-rasterbar','boost_python-mt-1_35'] + parse_cmd(extra_cmd, '-l'))],
 )

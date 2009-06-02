@@ -255,11 +255,7 @@ namespace libtorrent
 
 		int num_seeds() const { return m_num_seeds; }
 		int num_connect_candidates() const { return m_num_connect_candidates; }
-		void recalculate_connect_candidates()
-		{
-			if (m_num_connect_candidates == 0)
-				m_num_connect_candidates = 1;
-		}
+		void recalculate_connect_candidates();
 
 		void erase_peer(iterator i);
 
@@ -294,6 +290,16 @@ namespace libtorrent
 
 		// the number of seeds in the peer list
 		int m_num_seeds;
+
+		// this was the state of the torrent the
+		// last time we recalculated the number of
+		// connect candidates. Since seeds (or upload
+		// only) peers are not connect candidates
+		// when we're finished, the set depends on
+		// this state. Every time m_torrent->is_finished()
+		// is different from this state, we need to
+		// recalculate the connect candidates.
+		bool m_finished;
 	};
 
 }

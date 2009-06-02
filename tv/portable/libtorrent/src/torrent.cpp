@@ -699,6 +699,8 @@ namespace libtorrent
 		m_files_checked = false;
 		set_state(torrent_status::checking_resume_data);
 
+		m_policy.recalculate_connect_candidates();
+
 		if (m_auto_managed)
 			set_queue_position((std::numeric_limits<int>::max)());
 
@@ -1925,7 +1927,6 @@ namespace libtorrent
 			// if we used to be finished, but we aren't anymore
 			// we may need to connect to peers again
 			resume_download();
-			m_policy.recalculate_connect_candidates();
 		}
 	}
 
@@ -3370,6 +3371,8 @@ namespace libtorrent
 		std::for_each(seeds.begin(), seeds.end()
 			, bind(&peer_connection::disconnect, _1, "torrent finished, disconnecting seed", 0));
 
+		m_policy.recalculate_connect_candidates();
+
 		TORRENT_ASSERT(m_storage);
 		// we need to keep the object alive during this operation
 		m_storage->async_release_files(
@@ -3385,6 +3388,7 @@ namespace libtorrent
 		TORRENT_ASSERT(!is_finished());
 		set_state(torrent_status::downloading);
 		set_queue_position((std::numeric_limits<int>::max)());
+		m_policy.recalculate_connect_candidates();
 	}
 
 	// called when torrent is complete (all pieces downloaded)
@@ -3567,6 +3571,10 @@ namespace libtorrent
 		else
 		{
 			m_save_path = save_path;
+			if (alerts().should_post<storage_moved_alert>())
+			{
+				alerts().post_alert(storage_moved_alert(get_handle(), m_save_path.string()));
+			}
 		}
 	}
 
@@ -3574,11 +3582,21 @@ namespace libtorrent
 	{
 		session_impl::mutex_t::scoped_lock l(m_ses.m_mutex);
 
-		if (alerts().should_post<storage_moved_alert>())
+		if (ret == 0)
 		{
-			alerts().post_alert(storage_moved_alert(get_handle(), j.str));
+			if (alerts().should_post<storage_moved_alert>())
+			{
+				alerts().post_alert(storage_moved_alert(get_handle(), j.str));
+			}
+			m_save_path = j.str;
 		}
-		m_save_path = j.str;
+		else
+		{
+			if (alerts().should_post<storage_moved_failed_alert>())
+			{
+				alerts().post_alert(storage_moved_failed_alert(get_handle(), j.error));
+			}
+		}
 	}
 
 	piece_manager& torrent::filesystem()

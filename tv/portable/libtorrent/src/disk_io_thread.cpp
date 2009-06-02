@@ -59,10 +59,11 @@ namespace libtorrent
 		, m_coalesce_reads(true)
 		, m_use_read_cache(true)
 #ifndef TORRENT_DISABLE_POOL_ALLOCATOR
-		, m_pool(block_size)
+		, m_pool(block_size, 16)
 #endif
 		, m_block_size(block_size)
 		, m_ios(ios)
+		, m_work(io_service::work(m_ios))
 		, m_disk_io_thread(boost::ref(*this))
 	{
 #ifdef TORRENT_STATS
@@ -71,11 +72,18 @@ namespace libtorrent
 #ifdef TORRENT_DISK_STATS
 		m_log.open("disk_io_thread.log", std::ios::trunc);
 #endif
+#ifdef TORRENT_DEBUG
+	m_magic = 0x1337;
+#endif
 	}
 
 	disk_io_thread::~disk_io_thread()
 	{
 		TORRENT_ASSERT(m_abort == true);
+		TORRENT_ASSERT(m_magic == 0x1337);
+#ifdef TORRENT_DEBUG
+		m_magic = 0;
+#endif
 	}
 
 	void disk_io_thread::join()
@@ -368,10 +376,12 @@ namespace libtorrent
 #endif
 	}
 
-	void disk_io_thread::cache_block(disk_io_job& j, mutex_t::scoped_lock& l)
+	// returns -1 on failure
+	int disk_io_thread::cache_block(disk_io_job& j, mutex_t::scoped_lock& l)
 	{
 		INVARIANT_CHECK;
 		TORRENT_ASSERT(find_cached_piece(m_pieces, j, l) == m_pieces.end());
+		TORRENT_ASSERT((j.offset & (m_block_size-1)) == 0);
 		cached_piece_entry p;
 
 		int piece_size = j.storage->info()->piece_size(j.piece);
@@ -381,13 +391,15 @@ namespace libtorrent
 		p.storage = j.storage;
 		p.last_use = time_now();
 		p.num_blocks = 1;
-		p.blocks.reset(new char*[blocks_in_piece]);
+		p.blocks.reset(new (std::nothrow) char*[blocks_in_piece]);
+		if (!p.blocks) return -1;
 		std::memset(&p.blocks[0], 0, blocks_in_piece * sizeof(char*));
 		int block = j.offset / m_block_size;
 //		std::cerr << " adding cache entry for p: " << j.piece << " block: " << block << " cached_blocks: " << m_cache_stats.cache_size << std::endl;
 		p.blocks[block] = j.buffer;
 		++m_cache_stats.cache_size;
 		m_pieces.push_back(p);
+		return 0;
 	}
 
 	// fills a piece with data from disk, returns the total number of bytes
@@ -496,11 +508,12 @@ namespace libtorrent
 		p.storage = j.storage;
 		p.last_use = time_now();
 		p.num_blocks = 0;
-		p.blocks.reset(new char*[blocks_in_piece]);
+		p.blocks.reset(new (std::nothrow) char*[blocks_in_piece]);
+		if (!p.blocks) return -1;
 		std::memset(&p.blocks[0], 0, blocks_in_piece * sizeof(char*));
 		int ret = read_into_piece(p, start_block, l);
 		
-		if (ret == -1)
+		if (ret < 0)
 			free_piece(p, l);
 		else
 			m_read_pieces.push_back(p);
@@ -641,6 +654,7 @@ namespace libtorrent
 	void disk_io_thread::add_job(disk_io_job const& j
 		, boost::function<void(int, disk_io_job const&)> const& f)
 	{
+		TORRENT_ASSERT(!m_abort);
 		TORRENT_ASSERT(!j.callback);
 		TORRENT_ASSERT(j.storage);
 		TORRENT_ASSERT(j.buffer_size <= m_block_size);
@@ -700,10 +714,15 @@ namespace libtorrent
 #ifdef TORRENT_DEBUG
 	bool disk_io_thread::is_disk_buffer(char* buffer) const
 	{
+		TORRENT_ASSERT(m_magic == 0x1337);
 #ifdef TORRENT_DISABLE_POOL_ALLOCATOR
 		return true;
 #else
 		mutex_t::scoped_lock l(m_pool_mutex);
+#ifdef TORRENT_DISK_STATS
+		if (m_buf_to_category.find(buffer)
+			== m_buf_to_category.end()) return false;
+#endif
 		return m_pool.is_from(buffer);
 #endif
 	}
@@ -712,12 +731,14 @@ namespace libtorrent
 	char* disk_io_thread::allocate_buffer()
 	{
 		mutex_t::scoped_lock l(m_pool_mutex);
+		TORRENT_ASSERT(m_magic == 0x1337);
 #ifdef TORRENT_STATS
 		++m_allocations;
 #endif
 #ifdef TORRENT_DISABLE_POOL_ALLOCATOR
 		return (char*)malloc(m_block_size);
 #else
+		m_pool.set_next_size(16);
 		return (char*)m_pool.ordered_malloc();
 #endif
 	}
@@ -725,6 +746,7 @@ namespace libtorrent
 	void disk_io_thread::free_buffer(char* buf)
 	{
 		mutex_t::scoped_lock l(m_pool_mutex);
+		TORRENT_ASSERT(m_magic == 0x1337);
 #ifdef TORRENT_STATS
 		--m_allocations;
 #endif
@@ -740,6 +762,7 @@ namespace libtorrent
 		error_code const& ec = j.storage->error();
 		if (ec)
 		{
+			j.buffer = 0;
 			j.str = ec.message();
 			j.error = ec;
 			j.error_file = j.storage->error_file();
@@ -777,6 +800,9 @@ namespace libtorrent
 					free_piece(*i, l);
 				m_pieces.clear();
 				m_read_pieces.clear();
+				// release the io_service to allow the run() call to return
+				// we do this once we stop posting new callbacks to it.
+				m_work.reset();
 				return;
 			}
 
@@ -834,7 +860,6 @@ namespace libtorrent
 				case disk_io_job::abort_thread:
 				{
 					mutex_t::scoped_lock jl(m_queue_mutex);
-					m_abort = true;
 
 					for (std::list<disk_io_job>::iterator i = m_jobs.begin();
 							i != m_jobs.end();)
@@ -854,6 +879,8 @@ namespace libtorrent
 						}
 						++i;
 					}
+
+					m_abort = true;
 					break;
 				}
 				case disk_io_job::read:
@@ -885,7 +912,6 @@ namespace libtorrent
 					// or that the read cache is disabled
 					if (ret == -1)
 					{
-						j.buffer = 0;
 						test_error(j);
 						break;
 					}
@@ -900,6 +926,7 @@ namespace libtorrent
 						}
 						++m_cache_stats.blocks_read;
 					}
+					TORRENT_ASSERT(j.buffer == read_holder.get());
 					read_holder.release();
 					break;
 				}
@@ -923,6 +950,7 @@ namespace libtorrent
 					if (p != m_pieces.end())
 					{
 						TORRENT_ASSERT(p->blocks[block] == 0);
+
 						if (p->blocks[block])
 						{
 							free_buffer(p->blocks[block]);
@@ -935,7 +963,15 @@ namespace libtorrent
 					}
 					else
 					{
-						cache_block(j, l);
+						if (cache_block(j, l) < 0)
+						{
+							ret = j.storage->write_impl(j.buffer, j.piece, j.offset, j.buffer_size);
+							if (ret < 0)
+							{
+								test_error(j);
+								break;
+							}
+						}
 					}
 					// we've now inserted the buffer
 					// in the cache, we should not
@@ -1018,6 +1054,7 @@ namespace libtorrent
 #ifndef TORRENT_DISABLE_POOL_ALLOCATOR
 					{
 						mutex_t::scoped_lock l(m_pool_mutex);
+						TORRENT_ASSERT(m_magic == 0x1337);
 						m_pool.release_memory();
 					}
 #endif
@@ -1157,6 +1194,11 @@ namespace libtorrent
 					m_log << log_time() << " rename file" << std::endl;
 #endif
 					ret = j.storage->rename_file_impl(j.piece, j.str);
+					if (ret != 0)
+					{
+						test_error(j);
+						break;
+					}
 				}
 			}
 #ifndef BOOST_NO_EXCEPTIONS

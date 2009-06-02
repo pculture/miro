@@ -1800,6 +1800,8 @@ namespace libtorrent
 		INVARIANT_CHECK;
 
 		TORRENT_ASSERT(m_files.piece_length() > 0);
+		
+		m_current_slot = 0;
 
 		// if we don't have any resume data, return
 		if (rd.type() == lazy_entry::none_t) return check_no_fastresume(error);
@@ -2227,7 +2229,10 @@ namespace libtorrent
 #else
 				&& m_storage->error() != error_code(ENOENT, get_posix_category()))
 #endif
+			{
+				m_piece_data.clear();
 				return -1;
+			}
 			return 1;
 		}
 
