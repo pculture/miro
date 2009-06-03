@@ -547,6 +547,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         return cls.make_view("parent_id=? AND "
                 "file_type IN ('video', 'audio')", (parent_id,))
 
+    @classmethod
+    def containers_view(cls):
+        return cls.make_view("isContainerItem")
+
+    @classmethod
+    def file_items_view(cls):
+        return cls.make_view("is_file_item")
+
     def get_expiring(self):
         if self.expiring is None:
             if not self.get_seen():

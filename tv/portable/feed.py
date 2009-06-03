@@ -2197,18 +2197,19 @@ class DirectoryFeedImpl(FeedImpl):
         # that do 8.3 paths.  what we have here is a veritable mess.
         self.ufeed.confirm_db_thread()
         movies_dir = config.get(prefs.MOVIES_DIRECTORY)
-        # files known about by real feeds
-        known_files = set()
-        for item in models.Item.toplevel_view():
-            if item.feed_id is not self.ufeed.id:
-                known_files.add(item.get_filename())
-            if item.isContainerItem:
-                item.find_new_children()
+
+        # Make sure container items have created FileItems for their contents
+        for container in models.Item.containers_view():
+            container.find_new_children()
+
+        # Add downloaded files.  Using a select statement is good here because
+        # we don't want to construct all the Item objects if we don't need to.
+        known_files = set(os.path.normcase(row[0]) for row in
+                models.Item.select('filename', 
+                    'filename IS NOT NULL AND feed_id != ?', (self.ufeed_id,)))
 
         incomplete_dir = os.path.join(movies_dir, "Incomplete Downloads")
-        known_files.add(incomplete_dir)
-
-        known_files = set([os.path.normcase(k) for k in known_files])
+        known_files.add(os.path.normcase(incomplete_dir))
 
         # remove items that are in feeds, but we have in our list
         for item in self.items:
