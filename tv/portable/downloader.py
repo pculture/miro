@@ -148,8 +148,8 @@ class RemoteDownloader(DDBObject):
 
     @classmethod
     def finished_view(cls):
-        return cls.make_view(
-                "state in ('finished', 'uploading', 'uploading-paused')")
+        return cls.make_view("state in ('stopped', 'finished', 'uploading', "
+                "'uploading-paused')")
 
     @classmethod
     def auto_uploader_view(cls):
