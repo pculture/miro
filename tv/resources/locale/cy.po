@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-05-14 15:16-0400\n"
-"PO-Revision-Date: 2009-05-04 18:49+0000\n"
+"PO-Revision-Date: 2009-05-24 19:59+0000\n"
 "Last-Translator: duw <Unknown>\n"
 "Language-Team: Welsh <cy@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : (n != 8 || n != 11) ? "
 "2 : 3;\n"
-"X-Launchpad-Export-Date: 2009-05-20 15:56+0000\n"
+"X-Launchpad-Export-Date: 2009-06-03 16:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -2739,17 +2739,19 @@ msgstr ""
 #, python-format
 msgid "%(count)d Site Selected"
 msgid_plural "%(count)d Sites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d Safle wedi'i Dewis"
+msgstr[1] "%(count)d Safle wedi'u Dewis"
+msgstr[2] "%(count)d Safle wedi'u Dewis"
+msgstr[3] "%(count)d Safle wedi'u Dewis"
 
 #: ../../portable/frontends/widgets/browser.py:102
 msgid "Download this video"
-msgstr ""
+msgstr "Lawrlwythwch y fideo hwn"
 
 #: ../../portable/frontends/widgets/application.py:306
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
-msgstr ""
+msgstr "Cafodd y ffeil %(filename)s ei dileu o du allan %(appname)s."
 
 #: ../../portable/frontends/widgets/application.py:379
 #, python-format
@@ -2764,15 +2766,19 @@ msgstr "Mae %(appname)s yn gyfredol!"
 #: ../../portable/frontends/widgets/application.py:728
 msgid "Remove site"
 msgid_plural "Remove sites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Tynnu safle"
+msgstr[1] "Tynnu safleoedd"
+msgstr[2] "Tynnu safleoedd"
+msgstr[3] "Tynnu safleoedd"
 
 #: ../../portable/frontends/widgets/application.py:730
 #, python-format
 msgid "Are you sure you want to remove this site?"
 msgid_plural "Are you sure you want to remove these %(count)s sites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ydych wir am dynnu'r safle hwn?"
+msgstr[1] "Ydych wir am dynnu'r safleoedd hyn?"
+msgstr[2] "Ydych wir am dynnu'r safleoedd hyn?"
+msgstr[3] "Ydych wir am dynnu'r safleoedd hyn?"
 
 #: ../../portable/frontends/widgets/prefpanel.py:267
 #, python-format
@@ -2803,16 +2809,16 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/gtk/video.py:301
 msgid "Pop-in"
-msgstr ""
+msgstr "Pop-mewn"
 
 #: ../../portable/frontends/widgets/gtk/video.py:306
 msgid "Pop-out"
-msgstr ""
+msgstr "Pop-allan"
 
 #: ../../portable/frontends/widgets/gtk/window.py:516
 #, python-format
 msgid "About %(appname)s"
-msgstr ""
+msgstr "Ynghylch %(appname)s"
 
 #: ../../portable/frontends/widgets/gtk/window.py:531
 #, python-format
@@ -2820,10 +2826,12 @@ msgid ""
 "%(copyright)s.  See license.txt file for details.\n"
 "%(trademark)s"
 msgstr ""
+"%(copyright)s.  Gweler ffeil license.txt am fanylion.\n"
+"%(trademark)s"
 
 #: ../../portable/frontends/widgets/tablist.py:506
 msgid "Remove Sites"
-msgstr ""
+msgstr "Tynnu Safleoedd"
 
 #: ../../portable/frontends/widgets/tablist.py:634
 msgid "LIBRARY"

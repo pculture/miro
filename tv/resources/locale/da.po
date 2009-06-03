@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-05-14 15:16-0400\n"
-"PO-Revision-Date: 2009-05-18 17:12+0000\n"
+"PO-Revision-Date: 2009-05-29 18:21+0000\n"
 "Last-Translator: Mads Konradsen <Unknown>\n"
 "Language-Team: Danish <da@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-05-20 15:57+0000\n"
+"X-Launchpad-Export-Date: 2009-06-03 16:17+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -2603,6 +2603,12 @@ msgid ""
 "This way, downloads in progress can finish downloading and new media files "
 "can be downloaded in the background, ready when you want to watch."
 msgstr ""
+"De næste få skærmbilleder vil hjælpe dig med at opsætte %(name)s så det "
+"virker bedst for dig.\n"
+"Vi anbefaler at du har %(name)s til at starte hvergang du starter din "
+"computer. På den måde kan dine downloads blive færdige med at downloade og "
+"nye elementer kan blive downloadet i baggrunden så de er klar når du ønsker "
+"at se dem."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:138
 #, python-format
@@ -2659,7 +2665,7 @@ msgstr "Download denne video"
 #: ../../portable/frontends/widgets/application.py:306
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
-msgstr ""
+msgstr "Filen %(filename)s blev slettet udenfor %(appname)s."
 
 #: ../../portable/frontends/widgets/application.py:379
 #, python-format
@@ -2681,13 +2687,13 @@ msgstr[1] "Fjern sider"
 #, python-format
 msgid "Are you sure you want to remove this site?"
 msgid_plural "Are you sure you want to remove these %(count)s sites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Er du sikker på at du ønsker at fjerne denne side?"
+msgstr[1] "Er du sikker på at du ønsker at fjerne disse %(count)s sider?"
 
 #: ../../portable/frontends/widgets/prefpanel.py:267
 #, python-format
 msgid "Automatically run %(appname)s when I log in."
-msgstr ""
+msgstr "Kør automatisk %(appname)s når jeg logger ind."
 
 #: ../../portable/frontends/widgets/prefpanel.py:454
 #, python-format
@@ -2696,6 +2702,9 @@ msgid ""
 "migrate your existing downloads there? (Currently downloading movies will "
 "not be moved until they finish.)"
 msgstr ""
+"Du har valgt en ny mappe at downloade film til. Skal %(appname)s flytte dine "
+"eksisterende downloadede filer dertil? (Film der bliver downloadet i "
+"øjeblikket vil ikke blive flyttet før de er færdige.)"
 
 #: ../../portable/frontends/widgets/removefeeds.py:83
 #, python-format
@@ -2704,14 +2713,17 @@ msgid ""
 "still appear in your library.  You can stop watching watched folders "
 "completely in the %(appname)s preference panel."
 msgstr ""
+"Overvågede mapper vil blive fjernet fra sidebaren men deres indhold vil "
+"fortsat være at finde i dit bibliotek. Du kan stoppe med at overvåge "
+"overvågede mappe fuldstændigt i %(appname)s Indstillings panelet."
 
 #: ../../portable/frontends/widgets/gtk/video.py:301
 msgid "Pop-in"
-msgstr ""
+msgstr "Pop-ind"
 
 #: ../../portable/frontends/widgets/gtk/video.py:306
 msgid "Pop-out"
-msgstr ""
+msgstr "Pop-ud"
 
 #: ../../portable/frontends/widgets/gtk/window.py:516
 #, python-format
@@ -2745,7 +2757,7 @@ msgstr "Ikke feed"
 
 #: ../../portable/frontends/widgets/diagnostics.py:110
 msgid "Total db objects in memory:"
-msgstr ""
+msgstr "Totale db objekter i hukommelse:"
 
 #: ../../portable/startup.py:99
 #, python-format
@@ -2753,6 +2765,8 @@ msgid ""
 "An unknown error prevented %(appname)s from startup.  Please file a bug "
 "report at %(url)s."
 msgstr ""
+"En ukendt fejl forusagede at %(appname)s ikke kunne starte. Udfyld venligst "
+"en fejl rapport på %(url)s."
 
 #: ../../portable/singleclick.py:61
 #, python-format
@@ -2766,11 +2780,14 @@ msgid ""
 "\n"
 "URL: %(url)s"
 msgstr ""
+"%(appname)s kunne ikke downloade en fil på denne URL:\n"
+"\n"
+"URL: %(url)s"
 
 #: ../../portable/dl_daemon/download.py:1101
 #, python-format
 msgid "The torrent file for this item was deleted outside of %(appname)s."
-msgstr ""
+msgstr "Torrent filen for dette element blev slettet udenfor %(appname)s."
 
 #: ../../portable/menubar.py:270
 #, python-format
@@ -2822,11 +2839,12 @@ msgstr "%(appname)s Hjælp"
 #, python-format
 msgid "You must restart %(appname)s for renderer changes to take effect."
 msgstr ""
+"Du bør genstarte %(appname)s for at visnings ændringerne træder i kræft."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/update.py:152
 #, python-format
 msgid "A new version of %(appname)s is available for download."
-msgstr ""
+msgstr "En ny version af %(appname)s er tilgængelig for download."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/flash.py:71
 #, python-format
@@ -2837,11 +2855,15 @@ msgid ""
 "You should quit %(appname)s now and start it up again after Adobe Flash has "
 "been installed."
 msgstr ""
+"Din browser vil indlæse siden hvorpå du kan downloade og installere Adobe "
+"Flash.\n"
+"Du bør lukke %(appname)s nu og starte det igen når Adobe Flash er "
+"installeret."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:47
 #, python-format
 msgid "Quit %(appname)s completely."
-msgstr ""
+msgstr "Afslut %(appname)s fuldstændigt."
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:128
 #, python-format
@@ -2849,3 +2871,6 @@ msgid ""
 "When you click the red close button, would you like %(appname)s to close to "
 "the system tray or quit?  You can change this setting later in the Options."
 msgstr ""
+"Når du klikker på den røde luk knap, ønsker du så at %(appname)s minimerer "
+"til statusfeltet eller lukker? Du kan ændre denne indstilling senere under "
+"Indstillinger."

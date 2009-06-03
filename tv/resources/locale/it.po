@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: getdemocracy\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-05-14 15:16-0400\n"
-"PO-Revision-Date: 2009-05-18 22:26+0000\n"
-"Last-Translator: scerathel <Unknown>\n"
+"PO-Revision-Date: 2009-05-28 12:00+0000\n"
+"Last-Translator: Matteo Piotto <piotto@gmail.com>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-05-20 15:57+0000\n"
+"X-Launchpad-Export-Date: 2009-06-03 16:17+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -2660,7 +2660,7 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/browser.py:102
 msgid "Download this video"
-msgstr ""
+msgstr "Scarica questo video"
 
 #: ../../portable/frontends/widgets/application.py:306
 #, python-format
@@ -2680,15 +2680,15 @@ msgstr "%(appname)s è aggiornato!"
 #: ../../portable/frontends/widgets/application.py:728
 msgid "Remove site"
 msgid_plural "Remove sites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Rimuovi sito"
+msgstr[1] "Rimuovi siti"
 
 #: ../../portable/frontends/widgets/application.py:730
 #, python-format
 msgid "Are you sure you want to remove this site?"
 msgid_plural "Are you sure you want to remove these %(count)s sites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Sei veramente sicuro di rimuovere questo sito?"
+msgstr[1] "Sei veramente sicuro di rimuovere questi %(count) siti?"
 
 #: ../../portable/frontends/widgets/prefpanel.py:267
 #, python-format

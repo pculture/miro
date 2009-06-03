@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-05-14 15:16-0400\n"
-"PO-Revision-Date: 2009-05-09 23:20+0000\n"
-"Last-Translator: dokjmr <jmr.dok@hccnet.nl>\n"
+"PO-Revision-Date: 2009-05-28 20:14+0000\n"
+"Last-Translator: sg <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-05-20 15:57+0000\n"
+"X-Launchpad-Export-Date: 2009-06-03 16:17+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -86,7 +86,7 @@ msgstr "Authorisatie mislukt"
 #: ../../portable/httpclient.py:157
 #: ../../portable/frontends/widgets/crashdialog.py:48
 msgid "Internal Error"
-msgstr "Interne fout"
+msgstr "Intern probleem"
 
 #: ../../portable/httpclient.py:158
 msgid "Pipeline request never started"
@@ -161,11 +161,11 @@ msgstr "Audio"
 
 #: ../../portable/frontends/widgets/statictabs.py:108
 msgid "Downloading"
-msgstr "aan het downloaden"
+msgstr "Downloads"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
-msgstr "Playlist toevoegen"
+msgstr "Nieuwe afspeellijst"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
 msgid "Add items to an existing playlist or a new one."
@@ -181,7 +181,7 @@ msgstr "Nieuwe afspeellijst:"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
-msgstr "verwijderen uit de inhoudsopgave"
+msgstr "Verwijder"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
 #: ../../portable/frontends/widgets/gtk/video.py:253
@@ -190,7 +190,7 @@ msgstr "verwijderen uit de inhoudsopgave"
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:128
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
 msgid "Delete"
-msgstr "Verwijderen"
+msgstr "Verwijder"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:94
 #: ../../portable/frontends/widgets/itemcontextmenu.py:192
@@ -259,7 +259,7 @@ msgstr "Download"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:135
 #: ../../portable/frontends/widgets/style.py:228
 msgid "Web Page"
-msgstr "web pagina"
+msgstr "website"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:137
 #: ../../portable/frontends/widgets/style.py:225
@@ -292,7 +292,7 @@ msgstr "Toon"
 #: ../../portable/frontends/widgets/gtk/video.py:280
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:120
 msgid "Share"
-msgstr "Delen"
+msgstr "Deel"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:187
 #, python-format
@@ -324,7 +324,7 @@ msgstr[1] "%(count)d onderbroken"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:264
 msgid "Restart Upload"
-msgstr "herstart upload"
+msgstr "Hervat seeden"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:278
 msgid "Remove From Playlist"
@@ -845,7 +845,7 @@ msgstr "Bewaar als..."
 #: ../../portable/frontends/widgets/application.py:530
 #: ../../portable/menubar.py:213
 msgid "Add Site"
-msgstr "Website toevoegen"
+msgstr "Nieuwe website"
 
 #: ../../portable/frontends/widgets/application.py:531
 msgid "Enter the URL of the site to add"
@@ -960,7 +960,8 @@ msgstr[1] "Verwijder afspeellijsten"
 msgid "Are you sure you want to remove this playlist?"
 msgid_plural "Are you sure you want to remove these %(count)s playlists?"
 msgstr[0] "Weet u zeker dat u deze afspeellijst wilt verwijderen?"
-msgstr[1] "Weet u zeker dat u deze afspeellijsten wilt verwijderen?"
+msgstr[1] ""
+"Weet u zeker dat u deze %(count)s afspeellijsten wilt verwijderen?"
 
 #: ../../portable/frontends/widgets/application.py:760
 msgid "Are you sure you want to quit?"
@@ -1358,7 +1359,7 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/gtk/video.py:251
 msgid "Add to library"
-msgstr "Aan collectie toevoegen"
+msgstr "Voeg toe aan bibiliotheek"
 
 #: ../../portable/frontends/widgets/gtk/video.py:291
 msgid "Permalink"
@@ -1458,7 +1459,7 @@ msgstr "Abonneren op podcast"
 
 #: ../../portable/frontends/widgets/newfeed.py:111
 msgid "Enter the URL of the feed to add"
-msgstr "Geef de URL van de nieuwe podcast op"
+msgstr "Geef de URL van de op te abonneren podcast op"
 
 #: ../../portable/frontends/widgets/newfeed.py:122
 msgid "Add Feed - Invalid URL"
@@ -1479,7 +1480,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/tablist.py:500
 #: ../../portable/frontends/widgets/tablist.py:563
 msgid "Copy URL to clipboard"
-msgstr "Kopieer URL naar klembord"
+msgstr "Kopieer URL"
 
 #: ../../portable/frontends/widgets/tablist.py:502
 msgid "Remove Site"
@@ -1491,7 +1492,7 @@ msgstr "Vernieuw"
 
 #: ../../portable/frontends/widgets/tablist.py:557
 msgid "Update Feed Now"
-msgstr "Werk podcast bij"
+msgstr "Vernieuw"
 
 #: ../../portable/frontends/widgets/tablist.py:560
 msgid "Rename"
@@ -1679,11 +1680,11 @@ msgstr "in wachtrij"
 
 #: ../../portable/messagehandler.py:1256
 msgid "Subscribed to new feed:"
-msgstr "Abonneren op nieuwe feed:"
+msgstr "Nieuwe podcast:"
 
 #: ../../portable/messagehandler.py:1259
 msgid "Subscribed to new feeds:"
-msgstr "Abonneren op nieuwe feeds:"
+msgstr "Nieuwe podcasts:"
 
 #: ../../portable/startup.py:97
 msgid "Unknown Error"
@@ -1699,8 +1700,8 @@ msgid ""
 "You have a database that was saved with a newer version of %(appname)s. You "
 "must download the latest version of %(appname)s and run that."
 msgstr ""
-"Je hebt een gegevensbestand dat met een nieuwere versie van %(appname)s is "
-"opgeslagen. Download de meest recente versie van %(appname)s en gebruik dit."
+"Je database is bewaard door een nieuwere versie van %(appname)s. Download de "
+"meest recente versie van %(appname)s en gebruik deze."
 
 #: ../../portable/commandline.py:106
 msgid "Subscription error"
@@ -2004,19 +2005,19 @@ msgstr "Items ve_rwijderen"
 
 #: ../../portable/menubar.py:190
 msgid "Re_name Item"
-msgstr "Her_noemen"
+msgstr "Her_noem"
 
 #: ../../portable/menubar.py:191
 msgid "Save Item _As"
-msgstr "Item opslaan _als"
+msgstr "Bewaar al_s"
 
 #: ../../portable/menubar.py:192
 msgid "Save Items _As"
-msgstr "Items opslaan _als"
+msgstr "Bewaar al_s"
 
 #: ../../portable/menubar.py:193
 msgid "Copy Item _URL"
-msgstr "_URL kopiëren"
+msgstr "Kopieer _URL"
 
 #: ../../portable/menubar.py:195
 msgid "_Options"
@@ -2024,31 +2025,31 @@ msgstr "V_oorkeuren"
 
 #: ../../portable/menubar.py:196
 msgid "_Quit"
-msgstr "_Afsluiten"
+msgstr "_Stop"
 
 #: ../../portable/menubar.py:205
 msgid "Cu_t"
-msgstr "K_nippen"
+msgstr "_Knip"
 
 #: ../../portable/menubar.py:206
 msgid "_Copy"
-msgstr "_Kopiëren"
+msgstr "_Kopieer"
 
 #: ../../portable/menubar.py:207
 msgid "_Paste"
-msgstr "_Plakken"
+msgstr "_Plak"
 
 #: ../../portable/menubar.py:208
 msgid "Select _All"
-msgstr "_Alles selecteren"
+msgstr "Selecteer _alles"
 
 #: ../../portable/menubar.py:212
 msgid "Add _Feed"
-msgstr "_Feed toevoegen"
+msgstr "_Abonneer op podcast"
 
 #: ../../portable/menubar.py:214
 msgid "New Searc_h Feed"
-msgstr "Nieuw slim abonnement"
+msgstr "Nieuwe slimme _podcast"
 
 #: ../../portable/menubar.py:215
 msgid "New _Folder"
@@ -2056,15 +2057,15 @@ msgstr "Nieuwe _map"
 
 #: ../../portable/menubar.py:217
 msgid "Re_name"
-msgstr "Her_noemen"
+msgstr "Her_noem"
 
 #: ../../portable/menubar.py:218
 msgid "_Remove"
-msgstr "Ve_rwijderen"
+msgstr "Ve_rwijder"
 
 #: ../../portable/menubar.py:219
 msgid "_Remove Folder"
-msgstr "Map ve_rwijderen"
+msgstr "Ve_rwijder map"
 
 #: ../../portable/menubar.py:221
 msgid "_Update Feed"
@@ -2072,27 +2073,27 @@ msgstr "We_rk podcast bij"
 
 #: ../../portable/menubar.py:222
 msgid "_Update Feeds"
-msgstr "_Abonnementen bijwerken"
+msgstr "We_rk podcasts bij"
 
 #: ../../portable/menubar.py:223
 msgid "Update _All Feeds"
-msgstr "_Alle abonnementen bijwerken"
+msgstr "Ve_nieuw alles"
 
 #: ../../portable/menubar.py:225
 msgid "_Import Feeds (OPML)"
-msgstr "Abonnementen _importeren (OPML)"
+msgstr "_Importeer abonnementen (OPML)"
 
 #: ../../portable/menubar.py:226
 msgid "E_xport Feeds (OPML)"
-msgstr "Abonnementen e_xporteren (OPML)"
+msgstr "E_xporteer abonnementen (OPML)"
 
 #: ../../portable/menubar.py:228
 msgid "_Share with a Friend"
-msgstr "Met een vriend _delen"
+msgstr "_Deel"
 
 #: ../../portable/menubar.py:229
 msgid "Copy URL"
-msgstr "URL kopiëren"
+msgstr "Kopieer URL"
 
 #: ../../portable/menubar.py:233
 msgid "New _Playlist"
@@ -2104,35 +2105,35 @@ msgstr "Nieuwe afspeellijst_map"
 
 #: ../../portable/menubar.py:236
 msgid "Re_name Playlist"
-msgstr "Afspeellijst her_noemen"
+msgstr "Her_noem afspeellijst"
 
 #: ../../portable/menubar.py:237
 msgid "_Remove Playlist"
-msgstr "Afsoeellijst ve_rwijderen"
+msgstr "Ve_rwijder afspeellijst"
 
 #: ../../portable/menubar.py:238
 msgid "_Remove Playlists"
-msgstr "Afspeellijsten ve_rwijderen"
+msgstr "Ve_rwijder afspeellijst"
 
 #: ../../portable/menubar.py:239
 msgid "_Remove Playlist Folders"
-msgstr "Aafspeellijstmappen ve_rwijderen"
+msgstr "Ve_rwijder afspeellijstmappen"
 
 #: ../../portable/menubar.py:240
 msgid "_Remove Playlist Folder"
-msgstr "Afspeellijstmap ve_rwijderen"
+msgstr "Ve_rwijder afspeellijstmap"
 
 #: ../../portable/menubar.py:251 ../../portable/menubar.py:252
 msgid "_Play"
-msgstr "_Afspelen"
+msgstr "_Speel af"
 
 #: ../../portable/menubar.py:253
 msgid "_Pause"
-msgstr "_Pauzeren"
+msgstr "_Pauseer"
 
 #: ../../portable/menubar.py:254
 msgid "_Stop"
-msgstr "_Stoppen"
+msgstr "_Stop"
 
 #: ../../portable/menubar.py:256
 msgid "_Next Video"
@@ -2152,11 +2153,11 @@ msgstr "A_chteruit spoelen"
 
 #: ../../portable/menubar.py:262
 msgid "Volume _Up"
-msgstr "Harder"
+msgstr "Volume om_hoog"
 
 #: ../../portable/menubar.py:263
 msgid "Volume _Down"
-msgstr "Zachter"
+msgstr "Volume om_laag"
 
 #: ../../portable/menubar.py:265
 msgid "_Fullscreen"
@@ -2286,8 +2287,8 @@ msgstr[1] "Geabonneerd op %(count)d podcasts."
 #, python-format
 msgid "Skipped %(count)d feed already present."
 msgid_plural "Skipped %(count)d feeds already present."
-msgstr[0] "Skipped %(count)d feed already present."
-msgstr[1] "Overgeslagen %(count)d feeds reeds aanwezig."
+msgstr[0] "%(count)d dubbele podcast overgeslagen."
+msgstr[1] "%(count)d dubbele podcasts overgeslagen."
 
 #: ../../portable/theme.py:159
 msgid "Example Playlist"
@@ -2393,7 +2394,7 @@ msgstr "Downloaden video '%s' voltooid."
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:132
 msgid "Add to Library"
-msgstr "Aan collectie toevoegen"
+msgstr "Voeg toe"
 
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:205
 msgid "Pop Out"
@@ -2409,11 +2410,11 @@ msgstr "Voorzieningen"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:140
 msgid "Hide Others"
-msgstr "Andere verbergen"
+msgstr "Verberg andere"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:141
 msgid "Show All"
-msgstr "Alles tonen"
+msgstr "Toon alles"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:146
 msgid "Preferences..."
@@ -2425,15 +2426,15 @@ msgstr "Venster sluiten"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:157
 msgid "Cut"
-msgstr "Knippen"
+msgstr "Knip"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:158
 msgid "Copy"
-msgstr "Kopiëren"
+msgstr "Kopieer"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:159
 msgid "Paste"
-msgstr "Plakken"
+msgstr "Plak"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:162
 msgid "Select All"
@@ -2441,7 +2442,7 @@ msgstr "Alles selecteren"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:164
 msgid "Edit"
-msgstr "Bewerken"
+msgstr "Wijzig"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:169
 msgid "Present Half Size"
@@ -2482,7 +2483,7 @@ msgstr "Venster"
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:47
 #: ../../platform/windows-xul/plat/frontends/widgets/prefpanelset.py:39
 msgid "Enable tray icon"
-msgstr "Systeemvak gebruiken"
+msgstr "Gebruik systeemvak"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:55
 msgid "Renderer options:"
@@ -2545,7 +2546,7 @@ msgstr "Minimaliseren naar systeemvak?"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:186
 msgid "Error Bombing Item"
-msgstr "Probleem 'bombing'-item"
+msgstr "Probleem 'bomben' item"
 
 #: ../../platform/windows-xul/plat/frontends/widgets/application.py:188
 msgid "Error Recommending Item"
@@ -2569,7 +2570,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/statictabs.py:103
 #: ../../portable/frontends/widgets/itemlistcontroller.py:512
 msgid "Other"
-msgstr "Anders"
+msgstr "Overige"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just This Item"
@@ -2577,11 +2578,11 @@ msgstr "alleen dit item afspelen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:113
 msgid "Stop Seeding"
-msgstr "stop met toevoegen"
+msgstr "Stop seeden"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start Seeding"
-msgstr "begin met toevoegen"
+msgstr "Start seeden"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:63
 #, python-format
@@ -2607,7 +2608,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/firsttimedialog.py:138
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
-msgstr ""
+msgstr "Wilt u dat %(name)s automatisch opent na het inloggen?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:163
 #, python-format
@@ -2641,8 +2642,8 @@ msgstr ""
 #, python-format
 msgid "%(count)d Site Selected"
 msgid_plural "%(count)d Sites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d website geselecteerd"
+msgstr[1] "%(count)d websites geselecteerd"
 
 #: ../../portable/frontends/widgets/browser.py:102
 msgid "Download this video"
@@ -2666,20 +2667,20 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:728
 msgid "Remove site"
 msgid_plural "Remove sites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Verwijder website"
+msgstr[1] "Verwijder websites"
 
 #: ../../portable/frontends/widgets/application.py:730
 #, python-format
 msgid "Are you sure you want to remove this site?"
 msgid_plural "Are you sure you want to remove these %(count)s sites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Weet u zeker dat u deze website wilt verwijderen?"
+msgstr[1] "Weet u zeker dat u deze %(count)s websites wilt verwijderen?"
 
 #: ../../portable/frontends/widgets/prefpanel.py:267
 #, python-format
 msgid "Automatically run %(appname)s when I log in."
-msgstr ""
+msgstr "Open %(appname)s automatisch na het inloggen."
 
 #: ../../portable/frontends/widgets/prefpanel.py:454
 #, python-format
@@ -2708,7 +2709,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/gtk/window.py:516
 #, python-format
 msgid "About %(appname)s"
-msgstr ""
+msgstr "Over %(appname)s"
 
 #: ../../portable/frontends/widgets/gtk/window.py:531
 #, python-format
@@ -2716,14 +2717,16 @@ msgid ""
 "%(copyright)s.  See license.txt file for details.\n"
 "%(trademark)s"
 msgstr ""
+"%(copyright)s.  Meer info in license.txt file.\n"
+"%(trademark)s"
 
 #: ../../portable/frontends/widgets/tablist.py:506
 msgid "Remove Sites"
-msgstr ""
+msgstr "Verwijder websites"
 
 #: ../../portable/frontends/widgets/tablist.py:634
 msgid "LIBRARY"
-msgstr ""
+msgstr "BIBLIOTHEEK"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:726
 msgid "View:"
@@ -2731,7 +2734,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:729
 msgid "Non Feed"
-msgstr ""
+msgstr "Geen podcasts"
 
 #: ../../portable/frontends/widgets/diagnostics.py:110
 msgid "Total db objects in memory:"
@@ -2765,48 +2768,48 @@ msgstr ""
 #: ../../portable/menubar.py:270
 #, python-format
 msgid "_About %(name)s"
-msgstr ""
+msgstr "_Over %(name)s"
 
 #: ../../portable/displaytext.py:67
 #, python-format
 msgid "%(num).0f day"
 msgid_plural "%(num).0f days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f dag"
+msgstr[1] "%(num).0f dagen"
 
 #: ../../portable/displaytext.py:70
 #, python-format
 msgid "%(num).0f hr"
 msgid_plural "%(num).0f hrs"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f uur"
+msgstr[1] "%(num).0f uur"
 
 #: ../../portable/displaytext.py:73
 #, python-format
 msgid "%(num).0f min"
 msgid_plural "%(num).0f mins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num).0f minuut"
+msgstr[1] "%(num).0f minuten"
 
 #: ../../portable/displaytext.py:141
 #, python-format
 msgid "%(month)s %(dayofmonth)s, %(year)s"
-msgstr ""
+msgstr "%(dayofmonth)s %(month)s %(year)s"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:138
 #, python-format
 msgid "Hide %(appname)s"
-msgstr ""
+msgstr "Verberg %(appname)s"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:148
 #, python-format
 msgid "Quit %(appname)s"
-msgstr ""
+msgstr "Stop %(appname)s"
 
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:192
 #, python-format
 msgid "%(appname)s Help"
-msgstr ""
+msgstr "%(appname)s help"
 
 #: ../../platform/gtk-x11/plat/frontends/widgets/prefpanelset.py:61
 #, python-format

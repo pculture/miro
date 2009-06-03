@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-05-14 15:16-0400\n"
-"PO-Revision-Date: 2009-03-31 15:54+0000\n"
-"Last-Translator: user1cat <yvzprqakfu@sxipper.net>\n"
+"PO-Revision-Date: 2009-05-31 17:56+0000\n"
+"Last-Translator: Sergi <Unknown>\n"
 "Language-Team: Catalan <ca@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-05-20 15:57+0000\n"
+"X-Launchpad-Export-Date: 2009-06-03 16:17+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
@@ -1206,11 +1206,12 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
-msgstr ""
+msgstr "Afegir una llista de reproducció"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:58
 msgid "Add items to an existing playlist or a new one."
 msgstr ""
+"Afegir elements a una llista de reproducció existent o a una de nova."
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
 msgid "Existing playlist:"
@@ -1222,12 +1223,12 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just This Item"
-msgstr ""
+msgstr "Només reproduir aquest document"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:96
 #: ../../portable/frontends/widgets/itemcontextmenu.py:193
 msgid "Add to Playlist"
-msgstr ""
+msgstr "Afegir a la llista de reproducció"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:99
 #: ../../portable/frontends/widgets/application.py:453
@@ -1246,7 +1247,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemcontextmenu.py:106
 #: ../../portable/frontends/widgets/itemcontextmenu.py:205
 msgid "Mark as Played"
-msgstr ""
+msgstr "Marcar com a reproduït"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:113
 msgid "Stop Seeding"
@@ -1258,7 +1259,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:139
 msgid "License"
-msgstr ""
+msgstr "Llicència"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:142
 msgid "File in Browser"
@@ -1271,11 +1272,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:146
 msgid "File on Disk"
-msgstr ""
+msgstr "Arxiu en el disc"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:149
 msgid "View"
-msgstr ""
+msgstr "Veure"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:187
 #, python-format
@@ -1337,23 +1338,23 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:97
 msgid "Watched 1 day ago"
-msgstr ""
+msgstr "Vist fa 1 dia"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr ""
+msgstr "Vist fa 3 dies"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
-msgstr ""
+msgstr "Vist fa 6 dies"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:100
 msgid "Watched 10 days ago"
-msgstr ""
+msgstr "Vist fa 10 dies"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:101
 msgid "Watched 1 month ago"
-msgstr ""
+msgstr "Vist fa 1 mes"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
@@ -1386,7 +1387,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
-msgstr ""
+msgstr "Els elements antics han estat eliminats."
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause Auto-Downloading when this many items are unplayed:"
@@ -1394,23 +1395,23 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
-msgstr ""
+msgstr "1 element no reproduït"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:198
 msgid "3 unplayed items"
-msgstr ""
+msgstr "3 elements no reproduïts"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:199
 msgid "5 unplayed items"
-msgstr ""
+msgstr "5 elements no reproduïts"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:200
 msgid "10 unplayed items"
-msgstr ""
+msgstr "10 elements no reproduïts"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:201
 msgid "15 unplayed items"
-msgstr ""
+msgstr "15 elements no reproduïts"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:241
 msgid "Feed Settings"
@@ -1466,7 +1467,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:197
 msgid "Choose directory to search for media files"
-msgstr ""
+msgstr "Escolliu el directori per cercar fitxers multimèdia"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:211
 #: ../../portable/frontends/widgets/firsttimedialog.py:290
@@ -1475,7 +1476,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:273
 msgid "Searching for media files"
-msgstr ""
+msgstr "Cercant arxius multimèdia"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:321
 #, python-format
@@ -1514,15 +1515,15 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:222
 msgid "File name:"
-msgstr ""
+msgstr "Nom d'arxiu:"
 
 #: ../../portable/frontends/widgets/style.py:223
 msgid "Show More"
-msgstr ""
+msgstr "Mostra més"
 
 #: ../../portable/frontends/widgets/style.py:224
 msgid "Show Less"
-msgstr ""
+msgstr "Mostra menys"
 
 #: ../../portable/frontends/widgets/style.py:227
 #, python-format
@@ -1536,7 +1537,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:229
 msgid "File URL"
-msgstr ""
+msgstr "URL del fitxer"
 
 #: ../../portable/frontends/widgets/style.py:230
 msgid "License Page"
@@ -1556,7 +1557,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:235
 msgid "Upload Total"
-msgstr ""
+msgstr "Total Pujat"
 
 #: ../../portable/frontends/widgets/style.py:236
 msgid "Down Rate"
@@ -1575,7 +1576,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:243
 #: ../../portable/frontends/widgets/style.py:1120
 msgid "Newly Available"
-msgstr ""
+msgstr "Recentment disponible"
 
 #: ../../portable/frontends/widgets/style.py:246
 msgid "Stop seeding"
@@ -1584,11 +1585,11 @@ msgstr ""
 #: ../../portable/frontends/widgets/style.py:558
 #: ../../portable/frontends/widgets/style.py:1113
 msgid "paused"
-msgstr ""
+msgstr "en pausa"
 
 #: ../../portable/frontends/widgets/style.py:986
 msgid "Remove from playlist"
-msgstr ""
+msgstr "Suprimeix de la llista de reproducció"
 
 #: ../../portable/frontends/widgets/displays.py:358
 #, python-format
@@ -1599,7 +1600,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/displays.py:378
 msgid "Skip"
-msgstr ""
+msgstr "Saltar"
 
 #: ../../portable/frontends/widgets/displays.py:552
 #, python-format
@@ -1656,7 +1657,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/browser.py:102
 msgid "Download this video"
-msgstr ""
+msgstr "Descarregar aquest vídeo"
 
 #: ../../portable/frontends/widgets/application.py:135
 msgid "Movies directory gone"
@@ -1687,12 +1688,12 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:314
 msgid "Open Files..."
-msgstr ""
+msgstr "Obrir arxius ..."
 
 #: ../../portable/frontends/widgets/application.py:325
 #: ../../portable/frontends/widgets/application.py:330
 msgid "Open Files - Error"
-msgstr ""
+msgstr "Obrir arxius - Error"
 
 #: ../../portable/frontends/widgets/application.py:326
 #: ../../portable/frontends/widgets/application.py:592
@@ -1702,11 +1703,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:331
 msgid "The following files do not exist:"
-msgstr ""
+msgstr "Els següents fitxers no existeixen:"
 
 #: ../../portable/frontends/widgets/application.py:368
 msgid "New Download"
-msgstr ""
+msgstr "Nova descàrrega"
 
 #: ../../portable/frontends/widgets/application.py:369
 msgid "Enter the URL of the item to download"
@@ -1714,7 +1715,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/application.py:370
 msgid "New Download - Invalid URL"
-msgstr ""
+msgstr "Nova Descarrega - URL no vàlid"
 
 #: ../../portable/frontends/widgets/application.py:371
 msgid ""
@@ -1737,8 +1738,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:404
 msgid "Remove item"
 msgid_plural "Remove items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Remove item"
 
 #: ../../portable/frontends/widgets/application.py:408
 msgid ""
@@ -1768,15 +1768,15 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:530
 #: ../../portable/menubar.py:213
 msgid "Add Site"
-msgstr ""
+msgstr "Afegir lloc"
 
 #: ../../portable/frontends/widgets/application.py:531
 msgid "Enter the URL of the site to add"
-msgstr ""
+msgstr "Introduïu l'URL del lloc per afegir"
 
 #: ../../portable/frontends/widgets/application.py:532
 msgid "Add Site - Invalid URL"
-msgstr ""
+msgstr "Afegir lloc - URL no vàlid"
 
 #: ../../portable/frontends/widgets/application.py:533
 msgid ""
@@ -1785,10 +1785,14 @@ msgid ""
 "\n"
 "Enter the URL of the site to add"
 msgstr ""
+"L'adreça que heu introduït no és un URL vàlid.\n"
+"Si us plau, comproveu l'URL i torneu a provar.\n"
+"\n"
+"Introduïu l'URL del lloc per afegir"
 
 #: ../../portable/frontends/widgets/application.py:591
 msgid "Import OPML File - Error"
-msgstr ""
+msgstr "Importar fitxer OPML - Error"
 
 #: ../../portable/frontends/widgets/application.py:665
 #: ../../portable/frontends/widgets/tablist.py:551
@@ -1822,7 +1826,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:684
 #: ../../portable/frontends/widgets/tablist.py:501
 msgid "Rename Site"
-msgstr ""
+msgstr "Canviar el nom del lloc"
 
 #: ../../portable/frontends/widgets/application.py:685
 #, python-format
@@ -1832,8 +1836,8 @@ msgstr ""
 #: ../../portable/frontends/widgets/application.py:709
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Suprimeix la llista de reproducció"
+msgstr[1] "Suprimeix les llistes de reproducció"
 
 #: ../../portable/frontends/widgets/application.py:711
 #, python-format
@@ -1845,8 +1849,8 @@ msgstr[1] ""
 #: ../../portable/frontends/widgets/application.py:728
 msgid "Remove site"
 msgid_plural "Remove sites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Eliminar lloc"
+msgstr[1] "Eliminar llocs"
 
 #: ../../portable/frontends/widgets/application.py:730
 #, python-format
@@ -1864,7 +1868,7 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/application.py:1040
 msgid "Message"
-msgstr ""
+msgstr "Missatge"
 
 #: ../../portable/frontends/widgets/application.py:1065
 msgid "Migrating Files"
@@ -1897,23 +1901,23 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:297
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: ../../portable/frontends/widgets/prefpanel.py:298
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../../portable/frontends/widgets/prefpanel.py:299
 msgid "50"
-msgstr ""
+msgstr "50"
 
 #: ../../portable/frontends/widgets/prefpanel.py:300
 msgid "100"
-msgstr ""
+msgstr "100"
 
 #: ../../portable/frontends/widgets/prefpanel.py:301
 msgid "1000"
-msgstr ""
+msgstr "1000"
 
 #: ../../portable/frontends/widgets/prefpanel.py:307
 msgid "Default settings for new feeds:"
@@ -1945,7 +1949,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:357
 msgid "Bittorrent:"
-msgstr ""
+msgstr "Bittorrent:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:360
 msgid "Limit upstream bandwidth to:"
@@ -1973,7 +1977,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:414
 msgid "Ignore unencrypted connections."
-msgstr ""
+msgstr "No feu cas de les connexions sense xifrar."
 
 #: ../../portable/frontends/widgets/prefpanel.py:440
 msgid "Choose Movies Directory"
@@ -1997,19 +2001,19 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:599
 msgid "Always play videos in a separate window."
-msgstr ""
+msgstr "Sempre reproduir vídeos en una finestra a part."
 
 #: ../../portable/frontends/widgets/prefpanel.py:603
 msgid "Resume playing a video from the point it was last stopped."
-msgstr ""
+msgstr "Reprèn la reproducció d'un vídeo des del punt de l'última parada."
 
 #: ../../portable/frontends/widgets/prefpanel.py:608
 msgid "Play videos one after another"
-msgstr ""
+msgstr "Reproduir vídeos un rera l'altre"
 
 #: ../../portable/frontends/widgets/prefpanel.py:609
 msgid "Stop after each video"
-msgstr ""
+msgstr "Aturar després de cada vídeo"
 
 #: ../../portable/frontends/widgets/prefpanel.py:621
 msgid "Feeds"
@@ -2043,13 +2047,13 @@ msgstr ""
 #: ../../portable/frontends/widgets/newfolder.py:70
 #: ../../portable/frontends/widgets/newfeed.py:71
 msgid "video"
-msgstr ""
+msgstr "vídeo"
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:136
 #: ../../portable/frontends/widgets/newfolder.py:71
 #: ../../portable/frontends/widgets/newfeed.py:72
 msgid "audio"
-msgstr ""
+msgstr "àudio"
 
 #: ../../portable/frontends/widgets/linkhandler.py:54
 msgid "Subscribe to Feed"
@@ -2066,7 +2070,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/newfolder.py:60
 msgid "Folder name:"
-msgstr ""
+msgstr "Nom de la carpeta:"
 
 #: ../../portable/frontends/widgets/newfolder.py:68
 msgid "Folder should go in this section:"
@@ -2079,16 +2083,18 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/newfolder.py:110
 msgid "Enter the name of the folder to add"
-msgstr ""
+msgstr "Introduïu el nom de la carpeta per afegir"
 
 #: ../../portable/frontends/widgets/playlist.py:146
 msgid "This Playlist is Empty"
-msgstr ""
+msgstr "Aquesta llista de reproducció està buida"
 
 #: ../../portable/frontends/widgets/playlist.py:149
 msgid ""
 "To add an item, drag it onto the name of this playlist in the sidebar."
 msgstr ""
+"Per afegir un element, arrossegueu-lo cap el nom d'aquesta llista de "
+"reproducció a la barra lateral."
 
 #: ../../portable/frontends/widgets/removefeeds.py:49
 msgid "Remove Feed"
@@ -2126,11 +2132,11 @@ msgstr[1] ""
 
 #: ../../portable/frontends/widgets/gtk/video.py:251
 msgid "Add to library"
-msgstr ""
+msgstr "Afegeix a la biblioteca"
 
 #: ../../portable/frontends/widgets/gtk/video.py:291
 msgid "Permalink"
-msgstr ""
+msgstr "Enllaç permanent"
 
 #: ../../portable/frontends/widgets/gtk/video.py:301
 msgid "Pop-in"
@@ -2162,11 +2168,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/gtk/window.py:472
 msgid "All files"
-msgstr ""
+msgstr "Tots els arxius"
 
 #: ../../portable/frontends/widgets/gtk/window.py:501
 msgid "Choose"
-msgstr ""
+msgstr "Escollir"
 
 #: ../../portable/frontends/widgets/gtk/window.py:516
 #, python-format
@@ -2183,7 +2189,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/gtk/window.py:570
 #: ../../portable/dialogs.py:84
 msgid "Close"
-msgstr ""
+msgstr "Tancar"
 
 #: ../../portable/frontends/widgets/feedcontroller.py:137
 msgid "Full Feed"
@@ -2249,11 +2255,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:502
 msgid "Remove Site"
-msgstr ""
+msgstr "Eliminar lloc"
 
 #: ../../portable/frontends/widgets/tablist.py:506
 msgid "Remove Sites"
-msgstr ""
+msgstr "Eliminar Llocs"
 
 #: ../../portable/frontends/widgets/tablist.py:550
 msgid "Update Feeds In Folder"
@@ -2265,7 +2271,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:560
 msgid "Rename"
-msgstr ""
+msgstr "Reanomena"
 
 #: ../../portable/frontends/widgets/tablist.py:562
 msgid "Revert Feed Name"
@@ -2277,11 +2283,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:634
 msgid "LIBRARY"
-msgstr ""
+msgstr "BIBLIOTECA"
 
 #: ../../portable/frontends/widgets/tablist.py:636
 msgid "SITES"
-msgstr ""
+msgstr "LLOCS"
 
 #: ../../portable/frontends/widgets/tablist.py:638
 msgid "FEEDS"
@@ -2293,15 +2299,15 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/tablist.py:642
 msgid "PLAYLISTS"
-msgstr ""
+msgstr "LLISTES DE REPRODUCCIÓ"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:431
 msgid "No Results Found"
-msgstr ""
+msgstr "No s'han trobat resultats"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:285
 msgid "Title"
-msgstr ""
+msgstr "Títol"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:287
 msgid "Feed"
@@ -2310,11 +2316,11 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemlistwidgets.py:289
 #: ../../portable/frontends/widgets/itemlistwidgets.py:740
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:290
 msgid "Length"
-msgstr ""
+msgstr "Longitud"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:291
 msgid "Status"
@@ -2323,7 +2329,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemlistwidgets.py:292
 #: ../../portable/frontends/widgets/itemlistwidgets.py:741
 msgid "Size"
-msgstr ""
+msgstr "Mida"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:294
 msgid "ETA"
@@ -2331,7 +2337,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:295
 msgid "Speed"
-msgstr ""
+msgstr "Velocitat"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:431
 msgid "Save as a Feed"
@@ -2339,7 +2345,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:499
 msgid "Cancel All"
-msgstr ""
+msgstr "Cancel·lar tots"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:506
 msgid "Download Settings"
@@ -2380,7 +2386,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:726
 msgid "View:"
-msgstr ""
+msgstr "Veure:"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:729
 msgid "Non Feed"
@@ -2388,11 +2394,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:739
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: ../../portable/frontends/widgets/itemlistwidgets.py:742
 msgid "Time"
-msgstr ""
+msgstr "Temps"
 
 #: ../../portable/frontends/widgets/diagnostics.py:83
 msgid "Movies location:"
@@ -2404,7 +2410,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/diagnostics.py:91
 msgid "Log file location:"
-msgstr ""
+msgstr "Ubicació del fitxer de registre:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:95
 msgid "Downloader log file location:"
@@ -2420,7 +2426,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/diagnostics.py:108
 msgid "Database size:"
-msgstr ""
+msgstr "Mida de la Base de dades:"
 
 #: ../../portable/frontends/widgets/diagnostics.py:110
 msgid "Total db objects in memory:"
@@ -2429,7 +2435,7 @@ msgstr ""
 #: ../../portable/frontends/widgets/diagnostics.py:118
 #: ../../portable/menubar.py:276
 msgid "Diagnostics"
-msgstr ""
+msgstr "Diagnòstic"
 
 #: ../../portable/startup.py:99
 #, python-format
@@ -2496,7 +2502,7 @@ msgstr ""
 
 #: ../../portable/dialogs.py:86
 msgid "Done"
-msgstr ""
+msgstr "Fet"
 
 #: ../../portable/dialogs.py:102
 msgid "Create Feed"
@@ -2504,7 +2510,7 @@ msgstr ""
 
 #: ../../portable/dialogs.py:103
 msgid "Create Folder"
-msgstr ""
+msgstr "Crea carpeta"
 
 #: ../../portable/dialogs.py:113
 msgid "Open in External Browser"
@@ -2512,7 +2518,7 @@ msgstr ""
 
 #: ../../portable/dialogs.py:115
 msgid "Subscribe"
-msgstr ""
+msgstr "Subscriure"
 
 #: ../../portable/dialogs.py:116
 msgid "Stop Watching"
@@ -2619,7 +2625,7 @@ msgstr[1] ""
 
 #: ../../portable/item.py:1085
 msgid "no title"
-msgstr ""
+msgstr "sense títol"
 
 #: ../../portable/opml.py:208
 #, python-format

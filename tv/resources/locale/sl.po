@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-05-14 15:16-0400\n"
-"PO-Revision-Date: 2009-05-13 10:33+0000\n"
+"PO-Revision-Date: 2009-05-31 10:17+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
 "n%100==4 ? 3 : 0);\n"
-"X-Launchpad-Export-Date: 2009-05-20 15:57+0000\n"
+"X-Launchpad-Export-Date: 2009-06-03 16:17+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: SLOVENIA\n"
 "X-Poedit-Language: Slovenian\n"
@@ -2741,17 +2741,19 @@ msgstr ""
 #, python-format
 msgid "%(count)d Site Selected"
 msgid_plural "%(count)d Sites Selected"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Izbrano %(count)d mesto"
+msgstr[1] "Izbrani %(count)d mesti"
+msgstr[2] "Izbrana %(count)d mesta"
+msgstr[3] "Izbranih %(count)d mest"
 
 #: ../../portable/frontends/widgets/browser.py:102
 msgid "Download this video"
-msgstr ""
+msgstr "Prenesi ta video"
 
 #: ../../portable/frontends/widgets/application.py:306
 #, python-format
 msgid "The file %(filename)s was deleted from outside %(appname)s."
-msgstr ""
+msgstr "Datoteka %(filename)s je bila izbrisana zunaj programa %(appname)s."
 
 #: ../../portable/frontends/widgets/application.py:379
 #, python-format
@@ -2766,15 +2768,19 @@ msgstr "Za %(appname)s ni posodobitev!"
 #: ../../portable/frontends/widgets/application.py:728
 msgid "Remove site"
 msgid_plural "Remove sites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Odstrani mesto"
+msgstr[1] "Odstrani mesti"
+msgstr[2] "Odstrani mesta"
+msgstr[3] "Odstrani mesta"
 
 #: ../../portable/frontends/widgets/application.py:730
 #, python-format
 msgid "Are you sure you want to remove this site?"
 msgid_plural "Are you sure you want to remove these %(count)s sites?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Ste prepričani, da želite odstraniti to %(count)s mesto?"
+msgstr[1] "Ste prepričani, da želite odstraniti ti %(count)s mesti?"
+msgstr[2] "Ste prepričani, da želite odstraniti ta %(count)s mesta?"
+msgstr[3] "Ste prepričani, da želite odstraniti teh %(count)s mest?"
 
 #: ../../portable/frontends/widgets/prefpanel.py:267
 #, python-format
@@ -2805,16 +2811,16 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/gtk/video.py:301
 msgid "Pop-in"
-msgstr ""
+msgstr "Vstavi"
 
 #: ../../portable/frontends/widgets/gtk/video.py:306
 msgid "Pop-out"
-msgstr ""
+msgstr "Odstavi"
 
 #: ../../portable/frontends/widgets/gtk/window.py:516
 #, python-format
 msgid "About %(appname)s"
-msgstr ""
+msgstr "O programu %(appname)s"
 
 #: ../../portable/frontends/widgets/gtk/window.py:531
 #, python-format
@@ -2822,10 +2828,13 @@ msgid ""
 "%(copyright)s.  See license.txt file for details.\n"
 "%(trademark)s"
 msgstr ""
+"%(copyright)s.  Če vas zanimajo podrobnosti, si oglejte datoteko "
+"license.txt.\n"
+"%(trademark)s"
 
 #: ../../portable/frontends/widgets/tablist.py:506
 msgid "Remove Sites"
-msgstr ""
+msgstr "Odstrani mesta"
 
 #: ../../portable/frontends/widgets/tablist.py:634
 msgid "LIBRARY"

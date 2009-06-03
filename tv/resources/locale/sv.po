@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-05-14 15:16-0400\n"
-"PO-Revision-Date: 2009-02-11 20:27+0000\n"
-"Last-Translator: Oskarius38 <visby38@telia.com>\n"
+"PO-Revision-Date: 2009-06-01 09:17+0000\n"
+"Last-Translator: Svend Ostergaard <svend.ostergaard@gmail.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-05-20 15:56+0000\n"
+"X-Launchpad-Export-Date: 2009-06-03 16:17+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -161,7 +161,7 @@ msgstr "Ljud"
 
 #: ../../portable/frontends/widgets/statictabs.py:108
 msgid "Downloading"
-msgstr "Hämtar"
+msgstr "Laddar ner"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:57
 msgid "Add a Playlist"
@@ -173,7 +173,7 @@ msgstr "Lägg till i en existerande spellista eller skapa en ny."
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:76
 msgid "Existing playlist:"
-msgstr "Existerande spellista:"
+msgstr "Befintlig spellista"
 
 #: ../../portable/frontends/widgets/addtoplaylistdialog.py:82
 msgid "New playlist:"
@@ -214,12 +214,12 @@ msgstr "Återställ objektnamn"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:103
 #: ../../portable/frontends/widgets/itemcontextmenu.py:200
 msgid "Mark as Unplayed"
-msgstr "Markera som osedd"
+msgstr "Markera som ospelad/osedd"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:106
 #: ../../portable/frontends/widgets/itemcontextmenu.py:205
 msgid "Mark as Played"
-msgstr "Markera som sedd"
+msgstr "Markera som spelad/sedd"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:109
 #: ../../portable/frontends/widgets/itemcontextmenu.py:211
@@ -2572,29 +2572,29 @@ msgstr ""
 #: ../../portable/frontends/widgets/statictabs.py:103
 #: ../../portable/frontends/widgets/itemlistcontroller.py:512
 msgid "Other"
-msgstr ""
+msgstr "Annat"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:95
 msgid "Play Just This Item"
-msgstr ""
+msgstr "Spela endast denna"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:113
 msgid "Stop Seeding"
-msgstr ""
+msgstr "Sluta dela"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start Seeding"
-msgstr ""
+msgstr "Starta dela"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:63
 #, python-format
 msgid "%(name)s First Time Setup"
-msgstr ""
+msgstr "%(name)s 1:a installation"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:122
 #, python-format
 msgid "Welcome to the %(name)s First Time Setup"
-msgstr ""
+msgstr "Välkommen till %(name)s 1:a installation"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:126
 #, python-format
@@ -2606,16 +2606,21 @@ msgid ""
 "This way, downloads in progress can finish downloading and new media files "
 "can be downloaded in the background, ready when you want to watch."
 msgstr ""
+"De följande sidorna kommer att hjälpa dig att ställa in %(name)s så det "
+"fungerar bäst för dig.\n"
+"Vi rekommenderar att %(name)s startas när datorn startar upp, så att "
+"pågående hämtningar kan avslutas och nya mediafiler kan hämtas i bakgrunden "
+"och vara klara att ses när du önskar detta."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:138
 #, python-format
 msgid "Would you like to run %(name)s on startup?"
-msgstr ""
+msgstr "Vill du att %(name)s startas när datorn startas upp?"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:163
 #, python-format
 msgid "Completing the %(name)s First Time Setup"
-msgstr ""
+msgstr "Färdigställer %(name)s första installation."
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:167
 #, python-format
@@ -2625,6 +2630,10 @@ msgid ""
 "\n"
 "Would you like %(name)s to look for media files on your computer?"
 msgstr ""
+"%(name)s kan leta reda på alla mediafiler på datorn för att hjälpa dig med "
+"att organisera dom.\n"
+"\n"
+"Vill du att %(name)s letar efter mediafiler på datorn?"
 
 #: ../../portable/frontends/widgets/crashdialog.py:54
 #, python-format
@@ -2632,6 +2641,8 @@ msgid ""
 "%(appname)s has encountered an internal error.  You can help us track down "
 "this problem and fix it by submitting an error report."
 msgstr ""
+"%(appname)s har upptäckt ett internt fel. Du kan hjälpa oss att lösa detta "
+"problem genom att skicka en felrapport."
 
 #: ../../portable/frontends/widgets/displays.py:358
 #, python-format

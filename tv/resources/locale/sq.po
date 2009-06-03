@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-05-14 15:16-0400\n"
-"PO-Revision-Date: 2009-05-18 14:04+0000\n"
+"PO-Revision-Date: 2009-05-22 05:00+0000\n"
 "Last-Translator: heroid <heroid@ayih.org>\n"
 "Language-Team: Albanian <sq@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-05-20 15:56+0000\n"
+"X-Launchpad-Export-Date: 2009-06-03 16:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:104 ../../portable/httpclient.py:110
@@ -858,12 +858,12 @@ msgstr "Gabim në lidhje: %(msg)s"
 #: ../../portable/httpclient.py:119
 #, python-format
 msgid "Bad Status Line: %(msg)s"
-msgstr ""
+msgstr "Linje e keqe gjendjeje: %(msg)s"
 
 #: ../../portable/httpclient.py:124
 #, python-format
 msgid "Bad Header Line: %(msg)s"
-msgstr ""
+msgstr "Linja kryesore e keqe: %(msg)s"
 
 #: ../../portable/httpclient.py:129
 #, python-format
@@ -883,7 +883,7 @@ msgstr "%(host)s lidhja u mbyll"
 #: ../../portable/httpclient.py:147
 #, python-format
 msgid "Bad Status Code: %(code)s"
-msgstr ""
+msgstr "Status i keq kodi: %(code)s"
 
 #: ../../portable/httpclient.py:163
 #, python-format
@@ -956,20 +956,20 @@ msgstr ""
 #: ../../portable/frontends/widgets/itemcontextmenu.py:103
 #: ../../portable/frontends/widgets/itemcontextmenu.py:200
 msgid "Mark as Unplayed"
-msgstr ""
+msgstr "Bëje si të paluajtur"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:106
 #: ../../portable/frontends/widgets/itemcontextmenu.py:205
 msgid "Mark as Played"
-msgstr ""
+msgstr "Bëje si të luajtur"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:113
 msgid "Stop Seeding"
-msgstr ""
+msgstr "Ndale Ndarjen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:115
 msgid "Start Seeding"
-msgstr ""
+msgstr "Fillo Ndarjen"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:125
 #: ../../portable/frontends/widgets/itemcontextmenu.py:254
@@ -1065,7 +1065,7 @@ msgstr[1] "%(count)d muaj më parë"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:92
 msgid "Auto-Expire Videos:"
-msgstr ""
+msgstr "Automatikisht Kaloju Afatin Videove:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:95
 #, python-format
@@ -1094,68 +1094,68 @@ msgstr "E shiquar 1 muaj parë"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:137
 msgid "Outdated Feed Items:"
-msgstr ""
+msgstr "Ushqyesit Afatkaluar:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:139
 #, python-format
 msgid "Keep %(number)s (Default)"
-msgstr ""
+msgstr "Mbajë %(number)s (Default)"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:141
 msgid "Keep 0"
-msgstr ""
+msgstr "Mbajë 0"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:142
 msgid "Keep 20"
-msgstr ""
+msgstr "Mbajë 20"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:143
 msgid "Keep 50"
-msgstr ""
+msgstr "Mbajë 50"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:144
 msgid "Keep 100"
-msgstr ""
+msgstr "Mbajë 100"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:145
 msgid "Keep 1000"
-msgstr ""
+msgstr "Mbajë 1000"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:169
 msgid "Remove All"
-msgstr ""
+msgstr "Fshiji të gjitha"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:182
 msgid "Old items have been removed."
-msgstr ""
+msgstr "Gjërat e vjetrruara janë fshirë."
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:193
 msgid "Pause Auto-Downloading when this many items are unplayed:"
-msgstr ""
+msgstr "Ndale Auto-Shkarkimin kur ka shumë objekte të paluajtura:"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:197
 msgid "1 unplayed item"
-msgstr ""
+msgstr "1 objekt i paluajtur"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:198
 msgid "3 unplayed items"
-msgstr ""
+msgstr "3 objekte të paluajtura"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:199
 msgid "5 unplayed items"
-msgstr ""
+msgstr "5 objekte të paluajtura"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:200
 msgid "10 unplayed items"
-msgstr ""
+msgstr "10 objekte të paluajtura"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:201
 msgid "15 unplayed items"
-msgstr ""
+msgstr "15 objekte të paluajtura"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:241
 msgid "Feed Settings"
-msgstr ""
+msgstr "Ndrrysho Ushqyesin"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:63
 #, python-format
@@ -1185,12 +1185,12 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:153
 msgid "Next >"
-msgstr ""
+msgstr "Tjetra >"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:163
 #, python-format
 msgid "Completing the %(name)s First Time Setup"
-msgstr ""
+msgstr "Duke kompletuar %(name)s Në Lëshim të Parë"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:167
 #, python-format
