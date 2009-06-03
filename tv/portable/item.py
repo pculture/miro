@@ -571,6 +571,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def _look_for_downloader(self):
         self.set_downloader(downloader.lookup_downloader(self.get_url()))
+        if self.downloader is not None and self.downloader.isFinished():
+            self.set_filename(self.downloader.get_filename())
 
     getSelected, setSelected = make_simple_get_set(u'selected',
             changeNeedsSave=False)
