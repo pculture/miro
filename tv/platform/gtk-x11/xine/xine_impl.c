@@ -262,15 +262,27 @@ void xineAttach(_Xine* xine, const char* displayName, Drawable d,
       vis.user_data = xine;
     }
 
+    // FIXME - should check xine to see what the driver options are
+    // and cycle through them if the specified one doesn't work.
+
     /* opening xine output ports */
     // try to use char *driver for video, default to "auto" if NULL
     if (!driver) {
+      printf("xine_impl.c: no driver passed in, using auto\n");
       driver = "auto";
     }
 
     if (d != 0) {
+      printf("xine_impl.c: trying driver %s\n", driver);
+
       xine->videoPort = xine_open_video_driver(xine->xine, driver,
                                                XINE_VISUAL_TYPE_X11, (void *)&vis);
+
+      if (!xine->videoPort) {
+        printf("xine_impl.c: driver failed--trying auto\n");
+        xine->videoPort = xine_open_video_driver(xine->xine, "auto",
+                                                 XINE_VISUAL_TYPE_X11, (void *)&vis);
+      }
 
 #ifdef INCLUDE_XINE_DRIVER_HACK
     // by default, don't use the hack
