@@ -2171,12 +2171,15 @@ def upgrade89(cursor):
         item_id, downloader_id = row
         if downloader_id is None:
             continue
-        cursor.execute("SELECT status FROM remote_downloader " "WHERE id=?",
-                (downloader_id,))
-        status = cursor.fetchall()[0][0]
+        cursor.execute("SELECT state, status FROM remote_downloader "
+                "WHERE id=?", (downloader_id,))
+        row = cursor.fetchall()[0]
+        state = row[0]
+        status = row[1]
         status = eval(status, __builtins__, {'datetime': datetime})
         filename = status.get('filename')
-        if filename:
+        if (state in ('stopped', 'finished', 'uploading', 'uploading-paused')
+                and filename):
             if FilenameType is not unicode:
                 filename = filename.decode('utf-8')
             cursor.execute("UPDATE item SET videoFilename=? WHERE id=?",
