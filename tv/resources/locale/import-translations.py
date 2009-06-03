@@ -62,7 +62,9 @@ def fix_ro_plurals():
 
     good_str = '"Plural-Forms: nplurals=3; plural=((n == 1 ? 0: (((n % 100 > 19) || ((n % 100 == 0) && (n != 0))) ? 2: 1)));\\n"'
     ro_path = os.path.normpath(os.path.join(__file__, '..', 'ro.po'))
-    content = open(ro_path).read()
+    f = open(ro_path)
+    content = f.read()
+    f.close()
     if bad_str in content:
         print 'fixing ro.po'
         f = open(ro_path, 'wt')
@@ -70,14 +72,19 @@ def fix_ro_plurals():
         f.close()
 
 def fix_pound_pipe():
+    bad_files = 0
     files = get_files()
     for pofile in files:
         f = open(pofile, "r")
-        lines = [line for line in f.readlines() if not line.startswith("#|")]
+        content = f.readlines()
+        lines = [line for line in content if not line.startswith("#|")]
         f.close()
-        f = open(pofile, "w")
-        f.write("".join(lines))
-        f.close()
+        if len(content) != len(lines):
+            bad_files += 1
+            f = open(pofile, "w")
+            f.write("".join(lines))
+            f.close()
+    print "(bad files: %d)" % bad_files
 
 def build_catalogs():
     files = get_files()
