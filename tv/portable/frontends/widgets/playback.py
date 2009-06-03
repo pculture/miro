@@ -525,9 +525,13 @@ def handle_key_press(key, mods):
     if len(mods) != 0:
         return False
 
-    if key == menubar.ESCAPE and app.playback_manager.is_fullscreen:
-        app.widgetapp.on_fullscreen_clicked()
-        return True
+    if key == menubar.ESCAPE:
+        if app.playback_manager.is_fullscreen:
+            app.widgetapp.on_fullscreen_clicked()
+            return True
+        else:
+            app.widgetapp.on_stop_clicked()
+            return True
 
     if key == menubar.RIGHT_ARROW:
         app.widgetapp.on_skip_forward()
