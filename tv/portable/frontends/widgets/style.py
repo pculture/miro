@@ -1131,15 +1131,18 @@ class StatusRenderer(ListViewRenderer):
 
     def _setup_layout(self):
         if self.info.downloaded:
-            if not self.info.video_watched:
-                self.text = _('Unplayed')
-                self.color = UNPLAYED_COLOR
-            elif self.info.expiration_date:
-                self.text = displaytext.expiration_date_short(
-                        self.info.expiration_date)
-                self.color = EXPIRING_TEXT_COLOR
-            else:
+            if not self.info.is_playable:
                 self.text = ''
+            else:
+                if not self.info.video_watched:
+                    self.text = _('Unplayed')
+                    self.color = UNPLAYED_COLOR
+                elif self.info.expiration_date:
+                    self.text = displaytext.expiration_date_short(
+                        self.info.expiration_date)
+                    self.color = EXPIRING_TEXT_COLOR
+                else:
+                    self.text = ''
         elif (self.info.download_info and
                 self.info.download_info.rate == 0):
             if self.info.download_info.state == 'paused':
@@ -1225,7 +1228,7 @@ class StateCircleRenderer(widgetset.CustomCellRenderer):
     def render(self, context, layout, selected, hotspot, hover):
         if self.info.state == 'downloading':
             icon = self.downloading_icon
-        elif self.info.downloaded and not self.info.video_watched:
+        elif self.info.downloaded and self.info.is_playable and not self.info.video_watched:
             icon = self.unwatched_icon
         elif not self.info.item_viewed and not self.info.expiration_date:
             icon = self.new_icon
