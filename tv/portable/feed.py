@@ -2131,29 +2131,34 @@ class DirectoryWatchFeedImpl(FeedImpl):
     def update(self):
         self.ufeed.confirm_db_thread()
 
-        # Files known about by real feeds (other than other directory
-        # watch feeds)
-        known_files = set()
-        for item in models.Item.toplevel_view():
-            if not item.get_feed().get_url().startswith("dtv:directoryfeed"):
-                known_files.add(item.get_filename())
+        # Calculate files known about by feeds other than the directory watch
+        # feeds.
+        # Using a select statement is good here because we don't want to
+        # construct all the Item objects if we don't need to.
+        watched_folder_ids = tuple(f.id for f in Feed.watched_folder_view())
+        watched_folder_ids = ', '.join(str(id) for id in watched_folder_ids)
+        known_files = set(os.path.normcase(row[0]) for row in
+                models.Item.select('filename',
+                    "filename IS NOT NULL AND "
+                    "feed_id NOT IN (%s)" % watched_folder_ids))
 
         # Remove items that are in feeds, but we have in our list
         for item in self.items:
-            if item.get_filename() in known_files:
+            if os.path.normcase(item.get_filename()) in known_files:
                 item.remove()
 
         # Now that we've checked for items that need to be removed, we
         # add our items to known_files so that they don't get added
         # multiple times to this feed.
         for x in self.items:
-            known_files.add(x.get_filename())
+            known_files.add(os.path.normcase(x.get_filename()))
 
         # adds any files we don't know about on the filesystem
         if fileutil.isdir(self.dir):
             all_files = fileutil.miro_allfiles(self.dir)
             for file_ in all_files:
                 ufile = filenameToUnicode(file_)
+                file_ = os.path.normcase(file_)
                 if (file_ not in known_files
                         and (filetypes.is_video_filename(ufile) or filetypes.is_audio_filename(ufile))):
                     models.FileItem(file_, feed_id=self.ufeed.id)
@@ -2202,8 +2207,10 @@ class DirectoryFeedImpl(FeedImpl):
         for container in models.Item.containers_view():
             container.find_new_children()
 
-        # Add downloaded files.  Using a select statement is good here because
-        # we don't want to construct all the Item objects if we don't need to.
+
+        # Calculate files known about by feeds other than the directory feed
+        # Using a select statement is good here because we don't want to
+        # construct all the Item objects if we don't need to.
         known_files = set(os.path.normcase(row[0]) for row in
                 models.Item.select('filename', 
                     'filename IS NOT NULL AND feed_id != ?', (self.ufeed_id,)))
