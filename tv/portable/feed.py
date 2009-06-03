@@ -55,7 +55,7 @@ from miro.util import returnsUnicode, returnsFilename, unicodify, checkU, checkF
 from miro import fileutil
 from miro.plat.utils import filenameToUnicode, makeURLSafe, unmakeURLSafe
 from miro import filetypes
-from miro import item as itemmod
+from miro.item import FeedParserValues
 from miro import search
 from miro import searchengines
 from miro import sorts
@@ -528,13 +528,13 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         self.wasUpdating = isUpdating
 
     def calc_item_list(self):
-        self.items = itemmod.Item.feed_view(self.id)
-        self.visible_items = itemmod.Item.visible_feed_view(self.id)
-        self.downloaded_items = itemmod.Item.feed_downloaded_view(self.id)
-        self.downloading_items = itemmod.Item.feed_downloading_view(self.id)
-        self.available_items = itemmod.Item.feed_available_view(self.id)
-        self.auto_pending_items = itemmod.Item.feed_auto_pending_view(self.id)
-        self.unwatched_items = itemmod.Item.feed_unwatched_view(self.id)
+        self.items = models.Item.feed_view(self.id)
+        self.visible_items = models.Item.visible_feed_view(self.id)
+        self.downloaded_items = models.Item.feed_downloaded_view(self.id)
+        self.downloading_items = models.Item.feed_downloading_view(self.id)
+        self.available_items = models.Item.feed_available_view(self.id)
+        self.auto_pending_items = models.Item.feed_auto_pending_view(self.id)
+        self.unwatched_items = models.Item.feed_unwatched_view(self.id)
 
     def update_after_restore(self):
         if self.actualFeed.__class__ == FeedImpl:
@@ -641,7 +641,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             delta = timedelta(days=expire_after_x_days)
         else:
             delta = self.expireTime
-        return itemmod.Item.feed_expiring_view(self.id, datetime.now() - delta)
+        return models.Item.feed_expiring_view(self.id, datetime.now() - delta)
 
     def expire_items(self):
         """Returns marks expired items as expired
@@ -1306,7 +1306,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
 
     def _handleNewEntry(self, entry, channelTitle):
         """Handle getting a new entry from a feed."""
-        item = itemmod.Item(entry, feed_id=self.ufeed.id)
+        item = models.Item(entry, feed_id=self.ufeed.id)
         if not item.matches_search(self.ufeed.searchTerm):
             item.remove()
         item.set_channel_title(channelTitle)
@@ -1367,7 +1367,7 @@ class RSSFeedImplBase(ThrottledUpdateFeedImpl):
                 items_byURLTitle[by_url_title_key] = item
         for entry in parsed.entries:
             entry = self.addScrapedThumbnail(entry)
-            fp_values = itemmod.FeedParserValues(entry)
+            fp_values = FeedParserValues(entry)
             new = True
             if entry.has_key("id"):
                 id_ = entry["id"]
@@ -1928,14 +1928,14 @@ class ScraperFeedImpl(ThrottledUpdateFeedImpl):
         # Anywhere we call this, we need to convert the input back to unicode
         title = feedparser.sanitizeHTML(title, "utf-8").decode('utf-8')
         if dict_.has_key('thumbnail') > 0:
-            i = itemmod.Item(FeedParserDict({'title': title,
+            i = models.Item(FeedParserDict({'title': title,
                                              'enclosures': [FeedParserDict({'url': link,
                                                                             'thumbnail': FeedParserDict({'url': dict_['thumbnail']})
                                                                           })]
                                            }),
                              linkNumber=linkNumber, feed_id=self.ufeed.id)
         else:
-            i = itemmod.Item(FeedParserDict({'title': title,
+            i = models.Item(FeedParserDict({'title': title,
                                              'enclosures': [FeedParserDict({'url': link})]
                                            }),
                              linkNumber=linkNumber, feed_id=self.ufeed.id)
@@ -2134,7 +2134,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
         # Files known about by real feeds (other than other directory
         # watch feeds)
         known_files = set()
-        for item in itemmod.Item.toplevel_view():
+        for item in models.Item.toplevel_view():
             if not item.get_feed().get_url().startswith("dtv:directoryfeed"):
                 known_files.add(item.get_filename())
 
@@ -2156,7 +2156,7 @@ class DirectoryWatchFeedImpl(FeedImpl):
                 ufile = filenameToUnicode(file_)
                 if (file_ not in known_files
                         and (filetypes.is_video_filename(ufile) or filetypes.is_audio_filename(ufile))):
-                    itemmod.FileItem(file_, feed_id=self.ufeed.id)
+                    models.FileItem(file_, feed_id=self.ufeed.id)
 
         for item in self.items:
             if not fileutil.isfile(item.get_filename()):
@@ -2199,7 +2199,7 @@ class DirectoryFeedImpl(FeedImpl):
         movies_dir = config.get(prefs.MOVIES_DIRECTORY)
         # files known about by real feeds
         known_files = set()
-        for item in itemmod.Item.toplevel_view():
+        for item in models.Item.toplevel_view():
             if item.feed_id is not self.ufeed.id:
                 known_files.add(item.get_filename())
             if item.isContainerItem:
@@ -2232,7 +2232,7 @@ class DirectoryFeedImpl(FeedImpl):
                 if (file_ not in known_files
                         and not "incomplete downloads" in file_.lower()
                         and filetypes.is_video_filename(filenameToUnicode(file_))):
-                    itemmod.FileItem(file_, feed_id=self.ufeed.id)
+                    models.FileItem(file_, feed_id=self.ufeed.id)
 
         for item in self.items:
             if not fileutil.exists(item.get_filename()):
@@ -2327,7 +2327,7 @@ class SearchFeedImpl(RSSMultiFeedImpl):
 
     def _handleNewEntry(self, entry, channelTitle):
         """Handle getting a new entry from a feed."""
-        fp_values = itemmod.FeedParserValues(entry)
+        fp_values = FeedParserValues(entry)
         url = fp_values.data['url']
         if url is not None:
             dl = downloader.get_existing_downloader_by_url(url)
