@@ -2279,3 +2279,18 @@ def upgrade98(cursor):
     """Add an index for item parents
     """
     cursor.execute("CREATE INDEX item_parent ON item (parent_id)")
+
+def upgrade99(cursor):
+    """Set the filename attribute for downloaded Item objects
+    """
+    cursor.execute("SELECT id, status from remote_downloader "
+            "WHERE state in ('stopped', 'finished', 'uploading', "
+            "'uploading-paused')")
+    for row in cursor.fetchall():
+        downloader_id = row[0]
+        status = eval(row[1], __builtins__,
+                {'datetime': datetime, 'time': time})
+        filename = status.get('filename')
+        if filename:
+            cursor.execute("UPDATE item SET filename=? WHERE downloader_id=?",
+                    (filename, downloader_id))

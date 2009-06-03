@@ -301,7 +301,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         FeedParserValues(entry).update_item(self)
         self.expired = False
         self.keep = False
-        self.file_type = None
+        self.filename = self.file_type = None
         self.eligibleForAutoDownload = True
         self.duration = None
         self.screenshot = None
@@ -311,8 +311,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.was_downloaded = False
         self.setup_new_icon_cache()
         # Initalize FileItem attributes to None
-        self.filename = self.deleted = self.shortFilename = \
-                self.offsetPath = None
+        self.deleted = self.shortFilename = self.offsetPath = None
 
         # linkNumber is a hack to make sure that scraped items at the
         # top of a page show up before scraped items at the bottom of
@@ -635,7 +634,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.signal_change()
         return True
 
-    def set_file_type(self, filename):
+    def set_filename(self, filename):
+        self.filename = filename
         self.file_type = self._file_type_for_filename(filename)
 
     def _file_type_for_filename(self, filename):
@@ -834,6 +834,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             self.expired = True
             self.seen = self.keep = self.pendingManualDL = False
+            self.filename = None
             self.file_type = self.watchedTime = self.duration = None
             self.isContainerItem = None
             self.signal_change()
@@ -1497,7 +1498,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
         self.confirm_db_thread()
         self.downloadedTime = datetime.now()
-        self.set_file_type(self.downloader.get_filename())
+        self.set_filename(self.downloader.get_filename())
         self.split_item()
         self.signal_change()
         moviedata.movieDataUpdater.request_update(self)
@@ -1516,7 +1517,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         # this case correctly.
         new_video_filename = self.videoFilename.replace(old_filename,
                 new_filename)
-        self.set_file_type(new_video_filename)
+        self.set_filename(new_video_filename)
         self.signal_change()
 
     def set_downloader(self, downloader):
@@ -1540,15 +1541,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @returnsFilename
     def get_filename(self):
-        """Returns the filename of the first downloaded video or the empty string.
-
-        NOTE: this will always return the absolute path to the file.
-        """
-        self.confirm_db_thread()
-        if self.downloader and hasattr(self.downloader, "get_filename"):
-            return self.downloader.get_filename()
-
-        return FilenameType("")
+        return self.filename
 
     def is_video_file(self):
         return self.isContainerItem != True and filetypes.is_video_filename(self.get_filename())
@@ -1629,7 +1622,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                     raise
                 except:
                     logging.warn("fix_incorrect_torrent_subdir error:\n%s", traceback.format_exc())
-                self.file_type = None
+                self.set_filename(filenamePath)
 
     def __str__(self):
         return "Item - %s" % self.get_title()
@@ -1643,8 +1636,7 @@ class FileItem(Item):
         self.is_file_item = True
         checkF(filename)
         filename = fileutil.abspath(filename)
-        self.filename = filename
-        self.set_file_type(filename)
+        self.set_filename(filename)
         self.deleted = deleted
         self.offsetPath = offsetPath
         self.shortFilename = cleanFilename(os.path.basename(self.filename))
@@ -1745,13 +1737,6 @@ class FileItem(Item):
             raise
         except:
             logging.warn("delete_files error:\n%s", traceback.format_exc())
-
-    @returnsFilename
-    def get_filename(self):
-        if hasattr(self, "filename"):
-            return self.filename
-
-        return FilenameType("")
 
     def download(self, autodl=False):
         self.deleted = False
