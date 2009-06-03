@@ -147,7 +147,7 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
 
         if parser:
             if parser.title:
-                self.title = unicode(parser.title)
+                self.title = unicode(parser.title.strip())
             if parser.favicon and unicode(parser.favicon) != self.favicon:
                 self.favicon = unicode(parser.favicon)
                 self.icon_cache.request_update(True)
