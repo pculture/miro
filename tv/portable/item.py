@@ -1549,7 +1549,10 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @returnsFilename
     def get_filename(self):
-        return self.filename
+        if self.filename is not None:
+            return self.filename
+        else:
+            return FilenameType('')
 
     def is_video_file(self):
         return self.isContainerItem != True and filetypes.is_video_filename(self.get_filename())
