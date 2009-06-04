@@ -63,7 +63,7 @@ class SniffingPlayer (quicktime.Player):
         item_type = 'other'
         if has_video:
             item_type = 'video'
-        elif has_audio and not has_video:
+        elif has_audio:
             item_type = 'audio'
 
         logging.debug("Item type set to: %s" % item_info.file_type)
