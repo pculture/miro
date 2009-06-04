@@ -137,11 +137,14 @@ class LiveStorage:
             self._dc.cancel()
             self._dc = None
 
-        logging.info("Vacuuming the db before shutting down.")
-        try:
-            self.cursor.execute("vacuum")
-        except sqlite3.DatabaseError:
-            logging.info("... Vacuuming failed with DatabaseError")
+        # the unittests run in memory and vacuum causes a segfault if
+        # the db is in memory.
+        if self.path != ":memory:" and self.connection and self.cursor:
+            logging.info("Vacuuming the db before shutting down.")
+            try:
+                self.cursor.execute("vacuum")
+            except sqlite3.DatabaseError:
+                logging.info("... Vacuuming failed with DatabaseError")
         self.connection.close()
 
     def upgrade_database(self):
