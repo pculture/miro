@@ -37,6 +37,7 @@ from miro import signals
 from miro import messages
 
 from miro.plat.frontends.widgets import timer
+from miro.plat.frontends.widgets import sniffer
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets.displays import VideoDisplay
 
@@ -355,7 +356,8 @@ class PlaybackManager (signals.SignalEmitter):
         return None
 
     def _setup_player(self, item_info, volume):
-        if item_info.file_type == 'audio':
+        item_type = sniffer.get_item_type(item_info)
+        if item_type == 'audio':
             if self.is_playing and self.video_display is not None:
                 # if we were previously playing a video get rid of the video
                 # display first
@@ -367,9 +369,9 @@ class PlaybackManager (signals.SignalEmitter):
                 self._build_audio_player(item_info, volume)
             self.is_playing = True
             self.player.setup(item_info, volume)
-        elif item_info.file_type in ('video', 'other'):
-            # We send items with file_type 'other' to the video display to
-            # be able to open them using the 'play externally' display - luc.
+        elif item_type in ('video', 'other'):
+            # We send items with type 'other' to the video display to be able 
+            # to open them using the 'play externally' display - luc.
             if self.is_playing and self.video_display is None:
                 # if we were previously playing an audio file, stop.
                 self.stop()
