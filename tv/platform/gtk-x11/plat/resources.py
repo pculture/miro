@@ -43,7 +43,8 @@ import os
 import urllib
 import platform
 
-resource_root = os.path.abspath(os.environ.get('MIRO_RESOURCE_ROOT', '/usr/share/miro/resources/'))
+resource_root = os.path.abspath(os.environ.get('MIRO_RESOURCE_ROOT',
+                                               '/usr/share/miro/resources/'))
 share_root = os.path.abspath(os.environ.get('MIRO_SHARE_ROOT', '/usr/share/'))
 
 def root():

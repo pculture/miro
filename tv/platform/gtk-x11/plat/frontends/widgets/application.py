@@ -129,7 +129,7 @@ class GtkX11Application(Application):
     def _set_default_icon(self):
         # we set the icon first (if available) so that it doesn't flash
         # on when the window is realized in Application.build_window()
-        icopath = resources.share_path("pixmaps/miro-24x24.png")
+        icopath = resources.share_path("icons/hicolor/24x24/apps/miro.png")
         if config.get(prefs.THEME_NAME) and config.get(options.WINDOWS_ICON):
             themeIcoPath = resources.theme_path(config.get(prefs.THEME_NAME),
                                                 config.get(options.WINDOWS_ICON))
@@ -138,7 +138,7 @@ class GtkX11Application(Application):
                 gtk.window_set_default_icon_from_file(icopath)
         else:
             gtk.window_set_default_icon_from_file(
-                resources.share_path('pixmaps/miro-128x128.png'))
+                resources.share_path('icons/hicolor/128x128/apps/miro.png'))
         return icopath
 
     def build_window(self):
