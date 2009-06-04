@@ -200,3 +200,31 @@ GOOD because it doesn't compose things preventing re-ordering::
 which shows up as something like this:
 
     Remember this many videos in this feed: [________]
+
+
+One-word string problems
+------------------------
+
+Many strings to be translated are only one word.  In some cases, the
+word may be used in different contexts and should get translated
+differently.  The problem is that gettext globs the uses together into
+one translatable string.
+
+There's more details about this problem at
+http://www.gnu.org/s/libc/manual/html_node/GUI-program-problems.html .
+
+The way we deal with it is to use the ``|`` symbol to provide clarity
+as to which context this particular single word is being used in, then
+peel it off at usage by calling ``gtcache.declarify``.
+
+For example::
+
+    from miro.gtcache import gettext as _
+    from miro.gtcache import declarify
+
+    all1_text = _('All')
+    all2_text = declarify(_('View|All'))
+    
+In this example, "View|All" doesn't get globbed with "All" because
+they're different strings.  Translators can translate them differently
+and they should up correctly in the ui.
