@@ -45,6 +45,7 @@ from miro import prefs
 from miro import displaytext
 from miro import searchengines
 from miro.gtcache import gettext as _
+from miro.gtcache import declarify
 from miro.frontends.widgets import imagebutton
 from miro.frontends.widgets import style
 from miro.frontends.widgets import widgetconst
@@ -724,12 +725,9 @@ class HeaderToolbar(widgetset.Background):
             self.create_signal('toggle-unwatched-clicked')
             self.create_signal('toggle-non-feed-clicked')
             self.filter_switch = segmented.SegmentedButtonsRow(_("View:"), 'custom')
-            # we do this to differentiate the "All" for filters from the "All" for
-            # viewing because the two different Alls translate differently.
-            all_text = _('View|All')
-            if "|" in all_text:
-                all_text = all_text.split("|")[-1]
-            self.filter_switch.add_text_button('view-all', all_text, self._on_view_all_clicked)
+            # this "All" is different than other "All"s in the codebase, so it
+            # needs to be clarified
+            self.filter_switch.add_text_button('view-all', declarify(_('View|All')), self._on_view_all_clicked)
             self.filter_switch.add_text_button('view-unwatched', unwatched_label, self._on_toggle_unwatched_clicked)
             self.filter_switch.add_text_button('view-non-feed', _('Non Feed'), self._on_toggle_non_feed_clicked)
             self.filter_switch.set_active('view-all')

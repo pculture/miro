@@ -71,6 +71,23 @@ def init():
     _gt.textdomain("miro")
     _gt.bind_textdomain_codeset("miro", "UTF-8")
 
+def declarify(text):
+    """Takes the return from a gettext call, and "declarifies" it.  If the
+    item has | symbols in it, then this splits the string on | and returns
+    the last string.  If the item has no | symbols in it, then it returns
+    the string.
+
+    >>> declarify("foo")
+    'foo'
+    >>> declarify("View|All")
+    'All'
+
+    Returns a unicode string.
+    """
+    if "|" in text:
+        return text.split("|")[-1]
+    return text
+
 def gettext(text, values=None):
     """Returns the translated form of the given text.  If values are provided,
     expands the string with the given values.
