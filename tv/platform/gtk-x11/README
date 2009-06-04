@@ -106,6 +106,7 @@ or::
 
    miro --set=xine-xvhack=False
 
+
 Problems with gstreamer
 =======================
 
