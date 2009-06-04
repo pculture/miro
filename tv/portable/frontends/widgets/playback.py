@@ -37,7 +37,6 @@ from miro import signals
 from miro import messages
 
 from miro.plat.frontends.widgets import timer
-from miro.plat.frontends.widgets import sniffer
 from miro.plat.frontends.widgets import widgetset
 from miro.frontends.widgets.displays import VideoDisplay
 
@@ -356,7 +355,7 @@ class PlaybackManager (signals.SignalEmitter):
         return None
 
     def _setup_player(self, item_info, volume):
-        item_type = sniffer.get_item_type(item_info)
+        item_type = widgetset.get_item_type(item_info)
         if item_type == 'audio':
             if self.is_playing and self.video_display is not None:
                 # if we were previously playing a video get rid of the video

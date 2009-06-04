@@ -47,3 +47,4 @@ from miro.plat.frontends.widgets.tableview import TableView, TableColumn, CellRe
 from miro.plat.frontends.widgets.tablemodel import TableModel, TreeTableModel
 from miro.plat.frontends.widgets.audio import AudioPlayer
 from miro.plat.frontends.widgets.video import VideoPlayer
+from miro.plat.frontends.widgets.sniffer import get_item_type

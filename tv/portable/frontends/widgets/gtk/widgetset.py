@@ -53,3 +53,4 @@ from miro.frontends.widgets.gtk.simple import Image, ImageDisplay, \
 from miro.frontends.widgets.gtk.audio import AudioPlayer
 from miro.frontends.widgets.gtk.video import VideoPlayer
 from miro.frontends.widgets.gtk.widgets import Rect
+from miro.frontends.widgets.gtk.sniffer import get_item_type
