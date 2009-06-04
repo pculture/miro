@@ -724,7 +724,12 @@ class HeaderToolbar(widgetset.Background):
             self.create_signal('toggle-unwatched-clicked')
             self.create_signal('toggle-non-feed-clicked')
             self.filter_switch = segmented.SegmentedButtonsRow(_("View:"), 'custom')
-            self.filter_switch.add_text_button('view-all', _('All'), self._on_view_all_clicked)
+            # we do this to differentiate the "All" for filters from the "All" for
+            # viewing because the two different Alls translate differently.
+            all_text = _('View|All')
+            if "|" in all_text:
+                all_text = all_text.split("|")[-1]
+            self.filter_switch.add_text_button('view-all', all_text, self._on_view_all_clicked)
             self.filter_switch.add_text_button('view-unwatched', unwatched_label, self._on_toggle_unwatched_clicked)
             self.filter_switch.add_text_button('view-non-feed', _('Non Feed'), self._on_toggle_non_feed_clicked)
             self.filter_switch.set_active('view-all')
