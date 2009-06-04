@@ -1,57 +1,63 @@
-=================
-widget ui modules
-=================
+================================
+portable widget frontend modules
+================================
 
-Miro's frontend consists of a portable widget layer that is implemented
-on each platform.
+Miro's widget frontend is split between portable code and
+platform-specific code.
+
+The portable code is located in ``portable/frontends/widgets/`` and is
+in the ``miro.frontends.widgets`` package space.
+
+See the chapter on platform-specific widget frontend modules for
+platform-specific details.
 
 FIXME - need explanation here and probably a drawing of the architecture
 
 
-``miro.frontends.widgets.application``
-======================================
+``application``
+===============
 
 .. automodule:: miro.frontends.widgets.application
    :members:
 
-``miro.frontends.widgets.cellpack``
-===================================
+``cellpack``
+============
 
 .. automodule:: miro.frontends.widgets.cellpack
    :members:
 
-``miro.frontends.widgets.dialogs``
-==================================
+``dialogs``
+===========
 
 .. automodule:: miro.frontends.widgets.dialogs
    :members:
 
-``miro.frontends.widgets.imagepool``
-====================================
+``imagepool``
+=============
 
 .. automodule:: miro.frontends.widgets.imagepool
    :members:
 
-``miro.frontends.widgets.util``
-===============================
+``util``
+========
 
 .. automodule:: miro.frontends.widgets.util
    :members:
 
-``miro.frontends.widgets.widgetconst``
-======================================
+``widgetconst``
+===============
 
 .. automodule:: miro.frontends.widgets.widgetconst
    :members:
 
-``miro.frontends.widgets.widgetutil``
-=====================================
+``widgetutil``
+==============
 
 .. automodule:: miro.frontends.widgets.widgetutil
    :members:
 
-``miro.frontends.widgets.window``
-=================================
+``window``
+==========
 
 .. automodule:: miro.frontends.widgets.window
    :members:

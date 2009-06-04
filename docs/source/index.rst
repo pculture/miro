@@ -19,6 +19,7 @@ Contents:
    backend_modules
    database_modules
    frontend_widgets_modules
+   frontend_platform_widgets_modules
 
 Indices and tables
 ==================
