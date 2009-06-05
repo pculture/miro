@@ -534,6 +534,11 @@ def handle_key_press(key, mods):
             app.widgetapp.on_stop_clicked()
             return True
 
+    # anything after this point doesn't work when we're playing
+    # audio
+    if app.playback_manager.is_playing_audio:
+        return False
+
     if key == menubar.RIGHT_ARROW:
         app.widgetapp.on_skip_forward()
         return True
