@@ -2450,9 +2450,7 @@ def _parse_date(dateString):
                 if _debug: sys.stderr.write('date handler function must return 9-tuple\n')
                 raise ValueError
             map(int, date9tuple)
-            # we do this to convert time.struct_time to a 9-tuple which
-            # has a repr that can be eval'd in python 2.6.
-            return tuple(date9tuple)
+            return date9tuple
         except Exception, e:
             if _debug: sys.stderr.write('%s raised %s\n' % (handler.__name__, repr(e)))
             pass

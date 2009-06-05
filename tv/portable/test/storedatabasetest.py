@@ -405,5 +405,17 @@ class ValidationTest(FakeSchemaTest):
         self.joe.high_scores[1943] = 1234123
         self.assert_object_invalid(self.joe)
 
+class ConverterTest(StoreDatabaseTest):
+    def test_convert_repr(self):
+        converter = storedatabase.SQLiteConverter()
+
+        test1 = """{'updated_parsed': (2009, 6, 5, 1, 30, 0, 4, 156, 0)}"""
+        val = converter._convert_repr(test1)
+        self.assertEquals(val, {"updated_parsed": (2009, 6, 5, 1, 30, 0, 4, 156, 0)})
+
+        test2 = """{'updated_parsed': time.struct_time(tm_year=2009, tm_mon=6, tm_mday=5, tm_hour=1, tm_min=30, tm_sec=0, tm_wday=4, tm_yday=156, tm_isdst=0)}"""
+        val = converter._convert_repr(test2)
+        self.assertEquals(val, {"updated_parsed": (2009, 6, 5, 1, 30, 0, 4, 156, 0)})
+
 if __name__ == '__main__':
     unittest.main()
