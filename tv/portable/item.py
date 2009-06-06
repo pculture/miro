@@ -1532,7 +1532,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
 
     def set_downloader(self, downloader):
         if self.downloader_id is not None:
-            if downloader is self._downloader:
+            if downloader is self.downloader:
                 return
             self.downloader.removeItem(self)
         self._downloader = downloader
