@@ -546,8 +546,8 @@ class FoldersPanel(PanelBuilder):
         grid.pack(self.movie_dir_helper.label, grid.ALIGN_LEFT, pad_left=12)
         grid.pack(self.movie_dir_helper.button)
         grid.end_line(spacing=18)
-        grid.pack_label(_('Watch for new videos in these folders and include '
-            'them in library:'), span=2)
+        grid.pack_label(_('Watch for new video and audio items in these folders '
+                          'and include them in library:'), span=2)
         grid.end_line()
         grid.pack(self.watched_folder_helper.folder_list, pad_right=12)
         grid.pack(self.watched_folder_helper.button_box)
@@ -587,7 +587,7 @@ class DiskSpacePanel(PanelBuilder):
         attach_combo(expire_menu, prefs.EXPIRE_AFTER_X_DAYS,
                 [op[0] for op in expire_ops])
 
-        grid.pack_label(_('By default, videos expire after:'), extra_space=dialogwidgets.ControlGrid.ALIGN_RIGHT)
+        grid.pack_label(_('By default, video and audio items expire after:'), extra_space=dialogwidgets.ControlGrid.ALIGN_RIGHT)
         grid.pack(expire_menu, extra_space=dialogwidgets.ControlGrid.ALIGN_LEFT)
 
         return grid.make_table()
@@ -600,13 +600,13 @@ class PlaybackPanel(PanelBuilder):
         attach_boolean(cbx, prefs.PLAY_DETACHED)
         v.pack_start(widgetutil.align_left(cbx, bottom_pad=6))
 
-        cbx = widgetset.Checkbox(_('Resume playing a video from the point it was last stopped.'))
+        cbx = widgetset.Checkbox(_('Resume playing a video or audio item from the point it was last stopped.'))
         attach_boolean(cbx, prefs.RESUME_VIDEOS_MODE)
         v.pack_start(widgetutil.align_left(cbx, bottom_pad=12))
 
         rbg = widgetset.RadioButtonGroup()
-        play_rb = widgetset.RadioButton(_("Play videos one after another"), rbg)
-        stop_rb = widgetset.RadioButton(_("Stop after each video"), rbg)
+        play_rb = widgetset.RadioButton(_("Play video and audio items one after another"), rbg)
+        stop_rb = widgetset.RadioButton(_("Stop after each video or audio item"), rbg)
         attach_radio( [(stop_rb, True), (play_rb, False)], prefs.SINGLE_VIDEO_PLAYBACK_MODE)
         v.pack_start(widgetutil.align_left(play_rb), padding=2)
         v.pack_start(widgetutil.align_left(stop_rb))
