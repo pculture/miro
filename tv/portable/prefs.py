@@ -83,32 +83,28 @@ LAST_SEARCH_ENGINE = \
 SEARCH_ORDERING = \
     Pref(key='SearchOrdering', default=None, platformSpecific=False)
 
+
 # These have a hardcoded default which can be overridden by setting an
 # environment variable.
 
-if 'DTV_CHANNELGUIDE_URL' in os.environ:
-    effectiveChannelGuide = util.unicodify(os.environ['DTV_CHANNELGUIDE_URL'])
-else:
-    effectiveChannelGuide = u'https://www.miroguide.com/'
+def get_from_environ(key, default):
+    if key in os.environ:
+        return util.unicodify(os.environ[key])
 
-if 'DTV_CHANNELGUIDE_FIRST_TIME_URL' in os.environ:
-    effectiveChannelGuideFirstTime = util.unicodify(os.environ['DTV_CHANNELGUIDE_FIRST_TIME_URL'])
-else:
-    effectiveChannelGuideFirstTime = u'https://www.miroguide.com/firsttime'
+    return default
 
-if 'DTV_SHARE_URL' in os.environ:
-    effectiveShare = util.unicodify(os.environ['DTV_SHARE_URL'])
-else:
-    effectiveShare = u'https://www.miroguide.com/share'
+default_guide = get_from_environ('DTV_CHANNELGUIDE_URL',
+                                 u'https://www.miroguide.com/')
+default_guide_first_time = get_from_environ('DTV_CHANNELGUIDE_FIRST_TIME_URL',
+                                            u'https://www.miroguide.com/firsttime')
+default_share = get_from_environ('DTV_SHARE_URL',
+                                 u'https://www.miroguide.com/share')
+default_autoupdate = get_from_environ('DTV_AUTOUPDATE_URL',
+                                      u'http://www.participatoryculture.org/democracy-appcast.xml')
 
-if 'DTV_AUTOUPDATE_URL' in os.environ:
-    effectiveAutoupdate = util.unicodify(os.environ['DTV_AUTOUPDATE_URL'])
-else:
-    effectiveAutoupdate = u'http://www.participatoryculture.org/democracy-appcast.xml'
-
-CHANNEL_GUIDE_URL = Pref(key='ChannelGuideURL', default=effectiveChannelGuide,
+CHANNEL_GUIDE_URL = Pref(key='ChannelGuideURL', default=default_guide,
                          platformSpecific=False)
-CHANNEL_GUIDE_FIRST_TIME_URL = Pref(key='ChannelGuideFirstTimeURL', default=effectiveChannelGuideFirstTime,
+CHANNEL_GUIDE_FIRST_TIME_URL = Pref(key='ChannelGuideFirstTimeURL', default=default_guide_first_time,
                          platformSpecific=False)
 CHANNEL_GUIDE_ALLOWED_URLS = Pref(key='ChannelGuideAllowedURLs',
                               default='http://pagead2.googlesyndication.com/ '
@@ -117,9 +113,9 @@ CHANNEL_GUIDE_ALLOWED_URLS = Pref(key='ChannelGuideAllowedURLs',
                               platformSpecific=False)
 ADDITIONAL_CHANNEL_GUIDES = Pref(key='additionalChannelGuides', default='',
                                   platformSpecific=False)
-SHARE_URL         = Pref(key='ShareURL',        default=effectiveShare,
+SHARE_URL         = Pref(key='ShareURL',        default=default_share,
                          platformSpecific=False)
-AUTOUPDATE_URL    = Pref(key='AutoupdateURL',   default=effectiveAutoupdate,
+AUTOUPDATE_URL    = Pref(key='AutoupdateURL',   default=default_autoupdate,
                          platformSpecific=False)
 DONATE_URL        = Pref(key='DonateURL', default=u"http://www.getmiro.com/donate/",
                          platformSpecific=False)
