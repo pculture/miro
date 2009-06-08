@@ -97,7 +97,6 @@ def run_application(props_to_set):
 class GtkX11Application(Application):
     def run(self, props_to_set):
         gobject.set_application_name(config.get(prefs.SHORT_APP_NAME))
-        gtk.window_set_default_icon_name("miro")
         os.environ["PULSE_PROP_media.role"] = "video"
 
         threads.call_on_ui_thread(mozsetup.setup_mozilla_environment)
@@ -127,18 +126,20 @@ class GtkX11Application(Application):
             self.update_autostart(value)
 
     def _set_default_icon(self):
-        # we set the icon first (if available) so that it doesn't flash
-        # on when the window is realized in Application.build_window()
+        # set the icon so that it doesn't flash when the window is realized in
+        # Application.build_window().
+        # if this isn't a themed Miro, then we use the default icon set
         icopath = resources.share_path("icons/hicolor/24x24/apps/miro.png")
-        if config.get(prefs.THEME_NAME) and config.get(options.WINDOWS_ICON):
+        if config.get(prefs.THEME_NAME) != prefs.THEME_NAME.default and config.get(options.WINDOWS_ICON):
             themeIcoPath = resources.theme_path(config.get(prefs.THEME_NAME),
                                                 config.get(options.WINDOWS_ICON))
             if os.path.exists(themeIcoPath):
                 icopath = themeIcoPath
                 gtk.window_set_default_icon_from_file(icopath)
         else:
-            gtk.window_set_default_icon_from_file(
-                resources.share_path('icons/hicolor/128x128/apps/miro.png'))
+            gtk.icon_theme_get_default().append_search_path(resources.share_path('icons'))
+            gtk.window_set_default_icon_name("miro")
+
         return icopath
 
     def build_window(self):
@@ -155,7 +156,7 @@ class GtkX11Application(Application):
                 self.window._window.unmaximize()
 
         if trayicon.trayicon_is_supported:
-            self.trayicon = trayicon.Trayicon(icopath)
+            self.trayicon = trayicon.Trayicon('miro')
             if config.get(options.SHOW_TRAYICON):
                 self.trayicon.set_visible(True)
             else:

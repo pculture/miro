@@ -26,6 +26,7 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
+import os
 import pygtk
 pygtk.require("2.0")
 import gtk
@@ -49,7 +50,10 @@ if gtk.check_version(2, 10, 0) == None:
     class Trayicon(gtk.StatusIcon):
         def __init__(self, icon):
             gtk.StatusIcon.__init__(self)
-            self.set_from_file(icon)
+            if os.sep in icon:
+                self.set_from_file(icon)
+            else:
+                self.set_from_icon_name(icon)
             self.set_visible(False)
             self._hid_pref_panel = False
             self.connect("activate", self.on_click)
