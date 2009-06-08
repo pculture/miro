@@ -1152,22 +1152,6 @@ class BackendMessageHandler(messages.MessageHandler):
             # FIXME - we should pass the error back to the frontend
             pass
 
-    def handle_add_item_to_library(self, message):
-        try:
-            item_ = item.Item.get_by_id(message.id)
-        except database.ObjectNotFoundError:
-            logging.warn("AddItemToLibrary: Item not found -- %s", message.id)
-            return
-
-        if isinstance(item_, item.FileItem):
-            item_.setFeed(feed.Feed.get_manual_feed().getID())
-
-        manualFeed = feed.Feed.get_manual_feed()
-        changed = set()
-        changed.add(messages.ItemInfo(item_))
-        # I think we have to do this manually because it's in the manualFeed.
-        messages.ItemsChanged('feed', manualFeed.getID(), [], changed, set()).send_to_frontend()
-
     def handle_remove_video_entry(self, message):
         try:
             item_ = item.Item.get_by_id(message.id)

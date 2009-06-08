@@ -330,7 +330,7 @@ class OverlayPalette (NSWindowController):
         app.widgetapp.share_item(item_info)
     
     def addToLibrary_(self, sender):
-        messages.AddItemToLibrary(self.item_info.id).send_to_backend()
+        logging.info("FIXME - this should get removed")
     
     def handleShareItem_(self, sender):
         pass

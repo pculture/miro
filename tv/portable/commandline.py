@@ -76,13 +76,7 @@ def add_video(path, single=False):
             if _command_line_videos is not None:
                 _command_line_videos.add(i)
             return
-    if single:
-        correctFeed = feed.Feed.get_single_feed()
-        items = list(correctFeed.items)
-        for i in items:
-            i.expire()
-    else:
-        correctFeed = feed.Feed.get_manual_feed()
+    correctFeed = feed.Feed.get_manual_feed()
     fileItem = item.FileItem(path, feed_id=correctFeed.getID())
     fileItem.mark_item_seen()
     if _command_line_videos is not None:

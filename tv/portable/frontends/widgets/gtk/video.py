@@ -241,9 +241,8 @@ class VideoDetailsWidget(Background):
         outer_hbox = HBox(5)
 
         if info.is_external:
-            if info.is_single:
-                outer_hbox.pack_start(_align_middle(make_label(_("Add to library"), self.handle_add_to_library, True)))
-            else:
+            # FIXME - this check can probably go away
+            if not info.is_single:
                 self._delete_link = make_label(_("Delete"), self.handle_delete, True)
                 outer_hbox.pack_start(_align_middle(self._delete_link))
 
@@ -317,9 +316,6 @@ class VideoDetailsWidget(Background):
 
     def handle_keep(self, widget):
         messages.KeepVideo(self.item_info.id).send_to_backend()
-
-    def handle_add_to_library(self, widget):
-        messages.AddItemToLibrary(self.item_info.id).send_to_backend()
 
     def handle_delete(self, widget):
         item_info = self.item_info

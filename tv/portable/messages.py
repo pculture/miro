@@ -578,11 +578,6 @@ class SaveItemAs(BackendMessage):
         self.id = id
         self.filename = filename
 
-class AddItemToLibrary(BackendMessage):
-    """Adds an item to the library."""
-    def __init__(self, id):
-        self.id = id
-
 class RemoveVideoEntry(BackendMessage):
     """Remove the entry for an external video"""
     def __init__(self, id):

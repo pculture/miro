@@ -479,10 +479,6 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         return cls.get_by_url('dtv:manualFeed')
 
     @classmethod
-    def get_single_feed(cls):
-        return cls.get_by_url('dtv:singleFeed')
-
-    @classmethod
     def get_directory_feed(cls):
         return cls.get_by_url('dtv:directoryfeed')
 
