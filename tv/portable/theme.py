@@ -96,7 +96,8 @@ class ThemeHistory(DDBObject):
             guide.ChannelGuide(guideURL,
             unicode(config.get(prefs.CHANNEL_GUIDE_ALLOWED_URLS)).split())
 
-        if self.theme is not None: # we have a theme
+        if self.theme is not None:
+            # we have a theme
             new_guides = unicode(config.get(prefs.ADDITIONAL_CHANNEL_GUIDES)).split()
             for temp_guide in new_guides:
                 if guide.get_guide_by_url(temp_guide) is None:
@@ -124,36 +125,52 @@ class ThemeHistory(DDBObject):
                 #     guide.ChannelGuide(prefs.CHANNEL_GUIDE_URL.default)
                 self.pastThemes.append(None)
                 self._install_default_feeds()
-        else: # no theme
+        else:
+            # no theme
             self._install_default_feeds()
         signals.system.theme_first_run(self.theme)
+
+    def _add_default(self, default, section):
+        # folder
+        if isinstance(default, tuple) and isinstance(default[1], list):
+            defaultFolder = default
+            c_folder = folder.ChannelFolder(defaultFolder[0])
+            c_folder.section = section
+            c_folder.signal_change()
+            for url, autodownload in defaultFolder[1]:
+                logging.info("adding feed %s in section %s" % (url, section))
+                d_feed = feed.Feed(url, initiallyAutoDownloadable=autodownload)
+                d_feed.set_folder(c_folder)
+                d_feed.section = section
+                d_feed.signal_change()
+        # feed
+        else:
+            logging.info("adding feed %s in section %s" % (default, section))
+            d_feed = feed.Feed(default[0], initiallyAutoDownloadable=default[1])
+            d_feed.section = section
+            d_feed.signal_change()
 
     @asUrgent
     def _install_default_feeds(self):
         logging.info("Adding default feeds")
-
-        defaultFeedURLs = []
-
-        defaultFeedURLs.extend([
+        default_video_feeds = []
+        default_video_feeds.extend([
             (u'http://feeds.miroguide.com/miroguide/new', False),
             (u'http://feeds.miroguide.com/miroguide/featured', False),
             (u'http://feeds.feedburner.com/earth-touch_podcast_720p', False),
             (u'http://www.linktv.org/rss/hq/globalpulse.xml', False),
+            ])
 
-        ])
+        default_audio_feeds = []
+        default_audio_feeds.extend([
+            (u'http://feeds.thisamericanlife.org/talpodcast', False)
+            ])
 
-        for default in defaultFeedURLs:
-            # folder
-            if isinstance(default, tuple) and isinstance(default[1], list):
-                defaultFolder = default
-                c_folder = folder.ChannelFolder(defaultFolder[0])
-                for url, autodownload in defaultFolder[1]:
-                    d_feed = feed.Feed(url, initiallyAutoDownloadable=autodownload)
-                    d_feed.set_folder(c_folder)
+        for default in default_video_feeds:
+            self._add_default(default, u"video")
 
-            # feed
-            else:
-                d_feed = feed.Feed(default[0], initiallyAutoDownloadable=default[1])
+        for default in default_audio_feeds:
+            self._add_default(default, u"audio")
 
         # create example playlist
         playlist.SavedPlaylist(_(u"Example Playlist"))
