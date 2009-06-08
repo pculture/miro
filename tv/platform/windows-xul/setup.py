@@ -305,7 +305,7 @@ template_vars = util.read_simple_config_file(app_config)
 
 # pixmap for the about dialog
 icon_path = os.path.join("icons", "hicolor", "128x128", "apps")
-data_files.append((icon_path, [os.path.join(platform_dir, icon_path, "miro.png")]))
+data_files.append((os.path.join("resources", icon_path), [os.path.join(platform_dir, icon_path, "miro.png")]))
 
 ###############################################################################
 
