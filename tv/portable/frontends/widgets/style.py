@@ -252,6 +252,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
     ERROR_TEXT = _("Error")
     QUEUED_TEXT = _("queued for autodownload")
     UNPLAYED_TEXT = _("Unplayed")
+    CURRENTLY_PLAYING_TEXT = _("Currently Playing")
     NEWLY_AVAILABLE_TEXT = _("Newly Available")
     KEEP_TEXT = _("Keep")
     REMOVE_TEXT = _("Remove")
@@ -737,6 +738,20 @@ class ItemRenderer(widgetset.CustomCellRenderer):
             emblem_hbox.pack(cellpack.align_middle(layout.textbox(self.QUEUED_TEXT)))
 
             stack.pack(cellpack.align_left(emblem_hbox))
+
+        elif (self.data.downloaded and app.playback_manager.get_playing_item() and
+                app.playback_manager.get_playing_item().id == self.data.id):
+            layout.set_font(0.80, bold=True)
+            layout.set_text_color((1, 1, 1))
+
+            emblem_hbox.pack(cellpack.align_middle(layout.textbox(self.CURRENTLY_PLAYING_TEXT)))
+            emblem_hbox.pack_space(2)
+
+            emblem_color = UNPLAYED_COLOR
+            emblem = cellpack.Background(emblem_hbox, margin=(5, 20, 4, 4))
+            emblem.set_callback(self.draw_emblem, emblem_color)
+
+            stack.pack(cellpack.align_left(emblem))
 
         elif (self.data.downloaded and not self.data.video_watched and
                 self.data.is_playable):
