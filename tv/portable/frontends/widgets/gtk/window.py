@@ -522,7 +522,7 @@ class AboutDialog(Dialog):
                         _("About %(appname)s") % {
                 'appname': config.get(prefs.SHORT_APP_NAME)})
         icon_pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(
-                resources.share_path('pixmaps/miro-128x128.png'), 48, 48)
+                resources.share_path('icons/hicolor/128x128/apps/miro.png'), 48, 48)
         self.packing_vbox.pack_start(gtk.image_new_from_pixbuf(icon_pixbuf))
         if config.get(prefs.APP_REVISION_NUM):
             version = "%s (r%s)" % (
