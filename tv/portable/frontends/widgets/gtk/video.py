@@ -241,10 +241,8 @@ class VideoDetailsWidget(Background):
         outer_hbox = HBox(5)
 
         if info.is_external:
-            # FIXME - this check can probably go away
-            if not info.is_single:
-                self._delete_link = make_label(_("Delete"), self.handle_delete, True)
-                outer_hbox.pack_start(_align_middle(self._delete_link))
+            self._delete_link = make_label(_("Delete"), self.handle_delete, True)
+            outer_hbox.pack_start(_align_middle(self._delete_link))
 
         else:
             # keep / delete

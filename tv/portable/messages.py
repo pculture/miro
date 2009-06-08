@@ -852,7 +852,6 @@ class ItemInfo(object):
     can_be_saved -- is this an expiring downloaded item?
     downloaded -- has the item been downloaded?
     is_external -- is this item external (true) or from a channel (false)?
-    is_single -- is this item a single (true) or not (false)?
     expiration_date -- datetime object for when the item will expire (or None)
     item_viewed -- has the user ever seen the item?
     video_watched -- has the user watched the video for the item?
@@ -907,7 +906,6 @@ class ItemInfo(object):
         self.item_viewed = item.get_viewed()
         self.downloaded = item.is_downloaded()
         self.is_external = item.is_external()
-        self.is_single = item.is_single()
         self.video_watched = item.get_seen()
         self.video_path = item.get_filename()
         self.thumbnail = item.get_thumbnail()

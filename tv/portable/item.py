@@ -1568,12 +1568,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         """
         return self.feed_id is not None and self.get_feed_url() == 'dtv:manualFeed'
 
-    def is_single(self):
-        """Returns True iff the item is in the singleFeed and thus was created
-        by the "open" menu.
-        """
-        return self.get_feed_url() == 'dtv:singleFeed'
-
     def migrate_children(self, newdir):
         if self.isContainerItem:
             for item in self.getChildren():

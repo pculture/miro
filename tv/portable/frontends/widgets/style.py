@@ -777,7 +777,7 @@ class ItemRenderer(widgetset.CustomCellRenderer):
 
         main_hbox.pack_space(2, expand=True)
 
-        if self.data.is_external or self.data.is_single or self.data.downloaded:
+        if self.data.is_external or self.data.downloaded:
             main_hbox.pack(self.pack_video_buttons(layout))
 
         stack.pack(main_hbox)
