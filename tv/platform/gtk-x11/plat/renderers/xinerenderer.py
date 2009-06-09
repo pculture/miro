@@ -51,13 +51,7 @@ class Renderer:
         # to the ui thread to do things.
         threads.call_on_ui_thread(app.playback_manager.on_movie_finished)
 
-    def can_play_file(self, filename, yes_callback, no_callback):
-        if self.xine.can_play_file(filename):
-            yes_callback()
-        else:
-            no_callback()
-
-    def select_file(self, filename, callback, errback):
+    def select_file(self, filename, success_callback, error_callback):
         logging.error("Not implemented.")
 
     def get_progress(self):
@@ -196,10 +190,10 @@ class VideoRenderer(Renderer):
         # nothing to do here
         pass
 
-    def select_file(self, filename, callback, errback):
+    def select_file(self, filename, success_callback, error_callback):
         self._filename = filename
         if self.xine.select_file(filename):
-            gobject.idle_add(callback)
+            gobject.idle_add(success_callback)
             def expose_workaround():
                 try:
                     _, _, width, height, _ = self.widget.window.get_geometry()
@@ -213,7 +207,7 @@ class VideoRenderer(Renderer):
             gobject.timeout_add(500, expose_workaround)
             self.seek(0)
         else:
-            gobject.idle_add(errback)
+            gobject.idle_add(error_callback)
 
 class AudioRenderer(Renderer):
     def __init__(self):
@@ -230,16 +224,16 @@ class AudioRenderer(Renderer):
         self.xine.detach()
         self._attached = False
 
-    def select_file(self, filename, callback, errback):
+    def select_file(self, filename, success_callback, error_callback):
         if not self._attached:
             self.attach()
 
         self._filename = filename
         if self.xine.select_file(filename):
-            gobject.idle_add(callback)
+            gobject.idle_add(success_callback)
             self.seek(0)
         else:
-            gobject.idle_add(errback)
+            gobject.idle_add(error_callback)
 
     def on_eos(self):
         Renderer.on_eos(self)
