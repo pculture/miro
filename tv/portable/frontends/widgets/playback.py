@@ -355,7 +355,13 @@ class PlaybackManager (signals.SignalEmitter):
         return None
 
     def _setup_player(self, item_info, volume):
-        item_type = widgetset.get_item_type(item_info)
+        def _handle_successful_sniff(item_type):
+            self._finish_setup_player(item_info, item_type, volume)
+        def _handle_unsuccessful_sniff():
+            self._finish_setup_player(item_info, "unplayable", volume)
+        widgetset.get_item_type(item_info, _handle_successful_sniff, _handle_unsuccessful_sniff)
+    
+    def _finish_setup_player(self, item_info, item_type, volume):
         if item_type == 'audio':
             if self.is_playing and self.video_display is not None:
                 # if we were previously playing a video get rid of the video
@@ -368,7 +374,7 @@ class PlaybackManager (signals.SignalEmitter):
                 self._build_audio_player(item_info, volume)
             self.is_playing = True
             self.player.setup(item_info, volume)
-        elif item_type in ('video', 'other'):
+        elif item_type in ('video', 'unplayable'):
             # We send items with type 'other' to the video display to be able 
             # to open them using the 'play externally' display - luc.
             if self.is_playing and self.video_display is None:

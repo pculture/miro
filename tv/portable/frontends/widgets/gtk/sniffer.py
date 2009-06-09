@@ -30,8 +30,8 @@ import logging
 
 ###############################################################################
     
-def get_item_type(item_info):
+def get_item_type(item_info, success_callback, error_callback):
     logging.debug("GTK sniffer not implemented, returning item_info default type: %s" % item_info.file_type)
-    return item_info.file_type
+    success_callback(item_info.file_type)
 
 ###############################################################################

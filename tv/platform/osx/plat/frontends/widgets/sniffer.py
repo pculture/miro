@@ -45,11 +45,11 @@ class SniffingPlayer (quicktime.Player):
     def get_item_type(self, item_info):
         qtmovie = self.get_movie_from_file(item_info.video_path)
         if qtmovie is None:
-            return 'other'
+            return 'unplayable'
 
         allTracks = qtmovie.tracks()
         if len(allTracks) == 0:
-            return 'other'
+            return 'unplayable'
 
         has_audio = False
         has_video = False
@@ -60,7 +60,7 @@ class SniffingPlayer (quicktime.Player):
             elif media_type in video.SUPPORTED_MEDIA_TYPES:
                 has_video = True
         
-        item_type = 'other'
+        item_type = 'unplayable'
         if has_video:
             item_type = 'video'
         elif has_audio:
@@ -73,7 +73,7 @@ class SniffingPlayer (quicktime.Player):
 ###############################################################################
     
 sniffer = SniffingPlayer()
-def get_item_type(item_info):
-    return sniffer.get_item_type(item_info)
+def get_item_type(item_info, success_callback, error_callback):
+    success_callback(sniffer.get_item_type(item_info))
 
 ###############################################################################
