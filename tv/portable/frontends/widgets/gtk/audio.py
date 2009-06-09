@@ -50,8 +50,8 @@ class NullRenderer:
 class AudioPlayer(player.Player):
     """Audio renderer widget.
 
-    Note: ``app.renderer`` must be inititalized before instantiating this
-    class.  If no renderers can be found, set ``app.renderer`` to ``None``.
+    Note: ``app.audio_renderer`` must be inititalized before instantiating this
+    class.  If no renderers can be found, set ``app.audio_renderer`` to ``None``.
     """
     def __init__(self):
         player.Player.__init__(self)

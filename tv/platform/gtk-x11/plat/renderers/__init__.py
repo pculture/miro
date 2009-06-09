@@ -54,11 +54,13 @@ def set_renderer(modname):
 
 def init_renderer():
     """Initializes a video renderer for us to use.  This call will attempt to
-    find a working renderer and set the global variable app.renderer to that
-    renderer.
+    find a working renderer and set the global variables ``app.audio_renderer``
+    and ``app.video_renderer`` to renderers in that module.
 
-    Note: renderer modules have to be xxxxrenderer and xxxx shows up in the
-    preferences.
+    .. Note::
+
+       Renderer modules have to be ``xxxxrenderer`` and ``xxxx`` shows up in
+       the preferences.
     """
     r = config.get(options.USE_RENDERER)
     try:
@@ -73,4 +75,5 @@ def init_renderer():
         return
     except:
         logging.exception("init_renderer: no valid renderer has been loaded")
-    app.renderer = None
+    app.audio_renderer = None
+    app.video_renderer = None
