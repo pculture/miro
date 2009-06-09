@@ -176,3 +176,6 @@ class ThemeHistory(DDBObject):
         # create default site
         cg = guide.ChannelGuide(u"http://beta.legaltorrents.com/")
         cg.set_title(u"LegalTorrents")
+
+        cg = guide.ChannelGuide(u'https://www.miroguide.com/audio/')
+        cg.set_title(u"Miro Audio Guide")

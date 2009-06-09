@@ -2297,3 +2297,35 @@ def upgrade99(cursor):
         if filename:
             cursor.execute("UPDATE item SET filename=? WHERE downloader_id=?",
                     (filename, downloader_id))
+
+def upgrade100(cursor):
+    """Adds the Miro audio guide as a site for anyone who doesn't
+    already have it and isn't using a theme.
+    """
+    # if the user is using a theme, we don't do anything
+    if not config.get(prefs.THEME_NAME) == prefs.THEME_NAME.default:
+        return
+
+    audio_guide_url = u'https://www.miroguide.com/audio/'
+    favicon_url = u'https://www.miroguide.com/favicon.ico'
+    cursor.execute("SELECT count(*) FROM channel_guide WHERE url=?", (audio_guide_url,))
+    count = cursor.fetchone()[0]
+    if count > 0:
+        return
+
+    max_id = 0
+    for table in ('channel_folder', 'playlist_folder_item_map',
+                  'channel_guide', 'playlist_item_map', 'feed',
+                  'directory_feed_impl', 'remote_downloader',
+                  'directory_watch_feed_impl', 'rss_feed_impl'
+                  'rss_multi_feed_impl', 'scraper_feed_impl', 'feed_impl',
+                  'search_downloads_feed_impl', 'http_auth_password',
+                  'search_feed_impl', 'icon_cache', 'single_feed_impl',
+                  'item', 'taborder_order', 'manual_feed_impl', 'theme_history',
+                  'playlist', 'widgets_frontend_state', 'playlist_folder'):
+        cursor.execute("SELECT MAX(id) from %s" % table)
+        max_id = max(max_id, cursor.fetchone()[0])
+
+    cursor.execute("INSERT INTO channel_guide "
+                   "(id, url, allowedURLs, updated_url, favicon, firstTime) VALUES (?, ?, ?, ?, ?, ?)",
+                   (max_id + 1, audio_guide_url, "[]", audio_guide_url, favicon_url, True))
