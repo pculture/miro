@@ -1519,15 +1519,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.recalc_feed_counts()
 
     def on_downloader_migrated(self, old_filename, new_filename):
-        # When we calculate videoFilename, we need to take into account that
-        # split_item() sometimes makes it so videoFilename is not the same our
-        # downloader's filename.  For example, if a torrent download contains
-        # a folder with a single video, then videoFilename will point to the
-        # video, not the folder path.  I think the next line should handle
-        # this case correctly.
-        new_video_filename = self.videoFilename.replace(old_filename,
-                new_filename)
-        self.set_filename(new_video_filename)
+        self.set_filename(video_filename)
         self.signal_change()
 
     def set_downloader(self, downloader):
