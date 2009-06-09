@@ -72,7 +72,6 @@ class OverlayPalette (NSWindowController):
     shareButton         = IBOutlet('shareButton')
     keepButton          = IBOutlet('keepButton')
     deleteButton        = IBOutlet('deleteButton')
-    addToLibButton      = IBOutlet('addToLibButton')
     fsButton            = IBOutlet('fsButton')
     popInOutButton      = IBOutlet('popInOutButton')
     popInOutLabel       = IBOutlet('popInOutLabel')
@@ -127,10 +126,6 @@ class OverlayPalette (NSWindowController):
         self.deleteButton.setAlternateImage_(getOverlayButtonAlternateImage(self.deleteButton.bounds().size))
         self.deleteButton.setTitle_(_("Delete"))
 
-        self.addToLibButton.setImage_(getOverlayButtonImage(self.addToLibButton.bounds().size))
-        self.addToLibButton.setAlternateImage_(getOverlayButtonAlternateImage(self.addToLibButton.bounds().size))
-        self.addToLibButton.setTitle_(_("Add to Library"))
-
         self.seekForwardButton.setCell_(SkipSeekButtonCell.cellFromButtonCell_direction_delay_(self.seekForwardButton.cell(), 1, 0.0))
         self.seekForwardButton.cell().setAllowsSkipping(False)
         self.seekBackwardButton.setCell_(SkipSeekButtonCell.cellFromButtonCell_direction_delay_(self.seekBackwardButton.cell(), -1, 0.0))
@@ -158,9 +153,6 @@ class OverlayPalette (NSWindowController):
             self.feedLabel.setStringValue_("")
         self.keepButton.setEnabled_(item_info.can_be_saved)
         self.shareButton.setEnabled_(item_info.has_sharable_url)
-        # FIXME - this use to check item_info.is_single, but that's gone now,
-        # so the addToLibButton should get removed.
-        self.addToLibButton.setEnabled_(False)
         self.adjustContent(video_window, False)
         self.update_(nil)
         self.suspendAutoHiding()
@@ -329,9 +321,6 @@ class OverlayPalette (NSWindowController):
     def share_(self, sender):
         item_info = self.item_info
         app.widgetapp.share_item(item_info)
-    
-    def addToLibrary_(self, sender):
-        logging.info("FIXME - this should get removed")
     
     def handleShareItem_(self, sender):
         pass
