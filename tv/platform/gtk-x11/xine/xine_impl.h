@@ -232,6 +232,12 @@ void xineSetArea(_Xine* xine, int xpos, int ypos, int width, int height);
 /* Make Xine stop drawing to its X drawable.  */
 void xineDetach(_Xine* xine);
 
+/* sets up the xine object as a sniffer. */
+void xineSetupSniffer(_Xine* xine);
+
+/* Returns -1 if it can't play, 0 if video, 1 if audio, 2 if unplayable. */
+int xineGetType(_Xine* xine, const char* filename);
+
 /* Set the file to play.  Returns 1 if successfull, 0 if not. */
 int xineSelectFile(_Xine* xine, const char* filename);
 

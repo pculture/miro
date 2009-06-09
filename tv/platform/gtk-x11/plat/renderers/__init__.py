@@ -45,6 +45,7 @@ def set_renderer(modname):
         app.video_renderer = module.VideoRenderer()
         app.audio_renderer = module.AudioRenderer()
         app.movie_data_program_info = module.movie_data_program_info
+        app.get_item_type = module.get_item_type
         logging.info("set_renderer: successfully loaded %s", modname)
     except:
         logging.info("set_renderer: couldn't load %s: %s", modname,

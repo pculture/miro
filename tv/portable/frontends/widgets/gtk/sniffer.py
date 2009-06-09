@@ -27,11 +27,12 @@
 # statement from all source files in the program, then also delete it here.
 
 import logging
+from miro import app
 
-###############################################################################
-    
 def get_item_type(item_info, success_callback, error_callback):
-    logging.debug("GTK sniffer not implemented, returning item_info default type: %s" % item_info.file_type)
-    success_callback(item_info.file_type)
+    if hasattr(app, "get_item_type"):
+        app.get_item_type(item_info, success_callback, error_callback)
+    else:
+        logging.debug("GTK sniffer not implemented, returning item_info default type: %s" % item_info.file_type)
+        success_callback(item_info.file_type)
 
-###############################################################################

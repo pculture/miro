@@ -39,6 +39,14 @@ from miro.plat import options
 from miro.plat import resources
 from miro.plat.frontends.widgets import threads
 
+class Sniffer:
+    def __init__(self):
+        self.xine = xine.Xine()
+        self.xine.setup_sniffer()
+
+    def get_item_type(self, filename):
+        return self.xine.get_type(filename)
+
 class Renderer:
     def __init__(self):
         logging.info("Xine version:      %s", xine.getXineVersion())
@@ -245,3 +253,16 @@ def movie_data_program_info(movie_path, thumbnail_path):
     else:
         logging.error("xine_extractor cannot be found.")
         raise NotImplementedError()
+
+_SNIFFER = Sniffer()
+
+def get_item_type(item_info, success_callback, error_callback):
+    item_type = _SNIFFER.get_item_type(item_info.video_path)
+    if item_type == -1:
+        error_callback()
+    elif item_type == 0:
+        success_callback("video")
+    elif item_type == 1:
+        success_callback("audio")
+    else:
+        success_callback("unplayable")

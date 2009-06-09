@@ -66,6 +66,8 @@ cdef extern from "xine_impl.h":
     void xineAttach(_Xine* xine, char* displayName, Drawable d, char *driver, int sync, int use_xv_hack)
     void xineSetArea(_Xine* xine, int xpos, int ypos, int width, int height)
     void xineDetach(_Xine* xine)
+    void xineSetupSniffer(_Xine* xine)
+    int xineGetType(_Xine* xine, char* filename)
     int xineSelectFile(_Xine* xine, char* filename)
     void xineSetPlaying(_Xine* xine, int isPlaying)
     void xineSetViz(_Xine* xine, char *viz)
@@ -96,8 +98,12 @@ cdef class Xine:
         xineAttach(self.xine, displayName, drawable, driver, sync, use_xv_hack)
     def detach(self):
         xineDetach(self.xine)
+    def setup_sniffer(self):
+        xineSetupSniffer(self.xine)
     def set_area(self, int xpos, int ypos, int width, int height):
         xineSetArea(self.xine, xpos, ypos, width, height)
+    def get_type(self, char* filename):
+        return xineGetType(self.xine, filename)
     def select_file(self, char* filename):
         return xineSelectFile(self.xine, filename)
     def play(self):

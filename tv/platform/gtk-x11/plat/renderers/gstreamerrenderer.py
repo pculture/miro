@@ -53,6 +53,66 @@ def to_seconds(t):
 def from_seconds(s):
     return s * gst.SECOND
 
+class Sniffer:
+    """Determines whether a file is "audio", "video", or "unplayable".
+    """
+    def __init__(self, filename):
+        self.done = Event()
+        self.success = False
+
+        self.playbin = gst.element_factory_make('playbin')
+        self.videosink = gst.element_factory_make("fakesink", "videosink")
+        self.playbin.set_property("video-sink", self.videosink)
+        self.audiosink = gst.element_factory_make("fakesink", "audiosink")
+        self.playbin.set_property("audio-sink", self.audiosink)
+
+        self.bus = self.playbin.get_bus()
+        self.bus.add_signal_watch()
+        self.watch_id = self.bus.connect("message", self.on_bus_message)
+
+        self.playbin.set_property("uri", "file://%s" % filename)
+        self.playbin.set_state(gst.STATE_PAUSED)
+
+    def result(self, success_callback, error_callback):
+        def _result():
+            self.done.wait(1)
+            if self.success:
+                # -1 if None, 0 if yes
+                current_video = self.playbin.get_property("current-video")
+                current_audio = self.playbin.get_property("current-audio")
+
+                if current_video == 0:
+                    call_on_ui_thread(success_callback, "video")
+                elif current_audio == 0:
+                    call_on_ui_thread(success_callback, "audio")
+                else:
+                    call_on_ui_thread(success_callback, "unplayable")
+            else:
+                call_on_ui_thread(error_callback)
+            self.disconnect()
+        thread.start_new_thread(_result, ())
+
+    def on_bus_message(self, bus, message):
+        if message.src == self.playbin:
+            if message.type == gst.MESSAGE_STATE_CHANGED:
+                prev, new, pending = message.parse_state_changed()
+                if new == gst.STATE_PAUSED:
+                    # Success
+                    self.success = True
+                    self.done.set()
+
+            elif message.type == gst.MESSAGE_ERROR:
+                self.success = False
+                self.done.set()
+
+    def disconnect(self):
+        self.bus.disconnect(self.watch_id)
+        self.playbin.set_state(gst.STATE_NULL)
+        del self.bus
+        del self.playbin
+        del self.audiosink
+        del self.videosink
+
 class Renderer:
     def __init__(self):
         logging.info("GStreamer version: %s", gst.version_string())
@@ -265,3 +325,7 @@ class AudioRenderer(Renderer):
 def movie_data_program_info(movie_path, thumbnail_path):
     extractor_path = os.path.join(os.path.split(__file__)[0], "gst_extractor.py")
     return ((sys.executable, extractor_path, movie_path, thumbnail_path), None)
+
+def get_item_type(item_info, success_callback, error_callback):
+    s = Sniffer(item_info.video_path)
+    s.result(success_callback, error_callback)

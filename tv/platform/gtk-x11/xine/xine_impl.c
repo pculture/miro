@@ -364,6 +364,17 @@ void xineDetach(_Xine* xine)
     Py_END_ALLOW_THREADS    
 }
 
+/**
+ * Sets up this xine instance as a sniffer.
+ */
+void xineSetupSniffer(_Xine* xine)
+{
+  xine->videoPort = xine_open_video_driver(xine->xine, "auto",
+                                           XINE_VISUAL_TYPE_NONE, NULL);
+  xine->audioPort = xine_open_audio_driver(xine->xine, "none", NULL);
+  xine->stream = xine_stream_new(xine->xine, xine->audioPort, xine->videoPort);
+}
+
 void xineSetArea(_Xine* xine, int xpos, int ypos, int width, int height)
 {
     g_mutex_lock(xine->frameInfo.lock);
@@ -372,6 +383,21 @@ void xineSetArea(_Xine* xine, int xpos, int ypos, int width, int height)
     xine->frameInfo.width = width;
     xine->frameInfo.height = height;
     g_mutex_unlock(xine->frameInfo.lock);
+}
+
+int xineGetType(_Xine* xine, const char* filename)
+{
+  xine_close(xine->stream);
+  if (!xine_open(xine->stream, filename)) {
+    return -1;
+  }
+  if (xine_get_stream_info(xine->stream, XINE_STREAM_INFO_HAS_VIDEO)) {
+    return 0;
+  }
+  if (xine_get_stream_info(xine->stream, XINE_STREAM_INFO_HAS_AUDIO)) {
+    return 1;
+  }
+  return 2;
 }
 
 int xineSelectFile(_Xine* xine, const char* filename)
