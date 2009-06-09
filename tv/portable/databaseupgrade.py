@@ -2317,7 +2317,7 @@ def upgrade100(cursor):
     for table in ('channel_folder', 'playlist_folder_item_map',
                   'channel_guide', 'playlist_item_map', 'feed',
                   'directory_feed_impl', 'remote_downloader',
-                  'directory_watch_feed_impl', 'rss_feed_impl'
+                  'directory_watch_feed_impl', 'rss_feed_impl',
                   'rss_multi_feed_impl', 'scraper_feed_impl', 'feed_impl',
                   'search_downloads_feed_impl', 'http_auth_password',
                   'search_feed_impl', 'icon_cache', 'single_feed_impl',
