@@ -814,7 +814,10 @@ class TableView(Widget):
                     path, column, x, y = path_info
                     selection = self._widget.get_selection()
                     triangle_size = treeview.style_get_property("expander_size")
-                    if selection.path_is_selected(path) and x > triangle_size:
+                    renderer = column.get_cell_renderers()[0]
+                    if (selection.path_is_selected(path) and
+                            x > triangle_size and
+                            not isinstance(renderer, GTKCheckboxCellRenderer)):
                         self.delaying_press = True
                         return True
 
