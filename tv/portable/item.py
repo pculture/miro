@@ -1519,7 +1519,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.recalc_feed_counts()
 
     def on_downloader_migrated(self, old_filename, new_filename):
-        self.set_filename(video_filename)
+        self.set_filename(new_filename)
         self.signal_change()
 
     def set_downloader(self, downloader):
