@@ -328,3 +328,19 @@ class VLCRenderer:
 
     def get_rate(self):
         pass
+
+def get_item_type(item_info, success_callback, error_callback):
+    # FIXME - vlc 0.9.9a and earlier don't have the
+    # libvlc_video_get_track_count function which we really need
+    # to determine whether the media item has video tracks or not.
+    # So instead we have to "fake it".
+    #
+    # What we do here is return the item_info.file_type except in
+    # cases where the way the file_type is determined (by the file
+    # extension) is ambiguous.  In those cases, we return "video".
+    file_extension = os.path.splitext(item_info.video_path)[1]
+    if file_extension == ".ogg":
+        logging.info("** overriding file_type to 'video'")
+        success_callback("video")
+    else:
+        success_callback(item_info.file_type)

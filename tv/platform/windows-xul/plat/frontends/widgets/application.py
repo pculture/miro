@@ -47,7 +47,7 @@ from miro.plat import migrateappname
 from miro.plat import clipboard
 from miro.plat import options
 from miro.plat import resources
-from miro.plat.renderers.vlc import VLCRenderer
+from miro.plat.renderers.vlc import VLCRenderer, get_item_type
 from miro.plat.frontends.widgets import xulrunnerbrowser
 from miro.frontends.widgets.gtk import trayicon
 from miro.frontends.widgets.gtk import persistentwindow
@@ -63,8 +63,8 @@ class WindowsApplication(Application):
         logging.info("PyGObject version: %s", gtk.ver)
         logging.info("PyGtk version:     %s", gtk.pygtk_version)
 
-        app.renderer = VLCRenderer()
-        app.video_renderer = app.audio_renderer = app.renderer
+        app.video_renderer = app.audio_renderer = VLCRenderer()
+        app.get_item_type = get_item_type
         self.initXULRunner()
         gtk.gdk.threads_init()
         self.startup()
