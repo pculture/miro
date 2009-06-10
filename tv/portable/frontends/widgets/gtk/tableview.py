@@ -220,6 +220,7 @@ class MiroTreeView(gtk.TreeView):
         gtk.TreeView.__init__(self, model)
         self.drag_dest_at_bottom = False
         self.height_without_pad_bottom = -1
+        self.set_enable_search(False)
 
     def do_size_request(self, req):
         gtk.TreeView.do_size_request(self, req)
