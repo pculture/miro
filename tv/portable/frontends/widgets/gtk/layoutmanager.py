@@ -213,9 +213,20 @@ class TextBox(object):
         width, height = self.layout.get_size()
         if 0 <= x < width and 0 <= y < height:
             index, leading = self.layout.xy_to_index(x, y)
-            return index
-        else:
-            return None
+            # xy_to_index returns the nearest character, but that doesn't mean
+            # the user actually clicked on it.  Double check that (x, y) is
+            # actually inside that char's bounding box
+            char_x, char_y, char_w, char_h = self.layout.index_to_pos(index)
+            if char_w > 0: # the glyph is LTR
+                left = char_x
+                right = char_x + char_w
+            else: # the glyph is RTL
+                left = char_x + char_w
+                right = char_x
+            if left <= x < right:
+                return index
+        return None
+
 
     def draw(self, context, x, y, width, height):
         self.set_width(width)
