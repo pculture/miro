@@ -223,6 +223,8 @@ class Importer(object):
                         subscriptions.append(self._handle_site_entry(child))
                     elif child.getAttribute('type') == 'guide':
                         subscriptions.append(self._handle_guide_entry(child))
+                    elif child.getAttribute('type') == 'download':
+                        subscriptions.append(self._handle_download_entry(child))
                     elif child.hasAttribute("xmlUrl"):
                         subscriptions.append(self._handle_feed_entry(child))
                     else:
@@ -241,6 +243,28 @@ class Importer(object):
         url = entry.getAttribute("xmlUrl")
         title = entry.getAttribute('text')
         return {'type': 'site', 'url': url, 'title': title}
+
+    def _handle_download_entry(self, entry):
+        url = entry.getAttribute('xmlUrl')
+        subscription = {'type': 'download', 'url': url}
+        title = entry.getAttribute('title')
+        if title and title != url:
+            subscription['title'] = title
+
+        keys = ('title', 'description', 'length', 'thumbnail', 'feed', 'link',
+                'type')
+        additionalData = {}
+        for key in keys:
+            data = entry.getAttribute('additional%s' % key.title())
+            if data:
+                additionalData[key] = data
+
+        if 'type' in additionalData: # type key needs to be converted to
+                                     # mime_type
+            mime_type = additionalData.pop('type')
+            subscription['mime_type'] = mime_type
+        subscription.update(additionalData) # other keys can pass through
+        return subscription
 
     def _handle_feed_entry(self, entry):
         url = entry.getAttribute("xmlUrl")
