@@ -1245,7 +1245,7 @@ class StateCircleRenderer(widgetset.CustomCellRenderer):
             icon = self.downloading_icon
         elif self.info.downloaded and self.info.is_playable and not self.info.video_watched:
             icon = self.unwatched_icon
-        elif not self.info.item_viewed and not self.info.expiration_date:
+        elif not self.info.item_viewed and not self.info.expiration_date and not self.info.is_external:
             icon = self.new_icon
         else:
             return
