@@ -724,7 +724,7 @@ class HeaderToolbar(widgetset.Background):
             self.create_signal('view-all-clicked')
             self.create_signal('toggle-unwatched-clicked')
             self.create_signal('toggle-non-feed-clicked')
-            self.filter_switch = segmented.SegmentedButtonsRow(_("View:"), 'custom')
+            self.filter_switch = segmented.SegmentedButtonsRow(behavior='custom')
             # this "All" is different than other "All"s in the codebase, so it
             # needs to be clarified
             self.filter_switch.add_text_button('view-all', declarify(_('View|All')), self._on_view_all_clicked)
