@@ -434,6 +434,11 @@ class TableViewCommon(object):
             focused = self.isDescendantOf_(self.window().firstResponder())
             for row in get_all_indexes(self, self.selectedRowIndexes()):
                 self.drawBackgroundGradient(context, focused, row)
+    
+    def setFrameSize_(self, size):
+        if size.height == 0:
+            size.height = 4
+        self.SuperClass.setFrameSize_(self, size)
 
     def drawBackgroundGradient(self, context, focused, row):
         if focused:
