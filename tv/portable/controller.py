@@ -34,6 +34,7 @@ import logging
 import os
 import threading
 import tempfile
+import locale
 from random import randrange
 from zipfile import ZipFile
 
@@ -125,7 +126,11 @@ class Controller:
             except:
                 logging.exception("Failed to backup database")
 
+        if isinstance(report, str):
+            report = report.decode(locale.getpreferredencoding())
         report = report.encode("utf-8", "ignore")
+        if isinstance(description, str):
+            description = description.decode(locale.getpreferredencoding())
         description = description.encode("utf-8", "ignore")
         postVars = {"description": description,
                     "app_name": config.get(prefs.LONG_APP_NAME),
