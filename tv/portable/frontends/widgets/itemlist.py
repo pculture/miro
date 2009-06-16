@@ -362,7 +362,7 @@ class ItemList(object):
             return False
         return (not (self.new_only and item_info.item_viewed) and
                 not (self.unwatched_only and item_info.video_watched) and
-                not (self.non_feed_only and not item_info.is_external) and
+                not (self.non_feed_only and (not item_info.is_external and item_info.feed_url != 'dtv:searchDownloads')) and
                 item_matches_search(item_info, self._search_text))
 
     def set_show_details(self, item_id, value):
