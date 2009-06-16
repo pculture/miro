@@ -156,20 +156,6 @@ def add_download(url, handle_unknown_callback=None, metadata=None):
 
         handle_unknown_callback(url)
 
-    def callback_flash(old_url):
-        def _callback(url, contentType="video/flv"):
-            if url:
-                entry = _build_entry(url, contentType, additional=metadata)
-                download_video(entry)
-                return
-
-            if url == None:
-                handle_unknown_callback(old_url)
-            else:
-                handle_unknown_callback(url)
-
-        flashscraper.try_scraping_url(url, _callback)
-
     def callback(headers):
         """We need to figure out if the URL is a external video link, or a link to
         a feed.
@@ -183,7 +169,8 @@ def add_download(url, handle_unknown_callback=None, metadata=None):
             return
 
         if contentType and flashscraper.is_maybe_flashscrapable(url):
-            callback_flash(url)
+            entry = _build_entry(url, 'video/x-flv', additional=metadata)
+            download_video(entry)
             return
 
         if contentType and filetypes.is_maybe_feed_content_type(contentType):
