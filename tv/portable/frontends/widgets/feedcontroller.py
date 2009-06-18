@@ -215,8 +215,14 @@ class FeedController(itemlistcontroller.ItemListController):
         watchable = self.downloaded_view.item_list.get_count()
         full_count = (self.full_view.item_list.get_count() +
                 self._show_more_count)
-        autoqueued_count = len([i for i in self.full_view.item_list.get_items()
-                                if i.pending_auto_dl])
+        info = widgetutil.get_feed_info(self.id)
+        if info.autodownload_mode == 'off' or info.unwatched < info.max_new:
+            # don't count videos queued for other reasons
+            autoqueued_count = 0
+        else:
+            autoqueued_count = len([i for i in
+                                    self.full_view.item_list.get_items()
+                                    if i.pending_auto_dl])
         self._update_downloading_section(downloads)
         self._update_downloaded_section(watchable)
         self._update_full_section(downloads, full_count, autoqueued_count)
