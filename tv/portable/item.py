@@ -435,7 +435,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     @classmethod
     def visible_feed_view(cls, feed_id):
         return cls.make_view('feed_id=? AND (deleted IS NULL or not deleted)',
-                (feed_id,))
+                (feed_id,),
+                joins={'feed': 'item.feed_id=feed.id'})
 
     @classmethod
     def visible_folder_view(cls, folder_id):

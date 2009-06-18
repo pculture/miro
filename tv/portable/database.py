@@ -230,6 +230,11 @@ class ViewTracker(signals.SignalEmitter):
             self.emit('added', app.db.get_obj_by_id(id))
         for id in self.current_ids.difference(new_ids):
             self.emit('removed', app.db.get_obj_by_id(id))
+        for id in self.current_ids.union(new_ids):
+            # XXX this hits all the IDs, but there doesn't seem to be a way to
+            # check if the objects have actually been changed.  luckily, this
+            # isn't called very often.
+            self.emit('changed', app.db.get_obj_by_id(id))
         self.current_ids = new_ids
 
     def __len__(self):
