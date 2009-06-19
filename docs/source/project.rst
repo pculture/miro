@@ -58,16 +58,26 @@ Miro 1.2 branch (stable, but old)::
 Documentation
 =============
 
-Developer-focused documentation is in the Trac wiki at
-https://develop.participatoryculture.org/ .  Here you'll find build
-documentation for the three Miro platforms, architecture
+This manual is written using `restructured text`_.  It is "compiled"
+into HTML and PDF by `Sphinx`_.  This manual is versioned alongside
+Miro in the ``docs/`` directory of trunk.  See the ``README`` file for
+information on how to build the manual.
+
+.. _restructured text: http://docutils.sourceforge.net/rst.html
+.. _Sphinx: http://sphinx.pocoo.org/
+
+Additional developer-focused documentation is in the Trac wiki at
+https://develop.participatoryculture.org/ .  In the wiki, you'll find
+build documentation for the three Miro platforms, architecture
 documentation, testing and QA documentation, information on
 translating and packaging Miro, code style, and a bunch of pages that
 discuss decisions made during Miro development over the eons.  Some of
 this documentation will be absorbed into this manual.
 
-There's documentation in the developer blogs which are syndicated on
-http://planet.getmiro.com/ .
+There's additional material in the developer blogs and the `Miro
+Planet`_.  This material tends to be on a day-by-day basis.
+
+.. _Miro Planet: http://planet.getmiro.com/
 
 User documentation is primarily on the Get Miro site:
 

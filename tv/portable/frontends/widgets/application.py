@@ -26,7 +26,17 @@
 # this exception statement from your version. If you delete this exception
 # statement from all source files in the program, then also delete it here.
 
-"""Application class.  Portable code to handle the high-level running of Miro.
+"""The application module holds :class:`Application` and the portable
+code to handle the high level running of the Miro application.
+
+It also holds:
+
+* :class:`InfoUpdater` -- tracks channel/item updates from the backend
+  and sends the information to the frontend
+* :class:`InfoUpdaterCallbackList` -- tracks the list of callbacks for
+  info updater
+* :class:`WidgetsMessageHandler` -- frontend message handler
+* :class:`FrontendStatesStore` -- stores state of the frontend
 """
 
 import os
@@ -68,6 +78,9 @@ from miro.plat.frontends.widgets.widgetset import Rect
 from miro.plat.utils import unicodeToFilename, FilenameType
 
 class Application:
+    """This class holds the portable application code.  Each platform
+    extends this class with a platform-specific version.
+    """
     def __init__(self):
         app.widgetapp = self
         self.ignore_errors = False
@@ -83,12 +96,19 @@ class Application:
         self.unwatched_count = 0
 
     def startup(self):
+        """Connects to signals, installs handlers, and calls :meth:`startup`
+        from the :mod:`miro.startup` module.
+        """
         self.connect_to_signals()
         startup.install_movies_directory_gone_handler(self.handle_movies_gone)
         startup.install_first_time_handler(self.handle_first_time)
         startup.startup()
 
     def startup_ui(self):
+        """Starts up the widget ui by sending a bunch of messages
+        requesting data from the backend.  Also sets up managers,
+        initializes the ui, and displays the :class:`MiroWindow`.
+        """
         # Send a couple messages to the backend, when we get responses,
         # WidgetsMessageHandler() will call build_window()
         messages.TrackGuides().send_to_backend()
@@ -838,16 +858,29 @@ class Application:
         logging.info('Shutting down...')
 
 class InfoUpdaterCallbackList(object):
-    """Tracks the list of callbacks for InfoUpdater."""
+    """Tracks the list of callbacks for InfoUpdater.
+    """
 
     def __init__(self):
         self._callbacks = {}
 
     def add(self, type_, id_, callback):
+        """Adds the callback to the list for ``type_`` ``id_``.
+
+        :param type_: the type of the thing (feed, audio-feed, site, ...)
+        :param id_: the id for the thing
+        :param callback: the callback function to add
+        """
         key = (type_, id_)
         self._callbacks.setdefault(key, set()).add(callback)
 
     def remove(self, type_, id_, callback):
+        """Removes the callback from the list for ``type_`` ``id_``.
+
+        :param type_: the type of the thing (feed, audio-feed, site, ...)
+        :param id_: the id for the thing
+        :param callback: the callback function to remove
+        """
         key = (type_, id_)
         callback_set = self._callbacks[key]
         callback_set.remove(callback)
@@ -855,7 +888,11 @@ class InfoUpdaterCallbackList(object):
             del self._callbacks[key]
 
     def get(self, type_, id_):
-        """Get the list of callbacks for type_, id_."""
+        """Get the list of callbacks for ``type_``, ``id_``.
+
+        :param type_: the type of the thing (feed, audio-feed, site, ...)
+        :param id_: the id for the thing
+        """
         key = (type_, id_)
         if key not in self._callbacks:
             return []
@@ -868,23 +905,23 @@ class InfoUpdaterCallbackList(object):
 class InfoUpdater(signals.SignalEmitter):
     """Track channel/item updates from the backend.
 
-    To track item updates, use add_item_callback().  To track tab
+    To track item updates, use ``add_item_callback()``.  To track tab
     updates, connect to one of the signals below.
 
     Signals:
 
-        feeds-added (self, info_list) -- New video feeds were added
-        feeds-changed (self, info_list) -- Video feeds were changed
-        feeds-removed (self, info_list) -- Video feeds were removed
-        audio-feeds-added (self, info_list) -- New audio feeds were added
-        audio-feeds-changed (self, info_list) -- Audio feeds were changed
-        audio-feeds-removed (self, info_list) -- Audio feeds were removed
-        sites-added (self, info_list) -- New sites were added
-        sites-changed (self, info_list) -- Sites were changed
-        sites-removed (self, info_list) -- Sites were removed
-        playlists-added (self, info_list) -- New playlists were added
-        playlists-changed (self, info_list) -- Playlists were changed
-        playlists-removed (self, info_list) -- Playlists were removed
+    * feeds-added (self, info_list) -- New video feeds were added
+    * feeds-changed (self, info_list) -- Video feeds were changed
+    * feeds-removed (self, info_list) -- Video feeds were removed
+    * audio-feeds-added (self, info_list) -- New audio feeds were added
+    * audio-feeds-changed (self, info_list) -- Audio feeds were changed
+    * audio-feeds-removed (self, info_list) -- Audio feeds were removed
+    * sites-added (self, info_list) -- New sites were added
+    * sites-changed (self, info_list) -- Sites were changed
+    * sites-removed (self, info_list) -- Sites were removed
+    * playlists-added (self, info_list) -- New playlists were added
+    * playlists-changed (self, info_list) -- Playlists were changed
+    * playlists-removed (self, info_list) -- Playlists were removed
     """
     def __init__(self):
         signals.SignalEmitter.__init__(self)
@@ -925,6 +962,13 @@ class InfoUpdater(signals.SignalEmitter):
             self.emit('%s-removed' % signal_start, message.removed)
 
 class WidgetsMessageHandler(messages.MessageHandler):
+    """Handles frontend messages.
+
+    There's a method to handle each frontend message type.  See
+    :mod:`miro.messages` (``portable/messages.py``) and
+    :mod:`miro.messagehandler` (``portable/messagehandler.py``) for
+    more details.
+    """
     def __init__(self):
         messages.MessageHandler.__init__(self)
         # Messages that we need to see before the UI is ready
@@ -1101,9 +1145,10 @@ class WidgetsMessageHandler(messages.MessageHandler):
         library_tab_list.blink_tab("downloading")
 
 class FrontendStatesStore(object):
-    """Stores which views were left in list mode by the user."""
+    """Stores which views were left in list mode by the user.
+    """
 
-    # Maybe this should get its own module, but I'm it seems small enough to
+    # Maybe this should get its own module, but it seems small enough to
     # me -- BDK
 
     def __init__(self, message):
