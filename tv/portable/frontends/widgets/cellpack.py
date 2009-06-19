@@ -28,14 +28,15 @@
 
 """cellpack.py -- Code to layout CustomTableCells.
 
-We use the hbox/vbox model to lay things out with a couple changes.  The main
-difference here is that layouts are one-shot.  We don't keep state around
-inside the cell renderers, so we just set up the objects at the start, then
-use them to calculate info.
+We use the hbox/vbox model to lay things out with a couple changes.
+The main difference here is that layouts are one-shot.  We don't keep
+state around inside the cell renderers, so we just set up the objects
+at the start, then use them to calculate info.
 """
 
 class Margin(object):
-    """Helper object used to calculate margins."""
+    """Helper object used to calculate margins.
+    """
     def __init__(self , margin):
         if margin is None:
             margin = (0, 0, 0, 0)
@@ -45,21 +46,30 @@ class Margin(object):
         self.margin_height = margin[0] + margin[2]
 
     def inner_rect(self, x, y, width, height):
+        """Returns the x, y, width, height of the inner
+        box.
+        """
         return (x + self.margin_left,
                 y + self.margin_top,
                 width - self.margin_width,
                 height - self.margin_height)
 
     def outer_size(self, inner_size):
+        """Returns the width, height of the outer box.
+        """
         return (inner_size[0] + self.margin_width,
                 inner_size[1] + self.margin_height)
 
     def point_in_margin(self, x, y, width, height):
+        """Returns whether a given point is inside of the
+        margins.
+        """
         return ((0 <= x - self.margin_left < width - self.margin_width) and
                 (0 <= y  - self.margin_top < height - self.margin_height))
 
 class Packing(object):
-    """Helper object used to layout Boxes."""
+    """Helper object used to layout Boxes.
+    """
     def __init__(self, child, expand):
         self.child = child
         self.expand = expand
@@ -71,7 +81,8 @@ class Packing(object):
         self.child.draw(context, x, y, width, height)
 
 class WhitespacePacking(object):
-    """Helper object used to layout Boxes."""
+    """Helper object used to layout Boxes.
+    """
     def __init__(self, size, expand):
         self.size = size
         self.expand = expand
@@ -140,12 +151,13 @@ class Packer(object):
         return None
 
     def _layout(self, context, x, y, width, height):
-        """Layout our children and call draw() on them.  """
+        """Layout our children and call ``draw()`` on them.
+        """
         raise NotImplementedError()
 
     def _calc_size(self):
         """Calculate the size needed to hold the box.  The return value gets
-        cached and return in get_size().
+        cached and return in ``get_size()``.
         """
         raise NotImplementedError()
 
@@ -165,13 +177,13 @@ class Box(Packer):
 
     def pack(self, child, expand=False):
         """Add a new child to the box.  The child will be placed after all the
-        children packed before with pack_start.  Arguments:
-        
-        child -- child to pack.  It can be anything with a get_size() method,
-            including TextBoxes, ImageSurfarces, Buttons, Boxes and
-            Backgrounds.
-        expand -- If True, then the child will enlarge if space available is
-            more than the space required.
+        children packed before with pack_start.
+
+        :param child: child to pack.  It can be anything with a
+                      ``get_size()`` method, including TextBoxes,
+                      ImageSurfarces, Buttons, Boxes and Backgrounds.
+        :param expand: If True, then the child will enlarge if space
+                       available is more than the space required.
         """
         if not (hasattr(child, 'draw') and hasattr(child, 'get_size')):
             raise TypeError("%s can't be drawn" % child)
@@ -181,13 +193,13 @@ class Box(Packer):
 
     def pack_end(self, child, expand=False):
         """Add a new child to the end box.  The child will be placed before
-        all the children packed before with pack_end.  Arguments:
-        
-        child -- child to pack.  It can be anything with a get_size() method,
-            including TextBoxes, ImageSurfarces, Buttons, Boxes and
-            Backgrounds.
-        expand -- If True, then the child will enlarge if space available is
-            more than the space required.
+        all the children packed before with pack_end.
+
+        :param child: child to pack.  It can be anything with a
+                      ``get_size()`` method, including TextBoxes,
+                      ImageSurfarces, Buttons, Boxes and Backgrounds.
+        :param expand: If True, then the child will enlarge if space
+                       available is more than the space required.
         """
         if not (hasattr(child, 'draw') and hasattr(child, 'get_size')):
             raise TypeError("%s can't be drawn" % child)
@@ -196,13 +208,15 @@ class Box(Packer):
             self.expand_count += 1
 
     def pack_space(self, size, expand=False):
-        """Pack whitespace into the box."""
+        """Pack whitespace into the box.
+        """
         self.children.append(WhitespacePacking(size, expand))
         if expand:
             self.expand_count += 1
 
     def pack_space_end(self, size, expand=False):
-        """Pack whitespace into the end of box."""
+        """Pack whitespace into the end of box.
+        """
         self.children_end.append(WhitespacePacking(size, expand))
         if expand:
             self.expand_count += 1
@@ -296,14 +310,12 @@ class VBox(Box):
 class Table(Packer):
     def __init__(self, row_length=1, col_length=1,
                  row_spacing=0, col_spacing=0):
-        """
-        Create a new Table.
+        """Create a new Table.
 
-        Args:
-          row_length: how many rows long this should be
-          col_length: how many rows wide this should be
-          row_spacing: amount of spacing (in pixels) between rows
-          col_spacing: amount of spacing (in pixels) between columns
+        :param row_length: how many rows long this should be
+        :param col_length: how many rows wide this should be
+        :param row_spacing: amount of spacing (in pixels) between rows
+        :param col_spacing: amount of spacing (in pixels) between columns
         """
         assert min(row_length, col_length) > 0
         assert isinstance(row_length, int) and isinstance(col_length, int)
@@ -329,8 +341,7 @@ class Table(Packer):
         self.table_multiarray[row][column] = Packing(child, expand)
     
     def _get_grid_sizes(self):
-        """
-        Get the width and eights for both rows and columns
+        """Get the width and eights for both rows and columns
         """
         row_sizes = {}
         col_sizes = {}
@@ -388,7 +399,8 @@ class Table(Packer):
 
 
 class Alignment(Packer):
-    """Positions a child inside a larger space.  """
+    """Positions a child inside a larger space.
+    """
     def __init__(self, child, xscale=1.0, yscale=1.0, xalign=0.0, yalign=0.0,
             min_width=0, min_height=0):
         self.child = child
@@ -427,7 +439,8 @@ class Alignment(Packer):
             return None # (x, y) is in the empty space around child
 
 class DrawingArea(Packer):
-    """Area that uses custom drawing code."""
+    """Area that uses custom drawing code.
+    """
     def __init__(self, width, height, callback, *args):
         self.width = width
         self.height = height
@@ -444,7 +457,8 @@ class DrawingArea(Packer):
         return None
 
 class Background(Packer):
-    """Draws a background behind a child element."""
+    """Draws a background behind a child element.
+    """
     def __init__(self, child, min_width=0, min_height=0, margin=None):
         self.child = child
         self.min_width = min_width
@@ -473,7 +487,8 @@ class Background(Packer):
         return (self.child,) + self.margin.inner_rect(0, 0, width, height)
 
 class Padding(Packer):
-    """Adds padding to the edges of a packer."""
+    """Adds padding to the edges of a packer.
+    """
     def __init__(self, child, top=0, right=0, bottom=0, left=0):
         self.child = child
         self.margin = Margin((top, right, bottom, left))
@@ -490,7 +505,8 @@ class Padding(Packer):
         return (self.child,) + self.margin.inner_rect(0, 0, width, height)
 
 class TextBoxPacker(Packer):
-    """Base class for ClippedTextLine and ClippedTextBox"""
+    """Base class for ClippedTextLine and ClippedTextBox.
+    """
     def _layout(self, context, x, y, width, height):
         self.textbox.draw(context, x, y, width, height)
 
@@ -503,7 +519,6 @@ class ClippedTextBox(TextBoxPacker):
     """A TextBox that gets clipped if it's larger than it's allocated
     width.
     """
-
     def __init__(self, textbox, min_width=0, min_height=0):
         self.textbox = textbox
         self.min_width = min_width
@@ -518,7 +533,6 @@ class ClippedTextLine(TextBoxPacker):
     space allocated to it.  By default the clipping will happen at character
     boundaries.
     """
-
     def __init__(self, textbox, min_width=0):
         self.textbox = textbox
         self.textbox.set_wrap_style('char')
@@ -533,11 +547,10 @@ class TruncatedTextLine(ClippedTextLine):
         self.textbox.set_wrap_style('truncated-char')
 
 class Hotspot(Packer):
-    """A Hotspot handles mouse click tracking.  It's only purpose is to store
-    a name to return from find_hotspot().  In terms of layout, it simply
-    renders it's child in it's allocated space.
+    """A Hotspot handles mouse click tracking.  It's only purpose is
+    to store a name to return from ``find_hotspot()``.  In terms of
+    layout, it simply renders it's child in it's allocated space.
     """
-
     def __init__(self, name, child):
         self.name = name
         self.child = child
@@ -552,7 +565,8 @@ class Hotspot(Packer):
         return self.name, x, y, width, height
 
 class Stack(Packer):
-    """Packer that stacks other packers on top of each other."""
+    """Packer that stacks other packers on top of each other.
+    """
     def __init__(self):
         self.children = []
 

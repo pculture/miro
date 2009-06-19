@@ -50,6 +50,15 @@ path_to_surface = weakref.WeakValueDictionary()
 broken_image = widgetset.Image(resources.path('images/broken-image.gif'))
 
 def scaled_size(image, size):
+    """Takes an image which has a width and a height and a size tuple
+    that specifies the space available and returns the new width
+    and height that allows the image to fit into the sized space
+    at the correct height/width ratio.
+
+    :param image: the Image (must have width and height properties)
+    :param size: (width, height) tuple of space you want the image
+                 to fit in
+    """
     if image.width == 0 or image.height == 0:
         image = broken_image
     image_ratio = float(image.width) / image.height
@@ -67,10 +76,12 @@ def scaled_size(image, size):
 
 def get(path, size=None):
     """Returns an Image for path.
-    
-    size is an optional argument that can be used to get resized images.  If
-    given it should be a (width, height) tuple.  By default we return the
-    native size of the widget.
+
+    :param path: the filename for the image
+    :param size: if the image needs to fit into a specified sized
+                 space, then specify this and get will return a
+                 scaled image; if size is not specified, then this
+                 returns the default sized image
     """
     try:
         return path_to_image[(path, size)]
@@ -92,7 +103,14 @@ def get(path, size=None):
         return image
 
 def get_surface(path, size=None):
-    """Returns an ImageSurface for path."""
+    """Returns an ImageSurface for path.
+
+    :param path: the filename for the image
+    :param size: if the image needs to fit into a specified sized
+                 space, then specify this and get will return a
+                 scaled image; if size is not specified, then this
+                 returns the default sized image
+    """
     try:
         return path_to_surface[(path, size)]
     except KeyError:
