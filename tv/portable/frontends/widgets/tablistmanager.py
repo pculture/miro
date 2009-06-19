@@ -189,9 +189,11 @@ class TabListManager(object):
             selected_tabs = set()
             for mem in table_view.get_selection():
                 row = table_view.model[mem]
-                selected_tabs.add(row[0])
+                # sort children before parents
+                selected_tabs.add((1, row[0]))
                 for children in row.iterchildren():
-                    selected_tabs.add(children[0])
-            return self.selected_tab_list.type, list(selected_tabs)
+                    selected_tabs.add((0, children[0]))
+            return self.selected_tab_list.type, [obj for index, obj in
+                                                 sorted(selected_tabs)]
         else:
             return None, []
