@@ -1,9 +1,14 @@
-# Makefile for Sphinx documentation
-#
+# stuff to build Miro
+PYTHON         := $(shell which python)
+PYTHON_VERSION := $(shell python -c 'import sys; info=sys.version_info; print "%s.%s" % (info[0], info[1])')
+PREFIX         := /usr
+MIRO_SHARE_ROOT := dist/${PREFIX}/share/
+MIRO_RESOURCE_ROOT := dist/${PREFIX}/share/miro/resources/
+PYTHONPATH := dist/${PREFIX}/lib/python${PYTHON_VERSION}/site-packages/:${PYTHONPATH}
 
 # You can set these variables from the command line.
 SPHINXOPTS    =
-SPHINXBUILD   = sphinx-build
+SPHINXBUILD   = PYTHONPATH=${PYTHONPATH} sphinx-build
 PAPER         =
 
 # Internal variables.
@@ -17,6 +22,9 @@ setup:
 	-mkdir _build
 	-mkdir source/_static
 	-mkdir source/_templates
+
+	PYTHONPATH=${PYTHONPATH} ${PYTHON} ../tv/platform/gtk-x11/setup.py \
+	    install --root=./dist --prefix=${PREFIX}
 
 help:
 	@echo "Please use \`make <target>' where <target> is one of"

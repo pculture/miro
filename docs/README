@@ -8,7 +8,8 @@ Requirements
 You must build the documentation on a valid gtk-x11 platform.  This
 means that platform-specific documentation is of gtk-x11.
 
-You must have the Sphinx documentation tools installed.
+You must have the Sphinx documentation tools installed and running
+``./run.sh`` from ``platform/gtk-x11/`` should work as well.
 
 
 Building the docs
@@ -16,7 +17,7 @@ Building the docs
 
 To build the docs, run::
 
-    ./builddocs.sh
+    make html
 
 
 If documentation building is successful, then it will be in the ./_build/html/
