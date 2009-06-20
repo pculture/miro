@@ -65,7 +65,7 @@ class FolderBase(DDBObject):
     def get_folder(self):
         return None
 
-    def set_folder(self, newFolder):
+    def set_folder(self, newFolder, signal_items=False):
         if newFolder is not None:
             raise TypeError("Nested folders not allowed")
 

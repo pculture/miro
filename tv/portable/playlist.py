@@ -165,7 +165,7 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
             for map in PlaylistItemMap.playlist_view(self.id):
                 folder.add_id(map.item_id)
 
-    def set_folder(self, new_folder):
+    def set_folder(self, new_folder, update_trackers=True):
         self.confirm_db_thread()
         self._remove_ids_from_folder()
         if new_folder is not None:
@@ -174,6 +174,14 @@ class SavedPlaylist(database.DDBObject, PlaylistMixin):
             self.folder_id = None
         self.signal_change()
         self._add_ids_to_folder()
+        if update_trackers:
+            models.Item.update_folder_trackers()
+
+    @staticmethod
+    def bulk_set_folders(new_folders):
+        for child, parent in new_folders:
+            child.set_folder(parent, update_trackers=False)
+        models.Item.update_folder_trackers()
 
     def rename(self):
         title = _("Rename Playlist")

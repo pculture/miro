@@ -784,6 +784,7 @@ class BackendMessageHandler(messages.MessageHandler):
                 raise ValueError("Unknown Type: %s" % message.type)
 
             order = []
+            new_folders = []
             for info in info_list:
                 order.append(info.id)
                 if info.is_folder:
@@ -792,10 +793,11 @@ class BackendMessageHandler(messages.MessageHandler):
                         child_id = child_info.id
                         order.append(child_id)
                         child = child_class.get_by_id(child_id)
-                        child.set_folder(folder)
+                        new_folders.append((child, folder))
                 else:
                     child = child_class.get_by_id(info.id)
-                    child.set_folder(None)
+                    new_folders.append((child, None))
+            child_class.bulk_set_folders(new_folders)
             tab_order.reorder(order)
             tab_order.signal_change()
 

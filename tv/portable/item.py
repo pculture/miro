@@ -44,7 +44,7 @@ from miro.download_utils import cleanFilename, nextFreeFilename
 from miro.feedparser import FeedParserDict
 from miro.feedparserutil import normalize_feedparser_dict
 
-from miro.database import DDBObject, ObjectNotFoundError
+from miro.database import DDBObject, ObjectNotFoundError, ViewTracker
 from miro.database import DatabaseConstraintError
 from miro.databasehelper import make_simple_get_set
 from miro import app
@@ -556,6 +556,19 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     @classmethod
     def file_items_view(cls):
         return cls.make_view("is_file_item")
+
+    @classmethod
+    def update_folder_trackers(cls):
+        """Update each view tracker that care's about the item's folder (both
+        playlist and channel folders).
+        """
+
+        for tracker in ViewTracker.trackers_for_ddb_class(cls):
+            # bit of a hack here.  We only need to update ViewTrackers that
+            # care about the item's folder.  This seems like a safe way to
+            # check if that's true.
+            if 'folder_id' in tracker.where:
+                tracker.check_all_objects()
 
     def get_expiring(self):
         if self.expiring is None:

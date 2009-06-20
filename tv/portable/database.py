@@ -144,7 +144,7 @@ class ViewTracker(signals.SignalEmitter):
         cls.joined_table_to_tracker = {}
 
     @classmethod
-    def _get_trackers(cls, table_name):
+    def trackers_for_table(cls, table_name):
         try:
             return cls.table_to_tracker[table_name]
         except KeyError:
@@ -152,7 +152,11 @@ class ViewTracker(signals.SignalEmitter):
             return cls.table_to_tracker[table_name]
 
     @classmethod
-    def _get_related_trackers(cls, table_name):
+    def trackers_for_ddb_class(cls, klass):
+        return cls.trackers_for_table(app.db.table_name(klass))
+
+    @classmethod
+    def related_trackers_for_table(cls, table_name):
         try:
             return cls.joined_table_to_tracker[table_name]
         except KeyError:
@@ -160,15 +164,18 @@ class ViewTracker(signals.SignalEmitter):
             return cls.joined_table_to_tracker[table_name]
 
     @classmethod
+    def related_trackers_for_ddb_class(cls, klass):
+        return cls.related_trackers_for_table(app.db.table_name(klass))
+
+    @classmethod
     def _update_view_trackers(cls, obj):
-        table_name = app.db.table_name(obj.__class__)
-        for tracker in cls._get_trackers(table_name):
+        for tracker in cls.trackers_for_ddb_class(obj.__class__):
             tracker.object_changed(obj)
 
     @classmethod
     def _update_related_view_trackers(cls, obj):
         table_name = app.db.table_name(obj.__class__)
-        for tracker in cls._get_related_trackers(table_name):
+        for tracker in cls.related_trackers_for_table(table_name):
             tracker.object_changed(obj)
 
     def __init__(self, klass, where, values, joins):
@@ -182,16 +189,16 @@ class ViewTracker(signals.SignalEmitter):
         self.current_ids = set(app.db.query_ids(klass, where, values,
             joins=joins))
         self.table_name = app.db.table_name(klass)
-        ViewTracker._get_trackers(self.table_name).add(self)
+        ViewTracker.trackers_for_table(self.table_name).add(self)
         if joins is not None:
             for table_name in joins.keys():
-                ViewTracker._get_related_trackers(table_name).add(self)
+                ViewTracker.related_trackers_for_table(table_name).add(self)
 
     def unlink(self):
-        ViewTracker._get_trackers(self.table_name).discard(self)
+        ViewTracker.trackers_for_table(self.table_name).discard(self)
         if self.joins is not None:
             for table_name in self.joins.keys():
-                ViewTracker._get_related_trackers(table_name).discard(self)
+                ViewTracker.related_trackers_for_table(table_name).discard(self)
 
     def _obj_in_view(self, obj):
         where = '%s.id = ?' % (self.table_name,)

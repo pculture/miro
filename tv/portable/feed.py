@@ -843,20 +843,33 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             return None
 
-    def set_folder(self, newFolder):
+    def set_folder(self, newFolder, update_trackers=True):
         self.confirm_db_thread()
         oldFolder = self.get_folder()
+        if newFolder is oldFolder:
+            return
         if newFolder is not None:
             self.folder_id = newFolder.getID()
         else:
             self.folder_id = None
         self.signal_change()
-        for item in self.items:
-            item.signal_change(needsSave=False)
+        if update_trackers:
+            models.Item.update_folder_trackers()
         if newFolder:
             newFolder.signal_change(needsSave=False)
         if oldFolder:
             oldFolder.signal_change(needsSave=False)
+
+    @staticmethod
+    def bulk_set_folders(folder_assignments):
+        """Set the folders for multiple feeds at once.
+
+        This method is optimized to be a bit faster than calling set_folder()
+        for each individual folder.
+        """
+        for child, folder in folder_assignments:
+            child.set_folder(folder, update_trackers=False)
+        models.Item.update_folder_trackers()
 
     def generateFeed(self, removeOnError=False):
         newFeed = None
