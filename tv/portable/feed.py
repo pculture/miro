@@ -653,7 +653,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         for item in self.expiring_items():
             item.expire()
 
-    def signalItems (self):
+    def signal_items(self):
         for item in self.items:
             item.signal_change(needsSave=False)
 
@@ -777,7 +777,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             raise ValueError("Bad auto-download mode: %s" % mode)
         self.signal_change()
-        self.signalItems()
+        self.signal_items()
 
     def getCurrentAutoDownloadableItems(self):
         auto = set()
@@ -802,8 +802,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
                     item.save()
 
         self.signal_change()
-        for item in self.items:
-            item.signal_change(needsSave=False)
+        self.signal_items()
 
     def set_max_new(self, max_new):
         """Sets the maxNew attributes. -1 means unlimited.
