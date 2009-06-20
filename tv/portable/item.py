@@ -924,7 +924,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         self.recalc_feed_counts()
 
     def has_downloader(self):
-        return self.downloader_id is not None
+        return self.downloader_id is not None and self.downloader is not None
 
     def is_main_item(self):
         return (self.has_downloader() and
