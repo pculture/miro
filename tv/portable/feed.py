@@ -488,15 +488,23 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
 
     @classmethod
     def visible_video_view(cls):
-        return cls.make_view("visible AND section='video'")
+        return cls.make_view("visible AND section='video'",
+                track_optimizer=lambda obj: \
+                        obj.visible and obj.section == 'video')
 
     @classmethod
     def watched_folder_view(cls):
-        return cls.make_view("origURL LIKE 'dtv:directoryfeed:%'")
+        return cls.make_view("origURL LIKE 'dtv:directoryfeed:%'",
+                track_optimizer=cls._in_watched_folder_view)
+
+    def _in_watched_folder_view(self):
+        return self.origURL.startswith("dtv:directoryfeed:")
 
     @classmethod
     def visible_audio_view(cls):
-        return cls.make_view("visible AND section='audio'")
+        return cls.make_view("visible AND section='audio'",
+                track_optimizer=lambda obj: \
+                        obj.visible and obj.section == 'audio')
 
     def on_db_insert(self):
         self.generateFeed(True)

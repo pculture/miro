@@ -34,6 +34,7 @@
 #            filters so that they no longer keep the order of the
 #            parent view. So, filter before you sort.
 
+import logging
 import traceback
 import threading
 
@@ -106,13 +107,21 @@ def confirm_db_thread():
         traceback.print_stack()
         raise DatabaseThreadError, errorString
 
+def _always_true(obj):
+    return True
+
 class View(object):
-    def __init__(self, klass, where, values, order_by, joins):
+    def __init__(self, klass, where, values, order_by, joins, track_optimizer):
         self.klass = klass
         self.where = where
         self.values = values
         self.order_by = order_by
         self.joins = joins
+        if track_optimizer is None and where is None:
+            # If where is None, then all items will be in the view, so we can
+            # build track_optimizer trivially.
+            track_optimizer = _always_true
+        self.track_optimizer = track_optimizer
 
     def __iter__(self):
         return app.db.query(self.klass, self.where, self.values,
@@ -132,7 +141,8 @@ class View(object):
             raise TooManyObjects("Too many results returned")
 
     def make_tracker(self):
-        return ViewTracker(self.klass, self.where, self.values, self.joins)
+        return ViewTracker(self.klass, self.where, self.values, self.joins,
+                self.track_optimizer)
 
 class ViewTracker(signals.SignalEmitter):
     table_to_tracker = {} # maps table_name to trackers
@@ -178,10 +188,16 @@ class ViewTracker(signals.SignalEmitter):
         for tracker in cls.related_trackers_for_table(table_name):
             tracker.object_changed(obj)
 
-    def __init__(self, klass, where, values, joins):
+    def __init__(self, klass, where, values, joins, track_optimizer):
         signals.SignalEmitter.__init__(self, 'added', 'removed', 'changed')
         self.klass = klass
         self.where = where
+        if track_optimizer is not None:
+            self.track_check_func = track_optimizer
+        else:
+            logging.warn("Making tracker without optimizer: %s %s",
+                    self.klass.__name__, self.where)
+            self.track_check_func = self._default_track_check_func
         if isinstance(values, list):
             raise TypeError("values must be a tuple")
         self.values = values
@@ -200,7 +216,7 @@ class ViewTracker(signals.SignalEmitter):
             for table_name in self.joins.keys():
                 ViewTracker.related_trackers_for_table(table_name).discard(self)
 
-    def _obj_in_view(self, obj):
+    def _default_track_check_func(self, obj):
         where = '%s.id = ?' % (self.table_name,)
         if self.where:
             where += ' AND (%s)' % (self.where,)
@@ -220,7 +236,7 @@ class ViewTracker(signals.SignalEmitter):
 
     def check_object(self, obj):
         before = (obj.id in self.current_ids)
-        now = self._obj_in_view(obj)
+        now = self.track_check_func(obj)
         if before and not now:
             self.current_ids.remove(obj.id)
             self.emit('removed', obj)
@@ -286,10 +302,11 @@ class DDBObject(signals.SignalEmitter):
             ViewTracker._update_view_trackers(self)
 
     @classmethod
-    def make_view(cls, where=None, values=None, order_by=None, joins=None):
+    def make_view(cls, where=None, values=None, order_by=None, joins=None,
+            track_optimizer=None):
         if values is None:
             values = ()
-        return View(cls, where, values, order_by, joins)
+        return View(cls, where, values, order_by, joins, track_optimizer)
 
     @classmethod
     def get_by_id(cls, id):

@@ -89,11 +89,13 @@ class ChannelFolder(FolderBase):
 
     @classmethod
     def video_view(cls):
-        return cls.make_view("section='video'")
+        return cls.make_view("section='video'",
+                track_optimizer=lambda obj: obj.section == 'video')
 
     @classmethod
     def audio_view(cls):
-        return cls.make_view("section='audio'")
+        return cls.make_view("section='audio'",
+                track_optimizer=lambda obj: obj.section == 'audio')
 
     def getChildrenView(self):
         return feed.Feed.folder_view(self.id)
