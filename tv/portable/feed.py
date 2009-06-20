@@ -777,9 +777,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
         else:
             raise ValueError("Bad auto-download mode: %s" % mode)
         self.signal_change()
-        # need to call signal_related_change() because items may have
-        # entered/left the pending autodownload view
-        self.signal_related_change()
+        self.signalItems()
 
     def getCurrentAutoDownloadableItems(self):
         auto = set()

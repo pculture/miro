@@ -488,7 +488,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             return obj.feed_id == feed_id and not obj.deleted
         return cls.make_view('feed_id=? AND (deleted IS NULL or not deleted)',
                 (feed_id,),
-                joins={'feed': 'item.feed_id=feed.id'},
                 track_optimizer=track_optimizer)
 
     @classmethod
