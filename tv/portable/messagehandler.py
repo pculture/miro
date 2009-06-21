@@ -1261,7 +1261,6 @@ class BackendMessageHandler(messages.MessageHandler):
         feeds = added.get('feed')
         # send a notification to the user
         if feeds:
-            print feeds
             if len(feeds) == 1:
                 title = _("Subscribed to new feed:")
                 body = feeds[0].get('title', feeds[0]['url'])
