@@ -64,6 +64,8 @@ class ChannelGuide(DDBObject, iconcache.IconCacheOwnerMixin):
             self.historyLocation = None
             self.history = []
 
+        self.download_guide()
+
     def setup_restored(self):
         self.lastVisitedURL = None
         self.historyLocation = None
