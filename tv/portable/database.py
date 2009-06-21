@@ -95,7 +95,7 @@ def set_thread(thread):
     global event_thread
     if event_thread is None:
         event_thread = thread
-    
+
 import traceback
 def confirm_db_thread():
     global event_thread
@@ -107,8 +107,8 @@ def confirm_db_thread():
         traceback.print_stack()
         raise DatabaseThreadError, errorString
 
-def _always_true(obj):
-    return True
+def _object_exists(obj):
+    return obj.idExists()
 
 class View(object):
     def __init__(self, klass, where, values, order_by, joins, track_optimizer):
@@ -118,9 +118,9 @@ class View(object):
         self.order_by = order_by
         self.joins = joins
         if track_optimizer is None and where is None:
-            # If where is None, then all items will be in the view, so we can
-            # build track_optimizer trivially.
-            track_optimizer = _always_true
+            # If where is None, then all items that are in the database will be
+            # in the view, so we can build track_optimizer trivially.
+            track_optimizer = _object_exists
         self.track_optimizer = track_optimizer
 
     def __iter__(self):
