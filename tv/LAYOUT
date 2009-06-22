@@ -1,11 +1,28 @@
 # Miro - an RSS based video player application
 # Copyright (C) 2005-2009 Participatory Culture Foundation
 
-'platform/<platform name>' -- platform-specific code. This is searched
-first when importing Python modules.
+======
+LAYOUT
+======
 
-'portable' -- the portable backend that is common across all platforms.
+* ``portable``
 
-'resources' -- cross-platform resource files distributed with the
-application. Includes GUI assets that are (or could be) shared across
-platforms, but not those that are specific to a particular widget set.
+  Portable code that's common to all platforms.
+
+* ``platform/gtk-x11``
+
+  Linux platform specific code.
+
+* ``platform/windows-xul``
+
+  Windows platform specific code.
+
+* ``platform/osx``
+
+  OSX platform specific code
+
+* ``resources``
+
+  Cross-platform resource files distributed with the application.
+  Includes GUI assets that are (or could be) shared across platforms,
+  but not those that are specific to a particular widget set.

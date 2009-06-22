@@ -2,25 +2,25 @@
 README
 ======
 
-This is the source for Miro, the client-side component of
-the Democracy platform for Internet TV.  It is targeted at average,
+This is the source for Miro, the client-side component of the
+Democracy platform for Internet TV.  It is targeted at average,
 unsophisticated Internet users with broadband connections.  It can be
 built for Mac OS X, Microsoft Windows, or X Window-based platforms
-such as Linux, with a native look and feel on each platform.  There
-is a clean separation between the portable backend and the
+such as Linux, with a native look and feel on each platform.  There is
+a clean separation between the portable backend and the
 platform-specific frontend in the event that new ports are desired in
-the future.  
+the future.
 
-It is written primarily in Python and is distributed under the terms 
+It is written primarily in Python and is distributed under the terms
 of the GNU General Public License; see license.txt.
 
 Prebuilt versions are available from::
 
    http://www.getmiro.com/downloads/
 
-Development information, instructions on how to submit bug reports, 
-source code, information on mailing lists, and other development-related
-links and information are located at::
+Development information, instructions on how to submit bug reports,
+source code, information on mailing lists, and other
+development-related links and information are located at::
 
    https://develop.participatoryculture.org/
 
@@ -30,10 +30,7 @@ The latest source can be retrieved via Subversion from::
 
 Release notes and changes are listed in the dev wiki at::
 
-   https://develop.participatoryculture.org/trac/democracy/wiki/2.0ReleaseNotes
-   https://develop.participatoryculture.org/trac/democracy/wiki/1.2ReleaseNotes
-   https://develop.participatoryculture.org/trac/democracy/wiki/1.1ReleaseNotes
-   https://develop.participatoryculture.org/trac/democracy/wiki/1.0ReleaseNotes
+   https://develop.participatoryculture.org/trac/democracy/wiki/ReleaseNotes
 
 The public face of Miro is::
 
@@ -44,5 +41,6 @@ Miro development and promotes the platform, has a site at::
 
    http://participatoryculture.org/
 
-See https://develop.participatoryculture.org/trac/democracy/wiki/DevelopmentDocs 
+See
+https://develop.participatoryculture.org/trac/democracy/wiki/DevelopmentDocs
 for the latest build instructions.

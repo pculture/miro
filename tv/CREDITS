@@ -1,83 +1,98 @@
 # Miro - an RSS based video player application
 # Copyright (C) 2005-2009 Participatory Culture Foundation
 
-Funded software developers (chronological order)
-------------------------------------------------
+=======
+CREDITS
+=======
 
-  * Nick Nassar (nassar at downhillbattle dot org)
-    Worcester, Massachusetts, USA
+Funded developers
+=================
 
-  * Geoff Schmidt (gschmidt at gschmidt dot org)
-    Cambridge, Massachusetts, USA
+This list is in chronological order.
 
-  * Luc Heinrich (luc at honk-honk dot com)
-    Paris, France
+* Nick Nassar (nassar at downhillbattle dot org)
+  Worcester, Massachusetts, USA
 
-  * Ben Dean-Kawamura (ben.dean.kawamura at gmail.com)
-    Worcester, Massachusetts, USA
+* Geoff Schmidt (gschmidt at gschmidt dot org)
+  Cambridge, Massachusetts, USA
 
-  * Chris Lahey (clahey at clahey dot net)
+* Luc Heinrich (luc at honk-honk dot com)
+  Paris, France
 
-  * Paul Swartz (pswartz at pculture dot org)
+* Ben Dean-Kawamura (ben.dean.kawamura at gmail.com)
+  Worcester, Massachusetts, USA
 
-  * Will Kahn-Greene (will dot guaraldi at pculture dot org)
-    Somerville, Massachusetts, USA
+* Chris Lahey (clahey at clahey dot net)
 
-  * Chris Webber (cwebber at pculture dot org)
+* Paul Swartz (pswartz at pculture dot org)
+
+* Will Kahn-Greene (will dot guaraldi at pculture dot org)
+  Somerville, Massachusetts, USA
+
+* Chris Webber (cwebber at pculture dot org)
 
 
-Funded user interface designers (chronological order)
------------------------------------------------------
+Funded user interface designers
+===============================
 
-  * Nick Reville (npr at pculture dot org)
-    Worcester, Massachusetts, USA
+This list is in chronological order:
 
-  * Matt Bret (mb at pculture dot org)
-    Whitby, Ontario, Canada
+* Nick Reville (npr at pculture dot org)
+  Worcester, Massachusetts, USA
 
-  * Morgan Knutson (morgan at pculture dot org)
+* Matt Bret (mb at pculture dot org)
+  Whitby, Ontario, Canada
+
+* Morgan Knutson (morgan at pculture dot org)
 
 
 Funding
--------
+=======
 
-This software is one part of Democracy, an Internet TV
-platform. Funding for Democracy development is funded by the
-Participatory Culture Foundation, a 501(c)(3) nonprofit
-organization based in Worcester, Massachusetts, USA.
+This software is one part of Miro, an Internet TV platform. Funding
+for Miro development is funded by the Participatory Culture
+Foundation, a 501(c)(3) nonprofit organization based in Worcester,
+Massachusetts, USA.
 
 PCF, in turn, is funded by generous grants from Andrew and Deborah
 Rappaport, Mitch Kapor, and viewers like you.
 
 
 Special thanks
---------------
+==============
 
-Holmes Wilson
-Tiffiny Cheng
-Colin Mitchell
-David Moore
-Buzz
-Morgan Knutson
-Padgett Arango
-Webneo (Design Contest winner!)
-Dean Jansen
-Michael Bell-smith
-Samuel Felder
-Andy Ross
-Matt Griffin
-Adam Conover
-Tom Woodhams (icon design)
-Neil Cook
-Dan Funderburg (T-shirts)
-Tekriti Software (channel guide)
+Special thanks to the many people out there who have helped with the
+Miro project over the years.  They include:
 
-
-Code Contributors
------------------
-
-Tim Cuthbertson
-j@v2v.cc
-Andrew MacGinitie
-Michael Frank
-Felipe Sanches
+* Holmes Wilson
+* Tiffiny Cheng
+* Colin Mitchell
+* David Moore
+* Buzz
+* Morgan Knutson
+* Padgett Arango
+* Webneo (Design Contest winner!)
+* Dean Jansen
+* Michael Bell-smith
+* Samuel Felder
+* Andy Ross
+* Matt Griffin
+* Adam Conover
+* Tom Woodhams (icon design)
+* Neil Cook
+* Dan Funderburg (T-shirts)
+* Tekriti Software (channel guide)
+* Tim Cuthbertson (code)
+* j@v2v.cc (code)
+* Andrew MacGinitie (code)
+* Michael Frank (code)
+* Felipe Sanches (code)
+* Uwe Hermann (code)
+* Nathan Yergler (code)
+* mutantmonkey (code)
+* Njaal Borch (code)
+* Markus Golser (code)
+* Karl Ove Hufthammer (code)
+* Daniel Heres (code)
+* Jerry Zhou (code)
+* Zach Dwiel (code)

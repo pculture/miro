@@ -1,6 +1,10 @@
-This Subversion repository holds source code for several components of
-Miro, the open and free Internet TV platform.  For more information 
-about Miro, see:
+======
+README
+======
+
+This repository holds source code for several components of Miro, the
+open and free Internet TV platform.  For more information about Miro,
+see:
 
 * http://www.getmiro.com/
 * http://participatoryculture.org/
@@ -11,34 +15,69 @@ go to:
 
 * https://develop.participatoryculture.org/
 
-                                  ---
 
-Hosted here are:
+What's here
+===========
 
-Subdirectory bmachine: Broadcast Machine, an Internet TV publishing
-package, integrating a Bittorrent tracker, an RSS server, and a
-content management system into one easy-to-use Web application that
-can be installed by dragging a folder into your FTP client -- no
-database setup needed.
+Miro
+----
 
-Subdirectory tv: The centerpiece of the Miro platform, Miro
-Player is a desktop application that aims to make Internet TV an
-enjoyable experience for even the least technically sophisticated
-user. The Player can view channels created with Broadcast Machine as
-well as a wide variety of other video sources on the Internet. It also
-integrates with the remaining two components of the Miro
-platform: Channel Guide for promoting channels and Video Bomb for easy
-end-user republishing and social promotion of individual videos.
+* ``tv``
 
-Subdirectory dtv-binary-kit: Prebuilt binary dependencies for building
-Miro Player on Windows -- so developers can get up and running in
-half an hour instead of a week. If used, it should be checked out
-'alongside' the source to Miro Player. That is, 'tv' and
-'dtv-binary-kit' should both be subdirectories of the same
-directory. If you're reading this file, odds are good that you just
-checked out the whole repository, and so this has already been taken
-care of for you :)
+  The centerpiece of the Miro platform, Miro is a desktop application
+  that aims to make Internet TV an enjoyable experience for even the
+  least technically sophisticated user.  Miro can view channels
+  created with Broadcast Machine as well as a wide variety of other
+  video sources on the Internet.  It also integrates with the remaining
+  two components of the Miro platform: Channel Guide for promoting
+  channels and Video Bomb for easy end-user republishing and social
+  promotion of individual videos.
 
-                                  ---
+* ``dtv-binary-kit``
 
-Channel Guide and Video Bomb are tracked in other repositories.
+  Prebuilt binary dependencies for building Miro on Windows -- so
+  developers can get up and running in half an hour instead of a
+  week. If used, it should be checked out *alongside* the source to
+  Miro Player. That is, ``tv`` and ``dtv-binary-kit`` should both be
+  subdirectories of the same directory. If you're reading this file,
+  odds are good that you just checked out the whole repository, and so
+  this has already been taken care of for you. :)
+
+* ``dtv-binary-kit-mac``
+
+  Prebuilt binary dependencies for building Miro on Mac OSX.
+
+* ``docs``
+
+  Developer documentation for Miro.
+
+* ``resources``
+
+  Scripts, packaging files, and a bunch of other stuff that helps
+  us doing development on Miro and related projects.
+
+
+Broadcast Machine
+-----------------
+
+Channel Guide, Video Bomb, Miro Community and other projects are
+tracked in other repositories.
+
+* ``bmachine``
+
+  Broadcast Machine, an Internet TV publishing package, integrating a
+  Bittorrent tracker, an RSS server, and a content management system
+  into one easy-to-use Web application that can be installed by
+  dragging a folder into your FTP client -- no database setup needed.
+
+* ``bmachine-binary-kit``
+
+  Binary kit bits for Broadcast Machine.
+
+
+Misc
+----
+
+* ``retemplate``
+
+  I don't really know what this is.
