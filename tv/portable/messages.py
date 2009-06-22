@@ -64,6 +64,8 @@ class MessageHandler(object):
         raise NotImplementedError()
 
     def handle(self, message):
+        """Handles a given message.
+        """
         handler_name = self.get_message_handler_name(message)
         try:
             handler = getattr(self, handler_name)
@@ -92,7 +94,8 @@ class MessageHandler(object):
         return 'handle_' + util.ascii_lower(underscores)
 
 class Message(object):
-    """Base class for all Messages."""
+    """Base class for all Messages.
+    """
 
     @classmethod
     def install_handler(cls, handler):
@@ -103,8 +106,8 @@ class Message(object):
         cls.handler = handler
 
 class BackendMessage(Message):
-    """Base class for Messages that get sent to the backend."""
-
+    """Base class for Messages that get sent to the backend.
+    """
     def send_to_backend(self):
         try:
             handler = self.handler
@@ -114,7 +117,8 @@ class BackendMessage(Message):
             handler.handle(self)
 
 class FrontendMessage(Message):
-    """Base class for Messages that get sent to the frontend."""
+    """Base class for Messages that get sent to the frontend.
+    """
 
     def send_to_frontend(self):
         try:
@@ -127,7 +131,8 @@ class FrontendMessage(Message):
 # Backend Messages
 
 class FrontendStarted(BackendMessage):
-    """Inform the backend that the frontend has finished starting up."""
+    """Inform the backend that the frontend has finished starting up.
+    """
     pass
 
 class TrackChannels(BackendMessage):
@@ -140,11 +145,13 @@ class TrackChannels(BackendMessage):
     pass
 
 class StopTrackingChannels(BackendMessage):
-    """Stop tracking channels."""
+    """Stop tracking channels.
+    """
     pass
 
 class QuerySearchInfo(BackendMessage):
-    """Ask the backend to send a CurrentSearchInfo message.  """
+    """Ask the backend to send a CurrentSearchInfo message.
+    """
     pass
 
 class TrackPlaylists(BackendMessage):
@@ -157,7 +164,8 @@ class TrackPlaylists(BackendMessage):
     pass
 
 class StopTrackingPlaylists(BackendMessage):
-    """Stop tracking playlists."""
+    """Stop tracking playlists.
+    """
     pass
 
 class TrackGuides(BackendMessage):
@@ -170,7 +178,8 @@ class TrackGuides(BackendMessage):
     pass
 
 class StopTrackingGuides(BackendMessage):
-    """Stop tracking guides."""
+    """Stop tracking guides.
+    """
     pass
 
 class TrackItems(BackendMessage):
@@ -182,16 +191,15 @@ class TrackItems(BackendMessage):
     type is the type of object that we are tracking items for.  It can be one
     of the following:
 
-    'feed' -- Items in a feed
-    'playlist' - Items in a playlist
-    'new' -- Items that haven't been watched
-    'downloading' -- Items being downloaded
-    'library' -- All items
+    * feed -- Items in a feed
+    * playlist -- Items in a playlist
+    * new -- Items that haven't been watched
+    * downloading -- Items being downloaded
+    * library -- All items
 
     id should be the id of a feed/playlist. For new, downloading and library
     it is ignored.
     """
-
     def __init__(self, type, id):
         self.type = type
         self.id = id
@@ -202,15 +210,14 @@ class TrackItemsManually(BackendMessage):
     ItemList and ItemsChanged messages will have "manual" as the type and
     will use the id specified in the constructed.
     """
-
     def __init__(self, id, ids_to_track):
         self.id = id
         self.ids_to_track = ids_to_track
         self.type = 'manual'
 
 class StopTrackingItems(BackendMessage):
-    """Stop tracking items for a feed."""
-
+    """Stop tracking items for a feed.
+    """
     def __init__(self, type, id):
         self.type = type
         self.id = id
@@ -224,14 +231,15 @@ class TrackDownloadCount(BackendMessage):
     pass
 
 class StopTrackingDownloadCount(BackendMessage):
-    """Stop tracking the download count."""
+    """Stop tracking the download count.
+    """
     pass
 
 class TrackPausedCount(BackendMessage):
-    """Start tracking the number of paused downloading items.  After this
-    message is received, the backend will send a corresponding PausedCountChanged
-    message.  It will also send PausedCountChanged whenever the count
-    changes.
+    """Start tracking the number of paused downloading items.  After
+    this message is received, the backend will send a corresponding
+    PausedCountChanged message.  It will also send PausedCountChanged
+    whenever the count changes.
     """
     pass
 
@@ -240,66 +248,76 @@ class StopTrackingPausedCount(BackendMessage):
     pass
 
 class TrackNewVideoCount(BackendMessage):
-    """Start tracking the number of new videos.  When this message is received
-    the backend will send a corresponding NewVideoCountChanged message.  It will
-    also send NewVideoCountChanged whenever the count changes.
+    """Start tracking the number of new videos.  When this message is
+    received the backend will send a corresponding
+    NewVideoCountChanged message.  It will also send
+    NewVideoCountChanged whenever the count changes.
     """
     pass
 
 class StopTrackingNewVideoCount(BackendMessage):
-    """Stop tracking the new videos count."""
+    """Stop tracking the new videos count.
+    """
     pass
 
 class TrackNewAudioCount(BackendMessage):
-    """Start tracking the number of new audio items.  When this message is received
-    the backend will send a corresponding NewAudioCountChanged message.  It will
-    also send NewAudioCountChanged whenever the count changes.
+    """Start tracking the number of new audio items.  When this
+    message is received the backend will send a corresponding
+    NewAudioCountChanged message.  It will also send
+    NewAudioCountChanged whenever the count changes.
     """
     pass
 
 class StopTrackingNewAudioCount(BackendMessage):
-    """Stop tracking the new audio items count."""
+    """Stop tracking the new audio items count.
+    """
     pass
 
 class TrackUnwatchedCount(BackendMessage):
-    """Start tracking the number of unwatched items.  When this message is
-    received, the backend will send a corresponding UnwatchedCountChanged
-    message.  It will also send UnwatchedCountChanged whenever the count changes.
+    """Start tracking the number of unwatched items.  When this
+    message is received, the backend will send a corresponding
+    UnwatchedCountChanged message.  It will also send
+    UnwatchedCountChanged whenever the count changes.
     """
     pass
 
 class StopTrackingUnwatchedCount(BackendMessage):
-    """Stop tracking the unwatched items count."""
+    """Stop tracking the unwatched items count.
+    """
     pass
 
 class TrackWatchedFolders(BackendMessage):
     """Begin tracking watched folders
 
-    After this message is sent, the backend will send back a WatchedFolderList
-    message, then it will send WatchedFoldersChanged messages whenever the
-    list changes.
+    After this message is sent, the backend will send back a
+    WatchedFolderList message, then it will send WatchedFoldersChanged
+    messages whenever the list changes.
     """
     pass
 
 class StopTrackingWatchedFolders(BackendMessage):
-    """Stop tracking watched folders."""
+    """Stop tracking watched folders.
+    """
     pass
 
 class SetFeedExpire(BackendMessage):
-    """Sets the expiration for a feed."""
+    """Sets the expiration for a feed.
+    """
     def __init__(self, channel_info, expire_type, expire_time):
         self.channel_info = channel_info
         self.expire_type = expire_type
         self.expire_time = expire_time
 
 class SetFeedMaxNew(BackendMessage):
-    """Sets the feed's max new property."""
+    """Sets the feed's max new property.
+    """
     def __init__(self, channel_info, max_new):
         self.channel_info = channel_info
         self.max_new = max_new
 
 class SetFeedMaxOldItems(BackendMessage):
-    """Sets the feed's max old items property."""
+    """Sets the feed's max old items property.
+    """
     def __init__(self, channel_info, max_old_items):
         self.channel_info = channel_info
         self.max_old_items = max_old_items
@@ -313,8 +331,7 @@ class CleanFeed(BackendMessage):
 class ImportFeeds(BackendMessage):
     """Tell the backend to import feeds from an .opml file.
 
-    Attributes:
-    filename -- file name that exists
+    :param filename: file name that exists
     """
     def __init__(self, filename):
         self.filename = filename
@@ -322,8 +339,7 @@ class ImportFeeds(BackendMessage):
 class ExportSubscriptions(BackendMessage):
     """Tell the backend to export subscriptions to an .opml file.
 
-    Attributes:
-    filename -- file name to export to
+    :param filename: file name to export to
     """
     def __init__(self, filename):
         self.filename = filename
@@ -331,10 +347,10 @@ class ExportSubscriptions(BackendMessage):
 class RenameObject(BackendMessage):
     """Tell the backend to rename a feed/playlist/folder.
     
-    Attributes:
-    type -- 'feed', 'playlist', 'feed-folder' or 'playlist-folder'
-    id  -- id of the object to rename
-    new_name -- new name for the object
+    :param type: ``feed``, ``playlist``, ``feed-folder`` or
+                 ``playlist-folder``
+    :param id: id of the object to rename
+    :param new_name: new name for the object
     """
     def __init__(self, type, id, new_name):
         self.type = type
@@ -342,42 +358,50 @@ class RenameObject(BackendMessage):
         self.new_name = util.toUni(new_name)
 
 class UpdateFeed(BackendMessage):
-    """Updates a feed."""
+    """Updates a feed.
+    """
     def __init__(self, id):
         self.id = id
 
 class UpdateFeedFolder(BackendMessage):
-    """Updates the feeds in a feed folder."""
+    """Updates the feeds in a feed folder.
+    """
     def __init__(self, id):
         self.id = id
 
 class MarkFeedSeen(BackendMessage):
-    """Mark a feed as seen"""
+    """Mark a feed as seen.
+    """
     def __init__(self, id):
         self.id = id
 
 class MarkItemWatched(BackendMessage):
-    """Mark an item as watched"""
+    """Mark an item as watched.
+    """
     def __init__(self, id):
         self.id = id
 
 class MarkItemUnwatched(BackendMessage):
-    """Mark an item as unwatched"""
+    """Mark an item as unwatched.
+    """
     def __init__(self, id):
         self.id = id
 
 class SetItemResumeTime(BackendMessage):
-    """Set an item resume time"""
+    """Set an item resume time.
+    """
     def __init__(self, id, time):
         self.id = id
         self.resume_time = time
 
 class UpdateAllFeeds(BackendMessage):
-    """Updates all feeds."""
+    """Updates all feeds.
+    """
     pass
 
 class DeleteFeed(BackendMessage):
-    """Delete a feed."""
+    """Delete a feed.
+    """
     def __init__(self, id, is_folder, keep_items):
         self.id = id
         self.is_folder = is_folder
@@ -386,20 +410,24 @@ class DeleteFeed(BackendMessage):
 class DeleteWatchedFolder(BackendMessage):
     """Delete a watched folder.
 
-    NOTE: this separate from DeleteFeed since not all watched folders are
-    visible.
+    .. Note::
+
+       This separate from DeleteFeed since not all watched folders are
+       visible.
     """
     def __init__(self, id):
         self.id = id
 
 class DeletePlaylist(BackendMessage):
-    """Delete a playlist."""
+    """Delete a playlist.
+    """
     def __init__(self, id, is_folder):
         self.id = id
         self.is_folder = is_folder
 
 class DeleteSite(BackendMessage):
-    """Delete an external channel guide."""
+    """Delete an external channel guide.
+    """
     def __init__(self, id):
         self.id = id
 
@@ -410,58 +438,67 @@ class NewGuide(BackendMessage):
         self.url = util.toUni(url)
 
 class NewFeed(BackendMessage):
-    """Creates a new feed."""
+    """Creates a new feed.
+    """
     def __init__(self, url, section=u"video"):
         self.url = util.toUni(url)
         self.section = section
 
 class NewFeedSearchFeed(BackendMessage):
-    """Creates a new feed based on a search through a feed."""
+    """Creates a new feed based on a search through a feed.
+    """
     def __init__(self, channel_info, search_term, section=u"video"):
         self.channel_info = channel_info
         self.search_term = search_term
         self.section = section
 
 class NewFeedSearchEngine(BackendMessage):
-    """Creates a new feed from a search engine."""
+    """Creates a new feed from a search engine.
+    """
     def __init__(self, search_engine_info, search_term, section=u"video"):
         self.search_engine_info = search_engine_info
         self.search_term = search_term
         self.section = section
 
 class NewFeedSearchURL(BackendMessage):
-    """Creates a new feed from a url."""
+    """Creates a new feed from a url.
+    """
     def __init__(self, url, search_term, section):
         self.url = url
         self.search_term = search_term
         self.section = section
 
 class NewWatchedFolder(BackendMessage):
-    """Creates a new watched folder."""
+    """Creates a new watched folder.
+    """
     def __init__(self, path):
         self.path = path
 
 class SetWatchedFolderVisible(BackendMessage):
-    """Changes if a watched folder is visible in the tab list or not."""
+    """Changes if a watched folder is visible in the tab list or not.
+    """
     def __init__(self, id, visible):
         self.id = id
         self.visible = visible
 
 class NewPlaylist(BackendMessage):
-    """Create a new playlist."""
+    """Create a new playlist.
+    """
     def __init__(self, name, ids):
         self.name = util.toUni(name)
         self.ids = ids
 
 class NewFeedFolder(BackendMessage):
-    """Create a new feed folder."""
+    """Create a new feed folder.
+    """
     def __init__(self, name, section, child_feed_ids):
         self.name = util.toUni(name)
         self.section = section
         self.child_feed_ids = child_feed_ids
 
 class NewPlaylistFolder(BackendMessage):
-    """Create a new playlist folder."""
+    """Create a new playlist folder.
+    """
     def __init__(self, name, child_playlist_ids):
         self.name = util.toUni(name)
         self.child_playlist_ids = child_playlist_ids
@@ -477,38 +514,58 @@ class ChangeMoviesDirectory(BackendMessage):
         self.migrate = migrate
 
 class AddVideosToPlaylist(BackendMessage):
+    """Adds a list of videos to a playlist.
+    """
     def __init__(self, playlist_id, video_ids):
         self.playlist_id = playlist_id
         self.video_ids = video_ids
 
 class RemoveVideosFromPlaylist(BackendMessage):
+    """Removes a list of videos from a playlist.
+    """
     def __init__(self, playlist_id, video_ids):
         self.playlist_id = playlist_id
         self.video_ids = video_ids
 
 class DownloadURL(BackendMessage):
+    """Downloads the item at a url.
+
+    :param url: the url of the thing to download
+    :handle_unknown_callback: if the thing at the url isn't something that
+                              Miro knows what to do with, then it calls
+                              this callback.  The handler should take a
+                              single argument which is the url that
+                              couldn't be handled.
+    :param metadata: dict of name/value pairs to include in the item.
+    """
     def __init__(self, url, handle_unknown_callback=None, metadata=None):
         self.url = util.toUni(url)
         self.handle_unknown_callback = handle_unknown_callback
         self.metadata = metadata
 
 class OpenIndividualFile(BackendMessage):
+    """Open a single file item in Miro.
+    """
     def __init__(self, filename):
         self.filename = filename
 
 class OpenIndividualFiles(BackendMessage):
+    """Open a list of file items in Miro.
+    """
     def __init__(self, filenames):
         self.filenames = filenames
 
 class AddFiles(BackendMessage):
-    """This is like OpenIndividualFiles, but is handled differently
-    in that adding files doesn't cause videos that were added to be
+    """This is like OpenIndividualFiles, but is handled differently in
+    that adding files doesn't cause videos that were added to be
     played.
     """
     def __init__(self, filenames):
         self.filenames = filenames
 
 class CheckVersion(BackendMessage):
+    """Checks whether Miro is the most recent version.
+    """
     def __init__(self, up_to_date_callback):
         self.up_to_date_callback = up_to_date_callback
 
@@ -522,97 +579,114 @@ class Search(BackendMessage):
         self.terms = terms
 
 class StartDownload(BackendMessage):
-    """Start downloading an item."""
+    """Start downloading an item.
+    """
     def __init__(self, id):
         self.id = id
     def __repr__(self):
         return BackendMessage.__repr__(self) + (", id: %s" % self.id)
 
 class CancelDownload(BackendMessage):
-    """Cancel downloading an item."""
+    """Cancel downloading an item.
+    """
     def __init__(self, id):
         self.id = id
 
 class CancelAllDownloads(BackendMessage):
-    """Cancels all downloading items."""
+    """Cancels all downloading items.
+    """
     pass
 
 class PauseAllDownloads(BackendMessage):
-    """Pauses all downloading items."""
+    """Pauses all downloading items.
+    """
     pass
 
 class PauseDownload(BackendMessage):
-    """Pause downloading an item."""
+    """Pause downloading an item.
+    """
     def __init__(self, id):
         self.id = id
 
 class ResumeAllDownloads(BackendMessage):
-    """Resumes all downloading items."""
+    """Resumes all downloading items.
+    """
     pass
 
 class ResumeDownload(BackendMessage):
-    """Resume downloading an item."""
+    """Resume downloading an item.
+    """
     def __init__(self, id):
         self.id = id
 
 class StartUpload(BackendMessage):
-    """Start uploading a torrent."""
+    """Start uploading a torrent.
+    """
     def __init__(self, id):
         self.id = id
 
 class StopUpload(BackendMessage):
-    """Stop uploading a torrent."""
+    """Stop uploading a torrent.
+    """
     def __init__(self, id):
         self.id = id
 
 class KeepVideo(BackendMessage):
-    """Cancel the auto-expiration of an item's video"""
+    """Cancel the auto-expiration of an item's video.
+    """
     def __init__(self, id):
         self.id = id
     def __repr__(self):
         return BackendMessage.__repr__(self) + (", id: %s" % self.id)
 
 class SaveItemAs(BackendMessage):
-    """Saves an item in the dark clutches of Miro to somewhere else."""
+    """Saves an item in the dark clutches of Miro to somewhere else.
+    """
     def __init__(self, id, filename):
         self.id = id
         self.filename = filename
 
 class RemoveVideoEntry(BackendMessage):
-    """Remove the entry for an external video"""
+    """Remove the entry for an external video.
+    """
     def __init__(self, id):
         self.id = id
 
 class DeleteVideo(BackendMessage):
-    """Delete the video for an item's video"""
+    """Delete the video for an item's video.
+    """
     def __init__(self, id):
         self.id = id
     def __repr__(self):
         return BackendMessage.__repr__(self) + (", id: %s" % self.id)
 
 class RenameVideo(BackendMessage):
-    """Renames the video"""
+    """Renames the video.
+    """
     def __init__(self, id, new_name):
         self.id = id
         self.new_name = new_name
 
 class RevertFeedTitle(BackendMessage):
-    """Reverts the feed's title back to the original"""
+    """Reverts the feed's title back to the original.
+    """
     def __init__(self, id):
         self.id = id
 
 class RevertItemTitle(BackendMessage):
-    """Reverts the item's title back to the original"""
+    """Reverts the item's title back to the original.
+    """
     def __init__(self, id):
         self.id = id
 
 class PlayAllUnwatched(BackendMessage):
-    """Figures out all the unwatched items and plays them."""
+    """Figures out all the unwatched items and plays them.
+    """
     def __init__(self):
         pass
 
 class FolderExpandedChange(BackendMessage):
-    """Inform the backend when a folder gets expanded/collapsed
+    """Inform the backend when a folder gets expanded/collapsed.
     """
     def __init__(self, type, id, expanded):
         self.type = type
@@ -620,25 +694,24 @@ class FolderExpandedChange(BackendMessage):
         self.expanded = expanded
 
 class AutodownloadChange(BackendMessage):
-    """Inform the backend that the user changed the auto-download setting for
-    a feed.  The possible setting values are "all", "new" and "off"
+    """Inform the backend that the user changed the auto-download
+    setting for a feed.  The possible setting values are ``all``,
+    ``new`` and ``off``.
     """
     def __init__(self, id, setting):
         self.id = id
         self.setting = setting
 
 class TabsReordered(BackendMessage):
-    """Inform the backend when the channel tabs are rearranged.  This includes
-    simple position changes and also changes to which folders the channels are
-    in.
+    """Inform the backend when the channel tabs are rearranged.  This
+    includes simple position changes and also changes to which folders
+    the channels are in.
 
-    Attributes:
-
-    toplevels -- a dictionary of {'type': [channelinfo1, channelinfo2]},
-        where 'channelinfo' is a ChannelInfo object without parents
-
-    folder_children -- dict mapping channel folder ids to a list of
-        ChannelInfo objects for their children
+    :param toplevels: a dict of {'type': [channelinfo1,
+                      channelinfo2]}, where ``channelinfo`` is a
+                      ChannelInfo object without parents
+    :param folder_children: dict mapping channel folder ids to a list of
+                            ChannelInfo objects for their children
     """
     def __init__(self):
         self.toplevels = {
@@ -658,17 +731,17 @@ class TabsReordered(BackendMessage):
 class PlaylistReordered(BackendMessage):
     """Inform the backend when the items in a playlist are re-ordered.
 
-    Attributes:
-    id -- playlist that was re-ordered
-    item_ids -- List of ids for item in the playlist, in their new order.
+    :param id: playlist that was re-ordered.
+    :param item_ids: List of ids for item in the playlist, in their new
+                     order.
     """
     def __init__(self, id, item_ids):
         self.id = id
         self.item_ids = item_ids
 
 class SubscriptionLinkClicked(BackendMessage):
-    """Inform the backend that the user clicked on a subscription link in a
-    web browser.
+    """Inform the backend that the user clicked on a subscription link
+    in a web browser.
     """
     def __init__(self, url):
         self.url = url
@@ -682,31 +755,33 @@ class ReportCrash(BackendMessage):
         self.send_report = send_report
 
 class SaveFrontendState(BackendMessage):
-    """Save data for the frontend."""
+    """Save data for the frontend.
+    """
     def __init__(self, list_view_displays, sort_states):
         self.list_view_displays = list_view_displays
         self.sort_states = sort_states
 
 class QueryFrontendState(BackendMessage):
-    """Ask for a CurrentFrontendState message to be sent back."""
+    """Ask for a CurrentFrontendState message to be sent back.
+    """
+    pass
 
 # Frontend Messages
 
 class StartupSuccess(FrontendMessage):
-    """The startup process is complete.  The frontend should wait for this
-    signal to show the UI to the user.
+    """The startup process is complete.  The frontend should wait for
+    this signal to show the UI to the user.
     """
     pass
 
 class StartupFailure(FrontendMessage):
-    """The startup process failed.  The frontend should inform the user that
-    this happened and quit.
+    """The startup process failed.  The frontend should inform the
+    user that this happened and quit.
 
     Attributes:
-        summary -- Short, user-friendly, summary of the problem
-        description -- Longer explanation of the problem
+    :param summary: Short, user-friendly, summary of the problem.
+    :param description: Longer explanation of the problem.
     """
-
     def __init__(self, summary, description):
         self.summary = summary
         self.description = description
@@ -714,32 +789,31 @@ class StartupFailure(FrontendMessage):
 class ChannelInfo(object):
     """Tracks the state of a channel
 
-    Attributes:
-
-    name -- channel name
-    url -- channel url (None for channel folders)
-    id -- object id
-    section -- which section this is in (audio or video)
-    tab_icon -- path to this channel's tab icon
-    thumbnail -- path to this channel's thumbnail
-    num_downloaded -- number of downloaded items in the feed
-    unwatched -- number of unwatched videos
-    available -- number of newly downloaded videos
-    is_folder -- is this a channel folder?
-    is_directory_feed -- is this channel is a watched directory?
-    parent_id -- id of parent folder or None
-    is_updating -- whether or not the feed is currently updating
-    has_downloading -- are videos currently being downloaded for this channel?
-    base_href -- url to use for relative links for items in this channel.
-      This will be None for ChannelFolders.
-    autodownload_mode -- current autodownload mode ('all', 'new' or 'off')
-    search_term -- the search term used for this feed or None
-    expire -- expire type ("system", "never", or "feed")
-    expire_time -- expire time in hours
-    max_new -- maximum number of items this feed wants
-    max_old_items -- maximum number of old items to remember
+    :param name: channel name
+    :param url: channel url (None for channel folders)
+    :param id: object id
+    :param section: which section this is in (audio or video)
+    :param tab_icon: path to this channel's tab icon
+    :param thumbnail: path to this channel's thumbnail
+    :param num_downloaded: number of downloaded items in the feed
+    :param unwatched: number of unwatched videos
+    :param available: number of newly downloaded videos
+    :param is_folder: is this a channel folder?
+    :param is_directory_feed: is this channel is a watched directory?
+    :param parent_id: id of parent folder or None
+    :param is_updating: whether or not the feed is currently updating
+    :param has_downloading: are videos currently being downloaded for
+                            this channel?
+    :param base_href: url to use for relative links for items in this
+                      channel.  This will be None for ChannelFolders.
+    :param autodownload_mode: current autodownload mode (``all``,
+                              ``new`` or ``off``)
+    :param search_term: the search term used for this feed or None
+    :param expire: expire type (``system``, ``never``, or ``feed``)
+    :param expire_time: expire time in hours
+    :param max_new: maximum number of items this feed wants
+    :param max_old_items: maximum number of old items to remember
     """
-
     def __init__(self, channel_obj):
         import time
         start = time.time()
@@ -788,13 +862,10 @@ class ChannelInfo(object):
 class PlaylistInfo(object):
     """Tracks the state of a playlist
 
-    Attributes:
-
-    name -- playlist name
-    id -- object id
-    is_folder -- is this a playlist folder?
+    :param name: playlist name
+    :param id: object id
+    :param is_folder: is this a playlist folder?
     """
-
     def __init__(self, playlist_obj):
         self.name = playlist_obj.get_title()
         self.id = playlist_obj.id
@@ -807,16 +878,14 @@ class PlaylistInfo(object):
 class GuideInfo(object):
     """Tracks the state of a channel guide
 
-    Attributes:
-
-    name -- channel name
-    id -- object id
-    url -- URL for the guide
-    allowed_urls -- URLs that should be also considered part of the guide
-    default -- is this the default channel guide?
-    favicon -- the favicon for the guide
-    faviconIsDefault -- true if the guide is using the default site icon and
-                        not a favicon from the web
+    :param name: channel name
+    :param id: object id
+    :param url: URL for the guide
+    :param allowed_urls: URLs that should be also considered part of the guide
+    :param default: is this the default channel guide?
+    :param favicon: the favicon for the guide
+    :param faviconIsDefault: true if the guide is using the default site
+                             icon and not a favicon from the web
     """
     def __init__(self, guide):
         self.name = guide.get_title()
@@ -831,53 +900,56 @@ class GuideInfo(object):
 class ItemInfo(object):
     """Tracks the state of an item
 
-    Attributes:
-
-    name -- name of the item
-    id -- object id
-    feed_id -- id for the items feed
-    feed_name -- name of the feed item is attached to
-    feed_url -- URL of the feed item is attached to 
-    description -- longer description for the item (HTML)
-    state -- see Item.get_state()
-    release_date -- datetime object when the item was published
-    size -- size of the item in bytes
-    duration -- length of the video in seconds
-    resume_time -- time at which playback should restart
-    permalink -- URL to a permalink to the item (or None)
-    commentslink -- URL to a comments page for the item (or None)
-    payment_link -- URL of the payment page associated with the item
-        (or empty string)
-    has_sharable_url -- does this item have a sharable URL?
-    can_be_saved -- is this an expiring downloaded item?
-    downloaded -- has the item been downloaded?
-    is_external -- is this item external (true) or from a channel (false)?
-    expiration_date -- datetime object for when the item will expire (or None)
-    item_viewed -- has the user ever seen the item?
-    video_watched -- has the user watched the video for the item?
-    video_path -- the file path to the video for this item (or None)
-    file_type -- type of the downloaded file (video/audio/other)
-    seeding_status -- Torrent seeding status ('seeding', 'stopped', or None)
-    thumbnail -- path to the thumbnail for this file
-    thumbnail_url -- URL for the item's thumbnail (or None)
-    file_format -- User-facing format description.  Possibly the file type,
-        pulled from the mime_type, or more generic, like "audio"
-    license -- this file's license, if known.
-    mime_type -- mime-type of the enclosure that would be downloaded
-    file_url -- URL of the enclosure that would be downloaded
-    download_info -- DownloadInfo object containing info about the download
-        (or None)
-    is_container_item -- whether or not this item is actually a
-        collection of files as opposed to an individual item
-    children -- for container items the children of the item.
-    is_playable -- is this item a audio/video file, or a container that
-        contains audio/video files inside.
-    self.leechers -- (Torrent only) number of leeching clients
-    self.seeders -- (Torrent only) number of seeding clients
-    self.up_rate -- (Torrent only) how fast we're uploading data
-    self.down_rate -- (Torrent only) how fast we're downloading data
-    self.up_total -- (Torrent only) total amount we've uploaded
-    self.down_total -- (Torrent only) total amount we've downloaded
+    :param name: name of the item
+    :param id: object id
+    :param feed_id: id for the items feed
+    :param feed_name: name of the feed item is attached to
+    :param feed_url: URL of the feed item is attached to 
+    :param description: longer description for the item (HTML)
+    :param state: see Item.get_state()
+    :param release_date: datetime object when the item was published
+    :param size: size of the item in bytes
+    :param duration: length of the video in seconds
+    :param resume_time: time at which playback should restart
+    :param permalink: URL to a permalink to the item (or None)
+    :param commentslink: URL to a comments page for the item (or None)
+    :param payment_link: URL of the payment page associated with the item
+                         (or empty string)
+    :param has_sharable_url: does this item have a sharable URL?
+    :param can_be_saved: is this an expiring downloaded item?
+    :param downloaded: has the item been downloaded?
+    :param is_external: is this item external (true) or from a channel
+                        (false)?
+    :param expiration_date: datetime object for when the item will expire
+                            (or None)
+    :param item_viewed: has the user ever seen the item?
+    :param video_watched: has the user watched the video for the item?
+    :param video_path: the file path to the video for this item (or None)
+    :param file_type: type of the downloaded file (video/audio/other)
+    :param seeding_status: Torrent seeding status ('seeding', 'stopped',
+                           or None)
+    :param thumbnail: path to the thumbnail for this file
+    :param thumbnail_url: URL for the item's thumbnail (or None)
+    :param file_format: User-facing format description.  Possibly the
+                        file type,  pulled from the mime_type, or more
+                        generic, like "audio"
+    :param license: this file's license, if known.
+    :param mime_type: mime-type of the enclosure that would be downloaded
+    :param file_url: URL of the enclosure that would be downloaded
+    :param download_info: DownloadInfo object containing info about the
+                          download (or None)
+    :param is_container_item: whether or not this item is actually a
+                              collection of files as opposed to an
+                              individual item
+    :param children: for container items the children of the item.
+    :param is_playable: is this item a audio/video file, or a container that
+                        contains audio/video files inside.
+    :param leechers: (Torrent only) number of leeching clients
+    :param seeders: (Torrent only) number of seeding clients
+    :param up_rate: (Torrent only) how fast we're uploading data
+    :param down_rate: (Torrent only) how fast we're downloading data
+    :param up_total: (Torrent only) total amount we've uploaded
+    :param down_total: (Torrent only) total amount we've downloaded
     """
     def __init__(self, item):
         self.name = item.get_title()
@@ -950,17 +1022,16 @@ class ItemInfo(object):
 class DownloadInfo(object):
     """Tracks the download state of an item.
 
-    Attributes:
-
-    downloaded_size -- bytes downloaded
-    rate -- current download rate, in bytes per second
-    state -- one of 'downloading', 'uploading', 'finished', 'failed' or 
-        'paused'.  'uploading' is for torrents only.  It means that we've
-        finished downloading the torrent and are now seeding it.
-    eta -- Estimated seconds before the download is finished
-    startup_activity -- The current stage of starting up
-    finished -- True if the item has finished downloading
-    torrent -- Is this a Torrent download?
+    :param downloaded_size: bytes downloaded
+    :param rate: current download rate, in bytes per second
+    :param state: one of ``downloading``, ``uploading``, ``finished``,
+                  ``failed`` or ``paused``.  ``uploading`` is for
+                  torrents only.  It means that we've finished
+                  downloading the torrent and are now seeding it.
+    :param eta: Estimated seconds before the download is finished
+    :param startup_activity: The current stage of starting up
+    :param finished: True if the item has finished downloading
+    :param torrent: Is this a Torrent download?
     """
     def __init__(self, downloader):
         self.downloaded_size = downloader.get_current_size()
@@ -978,8 +1049,8 @@ class DownloadInfo(object):
         self.eta = downloader.getETA()
 
 class PendingDownloadInfo(DownloadInfo):
-    """DownloadInfo object for pending downloads (downloads queued, but not
-    started because we've reached some limit)
+    """DownloadInfo object for pending downloads (downloads queued,
+    but not started because we've reached some limit)
     """
     def __init__(self):
         self.downloaded_size = 0
@@ -995,11 +1066,9 @@ class PendingDownloadInfo(DownloadInfo):
 class WatchedFolderInfo(object):
     """Tracks the state of a watched folder.
     
-    Attributes:
-
-    id -- ID of the channel
-    path -- Path to the folder being watched
-    visible -- Is the watched folder shown on the tab list?
+    :param id: ID of the channel
+    :param path: Path to the folder being watched
+    :param visible: Is the watched folder shown on the tab list?
     """
     def __init__(self, channel):
         self.id = channel.id
@@ -1009,11 +1078,9 @@ class WatchedFolderInfo(object):
 class GuideList(FrontendMessage):
     """Sends the frontend the initial list of channel guides
 
-    Attributes:
-    default_guide -- The Default channel guide
-    guides -- list added channel guides
+    :param default_guide: The Default channel guide
+    :param guides: list added channel guides
     """
-
     def __init__(self, guides):
         self.default_guide = [g for g in guides if g.default]
         if len(self.default_guide) == 0:
@@ -1036,15 +1103,15 @@ class TabList(FrontendMessage):
     This is sent at startup and when the changes to the list of
     channels/playlists is too complex to describe with a TabsChanged message.
 
-    Attributes:
-    type -- 'feed' or 'playlist'
-    toplevels -- the list of ChannelInfo/PlaylistInfo objects without parents
-    folder_children -- dict mapping channel folder ids to a list of
-        ChannelInfo/PlaylistInfo objects for their children
-    expanded_folders -- set containing ids of the folders that should
-        be initially expanded.
+    :param type: ``feed`` or ``playlist``
+    :param toplevels: the list of ChannelInfo/PlaylistInfo objects
+                      without parents
+    :param folder_children: dict mapping channel folder ids to a list of
+                            ChannelInfo/PlaylistInfo objects for their
+                            children
+    :param expanded_folders: set containing ids of the folders that should
+                             be initially expanded.
     """
-
     def __init__(self, type):
         self.type = type
         self.toplevels = []
@@ -1066,14 +1133,13 @@ class TabsChanged(FrontendMessage):
     """Informs the frontend that the channel list or playlist list has been 
     changed.
 
-    Attributes:
-    type -- 'feed', playlist' or 'guide'
-    added -- ChannelInfo/PlaylistInfo object for each added tab.  The list 
-        will be in the same order that the tabs were added.
-    changed -- list of ChannelInfo/PlaylistInfos for each changed tab.
-    removed -- list of ids for each tab that was removed
-    section -- 'audio', 'video', or None (used for channels and
-        channel folders)
+    :param type: ``feed``, ``playlist` or ``guide``
+    :param added: ChannelInfo/PlaylistInfo object for each added tab.  The
+                  list will be in the same order that the tabs were added.
+    :param changed: list of ChannelInfo/PlaylistInfos for each changed tab.
+    :param removed: list of ids for each tab that was removed
+    :param section: ``audio``, ``video``, or None (used for channels and
+                    channel folders)
     """
     def __init__(self, type, added, changed, removed, section=None):
         self.type = type
@@ -1085,10 +1151,9 @@ class TabsChanged(FrontendMessage):
 class ItemList(FrontendMessage):
     """Sends the frontend the initial list of items for a feed
 
-    Attributes:
-    type -- type of object being tracked (same as in TrackItems)
-    id -- id of the object being tracked (same as in TrackItems)
-    items -- list of ItemInfo objects
+    :param type: type of object being tracked (same as in TrackItems)
+    :param id: id of the object being tracked (same as in TrackItems)
+    :param items: list of ItemInfo objects
     """
     def __init__(self, type, id, item_infos):
         self.type = type
@@ -1098,15 +1163,13 @@ class ItemList(FrontendMessage):
 class ItemsChanged(FrontendMessage):
     """Informs the frontend that the items in a feed have changed.
 
-    Attributes:
-    type -- type of object being tracked (same as in TrackItems)
-    id -- id of the object being tracked (same as in TrackItems)
-    added -- list containing an ItemInfo object for each added item.  The
-        order will be the order they were added.
-    changed -- set containing an ItemInfo for each changed item.
-    removed -- set containing ids for each item that was removed
+    :param type: type of object being tracked (same as in TrackItems)
+    :param id: id of the object being tracked (same as in TrackItems)
+    :param added: list containing an ItemInfo object for each added item.
+                  The order will be the order they were added.
+    :param changed: set containing an ItemInfo for each changed item.
+    :param removed: set containing ids for each item that was removed
     """
-
     def __init__(self, type, id, added, changed, removed):
         self.type = type
         self.id = id
@@ -1115,75 +1178,80 @@ class ItemsChanged(FrontendMessage):
         self.removed = removed
 
 class WatchedFolderList(FrontendMessage):
-    """Sends the frontend the initial list of watched folders
+    """Sends the frontend the initial list of watched folders.
 
-    Attributes:
-        watched_folders -- List of watched folders
+    :param watched_folders: List of watched folders
     """
-
     def __init__(self, watched_folders):
         self.watched_folders = watched_folders
 
 class WatchedFoldersChanged(FrontendMessage):
     """Informs the frontend that the watched folder list has changed.
 
-    Attributes:
-    added -- WatchedFolderInfo object for each added watched folder.  The list
-        will be in the same order that they were added
-    changed -- list of WatchedFolderInfo for each changed watched folder.
-    removed -- list of ids for each watched folder that was removed.
+    :param added: WatchedFolderInfo object for each added watched folder.
+                  The list will be in the same order that they were added.
+    :param changed: The list of WatchedFolderInfo for each changed watched
+                    folder.
+    :param removed: list of ids for each watched folder that was removed.
     """
-
     def __init__(self, added, changed, removed):
         self.added = added
         self.changed = changed
         self.removed = removed
 
 class CurrentSearchInfo(FrontendMessage):
-    """Informs the frontend of the current search settings """
+    """Informs the frontend of the current search settings.
+    """
     def __init__(self, engine, text):
         self.engine = engine
         self.text = text
 
 class DownloadCountChanged(FrontendMessage):
-    """Informs the frontend that number of downloads has changed """
+    """Informs the frontend that number of downloads has changed.
+    """
     def __init__(self, count):
         self.count = count
 
 class PausedCountChanged(FrontendMessage):
-    """Informs the frontend that number of paused downloading items has changed """
+    """Informs the frontend that number of paused downloading items
+    has changed.
+    """
     def __init__(self, count):
         self.count = count
 
 class NewVideoCountChanged(FrontendMessage):
-    """Informs the frontend that number of new videos has changed """
+    """Informs the frontend that number of new videos has changed.
+    """
     def __init__(self, count):
         self.count = count
 
 class NewAudioCountChanged(FrontendMessage):
-    """Informs the frontend that number of new videos has changed """
+    """Informs the frontend that number of new videos has changed.
+    """
     def __init__(self, count):
         self.count = count
 
 class UnwatchedCountChanged(FrontendMessage):
-    """Informs the frontend that number of unwatched items has changed """
+    """Informs the frontend that number of unwatched items has changed.
+    """
     def __init__(self, count):
         self.count = count
 
 class MessageToUser(FrontendMessage):
-    """Lets the backend send messages directly to the user."""
+    """Lets the backend send messages directly to the user.
+    """
     def __init__(self, title, desc):
         self.title = title
         self.desc = desc
 
 class PlayMovie(FrontendMessage):
-    """Starts playing a specific movie."""
+    """Starts playing a specific movie.
+    """
     def __init__(self, item_infos):
         self.item_infos = item_infos
 
 class NotifyUser(FrontendMessage):
-    """
-    Sends a notification to the user.
+    """Sends a notification to the user.
 
     Can optionally give a notification type, so we can filter based on
     whether the user has selected that they are interested in
@@ -1195,26 +1263,29 @@ class NotifyUser(FrontendMessage):
         self.notify_type = notify_type
     
 class SearchComplete(FrontendMessage):
-    """Notifies the backend that the search was complete."""
-
+    """Notifies the backend that the search was complete.
+    """
     def __init__(self, engine, query, result_count):
         self.engine = engine
         self.query = query
         self.result_count = result_count
 
 class CurrentFrontendState(FrontendMessage):
-    """Returns the latest data saved with SaveFrontendState."""
+    """Returns the latest data saved with SaveFrontendState.
+    """
     def __init__(self, list_view_displays, sort_states):
         self.list_view_displays = list_view_displays
         self.sort_states = sort_states
 
 class OpenInExternalBrowser(FrontendMessage):
-    """Opens the specified url in an external browser."""
+    """Opens the specified url in an external browser.
+    """
     def __init__(self, url):
         self.url = url
 
 class MigrationProgress(FrontendMessage):
-    """Inform the frontend of progress while we migrate files."""
+    """Inform the frontend of progress while we migrate files.
+    """
     def __init__(self, iteration, total_files, finished):
         self.iteration = iteration
         self.total_files = total_files
@@ -1224,3 +1295,4 @@ class FeedlessDownloadStarted(FrontendMessage):
     """Inform the frontend that a new video started downloading because a
     subscribe link was clicked.
     """
+    pass
