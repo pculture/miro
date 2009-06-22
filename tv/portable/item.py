@@ -30,14 +30,12 @@ from datetime import datetime, timedelta
 from miro.gtcache import gettext as _
 from miro.gtcache import ngettext
 from math import ceil
-from miro.xhtmltools import unescape, xhtmlify
+from miro.xhtmltools import xhtmlify
 from xml.sax.saxutils import unescape
-from miro.util import checkU, returnsUnicode, checkF, returnsFilename, quoteUnicodeURL, stringify, getFirstVideoEnclosure, getSingletonDDBObject, entity_replace
+from miro.util import checkU, returnsUnicode, checkF, returnsFilename, quoteUnicodeURL, stringify, getFirstVideoEnclosure, entity_replace
 from miro.plat.utils import FilenameType, filenameToUnicode, unicodeToFilename
 import locale
-import os
 import os.path
-import urlparse
 import traceback
 
 from miro.download_utils import cleanFilename, nextFreeFilename
@@ -62,8 +60,6 @@ from miro import filetypes
 from miro import searchengines
 from miro import fileutil
 from miro import search
-from miro import signals
-from miro import playlist
 from miro import models
 
 _charset = locale.getpreferredencoding()
@@ -528,8 +524,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         def track_optimizer(obj):
             feed = obj.get_feed()
             return (obj.feed_id == feed_id and feed.autoDownloadable and
-                    not item.was_downloaded and
-                    (item.eligibleForAutoDownload or feed.getEverything))
+                    not obj.was_downloaded and
+                    (obj.eligibleForAutoDownload or feed.getEverything))
         return cls.make_view('feed_id=? AND feed.autoDownloadable AND '
                 'NOT item.was_downloaded AND '
                 '(item.eligibleForAutoDownload OR feed.getEverything)',
@@ -628,20 +624,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             if 'folder_id' in tracker.where:
                 tracker.check_all_objects()
 
-    def get_expiring(self):
-        if self.expiring is None:
-            if not self.get_seen():
-                self.expiring = False
-            else:
-                ufeed = self.get_feed()
-                if (self.keep or ufeed.expire == u'never' or
-                        (ufeed.expire == u'system' and
-                            config.get(prefs.EXPIRE_AFTER_X_DAYS) <= 0)):
-                    self.expiring = False
-                else:
-                    self.expiring = True
-        return self.expiring
-
     def _look_for_downloader(self):
         self.set_downloader(downloader.lookup_downloader(self.get_url()))
         if self.has_downloader() and self.downloader.isFinished():
@@ -675,7 +657,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         find any new children.  Returns True if it found childern and ran
         signal_change().
         """
-        filename_root = self.get_filename()
         if not self.isContainerItem:
             return False
         if self.get_state() == 'downloading':
@@ -740,11 +721,8 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
         filename = filenameToUnicode(self.get_filename()) or u''
         if search.match(searchString, [title.lower(), desc.lower(), filename.lower()]):
             return True
-        if not self.isContainerItem:
-            parent = self.get_parent()
-        if parent != self:
-            return matchingItems(parent, searchString)
-        return False
+        else:
+            return False
 
     def _remove_from_playlists(self):
         models.PlaylistItemMap.remove_item_from_playlists(self)
@@ -885,7 +863,7 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
             del self._feed
         if self.isContainerItem:
             for item in self.getChildren():
-                if hasaatr(item, "_feed"):
+                if hasattr(item, "_feed"):
                     del item._feed
                 item.signal_change()
         self.signal_change()
@@ -1486,7 +1464,6 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
     def download_progress(self):
         """Returns the download progress in absolute percentage [0.0 - 100.0].
         """
-        progress = 0
         self.confirm_db_thread()
         if self.downloader is None:
             return 0
