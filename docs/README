@@ -6,10 +6,16 @@ Requirements
 ============
 
 You must build the documentation on a valid gtk-x11 platform.  This
-means that platform-specific documentation is of gtk-x11.
+means that platform-specific documentation is for gtk-x11.
 
-You must have the Sphinx documentation tools installed and running
-``./run.sh`` from ``platform/gtk-x11/`` should work as well.
+You must be able to build Miro on gtk-x11.  This means you'll need to
+have all the requirements to run ``run.sh`` in
+``tv/platform/gtk-x11/``.
+
+You must have the Sphinx documentation tools installed.  On Ubuntu,
+this is usually as easy as::
+
+    sudo apt-get python-sphinx
 
 
 Building the docs
@@ -19,10 +25,9 @@ To build the docs, run::
 
     make html
 
+If documentation building is successful, then it will be in the
+``./_build/html/`` directory.
 
-If documentation building is successful, then it will be in the ./_build/html/
-directory.
-
-To clean out the directory::
+To clean everything::
 
     make clean
