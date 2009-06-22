@@ -1238,6 +1238,7 @@ class Feed(DDBObject, iconcache.IconCacheOwnerMixin):
             else:
                 item.remove()
         self.remove_icon_cache()
+        self.visible = False
         DDBObject.remove(self)
         self.actualFeed.remove()
 
