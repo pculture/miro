@@ -250,8 +250,7 @@ Function OpenCandyPageStart
   Abort
   Call CheckMiroBarInstall
   Pop $0
-  StrCmp $0 "0" +3
-  !insertmacro OpenCandySetRemnant
+  StrCmp $0 "0" +2
   Abort
   Call OpenCandyPageStartFn
 FunctionEnd
