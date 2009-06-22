@@ -76,7 +76,7 @@ def _scrape_youtube_url(url, callback):
     params = cgi.parse_qs(components[3])
 
     if components[2] == u'/watch' and 'v' in params:
-        videoID = params['v']
+        videoID = params['v'][0]
     elif components[2].startswith('/v/'):
         videoID = re.compile(r'/v/(\w+)').match(components[2]).group(1)
     else:
