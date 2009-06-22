@@ -1,0 +1,6 @@
+<searchengine>
+   <id>mininova</id>
+   <displayname>Mininova</displayname>
+   <url>http://www.mininova.org/rss/%s/seeds</url>
+   <sort>12</sort>
+</searchengine>
