@@ -411,7 +411,7 @@ class CountTracker(object):
 
 class DownloadCountTracker(CountTracker):
     def get_view(self):
-        return item.Item.downloading_view()
+        return item.Item.only_downloading_view()
 
     def make_message(self, count):
         return messages.DownloadCountChanged(count)

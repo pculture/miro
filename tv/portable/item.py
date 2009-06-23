@@ -390,6 +390,14 @@ class Item(DDBObject, iconcache.IconCacheOwnerMixin):
                 joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
                 track_optimizer=cls._in_downloading_view)
 
+    @classmethod
+    def only_downloading_view(cls):
+        return cls.make_view("rd.state='downloading' AND "
+                "rd.main_item_id=item.id",
+                joins={'remote_downloader AS rd': 'item.downloader_id=rd.id'},
+                track_optimizer=lambda obj: obj.is_main_item() and \
+                                 obj.downloader_state() == 'downloading')
+
     def _in_downloading_view(self):
         return (self.is_main_item() and
                 self.downloader_state() in ('downloading', 'uploading'))
