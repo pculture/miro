@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-06-04 14:53-0400\n"
+"POT-Creation-Date: 2009-06-08 19:44-0400\n"
 "PO-Revision-Date: 2009-03-15 14:15+0000\n"
 "Last-Translator: jirka <lafinacek83@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-06-08 21:24+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 00:40+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -134,17 +134,17 @@ msgstr "Vnitřní chyba: nepřipraven k odesílání"
 msgid "Miro Guide"
 msgstr "Průvodce"
 
-#: ../../portable/frontends/widgets/statictabs.py:87
+#: ../../portable/frontends/widgets/statictabs.py:97
 #: ../../portable/frontends/widgets/itemlistcontroller.py:419
 msgid "Video Search"
 msgstr "Hledat video"
 
-#: ../../portable/frontends/widgets/statictabs.py:98
+#: ../../portable/frontends/widgets/statictabs.py:108
 #: ../../portable/frontends/widgets/itemlistcontroller.py:508
 msgid "Audio"
 msgstr "Audio"
 
-#: ../../portable/frontends/widgets/statictabs.py:108
+#: ../../portable/frontends/widgets/statictabs.py:118
 msgid "Downloading"
 msgstr "Stahuji"
 
@@ -169,8 +169,8 @@ msgid "Remove From the Library"
 msgstr "Odstranit z knihovny"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
-#: ../../portable/frontends/widgets/gtk/video.py:247
-#: ../../portable/frontends/widgets/gtk/video.py:256
+#: ../../portable/frontends/widgets/gtk/video.py:244
+#: ../../portable/frontends/widgets/gtk/video.py:253
 #: ../../portable/dialogs.py:107
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:128
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
@@ -208,10 +208,10 @@ msgstr "Označit jako již přehrané"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:109
 #: ../../portable/frontends/widgets/itemcontextmenu.py:210
-#: ../../portable/frontends/widgets/style.py:256
-#: ../../portable/frontends/widgets/style.py:1017
-#: ../../portable/frontends/widgets/style.py:1184
-#: ../../portable/frontends/widgets/gtk/video.py:253
+#: ../../portable/frontends/widgets/style.py:257
+#: ../../portable/frontends/widgets/style.py:1032
+#: ../../portable/frontends/widgets/style.py:1199
+#: ../../portable/frontends/widgets/gtk/video.py:250
 #: ../../portable/dialogs.py:106
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:124
 msgid "Keep"
@@ -236,8 +236,8 @@ msgstr "Obnovit stahováni"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:128
 #: ../../portable/frontends/widgets/itemcontextmenu.py:223
 #: ../../portable/frontends/widgets/style.py:250
-#: ../../portable/frontends/widgets/style.py:1087
-#: ../../portable/frontends/widgets/style.py:1098 ../../portable/dialogs.py:95
+#: ../../portable/frontends/widgets/style.py:1102
+#: ../../portable/frontends/widgets/style.py:1113 ../../portable/dialogs.py:95
 msgid "Download"
 msgstr "Stáhnout"
 
@@ -248,7 +248,7 @@ msgstr "WWW stránka"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:136
 #: ../../portable/frontends/widgets/style.py:236
-#: ../../portable/frontends/widgets/gtk/video.py:283
+#: ../../portable/frontends/widgets/gtk/video.py:280
 msgid "Comments"
 msgstr "Poznámky"
 
@@ -270,7 +270,7 @@ msgid "View"
 msgstr "Zobrazit"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:151
-#: ../../portable/frontends/widgets/gtk/video.py:274
+#: ../../portable/frontends/widgets/gtk/video.py:271
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:120
 msgid "Share"
 msgstr "Sdílet"
@@ -453,7 +453,7 @@ msgstr "< Předchozí"
 #: ../../portable/frontends/widgets/firsttimedialog.py:223
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:282
-#: ../../portable/feed.py:2275 ../../portable/feed.py:2382
+#: ../../portable/feed.py:2271 ../../portable/feed.py:2378
 msgid "Search"
 msgstr "Hledat"
 
@@ -559,17 +559,17 @@ msgid "queued for autodownload"
 msgstr "vloženo do fronty automatického stahování"
 
 #: ../../portable/frontends/widgets/style.py:254
-#: ../../portable/frontends/widgets/style.py:1138
-#: ../../portable/frontends/widgets/itemlistwidgets.py:720
+#: ../../portable/frontends/widgets/style.py:1153
+#: ../../portable/frontends/widgets/itemlistwidgets.py:721
 msgid "Unplayed"
 msgstr "Nepřehrané"
 
-#: ../../portable/frontends/widgets/style.py:255
-#: ../../portable/frontends/widgets/style.py:1156
+#: ../../portable/frontends/widgets/style.py:256
+#: ../../portable/frontends/widgets/style.py:1171
 msgid "Newly Available"
 msgstr "Nově k dispozici"
 
-#: ../../portable/frontends/widgets/style.py:257
+#: ../../portable/frontends/widgets/style.py:258
 #: ../../portable/frontends/widgets/prefpanel.py:485
 #: ../../portable/frontends/widgets/tablist.py:580
 #: ../../portable/frontends/widgets/tablist.py:592
@@ -581,8 +581,8 @@ msgstr "Nově k dispozici"
 msgid "Remove"
 msgstr "Odstranit"
 
-#: ../../portable/frontends/widgets/style.py:570
-#: ../../portable/frontends/widgets/style.py:1149
+#: ../../portable/frontends/widgets/style.py:571
+#: ../../portable/frontends/widgets/style.py:1164
 msgid "paused"
 msgstr "pozastaveno"
 
@@ -863,17 +863,17 @@ msgid "Manually"
 msgstr "Ručně"
 
 #: ../../portable/frontends/widgets/prefpanel.py:289
-#: ../../portable/frontends/widgets/itemlistwidgets.py:623
+#: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "New"
 msgstr "Nové"
 
 #: ../../portable/frontends/widgets/prefpanel.py:290
-#: ../../portable/frontends/widgets/itemlistwidgets.py:623
+#: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "All"
 msgstr "Vše"
 
 #: ../../portable/frontends/widgets/prefpanel.py:291
-#: ../../portable/frontends/widgets/itemlistwidgets.py:623
+#: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "Off"
 msgstr "Vypnuto"
 
@@ -980,21 +980,9 @@ msgstr "10 dní"
 msgid "1 month"
 msgstr "1 měsíc"
 
-#: ../../portable/frontends/widgets/prefpanel.py:590
-msgid "By default, videos expire after:"
-msgstr "Standartně vyprší video po:"
-
 #: ../../portable/frontends/widgets/prefpanel.py:599
 msgid "Always play videos in a separate window."
 msgstr "Přehrávat videa vždy v odděleném okně."
-
-#: ../../portable/frontends/widgets/prefpanel.py:608
-msgid "Play videos one after another"
-msgstr "Přehraj videa jedno po druhém"
-
-#: ../../portable/frontends/widgets/prefpanel.py:609
-msgid "Stop after each video"
-msgstr "Zastav po každém videu"
 
 #: ../../portable/frontends/widgets/prefpanel.py:620
 msgid "General"
@@ -1130,24 +1118,20 @@ msgstr[1] ""
 msgstr[2] ""
 "Opravdu chcete odstranit tyto feedy? Právě stahované položky budou zrušeny."
 
-#: ../../portable/frontends/widgets/gtk/video.py:245
-msgid "Add to library"
-msgstr "Přidat do knihovny"
-
-#: ../../portable/frontends/widgets/gtk/video.py:285
+#: ../../portable/frontends/widgets/gtk/video.py:282
 msgid "Permalink"
 msgstr "Stálý odkaz"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:70
+#: ../../portable/frontends/widgets/gtk/trayicon.py:74
 #, python-format
 msgid "Pause All Downloads (%(downloading)d)"
 msgstr "Pozastavit všechna stahování (%(downloading)d)"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:81
+#: ../../portable/frontends/widgets/gtk/trayicon.py:85
 msgid "Hide"
 msgstr "Skrýt"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:83
+#: ../../portable/frontends/widgets/gtk/trayicon.py:87
 #: ../../portable/frontends/widgets/diagnostics.py:76
 msgid "Show"
 msgstr "Zobrazit"
@@ -1276,100 +1260,100 @@ msgstr "PLAYLISTY"
 msgid "No Results Found"
 msgstr "Nenalezeny žádné výsledky"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:178
+#: ../../portable/frontends/widgets/itemlistwidgets.py:179
 msgid "Save Search"
 msgstr "Uložit vyhledávání"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:285
+#: ../../portable/frontends/widgets/itemlistwidgets.py:286
 msgid "Title"
 msgstr "Název"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:287
+#: ../../portable/frontends/widgets/itemlistwidgets.py:288
 msgid "Feed"
 msgstr "Feed"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:289
-#: ../../portable/frontends/widgets/itemlistwidgets.py:745
+#: ../../portable/frontends/widgets/itemlistwidgets.py:290
+#: ../../portable/frontends/widgets/itemlistwidgets.py:743
 msgid "Date"
 msgstr "Datum"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:290
+#: ../../portable/frontends/widgets/itemlistwidgets.py:291
 msgid "Length"
 msgstr "Délka"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:291
+#: ../../portable/frontends/widgets/itemlistwidgets.py:292
 msgid "Status"
 msgstr "Status"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:292
-#: ../../portable/frontends/widgets/itemlistwidgets.py:746
+#: ../../portable/frontends/widgets/itemlistwidgets.py:293
+#: ../../portable/frontends/widgets/itemlistwidgets.py:744
 msgid "Size"
 msgstr "Velikost"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:294
+#: ../../portable/frontends/widgets/itemlistwidgets.py:295
 msgid "ETA"
 msgstr "Zbývající čas"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:295
+#: ../../portable/frontends/widgets/itemlistwidgets.py:296
 msgid "Speed"
 msgstr "Rychlost"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:485
+#: ../../portable/frontends/widgets/itemlistwidgets.py:486
 msgid "Pause All"
 msgstr "Pozastavit vše"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:492
+#: ../../portable/frontends/widgets/itemlistwidgets.py:493
 msgid "Resume All"
 msgstr "Znovu spustit vše"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:499
+#: ../../portable/frontends/widgets/itemlistwidgets.py:500
 msgid "Cancel All"
 msgstr "Zrušit vše"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:506
+#: ../../portable/frontends/widgets/itemlistwidgets.py:507
 msgid "Download Settings"
 msgstr "Nastavení stahování"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:563
+#: ../../portable/frontends/widgets/itemlistwidgets.py:564
 #, python-format
 msgid "%(amount)s free on disk"
 msgstr "%(amount)s volné na disku"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:582
+#: ../../portable/frontends/widgets/itemlistwidgets.py:583
 #, python-format
 msgid "%(rate)s uploading"
 msgstr "%(rate)s posílání"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:584
+#: ../../portable/frontends/widgets/itemlistwidgets.py:585
 #, python-format
 msgid "%(rate)s downloading"
 msgstr "%(rate)s stahování"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:618
+#: ../../portable/frontends/widgets/itemlistwidgets.py:619
 msgid "Auto Download"
 msgstr "Automaticky stahovat"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:630
+#: ../../portable/frontends/widgets/itemlistwidgets.py:631
 msgid "Share feed"
 msgstr "Sdílet feed"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:636
+#: ../../portable/frontends/widgets/itemlistwidgets.py:637
 msgid "Settings"
 msgstr "Nastavení"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:642
+#: ../../portable/frontends/widgets/itemlistwidgets.py:643
 msgid "Remove feed"
 msgstr "Odstranit feed"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:718
+#: ../../portable/frontends/widgets/itemlistwidgets.py:719
 msgid "Unwatched"
 msgstr "Neshlédnuté"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:744
+#: ../../portable/frontends/widgets/itemlistwidgets.py:742
 msgid "Name"
 msgstr "Jméno"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:747
+#: ../../portable/frontends/widgets/itemlistwidgets.py:745
 msgid "Time"
 msgstr "Čas"
 
@@ -1410,7 +1394,7 @@ msgstr "Diagnostika"
 msgid "Search All"
 msgstr "Prohledat vše"
 
-#: ../../portable/messages.py:995 ../../portable/item.py:1057
+#: ../../portable/messages.py:988 ../../portable/item.py:1057
 msgid "queued for download"
 msgstr "uloženo do fronty ke stažení"
 
@@ -1431,11 +1415,11 @@ msgstr ""
 "Vaše databáze byla uložena s novější verzí %(appname)s. Musíte stáhnout a "
 "spustit poslední verzi %(appname)s."
 
-#: ../../portable/commandline.py:106
+#: ../../portable/commandline.py:100
 msgid "Subscription error"
 msgstr "Chyba při odebírání"
 
-#: ../../portable/commandline.py:116
+#: ../../portable/commandline.py:110
 #, python-format
 msgid ""
 "This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
@@ -1444,7 +1428,7 @@ msgstr ""
 "Soubor %(appname)s feedu má nesprávný formát: %(url)s.  Prosím upozorněte "
 "poskytovatele tohoto souboru."
 
-#: ../../portable/commandline.py:126
+#: ../../portable/commandline.py:120
 #, python-format
 msgid ""
 "This %(appname)s feed file has the wrong content type: %(url)s. Please "
@@ -1453,16 +1437,16 @@ msgstr ""
 "Soubor %(appname)s feedu má špatný formát: %(url)s.  Prosím upozorněte "
 "poskytovatele tohoto souboru."
 
-#: ../../portable/commandline.py:134
+#: ../../portable/commandline.py:128
 #, python-format
 msgid "Could not download the %(appname)s feed file: %(url)s"
 msgstr "Nemohu stáhnout %(appname)s feed soubor: %(url)s"
 
-#: ../../portable/commandline.py:186
+#: ../../portable/commandline.py:180
 msgid "Invalid Torrent"
 msgstr "Chybný Torrent"
 
-#: ../../portable/commandline.py:188
+#: ../../portable/commandline.py:182
 #, python-format
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
@@ -1482,29 +1466,29 @@ msgstr "Flash URL Scraping Error"
 msgid "starting up"
 msgstr "startuji"
 
-#: ../../portable/feed.py:924
+#: ../../portable/feed.py:920
 msgid "Error loading feed"
 msgstr "Chyba při načítání proudu"
 
-#: ../../portable/feed.py:926
+#: ../../portable/feed.py:922
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 msgstr "Nelze číst feed z %(url)s (%(errordescription)s)."
 
-#: ../../portable/feed.py:929
+#: ../../portable/feed.py:925
 msgid "Would you like to keep the feed?"
 msgstr "Chcete ponechat tento proud?"
 
-#: ../../portable/feed.py:1054
+#: ../../portable/feed.py:1050
 msgid "Bad content-type"
 msgstr "Špatný typ obsahu"
 
-#: ../../portable/feed.py:1067
+#: ../../portable/feed.py:1063
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
 msgstr "Kanál není s %(appname)s kompatibilní."
 
-#: ../../portable/feed.py:1070
+#: ../../portable/feed.py:1066
 #, python-format
 msgid ""
 "This channel is not compatible with %(appname)s but we'll try our best to "
@@ -1525,16 +1509,16 @@ msgstr ""
 "\n"
 "Chcete se i tak pokusit tento kanál nahrát?"
 
-#: ../../portable/feed.py:1671
+#: ../../portable/feed.py:1667
 #, python-format
 msgid "Search All: %(text)s"
 msgstr "Prohledat vše: %(text)s"
 
-#: ../../portable/feed.py:2400
+#: ../../portable/feed.py:2396
 msgid "Local Files"
 msgstr "Místní soubory"
 
-#: ../../portable/feed.py:2414
+#: ../../portable/feed.py:2410
 msgid "Playing File"
 msgstr "Přehrává se soubor"
 
@@ -1992,7 +1976,7 @@ msgstr[0] "Úspěšně importován %(count)d feed."
 msgstr[1] "Úspěšně importovány %(count)d feedy."
 msgstr[2] "Úspěšně importovány %(count)d feedy."
 
-#: ../../portable/theme.py:159
+#: ../../portable/theme.py:174
 msgid "Example Playlist"
 msgstr "Ukázkový seznam skladeb"
 
@@ -2105,11 +2089,11 @@ msgstr "Stahování videa '%s' je dokončeno."
 msgid "Add to Library"
 msgstr "Přidat do knihovny"
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:206
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:207
 msgid "Pop Out"
 msgstr "Vyskakovat"
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:209
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:210
 msgid "Pop In"
 msgstr "Zaskočit"
 
@@ -2269,12 +2253,12 @@ msgstr ""
 msgid "Expected CRLF got: %(character)r"
 msgstr ""
 
-#: ../../portable/frontends/widgets/statictabs.py:93
+#: ../../portable/frontends/widgets/statictabs.py:103
 #: ../../portable/frontends/widgets/itemlistcontroller.py:502
 msgid "Video"
 msgstr ""
 
-#: ../../portable/frontends/widgets/statictabs.py:103
+#: ../../portable/frontends/widgets/statictabs.py:113
 #: ../../portable/frontends/widgets/itemlistcontroller.py:514
 msgid "Other"
 msgstr ""
@@ -2386,11 +2370,15 @@ msgstr ""
 msgid "Display Contents"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:258
+#: ../../portable/frontends/widgets/style.py:255
+msgid "Currently Playing"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:259
 msgid "Stop seeding"
 msgstr ""
 
-#: ../../portable/frontends/widgets/style.py:1019
+#: ../../portable/frontends/widgets/style.py:1034
 msgid "Remove from playlist"
 msgstr ""
 
@@ -2609,11 +2597,26 @@ msgid "Add Watched Folder"
 msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:549
-msgid "Watch for new videos in these folders and include them in library:"
+msgid ""
+"Watch for new video and audio items in these folders and include them in "
+"library:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:590
+msgid "By default, video and audio items expire after:"
 msgstr ""
 
 #: ../../portable/frontends/widgets/prefpanel.py:603
-msgid "Resume playing a video from the point it was last stopped."
+msgid ""
+"Resume playing a video or audio item from the point it was last stopped."
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:608
+msgid "Play video and audio items one after another"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:609
+msgid "Stop after each video or audio item"
 msgstr ""
 
 #: ../../portable/frontends/widgets/newsearchfeed.py:58
@@ -2633,25 +2636,25 @@ msgid ""
 "completely in the %(appname)s preference panel."
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/video.py:295
+#: ../../portable/frontends/widgets/gtk/video.py:292
 msgid "Pop-in"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/video.py:300
+#: ../../portable/frontends/widgets/gtk/video.py:297
 msgid "Pop-out"
-msgstr ""
-
-#: ../../portable/frontends/widgets/gtk/trayicon.py:63
-#, python-format
-msgid "Play Next Unplayed (%(unplayed)d)"
 msgstr ""
 
 #: ../../portable/frontends/widgets/gtk/trayicon.py:67
 #, python-format
+msgid "Play Next Unplayed (%(unplayed)d)"
+msgstr ""
+
+#: ../../portable/frontends/widgets/gtk/trayicon.py:71
+#, python-format
 msgid "Play All Unplayed (%(unplayed)d)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:73
+#: ../../portable/frontends/widgets/gtk/trayicon.py:77
 #, python-format
 msgid "Resume All Downloads (%(paused)d)"
 msgstr ""
@@ -2700,29 +2703,29 @@ msgstr ""
 msgid "Back to feed"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:431
+#: ../../portable/frontends/widgets/itemlistwidgets.py:432
 msgid "Save as a Feed"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:552
+#: ../../portable/frontends/widgets/itemlistwidgets.py:553
 #, python-format
 msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:558
+#: ../../portable/frontends/widgets/itemlistwidgets.py:559
 #, python-format
 msgid "%(available)s free for downloads (%(amount)s free on disk)"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:726
+#: ../../portable/frontends/widgets/itemlistwidgets.py:727
 msgid "View:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:729
+#: ../../portable/frontends/widgets/itemlistwidgets.py:730
 msgid "View|All"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:734
+#: ../../portable/frontends/widgets/itemlistwidgets.py:732
 msgid "Non Feed"
 msgstr ""
 
@@ -2730,11 +2733,11 @@ msgstr ""
 msgid "Total db objects in memory:"
 msgstr ""
 
-#: ../../portable/messagehandler.py:1280
+#: ../../portable/messagehandler.py:1264
 msgid "Subscribed to new feed:"
 msgstr ""
 
-#: ../../portable/messagehandler.py:1283
+#: ../../portable/messagehandler.py:1267
 msgid "Subscribed to new feeds:"
 msgstr ""
 

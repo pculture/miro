@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-06-04 14:53-0400\n"
+"POT-Creation-Date: 2009-06-08 19:44-0400\n"
 "PO-Revision-Date: 2009-04-24 01:56+0000\n"
 "Last-Translator: smg <Unknown>\n"
 "Language-Team: Turkish <tr@li.org>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2009-06-08 21:24+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 00:40+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -144,17 +144,17 @@ msgstr "İç Hata: Göndermeye hazır değil"
 msgid "Miro Guide"
 msgstr "Miro Rehberi"
 
-#: ../../portable/frontends/widgets/statictabs.py:87
+#: ../../portable/frontends/widgets/statictabs.py:97
 #: ../../portable/frontends/widgets/itemlistcontroller.py:419
 msgid "Video Search"
 msgstr "Video Arama"
 
-#: ../../portable/frontends/widgets/statictabs.py:98
+#: ../../portable/frontends/widgets/statictabs.py:108
 #: ../../portable/frontends/widgets/itemlistcontroller.py:508
 msgid "Audio"
 msgstr "Ses"
 
-#: ../../portable/frontends/widgets/statictabs.py:108
+#: ../../portable/frontends/widgets/statictabs.py:118
 msgid "Downloading"
 msgstr "İndiriliyor"
 
@@ -179,8 +179,8 @@ msgid "Remove From the Library"
 msgstr "Kütüphaneden Çıkart"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
-#: ../../portable/frontends/widgets/gtk/video.py:247
-#: ../../portable/frontends/widgets/gtk/video.py:256
+#: ../../portable/frontends/widgets/gtk/video.py:244
+#: ../../portable/frontends/widgets/gtk/video.py:253
 #: ../../portable/dialogs.py:107
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:128
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
@@ -218,10 +218,10 @@ msgstr "Çalındı olarak işaretle"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:109
 #: ../../portable/frontends/widgets/itemcontextmenu.py:210
-#: ../../portable/frontends/widgets/style.py:256
-#: ../../portable/frontends/widgets/style.py:1017
-#: ../../portable/frontends/widgets/style.py:1184
-#: ../../portable/frontends/widgets/gtk/video.py:253
+#: ../../portable/frontends/widgets/style.py:257
+#: ../../portable/frontends/widgets/style.py:1032
+#: ../../portable/frontends/widgets/style.py:1199
+#: ../../portable/frontends/widgets/gtk/video.py:250
 #: ../../portable/dialogs.py:106
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:124
 msgid "Keep"
@@ -246,8 +246,8 @@ msgstr "İndirmeye Devam Et"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:128
 #: ../../portable/frontends/widgets/itemcontextmenu.py:223
 #: ../../portable/frontends/widgets/style.py:250
-#: ../../portable/frontends/widgets/style.py:1087
-#: ../../portable/frontends/widgets/style.py:1098 ../../portable/dialogs.py:95
+#: ../../portable/frontends/widgets/style.py:1102
+#: ../../portable/frontends/widgets/style.py:1113 ../../portable/dialogs.py:95
 msgid "Download"
 msgstr "İndir"
 
@@ -258,7 +258,7 @@ msgstr "Web Sayfası"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:136
 #: ../../portable/frontends/widgets/style.py:236
-#: ../../portable/frontends/widgets/gtk/video.py:283
+#: ../../portable/frontends/widgets/gtk/video.py:280
 msgid "Comments"
 msgstr "Açıklamalar"
 
@@ -284,7 +284,7 @@ msgid "View"
 msgstr "Göster"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:151
-#: ../../portable/frontends/widgets/gtk/video.py:274
+#: ../../portable/frontends/widgets/gtk/video.py:271
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:120
 msgid "Share"
 msgstr "Paylaş"
@@ -480,7 +480,7 @@ msgstr "< Önceki"
 #: ../../portable/frontends/widgets/firsttimedialog.py:223
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:282
-#: ../../portable/feed.py:2275 ../../portable/feed.py:2382
+#: ../../portable/feed.py:2271 ../../portable/feed.py:2378
 msgid "Search"
 msgstr "Arama"
 
@@ -598,17 +598,17 @@ msgid "queued for autodownload"
 msgstr "Otomatik indirme için sırada"
 
 #: ../../portable/frontends/widgets/style.py:254
-#: ../../portable/frontends/widgets/style.py:1138
-#: ../../portable/frontends/widgets/itemlistwidgets.py:720
+#: ../../portable/frontends/widgets/style.py:1153
+#: ../../portable/frontends/widgets/itemlistwidgets.py:721
 msgid "Unplayed"
 msgstr "Oynatılmamış"
 
-#: ../../portable/frontends/widgets/style.py:255
-#: ../../portable/frontends/widgets/style.py:1156
+#: ../../portable/frontends/widgets/style.py:256
+#: ../../portable/frontends/widgets/style.py:1171
 msgid "Newly Available"
 msgstr "Yeni"
 
-#: ../../portable/frontends/widgets/style.py:257
+#: ../../portable/frontends/widgets/style.py:258
 #: ../../portable/frontends/widgets/prefpanel.py:485
 #: ../../portable/frontends/widgets/tablist.py:580
 #: ../../portable/frontends/widgets/tablist.py:592
@@ -620,16 +620,16 @@ msgstr "Yeni"
 msgid "Remove"
 msgstr "Kaldır"
 
-#: ../../portable/frontends/widgets/style.py:258
+#: ../../portable/frontends/widgets/style.py:259
 msgid "Stop seeding"
 msgstr "Göndermeyi durdur"
 
-#: ../../portable/frontends/widgets/style.py:570
-#: ../../portable/frontends/widgets/style.py:1149
+#: ../../portable/frontends/widgets/style.py:571
+#: ../../portable/frontends/widgets/style.py:1164
 msgid "paused"
 msgstr "Duraklatıldı"
 
-#: ../../portable/frontends/widgets/style.py:1019
+#: ../../portable/frontends/widgets/style.py:1034
 msgid "Remove from playlist"
 msgstr "Çalma listesinden Sil"
 
@@ -1005,17 +1005,17 @@ msgid "Manually"
 msgstr "Siz istediğinizde"
 
 #: ../../portable/frontends/widgets/prefpanel.py:289
-#: ../../portable/frontends/widgets/itemlistwidgets.py:623
+#: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "New"
 msgstr "Yeni"
 
 #: ../../portable/frontends/widgets/prefpanel.py:290
-#: ../../portable/frontends/widgets/itemlistwidgets.py:623
+#: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "All"
 msgstr "Hepsi"
 
 #: ../../portable/frontends/widgets/prefpanel.py:291
-#: ../../portable/frontends/widgets/itemlistwidgets.py:623
+#: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "Off"
 msgstr "Kapalı"
 
@@ -1133,10 +1133,6 @@ msgstr "İzlenen Klasör ekle"
 msgid "Store downloads in this folder:"
 msgstr "İndirilen içeriği şu klasörde sakla"
 
-#: ../../portable/frontends/widgets/prefpanel.py:549
-msgid "Watch for new videos in these folders and include them in library:"
-msgstr "Bu klasörlerde yeni videoları tara ve bunları kitaplığa ekle:"
-
 #: ../../portable/frontends/widgets/prefpanel.py:568
 msgid "Keep at least this much free space on my drive:"
 msgstr "Sabit diskimde en az bu kadar yer kalmasını sağla"
@@ -1166,25 +1162,9 @@ msgstr "10 gün"
 msgid "1 month"
 msgstr "1 ay"
 
-#: ../../portable/frontends/widgets/prefpanel.py:590
-msgid "By default, videos expire after:"
-msgstr "Öntanımlı olarak, videoların süresi dolar:"
-
 #: ../../portable/frontends/widgets/prefpanel.py:599
 msgid "Always play videos in a separate window."
 msgstr "Videoları her zaman ayrı bir pencerede oynat."
-
-#: ../../portable/frontends/widgets/prefpanel.py:603
-msgid "Resume playing a video from the point it was last stopped."
-msgstr "Videoyu son durdurulduğu yerden oynatmaya devam ettir."
-
-#: ../../portable/frontends/widgets/prefpanel.py:608
-msgid "Play videos one after another"
-msgstr "Videoları biribiri ardına oynat"
-
-#: ../../portable/frontends/widgets/prefpanel.py:609
-msgid "Stop after each video"
-msgstr "Her videodan sonra dur"
 
 #: ../../portable/frontends/widgets/prefpanel.py:620
 msgid "General"
@@ -1325,39 +1305,35 @@ msgstr[0] ""
 "Are you sure you want to remove this feed?  The downloads currently in "
 "progress will be canceled."
 
-#: ../../portable/frontends/widgets/gtk/video.py:245
-msgid "Add to library"
-msgstr "Kütüphaneye ekle"
-
-#: ../../portable/frontends/widgets/gtk/video.py:285
+#: ../../portable/frontends/widgets/gtk/video.py:282
 msgid "Permalink"
 msgstr "Permalink"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:63
+#: ../../portable/frontends/widgets/gtk/trayicon.py:67
 #, python-format
 msgid "Play Next Unplayed (%(unplayed)d)"
 msgstr "Oynatlandan sonraki oynatılmamış (%(unplayed)d)"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:67
+#: ../../portable/frontends/widgets/gtk/trayicon.py:71
 #, python-format
 msgid "Play All Unplayed (%(unplayed)d)"
 msgstr "Oynatlandan sonraki tüm oynatılmamışlar (%(unplayed)d)"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:70
+#: ../../portable/frontends/widgets/gtk/trayicon.py:74
 #, python-format
 msgid "Pause All Downloads (%(downloading)d)"
 msgstr "Tüm indirmeleri Beklet (%(downloading)d)"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:73
+#: ../../portable/frontends/widgets/gtk/trayicon.py:77
 #, python-format
 msgid "Resume All Downloads (%(paused)d)"
 msgstr "Tüm indirmeleri devamettir (%(paused)d)"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:81
+#: ../../portable/frontends/widgets/gtk/trayicon.py:85
 msgid "Hide"
 msgstr "Gizle"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:83
+#: ../../portable/frontends/widgets/gtk/trayicon.py:87
 #: ../../portable/frontends/widgets/diagnostics.py:76
 msgid "Show"
 msgstr "Göster"
@@ -1493,114 +1469,114 @@ msgstr "ÇALMA LİSTELERİ"
 msgid "No Results Found"
 msgstr "Sonuç Bulunamadı"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:178
+#: ../../portable/frontends/widgets/itemlistwidgets.py:179
 msgid "Save Search"
 msgstr "Aramayı Kaydet"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:285
+#: ../../portable/frontends/widgets/itemlistwidgets.py:286
 msgid "Title"
 msgstr "Başlık"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:287
+#: ../../portable/frontends/widgets/itemlistwidgets.py:288
 msgid "Feed"
 msgstr "Besleme"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:289
-#: ../../portable/frontends/widgets/itemlistwidgets.py:745
+#: ../../portable/frontends/widgets/itemlistwidgets.py:290
+#: ../../portable/frontends/widgets/itemlistwidgets.py:743
 msgid "Date"
 msgstr "Tarih"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:290
+#: ../../portable/frontends/widgets/itemlistwidgets.py:291
 msgid "Length"
 msgstr "Süre"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:291
+#: ../../portable/frontends/widgets/itemlistwidgets.py:292
 msgid "Status"
 msgstr "Durum"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:292
-#: ../../portable/frontends/widgets/itemlistwidgets.py:746
+#: ../../portable/frontends/widgets/itemlistwidgets.py:293
+#: ../../portable/frontends/widgets/itemlistwidgets.py:744
 msgid "Size"
 msgstr "Boyut"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:294
+#: ../../portable/frontends/widgets/itemlistwidgets.py:295
 msgid "ETA"
 msgstr "ETA"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:295
+#: ../../portable/frontends/widgets/itemlistwidgets.py:296
 msgid "Speed"
 msgstr "Hız"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:431
+#: ../../portable/frontends/widgets/itemlistwidgets.py:432
 msgid "Save as a Feed"
 msgstr "Beslemeyi Farklı Kaydet"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:485
+#: ../../portable/frontends/widgets/itemlistwidgets.py:486
 msgid "Pause All"
 msgstr "Hepsini duraklat"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:492
+#: ../../portable/frontends/widgets/itemlistwidgets.py:493
 msgid "Resume All"
 msgstr "Hepsini devam ettir"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:499
+#: ../../portable/frontends/widgets/itemlistwidgets.py:500
 msgid "Cancel All"
 msgstr "Hepsini iptal et"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:506
+#: ../../portable/frontends/widgets/itemlistwidgets.py:507
 msgid "Download Settings"
 msgstr "İndirme Ayarları"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:552
+#: ../../portable/frontends/widgets/itemlistwidgets.py:553
 #, python-format
 msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
 msgstr "%(available)s yükleme alanı sınırı altında (%(amount)s diskte boş)"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:558
+#: ../../portable/frontends/widgets/itemlistwidgets.py:559
 #, python-format
 msgid "%(available)s free for downloads (%(amount)s free on disk)"
 msgstr "%(available)s boş yükleme alanı (%(amount)s diskte boş)"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:563
+#: ../../portable/frontends/widgets/itemlistwidgets.py:564
 #, python-format
 msgid "%(amount)s free on disk"
 msgstr "Sabit Diskte %(amount)s yer var"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:582
+#: ../../portable/frontends/widgets/itemlistwidgets.py:583
 #, python-format
 msgid "%(rate)s uploading"
 msgstr "%(rate)s gönderiliyor"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:584
+#: ../../portable/frontends/widgets/itemlistwidgets.py:585
 #, python-format
 msgid "%(rate)s downloading"
 msgstr "%(rate)s indiriliyor"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:618
+#: ../../portable/frontends/widgets/itemlistwidgets.py:619
 msgid "Auto Download"
 msgstr "Otomatik İndirme"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:630
+#: ../../portable/frontends/widgets/itemlistwidgets.py:631
 msgid "Share feed"
 msgstr "Beslemeyi paylaş"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:636
+#: ../../portable/frontends/widgets/itemlistwidgets.py:637
 msgid "Settings"
 msgstr "Ayarlar"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:642
+#: ../../portable/frontends/widgets/itemlistwidgets.py:643
 msgid "Remove feed"
 msgstr "Beslemeyi Sil"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:718
+#: ../../portable/frontends/widgets/itemlistwidgets.py:719
 msgid "Unwatched"
 msgstr "İzlenmedi"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:744
+#: ../../portable/frontends/widgets/itemlistwidgets.py:742
 msgid "Name"
 msgstr "İsim"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:747
+#: ../../portable/frontends/widgets/itemlistwidgets.py:745
 msgid "Time"
 msgstr "Zaman"
 
@@ -1641,15 +1617,15 @@ msgstr "Tanılar"
 msgid "Search All"
 msgstr "Tümünü Ara"
 
-#: ../../portable/messages.py:995 ../../portable/item.py:1057
+#: ../../portable/messages.py:988 ../../portable/item.py:1057
 msgid "queued for download"
 msgstr "indirmek için sırada"
 
-#: ../../portable/messagehandler.py:1280
+#: ../../portable/messagehandler.py:1264
 msgid "Subscribed to new feed:"
 msgstr "Yeni beslemeye abone olundu:"
 
-#: ../../portable/messagehandler.py:1283
+#: ../../portable/messagehandler.py:1267
 msgid "Subscribed to new feeds:"
 msgstr "Yeni beslemelere abone olundu:"
 
@@ -1670,11 +1646,11 @@ msgstr ""
 "You have a database that was saved with a newer version of %(appname)s. You "
 "must download the latest version of %(appname)s and run that."
 
-#: ../../portable/commandline.py:106
+#: ../../portable/commandline.py:100
 msgid "Subscription error"
 msgstr "Abonelik hatası"
 
-#: ../../portable/commandline.py:116
+#: ../../portable/commandline.py:110
 #, python-format
 msgid ""
 "This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
@@ -1683,7 +1659,7 @@ msgstr ""
 "This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
 "the publisher of this file."
 
-#: ../../portable/commandline.py:126
+#: ../../portable/commandline.py:120
 #, python-format
 msgid ""
 "This %(appname)s feed file has the wrong content type: %(url)s. Please "
@@ -1692,18 +1668,18 @@ msgstr ""
 "This %(appname)s feed file has the wrong content type: %(url)s. Please "
 "notify the publisher of this file."
 
-#: ../../portable/commandline.py:134
+#: ../../portable/commandline.py:128
 #, python-format
 msgid "Could not download the %(appname)s feed file: %(url)s"
 msgstr ""
 "Could not download the %(appname)s feed file: %(url)sBu %(appname)s dosyası "
 "besleme noktasıından indirilemedi: %(url)s"
 
-#: ../../portable/commandline.py:186
+#: ../../portable/commandline.py:180
 msgid "Invalid Torrent"
 msgstr "Geçersiz Torrent"
 
-#: ../../portable/commandline.py:188
+#: ../../portable/commandline.py:182
 #, python-format
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
@@ -1722,29 +1698,29 @@ msgstr "Flash Adresi Kazıma Hatası"
 msgid "starting up"
 msgstr "başlatılıyor"
 
-#: ../../portable/feed.py:924
+#: ../../portable/feed.py:920
 msgid "Error loading feed"
 msgstr "Beslemeyi yüklemede hata"
 
-#: ../../portable/feed.py:926
+#: ../../portable/feed.py:922
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 msgstr "Besleme yapılamadı %(url)s (%(errordescription)s)."
 
-#: ../../portable/feed.py:929
+#: ../../portable/feed.py:925
 msgid "Would you like to keep the feed?"
 msgstr "Beslemeyi saklamak ister misiniz?"
 
-#: ../../portable/feed.py:1054
+#: ../../portable/feed.py:1050
 msgid "Bad content-type"
 msgstr "Geçersiz içerik-tür"
 
-#: ../../portable/feed.py:1067
+#: ../../portable/feed.py:1063
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
 msgstr "Kanal ile uyumlu değildir %(appname)s"
 
-#: ../../portable/feed.py:1070
+#: ../../portable/feed.py:1066
 #, python-format
 msgid ""
 "This channel is not compatible with %(appname)s but we'll try our best to "
@@ -1763,16 +1739,16 @@ msgstr ""
 "uyumlu formatta feed desteğini olup olmayacağını sorun.\n"
 "Her şeye rağmen kanalı yüklemek istiyor musunuz?"
 
-#: ../../portable/feed.py:1671
+#: ../../portable/feed.py:1667
 #, python-format
 msgid "Search All: %(text)s"
 msgstr "Tümünü Ara: %(text)s"
 
-#: ../../portable/feed.py:2400
+#: ../../portable/feed.py:2396
 msgid "Local Files"
 msgstr "Yerel Dosyalar"
 
-#: ../../portable/feed.py:2414
+#: ../../portable/feed.py:2410
 msgid "Playing File"
 msgstr "Dosya çalınıyor"
 
@@ -2250,7 +2226,7 @@ msgid "Skipped %(count)d feed already present."
 msgid_plural "Skipped %(count)d feeds already present."
 msgstr[0] "Hali hazırda mevcut olan %(count)d besleme geçildi."
 
-#: ../../portable/theme.py:159
+#: ../../portable/theme.py:174
 msgid "Example Playlist"
 msgstr "Örnek Çalma Listesi"
 
@@ -2351,11 +2327,11 @@ msgstr "'%s' adlı videonun indirilmesi tamamlandı."
 msgid "Add to Library"
 msgstr "Kütüphaneye ekle"
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:206
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:207
 msgid "Pop Out"
 msgstr "Pop Out"
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:209
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:210
 msgid "Pop In"
 msgstr "Pop In"
 
@@ -2504,12 +2480,12 @@ msgid ""
 msgstr ""
 "%(url)s acilirken hata olustu. Bir kac saniye icinde yeniden deneyin!"
 
-#: ../../portable/frontends/widgets/statictabs.py:93
+#: ../../portable/frontends/widgets/statictabs.py:103
 #: ../../portable/frontends/widgets/itemlistcontroller.py:502
 msgid "Video"
 msgstr ""
 
-#: ../../portable/frontends/widgets/statictabs.py:103
+#: ../../portable/frontends/widgets/statictabs.py:113
 #: ../../portable/frontends/widgets/itemlistcontroller.py:514
 msgid "Other"
 msgstr ""
@@ -2575,6 +2551,10 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:239
 msgid "Display Contents"
+msgstr ""
+
+#: ../../portable/frontends/widgets/style.py:255
+msgid "Currently Playing"
 msgstr ""
 
 #: ../../portable/frontends/widgets/displays.py:372
@@ -2658,6 +2638,29 @@ msgid ""
 "not be moved until they finish.)"
 msgstr ""
 
+#: ../../portable/frontends/widgets/prefpanel.py:549
+msgid ""
+"Watch for new video and audio items in these folders and include them in "
+"library:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:590
+msgid "By default, video and audio items expire after:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:603
+msgid ""
+"Resume playing a video or audio item from the point it was last stopped."
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:608
+msgid "Play video and audio items one after another"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:609
+msgid "Stop after each video or audio item"
+msgstr ""
+
 #: ../../portable/frontends/widgets/removefeeds.py:82
 #, python-format
 msgid ""
@@ -2666,11 +2669,11 @@ msgid ""
 "completely in the %(appname)s preference panel."
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/video.py:295
+#: ../../portable/frontends/widgets/gtk/video.py:292
 msgid "Pop-in"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/video.py:300
+#: ../../portable/frontends/widgets/gtk/video.py:297
 msgid "Pop-out"
 msgstr ""
 
@@ -2706,15 +2709,15 @@ msgstr ""
 msgid "Back to feed"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:726
+#: ../../portable/frontends/widgets/itemlistwidgets.py:727
 msgid "View:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:729
+#: ../../portable/frontends/widgets/itemlistwidgets.py:730
 msgid "View|All"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:734
+#: ../../portable/frontends/widgets/itemlistwidgets.py:732
 msgid "Non Feed"
 msgstr ""
 

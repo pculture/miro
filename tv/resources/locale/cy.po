@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-06-04 14:53-0400\n"
-"PO-Revision-Date: 2009-05-24 19:59+0000\n"
+"POT-Creation-Date: 2009-06-08 19:44-0400\n"
+"PO-Revision-Date: 2009-06-19 21:05+0000\n"
 "Last-Translator: duw <Unknown>\n"
 "Language-Team: Welsh <cy@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : (n != 8 || n != 11) ? "
 "2 : 3;\n"
-"X-Launchpad-Export-Date: 2009-06-08 21:24+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 00:41+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -145,22 +145,22 @@ msgstr "Gwall mewnol: Dim yn barod i yrru"
 msgid "Miro Guide"
 msgstr "Canllawiau Miro"
 
-#: ../../portable/frontends/widgets/statictabs.py:87
+#: ../../portable/frontends/widgets/statictabs.py:97
 #: ../../portable/frontends/widgets/itemlistcontroller.py:419
 msgid "Video Search"
 msgstr "Chwilio Fideo"
 
-#: ../../portable/frontends/widgets/statictabs.py:93
+#: ../../portable/frontends/widgets/statictabs.py:103
 #: ../../portable/frontends/widgets/itemlistcontroller.py:502
 msgid "Video"
 msgstr "Fideo"
 
-#: ../../portable/frontends/widgets/statictabs.py:98
+#: ../../portable/frontends/widgets/statictabs.py:108
 #: ../../portable/frontends/widgets/itemlistcontroller.py:508
 msgid "Audio"
 msgstr "Sain"
 
-#: ../../portable/frontends/widgets/statictabs.py:108
+#: ../../portable/frontends/widgets/statictabs.py:118
 msgid "Downloading"
 msgstr "Lawrlwytho"
 
@@ -186,8 +186,8 @@ msgid "Remove From the Library"
 msgstr "Tynnu o'r Llyfrgell"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
-#: ../../portable/frontends/widgets/gtk/video.py:247
-#: ../../portable/frontends/widgets/gtk/video.py:256
+#: ../../portable/frontends/widgets/gtk/video.py:244
+#: ../../portable/frontends/widgets/gtk/video.py:253
 #: ../../portable/dialogs.py:107
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:128
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
@@ -225,10 +225,10 @@ msgstr "Gosodwch fel wedi'i Chwarae"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:109
 #: ../../portable/frontends/widgets/itemcontextmenu.py:210
-#: ../../portable/frontends/widgets/style.py:256
-#: ../../portable/frontends/widgets/style.py:1017
-#: ../../portable/frontends/widgets/style.py:1184
-#: ../../portable/frontends/widgets/gtk/video.py:253
+#: ../../portable/frontends/widgets/style.py:257
+#: ../../portable/frontends/widgets/style.py:1032
+#: ../../portable/frontends/widgets/style.py:1199
+#: ../../portable/frontends/widgets/gtk/video.py:250
 #: ../../portable/dialogs.py:106
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:124
 msgid "Keep"
@@ -253,8 +253,8 @@ msgstr "Ailddechrau'r Lawrlwythiad"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:128
 #: ../../portable/frontends/widgets/itemcontextmenu.py:223
 #: ../../portable/frontends/widgets/style.py:250
-#: ../../portable/frontends/widgets/style.py:1087
-#: ../../portable/frontends/widgets/style.py:1098 ../../portable/dialogs.py:95
+#: ../../portable/frontends/widgets/style.py:1102
+#: ../../portable/frontends/widgets/style.py:1113 ../../portable/dialogs.py:95
 msgid "Download"
 msgstr "Lawrlwytho"
 
@@ -265,7 +265,7 @@ msgstr "Tudalen We"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:136
 #: ../../portable/frontends/widgets/style.py:236
-#: ../../portable/frontends/widgets/gtk/video.py:283
+#: ../../portable/frontends/widgets/gtk/video.py:280
 msgid "Comments"
 msgstr "Sylwadau"
 
@@ -291,7 +291,7 @@ msgid "View"
 msgstr "Golwg"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:151
-#: ../../portable/frontends/widgets/gtk/video.py:274
+#: ../../portable/frontends/widgets/gtk/video.py:271
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:120
 msgid "Share"
 msgstr "Rhannu"
@@ -334,7 +334,7 @@ msgstr[3] "%(count)d Eitem wedi Seibio"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:263
 msgid "Restart Upload"
-msgstr "AIlddechrau Llwythiad"
+msgstr "Ailddechrau Lanlwythiad"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:277
 msgid "Remove From Playlist"
@@ -509,7 +509,7 @@ msgstr "< Cynt"
 #: ../../portable/frontends/widgets/firsttimedialog.py:223
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:282
-#: ../../portable/feed.py:2275 ../../portable/feed.py:2382
+#: ../../portable/feed.py:2271 ../../portable/feed.py:2378
 msgid "Search"
 msgstr "Chwilio"
 
@@ -606,11 +606,11 @@ msgstr "Sugnwyr"
 
 #: ../../portable/frontends/widgets/style.py:246
 msgid "Upload Rate"
-msgstr "Cyfradd Llwytho"
+msgstr "Cyfradd Lanlwytho"
 
 #: ../../portable/frontends/widgets/style.py:247
 msgid "Upload Total"
-msgstr "Cyfanswm Llwythiadau"
+msgstr "Cyfanswm Lanlwythiadau"
 
 #: ../../portable/frontends/widgets/style.py:248
 msgid "Down Rate"
@@ -634,17 +634,17 @@ msgid "queued for autodownload"
 msgstr "ciwiwyd am awtolawrlwytho"
 
 #: ../../portable/frontends/widgets/style.py:254
-#: ../../portable/frontends/widgets/style.py:1138
-#: ../../portable/frontends/widgets/itemlistwidgets.py:720
+#: ../../portable/frontends/widgets/style.py:1153
+#: ../../portable/frontends/widgets/itemlistwidgets.py:721
 msgid "Unplayed"
 msgstr "Heb ei chwarae"
 
-#: ../../portable/frontends/widgets/style.py:255
-#: ../../portable/frontends/widgets/style.py:1156
+#: ../../portable/frontends/widgets/style.py:256
+#: ../../portable/frontends/widgets/style.py:1171
 msgid "Newly Available"
 msgstr "Ar gael yn ddiweddar"
 
-#: ../../portable/frontends/widgets/style.py:257
+#: ../../portable/frontends/widgets/style.py:258
 #: ../../portable/frontends/widgets/prefpanel.py:485
 #: ../../portable/frontends/widgets/tablist.py:580
 #: ../../portable/frontends/widgets/tablist.py:592
@@ -656,16 +656,16 @@ msgstr "Ar gael yn ddiweddar"
 msgid "Remove"
 msgstr "Tynnu"
 
-#: ../../portable/frontends/widgets/style.py:258
+#: ../../portable/frontends/widgets/style.py:259
 msgid "Stop seeding"
 msgstr "Atal hadu"
 
-#: ../../portable/frontends/widgets/style.py:570
-#: ../../portable/frontends/widgets/style.py:1149
+#: ../../portable/frontends/widgets/style.py:571
+#: ../../portable/frontends/widgets/style.py:1164
 msgid "paused"
 msgstr "seibiwyd"
 
-#: ../../portable/frontends/widgets/style.py:1019
+#: ../../portable/frontends/widgets/style.py:1034
 msgid "Remove from playlist"
 msgstr "Tynnu o'r rhestr chwarae"
 
@@ -1075,17 +1075,17 @@ msgid "Manually"
 msgstr "Gan law"
 
 #: ../../portable/frontends/widgets/prefpanel.py:289
-#: ../../portable/frontends/widgets/itemlistwidgets.py:623
+#: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "New"
 msgstr "Newydd"
 
 #: ../../portable/frontends/widgets/prefpanel.py:290
-#: ../../portable/frontends/widgets/itemlistwidgets.py:623
+#: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "All"
 msgstr "Pob"
 
 #: ../../portable/frontends/widgets/prefpanel.py:291
-#: ../../portable/frontends/widgets/itemlistwidgets.py:623
+#: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "Off"
 msgstr "Bant"
 
@@ -1180,7 +1180,7 @@ msgstr "Anwybyddu cysylltiadau heb eu hamgryptio."
 
 #: ../../portable/frontends/widgets/prefpanel.py:418
 msgid "Stop torrent uploads when this ratio is reached:"
-msgstr "Atal llwythiadau torrent pan gyrhaeddir y cymhareb hwn:"
+msgstr "Atal lanlwythiadau torrent pan gyrhaeddir y cymhareb hwn:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:440
 msgid "Choose Movies Directory"
@@ -1202,10 +1202,6 @@ msgstr "Ychwanegu Ffolder Gwyliwyd"
 #: ../../portable/frontends/widgets/prefpanel.py:542
 msgid "Store downloads in this folder:"
 msgstr "Cadw lawrlwythiadau yn y ffolder hwn:"
-
-#: ../../portable/frontends/widgets/prefpanel.py:549
-msgid "Watch for new videos in these folders and include them in library:"
-msgstr "Gwylio fideos newydd yn y ffolderi hyn a'u cynnwys yn y llyfrgell:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:568
 msgid "Keep at least this much free space on my drive:"
@@ -1236,25 +1232,9 @@ msgstr "10 diwrnod"
 msgid "1 month"
 msgstr "1 mis"
 
-#: ../../portable/frontends/widgets/prefpanel.py:590
-msgid "By default, videos expire after:"
-msgstr "Mae'r fideos yn dod i ben wedi:"
-
 #: ../../portable/frontends/widgets/prefpanel.py:599
 msgid "Always play videos in a separate window."
 msgstr "Pob amser chwarae fideos mewn ffenestr ar wahân"
-
-#: ../../portable/frontends/widgets/prefpanel.py:603
-msgid "Resume playing a video from the point it was last stopped."
-msgstr "Ailddechrau chwarae fideo o'r pwynt a orffennwyd diwethaf"
-
-#: ../../portable/frontends/widgets/prefpanel.py:608
-msgid "Play videos one after another"
-msgstr "Chwarae fideos un ar ôl y llall"
-
-#: ../../portable/frontends/widgets/prefpanel.py:609
-msgid "Stop after each video"
-msgstr "Stopio ar ôl pob fideo"
 
 #: ../../portable/frontends/widgets/prefpanel.py:620
 msgid "General"
@@ -1409,39 +1389,35 @@ msgstr[3] ""
 "Ydych wir am dynnu'r ffrydiau hyn? Caiff y lawrlwythiadau sydd dal yn parhau "
 "eu diddymu."
 
-#: ../../portable/frontends/widgets/gtk/video.py:245
-msgid "Add to library"
-msgstr "Ychwanegwch i'r Llyfrgell"
-
-#: ../../portable/frontends/widgets/gtk/video.py:285
+#: ../../portable/frontends/widgets/gtk/video.py:282
 msgid "Permalink"
 msgstr "Permalink"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:63
+#: ../../portable/frontends/widgets/gtk/trayicon.py:67
 #, python-format
 msgid "Play Next Unplayed (%(unplayed)d)"
 msgstr "Chwarae'r Nesaf heb ei Chwarae (%(unplayed)d)"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:67
+#: ../../portable/frontends/widgets/gtk/trayicon.py:71
 #, python-format
 msgid "Play All Unplayed (%(unplayed)d)"
 msgstr "Chwarae Pob Un heb eu Chwarae  (%(unplayed)d)"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:70
+#: ../../portable/frontends/widgets/gtk/trayicon.py:74
 #, python-format
 msgid "Pause All Downloads (%(downloading)d)"
 msgstr "Seibio Pob Lawrlwythiad (%(downloading)d)"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:73
+#: ../../portable/frontends/widgets/gtk/trayicon.py:77
 #, python-format
 msgid "Resume All Downloads (%(paused)d)"
 msgstr "Ailddechrau Pob Lawrlwythiad (%(paused)d)"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:81
+#: ../../portable/frontends/widgets/gtk/trayicon.py:85
 msgid "Hide"
 msgstr "Cuddio"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:83
+#: ../../portable/frontends/widgets/gtk/trayicon.py:87
 #: ../../portable/frontends/widgets/diagnostics.py:76
 msgid "Show"
 msgstr "Dangos"
@@ -1586,113 +1562,113 @@ msgstr "RHESTRAU CHWARAE"
 msgid "No Results Found"
 msgstr "Dim Canlyniadau wedi'u Canfod"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:178
+#: ../../portable/frontends/widgets/itemlistwidgets.py:179
 msgid "Save Search"
 msgstr "Cadw Chwiliad"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:285
+#: ../../portable/frontends/widgets/itemlistwidgets.py:286
 msgid "Title"
 msgstr "Teitl"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:287
+#: ../../portable/frontends/widgets/itemlistwidgets.py:288
 msgid "Feed"
 msgstr "Ffrwd"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:289
-#: ../../portable/frontends/widgets/itemlistwidgets.py:745
+#: ../../portable/frontends/widgets/itemlistwidgets.py:290
+#: ../../portable/frontends/widgets/itemlistwidgets.py:743
 msgid "Date"
 msgstr "Dyddiad"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:290
+#: ../../portable/frontends/widgets/itemlistwidgets.py:291
 msgid "Length"
 msgstr "Hyd"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:291
+#: ../../portable/frontends/widgets/itemlistwidgets.py:292
 msgid "Status"
 msgstr "Statws"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:292
-#: ../../portable/frontends/widgets/itemlistwidgets.py:746
+#: ../../portable/frontends/widgets/itemlistwidgets.py:293
+#: ../../portable/frontends/widgets/itemlistwidgets.py:744
 msgid "Size"
 msgstr "Maint"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:294
+#: ../../portable/frontends/widgets/itemlistwidgets.py:295
 msgid "ETA"
 msgstr "ETA"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:295
+#: ../../portable/frontends/widgets/itemlistwidgets.py:296
 msgid "Speed"
 msgstr "Cyflymder"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:431
+#: ../../portable/frontends/widgets/itemlistwidgets.py:432
 msgid "Save as a Feed"
 msgstr "Cadw fel Ffrwd"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:485
+#: ../../portable/frontends/widgets/itemlistwidgets.py:486
 msgid "Pause All"
 msgstr "Seibio Pob Un"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:492
+#: ../../portable/frontends/widgets/itemlistwidgets.py:493
 msgid "Resume All"
 msgstr "Ailddechrau Pob Un"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:499
+#: ../../portable/frontends/widgets/itemlistwidgets.py:500
 msgid "Cancel All"
 msgstr "Diddymu Pob Un"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:506
+#: ../../portable/frontends/widgets/itemlistwidgets.py:507
 msgid "Download Settings"
 msgstr "Gosodiadau Lawrlwytho"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:552
+#: ../../portable/frontends/widgets/itemlistwidgets.py:553
 #, python-format
 msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
 msgstr ""
 "%(available)s o dan gyfyngiad lle ar gyfer  lawrlwythiadau (%(amount)s ar "
 "gael ar ddisg)"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:558
+#: ../../portable/frontends/widgets/itemlistwidgets.py:559
 #, python-format
 msgid "%(available)s free for downloads (%(amount)s free on disk)"
 msgstr ""
 "%(available)s ar gael am lawrlwythiadau (%(amount)s ar gael ar ddisg)"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:563
+#: ../../portable/frontends/widgets/itemlistwidgets.py:564
 #, python-format
 msgid "%(amount)s free on disk"
 msgstr "%(amount)s ar gael ar ddisg"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:582
+#: ../../portable/frontends/widgets/itemlistwidgets.py:583
 #, python-format
 msgid "%(rate)s uploading"
-msgstr "%(rate)s yn llwytho"
+msgstr "%(rate)s yn lanlwytho"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:584
+#: ../../portable/frontends/widgets/itemlistwidgets.py:585
 #, python-format
 msgid "%(rate)s downloading"
 msgstr "%(rate)s yn lawrlwytho"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:618
+#: ../../portable/frontends/widgets/itemlistwidgets.py:619
 msgid "Auto Download"
 msgstr "Awtolawrlwytho"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:630
+#: ../../portable/frontends/widgets/itemlistwidgets.py:631
 msgid "Share feed"
 msgstr "Rhannwch ffrwd"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:636
+#: ../../portable/frontends/widgets/itemlistwidgets.py:637
 msgid "Settings"
 msgstr "Gosodiadau"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:642
+#: ../../portable/frontends/widgets/itemlistwidgets.py:643
 msgid "Remove feed"
 msgstr "Tynnu ffrwd"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:744
+#: ../../portable/frontends/widgets/itemlistwidgets.py:742
 msgid "Name"
 msgstr "Enw"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:747
+#: ../../portable/frontends/widgets/itemlistwidgets.py:745
 msgid "Time"
 msgstr "Amser"
 
@@ -1733,15 +1709,15 @@ msgstr "Diagnosteg"
 msgid "Search All"
 msgstr "Chwilio Pob"
 
-#: ../../portable/messages.py:995 ../../portable/item.py:1057
+#: ../../portable/messages.py:988 ../../portable/item.py:1057
 msgid "queued for download"
 msgstr "mewn ciw i'w lawrlwytho"
 
-#: ../../portable/messagehandler.py:1280
+#: ../../portable/messagehandler.py:1264
 msgid "Subscribed to new feed:"
 msgstr "Tanysgrifiwyd i ffrwd newydd:"
 
-#: ../../portable/messagehandler.py:1283
+#: ../../portable/messagehandler.py:1267
 msgid "Subscribed to new feeds:"
 msgstr "Tanysgrifiwyd i ffrydau newydd:"
 
@@ -1763,11 +1739,11 @@ msgstr ""
 "%(appname)s. Mae'n rhaid i chi lawrlwytho fersiwn ddiweddaraf %(appname)s a "
 "rhedeg honno."
 
-#: ../../portable/commandline.py:106
+#: ../../portable/commandline.py:100
 msgid "Subscription error"
 msgstr "Gwall Tanysgrifo"
 
-#: ../../portable/commandline.py:116
+#: ../../portable/commandline.py:110
 #, python-format
 msgid ""
 "This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
@@ -1776,7 +1752,7 @@ msgstr ""
 "Mae'r ffeil ffrwd %(appname)s â fformat annilys: %(url)s. Rhowch wybod i "
 "gyhoeddwr y ffeil hon."
 
-#: ../../portable/commandline.py:126
+#: ../../portable/commandline.py:120
 #, python-format
 msgid ""
 "This %(appname)s feed file has the wrong content type: %(url)s. Please "
@@ -1787,16 +1763,16 @@ msgstr ""
 "Mae math cynnwys y ffeil ffrwd %(appname)s yn anghywir: %(url)s. Rhowch "
 "wybod i gyhoeddwr y ffeil hon."
 
-#: ../../portable/commandline.py:134
+#: ../../portable/commandline.py:128
 #, python-format
 msgid "Could not download the %(appname)s feed file: %(url)s"
 msgstr "Methwyd â lawrlwytho ffeil y ffrwd %(appname)s: %(url)s"
 
-#: ../../portable/commandline.py:186
+#: ../../portable/commandline.py:180
 msgid "Invalid Torrent"
 msgstr "Torrent Annilys"
 
-#: ../../portable/commandline.py:188
+#: ../../portable/commandline.py:182
 #, python-format
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
@@ -1817,29 +1793,29 @@ msgstr "Gwall Flash URL Scraping"
 msgid "starting up"
 msgstr "yn dechrau"
 
-#: ../../portable/feed.py:924
+#: ../../portable/feed.py:920
 msgid "Error loading feed"
 msgstr "Gwall llwytho ffrwd"
 
-#: ../../portable/feed.py:926
+#: ../../portable/feed.py:922
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 msgstr "Methwyd â llwytho'r ffrwd ar %(url)s (%(errordescription)s)."
 
-#: ../../portable/feed.py:929
+#: ../../portable/feed.py:925
 msgid "Would you like to keep the feed?"
 msgstr "Hoffech gadw'r ffrwd?"
 
-#: ../../portable/feed.py:1054
+#: ../../portable/feed.py:1050
 msgid "Bad content-type"
 msgstr "Math-cynnwys gwael"
 
-#: ../../portable/feed.py:1067
+#: ../../portable/feed.py:1063
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
 msgstr "Nid yw'r sianel yn gytûn â  %(appname)s"
 
-#: ../../portable/feed.py:1070
+#: ../../portable/feed.py:1066
 #, python-format
 msgid ""
 "This channel is not compatible with %(appname)s but we'll try our best to "
@@ -1860,16 +1836,16 @@ msgstr ""
 "\n"
 "Ydych am geisio â llwytho'r sianel beth bynnag?"
 
-#: ../../portable/feed.py:1671
+#: ../../portable/feed.py:1667
 #, python-format
 msgid "Search All: %(text)s"
 msgstr "Chwilio Pob Un: %(text)s"
 
-#: ../../portable/feed.py:2400
+#: ../../portable/feed.py:2396
 msgid "Local Files"
 msgstr "Ffeiliau Lleol"
 
-#: ../../portable/feed.py:2414
+#: ../../portable/feed.py:2410
 msgid "Playing File"
 msgstr "Chwarae Ffeil"
 
@@ -2364,7 +2340,7 @@ msgstr[1] "%(count)d ffrwd yn bodoli eisoes - sgipiwyd"
 msgstr[2] "%(count)d ffrwd yn bodoli eisoes - sgipiwyd"
 msgstr[3] "%(count)d ffrwd yn bodoli eisoes - sgipiwyd"
 
-#: ../../portable/theme.py:159
+#: ../../portable/theme.py:174
 msgid "Example Playlist"
 msgstr "Rhestr Chwarae Enghreifftiol"
 
@@ -2484,11 +2460,11 @@ msgstr "Lawrlwythiad fideo '%s' yn gyflawn."
 msgid "Add to Library"
 msgstr "Ychwanegwch i'r Llyfrgell"
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:206
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:207
 msgid "Pop Out"
 msgstr "Allneidio"
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:209
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:210
 msgid "Pop In"
 msgstr "Mewnbigo"
 
@@ -2636,7 +2612,7 @@ msgid ""
 "There was an error opening %(url)s.  Please try again in a few seconds"
 msgstr "Roedd gwall wrth agor %(url)s. Ceisiwch eto ymhen rhai eiliadau"
 
-#: ../../portable/frontends/widgets/statictabs.py:103
+#: ../../portable/frontends/widgets/statictabs.py:113
 #: ../../portable/frontends/widgets/itemlistcontroller.py:514
 msgid "Other"
 msgstr "Arall"
@@ -2651,7 +2627,7 @@ msgstr "Atal Hadu"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:114
 msgid "Resume Seeding"
-msgstr ""
+msgstr "Ailgychwyn Hadu"
 
 #: ../../portable/frontends/widgets/firsttimedialog.py:63
 #, python-format
@@ -2714,7 +2690,11 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/style.py:239
 msgid "Display Contents"
-msgstr ""
+msgstr "Dangos Cynnwys"
+
+#: ../../portable/frontends/widgets/style.py:255
+msgid "Currently Playing"
+msgstr "Chwarae Nawr"
 
 #: ../../portable/frontends/widgets/displays.py:372
 #, python-format
@@ -2727,7 +2707,7 @@ msgstr ""
 
 #: ../../portable/frontends/widgets/displays.py:430
 msgid "Open Externally"
-msgstr ""
+msgstr "Agor yn Allanol"
 
 #: ../../portable/frontends/widgets/displays.py:574
 #, python-format
@@ -2765,7 +2745,17 @@ msgid_plural ""
 "Some of these items are folders.  Delete/Removeing a folder will "
 "delete/remove it's contents"
 msgstr[0] ""
+"Mae un o'r eitemau hyn yn ffolder.  Bydd Dileu/Tynnu ffolder yn "
+"Dileu/Tynnu'r cynnwys"
 msgstr[1] ""
+"Ffolderi yw rhai o'r eitemau hyn.  Bydd Dileu/Tynnu ffolder yn Dileu/Tynnu'r "
+"cynnwys"
+msgstr[2] ""
+"Ffolderi yw rhai o'r eitemau hyn.  Bydd Dileu/Tynnu ffolder yn Dileu/Tynnu'r "
+"cynnwys"
+msgstr[3] ""
+"Ffolderi yw rhai o'r eitemau hyn.  Bydd Dileu/Tynnu ffolder yn Dileu/Tynnu'r "
+"cynnwys"
 
 #: ../../portable/frontends/widgets/application.py:441
 msgid ""
@@ -2773,7 +2763,13 @@ msgid ""
 msgid_plural ""
 "Some of these items are folders.  Deleting a folder will delete it's contents"
 msgstr[0] ""
+"Mae un o'r eitemau hyn yn ffolder.  Bydd Dileu ffolder yn Dileu'r cynnwys"
 msgstr[1] ""
+"Ffolderi yw rhai o'r eitemau hyn.  Bydd Dileu ffolder yn Dileu'r cynnwys"
+msgstr[2] ""
+"Ffolderi yw rhai o'r eitemau hyn.  Bydd Dileu ffolder yn Dileu'r cynnwys"
+msgstr[3] ""
+"Ffolderi yw rhai o'r eitemau hyn.  Bydd Dileu ffolder yn Dileu'r cynnwys"
 
 #: ../../portable/frontends/widgets/application.py:749
 msgid "Remove site"
@@ -2808,6 +2804,32 @@ msgstr ""
 "%(appname)s fudo lawrlwythiadau cynt yna? (Bydd fideos sy'n lawrlwytho nawr "
 "yn cael eu symud tan iddynt orffen)."
 
+#: ../../portable/frontends/widgets/prefpanel.py:549
+msgid ""
+"Watch for new video and audio items in these folders and include them in "
+"library:"
+msgstr ""
+"Edrychwch am eitemau fideo a sain newydd yn y ffolderi hyn a'u cynnwys yn y "
+"llyfrgell:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:590
+msgid "By default, video and audio items expire after:"
+msgstr "Yn ddiofyn, bydd eitemau fideo a sain yn dod i ben ar ôl:"
+
+#: ../../portable/frontends/widgets/prefpanel.py:603
+msgid ""
+"Resume playing a video or audio item from the point it was last stopped."
+msgstr ""
+"AIlgychwyn chwarae'r eitem fideo neu sain o'r pwynt a orffenwyd diwethaf."
+
+#: ../../portable/frontends/widgets/prefpanel.py:608
+msgid "Play video and audio items one after another"
+msgstr "Chwarae eitemau fideo a sain, un ar ôl y llall"
+
+#: ../../portable/frontends/widgets/prefpanel.py:609
+msgid "Stop after each video or audio item"
+msgstr "Atal chwarae ar ôl pob eitem fideo neu sain"
+
 #: ../../portable/frontends/widgets/removefeeds.py:82
 #, python-format
 msgid ""
@@ -2819,11 +2841,11 @@ msgstr ""
 "ymddangos yn eich llyfrgell.  Gallwch atal gwylio'r ffolderi a wyliwyd yn "
 "gyfan gwbl yn panel hoffterau %(appname)s."
 
-#: ../../portable/frontends/widgets/gtk/video.py:295
+#: ../../portable/frontends/widgets/gtk/video.py:292
 msgid "Pop-in"
 msgstr "Pop-mewn"
 
-#: ../../portable/frontends/widgets/gtk/video.py:300
+#: ../../portable/frontends/widgets/gtk/video.py:297
 msgid "Pop-out"
 msgstr "Pop-allan"
 
@@ -2847,7 +2869,17 @@ msgid "%(count)d Download Queued Due To Unplayed Items (See Settings)"
 msgid_plural ""
 "%(count)d Downloads Queued Due To Unplayed Items (See Settings)"
 msgstr[0] ""
+"%(count)d Lawrlwythiad Mewn Ciw Oherwydd Eitemau Heb Eu Chwarae (Gweler "
+"Gosodiadau)"
 msgstr[1] ""
+"%(count)d Lawrlwythiad Mewn Ciw Oherwydd Eitemau Heb Eu Chwarae (Gweler "
+"Gosodiadau)"
+msgstr[2] ""
+"%(count)d Lawrlwythiad Mewn Ciw Oherwydd Eitemau Heb Eu Chwarae (Gweler "
+"Gosodiadau)"
+msgstr[3] ""
+"%(count)d Lawrlwythiad Mewn Ciw Oherwydd Eitemau Heb Eu Chwarae (Gweler "
+"Gosodiadau)"
 
 #: ../../portable/frontends/widgets/tablist.py:534
 msgid "Remove Sites"
@@ -2859,21 +2891,21 @@ msgstr "LLYFRGELL"
 
 #: ../../portable/frontends/widgets/itemlistcontroller.py:539
 msgid "Back to feed"
-msgstr ""
+msgstr "Nôl i'r ffrwd"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:718
+#: ../../portable/frontends/widgets/itemlistwidgets.py:719
 msgid "Unwatched"
 msgstr "Heb wylio"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:726
+#: ../../portable/frontends/widgets/itemlistwidgets.py:727
 msgid "View:"
 msgstr "Golwg:"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:729
+#: ../../portable/frontends/widgets/itemlistwidgets.py:730
 msgid "View|All"
-msgstr ""
+msgstr "Golwg|Pob"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:734
+#: ../../portable/frontends/widgets/itemlistwidgets.py:732
 msgid "Non Feed"
 msgstr "Di-Ffrwd"
 
@@ -2919,11 +2951,11 @@ msgstr "_Ynghylch %(name)s"
 
 #: ../../portable/item.py:1190
 msgid "Contents appear in the library"
-msgstr ""
+msgstr "Cynnwys yn ymddangos yn y llyfrgell"
 
 #: ../../portable/item.py:1195
 msgid "Contents:"
-msgstr ""
+msgstr "Cynnwys:"
 
 #: ../../portable/displaytext.py:67
 #, python-format

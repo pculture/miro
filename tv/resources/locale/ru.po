@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: democracy\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-06-04 14:53-0400\n"
-"PO-Revision-Date: 2009-05-30 19:24+0000\n"
-"Last-Translator: Nextt <yanbest@mail.ru>\n"
+"POT-Creation-Date: 2009-06-08 19:44-0400\n"
+"PO-Revision-Date: 2009-06-19 16:21+0000\n"
+"Last-Translator: Andrey Medvedev <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2009-06-08 21:25+0000\n"
+"X-Launchpad-Export-Date: 2009-06-23 00:41+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../../portable/httpclient.py:89
@@ -123,7 +123,7 @@ msgstr "Ошибка чтения"
 #: ../../portable/httpclient.py:179
 #, python-format
 msgid "Error while reading from \"%(path)s\""
-msgstr "Ошибка вовремя чтения \"%(path)s\""
+msgstr "Ошибка во время чтения \"%(path)s\""
 
 #: ../../portable/httpclient.py:376
 msgid "Unknown Error code"
@@ -145,17 +145,17 @@ msgstr "Внутренняя ошибка: не могу ответить"
 msgid "Miro Guide"
 msgstr "Путеводитель по Miro"
 
-#: ../../portable/frontends/widgets/statictabs.py:87
+#: ../../portable/frontends/widgets/statictabs.py:97
 #: ../../portable/frontends/widgets/itemlistcontroller.py:419
 msgid "Video Search"
 msgstr "Поиск видео"
 
-#: ../../portable/frontends/widgets/statictabs.py:98
+#: ../../portable/frontends/widgets/statictabs.py:108
 #: ../../portable/frontends/widgets/itemlistcontroller.py:508
 msgid "Audio"
 msgstr "Звук"
 
-#: ../../portable/frontends/widgets/statictabs.py:108
+#: ../../portable/frontends/widgets/statictabs.py:118
 msgid "Downloading"
 msgstr "Идет загрузка"
 
@@ -177,11 +177,11 @@ msgstr "Новый список воспроизведения:"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:63
 msgid "Remove From the Library"
-msgstr "Удалить из библиотеке"
+msgstr "Удалить из библиотеки"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:65
-#: ../../portable/frontends/widgets/gtk/video.py:247
-#: ../../portable/frontends/widgets/gtk/video.py:256
+#: ../../portable/frontends/widgets/gtk/video.py:244
+#: ../../portable/frontends/widgets/gtk/video.py:253
 #: ../../portable/dialogs.py:107
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:128
 #: ../../platform/osx/plat/frontends/widgets/osxmenus.py:160
@@ -219,10 +219,10 @@ msgstr "Отметить как проигранный"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:109
 #: ../../portable/frontends/widgets/itemcontextmenu.py:210
-#: ../../portable/frontends/widgets/style.py:256
-#: ../../portable/frontends/widgets/style.py:1017
-#: ../../portable/frontends/widgets/style.py:1184
-#: ../../portable/frontends/widgets/gtk/video.py:253
+#: ../../portable/frontends/widgets/style.py:257
+#: ../../portable/frontends/widgets/style.py:1032
+#: ../../portable/frontends/widgets/style.py:1199
+#: ../../portable/frontends/widgets/gtk/video.py:250
 #: ../../portable/dialogs.py:106
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:124
 msgid "Keep"
@@ -232,7 +232,7 @@ msgstr "Сохранить"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:239
 #: ../../portable/frontends/widgets/itemcontextmenu.py:257
 msgid "Cancel Download"
-msgstr "Отмена скачивание"
+msgstr "Отмена скачивания"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:121
 #: ../../portable/frontends/widgets/itemcontextmenu.py:240
@@ -247,8 +247,8 @@ msgstr "Возобновить закачку"
 #: ../../portable/frontends/widgets/itemcontextmenu.py:128
 #: ../../portable/frontends/widgets/itemcontextmenu.py:223
 #: ../../portable/frontends/widgets/style.py:250
-#: ../../portable/frontends/widgets/style.py:1087
-#: ../../portable/frontends/widgets/style.py:1098 ../../portable/dialogs.py:95
+#: ../../portable/frontends/widgets/style.py:1102
+#: ../../portable/frontends/widgets/style.py:1113 ../../portable/dialogs.py:95
 msgid "Download"
 msgstr "Скачать"
 
@@ -259,7 +259,7 @@ msgstr "Веб-страница"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:136
 #: ../../portable/frontends/widgets/style.py:236
-#: ../../portable/frontends/widgets/gtk/video.py:283
+#: ../../portable/frontends/widgets/gtk/video.py:280
 msgid "Comments"
 msgstr "Комментарии"
 
@@ -285,7 +285,7 @@ msgid "View"
 msgstr "Вид"
 
 #: ../../portable/frontends/widgets/itemcontextmenu.py:151
-#: ../../portable/frontends/widgets/gtk/video.py:274
+#: ../../portable/frontends/widgets/gtk/video.py:271
 #: ../../platform/osx/plat/frontends/widgets/overlay.py:120
 msgid "Share"
 msgstr "Общий доступ"
@@ -375,7 +375,7 @@ msgstr "Просмотрен 1 день назад"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:98
 msgid "Watched 3 days ago"
-msgstr "Просмотрен3 дня назад"
+msgstr "Просмотрен 3 дня назад"
 
 #: ../../portable/frontends/widgets/feedsettingspanel.py:99
 msgid "Watched 6 days ago"
@@ -495,7 +495,7 @@ msgstr "< Предыдущий"
 #: ../../portable/frontends/widgets/firsttimedialog.py:223
 #: ../../portable/frontends/widgets/firsttimedialog.py:225
 #: ../../portable/frontends/widgets/firsttimedialog.py:282
-#: ../../portable/feed.py:2275 ../../portable/feed.py:2382
+#: ../../portable/feed.py:2271 ../../portable/feed.py:2378
 msgid "Search"
 msgstr "Поиск"
 
@@ -601,7 +601,7 @@ msgstr "Скорость загрузки"
 
 #: ../../portable/frontends/widgets/style.py:249
 msgid "Down Total"
-msgstr "Скачено"
+msgstr "Скачано"
 
 #: ../../portable/frontends/widgets/style.py:251
 msgid "Download Torrent"
@@ -617,17 +617,17 @@ msgid "queued for autodownload"
 msgstr "В очереди для автоматического скачивания"
 
 #: ../../portable/frontends/widgets/style.py:254
-#: ../../portable/frontends/widgets/style.py:1138
-#: ../../portable/frontends/widgets/itemlistwidgets.py:720
+#: ../../portable/frontends/widgets/style.py:1153
+#: ../../portable/frontends/widgets/itemlistwidgets.py:721
 msgid "Unplayed"
 msgstr "Не проиграно"
 
-#: ../../portable/frontends/widgets/style.py:255
-#: ../../portable/frontends/widgets/style.py:1156
+#: ../../portable/frontends/widgets/style.py:256
+#: ../../portable/frontends/widgets/style.py:1171
 msgid "Newly Available"
 msgstr "Последние новинки"
 
-#: ../../portable/frontends/widgets/style.py:257
+#: ../../portable/frontends/widgets/style.py:258
 #: ../../portable/frontends/widgets/prefpanel.py:485
 #: ../../portable/frontends/widgets/tablist.py:580
 #: ../../portable/frontends/widgets/tablist.py:592
@@ -639,16 +639,16 @@ msgstr "Последние новинки"
 msgid "Remove"
 msgstr "Удалить"
 
-#: ../../portable/frontends/widgets/style.py:258
+#: ../../portable/frontends/widgets/style.py:259
 msgid "Stop seeding"
 msgstr "Остановить раздачу"
 
-#: ../../portable/frontends/widgets/style.py:570
-#: ../../portable/frontends/widgets/style.py:1149
+#: ../../portable/frontends/widgets/style.py:571
+#: ../../portable/frontends/widgets/style.py:1164
 msgid "paused"
 msgstr "приостановлен"
 
-#: ../../portable/frontends/widgets/style.py:1019
+#: ../../portable/frontends/widgets/style.py:1034
 msgid "Remove from playlist"
 msgstr "Убрать из списка воиспроизведения"
 
@@ -794,7 +794,7 @@ msgstr "Файл %(filename)s не существует."
 
 #: ../../portable/frontends/widgets/application.py:331
 msgid "The following files do not exist:"
-msgstr "Следующий файл не существует:"
+msgstr "Следующие файлы не существуют:"
 
 #: ../../portable/frontends/widgets/application.py:368
 msgid "New Download"
@@ -867,7 +867,7 @@ msgstr "Добавить сайт"
 
 #: ../../portable/frontends/widgets/application.py:552
 msgid "Enter the URL of the site to add"
-msgstr "Введите URL сайта для добавления"
+msgstr "Введите URL добавляемого сайта"
 
 #: ../../portable/frontends/widgets/application.py:553
 msgid "Add Site - Invalid URL"
@@ -880,7 +880,7 @@ msgid ""
 "\n"
 "Enter the URL of the site to add"
 msgstr ""
-"Введенный адрес не корректен.\n"
+"Введенный адрес не является корректным URL.\n"
 "Проверьте правильность адреса и повторите. \n"
 "\n"
 "Введите адрес сайта для добавления"
@@ -903,19 +903,19 @@ msgstr "Экспортировать OPML-файл"
 
 #: ../../portable/frontends/widgets/application.py:642
 msgid "Create Playlist"
-msgstr "Создать плейлист"
+msgstr "Создать список воспроизведения"
 
 #: ../../portable/frontends/widgets/application.py:643
 msgid "Enter a name for the new playlist"
-msgstr "Введите новое имя для плейлиста:"
+msgstr "Введите новое имя для списка воспроизведения"
 
 #: ../../portable/frontends/widgets/application.py:664
 msgid "Create Playlist Folder"
-msgstr "Создать папку плейлиста"
+msgstr "Создать папку списка воспроизведения"
 
 #: ../../portable/frontends/widgets/application.py:665
 msgid "Enter a name for the new playlist folder"
-msgstr "Введите имя для новой папки плейлиста"
+msgstr "Введите имя для новой папки списка воспроизведения"
 
 #: ../../portable/frontends/widgets/application.py:686
 #: ../../portable/frontends/widgets/tablist.py:579
@@ -940,7 +940,7 @@ msgstr "Введите новое имя вещания %(name)s"
 #: ../../portable/frontends/widgets/tablist.py:640
 #: ../../portable/playlist.py:179
 msgid "Rename Playlist"
-msgstr "Переименовать плейлист..."
+msgstr "Переименовать список воспроизведения"
 
 #: ../../portable/frontends/widgets/application.py:697
 #, python-format
@@ -950,7 +950,7 @@ msgstr "Введите новое имя списка воспроизведен
 #: ../../portable/frontends/widgets/application.py:701
 #: ../../portable/frontends/widgets/tablist.py:634
 msgid "Rename Playlist Folder"
-msgstr "Переименовать папку плейлиста"
+msgstr "Переименовать папку списка воспроизведения"
 
 #: ../../portable/frontends/widgets/application.py:702
 #, python-format
@@ -971,8 +971,8 @@ msgstr "Введите новое имя сайта %(name)s"
 msgid "Remove playlist"
 msgid_plural "Remove playlists"
 msgstr[0] "Удалить список воспроизведения"
-msgstr[1] "Удалить %(count)d списка воспроизведения"
-msgstr[2] "Удалить %(count)d списков воспроизведения"
+msgstr[1] "Удалить списки воспроизведения"
+msgstr[2] "Удалить списки воспроизведения"
 
 #: ../../portable/frontends/widgets/application.py:732
 #, python-format
@@ -984,14 +984,14 @@ msgstr[2] "Вы точно хотите удалить эти %(count)s спис
 
 #: ../../portable/frontends/widgets/application.py:781
 msgid "Are you sure you want to quit?"
-msgstr "Вы уверены, что хотите выйте?"
+msgstr "Вы действительно хотите выйти?"
 
 #: ../../portable/frontends/widgets/application.py:783
 #, python-format
 msgid "You have %(count)d download in progress.  Quit anyway?"
 msgid_plural "You have %(count)d downloads in progress.  Quit anyway?"
 msgstr[0] "Продолжается %(count)d загрузка. Всё равно выйти?"
-msgstr[1] "Продолжаются %(count)d загрузок. Всё равно выйти?"
+msgstr[1] "Продолжаются %(count)d загрузки. Всё равно выйти?"
 msgstr[2] "Продолжаются %(count)d загрузок. Всё равно выйти?"
 
 #: ../../portable/frontends/widgets/application.py:788
@@ -1030,12 +1030,11 @@ msgstr "Раздача"
 #: ../../portable/frontends/widgets/prefpanel.py:271
 msgid "Warn me if I attempt to quit with downloads in progress."
 msgstr ""
-"При выходе из программы предупреждать пользователя о закачках в процессе "
-"выполенния."
+"При выходе из программы предупреждать пользователя о незавершенных закачках."
 
 #: ../../portable/frontends/widgets/prefpanel.py:281
 msgid "Every day"
-msgstr "Каждый день"
+msgstr "Ежедневно"
 
 #: ../../portable/frontends/widgets/prefpanel.py:282
 msgid "Every hour"
@@ -1050,17 +1049,17 @@ msgid "Manually"
 msgstr "Вручную"
 
 #: ../../portable/frontends/widgets/prefpanel.py:289
-#: ../../portable/frontends/widgets/itemlistwidgets.py:623
+#: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "New"
 msgstr "Новый"
 
 #: ../../portable/frontends/widgets/prefpanel.py:290
-#: ../../portable/frontends/widgets/itemlistwidgets.py:623
+#: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "All"
 msgstr "Все"
 
 #: ../../portable/frontends/widgets/prefpanel.py:291
-#: ../../portable/frontends/widgets/itemlistwidgets.py:623
+#: ../../portable/frontends/widgets/itemlistwidgets.py:624
 msgid "Off"
 msgstr "Выключено"
 
@@ -1114,7 +1113,7 @@ msgstr "Максимальное число загрузок вручную од
 
 #: ../../portable/frontends/widgets/prefpanel.py:347
 msgid "Maximum number of auto-downloads at a time:"
-msgstr "Максимальное количество одновременных закачек:"
+msgstr "Максимальное количество одновременных автоматических закачек:"
 
 #: ../../portable/frontends/widgets/prefpanel.py:357
 msgid "Bittorrent:"
@@ -1178,11 +1177,6 @@ msgstr "Добавить каталог для отслеживания"
 msgid "Store downloads in this folder:"
 msgstr "Сохранять загрузки в этой папке:"
 
-#: ../../portable/frontends/widgets/prefpanel.py:549
-msgid "Watch for new videos in these folders and include them in library:"
-msgstr ""
-"Обнаружить новые видео-фрагменты в данных папках и включить их в библиотеку:"
-
 #: ../../portable/frontends/widgets/prefpanel.py:568
 msgid "Keep at least this much free space on my drive:"
 msgstr "Оставлять как минимум столько свободного места на диске:"
@@ -1212,25 +1206,9 @@ msgstr "10 дней"
 msgid "1 month"
 msgstr "1 месяц"
 
-#: ../../portable/frontends/widgets/prefpanel.py:590
-msgid "By default, videos expire after:"
-msgstr "По умолчанию, видео-файлы удаляются после:"
-
 #: ../../portable/frontends/widgets/prefpanel.py:599
 msgid "Always play videos in a separate window."
 msgstr "Всегда проигрывать видео в отдельном окне."
-
-#: ../../portable/frontends/widgets/prefpanel.py:603
-msgid "Resume playing a video from the point it was last stopped."
-msgstr "Возобновить воспроизведение видео-фрагмента с момента остановки."
-
-#: ../../portable/frontends/widgets/prefpanel.py:608
-msgid "Play videos one after another"
-msgstr "Проигрывать видео одно за другим."
-
-#: ../../portable/frontends/widgets/prefpanel.py:609
-msgid "Stop after each video"
-msgstr "Останавливать после каждого видео"
 
 #: ../../portable/frontends/widgets/prefpanel.py:620
 msgid "General"
@@ -1383,39 +1361,35 @@ msgstr[2] ""
 "Вы уверены, что хотите удалить эти вещания? Загрузка трансляций, "
 "принадлежащих этим вещаниям, будет отменена."
 
-#: ../../portable/frontends/widgets/gtk/video.py:245
-msgid "Add to library"
-msgstr "Добавить в библиотеку"
-
-#: ../../portable/frontends/widgets/gtk/video.py:285
+#: ../../portable/frontends/widgets/gtk/video.py:282
 msgid "Permalink"
 msgstr "Постоянная ссылка"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:63
+#: ../../portable/frontends/widgets/gtk/trayicon.py:67
 #, python-format
 msgid "Play Next Unplayed (%(unplayed)d)"
 msgstr "Проиграть следующий непроигранный (%(unplayed)d)"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:67
+#: ../../portable/frontends/widgets/gtk/trayicon.py:71
 #, python-format
 msgid "Play All Unplayed (%(unplayed)d)"
 msgstr "Проиграть все непроигранные (%(unplayed)d)"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:70
+#: ../../portable/frontends/widgets/gtk/trayicon.py:74
 #, python-format
 msgid "Pause All Downloads (%(downloading)d)"
 msgstr "Приостановить все загрузки (%(downloading)d)"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:73
+#: ../../portable/frontends/widgets/gtk/trayicon.py:77
 #, python-format
 msgid "Resume All Downloads (%(paused)d)"
 msgstr "Возобновить все загрузки (%(paused)d)"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:81
+#: ../../portable/frontends/widgets/gtk/trayicon.py:85
 msgid "Hide"
 msgstr "Скрыть"
 
-#: ../../portable/frontends/widgets/gtk/trayicon.py:83
+#: ../../portable/frontends/widgets/gtk/trayicon.py:87
 #: ../../portable/frontends/widgets/diagnostics.py:76
 msgid "Show"
 msgstr "Показать"
@@ -1556,115 +1530,115 @@ msgstr "СПИСКИ ВОСПРОИЗВЕДЕНИЯ"
 msgid "No Results Found"
 msgstr "Ничего не найдено"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:178
+#: ../../portable/frontends/widgets/itemlistwidgets.py:179
 msgid "Save Search"
 msgstr "Сохранить результаты поиска"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:285
+#: ../../portable/frontends/widgets/itemlistwidgets.py:286
 msgid "Title"
 msgstr "Название"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:287
+#: ../../portable/frontends/widgets/itemlistwidgets.py:288
 msgid "Feed"
 msgstr "Вещание"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:289
-#: ../../portable/frontends/widgets/itemlistwidgets.py:745
+#: ../../portable/frontends/widgets/itemlistwidgets.py:290
+#: ../../portable/frontends/widgets/itemlistwidgets.py:743
 msgid "Date"
 msgstr "Дата"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:290
+#: ../../portable/frontends/widgets/itemlistwidgets.py:291
 msgid "Length"
 msgstr "Продолжительность"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:291
+#: ../../portable/frontends/widgets/itemlistwidgets.py:292
 msgid "Status"
 msgstr "Состояние"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:292
-#: ../../portable/frontends/widgets/itemlistwidgets.py:746
+#: ../../portable/frontends/widgets/itemlistwidgets.py:293
+#: ../../portable/frontends/widgets/itemlistwidgets.py:744
 msgid "Size"
 msgstr "Размер"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:294
+#: ../../portable/frontends/widgets/itemlistwidgets.py:295
 msgid "ETA"
 msgstr "ETA"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:295
+#: ../../portable/frontends/widgets/itemlistwidgets.py:296
 msgid "Speed"
 msgstr "Скорость"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:431
+#: ../../portable/frontends/widgets/itemlistwidgets.py:432
 msgid "Save as a Feed"
 msgstr "Сохранить вещание как"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:485
+#: ../../portable/frontends/widgets/itemlistwidgets.py:486
 msgid "Pause All"
 msgstr "Приостановить все"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:492
+#: ../../portable/frontends/widgets/itemlistwidgets.py:493
 msgid "Resume All"
 msgstr "Возобновить все"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:499
+#: ../../portable/frontends/widgets/itemlistwidgets.py:500
 msgid "Cancel All"
 msgstr "Отменить все"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:506
+#: ../../portable/frontends/widgets/itemlistwidgets.py:507
 msgid "Download Settings"
 msgstr "Параметры загрузки"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:552
+#: ../../portable/frontends/widgets/itemlistwidgets.py:553
 #, python-format
 msgid "%(available)s below downloads space limit (%(amount)s free on disk)"
 msgstr ""
 "%(available)s - ограничение на загрузку файлов (%(amount)s свободно на диске)"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:558
+#: ../../portable/frontends/widgets/itemlistwidgets.py:559
 #, python-format
 msgid "%(available)s free for downloads (%(amount)s free on disk)"
 msgstr "%(available)s доступно для скачивания (%(amount)s свободно на диске)"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:563
+#: ../../portable/frontends/widgets/itemlistwidgets.py:564
 #, python-format
 msgid "%(amount)s free on disk"
 msgstr "%(amount)s свободно на диске"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:582
+#: ../../portable/frontends/widgets/itemlistwidgets.py:583
 #, python-format
 msgid "%(rate)s uploading"
 msgstr "%(rate)s отправлено"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:584
+#: ../../portable/frontends/widgets/itemlistwidgets.py:585
 #, python-format
 msgid "%(rate)s downloading"
 msgstr "%(rate)s загружается"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:618
+#: ../../portable/frontends/widgets/itemlistwidgets.py:619
 msgid "Auto Download"
 msgstr "Автоматическая загрузка"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:630
+#: ../../portable/frontends/widgets/itemlistwidgets.py:631
 msgid "Share feed"
 msgstr "Поделиться вещанием"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:636
+#: ../../portable/frontends/widgets/itemlistwidgets.py:637
 msgid "Settings"
 msgstr "Настройки"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:642
+#: ../../portable/frontends/widgets/itemlistwidgets.py:643
 msgid "Remove feed"
 msgstr "Удалить вещание"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:718
+#: ../../portable/frontends/widgets/itemlistwidgets.py:719
 msgid "Unwatched"
 msgstr "Непросмотренные"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:744
+#: ../../portable/frontends/widgets/itemlistwidgets.py:742
 msgid "Name"
 msgstr "Наименование"
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:747
+#: ../../portable/frontends/widgets/itemlistwidgets.py:745
 msgid "Time"
 msgstr "Время"
 
@@ -1705,15 +1679,15 @@ msgstr "Диагностика"
 msgid "Search All"
 msgstr "Искать везде"
 
-#: ../../portable/messages.py:995 ../../portable/item.py:1057
+#: ../../portable/messages.py:988 ../../portable/item.py:1057
 msgid "queued for download"
 msgstr "В очереди для скачивания"
 
-#: ../../portable/messagehandler.py:1280
+#: ../../portable/messagehandler.py:1264
 msgid "Subscribed to new feed:"
 msgstr "Добавлено вещание:"
 
-#: ../../portable/messagehandler.py:1283
+#: ../../portable/messagehandler.py:1267
 msgid "Subscribed to new feeds:"
 msgstr "Добавлены вещания:"
 
@@ -1735,11 +1709,11 @@ msgstr ""
 "Чтобы продолжить ее использование, вам необходимо скачать  и использовать "
 "самую последную версию %(appname)s."
 
-#: ../../portable/commandline.py:106
+#: ../../portable/commandline.py:100
 msgid "Subscription error"
 msgstr "Ошибка при подключении к каналу"
 
-#: ../../portable/commandline.py:116
+#: ../../portable/commandline.py:110
 #, python-format
 msgid ""
 "This %(appname)s feed file has an invalid format: %(url)s.  Please notify "
@@ -1748,7 +1722,7 @@ msgstr ""
 "Этот файл с вещаниями от программы %(appname)s имеет неправильный формат: "
 "%(url)s. Пожалуйста, оповестите об этом распространителя файла."
 
-#: ../../portable/commandline.py:126
+#: ../../portable/commandline.py:120
 #, python-format
 msgid ""
 "This %(appname)s feed file has the wrong content type: %(url)s. Please "
@@ -1757,16 +1731,16 @@ msgstr ""
 "Этот файл с вещаниями %(appname)s имеет неправильное содержимое: %(url)s. "
 "Пожалуйста, оповестите об этом распространителя файла."
 
-#: ../../portable/commandline.py:134
+#: ../../portable/commandline.py:128
 #, python-format
 msgid "Could not download the %(appname)s feed file: %(url)s"
 msgstr "Ошибка загрузки файла с вещаниями %(appname)s: %(url)s"
 
-#: ../../portable/commandline.py:186
+#: ../../portable/commandline.py:180
 msgid "Invalid Torrent"
 msgstr "Невалидный торрент-файл"
 
-#: ../../portable/commandline.py:188
+#: ../../portable/commandline.py:182
 #, python-format
 msgid ""
 "The torrent file %(filename)s appears to be corrupt and cannot be opened. "
@@ -1787,29 +1761,29 @@ msgstr "Ошибка получения URL Flash-файла"
 msgid "starting up"
 msgstr "запускается"
 
-#: ../../portable/feed.py:924
+#: ../../portable/feed.py:920
 msgid "Error loading feed"
 msgstr "Ошибка при загрузке вещания"
 
-#: ../../portable/feed.py:926
+#: ../../portable/feed.py:922
 #, python-format
 msgid "Couldn't load the feed at %(url)s (%(errordescription)s)."
 msgstr "Не удается загрузить вещание %(url)s (%(errordescription)s)."
 
-#: ../../portable/feed.py:929
+#: ../../portable/feed.py:925
 msgid "Would you like to keep the feed?"
 msgstr "Оставить это вещание?"
 
-#: ../../portable/feed.py:1054
+#: ../../portable/feed.py:1050
 msgid "Bad content-type"
 msgstr "Ошибка в поле content-type"
 
-#: ../../portable/feed.py:1067
+#: ../../portable/feed.py:1063
 #, python-format
 msgid "Channel is not compatible with %(appname)s"
 msgstr "Канал не совместим с %(appname)s"
 
-#: ../../portable/feed.py:1070
+#: ../../portable/feed.py:1066
 #, python-format
 msgid ""
 "This channel is not compatible with %(appname)s but we'll try our best to "
@@ -1830,16 +1804,16 @@ msgstr ""
 "\n"
 "Вы всё равно хотите попробовать загрузить трансляции из этого вещания?"
 
-#: ../../portable/feed.py:1671
+#: ../../portable/feed.py:1667
 #, python-format
 msgid "Search All: %(text)s"
 msgstr "Искать все: %(text)s"
 
-#: ../../portable/feed.py:2400
+#: ../../portable/feed.py:2396
 msgid "Local Files"
 msgstr "Локальные файлы"
 
-#: ../../portable/feed.py:2414
+#: ../../portable/feed.py:2410
 msgid "Playing File"
 msgstr "Текущий файл"
 
@@ -2327,7 +2301,7 @@ msgstr[0] "Пропущено %(count)d уже существующее веща
 msgstr[1] "Пропущено %(count)d уже существующих вещаний."
 msgstr[2] "Пропущено уже существующих %(count)d фидов."
 
-#: ../../portable/theme.py:159
+#: ../../portable/theme.py:174
 msgid "Example Playlist"
 msgstr "Пример плейлиста"
 
@@ -2440,11 +2414,11 @@ msgstr "Видео '%s' скачено."
 msgid "Add to Library"
 msgstr "Добавить в библиотеку"
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:206
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:207
 msgid "Pop Out"
 msgstr "Отделить"
 
-#: ../../platform/osx/plat/frontends/widgets/overlay.py:209
+#: ../../platform/osx/plat/frontends/widgets/overlay.py:210
 msgid "Pop In"
 msgstr "Присоединить"
 
@@ -2594,15 +2568,18 @@ msgstr ""
 "Произошла ошибка при открытии %(url)s. Попробуйте еще раз через несколько "
 "секунд"
 
+#~ msgid "By default, videos expire after:"
+#~ msgstr "По умолчанию, видео-файлы удаляются после:"
+
 #~ msgid "Custom Channels"
 #~ msgstr "Пользовательский канал"
 
-#: ../../portable/frontends/widgets/statictabs.py:93
+#: ../../portable/frontends/widgets/statictabs.py:103
 #: ../../portable/frontends/widgets/itemlistcontroller.py:502
 msgid "Video"
 msgstr ""
 
-#: ../../portable/frontends/widgets/statictabs.py:103
+#: ../../portable/frontends/widgets/statictabs.py:113
 #: ../../portable/frontends/widgets/itemlistcontroller.py:514
 msgid "Other"
 msgstr ""
@@ -2670,6 +2647,10 @@ msgstr ""
 msgid "Display Contents"
 msgstr ""
 
+#: ../../portable/frontends/widgets/style.py:255
+msgid "Currently Playing"
+msgstr ""
+
 #: ../../portable/frontends/widgets/displays.py:372
 #, python-format
 msgid ""
@@ -2728,8 +2709,9 @@ msgstr[1] ""
 #: ../../portable/frontends/widgets/application.py:749
 msgid "Remove site"
 msgid_plural "Remove sites"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Удалить сайт"
+msgstr[1] "Удалить сайты"
+msgstr[2] "Удалить сайты"
 
 #: ../../portable/frontends/widgets/application.py:751
 #, python-format
@@ -2751,6 +2733,29 @@ msgid ""
 "not be moved until they finish.)"
 msgstr ""
 
+#: ../../portable/frontends/widgets/prefpanel.py:549
+msgid ""
+"Watch for new video and audio items in these folders and include them in "
+"library:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:590
+msgid "By default, video and audio items expire after:"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:603
+msgid ""
+"Resume playing a video or audio item from the point it was last stopped."
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:608
+msgid "Play video and audio items one after another"
+msgstr ""
+
+#: ../../portable/frontends/widgets/prefpanel.py:609
+msgid "Stop after each video or audio item"
+msgstr ""
+
 #: ../../portable/frontends/widgets/removefeeds.py:82
 #, python-format
 msgid ""
@@ -2759,18 +2764,18 @@ msgid ""
 "completely in the %(appname)s preference panel."
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/video.py:295
+#: ../../portable/frontends/widgets/gtk/video.py:292
 msgid "Pop-in"
 msgstr ""
 
-#: ../../portable/frontends/widgets/gtk/video.py:300
+#: ../../portable/frontends/widgets/gtk/video.py:297
 msgid "Pop-out"
 msgstr ""
 
 #: ../../portable/frontends/widgets/gtk/window.py:522
 #, python-format
 msgid "About %(appname)s"
-msgstr ""
+msgstr "О %(appname)s"
 
 #: ../../portable/frontends/widgets/gtk/window.py:537
 #, python-format
@@ -2799,15 +2804,15 @@ msgstr ""
 msgid "Back to feed"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:726
+#: ../../portable/frontends/widgets/itemlistwidgets.py:727
 msgid "View:"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:729
+#: ../../portable/frontends/widgets/itemlistwidgets.py:730
 msgid "View|All"
 msgstr ""
 
-#: ../../portable/frontends/widgets/itemlistwidgets.py:734
+#: ../../portable/frontends/widgets/itemlistwidgets.py:732
 msgid "Non Feed"
 msgstr ""
 
