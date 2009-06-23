@@ -138,7 +138,7 @@ def unicodeToFilename(filename, path=None):
         if first:
             return u"".join([first[:-1], last])
 
-        return last[:-1]
+        return unicode(last[:-1])
 
     checkU(filename)
     if path:
