@@ -67,19 +67,22 @@ def _scrape_youtube_url(url, callback):
     components = urlparse.urlsplit(url)
     params = cgi.parse_qs(components[3])
 
-    # if it's a watch url, we convert it to a form we already handle
+    logging.info("youtube: components[2]: %s", components[2])
+
     if components[2] == u'/watch' and 'v' in params:
-        url = 'http://www.youtube.com/v/%s&f=gdata_videos' % params["v"][0]
+        logging.info("youtube: /watch and v case")
+        videoID = params['v'][0]
+    elif components[2].startswith('/v/'):
+        logging.info("youtube: v case")
+        videoID = re.compile(r'/v/([\w-]+)').match(components[2]).group(1)
+    else:
+        logging.warning("_scrape_youtube_url: unable to scrape YouTube Video URL")
+        callback(None)
+        return
 
-    httpclient.grabHeaders(url, lambda x: _youtube_callback(x, callback),
-                           lambda x:_youtube_errback(x, callback))
+    logging.info("youtube: videoid: %s", videoID)
 
-def _youtube_callback(info, callback):
-    redirected_url = info['redirected-url']
     try:
-        components = urlparse.urlsplit(redirected_url)
-        params = cgi.parse_qs(components[3])
-        videoID = params['video_id'][0]
         url = u"http://www.youtube.com/get_video_info?video_id=%s&el=embedded&ps=default&eurl=" % videoID
         httpclient.grabURL(url, lambda x: _youtube_callback_step2(x, videoID, callback),
                            lambda x: _youtube_errback(x, callback))
